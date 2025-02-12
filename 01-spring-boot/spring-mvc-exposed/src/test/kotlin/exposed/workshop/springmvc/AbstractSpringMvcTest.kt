@@ -4,7 +4,7 @@ import io.bluetape4k.junit5.faker.Fakers
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 
-@ActiveProfiles("h2")
+@ActiveProfiles("h2") // postgres | mysql
 @SpringBootTest(
     classes = [SpringMvcApplication::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT

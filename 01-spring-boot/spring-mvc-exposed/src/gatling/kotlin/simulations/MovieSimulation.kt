@@ -1,6 +1,6 @@
 package simulations
 
-import io.gatling.javaapi.core.CoreDsl.rampConcurrentUsers
+import io.gatling.javaapi.core.CoreDsl
 import io.gatling.javaapi.core.CoreDsl.scenario
 import io.gatling.javaapi.core.Simulation
 import io.gatling.javaapi.http.HttpDsl.http
@@ -28,8 +28,8 @@ class MovieSimulation: Simulation() {
 
     init {
         setUp(
-            scn.injectClosed(rampConcurrentUsers(10).to(200).during(10.seconds.toJavaDuration()))
-            // scn.injectOpen(constantUsersPerSec(200.0).during(10.seconds.toJavaDuration()))
+            scn.injectClosed(CoreDsl.rampConcurrentUsers(10).to(100).during(10.seconds.toJavaDuration()))
+            // scn.injectOpen(CoreDsl.constantUsersPerSec(400.0).during(10.seconds.toJavaDuration()))
         ).protocols(httpProtocol)
     }
 }

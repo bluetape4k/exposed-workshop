@@ -9,7 +9,7 @@ server:
 
     tomcat:
         threads:
-            max: 800
+            max: 8000
             min-spare: 20
 
     shutdown: graceful  # WebServer Graceful shutdown (https://www.baeldung.com/spring-boot-web-server-shutdown)
