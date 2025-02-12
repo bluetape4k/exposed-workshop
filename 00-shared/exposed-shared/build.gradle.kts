@@ -9,17 +9,19 @@ configurations {
 dependencies {
     implementation(platform(Libs.exposed_bom))
 
+    testImplementation(project(":exposed-shared-tests"))
+
     api(Libs.bluetape4k_exposed)
     api(Libs.exposed_core)
-    implementation(Libs.exposed_crypt)
+    api(Libs.exposed_crypt)
     api(Libs.exposed_dao)
-    implementation(Libs.exposed_java_time)
+    api(Libs.exposed_java_time)
     api(Libs.exposed_jdbc)
-    implementation(Libs.exposed_json)
-    implementation(Libs.exposed_kotlin_datetime)
-    implementation(Libs.exposed_migration)
-    implementation(Libs.exposed_money)
-    implementation(Libs.exposed_spring_boot_starter)
+    api(Libs.exposed_json)
+    api(Libs.exposed_kotlin_datetime)
+    api(Libs.exposed_migration)
+    api(Libs.exposed_money)
+    api(Libs.exposed_spring_boot_starter)
 
     implementation(Libs.bluetape4k_jdbc)
     testImplementation(Libs.bluetape4k_junit5)
