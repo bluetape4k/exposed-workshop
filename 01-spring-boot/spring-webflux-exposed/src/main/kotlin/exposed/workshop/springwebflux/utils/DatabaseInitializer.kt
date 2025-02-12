@@ -1,8 +1,10 @@
-package exposed.workshop.springmvc.domain
+package exposed.workshop.springwebflux.utils
 
-import exposed.workshop.springmvc.domain.MovieSchema.ActorInMovieTable
-import exposed.workshop.springmvc.domain.MovieSchema.ActorTable
-import exposed.workshop.springmvc.domain.MovieSchema.MovieTable
+import exposed.workshop.springwebflux.domain.ActorDTO
+import exposed.workshop.springwebflux.domain.MovieSchema.ActorInMovieTable
+import exposed.workshop.springwebflux.domain.MovieSchema.ActorTable
+import exposed.workshop.springwebflux.domain.MovieSchema.MovieTable
+import exposed.workshop.springwebflux.domain.MovieWithActorDTO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.info
@@ -18,11 +20,11 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Component
+@Transactional
 class DatabaseInitializer: ApplicationRunner {
 
     companion object: KLogging()
 
-    @Transactional
     override fun run(args: ApplicationArguments?) {
         log.info { "데이터베이스 초기화 및 샘플 데이터 추가" }
         createSchema()
@@ -33,7 +35,11 @@ class DatabaseInitializer: ApplicationRunner {
         log.debug { "Creating schema and test data ..." }
 
         @Suppress("DEPRECATION")
-        SchemaUtils.createMissingTablesAndColumns(ActorTable, MovieTable, ActorInMovieTable)
+        (SchemaUtils.createMissingTablesAndColumns(
+            ActorTable,
+            MovieTable,
+            ActorInMovieTable
+        ))
     }
 
     private fun populateData() {

@@ -6,12 +6,12 @@ plugins {
 
 
 springBoot {
-    mainClass.set("io.bluetape4k.workshop.exposed.ExposedSqlApplicationKt")
+    mainClass.set("exposed.workshop.springwebflux.SpringWebfluxApplicationKt")
 
     buildInfo {
         properties {
-            additional.put("name", "Webflux + Exposed SQL Application")
-            additional.put("description", "Webflux + Exposed SQL Application")
+            additional.put("name", "Webflux + Exposed Application")
+            additional.put("description", "Webflux + Exposed Application")
             version = "1.0.0"
             additional.put("java.version", JavaVersion.current())
         }
@@ -47,9 +47,9 @@ dependencies {
     implementation(Libs.h2_v2)
 
     // MySQL
-//    implementation(Libs.bluetape4k_testcontainers)
-//    implementation(Libs.testcontainers_mysql)
-//    implementation(Libs.mysql_connector_j)
+    implementation(Libs.bluetape4k_testcontainers)
+    implementation(Libs.testcontainers_mysql)
+    implementation(Libs.mysql_connector_j)
 
     // PostgreSQL
     implementation(Libs.bluetape4k_testcontainers)

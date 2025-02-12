@@ -79,7 +79,7 @@ dependencies {
     implementation(Libs.micrometer_registry_prometheus)
 
     // SpringDoc - OpenAPI 3.0
-    implementation(Libs.springdoc_openapi_starter_webflux_ui)
+    implementation(Libs.springdoc_openapi_starter_webmvc_ui)
 
     // Gatling
     implementation(Libs.gatling_app)
