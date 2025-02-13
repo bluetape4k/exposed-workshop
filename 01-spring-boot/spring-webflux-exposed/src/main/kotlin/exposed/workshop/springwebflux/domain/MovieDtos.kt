@@ -39,7 +39,6 @@ data class MovieActorCountDTO(
     val actorCount: Int,
 ): Serializable
 
-
 /**
  * 영화 정보와 해당 영화에 출연한 배우 정보를 나타내는 DTO
  */
