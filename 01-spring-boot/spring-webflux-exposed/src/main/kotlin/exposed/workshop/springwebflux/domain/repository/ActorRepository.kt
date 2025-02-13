@@ -6,6 +6,8 @@ import exposed.workshop.springwebflux.domain.MovieSchema.ActorTable
 import exposed.workshop.springwebflux.domain.toActorDTO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.deleteWhere
@@ -19,12 +21,16 @@ class ActorRepository {
 
     companion object: KLogging()
 
+    suspend fun count(): Long = newSuspendedTransaction(readOnly = true) {
+        ActorTable.selectAll().count()
+    }
+
     suspend fun findById(id: Long): ActorDTO? = newSuspendedTransaction(readOnly = true) {
         log.debug { "Find Actor by id. id: $id" }
         ActorEntity.findById(id)?.toActorDTO()
     }
 
-    suspend fun searchActor(params: Map<String, String?>): List<ActorDTO> = newSuspendedTransaction(readOnly = true) {
+    suspend fun searchActor(params: Map<String, String?>): Flow<ActorDTO> = newSuspendedTransaction(readOnly = true) {
         log.debug { "Search Actor by params. params: $params" }
 
         val query = ActorTable.selectAll()
@@ -39,7 +45,7 @@ class ActorRepository {
                 }
             }
         }
-        query.map { it.toActorDTO() }
+        query.map { it.toActorDTO() }.asFlow()
     }
 
     suspend fun create(actor: ActorDTO): ActorDTO = newSuspendedTransaction {

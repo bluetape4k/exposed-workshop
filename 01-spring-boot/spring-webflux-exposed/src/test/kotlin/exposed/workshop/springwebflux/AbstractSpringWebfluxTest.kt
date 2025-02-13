@@ -1,5 +1,6 @@
 package exposed.workshop.springwebflux
 
+import io.bluetape4k.junit5.faker.Fakers
 import io.bluetape4k.logging.KLogging
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
@@ -11,5 +12,8 @@ import org.springframework.test.context.ActiveProfiles
 )
 abstract class AbstractSpringWebfluxTest {
 
-    companion object: KLogging()
+    companion object: KLogging() {
+        @JvmStatic
+        val faker = Fakers.faker
+    }
 }

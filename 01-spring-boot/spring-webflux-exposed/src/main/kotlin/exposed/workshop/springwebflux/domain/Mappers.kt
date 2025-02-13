@@ -3,6 +3,7 @@ package exposed.workshop.springwebflux.domain
 import exposed.workshop.springwebflux.domain.MovieSchema.ActorEntity
 import exposed.workshop.springwebflux.domain.MovieSchema.ActorTable
 import exposed.workshop.springwebflux.domain.MovieSchema.MovieEntity
+import exposed.workshop.springwebflux.domain.MovieSchema.MovieTable
 import org.jetbrains.exposed.sql.ResultRow
 
 fun ResultRow.toActorDTO() = ActorDTO(
@@ -20,45 +21,45 @@ fun ActorEntity.toActorDTO() = ActorDTO(
 )
 
 fun ResultRow.toMovieDTO() = MovieDTO(
-    name = this[MovieSchema.MovieTable.name],
-    producerName = this[MovieSchema.MovieTable.producerName],
-    releaseDate = this[MovieSchema.MovieTable.releaseDate].toString(),
-    id = this[MovieSchema.MovieTable.id].value
+    id = this[MovieTable.id].value,
+    name = this[MovieTable.name],
+    producerName = this[MovieTable.producerName],
+    releaseDate = this[MovieTable.releaseDate].toString(),
 )
 
 fun ResultRow.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
-    name = this[MovieSchema.MovieTable.name],
-    producerName = this[MovieSchema.MovieTable.producerName],
-    releaseDate = this[MovieSchema.MovieTable.releaseDate].toString(),
+    id = this[MovieTable.id].value,
+    name = this[MovieTable.name],
+    producerName = this[MovieTable.producerName],
+    releaseDate = this[MovieTable.releaseDate].toString(),
     actors = actors.toMutableList(),
-    id = this[MovieSchema.MovieTable.id].value
 )
 
 fun MovieDTO.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
+    id = this.id,
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate,
     actors = actors.toMutableList(),
-    id = this.id
 )
 
 fun MovieEntity.toMovieDTO() = MovieDTO(
+    id = this.id.value,
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate.toString(),
-    id = this.id.value
 )
 
 fun MovieEntity.toMovieWithActorDTO() = MovieWithActorDTO(
+    id = this.id.value,
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate.toString(),
     actors = this.actors.map { it.toActorDTO() }.toMutableList(),
-    id = this.id.value
 )
 
 
 fun ResultRow.toMovieWithProducingActorDTO() = MovieWithProducingActorDTO(
-    movieName = this[MovieSchema.MovieTable.name],
+    movieName = this[MovieTable.name],
     producerActorName = this[ActorTable.firstName] + " " + this[ActorTable.lastName]
 )

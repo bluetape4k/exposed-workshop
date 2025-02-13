@@ -14,7 +14,8 @@ import exposed.workshop.springwebflux.domain.toMovieWithActorDTO
 import exposed.workshop.springwebflux.domain.toMovieWithProducingActorDTO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.jetbrains.exposed.dao.load
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.count
@@ -36,6 +37,10 @@ class MovieRepository {
         }
     }
 
+    suspend fun count(): Long = newSuspendedTransaction(readOnly = true) {
+        MovieTable.selectAll().count()
+    }
+
     suspend fun findById(movieId: Long) = newSuspendedTransaction(readOnly = true) {
         log.debug { "Find Movie by id. id: $movieId" }
 
@@ -45,7 +50,7 @@ class MovieRepository {
             ?.toMovieDTO()
     }
 
-    suspend fun searchMovie(params: Map<String, String?>): List<MovieDTO> = newSuspendedTransaction(readOnly = true) {
+    suspend fun searchMovie(params: Map<String, String?>): Flow<MovieDTO> = newSuspendedTransaction(readOnly = true) {
         log.debug { "Search Movie by params. params: $params" }
 
         val query = MovieTable.selectAll()
@@ -63,10 +68,10 @@ class MovieRepository {
             }
         }
 
-        query.map { it.toMovieDTO() }
+        query.map { it.toMovieDTO() }.asFlow()
     }
 
-    suspend fun create(movie: MovieDTO): MovieDTO? = newSuspendedTransaction {
+    suspend fun create(movie: MovieDTO): MovieDTO = newSuspendedTransaction {
         log.debug { "Create Movie. movie: $movie" }
 
         val newMovie = MovieEntity.new {
@@ -85,6 +90,21 @@ class MovieRepository {
         MovieTable.deleteWhere { MovieTable.id eq movieId }
     }
 
+    /**
+     * ```sql
+     * SELECT MOVIES.ID,
+     *        MOVIES."name",
+     *        MOVIES.PRODUCER_NAME,
+     *        MOVIES.RELEASE_DATE,
+     *        ACTORS.ID,
+     *        ACTORS.FIRST_NAME,
+     *        ACTORS.LAST_NAME,
+     *        ACTORS.BIRTHDAY
+     *   FROM MOVIES
+     *          INNER JOIN ACTORS_IN_MOVIES ON MOVIES.ID = ACTORS_IN_MOVIES.MOVIE_ID
+     *          INNER JOIN ACTORS ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID
+     * ```
+     */
     suspend fun getAllMoviesWithActors(): List<MovieWithActorDTO> = newSuspendedTransaction(readOnly = true) {
         log.debug { "Get all movies with actors." }
 
@@ -122,14 +142,50 @@ class MovieRepository {
         movies.values.flatten()
     }
 
+    /**
+     * ```sql
+     * SELECT MOVIES.ID, MOVIES."name", MOVIES.PRODUCER_NAME, MOVIES.RELEASE_DATE
+     *   FROM MOVIES
+     *  WHERE MOVIES.ID = 1;
+     *
+     * SELECT ACTORS.ID,
+     *        ACTORS.FIRST_NAME,
+     *        ACTORS.LAST_NAME,
+     *        ACTORS.BIRTHDAY
+     *   FROM MOVIES
+     *          INNER JOIN ACTORS_IN_MOVIES ON MOVIES.ID = ACTORS_IN_MOVIES.MOVIE_ID
+     *          INNER JOIN ACTORS ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID
+     *  WHERE MOVIES.ID = 1
+     * ```
+     */
     suspend fun getMovieWithActors(movieId: Long): MovieWithActorDTO? = newSuspendedTransaction {
         log.debug { "Get Movie with actors. movieId=$movieId" }
 
-        MovieEntity.findById(movieId)
-            ?.load(MovieEntity::actors)
-            ?.toMovieWithActorDTO()
+        // FIXME: 이 것은 작동하지 않습니다. one-to-many 관계에서는 작동하는데, many-to-many 관계에서는 작동하지 않습니다.
+        // MovieEntity.findById(movieId)?.load(MovieEntity::actors)?.toMovieWithActorDTO()
+
+        val movie = MovieEntity.findById(movieId)
+        movie?.let {
+            val actors = MovieActorJoin
+                .select(ActorTable.columns)
+                .where { MovieTable.id eq movieId }
+                .map { it.toActorDTO() }
+
+            movie.toMovieDTO().toMovieWithActorDTO(actors)
+        }
     }
 
+    /**
+     * ```sql
+     * SELECT MOVIES.ID,
+     *        MOVIES."name",
+     *        COUNT(ACTORS.ID)
+     *   FROM MOVIES
+     *          INNER JOIN ACTORS_IN_MOVIES ON MOVIES.ID = ACTORS_IN_MOVIES.MOVIE_ID
+     *          INNER JOIN ACTORS ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID
+     *  GROUP BY MOVIES.ID
+     * ```
+     */
     suspend fun getMovieActorsCount(): List<MovieActorCountDTO> = newSuspendedTransaction(readOnly = true) {
         log.debug { "Get Movie actors count." }
 
@@ -144,7 +200,17 @@ class MovieRepository {
             }
     }
 
-    suspend fun findMoviesWithActingProducers(): List<MovieWithProducingActorDTO> =
+    /**
+     * ```sql
+     * SELECT MOVIES."name",
+     *        ACTORS.FIRST_NAME,
+     *        ACTORS.LAST_NAME
+     *   FROM MOVIES
+     *          INNER JOIN ACTORS_IN_MOVIES ON MOVIES.ID = ACTORS_IN_MOVIES.MOVIE_ID
+     *          INNER JOIN ACTORS ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID AND (MOVIES.PRODUCER_NAME = ACTORS.FIRST_NAME)
+     * ```
+     */
+    suspend fun findMoviesWithActingProducers(): Flow<MovieWithProducingActorDTO> =
         newSuspendedTransaction(readOnly = true) {
             log.debug { "Find movies with acting producers." }
 
@@ -159,6 +225,6 @@ class MovieRepository {
                 }
                 .select(MovieTable.name, ActorTable.firstName, ActorTable.lastName)
 
-            query.map { it.toMovieWithProducingActorDTO() }
+            query.map { it.toMovieWithProducingActorDTO() }.asFlow()
         }
 }
