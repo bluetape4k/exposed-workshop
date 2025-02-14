@@ -1,0 +1,44 @@
+app:
+    virtualthread:
+        enabled: true
+
+server:
+    port: 8080
+    compression:
+        enabled: true
+
+    shutdown: graceful  # WebServer Graceful shutdown (https://www.baeldung.com/spring-boot-web-server-shutdown)
+
+spring:
+    application:
+        name: Spring Webflux with Exposed
+
+    profiles:
+        default: "postgres"    # postgres | mysql 을 선택할 수 있습니다.
+
+
+    jackson:
+        serialization:
+            indent-output: true
+    lifecycle:
+        timeout-per-shutdown-phase: 10s     # Graceful Shutdown 시간
+
+    netty:
+        leak-detection: simple
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+    endpoint:
+        health:
+            show-details: always
+
+    metrics:
+        tags:
+            application: ${spring.application.name}
+        distribution:
+            percentiles-histogram:
+                http.server.requests: true
+                resilience4j.circuitbreaker.calls: true
