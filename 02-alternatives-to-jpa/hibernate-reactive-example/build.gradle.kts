@@ -71,7 +71,6 @@ dependencies {
     implementation(Libs.kotlinx_coroutines_core)
     testImplementation(Libs.kotlinx_coroutines_test)
 
-
     // Vaidators
     implementation(Libs.hibernate_validator)
     runtimeOnly(Libs.jakarta_validation_api)
@@ -86,18 +85,18 @@ dependencies {
         exclude(module = "mockito-core")
     }
 
-    // HikariCP
-    implementation(Libs.hikaricp)
-
-    // MySQL
-    implementation(Libs.testcontainers_mysql)
-    implementation(Libs.vertx_mysql_client)
-    implementation(Libs.mysql_connector_j)
-
     // Postgres
     implementation(Libs.testcontainers_postgresql)
     implementation(Libs.vertx_pg_client)
+
+    // Testcontainers MySQL 에서 검증을 위해 사용하기 위해 불가피하게 필요합니다
+    // reactive 방식에서는 항상 verx-pg-client 를 사용합니다
     implementation(Libs.postgresql_driver)
+
+    // MySQL
+//    implementation(Libs.testcontainers_mysql)
+//    implementation(Libs.vertx_mysql_client)
+//    implementation(Libs.mysql_connector_j)
 
     // Monitoring
     implementation(Libs.micrometer_core)
