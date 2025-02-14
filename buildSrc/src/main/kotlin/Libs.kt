@@ -212,7 +212,7 @@ object Versions {
     const val scrimage = "4.3.0"  // https://mvnrepository.com/artifact/com.sksamuel.scrimage/scrimage-core
 
     // Gatling
-    const val gatling = "3.13.1"  // https://mvnrepository.com/artifact/io.gatling/gatling-core
+    const val gatling = "3.13.4"  // https://mvnrepository.com/artifact/io.gatling/gatling-core
 }
 
 object Libs {
