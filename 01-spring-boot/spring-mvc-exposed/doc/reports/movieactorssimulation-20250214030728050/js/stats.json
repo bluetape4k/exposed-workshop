@@ -1,0 +1,334 @@
+{
+  "type": "GROUP",
+  "name": "All Requests",
+  "path": "",
+  "pathFormatted": "group_missing-name--1146707516",
+  "stats": {
+    "name": "All Requests",
+    "numberOfRequests": {
+      "total": 84237,
+      "ok": 84237,
+      "ko": 0
+    },
+    "minResponseTime": {
+      "total": 0,
+      "ok": 0,
+      "ko": 0
+    },
+    "maxResponseTime": {
+      "total": 54,
+      "ok": 54,
+      "ko": 0
+    },
+    "meanResponseTime": {
+      "total": 2,
+      "ok": 2,
+      "ko": 0
+    },
+    "standardDeviation": {
+      "total": 2,
+      "ok": 2,
+      "ko": 0
+    },
+    "percentiles1": {
+      "total": 1,
+      "ok": 1,
+      "ko": 0
+    },
+    "percentiles2": {
+      "total": 2,
+      "ok": 2,
+      "ko": 0
+    },
+    "percentiles3": {
+      "total": 6,
+      "ok": 6,
+      "ko": 0
+    },
+    "percentiles4": {
+      "total": 12,
+      "ok": 12,
+      "ko": 0
+    },
+    "group1": {
+      "name": "t < 800 ms",
+      "htmlName": "t < 800 ms",
+      "count": 84237,
+      "percentage": 100.0
+    },
+    "group2": {
+      "name": "800 ms <= t < 1200 ms",
+      "htmlName": "t >= 800 ms <br> t < 1200 ms",
+      "count": 0,
+      "percentage": 0.0
+    },
+    "group3": {
+      "name": "t >= 1200 ms",
+      "htmlName": "t >= 1200 ms",
+      "count": 0,
+      "percentage": 0.0
+    },
+    "group4": {
+      "name": "failed",
+      "htmlName": "failed",
+      "count": 0,
+      "percentage": 0.0
+    },
+    "meanNumberOfRequestsPerSecond": {
+      "total": 8423.7,
+      "ok": 8423.7,
+      "ko": 0
+    }
+  },
+  "contents": {
+    "req_get-movie-and-a-255938113": {
+      "type": "REQUEST",
+      "name": "Get Movie and actors",
+      "path": "Get Movie and actors",
+      "pathFormatted": "req_get-movie-and-a-255938113",
+      "stats": {
+        "name": "Get Movie and actors",
+        "numberOfRequests": {
+          "total": 28079,
+          "ok": 28079,
+          "ko": 0
+        },
+        "minResponseTime": {
+          "total": 0,
+          "ok": 0,
+          "ko": 0
+        },
+        "maxResponseTime": {
+          "total": 27,
+          "ok": 27,
+          "ko": 0
+        },
+        "meanResponseTime": {
+          "total": 3,
+          "ok": 3,
+          "ko": 0
+        },
+        "standardDeviation": {
+          "total": 3,
+          "ok": 3,
+          "ko": 0
+        },
+        "percentiles1": {
+          "total": 1,
+          "ok": 1,
+          "ko": 0
+        },
+        "percentiles2": {
+          "total": 5,
+          "ok": 5,
+          "ko": 0
+        },
+        "percentiles3": {
+          "total": 8,
+          "ok": 8,
+          "ko": 0
+        },
+        "percentiles4": {
+          "total": 12,
+          "ok": 12,
+          "ko": 0
+        },
+        "group1": {
+          "name": "t < 800 ms",
+          "htmlName": "t < 800 ms",
+          "count": 28079,
+          "percentage": 100.0
+        },
+        "group2": {
+          "name": "800 ms <= t < 1200 ms",
+          "htmlName": "t >= 800 ms <br> t < 1200 ms",
+          "count": 0,
+          "percentage": 0.0
+        },
+        "group3": {
+          "name": "t >= 1200 ms",
+          "htmlName": "t >= 1200 ms",
+          "count": 0,
+          "percentage": 0.0
+        },
+        "group4": {
+          "name": "failed",
+          "htmlName": "failed",
+          "count": 0,
+          "percentage": 0.0
+        },
+        "meanNumberOfRequestsPerSecond": {
+          "total": 2807.9,
+          "ok": 2807.9,
+          "ko": 0
+        }
+      }
+    },
+    "req_get-movie-and-a--944889276": {
+      "type": "REQUEST",
+      "name": "Get Movie and actor count group by movie name",
+      "path": "Get Movie and actor count group by movie name",
+      "pathFormatted": "req_get-movie-and-a--944889276",
+      "stats": {
+        "name": "Get Movie and actor count group by movie name",
+        "numberOfRequests": {
+          "total": 28079,
+          "ok": 28079,
+          "ko": 0
+        },
+        "minResponseTime": {
+          "total": 0,
+          "ok": 0,
+          "ko": 0
+        },
+        "maxResponseTime": {
+          "total": 54,
+          "ok": 54,
+          "ko": 0
+        },
+        "meanResponseTime": {
+          "total": 1,
+          "ok": 1,
+          "ko": 0
+        },
+        "standardDeviation": {
+          "total": 1,
+          "ok": 1,
+          "ko": 0
+        },
+        "percentiles1": {
+          "total": 1,
+          "ok": 1,
+          "ko": 0
+        },
+        "percentiles2": {
+          "total": 2,
+          "ok": 2,
+          "ko": 0
+        },
+        "percentiles3": {
+          "total": 4,
+          "ok": 4,
+          "ko": 0
+        },
+        "percentiles4": {
+          "total": 11,
+          "ok": 8,
+          "ko": 0
+        },
+        "group1": {
+          "name": "t < 800 ms",
+          "htmlName": "t < 800 ms",
+          "count": 28079,
+          "percentage": 100.0
+        },
+        "group2": {
+          "name": "800 ms <= t < 1200 ms",
+          "htmlName": "t >= 800 ms <br> t < 1200 ms",
+          "count": 0,
+          "percentage": 0.0
+        },
+        "group3": {
+          "name": "t >= 1200 ms",
+          "htmlName": "t >= 1200 ms",
+          "count": 0,
+          "percentage": 0.0
+        },
+        "group4": {
+          "name": "failed",
+          "htmlName": "failed",
+          "count": 0,
+          "percentage": 0.0
+        },
+        "meanNumberOfRequestsPerSecond": {
+          "total": 2807.9,
+          "ok": 2807.9,
+          "ko": 0
+        }
+      }
+    },
+    "req_get-movie-and-a-1216864735": {
+      "type": "REQUEST",
+      "name": "Get Movie and acting producer",
+      "path": "Get Movie and acting producer",
+      "pathFormatted": "req_get-movie-and-a-1216864735",
+      "stats": {
+        "name": "Get Movie and acting producer",
+        "numberOfRequests": {
+          "total": 28079,
+          "ok": 28079,
+          "ko": 0
+        },
+        "minResponseTime": {
+          "total": 0,
+          "ok": 0,
+          "ko": 0
+        },
+        "maxResponseTime": {
+          "total": 19,
+          "ok": 19,
+          "ko": 0
+        },
+        "meanResponseTime": {
+          "total": 1,
+          "ok": 1,
+          "ko": 0
+        },
+        "standardDeviation": {
+          "total": 1,
+          "ok": 1,
+          "ko": 0
+        },
+        "percentiles1": {
+          "total": 1,
+          "ok": 1,
+          "ko": 0
+        },
+        "percentiles2": {
+          "total": 2,
+          "ok": 2,
+          "ko": 0
+        },
+        "percentiles3": {
+          "total": 4,
+          "ok": 4,
+          "ko": 0
+        },
+        "percentiles4": {
+          "total": 5,
+          "ok": 5,
+          "ko": 0
+        },
+        "group1": {
+          "name": "t < 800 ms",
+          "htmlName": "t < 800 ms",
+          "count": 28079,
+          "percentage": 100.0
+        },
+        "group2": {
+          "name": "800 ms <= t < 1200 ms",
+          "htmlName": "t >= 800 ms <br> t < 1200 ms",
+          "count": 0,
+          "percentage": 0.0
+        },
+        "group3": {
+          "name": "t >= 1200 ms",
+          "htmlName": "t >= 1200 ms",
+          "count": 0,
+          "percentage": 0.0
+        },
+        "group4": {
+          "name": "failed",
+          "htmlName": "failed",
+          "count": 0,
+          "percentage": 0.0
+        },
+        "meanNumberOfRequestsPerSecond": {
+          "total": 2807.9,
+          "ok": 2807.9,
+          "ko": 0
+        }
+      }
+    }
+  }
+}

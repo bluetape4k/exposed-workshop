@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.toList
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -33,7 +34,7 @@ class MovieActorsController(
     }
 
     @GetMapping("/acting-producers")
-    suspend fun findMoviesWithActingProducers(): Flow<MovieWithProducingActorDTO> {
-        return movieRepository.findMoviesWithActingProducers()
+    suspend fun findMoviesWithActingProducers(): List<MovieWithProducingActorDTO> {
+        return movieRepository.findMoviesWithActingProducers().toList()
     }
 }

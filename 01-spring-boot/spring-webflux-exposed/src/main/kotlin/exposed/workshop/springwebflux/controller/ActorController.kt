@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.toList
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -31,11 +32,11 @@ class ActorController(
     }
 
     @GetMapping
-    suspend fun searchActors(request: ServerHttpRequest): Flow<ActorDTO> {
+    suspend fun searchActors(request: ServerHttpRequest): List<ActorDTO> {
         val params = request.queryParams.map { it.key to it.value.first() }.toMap()
         return when {
-            params.isEmpty() -> emptyFlow()
-            else -> actorRepository.searchActor(params)
+            params.isEmpty() -> emptyList()
+            else -> actorRepository.searchActor(params).toList()
         }
     }
 

@@ -1,6 +1,7 @@
 package simulations
 
 import io.gatling.javaapi.core.CoreDsl.rampConcurrentUsers
+import io.gatling.javaapi.core.CoreDsl.reachRps
 import io.gatling.javaapi.core.CoreDsl.scenario
 import io.gatling.javaapi.core.Simulation
 import io.gatling.javaapi.http.HttpDsl.http
@@ -34,7 +35,7 @@ class ActorSimulation: Simulation() {
 
     init {
         setUp(
-            scn.injectClosed(rampConcurrentUsers(10).to(200).during(10.seconds.toJavaDuration()))
+            scn.injectClosed(rampConcurrentUsers(10).to(20).during(10.seconds.toJavaDuration()))
             // scn.injectOpen(constantUsersPerSec(200.0).during(10.seconds.toJavaDuration()))
         ).protocols(httpProtocol)
     }

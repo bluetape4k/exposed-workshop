@@ -16,15 +16,15 @@ spring:
     profiles:
         default: "h2"    # postgres | mysql | h2 를 선택할 수 있습니다.
 
-    threads:
-        virtual:
-            enabled: true   # Virtual Thread 사용 여부
 
     jackson:
         serialization:
             indent-output: true
     lifecycle:
         timeout-per-shutdown-phase: 10s     # Graceful Shutdown 시간
+
+    netty:
+        leak-detection: simple
 
 management:
     endpoints:

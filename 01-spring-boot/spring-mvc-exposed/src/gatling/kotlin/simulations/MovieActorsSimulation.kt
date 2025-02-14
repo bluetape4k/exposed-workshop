@@ -33,7 +33,7 @@ class MovieActorsSimulation: Simulation() {
 
     init {
         setUp(
-            scn.injectClosed(rampConcurrentUsers(10).to(100).during(10.seconds.toJavaDuration()))
+            scn.injectClosed(rampConcurrentUsers(10).to(20).during(10.seconds.toJavaDuration()))
             // scn.injectOpen(constantUsersPerSec(400.0).during(10.seconds.toJavaDuration()))
         ).protocols(httpProtocol)
     }
