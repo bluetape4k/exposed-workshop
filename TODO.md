@@ -11,7 +11,7 @@
 - [ ] R2DBC
 - [ ] Vertx SQL Client (with MyBatis SQL Builder)
 - [ ] Exposed with Coroutines
-- [ ] Virtual Threads with JDBC
+- [ ] Virtual Threads with JPA
 
 ## 3. Test enviroment for Exposed
 

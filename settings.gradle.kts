@@ -15,7 +15,9 @@ val PROJECT_NAME = "exposed"
 rootProject.name = "$PROJECT_NAME-workshop"
 
 includeModules("00-shared", false, false)
+
 includeModules("01-spring-boot", false, false)
+includeModules("02-alternatives-to-jpa", false, false)
 
 fun includeModules(baseDir: String, withProjectName: Boolean = true, withBaseDir: Boolean = true) {
     files("$rootDir/$baseDir").files

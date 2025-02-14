@@ -9,8 +9,6 @@ configurations {
 dependencies {
     implementation(platform(Libs.exposed_bom))
 
-    testImplementation(project(":exposed-shared-tests"))
-
     api(Libs.bluetape4k_exposed)
     api(Libs.exposed_core)
     api(Libs.exposed_crypt)
