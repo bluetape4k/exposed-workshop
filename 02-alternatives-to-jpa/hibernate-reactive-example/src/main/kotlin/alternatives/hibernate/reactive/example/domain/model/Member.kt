@@ -70,6 +70,7 @@ class Member: AbstractValueObject() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0L
+        protected set
 
     var name: String = ""
     var age: Int? = null

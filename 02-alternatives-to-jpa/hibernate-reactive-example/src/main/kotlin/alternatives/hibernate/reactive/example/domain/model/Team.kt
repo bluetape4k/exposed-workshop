@@ -56,7 +56,8 @@ class Team: AbstractValueObject() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0L
-
+        protected set
+    
     var name: String = ""
 
     @OneToMany(mappedBy = "team", orphanRemoval = false)
