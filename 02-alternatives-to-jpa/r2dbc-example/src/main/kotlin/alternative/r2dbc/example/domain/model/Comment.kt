@@ -15,4 +15,8 @@ data class Comment(
 
     @Id
     val id: Long? = null,
-): Serializable
+): Serializable {
+
+    val hasId: Boolean get() = id != null
+
+}

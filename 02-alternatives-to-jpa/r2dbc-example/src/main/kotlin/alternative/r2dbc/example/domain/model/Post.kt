@@ -13,4 +13,8 @@ data class Post(
     val content: String? = null,
     @Id
     val id: Long? = null,
-): Serializable
+): Serializable {
+
+    val hasId: Boolean get() = id != null
+
+}

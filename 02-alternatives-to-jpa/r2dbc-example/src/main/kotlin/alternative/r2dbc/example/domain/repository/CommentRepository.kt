@@ -14,8 +14,10 @@ import org.springframework.data.relational.core.query.Query
 import org.springframework.data.relational.core.query.isEqual
 import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 
 @Repository
+@Transactional(readOnly = true)
 class CommentRepository(
     private val client: DatabaseClient,
     private val operations: R2dbcEntityOperations,
@@ -27,6 +29,7 @@ class CommentRepository(
 
     fun findAll(): Flow<Comment> = operations.coSelectAll<Comment>()
 
+    @Transactional
     suspend fun save(comment: Comment): Comment {
         return operations.coInsert(comment)
     }
@@ -41,6 +44,7 @@ class CommentRepository(
         return operations.coSelect(query)
     }
 
+    @Transactional
     suspend fun init() {
         save(Comment(postId = 1, content = "Content 1 of post 1"))
         save(Comment(postId = 1, content = "Content 2 of post 1"))

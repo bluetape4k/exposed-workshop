@@ -19,8 +19,10 @@ import org.springframework.data.relational.core.query.Query.query
 import org.springframework.data.relational.core.query.isEqual
 import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 
 @Repository
+@Transactional(readOnly = true)
 class PostRepository(
     private val client: DatabaseClient,
     private val operations: R2dbcEntityOperations,
@@ -40,15 +42,19 @@ class PostRepository(
 
     suspend fun findFirstByIdOrNull(id: Long): Post? = operations.coFindFirstByIdOrNull(id)
 
+    @Transactional
     suspend fun deleteAll(): Long = operations.coDeleteAll<Post>()
 
+    @Transactional
     suspend fun deleteById(id: Long): Long {
         val query = query(Criteria.where(Post::id.name).isEqual(id))
         return operations.coDelete<Post>(query)
     }
 
+    @Transactional
     suspend fun save(post: Post): Post = operations.coInsert(post)
 
+    @Transactional
     suspend fun init() {
         save(Post(title = "My first post title", content = "Content of my first post"))
         save(Post(title = "My second post title", content = "Content of my second post"))
