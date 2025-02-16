@@ -6,8 +6,8 @@ var stats = {
     stats: {
         "name": "All Requests",
         "numberOfRequests": {
-            "total": "   86,802",
-            "ok": "   86,802",
+            "total": "   81,714",
+            "ok": "   81,714",
             "ko": "        0"
         },
         "minResponseTime": {
@@ -16,8 +16,8 @@ var stats = {
             "ko": "        -"
         },
         "maxResponseTime": {
-            "total": "       35",
-            "ok": "       35",
+            "total": "       46",
+            "ok": "       46",
             "ko": "        -"
         },
         "meanResponseTime": {
@@ -41,19 +41,19 @@ var stats = {
             "ko": "        -"
         },
         "percentiles3": {
-            "total": "        4",
-            "ok": "        4",
+            "total": "        5",
+            "ok": "        6",
             "ko": "        -"
         },
         "percentiles4": {
-            "total": "       10",
-            "ok": "       10",
+            "total": "        8",
+            "ok": "        8",
             "ko": "        -"
         },
         "group1": {
             "name": "t < 800 ms",
             "htmlName": "t < 800 ms",
-            "count": 86802,
+            "count": 81714,
             "percentage": 100.0
         },
         "group2": {
@@ -75,8 +75,8 @@ var stats = {
             "percentage": 0.0
         },
         "meanNumberOfRequestsPerSecond": {
-            "total": "  8,680.2",
-            "ok": "  8,680.2",
+            "total": " 7,428.55",
+            "ok": " 7,428.55",
             "ko": "        -"
         }
     },
@@ -89,8 +89,8 @@ var stats = {
             stats: {
                 "name": "Get Actor By Id",
                 "numberOfRequests": {
-                    "total": "   28,934",
-                    "ok": "   28,934",
+                    "total": "   27,238",
+                    "ok": "   27,238",
                     "ko": "        0"
                 },
                 "minResponseTime": {
@@ -99,8 +99,8 @@ var stats = {
                     "ko": "        -"
                 },
                 "maxResponseTime": {
-                    "total": "       35",
-                    "ok": "       35",
+                    "total": "       46",
+                    "ok": "       46",
                     "ko": "        -"
                 },
                 "meanResponseTime": {
@@ -109,8 +109,8 @@ var stats = {
                     "ko": "        -"
                 },
                 "standardDeviation": {
-                    "total": "        2",
-                    "ok": "        2",
+                    "total": "        3",
+                    "ok": "        3",
                     "ko": "        -"
                 },
                 "percentiles1": {
@@ -119,24 +119,24 @@ var stats = {
                     "ko": "        -"
                 },
                 "percentiles2": {
-                    "total": "        3",
-                    "ok": "        3",
+                    "total": "        4",
+                    "ok": "        4",
                     "ko": "        -"
                 },
                 "percentiles3": {
-                    "total": "        7",
+                    "total": "        6",
                     "ok": "        6",
                     "ko": "        -"
                 },
                 "percentiles4": {
-                    "total": "       14",
-                    "ok": "        9",
+                    "total": "       12",
+                    "ok": "       12",
                     "ko": "        -"
                 },
                 "group1": {
                     "name": "t < 800 ms",
                     "htmlName": "t < 800 ms",
-                    "count": 28934,
+                    "count": 27238,
                     "percentage": 100.0
                 },
                 "group2": {
@@ -158,8 +158,8 @@ var stats = {
                     "percentage": 0.0
                 },
                 "meanNumberOfRequestsPerSecond": {
-                    "total": "  2,893.4",
-                    "ok": "  2,893.4",
+                    "total": " 2,476.18",
+                    "ok": " 2,476.18",
                     "ko": "        -"
                 }
             }
@@ -171,8 +171,8 @@ var stats = {
             stats: {
                 "name": "Actor Search Last Name",
                 "numberOfRequests": {
-                    "total": "   28,934",
-                    "ok": "   28,934",
+                    "total": "   27,238",
+                    "ok": "   27,238",
                     "ko": "        0"
                 },
                 "minResponseTime": {
@@ -181,8 +181,8 @@ var stats = {
                     "ko": "        -"
                 },
                 "maxResponseTime": {
-                    "total": "       30",
-                    "ok": "       30",
+                    "total": "       22",
+                    "ok": "       22",
                     "ko": "        -"
                 },
                 "meanResponseTime": {
@@ -211,14 +211,14 @@ var stats = {
                     "ko": "        -"
                 },
                 "percentiles4": {
-                    "total": "       17",
-                    "ok": "        5",
+                    "total": "        6",
+                    "ok": "        6",
                     "ko": "        -"
                 },
                 "group1": {
                     "name": "t < 800 ms",
                     "htmlName": "t < 800 ms",
-                    "count": 28934,
+                    "count": 27238,
                     "percentage": 100.0
                 },
                 "group2": {
@@ -240,8 +240,8 @@ var stats = {
                     "percentage": 0.0
                 },
                 "meanNumberOfRequestsPerSecond": {
-                    "total": "  2,893.4",
-                    "ok": "  2,893.4",
+                    "total": " 2,476.18",
+                    "ok": " 2,476.18",
                     "ko": "        -"
                 }
             }
@@ -253,8 +253,8 @@ var stats = {
             stats: {
                 "name": "Actor Search First Name",
                 "numberOfRequests": {
-                    "total": "   28,934",
-                    "ok": "   28,934",
+                    "total": "   27,238",
+                    "ok": "   27,238",
                     "ko": "        0"
                 },
                 "minResponseTime": {
@@ -263,8 +263,8 @@ var stats = {
                     "ko": "        -"
                 },
                 "maxResponseTime": {
-                    "total": "       31",
-                    "ok": "       31",
+                    "total": "       21",
+                    "ok": "       21",
                     "ko": "        -"
                 },
                 "meanResponseTime": {
@@ -278,8 +278,8 @@ var stats = {
                     "ko": "        -"
                 },
                 "percentiles1": {
-                    "total": "        0",
-                    "ok": "        0",
+                    "total": "        1",
+                    "ok": "        1",
                     "ko": "        -"
                 },
                 "percentiles2": {
@@ -293,14 +293,14 @@ var stats = {
                     "ko": "        -"
                 },
                 "percentiles4": {
-                    "total": "       16",
-                    "ok": "       16",
+                    "total": "       12",
+                    "ok": "       12",
                     "ko": "        -"
                 },
                 "group1": {
                     "name": "t < 800 ms",
                     "htmlName": "t < 800 ms",
-                    "count": 28934,
+                    "count": 27238,
                     "percentage": 100.0
                 },
                 "group2": {
@@ -322,8 +322,8 @@ var stats = {
                     "percentage": 0.0
                 },
                 "meanNumberOfRequestsPerSecond": {
-                    "total": "  2,893.4",
-                    "ok": "  2,893.4",
+                    "total": " 2,476.18",
+                    "ok": " 2,476.18",
                     "ko": "        -"
                 }
             }

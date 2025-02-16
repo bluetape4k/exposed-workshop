@@ -6,8 +6,8 @@ var stats = {
     stats: {
         "name": "All Requests",
         "numberOfRequests": {
-            "total": "   57,992",
-            "ok": "   57,992",
+            "total": "   92,163",
+            "ok": "   92,163",
             "ko": "        0"
         },
         "minResponseTime": {
@@ -16,18 +16,18 @@ var stats = {
             "ko": "        -"
         },
         "maxResponseTime": {
-            "total": "       25",
-            "ok": "       25",
+            "total": "       33",
+            "ok": "       33",
             "ko": "        -"
         },
         "meanResponseTime": {
-            "total": "        2",
-            "ok": "        2",
+            "total": "        1",
+            "ok": "        1",
             "ko": "        -"
         },
         "standardDeviation": {
-            "total": "        3",
-            "ok": "        3",
+            "total": "        2",
+            "ok": "        2",
             "ko": "        -"
         },
         "percentiles1": {
@@ -41,19 +41,19 @@ var stats = {
             "ko": "        -"
         },
         "percentiles3": {
-            "total": "        8",
-            "ok": "        8",
+            "total": "        5",
+            "ok": "        5",
             "ko": "        -"
         },
         "percentiles4": {
-            "total": "       10",
-            "ok": "       10",
+            "total": "       15",
+            "ok": "       15",
             "ko": "        -"
         },
         "group1": {
             "name": "t < 800 ms",
             "htmlName": "t < 800 ms",
-            "count": 57992,
+            "count": 92163,
             "percentage": 100.0
         },
         "group2": {
@@ -75,22 +75,22 @@ var stats = {
             "percentage": 0.0
         },
         "meanNumberOfRequestsPerSecond": {
-            "total": "  5,799.2",
-            "ok": "  5,799.2",
+            "total": " 8,378.45",
+            "ok": " 8,378.45",
             "ko": "        -"
         }
     },
     contents: {
-        "req_get-movie-by-id--759100790": {
+        "req_get-movie-and-a-255938113": {
             type: "REQUEST",
-            name: "Get Movie By Id",
-            path: "Get Movie By Id",
-            pathFormatted: "req_get-movie-by-id--759100790",
+            name: "Get Movie and actors",
+            path: "Get Movie and actors",
+            pathFormatted: "req_get-movie-and-a-255938113",
             stats: {
-                "name": "Get Movie By Id",
+                "name": "Get Movie and actors",
                 "numberOfRequests": {
-                    "total": "   28,996",
-                    "ok": "   28,996",
+                    "total": "   30,721",
+                    "ok": "   30,721",
                     "ko": "        0"
                 },
                 "minResponseTime": {
@@ -99,18 +99,18 @@ var stats = {
                     "ko": "        -"
                 },
                 "maxResponseTime": {
-                    "total": "       25",
-                    "ok": "       25",
+                    "total": "       33",
+                    "ok": "       33",
                     "ko": "        -"
                 },
                 "meanResponseTime": {
-                    "total": "        3",
-                    "ok": "        3",
+                    "total": "        2",
+                    "ok": "        2",
                     "ko": "        -"
                 },
                 "standardDeviation": {
-                    "total": "        3",
-                    "ok": "        3",
+                    "total": "        2",
+                    "ok": "        2",
                     "ko": "        -"
                 },
                 "percentiles1": {
@@ -119,24 +119,24 @@ var stats = {
                     "ko": "        -"
                 },
                 "percentiles2": {
-                    "total": "        5",
-                    "ok": "        5",
+                    "total": "        3",
+                    "ok": "        3",
                     "ko": "        -"
                 },
                 "percentiles3": {
-                    "total": "        9",
-                    "ok": "        9",
+                    "total": "        6",
+                    "ok": "        6",
                     "ko": "        -"
                 },
                 "percentiles4": {
-                    "total": "       14",
-                    "ok": "       14",
+                    "total": "       16",
+                    "ok": "       16",
                     "ko": "        -"
                 },
                 "group1": {
                     "name": "t < 800 ms",
                     "htmlName": "t < 800 ms",
-                    "count": 28996,
+                    "count": 30721,
                     "percentage": 100.0
                 },
                 "group2": {
@@ -158,21 +158,21 @@ var stats = {
                     "percentage": 0.0
                 },
                 "meanNumberOfRequestsPerSecond": {
-                    "total": "  2,899.6",
-                    "ok": "  2,899.6",
+                    "total": " 2,792.82",
+                    "ok": " 2,792.82",
                     "ko": "        -"
                 }
             }
-        }, "req_search-movie-by--117551432": {
+        }, "req_get-movie-and-a--944889276": {
             type: "REQUEST",
-            name: "Search Movie by Producer Name",
-            path: "Search Movie by Producer Name",
-            pathFormatted: "req_search-movie-by--117551432",
+            name: "Get Movie and actor count group by movie name",
+            path: "Get Movie and actor count group by movie name",
+            pathFormatted: "req_get-movie-and-a--944889276",
             stats: {
-                "name": "Search Movie by Producer Name",
+                "name": "Get Movie and actor count group by movie name",
                 "numberOfRequests": {
-                    "total": "   28,996",
-                    "ok": "   28,996",
+                    "total": "   30,721",
+                    "ok": "   30,721",
                     "ko": "        0"
                 },
                 "minResponseTime": {
@@ -181,8 +181,8 @@ var stats = {
                     "ko": "        -"
                 },
                 "maxResponseTime": {
-                    "total": "       22",
-                    "ok": "       22",
+                    "total": "       30",
+                    "ok": "       30",
                     "ko": "        -"
                 },
                 "meanResponseTime": {
@@ -206,19 +206,19 @@ var stats = {
                     "ko": "        -"
                 },
                 "percentiles3": {
-                    "total": "        5",
-                    "ok": "        5",
+                    "total": "        3",
+                    "ok": "        3",
                     "ko": "        -"
                 },
                 "percentiles4": {
-                    "total": "       17",
-                    "ok": "       17",
+                    "total": "        5",
+                    "ok": "        5",
                     "ko": "        -"
                 },
                 "group1": {
                     "name": "t < 800 ms",
                     "htmlName": "t < 800 ms",
-                    "count": 28996,
+                    "count": 30721,
                     "percentage": 100.0
                 },
                 "group2": {
@@ -240,8 +240,90 @@ var stats = {
                     "percentage": 0.0
                 },
                 "meanNumberOfRequestsPerSecond": {
-                    "total": "  2,899.6",
-                    "ok": "  2,899.6",
+                    "total": " 2,792.82",
+                    "ok": " 2,792.82",
+                    "ko": "        -"
+                }
+            }
+        }, "req_get-movie-and-a-1216864735": {
+            type: "REQUEST",
+            name: "Get Movie and acting producer",
+            path: "Get Movie and acting producer",
+            pathFormatted: "req_get-movie-and-a-1216864735",
+            stats: {
+                "name": "Get Movie and acting producer",
+                "numberOfRequests": {
+                    "total": "   30,721",
+                    "ok": "   30,721",
+                    "ko": "        0"
+                },
+                "minResponseTime": {
+                    "total": "        0",
+                    "ok": "        0",
+                    "ko": "        -"
+                },
+                "maxResponseTime": {
+                    "total": "       30",
+                    "ok": "       30",
+                    "ko": "        -"
+                },
+                "meanResponseTime": {
+                    "total": "        1",
+                    "ok": "        1",
+                    "ko": "        -"
+                },
+                "standardDeviation": {
+                    "total": "        1",
+                    "ok": "        1",
+                    "ko": "        -"
+                },
+                "percentiles1": {
+                    "total": "        0",
+                    "ok": "        0",
+                    "ko": "        -"
+                },
+                "percentiles2": {
+                    "total": "        1",
+                    "ok": "        1",
+                    "ko": "        -"
+                },
+                "percentiles3": {
+                    "total": "        3",
+                    "ok": "        3",
+                    "ko": "        -"
+                },
+                "percentiles4": {
+                    "total": "        7",
+                    "ok": "        7",
+                    "ko": "        -"
+                },
+                "group1": {
+                    "name": "t < 800 ms",
+                    "htmlName": "t < 800 ms",
+                    "count": 30721,
+                    "percentage": 100.0
+                },
+                "group2": {
+                    "name": "800 ms <= t < 1200 ms",
+                    "htmlName": "t >= 800 ms <br> t < 1200 ms",
+                    "count": 0,
+                    "percentage": 0.0
+                },
+                "group3": {
+                    "name": "t >= 1200 ms",
+                    "htmlName": "t >= 1200 ms",
+                    "count": 0,
+                    "percentage": 0.0
+                },
+                "group4": {
+                    "name": "failed",
+                    "htmlName": "failed",
+                    "count": 0,
+                    "percentage": 0.0
+                },
+                "meanNumberOfRequestsPerSecond": {
+                    "total": " 2,792.82",
+                    "ok": " 2,792.82",
                     "ko": "        -"
                 }
             }

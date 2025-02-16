@@ -6,8 +6,8 @@
   "stats": {
     "name": "All Requests",
     "numberOfRequests": {
-      "total": 86802,
-      "ok": 86802,
+      "total": 92163,
+      "ok": 92163,
       "ko": 0
     },
     "minResponseTime": {
@@ -16,8 +16,8 @@
       "ko": 0
     },
     "maxResponseTime": {
-      "total": 35,
-      "ok": 35,
+      "total": 33,
+      "ok": 33,
       "ko": 0
     },
     "meanResponseTime": {
@@ -41,19 +41,19 @@
       "ko": 0
     },
     "percentiles3": {
-      "total": 4,
-      "ok": 4,
+      "total": 5,
+      "ok": 5,
       "ko": 0
     },
     "percentiles4": {
-      "total": 10,
-      "ok": 10,
+      "total": 15,
+      "ok": 15,
       "ko": 0
     },
     "group1": {
       "name": "t < 800 ms",
       "htmlName": "t < 800 ms",
-      "count": 86802,
+      "count": 92163,
       "percentage": 100.0
     },
     "group2": {
@@ -75,22 +75,22 @@
       "percentage": 0.0
     },
     "meanNumberOfRequestsPerSecond": {
-      "total": 8680.2,
-      "ok": 8680.2,
+      "total": 8378.454545454546,
+      "ok": 8378.454545454546,
       "ko": 0
     }
   },
   "contents": {
-    "req_get-actor-by-id-1527156111": {
+    "req_get-movie-and-a-255938113": {
       "type": "REQUEST",
-      "name": "Get Actor By Id",
-      "path": "Get Actor By Id",
-      "pathFormatted": "req_get-actor-by-id-1527156111",
+      "name": "Get Movie and actors",
+      "path": "Get Movie and actors",
+      "pathFormatted": "req_get-movie-and-a-255938113",
       "stats": {
-        "name": "Get Actor By Id",
+        "name": "Get Movie and actors",
         "numberOfRequests": {
-          "total": 28934,
-          "ok": 28934,
+          "total": 30721,
+          "ok": 30721,
           "ko": 0
         },
         "minResponseTime": {
@@ -99,8 +99,8 @@
           "ko": 0
         },
         "maxResponseTime": {
-          "total": 35,
-          "ok": 35,
+          "total": 33,
+          "ok": 33,
           "ko": 0
         },
         "meanResponseTime": {
@@ -124,19 +124,19 @@
           "ko": 0
         },
         "percentiles3": {
-          "total": 7,
+          "total": 6,
           "ok": 6,
           "ko": 0
         },
         "percentiles4": {
-          "total": 14,
-          "ok": 9,
+          "total": 16,
+          "ok": 16,
           "ko": 0
         },
         "group1": {
           "name": "t < 800 ms",
           "htmlName": "t < 800 ms",
-          "count": 28934,
+          "count": 30721,
           "percentage": 100.0
         },
         "group2": {
@@ -158,22 +158,22 @@
           "percentage": 0.0
         },
         "meanNumberOfRequestsPerSecond": {
-          "total": 2893.4,
-          "ok": 2893.4,
+          "total": 2792.818181818182,
+          "ok": 2792.818181818182,
           "ko": 0
         }
       }
     },
-    "req_actor-search-la-343195752": {
+    "req_get-movie-and-a--944889276": {
       "type": "REQUEST",
-      "name": "Actor Search Last Name",
-      "path": "Actor Search Last Name",
-      "pathFormatted": "req_actor-search-la-343195752",
+      "name": "Get Movie and actor count group by movie name",
+      "path": "Get Movie and actor count group by movie name",
+      "pathFormatted": "req_get-movie-and-a--944889276",
       "stats": {
-        "name": "Actor Search Last Name",
+        "name": "Get Movie and actor count group by movie name",
         "numberOfRequests": {
-          "total": 28934,
-          "ok": 28934,
+          "total": 30721,
+          "ok": 30721,
           "ko": 0
         },
         "minResponseTime": {
@@ -212,14 +212,14 @@
           "ko": 0
         },
         "percentiles4": {
-          "total": 17,
+          "total": 5,
           "ok": 5,
           "ko": 0
         },
         "group1": {
           "name": "t < 800 ms",
           "htmlName": "t < 800 ms",
-          "count": 28934,
+          "count": 30721,
           "percentage": 100.0
         },
         "group2": {
@@ -241,22 +241,22 @@
           "percentage": 0.0
         },
         "meanNumberOfRequestsPerSecond": {
-          "total": 2893.4,
-          "ok": 2893.4,
+          "total": 2792.818181818182,
+          "ok": 2792.818181818182,
           "ko": 0
         }
       }
     },
-    "req_actor-search-fi-1384956424": {
+    "req_get-movie-and-a-1216864735": {
       "type": "REQUEST",
-      "name": "Actor Search First Name",
-      "path": "Actor Search First Name",
-      "pathFormatted": "req_actor-search-fi-1384956424",
+      "name": "Get Movie and acting producer",
+      "path": "Get Movie and acting producer",
+      "pathFormatted": "req_get-movie-and-a-1216864735",
       "stats": {
-        "name": "Actor Search First Name",
+        "name": "Get Movie and acting producer",
         "numberOfRequests": {
-          "total": 28934,
-          "ok": 28934,
+          "total": 30721,
+          "ok": 30721,
           "ko": 0
         },
         "minResponseTime": {
@@ -265,8 +265,8 @@
           "ko": 0
         },
         "maxResponseTime": {
-          "total": 31,
-          "ok": 31,
+          "total": 30,
+          "ok": 30,
           "ko": 0
         },
         "meanResponseTime": {
@@ -295,14 +295,14 @@
           "ko": 0
         },
         "percentiles4": {
-          "total": 16,
-          "ok": 16,
+          "total": 7,
+          "ok": 7,
           "ko": 0
         },
         "group1": {
           "name": "t < 800 ms",
           "htmlName": "t < 800 ms",
-          "count": 28934,
+          "count": 30721,
           "percentage": 100.0
         },
         "group2": {
@@ -324,8 +324,8 @@
           "percentage": 0.0
         },
         "meanNumberOfRequestsPerSecond": {
-          "total": 2893.4,
-          "ok": 2893.4,
+          "total": 2792.818181818182,
+          "ok": 2792.818181818182,
           "ko": 0
         }
       }
