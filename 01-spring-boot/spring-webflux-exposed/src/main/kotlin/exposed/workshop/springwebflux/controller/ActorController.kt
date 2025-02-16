@@ -2,12 +2,10 @@ package exposed.workshop.springwebflux.controller
 
 import exposed.workshop.springwebflux.domain.ActorDTO
 import exposed.workshop.springwebflux.domain.repository.ActorRepository
+import io.bluetape4k.concurrent.virtualthread.VT
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.toList
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -22,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/actors")
 class ActorController(
     private val actorRepository: ActorRepository,
-): CoroutineScope by CoroutineScope(Dispatchers.IO + SupervisorJob()) {
+): CoroutineScope by CoroutineScope(Dispatchers.VT) {
 
     companion object: KLogging()
 

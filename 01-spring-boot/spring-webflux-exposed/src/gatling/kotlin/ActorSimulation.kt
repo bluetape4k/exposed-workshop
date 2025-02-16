@@ -35,7 +35,7 @@ class ActorSimulation: Simulation() {
 
     init {
         setUp(
-            scn.injectClosed(rampConcurrentUsers(10).to(20).during(10.seconds.toJavaDuration()))
+            scn.injectClosed(rampConcurrentUsers(1).to(20).during(10.seconds.toJavaDuration()))
             // scn.injectOpen(constantUsersPerSec(200.0).during(10.seconds.toJavaDuration()))
         ).protocols(httpProtocol)
     }

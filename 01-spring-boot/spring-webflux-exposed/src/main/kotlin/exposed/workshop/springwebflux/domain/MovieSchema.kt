@@ -15,14 +15,14 @@ import org.jetbrains.exposed.sql.javatime.datetime
 object MovieSchema {
 
     object MovieTable: LongIdTable("movies") {
-        val name = varchar("name", 255)
-        val producerName = varchar("producer_name", 255)
+        val name = varchar("name", 255).index()
+        val producerName = varchar("producer_name", 255).index()
         val releaseDate = datetime("release_date")
     }
 
     object ActorTable: LongIdTable("actors") {
-        val firstName = varchar("first_name", 255)
-        val lastName = varchar("last_name", 255)
+        val firstName = varchar("first_name", 255).index()
+        val lastName = varchar("last_name", 255).index()
         val birthday = date("birthday").nullable()
     }
 
