@@ -154,7 +154,7 @@ object Versions {
     const val javers = "7.6.3"             // https://mvnrepository.com/artifact/org.javers/javers-core
 
     const val slf4j = "2.0.16"      // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-    const val logback = "1.5.12"     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    const val logback = "1.5.16"     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
     const val log4j = "2.24.2"      // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
 
     const val metrics = "4.2.29"        // https://mvnrepository.com/artifact/io.dropwizard.metrics/metrics-core
@@ -190,7 +190,7 @@ object Versions {
 
     const val junit_jupiter = "5.11.4"      // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     const val junit_platform = "1.11.4"     // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher
-    const val assertj_core = "3.26.3"       // https://mvnrepository.com/artifact/org.assertj/assertj-core
+    const val assertj_core = "3.27.3"       // https://mvnrepository.com/artifact/org.assertj/assertj-core
     const val kluent = "1.73"               // https://mvnrepository.com/artifact/org.amshove.kluent/kluent
     const val mockk = "1.13.13"             // https://mvnrepository.com/artifact/io.mockk/mockk
     const val springmockk = "4.0.2"         // https://mvnrepository.com/artifact/com.ninja-squad/springmockk
@@ -202,7 +202,7 @@ object Versions {
     const val rest_assured = "5.5.0"        // https://mvnrepository.com/artifact/io.rest-assured/rest-assured
 
     const val datafaker = "2.4.2"          // https://mvnrepository.com/artifact/net.datafaker/datafaker
-    const val snakeyaml = "2.3"            // https://mvnrepository.com/artifact/org.yaml/snakeyaml
+    const val snakeyaml = "2.4"            // https://mvnrepository.com/artifact/org.yaml/snakeyaml
     const val random_beans = "3.9.0"
 
     const val logback_slack_appender = "1.6.1"  // https://mvnrepository.com/artifact/com.github.maricn/logback-slack-appender
