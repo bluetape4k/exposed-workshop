@@ -12,6 +12,7 @@ import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.dao.with
+import org.jetbrains.exposed.sql.intLiteral
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -92,9 +93,9 @@ class ExposedDaoExample: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `DAO Entity를 조건절로 검색하기 02`(testDB: TestDB) {
         withCityUsers(testDB) {
-            val users = User.find { UserTable.age greaterEq 18 }.with(User::city).toList()
+            val users = User.find { UserTable.age greaterEq intLiteral(18) }.with(User::city).toList()
+            
             users shouldHaveSize 4
-
             users.forEach { user ->
                 log.info { "${user.name} lives in ${user.city?.name ?: "unknown"}" }
             }
