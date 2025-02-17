@@ -18,6 +18,7 @@ includeModules("00-shared", false, false)
 
 includeModules("01-spring-boot", false, false)
 includeModules("02-alternatives-to-jpa", false, false)
+includeModules("03-exposed-basic", false, false)
 
 fun includeModules(baseDir: String, withProjectName: Boolean = true, withBaseDir: Boolean = true) {
     files("$rootDir/$baseDir").files
