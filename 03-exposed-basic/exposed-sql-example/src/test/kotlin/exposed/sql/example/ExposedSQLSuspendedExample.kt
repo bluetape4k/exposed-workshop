@@ -20,7 +20,7 @@ import org.jetbrains.exposed.sql.update
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class ExposedSQLSuspended: AbstractExposedTest() {
+class ExposedSQLSuspendedExample: AbstractExposedTest() {
 
     companion object: KLogging()
 
