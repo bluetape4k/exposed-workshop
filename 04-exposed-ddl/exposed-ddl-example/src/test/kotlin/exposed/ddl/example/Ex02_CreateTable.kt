@@ -7,13 +7,16 @@ import exposed.shared.tests.withDb
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContain
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IdTable
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.exists
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertFails
@@ -150,6 +153,8 @@ class Ex02_CreateTable: AbstractExposedTest() {
             log.debug { "DDL: $ddl" }
 
             SchemaUtils.create(BookTable)
+            BookTable.exists().shouldBeTrue()
+
             SchemaUtils.drop(BookTable)
         }
     }
@@ -171,7 +176,122 @@ class Ex02_CreateTable: AbstractExposedTest() {
             log.debug { "DDL: $ddl" }
 
             SchemaUtils.create(PersonTable)
+            PersonTable.exists().shouldBeTrue()
+
             SchemaUtils.drop(PersonTable)
+        }
+    }
+
+    /**
+     * `child1` 이 `parent1` 의 `id_a`, `id_b` 컬럼을 참조하는 Foreign Key를 가지고 있습니다.
+     *
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS parent1 (
+     *      id_a INT,
+     *      id_b INT,
+     *      CONSTRAINT pk_parent1 PRIMARY KEY (id_a, id_b)
+     * );
+     *
+     * CREATE TABLE IF NOT EXISTS child1 (
+     *      id_a INT NOT NULL,
+     *      id_b INT NOT NULL,
+     *
+     *      CONSTRAINT myforeignkey1 FOREIGN KEY (id_a, id_b)
+     *      REFERENCES parent1(id_a, id_b) ON DELETE CASCADE ON UPDATE CASCADE
+     * )
+     * ```
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `2개의 컬럼이 Foreign Key 로 지정된 테이블을 생성합니다 - 01`(testDB: TestDB) {
+        val fkName = "MyForeignKey1"
+        val parent = object: Table("parent1") {
+            val idA = integer("id_a")
+            val idB = integer("id_b")
+            override val primaryKey = PrimaryKey(idA, idB)
+        }
+        val child = object: Table("child1") {
+            val idA = integer("id_a")
+            val idB = integer("id_b")
+
+            init {
+                foreignKey(
+                    idA, idB,
+                    target = parent.primaryKey,
+                    onDelete = ReferenceOption.CASCADE,
+                    onUpdate = ReferenceOption.CASCADE,
+                    name = fkName
+                )
+            }
+        }
+        withDb(testDB) {
+            val parentDdl = parent.ddl.single()
+            val childDdl = child.ddl.single()
+
+            log.debug { "Parent DDL: $parentDdl" }
+            log.debug { "Child DDL: $childDdl" }
+
+            SchemaUtils.create(parent, child)
+            parent.exists().shouldBeTrue()
+            child.exists().shouldBeTrue()
+            SchemaUtils.drop(parent, child)
+        }
+    }
+
+    /**
+     * `child1` 이 `parent1` 의 `id_a`, `id_b` 컬럼을 참조하는 Foreign Key를 가지고 있습니다.
+     *
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS parent1 (
+     *      pid_a INT,
+     *      pid_b INT,
+     *      CONSTRAINT pk_parent1 PRIMARY KEY (pid_a, pid_b)
+     * );
+     *
+     * CREATE TABLE IF NOT EXISTS child1 (
+     *      id_a INT NOT NULL,
+     *      id_b INT NOT NULL,
+     *
+     *      CONSTRAINT myforeignkey1 FOREIGN KEY (id_a, id_b)
+     *      REFERENCES parent1(pid_a, pid_b) ON DELETE CASCADE ON UPDATE CASCADE
+     * )
+     * ```
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `2개의 컬럼이 Foreign Key 로 지정된 테이블을 생성합니다 - 02`(testDB: TestDB) {
+        val fkName = "MyForeignKey1"
+        val parent = object: Table("parent1") {
+            val pidA = integer("pid_a")
+            val pidB = integer("pid_b")
+            override val primaryKey = PrimaryKey(pidA, pidB)
+        }
+        val child = object: Table("child1") {
+            val idA = integer("id_a")
+            val idB = integer("id_b")
+
+            init {
+                foreignKey(
+                    idA to parent.pidA, idB to parent.pidB,
+                    onDelete = ReferenceOption.CASCADE,
+                    onUpdate = ReferenceOption.CASCADE,
+                    name = fkName
+                )
+            }
+        }
+        withDb(testDB) {
+            val parentDdl = parent.ddl.single()
+            val childDdl = child.ddl.single()
+
+            log.debug { "Parent DDL: $parentDdl" }
+            log.debug { "Child DDL: $childDdl" }
+
+            SchemaUtils.create(parent, child)
+            parent.exists().shouldBeTrue()
+            child.exists().shouldBeTrue()
+            SchemaUtils.drop(parent, child)
         }
     }
 }
