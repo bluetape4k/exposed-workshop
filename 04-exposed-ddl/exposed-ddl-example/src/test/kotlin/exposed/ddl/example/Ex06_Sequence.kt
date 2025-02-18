@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex05_Sequence: AbstractExposedTest() {
+class Ex06_Sequence: AbstractExposedTest() {
 
     companion object: KLogging()
 

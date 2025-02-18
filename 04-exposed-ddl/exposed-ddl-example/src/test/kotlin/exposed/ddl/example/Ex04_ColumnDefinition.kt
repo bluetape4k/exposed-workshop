@@ -20,7 +20,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.sql.SQLException
 import kotlin.test.assertFails
 
-class Ex03_ColumnDefinition: AbstractExposedTest() {
+class Ex04_ColumnDefinition: AbstractExposedTest() {
 
     // 컬럼 주석을 지원하는 DB - H2, MySQL 8, NOT Postgres
     val columnCommentSupportedDB = TestDB.ALL_H2 + TestDB.MYSQL_V8

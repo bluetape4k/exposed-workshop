@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex04_CreateIndex: AbstractExposedTest() {
+class Ex05_CreateIndex: AbstractExposedTest() {
 
     /**
      * 일반적인 인덱스 생성하기

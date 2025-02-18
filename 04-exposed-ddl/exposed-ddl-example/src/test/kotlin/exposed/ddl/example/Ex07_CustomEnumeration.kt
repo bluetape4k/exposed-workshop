@@ -30,7 +30,7 @@ import org.postgresql.util.PGobject
  * JPA의  `@Enumerated(EnumType.STRING)` 과 같은 방식으로 사용하시던 분들은
  * Exposed의 column transformation 기능을 사용하는 것을 추천합니다.
  */
-class Ex06_Enumeration: AbstractExposedTest() {
+class Ex07_CustomEnumeration: AbstractExposedTest() {
 
     private val supportsCustomEnumerationDB =
         TestDB.ALL_POSTGRES + TestDB.ALL_H2 + TestDB.ALL_MYSQL
