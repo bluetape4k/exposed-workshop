@@ -32,6 +32,7 @@ class Ex05_CreateIndex: AbstractExposedTest() {
      *      id SERIAL PRIMARY KEY,
      *      "name" VARCHAR(255) NOT NULL
      * );
+     * 
      * CREATE INDEX tester_by_name ON tester ("name");
      * ```
      */
@@ -119,11 +120,14 @@ class Ex05_CreateIndex: AbstractExposedTest() {
      *      flag BOOLEAN DEFAULT FALSE NOT NULL
      * );
      *
-     * CREATE INDEX flag_index ON tester (flag, "name") WHERE tester.flag = TRUE;
+     * CREATE INDEX flag_index ON tester (flag, "name")
+     *  WHERE tester.flag = TRUE;
      *
-     * CREATE INDEX tester_value_name ON tester ("value", "name") WHERE (tester."name" = 'aaa') AND (tester."value" >= 6);
+     * CREATE INDEX tester_value_name ON tester ("value", "name")
+     *  WHERE (tester."name" = 'aaa') AND (tester."value" >= 6);
      *
-     * ALTER TABLE tester ADD CONSTRAINT tester_another_value_unique UNIQUE (another_value);
+     * ALTER TABLE tester
+     *      ADD CONSTRAINT tester_another_value_unique UNIQUE (another_value);
      * ```
      */
     @ParameterizedTest
@@ -169,11 +173,13 @@ class Ex05_CreateIndex: AbstractExposedTest() {
      *      price INT NOT NULL,
      *      item VARCHAR(32) NULL
      * );
+     *
      * CREATE INDEX tester_plus_index ON tester ((tester.amount * tester.price));
      *
      * CREATE INDEX tester_lower ON tester (LOWER(tester.item));
      *
-     * CREATE UNIQUE INDEX tester_price_coalesce_unique ON tester (price, COALESCE(tester.item, '*'));
+     * CREATE UNIQUE INDEX tester_price_coalesce_unique
+     *  ON tester (price, COALESCE(tester.item, '*'));
      * ```
      *
      * ```sql
@@ -189,7 +195,8 @@ class Ex05_CreateIndex: AbstractExposedTest() {
      *
      * CREATE INDEX tester_lower ON tester ((LOWER(tester.item)));
      *
-     * CREATE UNIQUE INDEX tester_price_coalesce_unique ON tester (price, (COALESCE(tester.item, '*')));
+     * CREATE UNIQUE INDEX tester_price_coalesce_unique
+     *  ON tester (price, (COALESCE(tester.item, '*')));
      * ```
      */
     @ParameterizedTest

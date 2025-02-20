@@ -29,7 +29,9 @@ class Ex06_Sequence: AbstractExposedTest() {
      * SchemaUtils.createSequence(myseq)
      * ```
      * ```sql
-     * CREATE SEQUENCE IF NOT EXISTS my_sequence START WITH 4 INCREMENT BY 2 MINVALUE 1 MAXVALUE 100 CYCLE CACHE 20
+     * -- Postgres
+     * CREATE SEQUENCE IF NOT EXISTS my_sequence
+     *      START WITH 4 INCREMENT BY 2 MINVALUE 1 MAXVALUE 100 CYCLE CACHE 20
      * ```
      */
     private val myseq = org.jetbrains.exposed.sql.Sequence(
@@ -46,6 +48,7 @@ class Ex06_Sequence: AbstractExposedTest() {
      * 시퀀스 생성하기
      *
      * ```sql
+     * -- Postgres
      * CREATE SEQUENCE IF NOT EXISTS my_sequence
      *      START WITH 4
      *      INCREMENT BY 2
@@ -67,6 +70,7 @@ class Ex06_Sequence: AbstractExposedTest() {
 
     /**
      * ```sql
+     * -- Postgres
      * CREATE TABLE IF NOT EXISTS developer (
      *      id INT, "name" VARCHAR(255),
      *      CONSTRAINT pk_developer PRIMARY KEY (id, "name")
@@ -125,7 +129,9 @@ class Ex06_Sequence: AbstractExposedTest() {
      *
      * ```sql
      * -- Postgres
-     * CREATE SEQUENCE IF NOT EXISTS my_sequence START WITH 4 INCREMENT BY 2 MINVALUE 1 MAXVALUE 100 CYCLE CACHE 20;
+     * CREATE SEQUENCE IF NOT EXISTS my_sequence
+     *      START WITH 4 INCREMENT BY 2 MINVALUE 1 MAXVALUE 100 CYCLE CACHE 20;
+     *
      * CREATE TABLE IF NOT EXISTS tester (
      *      id INT PRIMARY KEY,
      *      "name" VARCHAR(255) NOT NULL

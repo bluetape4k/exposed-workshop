@@ -269,7 +269,11 @@ class Ex01_Select: AbstractExposedTest() {
              * 
              * ```sql
              * -- Postgres
-             * SELECT posts.id, posts.board, posts.parent, posts.category, posts."optCategory"
+             * SELECT posts.id,
+             *        posts.board,
+             *        posts.parent,
+             *        posts.category,
+             *        posts."optCategory"
              *   FROM posts
              *  WHERE posts.board = 1
              * ```

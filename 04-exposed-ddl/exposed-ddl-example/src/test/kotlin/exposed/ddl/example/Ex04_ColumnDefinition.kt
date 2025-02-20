@@ -67,6 +67,7 @@ class Ex04_ColumnDefinition: AbstractExposedTest() {
      * 묵시적으로 컬럼 전체를 뜻하는 `*` 를 사용하면, INVISIBLE 컬럼은 반환되지 않습니다.
      *
      * ```sql
+     * -- MySQL 8
      * CREATE TABLE IF NOT EXISTS tester (
      *      amount INT NOT NULL,
      *      active BOOLEAN INVISIBLE NULL   -- INVISIBLE 컬럼
@@ -74,6 +75,7 @@ class Ex04_ColumnDefinition: AbstractExposedTest() {
      * ```
      *
      * ```sql
+     * -- MySQL 8
      * SELECT *                    -- active 는 INVISIBLE 컬럼이므로 반환되지 않음
      *   FROM TESTER
      *  WHERE TESTER.AMOUNT > 100

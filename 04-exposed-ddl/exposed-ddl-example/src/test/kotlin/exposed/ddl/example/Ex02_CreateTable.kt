@@ -124,12 +124,32 @@ class Ex02_CreateTable: AbstractExposedTest() {
         }
     }
 
+    /**
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS book (
+     *      id SERIAL,
+     *      CONSTRAINT PK_Book_ID PRIMARY KEY (id)
+     * );
+     * ```
+     */
     object BookTable: Table("book") {
         val id = integer("id").autoIncrement()
 
         override val primaryKey = PrimaryKey(id, name = "PK_Book_ID")
     }
 
+    /**
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS person (
+     *      id1 INT,
+     *      id2 INT,
+     *
+     *      CONSTRAINT PK_Person_ID PRIMARY KEY (id1, id2)
+     * );
+     * ```
+     */
     object PersonTable: Table("person") {
         val id1 = integer("id1")
         val id2 = integer("id2")
