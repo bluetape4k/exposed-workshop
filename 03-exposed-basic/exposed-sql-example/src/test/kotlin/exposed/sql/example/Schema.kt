@@ -56,6 +56,9 @@ object Schema {
         override val primaryKey = PrimaryKey(id, name = "PK_User_ID")
     }
 
+    /**
+     * [CityTable], [UserTable]을 이용하여 [statement]를 수행합니다.
+     */
     fun withCityUsers(testDB: TestDB, statement: Transaction.() -> Unit) {
         withTables(testDB, CityTable, UserTable) {
             insertSampleData()
@@ -65,6 +68,9 @@ object Schema {
         }
     }
 
+    /**
+     * [CityTable], [UserTable]을 이용하여 Coroutines 환경에서 [statement]를 수행합니다.
+     */
     suspend fun withSuspendedCityUsers(testDB: TestDB, statement: suspend Transaction.() -> Unit) {
         withSuspendedTables(testDB, CityTable, UserTable) {
             insertSampleData()

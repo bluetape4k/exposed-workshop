@@ -63,6 +63,7 @@ class Ex01_Select: AbstractExposedTest() {
      * WHERE 조건들이 `AND` 로 연결된 경우
      *
      * ```sql
+     * -- Postgres
      * SELECT users.id, users."name", users.city_id, users.flags
      *   FROM users
      *  WHERE (users.id = 'andrey')
@@ -147,7 +148,7 @@ class Ex01_Select: AbstractExposedTest() {
 
 
     /**
-     * [SizedIterable] 을 사용한 SELECT 문
+     * [SizedIterable] 을 이용한 쿼리 실행
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -187,6 +188,7 @@ class Ex01_Select: AbstractExposedTest() {
         withCitiesAndUsers(testDB) { _, users, _ ->
             /**
              * ```sql
+             * -- Postgres
              * SELECT users.id, users."name", users.city_id, users.flags
              *   FROM users
              *  WHERE users.id IN ('andrey', 'alex')
@@ -205,6 +207,7 @@ class Ex01_Select: AbstractExposedTest() {
 
             /**
              * ```sql
+             * -- Postgres
              * SELECT users.id, users."name", users.city_id, users.flags
              *   FROM users
              *  WHERE users.id NOT IN ('ABC', 'DEF')
@@ -222,6 +225,7 @@ class Ex01_Select: AbstractExposedTest() {
      * `inList` 에 Pair 형식으로 사용하기
      *
      * ```sql
+     * -- Postgres
      * SELECT users.id, users."name", users.city_id, users.flags
      *   FROM users
      *  WHERE (users.id, users."name") IN (('andrey', 'Andrey'), ('sergey', 'Sergey'))
@@ -243,7 +247,9 @@ class Ex01_Select: AbstractExposedTest() {
         }
     }
 
-
+    /**
+     * `EntityID` 에 `inList`, `notInList` 사용하기
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `inList with entityID columns`(testDB: TestDB) {
@@ -259,7 +265,10 @@ class Ex01_Select: AbstractExposedTest() {
             }
 
             /**
+             * inList의 항목이 한개라면 `eq` 로 대체 가능
+             * 
              * ```sql
+             * -- Postgres
              * SELECT posts.id, posts.board, posts.parent, posts.category, posts."optCategory"
              *   FROM posts
              *  WHERE posts.board = 1
@@ -268,7 +277,7 @@ class Ex01_Select: AbstractExposedTest() {
             val result1 = Posts
                 .selectAll()
                 .where {
-                    Posts.boardId inList listOf(board1.id)   // 항목이 한개라면 `eq` 로 대체 가능
+                    Posts.boardId inList listOf(board1.id)
                 }
                 .singleOrNull()
                 ?.get(Posts.id)
@@ -279,6 +288,7 @@ class Ex01_Select: AbstractExposedTest() {
              * `inList` with `EntityID` columns
              *
              * ```sql
+             * -- Postgres
              * SELECT board.id, board."name"
              *   FROM board
              *  WHERE board.id IN (1, 2, 3, 4, 5)
@@ -293,6 +303,7 @@ class Ex01_Select: AbstractExposedTest() {
              * `notInList` with entityID columns
              *
              * ```sql
+             * -- Postgres
              * SELECT board.id, board."name"
              *   FROM board
              *  WHERE board.id  NOT IN (1, 2, 3, 4, 5)
