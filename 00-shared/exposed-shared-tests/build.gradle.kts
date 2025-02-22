@@ -26,20 +26,22 @@ dependencies {
     api(Libs.bluetape4k_jdbc)
     api(Libs.bluetape4k_junit5)
 
-    implementation(Libs.h2_v2)
-    implementation(Libs.mysql_connector_j)
-    implementation(Libs.postgresql_driver)
+    api(Libs.h2_v2)
+    api(Libs.mariadb_java_client)
+    api(Libs.mysql_connector_j)
+    api(Libs.postgresql_driver)
 
-    implementation(Libs.bluetape4k_testcontainers)
-    implementation(Libs.testcontainers)
-    implementation(Libs.testcontainers_junit_jupiter)
-    implementation(Libs.testcontainers_mysql)
-    implementation(Libs.testcontainers_postgresql)
-    implementation(Libs.testcontainers_cockroachdb)
+    api(Libs.bluetape4k_testcontainers)
+    api(Libs.testcontainers)
+    api(Libs.testcontainers_junit_jupiter)
+    api(Libs.testcontainers_mariadb)
+    api(Libs.testcontainers_mysql)
+    api(Libs.testcontainers_postgresql)
+    api(Libs.testcontainers_cockroachdb)
 
     // Identifier 자동 생성
-    implementation(Libs.bluetape4k_idgenerators)
-    implementation(Libs.java_uuid_generator)
+    api(Libs.bluetape4k_idgenerators)
+    api(Libs.java_uuid_generator)
 
     // Coroutines
     implementation(Libs.bluetape4k_coroutines)

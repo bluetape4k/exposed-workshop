@@ -97,7 +97,7 @@ class Ex06_Sequence: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `Sequence를 컬럼 값으로 지정하기`(testDB: TestDB) {
         withTables(testDB, Developer) {
-            Assumptions.assumeTrue { currentDialect.supportsCreateSequence }
+            Assumptions.assumeTrue { currentDialect.supportsSequenceAsGeneratedKeys }
 
             try {
                 // 시퀀스 생성
