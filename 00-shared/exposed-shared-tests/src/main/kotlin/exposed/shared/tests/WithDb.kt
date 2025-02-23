@@ -17,7 +17,7 @@ private val logger = KotlinLogging.logger {}
 
 private val registeredOnShutdown = mutableSetOf<TestDB>()
 
-internal var currentTestDB by nullableTransactionScope<TestDB>()
+var currentTestDB by nullableTransactionScope<TestDB>()
 
 object CurrentTestDBInterceptor: StatementInterceptor {
     override fun keepUserDataInTransactionStoreOnCommit(userData: Map<Key<*>, Any?>): Map<Key<*>, Any?> {
@@ -87,13 +87,11 @@ suspend fun withSuspendedDb(
     }
 
     val registeredDb = testDB.db!!
-
     try {
         if (newConfiguration) {
             testDB.db = testDB.connect(configure ?: {})
         }
         val database = testDB.db!!
-
         newSuspendedTransaction(
             context = context,
             db = database,
