@@ -112,7 +112,7 @@ object DMLTestData {
     }
 
 
-    internal fun Iterable<ResultRow>.toCityNameList(): List<String> =
+    fun Iterable<ResultRow>.toCityNameList(): List<String> =
         map { it[Cities.name] }
 
 
