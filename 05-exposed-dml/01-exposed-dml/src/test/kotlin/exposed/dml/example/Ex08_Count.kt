@@ -10,6 +10,8 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.batchInsert
+import org.jetbrains.exposed.sql.count
+import org.jetbrains.exposed.sql.countDistinct
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.max
 import org.jetbrains.exposed.sql.selectAll
@@ -60,6 +62,30 @@ class Ex08_Count: AbstractExposedTest() {
                 .select(cities.id, users.id)
                 .withDistinct()
                 .count() shouldBeEqualTo 3L
+        }
+    }
+
+    /**
+     * 특정 컬럼에 count 함수 적용하기
+     *
+     * ```sql
+     * -- Postgres
+     * SELECT COUNT(DISTINCT cities.city_id) FROM cities;
+     * SELECT COUNT(users.id) FROM users
+     * ```
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `특정 컬럼의 count, countDistinct 함수 적용하기`(testDB: TestDB) {
+        withCitiesAndUsers(testDB) { cities, users, _ ->
+
+            // SELECT COUNT(DISTINCT cities.city_id) FROM cities;
+            val cityCount = cities.id.countDistinct()
+            cities.select(cityCount).single()[cityCount] shouldBeEqualTo 3L
+
+            // SELECT COUNT(users.id) FROM users
+            val userIdCount = users.id.count()
+            users.select(userIdCount).single()[userIdCount] shouldBeEqualTo 5L
         }
     }
 
