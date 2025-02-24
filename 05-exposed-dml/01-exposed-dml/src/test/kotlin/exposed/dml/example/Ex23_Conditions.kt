@@ -157,7 +157,7 @@ class Ex23_Conditions: AbstractExposedTest() {
     }
 
     /**
-     * [EntityID] 수형을 비교 연산에 사용하는 예제
+     * `EntityID` 수형을 비교 연산에 사용하는 예제
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
