@@ -282,7 +282,7 @@ class Ex05_Delete: AbstractExposedTest() {
     }
 
     /**
-     * ### Join 을 사용하여 DELETE 를 수행할 때, 참조 위배 등의 예외 발생 시 무시한다.
+     * ### `delete(table, ignore = true) 를 이용하여 DELETE 수행 시 예외를 무시할 수 있다.
      *
      * `delete(table, ignore = true) { ... }` 와 같이 `ignore = true` 를 지정하여, 참조 위배 등의 예외를 무시할 수 있다.
      *
