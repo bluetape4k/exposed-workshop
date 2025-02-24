@@ -57,4 +57,7 @@ dependencies {
     implementation(Libs.javax_money_api)
     implementation(Libs.javamoney_moneta)
 
+    // Logcaptor
+    api("io.github.hakky54:logcaptor:2.10.0")
+
 }
