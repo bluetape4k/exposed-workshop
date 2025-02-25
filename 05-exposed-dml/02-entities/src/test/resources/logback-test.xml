@@ -11,7 +11,7 @@
         </encoder>
     </appender>
 
-    <logger name="exposed.dml.example" level="DEBUG"/>
+    <logger name="exposed.examples.entities" level="DEBUG"/>
     <logger name="exposed.shared" level="DEBUG"/>
     <logger name="io.bluetape4k" level="DEBUG"/>
 
