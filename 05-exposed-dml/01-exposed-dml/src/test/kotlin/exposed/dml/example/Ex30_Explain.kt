@@ -9,8 +9,10 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContain
+import org.amshove.kluent.shouldNotContain
+import org.amshove.kluent.shouldStartWith
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.Transaction
@@ -364,8 +366,8 @@ class Ex30_Explain: AbstractExposedTest() {
             log.debug { "JSON:\n$jsonString" }
 
             when (testDB) {
-                in TestDB.ALL_MYSQL_LIKE -> jsonString.startsWith('{').shouldBeTrue()
-                else -> jsonString.startsWith('[').shouldBeTrue()
+                in TestDB.ALL_MYSQL_LIKE -> jsonString.shouldStartWith("{")
+                else -> jsonString.shouldStartWith("[")
             }
 
             // test multiple options only
@@ -428,10 +430,9 @@ class Ex30_Explain: AbstractExposedTest() {
             statementCount shouldBeEqualTo 1
             val executed = statementStats.keys.single()
 
-            executed.startsWith("EXPLAIN ").shouldBeTrue()
-            ("SELECT " in executed).shouldBeTrue()   // 마지막 구문인 SELECT 구문은 실행된다.
-            ("DELETE " in executed).shouldBeFalse()  // DELETE 구문은 실행되지 않는다.
-
+            executed shouldStartWith "EXPLAIN "
+            executed shouldContain "SELECT "            // 마지막 구문인 SELECT 구문은 실행된다.
+            executed shouldNotContain "DELETE "        // DELETE 구문은 실행되지 않는다.
             debug = false
         }
     }
