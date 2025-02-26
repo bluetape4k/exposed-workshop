@@ -2,7 +2,6 @@ package exposed.examples.functions
 
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
-import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
@@ -45,7 +44,7 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `abs function`(testDB: TestDB) {
-        withDb(testDB) {
+        withTable(testDB) {
             AbsFunction(intLiteral(0)) shouldExpressionEqualTo 0
             AbsFunction(intLiteral(100)) shouldExpressionEqualTo 100
             AbsFunction(intLiteral(-100)) shouldExpressionEqualTo 100
@@ -68,7 +67,7 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `sign function`(testDB: TestDB) {
-        withDb(testDB) {
+        withTable(testDB) {
             SignFunction(intLiteral(0)) shouldExpressionEqualTo 0
             SignFunction(intLiteral(100)) shouldExpressionEqualTo 1
             SignFunction(intLiteral(-100)) shouldExpressionEqualTo -1
@@ -94,7 +93,7 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `floor function`(testDB: TestDB) {
-        withDb(testDB) {
+        withTable(testDB) {
             FloorFunction(intLiteral(100)) shouldExpressionEqualTo 100
             FloorFunction(intLiteral(-100)) shouldExpressionEqualTo -100
             FloorFunction(doubleLiteral(100.0)) shouldExpressionEqualTo 100
@@ -123,7 +122,7 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `ceil function`(testDB: TestDB) {
-        withDb(testDB) {
+        withTable(testDB) {
             CeilingFunction(intLiteral(100)) shouldExpressionEqualTo 100
             CeilingFunction(intLiteral(-100)) shouldExpressionEqualTo -100
             CeilingFunction(doubleLiteral(100.0)) shouldExpressionEqualTo 100
@@ -152,7 +151,7 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `power function`(testDB: TestDB) {
-        withDb(testDB) {
+        withTable(testDB) {
             PowerFunction(intLiteral(10), intLiteral(2)) shouldExpressionEqualTo 100.toBigDecimal()
             PowerFunction(intLiteral(10), doubleLiteral(2.0)) shouldExpressionEqualTo 100.toBigDecimal()
 
@@ -186,7 +185,7 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `round function`(testDB: TestDB) {
-        withDb(testDB) {
+        withTable(testDB) {
             RoundFunction(intLiteral(10), 0) shouldExpressionEqualTo 10.toBigDecimal()
             RoundFunction(intLiteral(10), 2) shouldExpressionEqualTo "10.00".toBigDecimal()
 
@@ -211,7 +210,7 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `sqrt function`(testDB: TestDB) {
-        withDb(testDB) {
+        withTable(testDB) {
             SqrtFunction(intLiteral(100)) shouldExpressionEqualTo 10.toBigDecimal()
             SqrtFunction(doubleLiteral(100.0)) shouldExpressionEqualTo 10.toBigDecimal()
 
@@ -244,7 +243,7 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `exp function`(testDB: TestDB) {
-        withDb(testDB) {
+        withTable(testDB) {
             ExpFunction(intLiteral(1)) shouldExpressionEqualTo "2.7182818284590".toBigDecimal()
             ExpFunction(doubleLiteral(2.5)) shouldExpressionEqualTo "12.182493960703473".toBigDecimal()
             ExpFunction(decimalLiteral("2.5".toBigDecimal())) shouldExpressionEqualTo "12.182493960703473".toBigDecimal()
