@@ -3,7 +3,6 @@ package exposed.examples.functions
 import exposed.shared.dml.DMLTestData
 import exposed.shared.dml.DMLTestData.Cities
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.withDb
@@ -59,7 +58,7 @@ import org.jetbrains.exposed.sql.vendors.SQLServerDialect
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex01_Functions: AbstractExposedTest() {
+class Ex01_Functions: Ex00_FunctionBase() {
 
     companion object: KLogging()
 
