@@ -21,6 +21,8 @@ includeModules("02-alternatives-to-jpa", false, false)
 includeModules("03-exposed-basic", false, false)
 includeModules("04-exposed-ddl", false, false)
 includeModules("05-exposed-dml", false, false)
+includeModules("06-advanced", false, false)
+includeModules("07-jpa", false, false)
 
 fun includeModules(baseDir: String, withProjectName: Boolean = true, withBaseDir: Boolean = true) {
     files("$rootDir/$baseDir").files
