@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger
 /**
  * 자동 증가가 아닌 Identifier를 가진 Entity 테스트
  */
-class Ex05_NonAutoIncEntities: AbstractExposedTest() {
+class Ex06_NonAutoIncEntities: AbstractExposedTest() {
 
     companion object: KLogging()
 

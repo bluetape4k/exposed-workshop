@@ -25,7 +25,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * [ExposedBlob] 필드를 가지는 엔티티를 다루는 예제입니다.
  */
-class Ex06_EntityWithBlob: AbstractExposedTest() {
+class Ex07_EntityWithBlob: AbstractExposedTest() {
 
     companion object: KLogging()
 

@@ -26,7 +26,7 @@ import kotlin.random.Random
 /**
  * 엔티티 필드의 수형이나 값을 변환하여 DB 컬럼 수형에 맞게 변환하는 작업에 대한 예
  */
-class Ex07_EntityFieldWithTransform: AbstractExposedTest() {
+class Ex08_EntityFieldWithTransform: AbstractExposedTest() {
 
     companion object: KLogging()
 

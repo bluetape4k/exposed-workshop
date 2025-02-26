@@ -1,8 +1,8 @@
 package exposed.examples.entities
 
-import exposed.examples.entities.Ex08_ImmutableEntity.Schema.ECachedOrganization
-import exposed.examples.entities.Ex08_ImmutableEntity.Schema.EOrganization
-import exposed.examples.entities.Ex08_ImmutableEntity.Schema.Organization
+import exposed.examples.entities.Ex09_ImmutableEntity.Schema.ECachedOrganization
+import exposed.examples.entities.Ex09_ImmutableEntity.Schema.EOrganization
+import exposed.examples.entities.Ex09_ImmutableEntity.Schema.Organization
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
@@ -27,7 +27,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * 읽기 전용 / 캐싱된 엔티티 사용 예
  */
-class Ex08_ImmutableEntity: AbstractExposedTest() {
+class Ex09_ImmutableEntity: AbstractExposedTest() {
 
     companion object: KLogging()
 

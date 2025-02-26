@@ -31,7 +31,7 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * one-to-one, one-to-many, many-to-one 관계를 모두 포함하고 있습니다.
  */
-class Ex10_ForeignIdEntity: AbstractExposedTest() {
+class Ex11_ForeignIdEntity: AbstractExposedTest() {
 
     companion object: KLogging()
 
