@@ -6,6 +6,7 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.Table.Dual
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.insert
 import java.math.BigDecimal
@@ -35,7 +36,8 @@ abstract class Ex00_FunctionBase: AbstractExposedTest() {
     }
 
     protected infix fun <T> SqlFunction<T>.shouldExpressionEqualTo(expected: T) {
-        val result = FakeTestTable.select(this).first()[this]
+        // val result = FakeTestTable.select(this).first()[this]
+        val result = Dual.select(this).first()[this]
 
         if (expected is BigDecimal && result is BigDecimal) {
             result.setScale(expected.scale(), RoundingMode.HALF_UP) shouldBeEqualTo expected
