@@ -28,8 +28,10 @@ import org.junit.jupiter.params.provider.MethodSource
 
 /**
  * Foreign Key 를 가지는 엔티티를 다루는 예제입니다.
+ *
+ * one-to-one, one-to-many, many-to-one 관계를 모두 포함하고 있습니다.
  */
-class Ex09_ForeignIdEntity: AbstractExposedTest() {
+class Ex10_ForeignIdEntity: AbstractExposedTest() {
 
     companion object: KLogging()
 

@@ -60,7 +60,7 @@ import java.util.*
 import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 
-class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
+class Ex09_CompositeIdTableEntity: AbstractExposedTest() {
 
     companion object: KLogging()
 
