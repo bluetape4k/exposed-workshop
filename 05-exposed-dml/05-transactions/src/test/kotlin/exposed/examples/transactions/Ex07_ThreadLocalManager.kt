@@ -32,6 +32,7 @@ class Ex07_ThreadLocalManager: AbstractExposedTest() {
     companion object: KLogging()
 
     /**
+     * Thread 별로 [TransactionManager] 를 관리합니다.
      * MYSQL V5 에서만 지원됩니다.
      */
     fun `re-connection`() {
@@ -59,6 +60,9 @@ class Ex07_ThreadLocalManager: AbstractExposedTest() {
         db2.transactionManager shouldBeEqualTo secondThreadTm
     }
 
+    /**
+     * read-only transaction 에서는 INSERT 작업을 수행할 수 없습니다.
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testReadOnly(testDB: TestDB) {
@@ -94,7 +98,9 @@ class Ex07_ThreadLocalManager: AbstractExposedTest() {
             }
         }
 
-        transaction(db = database) {
+        // [RollbackTable] 을 생성합니다.
+        // CREATE TABLE IF NOT EXISTS rollbacktable (id SERIAL PRIMARY KEY, "value" VARCHAR(20) NOT NULL)
+        newSuspendedTransaction(db = database) {
             SchemaUtils.create(RollbackTable)
         }
 
@@ -105,11 +111,15 @@ class Ex07_ThreadLocalManager: AbstractExposedTest() {
             }
         }
 
-        transaction(db = database) {
+        // 데이터 추가
+        // INSERT INTO rollbacktable ("value") VALUES ('random-something')
+        newSuspendedTransaction(db = database) {
             RollbackTable.insert { it[value] = "random-something" }
         }
 
-        transaction(db = database) {
+        // 테이블 삭제
+        // DROP TABLE IF EXISTS rollbacktable
+        newSuspendedTransaction(db = database) {
             SchemaUtils.drop(RollbackTable)
         }
     }
