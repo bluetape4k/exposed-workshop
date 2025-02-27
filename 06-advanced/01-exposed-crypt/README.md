@@ -1,3 +1,3 @@
-# 01 DML Examples
+# 01 Exposed Crypt example
 
-Exposed 로 Database DML (Data Manupulation Language) 작업을 수행하는 예제입니다. 
+`exposed-crypt` 모듈을 사용하여 컬럼의 데이터를 암호화하여 저장하고, 복호화하여 조회하는 예제를 제공합니다. 
