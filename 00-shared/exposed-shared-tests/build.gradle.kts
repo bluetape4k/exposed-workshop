@@ -30,6 +30,7 @@ dependencies {
     api(Libs.mariadb_java_client)
     api(Libs.mysql_connector_j)
     api(Libs.postgresql_driver)
+    api(Libs.pgjdbc_ng)
 
     api(Libs.bluetape4k_testcontainers)
     api(Libs.testcontainers)
