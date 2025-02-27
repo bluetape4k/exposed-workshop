@@ -17,6 +17,9 @@ class Ex03_ConnectionTimeout: AbstractExposedTest() {
 
     companion object: KLogging()
 
+    /**
+     * Connect 수행 시 [GetConnectException]을 발생 시키는 DataSource입니다.
+     */
     private class ExceptionOnGetConnectionDataSource: DataSourceStub() {
         var connectCount = 0
 
@@ -29,7 +32,8 @@ class Ex03_ConnectionTimeout: AbstractExposedTest() {
     private class GetConnectException: SQLTransientException()
 
     /**
-     * 이미 연결 되어 있는데, 다시 연결을 시도하면, [GetConnectException]이 발생합니다.
+     * 연결을 시도하면, [GetConnectException]이 발생합니다.
+     * `maxAttempts` 수만큼 재시도 합니다.
      */
     @Test
     fun `connect fail causes repeated connect attempts`() {
@@ -38,19 +42,19 @@ class Ex03_ConnectionTimeout: AbstractExposedTest() {
 
         try {
             transaction(Connection.TRANSACTION_SERIALIZABLE, db = db) {
-                maxAttempts = 42
+                maxAttempts = 3
                 exec("SELECT 1;")
                 // NO OP
             }
             fail("Should have thrown ${GetConnectException::class.simpleName}")
         } catch (e: ExposedSQLException) {
             e.cause shouldBeInstanceOf GetConnectException::class
-            datasource.connectCount shouldBeEqualTo 42
+            datasource.connectCount shouldBeEqualTo 3
         }
     }
 
     /**
-     * transaction 블록에서 설정한 [maxAttempts]가 [DatabaseConfig]의 기본값을 덮어씁니다.
+     * transaction 블록에서 설정한 `maxAttempts` 가 [DatabaseConfig]의 기본값을 덮어씁니다.
      * `maxAttempts` 는 예외 발생 시, 재시도 횟수를 설정합니다.
      */
     @Test
@@ -59,7 +63,7 @@ class Ex03_ConnectionTimeout: AbstractExposedTest() {
         val db = Database.connect(
             datasource = datasource,
             databaseConfig = DatabaseConfig {
-                defaultMaxAttempts = 10
+                defaultMaxAttempts = 3
             }
         )
 
@@ -71,7 +75,7 @@ class Ex03_ConnectionTimeout: AbstractExposedTest() {
             fail("Should have thrown ${GetConnectException::class.simpleName}")
         } catch (e: ExposedSQLException) {
             e.cause shouldBeInstanceOf GetConnectException::class
-            datasource.connectCount shouldBeEqualTo 10
+            datasource.connectCount shouldBeEqualTo 3
         }
 
         datasource.connectCount = 0
@@ -79,13 +83,13 @@ class Ex03_ConnectionTimeout: AbstractExposedTest() {
         try {
             // property set in transaction block should override default DatabaseConfig
             transaction(Connection.TRANSACTION_SERIALIZABLE, db = db) {
-                maxAttempts = 25
+                maxAttempts = 5
                 exec("SELECT 1;")
             }
             fail("Should have thrown ${GetConnectException::class.simpleName}")
         } catch (e: ExposedSQLException) {
             e.cause shouldBeInstanceOf GetConnectException::class
-            datasource.connectCount shouldBeEqualTo 25
+            datasource.connectCount shouldBeEqualTo 5
         }
     }
 }
