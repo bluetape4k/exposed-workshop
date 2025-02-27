@@ -1,5 +1,7 @@
-package exposed.ddl.example
+package exposed.examples.ddl
 
+import exposed.examples.ddl.Ex07_CustomEnumeration.Status.ACTIVE
+import exposed.examples.ddl.Ex07_CustomEnumeration.Status.INACTIVE
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
@@ -66,7 +68,7 @@ class Ex07_CustomEnumeration: AbstractExposedTest() {
      * ```
      */
     internal object EnumTable: IntIdTable("enum_table") {
-        internal var status: Column<Status> = enumeration<Status>("status").default(Status.ACTIVE)
+        internal var status: Column<Status> = enumeration<Status>("status").default(ACTIVE)
 
         internal fun initEnumColumn(sql: String) {
             (columns as MutableList<Column<*>>).remove(status)
@@ -113,16 +115,16 @@ class Ex07_CustomEnumeration: AbstractExposedTest() {
                 // enumColumn = ACTIVE 로 설정
                 // INSERT INTO enum_table (status) VALUES ('ACTIVE')
                 EnumTable.insert {
-                    it[EnumTable.status] = Status.ACTIVE
+                    it[status] = ACTIVE
                 }
-                EnumTable.selectAll().single()[EnumTable.status] shouldBeEqualTo Status.ACTIVE
+                EnumTable.selectAll().single()[EnumTable.status] shouldBeEqualTo ACTIVE
 
                 // enumColumn = INACTIVE 로 설정
                 // UPDATE enum_table SET status='INACTIVE'
                 EnumTable.update {
-                    it[EnumTable.status] = Status.INACTIVE
+                    it[status] = INACTIVE
                 }
-                EnumTable.selectAll().single()[EnumTable.status] shouldBeEqualTo Status.INACTIVE
+                EnumTable.selectAll().single()[EnumTable.status] shouldBeEqualTo INACTIVE
 
                 EnumTable.deleteAll()
 
@@ -130,18 +132,18 @@ class Ex07_CustomEnumeration: AbstractExposedTest() {
 
                 // INSERT INTO enum_table (status) VALUES ('ACTIVE')
                 val entity = EnumEntity.new {
-                    status = Status.ACTIVE
+                    status = ACTIVE
                 }
                 flushCache()
-                entity.status shouldBeEqualTo Status.ACTIVE
+                entity.status shouldBeEqualTo ACTIVE
 
                 // UPDATE enum_table SET status='INACTIVE' WHERE id = 2
-                entity.status = Status.INACTIVE
-                EnumEntity.reload(entity)!!.status shouldBeEqualTo Status.INACTIVE
+                entity.status = INACTIVE
+                EnumEntity.reload(entity)!!.status shouldBeEqualTo INACTIVE
 
                 // UPDATE enum_table SET status='ACTIVE' WHERE id = 2
-                entity.status = Status.ACTIVE
-                EnumEntity.reload(entity)!!.status shouldBeEqualTo Status.ACTIVE
+                entity.status = ACTIVE
+                EnumEntity.reload(entity)!!.status shouldBeEqualTo ACTIVE
             } finally {
                 SchemaUtils.drop(EnumTable)
                 if (currentDialect is PostgreSQLDialect) {
@@ -194,7 +196,7 @@ class Ex07_CustomEnumeration: AbstractExposedTest() {
                 referenceTable.initRefColumn()
                 SchemaUtils.create(referenceTable)
 
-                val status = Status.ACTIVE
+                val status = ACTIVE
                 val id1 = EnumTable.insert {
                     it[EnumTable.status] = status
                 } get EnumTable.status

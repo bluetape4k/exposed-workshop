@@ -1,4 +1,4 @@
-package exposed.ddl.example
+package exposed.examples.ddl
 
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB

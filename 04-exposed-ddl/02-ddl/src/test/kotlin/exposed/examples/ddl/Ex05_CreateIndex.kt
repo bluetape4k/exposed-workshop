@@ -1,4 +1,4 @@
-package exposed.ddl.example
+package exposed.examples.ddl
 
 import exposed.shared.sql.getIndices
 import exposed.shared.tests.AbstractExposedTest
