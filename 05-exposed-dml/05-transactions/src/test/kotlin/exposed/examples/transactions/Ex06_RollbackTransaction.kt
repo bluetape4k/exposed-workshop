@@ -26,6 +26,9 @@ class Ex06_RollbackTransaction: AbstractExposedTest() {
     private fun countByValue(value: String): Int =
         RollbackTable.selectAll().where { RollbackTable.value eq value }.count().toInt()
 
+    /**
+     * `save point` 없이 rollback 하기
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `rollback without save points`(testDB: TestDB) {
@@ -44,6 +47,8 @@ class Ex06_RollbackTransaction: AbstractExposedTest() {
 
                 RollbackTable.insert { it[value] = "after-dummy" }
                 countByValue("after-dummy") shouldBeEqualTo 1
+
+                // rollback() 를 호출하면, 모든 데이터의 추가가 취소됩니다.
                 rollback()
             }
             // 위의 transaction이 rollback 되었으므로, 모든 데이터의 추가가 취소됩니다.
@@ -53,6 +58,9 @@ class Ex06_RollbackTransaction: AbstractExposedTest() {
         }
     }
 
+    /**
+     * `save point`를 사용 (`useNestedTransactions = true`) 하여 rollback 하기
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `rollback with save points`(testDB: TestDB) {
@@ -73,6 +81,7 @@ class Ex06_RollbackTransaction: AbstractExposedTest() {
 
                 RollbackTable.insert { it[value] = "after-dummy" }
                 countByValue("after-dummy") shouldBeEqualTo 1
+
                 rollback()
             }
             // 위의 transaction이 rollback 되었으므로, 모든 데이터의 추가가 취소됩니다.
@@ -82,6 +91,9 @@ class Ex06_RollbackTransaction: AbstractExposedTest() {
         }
     }
 
+    /**
+     * 예외로 인해 triggered 된 rollback 수행
+     */
     @Test
     fun `rollback without save points triggered by exceptions`() {
         Assumptions.assumeTrue { TestDB.H2 in TestDB.enabledDialects() }
@@ -117,8 +129,8 @@ class Ex06_RollbackTransaction: AbstractExposedTest() {
             RollbackTable.selectAll().count().toInt() shouldBeEqualTo 0
         }
 
-        // non-db exception propagates from inner to outer without rollback and is handled, if caught.
-        // if not caught & exception propagates all the way to outer tx, full rollback occurs (as always).
+        // db 예외가 아닌 경우 내부 Tx 에서 rollback이 발생하지 않으며, 외부 Tx에서 rollback이 발생하지 않도록 처리해야 함
+        // 만약 이런 예외를 처리하지 않으면, 외부 Tx에서 rollback이 발생하게 되어 데이터가 삭제된다.
         transaction {
             val outerTxId = this.id
 
@@ -131,7 +143,7 @@ class Ex06_RollbackTransaction: AbstractExposedTest() {
                     innerTxId shouldBeEqualTo outerTxId
 
                     RollbackTable.insert { it[value] = "City B" }
-                    error("Failure")                    // Application 예외가 발생하므로, rollback이 발생하지 않아야 함
+                    error("Failure")         // Application 예외가 발생하므로, rollback이 발생하지 않아야 함
                 }
             } catch (cause: IllegalStateException) {
                 cause.toString() shouldContain "Failure"
