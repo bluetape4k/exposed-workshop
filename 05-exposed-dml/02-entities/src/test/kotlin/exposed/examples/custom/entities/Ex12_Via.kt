@@ -1,4 +1,4 @@
-package exposed.examples.entities
+package exposed.examples.custom.entities
 
 import exposed.examples.entities.ViaTestData.VNumber
 import exposed.examples.entities.ViaTestData.VString

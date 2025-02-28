@@ -1,4 +1,4 @@
-package exposed.examples.entities
+package exposed.examples.custom.entities
 
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode

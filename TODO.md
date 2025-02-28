@@ -74,7 +74,8 @@
 - [ ] JSON
     - [ ] JSON Column
     - [ ] JSONB Column
-- [ ] Java Time
+- [ ] Java Time Column
+- [ ] Kotlin DateTime Column
 - [ ] Money Column
 
 ## 7. Define Other Data Types
@@ -134,6 +135,7 @@
     - [ ] Platform Threads
     - [ ] Virtual Threads
 - [ ] Spring Boot Webflux + Coroutines
+- [ ] Implement ExposedRepository
 
 ## 10. Migration Existing Database (Flyway)
 

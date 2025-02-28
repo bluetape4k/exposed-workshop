@@ -1,4 +1,4 @@
-package exposed.examples.entities
+package exposed.examples.custom.entities
 
 import exposed.shared.samples.City
 import exposed.shared.samples.CityTable

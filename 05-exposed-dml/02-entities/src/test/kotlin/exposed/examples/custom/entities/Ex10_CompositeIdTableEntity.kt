@@ -1,4 +1,4 @@
-package exposed.examples.entities
+package exposed.examples.custom.entities
 
 import exposed.shared.mapping.compositeId.BookSchema
 import exposed.shared.mapping.compositeId.BookSchema.Author
@@ -587,13 +587,18 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
         val name = varchar("name", 64).entityId()
         val population = long("population").nullable()
 
-        override val primaryKey = PrimaryKey(zipCode, name)
+        override val primaryKey = PrimaryKey(
+            exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.zipCode,
+            exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.name
+        )
     }
 
     class Town(id: EntityID<CompositeID>): CompositeEntity(id) {
-        companion object: CompositeEntityClass<Town>(Towns)
+        companion object: CompositeEntityClass<exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Town>(
+            exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns
+        )
 
-        var population by Towns.population
+        var population by exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.population
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -608,16 +613,19 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `isNull and eq with alias`(testDB: TestDB) {
-        withTables(testDB, Towns) {
+        withTables(testDB, exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns) {
             val townAValue = CompositeID {
-                it[Towns.zipCode] = "1A2 3B4"
-                it[Towns.name] = "Town A"
+                it[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.zipCode] = "1A2 3B4"
+                it[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.name] = "Town A"
             }
-            val townAId: EntityID<CompositeID> = Towns.insertAndGetId { it[id] = townAValue }
+            val townAId: EntityID<CompositeID> =
+                exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.insertAndGetId {
+                    it[id] = townAValue
+                }
 
             flushCache()
 
-            val smallCity = Towns.alias("small_city")
+            val smallCity = exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.alias("small_city")
 
             /**
              * ```sql
@@ -629,11 +637,11 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
              */
             val result1 = smallCity.selectAll()
                 .where {
-                    smallCity[Towns.population].isNull() and (smallCity[Towns.id] eq townAId)
+                    smallCity[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.population].isNull() and (smallCity[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.id] eq townAId)
                 }
                 .single()
 
-            result1[smallCity[Towns.population]].shouldBeNull()
+            result1[smallCity[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.population]].shouldBeNull()
 
             /**
              * ```sql
@@ -643,11 +651,11 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
              * ```
              */
             val result2 = smallCity
-                .select(smallCity[Towns.name])
-                .where { smallCity[Towns.id] eq townAId.value }
+                .select(smallCity[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.name])
+                .where { smallCity[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.id] eq townAId.value }
                 .single()
 
-            result2[smallCity[Towns.name]] shouldBeEqualTo townAValue[Towns.name]
+            result2[smallCity[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.name]] shouldBeEqualTo townAValue[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.name]
         }
     }
 
@@ -657,14 +665,15 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `id param with composite value`(testDB: TestDB) {
-        withTables(testDB, Towns) {
+        withTables(testDB, exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns) {
             val townAValue = CompositeID {
-                it[Towns.zipCode] = "1A2 3B4"
-                it[Towns.name] = "Town A"
+                it[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.zipCode] = "1A2 3B4"
+                it[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.name] = "Town A"
             }
-            val townAId: EntityID<CompositeID> = Towns.insertAndGetId {
+            val townAId: EntityID<CompositeID> =
+                exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.insertAndGetId {
                 it[id] = townAValue
-                it[population] = 4
+                    it[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.population] = 4
             }
 
             entityCache.clear()
@@ -678,16 +687,25 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
              *  WHERE (TOWNS.ZIP_CODE = ?) AND (TOWNS."name" = ?)
              * ```
              */
-            val query: Query = Towns.selectAll()
-                .where { Towns.id eq idParam(townAId, Towns.id) }
+            val query: Query = exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.selectAll()
+                .where {
+                    exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.id eq idParam(
+                        townAId,
+                        exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.id
+                    )
+                }
 
             val selectClause = query.prepareSQL(this, prepared = true)
             log.debug { "Select Clause: $selectClause" }
 
             val whereClause = selectClause.substringAfter("WHERE ")
-            whereClause shouldBeEqualTo "(${fullIdentity(Towns.zipCode)} = ?) AND (${fullIdentity(Towns.name)} = ?)"
+            whereClause shouldBeEqualTo "(${fullIdentity(exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.zipCode)} = ?) AND (${
+                fullIdentity(
+                    exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.name
+                )
+            } = ?)"
 
-            query.single()[Towns.population] shouldBeEqualTo 4
+            query.single()[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.population] shouldBeEqualTo 4
         }
     }
 
@@ -699,10 +717,10 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `flushing updated entity`(testDB: TestDB) {
-        withTables(testDB, Towns) {
+        withTables(testDB, exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns) {
             val id = CompositeID {
-                it[Towns.zipCode] = "1A2 3B4"
-                it[Towns.name] = "Town A"
+                it[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.zipCode] = "1A2 3B4"
+                it[exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Towns.name] = "Town A"
             }
 
             /**
@@ -714,7 +732,7 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
              *  ```
              */
             inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
-                Town.new(id) {
+                exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Town.new(id) {
                     population = 1000
                 }
             }
@@ -722,14 +740,14 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
              * EntityID를 이용하여 조회한 후, population 값을 갱신한다.
              */
             inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
-                val town = Town[id]
+                val town = exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Town[id]
                 town.population = 2000
             }
             /**
              * EntityID를 이용하여 조회한 후, population 값을 확인한다
              */
             inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
-                val town = Town[id]
+                val town = exposed.examples.custom.entities.Ex10_CompositeIdTableEntity.Town[id]
                 town.population shouldBeEqualTo 2000
             }
         }

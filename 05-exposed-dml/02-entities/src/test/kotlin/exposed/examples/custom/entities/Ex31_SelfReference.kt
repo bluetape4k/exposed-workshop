@@ -1,4 +1,4 @@
-package exposed.examples.entities
+package exposed.examples.custom.entities
 
 import exposed.shared.dml.DMLTestData
 import exposed.shared.tests.AbstractExposedTest

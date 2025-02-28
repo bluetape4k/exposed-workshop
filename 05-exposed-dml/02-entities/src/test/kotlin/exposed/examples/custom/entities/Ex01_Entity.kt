@@ -1,4 +1,4 @@
-package exposed.examples.entities
+package exposed.examples.custom.entities
 
 import exposed.examples.entities.EntityTestData.AEntity
 import exposed.examples.entities.EntityTestData.BEntity
