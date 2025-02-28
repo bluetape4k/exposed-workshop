@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * one-to-many bidirectional 관계를 Exposed로 구현한 예제
  */
-class Ex01_OneToMany_Batch: AbstractExposedTest() {
+class Ex01_OneToMany_Bidirectional_Batch: AbstractExposedTest() {
 
     companion object: KLogging()
 
