@@ -1,12 +1,12 @@
 package exposed.examples.jpa.relations.onetoone
 
+import exposed.shared.dao.idEquals
+import exposed.shared.dao.idHashCode
+import exposed.shared.dao.idValue
+import exposed.shared.dao.toStringBuilder
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.exposed.dao.idEquals
-import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.idValue
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
@@ -20,7 +20,10 @@ import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex02_UnidirectionalMapsIdOneToOne: AbstractExposedTest() {
+/**
+ * JPA @MapsId 형태의 unidirectional one-to-one 관계를 Exposed로 구현한 예제
+ */
+class Ex03_OneToOne_Unidirectional_MapsId: AbstractExposedTest() {
 
     companion object: KLogging()
 
