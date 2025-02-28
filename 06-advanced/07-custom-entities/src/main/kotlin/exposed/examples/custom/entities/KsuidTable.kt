@@ -22,9 +22,9 @@ typealias KsuidEntityID = EntityID<String>
 /**
  * Entity ID 를 [Ksuid]로 생성한 문자열을 사용하는 Entity
  */
-abstract class KsuidEntity(id: KsuidEntityID): StringEntity(id)
+open class KsuidEntity(id: KsuidEntityID): StringEntity(id)
 
-abstract class KsuidEntityClass<out E: KsuidEntity>(
+open class KsuidEntityClass<out E: KsuidEntity>(
     table: KsuidTable,
     entityType: Class<E>? = null,
     entityCtor: ((KsuidEntityID) -> E)? = null,

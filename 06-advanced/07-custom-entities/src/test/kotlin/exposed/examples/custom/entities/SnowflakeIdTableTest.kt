@@ -26,6 +26,16 @@ class SnowflakeIdTableTest: AbstractCustomIdTableTest() {
 
     companion object: KLogging()
 
+    /**
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS t_snowflake (
+     *      id BIGINT PRIMARY KEY,
+     *      "name" VARCHAR(255) NOT NULL,
+     *      age INT NOT NULL
+     * )
+     * ```
+     */
     object T1: SnowflakeIdTable("t_snowflake") {
         val name = varchar("name", 255)
         val age = integer("age")
