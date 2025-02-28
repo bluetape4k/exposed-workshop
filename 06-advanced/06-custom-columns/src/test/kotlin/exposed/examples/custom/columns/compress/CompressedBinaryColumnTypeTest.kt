@@ -35,6 +35,15 @@ class CompressedBinaryColumnTypeTest: AbstractExposedTest() {
      *      zstd_data bytea NULL
      * )
      * ```
+     * ```sql
+     * -- MySQL V8
+     * CREATE TABLE IF NOT EXISTS T1 (
+     *      id INT AUTO_INCREMENT PRIMARY KEY,
+     *      lz4_data VARBINARY(4096) NULL,
+     *      snappy_data VARBINARY(4096) NULL,
+     *      zstd_data VARBINARY(4096) NULL
+     * )
+     * ```
      */
     private object T1: IntIdTable() {
         val lzData = compressedBinary("lz4_data", 4096, Compressors.LZ4).nullable()
@@ -57,7 +66,7 @@ class CompressedBinaryColumnTypeTest: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `DSL 방식으로 데이터를 압축하여 byte array 컬럼에 저장합니다`(testDB: TestDB) {
-        val text = Fakers.randomString(2048, 4096)
+        val text = Fakers.randomString(1024, 2048)
         val bytes = text.toByteArray()
 
         withTables(testDB, T1) {
@@ -99,7 +108,7 @@ class CompressedBinaryColumnTypeTest: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `DAO 방식으로 속성을 압축하여 byte array 컬럼에 저장합니다`(testDB: TestDB) {
-        val text = Fakers.randomString(2048, 4096)
+        val text = Fakers.randomString(1024, 2048)
         val bytes = text.toByteArray()
 
         withTables(testDB, T1) {

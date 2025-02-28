@@ -26,12 +26,28 @@ class CompressedBlobColumnTypeTest: AbstractExposedTest() {
     companion object: KLogging()
 
     /**
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS t1 (
+     *      id SERIAL PRIMARY KEY,
+     *      lz4_blob bytea NULL,
+     *      snappy_blob bytea NULL,
+     *      zstd_blob bytea NULL
+     * );
      *
+     * -- MySQL V8
+     * CREATE TABLE IF NOT EXISTS T1 (
+     *      id INT AUTO_INCREMENT PRIMARY KEY,
+     *      lz4_blob BLOB NULL,
+     *      snappy_blob BLOB NULL,
+     *      zstd_blob BLOB NULL
+     * );
+     * ```
      */
     private object T1: IntIdTable() {
-        val lzData = compressedBlob("lz4_data", Compressors.LZ4).nullable()
-        val snappyData = compressedBlob("snappy_data", Compressors.Snappy).nullable()
-        val zstdData = compressedBlob("zstd_data", Compressors.Zstd).nullable()
+        val lzData = compressedBlob("lz4_blob", Compressors.LZ4).nullable()
+        val snappyData = compressedBlob("snappy_blob", Compressors.Snappy).nullable()
+        val zstdData = compressedBlob("zstd_blob", Compressors.Zstd).nullable()
     }
 
     class E1(id: EntityID<Int>): IntEntity(id) {
