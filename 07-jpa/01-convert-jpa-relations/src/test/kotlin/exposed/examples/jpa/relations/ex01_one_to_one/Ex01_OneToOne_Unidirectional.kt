@@ -1,7 +1,7 @@
-package exposed.examples.jpa.relations.onetoone
+package exposed.examples.jpa.relations.ex01_one_to_one
 
-import exposed.examples.jpa.relations.onetoone.Ex01_OneToOne_Unidirectional.Cavalier
-import exposed.examples.jpa.relations.onetoone.Ex01_OneToOne_Unidirectional.Horse
+import exposed.examples.jpa.relations.ex01_one_to_one.Ex01_OneToOne_Unidirectional.Cavalier
+import exposed.examples.jpa.relations.ex01_one_to_one.Ex01_OneToOne_Unidirectional.Horse
 import exposed.shared.dao.idEquals
 import exposed.shared.dao.idHashCode
 import exposed.shared.dao.toStringBuilder

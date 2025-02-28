@@ -1,4 +1,4 @@
-package exposed.examples.jpa.relations.onetoone
+package exposed.examples.jpa.relations.ex01_one_to_one
 
 import exposed.shared.dao.idEquals
 import exposed.shared.dao.idHashCode
