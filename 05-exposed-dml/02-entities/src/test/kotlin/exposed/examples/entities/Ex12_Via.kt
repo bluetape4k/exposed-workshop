@@ -1,5 +1,8 @@
-package exposed.examples.custom.entities
+package exposed.examples.entities
 
+import exposed.examples.entities.ViaTestData.ConnectionAutoTable
+import exposed.examples.entities.ViaTestData.ConnectionTable
+import exposed.examples.entities.ViaTestData.IConnectionTable
 import exposed.examples.entities.ViaTestData.VNumber
 import exposed.examples.entities.ViaTestData.VString
 import exposed.shared.tests.AbstractExposedTest
@@ -48,7 +51,6 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.sql.Connection
 import java.util.*
 import kotlin.reflect.jvm.isAccessible
-
 
 object ViaTestData {
 
@@ -140,9 +142,9 @@ object ViaTestData {
     class VNumber(id: EntityID<UUID>): UUIDEntity(id) {
         companion object: UUIDEntityClass<VNumber>(NumbersTable)
 
-        var number: Int by ViaTestData.NumbersTable.number
-        var connectedStrings: SizedIterable<VString> by VString via ViaTestData.ConnectionTable
-        var connectedAutoStrings: SizedIterable<VString> by VString via ViaTestData.ConnectionAutoTable
+        var number: Int by NumbersTable.number
+        var connectedStrings: SizedIterable<VString> by VString via ConnectionTable
+        var connectedAutoStrings: SizedIterable<VString> by VString via ConnectionAutoTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -154,7 +156,7 @@ object ViaTestData {
     class VString(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<VString>(StringsTable)
 
-        var text: String by ViaTestData.StringsTable.text
+        var text: String by StringsTable.text
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -174,12 +176,12 @@ class Ex11_Via: AbstractExposedTest() {
 
     private fun VNumber.testWithBothTables(
         valuesToSet: List<VString>,
-        body: (ViaTestData.IConnectionTable, List<ResultRow>) -> Unit,
+        body: (IConnectionTable, List<ResultRow>) -> Unit,
     ) {
-        listOf(ViaTestData.ConnectionTable, ViaTestData.ConnectionAutoTable).forEach { ct ->
+        listOf(ConnectionTable, ConnectionAutoTable).forEach { ct ->
             when (ct) {
-                is ViaTestData.ConnectionTable -> connectedStrings = SizedCollection(valuesToSet)
-                is ViaTestData.ConnectionAutoTable -> connectedAutoStrings = SizedCollection(valuesToSet)
+                is ConnectionTable -> connectedStrings = SizedCollection(valuesToSet)
+                is ConnectionAutoTable -> connectedAutoStrings = SizedCollection(valuesToSet)
             }
 
             val result = ct.selectAll().toList()

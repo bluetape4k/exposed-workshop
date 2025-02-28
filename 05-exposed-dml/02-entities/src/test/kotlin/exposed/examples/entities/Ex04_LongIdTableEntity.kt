@@ -1,4 +1,4 @@
-package exposed.examples.custom.entities
+package exposed.examples.entities
 
 import exposed.examples.entities.LongIdTables.Cities
 import exposed.examples.entities.LongIdTables.City
@@ -6,7 +6,6 @@ import exposed.examples.entities.LongIdTables.People
 import exposed.examples.entities.LongIdTables.Person
 import exposed.examples.entities.LongIdTables.Town
 import exposed.examples.entities.LongIdTables.Towns
-import exposed.shared.mapping.PersonSchema.AddressTable.city
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables

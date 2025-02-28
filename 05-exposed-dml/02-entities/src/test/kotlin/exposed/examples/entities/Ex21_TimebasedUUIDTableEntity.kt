@@ -1,53 +1,53 @@
-package exposed.examples.custom.entities
+package exposed.examples.entities
 
-import exposed.examples.entities.UUIDTables.Address
-import exposed.examples.entities.UUIDTables.Addresses
-import exposed.examples.entities.UUIDTables.Cities
-import exposed.examples.entities.UUIDTables.City
-import exposed.examples.entities.UUIDTables.People
-import exposed.examples.entities.UUIDTables.Person
-import exposed.examples.entities.UUIDTables.Town
-import exposed.examples.entities.UUIDTables.Towns
-import exposed.shared.mapping.PersonSchema.AddressTable.city
+import exposed.examples.entities.TimebasedUUIDTables.Address
+import exposed.examples.entities.TimebasedUUIDTables.Addresses
+import exposed.examples.entities.TimebasedUUIDTables.Cities
+import exposed.examples.entities.TimebasedUUIDTables.City
+import exposed.examples.entities.TimebasedUUIDTables.People
+import exposed.examples.entities.TimebasedUUIDTables.Person
+import exposed.examples.entities.TimebasedUUIDTables.Town
+import exposed.examples.entities.TimebasedUUIDTables.Towns
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.id.TimebasedUUIDEntity
+import io.bluetape4k.exposed.dao.id.TimebasedUUIDEntityClass
+import io.bluetape4k.exposed.dao.id.TimebasedUUIDTable
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.idValue
 import io.bluetape4k.exposed.dao.toStringBuilder
+import io.bluetape4k.idgenerators.uuid.TimebasedUuid.Epoch
+import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
-import org.amshove.kluent.shouldContain
-import org.amshove.kluent.shouldContainSame
-import org.jetbrains.exposed.dao.UUIDEntity
-import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.dao.with
-import org.jetbrains.exposed.sql.SizedIterable
-import org.jetbrains.exposed.sql.SortOrder.ASC
 import org.jetbrains.exposed.sql.exists
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.*
 
+/**
+ * Timebased UUID 를 Identifier 로 사용하는 Entity 테스트
+ */
+object TimebasedUUIDTables {
 
-object UUIDTables {
     /**
      * ```sql
      * -- Postgres
      * CREATE TABLE IF NOT EXISTS cities (
-     *      d uuid PRIMARY KEY,
+     *      id uuid PRIMARY KEY,
      *      "name" VARCHAR(50) NOT NULL
-     * )
+     * );
      * ```
      */
-    object Cities: UUIDTable() {
+    object Cities: TimebasedUUIDTable() {
         val name = varchar("name", 50)
     }
 
@@ -64,7 +64,7 @@ object UUIDTables {
      * )
      * ```
      */
-    object People: UUIDTable() {
+    object People: TimebasedUUIDTable() {
         val name = varchar("name", 80)
         val cityId = reference("city_id", Cities)
     }
@@ -85,10 +85,11 @@ object UUIDTables {
      *      REFERENCES cities(id) ON DELETE RESTRICT ON UPDATE RESTRICT
      * );
      *
-     * ALTER TABLE addresses ADD CONSTRAINT addresses_person_id_city_id_unique UNIQUE (person_id, city_id);
+     * ALTER TABLE addresses
+     *      ADD CONSTRAINT addresses_person_id_city_id_unique UNIQUE (person_id, city_id);
      * ```
      */
-    object Addresses: UUIDTable() {
+    object Addresses: TimebasedUUIDTable() {
         val personId = reference("person_id", People)
         val cityId = reference("city_id", Cities)
 
@@ -108,83 +109,70 @@ object UUIDTables {
      *
      *      CONSTRAINT fk_towns_city_id__id FOREIGN KEY (city_id)
      *      REFERENCES cities(id) ON DELETE RESTRICT ON UPDATE RESTRICT
-     * );
+     * )
      * ```
      */
-    object Towns: UUIDTable("towns") {
+    object Towns: TimebasedUUIDTable("towns") {
         val cityId = uuid("city_id").references(Cities.id)
     }
 
-    class City(id: EntityID<UUID>): UUIDEntity(id) {
-        companion object: UUIDEntityClass<City>(Cities)
+    class City(id: EntityID<UUID>): TimebasedUUIDEntity(id) {
+        companion object: TimebasedUUIDEntityClass<City>(Cities)
 
-        var name: String by Cities.name
-        val towns: SizedIterable<Town> by Town referrersOn Towns.cityId  // one-to-many
+        var name by Cities.name
+        val towns by Town referrersOn Towns.cityId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
-            .add("name", name)
-            .toString()
+        override fun toString(): String = toStringBuilder().add("name", name).toString()
     }
 
-    class Person(id: EntityID<UUID>): UUIDEntity(id) {
-        companion object: UUIDEntityClass<Person>(People)
+    class Person(id: EntityID<UUID>): TimebasedUUIDEntity(id) {
+        companion object: TimebasedUUIDEntityClass<Person>(People)
 
-        var name: String by People.name
-        var city: City by City referencedOn People.cityId
+        var name by People.name
+        var city by City referencedOn People.cityId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
-            .add("name", name)
-            .add("city id", city.idValue)
-            .toString()
+        override fun toString(): String = toStringBuilder().add("name", name).add("city id", city.idValue).toString()
     }
 
-    class Address(id: EntityID<UUID>): UUIDEntity(id) {
-        companion object: UUIDEntityClass<Address>(Addresses)
+    class Address(id: EntityID<UUID>): TimebasedUUIDEntity(id) {
+        companion object: TimebasedUUIDEntityClass<Address>(Addresses)
 
-        var person: Person by Person referencedOn Addresses.personId  // many-to-one
-        var city: City by City referencedOn Addresses.cityId          // many-to-one
-        var address: String by Addresses.address
+        var person by Person.referencedOn(Addresses.personId)
+        var city by City.referencedOn(Addresses.cityId)
+        var address by Addresses.address
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
-            .add("address", address)
-            .add("person id", person.idValue)
-            .add("city id", city.idValue)
-            .toString()
+        override fun toString(): String =
+            toStringBuilder().add("address", address).add("person id", person.idValue).add("city id", city.idValue)
+                .toString()
     }
 
-    class Town(id: EntityID<UUID>): UUIDEntity(id) {
-        companion object: UUIDEntityClass<Town>(Towns)
+    class Town(id: EntityID<UUID>): TimebasedUUIDEntity(id) {
+        companion object: TimebasedUUIDEntityClass<Town>(Towns)
 
-        var city: City by City referencedOn Towns.cityId     // many-to-one
+        var city by City referencedOn Towns.cityId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
-            .add("city id", city.idValue)
-            .toString()
+        override fun toString(): String = toStringBuilder().add("city id", city.idValue).toString()
     }
 }
 
-/**
- * Primary Key 가 UUID 인 테이블을 사용하는 예
- */
-class Ex05_UUIDTableEntity: AbstractExposedTest() {
+class Ex21_TimebasedUUIDTableEntity: AbstractExposedTest() {
 
+    companion object: KLogging()
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `create tables`(testDB: TestDB) {
-        withTables(testDB, Cities, People, Addresses, Towns) {
+        withTables(testDB, Cities, People) {
             Cities.exists().shouldBeTrue()
             People.exists().shouldBeTrue()
-            Addresses.exists().shouldBeTrue()
-            Towns.exists().shouldBeTrue()
         }
     }
 
@@ -195,11 +183,11 @@ class Ex05_UUIDTableEntity: AbstractExposedTest() {
             val seoul = City.new { name = "Seoul" }
             val busan = City.new { name = "Busan" }
 
-            Person.new(UUID.randomUUID()) {
+            Person.new(Epoch.nextId()) {
                 name = "Debop"
                 city = seoul
             }
-            Person.new(UUID.randomUUID()) {
+            Person.new(Epoch.nextId()) {
                 name = "BTS"
                 city = seoul
             }
@@ -212,18 +200,14 @@ class Ex05_UUIDTableEntity: AbstractExposedTest() {
 
             /**
              * ```sql
-             * SELECT cities.id, cities."name"
-             *   FROM cities
-             *  ORDER BY cities.id ASC
+             * SELECT cities.id, cities."name" FROM cities
              * ```
              */
-            val allCities = City.all()
-                .orderBy(Cities.id to ASC)
-                .map { it.name }
-            allCities shouldContainSame listOf("Seoul", "Busan")
+            val allCities = City.all().map { it.name }
+            allCities shouldBeEqualTo listOf("Seoul", "Busan")
 
             /**
-             * eager loading of many-to-one
+             * many-to-one Earger Loaing
              *
              * ```sql
              * SELECT people.id, people."name", people.city_id
@@ -231,14 +215,12 @@ class Ex05_UUIDTableEntity: AbstractExposedTest() {
              *
              * SELECT cities.id, cities."name"
              *   FROM cities
-             *  WHERE cities.id IN ('15fd22e5-7480-47f5-b054-5d60b5c1b456', '45fba8f9-502f-4469-8a21-3ab119c08ee0');
+             *  WHERE cities.id IN ('1efe168f-dd0c-6303-8372-b5321e042980', '1efe168f-dd0c-6305-8372-b5321e042980');
              * ```
              */
             val allPeople = Person.all().with(Person::city).map { it.name to it.city.name }
-            allPeople shouldContainSame listOf(
-                "Debop" to "Seoul",
-                "BTS" to "Seoul",
-                "Sam" to "Busan"
+            allPeople shouldBeEqualTo listOf(
+                "Debop" to "Seoul", "BTS" to "Seoul", "Sam" to "Busan"
             )
         }
     }
@@ -250,11 +232,11 @@ class Ex05_UUIDTableEntity: AbstractExposedTest() {
             val seoul = City.new { name = "Seoul" }
             val busan = City.new { name = "Busan" }
 
-            Person.new(UUID.randomUUID()) {
+            Person.new(Epoch.nextId()) {
                 name = "Debop"
                 city = seoul
             }
-            Person.new(UUID.randomUUID()) {
+            Person.new(Epoch.nextId()) {
                 name = "BTS"
                 city = seoul
             }
@@ -263,75 +245,56 @@ class Ex05_UUIDTableEntity: AbstractExposedTest() {
                 city = busan
             }
 
-            // DELETE FROM people WHERE people.id = 'a7b353ef-2fcb-4daf-9d41-ed6516d18bda'
+            // DELETE FROM people WHERE people.id = '1efe168f-dc48-6de1-8372-b5321e042980'
             sam.delete()
-            // DELETE FROM cities WHERE cities.id = '038bcadb-a8a5-46b4-9e98-2385b70669e4'
+            // DELETE FROM cities WHERE cities.id = '1efe168f-dc48-6ddd-8372-b5321e042980'
             busan.delete()
 
-            flushCache()
+            entityCache.clear()
 
             val allCities = City.all().map { it.name }
             allCities shouldBeEqualTo listOf("Seoul")
 
             /**
-             * Eager loading of many-to-one
+             * many-to-one Earger Loaing
              *
              * ```sql
-             * SELECT people.id, people."name", people.city_id FROM people;
+             * SELECT people.id, people."name", people.city_id
+             *   FROM people;
              *
              * SELECT cities.id, cities."name"
              *   FROM cities
-             *  WHERE cities.id = '54ae8589-f7b9-4fd4-a0ef-fc74a598c99e'
+             *  WHERE cities.id = '1efe168f-dc48-6ddb-8372-b5321e042980'
              * ```
              */
             val allPeople = Person.all().with(Person::city).map { it.name to it.city.name }
-            allPeople shouldContainSame listOf(
+            allPeople shouldBeEqualTo listOf(
                 "Debop" to "Seoul",
                 "BTS" to "Seoul",
             )
         }
     }
 
-    /**
-     * Entity 속성에 바로 entity 생성을 수행할 수 있다.
-     *
-     * ```sql
-     * -- create city
-     * INSERT INTO cities (id, "name") VALUES ('ff62fa07-59cc-44c9-b407-df2f49151e11', 'City1');
-     *
-     * -- create person1, person2
-     * INSERT INTO people (id, "name", city_id)
-     * VALUES ('d8974bd1-3585-416c-a536-59db33e79f74', 'Person1', 'ff62fa07-59cc-44c9-b407-df2f49151e11');
-     *
-     * INSERT INTO people (id, "name", city_id)
-     * VALUES ('c23924b3-3215-4ad5-911f-10aec993ae02', 'Person2', 'ff62fa07-59cc-44c9-b407-df2f49151e11');
-     *
-     * -- create address1, address2
-     * INSERT INTO addresses (id, person_id, city_id, address)
-     * VALUES ('a2f74e17-47bd-4245-b0b7-99c7d0c8b480', 'd8974bd1-3585-416c-a536-59db33e79f74', 'ff62fa07-59cc-44c9-b407-df2f49151e11', 'Address1');
-     *
-     * INSERT INTO addresses (id, person_id, city_id, address)
-     * VALUES ('3bf486ba-728d-4f26-892b-38ce68359639', 'c23924b3-3215-4ad5-911f-10aec993ae02', 'ff62fa07-59cc-44c9-b407-df2f49151e11', 'Address2');
-     * ```
-     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert with inner table`(testDB: TestDB) {
         withTables(testDB, Addresses, Cities, People) {
             val city1 = City.new { name = "City1" }
+            val person1 = Person.new {
+                name = "Person1"
+                city = city1
+            }
             val address1 = Address.new {
-                person = Person.new {
-                    name = "Person1"
-                    city = city1
-                }
+                person = person1
                 city = city1
                 address = "Address1"
             }
+            val person2 = Person.new {
+                name = "Person2"
+                city = city1
+            }
             val address2 = Address.new {
-                person = Person.new {
-                    name = "Person2"
-                    city = city1
-                }
+                person = person2
                 city = city1
                 address = "Address2"
             }
@@ -346,67 +309,49 @@ class Ex05_UUIDTableEntity: AbstractExposedTest() {
 
     /**
      * Lazy loading referencedOn
+     *
      * ```sql
      * SELECT towns.id, towns.city_id FROM towns
-     *
-     * SELECT cities.id, cities."name"
-     *   FROM cities WHERE cities.id = '7f14895f-9a26-4f5e-9f07-fb6b7265c619'
+     * SELECT cities.id, cities."name" FROM cities WHERE cities.id = '1efe168f-db41-62fd-8372-b5321e042980'
      * ```
      *
      * Eager loading referencedOn
+     *
      * ```sql
      * SELECT towns.id, towns.city_id FROM towns
-     *
-     * SELECT cities.id, cities."name"
-     *   FROM cities
-     *  WHERE cities.id = '7f14895f-9a26-4f5e-9f07-fb6b7265c619'
-     *
-     * SELECT cities.id, cities."name"
-     *   FROM cities
-     *  WHERE cities.id = '7f14895f-9a26-4f5e-9f07-fb6b7265c619'
+     * SELECT cities.id, cities."name" FROM cities WHERE cities.id = '1efe168f-db41-62fd-8372-b5321e042980'
+     * SELECT cities.id, cities."name" FROM cities WHERE cities.id = '1efe168f-db41-62fd-8372-b5321e042980'
      * ```
      *
      * Lazy loading referrersOn
      * ```sql
      * SELECT cities.id, cities."name" FROM cities
-     *
-     * SELECT towns.id, towns.city_id
-     *   FROM towns
-     *  WHERE towns.city_id = '7f14895f-9a26-4f5e-9f07-fb6b7265c619'
-     *
-     * SELECT cities.id, cities."name"
-     *   FROM cities
-     *  WHERE cities.id = '7f14895f-9a26-4f5e-9f07-fb6b7265c619'
+     * SELECT towns.id, towns.city_id FROM towns WHERE towns.city_id = '1efe168f-db41-62fd-8372-b5321e042980'
+     * SELECT cities.id, cities."name" FROM cities WHERE cities.id = '1efe168f-db41-62fd-8372-b5321e042980'
      * ```
      *
      * Eager loading referrersOn
      * ```sql
-     * SELECT cities.id, cities."name" FROM cities;
-     *
-     * SELECT towns.id, towns.city_id, cities.id
-     *   FROM towns INNER JOIN cities ON towns.city_id = cities.id
-     *  WHERE towns.city_id = '7f14895f-9a26-4f5e-9f07-fb6b7265c619';
-     *
-     * SELECT cities.id, cities."name"
-     *   FROM cities
-     *  WHERE cities.id = '7f14895f-9a26-4f5e-9f07-fb6b7265c619';
+     * SELECT cities.id, cities."name" FROM cities
+     * SELECT towns.id, towns.city_id, cities.id FROM towns INNER JOIN cities ON towns.city_id = cities.id WHERE towns.city_id = '1efe168f-db41-62fd-8372-b5321e042980'
+     * SELECT cities.id, cities."name" FROM cities WHERE cities.id = '1efe168f-db41-62fd-8372-b5321e042980'
      * ```
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `foreign key between uuid and entity id column`(testDB: TestDB) {
         withTables(testDB, Cities, Towns) {
-            val cId = Cities.insertAndGetId {
+            val cId: EntityID<UUID> = Cities.insertAndGetId {
                 it[name] = "City A"
             }
-            val tId = Towns.insertAndGetId {
+            val tId: EntityID<UUID> = Towns.insertAndGetId {
                 it[cityId] = cId.value
             }
-            val tId2 = Towns.insertAndGetId {
+            val tId2: EntityID<UUID> = Towns.insertAndGetId {
                 it[cityId] = cId.value
             }
 
-            entityCache.clear()
+            flushCache()
 
             // lazy loading referencedOn
             log.debug { "Lazy loading referencedOn" }
@@ -426,7 +371,7 @@ class Ex05_UUIDTableEntity: AbstractExposedTest() {
             // eager loading referrersOn
             log.debug { "Eager loading referrersOn" }
             val city1WithTowns = City.all().with(City::towns).single()
-            listOf(tId, tId2) shouldContain city1WithTowns.towns.first().id
+            city1WithTowns.towns.first().id shouldBeEqualTo tId
         }
     }
 }

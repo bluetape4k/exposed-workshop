@@ -1,6 +1,5 @@
-package exposed.examples.custom.entities
+package exposed.examples.entities
 
-import exposed.examples.custom.entities.Ex09_ImmutableEntity.Schema.Organization.etag
 import exposed.examples.entities.Ex09_ImmutableEntity.Schema.ECachedOrganization
 import exposed.examples.entities.Ex09_ImmutableEntity.Schema.EOrganization
 import exposed.examples.entities.Ex09_ImmutableEntity.Schema.Organization

@@ -1,6 +1,12 @@
-package exposed.examples.custom.entities
+package exposed.examples.entities
 
-import exposed.shared.dml.DMLTestData
+import exposed.examples.entities.Ex31_SelfReference.TestTables.NoRefereeTable
+import exposed.examples.entities.Ex31_SelfReference.TestTables.RefereeTable
+import exposed.examples.entities.Ex31_SelfReference.TestTables.ReferencedTable
+import exposed.examples.entities.Ex31_SelfReference.TestTables.StrangeTable
+import exposed.shared.dml.DMLTestData.Cities
+import exposed.shared.dml.DMLTestData.UserData
+import exposed.shared.dml.DMLTestData.Users
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
@@ -23,16 +29,16 @@ class Ex31_SelfReference: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun simpleTest(testDB: TestDB) {
-        SchemaUtils.sortTablesByReferences(listOf(DMLTestData.Cities)) shouldBeEqualTo listOf(DMLTestData.Cities)
-        SchemaUtils.sortTablesByReferences(listOf(DMLTestData.Users)) shouldBeEqualTo listOf(
-            DMLTestData.Cities,
-            DMLTestData.Users
+        SchemaUtils.sortTablesByReferences(listOf(Cities)) shouldBeEqualTo listOf(Cities)
+        SchemaUtils.sortTablesByReferences(listOf(Users)) shouldBeEqualTo listOf(
+            Cities,
+            Users
         )
 
-        val rightOrder = listOf(DMLTestData.Cities, DMLTestData.Users, DMLTestData.UserData)
-        val r1 = SchemaUtils.sortTablesByReferences(listOf(DMLTestData.Cities, DMLTestData.UserData, DMLTestData.Users))
-        val r2 = SchemaUtils.sortTablesByReferences(listOf(DMLTestData.UserData, DMLTestData.Cities, DMLTestData.Users))
-        val r3 = SchemaUtils.sortTablesByReferences(listOf(DMLTestData.Users, DMLTestData.Cities, DMLTestData.UserData))
+        val rightOrder = listOf(Cities, Users, UserData)
+        val r1 = SchemaUtils.sortTablesByReferences(listOf(Cities, UserData, Users))
+        val r2 = SchemaUtils.sortTablesByReferences(listOf(UserData, Cities, Users))
+        val r3 = SchemaUtils.sortTablesByReferences(listOf(Users, Cities, UserData))
 
         r1 shouldBeEqualTo rightOrder
         r2 shouldBeEqualTo rightOrder
@@ -110,11 +116,11 @@ class Ex31_SelfReference: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `has cycle`(testDB: TestDB) {
-        SchemaUtils.checkCycle(TestTables.ReferencedTable).shouldBeFalse()
-        SchemaUtils.checkCycle(TestTables.RefereeTable).shouldBeFalse()
-        SchemaUtils.checkCycle(TestTables.NoRefereeTable).shouldBeFalse()
+        SchemaUtils.checkCycle(ReferencedTable).shouldBeFalse()
+        SchemaUtils.checkCycle(RefereeTable).shouldBeFalse()
+        SchemaUtils.checkCycle(NoRefereeTable).shouldBeFalse()
         SchemaUtils.checkCycle(TestTables.Users).shouldBeTrue()
         SchemaUtils.checkCycle(TestTables.Cities).shouldBeTrue()
-        SchemaUtils.checkCycle(TestTables.StrangeTable).shouldBeTrue()
+        SchemaUtils.checkCycle(StrangeTable).shouldBeTrue()
     }
 }

@@ -1,4 +1,4 @@
-package exposed.examples.custom.entities
+package exposed.examples.entities
 
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
@@ -187,7 +187,7 @@ class Ex08_EntityFieldWithTransform: AbstractExposedTest() {
     class TableWithTransform(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<TableWithTransform>(TableWithTransformss)
 
-        // `transform` 함수를 사용하여 DB 컬럼 (string) -> DSL 속성 (BigDecimal) -> 엔티티 필드 (Int) 의 수형을 변환한다 
+        // `transform` 함수를 사용하여 DB 컬럼 (string) -> DSL 속성 (BigDecimal) -> 엔티티 필드 (Int) 의 수형을 변환한다
         var value: Int by TableWithTransformss.value
             .transform(
                 wrap = { it.toInt() },

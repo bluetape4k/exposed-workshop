@@ -1,4 +1,4 @@
-package exposed.examples.custom.entities
+package exposed.examples.entities
 
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
@@ -174,6 +174,7 @@ class Ex06_NonAutoIncEntities: AbstractExposedTest() {
                 requestId = "requestId"
                 deleted = false
             }
+
             /**
              * Soft delete the entity
              *

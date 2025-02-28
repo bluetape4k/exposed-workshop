@@ -1,4 +1,4 @@
-package exposed.examples.custom.entities
+package exposed.examples.entities
 
 import exposed.examples.entities.EntityTestData.AEntity
 import exposed.examples.entities.EntityTestData.BEntity
@@ -10,6 +10,8 @@ import exposed.examples.entities.EntityTestData.YEntity
 import exposed.examples.entities.EntityTestData.YTable
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
+import exposed.shared.tests.TestDB.H2_V1
+import exposed.shared.tests.TestDB.POSTGRESQL
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -44,7 +46,7 @@ import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.Case
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ExpressionWithColumnType
-import org.jetbrains.exposed.sql.ReferenceOption
+import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.SizedCollection
 import org.jetbrains.exposed.sql.SizedIterable
@@ -526,22 +528,19 @@ class Ex01_Entity: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `self reference table`(testDB: TestDB) {
-        SchemaUtils
-            .sortTablesByReferences(listOf(Posts, Boards, Categories)) shouldBeEqualTo
+        SchemaUtils.sortTablesByReferences(listOf(Posts, Boards, Categories)) shouldBeEqualTo
                 listOf(
                     Boards,
                     Categories,
                     Posts
                 )
-        SchemaUtils
-            .sortTablesByReferences(listOf(Categories, Posts, Boards)) shouldBeEqualTo
+        SchemaUtils.sortTablesByReferences(listOf(Categories, Posts, Boards)) shouldBeEqualTo
                 listOf(
                     Categories,
                     Boards,
                     Posts
                 )
-        SchemaUtils
-            .sortTablesByReferences(listOf(Posts)) shouldBeEqualTo
+        SchemaUtils.sortTablesByReferences(listOf(Posts)) shouldBeEqualTo
                 listOf(
                     Boards,
                     Categories,
@@ -848,7 +847,7 @@ class Ex01_Entity: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `cache invalidated on DSL upsert`(testDB: TestDB) {
-        Assumptions.assumeTrue { testDB != TestDB.H2_V1 }
+        Assumptions.assumeTrue { testDB != H2_V1 }
 
         withTables(testDB, Items) {
             val oldPrice = 20.0.toBigDecimal()
@@ -1519,8 +1518,8 @@ class Ex01_Entity: AbstractExposedTest() {
      * ```
      */
     object SchoolHolidays: Table("school_holidays") {
-        val school = reference("school_id", Schools, ReferenceOption.CASCADE, ReferenceOption.CASCADE)
-        val holiday = reference("holiday_id", Holidays, ReferenceOption.CASCADE, ReferenceOption.CASCADE)
+        val school = reference("school_id", Schools, CASCADE, CASCADE)
+        val holiday = reference("holiday_id", Holidays, CASCADE, CASCADE)
 
         override val primaryKey = PrimaryKey(school, holiday)
     }
@@ -2395,7 +2394,7 @@ class Ex01_Entity: AbstractExposedTest() {
     fun `database generated value`(testDB: TestDB) {
         withTables(testDB, CreditCards) {
             when (testDB) {
-                TestDB.POSTGRESQL -> {
+                POSTGRESQL -> {
                     // The value can also be set using a SQL trigger
                     exec(
                         """

@@ -1,4 +1,4 @@
-package exposed.examples.custom.entities
+package exposed.examples.entities
 
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
@@ -17,7 +17,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.SizedIterable
-import org.jetbrains.exposed.sql.SortOrder
+import org.jetbrains.exposed.sql.SortOrder.DESC
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertAndGetId
@@ -234,8 +234,8 @@ class Ex13_OrderedReference: AbstractExposedTest() {
          */
         val ratings: SizedIterable<UserRatingMultiColumn> by UserRatingMultiColumn
             .referrersOn(UserRatings.user)
-            .orderBy(UserRatings.value to SortOrder.DESC)
-            .orderBy(UserRatings.id to SortOrder.DESC)
+            .orderBy(UserRatings.value to DESC)
+            .orderBy(UserRatings.id to DESC)
 
         /**
          * nullableRatings 을 [UserNullableRatings.value], [UserNullableRatings.id]로 내림차순 정렬합니다.
@@ -243,8 +243,8 @@ class Ex13_OrderedReference: AbstractExposedTest() {
         val nullableRatings: SizedIterable<UserNullableRatingMultiColumn> by UserNullableRatingMultiColumn
             .optionalReferrersOn(UserNullableRatings.user)
             .orderBy(
-                UserNullableRatings.value to SortOrder.DESC,
-                UserNullableRatings.id to SortOrder.DESC
+                UserNullableRatings.value to DESC,
+                UserNullableRatings.id to DESC
             )
 
         override fun equals(other: Any?): Boolean = idEquals(other)
@@ -338,8 +338,8 @@ class Ex13_OrderedReference: AbstractExposedTest() {
          */
         val ratings: SizedIterable<UserRatingChainedColumn> by UserRatingChainedColumn
             .referrersOn(UserRatings.user)
-            .orderBy(UserRatings.value to SortOrder.DESC)       // value DESC
-            .orderBy(UserRatings.id to SortOrder.DESC)          // id DESC
+            .orderBy(UserRatings.value to DESC)       // value DESC
+            .orderBy(UserRatings.id to DESC)          // id DESC
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()

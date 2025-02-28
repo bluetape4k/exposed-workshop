@@ -1,4 +1,4 @@
-package exposed.examples.custom.entities
+package exposed.examples.entities
 
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
