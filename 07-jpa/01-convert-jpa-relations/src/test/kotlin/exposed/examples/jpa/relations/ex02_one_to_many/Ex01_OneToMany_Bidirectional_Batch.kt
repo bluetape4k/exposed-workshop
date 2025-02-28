@@ -1,8 +1,8 @@
 package exposed.examples.jpa.relations.ex02_one_to_many
 
-import exposed.examples.jpa.relations.ex02_one_to_many.BatchSchema.Batch
-import exposed.examples.jpa.relations.ex02_one_to_many.BatchSchema.BatchItem
-import exposed.examples.jpa.relations.ex02_one_to_many.BatchSchema.batchTables
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.BatchSchema.Batch
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.BatchSchema.BatchItem
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.BatchSchema.batchTables
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables

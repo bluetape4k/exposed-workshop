@@ -1,10 +1,10 @@
 package exposed.examples.jpa.relations.ex02_one_to_many
 
-import exposed.examples.jpa.relations.ex02_one_to_many.OrderSchema.Order
-import exposed.examples.jpa.relations.ex02_one_to_many.OrderSchema.OrderItem
-import exposed.examples.jpa.relations.ex02_one_to_many.OrderSchema.OrderItemTable
-import exposed.examples.jpa.relations.ex02_one_to_many.OrderSchema.OrderTable
-import exposed.examples.jpa.relations.ex02_one_to_many.OrderSchema.ordersTables
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.OrderSchema.Order
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.OrderSchema.OrderItem
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.OrderSchema.OrderItemTable
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.OrderSchema.OrderTable
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.OrderSchema.ordersTables
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables

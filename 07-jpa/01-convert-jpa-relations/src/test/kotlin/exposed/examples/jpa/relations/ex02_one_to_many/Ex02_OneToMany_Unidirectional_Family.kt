@@ -1,9 +1,9 @@
 package exposed.examples.jpa.relations.ex02_one_to_many
 
-import exposed.examples.jpa.relations.ex02_one_to_many.FamilySchema.Child
-import exposed.examples.jpa.relations.ex02_one_to_many.FamilySchema.ChildTable
-import exposed.examples.jpa.relations.ex02_one_to_many.FamilySchema.Father
-import exposed.examples.jpa.relations.ex02_one_to_many.FamilySchema.familyTables
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.FamilySchema.Child
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.FamilySchema.ChildTable
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.FamilySchema.Father
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.FamilySchema.familyTables
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables

@@ -1,4 +1,4 @@
-package exposed.examples.jpa.relations.ex02_one_to_many
+package exposed.examples.jpa.relations.ex02_one_to_many.schema
 
 import exposed.shared.dao.idEquals
 import exposed.shared.dao.idHashCode
@@ -8,7 +8,7 @@ import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
-import org.jetbrains.exposed.sql.SortOrder
+import org.jetbrains.exposed.sql.SortOrder.ASC
 import org.jetbrains.exposed.sql.javatime.date
 
 /**
@@ -61,7 +61,7 @@ object FamilySchema {
         // Ordered by birthday
         // one-to-many relationship
         val children by Child.referrersOn(ChildTable.father)
-            .orderBy(ChildTable.birthday to SortOrder.ASC)
+            .orderBy(ChildTable.birthday to ASC)
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()

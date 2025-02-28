@@ -1,9 +1,9 @@
 package exposed.examples.jpa.relations.ex02_one_to_many
 
-import exposed.examples.jpa.relations.ex02_one_to_many.RestaurantSchema.Menu
-import exposed.examples.jpa.relations.ex02_one_to_many.RestaurantSchema.MenuTable
-import exposed.examples.jpa.relations.ex02_one_to_many.RestaurantSchema.Restaurant
-import exposed.examples.jpa.relations.ex02_one_to_many.RestaurantSchema.RestaurantTable
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.RestaurantSchema.Menu
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.RestaurantSchema.MenuTable
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.RestaurantSchema.Restaurant
+import exposed.examples.jpa.relations.ex02_one_to_many.schema.RestaurantSchema.RestaurantTable
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
