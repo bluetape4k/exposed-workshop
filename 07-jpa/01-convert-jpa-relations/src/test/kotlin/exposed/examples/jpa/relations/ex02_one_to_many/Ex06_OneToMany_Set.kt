@@ -138,6 +138,8 @@ class Ex06_OneToMany_Set: AbstractExposedTest() {
 
             val loaded2 = BiddingItem.findById(item1.id)!!
             loaded2 shouldBeEqualTo item1
+
+            // 이미 DB 상에서 Unique 하기 때문에, 굳이 `toSet()` 하지 않아도 된다.
             // SELECT bids.id, bids.amount, bids.item_id FROM bids WHERE bids.item_id = 1
             loaded2.bids.toSet() shouldContainSame setOf(bid1, bid2, bid3) - bidToRemove
 
