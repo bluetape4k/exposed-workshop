@@ -1,4 +1,4 @@
-# 01 Exposed Json example
+# 04 Exposed Json example
 
 `exposed-json` 모듈을 사용하여 `json`, `jsonb` 컬럼을 사용하는 예를 설명합니다.
 

@@ -1,4 +1,4 @@
-# 01 Exposed Custom Entity example
+# 06 Exposed Custom ColumnType example
 
 `Exposed` 의 `IntIdEntity`, `LongIdEntity`, `UUIDIdEntity` 외에 다양한 `IdEntity` 를 구현해 봅니다.
 
