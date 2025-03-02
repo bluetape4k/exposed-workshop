@@ -4,6 +4,7 @@ import exposed.workshop.springmvc.domain.MovieActorCountDTO
 import exposed.workshop.springmvc.domain.MovieDTO
 import exposed.workshop.springmvc.domain.MovieSchema.ActorInMovieTable
 import exposed.workshop.springmvc.domain.MovieSchema.ActorTable
+import exposed.workshop.springmvc.domain.MovieSchema.MovieEntity
 import exposed.workshop.springmvc.domain.MovieSchema.MovieTable
 import exposed.workshop.springmvc.domain.MovieWithActorDTO
 import exposed.workshop.springmvc.domain.MovieWithProducingActorDTO
@@ -13,6 +14,7 @@ import exposed.workshop.springmvc.domain.toMovieWithActorDTO
 import exposed.workshop.springmvc.domain.toMovieWithProducingActorDTO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.andWhere
@@ -148,21 +150,41 @@ class MovieRepository(
         return movies.values.flatten()
     }
 
+    /**
+     * `movieId` 에 대한 영화와 그 영화에 출연한 배우를 조회합니다.
+     *
+     * ```sql
+     * -- H2
+     * SELECT MOVIES.ID, MOVIES."name", MOVIES.PRODUCER_NAME, MOVIES.RELEASE_DATE
+     *   FROM MOVIES
+     *  WHERE MOVIES.ID = 1;
+     *
+     * SELECT ACTORS.ID,
+     *        ACTORS.FIRST_NAME,
+     *        ACTORS.LAST_NAME,
+     *        ACTORS.BIRTHDAY,
+     *        ACTORS_IN_MOVIES.MOVIE_ID,
+     *        ACTORS_IN_MOVIES.ACTOR_ID
+     *   FROM ACTORS INNER JOIN ACTORS_IN_MOVIES ON ACTORS_IN_MOVIES.ACTOR_ID = ACTORS.ID
+     *  WHERE ACTORS_IN_MOVIES.MOVIE_ID = 1;
+     * ```
+     */
     fun getMovieWithActors(movieId: Long): MovieWithActorDTO? {
         log.debug { "Get Movie with actors. movieId=$movieId" }
 
-        return MovieTable.selectAll()
-            .where { MovieTable.id eq movieId }
-            .singleOrNull()?.let {
-                val actors = ActorTable.innerJoin(ActorInMovieTable)
-                    .select(ActorTable.columns)
-                    .where { ActorInMovieTable.movieId eq movieId }
-                    .map { it.toActorDTO() }
-                it.toMovieWithActorDTO(actors)
-            }
-//        MovieEntity.findById(movieId)
-//            ?.load(MovieEntity::actors)
-//            ?.toMovieWithActorDTO()
+        return MovieEntity.findById(movieId)
+            ?.load(MovieEntity::actors)
+            ?.toMovieWithActorDTO()
+
+//        return MovieTable.selectAll()
+//            .where { MovieTable.id eq movieId }
+//            .singleOrNull()?.let {
+//                val actors = ActorTable.innerJoin(ActorInMovieTable)
+//                    .select(ActorTable.columns)
+//                    .where { ActorInMovieTable.movieId eq movieId }
+//                    .map { it.toActorDTO() }
+//                it.toMovieWithActorDTO(actors)
+//            }
     }
 
     fun getMovieActorsCount(): List<MovieActorCountDTO> {

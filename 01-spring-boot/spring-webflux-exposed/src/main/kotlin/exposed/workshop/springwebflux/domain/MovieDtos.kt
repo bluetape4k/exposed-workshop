@@ -50,7 +50,6 @@ data class MovieWithActorDTO(
     val id: Long? = null,
 ): Serializable
 
-
 /**
  * 영화 제목과 영화를 제작한 배우의 이름을 나타내는 DTO
  */

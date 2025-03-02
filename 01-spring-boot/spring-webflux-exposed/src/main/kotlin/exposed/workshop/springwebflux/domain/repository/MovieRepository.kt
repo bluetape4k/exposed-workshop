@@ -16,6 +16,9 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import org.jetbrains.exposed.dao.load
+import org.jetbrains.exposed.sql.Join
+import org.jetbrains.exposed.sql.Query
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.count
@@ -34,6 +37,18 @@ class MovieRepository {
             MovieTable
                 .innerJoin(ActorInMovieTable)
                 .innerJoin(ActorTable)
+        }
+
+        private val moviesWithActingProducersJoin: Join by lazy {
+            MovieTable
+                .innerJoin(ActorInMovieTable)
+                .innerJoin(
+                    ActorTable,
+                    onColumn = { ActorTable.id },
+                    otherColumn = { ActorInMovieTable.actorId }
+                ) {
+                    MovieTable.producerName eq ActorTable.firstName
+                }
         }
     }
 
@@ -143,7 +158,9 @@ class MovieRepository {
     }
 
     /**
+     * `movieId`에 해당하는 [Movie] 와 출현한 [Actor]들의 정보를 eager loading 으로 가져온다.
      * ```sql
+     * -- H2
      * SELECT MOVIES.ID, MOVIES."name", MOVIES.PRODUCER_NAME, MOVIES.RELEASE_DATE
      *   FROM MOVIES
      *  WHERE MOVIES.ID = 1;
@@ -151,28 +168,16 @@ class MovieRepository {
      * SELECT ACTORS.ID,
      *        ACTORS.FIRST_NAME,
      *        ACTORS.LAST_NAME,
-     *        ACTORS.BIRTHDAY
-     *   FROM MOVIES
-     *          INNER JOIN ACTORS_IN_MOVIES ON MOVIES.ID = ACTORS_IN_MOVIES.MOVIE_ID
-     *          INNER JOIN ACTORS ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID
-     *  WHERE MOVIES.ID = 1
+     *        ACTORS.BIRTHDAY,
+     *        ACTORS_IN_MOVIES.MOVIE_ID,
+     *        ACTORS_IN_MOVIES.ACTOR_ID
+     *   FROM ACTORS INNER JOIN ACTORS_IN_MOVIES ON ACTORS_IN_MOVIES.ACTOR_ID = ACTORS.ID
+     *  WHERE ACTORS_IN_MOVIES.MOVIE_ID = 1
      * ```
      */
     suspend fun getMovieWithActors(movieId: Long): MovieWithActorDTO? = newSuspendedTransaction {
         log.debug { "Get Movie with actors. movieId=$movieId" }
-
-        // FIXME: 이 것은 작동하지 않습니다. one-to-many 관계에서는 작동하는데, many-to-many 관계에서는 작동하지 않습니다.
-        // MovieEntity.findById(movieId)?.load(MovieEntity::actors)?.toMovieWithActorDTO()
-
-        val movie = MovieEntity.findById(movieId)
-        movie?.let {
-            val actors = MovieActorJoin
-                .select(ActorTable.columns)
-                .where { MovieTable.id eq movieId }
-                .map { it.toActorDTO() }
-
-            movie.toMovieDTO().toMovieWithActorDTO(actors)
-        }
+        MovieEntity.findById(movieId)?.load(MovieEntity::actors)?.toMovieWithActorDTO()
     }
 
     /**
@@ -214,17 +219,15 @@ class MovieRepository {
         newSuspendedTransaction(readOnly = true) {
             log.debug { "Find movies with acting producers." }
 
-            val query = MovieTable
-                .innerJoin(ActorInMovieTable)
-                .innerJoin(
-                    ActorTable,
-                    onColumn = { ActorTable.id },
-                    otherColumn = { ActorInMovieTable.actorId }
-                ) {
-                    MovieTable.producerName eq ActorTable.firstName
-                }
-                .select(MovieTable.name, ActorTable.firstName, ActorTable.lastName)
+            val query: Query = moviesWithActingProducersJoin
+                .select(
+                    MovieTable.name,
+                    ActorTable.firstName,
+                    ActorTable.lastName
+                )
 
             query.map { it.toMovieWithProducingActorDTO() }.asFlow()
         }
+
+
 }

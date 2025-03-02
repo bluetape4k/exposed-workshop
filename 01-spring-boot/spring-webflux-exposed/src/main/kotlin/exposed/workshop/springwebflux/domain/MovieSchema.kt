@@ -8,6 +8,7 @@ import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
+import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.date
 import org.jetbrains.exposed.sql.javatime.datetime
@@ -27,8 +28,8 @@ object MovieSchema {
     }
 
     object ActorInMovieTable: Table("actors_in_movies") {
-        val movieId = long("movie_id").references(MovieTable.id, onDelete = CASCADE)
-        val actorId = long("actor_id").references(ActorTable.id, onDelete = CASCADE)
+        val movieId = reference("movie_id", MovieTable, onDelete = CASCADE)
+        val actorId = reference("actor_id", ActorTable, onDelete = CASCADE)
 
         override val primaryKey = PrimaryKey(movieId, actorId)
     }
@@ -40,7 +41,7 @@ object MovieSchema {
         var producerName by MovieTable.producerName
         var releaseDate by MovieTable.releaseDate
 
-        val actors by ActorEntity via ActorInMovieTable
+        val actors: SizedIterable<ActorEntity> by ActorEntity via ActorInMovieTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
