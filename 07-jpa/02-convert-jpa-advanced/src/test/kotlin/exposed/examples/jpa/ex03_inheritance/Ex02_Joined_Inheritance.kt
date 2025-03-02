@@ -25,7 +25,7 @@ import java.io.Serializable
  *
  * 단 CRUD 를 위해서는 따로 Repository 를 만들어야 한다.
  */
-class Ex01_Joined_Inheritance: AbstractExposedTest() {
+class Ex02_Joined_Inheritance: AbstractExposedTest() {
 
     companion object: KLogging()
 
