@@ -30,6 +30,12 @@ class OrderService {
         }
     }
 
+    /**
+     * ```sql
+     * INSERT INTO ORDERS (ID, CUSTOMER, PRODUCT_NAME)
+     * VALUES ('fb401281-66ab-4171-8e88-06c347ba3863', '86c69c45-66e2-4727-a324-d3b7e46623db', 'Product1')
+     * ```
+     */
     fun createOrder(customer: CustomerEntity, productName: String): OrderEntity {
         log.debug { "주문 생성. customer=${customer.name}, productName=$productName" }
 
@@ -44,6 +50,13 @@ class OrderService {
         return createOrder(customer, productName)
     }
 
+    /**
+     * ```sql
+     * SELECT ORDERS.ID, ORDERS.CUSTOMER, ORDERS.PRODUCT_NAME
+     *   FROM ORDERS
+     *  WHERE ORDERS.PRODUCT_NAME = 'Product1'
+     * ```
+     */
     fun findOrderByProductName(productName: String): OrderEntity? {
         return OrderEntity.find { OrderTable.productName eq productName }.firstOrNull()
     }
