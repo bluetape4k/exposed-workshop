@@ -1,0 +1,12 @@
+spring:
+    datasource:
+        url: ${testcontainers.mysql.jdbc-url}
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: ${testcontainers.mysql.username}
+        password: ${testcontainers.mysql.password}
+        hikari:
+            maximum-pool-size: 100
+            minimum-idle: 10
+            idle-timeout: 30000
+            max-lifetime: 60000
+            connection-timeout: 30000
