@@ -23,11 +23,11 @@ import java.time.LocalDate
  * Application 시작 시 DB 스키마 생성 및 샘플 데이터를 삽입하는 클래스
  */
 @Component
+@Transactional
 class DataInitializer: ApplicationRunner {
 
     companion object: KLogging()
 
-    @Transactional
     override fun run(args: ApplicationArguments?) {
         log.info { "데이터베이스 초기화 및 샘플 데이터 추가" }
         createSchema()

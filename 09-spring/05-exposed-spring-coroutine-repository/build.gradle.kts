@@ -5,7 +5,7 @@ plugins {
 
 
 springBoot {
-    mainClass.set("exposed.examples.springwebflux.CoroutineRepositoryApplicationKt")
+    mainClass.set("exposed.examples.springwebflux.CoroutineExposedRepositoryAppKt")
 
     buildInfo {
         properties {

@@ -21,7 +21,8 @@
     </appender>
     <!-- formatter:on -->
 
-    <logger name="exposed.workshop.springwebflux" level="DEBUG"/>
+    <logger name="exposed.examples.springwebflux" level="DEBUG"/>
+    <logger name="Exposed" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="console"/>

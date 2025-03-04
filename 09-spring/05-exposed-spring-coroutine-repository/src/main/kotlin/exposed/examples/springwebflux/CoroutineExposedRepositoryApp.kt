@@ -6,14 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class CoroutineRepositoryApplication {
+class CoroutineExposedRepositoryApp {
 
     companion object: KLogging()
 
 }
 
 fun main(vararg args: String) {
-    runApplication<CoroutineRepositoryApplication>(*args) {
+    runApplication<CoroutineExposedRepositoryApp>(*args) {
         webApplicationType = WebApplicationType.REACTIVE
     }
 }

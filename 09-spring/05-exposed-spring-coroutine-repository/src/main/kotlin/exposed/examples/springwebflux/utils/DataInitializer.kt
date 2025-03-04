@@ -1,10 +1,10 @@
-package exposed.workshop.springwebflux.utils
+package exposed.examples.springwebflux.utils
 
-import exposed.workshop.springwebflux.domain.ActorDTO
-import exposed.workshop.springwebflux.domain.MovieSchema.ActorInMovieTable
-import exposed.workshop.springwebflux.domain.MovieSchema.ActorTable
-import exposed.workshop.springwebflux.domain.MovieSchema.MovieTable
-import exposed.workshop.springwebflux.domain.MovieWithActorDTO
+import exposed.examples.springwebflux.domain.dtos.ActorDTO
+import exposed.examples.springwebflux.domain.dtos.MovieWithActorDTO
+import exposed.examples.springwebflux.domain.model.MovieSchema.ActorInMovieTable
+import exposed.examples.springwebflux.domain.model.MovieSchema.ActorTable
+import exposed.examples.springwebflux.domain.model.MovieSchema.MovieTable
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.info
@@ -21,7 +21,7 @@ import java.time.LocalDate
 
 @Component
 @Transactional
-class DatabaseInitializer: ApplicationRunner {
+class DataInitializer: ApplicationRunner {
 
     companion object: KLogging()
 
@@ -112,7 +112,7 @@ class DatabaseInitializer: ApplicationRunner {
         MovieTable.batchInsert(movies) {
             this[MovieTable.name] = it.name
             this[MovieTable.producerName] = it.producerName
-            this[MovieTable.releaseDate] = LocalDate.parse(it.releaseDate).atTime(0, 0)
+            this[MovieTable.releaseDate] = LocalDate.parse(it.releaseDate)
         }
 
         movies.forEach { movie ->
