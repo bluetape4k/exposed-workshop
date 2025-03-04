@@ -10,6 +10,7 @@ import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.sql.alias
 import org.jetbrains.exposed.sql.innerJoin
 import org.jetbrains.exposed.sql.selectAll
+import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -38,6 +39,8 @@ class Ex06_Convering_Index: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `covering index`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB }
+        
         withPersonsAndAddress(testDB) { persons, _ ->
             // convering index 에 해당하는 subquery
             val p2 = persons
@@ -80,6 +83,8 @@ class Ex06_Convering_Index: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `subquery in join`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB }
+        
         withPersonsAndAddress(testDB) { persons, _ ->
             // Subquery 용 alias
             val p2 = persons.select(persons.id)

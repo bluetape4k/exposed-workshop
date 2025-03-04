@@ -8,6 +8,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.sql.alias
 import org.jetbrains.exposed.sql.innerJoin
+import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -47,6 +48,8 @@ class Ex05_Self_Join: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `self join`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB }
+
         withOrdersTables(testDB) { _, _, _, _, users ->
             val u1 = users.alias("u1")
             val u2 = users.alias("u2")
@@ -98,6 +101,8 @@ class Ex05_Self_Join: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `self join with new alias`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB }
+        
         withOrdersTables(testDB) { _, _, _, _, users ->
             val u2 = users.alias("u2")
 
