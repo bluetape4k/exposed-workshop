@@ -28,10 +28,10 @@ class DomainSQLTest: AbstractSpringWebfluxTest() {
         @Transactional(readOnly = true)
         @RepeatedTest(REPEAT_SIZE)
         open fun `get all actors`() = runSuspendIO {
-            newSuspendedTransaction(readOnly = true) {
-                val actors = ActorTable.selectAll().map { it.toActorDTO() }
-                actors.shouldNotBeEmpty()
-            }
+            val actors = newSuspendedTransaction(readOnly = true) {
+                ActorTable.selectAll().toList()
+            }.map { it.toActorDTO() }
+            actors.shouldNotBeEmpty()
         }
 
         @Test
@@ -40,10 +40,10 @@ class DomainSQLTest: AbstractSpringWebfluxTest() {
                 .numThreads(Runtime.getRuntime().availableProcessors() * 2)
                 .roundsPerJob(4)
                 .add {
-                    newSuspendedTransaction(readOnly = true) {
-                        val actors = ActorTable.selectAll().map { it.toActorDTO() }
-                        actors.shouldNotBeEmpty()
-                    }
+                    val actors = newSuspendedTransaction(readOnly = true) {
+                        ActorTable.selectAll().toList()
+                    }.map { it.toActorDTO() }
+                    actors.shouldNotBeEmpty()
                 }
                 .run()
         }

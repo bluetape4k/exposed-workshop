@@ -2,13 +2,14 @@ package exposed.workshop.springwebflux.domain.repository
 
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
 import exposed.workshop.springwebflux.domain.ActorDTO
+import exposed.workshop.springwebflux.domain.toActorDTO
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import kotlinx.coroutines.flow.toList
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -26,13 +27,15 @@ class ActorRepositoryTest(
 
     @Test
     fun `find actor by id`() = runSuspendIO {
-        val actorId = 1L
+        newSuspendedTransaction {
+            val actorId = 1L
 
-        val actor = actorRepository.findById(actorId)
+            val actor = actorRepository.findById(actorId)?.toActorDTO()
 
-        log.debug { "Actor: $actor" }
-        actor.shouldNotBeNull()
-        actor.id shouldBeEqualTo actorId
+            log.debug { "Actor: $actor" }
+            actor.shouldNotBeNull()
+            actor.id shouldBeEqualTo actorId
+        }
     }
 
     /**
@@ -44,12 +47,14 @@ class ActorRepositoryTest(
      */
     @Test
     fun `search actors by lastName`() = runSuspendIO {
-        val params = mapOf("lastName" to "Depp")
-        val actors = actorRepository.searchActor(params).toList()
+        newSuspendedTransaction {
+            val params = mapOf("lastName" to "Depp")
+            val actors = actorRepository.searchActor(params).toList()
 
-        actors.shouldNotBeEmpty()
-        actors.forEach {
-            log.debug { "actor: $it" }
+            actors.shouldNotBeEmpty()
+            actors.forEach {
+                log.debug { "actor: $it" }
+            }
         }
     }
 
@@ -62,38 +67,44 @@ class ActorRepositoryTest(
      */
     @Test
     fun `search actors by firstName`() = runSuspendIO {
-        val params = mapOf("firstName" to "Angelina")
-        val actors = actorRepository.searchActor(params).toList()
+        newSuspendedTransaction {
+            val params = mapOf("firstName" to "Angelina")
+            val actors = actorRepository.searchActor(params).toList()
 
-        actors.shouldNotBeEmpty()
-        actors.forEach {
-            log.debug { "actor: $it" }
+            actors.shouldNotBeEmpty()
+            actors.forEach {
+                log.debug { "actor: $it" }
+            }
         }
     }
 
     @Test
     fun `create new actor`() = runSuspendIO {
-        val prevCount = actorRepository.count()
+        newSuspendedTransaction {
+            val prevCount = actorRepository.count()
 
-        val actor = newActorDTO()
+            val actor = newActorDTO()
 
-        val savedActor = actorRepository.create(actor)
-        savedActor shouldBeEqualTo actor.copy(id = savedActor.id)
+            val savedActor = actorRepository.create(actor).toActorDTO()
+            savedActor shouldBeEqualTo actor.copy(id = savedActor.id)
 
-        val newActor = actorRepository.findById(savedActor.id!!)
-        newActor shouldBeEqualTo savedActor
+            val newActor = actorRepository.findById(savedActor.id!!)?.toActorDTO()
+            newActor shouldBeEqualTo savedActor
 
-        actorRepository.count() shouldBeEqualTo prevCount + 1L
+            actorRepository.count() shouldBeEqualTo prevCount + 1L
+        }
     }
 
     @Test
     fun `delete actor by id`() = runSuspendIO {
-        val actor = newActorDTO()
-        val savedActor = actorRepository.create(actor)
-        savedActor.shouldNotBeNull()
-        savedActor.id.shouldNotBeNull()
+        newSuspendedTransaction {
+            val actor = newActorDTO()
+            val savedActor = actorRepository.create(actor).toActorDTO()
+            savedActor.shouldNotBeNull()
+            savedActor.id.shouldNotBeNull()
 
-        val deletedCount = actorRepository.deleteById(savedActor.id!!)
-        deletedCount shouldBeEqualTo 1
+            val deletedCount = actorRepository.deleteById(savedActor.id!!)
+            deletedCount shouldBeEqualTo 1
+        }
     }
 }

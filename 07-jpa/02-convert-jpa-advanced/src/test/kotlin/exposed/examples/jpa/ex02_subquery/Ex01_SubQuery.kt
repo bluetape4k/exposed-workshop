@@ -153,7 +153,10 @@ class Ex01_SubQuery: AbstractExposedTest() {
             }
             entities.all { it.lastName == "Rubble" }.shouldBeTrue()
 
-            val expectedIds = if (currentDialect is MariaDBDialect) listOf(5L, 6L, 8L) else listOf(4L, 5L, 6L)
+            val expectedIds = when (currentDialect) {
+                is MariaDBDialect -> listOf(5L, 6L, 8L)
+                else -> listOf(4L, 5L, 6L)
+            }
             entities.map { it.id.value } shouldBeEqualTo expectedIds
         }
     }

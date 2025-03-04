@@ -8,7 +8,7 @@ import io.bluetape4k.concurrent.virtualthread.VT
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.toList
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -23,17 +23,20 @@ class MovieActorsController(
     companion object: KLogging()
 
     @GetMapping("/{movieId}")
-    suspend fun getMovieWithActors(@PathVariable movieId: Long): MovieWithActorDTO? {
-        return movieRepository.getMovieWithActors(movieId)
-    }
+    suspend fun getMovieWithActors(@PathVariable movieId: Long): MovieWithActorDTO? =
+        newSuspendedTransaction(readOnly = true) {
+            movieRepository.getMovieWithActors(movieId)
+        }
 
     @GetMapping("/count")
-    suspend fun getMovieActorsCount(): List<MovieActorCountDTO> {
-        return movieRepository.getMovieActorsCount()
-    }
+    suspend fun getMovieActorsCount(): List<MovieActorCountDTO> =
+        newSuspendedTransaction(readOnly = true) {
+            movieRepository.getMovieActorsCount()
+        }
 
     @GetMapping("/acting-producers")
-    suspend fun findMoviesWithActingProducers(): List<MovieWithProducingActorDTO> {
-        return movieRepository.findMoviesWithActingProducers().toList()
-    }
+    suspend fun findMoviesWithActingProducers(): List<MovieWithProducingActorDTO> =
+        newSuspendedTransaction(readOnly = true) {
+            movieRepository.findMoviesWithActingProducers()
+        }.toList()
 }

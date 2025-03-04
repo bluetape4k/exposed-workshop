@@ -2,11 +2,12 @@ package exposed.workshop.springwebflux.controller
 
 import exposed.workshop.springwebflux.domain.MovieDTO
 import exposed.workshop.springwebflux.domain.repository.MovieRepository
+import exposed.workshop.springwebflux.domain.toMovieDTO
 import io.bluetape4k.concurrent.virtualthread.VT
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.toList
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -25,27 +26,30 @@ class MovieController(
     companion object: KLogging()
 
     @GetMapping("/{id}")
-    suspend fun getMovieById(@PathVariable("id") movieId: Long): MovieDTO? {
-        return movieRepository.findById(movieId)
-    }
+    suspend fun getMovieById(@PathVariable("id") movieId: Long): MovieDTO? =
+        newSuspendedTransaction(readOnly = true) {
+            movieRepository.findById(movieId)
+        }?.toMovieDTO()
 
     @GetMapping
     suspend fun searchMovies(request: ServerHttpRequest): List<MovieDTO> {
         val params = request.queryParams.map { it.key to it.value.first() }.toMap()
         return when {
             params.isEmpty() -> emptyList()
-            else -> movieRepository.searchMovie(params).toList()
+            else -> newSuspendedTransaction(readOnly = true) {
+                movieRepository.searchMovie(params)
+            }.map { it.toMovieDTO() }
         }
     }
 
     @PostMapping
-    suspend fun createMovie(@RequestBody movie: MovieDTO): MovieDTO {
-        return movieRepository.create(movie)
-    }
+    suspend fun createMovie(@RequestBody movie: MovieDTO): MovieDTO = newSuspendedTransaction {
+        movieRepository.create(movie)
+    }.toMovieDTO()
 
     @DeleteMapping("/{id}")
-    suspend fun deleteMovie(@PathVariable("id") movieId: Long): Int {
-        return movieRepository.deleteById(movieId)
+    suspend fun deleteMovie(@PathVariable("id") movieId: Long): Int = newSuspendedTransaction {
+        movieRepository.deleteById(movieId)
     }
 
 }

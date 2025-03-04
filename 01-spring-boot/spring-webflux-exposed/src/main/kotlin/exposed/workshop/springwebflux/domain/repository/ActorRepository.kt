@@ -3,16 +3,12 @@ package exposed.workshop.springwebflux.domain.repository
 import exposed.workshop.springwebflux.domain.ActorDTO
 import exposed.workshop.springwebflux.domain.MovieSchema.ActorEntity
 import exposed.workshop.springwebflux.domain.MovieSchema.ActorTable
-import exposed.workshop.springwebflux.domain.toActorDTO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
@@ -21,16 +17,15 @@ class ActorRepository {
 
     companion object: KLogging()
 
-    suspend fun count(): Long = newSuspendedTransaction(readOnly = true) {
+    suspend fun count(): Long =
         ActorTable.selectAll().count()
-    }
 
-    suspend fun findById(id: Long): ActorDTO? = newSuspendedTransaction(readOnly = true) {
+    suspend fun findById(id: Long): ActorEntity? {
         log.debug { "Find Actor by id. id: $id" }
-        ActorEntity.findById(id)?.toActorDTO()
+        return ActorEntity.findById(id)
     }
 
-    suspend fun searchActor(params: Map<String, String?>): Flow<ActorDTO> = newSuspendedTransaction(readOnly = true) {
+    suspend fun searchActor(params: Map<String, String?>): List<ActorEntity> {
         log.debug { "Search Actor by params. params: $params" }
 
         val query = ActorTable.selectAll()
@@ -45,25 +40,23 @@ class ActorRepository {
                 }
             }
         }
-        query.map { it.toActorDTO() }.asFlow()
+        return ActorEntity.wrapRows(query).toList()
     }
 
-    suspend fun create(actor: ActorDTO): ActorDTO = newSuspendedTransaction {
+    suspend fun create(actor: ActorDTO): ActorEntity {
         log.debug { "Create Actor. actor: $actor" }
 
-        val actorEntity = ActorEntity.new {
+        return ActorEntity.new {
             firstName = actor.firstName
             lastName = actor.lastName
             actor.birthday?.let {
                 birthday = runCatching { LocalDate.parse(actor.birthday) }.getOrNull()
             }
         }
-
-        actorEntity.toActorDTO()
     }
 
-    suspend fun deleteById(actorId: Long): Int = newSuspendedTransaction {
+    suspend fun deleteById(actorId: Long): Int {
         log.debug { "Delete Actor by id. id: $actorId" }
-        ActorTable.deleteWhere { ActorTable.id eq actorId }
+        return ActorTable.deleteWhere { ActorTable.id eq actorId }
     }
 }
