@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 class MovieRepositoryTest(
-    @Autowired private val movieRepository: MovieRepository,
+    @Autowired private val movieRepository: MovieCoroutineRepository,
 ): AbstractCoroutineExposedRepositoryTest() {
 
     companion object: KLogging() {

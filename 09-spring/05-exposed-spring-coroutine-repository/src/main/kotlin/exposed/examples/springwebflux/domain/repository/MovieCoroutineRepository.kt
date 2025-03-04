@@ -11,7 +11,7 @@ import exposed.examples.springwebflux.domain.model.MovieSchema.MovieTable
 import exposed.examples.springwebflux.domain.model.toActorDTO
 import exposed.examples.springwebflux.domain.model.toMovieWithActorDTO
 import exposed.examples.springwebflux.domain.model.toMovieWithProducingActorDTO
-import exposed.shared.repository.AbstractCoroutineExposedRepository
+import exposed.shared.repository.AbstractExposedCoroutineRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.dao.load
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
 @Repository
-class MovieRepository: AbstractCoroutineExposedRepository<MovieEntity, Long>(MovieTable) {
+class MovieCoroutineRepository: AbstractExposedCoroutineRepository<MovieEntity, Long>(MovieTable) {
 
     companion object: KLogging() {
         private val MovieActorJoin by lazy {

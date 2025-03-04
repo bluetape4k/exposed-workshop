@@ -12,28 +12,12 @@ import org.jetbrains.exposed.sql.deleteIgnoreWhere
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.selectAll
 
-interface CoroutineExposedRepository<T: Entity<ID>, ID: Any> {
-
-    suspend fun count(): Long
-    suspend fun count(predicate: SqlExpressionBuilder.() -> Op<Boolean>): Long
-    suspend fun count(op: Op<Boolean>): Long
-
-    suspend fun isEmpty(): Boolean
-
-    suspend fun findById(id: ID): T
-    suspend fun findByIdOrNull(id: ID): T?
-    suspend fun findAll(): List<T>
-
-    suspend fun delete(entity: T): Int
-    suspend fun delete(limit: Int? = null, op: (IdTable<ID>).(ISqlExpressionBuilder) -> Op<Boolean>): Int
-    suspend fun deleteIgnore(entity: T): Int
-    suspend fun deleteById(id: ID): Int
-    suspend fun deleteIgnoreById(id: ID): Int
-}
-
-abstract class AbstractCoroutineExposedRepository<T: Entity<ID>, ID: Any>(
+/**
+ * Exposed 를 사용하는 Coroutines용 Repository 의 최상위 추상화 클래스
+ */
+abstract class AbstractExposedCoroutineRepository<T: Entity<ID>, ID: Any>(
     protected val table: IdTable<ID>,
-): CoroutineExposedRepository<T, ID> {
+): ExposedCoroutineRepository<T, ID> {
 
     companion object: KLogging()
 
