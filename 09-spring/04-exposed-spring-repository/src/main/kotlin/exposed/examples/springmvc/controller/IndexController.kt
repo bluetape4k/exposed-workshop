@@ -1,4 +1,4 @@
-package exposed.workshop.springmvc.controller
+package exposed.examples.springmvc.controller
 
 import io.bluetape4k.support.uninitialized
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,4 +19,5 @@ class IndexController {
     fun index(): BuildProperties {
         return buildProperties
     }
+
 }

@@ -4,7 +4,7 @@ plugins {
 }
 
 springBoot {
-    mainClass.set("exposed.examples.springmvc.RepositoryApplicationKt")
+    mainClass.set("exposed.examples.springmvc.ExposedRepositoryAppKt")
 
     buildInfo {
         properties {

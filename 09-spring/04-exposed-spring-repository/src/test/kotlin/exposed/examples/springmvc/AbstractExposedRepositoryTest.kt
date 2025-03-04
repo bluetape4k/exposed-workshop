@@ -1,0 +1,18 @@
+package exposed.examples.springmvc
+
+import io.bluetape4k.junit5.faker.Fakers
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
+
+@ActiveProfiles("h2")
+@SpringBootTest(
+    classes = [ExposedRepositoryApp::class],
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+)
+abstract class AbstractExposedRepositoryTest {
+
+    companion object {
+        @JvmStatic
+        val faker = Fakers.faker
+    }
+}

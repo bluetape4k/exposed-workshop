@@ -6,14 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class RepositoryApplication {
+class ExposedRepositoryApp {
 
     companion object: KLogging()
 
 }
 
 fun main(vararg args: String) {
-    runApplication<RepositoryApplication>(*args) {
+    runApplication<ExposedRepositoryApp>(*args) {
         webApplicationType = WebApplicationType.SERVLET
     }
 }
