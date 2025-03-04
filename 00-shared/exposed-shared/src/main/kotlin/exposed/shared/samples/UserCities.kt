@@ -1,8 +1,8 @@
 package exposed.shared.samples
 
-import io.bluetape4k.exposed.dao.idEquals
-import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
+import exposed.shared.dao.idEquals
+import exposed.shared.dao.idHashCode
+import exposed.shared.dao.toStringBuilder
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -13,22 +13,22 @@ import org.jetbrains.exposed.sql.Table
 
 /**
  * ```sql
- * CREATE TABLE IF NOT EXISTS "User" (
+ * -- Postgres
+ * CREATE TABLE IF NOT EXISTS country (
  *      id SERIAL PRIMARY KEY,
- *      "name" VARCHAR(50) NOT NULL,
- *      age INT NOT NULL
+ *      "name" VARCHAR(50) NOT NULL
  * );
  *
- * CREATE INDEX user_name ON "User" ("name");
+ * ALTER TABLE country ADD CONSTRAINT country_name_unique UNIQUE ("name")
  * ```
  */
-object UserTable: IntIdTable() {
-    val name = varchar("name", 50).index()
-    val age = integer("age")
+object CountryTable: IntIdTable() {
+    val name = varchar("name", 50).uniqueIndex()
 }
 
 /**
  * ```sql
+ * -- Postgres
  * CREATE TABLE IF NOT EXISTS city (
  *      id SERIAL PRIMARY KEY,
  *      "name" VARCHAR(50) NOT NULL,
@@ -53,17 +53,21 @@ object CityTable: IntIdTable() {
 
 /**
  * ```sql
- * CREATE TABLE IF NOT EXISTS country (
+ * -- Postgres
+ * CREATE TABLE IF NOT EXISTS "User" (
  *      id SERIAL PRIMARY KEY,
- *      "name" VARCHAR(50) NOT NULL
+ *      "name" VARCHAR(50) NOT NULL,
+ *      age INT NOT NULL
  * );
  *
- * ALTER TABLE country ADD CONSTRAINT country_name_unique UNIQUE ("name")
+ * CREATE INDEX user_name ON "User" ("name");
  * ```
  */
-object CountryTable: IntIdTable() {
-    val name = varchar("name", 50).uniqueIndex()
+object UserTable: IntIdTable() {
+    val name = varchar("name", 50).index()
+    val age = integer("age")
 }
+
 
 /**
  * City - User  Many-to-many relationship table
@@ -86,21 +90,17 @@ object UserToCityTable: Table() {
     val cityId = reference("city_id", CityTable, onDelete = ReferenceOption.CASCADE)
 }
 
-class User(id: EntityID<Int>): IntEntity(id) {
-    companion object: IntEntityClass<User>(UserTable)
+class Country(id: EntityID<Int>): IntEntity(id) {
+    companion object: IntEntityClass<Country>(CountryTable)
 
-    var name by UserTable.name
-    var age by UserTable.age
-    var cities: SizedIterable<City> by City via UserToCityTable      // many-to-many
+    var name by CountryTable.name
+    val cities: SizedIterable<City> by City referrersOn CityTable.countryId   // one-to-many
 
     override fun equals(other: Any?): Boolean = idEquals(other)
     override fun hashCode(): Int = idHashCode()
-    override fun toString(): String {
-        return toStringBuilder()
-            .add("name", name)
-            .add("age", age)
-            .toString()
-    }
+    override fun toString(): String = toStringBuilder()
+        .add("name", name)
+        .toString()
 }
 
 class City(id: EntityID<Int>): IntEntity(id) {
@@ -112,27 +112,23 @@ class City(id: EntityID<Int>): IntEntity(id) {
 
     override fun equals(other: Any?): Boolean = idEquals(other)
     override fun hashCode(): Int = idHashCode()
-    override fun toString(): String {
-        return toStringBuilder()
-            .add("id", id)
-            .add("name", name)
-            .add("country", country)
-            .toString()
-    }
+    override fun toString(): String = toStringBuilder()
+        .add("name", name)
+        .add("country", country)
+        .toString()
 }
 
-class Country(id: EntityID<Int>): IntEntity(id) {
-    companion object: IntEntityClass<Country>(CountryTable)
+class User(id: EntityID<Int>): IntEntity(id) {
+    companion object: IntEntityClass<User>(UserTable)
 
-    var name by CountryTable.name
-    val cities: SizedIterable<City> by City referrersOn CityTable.countryId   // one-to-many
+    var name by UserTable.name
+    var age by UserTable.age
+    var cities: SizedIterable<City> by City via UserToCityTable      // many-to-many
 
     override fun equals(other: Any?): Boolean = idEquals(other)
     override fun hashCode(): Int = idHashCode()
-    override fun toString(): String {
-        return toStringBuilder()
-            .add("id", id)
-            .add("name", name)
-            .toString()
-    }
+    override fun toString(): String = toStringBuilder()
+        .add("name", name)
+        .add("age", age)
+        .toString()
 }
