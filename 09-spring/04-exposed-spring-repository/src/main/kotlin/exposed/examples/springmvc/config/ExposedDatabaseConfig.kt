@@ -8,6 +8,7 @@ import io.bluetape4k.testcontainers.database.MySQL8Server
 import io.bluetape4k.testcontainers.database.PostgreSQLServer
 import io.bluetape4k.testcontainers.database.getDataSource
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.DatabaseConfig
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
@@ -58,8 +59,17 @@ class ExposedDatabaseConfig {
     }
 
     @Bean
-    fun database(dataSource: DataSource): Database {
+    fun databaseConfig(): DatabaseConfig {
+        return DatabaseConfig {
+            maxEntitiesToStoreInCachePerEntity = 100
+            useNestedTransactions = true
+        }
+    }
+
+    @Bean
+    fun database(dataSource: DataSource, databaseConfig: DatabaseConfig): Database {
         log.info { "Database connection: $dataSource" }
-        return Database.connect(dataSource)
+
+        return Database.connect(dataSource, databaseConfig = databaseConfig)
     }
 }
