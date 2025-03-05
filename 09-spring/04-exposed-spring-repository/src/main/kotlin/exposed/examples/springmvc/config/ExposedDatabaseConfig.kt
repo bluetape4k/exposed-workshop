@@ -11,6 +11,7 @@ import org.jetbrains.exposed.sql.Database
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.sql.DataSource
 
 /**
@@ -19,6 +20,7 @@ import javax.sql.DataSource
  * 일반적으로는 `application.yml` 에서 Spring Boot의 DataSource 설정을 사용하고, Exposed는 Spring Boot AutoConfiguration을 사용하여 DB에 연결한다.
  */
 @Configuration
+@EnableTransactionManagement
 class ExposedDatabaseConfig {
 
     companion object: KLogging()

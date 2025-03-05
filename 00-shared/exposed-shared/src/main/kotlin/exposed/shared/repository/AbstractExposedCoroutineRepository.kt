@@ -16,7 +16,7 @@ import org.jetbrains.exposed.sql.selectAll
  * Exposed 를 사용하는 Coroutines용 Repository 의 최상위 추상화 클래스
  */
 abstract class AbstractExposedCoroutineRepository<T: Entity<ID>, ID: Any>(
-    protected val table: IdTable<ID>,
+    val table: IdTable<ID>,
 ): ExposedCoroutineRepository<T, ID> {
 
     companion object: KLogging()

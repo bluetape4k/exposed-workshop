@@ -16,7 +16,7 @@ import org.jetbrains.exposed.sql.selectAll
  * Exposed 를 사용하는 Repository 의 최상위 구현체
  */
 abstract class AbstractExposedRepository<T: Entity<ID>, ID: Any>(
-    protected val table: IdTable<ID>,
+    val table: IdTable<ID>,
 ): ExposedRepository<T, ID> {
 
     companion object: KLogging()

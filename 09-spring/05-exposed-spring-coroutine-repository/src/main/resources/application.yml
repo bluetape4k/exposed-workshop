@@ -1,6 +1,4 @@
-app:
-    virtualthread:
-        enabled: true
+
 
 server:
     port: 8080
@@ -27,6 +25,17 @@ spring:
 
     netty:
         leak-detection: simple
+
+    exposed:
+        generate-ddl: true
+        show-sql: true
+
+    db:
+        default:
+            driver: org.h2.Driver
+            url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+            user: sa
+            password: sa
 
 management:
     endpoints:
