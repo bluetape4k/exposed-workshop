@@ -3,7 +3,7 @@ package exposed.examples.springwebflux.domain.repository
 import exposed.examples.springwebflux.domain.dtos.ActorDTO
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorEntity
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorTable
-import exposed.shared.repository.AbstractExposedCoroutineRepository
+import exposed.shared.repository.AbstractExposedRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.sql.ResultRow
@@ -13,13 +13,13 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
 @Repository
-class ActorCoroutineRepository: AbstractExposedCoroutineRepository<ActorEntity, Long>(ActorTable) {
+class ActorRepository: AbstractExposedRepository<ActorEntity, Long>(ActorTable) {
 
     companion object: KLogging()
 
     override fun ResultRow.toEntity(): ActorEntity = ActorEntity.wrapRow(this)
 
-    suspend fun searchActor(params: Map<String, String?>): List<ActorEntity> {
+    fun searchActor(params: Map<String, String?>): List<ActorEntity> {
         log.debug { "Search Actor by params. params: $params" }
 
         val query = ActorTable.selectAll()
@@ -37,7 +37,7 @@ class ActorCoroutineRepository: AbstractExposedCoroutineRepository<ActorEntity, 
         return ActorEntity.wrapRows(query).toList()
     }
 
-    suspend fun create(actor: ActorDTO): ActorEntity {
+    fun create(actor: ActorDTO): ActorEntity {
         log.debug { "Create Actor. actor: $actor" }
 
         val actorEntity = ActorEntity.new {

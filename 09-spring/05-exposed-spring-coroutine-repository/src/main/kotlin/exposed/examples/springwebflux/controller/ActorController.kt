@@ -2,7 +2,7 @@ package exposed.examples.springwebflux.controller
 
 import exposed.examples.springwebflux.domain.dtos.ActorDTO
 import exposed.examples.springwebflux.domain.model.toActorDTO
-import exposed.examples.springwebflux.domain.repository.ActorCoroutineRepository
+import exposed.examples.springwebflux.domain.repository.ActorRepository
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/actors")
 class ActorController(
-    private val actorRepository: ActorCoroutineRepository,
+    private val actorRepository: ActorRepository,
 ): CoroutineScope by CoroutineScope(Dispatchers.IO) {
     companion object: KLogging()
 
