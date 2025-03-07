@@ -12,7 +12,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitAll
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
@@ -61,12 +60,13 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
     @MethodSource("getTestDBAndEntityCount")
     fun `TimebasedUUID id를 가진 레코드를 생성한다`(testDB: TestDB, recordCount: Int) {
         withTables(testDB, T1) {
-            List(recordCount) {
+            repeat(recordCount) {
                 T1.insert {
                     it[T1.name] = faker.name().fullName()
                     it[T1.age] = Random.nextInt(10, 80)
                 }
             }
+            flushCache()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -87,6 +87,7 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
                 this[T1.name] = it.name
                 this[T1.age] = it.age
             }
+            flushCache()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -103,7 +104,6 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
                 }
             }
             flushCache()
-            entityCache.clear()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -122,7 +122,7 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
                 }
             }
             tasks.awaitAll()
-            entityCache.clear()
+            flushCache()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
         }

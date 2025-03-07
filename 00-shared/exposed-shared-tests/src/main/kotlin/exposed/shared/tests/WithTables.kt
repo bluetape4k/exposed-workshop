@@ -2,6 +2,7 @@ package exposed.shared.tests
 
 import io.bluetape4k.logging.KotlinLogging
 import io.bluetape4k.logging.error
+import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.DatabaseConfig
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
@@ -50,7 +51,7 @@ fun withTables(
 suspend fun withSuspendedTables(
     testDB: TestDB,
     vararg tables: Table,
-    context: CoroutineContext? = null,
+    context: CoroutineContext? = Dispatchers.IO,
     configure: (DatabaseConfig.Builder.() -> Unit)? = null,
     statement: suspend Transaction.(TestDB) -> Unit,
 ) {

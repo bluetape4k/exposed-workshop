@@ -3,6 +3,7 @@ package exposed.shared.tests
 import io.bluetape4k.logging.KotlinLogging
 import io.bluetape4k.logging.info
 import io.bluetape4k.utils.Runtimex
+import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.DatabaseConfig
 import org.jetbrains.exposed.sql.Key
 import org.jetbrains.exposed.sql.Transaction
@@ -67,7 +68,7 @@ fun withDb(
 
 suspend fun withSuspendedDb(
     testDB: TestDB,
-    context: CoroutineContext? = null,
+    context: CoroutineContext? = Dispatchers.IO,
     configure: (DatabaseConfig.Builder.() -> Unit)? = null,
     statement: suspend Transaction.(TestDB) -> Unit,
 ) {
