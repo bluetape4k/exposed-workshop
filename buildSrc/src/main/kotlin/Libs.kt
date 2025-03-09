@@ -146,7 +146,7 @@ object Versions {
     const val hibernate_validator = "8.0.1.Final" // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
     const val querydsl = "5.1.0"                  // https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
 
-    const val exposed = "0.59.0"       // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-core
+    const val exposed = "0.60.0"       // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-core
 
     const val agroal = "2.5"          // https://mvnrepository.com/artifact/io.agroal/agroal-api
 
@@ -270,6 +270,8 @@ object Libs {
     // Data
     val bluetape4k_cassandra = bluetape4k("cassandra")
     val bluetape4k_exposed = bluetape4k("exposed")
+    val bluetape4k_exposed_jackson = bluetape4k("exposed-jackson")
+    val bluetape4k_exposed_jasypt = bluetape4k("exposed-jasypt")
     val bluetape4k_hibernate = bluetape4k("hibernate")
     val bluetape4k_hibernate_reactive = bluetape4k("hibernate-reactive")
     val bluetape4k_jdbc = bluetape4k("jdbc")
