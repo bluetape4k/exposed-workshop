@@ -11,7 +11,12 @@ dependencies {
 
     implementation(project(":exposed-shared"))
 
+    // Bluetape4k Exposed
     api(Libs.bluetape4k_exposed)
+    implementation(Libs.bluetape4k_exposed_jackson)
+    implementation(Libs.bluetape4k_exposed_jasypt)
+
+    // Exposed
     api(Libs.exposed_core)
     api(Libs.exposed_dao)
     api(Libs.exposed_jdbc)
