@@ -34,8 +34,7 @@ class Ex05_Delete: AbstractExposedTest() {
 
     companion object: KLogging()
 
-
-    private val limitNotSupported = TestDB.ALL_POSTGRES_LIKE
+    private val limitNotSupported = TestDB.ALL_POSTGRES
 
     /**
      * [deleteWhere], [deleteIgnoreWhere] 사용 예
