@@ -17,7 +17,7 @@ import org.jetbrains.exposed.sql.javatime.date
 object BlogSchema {
 
     val blogTables = arrayOf(
-        PostTable, PostDetailsTable, PostCommentTable, PostTagTable, TagTable
+        PostTable, PostDetailTable, PostCommentTable, PostTagTable, TagTable
     )
 
     /**
@@ -45,7 +45,7 @@ object BlogSchema {
      * );
      * ```
      */
-    object PostDetailsTable: IdTable<Long>("post_details") {
+    object PostDetailTable: IdTable<Long>("post_details") {
         override val id: Column<EntityID<Long>> = reference("id", PostTable)   // one-to-one relationship
         val createdOn = date("created_on")  // .defaultExpression(CurrentDate)
         val createdBy = varchar("created_by", 255)
@@ -110,39 +110,36 @@ object BlogSchema {
         }
     }
 
-
     class Post(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<Post>(PostTable)
 
         var title by PostTable.title
 
-        val details: PostDetails by PostDetails backReferencedOn PostDetailsTable.id  // one-to-one relationship
+        val details: PostDetail by PostDetail backReferencedOn PostDetailTable.id  // one-to-one relationship
         val comments: SizedIterable<PostComment> by PostComment referrersOn PostCommentTable.postId
         val tags: SizedIterable<Tag> by Tag via PostTagTable // Tag.via (PostTagTable.post, PostTagTable.tag)
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("title", title)
-                .toString()
+        override fun toString(): String = toStringBuilder()
+            .add("title", title)
+            .toString()
     }
 
-    class PostDetails(id: EntityID<Long>): LongEntity(id) {
-        companion object: LongEntityClass<PostDetails>(PostDetailsTable)
+    class PostDetail(id: EntityID<Long>): LongEntity(id) {
+        companion object: LongEntityClass<PostDetail>(PostDetailTable)
 
-        val post: Post by Post referencedOn PostDetailsTable.id   // one-to-one relationship
-        var createdOn by PostDetailsTable.createdOn
-        var createdBy by PostDetailsTable.createdBy
+        val post: Post by Post referencedOn PostDetailTable.id   // one-to-one relationship
+        var createdOn by PostDetailTable.createdOn
+        var createdBy by PostDetailTable.createdBy
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("post id", post.idValue)
-                .add("createdOn", createdOn)
-                .add("createdBy", createdBy)
-                .toString()
+        override fun toString(): String = toStringBuilder()
+            .add("post id", post.idValue)
+            .add("createdOn", createdOn)
+            .add("createdBy", createdBy)
+            .toString()
     }
 
     class PostComment(id: EntityID<Long>): LongEntity(id) {
@@ -154,11 +151,10 @@ object BlogSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("post id", post.idValue)
-                .add("review", review)
-                .toString()
+        override fun toString(): String = toStringBuilder()
+            .add("post id", post.idValue)
+            .add("review", review)
+            .toString()
     }
 
     class Tag(id: EntityID<Long>): LongEntity(id) {
@@ -169,10 +165,8 @@ object BlogSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("name", name)
-                .toString()
+        override fun toString(): String = toStringBuilder()
+            .add("name", name)
+            .toString()
     }
-
 }

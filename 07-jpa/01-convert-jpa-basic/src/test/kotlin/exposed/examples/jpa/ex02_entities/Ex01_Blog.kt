@@ -1,7 +1,7 @@
 package exposed.examples.jpa.ex02_entities
 
 import exposed.examples.jpa.ex02_entities.BlogSchema.Post
-import exposed.examples.jpa.ex02_entities.BlogSchema.PostDetails
+import exposed.examples.jpa.ex02_entities.BlogSchema.PostDetail
 import exposed.examples.jpa.ex02_entities.BlogSchema.blogTables
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
@@ -51,7 +51,7 @@ class Ex01_Blog: AbstractExposedTest() {
      *   FROM posts
      *  WHERE posts.id = 1;
      *
-     * -- lazy loading for PostDetails of Post
+     * -- lazy loading for PostDetail of Post
      * SELECT post_details.id,
      *        post_details.created_on,
      *        post_details.created_by
@@ -68,11 +68,11 @@ class Ex01_Blog: AbstractExposedTest() {
             log.debug { "Post=$post" }
 
             // one-to-one 관계에서 ownership 을 가진 Post의 id 값을 지정합니다.
-            val postDetails = PostDetails.new(post.id.value) {
+            val postDetail = PostDetail.new(post.id.value) {
                 createdOn = LocalDate.now()
                 createdBy = "admin"
             }
-            log.debug { "PostDetails=$postDetails" }
+            log.debug { "PostDetail=$postDetail" }
 
             flushCache()
             entityCache.clear()
@@ -80,7 +80,7 @@ class Ex01_Blog: AbstractExposedTest() {
             val loadedPost = Post.findById(post.id)!!
 
             loadedPost shouldBeEqualTo post
-            loadedPost.details shouldBeEqualTo postDetails
+            loadedPost.details shouldBeEqualTo postDetail
         }
     }
 }
