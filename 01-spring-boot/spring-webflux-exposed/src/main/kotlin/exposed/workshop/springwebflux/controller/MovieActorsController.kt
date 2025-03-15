@@ -4,7 +4,6 @@ import exposed.workshop.springwebflux.domain.MovieActorCountDTO
 import exposed.workshop.springwebflux.domain.MovieWithActorDTO
 import exposed.workshop.springwebflux.domain.MovieWithProducingActorDTO
 import exposed.workshop.springwebflux.domain.repository.MovieRepository
-import io.bluetape4k.concurrent.virtualthread.VT
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/movie-actors")
 class MovieActorsController(
     private val movieRepository: MovieRepository,
-): CoroutineScope by CoroutineScope(Dispatchers.VT) {
+): CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
     companion object: KLogging()
 
@@ -37,6 +36,6 @@ class MovieActorsController(
     @GetMapping("/acting-producers")
     suspend fun findMoviesWithActingProducers(): List<MovieWithProducingActorDTO> =
         newSuspendedTransaction(readOnly = true) {
-            movieRepository.findMoviesWithActingProducers()
-        }.toList()
+            movieRepository.findMoviesWithActingProducers().toList()
+        }
 }

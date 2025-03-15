@@ -25,6 +25,10 @@
     <logger name="Exposed" level="DEBUG"/>
     <logger name="io.bluebank" level="DEBUG"/>
 
+    <logger name="org.jetbrains.exposed.spring" level="DEBUG"/>
+    <logger name="org.jetbrains.exposed.sql.transactions" level="DEBUG"/>
+    <logger name="org.springframework.transaction" level="DEBUG"/>
+    
     <root level="INFO">
         <appender-ref ref="console"/>
     </root>

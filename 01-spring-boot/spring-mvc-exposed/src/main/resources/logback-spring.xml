@@ -22,6 +22,10 @@
     <!-- formatter:on -->
 
     <logger name="exposed.workshop.springmvc" level="DEBUG"/>
+    <logger name="Exposed" level="DEBUG"/>
+    <logger name="org.jetbrains.exposed.spring" level="DEBUG"/>
+    <logger name="org.jetbrains.exposed.sql.transactions" level="DEBUG"/>
+    <logger name="org.springframework.transaction" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="console"/>
