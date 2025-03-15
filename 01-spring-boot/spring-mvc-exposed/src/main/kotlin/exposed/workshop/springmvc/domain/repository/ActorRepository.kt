@@ -5,6 +5,7 @@ import exposed.workshop.springmvc.domain.MovieSchema.ActorTable
 import exposed.workshop.springmvc.domain.toActorDTO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import org.jetbrains.exposed.sql.Query
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.deleteWhere
@@ -33,7 +34,7 @@ class ActorRepository {
     }
 
     fun searchActors(params: Map<String, String?>): List<ActorDTO> {
-        val query = ActorTable.selectAll()
+        val query: Query = ActorTable.selectAll()
 
         params.forEach { (key, value) ->
             when (key) {

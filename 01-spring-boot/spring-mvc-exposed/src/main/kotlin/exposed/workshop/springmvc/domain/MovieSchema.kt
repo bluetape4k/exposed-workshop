@@ -9,24 +9,64 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
+import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.date
 import org.jetbrains.exposed.sql.javatime.datetime
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 object MovieSchema {
 
+    /**
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS movies (
+     *      id BIGSERIAL PRIMARY KEY,
+     *      "name" VARCHAR(255) NOT NULL,
+     *      producer_name VARCHAR(255) NOT NULL,
+     *      release_date TIMESTAMP NOT NULL
+     * )
+     * ```
+     */
     object MovieTable: LongIdTable("movies") {
-        val name = varchar("name", 255)
-        val producerName = varchar("producer_name", 255)
-        val releaseDate = datetime("release_date")
+        val name: Column<String> = varchar("name", 255)
+        val producerName: Column<String> = varchar("producer_name", 255)
+        val releaseDate: Column<LocalDateTime> = datetime("release_date")
     }
 
+    /**
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS actors (
+     *      id BIGSERIAL PRIMARY KEY,
+     *      first_name VARCHAR(255) NOT NULL,
+     *      last_name VARCHAR(255) NOT NULL,
+     *      birthday DATE NULL
+     * )
+     * ```
+     */
     object ActorTable: LongIdTable("actors") {
-        val firstName = varchar("first_name", 255)
-        val lastName = varchar("last_name", 255)
-        val birthday = date("birthday").nullable()
+        val firstName: Column<String> = varchar("first_name", 255)
+        val lastName: Column<String> = varchar("last_name", 255)
+        val birthday: Column<LocalDate?> = date("birthday").nullable()
     }
 
+    /**
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS actors_in_movies (
+     *      movie_id BIGINT,
+     *      actor_id BIGINT,
+     *
+     *      CONSTRAINT pk_actors_in_movies PRIMARY KEY (movie_id, actor_id),
+     *      CONSTRAINT fk_actors_in_movies_movie_id__id FOREIGN KEY (movie_id)
+     *          REFERENCES movies(id) ON DELETE CASCADE ON UPDATE RESTRICT,
+     *      CONSTRAINT fk_actors_in_movies_actor_id__id FOREIGN KEY (actor_id)
+     *          REFERENCES actors(id) ON DELETE CASCADE ON UPDATE RESTRICT
+     * )
+     * ```
+     */
     object ActorInMovieTable: Table("actors_in_movies") {
         val movieId: Column<EntityID<Long>> = reference("movie_id", MovieTable, onDelete = CASCADE)
         val actorId: Column<EntityID<Long>> = reference("actor_id", ActorTable, onDelete = CASCADE)
@@ -37,11 +77,11 @@ object MovieSchema {
     class MovieEntity(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<MovieEntity>(MovieTable)
 
-        var name by MovieTable.name
-        var producerName by MovieTable.producerName
-        var releaseDate by MovieTable.releaseDate
+        var name: String by MovieTable.name
+        var producerName: String by MovieTable.producerName
+        var releaseDate: LocalDateTime by MovieTable.releaseDate
 
-        val actors by ActorEntity via ActorInMovieTable
+        val actors: SizedIterable<ActorEntity> by ActorEntity via ActorInMovieTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -55,11 +95,11 @@ object MovieSchema {
     class ActorEntity(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<ActorEntity>(ActorTable)
 
-        var firstName by ActorTable.firstName
-        var lastName by ActorTable.lastName
-        var birthday by ActorTable.birthday
+        var firstName: String by ActorTable.firstName
+        var lastName: String by ActorTable.lastName
+        var birthday: LocalDate? by ActorTable.birthday
 
-        val movies by MovieEntity via ActorInMovieTable
+        val movies: SizedIterable<MovieEntity> by MovieEntity via ActorInMovieTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()

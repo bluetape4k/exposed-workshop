@@ -21,6 +21,17 @@ object MovieSchema {
         val releaseDate = datetime("release_date")
     }
 
+    /**
+     * ```sql
+     * -- H2
+     * CREATE TABLE IF NOT EXISTS actors (
+     *     id BIGSERIAL PRIMARY KEY,
+     *     first_name VARCHAR(255) NOT NULL,
+     *     last_name VARCHAR(255) NOT NULL,
+     *     birthday DATE NULL
+     * )
+     * ```
+     */
     object ActorTable: LongIdTable("actors") {
         val firstName = varchar("first_name", 255).index()
         val lastName = varchar("last_name", 255).index()

@@ -155,18 +155,13 @@ class MovieRepository(
      *
      * ```sql
      * -- H2
-     * SELECT MOVIES.ID, MOVIES."name", MOVIES.PRODUCER_NAME, MOVIES.RELEASE_DATE
-     *   FROM MOVIES
-     *  WHERE MOVIES.ID = 1;
+     * SELECT movies.id, movies."name", movies.producer_name, movies.release_date
+     *   FROM movies WHERE movies.id = 1;
      *
-     * SELECT ACTORS.ID,
-     *        ACTORS.FIRST_NAME,
-     *        ACTORS.LAST_NAME,
-     *        ACTORS.BIRTHDAY,
-     *        ACTORS_IN_MOVIES.MOVIE_ID,
-     *        ACTORS_IN_MOVIES.ACTOR_ID
-     *   FROM ACTORS INNER JOIN ACTORS_IN_MOVIES ON ACTORS_IN_MOVIES.ACTOR_ID = ACTORS.ID
-     *  WHERE ACTORS_IN_MOVIES.MOVIE_ID = 1;
+     * SELECT actors.id, actors.first_name, actors.last_name, actors.birthday, actors_in_movies.movie_id, actors_in_movies.actor_id
+     *   FROM actors
+     *          INNER JOIN actors_in_movies ON actors_in_movies.actor_id = actors.id
+     *  WHERE actors_in_movies.movie_id = 1;
      * ```
      */
     fun getMovieWithActors(movieId: Long): MovieWithActorDTO? {
