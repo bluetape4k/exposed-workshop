@@ -34,7 +34,9 @@ class MovieController(
     suspend fun searchMovies(request: ServerHttpRequest): List<MovieDTO> {
         val params = request.queryParams.map { it.key to it.value.first() }.toMap()
         return when {
-            params.isEmpty() -> emptyList()
+            params.isEmpty() -> newSuspendedTransaction(readOnly = true) {
+                movieRepository.findAll().map { it.toMovieDTO() }
+            }
             else -> newSuspendedTransaction(readOnly = true) {
                 movieRepository.searchMovie(params).map { it.toMovieDTO() }
             }
@@ -52,5 +54,4 @@ class MovieController(
         newSuspendedTransaction {
             movieRepository.deleteById(movieId)
         }
-
 }

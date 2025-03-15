@@ -41,8 +41,8 @@ class DomainSQLTest: AbstractSpringWebfluxTest() {
                 .roundsPerJob(4)
                 .add {
                     val actors = newSuspendedTransaction(readOnly = true) {
-                        ActorTable.selectAll().toList()
-                    }.map { it.toActorDTO() }
+                        ActorTable.selectAll().map { it.toActorDTO() }
+                    }
                     actors.shouldNotBeEmpty()
                 }
                 .run()

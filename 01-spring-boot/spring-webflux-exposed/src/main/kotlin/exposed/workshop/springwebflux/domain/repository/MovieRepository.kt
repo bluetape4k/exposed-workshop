@@ -60,6 +60,10 @@ class MovieRepository {
             ?.let { MovieEntity.wrapRow(it) }
     }
 
+    suspend fun findAll(): List<MovieEntity> {
+        return MovieEntity.wrapRows(MovieTable.selectAll()).toList()
+    }
+
     suspend fun searchMovie(params: Map<String, String?>): List<MovieEntity> {
         log.debug { "Search Movie by params. params: $params" }
 

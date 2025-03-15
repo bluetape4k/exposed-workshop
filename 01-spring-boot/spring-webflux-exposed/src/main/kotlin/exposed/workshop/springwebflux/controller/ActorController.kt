@@ -37,7 +37,9 @@ class ActorController(
     suspend fun searchActors(request: ServerHttpRequest): List<ActorDTO> {
         val params = request.queryParams.map { it.key to it.value.first() }.toMap()
         return when {
-            params.isEmpty() -> emptyList()
+            params.isEmpty() -> newSuspendedTransaction(readOnly = true) {
+                actorRepository.findAll().map { it.toActorDTO() }
+            }
             else -> newSuspendedTransaction(readOnly = true) {
                 actorRepository.searchActor(params).map { it.toActorDTO() }
             }

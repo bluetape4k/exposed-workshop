@@ -25,6 +25,10 @@ class ActorRepository {
         return ActorEntity.findById(id)
     }
 
+    suspend fun findAll(): List<ActorEntity> {
+        return ActorEntity.wrapRows(ActorTable.selectAll()).toList()
+    }
+
     suspend fun searchActor(params: Map<String, String?>): List<ActorEntity> {
         log.debug { "Search Actor by params. params: $params" }
 
