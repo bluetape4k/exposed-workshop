@@ -4,7 +4,6 @@
 프로젝트는 [Kotlin Exposed - A lightweight SQL library](https://blog.jdriven.com/2019/07/kotlin-exposed-a-lightweight-sql-library/)
 를 참고하여 제작되었습니다.
 
-
 ## More info
 
 * [Exposed README](https://github.com/JetBrains/Exposed)
