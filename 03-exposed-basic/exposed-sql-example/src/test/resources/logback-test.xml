@@ -15,6 +15,7 @@
     <logger name="io.bluetape4k" level="DEBUG"/>
 
     <logger name="Exposed" level="DEBUG"/>
+    <logger name="org.jetbrains.exposed" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="Console"/>

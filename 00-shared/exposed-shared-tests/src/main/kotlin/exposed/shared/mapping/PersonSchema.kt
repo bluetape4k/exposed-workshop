@@ -26,7 +26,8 @@ object PersonSchema {
      *      id BIGSERIAL PRIMARY KEY,
      *      street VARCHAR(255) NOT NULL,
      *      city VARCHAR(255) NOT NULL,
-     *      "state" VARCHAR(2) NOT NULL, zip VARCHAR(10) NULL
+     *      "state" VARCHAR(2) NOT NULL,
+     *      zip VARCHAR(10) NULL
      * );
      * ```
      */

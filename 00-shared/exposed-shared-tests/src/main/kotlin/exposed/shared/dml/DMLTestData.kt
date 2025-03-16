@@ -87,7 +87,8 @@ object DMLTestData {
      * CREATE TABLE IF NOT EXISTS sales (
      *      "year" INT NOT NULL,
      *      "month" INT NOT NULL,
-     *      product VARCHAR(30) NULL, amount DECIMAL(8, 2) NOT NULL
+     *      product VARCHAR(30) NULL,
+     *      amount DECIMAL(8, 2) NOT NULL
      * )
      * ```
      */

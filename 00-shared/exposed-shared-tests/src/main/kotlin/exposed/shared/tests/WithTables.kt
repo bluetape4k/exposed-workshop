@@ -62,6 +62,7 @@ suspend fun withSuspendedTables(
         }
 
         SchemaUtils.create(*tables)
+
         try {
             statement(testDB)
             commit()
