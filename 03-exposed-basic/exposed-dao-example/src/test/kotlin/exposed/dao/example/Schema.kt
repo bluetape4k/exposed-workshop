@@ -15,11 +15,37 @@ import org.jetbrains.exposed.sql.Transaction
 
 object Schema {
 
-    object CityTable: IntIdTable() {
+    /**
+     * 도시 정보를 저장하는 테이블
+     *
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS cities (
+     *      id SERIAL PRIMARY KEY,
+     *      "name" VARCHAR(50) NOT NULL
+     * )
+     * ```
+     */
+    object CityTable: IntIdTable("cities") {
         val name = varchar("name", 50)
     }
 
-    object UserTable: IntIdTable() {
+    /**
+     * 사용자 정보를 저장하는 테이블
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS users (
+     *      id SERIAL PRIMARY KEY,
+     *      "name" VARCHAR(50) NOT NULL,
+     *      age INT NOT NULL,
+     *      city_id INT NULL,
+     *
+     *      CONSTRAINT fk_users_city_id__id FOREIGN KEY (city_id)
+     *          REFERENCES cities(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+     * )
+     * ```
+     */
+    object UserTable: IntIdTable("users") {
         val name = varchar("name", 50)
         val age = integer("age")
         val cityId = optReference("city_id", CityTable)
