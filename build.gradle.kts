@@ -31,37 +31,28 @@ plugins {
     id("net.bytebuddy.byte-buddy-gradle-plugin") version "1.15.10" apply false
 }
 
-// NOTE: Nexus 에 등록된 것 때문에 사용한다
-// NOTE: .zshrc 에 정의하던가, ~/.gradle/gradle.properties 에 정의해주셔야 합니다.
-//fun getEnvOrProjectProperty(propertyKey: String, envKey: String): String {
-//    return project.findProperty(propertyKey) as? String ?: System.getenv(envKey)
-//}
-//
-//val gprUser: String = getEnvOrProjectProperty("gpr.user", "GITHUB_USERNAME")
-//val gprKey: String = getEnvOrProjectProperty("gpr.key", "GITHUB_TOKEN")
-//val gprPublishKey: String = getEnvOrProjectProperty("gpr.publish.key", "GITHUB_PUBLISH_TOKEN")
+// NOTE: Github 에 등록된 Package 를 다운받기 위해서 사용합니다.
+// NOTE: ~/.gradle/gradle.properties gpr.user,gpr.key 를 정의하던가
+// NOTE: ~/.zshrc 에 GITHUB_USERNAME, GITHUB_TOKEN 을 정의합니다.
+fun getEnvOrProjectProperty(propertyKey: String, envKey: String): String {
+    return project.findProperty(propertyKey) as? String ?: System.getenv(envKey)
+}
 
+val bluetape4kGprKey: String = getEnvOrProjectProperty("bluetape4k.gpr.key", "GITHUB_TOKEN")
 
-val projectGroup: String by project
-val baseVersion: String by project
-val snapshotVersion: String by project
 
 allprojects {
-    group = projectGroup
-    version = baseVersion + snapshotVersion
-
     repositories {
         mavenCentral()
-        mavenLocal()
         google()
-//        maven {
-//            name = "bluetape4k"
-//            url = uri("https://maven.pkg.github.com/bluetape4k/bluetape4k-projects")
-//            credentials {
-//                username = gprUser
-//                password = gprKey
-//            }
-//        }
+        maven {
+            name = "bluetape4k"
+            url = uri("https://maven.pkg.github.com/bluetape4k/bluetape4k-projects")
+            credentials {
+                username = "debop"
+                password = bluetape4kGprKey
+            }
+        }
     }
 }
 
