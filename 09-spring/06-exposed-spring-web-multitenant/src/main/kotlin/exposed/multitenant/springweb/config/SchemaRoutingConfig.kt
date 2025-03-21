@@ -2,33 +2,28 @@ package exposed.multitenant.springweb.config
 
 import exposed.multitenant.springweb.tenant.TenantAwareDataSource
 import exposed.multitenant.springweb.tenant.Tenants
+import exposed.multitenant.springweb.tenant.Tenants.Tenant
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
+import io.bluetape4k.testcontainers.database.JdbcServer
 import io.bluetape4k.testcontainers.database.PostgreSQLServer
+import io.bluetape4k.testcontainers.database.getDataSource
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.DatabaseConfig
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.transaction.annotation.EnableTransactionManagement
-import javax.sql.DataSource
 
 @Configuration
 @EnableTransactionManagement
 class SchemaRoutingConfig {
 
-    companion object: KLogging() {
-
-        private val postgres by lazy {
-            PostgreSQLServer.Launcher.postgres
-        }
-    }
+    companion object: KLogging()
 
     @Bean
-    fun database(dataSource: DataSource, databaseConfig: DatabaseConfig): Database {
-        log.info { "Database connection: $dataSource" }
-
-        return Database.connect(dataSource, databaseConfig = databaseConfig)
+    fun getJdbcServer(): JdbcServer {
+        return PostgreSQLServer.Launcher.postgres
     }
 
     /**
@@ -37,15 +32,30 @@ class SchemaRoutingConfig {
     @Suppress("UNCHECKED_CAST")
     @Primary
     @Bean
-    fun tenantAwareDataSource(dataSource: DataSource): TenantAwareDataSource {
+    fun tenantAwareDataSource(jdbcServer: JdbcServer): TenantAwareDataSource {
         val tenantDataSource = TenantAwareDataSource()
 
-        val targetDataSources = Tenants.Tenant.entries.associateWith { dataSource }
+        val targetDataSources = Tenant.entries.associateWith { jdbcServer.getDataSource() }
 
         tenantDataSource.setTargetDataSources(targetDataSources as Map<Any, Any>)
         tenantDataSource.setDefaultTargetDataSource(targetDataSources[Tenants.DEFAULT_TENANT] as Any)
         tenantDataSource.afterPropertiesSet()
 
         return tenantDataSource
+    }
+
+    @Bean
+    fun databaseConfig(): DatabaseConfig {
+        return DatabaseConfig {
+            maxEntitiesToStoreInCachePerEntity = 100
+            useNestedTransactions = true
+        }
+    }
+
+    @Bean
+    fun database(dataSource: TenantAwareDataSource, databaseConfig: DatabaseConfig): Database {
+        log.info { "Database connection: $dataSource" }
+
+        return Database.connect(dataSource, databaseConfig = databaseConfig)
     }
 }

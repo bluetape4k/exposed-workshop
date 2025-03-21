@@ -37,12 +37,6 @@ class DataInitializer {
 
     private fun createSchema(tenant: Tenants.Tenant) {
         log.debug { "Creating schema and test data ..." }
-
-        val schema = getSchemaDefinition(tenant)
-
-        SchemaUtils.createSchema(schema)
-        SchemaUtils.setSchema(schema)
-
         @Suppress("DEPRECATION")
         SchemaUtils.createMissingTablesAndColumns(ActorTable, MovieTable, ActorInMovieTable)
     }
