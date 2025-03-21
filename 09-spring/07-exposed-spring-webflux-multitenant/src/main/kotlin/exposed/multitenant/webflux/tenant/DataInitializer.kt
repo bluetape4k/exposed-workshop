@@ -48,13 +48,13 @@ class DataInitializer {
 
     private suspend fun populateData(tenant: Tenants.Tenant) {
 
-        newSuspendedTransaction {
+        newSuspendedTransactionWithTenant(tenant) {
 
             val totalActors = ActorTable.selectAll().count()
 
             if (totalActors > 0) {
                 log.info { "There appears to be data already present, not inserting test data!" }
-                return@newSuspendedTransaction
+                return@newSuspendedTransactionWithTenant
             }
 
             log.info { "Inserting sample actors and movies ..." }
@@ -63,7 +63,10 @@ class DataInitializer {
                 Tenant.ENGLISH -> ActorDTO("Johnny", "Depp", "1973-06-09")
                 else -> ActorDTO("조니", "뎁", "1979-10-28")
             }
-            val bradPitt = ActorDTO("Brad", "Pitt", "1982-05-16")
+            val bradPitt = when (tenant) {
+                Tenant.ENGLISH -> ActorDTO("Brad", "Pitt", "1985-05-16")
+                else -> ActorDTO("브래드", "피트", "1985-05-16")
+            }
             val angelinaJolie = ActorDTO("Angelina", "Jolie", "1983-11-10")
             val jenniferAniston = ActorDTO("Jennifer", "Aniston", "1975-07-23")
             val angelinaGrace = ActorDTO("Angelina", "Grace", "1988-09-02")

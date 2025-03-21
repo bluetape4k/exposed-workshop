@@ -2,6 +2,9 @@ package exposed.multitenant.webflux.tenant
 
 import org.jetbrains.exposed.sql.Schema
 
+/**
+ * 테넌트에 대한 정보를 관리합니다.
+ */
 object Tenants {
 
     val DEFAULT_TENANT = Tenant.KOREAN

@@ -18,7 +18,9 @@ internal fun getSchemaDefinition(tenant: Tenants.Tenant): Schema =
         on = "USERS"
     )
 
-
+/**
+ * [newSuspendedTransaction] 함수를 수행할 때, [tenant] 를 전달하도록 합니다.
+ */
 suspend fun <T> newSuspendedTransactionWithTenant(
     tenant: Tenant? = null,
     db: Database? = null,
@@ -28,12 +30,16 @@ suspend fun <T> newSuspendedTransactionWithTenant(
 ): T {
     val currentTenant = tenant ?: currentTenant()
     val context = Dispatchers.IO + TenantId(currentTenant)
+
     return newSuspendedTransaction(context, db, transactionIsolation, readOnly) {
         SchemaUtils.setSchema(getSchemaDefinition(currentTenant))
         statement()
     }
 }
 
+/**
+ * [newSuspendedTransaction] 함수를 호출할 때, ReactorContext 에 있는 [TenantId]에 해당하는 Schema 를 사용하도록 합니다.
+ */
 suspend fun <T> newSuspendedTransactionWithCurrentReactorTenant(
     db: Database? = null,
     transactionIsolation: Int? = null,

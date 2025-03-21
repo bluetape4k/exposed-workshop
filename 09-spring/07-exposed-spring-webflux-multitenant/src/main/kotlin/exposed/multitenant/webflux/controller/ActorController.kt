@@ -7,6 +7,7 @@ import exposed.multitenant.webflux.tenant.newSuspendedTransactionWithCurrentReac
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -17,8 +18,13 @@ class ActorController(
 ): CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
     @GetMapping
-    suspend fun getAllActors(): List<ActorDTO> =
+    suspend fun getAllActors(): List<ActorDTO> = newSuspendedTransactionWithCurrentReactorTenant {
+        actorRepository.findAll().map { it.toActorDTO() }
+    }
+
+    @GetMapping("/{id}")
+    suspend fun findById(@PathVariable("id") id: Long): ActorDTO? =
         newSuspendedTransactionWithCurrentReactorTenant {
-            actorRepository.findAll().map { it.toActorDTO() }
+            actorRepository.findByIdOrNull(id)?.toActorDTO()
         }
 }
