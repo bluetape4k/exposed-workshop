@@ -38,10 +38,10 @@ class DataInitializer {
     private fun createSchema(tenant: Tenants.Tenant) {
         log.debug { "Creating schema and test data ..." }
 
-        val currentSchema = TenantContext.getCurrentTenantSchema()
+        val currentSchema = getSchemaDefinition(tenant)
         SchemaUtils.createSchema(currentSchema)
         SchemaUtils.setSchema(currentSchema)
-        
+
         @Suppress("DEPRECATION")
         SchemaUtils.createMissingTablesAndColumns(ActorTable, MovieTable, ActorInMovieTable)
     }
@@ -57,7 +57,10 @@ class DataInitializer {
 
         log.info { "Inserting sample actors and movies ..." }
 
-        val johnnyDepp = ActorDTO("Johnny", "Depp", "1979-10-28")
+        val johnnyDepp = when (tenant) {
+            Tenant.ENGLISH -> ActorDTO("Johnny", "Depp", "1973-06-09")
+            else -> ActorDTO("조니", "뎁", "1979-10-28")
+        }
         val bradPitt = ActorDTO("Brad", "Pitt", "1982-05-16")
         val angelinaJolie = ActorDTO("Angelina", "Jolie", "1983-11-10")
         val jenniferAniston = ActorDTO("Jennifer", "Aniston", "1975-07-23")
