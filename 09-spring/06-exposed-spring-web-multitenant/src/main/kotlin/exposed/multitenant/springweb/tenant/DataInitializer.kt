@@ -37,11 +37,17 @@ class DataInitializer {
 
     private fun createSchema(tenant: Tenants.Tenant) {
         log.debug { "Creating schema and test data ..." }
+
+        val currentSchema = TenantContext.getCurrentTenantSchema()
+        SchemaUtils.createSchema(currentSchema)
+        SchemaUtils.setSchema(currentSchema)
+        
         @Suppress("DEPRECATION")
         SchemaUtils.createMissingTablesAndColumns(ActorTable, MovieTable, ActorInMovieTable)
     }
 
     private fun populateData(tenant: Tenants.Tenant) {
+
         val totalActors = ActorTable.selectAll().count()
 
         if (totalActors > 0) {

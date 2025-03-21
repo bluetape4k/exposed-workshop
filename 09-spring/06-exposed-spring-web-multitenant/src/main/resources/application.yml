@@ -18,6 +18,9 @@ spring:
     application:
         name: Spring MVC with Exposed
 
+    profiles:
+        active: h2        # postgres | h2
+
     threads:
         virtual:
             enabled: true   # Virtual Thread 사용 여부

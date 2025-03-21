@@ -5,6 +5,7 @@ import io.bluetape4k.logging.info
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
 import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
@@ -22,10 +23,13 @@ class TransactionSchemaAspect {
     @Before("@within(org.springframework.transaction.annotation.Transactional)")
     fun setSchemaForTransaction() {
         runCatching {
-            val schema = TenantContext.getCurrentTenantSchema()
-            log.info { "Use schema=$schema" }
-            SchemaUtils.createSchema(schema)
-            SchemaUtils.setSchema(schema)
+            transaction {
+                val schema = TenantContext.getCurrentTenantSchema()
+                log.info { "Use schema=$schema" }
+                SchemaUtils.createSchema(schema)
+                SchemaUtils.setSchema(schema)
+                commit()
+            }
         }
     }
 }
