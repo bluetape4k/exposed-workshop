@@ -1,0 +1,53 @@
+server:
+    port: 8080
+    compression:
+        enabled: true
+        mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+        min-response-size: 1024
+
+    shutdown: graceful  # WebServer Graceful shutdown (https://www.baeldung.com/spring-boot-web-server-shutdown)
+
+spring:
+    application:
+        name: Spring Webflux with Exposed
+
+    profiles:
+        active: "h2"    # postgres | h2 를 선택할 수 있습니다.
+        default: "h2"
+
+    jackson:
+        serialization:
+            indent-output: true
+    lifecycle:
+        timeout-per-shutdown-phase: 10s     # Graceful Shutdown 시간
+
+    netty:
+        leak-detection: simple
+
+    exposed:
+        generate-ddl: true
+        show-sql: true
+
+    db:
+        default:
+            driver: org.h2.Driver
+            url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+            user: sa
+            password: sa
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+    endpoint:
+        health:
+            show-details: always
+
+    metrics:
+        tags:
+            application: ${spring.application.name}
+        distribution:
+            percentiles-histogram:
+                http.server.requests: true
+                resilience4j.circuitbreaker.calls: true

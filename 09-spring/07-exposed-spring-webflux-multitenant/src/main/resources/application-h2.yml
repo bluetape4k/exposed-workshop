@@ -1,0 +1,12 @@
+spring:
+    datasource:
+        url: jdbc:h2:mem:exposed;DB_CLOSE_DELAY=-1;MODE=MySQL;
+        driver-class-name: org.h2.Driver
+        username: sa
+        password:
+        hikari:
+            maximum-pool-size: 100
+            minimum-idle: 10
+            idle-timeout: 30000
+            max-lifetime: 60000
+            connection-timeout: 30000
