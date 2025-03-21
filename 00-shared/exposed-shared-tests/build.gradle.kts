@@ -31,6 +31,8 @@ dependencies {
     api(Libs.bluetape4k_jdbc)
     api(Libs.bluetape4k_junit5)
 
+    api(Libs.hikaricp)
+
     api(Libs.h2_v2)
     api(Libs.mariadb_java_client)
     api(Libs.mysql_connector_j)

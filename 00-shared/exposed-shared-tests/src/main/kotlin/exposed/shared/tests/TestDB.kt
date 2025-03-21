@@ -1,10 +1,13 @@
 package exposed.shared.tests
 
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
 import io.bluetape4k.jdbc.JdbcDrivers
 import io.bluetape4k.logging.KLogging
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.DatabaseConfig
 import java.sql.Connection
+import javax.sql.DataSource
 import kotlin.reflect.full.declaredMemberProperties
 
 /**
@@ -189,13 +192,30 @@ enum class TestDB(
             configure()
         }
         return Database.connect(
-            url = connection(),
-            databaseConfig = config,
-            user = user,
-            password = pass,
-            driver = driver,
+            datasource = getDataSource(),
             setupConnection = { afterConnection(it) },
+            databaseConfig = config,
         )
+//        return Database.connect(
+//            url = connection(),
+//            databaseConfig = config,
+//            user = user,
+//            password = pass,
+//            driver = driver,
+//            setupConnection = { afterConnection(it) },
+//        )
+    }
+
+    private fun getDataSource(): DataSource {
+        val config = HikariConfig().apply {
+            jdbcUrl = connection()
+            driverClassName = driver
+            username = user
+            password = pass
+            maximumPoolSize = 30
+            minimumIdle = 2
+        }
+        return HikariDataSource(config)
     }
 
     companion object: KLogging() {

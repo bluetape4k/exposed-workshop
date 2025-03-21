@@ -72,11 +72,12 @@ class Ex01_Coroutines: AbstractExposedTest() {
         override val primaryKey = PrimaryKey(id)
     }
 
-    suspend fun Transaction.getTesterById(id: Int): ResultRow? = withSuspendTransaction {
-        Tester.selectAll()
-            .where { Tester.id eq id }
-            .singleOrNull()
-    }
+    suspend fun Transaction.getTesterById(id: Int): ResultRow? =
+        withSuspendTransaction {
+            Tester.selectAll()
+                .where { Tester.id eq id }
+                .singleOrNull()
+        }
 
     /**
      * Coroutines 환경 하에서 여러 작업을 순차적으로 수행합니다.
@@ -313,6 +314,7 @@ class Ex01_Coroutines: AbstractExposedTest() {
             // 복수의 INSERT 작업을 동시에 수행합니다.
             val results = List(recordCount) { index ->
                 suspendedTransactionAsync(Dispatchers.IO, db = db) {
+                    maxAttempts = 5
                     Tester.insert { }
                     log.debug { "task[$index]: inserted" }
                     index + 1
