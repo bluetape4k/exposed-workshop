@@ -1,7 +1,3 @@
-app:
-    virtualthread:
-        enabled: true
-
 server:
     port: 8080
     compression:
@@ -9,7 +5,7 @@ server:
 
     tomcat:
         threads:
-            max: 8000
+            max: 400
             min-spare: 20
 
     shutdown: graceful  # WebServer Graceful shutdown (https://www.baeldung.com/spring-boot-web-server-shutdown)
@@ -23,7 +19,7 @@ spring:
 
     threads:
         virtual:
-            enabled: true   # Virtual Thread 사용 여부
+            enabled: false   # Virtual Thread 사용 여부 (TenantContext 를 ThreadLocal이 아닌 ScopeValue 를 사용하도록 변경하려면 ...)
 
     jackson:
         serialization:

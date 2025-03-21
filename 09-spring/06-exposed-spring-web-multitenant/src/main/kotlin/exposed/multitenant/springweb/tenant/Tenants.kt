@@ -15,6 +15,9 @@ object Tenants {
         }
     }
 
+    fun getById(tenantId: String): Tenant =
+        Tenant.fromId(tenantId) ?: error("No tenant found for id: $tenantId")
+
     private val tenantSchemas = mapOf(
         Tenant.KOREAN to getSchemaDefinition(Tenant.KOREAN),
         Tenant.ENGLISH to getSchemaDefinition(Tenant.ENGLISH),
