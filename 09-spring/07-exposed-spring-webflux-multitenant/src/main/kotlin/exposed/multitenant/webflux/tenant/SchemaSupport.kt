@@ -33,3 +33,16 @@ suspend fun <T> newSuspendedTransactionWithTenant(
         statement()
     }
 }
+
+suspend fun <T> newSuspendedTransactionWithCurrentReactorTenant(
+    db: Database? = null,
+    transactionIsolation: Int? = null,
+    readOnly: Boolean? = null,
+    statement: suspend Transaction.() -> T,
+): T = newSuspendedTransactionWithTenant(
+    currentReactorTenant(),
+    db,
+    transactionIsolation,
+    readOnly,
+    statement
+)
