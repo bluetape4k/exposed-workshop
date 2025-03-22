@@ -135,7 +135,10 @@ object TimebasedUUIDTables {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder().add("name", name).add("city id", city.idValue).toString()
+        override fun toString(): String = toStringBuilder()
+            .add("name", name)
+            .add("cityId", city.idValue)
+            .toString()
     }
 
     class Address(id: EntityID<UUID>): TimebasedUUIDEntity(id) {
@@ -148,7 +151,10 @@ object TimebasedUUIDTables {
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
         override fun toString(): String =
-            toStringBuilder().add("address", address).add("person id", person.idValue).add("city id", city.idValue)
+            toStringBuilder()
+                .add("address", address)
+                .add("personId", person.idValue)
+                .add("cityId", city.idValue)
                 .toString()
     }
 
@@ -159,7 +165,9 @@ object TimebasedUUIDTables {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder().add("city id", city.idValue).toString()
+        override fun toString(): String = toStringBuilder()
+            .add("cityId", city.idValue)
+            .toString()
     }
 }
 
@@ -352,6 +360,7 @@ class Ex21_TimebasedUUIDTableEntity: AbstractExposedTest() {
             }
 
             flushCache()
+            entityCache.clear()
 
             // lazy loading referencedOn
             log.debug { "Lazy loading referencedOn" }

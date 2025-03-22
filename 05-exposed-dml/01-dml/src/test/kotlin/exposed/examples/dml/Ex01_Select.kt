@@ -268,7 +268,7 @@ class Ex01_Select: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `inList with entityID columns`(testDB: TestDB) {
-        withTables(testDB, Posts, Boards, Categories) {
+        withTables(testDB, Boards, Posts, Categories) {
             val board1 = Board.new {
                 name = "board1"
             }

@@ -17,7 +17,7 @@ import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.idValue
 import io.bluetape4k.exposed.dao.toStringBuilder
-import io.bluetape4k.exposed.sql.timebasedGenerated
+import io.bluetape4k.idgenerators.uuid.TimebasedUuid
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEmpty
@@ -471,7 +471,7 @@ class Ex01_Entity: AbstractExposedTest() {
      * ```
      */
     object Categories: IntIdTable("categories") {
-        val uniqueId = varchar("uniqueId", 22).timebasedGenerated().uniqueIndex()
+        val uniqueId = varchar("uniqueId", 22).clientDefault { TimebasedUuid.Reordered.nextIdAsString() }.uniqueIndex()
         val title = varchar("title", 50)
     }
 
@@ -491,8 +491,8 @@ class Ex01_Entity: AbstractExposedTest() {
     class Post(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<Post>(Posts)
 
-        var board by Board optionalReferencedOn Posts.boardId     // many-to-one
-        var parent by Post optionalReferencedOn Posts.parentId     // many-to-one
+        var board: Board? by Board optionalReferencedOn Posts.boardId     // many-to-one
+        var parent: Post? by Post optionalReferencedOn Posts.parentId     // many-to-one
         val children by Post optionalReferrersOn Posts.parentId   // one-to-many
         var category: Category? by Category optionalReferencedOn Posts.categoryId   // many-to-one
         var optCategory: Category? by Category optionalReferencedOn Posts.optCategoryId  // many-to-one
@@ -510,7 +510,6 @@ class Ex01_Entity: AbstractExposedTest() {
         val posts by Post optionalReferrersOn Posts.optCategoryId  // one-to-many
 
         override fun equals(other: Any?): Boolean = idEquals(other)
-
         override fun hashCode(): Int = idHashCode()
         override fun toString(): String = toStringBuilder()
             .add("uniqueId", uniqueId)
@@ -1141,6 +1140,8 @@ class Ex01_Entity: AbstractExposedTest() {
                 optCategory = category1
                 parent = post1
             }
+
+            commit()
 
             // SELECT COUNT(*) FROM POSTS
             Post.all().count() shouldBeEqualTo 2L
