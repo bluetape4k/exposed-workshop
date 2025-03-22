@@ -6,6 +6,7 @@ import exposed.shared.tests.inProperCase
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import io.bluetape4k.support.ifTrue
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeEmpty
@@ -18,12 +19,12 @@ import org.jetbrains.exposed.sql.autoIncColumnType
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.statements.StatementType
-import org.jetbrains.exposed.sql.statements.StatementType.SELECT
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import org.testcontainers.utility.Base58
 import java.sql.ResultSet
 
 class Ex02_TransactionExec: AbstractExposedTest() {
@@ -69,8 +70,8 @@ class Ex02_TransactionExec: AbstractExposedTest() {
              * ```
              */
             val results: MutableList<Int> = exec(
-                """SELECT * FROM ${ExecTable.tableName.inProperCase()};""",
-                explicitStatementType = SELECT
+                """SELECT * FROM ${ExecTable.tableName.inProperCase()}""",
+                explicitStatementType = StatementType.SELECT
             ) { resultSet: ResultSet ->
                 val allAmounts = mutableListOf<Int>()
                 while (resultSet.next()) {
@@ -120,7 +121,9 @@ class Ex02_TransactionExec: AbstractExposedTest() {
         transaction(db) {
             try {
                 SchemaUtils.create(ExecTable)
+                commit()
                 testInsertAndSelectInSingleExec(testDB)
+                commit()
             } finally {
                 SchemaUtils.drop(ExecTable)
             }
@@ -142,7 +145,7 @@ class Ex02_TransactionExec: AbstractExposedTest() {
         val selectLastIdStatement = when (testDB) {
             TestDB.POSTGRESQL -> "SELECT lastval() AS $columnAlias;"
             TestDB.MARIADB -> "SELECT LASTVAL(${ExecTable.id.autoIncColumnType?.autoincSeq}) AS $columnAlias"
-            else -> "SELECT LAST_INSERT_ID() AS $columnAlias;"
+            else -> "SELECT LAST_INSERT_ID() AS $columnAlias"
         }
 
         val insertAndSelectStatements =
@@ -150,8 +153,6 @@ class Ex02_TransactionExec: AbstractExposedTest() {
             $insertStatement;
             $selectLastIdStatement;
             """.trimIndent()
-
-        log.debug { "insertAndSelectStatements:\n$insertAndSelectStatements" }
 
         val result = exec(
             insertAndSelectStatements,
@@ -169,7 +170,7 @@ class Ex02_TransactionExec: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `exec with nullable and empty resultSets`(testDB: TestDB) {
-        val tester = object: Table("tester") {
+        val tester = object: Table("tester_${Base58.randomString(4)}") {
             val id = integer("id")
             val title = varchar("title", 32)
         }
@@ -186,7 +187,7 @@ class Ex02_TransactionExec: AbstractExposedTest() {
             val stringResult = exec(
                 """SELECT $title FROM $table WHERE $id = 1;"""
             ) { rs: ResultSet ->
-                if (rs.next()) rs.getString(title) else null
+                rs.next().ifTrue { rs.getString(title) }
             }
             stringResult shouldBeEqualTo "Exposed"
 
@@ -194,7 +195,7 @@ class Ex02_TransactionExec: AbstractExposedTest() {
             val nullColumnResult = exec(
                 """SELECT (SELECT $title FROM $table WHERE $id = 999) AS sub;"""
             ) { rs: ResultSet ->
-                if (rs.next()) rs.getString("sub") else null
+                rs.next().ifTrue { rs.getString("sub") }
             }
             nullColumnResult.shouldBeNull()
 
@@ -202,11 +203,7 @@ class Ex02_TransactionExec: AbstractExposedTest() {
             val nullTransformResult = exec(
                 """SELECT $title FROM $table WHERE $id = 999;"""
             ) { rs: ResultSet ->
-                if (rs.next()) {
-                    rs.getString(title)
-                } else {
-                    null
-                }
+                rs.next().ifTrue { rs.getString(title) }
             }
             nullTransformResult.shouldBeNull()
         }

@@ -17,7 +17,6 @@ import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.inTopLevelTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.Assumptions
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.sql.Connection
@@ -43,15 +42,11 @@ class Ex01_TransactionIsolation: AbstractExposedTest() {
         Connection.TRANSACTION_SERIALIZABLE,
     )
 
-    @Disabled("TestDB는 모두 HikariCP 를 사용하도록 변경해서 Exposed의 Databasse의 transactionIsolation 이 적용되지 않음")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `what transaction isolation was applied`(testDB: TestDB) {
-
-        Assumptions.assumeTrue { testDB in transactionIsolationSupportDB }
-
-        isolations.forEach { isolation ->
-            withDb(testDB) {
+        withDb(testDB) {
+            isolations.forEach { isolation ->
                 log.debug { "db: ${testDB.name}, isolation: $isolation" }
                 inTopLevelTransaction(isolation) {
                     maxAttempts = 1
