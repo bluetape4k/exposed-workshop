@@ -8,6 +8,7 @@ import exposed.shared.tests.withDb
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
+import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
@@ -111,6 +112,7 @@ class Ex07_CustomEnumeration: AbstractExposedTest() {
                 }
                 EnumTable.initEnumColumn(sqlType)
                 SchemaUtils.create(EnumTable)
+                flushCache()
 
                 // enumColumn = ACTIVE 로 설정
                 // INSERT INTO enum_table (status) VALUES ('ACTIVE')
@@ -127,6 +129,8 @@ class Ex07_CustomEnumeration: AbstractExposedTest() {
                 EnumTable.selectAll().single()[EnumTable.status] shouldBeEqualTo INACTIVE
 
                 EnumTable.deleteAll()
+                flushCache()
+                entityCache.clear()
 
                 // Entity 를 통한 Enum 사용
 
@@ -144,6 +148,8 @@ class Ex07_CustomEnumeration: AbstractExposedTest() {
                 // UPDATE enum_table SET status='ACTIVE' WHERE id = 2
                 entity.status = ACTIVE
                 EnumEntity.reload(entity)!!.status shouldBeEqualTo ACTIVE
+
+                flushCache()
             } finally {
                 SchemaUtils.drop(EnumTable)
                 if (currentDialect is PostgreSQLDialect) {
@@ -207,6 +213,8 @@ class Ex07_CustomEnumeration: AbstractExposedTest() {
 
                 EnumTable.selectAll().single()[EnumTable.status] shouldBeEqualTo status
                 referenceTable.selectAll().single()[referenceTable.referenceColumn] shouldBeEqualTo status
+
+                flushCache()
             } finally {
                 runCatching {
                     SchemaUtils.drop(referenceTable)

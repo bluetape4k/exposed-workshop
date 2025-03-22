@@ -99,7 +99,7 @@ enum class TestDB(
                 "jdbc:mariadb://localhost:3306/exposed$options"
             }
         },
-        driver = JdbcDrivers.DRIVER_CLASS_MARIADB
+        driver = JdbcDrivers.DRIVER_CLASS_MARIADB,
     ),
 
     MYSQL_V5(
@@ -116,7 +116,7 @@ enum class TestDB(
                 "jdbc:mysql://localhost:3306/exposed$options"
             }
         },
-        driver = JdbcDrivers.DRIVER_CLASS_MYSQL
+        driver = JdbcDrivers.DRIVER_CLASS_MYSQL,
     ),
 
     MYSQL_V8(
@@ -137,7 +137,7 @@ enum class TestDB(
         },
         driver = JdbcDrivers.DRIVER_CLASS_MYSQL,
         user = if (USE_TESTCONTAINERS) "test" else "exposed",
-        pass = if (USE_TESTCONTAINERS) "test" else "@exposed2025"
+        pass = if (USE_TESTCONTAINERS) "test" else "@exposed2025",
     ),
 
     POSTGRESQL(
@@ -191,20 +191,23 @@ enum class TestDB(
             dbConfig()
             configure()
         }
-//        return Database.connect(
-//            url = connection(),
-//            databaseConfig = config,
-//            user = user,
-//            password = pass,
-//            driver = driver,
-//            setupConnection = { afterConnection(it) },
-//        )
 
+        // NOTE: 테스트 시에는 HikariDataSource 를 사용하지 않습니다.
+        // NOTE: HikariCP 는 성능을 위해 캐시 등 다양한 기능을 사용하는데, 테스트 시에 중복된 데이터에 의해 혼선이 생깁니다.
         return Database.connect(
-            datasource = getDataSource(),
-            setupConnection = { afterConnection(it) },
+            url = connection(),
             databaseConfig = config,
+            user = user,
+            password = pass,
+            driver = driver,
+            setupConnection = { afterConnection(it) },
         )
+
+//        return Database.connect(
+//            datasource = getDataSource(),
+//            setupConnection = { afterConnection(it) },
+//            databaseConfig = config,
+//        )
     }
 
     private fun getDataSource(): DataSource {
@@ -214,7 +217,7 @@ enum class TestDB(
             username = user
             password = pass
             maximumPoolSize = 30
-            minimumIdle = 2
+            minimumIdle = 1
         }
         return HikariDataSource(config)
     }
