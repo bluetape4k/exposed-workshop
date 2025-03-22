@@ -14,6 +14,8 @@ import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
+import org.jetbrains.exposed.dao.entityCache
+import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.SortOrder.DESC
@@ -23,6 +25,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import org.testcontainers.utility.Base58
 import java.util.*
 
 /**
@@ -355,13 +358,17 @@ class Ex16_FetchBatchedResults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `fetchBatchedResults with alias`(testDB: TestDB) {
-        val tester = object: IntIdTable("tester") {
+        // 많은 테스트에서 "tester" 테이블을 사용해서, Postgres에서 preparedStatement 를 캐싱합니다.
+        // 이 때문에 테스트가 실패하는 경우가 있습니다. 그래서 테이블 이름을 랜덤하게 생성합니다.
+        val tester = object: IntIdTable("tester_${Base58.randomString(4)}") {
             val name = varchar("name", 1)
         }
 
         withTables(testDB, tester) {
             tester.insert { it[name] = "a" }
             tester.insert { it[name] = "b" }
+            flushCache()
+            entityCache.clear()
 
             tester.alias("tester_alias").selectAll().fetchBatchedResults(1).flatten() shouldHaveSize 2
         }
