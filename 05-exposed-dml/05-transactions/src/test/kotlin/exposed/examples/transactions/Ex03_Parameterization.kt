@@ -4,6 +4,7 @@ import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.withTables
+import io.bluetape4k.support.ifTrue
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.jetbrains.exposed.sql.BooleanColumnType
@@ -108,8 +109,7 @@ class Ex03_Parameterization: AbstractExposedTest() {
                     ),
                     StatementType.MULTI
                 ) { resultSet ->
-                    resultSet.next()
-                    resultSet.getInt(1)
+                    resultSet.next().ifTrue { resultSet.getInt(1) }
                 }
                 result shouldBeEqualTo 1
 
@@ -165,8 +165,7 @@ class Ex03_Parameterization: AbstractExposedTest() {
                     ),
                     explicitStatementType = StatementType.MULTI
                 ) { resultSet ->
-                    resultSet.next()
-                    resultSet.getInt(1)
+                    resultSet.next().ifTrue { resultSet.getInt(1) }
                 }
                 result shouldBeEqualTo 1
 

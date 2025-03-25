@@ -1,0 +1,12 @@
+spring:
+    datasource:
+        url: ${testcontainers.postgres.jdbc-url}
+        driver-class-name: org.postgresql.Driver
+        username: ${testcontainers.postgres.username}
+        password: ${testcontainers.postgres.password}
+        hikari:
+            maximum-pool-size: 100
+            minimum-idle: 10
+            idle-timeout: 30000
+            max-lifetime: 60000
+            connection-timeout: 30000

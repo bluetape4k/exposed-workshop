@@ -5,6 +5,7 @@ import exposed.shared.samples.CountryTable
 import exposed.shared.tests.TestDB
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
+import io.bluetape4k.support.ifTrue
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -289,16 +290,14 @@ class Ex02_H2_MultiDatabase {
             // when running all tests together, this one usually fails
             // `Dual.select(intLiteral(1))`
             TransactionManager.current().exec("SELECT 1") { rs ->
-                rs.next()
-                rs.getInt(1) shouldBeEqualTo 1
+                rs.next().ifTrue { rs.getInt(1) } shouldBeEqualTo 1
             }
         }
         TransactionManager.defaultDatabase = db2
         newSuspendedTransaction(coroutineDispatcher1) {
             TransactionManager.current().db.name shouldBeEqualTo db2.name // fails??
             TransactionManager.current().exec("SELECT 1") { rs ->
-                rs.next()
-                rs.getInt(1) shouldBeEqualTo 1
+                rs.next().ifTrue { rs.getInt(1) } shouldBeEqualTo 1
             }
         }
         TransactionManager.defaultDatabase = null
@@ -314,8 +313,7 @@ class Ex02_H2_MultiDatabase {
             transaction {
                 TransactionManager.current().db.name shouldBeEqualTo db1.name
                 TransactionManager.current().exec("SELECT 1") { rs ->
-                    rs.next()
-                    rs.getInt(1) shouldBeEqualTo 1
+                    rs.next().ifTrue { rs.getInt(1) } shouldBeEqualTo 1
                 }
             }
         }.get()
@@ -325,8 +323,7 @@ class Ex02_H2_MultiDatabase {
             transaction {
                 TransactionManager.current().db.name shouldBeEqualTo db2.name
                 TransactionManager.current().exec("SELECT 1") { rs ->
-                    rs.next()
-                    rs.getInt(1) shouldBeEqualTo 1
+                    rs.next().ifTrue { rs.getInt(1) } shouldBeEqualTo 1
                 }
             }
         }.get()

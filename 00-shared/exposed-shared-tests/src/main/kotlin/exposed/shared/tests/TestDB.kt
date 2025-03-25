@@ -1,10 +1,13 @@
 package exposed.shared.tests
 
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
 import io.bluetape4k.jdbc.JdbcDrivers
 import io.bluetape4k.logging.KLogging
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.DatabaseConfig
 import java.sql.Connection
+import javax.sql.DataSource
 import kotlin.reflect.full.declaredMemberProperties
 
 /**
@@ -39,7 +42,7 @@ enum class TestDB(
         connection = { "jdbc:h2:mem:regular-v1;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;" },
         driver = JdbcDrivers.DRIVER_CLASS_H2,
         dbConfig = {
-            defaultIsolationLevel = java.sql.Connection.TRANSACTION_READ_COMMITTED
+            defaultIsolationLevel = Connection.TRANSACTION_READ_COMMITTED
         }
     ),
 
@@ -47,15 +50,15 @@ enum class TestDB(
      * H2 v2.+ 를 사용할 때
      */
     H2(
-        connection = { "jdbc:h2:mem:regular-v2;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;" },
+        connection = { "jdbc:h2:mem:regular-v2;DB_CLOSE_DELAY=-1;" },
         driver = JdbcDrivers.DRIVER_CLASS_H2,
         dbConfig = {
-            defaultIsolationLevel = java.sql.Connection.TRANSACTION_READ_COMMITTED
+            defaultIsolationLevel = Connection.TRANSACTION_READ_COMMITTED
         }
     ),
     H2_MYSQL(
         connection = {
-            "jdbc:h2:mem:mysql;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;"
+            "jdbc:h2:mem:mysql;MODE=MySQL;DB_CLOSE_DELAY=-1;"
         },
         driver = JdbcDrivers.DRIVER_CLASS_H2,
         beforeConnection = {
@@ -70,13 +73,13 @@ enum class TestDB(
     ),
     H2_MARIADB(
         connection = {
-            "jdbc:h2:mem:mariadb;MODE=MariaDB;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;"
+            "jdbc:h2:mem:mariadb;MODE=MariaDB;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;"
         },
         driver = JdbcDrivers.DRIVER_CLASS_H2,
     ),
     H2_PSQL(
         connection = {
-            "jdbc:h2:mem:psql;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;"
+            "jdbc:h2:mem:psql;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1;"
         },
         driver = JdbcDrivers.DRIVER_CLASS_H2
     ),
@@ -96,7 +99,7 @@ enum class TestDB(
                 "jdbc:mariadb://localhost:3306/exposed$options"
             }
         },
-        driver = JdbcDrivers.DRIVER_CLASS_MARIADB
+        driver = JdbcDrivers.DRIVER_CLASS_MARIADB,
     ),
 
     MYSQL_V5(
@@ -113,7 +116,7 @@ enum class TestDB(
                 "jdbc:mysql://localhost:3306/exposed$options"
             }
         },
-        driver = JdbcDrivers.DRIVER_CLASS_MYSQL
+        driver = JdbcDrivers.DRIVER_CLASS_MYSQL,
     ),
 
     MYSQL_V8(
@@ -134,7 +137,7 @@ enum class TestDB(
         },
         driver = JdbcDrivers.DRIVER_CLASS_MYSQL,
         user = if (USE_TESTCONTAINERS) "test" else "exposed",
-        pass = if (USE_TESTCONTAINERS) "test" else "@exposed2025"
+        pass = if (USE_TESTCONTAINERS) "test" else "@exposed2025",
     ),
 
     POSTGRESQL(
@@ -188,6 +191,9 @@ enum class TestDB(
             dbConfig()
             configure()
         }
+
+        // NOTE: 테스트 시에는 HikariDataSource 를 사용하지 않습니다.
+        // NOTE: HikariCP 는 성능을 위해 캐시 등 다양한 기능을 사용하는데, 테스트 시에 prepared statement 캐시 등에 의해 예외가 발생합니다.
         return Database.connect(
             url = connection(),
             databaseConfig = config,
@@ -196,6 +202,24 @@ enum class TestDB(
             driver = driver,
             setupConnection = { afterConnection(it) },
         )
+
+//        return Database.connect(
+//            datasource = getDataSource(),
+//            setupConnection = { afterConnection(it) },
+//            databaseConfig = config,
+//        )
+    }
+
+    private fun getDataSource(): DataSource {
+        val config = HikariConfig().apply {
+            jdbcUrl = connection()
+            driverClassName = driver
+            username = user
+            password = pass
+            maximumPoolSize = 30
+            minimumIdle = 1
+        }
+        return HikariDataSource(config)
     }
 
     companion object: KLogging() {

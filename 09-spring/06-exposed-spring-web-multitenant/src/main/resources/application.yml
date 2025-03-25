@@ -1,0 +1,51 @@
+server:
+    port: 8080
+    compression:
+        enabled: true
+
+    tomcat:
+        threads:
+            max: 8000
+            min-spare: 20
+
+    shutdown: graceful  # WebServer Graceful shutdown (https://www.baeldung.com/spring-boot-web-server-shutdown)
+
+spring:
+    application:
+        name: Spring MVC with Exposed
+
+    profiles:
+        active: h2        # postgres | h2
+
+    threads:
+        virtual:
+            enabled: true   # Virtual Thread 사용 여부 (TenantContext 를 ThreadLocal이 아닌 ScopeValue 를 사용하도록 변경하려면 ...)
+
+    jackson:
+        serialization:
+            indent-output: true
+    lifecycle:
+        timeout-per-shutdown-phase: 10s     # Graceful Shutdown 시간
+
+    datasource:
+        hikari:
+            maximum-pool-size: 100
+            minimum-idle: 10
+            connection-timeout: 1000
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+    endpoint:
+        health:
+            show-details: always
+
+    metrics:
+        tags:
+            application: ${spring.application.name}
+        distribution:
+            percentiles-histogram:
+                http.server.requests: true
+                resilience4j.circuitbreaker.calls: true

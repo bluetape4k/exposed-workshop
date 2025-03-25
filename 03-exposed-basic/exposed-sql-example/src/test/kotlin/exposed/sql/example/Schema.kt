@@ -18,6 +18,8 @@ object Schema {
      * 도시 정보를 저장하는 테이블
      *
      * ```sql
+     * -- Postgres
+     *
      * CREATE TABLE IF NOT EXISTS cities (
      *      id SERIAL,
      *      "name" VARCHAR(50) NOT NULL,
@@ -41,17 +43,17 @@ object Schema {
      *      "name" VARCHAR(50) NOT NULL,
      *      city_id INT NULL,
      *
-     *      CONSTRAINT PK_User_ID  PRIMARY KEY (id),
+     *      CONSTRAINT PK_User_ID PRIMARY KEY (id),
      *
      *      CONSTRAINT fk_users_city_id__id FOREIGN KEY (city_id)
-     *      REFERENCES cities(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+     *          REFERENCES cities(id) ON DELETE RESTRICT ON UPDATE RESTRICT
      * )
      * ```
      */
     object UserTable: Table("users") {
         val id = varchar("id", length = 10)
         val name = varchar("name", length = 50)
-        val cityId = integer("city_id").references(CityTable.id).nullable()
+        val cityId = optReference("city_id", CityTable.id)
 
         override val primaryKey = PrimaryKey(id, name = "PK_User_ID")
     }

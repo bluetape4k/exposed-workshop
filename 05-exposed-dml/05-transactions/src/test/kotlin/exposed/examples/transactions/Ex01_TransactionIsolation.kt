@@ -45,8 +45,8 @@ class Ex01_TransactionIsolation: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `what transaction isolation was applied`(testDB: TestDB) {
-        isolations.forEach { isolation ->
-            withDb(testDB) {
+        withDb(testDB) {
+            isolations.forEach { isolation ->
                 log.debug { "db: ${testDB.name}, isolation: $isolation" }
                 inTopLevelTransaction(isolation) {
                     maxAttempts = 1
