@@ -259,6 +259,7 @@ object Libs {
     val bluetape4k_avro = bluetape4k("avro")
     val bluetape4k_crypto = bluetape4k("crypto")
     val bluetape4k_csv = bluetape4k("csv")
+    val bluetape4k_fastjson2 = bluetape4k("fastjson2")
     val bluetape4k_feign = bluetape4k("feign")
     val bluetape4k_grpc = bluetape4k("grpc")
     val bluetape4k_http = bluetape4k("http")
@@ -272,6 +273,7 @@ object Libs {
     // Data
     val bluetape4k_cassandra = bluetape4k("cassandra")
     val bluetape4k_exposed = bluetape4k("exposed")
+    val bluetape4k_exposed_fastjson2 = bluetape4k("exposed-fastjson2")
     val bluetape4k_exposed_jackson = bluetape4k("exposed-jackson")
     val bluetape4k_exposed_jasypt = bluetape4k("exposed-jasypt")
     val bluetape4k_exposed_tests = bluetape4k("exposed-tests")
