@@ -1,12 +1,12 @@
 package exposed.examples.jpa.ex05_relations.ex02_one_to_many
 
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.Ex07_OneToMany_Map.CarOptionTable
-import exposed.shared.dao.idEquals
-import exposed.shared.dao.idHashCode
-import exposed.shared.dao.toStringBuilder
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
+import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame

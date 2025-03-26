@@ -1,9 +1,9 @@
 package exposed.examples.jpa.ex04_compositeId
 
-import exposed.shared.dao.idEquals
-import exposed.shared.dao.idHashCode
-import exposed.shared.dao.idValue
-import exposed.shared.dao.toStringBuilder
+import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
+import io.bluetape4k.exposed.dao.idValue
+import io.bluetape4k.exposed.dao.toStringBuilder
 import org.jetbrains.exposed.dao.CompositeEntity
 import org.jetbrains.exposed.dao.CompositeEntityClass
 import org.jetbrains.exposed.dao.IntEntity

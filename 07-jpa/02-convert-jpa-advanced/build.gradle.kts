@@ -9,13 +9,14 @@ configurations {
 dependencies {
     implementation(platform(Libs.exposed_bom))
 
-    implementation(project(":exposed-shared"))
+
     testImplementation(project(":exposed-shared-tests"))
 
     implementation(Libs.bluetape4k_exposed)
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
+    implementation(Libs.exposed_java_time)
 
     // Coroutines
     implementation(Libs.bluetape4k_coroutines)

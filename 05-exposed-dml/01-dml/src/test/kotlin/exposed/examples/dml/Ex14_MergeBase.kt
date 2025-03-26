@@ -4,16 +4,16 @@ import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
-import kotlinx.datetime.LocalDateTime
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.kotlin.datetime.datetime
+import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.selectAll
 import org.junit.jupiter.api.Assumptions
+import java.time.LocalDateTime
 
-val TEST_DEFAULT_DATE_TIME = LocalDateTime(
+val TEST_DEFAULT_DATE_TIME: LocalDateTime = LocalDateTime.of(
     2000,
     1,
     1,
@@ -56,12 +56,12 @@ abstract class Ex14_MergeBase: AbstractExposedTest() {
             source.insert(key = "only-in-source-1", value = 1)
             source.insert(key = "only-in-source-2", value = 2)
             source.insert(key = "only-in-source-3", value = 3, optional = "optional-is-present")
-            source.insert(key = "only-in-source-4", value = 4, at = LocalDateTime(2050, 1, 1, 0, 0, 0, 0))
+            source.insert(key = "only-in-source-4", value = 4, at = LocalDateTime.of(2050, 1, 1, 0, 0, 0, 0))
 
             dest.insert(key = "only-in-dest-1", value = 10)
             dest.insert(key = "only-in-dest-2", value = 20)
             dest.insert(key = "only-in-dest-3", value = 30, optional = "optional-is-present")
-            dest.insert(key = "only-in-dest-4", value = 40, at = LocalDateTime(2050, 1, 1, 0, 0, 0, 0))
+            dest.insert(key = "only-in-dest-4", value = 40, at = LocalDateTime.of(2050, 1, 1, 0, 0, 0, 0))
 
             source.insert(key = "in-source-and-dest-1", value = 1)
             dest.insert(key = "in-source-and-dest-1", value = 10)
@@ -69,8 +69,8 @@ abstract class Ex14_MergeBase: AbstractExposedTest() {
             dest.insert(key = "in-source-and-dest-2", value = 20)
             source.insert(key = "in-source-and-dest-3", value = 3, optional = "optional-is-present")
             dest.insert(key = "in-source-and-dest-3", value = 30, optional = "optional-is-present")
-            source.insert(key = "in-source-and-dest-4", value = 4, at = LocalDateTime(1950, 1, 1, 0, 0, 0, 0))
-            dest.insert(key = "in-source-and-dest-4", value = 40, at = LocalDateTime(1950, 1, 1, 0, 0, 0, 0))
+            source.insert(key = "in-source-and-dest-4", value = 4, at = LocalDateTime.of(1950, 1, 1, 0, 0, 0, 0))
+            dest.insert(key = "in-source-and-dest-4", value = 40, at = LocalDateTime.of(1950, 1, 1, 0, 0, 0, 0))
 
             statement(Dest, Source)
         }

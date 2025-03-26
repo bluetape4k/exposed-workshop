@@ -3,7 +3,6 @@ package exposed.examples.dml
 import exposed.shared.dml.DMLTestData
 import exposed.shared.dml.DMLTestData.Cities
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.sql.BatchInsertOnConflictIgnore
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.assertFailAndRollback
@@ -15,6 +14,7 @@ import io.bluetape4k.codec.Base58
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
+import io.bluetape4k.exposed.sql.BatchInsertOnConflictIgnore
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
@@ -43,8 +43,8 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.insertIgnore
 import org.jetbrains.exposed.sql.insertIgnoreAndGetId
-import org.jetbrains.exposed.sql.kotlin.datetime.CurrentTimestamp
-import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
+import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
+import org.jetbrains.exposed.sql.javatime.timestamp
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.stringLiteral

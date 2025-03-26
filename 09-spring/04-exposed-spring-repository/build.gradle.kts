@@ -21,8 +21,8 @@ configurations {
 
 dependencies {
 
-    implementation(project(":exposed-shared"))
-    testImplementation(project(":exposed-shared-tests"))
+
+testImplementation(project(":exposed-shared-tests"))
 
     // bluetape4k
     implementation(Libs.bluetape4k_io)

@@ -1,6 +1,5 @@
 package exposed.dao.example
 
-import exposed.shared.samples.City
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables

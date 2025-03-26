@@ -9,13 +9,15 @@ configurations {
 dependencies {
     implementation(platform(Libs.exposed_bom))
 
-    implementation(project(":exposed-shared"))
+
     testImplementation(project(":exposed-shared-tests"))
 
     implementation(Libs.bluetape4k_exposed)
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
+    implementation(Libs.exposed_json)
+    implementation(Libs.exposed_migration)
 
     // java time 지원 라이브러리
     implementation(Libs.exposed_java_time)

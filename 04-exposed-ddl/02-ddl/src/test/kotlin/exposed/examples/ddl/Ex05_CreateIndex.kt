@@ -1,10 +1,10 @@
 package exposed.examples.ddl
 
-import exposed.shared.sql.getIndices
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.sql.getIndices
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
@@ -32,10 +32,11 @@ class Ex05_CreateIndex: AbstractExposedTest() {
      *      id SERIAL PRIMARY KEY,
      *      "name" VARCHAR(255) NOT NULL
      * );
-     * 
+     *
      * CREATE INDEX tester_by_name ON tester ("name");
      * ```
      */
+    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `표준 인덱스 정의`(testDB: TestDB) {
@@ -83,6 +84,7 @@ class Ex05_CreateIndex: AbstractExposedTest() {
      * CREATE INDEX tester_by_name ON tester (`name`) USING HASH;
      * ```
      */
+    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `Hash Index 생성하기`(testDB: TestDB) {
@@ -130,6 +132,7 @@ class Ex05_CreateIndex: AbstractExposedTest() {
      *      ADD CONSTRAINT tester_another_value_unique UNIQUE (another_value);
      * ```
      */
+    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `특정 조건일 때만 인덱싱되는 partial index 생성`(testDB: TestDB) {

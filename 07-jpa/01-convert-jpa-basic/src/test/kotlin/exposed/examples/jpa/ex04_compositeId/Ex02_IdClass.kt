@@ -1,11 +1,11 @@
 package exposed.examples.jpa.ex04_compositeId
 
-import exposed.shared.dao.idEquals
-import exposed.shared.dao.idHashCode
-import exposed.shared.dao.toStringBuilder
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
+import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.requireNotBlank

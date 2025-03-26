@@ -36,6 +36,7 @@ class Ex03_CreateMissingTableAndColumns: AbstractExposedTest() {
      * ALTER TABLE tester ADD CONSTRAINT tester_time_unique UNIQUE ("time");
      * ```
      */
+    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `누락된 테이블과 컬럼을 생성 - 01`(testDB: TestDB) {
@@ -74,6 +75,7 @@ class Ex03_CreateMissingTableAndColumns: AbstractExposedTest() {
      * CREATE INDEX users2_camelcased ON users2 ("camelCased");
      * ```
      */
+    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `누락된 테이블과 컬럼을 생성 - 02`(testDB: TestDB) {
@@ -124,6 +126,7 @@ class Ex03_CreateMissingTableAndColumns: AbstractExposedTest() {
      *      ALTER COLUMN idcol DROP DEFAULT;
      * ```
      */
+    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `같은 테이블에 대한 매핑 중 autoIncrement를 없앨 수 있다`(testDB: TestDB) {

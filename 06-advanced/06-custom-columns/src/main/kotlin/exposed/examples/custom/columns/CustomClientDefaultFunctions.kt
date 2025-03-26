@@ -1,11 +1,11 @@
 package exposed.examples.custom.columns
 
-import exposed.shared.samples.CityTable.clientDefault
 import io.bluetape4k.idgenerators.ksuid.Ksuid
 import io.bluetape4k.idgenerators.ksuid.KsuidMillis
 import io.bluetape4k.idgenerators.snowflake.Snowflakers
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid
 import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.Table.Dual.clientDefault
 import java.util.*
 
 fun Column<String>.ksuidGenerated(): Column<String> =

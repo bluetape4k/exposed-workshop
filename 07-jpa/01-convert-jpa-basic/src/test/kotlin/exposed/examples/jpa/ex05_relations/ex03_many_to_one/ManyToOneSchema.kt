@@ -1,11 +1,11 @@
 package exposed.examples.jpa.ex05_relations.ex03_many_to_one
 
-import exposed.shared.dao.idEquals
-import exposed.shared.dao.idHashCode
-import exposed.shared.dao.idValue
-import exposed.shared.dao.toStringBuilder
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
+import io.bluetape4k.exposed.dao.idValue
+import io.bluetape4k.exposed.dao.toStringBuilder
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.entityCache

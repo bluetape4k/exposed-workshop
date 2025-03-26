@@ -607,6 +607,7 @@ class Ex02_Defaults: AbstractExposedTest() {
         }
     }
 
+    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testConsistentSchemeWithFunctionAsDefaultExpression(testDB: TestDB) {

@@ -9,12 +9,14 @@ configurations {
 
 dependencies {
     implementation(platform(Libs.exposed_bom))
-    implementation(project(":exposed-shared"))
+
     testImplementation(project(":exposed-shared-tests"))
 
     // Exposed
+    implementation(Libs.bluetape4k_exposed)
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_dao)
+    implementation(Libs.exposed_java_time)
     implementation(Libs.exposed_spring_boot_starter)
 
     // Bluetape4k

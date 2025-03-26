@@ -911,6 +911,7 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
         }
     }
 
+    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testCurrentDateAsDefaultExpression(testDB: TestDB) {

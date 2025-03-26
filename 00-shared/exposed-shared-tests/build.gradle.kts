@@ -9,11 +9,10 @@ configurations {
 dependencies {
     implementation(platform(Libs.exposed_bom))
 
-    implementation(project(":exposed-shared"))
-
     // Bluetape4k Exposed
     api(Libs.bluetape4k_exposed)
     implementation(Libs.bluetape4k_exposed_jackson)
+    implementation(Libs.bluetape4k_exposed_fastjson2)
     implementation(Libs.bluetape4k_exposed_jasypt)
 
     // Exposed
@@ -23,7 +22,6 @@ dependencies {
     implementation(Libs.exposed_java_time)
     implementation(Libs.exposed_crypt)
     implementation(Libs.exposed_json)
-    implementation(Libs.exposed_kotlin_datetime)
     implementation(Libs.exposed_migration)
     implementation(Libs.exposed_money)
     implementation(Libs.exposed_spring_boot_starter)

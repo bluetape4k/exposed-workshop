@@ -852,6 +852,7 @@ class Ex01_JavaTime: AbstractExposedTest() {
      * CREATE INDEX test_table_date ON test_table ("date");
      * ```
      */
+    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `CurrentDate as default expression`(testDB: TestDB) {
