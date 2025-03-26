@@ -1,14 +1,26 @@
 package exposed.multitenant.springweb.tenant
 
-import exposed.multitenant.springweb.tenant.Tenants.Tenant
 import org.jetbrains.exposed.sql.Schema
 
 object TenantContext {
 
-    val CURRENT_TENANT: ScopedValue<Tenant> = ScopedValue.newInstance()
+    private val currentTenant = ThreadLocal<Tenants.Tenant?>()
 
-    fun getCurrentTenant(): Tenants.Tenant = CURRENT_TENANT.get() ?: Tenants.DEFAULT_TENANT
+    fun setCurrentTenant(tenant: Tenants.Tenant) = currentTenant.set(tenant)
+
+    fun getCurrentTenant(): Tenants.Tenant = currentTenant.get() ?: Tenants.DEFAULT_TENANT
 
     fun getCurrentTenantSchema(): Schema = getSchemaDefinition(getCurrentTenant())
+
+    fun clear() = currentTenant.remove()
+
+    inline fun withTenant(tenant: Tenants.Tenant, block: () -> Unit) {
+        setCurrentTenant(tenant)
+        try {
+            block()
+        } finally {
+            clear()
+        }
+    }
 
 }

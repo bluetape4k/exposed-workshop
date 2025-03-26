@@ -18,7 +18,7 @@ class SchemaRoutingConfigTest: AbstractMultitenantTest() {
 
     @Test
     fun `get actors in korean`() {
-        TenantContext.withTenant(Tenants.Tenant.KOREAN) {
+        ScopedValue.where(TenantContext.CURRENT_TENANT, Tenants.Tenant.KOREAN).run {
             val actors = ActorTable.selectAll().map { it.toActorDTO() }
 
             actors.forEach {

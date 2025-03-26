@@ -5,7 +5,7 @@ server:
 
     tomcat:
         threads:
-            max: 200
+            max: 8000
             min-spare: 20
 
     shutdown: graceful  # WebServer Graceful shutdown (https://www.baeldung.com/spring-boot-web-server-shutdown)
@@ -16,6 +16,10 @@ spring:
 
     profiles:
         active: h2        # postgres | h2
+
+    threads:
+        virtual:
+            enabled: true   # Virtual Thread 사용 여부 (TenantContext 를 ThreadLocal이 아닌 ScopeValue 를 사용하도록 변경하려면 ...)
 
     jackson:
         serialization:

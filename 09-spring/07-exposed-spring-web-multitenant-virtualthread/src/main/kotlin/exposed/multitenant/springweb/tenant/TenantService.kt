@@ -11,7 +11,7 @@ class TenantService(
 
     fun createTenantSchemas() {
         Tenants.Tenant.entries.forEach { tenant ->
-            TenantContext.withTenant(tenant) {
+            ScopedValue.where(TenantContext.CURRENT_TENANT, tenant).run {
                 dataInitializer.initialize()
             }
         }

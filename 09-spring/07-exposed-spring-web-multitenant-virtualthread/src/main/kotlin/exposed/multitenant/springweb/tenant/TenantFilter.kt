@@ -17,7 +17,7 @@ class TenantFilter: Filter {
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
         val tenant = extractTenant(request as HttpServletRequest)
-        TenantContext.withTenant(tenant) {
+        ScopedValue.where(TenantContext.CURRENT_TENANT, tenant).run {
             chain.doFilter(request, response)
         }
     }
