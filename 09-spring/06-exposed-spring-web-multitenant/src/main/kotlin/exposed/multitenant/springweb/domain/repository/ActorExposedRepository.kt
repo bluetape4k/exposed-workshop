@@ -3,7 +3,7 @@ package exposed.multitenant.springweb.domain.repository
 import exposed.multitenant.springweb.domain.dtos.ActorDTO
 import exposed.multitenant.springweb.domain.model.MovieSchema.ActorEntity
 import exposed.multitenant.springweb.domain.model.MovieSchema.ActorTable
-import exposed.shared.repository.AbstractExposedRepository
+import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.sql.ResultRow
@@ -14,10 +14,11 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Repository
-class ActorExposedRepository: AbstractExposedRepository<ActorEntity, Long>(ActorTable) {
+class ActorExposedRepository: ExposedRepository<ActorEntity, Long> {
 
     companion object: KLogging()
 
+    override val table = ActorTable
     override fun ResultRow.toEntity(): ActorEntity = ActorEntity.wrapRow(this)
 
     /**

@@ -11,7 +11,7 @@ import exposed.examples.springmvc.domain.model.MovieSchema.ActorInMovieTable
 import exposed.examples.springmvc.domain.model.MovieSchema.ActorTable
 import exposed.examples.springmvc.domain.model.MovieSchema.MovieEntity
 import exposed.examples.springmvc.domain.model.MovieSchema.MovieTable
-import exposed.shared.repository.AbstractExposedRepository
+import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.dao.load
@@ -25,10 +25,11 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Repository
-class MovieExposedRepository: AbstractExposedRepository<MovieEntity, Long>(MovieTable) {
+class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
 
     companion object: KLogging()
 
+    override val table = MovieTable
     override fun ResultRow.toEntity(): MovieEntity = MovieEntity.wrapRow(this)
 
     @Transactional(readOnly = true)

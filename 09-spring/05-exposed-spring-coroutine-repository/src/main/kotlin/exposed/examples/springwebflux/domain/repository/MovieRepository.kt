@@ -11,7 +11,7 @@ import exposed.examples.springwebflux.domain.model.MovieSchema.MovieTable
 import exposed.examples.springwebflux.domain.model.toActorDTO
 import exposed.examples.springwebflux.domain.model.toMovieWithActorDTO
 import exposed.examples.springwebflux.domain.model.toMovieWithProducingActorDTO
-import exposed.shared.repository.AbstractExposedRepository
+import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.dao.load
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
 @Repository
-class MovieRepository: AbstractExposedRepository<MovieEntity, Long>(MovieTable) {
+class MovieRepository: ExposedRepository<MovieEntity, Long> {
 
     companion object: KLogging() {
         private val MovieActorJoin by lazy {
@@ -48,6 +48,7 @@ class MovieRepository: AbstractExposedRepository<MovieEntity, Long>(MovieTable) 
         }
     }
 
+    override val table = MovieTable
     override fun ResultRow.toEntity(): MovieEntity = MovieEntity.wrapRow(this)
 
     fun searchMovie(params: Map<String, String?>): List<MovieEntity> {

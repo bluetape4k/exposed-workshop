@@ -3,7 +3,7 @@ package exposed.examples.springwebflux.domain.repository
 import exposed.examples.springwebflux.domain.dtos.ActorDTO
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorEntity
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorTable
-import exposed.shared.repository.AbstractExposedRepository
+import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.sql.ResultRow
@@ -13,10 +13,11 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
 @Repository
-class ActorRepository: AbstractExposedRepository<ActorEntity, Long>(ActorTable) {
+class ActorRepository: ExposedRepository<ActorEntity, Long> {
 
     companion object: KLogging()
 
+    override val table = ActorTable
     override fun ResultRow.toEntity(): ActorEntity = ActorEntity.wrapRow(this)
 
     fun searchActor(params: Map<String, String?>): List<ActorEntity> {
