@@ -12,7 +12,8 @@ data class MemberDTO(
 
     /**
      * 이렇게도 가능하지만, 성능 상 좋은 점이 없다
-     * 또한, DTO 모듈에 Entity 관련 기능이 포함되어 버린다
+     *
+     * 또한, DTO 모듈에 Entity 관련 기능이 포함되어 버리기 때문에 추천하지 않는다
      */
     constructor(member: Member): this(member.id, member.name, member.age)
 }
