@@ -28,7 +28,7 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * **`REPLACE INTO` 문은 MySQL, MariaDB 에서만 지원한다.**
  */
-class Ex13_Relace: AbstractExposedTest() {
+class Ex13_Replace: AbstractExposedTest() {
 
     private val replaceSupported = TestDB.ALL_MYSQL_LIKE + TestDB.ALL_MARIADB_LIKE
 
@@ -57,7 +57,7 @@ class Ex13_Relace: AbstractExposedTest() {
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `replaice select`(testDB: TestDB) {
+    fun `replace select`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB in replaceSupported }
 
         withTables(testDB, NewAuth) {
