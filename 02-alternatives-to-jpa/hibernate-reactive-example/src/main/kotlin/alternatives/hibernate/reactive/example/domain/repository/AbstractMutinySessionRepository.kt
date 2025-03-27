@@ -25,7 +25,6 @@ abstract class AbstractMutinySessionRepository<T: Any, ID: Serializable>(
 
     suspend fun save(session: Session, entity: T): T {
         session.persist(entity).map { session.flush() }.awaitSuspending()
-        session.flush().awaitSuspending()
         return entity
     }
 
