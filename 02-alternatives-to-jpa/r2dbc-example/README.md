@@ -1,5 +1,9 @@
 # Spring Data R2DBC Demo
 
+## 블로그 글
+
+* [R2DBC + Spring Data R2DBC](https://debop.notion.site/R2DBC-Spring-Data-R2DBC-1ad2744526b080adadc7c737672f32a1)
+
 ## 참고
 
 * [Spring Data Examples - r2dbc/example](https://github.com/spring-projects/spring-data-examples/tree/main/r2dbc/example)

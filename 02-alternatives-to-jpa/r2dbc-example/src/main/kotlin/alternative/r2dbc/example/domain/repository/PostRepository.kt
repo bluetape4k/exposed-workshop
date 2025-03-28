@@ -59,5 +59,4 @@ class PostRepository(
         save(Post(title = "My first post title", content = "Content of my first post"))
         save(Post(title = "My second post title", content = "Content of my second post"))
     }
-
 }

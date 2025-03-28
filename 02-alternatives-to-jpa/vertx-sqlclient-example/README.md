@@ -1,5 +1,9 @@
 # Vert.x Sql Client Example
 
+## 븦로그 글
+
+* [Vert.x Sql Client 소개](https://debop.notion.site/Vert-x-Sql-Client-1ad2744526b08072b431f5b00e0874d9)
+
 [Vert.x Sql Client](https://vertx.io/docs/vertx-sql-client/java/) 와
 [MyBatis Dynamic SQL](https://mybatis.org/mybatis-dynamic-sql/docs/introduction.html) 을
 사용하여 Async/Non-Blocking 방식으로 데이터베이스를 사용하는 예제입니다.
