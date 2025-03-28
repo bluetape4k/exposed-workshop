@@ -24,6 +24,7 @@
     <logger name="alternative.r2dbc.example" level="DEBUG"/>
     <logger name="io.bluetape4k" level="DEBUG"/>
     <logger name="org.springframework.r2dbc" level="DEBUG"/>
+    <logger name="org.springframework.transaction" level="DEBUG"/>
     
     <root level="INFO">
         <appender-ref ref="console"/>

@@ -56,7 +56,7 @@ class R2dbcConfig: AbstractR2dbcConfiguration() {
     }
 
     @Value("\${spring.profiles.active:postgres}")
-    private val activeProfiles: String = "postgres"
+    private val activeProfiles: String = "h2"
 
     override fun connectionFactory(): ConnectionFactory {
         val connectionUrl = when {
