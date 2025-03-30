@@ -69,7 +69,7 @@ class ExposedSQLExample: AbstractExposedTest() {
             val affectedCount = UserTable.deleteWhere { UserTable.name like "%thing" }
             affectedCount shouldBeEqualTo 1
 
-            // 삭제된 데이터가 없어야 한다.
+            // 삭제된 데이터는 조회되지 않아야 한다
             UserTable
                 .selectAll()
                 .where { UserTable.name like "%thing" }

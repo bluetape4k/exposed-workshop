@@ -11,6 +11,7 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
+import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.intLiteral
 import org.junit.jupiter.params.ParameterizedTest
@@ -38,6 +39,7 @@ class ExposedDaoExample: AbstractExposedTest() {
             // 도시 정보를 조회합니다.
             City.all().count() shouldBeEqualTo 3L
             City.all().map { it.name }.toSet() shouldBeEqualTo setOf("Seoul", "Busan", "Daegu")
+            City.find { CityTable.name eq "Seoul" }.single().name shouldBeEqualTo "Seoul"
         }
     }
 
@@ -99,6 +101,34 @@ class ExposedDaoExample: AbstractExposedTest() {
             users.forEach { user ->
                 log.info { "${user.name} lives in ${user.city?.name ?: "unknown"}" }
             }
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `DAO Entity Update 하기`(testDB: TestDB) {
+        withCityUsers(testDB) {
+            val temp = User.new {
+                name = "temp"
+                age = 14
+            }
+            flushCache()
+
+            val loaded = User.findById(temp.id)!!
+            loaded.age = 42
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `DAO Entity 삭제하기`(testDB: TestDB) {
+        withCityUsers(testDB) {
+            val temp = User.new {
+                name = "temp"
+                age = 14
+            }
+            flushCache()
+            temp.delete()
         }
     }
 }
