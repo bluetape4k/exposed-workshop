@@ -40,7 +40,14 @@ class Ex03_CreateMissingTableAndColumns: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `누락된 테이블과 컬럼을 생성 - 01`(testDB: TestDB) {
-        val tester = object: Table("tester") {
+        val testerV1 = object: Table("tester") {
+            val id = integer("id")
+            val name = varchar("name", 50)
+            val time = long("time")
+
+            override val primaryKey = PrimaryKey(id)
+        }
+        val testerV2 = object: Table("tester") {
             val id = integer("id")
             val name = varchar("name", 50)
             val time = long("time").uniqueIndex()
@@ -49,12 +56,14 @@ class Ex03_CreateMissingTableAndColumns: AbstractExposedTest() {
         }
 
         withDb(testDB) {
-            tester.exists().shouldBeFalse()
+            // V1 테이블 생성
+            SchemaUtils.create(testerV1)
 
-            SchemaUtils.createMissingTablesAndColumns(tester)
-            tester.exists().shouldBeTrue()
+            // V2 테이블의 uniqueIndex 를 추가합니다.
+            SchemaUtils.createMissingTablesAndColumns(testerV2)
 
-            SchemaUtils.drop(tester)
+            testerV2.exists().shouldBeTrue()
+            SchemaUtils.drop(testerV2)
         }
     }
 

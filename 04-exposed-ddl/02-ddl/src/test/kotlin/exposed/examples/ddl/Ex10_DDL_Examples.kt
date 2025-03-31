@@ -871,7 +871,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     }
 
     private abstract class EntityTable(name: String = ""): IdTable<String>(name) {
-        override val id: Column<EntityID<String>> = varchar("id", 64)
+        final override val id: Column<EntityID<String>> = varchar("id", 64)
             .clientDefault { Base58.randomString(32) }
             .entityId()
 
