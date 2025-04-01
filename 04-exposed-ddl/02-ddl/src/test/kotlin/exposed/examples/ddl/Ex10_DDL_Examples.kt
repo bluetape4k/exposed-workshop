@@ -1266,9 +1266,8 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
         }
     }
 
-    @ParameterizedTest
-    @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `eq operator without DB connection`(testDB: TestDB) {
+    @Test
+    fun `eq operator without DB connection`() {
         object: Table("test") {
             val testColumn = integer("test_column").nullable()
 
@@ -1280,9 +1279,8 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
         }
     }
 
-    @ParameterizedTest
-    @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `neq operator without DB connection`(testDB: TestDB) {
+    @Test
+    fun `neq operator without DB connection`() {
         object: Table("test") {
             val testColumn = integer("test_column").nullable()
 

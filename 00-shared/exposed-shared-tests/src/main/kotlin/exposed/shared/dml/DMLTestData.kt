@@ -50,7 +50,7 @@ object DMLTestData {
     object Users: Table() {
         val id = varchar("id", 10)
         val name = varchar("name", 50)
-        val cityId = reference("city_id", Cities.id).nullable()
+        val cityId = optReference("city_id", Cities.id)
         val flags = integer("flags").default(0)
 
         override val primaryKey = PrimaryKey(id)

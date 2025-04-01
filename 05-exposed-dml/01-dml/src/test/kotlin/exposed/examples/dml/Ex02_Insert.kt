@@ -88,6 +88,14 @@ class Ex02_Insert: AbstractExposedTest() {
             idTable.selectAll().count() shouldBeEqualTo 2L
             id2.value shouldBeEqualTo 2
 
+            val id3 = idTable.insert {
+                it[name] = "name-3"
+            } get idTable.id
+
+            val id4 = idTable.insert {
+                it[name] = "name-4"
+            }[idTable.id]
+
             assertFailAndRollback("Unique constraint failed") {
                 idTable.insertAndGetId { it[name] = "name-1" }
             }
@@ -100,6 +108,7 @@ class Ex02_Insert: AbstractExposedTest() {
      * 예외가 발생하지 않으면, `INSERT` 된 ROW의 ID를 반환합니다.
      *
      * ```sql
+     * -- Postgres
      * INSERT INTO tmp (foo) VALUES ('1') ON CONFLICT DO NOTHING;
      * INSERT INTO tmp (foo) VALUES ('2') ON CONFLICT DO NOTHING;
      *
@@ -233,7 +242,7 @@ class Ex02_Insert: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insertIgnore with predefined id`(testDB: TestDB) {
-        Assumptions.assumeTrue { testDB in (TestDB.ALL_MYSQL_LIKE - TestDB.MYSQL_V5 - TestDB.ALL_MARIADB_LIKE) + TestDB.ALL_POSTGRES_LIKE }
+        Assumptions.assumeTrue { testDB in TestDB.ALL_POSTGRES_LIKE + TestDB.H2_MYSQL + TestDB.MYSQL_V8 }
 
         val idTable = object: IntIdTable("tmp") {
             val name = varchar("foo", 10).uniqueIndex()
@@ -248,7 +257,7 @@ class Ex02_Insert: AbstractExposedTest() {
             insertedStatement[idTable.id].value shouldBeEqualTo 1
             insertedStatement.insertedCount shouldBeEqualTo 1
 
-            // ID가 중복되었다는 예외가 발생하는 것을 무시되고, INSERT는 취소됩니다.
+            // ID가 중복되었다는 예외가 발생, 에외는 무시되고, INSERT는 취소됩니다.
             val notInsertedStatement: InsertStatement<Long> = idTable.insertIgnore {
                 it[idTable.id] = EntityID(1, idTable)
                 it[idTable.name] = "2"

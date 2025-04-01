@@ -438,7 +438,6 @@ class Ex04_Upsert: AbstractExposedTest() {
         }
 
         withTables(testDB, tester) {
-
             /**
              * Insert
              * ```sql
@@ -531,8 +530,8 @@ class Ex04_Upsert: AbstractExposedTest() {
              *
              * 첫번째는 Insert, 두번째, 세번째는 Update 를 수행하도록 한다.
              *
-             * Postgres:
              * ```sql
+             * -- Postgres
              * INSERT INTO words ("name") VALUES ('Test')
              * ON CONFLICT ("name") DO
              *      UPDATE SET "count"=(words."count" + 1)

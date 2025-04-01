@@ -167,7 +167,7 @@ class Ex01_Select: AbstractExposedTest() {
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `SizedIterable 수형에 해당하는 쿼리 실행`(testDB: TestDB) {
+    fun `Query 수형에 해당하는 쿼리 실행`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, users, _ ->
 
             // SELECT cities.city_id, cities."name" FROM cities
@@ -229,7 +229,7 @@ class Ex01_Select: AbstractExposedTest() {
              * ```
              */
             val r2 = users.selectAll()
-                .where { users.id notInList listOf("ABC", "DEF") }
+                .where { users.id notInList setOf("ABC", "DEF") }
                 .toList()
 
             users.selectAll().count() shouldBeEqualTo r2.size.toLong()
@@ -252,7 +252,8 @@ class Ex01_Select: AbstractExposedTest() {
         withCitiesAndUsers(testDB) { _, users, _ ->
             val rows = users.selectAll()
                 .where {
-                    (users.id to users.name) inList listOf("andrey" to "Andrey", "sergey" to "Sergey")
+                    (users.id to users.name) inList
+                            listOf("andrey" to "Andrey", "sergey" to "Sergey")
                 }
                 .toList()
 
@@ -455,7 +456,7 @@ class Ex01_Select: AbstractExposedTest() {
      *   FROM cities
      *  WHERE cities.city_id = ANY (SELECT cities.city_id
      *                                FROM cities
-     *                               WHERE cities.city_id = 2)
+     *                               WHERE cities.city_id >= 2)
      * ```
      */
     @ParameterizedTest
@@ -464,7 +465,7 @@ class Ex01_Select: AbstractExposedTest() {
         withCitiesAndUsers(testDB) { cities, _, _ ->
             val subquery: Query = cities
                 .select(cities.id)
-                .where { cities.id eq 2 }
+                .where { cities.id greaterEq 2 }
 
             val rows = cities
                 .selectAll()
@@ -472,7 +473,7 @@ class Ex01_Select: AbstractExposedTest() {
                     cities.id eq anyFrom(subquery)
                 }
 
-            rows.count() shouldBeEqualTo 1L
+            rows.count() shouldBeEqualTo 2L
         }
     }
 
@@ -485,7 +486,7 @@ class Ex01_Select: AbstractExposedTest() {
      *   FROM cities
      *  WHERE cities.city_id <> ANY (SELECT cities.city_id
      *                                 FROM cities
-     *                                WHERE cities.city_id = 2)
+     *                                WHERE cities.city_id >= 2)
      * ```
      */
     @ParameterizedTest
@@ -494,7 +495,7 @@ class Ex01_Select: AbstractExposedTest() {
         withCitiesAndUsers(dialect) { cities, _, _ ->
             val subquery: Query = cities
                 .select(cities.id)
-                .where { cities.id eq 2 }
+                .where { cities.id greaterEq 2 }
 
             val rows = cities
                 .selectAll()
@@ -502,7 +503,7 @@ class Ex01_Select: AbstractExposedTest() {
                     cities.id neq anyFrom(subquery)
                 }
 
-            rows.count() shouldBeEqualTo 2L
+            rows.count() shouldBeEqualTo 1L
         }
     }
 
@@ -696,8 +697,8 @@ class Ex01_Select: AbstractExposedTest() {
     /**
      * `eq` [anyFrom] with Table
      *
-     * Postgres:
      * ```sql
+     * -- Postgres
      * SELECT COUNT(*)
      *   FROM sales
      *  WHERE sales.amount = ANY (TABLE SomeAmounts)

@@ -5,6 +5,7 @@ import exposed.examples.ddl.Ex07_CustomEnumeration.Status.INACTIVE
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
+import exposed.shared.tests.withTables
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
@@ -42,9 +43,7 @@ class Ex07_CustomEnumeration: AbstractExposedTest() {
         ACTIVE,
         INACTIVE;
 
-        override fun toString(): String {
-            return "Status Enum ToString: $name"
-        }
+        override fun toString(): String = "Status: $name"
     }
 
     internal class PGEnum<T: Enum<T>>(enumTypeName: String, enumValue: T?): PGobject() {
@@ -69,7 +68,7 @@ class Ex07_CustomEnumeration: AbstractExposedTest() {
      * ```
      */
     internal object EnumTable: IntIdTable("enum_table") {
-        internal var status: Column<Status> = enumeration<Status>("status").default(ACTIVE)
+        var status: Column<Status> = enumeration<Status>("status").default(ACTIVE)
 
         internal fun initEnumColumn(sql: String) {
             (columns as MutableList<Column<*>>).remove(status)
@@ -92,6 +91,39 @@ class Ex07_CustomEnumeration: AbstractExposedTest() {
         companion object: IntEntityClass<EnumEntity>(EnumTable)
 
         var status: Status by EnumTable.status
+    }
+
+    /**
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS tester (
+     *      id SERIAL PRIMARY KEY,
+     *      status_name VARCHAR(32) DEFAULT 'ACTIVE' NOT NULL
+     * )
+     * ```
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `Enum Name 으로 저장하기`(testDB: TestDB) {
+        val tester = object: IntIdTable("tester") {
+            var statusName = enumerationByName<Status>("status_name", 32).default(Status.ACTIVE)
+        }
+        withTables(testDB, tester) {
+            // INSERT INTO tester (status_name) VALUES ('ACTIVE')
+            tester.insert {
+                it[statusName] = Status.ACTIVE
+            }
+            tester.selectAll().single()[tester.statusName] shouldBeEqualTo Status.ACTIVE
+
+            // UPDATE tester SET status_name='INACTIVE' WHERE tester.id = 1
+            tester.update({ tester.id eq 1 }) {
+                it[statusName] = Status.INACTIVE
+            }
+            tester.selectAll().single()[tester.statusName] shouldBeEqualTo Status.INACTIVE
+
+            tester.deleteAll()
+            flushCache()
+        }
     }
 
     @ParameterizedTest

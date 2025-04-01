@@ -46,7 +46,7 @@ class Ex03_Update: AbstractExposedTest() {
             val alexName = users
                 .select(users.name)
                 .where { users.id eq alexId }
-                .first()[users.name]
+                .single()[users.name]
             alexName shouldBeEqualTo "Alex"
 
             val newName = "Alexey"
@@ -196,11 +196,13 @@ class Ex03_Update: AbstractExposedTest() {
              * -- MariaDB
              * UPDATE Users INNER JOIN UserData ON Users.id = UserData.user_id
              *    SET UserData.`value`=123
+             *        Users.flags=1
              *  LIMIT 2
              * ```
              */
             join.update(limit = maxToUpdate) {
                 it[userData.value] = updatedValue
+                it[users.flags] = 1
             }
 
             valueQuery.count().toInt() shouldBeEqualTo maxToUpdate
@@ -327,106 +329,125 @@ class Ex03_Update: AbstractExposedTest() {
                 }
             }
         }
+    }
 
 
-        /**
-         * Subquery 를 이용한 JOIN 문을 사용한 Update
-         */
-        @ParameterizedTest
-        @MethodSource(ENABLE_DIALECTS_METHOD)
-        fun `update with join query`(testDB: TestDB) {
-            Assumptions.assumeTrue { testDB !in TestDB.ALL_H2_V1 }
+    /**
+     * Subquery 를 이용한 JOIN 문을 사용한 Update
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `update with join query`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB !in TestDB.ALL_H2_V1 }
 
-            withCitiesAndUsers(testDB) { _, users, userData ->
-                /**
-                 * single join query using join()
-                 *
-                 * ```sql
-                 * -- Postgres
-                 * UPDATE userdata
-                 *    SET "value"=123
-                 *   FROM (SELECT users.id, users."name", users.city_id, users.flags
-                 *           FROM users
-                 *          WHERE users.city_id = 1
-                 *        ) u2
-                 *  WHERE userdata.user_id = u2.id
-                 * ```
-                 */
-                val userAlias = users.selectAll().where { users.cityId eq 1 }.alias("u2")
-                val joinWithSubQuery = userData.innerJoin(userAlias, { userData.userId }, { userAlias[users.id] })
-                joinWithSubQuery.update {
-                    it[userData.value] = 123
-                }
+        withCitiesAndUsers(testDB) { _, users, userData ->
+            /**
+             * single join query using join()
+             *
+             * ```sql
+             * -- Postgres
+             * UPDATE userdata
+             *    SET "value"=123
+             *   FROM (SELECT users.id, users."name", users.city_id, users.flags
+             *           FROM users
+             *          WHERE users.city_id = 1
+             *        ) u2
+             *  WHERE userdata.user_id = u2.id
+             * ```
+             */
+            val userAlias = users.selectAll().where { users.cityId eq 1 }.alias("u2")
+            val joinWithSubQuery = userData.innerJoin(userAlias, { userData.userId }, { userAlias[users.id] })
+            joinWithSubQuery.update {
+                it[userData.value] = 123
+            }
 
-                joinWithSubQuery.selectAll().all { it[userData.value] == 123 }.shouldBeTrue()
+            joinWithSubQuery.selectAll().all { it[userData.value] == 123 }.shouldBeTrue()
 
-                // does not support either multi-table joins or update(where)
-                Assumptions.assumeTrue { testDB !in TestDB.ALL_H2 }
+            // does not support either multi-table joins or update(where)
+            Assumptions.assumeTrue { testDB !in TestDB.ALL_H2 }
 
-                /**
-                 * single join query using join() with update(where)
-                 *
-                 * ```sql
-                 * -- Postgres
-                 * UPDATE userdata
-                 *    SET "value"=42
-                 *   FROM (SELECT users.id,
-                 *                users."name",
-                 *                users.city_id,
-                 *                users.flags
-                 *           FROM users
-                 *          WHERE users.city_id = 1
-                 *        ) u2
-                 *   WHERE userdata.user_id = u2.id
-                 *     AND userdata."comment" LIKE 'Comment%'
-                 * ```
-                 */
-                joinWithSubQuery.update({ userData.comment like "Comment%" }) {
-                    it[userData.value] = 42
-                }
+            /**
+             * single join query using join() with update(where)
+             *
+             * ```sql
+             * -- Postgres
+             * UPDATE userdata
+             *    SET "value"=42
+             *   FROM (SELECT users.id,
+             *                users."name",
+             *                users.city_id,
+             *                users.flags
+             *           FROM users
+             *          WHERE users.city_id = 1
+             *        ) u2
+             *   WHERE userdata.user_id = u2.id
+             *     AND userdata."comment" LIKE 'Comment%'
+             * ```
+             */
+            joinWithSubQuery.update({ userData.comment like "Comment%" }) {
+                it[userData.value] = 42
+            }
 
-                joinWithSubQuery.selectAll().forEach {
-                    it[userData.value] shouldBeEqualTo 42
-                }
+            joinWithSubQuery.selectAll().forEach {
+                it[userData.value] shouldBeEqualTo 42
+            }
 
-                /**
-                 * multiple join queries using [joinQuery]
-                 *
-                 * ```sql
-                 * UPDATE userdata
-                 *    SET "value"=99
-                 *   FROM (SELECT users.id,
-                 *                users."name",
-                 *                users.city_id,
-                 *                users.flags
-                 *           FROM users
-                 *          WHERE users.city_id = 1
-                 *        ) q0,
-                 *        (SELECT users.id,
-                 *                users."name",
-                 *                users.city_id,
-                 *                users.flags
-                 *           FROM users WHERE users."name" LIKE '%ey'
-                 *        ) q1
-                 *  WHERE  (userdata.user_id = q0.id)
-                 *    AND  (userdata.user_id = q1.id)
-                 * ```
-                 */
-                val singleJoinQuery = userData.joinQuery(
-                    on = { userData.userId eq it[users.id] },
-                    joinPart = { users.selectAll().where { users.cityId eq 1 } }
-                )
-                val doubleJoinQuery = singleJoinQuery.joinQuery(
-                    on = { userData.userId eq it[users.id] },
-                    joinPart = { users.selectAll().where { users.name like "%ey" } }
-                )
-                doubleJoinQuery.update {
-                    it[userData.value] = 99
-                }
+            /**
+             * multiple join queries using [joinQuery]
+             *
+             * ```sql
+             * -- Postgres
+             * UPDATE userdata
+             *    SET "value"=99
+             *   FROM (SELECT users.id,
+             *                users."name",
+             *                users.city_id,
+             *                users.flags
+             *           FROM users
+             *          WHERE users.city_id = 1
+             *        ) q0,
+             *        (SELECT users.id,
+             *                users."name",
+             *                users.city_id,
+             *                users.flags
+             *           FROM users
+             *          WHERE users."name" LIKE '%ey'
+             *        ) q1
+             *  WHERE  (userdata.user_id = q0.id)
+             *    AND  (userdata.user_id = q1.id)
+             * ```
+             * ```sql
+             * -- MySQL V8
+             * UPDATE UserData
+             *      INNER JOIN (SELECT Users.id,
+             *                         Users.`name`,
+             *                         Users.city_id,
+             *                         Users.flags
+             *                    FROM Users
+             *                   WHERE Users.city_id = 1) q0 ON  (UserData.user_id = q0.id)
+             *      INNER JOIN (SELECT Users.id,
+             *                         Users.`name`,
+             *                         Users.city_id,
+             *                         Users.flags
+             *                    FROM Users
+             *                   WHERE Users.`name` LIKE '%ey') q1 ON  (UserData.user_id = q1.id)
+             *     SET UserData.`value`=99
+             * ```
+             */
+            val singleJoinQuery = userData.joinQuery(
+                on = { userData.userId eq it[users.id] },
+                joinPart = { users.selectAll().where { users.cityId eq 1 } }
+            )
+            val doubleJoinQuery = singleJoinQuery.joinQuery(
+                on = { userData.userId eq it[users.id] },
+                joinPart = { users.selectAll().where { users.name like "%ey" } }
+            )
+            doubleJoinQuery.update {
+                it[userData.value] = 99
+            }
 
-                doubleJoinQuery.selectAll().forEach {
-                    it[userData.value] shouldBeEqualTo 99
-                }
+            doubleJoinQuery.selectAll().forEach {
+                it[userData.value] shouldBeEqualTo 99
             }
         }
     }
