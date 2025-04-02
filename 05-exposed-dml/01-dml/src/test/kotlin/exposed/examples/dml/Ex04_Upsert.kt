@@ -1548,8 +1548,8 @@ class Ex04_Upsert: AbstractExposedTest() {
             /**
              * `batchUpdate` 시에 conflict를 판단하는 컬럼을 `tester.key`로 하고, Update 작업 시에는 `tester.id` 는 제외한다.
              *
-             * Postgres:
              * ```sql
+             * -- Postgres
              * INSERT INTO batch_upsert_test (test_key, test_value, id)
              * VALUES (1, 'two', '6b594a66-dc19-4f9e-a3f1-2349eead4548')
              *     ON CONFLICT (test_key) DO
