@@ -15,7 +15,6 @@ import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.JoinType
-import org.jetbrains.exposed.sql.JoinType.LEFT
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.alias
 import org.jetbrains.exposed.sql.and
@@ -68,7 +67,6 @@ class Ex11_Join: AbstractExposedTest() {
                         else -> error("Unexpected user $userName")
                     }
                 }
-
         }
     }
 
@@ -161,6 +159,7 @@ class Ex11_Join: AbstractExposedTest() {
         /**
          * `numbers` 와 `names` 테이블의 관계를 `many-to-many` 로 매핑하는 테이블
          * ```sql
+         * -- Postgres
          * CREATE TABLE IF NOT EXISTS "map" (
          *      id_ref INT NOT NULL,
          *      name_ref VARCHAR(10) NOT NULL,
@@ -460,23 +459,24 @@ class Ex11_Join: AbstractExposedTest() {
     fun `no warnings on left join regression`(testDB: TestDB) {
         val logCaptor = LogCaptor.forName(exposedLogger.name)
 
-        val mainTable = object: Table("maintable") {
+        val leftTable = object: Table("left_table") {
             val id = integer("idCol")
         }
-        val joinTable = object: Table("jointable") {
+        val rightTable = object: Table("right_table") {
             val id = integer("idCol")
             val data = integer("dataCol").default(42)
         }
 
-        withTables(testDB, mainTable, joinTable) {
-            mainTable.insert { it[id] = 2 }
+        withTables(testDB, leftTable, rightTable) {
+            // leftTable 에만 데이터를 넣는다
+            leftTable.insert { it[id] = 2 }
 
-            val data = mainTable.join(joinTable, LEFT, joinTable.id, mainTable.id)
-                .select(joinTable.data)
+            val data = leftTable.join(rightTable, JoinType.LEFT, rightTable.id, leftTable.id)
+                .select(rightTable.data)
                 .single()
-                .getOrNull(joinTable.data)
+                .getOrNull(rightTable.data)
 
-            data.shouldBeNull()  // left join 이므로, mainTable 정보만 있고, joinTable 정보가 없으므로 null 이어야 한다.
+            data.shouldBeNull()  // left join 이므로, leftTable 정보만 있고, rightTable 정보가 없으므로 null 이어야 한다.
 
             // Assert no logging took place
             logCaptor.warnLogs.shouldBeEmpty()

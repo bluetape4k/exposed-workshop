@@ -47,7 +47,10 @@ class Ex10_OrderBy: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `orderBy 01`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { _, users, _ ->
-            val rows = users.selectAll().orderBy(users.id).toList()
+            val rows = users
+                .selectAll()
+                .orderBy(users.id)
+                .toList()
 
             rows shouldHaveSize 5
             rows.map { it[users.id] } shouldBeEqualTo listOf("alex", "andrey", "eugene", "sergey", "smth")

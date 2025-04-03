@@ -121,8 +121,8 @@ class Ex09_GroupBy: AbstractExposedTest() {
     /**
      * [groupBy] 와 `having` 을 이용하여 조건에 맞는 데이터를 조회한다.
      *
-     * Postgres:
      * ```sql
+     * -- Postgres
      * SELECT cities."name",
      *        COUNT(users.id),
      *        MAX(cities.city_id)

@@ -45,12 +45,13 @@ class Ex12_InsertInto_Select: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert select example 01`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, users, _ ->
+            // autoIncrement 컬럼에 대한 nextValExpression 을 사용
             val nextVal = cities.id.autoIncColumnType?.nextValExpression
             val substring = users.name.substring(1, 2)
             val slice = listOfNotNull(nextVal, substring)
             val limit = 2
 
-            // users 테이블에서 2개의 city name을 선택하여 cities 테이블에 추가
+            // users 테이블에서 2개의 행을 선택 user name의 substring을  cities 테이블에 추가
             cities.insert(users.select(slice).orderBy(users.id).limit(limit))
 
             // 최근 추가된 2개의 city name 조회 
@@ -112,9 +113,10 @@ class Ex12_InsertInto_Select: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert select example 03`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { _, users, _ ->
+            val userCount = users.selectAll().count()
+
             // 이렇게 Expresssion 을 사용할 수 있습니다.
             // Random() 은 org.jetbrains.exposed.sql.Random() 이다.
-            val userCount = users.selectAll().count()
             val nullableExpression: Expression<BigDecimal?> = Random() as Expression<BigDecimal?>
 
             users.insert(
@@ -177,8 +179,8 @@ class Ex12_InsertInto_Select: AbstractExposedTest() {
             val fooParam = stringParam("Foo")
 
             users.insert(
-                users.select(fooParam, fooParam).limit(1),
-                columns = listOf(users.name, users.id)
+                users.select(fooParam, fooParam).limit(1),      // 레코드 수 제한
+                columns = listOf(users.name, users.id)                // 대상 컬럼 지정
             )
 
             users.selectAll()
