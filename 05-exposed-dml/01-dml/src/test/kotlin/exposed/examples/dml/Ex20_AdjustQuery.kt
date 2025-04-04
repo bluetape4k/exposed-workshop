@@ -36,10 +36,7 @@ class Ex20_AdjustQuery: AbstractExposedTest() {
     companion object: KLogging()
 
     private val predicate = Op.build {
-        val nameCheck = (DMLTestData.Users.id eq "andrey") or (DMLTestData.Users.name eq "Sergey")
-//        val cityCheck = DMLTestData.Users.cityId eq DMLTestData.Cities.id
-//        nameCheck and cityCheck
-        nameCheck
+        (DMLTestData.Users.id eq "andrey") or (DMLTestData.Users.name eq "Sergey")
     }
 
     private fun Query.assertQueryResultValid() {
@@ -220,6 +217,7 @@ class Ex20_AdjustQuery: AbstractExposedTest() {
      * `adjustHaving` 함수를 사용하여 HAVING 절을 변경할 수 있다.
      *
      * ```sql
+     * -- Postgres
      * SELECT CITIES."name"
      *   FROM CITIES INNER JOIN USERS ON CITIES.CITY_ID = USERS.CITY_ID
      *  GROUP BY CITIES."name"

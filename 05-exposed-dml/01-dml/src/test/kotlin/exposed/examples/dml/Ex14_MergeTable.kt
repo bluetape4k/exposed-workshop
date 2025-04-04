@@ -20,6 +20,7 @@ import org.jetbrains.exposed.sql.alias
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.sql.intLiteral
 import org.jetbrains.exposed.sql.mergeFrom
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.stringLiteral
@@ -71,7 +72,7 @@ class Ex14_MergeTable: Ex14_MergeBase() {
             ) {
                 whenNotMatchedInsert {
                     it[dest.key] = source.key
-                    it[dest.value] = source.value * 2
+                    it[dest.value] = source.value * intLiteral(2)
                     it[dest.optional] = stringLiteral("optional::") + source.key
                 }
             }
@@ -304,8 +305,8 @@ class Ex14_MergeTable: Ex14_MergeBase() {
     /**
      * MergeFrom with multiple clauses
      *
-     * Postgres
      * ```sql
+     * -- Postgres
      * MERGE INTO dest
      * USING "source" ON "source"."key" = dest."key"
      *  WHEN NOT MATCHED AND ("source"."value" = 1) THEN
@@ -452,8 +453,8 @@ class Ex14_MergeTable: Ex14_MergeBase() {
      *
      * `whenNotMatchedDoNothing` 는 매치되는 행이 없을 때 아무 작업도 수행하지 않습니다.
      *
-     * Postgres:
      * ```sql
+     * -- Postgres
      * MERGE INTO dest
      * USING "source" ON "source"."key" = dest."key"
      *  WHEN NOT MATCHED AND ("source"."value" > 1) THEN
@@ -480,10 +481,12 @@ class Ex14_MergeTable: Ex14_MergeBase() {
                 }
             }
 
+            // `source.value = 1` 이라 INSERT 된다
             dest.selectAll()
                 .where { dest.key eq "only-in-source-1" }
                 .first()[dest.value] shouldBeEqualTo 101
 
+            // `source.value > 1` 이라 아무 일도 하지 않는다    
             dest.selectAll()
                 .where { dest.key inList listOf("only-in-source-2", "only-in-source-3") }
                 .firstOrNull().shouldBeNull()
@@ -519,10 +522,12 @@ class Ex14_MergeTable: Ex14_MergeBase() {
                 whenMatchedDelete()
             }
 
+            // source.value = 1 이라 아무 일도 하지 않는다
             dest.selectAll()
                 .where { dest.key eq "in-source-and-dest-1" }
                 .first()[dest.value] shouldBeEqualTo 10
 
+            // source.value > 1 이라 DELETE 된다
             dest.selectAll()
                 .where { dest.key inList listOf("in-source-and-dest-2", "in-source-and-dest-3") }
                 .toList()

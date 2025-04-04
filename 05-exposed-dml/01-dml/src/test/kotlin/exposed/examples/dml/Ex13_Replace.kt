@@ -179,6 +179,8 @@ class Ex13_Replace: AbstractExposedTest() {
             val (name1, session1) = "username" to "session"
 
             /**
+             * 일치하는 데이터가 없으므로 INSERT 된다.
+             * 
              * ```sql
              * REPLACE INTO new_auth (username, `session`)
              *  VALUES ('username', session)
@@ -194,6 +196,7 @@ class Ex13_Replace: AbstractExposedTest() {
             result1[NewAuth.serverID].shouldBeEmpty()
 
             /**
+             * name 이 중복되므로, DELETE 후 INSERT 된다.
              * ```sql
              * REPLACE INTO new_auth (username, `session`, `timestamp`, serverID)
              *  VALUES ('username', session, 1738147874872, 'username-session')
@@ -275,7 +278,7 @@ class Ex13_Replace: AbstractExposedTest() {
                 .single()[tester.replaced] shouldBeEqualTo 0L
 
             /**
-             * 기본 키(key1, key2)에 해당하는 데이터가 일치하는 레코드가 있으므로, 삭제하고 새로운 레코드를 추가한다.
+             * 기본 키(key1, key2)에 일치하는 레코드가 있으므로, 삭제하고 새로운 레코드를 추가한다.
              *
              * ```sql
              * REPLACE INTO test_table (key_1, key_2, replaced) VALUES ('A', 'B', 1738147874913)

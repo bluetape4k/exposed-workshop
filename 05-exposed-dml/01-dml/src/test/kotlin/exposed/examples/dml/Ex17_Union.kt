@@ -46,11 +46,11 @@ class Ex17_Union: AbstractExposedTest() {
      *   FROM users
      *  WHERE users.id = 'andrey'
      *
-     *  UNION
+     * UNION
      *
-     *  SELECT users.id, users."name", users.city_id, users.flags
-     *    FROM users
-     *   WHERE users.id = 'sergey'
+     * SELECT users.id, users."name", users.city_id, users.flags
+     *   FROM users
+     *  WHERE users.id = 'sergey'
      *
      *  LIMIT 1
      * ```
@@ -67,7 +67,7 @@ class Ex17_Union: AbstractExposedTest() {
                 .map { it[users.id] }
 
             rows shouldHaveSize 1
-            rows.first() shouldBeEqualTo "andrey"
+            rows.single() shouldBeEqualTo "andrey"
         }
     }
 
@@ -99,7 +99,7 @@ class Ex17_Union: AbstractExposedTest() {
                 .map { it[users.id] }
 
             rows shouldHaveSize 1
-            rows.first() shouldBeEqualTo "sergey"
+            rows.single() shouldBeEqualTo "sergey"
         }
     }
 
@@ -326,13 +326,24 @@ class Ex17_Union: AbstractExposedTest() {
             val expectedUsers = usersQuery.map { it[users.id] } - "sergey"
             val sergeyQuery = users.selectAll().where { users.id eq "sergey" }
 
-            val result = usersQuery
+            usersQuery
                 .unionAll(usersQuery)
+                .except(sergeyQuery)        // `sergey` 를 제외한 모든 사용자
+                .forEach {
+                    log.debug { "user=${it[users.id]}" }
+                }
+
+            val result = usersQuery
+                .union(usersQuery)
                 .except(sergeyQuery)        // `sergey` 를 제외한 모든 사용자
                 .map { it[users.id] }
 
             result shouldHaveSize 4
             result shouldContainSame expectedUsers
+
+            result.forEach {
+                log.debug { "user=$it" }
+            }
         }
     }
 

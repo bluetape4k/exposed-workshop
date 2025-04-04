@@ -1,6 +1,5 @@
 package exposed.examples.dml
 
-import exposed.shared.dml.DMLTestData
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
@@ -17,6 +16,7 @@ import org.jetbrains.exposed.sql.Table.Dual
 import org.jetbrains.exposed.sql.decimalLiteral
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import java.math.BigDecimal
 
 class Ex21_Arithmetic: AbstractExposedTest() {
 
@@ -38,12 +38,12 @@ class Ex21_Arithmetic: AbstractExposedTest() {
     fun `operator precedence of minus, plus, div times`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { _, _, userData ->
 
-            val calculatedColumn: DivideOp<Int, Int> = ((DMLTestData.UserData.value - 5) * 2) / 2
+            val calculatedColumn: DivideOp<Int, Int> = ((userData.value - 5) * 2) / 2
 
             userData
-                .select(DMLTestData.UserData.value, calculatedColumn)
+                .select(userData.value, calculatedColumn)
                 .forEach {
-                    val value = it[DMLTestData.UserData.value]
+                    val value = it[userData.value]
                     val actualResult = it[calculatedColumn]
                     val expectedResult = ((value - 5) * 2) / 2
                     actualResult shouldBeEqualTo expectedResult
@@ -73,7 +73,7 @@ class Ex21_Arithmetic: AbstractExposedTest() {
             val three = decimalLiteral(3.toBigDecimal())
 
             // SELECT (10 / 3)
-            val divTenToThreeWithoutScale = Expression.build { ten / three }
+            val divTenToThreeWithoutScale: DivideOp<BigDecimal, BigDecimal> = Expression.build { ten / three }
             val resultWithoutScale = Dual
                 .select(divTenToThreeWithoutScale)
                 .single()[divTenToThreeWithoutScale]
@@ -81,7 +81,7 @@ class Ex21_Arithmetic: AbstractExposedTest() {
             resultWithoutScale shouldBeEqualTo 3.toBigDecimal()
 
             // SELECT (10.0 / 3)
-            val divTenToThreeWithScale = divTenToThreeWithoutScale.withScale(2)
+            val divTenToThreeWithScale: DivideOp<BigDecimal, BigDecimal> = divTenToThreeWithoutScale.withScale(2)
             val resultWithScale = Dual
                 .select(divTenToThreeWithScale)
                 .single()[divTenToThreeWithScale]

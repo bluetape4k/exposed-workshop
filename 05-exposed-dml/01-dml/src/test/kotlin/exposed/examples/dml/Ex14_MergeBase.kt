@@ -89,7 +89,7 @@ abstract class Ex14_MergeBase: AbstractExposedTest() {
      * ```
      */
     object Source: IntIdTable("source") {
-        val key = varchar("key", 128)
+        val key = varchar("key", 128).uniqueIndex()
         val value = integer("value")
         val optional = text("optional_value").nullable()
         val at = datetime("at").clientDefault { TEST_DEFAULT_DATE_TIME }
@@ -117,7 +117,7 @@ abstract class Ex14_MergeBase: AbstractExposedTest() {
      * ```
      */
     object Dest: IntIdTable("dest") {
-        val key = varchar("key", 128)
+        val key = varchar("key", 128).uniqueIndex()
         val value = integer("value")
         val optional = text("optional_value").nullable()
         val at = datetime("at").clientDefault { TEST_DEFAULT_DATE_TIME }

@@ -42,21 +42,24 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
     companion object: KLogging()
 
     @JvmInline
-    value class TransformDataHolder(val value: Int): Serializable
+    value class Holder(val value: Int): Serializable
 
-    class DataHolderTransformer: ColumnTransformer<Int, TransformDataHolder> {
-        override fun unwrap(value: TransformDataHolder): Int = value.value
-        override fun wrap(value: Int): TransformDataHolder = TransformDataHolder(value)
+    // Holder <-> Int 변환을 수행하는 [ColumnTransformer] 구현
+    class HolderTransformer: ColumnTransformer<Int, Holder> {
+        override fun unwrap(value: Holder): Int = value.value
+        override fun wrap(value: Int): Holder = Holder(value)
     }
 
-    class DataHolderNullableTransformer: ColumnTransformer<Int?, TransformDataHolder?> {
-        override fun unwrap(value: TransformDataHolder?): Int? = value?.value
-        override fun wrap(value: Int?): TransformDataHolder? = value?.let { TransformDataHolder(it) }
+    // Holder? <-> Int? 변환을 수행하는 [ColumnTransformer] 구현
+    class HolderNullableTransformer: ColumnTransformer<Int?, Holder?> {
+        override fun unwrap(value: Holder?): Int? = value?.value
+        override fun wrap(value: Int?): Holder? = value?.let { Holder(it) }
     }
 
-    class DataHolderNullTransformer: ColumnTransformer<Int, TransformDataHolder?> {
-        override fun unwrap(value: TransformDataHolder?): Int = value?.value ?: 0
-        override fun wrap(value: Int): TransformDataHolder? = if (value == 0) null else TransformDataHolder(value)
+    // Holder? <-> Int 변환을 수행하는 [ColumnTransformer] 구현
+    class HolderNullTransformer: ColumnTransformer<Int, Holder?> {
+        override fun unwrap(value: Holder?): Int = value?.value ?: 0
+        override fun wrap(value: Int): Holder? = if (value == 0) null else Holder(value)
     }
 
     /**
@@ -68,33 +71,33 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
     @Test
     fun `recursive unwrap`() {
         val tester1 = object: IntIdTable() {
-            val value: Column<TransformDataHolder?> = integer("value")
-                .transform(DataHolderTransformer())
+            val value: Column<Holder?> = integer("value")
+                .transform(HolderTransformer())
                 .nullable()
         }
-        val columnType1 = tester1.value.columnType as? ColumnWithTransform<Int, TransformDataHolder>
+        val columnType1 = tester1.value.columnType as? ColumnWithTransform<Int, Holder>
         columnType1.shouldNotBeNull()
-        columnType1.unwrapRecursive(TransformDataHolder(1)) shouldBeEqualTo 1
+        columnType1.unwrapRecursive(Holder(1)) shouldBeEqualTo 1
         columnType1.unwrapRecursive(null).shouldBeNull()
 
         // Transform null into non-null value
         val tester2 = object: IntIdTable() {
             val value = integer("value")
-                .nullTransform(DataHolderNullTransformer())
+                .nullTransform(HolderNullTransformer())
         }
-        val columnType2 = tester2.value.columnType as? ColumnWithTransform<Int, TransformDataHolder?>
+        val columnType2 = tester2.value.columnType as? ColumnWithTransform<Int, Holder?>
         columnType2.shouldNotBeNull()
-        columnType2.unwrapRecursive(TransformDataHolder(1)) shouldBeEqualTo 1
+        columnType2.unwrapRecursive(Holder(1)) shouldBeEqualTo 1
         columnType2.unwrapRecursive(null) shouldBeEqualTo 0
 
-        // Transform 을 2번 적용하므로, ColumnWithTransform<TransformDataHolder?, Int?> 가 생성되어야 한다.
+        // Transform 을 2번 적용하므로, ColumnWithTransform<Holder?, Int?> 가 생성되어야 한다.
         val tester3 = object: IntIdTable() {
             val value = integer("value")
-                .transform(DataHolderTransformer())
+                .transform(HolderTransformer())
                 .nullable()
-                .transform(wrap = { it?.value ?: 0 }, unwrap = { TransformDataHolder(it ?: 0) })
+                .transform(wrap = { it?.value ?: 0 }, unwrap = { Holder(it ?: 0) })
         }
-        val columnType3 = tester3.value.columnType as? ColumnWithTransform<TransformDataHolder?, Int?>
+        val columnType3 = tester3.value.columnType as? ColumnWithTransform<Holder?, Int?>
         columnType3.shouldNotBeNull()
         columnType3.unwrapRecursive(1) shouldBeEqualTo 1
         columnType3.unwrapRecursive(null) shouldBeEqualTo 0
@@ -118,18 +121,18 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
         val tester = object: IntIdTable("simple_transforms") {
             val v1 = integer("v1")
                 .transform(
-                    wrap = { TransformDataHolder(it) },
+                    wrap = { Holder(it) },
                     unwrap = { it.value }
                 )
             val v2 = integer("v2")
                 .nullable()
                 .transform(
-                    wrap = { it?.let { TransformDataHolder(it) } },
+                    wrap = { it?.let { Holder(it) } },
                     unwrap = { it?.value }
                 )
             val v3 = integer("v3")
                 .transform(
-                    wrap = { TransformDataHolder(it) },
+                    wrap = { Holder(it) },
                     unwrap = { it.value }
                 )
                 .nullable()
@@ -138,9 +141,9 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
         withTables(testDB, tester) {
             // INSERT INTO simple_transforms (v1, v2, v3) VALUES (1, 2, 3)
             val id1 = tester.insertAndGetId {
-                it[v1] = TransformDataHolder(1)
-                it[v2] = TransformDataHolder(2)
-                it[v3] = TransformDataHolder(3)
+                it[v1] = Holder(1)
+                it[v2] = Holder(2)
+                it[v3] = Holder(3)
             }
 
             val entry1 = tester.selectAll().where { tester.id eq id1 }.single()
@@ -150,7 +153,7 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
 
             // INSERT INTO simple_transforms (v1, v2, v3) VALUES (1, NULL, NULL)
             val id2 = tester.insertAndGetId {
-                it[v1] = TransformDataHolder(1)
+                it[v1] = Holder(1)
                 it[v2] = null
                 it[v3] = null
             }
@@ -181,34 +184,34 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
          */
         val tester = object: IntIdTable("nested_transformer") {
             val v1: Column<String> = integer("v1")
-                .transform(DataHolderTransformer())
+                .transform(HolderTransformer())
                 .transform(
                     wrap = { it.value.toString() },
-                    unwrap = { TransformDataHolder(it.toInt()) }
+                    unwrap = { Holder(it.toInt()) }
                 )
 
             val v2: Column<String?> = integer("v2")
-                .transform(DataHolderTransformer())
+                .transform(HolderTransformer())
                 .transform(
                     wrap = { it.value.toString() },
-                    unwrap = { TransformDataHolder(it.toInt()) }
+                    unwrap = { Holder(it.toInt()) }
                 )
                 .nullable()
 
             val v3: Column<String?> = integer("v3")
-                .transform(DataHolderTransformer())
+                .transform(HolderTransformer())
                 .nullable()
                 .transform(
                     wrap = { it?.value.toString() },
-                    unwrap = { it?.let { it1 -> TransformDataHolder(it1.toInt()) } }
+                    unwrap = { it?.let { it1 -> Holder(it1.toInt()) } }
                 )
 
             val v4: Column<String?> = integer("v4")
                 .nullable()
-                .transform(DataHolderNullableTransformer())
+                .transform(HolderNullableTransformer())
                 .transform(
                     wrap = { it?.value.toString() },
-                    unwrap = { it?.let { it1 -> TransformDataHolder(it1.toInt()) } }
+                    unwrap = { it?.let { it1 -> Holder(it1.toInt()) } }
                 )
         }
 
@@ -247,8 +250,8 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `read transformed values from insert statement`(testDB: TestDB) {
         val tester = object: IntIdTable("read_transformed_values") {
-            val v1: Column<TransformDataHolder> = integer("v1").transform(DataHolderTransformer())
-            val v2: Column<TransformDataHolder?> = integer("v2").nullTransform(DataHolderNullTransformer())
+            val v1: Column<Holder> = integer("v1").transform(HolderTransformer())
+            val v2: Column<Holder?> = integer("v2").nullTransform(HolderNullTransformer())
         }
 
         withTables(testDB, tester) {
@@ -258,11 +261,11 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
              * ```
              */
             val statement: InsertStatement<Number> = tester.insert {
-                it[tester.v1] = TransformDataHolder(1)
+                it[tester.v1] = Holder(1)
                 it[tester.v2] = null
             }
 
-            statement[tester.v1] shouldBeEqualTo TransformDataHolder(1)
+            statement[tester.v1] shouldBeEqualTo Holder(1)
             statement[tester.v2].shouldBeNull()
         }
     }
@@ -277,46 +280,47 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
      * ```
      */
     object TransformTable: IntIdTable("transform_table") {
-        val simple: Column<TransformDataHolder> = integer("simple")
+        val simple: Column<Holder> = integer("simple")
             .default(1)
-            .transform(DataHolderTransformer())
+            .transform(HolderTransformer())
 
-        val chained: Column<TransformDataHolder> = varchar("chained", 128)
+        val chained: Column<Holder> = varchar("chained", 128)
             .transform(wrap = { it.toInt() }, unwrap = { it.toString() })
-            .transform(DataHolderTransformer())
-            .default(TransformDataHolder(2))
+            .transform(HolderTransformer())
+            .default(Holder(2))
     }
 
     class TransformEntity(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<TransformEntity>(TransformTable)
 
-        var simple: TransformDataHolder by TransformTable.simple
-        var chained: TransformDataHolder by TransformTable.chained
+        var simple: Holder by TransformTable.simple
+        var chained: Holder by TransformTable.chained
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("simple", simple)
-                .add("chained", chained)
-                .toString()
+        override fun toString(): String = toStringBuilder()
+            .add("simple", simple)
+            .add("chained", chained)
+            .toString()
     }
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `transformed values with DAO`(testDB: TestDB) {
         withTables(testDB, TransformTable) {
+            // DAO 방식
             val entity = TransformEntity.new {
-                simple = TransformDataHolder(120)
-                chained = TransformDataHolder(240)
+                simple = Holder(120)
+                chained = Holder(240)
             }
             log.debug { "entity: $entity" }
-            entity.simple shouldBeEqualTo TransformDataHolder(120)
-            entity.chained shouldBeEqualTo TransformDataHolder(240)
+            entity.simple shouldBeEqualTo Holder(120)
+            entity.chained shouldBeEqualTo Holder(240)
 
+            // SQL DSL 방식
             val row = TransformTable.selectAll().first()
-            row[TransformTable.simple] shouldBeEqualTo TransformDataHolder(120)
-            row[TransformTable.chained] shouldBeEqualTo TransformDataHolder(240)
+            row[TransformTable.simple] shouldBeEqualTo Holder(120)
+            row[TransformTable.chained] shouldBeEqualTo Holder(240)
         }
     }
 
@@ -325,12 +329,12 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
     fun `entity with default value`(testDB: TestDB) {
         withTables(testDB, TransformTable) {
             val entity = TransformEntity.new { }
-            entity.simple shouldBeEqualTo TransformDataHolder(1)
-            entity.chained shouldBeEqualTo TransformDataHolder(2)
+            entity.simple shouldBeEqualTo Holder(1)
+            entity.chained shouldBeEqualTo Holder(2)
 
             val row = TransformTable.selectAll().first()
-            row[TransformTable.simple] shouldBeEqualTo TransformDataHolder(1)
-            row[TransformTable.chained] shouldBeEqualTo TransformDataHolder(2)
+            row[TransformTable.simple] shouldBeEqualTo Holder(1)
+            row[TransformTable.chained] shouldBeEqualTo Holder(2)
         }
     }
 
@@ -347,6 +351,7 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
         /**
          * value class인 [CustomId]의 value 수형이 UUID 이므로, 테이블 기본 키의 수형은 UUID 이다.
          * ```sql
+         * -- Postgres
          * CREATE TABLE IF NOT EXISTS tester (id uuid PRIMARY KEY)
          * ```
          */
@@ -445,10 +450,10 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `null to non-null recursive transform`(testDB: TestDB) {
         val tester = object: IntIdTable("tester") {
-            val value: Column<TransformDataHolder?> = integer("value")
+            val value: Column<Holder?> = integer("value")
                 .nullable()
                 .transform(wrap = { if (it == -1) null else it }, unwrap = { it ?: -1 })
-                .transform(DataHolderNullableTransformer())
+                .transform(HolderNullableTransformer())
         }
         val rawTester = object: IntIdTable("tester") {
             val value: Column<Long?> = long("value").nullable()
@@ -456,7 +461,7 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
 
         withTables(testDB, tester) {
             val id1 = tester.insertAndGetId {
-                it[value] = TransformDataHolder(100)
+                it[value] = Holder(100)
             }
             tester.selectAll().where { tester.id eq id1 }.single()[tester.value]?.value shouldBeEqualTo 100
             rawTester.selectAll().where { rawTester.id eq id1 }.single()[rawTester.value] shouldBeEqualTo 100L
@@ -474,8 +479,8 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `null transform`(testDB: TestDB) {
         val tester = object: IntIdTable("tester") {
-            val value: Column<TransformDataHolder?> = integer("value")
-                .nullTransform(DataHolderNullTransformer())
+            val value: Column<Holder?> = integer("value")
+                .nullTransform(HolderNullTransformer())
         }
         val rawTester = object: IntIdTable("tester") {
             val value: Column<Int> = integer("value")
@@ -492,7 +497,7 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
     }
 
     /**
-     * [ColumnTransformer]를 상속받아 구현한 [DataHolderTransformer] 를 사용하는 예제
+     * [ColumnTransformer]를 상속받아 구현한 [HolderTransformer] 를 사용하는 예제
      *
      * 여기에 기본 값을 value class로 지정할 수 있다.
      *
@@ -507,18 +512,18 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `transform with default`(testDB: TestDB) {
         val tester = object: IntIdTable("tester") {
-            val value: Column<TransformDataHolder> = integer("value")
-                .transform(DataHolderTransformer())
-                .default(TransformDataHolder(1))
+            val value: Column<Holder> = integer("value")
+                .transform(HolderTransformer())
+                .default(Holder(1))
         }
 
         withTables(testDB, tester) {
             // 기본 값이 지정되어 있으므로, 값을 지정하지 않아도 된다.
             val entry = tester.insert { }
-            entry[tester.value] shouldBeEqualTo TransformDataHolder(1)
+            entry[tester.value] shouldBeEqualTo Holder(1)
 
             // INSERT INTO tester  DEFAULT VALUES
-            tester.selectAll().first()[tester.value] shouldBeEqualTo TransformDataHolder(1)
+            tester.selectAll().first()[tester.value] shouldBeEqualTo Holder(1)
         }
     }
 
@@ -536,12 +541,12 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
     fun `transform in batch insert`(testDB: TestDB) {
         val tester = object: IntIdTable("test-batch-insert") {
             val v1 = integer("v1")
-                .transform(wrap = { TransformDataHolder(it) }, unwrap = { it.value })
+                .transform(wrap = { Holder(it) }, unwrap = { it.value })
         }
 
         withTables(testDB, tester) {
             tester.batchInsert(listOf(1, 2, 3)) {
-                this[tester.v1] = TransformDataHolder(it)
+                this[tester.v1] = Holder(it)
             }
 
             tester.selectAll()
@@ -567,16 +572,16 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
     fun `transform in update`(testDB: TestDB) {
         val tester = object: IntIdTable("test-update") {
             val v1 = integer("v1")
-                .transform(wrap = { TransformDataHolder(it) }, unwrap = { it.value })
+                .transform(wrap = { Holder(it) }, unwrap = { it.value })
         }
 
         withTables(testDB, tester) {
             val id = tester.insertAndGetId {
-                it[v1] = TransformDataHolder(1)
+                it[v1] = Holder(1)
             }
 
             tester.update(where = { tester.id eq id }) {
-                it[tester.v1] = TransformDataHolder(2)
+                it[tester.v1] = Holder(2)
             }
 
             tester.selectAll().first()[tester.v1].value shouldBeEqualTo 2
@@ -588,19 +593,19 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
     fun `wrapRow with aliases`(testDB: TestDB) {
         withTables(testDB, TransformTable) {
             TransformEntity.new {
-                simple = TransformDataHolder(10)
+                simple = Holder(10)
             }
             entityCache.clear()
 
             val tableAlias = TransformTable.alias("tableAlias")
             val e2 = tableAlias.selectAll().map { TransformEntity.wrapRow(it, tableAlias) }.single()
-            e2.simple shouldBeEqualTo TransformDataHolder(10)
+            e2.simple shouldBeEqualTo Holder(10)
 
             entityCache.clear()
 
             val queryAlias = TransformTable.selectAll().alias("queryAlias")
             val e3 = queryAlias.selectAll().map { TransformEntity.wrapRow(it, queryAlias) }.single()
-            e3.simple shouldBeEqualTo TransformDataHolder(10)
+            e3.simple shouldBeEqualTo Holder(10)
         }
     }
 }
