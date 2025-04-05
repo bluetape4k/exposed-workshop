@@ -81,14 +81,16 @@ class Ex30_Explain: AbstractExposedTest() {
         withTables(testDB, Countries) {
             val originalCode = "ABC"
 
+            // INSERT 작업에 대한 실행계획을 얻는다
+            // EXPLAIN INSERT INTO countries (country_code) VALUES ('ABC');
             explain { Countries.insert { it[code] = originalCode } }.toList().apply {
                 log.debug { "EXPLAIN Insert: $this" }
             }
             Countries.selectAll().empty().shouldBeTrue()
-
             Countries.insert { it[code] = originalCode }
             Countries.selectAll().count() shouldBeEqualTo 1L
 
+            // UPDATE 작업의 실행 계획을 얻는다
             // EXPLAIN UPDATE COUNTRIES SET COUNTRY_CODE = 'DEF'
             explain { Countries.update { it[code] = "DEF" } }.toList().apply {
                 log.debug { "EXPLAIN Update: $this" }
@@ -97,10 +99,12 @@ class Ex30_Explain: AbstractExposedTest() {
             Countries.update { it[code] = "DEF" }
             Countries.selectAll().single()[Countries.code] shouldBeEqualTo "DEF"
 
+            // DELETE 작업의 실행계획을 얻는다
             // EXPLAIN DELETE FROM COUNTRIES
             explain { Countries.deleteAll() }.toList().apply {
                 log.debug { "EXPLAIN Delete: $this" }
             }
+
             Countries.selectAll().count() shouldBeEqualTo 1L
 
             Countries.deleteAll() shouldBeEqualTo 1

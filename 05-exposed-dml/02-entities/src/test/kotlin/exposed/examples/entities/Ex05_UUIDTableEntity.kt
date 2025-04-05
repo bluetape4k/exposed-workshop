@@ -41,7 +41,7 @@ object UUIDTables {
      * ```sql
      * -- Postgres
      * CREATE TABLE IF NOT EXISTS cities (
-     *      d uuid PRIMARY KEY,
+     *      id uuid PRIMARY KEY,
      *      "name" VARCHAR(50) NOT NULL
      * )
      * ```
@@ -267,7 +267,7 @@ class Ex05_UUIDTableEntity: AbstractExposedTest() {
             // DELETE FROM cities WHERE cities.id = '038bcadb-a8a5-46b4-9e98-2385b70669e4'
             busan.delete()
 
-            flushCache()
+            flushCache()     // 캐시에 남아있는 변경을 DB에 바로 적용하라는 함수
 
             val allCities = City.all().map { it.name }
             allCities shouldBeEqualTo listOf("Seoul")

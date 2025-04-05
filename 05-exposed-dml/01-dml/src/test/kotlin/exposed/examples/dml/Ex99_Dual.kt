@@ -35,6 +35,7 @@ class Ex99_Dual: AbstractExposedTest() {
     fun testDualTable(testDB: TestDB) {
         withDb(testDB) {
             val resultColumn = intLiteral(1)
+            // SELECT 1
             val result: Int = Dual.select(resultColumn).single()[resultColumn]
             result shouldBeEqualTo 1
         }

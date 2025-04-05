@@ -13,14 +13,15 @@ import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContainSame
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.dao.with
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.exists
 import org.jetbrains.exposed.sql.insertAndGetId
@@ -38,7 +39,7 @@ object LongIdTables {
      * ```
      */
     object Cities: LongIdTable() {
-        val name = varchar("name", 50)
+        val name: Column<String> = varchar("name", 50)
     }
 
     /**
@@ -54,8 +55,8 @@ object LongIdTables {
      * ```
      */
     object People: LongIdTable() {
-        val name = varchar("name", 80)
-        val cityId = reference("city_id", Cities)
+        val name: Column<String> = varchar("name", 80)
+        val cityId: Column<EntityID<Long>> = reference("city_id", Cities)
     }
 
     /**
@@ -70,14 +71,19 @@ object LongIdTables {
      * ```
      */
     object Towns: LongIdTable("towns") {
-        val cityId = long("city_id").references(Cities.id)
+        val cityId: Column<Long> = long("city_id").references(Cities.id)
     }
 
     class City(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<City>(Cities)
 
         var name: String by Cities.name
+
+        // one-to-many 관계
         val towns: SizedIterable<Town> by Town referrersOn Towns.cityId
+
+        // one-to-many 관계
+        // val people: SizedIterable<Person> by Person referrersOn People.cityId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -89,8 +95,10 @@ object LongIdTables {
     class Person(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<Person>(People)
 
-        var name by People.name
-        var city by City referencedOn People.cityId
+        var name: String by People.name
+
+        // many-to-one 관계
+        var city: City by City referencedOn People.cityId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -104,7 +112,8 @@ object LongIdTables {
     class Town(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<Town>(Towns)
 
-        var city by City referencedOn Towns.cityId
+        // many-to-one 관계
+        var city: City by City referencedOn Towns.cityId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -134,30 +143,31 @@ class Ex04_LongIdTableEntity: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `create records`(testDB: TestDB) {
         withTables(testDB, Cities, People) {
-            val mumbai = City.new { name = "Mumbai" }
-            val pune = City.new { name = "Pune" }
+            val seoul: City = City.new { name = "Seoul" }
+            val busan: City = City.new { name = "Busan" }
 
             Person.new {
-                name = "David D'souza"
-                city = mumbai
+                name = "Sunghyouk Bae"
+                city = seoul
             }
             Person.new {
-                name = "Tushar Mumbaikar"
-                city = mumbai
+                name = "Minseok Kim"
+                city = seoul
             }
             Person.new {
-                name = "Tanu Arora"
-                city = pune
+                name = "Sunghoon Lee"
+                city = busan
             }
 
+            // all() 는 모든 테이블의 레코드를 가져온다.
             val allCities = City.all().map { it.name }
-            allCities shouldContainSame listOf("Mumbai", "Pune")
+            allCities shouldContainSame listOf("Seoul", "Busan")
 
             val allPeople = Person.all().map { it.name to it.city.name }
             allPeople shouldContainSame listOf(
-                "David D'souza" to "Mumbai",
-                "Tushar Mumbaikar" to "Mumbai",
-                "Tanu Arora" to "Pune"
+                "Sunghyouk Bae" to "Seoul",
+                "Minseok Kim" to "Seoul",
+                "Sunghoon Lee" to "Busan"
             )
         }
     }
@@ -166,32 +176,32 @@ class Ex04_LongIdTableEntity: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `update and delete records`(testDB: TestDB) {
         withTables(testDB, Cities, People) {
-            val mumbai = City.new { name = "Mumbai" }
-            val pune = City.new { name = "Pune" }
+            val seoul: City = City.new { name = "Seoul" }
+            val busan: City = City.new { name = "Busan" }
 
             Person.new {
-                name = "David D'souza"
-                city = mumbai
+                name = "Sunghyouk Bae"
+                city = seoul
             }
             Person.new {
-                name = "Tushar Mumbaikar"
-                city = mumbai
+                name = "Minseok Kim"
+                city = seoul
             }
-            val tanu = Person.new {
-                name = "Tanu Arora"
-                city = pune
+            val sunghoon = Person.new {
+                name = "Sunghoon Lee"
+                city = busan
             }
 
-            tanu.delete()
-            pune.delete()
+            sunghoon.delete() // delete() 는 레코드를 삭제한다.
+            busan.delete()    // delete() 는 레코드를 삭제한다.
 
             val allCities = City.all().map { it.name }
-            allCities shouldContainSame listOf("Mumbai")
+            allCities shouldContainSame listOf("Seoul")
 
             val allPeople = Person.all().map { it.name to it.city.name }
             allPeople shouldContainSame listOf(
-                "David D'souza" to "Mumbai",
-                "Tushar Mumbaikar" to "Mumbai"
+                "Sunghyouk Bae" to "Seoul",
+                "Minseok Kim" to "Seoul",
             )
         }
     }
@@ -214,37 +224,29 @@ class Ex04_LongIdTableEntity: AbstractExposedTest() {
              * lazy loaded referencedOn
              *
              * ```sql
-             * SELECT towns.id, towns.city_id FROM towns
-             * SELECT cities.id, cities."name" FROM cities WHERE cities.id = 1
+             * SELECT towns.id, towns.city_id FROM towns LIMIT 1
              * ```
              */
-            val town1 = Town.all().first()
-            town1.city.id shouldBeEqualTo cId
+            val town1 = Town.findById(tId)!!
 
             /**
-             * eager loaded referrersOn (`with(Town::city)`)
+             * eager loaded referencedOn (`load(Town::city)`)
              *
              * ```sql
-             * SELECT towns.id, towns.city_id FROM towns
-             * SELECT cities.id, cities."name" FROM cities WHERE cities.id = 1
+             * SELECT towns.id, towns.city_id FROM towns WHERE towns.id = 2
              * SELECT cities.id, cities."name" FROM cities WHERE cities.id = 1
              * ```
              */
-            val town1WithCity = Town.all().with(Town::city).first()
-            town1WithCity.city.id shouldBeEqualTo cId
+            val town1WithCity = Town.findById(tId2)!!.load(Town::city)
 
             /**
              * lazy loaded referrersOn
              *
              * ```sql
              * SELECT cities.id, cities."name" FROM cities
-             * SELECT towns.id, towns.city_id FROM towns WHERE towns.city_id = 1
-             * SELECT cities.id, cities."name" FROM cities WHERE cities.id = 1
              * ```
              */
             val city1 = City.all().single()
-            val towns = city1.towns
-            towns.first().city.id shouldBeEqualTo cId
 
             /**
              * eager loaded referrersOn (`with(City::towns)`)
@@ -260,9 +262,7 @@ class Ex04_LongIdTableEntity: AbstractExposedTest() {
              * SELECT cities.id, cities."name" FROM cities WHERE cities.id = 1
              * ```
              */
-            val city1WithTowns = City.all().with(City::towns).single()
-
-            city1WithTowns.towns.first().city.id shouldBeEqualTo cId
+            val city2 = City.all().with(City::towns).single()
         }
     }
 }

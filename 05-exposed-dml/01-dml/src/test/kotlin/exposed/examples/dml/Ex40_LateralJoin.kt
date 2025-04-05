@@ -53,6 +53,7 @@ class Ex40_LateralJoin: AbstractExposedTest() {
      * ### Lateral Join Query
      *
      * ```sql
+     * -- Postgres
      * SELECT parent.id,
      *        parent."value",
      *        q0.id,
