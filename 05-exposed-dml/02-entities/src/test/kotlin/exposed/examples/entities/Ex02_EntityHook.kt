@@ -10,24 +10,42 @@ import exposed.shared.samples.UserToCityTable
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
+import io.bluetape4k.exposed.dao.idValue
+import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
+import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityChange
 import org.jetbrains.exposed.dao.EntityChangeType
 import org.jetbrains.exposed.dao.EntityHook
+import org.jetbrains.exposed.dao.LongEntity
+import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.flushCache
+import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.dao.registeredChanges
 import org.jetbrains.exposed.dao.toEntity
+import org.jetbrains.exposed.dao.withHook
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.SizedCollection
+import org.jetbrains.exposed.sql.Slf4jSqlDebugLogger
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.emptySized
+import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
+import org.jetbrains.exposed.sql.javatime.timestamp
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import java.time.Instant
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 /**
  * Entity 에 대한 변경사항을 추적하는 `EntityHook` 을 테스트합니다.
@@ -53,6 +71,100 @@ class Ex02_EntityHook: AbstractExposedTest() {
             val result = statement()
             flushCache()
             Triple(result, registeredChanges().drop(alreadyChanged), id)
+        }
+    }
+
+    /**
+     * User Entity에 대한 변경사항을 추적하는 이벤트 리스너입니다.
+     */
+    open class UserEventListener: (EntityChange) -> Unit {
+        fun subscribe() {
+            EntityHook.subscribe(this)
+        }
+
+        fun unsubscribe() {
+            EntityHook.unsubscribe(this)
+        }
+
+        override fun invoke(change: EntityChange) {
+            when (change.changeType) {
+                EntityChangeType.Created -> onCreate(change)
+                EntityChangeType.Updated -> onUpdate(change)
+                EntityChangeType.Removed -> onDelete(change)
+            }
+        }
+
+        open fun onCreate(change: EntityChange) {
+            log.info { "Entity created: ${change.toEntity<Int, User>()} " }
+        }
+
+        open fun onUpdate(change: EntityChange) {
+            log.info { "Entity updated: ${change.toEntity<Int, User>()} " }
+        }
+
+        open fun onDelete(change: EntityChange) {
+            log.info { "Entity deleted: ${change.toEntity<Int, User>()} " }
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `subscribe EntityHook`(testDB: TestDB) {
+        val entityChangeLogger = { change: EntityChange ->
+            log.info { "Entity changes: [${change.changeType}], entity id=${change.entityId}, entity class=${change.toEntity<Int, User>()} " }
+        }
+        withTables(testDB, UserTable) {
+            EntityHook.subscribe(entityChangeLogger)
+            val user = User.new {
+                name = "John"
+                age = 30
+            }
+            user.flush()
+
+            user.delete()
+
+            EntityHook.unsubscribe(entityChangeLogger)
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `custom event listener`(testDB: TestDB) {
+        val eventListener = UserEventListener()
+        withTables(testDB, UserTable) {
+            eventListener.subscribe()
+            val user = User.new {
+                name = "John"
+                age = 30
+            }
+            user.flush()
+
+            user.delete()
+
+            eventListener.unsubscribe()
+        }
+    }
+
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `withHook example`(testDB: TestDB) {
+        Slf4jSqlDebugLogger
+        withTables(testDB, UserTable) {
+            withHook(
+                action = { change ->
+                    log.info { "Entity changes: [${change.changeType}], entity id=${change.entityId} " }
+                },
+                body = {
+                    val user = User.new {
+                        name = "John"
+                        age = 30
+                    }
+                    user.flush()
+
+                    user.delete()
+                }
+            )
         }
     }
 
@@ -345,6 +457,163 @@ class Ex02_EntityHook: AbstractExposedTest() {
             log.debug { "Flush user - update" }
             user.flush()
             hookCalls shouldBeEqualTo 2
+        }
+    }
+}
+
+class Ex02_EntityHook_Auditable: AbstractExposedTest() {
+
+    interface AuditableEntity {
+        var createdAt: Instant?
+        var updatedAt: Instant?
+    }
+
+    open class AuditableLongTable(name: String = ""): LongIdTable(name) {
+        var createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp).nullable()
+        var updatedAt = timestamp("updated_at").defaultExpression(CurrentTimestamp).nullable()
+    }
+
+    open class AuditableEntityListener<ID: Any, T: Entity<ID>>: (EntityChange) -> Unit {
+
+        companion object: KLogging()
+
+        override fun invoke(change: EntityChange) {
+            if (isAuditableEntity(change)) {
+                val entity = change.toEntity<ID, T>() as? AuditableEntity
+                if (entity != null) {
+                    when (change.changeType) {
+                        EntityChangeType.Created -> onCreated(change, entity)
+                        EntityChangeType.Updated -> onUpdated(change, entity)
+                        else -> {} // Nothing to do
+                    }
+                }
+            }
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        protected fun isAuditableEntity(change: EntityChange): Boolean =
+            (change.entityClass.javaClass.enclosingClass as? Class<out AuditableEntity>) != null
+
+        fun onCreated(change: EntityChange, entity: AuditableEntity) {
+            log.debug { "Entity created: ${change.entityId}, entityClass=${change.entityClass.javaClass.enclosingClass.enclosingClass} " }
+            // 굳이 할 필요 없다 (DB에서 기본값으로 지정했기 때문)
+            // val now = Instant.now()
+            // entity.updatedAt = now
+        }
+
+        fun onUpdated(change: EntityChange, entity: AuditableEntity) {
+            log.debug { "Entity updated: ${change.entityId}, entityClass=${change.entityClass.javaClass.enclosingClass.enclosingClass} " }
+            val now = Instant.now()
+            if (entity.updatedAt?.plusMillis(10)?.isBefore(now) != false) {
+                entity.updatedAt = now
+            }
+        }
+
+        fun subscribe() {
+            EntityHook.subscribe(this)
+        }
+
+        fun unsubscribe() {
+            EntityHook.unsubscribe(this)
+        }
+    }
+
+    object Articles: AuditableLongTable("articles") {
+        val title = varchar("title", 255)
+        val content = varchar("content", 255)
+    }
+
+    class Article(id: EntityID<Long>): LongEntity(id), AuditableEntity {
+        companion object: LongEntityClass<Article>(Articles)
+
+        override var createdAt: Instant? by Articles.createdAt
+        override var updatedAt: Instant? by Articles.updatedAt
+
+        var title by Articles.title
+        var content by Articles.content
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
+        override fun toString(): String = toStringBuilder()
+            .add("id", idValue)
+            .add("title", title)
+            .add("content", content)
+            .add("createdAt", createdAt)
+            .add("updatedAt", updatedAt)
+            .toString()
+    }
+
+    /**
+     * NOTE: 이 작업은 다른 속성 UPDATE 후 updatedAt 속성을 또 UPDATE 하므로 좋은 방법이 아닙니다.
+     * 아래의 property deletegate 를 이용하는 방법을 사용하세요.
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `auditable entity with entity hook`(testDB: TestDB) {
+        val articleListener = AuditableEntityListener<Long, Article>()
+
+        withTables(testDB, Articles) {
+            articleListener.subscribe()
+
+            val article1 = Article.new {
+                title = "Article 1"
+                content = "Content of article 1"
+            }
+            article1.refresh(true)
+
+            Thread.sleep(100)
+
+            article1.title = "Updated Article 1"
+
+            article1.refresh(true)
+
+            articleListener.unsubscribe()
+        }
+    }
+
+    /**
+     * property delegate 를 이용하여 AuditableEntity 를 구현합니다.
+     */
+    abstract class AbstractAuditableLongEntity(id: EntityID<Long>): LongEntity(id), AuditableEntity {
+        fun <T> auditing(column: Column<T>): ReadWriteProperty<AbstractAuditableLongEntity, T> {
+            return object: ReadWriteProperty<AbstractAuditableLongEntity, T> {
+                override fun getValue(thisRef: AbstractAuditableLongEntity, property: KProperty<*>): T {
+                    return column.getValue(thisRef, property)
+                }
+
+                override fun setValue(thisRef: AbstractAuditableLongEntity, property: KProperty<*>, value: T) {
+                    column.setValue(thisRef, property, value)
+                    thisRef.updatedAt = Instant.now()
+                }
+            }
+        }
+    }
+
+    class AuditableArticle(id: EntityID<Long>): AbstractAuditableLongEntity(id) {
+        companion object: LongEntityClass<AuditableArticle>(Articles)
+
+        // 속셩 변경 시, updatedAt 속성을 자동으로 변경합니다.
+        var title: String by auditing(Articles.title)
+
+        // 속셩 변경 시, updatedAt 속성을 자동으로 변경합니다.
+        var content: String by auditing(Articles.content)
+
+        override var createdAt: Instant? by Articles.createdAt
+        override var updatedAt: Instant? by Articles.updatedAt
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `auditable entity with delegate`(testDB: TestDB) {
+        withTables(testDB, Articles) {
+            val article1 = AuditableArticle.new {
+                title = "Article 1"
+                content = "Content of article 1"
+            }
+            article1.flush()
+
+            article1.title = "Updated Article 1"
+            article1.flush()
         }
     }
 }

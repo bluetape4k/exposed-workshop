@@ -12,6 +12,7 @@ dependencies {
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
+    implementation(Libs.exposed_java_time)
 
     compileOnly(Libs.h2_v2)
     compileOnly(Libs.mysql_connector_j)
