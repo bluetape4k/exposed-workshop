@@ -196,7 +196,7 @@ class Ex08_EntityFieldWithTransform: AbstractExposedTest() {
     }
 
     /**
-     * DSL 방식에서도 `transform` 함수를 정의하고, 엔티티 필드의 수형을 변환한다.
+     * SQL DSL 방식에서도 `transform` 함수를 정의하고, 엔티티 필드의 수형을 변환한다.
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -306,10 +306,10 @@ class Ex08_EntityFieldWithTransform: AbstractExposedTest() {
 
             firstRead.shouldStartWith("value#")
 
-            // cache 된 값을 재사용한다.
+            // 캐시된된 값을 사용한다.
             entity.value shouldBeEqualTo firstRead
 
-            // 캐시된 값을 사용한다
+            // 캐시된된 값을 사용한다.
             MemoizedChainedTrans.all().first().value shouldBeEqualTo firstRead
         }
     }

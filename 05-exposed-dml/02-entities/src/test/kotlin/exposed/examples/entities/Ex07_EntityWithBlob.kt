@@ -18,6 +18,7 @@ import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.statements.api.ExposedBlob
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -39,16 +40,16 @@ class Ex07_EntityWithBlob: AbstractExposedTest() {
      * ```
      */
     object BlobTable: LongIdTable("BlobTable") {
-        val blob = blob("content").nullable()
+        val blob: Column<ExposedBlob?> = blob("content").nullable()
     }
 
     class BlobEntity(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<BlobEntity>(BlobTable) {
-            /**
-             * Custom 생성자
-             */
-            operator fun invoke(bytes: ByteArray): BlobEntity {
-                return new { content = ExposedBlob(bytes) }
+            // Custom 엔티티 생성 함수
+            fun new(bytes: ByteArray, id: Long? = null, init: BlobEntity.() -> Unit = {}): BlobEntity {
+                return new(id, init).apply {
+                    content = ExposedBlob(bytes)
+                }
             }
         }
 
@@ -73,7 +74,7 @@ class Ex07_EntityWithBlob: AbstractExposedTest() {
             val bytes1 = text1.toUtf8Bytes()
 
             // INSERT INTO blobtable ("content") VALUES (E'\\x')
-            val blobEntity = BlobEntity(bytes1)
+            val blobEntity = BlobEntity.new(bytes1)
             entityCache.clear()
 
             // SELECT blobtable.id, blobtable."content" FROM blobtable WHERE blobtable.id = 1

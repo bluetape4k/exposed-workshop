@@ -97,10 +97,10 @@ class Ex03_EntityCache: AbstractExposedTest() {
     }
 
     /**
-     * 전역 `EntityCace` 의 `maxEntitiesToStoreInCachePerEntity` 값을 0 으로 설정하면, 캐시를 사용하지 않습니다.
+     * `EntityCace` 의 `maxEntitiesToStoreInCachePerEntity` 값을 0 으로 설정하면, 캐시를 사용하지 않습니다.
      */
     @Test
-    fun `global entity cache limit zero`() {
+    fun `entity cache limit zero`() {
         val entitiesCount = 25
 
         // 기본 캐시 사이즈를 사용하는 DB 연결
@@ -248,6 +248,8 @@ class Ex03_EntityCache: AbstractExposedTest() {
             // 명시적으로 entityCache를 삭제해야 함
             entityCache.clear()
             TestEntity.testCache(entity.id).shouldBeNull()
+
+            TestEntity.removeFromCache(entity)
         }
     }
 }

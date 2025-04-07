@@ -28,10 +28,7 @@ class Ex06_NonAutoIncEntities: AbstractExposedTest() {
 
     companion object: KLogging()
 
-    /**
-     * Hibernate의 `InheritanceType.TABLE_PER_CLASS` 와 같은 구조를 만든다.
-     */
-    abstract class BaseNonAutoIncTable(name: String): IdTable<Int>(name) {
+    abstract class BaseNonAutoIncTable(name: String = ""): IdTable<Int>(name) {
         override val id: Column<EntityID<Int>> = integer("id").entityId()
         val b1: Column<Boolean> = bool("b1")
     }
@@ -46,22 +43,22 @@ class Ex06_NonAutoIncEntities: AbstractExposedTest() {
      * )
      * ```
      */
-    object NotAutoIntIdTable: BaseNonAutoIncTable("") {
+    object NotAutoIntIdTable: BaseNonAutoIncTable() {
         val defaultedInt: Column<Int> = integer("i1")
     }
 
-    class NotAutoEntity(id: EntityID<Int>): Entity<Int>(id) {
+    class NotAutoIntEntity(id: EntityID<Int>): Entity<Int>(id) {
         var b1: Boolean by NotAutoIntIdTable.b1
         var defaultedInNew: Int by NotAutoIntIdTable.defaultedInt
 
-        companion object: EntityClass<Int, NotAutoEntity>(NotAutoIntIdTable) {
+        companion object: EntityClass<Int, NotAutoIntEntity>(NotAutoIntIdTable) {
             val lastId = AtomicInteger(0)
             internal const val defaultInt = 42
 
             fun new(b: Boolean) = new(lastId.incrementAndGet()) { b1 = b }
 
             // `new` 메소드를 재정의하여 id를 Client에서 제공합니다.
-            override fun new(id: Int?, init: NotAutoEntity.() -> Unit): NotAutoEntity {
+            override fun new(id: Int?, init: NotAutoIntEntity.() -> Unit): NotAutoIntEntity {
                 // Client의 `lastId`를 사용하여 id를 생성합니다. (멀티 JVM, HA 구성 시 문제가 될 수 있습니다)
                 return super.new(id ?: lastId.incrementAndGet()) {
                     defaultedInNew = defaultInt
@@ -88,12 +85,12 @@ class Ex06_NonAutoIncEntities: AbstractExposedTest() {
         withTables(testDB, NotAutoIntIdTable) {
 
             // INSERT INTO notautointid (id, i1, b1) VALUES (27, 42, TRUE);
-            val entity1 = NotAutoEntity.new(true)
+            val entity1 = NotAutoIntEntity.new(true)
             entity1.b1.shouldBeTrue()
-            entity1.defaultedInNew shouldBeEqualTo NotAutoEntity.defaultInt
+            entity1.defaultedInNew shouldBeEqualTo NotAutoIntEntity.defaultInt
 
             // INSERT INTO notautointid (id, i1, b1) VALUES (28, 1, FALSE);
-            val entity2 = NotAutoEntity.new {
+            val entity2 = NotAutoIntEntity.new {
                 b1 = false
                 defaultedInNew = 1
             }
@@ -111,14 +108,14 @@ class Ex06_NonAutoIncEntities: AbstractExposedTest() {
         withTables(testDB, NotAutoIntIdTable) {
 
             // INSERT INTO notautointid (id, i1, b1) VALUES (7, 42, TRUE)
-            val e1 = NotAutoEntity.new(true)
+            val e1 = NotAutoIntEntity.new(true)
 
             // INSERT INTO notautointid (id, i1, b1) VALUES (8, 42, FALSE)
-            val e2 = NotAutoEntity.new(false)
+            val e2 = NotAutoIntEntity.new(false)
 
             entityCache.clear()
 
-            val all = NotAutoEntity.all()
+            val all = NotAutoIntEntity.all()
             all.map { it.id } shouldBeEqualTo listOf(e1.id, e2.id)
         }
     }
