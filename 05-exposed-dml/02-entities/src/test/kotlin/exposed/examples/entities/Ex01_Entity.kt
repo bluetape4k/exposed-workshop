@@ -276,6 +276,7 @@ class Ex01_Entity: AbstractExposedTest() {
      * [User] 엔티티의 생성자에서 [Human]도 엔티티를 생성합니다.
      *
      * ```sql
+     * -- Postgres
      * INSERT INTO human (h) VALUES ('te');
      * INSERT INTO "user" (id, "name") VALUES (1, 'testUser');
      *
