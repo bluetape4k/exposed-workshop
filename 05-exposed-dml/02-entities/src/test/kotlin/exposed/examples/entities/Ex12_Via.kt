@@ -52,9 +52,15 @@ import java.sql.Connection
 import java.util.*
 import kotlin.reflect.jvm.isAccessible
 
+/**
+ * [ViaTestData]는 Exposed를 사용하여 다대다 관계를 테스트하기 위한 데이터 모델을 정의합니다.
+ * 이 모델은 두 개의 엔티티(NumbersTable, StringsTable)와 이를 연결하는 두 개의 관계 테이블(ConnectionTable, ConnectionAutoTable)을 포함합니다.
+ */
 object ViaTestData {
 
     /**
+     * NumbersTable은 UUID를 기본 키로 가지며, 정수를 저장하는 테이블입니다.
+     *
      * ```sql
      * CREATE TABLE IF NOT EXISTS numbers (
      *      id uuid PRIMARY KEY,
@@ -67,6 +73,8 @@ object ViaTestData {
     }
 
     /**
+     * StringsTable은 Long 타입의 ID를 기본 키로 가지며, 문자열을 저장하는 테이블입니다.
+     *
      * ```sql
      * CREATE TABLE IF NOT EXISTS strings (
      *      id BIGINT PRIMARY KEY,
@@ -78,12 +86,19 @@ object ViaTestData {
         val text = varchar("text", 10)
     }
 
+    /**
+     * IConnectionTable은 NumbersTable과 StringsTable 간의 관계를 정의하는 인터페이스입니다.
+     * 이를 구현하는 테이블은 numId와 stringId를 포함해야 합니다.
+     */
     interface IConnectionTable {
         val numId: Column<EntityID<UUID>>
         val stringId: Column<EntityID<Long>>
     }
 
     /**
+     * ConnectionTable은 NumbersTable과 StringsTable 간의 관계를 정의하는 테이블입니다.
+     * UUID를 기본 키로 사용하며, 두 테이블 간의 다대다 관계를 나타냅니다.
+     *
      * ```sql
      * CREATE TABLE IF NOT EXISTS "Connection" (
      *      id uuid PRIMARY KEY,
@@ -111,6 +126,9 @@ object ViaTestData {
     }
 
     /**
+     * ConnectionAutoTable은 ConnectionTable과 유사하지만, Long 타입의 자동 증가 ID를 기본 키로 사용합니다.
+     * 또한, 외래 키 제약 조건에서 ON DELETE CASCADE를 사용합니다.
+     *
      * ```sql
      * CREATE TABLE IF NOT EXISTS connectionauto (
      *      id SERIAL PRIMARY KEY,
@@ -139,12 +157,16 @@ object ViaTestData {
 
     val allTables = arrayOf(NumbersTable, StringsTable, ConnectionTable, ConnectionAutoTable)
 
+    /**
+     * VNumber는 NumbersTable의 행을 나타내는 엔티티 클래스입니다.
+     * 연결된 VString 엔티티를 조회할 수 있는 프로퍼티를 제공합니다.
+     */
     class VNumber(id: EntityID<UUID>): UUIDEntity(id) {
         companion object: UUIDEntityClass<VNumber>(NumbersTable)
 
         var number: Int by NumbersTable.number
-        var connectedStrings: SizedIterable<VString> by VString via ConnectionTable
-        var connectedAutoStrings: SizedIterable<VString> by VString via ConnectionAutoTable
+        var connectedStrings: SizedIterable<VString> by VString via ConnectionTable // ConnectionTable을 통해 연결된 VString 엔티티
+        var connectedAutoStrings: SizedIterable<VString> by VString via ConnectionAutoTable // ConnectionAutoTable을 통해 연결된 VString 엔티티
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -153,6 +175,9 @@ object ViaTestData {
             .toString()
     }
 
+    /**
+     * VString은 StringsTable의 행을 나타내는 엔티티 클래스입니다.
+     */
     class VString(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<VString>(StringsTable)
 
@@ -167,13 +192,15 @@ object ViaTestData {
 }
 
 /**
- * many-to-many 에서 relation table 을 통해 연결된 entity 들을 조회하는 테스트 (`via` 테스트)
+ * many-to-many 에서 relation table 을 통해 연결된 entity 들을 다루는 예제입니다.
  */
-class Ex11_Via: AbstractExposedTest() {
+class Ex12_Via: AbstractExposedTest() {
 
     companion object: KLogging()
 
-
+    /**
+     * [VNumber] 엔티티에 대해, 지정된 관계 테이블에 값을 넣고 확인하는 헬퍼 메서드입니다.
+     */
     private fun VNumber.testWithBothTables(
         valuesToSet: List<VString>,
         body: (IConnectionTable, List<ResultRow>) -> Unit,
@@ -189,6 +216,9 @@ class Ex11_Via: AbstractExposedTest() {
         }
     }
 
+    /**
+     * 하나의 VNumber와 VString 간 다대다 관계를 생성 후, 올바르게 매핑되었는지 확인합니다.
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `connection 01`(testDB: TestDB) {
@@ -204,6 +234,9 @@ class Ex11_Via: AbstractExposedTest() {
         }
     }
 
+    /**
+     * 여러 개의 VString을 하나의 VNumber에 연결하고, 데이터를 확인합니다.
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `connection 02`(testDB: TestDB) {
@@ -224,6 +257,9 @@ class Ex11_Via: AbstractExposedTest() {
         }
     }
 
+    /**
+     * 두 개의 VNumber와 여러 VString을 연결한 후, 관계를 해제했을 때의 동작을 확인합니다.
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `connection 03`(testDB: TestDB) {
@@ -250,6 +286,9 @@ class Ex11_Via: AbstractExposedTest() {
         }
     }
 
+    /**
+     * 여러 연결 관계에서 SizedCollection을 이용해 특정 항목을 제거했을 때의 동작을 테스트합니다.
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `connection 04`(testDB: TestDB) {
@@ -285,7 +324,7 @@ class Ex11_Via: AbstractExposedTest() {
      * ```
      */
     object NodesTable: IntIdTable() {
-        val name = varchar("name", 50)
+        val name: Column<String> = varchar("name", 50)
     }
 
     /**
@@ -304,16 +343,24 @@ class Ex11_Via: AbstractExposedTest() {
      * ```
      */
     object NodeToNodes: Table() {
-        val parent = reference("parent_node_id", NodesTable)
-        val child = reference("child_node_id", NodesTable)
+        val parentId: Column<EntityID<Int>> = reference("parent_node_id", NodesTable)
+        val childId: Column<EntityID<Int>> = reference("child_node_id", NodesTable)
+
+        init {
+            uniqueIndex(parentId, childId)
+        }
     }
 
     class Node(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<Node>(NodesTable)
 
-        var name by NodesTable.name
-        var parents by Node.via(NodeToNodes.child, NodeToNodes.parent)
-        var children by Node.via(NodeToNodes.parent, NodeToNodes.child)
+        var name: String by NodesTable.name
+
+        // NodeToNodes.childId -> NotToNodes.parentId 
+        var parents: SizedIterable<Node> by Node.via(NodeToNodes.childId, NodeToNodes.parentId)
+
+        // NodeToNodes.parentId -> NodeToNodes.childId
+        var children: SizedIterable<Node> by Node.via(NodeToNodes.parentId, NodeToNodes.childId)
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -348,9 +395,9 @@ class Ex11_Via: AbstractExposedTest() {
             val root = Node.new { name = "root" }
             val child1 = Node.new {
                 name = "child1"
-                parents = SizedCollection(root)
+                parents = SizedCollection(root)      // 이렇게 parents 를 지정하면 `NodeToNodes` 에 insert 된다.
             }
-            flushCache()
+
             entityCache.clear()
 
             log.debug { "Create Root, Child1 " }
@@ -438,6 +485,9 @@ class Ex11_Via: AbstractExposedTest() {
         }
     }
 
+    /**
+     * 계층 구조가 있는 엔티티를 eager loading한 뒤, 부모-자식 관계가 캐시에 정상적으로 반영되는지 검증합니다.
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `warm up on hierarchy entities`(testDB: TestDB) {
@@ -518,9 +568,9 @@ class Ex11_Via: AbstractExposedTest() {
         companion object: IntEntityClass<NodeOrdered>(NodesTable)
 
         var name by NodesTable.name
-        var parents by NodeOrdered.via(NodeToNodes.child, NodeToNodes.parent)
+        var parents by NodeOrdered.via(NodeToNodes.childId, NodeToNodes.parentId)
         var children by NodeOrdered
-            .via(NodeToNodes.parent, NodeToNodes.child)
+            .via(NodeToNodes.parentId, NodeToNodes.childId)
             .orderBy(NodesTable.name to SortOrder.ASC)
 
         override fun equals(other: Any?): Boolean = (other as? NodeOrdered)?.id == id
@@ -610,24 +660,25 @@ class Ex11_Via: AbstractExposedTest() {
      * ```
      */
     object ProjectTasks: CompositeIdTable("project_tasks") {
-        val project = reference("project_id", Projects, onDelete = ReferenceOption.CASCADE)
-        val task = reference("task_id", Tasks, onDelete = ReferenceOption.CASCADE)
+        val projectId: Column<EntityID<Int>> = reference("project_id", Projects, onDelete = ReferenceOption.CASCADE)
+        val taskId: Column<EntityID<Int>> = reference("task_id", Tasks, onDelete = ReferenceOption.CASCADE)
+
         val approved = bool("approved").default(false)
 
-        override val primaryKey = PrimaryKey(project, task)
+        override val primaryKey = PrimaryKey(projectId, taskId)
 
         init {
             // Composite ID 를 정의한다.
-            addIdColumn(project)
-            addIdColumn(task)
+            addIdColumn(projectId)
+            addIdColumn(taskId)
         }
     }
 
     class Project(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<Project>(Projects)
 
-        var name by Projects.name
-        var tasks by Task via ProjectTasks
+        var name: String by Projects.name
+        var tasks: SizedIterable<Task> by Task via ProjectTasks  // ProjectTasks 를 통해 연결된 Task 엔티티
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -645,6 +696,19 @@ class Ex11_Via: AbstractExposedTest() {
 
         var approved by ProjectTasks.approved
 
+        val projectId: EntityID<Int>
+            get() = id.value[ProjectTasks.projectId]
+
+        val project: Project?
+            get() = Project.findById(projectId)
+
+        val taskId: EntityID<Int>
+            get() = id.value[ProjectTasks.taskId]
+
+        val task: Task?
+            get() = Task.findById(taskId)
+
+
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
         override fun toString(): String = toStringBuilder()
@@ -655,8 +719,9 @@ class Ex11_Via: AbstractExposedTest() {
     class Task(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<Task>(Tasks)
 
-        var title by Tasks.title
-        var approved by ProjectTasks.approved
+        var title: String by Tasks.title
+        var approved: Boolean by ProjectTasks.approved  // ProjectTasks 를 통해 연결된 approved 속성
+        var projects: SizedIterable<Project> by Project via ProjectTasks  // ProjectTasks 를 통해 연결된 Project 엔티티
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -667,6 +732,8 @@ class Ex11_Via: AbstractExposedTest() {
     }
 
     /**
+     * project-tasks 관계에서 composite ID를 사용한 추가 속성(approved)을 포함한 매핑 동작을 테스트합니다.
+     *
      * ```sql
      * -- create ProjectTask
      * INSERT INTO project_tasks (task_id, project_id, approved) VALUES (1, 1, TRUE);
@@ -678,6 +745,8 @@ class Ex11_Via: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `additional link data using composite id inner table`(testDB: TestDB) {
         withTables(testDB, Projects, Tasks, ProjectTasks) {
+
+            // 샘플 데이터 추가
             val p1 = Project.new { name = "Project 1" }
             val p2 = Project.new { name = "Project 2" }
 
@@ -685,10 +754,11 @@ class Ex11_Via: AbstractExposedTest() {
             val t2 = Task.new { title = "Task 2" }
             val t3 = Task.new { title = "Task 3" }
 
+            // Project 와 Task 를 연결하는 ProjectTask 엔티티 생성
             ProjectTask.new(
                 CompositeID {
-                    it[ProjectTasks.project] = p1.id
-                    it[ProjectTasks.task] = t1.id
+                    it[ProjectTasks.projectId] = p1.id
+                    it[ProjectTasks.taskId] = t1.id
                 }
             ) {
                 approved = true
@@ -696,8 +766,8 @@ class Ex11_Via: AbstractExposedTest() {
 
             ProjectTask.new(
                 CompositeID {
-                    it[ProjectTasks.project] = p2.id
-                    it[ProjectTasks.task] = t2.id
+                    it[ProjectTasks.projectId] = p2.id
+                    it[ProjectTasks.taskId] = t2.id
                 }
             ) {
                 approved = false
@@ -705,8 +775,8 @@ class Ex11_Via: AbstractExposedTest() {
 
             ProjectTask.new(
                 CompositeID {
-                    it[ProjectTasks.project] = p2.id
-                    it[ProjectTasks.task] = t3.id
+                    it[ProjectTasks.projectId] = p2.id
+                    it[ProjectTasks.taskId] = t3.id
                 }
             ) {
                 approved = false
@@ -714,11 +784,12 @@ class Ex11_Via: AbstractExposedTest() {
 
             commit()
 
+            // 캐시를 공유하지 않도록, 다른 트랜잭션에서 조회 작업을 수행합니다.
             inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 1
 
                 /**
-                 * Eager loading one-to-many relation (`with(Project::tasks)` 사용)
+                 * Project 조회 시 관련된 Task 엔티티를 eager loading 합니다. (`with(Project::tasks)` 사용)
                  *
                  * ```sql
                  * -- Postgres
@@ -737,16 +808,16 @@ class Ex11_Via: AbstractExposedTest() {
                 val cache = TransactionManager.current().entityCache
 
                 // eager load 되었으므로 캐시에 존재한다.
-                val p1Tasks = cache.getReferrers<Task>(p1.id, ProjectTasks.project)?.toList().orEmpty()
+                val p1Tasks = cache.getReferrers<Task>(p1.id, ProjectTasks.projectId)?.toList().orEmpty()
                 p1Tasks.map { it.id } shouldBeEqualTo listOf(t1.id)
                 p1Tasks.all { it.approved }.shouldBeTrue()
 
                 // eager load 되었으므로 캐시에 존재한다.
-                val p2Tasks = cache.getReferrers<Task>(p2.id, ProjectTasks.project)?.toList().orEmpty()
+                val p2Tasks = cache.getReferrers<Task>(p2.id, ProjectTasks.projectId)?.toList().orEmpty()
                 p2Tasks.map { it.id } shouldBeEqualTo listOf(t2.id, t3.id)
                 p2Tasks.all { !it.approved }.shouldBeTrue()
 
-                // eager load 되었으므로 쿼리를 발생시키지 않는다.
+                // eager load 되었으므로 count() 함수에 대한 쿼리를 발생시키지 않는다.
                 p1.tasks.count() shouldBeEqualTo 1
                 p2.tasks.count() shouldBeEqualTo 2
 
