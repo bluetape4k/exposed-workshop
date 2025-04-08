@@ -6,13 +6,14 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.CharColumnType
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ColumnType
 import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.VarCharColumnType
 import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.booleanParam
 import org.jetbrains.exposed.sql.insert
@@ -132,38 +133,45 @@ class Ex01_BooleanColumnType: AbstractExposedTest() {
          * ```sql
          * -- Postgres
          * CREATE TABLE IF NOT EXISTS tester (
-         *      "charBooleanColumn" VARCHAR(1) NOT NULL,
-         *      "charBooleanColumnWithDefault" VARCHAR(1) DEFAULT 'N' NOT NULL
+         *      "char_bool" CHAR(1) NOT NULL,
+         *      "char_bool_default" CHAR(1) DEFAULT 'N' NOT NULL,
+         *      "char_bool_nullable" CHAR(1) NULL
          * )
          * ```
          */
         val tester = object: Table("tester") {
-            val charBooleanColumn = charBoolean("charBooleanColumn")
-            val charBooleanColumnWithDefault = charBoolean("charBooleanColumnWithDefault")
-                .default(false)
+            val charBoolean: Column<Boolean> = charBool("char_bool")
+            val charBooleanWithDefault: Column<Boolean> = charBool("char_bool_default").default(false)
+            val charBooleanNullable: Column<Boolean?> = charBool("char_bool_nullable").nullable()
         }
 
         withTables(testDB, tester) {
-            // INSERT INTO tester ("charBooleanColumn") VALUES ('Y')
+            // INSERT INTO tester (char_bool, char_bool_nullable) VALUES ('Y', NULL)
             tester.insert {
-                it[charBooleanColumn] = true
+                it[charBoolean] = true
+                it[charBooleanNullable] = null
             }
 
-            tester.selectAll().single()[tester.charBooleanColumn].shouldBeTrue()
+            val row = tester.selectAll().single()
+            row[tester.charBoolean].shouldBeTrue()
+            row[tester.charBooleanWithDefault].shouldBeFalse()
+            row[tester.charBooleanNullable].shouldBeNull()
 
             /**
              * ```sql
              * -- Postgres
              * SELECT COUNT(*)
              *   FROM tester
-             *  WHERE (tester."charBooleanColumn" = 'Y')
-             *    AND (tester."charBooleanColumnWithDefault" = 'N')
+             *  WHERE (tester.char_bool = 'Y')
+             *    AND (tester.char_bool_default = 'N')
+             *    AND (tester.char_bool_nullable IS NULL);
              * ```
              */
             tester
-                .select(tester.charBooleanColumn)
-                .where { tester.charBooleanColumn eq true }
-                .andWhere { tester.charBooleanColumnWithDefault eq false }
+                .select(tester.charBoolean)
+                .where { tester.charBoolean eq true }
+                .andWhere { tester.charBooleanWithDefault eq false }
+                .andWhere { tester.charBooleanNullable.isNull() }
                 .count() shouldBeEqualTo 1
         }
     }
@@ -175,32 +183,37 @@ class Ex01_BooleanColumnType: AbstractExposedTest() {
      * * else -> false ('N')
      */
     class CharBooleanColumnType(
-        private val characterColumnType: VarCharColumnType = VarCharColumnType(1),
+        private val characterColumnType: CharColumnType = CharColumnType(1),
     ): ColumnType<Boolean>() {
-        override fun sqlType(): String = characterColumnType.preciseType()
 
-        override fun valueFromDB(value: Any): Boolean =
-            when (characterColumnType.valueFromDB(value).uppercase()) {
+        override fun sqlType(): String = characterColumnType.sqlType()
+
+        // DB 컬럼 값을 Kotlin Boolean 값으로 변환
+        override fun valueFromDB(value: Any): Boolean? {
+            return when (characterColumnType.valueFromDB(value).uppercase()) {
                 "Y" -> true
-                else -> false
+                "N" -> false
+                else -> null
             }
+        }
 
+        // Kotlin Boolean 값을 DB 컬럼 값으로 변환
         override fun valueToDB(value: Boolean?): Any? =
-            characterColumnType.valueToDB(value.toChar().toString())
+            characterColumnType.valueToDB(value.asChar()?.toString())
 
         override fun nonNullValueToString(value: Boolean): String =
-            characterColumnType.nonNullValueToString(value.toChar().toString())
+            characterColumnType.nonNullValueToString(value.asChar()?.toString() ?: "")
 
-        private fun Boolean?.toChar() = when (this) {
+        private fun Boolean?.asChar(): Char? = when (this) {
             true -> 'Y'
             false -> 'N'
-            else -> ' '
+            else -> null
         }
     }
 
     /**
      * DB CHAR(1) 컬럼 타입을 `Column<Boolean>` 수형으로 등록하는 함수
      */
-    fun Table.charBoolean(name: String): Column<Boolean> =
+    fun Table.charBool(name: String): Column<Boolean> =
         registerColumn(name, CharBooleanColumnType())
 }
