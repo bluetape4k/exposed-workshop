@@ -937,8 +937,8 @@ class Ex01_Entity: AbstractExposedTest() {
             val newPrice = 50.0.toBigDecimal()
 
             /**
-             * Postgres:
              * ```sql
+             * -- Postgres
              * SELECT items.id, items."name", items.price
              *   FROM items
              *  WHERE items.id = 1
@@ -1667,8 +1667,13 @@ class Ex01_Entity: AbstractExposedTest() {
                  * `with` 를 이용하여 eager loading 을 수행한다.
                  *
                  * ```sql
-                 * SELECT SCHOOLS.ID, SCHOOLS."name", SCHOOLS.REGION_ID, SCHOOLS.SECONDARY_REGION_ID FROM SCHOOLS;
-                 * SELECT REGIONS.ID, REGIONS."name" FROM REGIONS WHERE REGIONS.ID IN (1, 2);
+                 * -- Postgres
+                 * SELECT schools.id, schools."name", schools.region_id, schools.secondary_region_id
+                 *   FROM schools;
+                 *
+                 * SELECT regions.id, regions."name"
+                 *   FROM regions
+                 *  WHERE regions.id IN (1, 2)
                  * ```
                  */
                 School.all().with(School::region)

@@ -57,7 +57,7 @@ class Ex13_OrderedReference: AbstractExposedTest() {
      */
     object UserRatings: IntIdTable() {
         val value: Column<Int> = integer("value")
-        val user: Column<EntityID<Int>> = reference("user", Users)
+        val userId: Column<EntityID<Int>> = reference("user_id", Users)
     }
 
     /**
@@ -75,14 +75,14 @@ class Ex13_OrderedReference: AbstractExposedTest() {
      */
     object UserNullableRatings: IntIdTable() {
         val value: Column<Int> = integer("value")
-        val user: Column<EntityID<Int>?> = reference("user", Users).nullable()
+        val userId: Column<EntityID<Int>?> = reference("user_id", Users).nullable()
     }
 
     class UserRatingDefaultOrder(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<UserRatingDefaultOrder>(UserRatings)
 
         var value: Int by UserRatings.value
-        var user: UserDefaultOrder by UserDefaultOrder referencedOn UserRatings.user
+        var user: UserDefaultOrder by UserDefaultOrder referencedOn UserRatings.userId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -95,7 +95,7 @@ class Ex13_OrderedReference: AbstractExposedTest() {
         companion object: IntEntityClass<UserNullableRatingDefaultOrder>(UserNullableRatings)
 
         var value: Int by UserNullableRatings.value
-        var user: UserDefaultOrder? by UserDefaultOrder optionalReferencedOn UserNullableRatings.user
+        var user: UserDefaultOrder? by UserDefaultOrder optionalReferencedOn UserNullableRatings.userId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -112,14 +112,14 @@ class Ex13_OrderedReference: AbstractExposedTest() {
          */
         val ratings: SizedIterable<UserRatingDefaultOrder>
                 by UserRatingDefaultOrder referrersOn
-                        UserRatings.user orderBy UserRatings.value
+                        UserRatings.userId orderBy UserRatings.value
 
         /**
          * nullableRatings 을 [UserNullableRatings.value]로 올림차순 정렬합니다.
          */
         val nullableRatings: SizedIterable<UserNullableRatingDefaultOrder>
                 by UserNullableRatingDefaultOrder optionalReferrersOn
-                        UserNullableRatings.user orderBy UserNullableRatings.value
+                        UserNullableRatings.userId orderBy UserNullableRatings.value
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -133,15 +133,15 @@ class Ex13_OrderedReference: AbstractExposedTest() {
             val userId = Users.insertAndGetId {}
             unsortedRatingValues.forEach { value ->
                 UserRatings.insert {
-                    it[user] = userId
+                    it[this.userId] = userId
                     it[UserRatings.value] = value
                 }
                 UserNullableRatings.insert {
-                    it[user] = userId
+                    it[this.userId] = userId
                     it[UserNullableRatings.value] = value
                 }
                 UserNullableRatings.insert {
-                    it[user] = null
+                    it[this.userId] = null
                     it[UserNullableRatings.value] = value
                 }
             }
@@ -204,7 +204,7 @@ class Ex13_OrderedReference: AbstractExposedTest() {
         companion object: IntEntityClass<UserRatingMultiColumn>(UserRatings)
 
         var value: Int by UserRatings.value
-        var user: UserMultiColumn by UserMultiColumn referencedOn UserRatings.user
+        var user: UserMultiColumn by UserMultiColumn referencedOn UserRatings.userId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -217,7 +217,7 @@ class Ex13_OrderedReference: AbstractExposedTest() {
         companion object: IntEntityClass<UserNullableRatingMultiColumn>(UserNullableRatings)
 
         var value: Int by UserNullableRatings.value
-        var user: UserMultiColumn? by UserMultiColumn optionalReferencedOn UserNullableRatings.user
+        var user: UserMultiColumn? by UserMultiColumn optionalReferencedOn UserNullableRatings.userId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -233,7 +233,7 @@ class Ex13_OrderedReference: AbstractExposedTest() {
          * ratings 을 [UserRatings.value], [UserRatings.id]로 내림차순 정렬합니다.
          */
         val ratings: SizedIterable<UserRatingMultiColumn> by UserRatingMultiColumn
-            .referrersOn(UserRatings.user)
+            .referrersOn(UserRatings.userId)
             .orderBy(UserRatings.value to DESC)
             .orderBy(UserRatings.id to DESC)
 
@@ -241,7 +241,7 @@ class Ex13_OrderedReference: AbstractExposedTest() {
          * nullableRatings 을 [UserNullableRatings.value], [UserNullableRatings.id]로 내림차순 정렬합니다.
          */
         val nullableRatings: SizedIterable<UserNullableRatingMultiColumn> by UserNullableRatingMultiColumn
-            .optionalReferrersOn(UserNullableRatings.user)
+            .optionalReferrersOn(UserNullableRatings.userId)
             .orderBy(
                 UserNullableRatings.value to DESC,
                 UserNullableRatings.id to DESC
@@ -321,7 +321,7 @@ class Ex13_OrderedReference: AbstractExposedTest() {
         companion object: IntEntityClass<UserRatingChainedColumn>(UserRatings)
 
         var value: Int by UserRatings.value
-        var user: UserChainedColumn by UserChainedColumn referencedOn UserRatings.user
+        var user: UserChainedColumn by UserChainedColumn referencedOn UserRatings.userId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -337,7 +337,7 @@ class Ex13_OrderedReference: AbstractExposedTest() {
          * ratings 을 [UserRatings.value], [UserRatings.id]로 내림차순 정렬합니다.
          */
         val ratings: SizedIterable<UserRatingChainedColumn> by UserRatingChainedColumn
-            .referrersOn(UserRatings.user)
+            .referrersOn(UserRatings.userId)
             .orderBy(UserRatings.value to DESC)       // value DESC
             .orderBy(UserRatings.id to DESC)          // id DESC
 
