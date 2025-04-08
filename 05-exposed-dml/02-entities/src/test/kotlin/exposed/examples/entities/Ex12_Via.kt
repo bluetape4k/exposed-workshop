@@ -128,7 +128,7 @@ object ViaTestData {
      *      ADD CONSTRAINT connectionauto_numid_stringid_unique UNIQUE ("numId", "stringId");
      * ```
      */
-    object ConnectionAutoTable: IntIdTable(), IConnectionTable {
+    object ConnectionAutoTable: LongIdTable(), IConnectionTable {
         override val numId = reference("numId", NumbersTable, onDelete = ReferenceOption.CASCADE)
         override val stringId = reference("stringId", StringsTable, onDelete = ReferenceOption.CASCADE)
 

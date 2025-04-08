@@ -7,7 +7,9 @@ import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContainSame
 import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
@@ -20,6 +22,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IdTable
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -27,7 +30,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
 /**
- * Foreign Key 를 가지는 엔티티를 다루는 예제입니다.
+ * 엔티티의 ID 가 다른 테이블의 ID를 참조 (Foreign Key) 하는 엔티티에 대한 예제
  *
  * one-to-one, one-to-many, many-to-one 관계를 모두 포함하고 있습니다.
  */
@@ -64,6 +67,7 @@ class Ex11_ForeignIdEntity: AbstractExposedTest() {
      */
     object ProjectConfigs: IdTable<Long>("project_configs") {
         override val id: Column<EntityID<Long>> = reference("id", Projects)     // one-to-one relationship
+        val ownerId: Column<String> = varchar("owner_id", 50)
         val setting: Column<Boolean> = bool("setting")
     }
 
@@ -103,6 +107,7 @@ class Ex11_ForeignIdEntity: AbstractExposedTest() {
         companion object: LongEntityClass<Project>(Projects)
 
         var name by Projects.name
+        val config: ProjectConfig by ProjectConfig backReferencedOn ProjectConfigs  // one-to-one relationship
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -114,6 +119,8 @@ class Ex11_ForeignIdEntity: AbstractExposedTest() {
     class ProjectConfig(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<ProjectConfig>(ProjectConfigs)
 
+        val project by Project referencedOn ProjectConfigs  // one-to-one relationship
+        var ownerId by ProjectConfigs.ownerId
         var setting by ProjectConfigs.setting
 
         override fun equals(other: Any?): Boolean = idEquals(other)
@@ -149,21 +156,20 @@ class Ex11_ForeignIdEntity: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `foreign id entity update`(testDB: TestDB) {
-        withTables(
-            testDB,
-            Projects, ProjectConfigs,
-            configure = { useNestedTransactions = true }
-        ) {
+        withTables(testDB, Projects, ProjectConfigs, configure = { useNestedTransactions = true }) {
             val project1 = transaction {
                 /**
                  * ```sql
                  * INSERT INTO projects ("name") VALUES ('Space');
-                 * INSERT INTO project_configs (id, setting) VALUES (1, TRUE);
+                 * INSERT INTO project_configs (id, owner_id, setting) VALUES (1, 'debop', TRUE);
                  * ```
                  */
                 val project1 = Project.new { name = "Space" }
                 // ProjectConfig is a one-to-one relationship with Project
-                ProjectConfig.new(project1.id.value) { setting = true }
+                ProjectConfig.new(project1.id.value) {
+                    ownerId = "debop"
+                    setting = true
+                }
 
                 project1
             }
@@ -172,11 +178,14 @@ class Ex11_ForeignIdEntity: AbstractExposedTest() {
                 /**
                  * ```sql
                  * INSERT INTO projects ("name") VALUES ('Earth');
-                 * INSERT INTO project_configs (id, setting) VALUES (2, TRUE);
+                 * INSERT INTO project_configs (id, owner_id, setting) VALUES (2, 'jane', TRUE);
                  * ```
                  */
                 val project2 = Project.new { name = "Earth" }
-                ProjectConfig.new(project2.id.value) { setting = true }
+                ProjectConfig.new(project2.id.value) {
+                    ownerId = "jane"
+                    setting = true
+                }
                 project2
             }
 
@@ -187,7 +196,10 @@ class Ex11_ForeignIdEntity: AbstractExposedTest() {
 
             transaction {
                 // SELECT project_configs.id, project_configs.setting FROM project_configs WHERE project_configs.id = 1
-                ProjectConfig.findById(project1.id)!!.setting.shouldBeFalse()
+                val config = ProjectConfig.findById(project1.id)!!
+                config.setting.shouldBeFalse()
+                // SELECT projects.id, projects."name" FROM projects WHERE projects.id = 1
+                config.project.name shouldBeEqualTo project1.name
             }
         }
     }
@@ -212,10 +224,93 @@ class Ex11_ForeignIdEntity: AbstractExposedTest() {
 
             entityCache.clear()
 
+            // SELECT roles.id, roles.guild_id FROM roles WHERE roles.guild_id = '3746529'
             actorA.roles.toList() shouldContainSame listOf(roleA, roleB)
 
             // SELECT roles.id, roles.guild_id FROM roles;
-            Role.all().toList() shouldContainSame listOf(roleA, roleB)
+            val roles = Role.all().toList()
+            roles shouldContainSame listOf(roleA, roleB)
+            // SELECT actors.guild_id FROM actors WHERE actors.guild_id = '3746529'
+            roles.all { it.actor == actorA }.shouldBeTrue()
+
+        }
+    }
+
+    object Users: IntIdTable("users") {
+        val name: Column<String> = varchar("user_name", 50)
+    }
+
+    object UserProfiles: IdTable<Int>("user_profiles") {
+        override val id: Column<EntityID<Int>> = reference("user_id", Users)  // one-to-one relationship
+        val bio = varchar("bio", 255)
+    }
+
+    class User(id: EntityID<Int>): IntEntity(id) {
+        companion object: IntEntityClass<User>(Users)
+
+        var name by Users.name
+        val profile: UserProfile by UserProfile backReferencedOn UserProfiles  // one-to-one relationship
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
+        override fun toString(): String = toStringBuilder()
+            .add("name", name)
+            .toString()
+    }
+
+    class UserProfile(id: EntityID<Int>): IntEntity(id) {
+        companion object: IntEntityClass<UserProfile>(UserProfiles)
+
+        var bio by UserProfiles.bio
+        var user by User referencedOn UserProfiles
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
+        override fun toString(): String = toStringBuilder()
+            .add("bio", bio)
+            .toString()
+    }
+
+    /**
+     * one-to-one 관계인 [User] 와 [UserProfile] 를 다루는 테스트
+     *
+     * ```sql
+     * -- Postgres
+     * INSERT INTO users (user_name) VALUES ('Earth')
+     * INSERT INTO user_profiles (user_id, bio) VALUES (1, 'Earth is a planet')
+     *
+     * SELECT users.id, users.user_name FROM users WHERE users.id = 1
+     * SELECT user_profiles.user_id, user_profiles.bio FROM user_profiles WHERE user_profiles.user_id = 1
+     * SELECT user_profiles.user_id, user_profiles.bio FROM user_profiles WHERE user_profiles.user_id = 1
+     *
+     * UPDATE user_profiles SET bio='Updated: Earth is a planet' WHERE user_id = 1
+     * SELECT users.id, users.user_name FROM users WHERE users.id = 1
+     * SELECT user_profiles.user_id, user_profiles.bio FROM user_profiles WHERE user_profiles.user_id = 1
+     * ```
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `user and user profile`(testDB: TestDB) {
+        withTables(testDB, Users, UserProfiles) {
+            val user = User.new { name = "Earth" }
+            UserProfile.new(user.id.value) { bio = "Earth is a planet" }
+
+            entityCache.clear()
+
+            val loadedUser = User.findById(user.id)!!
+            loadedUser.profile.bio shouldBeEqualTo "Earth is a planet"
+            loadedUser.profile.user shouldBeEqualTo user
+
+            entityCache.clear()
+
+            val profile = UserProfile.findById(user.id)!!
+            profile.bio = "Updated: Earth is a planet"
+
+            entityCache.clear()
+
+            val loadedUser2 = User.findById(user.id)!!.load(User::profile)
+            loadedUser2.profile.bio shouldBeEqualTo "Updated: Earth is a planet"
+            loadedUser2.profile.user shouldBeEqualTo user
         }
     }
 }

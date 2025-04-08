@@ -123,7 +123,7 @@ object EntityTestData {
         companion object: EntityClass<String, YEntity>(YTable)
 
         var x: Boolean by YTable.x
-        val b: BEntity? by BEntity.backReferencedOn(XTable.y1)
+        val b: BEntity? by BEntity backReferencedOn XTable.y1
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()

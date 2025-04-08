@@ -473,13 +473,13 @@ class Ex02_EntityHook_Auditable: AbstractExposedTest() {
         var updatedAt = timestamp("updated_at").defaultExpression(CurrentTimestamp).nullable()
     }
 
-    open class AuditableEntityListener<ID: Any, T: Entity<ID>>: (EntityChange) -> Unit {
+    open class AuditableEntityListener: (EntityChange) -> Unit {
 
         companion object: KLogging()
 
         override fun invoke(change: EntityChange) {
             if (isAuditableEntity(change)) {
-                val entity = change.toEntity<ID, T>() as? AuditableEntity
+                val entity = change.toEntity<Any, Entity<Any>>() as? AuditableEntity
                 if (entity != null) {
                     when (change.changeType) {
                         EntityChangeType.Created -> onCreated(change, entity)
@@ -504,6 +504,9 @@ class Ex02_EntityHook_Auditable: AbstractExposedTest() {
         fun onUpdated(change: EntityChange, entity: AuditableEntity) {
             log.debug { "Entity updated: ${change.entityId}, entityClass=${change.entityClass.javaClass.enclosingClass.enclosingClass} " }
             val now = Instant.now()
+            // 재귀호출을 방지하기 위해서 10ms 정도의 여유를 둡니다.
+            // 물론 현 Transaction에서 ThreadLocal 에 상태를 관리해서 처리할 수도 있으나
+            // 문제는 Coroutines 방식이나 Virtual Thread 사용 시에는 ThreadLocal 사용도 위험할 수 있습니다.
             if (entity.updatedAt?.plusMillis(10)?.isBefore(now) != false) {
                 entity.updatedAt = now
             }
@@ -550,7 +553,7 @@ class Ex02_EntityHook_Auditable: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `auditable entity with entity hook`(testDB: TestDB) {
-        val articleListener = AuditableEntityListener<Long, Article>()
+        val articleListener = AuditableEntityListener()
 
         withTables(testDB, Articles) {
             articleListener.subscribe()

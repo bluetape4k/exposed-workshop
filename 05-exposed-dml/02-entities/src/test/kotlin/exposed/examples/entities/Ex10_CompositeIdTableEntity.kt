@@ -42,6 +42,7 @@ import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.dao.with
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.Query
+import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.alias
@@ -112,17 +113,22 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
 
             // 엔티티들끼리 비교하기 (equals, hashCode 재정의를 제대로 해줘야함)
             result1 shouldBeEqualTo p1
+
             // 또는 엔티티 ID 를 비교하기
             result1.id shouldBeEqualTo p1.id
+
             // 또는 엔티티 ID의 wrapped value 를 비교하기
             result1.id.value shouldBeEqualTo p1.id.value
-            // 또는 CompositeID의 각 컬럼의 값을 비교하기
-            result1.id.value[Publishers.pubId] shouldBeEqualTo p1.id.value[Publishers.pubId]
-            result1.id.value[Publishers.isbn] shouldBeEqualTo p1.id.value[Publishers.isbn]
 
+            // 또는 CompositeID의 각 컬럼의 값을 비교하기
+            result1.pubId shouldBeEqualTo p1.pubId
+            result1.isbn shouldBeEqualTo p1.isbn
+
+            // pubId는 자동증가, isbn 은 UUID.randomUUID() 로 설정됨
             Publisher.new {
                 name = "Publisher B"
             }
+            // pubId는 자동증가, isbn 은 UUID.randomUUID() 로 설정됨
             Publisher.new {
                 name = "Publisher C"
             }
@@ -135,7 +141,7 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
     }
 
     /**
-     * DSL query builder 를 이용하여 CompositeID 엔티티를 생성하고 조회한다.
+     * SQL DSL query builder 를 이용하여 CompositeID 엔티티를 생성하고 조회한다.
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -146,7 +152,7 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
             }
             entityCache.clear()
 
-            val result = Publishers.selectAll().single()
+            val result: ResultRow = Publishers.selectAll().single()
             result[Publishers.name] shouldBeEqualTo "Publisher A"
 
             // 하나의 ResultRow에 CompositeID를 구성하는 모든 컬럼에 접근할 수 있다.
@@ -165,9 +171,11 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
             log.debug { "DSL Query: $dslQuery" }
 
             val selectClause = dslQuery.substringAfter("SELECT ").substringBefore(" FROM")
+
             // ID 컬럼은 PK 로부터 2개의 컬럼으로 분해되어야 한다. (pubId, isbn)
             selectClause.split(", ", ignoreCase = true) shouldHaveSize 2
             val whereClause = dslQuery.substringAfter(" WHERE ")
+
             // Composite PK 에 있는 2 개의 컬럼이 AND 연산자로 결합되어야 한다. (pubId, isbn)
             whereClause.split(" AND ", ignoreCase = true) shouldHaveSize 2
 
@@ -507,6 +515,46 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
     }
 
     /**
+     * `idParam` 을 이용하여 CompositeID를 가진 엔티티를 조회한다.
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `조회 시 idParam with composite value`(testDB: TestDB) {
+        withTables(testDB, Publishers) {
+            val publisherId = CompositeID {
+                it[Publishers.pubId] = 42
+                it[Publishers.isbn] = UUID.randomUUID()
+            }
+            val publisherEntityId: EntityID<CompositeID> = Publishers.insertAndGetId {
+                it[id] = publisherId
+                it[Publishers.name] = "Publisher A"
+            }
+
+            entityCache.clear()
+
+            /**
+             * Publishers.id 에 해당하는 CompositeID의 parameters 에 publisherEntityId 를 지정한다.
+             *
+             * ```sql
+             * -- Postgres
+             * SELECT publishers.pub_id, publishers.isbn_code, publishers.publisher_name
+             *   FROM publishers
+             *  WHERE (publishers.isbn_code = 'a3e57c35-5393-4fe3-9e19-666276b24098')
+             *    AND (publishers.pub_id = 42)
+             * ```
+             */
+            val query: Query = Publishers
+                .selectAll()
+                .where { Publishers.id eq idParam(publisherEntityId, Publishers.id) }
+
+            val selectClause = query.prepareSQL(this, prepared = true)
+            log.debug { "Select Clause: $selectClause" }
+
+            query.single()[Publishers.name] shouldBeEqualTo "Publisher A"
+        }
+    }
+
+    /**
      * CompositeID를 가지는 엔티티에 대한 업데이트를 테스트한다.
      *
      * ```sql
@@ -592,10 +640,7 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
         val name = varchar("name", 64).entityId()
         val population = long("population").nullable()
 
-        override val primaryKey = PrimaryKey(
-            Ex10_CompositeIdTableEntity.Towns.zipCode,
-            Ex10_CompositeIdTableEntity.Towns.name
-        )
+        override val primaryKey = PrimaryKey(zipCode, name)
     }
 
     class Town(id: EntityID<CompositeID>): CompositeEntity(id) {

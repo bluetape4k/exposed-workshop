@@ -158,6 +158,7 @@ object BookSchema {
 
     class Publisher(id: EntityID<CompositeID>): CompositeEntity(id) {
         companion object: CompositeEntityClass<Publisher>(Publishers) {
+            // CompositeID 중 pubId 는 자동증가이므로, isbn 은 사용자에게 입력받거나 자동 생성하는 UUID 를 사용
             fun new(isbn: UUID, init: Publisher.() -> Unit): Publisher {
                 // pubId 는 autoIncrement 이므로, isbn 만으로 CompositeID 를 생성
                 val compositeId = CompositeID {
@@ -169,17 +170,22 @@ object BookSchema {
             }
         }
 
+        val pubId: Int
+            get() = id.value[Publishers.pubId].value // CompositeID 의 pubId 컬럼
+        val isbn: UUID
+            get() = id.value[Publishers.isbn].value // CompositeID 의 isbn 컬럼
+
         var name: String by Publishers.name
+
         val authors: SizedIterable<Author> by Author referrersOn Authors                // one-to-many
         val office: Office? by Office optionalBackReferencedOn Offices                  // one-to-one
         val allOffices: SizedIterable<Office> by Office optionalReferrersOn Offices     // one-to-many
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("name", name)
-                .toString()
+        override fun toString(): String = toStringBuilder()
+            .add("name", name)
+            .toString()
     }
 
     class Author(id: EntityID<Int>): IntEntity(id) {
@@ -190,11 +196,10 @@ object BookSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("pen name", penName)
-                .add("publisher id", publisher.idValue)
-                .toString()
+        override fun toString(): String = toStringBuilder()
+            .add("pen name", penName)
+            .add("publisher id", publisher.idValue)
+            .toString()
     }
 
     class Book(id: EntityID<CompositeID>): CompositeEntity(id) {
@@ -206,12 +211,11 @@ object BookSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("title", title)
-                .add("author id", author?.idValue)
-                .add("review id", review.idValue)
-                .toString()
+        override fun toString(): String = toStringBuilder()
+            .add("title", title)
+            .add("author id", author?.idValue)
+            .add("review id", review.idValue)
+            .toString()
     }
 
     class Review(id: EntityID<CompositeID>): CompositeEntity(id) {
@@ -221,10 +225,9 @@ object BookSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("book id", book.idValue)
-                .toString()
+        override fun toString(): String = toStringBuilder()
+            .add("book id", book.idValue)
+            .toString()
     }
 
     class Office(id: EntityID<CompositeID>): CompositeEntity(id) {
@@ -235,11 +238,10 @@ object BookSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("staff", staff)
-                .add("publisher id", publisher?.idValue)
-                .toString()
+        override fun toString(): String = toStringBuilder()
+            .add("staff", staff)
+            .add("publisher id", publisher?.idValue)
+            .toString()
     }
 
 }
