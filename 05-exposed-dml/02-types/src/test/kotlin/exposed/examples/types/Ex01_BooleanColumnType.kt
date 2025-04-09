@@ -10,7 +10,7 @@ import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.CharColumnType
+import org.jetbrains.exposed.sql.CharacterColumnType
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ColumnType
 import org.jetbrains.exposed.sql.Table
@@ -133,9 +133,9 @@ class Ex01_BooleanColumnType: AbstractExposedTest() {
          * ```sql
          * -- Postgres
          * CREATE TABLE IF NOT EXISTS tester (
-         *      "char_bool" CHAR(1) NOT NULL,
-         *      "char_bool_default" CHAR(1) DEFAULT 'N' NOT NULL,
-         *      "char_bool_nullable" CHAR(1) NULL
+         *      char_bool CHAR NOT NULL,
+         *      char_bool_default CHAR DEFAULT 'N' NOT NULL,
+         *      char_bool_nullable CHAR NULL
          * )
          * ```
          */
@@ -183,7 +183,7 @@ class Ex01_BooleanColumnType: AbstractExposedTest() {
      * * else -> false ('N')
      */
     class CharBooleanColumnType(
-        private val characterColumnType: CharColumnType = CharColumnType(1),
+        private val characterColumnType: CharacterColumnType = CharacterColumnType(),
     ): ColumnType<Boolean>() {
 
         override fun sqlType(): String = characterColumnType.sqlType()
@@ -199,10 +199,10 @@ class Ex01_BooleanColumnType: AbstractExposedTest() {
 
         // Kotlin Boolean 값을 DB 컬럼 값으로 변환
         override fun valueToDB(value: Boolean?): Any? =
-            characterColumnType.valueToDB(value.asChar()?.toString())
+            characterColumnType.valueToDB(value.asChar())
 
         override fun nonNullValueToString(value: Boolean): String =
-            characterColumnType.nonNullValueToString(value.asChar()?.toString() ?: "")
+            characterColumnType.nonNullValueToString(value.asChar() ?: 'N')
 
         private fun Boolean?.asChar(): Char? = when (this) {
             true -> 'Y'
