@@ -332,6 +332,9 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
         }
     }
 
+    fun <T: Number?> ExpressionWithColumnType<T>.ln(): LnFunction<T> =
+        LnFunction(this)
+
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `ln function`(testDB: TestDB) {
@@ -357,6 +360,9 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
             internal val DefaultColumnType = DecimalColumnType(MathContext.DECIMAL64.precision, 20)
         }
     }
+
+    fun <B: Number, T: Number?> ExpressionWithColumnType<T>.log(base: Expression<B>): LogFunction<B, T> =
+        LogFunction(base, this)
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -390,6 +396,9 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
         base = decimalLiteral(10.toBigDecimal()),
         expression = expression
     )
+
+    fun <T: Number?> ExpressionWithColumnType<T>.log10(): Log10Function<T> =
+        Log10Function(this)
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
