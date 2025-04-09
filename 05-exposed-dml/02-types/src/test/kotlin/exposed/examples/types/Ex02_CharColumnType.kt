@@ -5,7 +5,10 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
+import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insertAndGetId
@@ -28,18 +31,18 @@ class Ex02_CharColumnType: AbstractExposedTest() {
      * ```
      */
     object CharTable: IntIdTable("charTable") {
-        val charColumn = char("charColumn")
+        val charColumn: Column<Char> = char("charColumn")
     }
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `char column read and write`(testDB: TestDB) {
         withTables(testDB, CharTable) {
-            val id = CharTable.insertAndGetId {
+            val id: EntityID<Int> = CharTable.insertAndGetId {
                 it[charColumn] = 'A'
             }
 
-            val result = CharTable
+            val result: ResultRow? = CharTable
                 .selectAll()
                 .where { CharTable.id eq id }
                 .singleOrNull()
