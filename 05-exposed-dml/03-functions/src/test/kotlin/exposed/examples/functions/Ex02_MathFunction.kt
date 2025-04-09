@@ -6,6 +6,10 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.CustomFunction
+import org.jetbrains.exposed.sql.DecimalColumnType
+import org.jetbrains.exposed.sql.Expression
+import org.jetbrains.exposed.sql.ExpressionWithColumnType
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.div
 import org.jetbrains.exposed.sql.decimalLiteral
 import org.jetbrains.exposed.sql.doubleLiteral
@@ -24,6 +28,7 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.math.BigDecimal
+import java.math.MathContext
 import java.sql.SQLException
 
 class Ex02_MathFunction: Ex00_FunctionBase() {
@@ -311,6 +316,102 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
             result[foo.defaultDecimal3] shouldBeEqualTo 101.toBigDecimal()
             result[foo.defaultInt3] shouldBeEqualTo -1
             result[foo.defaultDecimal4] shouldBeEqualTo 10.toBigDecimal()
+        }
+    }
+
+    /**
+     * 	Returns e raised to the ln of a specified number
+     */
+    open class LnFunction<T: Number?>(expression: ExpressionWithColumnType<T>): CustomFunction<BigDecimal?>(
+        functionName = "LN",
+        columnType = DefaultColumnType,
+        expr = arrayOf(expression)
+    ) {
+        companion object {
+            internal val DefaultColumnType = DecimalColumnType(MathContext.DECIMAL64.precision, 20)
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `ln function`(testDB: TestDB) {
+        withTable(testDB) {
+            LnFunction(ExpFunction(intLiteral(100))) shouldExpressionEqualTo 100.toBigDecimal()
+            LnFunction(ExpFunction(doubleLiteral(100.0))) shouldExpressionEqualTo 100.0.toBigDecimal()
+            LnFunction(ExpFunction(decimalLiteral(100.0.toBigDecimal()))) shouldExpressionEqualTo 100.0.toBigDecimal()
+        }
+    }
+
+    /**
+     * "LOG" 함수를 표현합니다.
+     */
+    open class LogFunction<B: Number, T: Number?>(
+        base: Expression<B>,
+        expression: Expression<T>,
+    ): CustomFunction<BigDecimal?>(
+        functionName = "LOG",
+        columnType = DefaultColumnType,
+        expr = arrayOf(base, expression)
+    ) {
+        companion object {
+            internal val DefaultColumnType = DecimalColumnType(MathContext.DECIMAL64.precision, 20)
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `log function`(testDB: TestDB) {
+        withTable(testDB) {
+            LogFunction(intLiteral(10), intLiteral(10)) shouldExpressionEqualTo 1.toBigDecimal()
+            LogFunction(intLiteral(10), intLiteral(100)) shouldExpressionEqualTo 2.toBigDecimal()
+            LogFunction(doubleLiteral(10.0), doubleLiteral(100.0)) shouldExpressionEqualTo 2.toBigDecimal()
+            LogFunction(
+                decimalLiteral(10.0.toBigDecimal()),
+                decimalLiteral(100.0.toBigDecimal())
+            ) shouldExpressionEqualTo 2.toBigDecimal()
+
+            LogFunction(
+                decimalLiteral(10.0.toBigDecimal()),
+                PowerFunction(doubleLiteral(10.0), doubleLiteral(2.0))
+            ) shouldExpressionEqualTo 2.toBigDecimal()
+            LogFunction(
+                decimalLiteral(10.0.toBigDecimal()),
+                PowerFunction(decimalLiteral(10.0.toBigDecimal()), decimalLiteral(2.0.toBigDecimal()))
+            ) shouldExpressionEqualTo 2.toBigDecimal()
+        }
+    }
+
+    /**
+     * "LOG10" 함수를 표현합니다. (밑이 10인 로그)
+     */
+    open class Log10Function<T: Number?>(
+        expression: ExpressionWithColumnType<T>,
+    ): LogFunction<BigDecimal, T>(
+        base = decimalLiteral(10.toBigDecimal()),
+        expression = expression
+    )
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `log10 function`(testDB: TestDB) {
+        withTable(testDB) {
+            Log10Function(intLiteral(10)) shouldExpressionEqualTo 1.toBigDecimal()
+            Log10Function(intLiteral(100)) shouldExpressionEqualTo 2.toBigDecimal()
+            Log10Function(doubleLiteral(100.0)) shouldExpressionEqualTo 2.toBigDecimal()
+            Log10Function(decimalLiteral(100.0.toBigDecimal())) shouldExpressionEqualTo 2.toBigDecimal()
+
+            Log10Function(
+                PowerFunction(
+                    doubleLiteral(10.0),
+                    doubleLiteral(2.0)
+                )
+            ) shouldExpressionEqualTo 2.toBigDecimal()
+            Log10Function(
+                PowerFunction(
+                    decimalLiteral(10.0.toBigDecimal()),
+                    decimalLiteral(2.0.toBigDecimal())
+                )
+            ) shouldExpressionEqualTo 2.toBigDecimal()
         }
     }
 }
