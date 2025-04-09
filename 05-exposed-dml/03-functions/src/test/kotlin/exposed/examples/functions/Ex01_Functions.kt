@@ -18,17 +18,24 @@ import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.AndBitOp
 import org.jetbrains.exposed.sql.CharLength
 import org.jetbrains.exposed.sql.Coalesce
 import org.jetbrains.exposed.sql.Concat
+import org.jetbrains.exposed.sql.CustomFunction
 import org.jetbrains.exposed.sql.CustomLongFunction
 import org.jetbrains.exposed.sql.CustomOperator
 import org.jetbrains.exposed.sql.CustomStringFunction
 import org.jetbrains.exposed.sql.DecimalColumnType
+import org.jetbrains.exposed.sql.DivideOp
 import org.jetbrains.exposed.sql.Expression
+import org.jetbrains.exposed.sql.ExpressionWithColumnType
 import org.jetbrains.exposed.sql.IntegerColumnType
+import org.jetbrains.exposed.sql.LongColumnType
 import org.jetbrains.exposed.sql.LowerCase
+import org.jetbrains.exposed.sql.ModOp
 import org.jetbrains.exposed.sql.Op
+import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder
 import org.jetbrains.exposed.sql.Sum
 import org.jetbrains.exposed.sql.Table
@@ -57,10 +64,15 @@ import org.jetbrains.exposed.sql.vendors.MysqlDialect
 import org.jetbrains.exposed.sql.vendors.SQLServerDialect
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import java.math.BigDecimal
 
 class Ex01_Functions: Ex00_FunctionBase() {
 
     companion object: KLogging()
+
+    @Suppress("UNCHECKED_CAST")
+    fun ExpressionWithColumnType<Int>.sumToLong(): Sum<Long> =
+        Sum(this as ExpressionWithColumnType<Long>, LongColumnType())
 
     /**
      * [sum] function
@@ -76,6 +88,15 @@ class Ex01_Functions: Ex00_FunctionBase() {
         withCitiesAndUsers(testDB) { cities, _, _ ->
             val row = cities.select(cities.id.sum()).single()
             row[cities.id.sum()] shouldBeEqualTo 6
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `sumLong function`(testDB: TestDB) {
+        withCitiesAndUsers(testDB) { cities, _, _ ->
+            val row = cities.select(cities.id.sumToLong()).single()
+            row[cities.id.sumToLong()] shouldBeEqualTo 6L
         }
     }
 
@@ -139,17 +160,17 @@ class Ex01_Functions: Ex00_FunctionBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `calc function 03`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, users, userData ->
-            val sum = Expression.build {
+            val sum: Sum<Int> = Expression.build {
                 Sum(cities.id * 100 + userData.value / 10, IntegerColumnType())
             }
-            val sum2 = Expression.build {
+            val sum2: Sum<BigDecimal> = Expression.build {
                 Sum(
                     cities.id.intToDecimal() * 100.0.toBigDecimal() + userData.value.intToDecimal() / 10.0.toBigDecimal(),
                     DecimalColumnType(10, 2)
                 )
             }
-            val div = Expression.build { sum / 100 }
-            val mod = Expression.build { sum mod 100 }
+            val div: DivideOp<Int?, Int?> = Expression.build { sum / 100 }
+            val mod: ModOp<Int?, Int, Int?> = Expression.build { sum mod 100 }
 
             val rows = users.innerJoin(userData).innerJoin(cities)
                 .select(users.id, sum, div, mod, sum2)
@@ -191,14 +212,14 @@ class Ex01_Functions: Ex00_FunctionBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `calc function 02 - Decimal`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, users, userData ->
-            val sum = Expression.build {
+            val sum: Sum<BigDecimal> = Expression.build {
                 Sum(
                     cities.id.intToDecimal() * 100.0.toBigDecimal() + userData.value.intToDecimal() / 10.0.toBigDecimal(),
                     DecimalColumnType(15, 0)
                 )
             }
-            val div = Expression.build { sum / 100.0.toBigDecimal() }
-            val mod = Expression.build { sum mod 100.0.toBigDecimal() }
+            val div: DivideOp<BigDecimal?, BigDecimal?> = Expression.build { sum / 100.0.toBigDecimal() }
+            val mod: ModOp<BigDecimal?, BigDecimal, BigDecimal?> = Expression.build { sum mod 100.0.toBigDecimal() }
 
             val rows = users.innerJoin(userData).innerJoin(cities)
                 .select(users.id, sum, div, mod)
@@ -327,6 +348,7 @@ class Ex01_Functions: Ex00_FunctionBase() {
      * `bitwiseAnd` function 사용 예 01
      *
      * ```sql
+     * -- Postgres
      * SELECT (users.flags & 1),
      *        (users.flags & 1) = 1
      *   FROM users
@@ -338,12 +360,12 @@ class Ex01_Functions: Ex00_FunctionBase() {
     fun `bitwiseAnd 01`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { _, users, _ ->
 
-            val adminFlag = DMLTestData.Users.Flags.IS_ADMIN
-            val adminAndFlgsExpr = Expression.build { users.flags bitwiseAnd adminFlag }
-            val adminEq = Expression.build { adminAndFlgsExpr eq adminFlag }
-            val toSlice = listOfNotNull(adminAndFlgsExpr, adminEq)
+            val adminFlag: Int = DMLTestData.Users.Flags.IS_ADMIN
+            val adminAndFlgsExpr: AndBitOp<Int, Int> = Expression.build { users.flags bitwiseAnd adminFlag }
+            val adminEq: Op<Boolean> = Expression.build { adminAndFlgsExpr eq adminFlag }
+            val toSlice: List<Expression<out Comparable<*>>> = listOfNotNull(adminAndFlgsExpr, adminEq)
 
-            val rows = users.select(toSlice).orderBy(users.id).toList()
+            val rows: List<ResultRow> = users.select(toSlice).orderBy(users.id).toList()
 
             rows shouldHaveSize 5
 
@@ -376,10 +398,10 @@ class Ex01_Functions: Ex00_FunctionBase() {
     fun `bitwiseAnd 02`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { _, users, _ ->
 
-            val adminFlag = DMLTestData.Users.Flags.IS_ADMIN
-            val adminAndFlgsExpr = Expression.build { users.flags bitwiseAnd intLiteral(adminFlag) }
-            val adminEq = Expression.build { adminAndFlgsExpr eq adminFlag }
-            val toSlice = listOfNotNull(adminAndFlgsExpr, adminEq)
+            val adminFlag: Int = DMLTestData.Users.Flags.IS_ADMIN
+            val adminAndFlgsExpr: AndBitOp<Int, Int> = Expression.build { users.flags bitwiseAnd intLiteral(adminFlag) }
+            val adminEq: Op<Boolean> = Expression.build { adminAndFlgsExpr eq adminFlag }
+            val toSlice: List<Expression<out Comparable<*>>> = listOfNotNull(adminAndFlgsExpr, adminEq)
 
             val rows = users.select(toSlice).orderBy(users.id).toList()
 
@@ -403,6 +425,7 @@ class Ex01_Functions: Ex00_FunctionBase() {
      * `bitwiseOr` function 사용 예 01
      *
      * ```sql
+     * -- Postgres
      * SELECT users.id,
      *        (users.flags | 2)
      *  FROM users
@@ -530,6 +553,7 @@ class Ex01_Functions: Ex00_FunctionBase() {
      * `hasFlag` function 사용 예
      *
      * ```sql
+     * -- Postgres
      * SELECT users.id FROM users
      *  WHERE (users.flags & 1) = 1
      *  ORDER BY users.id ASC
@@ -557,8 +581,9 @@ class Ex01_Functions: Ex00_FunctionBase() {
      * [substring] function
      *
      * ```sql
+     * -- Postgres
      * SELECT users.id,
-     *        SUBSTRING(users."name", 1, 2)
+     *        SUBSTRING(users."name", 1, 2)  -- 'Al', 'An', 'Eu', 'Se', 'So'
      *   FROM users
      *  ORDER BY users.id ASC
      * ```
@@ -646,6 +671,7 @@ class Ex01_Functions: Ex00_FunctionBase() {
             result[multiByteLength] shouldBeEqualTo expectedMultibyte   // 8 characters
         }
     }
+
 
     /**
      * `case` function
@@ -1032,7 +1058,7 @@ class Ex01_Functions: Ex00_FunctionBase() {
     fun `custom string functions 02`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, _, _ ->
             // REPLACE(cities."name", 'gue', 'foo')
-            val replace = CustomStringFunction(
+            val replace: CustomFunction<String?> = CustomStringFunction(
                 "REPLACE",
                 cities.name,
                 stringParam("gue"),
@@ -1063,7 +1089,7 @@ class Ex01_Functions: Ex00_FunctionBase() {
             val ids = cities.selectAll().map { it[cities.id] }.toList()
             ids shouldBeEqualTo listOf(1, 2, 3)
 
-            val sqrt = cities.id.function("SQRT")
+            val sqrt: CustomFunction<Int?> = cities.id.function("SQRT")
 
             val sqrtIds = cities
                 .select(sqrt)
@@ -1086,8 +1112,8 @@ class Ex01_Functions: Ex00_FunctionBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `custom integer function 02`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, _, _ ->
-            val power = CustomLongFunction("POWER", cities.id, intParam(2))
-            val ids = cities.select(power).map { it[power] }.toList()
+            val power: CustomFunction<Long?> = CustomLongFunction("POWER", cities.id, intParam(2))
+            val ids: List<Long?> = cities.select(power).map { it[power] }.toList()
             ids shouldBeEqualTo listOf(1L, 4L, 9L)
         }
     }

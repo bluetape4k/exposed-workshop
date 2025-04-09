@@ -81,14 +81,14 @@ class Ex06_MultiArrayColumnType: AbstractExposedTest() {
         }
         withTables(testDB, tester) {
             val list = listOf(listOf(1, 2, 3), listOf(4, 5, 6), listOf(7, 8, 9))
+
             val statement = tester.insert {
                 it[multiArray] = list
             }
-            statement[tester.multiArray].flatten() shouldBeEqualTo list.flatten()
+            statement[tester.multiArray] shouldBeEqualTo list
 
             val value = tester.selectAll().first()[tester.multiArray]
             value shouldBeEqualTo list
-            value.flatten() shouldBeEqualTo list.flatten()
         }
     }
 
@@ -124,11 +124,12 @@ class Ex06_MultiArrayColumnType: AbstractExposedTest() {
                 it[multiArray] = list
             }
 
-            statement[tester.multiArray].flatten().flatten() shouldBeEqualTo list.flatten().flatten()
+            statement[tester.multiArray] shouldBeEqualTo list
+            // statement[tester.multiArray].flatten().flatten() shouldBeEqualTo list.flatten().flatten()
 
             val value = tester.selectAll().first()[tester.multiArray]
             value shouldBeEqualTo list
-            value.flatten().flatten() shouldBeEqualTo list.flatten().flatten()
+            // value.flatten().flatten() shouldBeEqualTo list.flatten().flatten()
         }
     }
 
@@ -158,17 +159,14 @@ class Ex06_MultiArrayColumnType: AbstractExposedTest() {
         }
         withTables(testDB, tester) {
             val list = listOf(listOf(listOf(listOf(listOf("Hallo", "MultiDimensional", "Array")))))
+
             val statement = tester.insert {
                 it[multiArray] = list
             }
-
-            statement[tester.multiArray].flatten().flatten().flatten().flatten() shouldBeEqualTo
-                    list.flatten().flatten().flatten().flatten()
+            statement[tester.multiArray] shouldBeEqualTo list
 
             val value = tester.selectAll().first()[tester.multiArray]
             value shouldBeEqualTo list
-            value.flatten().flatten().flatten().flatten() shouldBeEqualTo
-                    list.flatten().flatten().flatten().flatten()
         }
     }
 
@@ -612,7 +610,7 @@ class Ex06_MultiArrayColumnType: AbstractExposedTest() {
             val entity = MultiArrayEntity.new {
                 this.multiArray = initialArray
             }
-            entity.multiArray.flatten() shouldBeEqualTo initialArray.flatten()
+            entity.multiArray shouldBeEqualTo initialArray
 
             flushCache()
 

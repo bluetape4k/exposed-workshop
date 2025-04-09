@@ -15,6 +15,7 @@ import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.exceptions.ExposedSQLException
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.alias
@@ -45,7 +46,7 @@ class Ex08_BlobColumnType: AbstractExposedTest() {
      * ```
      */
     object BlobTable: IntIdTable("test_blob") {
-        val content = blob("content")
+        val content: Column<ExposedBlob> = blob("content")
     }
 
     /**
@@ -133,8 +134,8 @@ class Ex08_BlobColumnType: AbstractExposedTest() {
          * ```
          */
         val tester = object: Table("TestTable") {
-            val number = integer("number")
-            val blobWithDefault = blob("blobWithDefault").default(defaultBlob)
+            val number: Column<Int> = integer("number")
+            val blobWithDefault: Column<ExposedBlob> = blob("blobWithDefault").default(defaultBlob)
         }
 
         withDb(testDB) {
