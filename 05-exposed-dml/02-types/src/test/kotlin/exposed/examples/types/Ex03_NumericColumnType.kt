@@ -8,6 +8,7 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldEndWithIgnoringCase
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.byteParam
 import org.jetbrains.exposed.sql.decimalParam
@@ -196,17 +197,17 @@ class Ex03_NumericColumnType: AbstractExposedTest() {
          * ```
          */
         val tester = object: Table("tester") {
-            val byte = byte("byte_column")
-            val ubyte = ubyte("ubyte_column")
-            val short = short("short_column")
-            val ushort = ushort("ushort_column")
-            val integer = integer("integer_column")
-            val uinteger = uinteger("uinteger_column")
-            val long = long("long_column")
-            val ulong = ulong("ulong_column")
-            val float = float("float_column")
-            val double = double("double_column")
-            val decimal = decimal("decimal_column", 6, 3)
+            val byte: Column<Byte> = byte("byte_column")
+            val ubyte: Column<UByte> = ubyte("ubyte_column")
+            val short: Column<Short> = short("short_column")
+            val ushort: Column<UShort> = ushort("ushort_column")
+            val integer: Column<Int> = integer("integer_column")
+            val uinteger: Column<UInt> = uinteger("uinteger_column")
+            val long: Column<Long> = long("long_column")
+            val ulong: Column<ULong> = ulong("ulong_column")
+            val float: Column<Float> = float("float_column")
+            val double: Column<Double> = double("double_column")
+            val decimal: Column<BigDecimal> = decimal("decimal_column", 6, 3)
         }
 
         withTables(testDB, tester) {

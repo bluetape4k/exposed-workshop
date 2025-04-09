@@ -17,7 +17,7 @@ import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.flushCache
+import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.exceptions.ExposedSQLException
@@ -30,7 +30,7 @@ import org.jetbrains.exposed.sql.TextColumnType
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.alias
 import org.jetbrains.exposed.sql.allFrom
-import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.anyFrom
 import org.jetbrains.exposed.sql.arrayParam
 import org.jetbrains.exposed.sql.exists
@@ -72,6 +72,7 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
     object ArrayTestTable: IntIdTable("array_test_table") {
         val numbers: Column<List<Int>> = array<Int>("numbers").default(listOf(5))
         val strings: Column<List<String?>> = array<String?>("strings", TextColumnType()).default(emptyList())
+        val floats: Column<List<Float>?> = array<Float>("floats").nullable()
         val doubles: Column<List<Double>?> = array<Double>("doubles").nullable()
         val byteArray: Column<List<ByteArray>?> = array("byte_array", BinaryColumnType(32)).nullable()
     }
@@ -104,7 +105,7 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
         }
     }
 
-    @Disabled("array columns 을 logging 하면 예외가 발생한다. 실제 작동에는 문제가 없다")
+    // @Disabled("array columns 을 logging 하면 예외가 발생한다. 실제 작동에는 문제가 없다")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `array column insert and select`(testDB: TestDB) {
@@ -338,9 +339,8 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
              * ```
              */
             val result1 = ArrayTestTable.selectAll()
-                .where {
-                    (ArrayTestTable.numbers eq numInput) and (ArrayTestTable.strings neq emptyList())
-                }
+                .andWhere { ArrayTestTable.numbers eq numInput }
+                .andWhere { ArrayTestTable.strings neq emptyList() }
             result1.single()[ArrayTestTable.id] shouldBeEqualTo id1
 
             /**
@@ -359,6 +359,7 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
             if (currentDialectTest is PostgreSQLDialect) {
                 /**
                  * ```sql
+                 * -- Postgres
                  * SELECT array_test_table.id
                  *   FROM array_test_table
                  *  WHERE array_test_table.strings[4:] = ARRAY['hello']
@@ -455,10 +456,10 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
     class ArrayTestEntity(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<ArrayTestEntity>(ArrayTestTable)
 
-        var numbers by ArrayTestTable.numbers
-        var strings by ArrayTestTable.strings
-        var doubles by ArrayTestTable.doubles
-        var byteArray by ArrayTestTable.byteArray
+        var numbers: List<Int> by ArrayTestTable.numbers
+        var strings: List<String?> by ArrayTestTable.strings
+        var doubles: List<Double>? by ArrayTestTable.doubles
+        var byteArray: List<ByteArray>? by ArrayTestTable.byteArray
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -490,7 +491,7 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
                 doubles = null
             }
 
-            flushCache()
+            entityCache.clear()
 
             entity1.numbers shouldBeEqualTo numInput
             entity1.strings.shouldBeEmpty()
@@ -505,6 +506,8 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
              */
             val doublesInput = listOf(9.0)
             entity1.doubles = doublesInput
+
+            entityCache.clear()
 
             ArrayTestEntity.findById(entity1.id)?.doubles shouldBeEqualTo doublesInput
         }
@@ -571,9 +574,7 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
              * ```
              */
             val result4 = ArrayTestTable.select(ArrayTestTable.id)
-                .where {
-                    ArrayTestTable.id greater allFrom(ArrayTestTable.numbers)
-                }
+                .where { ArrayTestTable.id greater allFrom(ArrayTestTable.numbers) }
             result4.toList().shouldBeEmpty()
         }
     }
