@@ -3,9 +3,11 @@ package exposed.examples.functions
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.sql.alias
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.stdDevPop
 import org.jetbrains.exposed.sql.stdDevSamp
@@ -35,7 +37,7 @@ class Ex03_StatisticsFunction: Ex00_FunctionBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `StdDev Population`(testDB: TestDB) {
         withSampleTable(testDB) {
-            val expectedStdDevPop = calculateStandardDeviation(isPopulation = true)
+            val expectedStdDevPop: BigDecimal = calculateStandardDeviation(isPopulation = true)
             SampleTestTable.number.stdDevPop(scale) shouldExpressionEqualTo expectedStdDevPop
         }
     }
@@ -53,6 +55,28 @@ class Ex03_StatisticsFunction: Ex00_FunctionBase() {
         withSampleTable(testDB) {
             val expectedStdDevPop = calculateStandardDeviation(isPopulation = false)
             SampleTestTable.number.stdDevSamp(scale) shouldExpressionEqualTo expectedStdDevPop
+        }
+    }
+
+    /**
+     * 표준편차 구하기
+     * ```sql
+     * SELECT STDDEV_POP(sample_table."number") stddev_pop,
+     *        STDDEV_SAMP(sample_table."number") stddev_samp
+     *   FROM sample_table;
+     * ```
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `Calc standard deviation`(testDB: TestDB) {
+        withSampleTable(testDB) {
+            val stdDevPopExpr = SampleTestTable.number.stdDevPop(scale).alias("stddev_pop")
+            val stdDevSampExpr = SampleTestTable.number.stdDevSamp(scale).alias("stddev_samp")
+
+            val resultRow = SampleTestTable.select(stdDevPopExpr, stdDevSampExpr).first()
+            val stdDevPop = resultRow[stdDevPopExpr]
+            val stdDevSamp = resultRow[stdDevSampExpr]
+            log.debug { "stdDevPop: $stdDevPop, stdDevSamp: $stdDevSamp" }
         }
     }
 
@@ -85,6 +109,28 @@ class Ex03_StatisticsFunction: Ex00_FunctionBase() {
         withSampleTable(testDB) {
             val expectedVarSamp = calculateVariance(isPopulation = false)
             SampleTestTable.number.varSamp(scale) shouldExpressionEqualTo expectedVarSamp
+        }
+    }
+
+    /**
+     * ```sql
+     * -- Postgres
+     * SELECT VAR_POP(sample_table."number") var_pop,
+     *        VAR_SAMP(sample_table."number") var_samp
+     *   FROM sample_table;
+     * ```
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `Calc variance`(testDB: TestDB) {
+        withSampleTable(testDB) {
+            val varPopExpr = SampleTestTable.number.varPop(scale).alias("var_pop")
+            val varSampExpr = SampleTestTable.number.varSamp(scale).alias("var_samp")
+
+            val resultRow = SampleTestTable.select(varPopExpr, varSampExpr).first()
+            val varPop = resultRow[varPopExpr]
+            val varSamp = resultRow[varSampExpr]
+            log.debug { "varPop: $varPop, varSamp: $varSamp" }
         }
     }
 
