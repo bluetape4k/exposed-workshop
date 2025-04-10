@@ -57,6 +57,7 @@ class Ex05_WindowFunction: Ex00_FunctionBase() {
      * Window functions
      *
      * ```sql
+     * -- Postgres
      * SELECT ROW_NUMBER() OVER(PARTITION BY sales."year", sales.product ORDER BY sales.amount ASC)
      *   FROM sales
      *  ORDER BY sales."year" ASC,
@@ -162,7 +163,7 @@ class Ex05_WindowFunction: Ex00_FunctionBase() {
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `window functions`(testDB: TestDB) {
+    fun `윈도우 함수 기본 사용법`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB != TestDB.MYSQL_V5 }
 
         withSales(testDB) { _, sales ->
@@ -259,7 +260,7 @@ class Ex05_WindowFunction: Ex00_FunctionBase() {
     }
 
     /**
-     * Aggregate functions as window functions
+     * 집계 함수를 윈도우 함수로 사용하기
      *
      * ```sql
      * SELECT MIN(sales.amount) OVER(PARTITION BY sales."year", sales.product)
@@ -319,7 +320,7 @@ class Ex05_WindowFunction: Ex00_FunctionBase() {
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun testAggregateFunctionsAsWindowFunctions(testDB: TestDB) {
+    fun `집계함수를 윈도우 함수로 사용하기`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB != TestDB.MYSQL_V5 }
 
         withSales(testDB) { _, sales ->
@@ -413,7 +414,7 @@ class Ex05_WindowFunction: Ex00_FunctionBase() {
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun testPartitionByClause(testDB: TestDB) {
+    fun `partitionBy 절 적용에 따른 소계`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB != TestDB.MYSQL_V5 }
 
         withSales(testDB) { _, sales ->
@@ -467,7 +468,7 @@ class Ex05_WindowFunction: Ex00_FunctionBase() {
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun testOrderByClause(testDB: TestDB) {
+    fun `orderBy 적용에 따른 소계`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB != TestDB.MYSQL_V5 }
 
         withSales(testDB) { _, sales ->
@@ -495,6 +496,7 @@ class Ex05_WindowFunction: Ex00_FunctionBase() {
      * Window frame clause
      *
      * ```sql
+     * -- Postgres
      * SELECT SUM(sales.amount) OVER(PARTITION BY sales."year", sales.product ORDER BY sales.amount ASC ROWS UNBOUNDED PRECEDING)
      *   FROM sales
      *  ORDER BY sales."year" ASC,
@@ -697,7 +699,7 @@ class Ex05_WindowFunction: Ex00_FunctionBase() {
     @Suppress("LongMethod")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun testWindowFrameClause(testDB: TestDB) {
+    fun `WindowFrameBound 종류별 결과값 비교`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB != TestDB.MYSQL_V5 }
 
         withSales(testDB) { _, sales ->
@@ -884,14 +886,14 @@ class Ex05_WindowFunction: Ex00_FunctionBase() {
         definition: WindowFunctionDefinition<T>,
         expectedResult: List<T>,
     ) {
-        val result = select(definition)
+        val result = select(year, product, definition)
             .orderBy(
                 year to SortOrder.ASC,
                 month to SortOrder.ASC,
                 product to SortOrder.ASC_NULLS_FIRST
             )
+            .onEach { log.debug { "row=${it[year]},${it[product]},${it[definition]}" } }
             .map { it[definition] }
-            .apply { log.debug { "result=$this" } }
 
         result shouldBeEqualTo expectedResult
     }
