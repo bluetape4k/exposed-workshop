@@ -19,7 +19,7 @@ const val USE_TESTCONTAINERS = true
  * true 이면, InMemory DB만을 대상으로 테스트 합니다.
  * false 이면 Postgres, MySQL V8 도 포함해서 테스트 합니다.
  */
-const val USE_FAST_DB = true
+const val USE_FAST_DB = false
 
 /**
  * Exposed 기능을 테스트하기 위한 대상 DB 들의 목록과 정보들을 제공합니다.

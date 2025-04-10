@@ -8,12 +8,14 @@ import exposed.shared.tests.withDb
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.info
+import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.DatabaseConfig
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.inTopLevelTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.Assumptions
@@ -42,6 +44,9 @@ class Ex01_TransactionIsolation: AbstractExposedTest() {
         Connection.TRANSACTION_SERIALIZABLE,
     )
 
+    /**
+     * transaction 함수에서 transactionIsolation을 설정하는 방법
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `what transaction isolation was applied`(testDB: TestDB) {
@@ -106,7 +111,7 @@ class Ex01_TransactionIsolation: AbstractExposedTest() {
 
     /**
      * HikariCP 는 `TRANSACTION_REPEATABLE_READ` 로 설정,
-     * Exposed Connection 은 `TRANSACTION_READ_COMMITTED` 로 설정했을 때
+     * Exposed 의 Database Config에서는  `TRANSACTION_READ_COMMITTED` 로 설정했을 때 Exposed 의 설정을 따른다.
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -153,6 +158,60 @@ class Ex01_TransactionIsolation: AbstractExposedTest() {
 
         TransactionManager.closeAndUnregister(db)
     }
+
+
+    /**
+     * HikariCP 는 `TRANSACTION_REPEATABLE_READ` 로 설정,
+     * Exposed 의 Database Config에서는  `TRANSACTION_READ_COMMITTED` 로 설정했을 때 Exposed 의 설정을 따른다.
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `transaction isolation with Hikari and Database Config in Coroutines`(testDB: TestDB) = runTest {
+        Assumptions.assumeTrue { testDB in transactionIsolationSupportDB }
+
+        val db = Database.connect(
+            HikariDataSource(setupHikariConfig(testDB, "TRANSACTION_REPEATABLE_READ")),
+            databaseConfig = DatabaseConfig { defaultIsolationLevel = Connection.TRANSACTION_READ_COMMITTED }
+        )
+
+        val manager = TransactionManager.managerFor(db)!!
+
+        newSuspendedTransaction(db = db) {
+            // transaction manager should default to use DatabaseConfig level
+            manager.defaultIsolationLevel shouldBeEqualTo Connection.TRANSACTION_READ_COMMITTED
+
+            // database level should be set by DatabaseConfig
+            assertTransactionIsolationLevel(testDB, Connection.TRANSACTION_READ_COMMITTED)
+            // after first connection, transaction manager should retain DatabaseConfig level
+            manager.defaultIsolationLevel shouldBeEqualTo Connection.TRANSACTION_READ_COMMITTED
+        }
+
+        newSuspendedTransaction(transactionIsolation = Connection.TRANSACTION_REPEATABLE_READ, db = db) {
+            manager.defaultIsolationLevel shouldBeEqualTo Connection.TRANSACTION_READ_COMMITTED
+
+            // database level should be set by transaction-specific setting
+            assertTransactionIsolationLevel(testDB, Connection.TRANSACTION_REPEATABLE_READ)
+        }
+
+        newSuspendedTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE, db = db) {
+            manager.defaultIsolationLevel shouldBeEqualTo Connection.TRANSACTION_READ_COMMITTED
+
+            // database level should be set by transaction-specific setting
+            assertTransactionIsolationLevel(testDB, Connection.TRANSACTION_SERIALIZABLE)
+        }
+
+        newSuspendedTransaction(db = db) {
+            manager.defaultIsolationLevel shouldBeEqualTo Connection.TRANSACTION_READ_COMMITTED
+
+            // database level should be set by DatabaseConfig
+            assertTransactionIsolationLevel(testDB, Connection.TRANSACTION_READ_COMMITTED)
+        }
+
+        TransactionManager.closeAndUnregister(db)
+    }
+
+
+
 
     private fun setupHikariConfig(testDB: TestDB, isolation: String): HikariConfig {
         return HikariConfig().apply {
