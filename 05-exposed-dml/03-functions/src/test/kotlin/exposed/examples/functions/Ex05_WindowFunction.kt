@@ -882,17 +882,20 @@ class Ex05_WindowFunction: Ex00_FunctionBase() {
         }
     }
 
+    /**
+     * [definition] 결과값과 [expectedResult] 결과값이 같음을 검증합니다.
+     */
     private fun <T> DMLTestData.Sales.assertWindowFunctionDefinition(
         definition: WindowFunctionDefinition<T>,
         expectedResult: List<T>,
     ) {
-        val result = select(year, product, definition)
+        val result = select(year, month, product, amount, definition)
             .orderBy(
                 year to SortOrder.ASC,
                 month to SortOrder.ASC,
                 product to SortOrder.ASC_NULLS_FIRST
             )
-            .onEach { log.debug { "row=${it[year]},${it[product]},${it[definition]}" } }
+            .onEach { log.debug { "row=${it[year]},${it[month]},${it[product]},${it[amount]},${it[definition]}" } }
             .map { it[definition] }
 
         result shouldBeEqualTo expectedResult
