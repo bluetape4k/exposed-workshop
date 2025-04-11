@@ -27,7 +27,7 @@ import kotlin.concurrent.thread
 import kotlin.test.assertFails
 import kotlin.test.fail
 
-class Ex07_ThreadLocalManager: AbstractExposedTest() {
+class Ex07_TransactionManager: AbstractExposedTest() {
 
     companion object: KLogging()
 
