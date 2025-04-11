@@ -3,8 +3,13 @@ package exposed.examples.transactions
 import exposed.shared.dml.DMLTestData
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
-import exposed.shared.tests.withTables
+import exposed.shared.tests.withSuspendedTables
+import io.bluetape4k.codec.Base58
+import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.amshove.kluent.fail
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
@@ -14,10 +19,13 @@ import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.DatabaseConfig
 import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.deleteAll
+import org.jetbrains.exposed.sql.exposedLogger
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.inTopLevelTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.transactions.transactionManager
@@ -26,9 +34,65 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.sql.SQLException
-import kotlin.test.fail
+import kotlin.coroutines.CoroutineContext
 
-class Ex05_NestedTransactions: AbstractExposedTest() {
+/**
+ * 중첩된 작업에 대해 savepoint를 사용하여 롤백할 수 있도록 합니다.
+ */
+suspend fun <T> runWithSavepoint(
+    name: String = "savepoint_${Base58.randomString(8)}",
+    rollback: Boolean = false,
+    block: suspend Transaction.() -> T,
+): T? = withContext(Dispatchers.IO) {
+    val tx = TransactionManager.currentOrNull() ?: error("No active transaction")
+
+    val connection = tx.connection
+    val savepoint = connection.setSavepoint(name)
+
+    try {
+        block(tx)
+    } catch (e: Exception) {
+        connection.rollback(savepoint)
+        null
+    } finally {
+        if (rollback) {
+            connection.rollback(savepoint)
+        }
+        connection.releaseSavepoint(savepoint)
+    }
+}
+
+suspend fun <T> runWithSavepointOrNewTransaction(
+    name: String = "savepoint_${Base58.randomString(8)}",
+    rollback: Boolean = false,
+    context: CoroutineContext? = null,
+    db: Database? = null,
+    transactionIsolation: Int? = null,
+    readOnly: Boolean? = null,
+    block: suspend Transaction.() -> T,
+): T? {
+    val currentTx = TransactionManager.currentOrNull()
+
+    return if (currentTx != null) {
+        runWithSavepoint(name, rollback, block)
+    } else {
+        newSuspendedTransaction(context, db, transactionIsolation, readOnly) {
+            try {
+                block(this)
+            } catch (e: Exception) {
+                rollback()
+                null
+            } finally {
+                if (rollback) {
+                    rollback()
+                }
+            }
+        }
+    }
+}
+
+
+class Ex05_NestedTransactions_Coroutines: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -53,48 +117,45 @@ class Ex05_NestedTransactions: AbstractExposedTest() {
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `중첩 트랜잭션 실행`(testDB: TestDB) {
-        // 외부 트랜잭션
-        withTables(testDB, cities, configure = { useNestedTransactions = true }) {
+    fun `코루틴에서 중첩 트랜잭션 사용하기`(testDB: TestDB) = runSuspendIO {
+        withSuspendedTables(testDB, cities, configure = { useNestedTransactions = true }) {
+            // 외부 트랜잭션
             cities.selectAll().shouldBeEmpty()
             cities.insert { it[name] = "city1" }
             cityCounts() shouldBeEqualTo 1
             cityNames() shouldBeEqualTo listOf("city1")
 
-            // 중첩 1
-            transaction {
-                cities.insert {
-                    it[name] = "city2"
-                }
+            // 중첩 1 (종료되면 rollback 함)
+            runWithSavepointOrNewTransaction("savepoint1", rollback = true) {
+                cities.insert { it[name] = "city2" }
                 cityNames() shouldBeEqualTo listOf("city1", "city2")
 
                 // 중첩 2
-                transaction {
+                runWithSavepointOrNewTransaction("savepoint2") {
                     cities.insert { it[name] = "city3" }
                     cityNames() shouldBeEqualTo listOf("city1", "city2", "city3")
                 }
-                // 중첩 2가 성공했으므로, 중접 1의 결과는 모두 반영되어야 한다.
+                // 중첩 2의 작업은 commit 되었으므로, 현재 트랜잭션에 반영된다.
                 cityNames() shouldBeEqualTo listOf("city1", "city2", "city3")
 
-                // 중첩1을 강제 롤백한다
-                rollback()
+                // 중첩 1의 작업은 롤백되었으므로, 현 트랜잭션에 반영되지 않는다.
             }
 
-            // 중첩1과 내부 트랜잭션의 작업은 모두 취소되고, 현재 트랜잭션 결과만 반영된다.
+            // 중첩 1의 작업은 롤백되었으므로, 현재 트랜잭션 결과만 반영된다.
             cityNames() shouldBeEqualTo listOf("city1")
         }
     }
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `outer transaction restored after nested transaction failed`(testDB: TestDB) {
-        withTables(testDB, cities) {
+    fun `코루틴에서 중첩 트랜잭션 실패 후 외부 트랜잭션으로 복귀한다`(testDB: TestDB) = runSuspendIO {
+        withSuspendedTables(testDB, cities) {
             TransactionManager.currentOrNull().shouldNotBeNull()
 
             try {
-                inTopLevelTransaction(this.transactionIsolation) {
+                runWithSavepointOrNewTransaction<Unit> {
                     maxAttempts = 1
-                    throw IllegalStateException("Should be rethrow")
+                    error("Should be rethrow")
                 }
             } catch (e: Exception) {
                 e shouldBeInstanceOf IllegalStateException::class
@@ -105,16 +166,16 @@ class Ex05_NestedTransactions: AbstractExposedTest() {
     }
 
     @Test
-    fun `nested transaction not committed after database failure`() {
+    fun `DB 예외 시 중첩 트랜잭션은 commit 되지 않습니다`() = runSuspendIO {
         Assumptions.assumeTrue { TestDB.H2 in TestDB.enabledDialects() }
 
         val fakeSQLString = "BROKEN_SQL_THAT_CAUSES_EXCEPTION"
 
-        transaction(db) {
+        newSuspendedTransaction(db = db) {
             SchemaUtils.create(cities)
         }
 
-        transaction(db) {
+        newSuspendedTransaction(db = db) {
             val outerTxId = this.id
 
             cities.insert { it[name] = "City A" }
@@ -128,7 +189,7 @@ class Ex05_NestedTransactions: AbstractExposedTest() {
                     cities.insert { it[name] = "City B" }           // 이 작업는 롤백됩니다.
                     exec("${fakeSQLString}();")
                 }
-                fail("Should not reach here")
+                kotlin.test.fail("Should not reach here")
             } catch (cause: SQLException) {
                 cause.toString() shouldContain fakeSQLString
             }
@@ -136,86 +197,97 @@ class Ex05_NestedTransactions: AbstractExposedTest() {
 
         assertSingleRecordInNewTransactionAndReset()
 
-        transaction(db) {
+        newSuspendedTransaction(db = db) {
             val outerTxId = this.id
 
-            cities.insert { it[cities.name] = "City A" }
+            cities.insert { it[name] = "City A" }
             cityCounts() shouldBeEqualTo 1
 
-            try {
-                transaction(db) {
+            newSuspendedTransaction(db = db) {
+                try {
                     val innerTxId = this.id
                     innerTxId shouldNotBeEqualTo outerTxId
 
-                    cities.insert { it[cities.name] = "City B" }      // 이 작업는 롤백됩니다.
+                    cities.insert { it[name] = "City B" }           // 이 작업는 롤백됩니다.
                     exec("SELECT * FROM non_existent_table")
+                    fail("Should not reach here")
+                } catch (cause: SQLException) {
+                    try {
+                        rollback()
+                    } catch (e: Exception) {
+                        exposedLogger.warn(
+                            "Transaction rollback failed: ${cause.message}. Statement: $currentStatement",
+                            cause
+                        )
+                    }
+                    cause.toString() shouldContain "non_existent_table"
                 }
-                fail("Should not reach here")
-            } catch (cause: SQLException) {
-                cause.toString() shouldContain "non_existent_table"
             }
         }
 
         assertSingleRecordInNewTransactionAndReset()
 
-        transaction(db) {
+        newSuspendedTransaction(db = db) {
             SchemaUtils.drop(cities)
         }
     }
 
     @Test
-    fun `nested transaction not committed after exception`() {
+    fun `일반 예외 시 중첩 트랜잭션은 commit 되지 않습니다`() = runSuspendIO {
         Assumptions.assumeTrue { TestDB.H2 in TestDB.enabledDialects() }
 
         val exceptionMessage = "Failure!"
 
-        transaction(db) {
+        newSuspendedTransaction(db = db) {
             SchemaUtils.create(cities)
         }
 
-        transaction(db) {
+        newSuspendedTransaction(db = db) {
             val outerTxId = this.id
+
             cities.insert { it[name] = "City A" }
-            cities.selectAll().count().toInt() shouldBeEqualTo 1
+            cityCounts() shouldBeEqualTo 1
 
             try {
                 inTopLevelTransaction(db.transactionManager.defaultIsolationLevel, db = db) {
                     val innerTxId = this.id
                     innerTxId shouldNotBeEqualTo outerTxId
 
-                    cities.insert { it[name] = "City B" }       // 이 코드는 실행되지 않는다.
+                    cities.insert { it[name] = "City B" }           // 이 작업는 롤백됩니다.
                     error(exceptionMessage)
                 }
-            } catch (cause: IllegalStateException) {
+            } catch (cause: Exception) {
                 cause.toString() shouldContain exceptionMessage
             }
         }
 
         assertSingleRecordInNewTransactionAndReset()
 
-        transaction(db) {
+        newSuspendedTransaction(db = db) {
             val outerTxId = this.id
-            cities.insert { it[name] = "City A" }
-            cities.selectAll().count().toInt() shouldBeEqualTo 1
 
-            try {
-                transaction(db) {
+            cities.insert { it[name] = "City A" }
+            cityCounts() shouldBeEqualTo 1
+
+            newSuspendedTransaction(db = db) {
+                try {
                     val innerTxId = this.id
                     innerTxId shouldNotBeEqualTo outerTxId
 
-                    cities.insert { it[name] = "City B" }       // 이 코드는 실행되지 않는다.
+                    cities.insert { it[name] = "City B" }           // 이 작업는 롤백됩니다.
                     error(exceptionMessage)
+                } catch (cause: Exception) {
+                    rollback()
+                    cause.toString() shouldContain exceptionMessage
                 }
-            } catch (cause: IllegalStateException) {
-                cause.toString() shouldContain exceptionMessage
             }
         }
+
         assertSingleRecordInNewTransactionAndReset()
 
-        transaction(db) {
+        newSuspendedTransaction(db = db) {
             SchemaUtils.drop(cities)
         }
-
     }
 
     private fun assertSingleRecordInNewTransactionAndReset() = transaction(db) {

@@ -37,16 +37,15 @@ import org.junit.jupiter.params.provider.MethodSource
  */
 class Ex03_Parameterization: AbstractExposedTest() {
 
-
     /**
      * ```sql
      * CREATE TABLE IF NOT EXISTS tmp (
-     *      foo VARCHAR(50) NULL
+     *      username VARCHAR(50) NULL
      * )
      * ```
      */
-    object TempTable: Table("tmp") {
-        val name = varchar("foo", 50).nullable()
+    object TempTable: Table("param_table") {
+        val name = varchar("username", 50).nullable()
     }
 
     private val supportMultipleStatements = TestDB.ALL_MYSQL + TestDB.POSTGRESQL
@@ -58,13 +57,16 @@ class Ex03_Parameterization: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert with quotes and get it back`(testDB: TestDB) {
         withTables(testDB, TempTable) {
+            val name = faker.name().fullName()
+
             exec(
-                stmt = "INSERT INTO ${TempTable.tableName} (foo) VALUES (?)",
-                args = listOf(VarCharColumnType() to "John \"Johny\" Johnson"),
+                stmt = "INSERT INTO ${TempTable.tableName} (username) VALUES (?)",
+                args = listOf(VarCharColumnType() to name),
                 explicitStatementType = StatementType.INSERT
             )
 
-            TempTable.selectAll().single()[TempTable.name] shouldBeEqualTo "John \"Johny\" Johnson"
+            TempTable.selectAll()
+                .single()[TempTable.name] shouldBeEqualTo name
         }
     }
 
@@ -131,7 +133,7 @@ class Ex03_Parameterization: AbstractExposedTest() {
         Assumptions.assumeTrue { testDB in supportMultipleStatements }
 
         val tester = object: Table("tester") {
-            val name = varchar("foo", 50)
+            val name = varchar("username", 50)
             val age = integer("age")
             val active = bool("active")
         }

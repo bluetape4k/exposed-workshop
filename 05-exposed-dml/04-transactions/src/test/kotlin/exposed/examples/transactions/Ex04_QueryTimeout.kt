@@ -47,7 +47,7 @@ class Ex04_QueryTimeout: AbstractExposedTest() {
         Assumptions.assumeTrue { testDB in timeoutTestDBList }
 
         withDb(testDB) {
-            this.queryTimeout = 3
+            this.queryTimeout = 3  // 3초로 설정합니다.
             try {
                 /**
                  * ```sql

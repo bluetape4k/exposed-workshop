@@ -11,6 +11,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
+import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
@@ -18,6 +19,7 @@ import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.autoIncColumnType
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.statements.StatementType
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -89,14 +91,15 @@ class Ex02_TransactionExec: AbstractExposedTest() {
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `exec with multi statement query`(testDB: TestDB) {
+    fun `exec with multi statements query`(testDB: TestDB) {
         // PGjdbc-NG 드라이버는 단일 PreparedStatement에서 여러 명령을 허용하지 않습니다.
         // SQLite 및 H2 드라이버는 여러 개를 허용하지만 첫 번째 문장의 결과만 반환합니다.
         // SQLite issue tracker: https://github.com/xerial/sqlite-jdbc/issues/277
         // H2 issue tracker: https://github.com/h2database/h2database/issues/3704
-        val toExclude = TestDB.ALL_H2 + TestDB.ALL_MYSQL_LIKE + listOf(TestDB.POSTGRESQLNG)
+        // val toExclude = TestDB.ALL_H2 + TestDB.ALL_MYSQL_LIKE + listOf(TestDB.POSTGRESQLNG)
+        val supportMultipleStatements = setOf(TestDB.POSTGRESQL)
 
-        Assumptions.assumeTrue { testDB !in toExclude }
+        Assumptions.assumeTrue { testDB in supportMultipleStatements }
         withTables(testDB, ExecTable) {
             testInsertAndSelectInSingleExec(testDB)
         }
@@ -206,6 +209,32 @@ class Ex02_TransactionExec: AbstractExposedTest() {
                 rs.next().ifTrue { rs.getString(title) }
             }
             nullTransformResult.shouldBeNull()
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `run execInBatch`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB in TestDB.ALL_POSTGRES }
+
+        val users = object: IntIdTable("users_batch") {
+            val name = varchar("name", 50)
+            val age = integer("age")
+        }
+
+        withTables(testDB, users) {
+            val statments = List(3) {
+                val name = faker.name().firstName()
+                val age = faker.number().numberBetween(18, 80)
+
+                "INSERT INTO ${users.tableName.inProperCase()} " +
+                        "(${users.name.name.inProperCase()}, ${users.age.name.inProperCase()}) " +
+                        "VALUES ('$name', $age)"
+            }
+
+            execInBatch(statments)
+
+            users.selectAll().count() shouldBeEqualTo 3
         }
     }
 }
