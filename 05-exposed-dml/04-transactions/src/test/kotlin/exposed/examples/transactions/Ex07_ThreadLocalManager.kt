@@ -21,13 +21,14 @@ import org.jetbrains.exposed.sql.transactions.inTopLevelTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.transactions.transactionManager
 import org.junit.jupiter.api.Assumptions
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.concurrent.thread
 import kotlin.test.assertFails
 import kotlin.test.fail
 
-class Ex07_TransactionManager: AbstractExposedTest() {
+class Ex07_ThreadLocalManager: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -35,6 +36,7 @@ class Ex07_TransactionManager: AbstractExposedTest() {
      * Thread 별로 [TransactionManager] 를 관리합니다.
      * MYSQL V5 에서만 지원됩니다.
      */
+    @Test
     fun `re-connection`() {
         Assumptions.assumeTrue { TestDB.MYSQL_V5 in TestDB.enabledDialects() }
 

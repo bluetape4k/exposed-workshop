@@ -26,6 +26,8 @@ class Ex06_RollbackTransaction: AbstractExposedTest() {
     private fun countByValue(value: String): Int =
         RollbackTable.selectAll().where { RollbackTable.value eq value }.count().toInt()
 
+    private fun allCount(): Int = RollbackTable.selectAll().count().toInt()
+
     /**
      * `save point` 없이 rollback 하기
      */
@@ -110,7 +112,7 @@ class Ex06_RollbackTransaction: AbstractExposedTest() {
             val outerTxId = this.id
 
             RollbackTable.insert { it[value] = "City A" }
-            RollbackTable.selectAll().count().toInt() shouldBeEqualTo 1
+            allCount() shouldBeEqualTo 1
 
             try {
                 transaction {
@@ -126,7 +128,7 @@ class Ex06_RollbackTransaction: AbstractExposedTest() {
             }
 
             // SQL 예외가 발생했으므로, rollback 되어 모든 데이터의 추가가 취소됩니다.
-            RollbackTable.selectAll().count().toInt() shouldBeEqualTo 0
+            allCount() shouldBeEqualTo 0
         }
 
         // db 예외가 아닌 경우 내부 Tx 에서 rollback이 발생하지 않으며, 외부 Tx에서 rollback이 발생하지 않도록 처리해야 함
@@ -135,7 +137,7 @@ class Ex06_RollbackTransaction: AbstractExposedTest() {
             val outerTxId = this.id
 
             RollbackTable.insert { it[value] = "City A" }
-            RollbackTable.selectAll().count().toInt() shouldBeEqualTo 1
+            allCount() shouldBeEqualTo 1
 
             try {
                 transaction(db) {
@@ -150,7 +152,7 @@ class Ex06_RollbackTransaction: AbstractExposedTest() {
             }
 
             // Application 예외가 발생했으므로, rollback 되지 않아야 함 (rollback이 발생하지 않았으므로, 데이터가 그대로 남아 있어야 함)
-            RollbackTable.selectAll().count().toInt() shouldBeEqualTo 2
+            allCount() shouldBeEqualTo 2
         }
 
         transaction {

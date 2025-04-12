@@ -8,6 +8,7 @@ import io.bluetape4k.codec.Base58
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.amshove.kluent.fail
 import org.amshove.kluent.shouldBeEmpty
@@ -279,6 +280,76 @@ class Ex05_NestedTransactions_Coroutines: AbstractExposedTest() {
                 } catch (cause: Exception) {
                     rollback()
                     cause.toString() shouldContain exceptionMessage
+                }
+            }
+        }
+
+        assertSingleRecordInNewTransactionAndReset()
+
+        newSuspendedTransaction(db = db) {
+            SchemaUtils.drop(cities)
+        }
+    }
+
+    @Test
+    fun `외부는 코루틴용, 내부는 일반 transaction 인 경우에도 rollback 된다`() = runSuspendIO {
+        Assumptions.assumeTrue { TestDB.H2 in TestDB.enabledDialects() }
+
+        newSuspendedTransaction(db = db) {
+            SchemaUtils.create(cities)
+        }
+
+        newSuspendedTransaction(db = db) {
+            val outerTxId = this.id
+
+            cities.insert { it[name] = "City A" }
+            cityCounts() shouldBeEqualTo 1
+
+            transaction(db = db) {
+                try {
+                    val innerTxId = this.id
+                    innerTxId shouldNotBeEqualTo outerTxId
+
+                    cities.insert { it[name] = "City B" }           // 이 작업는 롤백됩니다.
+                    exec("SELECT * FROM non_existent_table")
+                } catch (cause: SQLException) {
+                    rollback()
+                }
+            }
+        }
+
+        assertSingleRecordInNewTransactionAndReset()
+
+        newSuspendedTransaction(db = db) {
+            SchemaUtils.drop(cities)
+        }
+    }
+
+    @Test
+    fun `외부는 일반 트랜잭션, 내부는 코루틴용 트랜잭션`() = runSuspendIO {
+        Assumptions.assumeTrue { TestDB.H2 in TestDB.enabledDialects() }
+
+        newSuspendedTransaction(db = db) {
+            SchemaUtils.create(cities)
+        }
+
+        transaction(db = db) {
+            val outerTxId = this.id
+
+            cities.insert { it[name] = "City A" }
+            cityCounts() shouldBeEqualTo 1
+
+            runBlocking {
+                newSuspendedTransaction(db = db) {
+                    try {
+                        val innerTxId = this.id
+                        innerTxId shouldNotBeEqualTo outerTxId
+
+                        cities.insert { it[name] = "City B" }           // 이 작업는 롤백됩니다.
+                        exec("SELECT * FROM non_existent_table")
+                    } catch (cause: SQLException) {
+                        rollback()
+                    }
                 }
             }
         }
