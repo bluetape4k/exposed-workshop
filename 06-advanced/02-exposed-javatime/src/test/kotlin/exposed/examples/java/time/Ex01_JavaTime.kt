@@ -92,8 +92,9 @@ class Ex01_JavaTime: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `javaTime functions`(testDB: TestDB) {
-        // FIXME: MySQL_V8 에서는 LocalDate 에 대해 Year 함수가 제대로 동작하지 않는다
-        Assumptions.assumeTrue { testDB != TestDB.MYSQL_V8 }
+        // FIXME: MySQL_V8 에서는 LocalDate 에 대해 Year 함수가 제대로 동작하지 않는다 --> Driver 문제인 듯 
+        // 에러 메시지: Unexpected value of type Int: 2025-01-01 of java.sql.Date
+        // Assumptions.assumeTrue { testDB != TestDB.MYSQL_V8 }
 
         withTables(testDB, CitiesTime) {
             val now = LocalDateTime.now()
@@ -125,6 +126,17 @@ class Ex01_JavaTime: AbstractExposedTest() {
              *   FROM citiestime
              *  WHERE citiestime.id = 1
              * ```
+             * ```sql
+             * -- MySQL V5
+             * SELECT YEAR(CitiesTime.local_time),
+             *        MONTH(CitiesTime.local_time),
+             *        DAY(CitiesTime.local_time),
+             *        HOUR(CitiesTime.local_time),
+             *        MINUTE(CitiesTime.local_time),
+             *        SECOND(CitiesTime.local_time)
+             *   FROM CitiesTime
+             *  WHERE CitiesTime.id = 1
+             * ```
              */
             val row = CitiesTime
                 .select(
@@ -138,7 +150,13 @@ class Ex01_JavaTime: AbstractExposedTest() {
                 .where { CitiesTime.id eq cityID }
                 .single()
 
-            row[CitiesTime.local_time.year()] shouldBeEqualTo now.year
+            // FIXME: MySQL_V8 에서는 LocalDate 에 대해 Year 함수가 제대로 동작하지 않는다 --> Driver 문제인 듯
+            // 에러 메시지: Unexpected value of type Int: 2025-01-01 of java.sql.Date
+            // Assumptions.assumeTrue { testDB != TestDB.MYSQL_V8 }
+
+            if (testDB != TestDB.MYSQL_V8) {
+                row[CitiesTime.local_time.year()] shouldBeEqualTo now.year
+            }
             row[CitiesTime.local_time.month()] shouldBeEqualTo now.month.value
             row[CitiesTime.local_time.day()] shouldBeEqualTo now.dayOfMonth
             row[CitiesTime.local_time.hour()] shouldBeEqualTo now.hour
@@ -230,7 +248,6 @@ class Ex01_JavaTime: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `Storing LocalDateTime with nanos`(testDB: TestDB) {
-
         val testDate = object: IntIdTable("TestLocalDateTime") {
             val time: Column<LocalDateTime> = datetime("time")
         }
@@ -675,6 +692,16 @@ class Ex01_JavaTime: AbstractExposedTest() {
                 .where { tester.id eq nowId }
                 .single()[tester.timestampWithTimeZone.time()] shouldBeEqualTo expectedTime
 
+            // FIXME: MySQL_V8 에서는 LocalDate 에 대해 Year 함수가 제대로 동작하지 않는다 --> Driver 문제인 듯
+            // 에러 메시지: Unexpected value of type Int: 2025-01-01 of java.sql.Date
+            // Assumptions.assumeTrue { testDB != TestDB.MYSQL_V8 }
+            if (testDB != TestDB.MYSQL_V8) {
+                // SELECT Extract(YEAR FROM tester.timestampz_column) FROM tester WHERE tester.id = 1
+                tester.select(tester.timestampWithTimeZone.year())
+                    .where { tester.id eq nowId }
+                    .single()[tester.timestampWithTimeZone.year()] shouldBeEqualTo now.year
+            }
+
             // SELECT Extract(MONTH FROM tester.timestampz_column) FROM tester WHERE tester.id = 1
             tester.select(tester.timestampWithTimeZone.month())
                 .where { tester.id eq nowId }
@@ -979,6 +1006,7 @@ val today: LocalDate = LocalDate.now()
 
 /**
  * ```sql
+ * -- Postgres
  * CREATE TABLE IF NOT EXISTS citiestime (
  *      id SERIAL PRIMARY KEY,
  *      "name" VARCHAR(50) NOT NULL,

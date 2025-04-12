@@ -105,7 +105,10 @@ class Ex02_Defaults: AbstractExposedTest() {
         val cIndex = AtomicInteger(0)
 
         val field = varchar("field", 100)
-        val t1 = datetime("t1").defaultExpression(CurrentDateTime)
+        val t1: Column<LocalDateTime> = datetime("t1").defaultExpression(CurrentDateTime)
+        val t2: Column<LocalDate> = date("t2").defaultExpression(CurrentDate)
+        val t3: Column<Instant> = timestamp("t3").defaultExpression(CurrentTimestamp)
+        val t4: Column<OffsetDateTime> = timestampWithTimeZone("t5").defaultExpression(CurrentTimestampWithTimeZone)
         val clientDefault = integer("clientDefault").clientDefault { cIndex.getAndIncrement() }
 
         init {

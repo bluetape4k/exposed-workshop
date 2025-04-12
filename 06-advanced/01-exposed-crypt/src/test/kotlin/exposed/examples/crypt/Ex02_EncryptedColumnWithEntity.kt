@@ -61,6 +61,7 @@ class Ex02_EncryptedColumnWithEntity: AbstractExposedTest() {
      * 암호화된 컬럼에 문자열과 ByteArray 값을 저장하기
      *
      * ```sql
+     * -- Postgres
      * INSERT INTO test ("varchar", "binary")
      * VALUES (BkaUzt6JpQIeylblnFquTYZUsMwxBwrplpqu/fUGdiL1xLfBzDYQ, [B@10a0d93a)
      * ```
@@ -101,6 +102,8 @@ class Ex02_EncryptedColumnWithEntity: AbstractExposedTest() {
      *
      * Exposed Encryptor는 매번 다른 값으로 암호화하기 때문에, WHERE 절에 쓸 수는 없습니다.
      * Jasypt 를 사용해서 매번 같은 값으로 암호화를 하도록 하면 가능합니다.
+     *
+     * 참고: [Exposed Crypt Module](https://debop.notion.site/Exposed-Crypt-Module-1c32744526b0802da419d5ce74d2c5f3)
      *
      * ```sql
      * INSERT INTO TEST ("varchar", "binary")

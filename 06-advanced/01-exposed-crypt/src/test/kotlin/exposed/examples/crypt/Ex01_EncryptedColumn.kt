@@ -18,6 +18,7 @@ import org.jetbrains.exposed.crypt.Encryptor
 import org.jetbrains.exposed.crypt.encryptedBinary
 import org.jetbrains.exposed.crypt.encryptedVarchar
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.exposedLogger
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.selectAll
@@ -83,10 +84,11 @@ class Ex01_EncryptedColumn: AbstractExposedTest() {
          */
         val nameEncryptor = Algorithms.AES_256_PBE_CBC("passwd", "5c0744940b5c369b")
         val stringTable = object: IntIdTable("StringTable") {
-            val name = encryptedVarchar("name", 80, nameEncryptor)
-            val city = encryptedVarchar("city", 80, Algorithms.AES_256_PBE_GCM("passwd", "5c0744940b5c369b"))
-            val address = encryptedVarchar("address", 100, Algorithms.BLOW_FISH("key"))
-            val age = encryptedVarchar("age", 100, Algorithms.TRIPLE_DES("1".repeat(24)))
+            val name: Column<String> = encryptedVarchar("name", 80, nameEncryptor)
+            val city: Column<String> =
+                encryptedVarchar("city", 80, Algorithms.AES_256_PBE_GCM("passwd", "5c0744940b5c369b"))
+            val address: Column<String> = encryptedVarchar("address", 100, Algorithms.BLOW_FISH("key"))
+            val age: Column<String> = encryptedVarchar("age", 100, Algorithms.TRIPLE_DES("1".repeat(24)))
         }
 
         withTables(testDB, stringTable) {
@@ -162,9 +164,9 @@ class Ex01_EncryptedColumn: AbstractExposedTest() {
          * ```
          */
         val stringTable = object: IntIdTable("StringTable") {
-            val name = encryptedVarchar("name", 100, Algorithms.AES_256_PBE_GCM("passwd", "12345678"))
-            val city = encryptedBinary("city", 100, Algorithms.AES_256_PBE_CBC("passwd", "12345678"))
-            val address = encryptedVarchar("address", 100, Algorithms.BLOW_FISH("key"))
+            val name: Column<String> = encryptedVarchar("name", 100, Algorithms.AES_256_PBE_GCM("passwd", "12345678"))
+            val city: Column<ByteArray> = encryptedBinary("city", 100, Algorithms.AES_256_PBE_CBC("passwd", "12345678"))
+            val address: Column<String> = encryptedVarchar("address", 100, Algorithms.BLOW_FISH("key"))
         }
 
         withTables(testDB, stringTable) {
@@ -173,11 +175,12 @@ class Ex01_EncryptedColumn: AbstractExposedTest() {
 
             /**
              * ```sql
+             * -- Postgres
              * INSERT INTO stringtable ("name", city, address)
              * VALUES (GLYN2dtSPlEklEDqu2WuXdsOtQBLSUZ+5QgW8AdrHvfVj5JBQSQT5Q==,
              *        [B@677349fb,
              *        NCoXob9KL2ffCyERcyae5w==
-             *        )
+             * )
              * ```
              */
             val insertedStrings = listOf("TestName", "TestCity", "TestAddress")
@@ -196,6 +199,7 @@ class Ex01_EncryptedColumn: AbstractExposedTest() {
 
             /**
              * ```sql
+             * -- Postgres
              * UPDATE stringtable
              *    SET "name"=V8kN75IkkYqYAejR/Xz4Vs7hakXQGRrVL7vcCzTRku8dgwfqR5Ft+tE=,
              *        city=[B@4466cf5d,

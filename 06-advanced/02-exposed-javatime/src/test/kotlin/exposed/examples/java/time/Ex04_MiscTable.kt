@@ -10,6 +10,7 @@ import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.sql.Cast
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
@@ -77,20 +78,20 @@ import kotlin.test.assertNull
  * ```
  */
 object Misc: MiscTable() {
-    val d = date("d")
-    val dn = date("dn").nullable()
+    val d: Column<LocalDate> = date("d")
+    val dn: Column<LocalDate?> = date("dn").nullable()
 
-    val t = time("t")
-    val tn = time("tn").nullable()
+    val t: Column<LocalTime> = time("t")
+    val tn: Column<LocalTime?> = time("tn").nullable()
 
-    val dt = datetime("dt")
-    val dtn = datetime("dtn").nullable()
+    val dt: Column<LocalDateTime> = datetime("dt")
+    val dtn: Column<LocalDateTime?> = datetime("dtn").nullable()
 
-    val ts = timestamp("ts")
-    val tsn = timestamp("tsn").nullable()
+    val ts: Column<Instant> = timestamp("ts")
+    val tsn: Column<Instant?> = timestamp("tsn").nullable()
 
-    val dr = duration("dr")
-    val drn = duration("drn").nullable()
+    val dr: Column<Duration> = duration("dr")
+    val drn: Column<Duration?> = duration("drn").nullable()
 }
 
 
