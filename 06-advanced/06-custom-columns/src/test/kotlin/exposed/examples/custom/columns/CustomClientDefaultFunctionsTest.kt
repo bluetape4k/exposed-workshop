@@ -14,10 +14,12 @@ import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import java.util.*
 
 class CustomClientDefaultFunctionsTest: AbstractExposedTest() {
 
@@ -37,11 +39,11 @@ class CustomClientDefaultFunctionsTest: AbstractExposedTest() {
      * ```
      */
     object ClientGenerated: IntIdTable() {
-        val timebasedUuid = uuid("timebased_uuid").timebasedUUIDGenerated()
-        val timebasedUuidString = varchar("timebased_uuid_string", 36).timebasedUUIDGenerated()
-        val snowflake = long("snowflake").snowflakeGenerated()
-        val ksuid = varchar("ksuid", 27).ksuidGenerated()
-        val ksuidMillis = varchar("ksuid_millis", 27).ksuidMillisGenerated()
+        val timebasedUuid: Column<UUID> = uuid("timebased_uuid").timebasedUUIDGenerated()
+        val timebasedUuidString: Column<String> = varchar("timebased_uuid_string", 36).timebasedUUIDGenerated()
+        val snowflake: Column<Long> = long("snowflake").snowflakeGenerated()
+        val ksuid: Column<String> = varchar("ksuid", 27).ksuidGenerated()
+        val ksuidMillis: Column<String> = varchar("ksuid_millis", 27).ksuidMillisGenerated()
     }
 
     class ClientGeneratedEntity(id: EntityID<Int>): IntEntity(id) {
@@ -67,11 +69,10 @@ class CustomClientDefaultFunctionsTest: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `DSL - 클라이언트에서 기본값으로 생성하는 함수`(testDB: TestDB) {
-        val entityCount = 100
         withTables(testDB, ClientGenerated) {
+            val entityCount = 100
             val values = List(entityCount) { it + 1 }
-            ClientGenerated.batchInsert(values) {
-            }
+            ClientGenerated.batchInsert(values) {}
             flushCache()
             entityCache.clear()
 
@@ -88,8 +89,8 @@ class CustomClientDefaultFunctionsTest: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `DAO - 클라이언트에서 기본값으로 생성하는 함수`(testDB: TestDB) {
-        val entityCount = 100
         withTables(testDB, ClientGenerated) {
+            val entityCount = 100
             val entities = List(entityCount) {
                 ClientGeneratedEntity.new {}
             }
