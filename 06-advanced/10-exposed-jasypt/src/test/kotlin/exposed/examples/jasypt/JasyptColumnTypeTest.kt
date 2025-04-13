@@ -56,7 +56,8 @@ class JasyptColumnTypeTest: AbstractExposedTest() {
             /**
              * Jasypt 암호화는 항상 같은 결과를 반환하므로, WHERE 절로 검색이 가능합니다.
              * ```sql
-             * SELECT COUNT(*) FROM string_table WHERE string_table.`name` = UPq8X_QFkR-tsUFSOwffVQ==
+             * SELECT COUNT(*) FROM string_table
+             *  WHERE string_table.`name` = UPq8X_QFkR-tsUFSOwffVQ==
              * ```
              */
             stringTable.selectAll()

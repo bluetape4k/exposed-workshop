@@ -37,6 +37,12 @@ object JacksonSchema {
      *      id SERIAL PRIMARY KEY,
      *      jackson_b_column JSONB NOT NULL
      * );
+     *
+     * -- MySQL V8
+     * CREATE TABLE IF NOT EXISTS jackson_b_table (
+     *      id INT AUTO_INCREMENT PRIMARY KEY,
+     *      jackson_b_column JSON NOT NULL
+     * )
      * ```
      */
     object JacksonBTable: IntIdTable("jackson_b_table") {
@@ -69,6 +75,23 @@ object JacksonSchema {
         val numbers = jackson<IntArray>("numbers")
     }
 
+    /**
+     * ```sql
+     * -- Postgres
+     * CREATE TABLE IF NOT EXISTS jackson_b_arrays (
+     *      id SERIAL PRIMARY KEY,
+     *      "groups" JSONB NOT NULL,
+     *      numbers JSONB NOT NULL
+     * );
+     *
+     * -- MySQL V8
+     * CREATE TABLE IF NOT EXISTS jackson_b_arrays (
+     *      id INT AUTO_INCREMENT PRIMARY KEY,
+     *      `groups` JSON NOT NULL,
+     *      numbers JSON NOT NULL
+     * )
+     * ```
+     */
     object JacksonBArrayTable: IntIdTable("jackson_b_arrays") {
         val groups = jacksonb<UserGroup>("groups")
         val numbers = jacksonb<IntArray>("numbers")

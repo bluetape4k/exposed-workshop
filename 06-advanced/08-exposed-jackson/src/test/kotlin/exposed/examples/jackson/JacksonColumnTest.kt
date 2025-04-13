@@ -334,9 +334,11 @@ class JacksonColumnTest: AbstractExposedTest() {
             val hasAnyData = tester.jacksonColumn.exists(optional = optional)
             tester.selectAll().where { hasAnyData }.count() shouldBeEqualTo 2L
 
+            // $.fakeKey path 가 존제하는 행을 셉니다.
             val hasFakeKey = tester.jacksonColumn.exists(".fakeKey", optional = optional)
             tester.selectAll().where { hasFakeKey }.count() shouldBeEqualTo 0L
 
+            // $.logins path 가 존재하는 행을 셉니다.
             val hasLogins = tester.jacksonColumn.exists(".logins", optional = optional)
             tester.selectAll().where { hasLogins }.count() shouldBeEqualTo 2L
 
@@ -428,6 +430,7 @@ class JacksonColumnTest: AbstractExposedTest() {
         Assumptions.assumeTrue { testDB in supportsJsonContains }
 
         withJacksonArrays(testDB) { tester, _, tripleId ->
+            // numbers 컬럼에 3, 5를 가진 행을 조회
             val hasSmallNumbers = tester.numbers.contains("[3, 5]")
             tester.selectAll().where { hasSmallNumbers }.single()[tester.id] shouldBeEqualTo tripleId
 

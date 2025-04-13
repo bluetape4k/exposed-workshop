@@ -4,10 +4,6 @@
 
 ## Custom Entities
 
-### SnowflakeId
+## 문서
 
-### TimebasedUUID
-
-### TimebasedUUIDBase62
-
-### KsuidEntity
+[Custom IdTable & Entities](https://debop.notion.site/Custom-Table-Entities-1c32744526b0804bad10ea3a0dce6c13)

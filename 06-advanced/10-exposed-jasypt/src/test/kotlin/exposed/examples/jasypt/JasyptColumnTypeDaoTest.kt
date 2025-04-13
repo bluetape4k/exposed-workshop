@@ -15,7 +15,6 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.selectAll
@@ -56,7 +55,7 @@ class JasyptColumnTypeDaoTest: AbstractExposedTest() {
                 varchar = insertedVarchar
                 binary = insertedBinary
             }
-            flushCache()
+
             entityCache.clear()
 
             val saved = E1.findById(entity.id)!!
@@ -84,7 +83,7 @@ class JasyptColumnTypeDaoTest: AbstractExposedTest() {
                 varchar = insertedVarchar
                 binary = insertedBinary
             }
-            flushCache()
+
             entityCache.clear()
 
             /**

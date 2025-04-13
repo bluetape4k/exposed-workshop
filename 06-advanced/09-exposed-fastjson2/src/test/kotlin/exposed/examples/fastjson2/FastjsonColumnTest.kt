@@ -55,15 +55,15 @@ class FastjsonColumnTest: AbstractExposedTest() {
     /**
      * ```sql
      * -- H2
-     * INSERT INTO FASTJSON_TABLE (fastjson_column)
+     * INSERT INTO fastjson_table (fastjson_column)
      * VALUES (JSON '{"user":{"name":"Pro","team":"Alpha"},"logins":999,"active":true,"team":"A"}' FORMAT JSON);
      *
      * -- MySQL V8
-     * INSERT INTO FASTJSON_TABLE (fastjson_column)
+     * INSERT INTO fastjson_table (fastjson_column)
      * VALUES ({"user":{"name":"Pro","team":"Alpha"},"logins":999,"active":true,"team":"A"});
      *
      * -- Postgres
-     * INSERT INTO FASTJSON_TABLE (fastjson_column)
+     * INSERT INTO fastjson_table (fastjson_column)
      * VALUES ({"user":{"name":"Pro","team":"Alpha"},"logins":999,"active":true,"team":"A"});
      * ```
      */
@@ -84,7 +84,7 @@ class FastjsonColumnTest: AbstractExposedTest() {
     /**
      * ```sql
      * -- Postgres
-     * UPDATE FASTJSON_TABLE
+     * UPDATE fastjson_table
      *    SET fastjson_column={"user":{"name":"Admin","team":null},"logins":10,"active":false,"team":null}
      * ```
      */
@@ -106,14 +106,14 @@ class FastjsonColumnTest: AbstractExposedTest() {
     /**
      * ```sql
      * -- Postgres
-     * SELECT JSON_EXTRACT_PATH(FASTJSON_TABLE.fastjson_column, 'active') FROM FASTJSON_TABLE;
-     * SELECT JSON_EXTRACT_PATH(FASTJSON_TABLE.fastjson_column, 'user') FROM FASTJSON_TABLE;
-     * SELECT JSON_EXTRACT_PATH_TEXT(FASTJSON_TABLE.fastjson_column, 'user', 'name') FROM FASTJSON_TABLE;
+     * SELECT JSON_EXTRACT_PATH(fastjson_table.fastjson_column, 'active') FROM fastjson_table
+     * SELECT JSON_EXTRACT_PATH(fastjson_table.fastjson_column, 'user') FROM fastjson_table
+     * SELECT JSON_EXTRACT_PATH_TEXT(fastjson_table.fastjson_column, 'user', 'name') FROM fastjson_table
      *
      * -- MySQL V8
-     * SELECT JSON_EXTRACT(FASTJSON_TABLE.fastjson_column, "$.active") FROM FASTJSON_TABLE;
-     * SELECT JSON_EXTRACT(FASTJSON_TABLE.fastjson_column, "$.user") FROM FASTJSON_TABLE;
-     * SELECT JSON_UNQUOTE(JSON_EXTRACT(FASTJSON_TABLE.fastjson_column, "$.user.name")) FROM FASTJSON_TABLE;
+     * SELECT JSON_EXTRACT(fastjson_table.fastjson_column, "$.active") FROM fastjson_table
+     * SELECT JSON_EXTRACT(fastjson_table.fastjson_column, "$.user") FROM fastjson_table
+     * SELECT JSON_UNQUOTE(JSON_EXTRACT(fastjson_table.fastjson_column, "$.user.name")) FROM fastjson_table
      * ```
      */
     @ParameterizedTest
@@ -147,14 +147,14 @@ class FastjsonColumnTest: AbstractExposedTest() {
     /**
      * ```sql
      * -- Postgres
-     * SELECT FASTJSON_TABLE.id
-     *   FROM FASTJSON_TABLE
-     *  WHERE CAST(JSON_EXTRACT_PATH_TEXT(FASTJSON_TABLE.fastjson_column, 'logins') AS INT) >= 1000;
+     * SELECT fastjson_table.id
+     *   FROM fastjson_table
+     *  WHERE CAST(JSON_EXTRACT_PATH_TEXT(fastjson_table.fastjson_column, 'logins') AS INT) >= 1000
      *
      * -- MySQL V8
-     * SELECT FASTJSON_TABLE.id
-     *   FROM FASTJSON_TABLE
-     *  WHERE JSON_UNQUOTE(JSON_EXTRACT(FASTJSON_TABLE.fastjson_column, "$.logins")) >= 1000
+     * SELECT fastjson_table.id
+     *   FROM fastjson_table
+     *  WHERE JSON_UNQUOTE(JSON_EXTRACT(fastjson_table.fastjson_column, "$.logins")) >= 1000
      * ```
      */
     @ParameterizedTest
@@ -163,6 +163,7 @@ class FastjsonColumnTest: AbstractExposedTest() {
         Assumptions.assumeTrue { testDB !in TestDB.ALL_H2 }
 
         withFastjsonTable(testDB) { tester, _, data1 ->
+            // logins=1000 인 새로운 레코드를 INSERT 합니다.
             val newId = tester.insertAndGetId {
                 it[fastjsonColumn] = data1.copy(logins = 1000)
             }
@@ -172,6 +173,8 @@ class FastjsonColumnTest: AbstractExposedTest() {
                 is PostgreSQLDialect -> tester.fastjsonColumn.extract<Int>("logins").castTo(IntegerColumnType())
                 else -> tester.fastjsonColumn.extract<Int>(".logins")
             }
+
+            // 검색 조건 지정
             val tooManyLogins = logins greaterEq 1000
 
             val row = tester.select(tester.id).where { tooManyLogins }.singleOrNull()
@@ -201,20 +204,20 @@ class FastjsonColumnTest: AbstractExposedTest() {
     /**
      * ```sql
      * -- Postgres
-     * INSERT INTO FASTJSON_TABLE (fastjson_column)
+     * INSERT INTO fastjson_table (fastjson_column)
      * VALUES ({"user":{"name":"Admin","team":"Alpha"},"logins":10,"active":true,"team":null});
      *
-     * UPDATE FASTJSON_TABLE
+     * UPDATE fastjson_table
      *    SET fastjson_column={"user":{"name":"Lead","team":"Beta"},"logins":10,"active":true,"team":null}
-     *  WHERE FASTJSON_TABLE.id = 1;
+     *  WHERE fastjson_table.id = 1;
      *
      * -- MySQL V8
-     * INSERT INTO FASTJSON_TABLE (fastjson_column)
+     * INSERT INTO fastjson_table (fastjson_column)
      * VALUES ({"user":{"name":"Admin","team":"Alpha"},"logins":10,"active":true,"team":null});
      *
-     * UPDATE FASTJSON_TABLE
+     * UPDATE fastjson_table
      *    SET fastjson_column={"user":{"name":"Lead","team":"Beta"},"logins":10,"active":true,"team":null}
-     *  WHERE FASTJSON_TABLE.id = 1;
+     *  WHERE fastjson_table.id = 1;
      * ```
      */
     @ParameterizedTest
@@ -243,26 +246,26 @@ class FastjsonColumnTest: AbstractExposedTest() {
     /**
      * ```sql
      * -- Postgres
-     * SELECT FASTJSON_TABLE.id, FASTJSON_TABLE.fastjson_column
-     *   FROM FASTJSON_TABLE
-     *  WHERE FASTJSON_TABLE.fastjson_column::jsonb @> '{"active":false}'::jsonb;
+     * SELECT fastjson_table.id, fastjson_table.fastjson_column
+     *   FROM fastjson_table
+     *  WHERE fastjson_table.fastjson_column::jsonb @> '{"active":false}'::jsonb;
      *
      * SELECT COUNT(*)
-     *   FROM FASTJSON_TABLE
-     *  WHERE FASTJSON_TABLE.fastjson_column::jsonb @> '{"user":{"name":"Admin","team":"Alpha"}}'::jsonb;
+     *   FROM fastjson_table
+     *  WHERE fastjson_table.fastjson_column::jsonb @> '{"user":{"name":"Admin","team":"Alpha"}}'::jsonb;
      *
      * -- MySQL V8
-     * SELECT FASTJSON_TABLE.id, FASTJSON_TABLE.fastjson_column
-     *   FROM FASTJSON_TABLE
-     *  WHERE JSON_CONTAINS(FASTJSON_TABLE.fastjson_column, '{"active":false}');
+     * SELECT fastjson_table.id, fastjson_table.fastjson_column
+     *   FROM fastjson_table
+     *  WHERE JSON_CONTAINS(fastjson_table.fastjson_column, '{"active":false}');
      *
      * SELECT COUNT(*)
-     *   FROM FASTJSON_TABLE
-     *  WHERE JSON_CONTAINS(FASTJSON_TABLE.fastjson_column, '{"user":{"name":"Admin","team":"Alpha"}}');
+     *   FROM fastjson_table
+     *  WHERE JSON_CONTAINS(fastjson_table.fastjson_column, '{"user":{"name":"Admin","team":"Alpha"}}');
      *
-     * SELECT FASTJSON_TABLE.id
-     *   FROM FASTJSON_TABLE
-     *  WHERE JSON_CONTAINS(FASTJSON_TABLE.fastjson_column, '"Alpha"', '$.user.team');
+     * SELECT fastjson_table.id
+     *   FROM fastjson_table
+     *  WHERE JSON_CONTAINS(fastjson_table.fastjson_column, '"Alpha"', '$.user.team');
      * ```
      */
     @ParameterizedTest
@@ -284,7 +287,7 @@ class FastjsonColumnTest: AbstractExposedTest() {
             var userIsInAlphaTeam = tester.fastjsonColumn.contains(stringLiteral(alphaTeamUserAsJson))
             tester.selectAll().where { userIsInAlphaTeam }.count() shouldBeEqualTo 1L
 
-            // test target contains candidate at specified path
+            // Path 를 이용하여 특정 필드를 비교할 수 있습니다.
             if (testDB in TestDB.ALL_MYSQL_LIKE) {
                 userIsInAlphaTeam = tester.fastjsonColumn.contains("\"Alpha\"", ".user.team")
                 val alphaTeamUsers = tester.select(tester.id).where { userIsInAlphaTeam }
@@ -296,24 +299,24 @@ class FastjsonColumnTest: AbstractExposedTest() {
     /**
      * ```sql
      * -- Postgres
-     * SELECT COUNT(*) FROM FASTJSON_TABLE
-     *  WHERE JSONB_PATH_EXISTS(CAST(FASTJSON_TABLE.fastjson_column as jsonb), '$');
+     * SELECT COUNT(*) FROM fastjson_table
+     *  WHERE JSONB_PATH_EXISTS(CAST(fastjson_table.fastjson_column as jsonb), '$');
      *
-     * SELECT COUNT(*) FROM FASTJSON_TABLE
-     *  WHERE JSONB_PATH_EXISTS(CAST(FASTJSON_TABLE.fastjson_column as jsonb), '$.fakeKey');
+     * SELECT COUNT(*) FROM fastjson_table
+     *  WHERE JSONB_PATH_EXISTS(CAST(fastjson_table.fastjson_column as jsonb), '$.fakeKey');
      *
-     * SELECT COUNT(*) FROM FASTJSON_TABLE
-     *  WHERE JSONB_PATH_EXISTS(CAST(FASTJSON_TABLE.fastjson_column as jsonb), '$.logins');
+     * SELECT COUNT(*) FROM fastjson_table
+     *  WHERE JSONB_PATH_EXISTS(CAST(fastjson_table.fastjson_column as jsonb), '$.logins');
      *
      * -- MySQL V8
-     * SELECT COUNT(*) FROM FASTJSON_TABLE
-     *  WHERE JSON_CONTAINS_PATH(FASTJSON_TABLE.fastjson_column, 'one', '$');
+     * SELECT COUNT(*) FROM fastjson_table
+     *  WHERE JSON_CONTAINS_PATH(fastjson_table.fastjson_column, 'one', '$');
      *
-     * SELECT COUNT(*) FROM FASTJSON_TABLE
-     *  WHERE JSON_CONTAINS_PATH(FASTJSON_TABLE.fastjson_column, 'one', '$.fakeKey');
+     * SELECT COUNT(*) FROM fastjson_table
+     *  WHERE JSON_CONTAINS_PATH(fastjson_table.fastjson_column, 'one', '$.fakeKey');
      *
-     * SELECT COUNT(*) FROM FASTJSON_TABLE
-     *  WHERE JSON_CONTAINS_PATH(FASTJSON_TABLE.fastjson_column, 'one', '$.logins');
+     * SELECT COUNT(*) FROM fastjson_table
+     *  WHERE JSON_CONTAINS_PATH(fastjson_table.fastjson_column, 'one', '$.logins');
      * ```
      */
     @ParameterizedTest
@@ -334,9 +337,11 @@ class FastjsonColumnTest: AbstractExposedTest() {
             val hasAnyData = tester.fastjsonColumn.exists(optional = optional)
             tester.selectAll().where { hasAnyData }.count() shouldBeEqualTo 2L
 
+            // $.fakeKey path 가 존제하는 행을 셉니다.
             val hasFakeKey = tester.fastjsonColumn.exists(".fakeKey", optional = optional)
             tester.selectAll().where { hasFakeKey }.count() shouldBeEqualTo 0L
 
+            // $.logins path 가 존재하는 행을 셉니다.
             val hasLogins = tester.fastjsonColumn.exists(".logins", optional = optional)
             tester.selectAll().where { hasLogins }.count() shouldBeEqualTo 2L
 
@@ -428,6 +433,7 @@ class FastjsonColumnTest: AbstractExposedTest() {
         Assumptions.assumeTrue { testDB in supportsJsonContains }
 
         withFastjsonArrays(testDB) { tester, _, tripleId ->
+            // numbers 컬럼에 3, 5를 가진 행을 조회
             val hasSmallNumbers = tester.numbers.contains("[3, 5]")
             tester.selectAll().where { hasSmallNumbers }.single()[tester.id] shouldBeEqualTo tripleId
 
