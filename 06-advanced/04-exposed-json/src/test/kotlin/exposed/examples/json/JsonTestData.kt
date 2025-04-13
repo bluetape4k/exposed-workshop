@@ -16,6 +16,7 @@ object JsonTestData {
 
     /**
      * ```sql
+     * -- Postgres
      * CREATE TABLE IF NOT EXISTS j_table (
      *      id SERIAL PRIMARY KEY,
      *      j_column JSON NOT NULL
@@ -60,7 +61,7 @@ object JsonTestData {
     class JsonBEntity(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<JsonBEntity>(JsonBTable)
 
-        var jsonBColumn by JsonBTable.jsonBColumn
+        var jsonBColumn: DataHolder by JsonBTable.jsonBColumn
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -70,6 +71,8 @@ object JsonTestData {
     }
 
     /**
+     * Array 수형을 JSON으로 저장합니다.
+     * 
      * ```sql
      * -- Postgres
      * CREATE TABLE IF NOT EXISTS j_arrays (

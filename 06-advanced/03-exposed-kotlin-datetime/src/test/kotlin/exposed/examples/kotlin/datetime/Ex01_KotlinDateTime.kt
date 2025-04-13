@@ -92,9 +92,6 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun kotlinTimeFunctions(testDB: TestDB) {
-        // NOTE: MYSQL V8 에서 year(), month(), day(), hour(), minute(), second() functions 이 제대로 작동하지 않는다.
-        Assumptions.assumeTrue { testDB != TestDB.MYSQL_V8 }
-
         withTables(testDB, CitiesTime) {
             val now: LocalDateTime = now()
 
@@ -107,6 +104,7 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
              * Time functions
              *
              * ```sql
+             * -- H2
              * SELECT CITIESTIME.ID, CITIESTIME."name", CITIESTIME.LOCAL_TIME FROM CITIESTIME
              * SELECT YEAR(CITIESTIME.LOCAL_TIME) FROM CITIESTIME WHERE CITIESTIME.ID = 1
              * SELECT MONTH(CITIESTIME.LOCAL_TIME) FROM CITIESTIME WHERE CITIESTIME.ID = 1
@@ -118,11 +116,15 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
              */
             CitiesTime.selectAll().single()[CitiesTime.local_time] shouldDateTimeEqualTo now
 
-            val insertedYear = CitiesTime
-                .select(CitiesTime.local_time.year())
-                .where { CitiesTime.id.eq(cityID) }
-                .single()[CitiesTime.local_time.year()]
+            // NOTE: MYSQL V8 에서 year(), month(), day(), hour(), minute(), second() functions 이 제대로 작동하지 않는다.
+            if (testDB != TestDB.MYSQL_V8) {
+                val insertedYear = CitiesTime
+                    .select(CitiesTime.local_time.year())
+                    .where { CitiesTime.id.eq(cityID) }
+                    .single()[CitiesTime.local_time.year()]
 
+                insertedYear shouldBeEqualTo now.year
+            }
             val insertedMonth = CitiesTime
                 .select(CitiesTime.local_time.month())
                 .where { CitiesTime.id.eq(cityID) }
@@ -148,7 +150,7 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
                 .where { CitiesTime.id.eq(cityID) }
                 .single()[CitiesTime.local_time.second()]
 
-            insertedYear shouldBeEqualTo now.year
+
             insertedMonth shouldBeEqualTo now.month.value
             insertedDay shouldBeEqualTo now.dayOfMonth
             insertedHour shouldBeEqualTo now.hour
@@ -1008,8 +1010,8 @@ val today: LocalDate = now().date
  * ```
  */
 object CitiesTime: IntIdTable("CitiesTime") {
-    val name = varchar("name", 50) // Column<String>
-    val local_time = datetime("local_time").nullable() // Column<datetime>
+    val name: Column<String> = varchar("name", 50) // Column<String>
+    val local_time: Column<LocalDateTime?> = datetime("local_time").nullable() // Column<datetime>
 }
 
 @Serializable

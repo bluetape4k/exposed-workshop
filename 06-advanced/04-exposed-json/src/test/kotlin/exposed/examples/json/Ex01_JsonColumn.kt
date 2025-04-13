@@ -199,6 +199,11 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
      * SELECT j_table.id
      *   FROM j_table
      *  WHERE CAST(JSON_EXTRACT_PATH_TEXT(j_table.j_column, 'logins') AS INT) >= 1000
+     *
+     * -- MySQL V8
+     * SELECT j_table.id
+     *   FROM j_table
+     *  WHERE JSON_UNQUOTE(JSON_EXTRACT(j_table.j_column, "$.logins")) >= 1000
      * ```
      */
     @ParameterizedTest
@@ -323,7 +328,7 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
         }
     }
 
-    private val jsonContainsSupported = TestDB.ALL_POSTGRES + TestDB.MYSQL_V5
+    private val jsonContainsSupported = TestDB.ALL_POSTGRES + TestDB.MYSQL_V5 + TestDB.MYSQL_V8
 
     /**
      * JSON 컬럼의 내용 중 PATH 에 해당하는 데이터가 포함되어 있는지 확인합니다.
@@ -353,6 +358,11 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
              * SELECT j_table.id, j_table.j_column
              *   FROM j_table
              *  WHERE j_table.j_column::jsonb @> '{"active":false}'::jsonb
+             *
+             * -- MySQL V8
+             * SELECT j_table.id, j_table.j_column
+             *   FROM j_table
+             *  WHERE JSON_CONTAINS(j_table.j_column, '{"active":false}')
              * ```
              */
             val userIsInactive = JsonTable.jsonColumn.contains("""{"active":false}""")
@@ -365,6 +375,11 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
              * SELECT COUNT(*)
              *   FROM j_table
              *  WHERE j_table.j_column::jsonb @> '{"user":{"name":"Admin","team":"Alpha"}}'::jsonb
+             *
+             * -- MySQL V8
+             * SELECT COUNT(*)
+             *   FROM j_table
+             *  WHERE JSON_CONTAINS(j_table.j_column, '{"user":{"name":"Admin","team":"Alpha"}}')
              * ```
              */
             val alphaTreamUserAsJson = """{"user":${Json.Default.encodeToString(alphaTeamUser)}}"""
@@ -373,6 +388,15 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
 
             // test target contains candidate at specified path
             if (testDB in TestDB.ALL_MYSQL_LIKE) {
+                /**
+                 * 아쉽게도 Postgres 에서는 JSON Path 의 값을 비교하는 방식은 지원하지 않습니다.
+                 * ```sql
+                 * -- MySQL V8
+                 * SELECT j_table.id, j_table.j_column
+                 *   FROM j_table
+                 *  WHERE JSON_CONTAINS(j_table.j_column, '"Alpha"', '$.user.team')
+                 * ```
+                 */
                 // Path 를 이용하여 특정 필드를 비교할 수 있습니다.
                 val userIsInAlphaTeam2 = JsonTable.jsonColumn.contains("\"Alpha\"", path = ".user.team")
                 val alphaTeamUsers = tester.selectAll().where { userIsInAlphaTeam2 }
@@ -402,23 +426,21 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
                 it[jsonColumn] = data1.copy(user = data1.user.copy(team = teamA), logins = maximumLogins)
             }
 
-            /**
-             * Postgres:
-             * ```sql
-             * SELECT COUNT(*)
-             *   FROM j_table
-             *  WHERE JSONB_PATH_EXISTS(CAST(j_table.j_column as jsonb), '$')
-             * ```
-             */
             val optional = if (testDB in TestDB.ALL_MYSQL_LIKE) "one" else null
 
             /**
              * test data at path root `$` exists by providing no path arguments
              *
              * ```sql
+             * -- Postgres
              * SELECT COUNT(*)
              *   FROM j_table
              *  WHERE JSONB_PATH_EXISTS(CAST(j_table.j_column as jsonb), '$')
+             *
+             *  -- MySQL V8
+             *  SELECT COUNT(*)
+             *    FROM j_table
+             *   WHERE JSON_CONTAINS_PATH(j_table.j_column, 'one', '$')
              * ```
              */
             val hasAnyData = JsonTable.jsonColumn.exists(optional = optional)
@@ -426,9 +448,13 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
 
             /**
              * ```sql
-             * SELECT COUNT(*)
-             *   FROM j_table
+             * -- Postgres
+             * SELECT COUNT(*) FROM j_table
              *  WHERE JSONB_PATH_EXISTS(CAST(j_table.j_column as jsonb), '$.fakeKey')
+             *
+             *  -- MySQL V8
+             *  SELECT COUNT(*) FROM j_table
+             *   WHERE JSON_CONTAINS_PATH(j_table.j_column, 'one', '$.fakeKey')
              * ```
              */
             val hasFakeKey = JsonTable.jsonColumn.exists(".fakeKey", optional = optional)
@@ -436,9 +462,13 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
 
             /**
              * ```sql
-             * SELECT COUNT(*)
-             *   FROM j_table
+             * -- Postgres
+             * SELECT COUNT(*) FROM j_table
              *  WHERE JSONB_PATH_EXISTS(CAST(j_table.j_column as jsonb), '$.logins')
+             *
+             * -- MySQL V8
+             * SELECT COUNT(*) FROM j_table
+             * WHERE JSON_CONTAINS_PATH(j_table.j_column, 'one', '$.logins')
              * ```
              */
             val hasLogins = JsonTable.jsonColumn.exists(".logins", optional = optional)
@@ -575,6 +605,11 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
              * SELECT j_arrays.id, j_arrays."groups", j_arrays.numbers
              *   FROM j_arrays
              *  WHERE JSONB_PATH_EXISTS(CAST(j_arrays."groups" as jsonb), '$.users[1]')
+             *
+             * -- MySQL V8
+             * SELECT j_arrays.id, j_arrays.`groups`, j_arrays.numbers
+             *   FROM j_arrays
+             *  WHERE JSON_CONTAINS_PATH(j_arrays.`groups`, 'one', '$.users[1]')
              * ```
              */
             val hasMultipleUsers = JsonArrayTable.groups.exists(".users[1]", optional = optional)
@@ -586,6 +621,11 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
              * SELECT j_arrays.id, j_arrays."groups", j_arrays.numbers
              *   FROM j_arrays
              *  WHERE JSONB_PATH_EXISTS(CAST(j_arrays.numbers as jsonb), '$[2]')
+             *
+             * -- MySQL V8
+             * SELECT j_arrays.id, j_arrays.`groups`, j_arrays.numbers
+             *   FROM j_arrays
+             *  WHERE JSON_CONTAINS_PATH(j_arrays.numbers, 'one', '$[2]')
              * ```
              */
             val hasAtLeast3Numbers = JsonArrayTable.numbers.exists("[2]", optional = optional)
@@ -658,17 +698,24 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
             /**
              * ```sql
              * -- Postgres
-             * SELECT iterables.id
-             *   FROM iterables
+             * SELECT iterables.id FROM iterables
              *  WHERE iterables.user_list::jsonb @> '[{"name":"A","team":"Team A"}]'::jsonb;
              *
-             * SELECT iterables.id
-             *   FROM iterables
+             * SELECT iterables.id FROM iterables
              *  WHERE iterables.user_set::jsonb @> '[{"name":"B","team":"Team B"}]'::jsonb;
              *
-             * SELECT iterables.id
-             *   FROM iterables
+             * SELECT iterables.id FROM iterables
              *  WHERE iterables.user_array::jsonb @> '[{"name":"A","team":"Team A"},{"name":"B","team":"Team B"}]'::jsonb;
+             *
+             * -- MySQL V8
+             * SELECT iterables.id FROM iterables
+             *  WHERE JSON_CONTAINS(iterables.user_list, '[{"name":"A","team":"Team A"}]');
+             *
+             * SELECT iterables.id FROM iterables
+             *  WHERE JSON_CONTAINS(iterables.user_set, '[{"name":"B","team":"Team B"}]');
+             *
+             * SELECT iterables.id FROM iterables
+             *  WHERE JSON_CONTAINS(iterables.user_array, '[{"name":"A","team":"Team A"},{"name":"B","team":"Team B"}]');
              * ```
              */
             selectIdWhere { iterables.userList.contains(listOf(user1)) } shouldBeEqualTo listOf(id1)

@@ -6,6 +6,7 @@ import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.money.currencyUnitOf
+import io.bluetape4k.money.inUSD
 import io.bluetape4k.money.moneyOf
 import org.amshove.kluent.shouldBeEqualTo
 import org.javamoney.moneta.Money
@@ -156,9 +157,10 @@ class Ex02_Money: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `search by composite column`(testDB: TestDB) {
-        val money = moneyOf(BigDecimal.TEN, "USD")
-
         withTables(testDB, AccountTable) {
+            // val money: Money = moneyOf(BigDecimal.TEN, "USD")
+            val money = BigDecimal.TEN.inUSD()
+
             AccountTable.insertAndGetId {
                 it[composite_money] = money
             }
@@ -256,6 +258,7 @@ class Ex02_Money: AbstractExposedTest() {
 
             /**
              * ```sql
+             * -- Postgres
              * SELECT tester.currency,
              *        tester.nullable_currency
              *   FROM tester

@@ -25,21 +25,39 @@ internal const val AMOUNT_SCALE = 5
  * -- Postgres
  * CREATE TABLE IF NOT EXISTS accounts (
  *      id SERIAL PRIMARY KEY,
- *      composite_money DECIMAL(8, 5) NULL,     -- currency amount
- *      "composite_money_C" VARCHAR(3) NULL     -- currency unit
- * );
+ *      composite_money DECIMAL(8, 5) NULL,       -- amount
+ *      "composite_money_C" VARCHAR(3) NULL       -- currency
+ * )
+ *
+ * CREATE INDEX ix_money_amount ON accounts (composite_money)
+ * ```
+ *
+ * ```sql
+ * -- MySQL
+ * CREATE TABLE IF NOT EXISTS Accounts (
+ *      id INT AUTO_INCREMENT PRIMARY KEY,
+ *      composite_money DECIMAL(8, 5) NULL,
+ *      composite_money_C VARCHAR(3) NULL
+ * )
+ *
+ * CREATE INDEX ix_amount ON Accounts (composite_money)
  * ```
  */
 internal object AccountTable: IntIdTable("Accounts") {
     val composite_money: CompositeMoneyColumn<BigDecimal?, CurrencyUnit?, MonetaryAmount?> =
         compositeMoney(8, AMOUNT_SCALE, "composite_money").nullable()
+
+    init {
+        index("ix_money_amount", false, composite_money.amount)
+    }
 }
 
 internal class AccountEntity(id: EntityID<Int>): IntEntity(id) {
     companion object: EntityClass<Int, AccountEntity>(AccountTable)
 
-    val money: MonetaryAmount? by AccountTable.composite_money
+    var money: MonetaryAmount? by AccountTable.composite_money
 
+    // `money` 의 2가지 속성을 따로 접근하게 합니다.
     val amount: BigDecimal? by AccountTable.composite_money.amount
     val currency: CurrencyUnit? by AccountTable.composite_money.currency
 
