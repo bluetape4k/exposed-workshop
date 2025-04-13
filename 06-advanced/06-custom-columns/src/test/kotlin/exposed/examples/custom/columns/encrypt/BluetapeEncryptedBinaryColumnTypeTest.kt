@@ -14,9 +14,12 @@ import io.bluetape4k.support.toUtf8String
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
+import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.selectAll
 import org.junit.jupiter.params.ParameterizedTest
@@ -52,9 +55,10 @@ class BluetapeEncryptedBinaryColumnTypeTest: AbstractExposedTest() {
     private object T1: IntIdTable("T1") {
         val name = varchar("name", 50)
 
-        val aesBinary = bluetapeEncryptedBinary("aes_binary", 1024, Encryptors.AES).nullable()
-        val rc4Binary = bluetapeEncryptedBinary("rc4_binary", 1024, Encryptors.RC4).nullable()
-        val tripleDesBinary = bluetapeEncryptedBinary("triple_des_binary", 1024, Encryptors.TripleDES).nullable()
+        val aesBinary: Column<ByteArray?> = bluetapeEncryptedBinary("aes_binary", 1024, Encryptors.AES).nullable()
+        val rc4Binary: Column<ByteArray?> = bluetapeEncryptedBinary("rc4_binary", 1024, Encryptors.RC4).nullable()
+        val tripleDesBinary: Column<ByteArray?> =
+            bluetapeEncryptedBinary("triple_des_binary", 1024, Encryptors.TripleDES).nullable()
     }
 
     class E1(id: EntityID<Int>): IntEntity(id) {
@@ -90,7 +94,8 @@ class BluetapeEncryptedBinaryColumnTypeTest: AbstractExposedTest() {
                 it[T1.rc4Binary] = bytes
                 it[T1.tripleDesBinary] = bytes
             }
-            flushCache()
+
+            entityCache.clear()
 
             val row = T1.selectAll().where { T1.id eq id }.single()
 
@@ -108,24 +113,25 @@ class BluetapeEncryptedBinaryColumnTypeTest: AbstractExposedTest() {
      * -- Postgres
      * SELECT t1.id, t1."name", t1.aes_binary, t1.rc4_binary, t1.triple_des_binary
      *   FROM t1
-     *  WHERE t1.aes_binary = [B@60bc308b
+     *  WHERE t1.aes_binary = [B@6acb45c1
      * ```
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `DSL 방식 - 암호화된 컬럼으로 검색합니다`(testDB: TestDB) {
         withTables(testDB, T1) {
-            val text = Fakers.randomString(8, 16)
+            val text = "동해물과 백두산이 마르고 닳도록"
             val bytes = text.toUtf8Bytes()
 
-            val id = T1.insertAndGetId {
+            T1.insert {
                 it[T1.name] = "Encryption"
 
                 it[T1.aesBinary] = bytes
                 it[T1.rc4Binary] = bytes
                 it[T1.tripleDesBinary] = bytes
             }
-            flushCache()
+
+            entityCache.clear()
 
             val row = T1.selectAll().where { T1.aesBinary eq bytes }.single()
 

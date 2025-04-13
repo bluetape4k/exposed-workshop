@@ -11,11 +11,11 @@
         </encoder>
     </appender>
 
-    <logger name="exposed.examples.custom.entities" level="DEBUG"/>
-    <logger name="exposed.shared" level="DEBUG"/>
-    <logger name="io.bluetape4k" level="DEBUG"/>
+    <!--    <logger name="exposed.examples.custom.entities" level="DEBUG"/>-->
+    <!--    <logger name="exposed.shared" level="DEBUG"/>-->
+    <!--    <logger name="io.bluetape4k" level="DEBUG"/>-->
 
-    <logger name="Exposed" level="DEBUG"/>
+    <!--    <logger name="Exposed" level="DEBUG"/>-->
 
     <root level="INFO">
         <appender-ref ref="Console"/>

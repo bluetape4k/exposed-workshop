@@ -16,6 +16,7 @@ import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.selectAll
 import org.junit.jupiter.params.ParameterizedTest
@@ -45,9 +46,9 @@ class CompressedBlobColumnTypeTest: AbstractExposedTest() {
      * ```
      */
     private object T1: IntIdTable() {
-        val lzData = compressedBlob("lz4_blob", Compressors.LZ4).nullable()
-        val snappyData = compressedBlob("snappy_blob", Compressors.Snappy).nullable()
-        val zstdData = compressedBlob("zstd_blob", Compressors.Zstd).nullable()
+        val lzData: Column<ByteArray?> = compressedBlob("lz4_blob", Compressors.LZ4).nullable()
+        val snappyData: Column<ByteArray?> = compressedBlob("snappy_blob", Compressors.Snappy).nullable()
+        val zstdData: Column<ByteArray?> = compressedBlob("zstd_blob", Compressors.Zstd).nullable()
     }
 
     class E1(id: EntityID<Int>): IntEntity(id) {

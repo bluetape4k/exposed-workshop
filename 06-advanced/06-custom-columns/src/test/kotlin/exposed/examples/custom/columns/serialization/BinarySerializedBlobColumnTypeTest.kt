@@ -10,7 +10,6 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.insertAndGetId
@@ -50,25 +49,10 @@ class BinarySerializedBlobColumnTypeTest: AbstractExposedTest() {
     private object T1: IntIdTable() {
         val name = varchar("name", 50)
 
-        val lz4Fury = binarySerializedBlob<Embeddable>(
-            "lz4_fury",
-            BinarySerializers.LZ4Fury
-        ).nullable()
-
-        val lz4Kryo = binarySerializedBlob<Embeddable>(
-            "lz4_kryo",
-            BinarySerializers.LZ4Kryo
-        ).nullable()
-
-        val zstdFury = binarySerializedBlob<Embeddable2>(
-            "zstd_fury",
-            BinarySerializers.ZstdFury
-        ).nullable()
-
-        val zstdKryo = binarySerializedBlob<Embeddable2>(
-            "zstd_kryo",
-            BinarySerializers.ZstdKryo
-        ).nullable()
+        val lz4Fury = binarySerializedBlob<Embeddable>("lz4_fury", BinarySerializers.LZ4Fury).nullable()
+        val lz4Kryo = binarySerializedBlob<Embeddable>("lz4_kryo", BinarySerializers.LZ4Kryo).nullable()
+        val zstdFury = binarySerializedBlob<Embeddable2>("zstd_fury", BinarySerializers.ZstdFury).nullable()
+        val zstdKryo = binarySerializedBlob<Embeddable2>("zstd_kryo", BinarySerializers.ZstdKryo).nullable()
     }
 
     class E1(id: EntityID<Int>): IntEntity(id) {
@@ -93,6 +77,7 @@ class BinarySerializedBlobColumnTypeTest: AbstractExposedTest() {
         val address: String,
     ): Serializable
 
+    // Schema evolution을 위해 추가된 필드
     data class Embeddable2(
         val name: String,
         val age: Int,
@@ -111,20 +96,20 @@ class BinarySerializedBlobColumnTypeTest: AbstractExposedTest() {
                 it[T1.name] = "Alice"
 
                 it[T1.lz4Fury] = embedded
-                it[T1.zstdFury] = embedded2
                 it[T1.lz4Kryo] = embedded
+                it[T1.zstdFury] = embedded2
                 it[T1.zstdKryo] = embedded2
             }
-            flushCache()
+
+            entityCache.clear()
 
             val row = T1.selectAll().where { T1.id eq id }.single()
 
             row[T1.id] shouldBeEqualTo id
 
             row[T1.lz4Fury] shouldBeEqualTo embedded
-            row[T1.zstdFury] shouldBeEqualTo embedded2
-
             row[T1.lz4Kryo] shouldBeEqualTo embedded
+            row[T1.zstdFury] shouldBeEqualTo embedded2
             row[T1.zstdKryo] shouldBeEqualTo embedded2
         }
     }
@@ -140,9 +125,8 @@ class BinarySerializedBlobColumnTypeTest: AbstractExposedTest() {
                 name = "Alice"
 
                 lz4Fury = embedded
-                zstdFury = embedded2
-
                 lz4Kryo = embedded
+                zstdFury = embedded2
                 zstdKryo = embedded2
             }
             entityCache.clear()
@@ -152,9 +136,8 @@ class BinarySerializedBlobColumnTypeTest: AbstractExposedTest() {
             loaded shouldBeEqualTo e1
 
             loaded.lz4Fury shouldBeEqualTo embedded
-            loaded.zstdFury shouldBeEqualTo embedded2
-
             loaded.lz4Kryo shouldBeEqualTo embedded
+            loaded.zstdFury shouldBeEqualTo embedded2
             loaded.zstdKryo shouldBeEqualTo embedded2
         }
     }

@@ -25,9 +25,9 @@ typealias SnowflakeEntityID = EntityID<Long>
 /**
  * 엔티티의 `id` 속성을 클라이언트에서 생성한 Snowflake ID 값을 사용하는 Entity
  */
-open class SnowflakeEntity(id: SnowflakeEntityID): LongEntity(id)
+open class SnowflakeIdEntity(id: SnowflakeEntityID): LongEntity(id)
 
-open class SnowflakeEntityClass<out E: SnowflakeEntity>(
+open class SnowflakeEntityClass<out E: SnowflakeIdEntity>(
     table: SnowflakeIdTable,
     entityType: Class<E>? = null,
     entityCtor: ((SnowflakeEntityID) -> E)? = null,

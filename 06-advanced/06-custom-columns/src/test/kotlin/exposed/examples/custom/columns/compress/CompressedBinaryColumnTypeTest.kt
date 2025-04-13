@@ -13,9 +13,9 @@ import org.amshove.kluent.shouldBeNull
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.selectAll
 import org.junit.jupiter.params.ParameterizedTest
@@ -46,17 +46,17 @@ class CompressedBinaryColumnTypeTest: AbstractExposedTest() {
      * ```
      */
     private object T1: IntIdTable() {
-        val lzData = compressedBinary("lz4_data", 4096, Compressors.LZ4).nullable()
-        val snappyData = compressedBinary("snappy_data", 4096, Compressors.Snappy).nullable()
-        val zstdData = compressedBinary("zstd_data", 4096, Compressors.Zstd).nullable()
+        val lzData: Column<ByteArray?> = compressedBinary("lz4_data", 4096, Compressors.LZ4).nullable()
+        val snappyData: Column<ByteArray?> = compressedBinary("snappy_data", 4096, Compressors.Snappy).nullable()
+        val zstdData: Column<ByteArray?> = compressedBinary("zstd_data", 4096, Compressors.Zstd).nullable()
     }
 
     class E1(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<E1>(T1)
 
-        var lz4Data by T1.lzData
-        var snappyData by T1.snappyData
-        var zstdData by T1.zstdData
+        var lz4Data: ByteArray? by T1.lzData
+        var snappyData: ByteArray? by T1.snappyData
+        var zstdData: ByteArray? by T1.zstdData
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = id.hashCode()
@@ -66,17 +66,16 @@ class CompressedBinaryColumnTypeTest: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `DSL 방식으로 데이터를 압축하여 byte array 컬럼에 저장합니다`(testDB: TestDB) {
-        val text = Fakers.randomString(1024, 2048)
-        val bytes = text.toByteArray()
-
         withTables(testDB, T1) {
+            val text = Fakers.randomString(1024, 2048)
+            val bytes = text.toByteArray()
+            
             val id = T1.insertAndGetId {
                 it[lzData] = bytes
                 it[snappyData] = bytes
                 it[zstdData] = bytes
             }
 
-            flushCache()
             entityCache.clear()
 
             val row = T1.selectAll().where { T1.id eq id }.single()
@@ -95,7 +94,6 @@ class CompressedBinaryColumnTypeTest: AbstractExposedTest() {
                 it[snappyData] = null
                 it[zstdData] = null
             }
-            flushCache()
             entityCache.clear()
 
             val row = T1.selectAll().where { T1.id eq id }.single()
@@ -117,7 +115,7 @@ class CompressedBinaryColumnTypeTest: AbstractExposedTest() {
                 snappyData = bytes
                 zstdData = bytes
             }
-            flushCache()
+
             entityCache.clear()
 
             val loaded = E1.findById(e1.id)!!

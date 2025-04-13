@@ -12,9 +12,10 @@ import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.flushCache
+import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.selectAll
 import org.junit.jupiter.params.ParameterizedTest
@@ -50,9 +51,10 @@ class BluetapeEncryptedVarCharColumnTypeTest: AbstractExposedTest() {
     private object T1: IntIdTable("T1") {
         val name = varchar("name", 50)
 
-        val aesString = bluetapeEncryptedVarChar("aes_str", 1024, Encryptors.AES).nullable()
-        val rc4String = bluetapeEncryptedVarChar("rc4_str", 1024, Encryptors.RC4).nullable()
-        val tripleDesString = bluetapeEncryptedVarChar("triple_des_str", 1024, Encryptors.TripleDES).nullable()
+        val aesString: Column<String?> = bluetapeEncryptedVarChar("aes_str", 1024, Encryptors.AES).nullable()
+        val rc4String: Column<String?> = bluetapeEncryptedVarChar("rc4_str", 1024, Encryptors.RC4).nullable()
+        val tripleDesString: Column<String?> =
+            bluetapeEncryptedVarChar("triple_des_str", 1024, Encryptors.TripleDES).nullable()
     }
 
     class E1(id: EntityID<Int>): IntEntity(id) {
@@ -87,7 +89,8 @@ class BluetapeEncryptedVarCharColumnTypeTest: AbstractExposedTest() {
                 it[T1.rc4String] = text
                 it[T1.tripleDesString] = text
             }
-            flushCache()
+
+            entityCache.clear()
 
             val row = T1.selectAll().where { T1.id eq id }.single()
 
@@ -105,14 +108,14 @@ class BluetapeEncryptedVarCharColumnTypeTest: AbstractExposedTest() {
      * -- Postgres
      * SELECT t1.id, t1."name", t1.aes_str, t1.rc4_str, t1.triple_des_str
      *   FROM t1
-     *  WHERE t1.rc4_str = 198zPPatSZC13T5Qt4e_8Q==
+     *  WHERE t1.rc4_str = r4YnE6KiXJTMrB4S0qK-jmVXPKer7d1eJagtKd5LJX2DmOHiCo9LyrVYtZVXy2gG6lx47w1S2WC5vOkq;
      * ```
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `암호화 컬럼으로 검색하기`(testDB: TestDB) {
         withTables(testDB, T1) {
-            val text = Fakers.randomString(8, 16)
+            val text = "동해물과 백두산이 마르고 닳도록"
 
             val id = T1.insertAndGetId {
                 it[T1.name] = "Encryption"
@@ -121,7 +124,8 @@ class BluetapeEncryptedVarCharColumnTypeTest: AbstractExposedTest() {
                 it[T1.rc4String] = text
                 it[T1.tripleDesString] = text
             }
-            flushCache()
+
+            entityCache.clear()
 
             // exposed-crypt 랑 달리 암호화된 값을 그대로 비교합니다.
             val row = T1.selectAll().where { T1.rc4String eq text }.single()
@@ -146,7 +150,8 @@ class BluetapeEncryptedVarCharColumnTypeTest: AbstractExposedTest() {
                 rc4String = text
                 tripleDesString = text
             }
-            flushCache()
+
+            entityCache.clear()
 
             val loaded = E1.findById(e1.id)!!
 
@@ -171,7 +176,7 @@ class BluetapeEncryptedVarCharColumnTypeTest: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `암호화한 컬럼 값을 기준으로 검색합니다`(testDB: TestDB) {
         withTables(testDB, T1) {
-            val text = Fakers.randomString(8, 16)
+            val text = "동해물과 백두산이 마르고 닳도록"
 
             val e1 = E1.new {
                 name = "Encryption"
@@ -180,7 +185,8 @@ class BluetapeEncryptedVarCharColumnTypeTest: AbstractExposedTest() {
                 rc4String = text
                 tripleDesString = text
             }
-            flushCache()
+
+            entityCache.clear()
 
             val loaded = E1.find { T1.aesString eq e1.aesString }.single()
 

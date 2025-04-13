@@ -12,7 +12,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitAll
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.exposed.dao.flushCache
+import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
@@ -66,7 +66,7 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
                     it[T1.age] = Random.nextInt(10, 80)
                 }
             }
-            flushCache()
+            entityCache.clear()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -87,7 +87,28 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
                 this[T1.name] = it.name
                 this[T1.age] = it.age
             }
-            flushCache()
+            entityCache.clear()
+
+            T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
+        }
+    }
+
+    @ParameterizedTest(name = "{0} - {1}개 레코드")
+    @MethodSource("getTestDBAndEntityCount")
+    fun `코루틴 환경에서 레코드를 배치로 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
+        withSuspendedTables(testDB, T1) {
+            val records = List(recordCount) {
+                Record(
+                    name = faker.name().fullName(),
+                    age = Random.nextInt(10, 80)
+                )
+            }
+
+            T1.batchInsert(records) {
+                this[T1.name] = it.name
+                this[T1.age] = it.age
+            }
+            entityCache.clear()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -103,7 +124,7 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
                     age = Random.nextInt(10, 80)
                 }
             }
-            flushCache()
+            entityCache.clear()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -111,7 +132,7 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
 
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource("getTestDBAndEntityCount")
-    fun `Coroutines 환경에서 TimebasedUUID Id를 가진 엔티티를 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
+    fun `코루틴 환경에서 엔티티를 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
         withSuspendedTables(testDB, T1) {
             val tasks: List<Deferred<E1>> = List(recordCount) {
                 suspendedTransactionAsync(Dispatchers.IO) {
@@ -122,7 +143,7 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
                 }
             }
             tasks.awaitAll()
-            flushCache()
+            entityCache.clear()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
         }
