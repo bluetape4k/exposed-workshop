@@ -7,6 +7,7 @@ import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
 import org.jetbrains.exposed.sql.SizedIterable
 
@@ -26,7 +27,7 @@ object BatchSchema {
      * ```
      */
     object BatchTable: IntIdTable("batch") {
-        val name = varchar("name", 255)
+        val name: Column<String> = varchar("name", 255)
     }
 
     /**
@@ -42,10 +43,10 @@ object BatchSchema {
      * ```
      */
     object BatchItemTable: IntIdTable("batch_item") {
-        val name = varchar("name", 255)
+        val name: Column<String> = varchar("name", 255)
 
         // reference to Batch
-        val batchId = reference("batch_id", BatchTable, onDelete = CASCADE).index()
+        val batchId: Column<EntityID<Int>> = reference("batch_id", BatchTable, onDelete = CASCADE).index()
     }
 
     class Batch(id: EntityID<Int>): IntEntity(id) {

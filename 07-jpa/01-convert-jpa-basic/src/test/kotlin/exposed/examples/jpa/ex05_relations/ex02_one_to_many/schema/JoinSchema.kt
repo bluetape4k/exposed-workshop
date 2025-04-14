@@ -1,4 +1,4 @@
-package exposed.examples.jpa.ex05_relations.ex05_jointable
+package exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema
 
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables

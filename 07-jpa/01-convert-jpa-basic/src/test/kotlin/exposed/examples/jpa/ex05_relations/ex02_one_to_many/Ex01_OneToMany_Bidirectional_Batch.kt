@@ -2,6 +2,7 @@ package exposed.examples.jpa.ex05_relations.ex02_one_to_many
 
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.BatchSchema.Batch
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.BatchSchema.BatchItem
+import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.BatchSchema.BatchItemTable
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.BatchSchema.batchTables
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
@@ -11,6 +12,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.dao.with
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.Transaction
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -36,7 +38,10 @@ class Ex01_OneToMany_Bidirectional_Batch: AbstractExposedTest() {
 
             val loaded = Batch.findById(batch1.id)!!
             loaded shouldBeEqualTo batch1
-            loaded.items.toList() shouldBeEqualTo batchItems
+            // items 조회시 쿼리를 실행합니다.
+            loaded.items
+                .orderBy(BatchItemTable.id to SortOrder.ASC)
+                .toList() shouldBeEqualTo batchItems
 
             // eager loading
             val loaded2 = Batch.all().with(Batch::items).single()

@@ -1,8 +1,7 @@
-package exposed.examples.jpa.ex05_relations.ex05_jointable
+package exposed.examples.jpa.ex05_relations.ex02_one_to_many
 
-import exposed.examples.jpa.ex05_relations.ex05_jointable.JoinSchema.User
-import exposed.examples.jpa.ex05_relations.ex05_jointable.JoinSchema.newUser
-import exposed.examples.jpa.ex05_relations.ex05_jointable.JoinSchema.withJoinSchema
+import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.JoinSchema
+import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.JoinSchema.User
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
@@ -18,7 +17,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * JPA 의 one-to-many 관계를 @JoinTable 방식을 Exposed 로 구현 한 예
  */
-class Ex01_JoinTable: AbstractExposedTest() {
+class Ex05_OneToMany_JoinTable: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -40,8 +39,8 @@ class Ex01_JoinTable: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `create user with address by join table`(testDB: TestDB) {
-        withJoinSchema(testDB) {
-            val user = newUser()
+        JoinSchema.withJoinSchema(testDB) {
+            val user = JoinSchema.newUser()
             entityCache.clear()
 
             /**

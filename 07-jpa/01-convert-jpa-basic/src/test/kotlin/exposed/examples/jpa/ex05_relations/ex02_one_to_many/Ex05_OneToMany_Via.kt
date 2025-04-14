@@ -24,6 +24,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertFailsWith
 
+/**
+ * JPA 의 one-to-many 관계를 @JoinTable 방식을 Exposed 로 구현 한 예l
+ */
 class Ex05_OneToMany_Via: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -199,7 +202,73 @@ class Ex05_OneToMany_Via: AbstractExposedTest() {
              *  WHERE cloud_snowflakes.cloud_id = 1
              * ```
              */
+
+            /**
+             * ```sql
+             * -- Postgres
+             * SELECT COUNT(*)
+             *   FROM snowflakes INNER JOIN cloud_snowflakes ON snowflakes.id = cloud_snowflakes.snowflake_id
+             *  WHERE cloud_snowflakes.cloud_id = 1
+             * ```
+             */
+
+            /**
+             * ```sql
+             * -- Postgres
+             * SELECT COUNT(*)
+             *   FROM snowflakes INNER JOIN cloud_snowflakes ON snowflakes.id = cloud_snowflakes.snowflake_id
+             *  WHERE cloud_snowflakes.cloud_id = 1
+             * ```
+             */
+
+            /**
+             * ```sql
+             * -- Postgres
+             * SELECT COUNT(*)
+             *   FROM snowflakes INNER JOIN cloud_snowflakes ON snowflakes.id = cloud_snowflakes.snowflake_id
+             *  WHERE cloud_snowflakes.cloud_id = 1
+             * ```
+             */
             cloud3.producedSnowflakes.count() shouldBeEqualTo 2L
+
+            /**
+             * ```sql
+             * -- Postgres
+             * SELECT snowflakes.id,
+             *        snowflakes."name",
+             *        snowflakes.description,
+             *        cloud_snowflakes.snowflake_id,
+             *        cloud_snowflakes.cloud_id
+             *   FROM snowflakes INNER JOIN cloud_snowflakes ON snowflakes.id = cloud_snowflakes.snowflake_id
+             *  WHERE cloud_snowflakes.cloud_id = 1
+             * ```
+             */
+
+            /**
+             * ```sql
+             * -- Postgres
+             * SELECT snowflakes.id,
+             *        snowflakes."name",
+             *        snowflakes.description,
+             *        cloud_snowflakes.snowflake_id,
+             *        cloud_snowflakes.cloud_id
+             *   FROM snowflakes INNER JOIN cloud_snowflakes ON snowflakes.id = cloud_snowflakes.snowflake_id
+             *  WHERE cloud_snowflakes.cloud_id = 1
+             * ```
+             */
+
+            /**
+             * ```sql
+             * -- Postgres
+             * SELECT snowflakes.id,
+             *        snowflakes."name",
+             *        snowflakes.description,
+             *        cloud_snowflakes.snowflake_id,
+             *        cloud_snowflakes.cloud_id
+             *   FROM snowflakes INNER JOIN cloud_snowflakes ON snowflakes.id = cloud_snowflakes.snowflake_id
+             *  WHERE cloud_snowflakes.cloud_id = 1
+             * ```
+             */
 
             /**
              * ```sql
