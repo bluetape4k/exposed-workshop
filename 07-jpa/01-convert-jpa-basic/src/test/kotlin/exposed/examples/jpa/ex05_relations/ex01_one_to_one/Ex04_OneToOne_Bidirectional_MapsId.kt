@@ -18,6 +18,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IdTable
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.dao.load
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
 import org.jetbrains.exposed.sql.selectAll
 import org.junit.jupiter.params.ParameterizedTest
@@ -40,7 +41,7 @@ class Ex04_OneToOne_Bidirectional_MapsId: AbstractExposedTest() {
      * ```
      */
     object Authors: IntIdTable("authors") {
-        val name = varchar("name", 255)
+        val name: Column<String> = varchar("name", 255)
     }
 
     /**
@@ -57,8 +58,8 @@ class Ex04_OneToOne_Bidirectional_MapsId: AbstractExposedTest() {
      */
     object Pictures: IdTable<Int>("pictures") {
         // @MapsId 와 같다. (Authors.id 를 Id로 사용한다)
-        override val id = reference("author_id", Authors, onDelete = CASCADE, onUpdate = CASCADE)
-        val path = varchar("path", 255)
+        override val id: Column<EntityID<Int>> = reference("author_id", Authors, onDelete = CASCADE, onUpdate = CASCADE)
+        val path: Column<String> = varchar("path", 255)
 
         override val primaryKey = PrimaryKey(Pictures.id)
     }
@@ -77,8 +78,8 @@ class Ex04_OneToOne_Bidirectional_MapsId: AbstractExposedTest() {
      */
     object Biographys: IdTable<Int>("biographys") {
         // @MapsId 와 같다. (Authors.id 를 Id로 사용한다)
-        override val id = reference("author_id", Authors, onDelete = CASCADE, onUpdate = CASCADE)
-        val infomation = varchar("information", 255).nullable()
+        override val id: Column<EntityID<Int>> = reference("author_id", Authors, onDelete = CASCADE, onUpdate = CASCADE)
+        val infomation: Column<String?> = varchar("information", 255).nullable()
 
         override val primaryKey = PrimaryKey(Biographys.id)
     }
@@ -183,9 +184,9 @@ class Ex04_OneToOne_Bidirectional_MapsId: AbstractExposedTest() {
             entityCache.clear()
 
             // Load by join
-            val authors = Authors.innerJoin(
-                Pictures
-            ).innerJoin(Biographys)
+            val authors = Authors
+                .innerJoin(Pictures)
+                .innerJoin(Biographys)
                 .selectAll()
                 .where { Authors.id eq author.id }
                 .map { Author.wrapRow(it) }

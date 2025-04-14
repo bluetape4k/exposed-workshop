@@ -9,6 +9,7 @@ import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import io.bluetape4k.support.requireNotBlank
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldNotBeNull
@@ -57,7 +58,15 @@ class Ex01_CustomId: AbstractExposedTest() {
     }
 
     class CustomIdEntity(id: EntityID<Email>): Entity<Email>(id) {
-        companion object: EntityClass<Email, CustomIdEntity>(CustomIdTable)
+        companion object: EntityClass<Email, CustomIdEntity>(CustomIdTable) {
+            // 편의를 위해 `new` 메서드를 추가합니다.
+            fun new(emailString: String, block: CustomIdEntity.() -> Unit): CustomIdEntity {
+                emailString.requireNotBlank("emailString")
+                val email = Email(emailString)
+                require(email.isValid) { "Invalid email: $email" }
+                return new(email, block)
+            }
+        }
 
         var name by CustomIdTable.name
         var ssn by CustomIdTable.ssn
@@ -75,13 +84,9 @@ class Ex01_CustomId: AbstractExposedTest() {
      * [CustomIdEntity]의 constructor 인 `new` 를 overriding 해도 됩니다.
      */
     private fun newEntity(): CustomIdEntity {
-        val email = Email(faker.internet().emailAddress())
-        val name = faker.name().name()
-        val ssn = Ssn(faker.idNumber().ssnValid())
-
-        return CustomIdEntity.new(email) {
-            this.name = name
-            this.ssn = ssn
+        return CustomIdEntity.new(faker.internet().emailAddress()) {
+            this.name = faker.name().name()
+            this.ssn = Ssn(faker.idNumber().ssnValid())
         }
     }
 
@@ -180,7 +185,9 @@ class Ex01_CustomId: AbstractExposedTest() {
 
             entityCache.clear()
 
-            val loaded = CustomIdEntity.find { CustomIdTable.ssn eq entity.ssn }.singleOrNull()
+            val loaded = CustomIdEntity
+                .find { CustomIdTable.ssn eq entity.ssn }
+                .singleOrNull()
             log.debug { "loaded=$loaded" }
             loaded shouldBeEqualTo entity
         }

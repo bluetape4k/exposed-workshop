@@ -12,9 +12,11 @@ import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
+import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.exceptions.ExposedSQLException
+import org.jetbrains.exposed.sql.Column
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertFailsWith
@@ -42,8 +44,8 @@ class Ex01_OneToOne_Unidirectional: AbstractExposedTest() {
      * ```
      */
     object Cavaliers: IntIdTable("cavalier") {
-        val name = varchar("name", 255)
-        val horseId = optReference("horse_id", Horses)
+        val name: Column<String> = varchar("name", 255)
+        val horseId: Column<EntityID<Int>?> = optReference("horse_id", Horses)
     }
 
     /**
@@ -56,14 +58,14 @@ class Ex01_OneToOne_Unidirectional: AbstractExposedTest() {
      * ```
      */
     object Horses: IntIdTable("horse") {
-        val name = varchar("name", 255)
+        val name: Column<String> = varchar("name", 255)
     }
 
     class Cavalier(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<Cavalier>(Cavaliers)
 
-        var name by Cavaliers.name
-        var horse by Horse optionalReferencedOn Cavaliers.horseId
+        var name: String by Cavaliers.name
+        var horse: Horse? by Horse optionalReferencedOn Cavaliers.horseId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -75,7 +77,7 @@ class Ex01_OneToOne_Unidirectional: AbstractExposedTest() {
     class Horse(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<Horse>(Horses)
 
-        var name by Horses.name
+        var name: String by Horses.name
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -96,6 +98,8 @@ class Ex01_OneToOne_Unidirectional: AbstractExposedTest() {
                 this.horse = horse
             }
 
+            entityCache.clear()
+
             val loaded = Cavalier.findById(cavalier.id)!!
             loaded shouldBeEqualTo cavalier
             loaded.horse shouldBeEqualTo horse
@@ -111,6 +115,7 @@ class Ex01_OneToOne_Unidirectional: AbstractExposedTest() {
                 }
             }
             cavalier.delete()
+
             // SELECT COUNT(cavalier.id) FROM cavalier
             Cavalier.count() shouldBeEqualTo 0L
 

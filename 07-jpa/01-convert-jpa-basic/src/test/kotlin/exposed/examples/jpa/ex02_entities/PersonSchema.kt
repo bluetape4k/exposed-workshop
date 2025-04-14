@@ -11,6 +11,7 @@ import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.javatime.date
@@ -31,10 +32,10 @@ object PersonSchema {
      * ```
      */
     object AddressTable: LongIdTable("addresses") {
-        val street = varchar("street", 255)
-        val city = varchar("city", 255)
-        val state = varchar("state", 2)
-        val zip = varchar("zip", 10).nullable()
+        val street: Column<String> = varchar("street", 255)
+        val city: Column<String> = varchar("city", 255)
+        val state: Column<String> = varchar("state", 2)
+        val zip: Column<String?> = varchar("zip", 10).nullable()
     }
 
     /**
@@ -53,12 +54,12 @@ object PersonSchema {
      * );
      */
     object PersonTable: LongIdTable("persons") {
-        val firstName = varchar("first_name", 50)
-        val lastName = varchar("last_name", 50)
-        val birthDate = date("birth_date")
-        val employeed = bool("employeed").default(true)
-        val occupation = varchar("occupation", 255).nullable()
-        val addressId = reference("address_id", AddressTable)  // many to one
+        val firstName: Column<String> = varchar("first_name", 50)
+        val lastName: Column<String> = varchar("last_name", 50)
+        val birthDate: Column<LocalDate> = date("birth_date")
+        val employeed: Column<Boolean> = bool("employeed").default(true)
+        val occupation: Column<String?> = varchar("occupation", 255).nullable()
+        val addressId: Column<EntityID<Long>> = reference("address_id", AddressTable)  // many to one
     }
 
     /**
@@ -81,10 +82,10 @@ object PersonSchema {
     class Address(id: EntityID<Long>): LongEntity(id), java.io.Serializable {
         companion object: LongEntityClass<Address>(AddressTable)
 
-        var street by AddressTable.street
-        var city by AddressTable.city
-        var state by AddressTable.state
-        var zip by AddressTable.zip
+        var street: String by AddressTable.street
+        var city: String by AddressTable.city
+        var state: String by AddressTable.state
+        var zip: String? by AddressTable.zip
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -99,12 +100,12 @@ object PersonSchema {
     class Person(id: EntityID<Long>): LongEntity(id), java.io.Serializable {
         companion object: LongEntityClass<Person>(PersonTable)
 
-        var firstName by PersonTable.firstName
-        var lastName by PersonTable.lastName
-        var birthDate by PersonTable.birthDate
-        var employeed by PersonTable.employeed
-        var occupation by PersonTable.occupation
-        var address by Address referencedOn PersonTable.addressId
+        var firstName: String by PersonTable.firstName
+        var lastName: String by PersonTable.lastName
+        var birthDate: LocalDate by PersonTable.birthDate
+        var employeed: Boolean by PersonTable.employeed
+        var occupation: String? by PersonTable.occupation
+        var address: Address by Address referencedOn PersonTable.addressId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -149,7 +150,7 @@ object PersonSchema {
 
 
     @Suppress("UnusedReceiverParameter")
-    fun AbstractExposedTest.withPersonsAndAddress(
+    fun AbstractExposedTest.withPersonAndAddress(
         testDB: TestDB,
         statement: Transaction.(
             persons: PersonSchema.PersonTable,

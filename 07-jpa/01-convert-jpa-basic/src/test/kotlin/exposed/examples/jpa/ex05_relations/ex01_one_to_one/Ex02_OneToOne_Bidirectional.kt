@@ -13,9 +13,10 @@ import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.dao.load
+import org.jetbrains.exposed.sql.Column
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -40,8 +41,8 @@ class Ex02_OneToOne_Bidirectional: AbstractExposedTest() {
      * ```
      */
     object HusbandTable: IntIdTable("husband") {
-        val name = varchar("name", 255)
-        val wifeId = optReference("wife_id", WifeTable)
+        val name: Column<String> = varchar("name", 255)
+        val wifeId: Column<EntityID<Int>?> = optReference("wife_id", WifeTable)
     }
 
     /**
@@ -54,18 +55,18 @@ class Ex02_OneToOne_Bidirectional: AbstractExposedTest() {
      * ```
      */
     object WifeTable: IntIdTable("wife") {
-        val name = varchar("name", 255)
+        val name: Column<String> = varchar("name", 255)
     }
 
     class Husband(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<Husband>(HusbandTable)
 
-        var name by HusbandTable.name
+        var name: String by HusbandTable.name
 
         /**
          * one-to-one bidirectional (husband -> wife)
          */
-        var wife by Wife optionalReferencedOn HusbandTable.wifeId
+        var wife: Wife? by Wife optionalReferencedOn HusbandTable.wifeId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -84,7 +85,7 @@ class Ex02_OneToOne_Bidirectional: AbstractExposedTest() {
         /**
          * one-to-one bidirectional (wife -> husband)
          */
-        val husband by Husband optionalBackReferencedOn HusbandTable.wifeId
+        val husband: Husband? by Husband optionalBackReferencedOn HusbandTable.wifeId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -106,7 +107,7 @@ class Ex02_OneToOne_Bidirectional: AbstractExposedTest() {
                 this.name = "Tom"
                 this.wife = wife
             }
-            flushCache()
+
             entityCache.clear()
 
             // SELECT wife.id, wife."name" FROM wife WHERE wife.id = 1
@@ -116,7 +117,7 @@ class Ex02_OneToOne_Bidirectional: AbstractExposedTest() {
 
             entityCache.clear()
 
-            val husband2 = Husband.findById(husband.id)!!
+            val husband2 = Husband.findById(husband.id)!!.load(Husband::wife)
             husband2 shouldBeEqualTo husband
             husband2.wife shouldBeEqualTo wife
 

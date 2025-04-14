@@ -3,7 +3,7 @@ package exposed.examples.jpa.ex02_entities
 import exposed.examples.jpa.ex02_entities.PersonSchema.Address
 import exposed.examples.jpa.ex02_entities.PersonSchema.Person
 import exposed.examples.jpa.ex02_entities.PersonSchema.PersonRecord
-import exposed.examples.jpa.ex02_entities.PersonSchema.withPersonsAndAddress
+import exposed.examples.jpa.ex02_entities.PersonSchema.withPersonAndAddress
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
@@ -51,7 +51,7 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `count with where clause`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             // DSL 사용한 방법
             persons.selectAll()
                 .where { persons.id less 3L }
@@ -78,7 +78,7 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `count all records`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
 
             // SQL DSL 이용
             persons.selectAll().count() shouldBeEqualTo 6L
@@ -97,7 +97,7 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `count lastName`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             persons
                 .select(persons.lastName.count())
                 .single()[persons.lastName.count()] shouldBeEqualTo 6L
@@ -114,7 +114,7 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `count distinct lastName`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
 
             // COUNT(DISTINCT persons.last_name)
             val counter = persons.lastName.countDistinct()
@@ -144,7 +144,7 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `delete by id`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             val pId: Long = insertPerson()
 
             // DELETE FROM persons WHERE persons.id = 7
@@ -165,11 +165,13 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `delete by where and`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             val id1 = insertPerson()
             val id2 = insertPerson()
             val id3 = insertPerson()
 
+            entityCache.clear()
+            
             // DELETE FROM PERSONS WHERE (PERSONS.ID > $id1) AND (PERSONS.OCCUPATION IS NULL)
             persons
                 .deleteWhere {
@@ -188,10 +190,12 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `delete by where or`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             val id1 = insertPerson()
             val id2 = insertPerson()
             val id3 = insertPerson()
+
+            entityCache.clear()
 
             persons
                 .deleteWhere {
@@ -211,7 +215,7 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `delete by where or and`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             val id1 = insertPerson()
             val id2 = insertPerson()
             val id3 = insertPerson()
@@ -235,7 +239,7 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `delete by where and or`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             val id1 = insertPerson()
             val id2 = insertPerson()
             val id3 = insertPerson()
@@ -261,7 +265,7 @@ class Ex02_Person: AbstractExposedTest() {
         // PostgreSQL doesn't support LIMIT in DELETE clause
         Assumptions.assumeTrue { testDB !in TestDB.ALL_POSTGRES_LIKE }
 
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             val id1 = insertPerson()
             val id2 = insertPerson()
             val id3 = insertPerson()
@@ -291,7 +295,7 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert entity`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             val person = Person.new(100) {
                 firstName = "John"
                 lastName = "Doe"
@@ -327,7 +331,7 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert record`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             val personId = persons.insertAndGetId {
                 it[firstName] = "John"
                 it[lastName] = "Doe"
@@ -355,7 +359,7 @@ class Ex02_Person: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `batchInsert 01`(testDB: TestDB) {
 
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             val record1 = PersonRecord(null, "Joe", "Jones", LocalDate.now(), true, "Developer", 1L)
             val record2 = PersonRecord(null, "Sarah", "Smith", LocalDate.now(), true, "Architect", 2L)
 
@@ -391,7 +395,7 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert select example 01`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             persons.selectAll().count() shouldBeEqualTo 6L
 
             val inserted = persons
@@ -434,7 +438,7 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert select example 02`(testDB: TestDB) {
-        withPersonsAndAddress(testDB) { persons, _ ->
+        withPersonAndAddress(testDB) { persons, _ ->
             persons.selectAll().count() shouldBeEqualTo 6L
 
             // PersonTaleDML 은 PersonTable과 물리적으로 같은 테이블을 사용하지만,

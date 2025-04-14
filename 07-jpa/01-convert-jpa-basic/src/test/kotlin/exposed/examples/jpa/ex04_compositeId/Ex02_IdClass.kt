@@ -44,7 +44,7 @@ class Ex02_IdClass: AbstractExposedTest() {
      * );
      * ```
      */
-    object CarTable: CompositeIdTable("car_table") {
+    object IdClassCarTable: CompositeIdTable("car_table") {
         val brand = varchar("car_brand", 64).entityId()
         val carYear = integer("car_year").entityId()
         val serialNo = varchar("serial_no", 32).nullable()
@@ -53,7 +53,7 @@ class Ex02_IdClass: AbstractExposedTest() {
     }
 
     class IdClassCar(id: EntityID<CompositeID>): CompositeEntity(id) {
-        companion object: CompositeEntityClass<IdClassCar>(CarTable) {
+        companion object: CompositeEntityClass<IdClassCar>(IdClassCarTable) {
             /**
              * CompositeID를 이용한 Entity를 생성합니다.
              */
@@ -67,15 +67,15 @@ class Ex02_IdClass: AbstractExposedTest() {
 
             fun carCompositeIdOf(brand: String, carYear: Int): CompositeID {
                 return CompositeID {
-                    it[CarTable.brand] = brand
-                    it[CarTable.carYear] = carYear
+                    it[IdClassCarTable.brand] = brand
+                    it[IdClassCarTable.carYear] = carYear
                 }
             }
         }
 
-        val brand by CarTable.brand
-        val carYear by CarTable.carYear
-        var serialNo by CarTable.serialNo
+        val brand by IdClassCarTable.brand
+        val carYear by IdClassCarTable.carYear
+        var serialNo by IdClassCarTable.serialNo
 
         val carIdentifier get() = CarIdentifier(id.value)
 
@@ -86,9 +86,9 @@ class Ex02_IdClass: AbstractExposedTest() {
             .toString()
     }
 
-    data class CarIdentifier(val compositeId: CompositeID): EntityID<CompositeID>(CarTable, compositeId) {
-        val brand: String get() = compositeId[CarTable.brand].value
-        val carYear: Int get() = compositeId[CarTable.carYear].value
+    data class CarIdentifier(val compositeId: CompositeID): EntityID<CompositeID>(IdClassCarTable, compositeId) {
+        val brand: String get() = compositeId[IdClassCarTable.brand].value
+        val carYear: Int get() = compositeId[IdClassCarTable.carYear].value
     }
 
     fun newIdClassCar(): IdClassCar {
@@ -106,13 +106,13 @@ class Ex02_IdClass: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `composite id entity`(testDB: TestDB) {
-        withTables(testDB, CarTable) {
+        withTables(testDB, IdClassCarTable) {
             /**
              * CompositeID 를 사용하여 EntityID 를 생성합니다.
              */
             val compositeId = CompositeID {
-                it[CarTable.brand] = faker.company().name()
-                it[CarTable.carYear] = faker.random().nextInt(1950, 2023)
+                it[IdClassCarTable.brand] = faker.company().name()
+                it[IdClassCarTable.carYear] = faker.random().nextInt(1950, 2023)
             }
             val car1 = IdClassCar.new(compositeId) {
                 serialNo = faker.random().nextLong().toString(32)
@@ -144,7 +144,7 @@ class Ex02_IdClass: AbstractExposedTest() {
             allCars shouldHaveSize 2
 
 
-            val searched1 = IdClassCar.find { CarTable.brand eq car1.brand }.single()
+            val searched1 = IdClassCar.find { IdClassCarTable.brand eq car1.brand }.single()
             searched1 shouldBeEqualTo car1
 
             /**
@@ -155,7 +155,7 @@ class Ex02_IdClass: AbstractExposedTest() {
              *    AND (car_table.car_year = 1983)
              * ```
              */
-            val deletedCount = CarTable.deleteWhere { CarTable.id eq compositeId }
+            val deletedCount = IdClassCarTable.deleteWhere { IdClassCarTable.id eq compositeId }
             deletedCount shouldBeEqualTo 1
         }
     }
@@ -163,28 +163,28 @@ class Ex02_IdClass: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `compoisite id with DSL`(testDB: TestDB) {
-        withTables(testDB, CarTable) {
+        withTables(testDB, IdClassCarTable) {
 
             val brand = faker.company().name()
             val carYear = faker.random().nextInt(1950, 2023)
             val serialNo = faker.random().nextLong().toString(32)
 
-            val id = CarTable.insertAndGetId {
-                it[CarTable.brand] = brand
-                it[CarTable.carYear] = carYear
-                it[CarTable.serialNo] = serialNo
+            val id = IdClassCarTable.insertAndGetId {
+                it[IdClassCarTable.brand] = brand
+                it[IdClassCarTable.carYear] = carYear
+                it[IdClassCarTable.serialNo] = serialNo
             }
             entityCache.clear()
 
-            val result = CarTable.selectAll().single()
+            val result = IdClassCarTable.selectAll().single()
 
-            result[CarTable.serialNo] shouldBeEqualTo serialNo
+            result[IdClassCarTable.serialNo] shouldBeEqualTo serialNo
 
-            val idResult: EntityID<CompositeID> = result[CarTable.id]
+            val idResult: EntityID<CompositeID> = result[IdClassCarTable.id]
             assertIs<EntityID<CompositeID>>(idResult)
 
-            val resultBrand: EntityID<String> = idResult.value[CarTable.brand]
-            val resultCarYear: EntityID<Int> = idResult.value[CarTable.carYear]
+            val resultBrand: EntityID<String> = idResult.value[IdClassCarTable.brand]
+            val resultCarYear: EntityID<Int> = idResult.value[IdClassCarTable.carYear]
 
             resultBrand.value shouldBeEqualTo brand
             resultCarYear.value shouldBeEqualTo carYear
@@ -202,18 +202,18 @@ class Ex02_IdClass: AbstractExposedTest() {
              *    AND (car_table.car_year = ?)
              * ```
              */
-            val dslQuery = CarTable.select(CarTable.id)
-                .where { CarTable.id eq idResult }
+            val dslQuery = IdClassCarTable.select(IdClassCarTable.id)
+                .where { IdClassCarTable.id eq idResult }
                 .prepareSQL(this, true)
 
             log.debug { "DSL Query: $dslQuery" }
 
             val entityId = EntityID(
                 CompositeID {
-                    it[CarTable.brand] = brand
-                    it[CarTable.carYear] = carYear
+                    it[IdClassCarTable.brand] = brand
+                    it[IdClassCarTable.carYear] = carYear
                 },
-                CarTable
+                IdClassCarTable
             )
 
             /**
@@ -228,13 +228,13 @@ class Ex02_IdClass: AbstractExposedTest() {
              *    AND (car_table.car_year = 1967)
              * ```
              */
-            CarTable.selectAll().where { CarTable.id eq entityId }.toList() shouldHaveSize 1
+            IdClassCarTable.selectAll().where { IdClassCarTable.id eq entityId }.toList() shouldHaveSize 1
 
             /**
              * Composite ID의 부분 컬럼만 사용하여 조회합니다.
              */
-            CarTable.selectAll()
-                .where { CarTable.brand neq resultBrand }
+            IdClassCarTable.selectAll()
+                .where { IdClassCarTable.brand neq resultBrand }
                 .count() shouldBeEqualTo 0L
 
         }
