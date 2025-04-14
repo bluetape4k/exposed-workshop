@@ -22,4 +22,8 @@ dependencies {
     implementation(Libs.bluetape4k_coroutines)
     implementation(Libs.kotlinx_coroutines_core)
     testImplementation(Libs.kotlinx_coroutines_test)
+
+    // Validator
+    implementation(Libs.jakarta_validation_api)
+    implementation(Libs.hibernate_validator)
 }

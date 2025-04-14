@@ -3,10 +3,12 @@ package exposed.examples.jpa.ex01_simple
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
+import io.bluetape4k.support.requireNotBlank
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SizedIterable
 import java.io.Serializable
@@ -29,18 +31,25 @@ object SimpleSchema {
      * ```
      */
     object SimpleTable: LongIdTable("simple_entity") {
-        val name = varchar("name", 255).uniqueIndex()
-        val description = text("description").nullable()
+        val name: Column<String> = varchar("name", 255).uniqueIndex()
+        val description: Column<String?> = text("description").nullable()
     }
 
     /**
      * Entity
      */
     class SimpleEntity(id: EntityID<Long>): LongEntity(id) {
-        companion object: LongEntityClass<SimpleEntity>(SimpleTable)
+        companion object: LongEntityClass<SimpleEntity>(SimpleTable) {
+            fun new(name: String): SimpleEntity {
+                name.requireNotBlank("name")
+                return SimpleEntity.new {
+                    this.name = name
+                }
+            }
+        }
 
-        var name by SimpleTable.name
-        var description by SimpleTable.description
+        var name: String by SimpleTable.name
+        var description: String? by SimpleTable.description
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()

@@ -6,13 +6,14 @@ import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
+import io.bluetape4k.support.requireNotBlank
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeEqualTo
 import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.selectAll
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertFailsWith
@@ -28,10 +29,15 @@ class Ex02_Simple_DAO: AbstractExposedTest() {
             val name1 = faker.name().name()
             val name2 = faker.name().name()
 
-            val entity1 = SimpleEntity.new { name = name1 }
-            val entity2 = SimpleEntity.new { name = name2 }
+            val entity1 = SimpleEntity.new {
+                name1.requireNotBlank("name1")
+                name = name1
+            }
+            val entity2 = SimpleEntity.new {
+                name2.requireNotBlank("name2")
+                name = name2
+            }
 
-            flushCache()
             entityCache.clear()
 
             val persisted1 = SimpleEntity.findById(entity1.id)!!
@@ -40,6 +46,13 @@ class Ex02_Simple_DAO: AbstractExposedTest() {
             persisted1 shouldBeEqualTo entity1
             persisted2 shouldBeEqualTo entity2
             persisted1 shouldNotBeEqualTo persisted2
+        }
+    }
+
+    @Test
+    fun `if name is empty, throw exception`() {
+        assertFailsWith<IllegalArgumentException> {
+            SimpleEntity.new("")
         }
     }
 
@@ -78,12 +91,6 @@ class Ex02_Simple_DAO: AbstractExposedTest() {
                 this[SimpleTable.description] = faker.lorem().paragraph()
             }
 
-            /**
-             * ```sql
-             * SELECT COUNT(*) FROM simple_entity;
-             * SELECT COUNT(*) FROM simple_entity;
-             * ```
-             */
             // SQL DSL 로 조회
             SimpleTable.selectAll().count() shouldBeEqualTo names.size.toLong()
 
