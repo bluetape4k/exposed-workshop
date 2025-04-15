@@ -1,5 +1,6 @@
 package exposed.examples.jpa.ex05_relations.ex02_one_to_many
 
+import exposed.examples.jpa.ex05_relations.ex02_one_to_many.Ex05_OneToMany_Via.CloudSnowflakeTable.cloudId
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
@@ -17,9 +18,14 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
+import org.jetbrains.exposed.sql.SizedCollection
 import org.jetbrains.exposed.sql.SizedIterable
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertFailsWith
@@ -122,7 +128,7 @@ class Ex05_OneToMany_Via: AbstractExposedTest() {
         var length by CloudTable.length
 
         // one-to-many unidirectional association
-        val producedSnowflakes: SizedIterable<Snowflake> by Snowflake via CloudSnowflakeTable
+        var producedSnowflakes: SizedIterable<Snowflake> by Snowflake via CloudSnowflakeTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -156,6 +162,36 @@ class Ex05_OneToMany_Via: AbstractExposedTest() {
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `DAO 방식으로 관계 설정`(testDB: TestDB) {
+        withTables(testDB, CloudTable, SnowflakeTable, CloudSnowflakeTable) {
+            val snowflake1 = fakeSnowflake()
+            val snowflake2 = fakeSnowflake()
+            val cloud = fakeCound()
+            cloud.producedSnowflakes = SizedCollection(snowflake1, snowflake2)
+
+            entityCache.clear()
+
+            val cloud2 = Cloud.findById(cloud.id)!!
+            cloud2.producedSnowflakes.count() shouldBeEqualTo 2L
+            cloud2.producedSnowflakes.toSet() shouldContainSame setOf(snowflake1, snowflake2)
+
+            // Remove snowflake
+            val snowflakes: List<Snowflake> = cloud2.producedSnowflakes.toList()
+            cloud2.producedSnowflakes = SizedCollection(snowflakes.drop(1))
+
+            entityCache.clear()
+
+            // 관계된 snowflakes 개수 조회
+            cloud2.producedSnowflakes.count() shouldBeEqualTo 1L
+
+            // 기존 정보는 삭제되지 않음
+            Cloud.count() shouldBeEqualTo 1L
+            Snowflake.count() shouldBeEqualTo 2L
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `one-to-many unidirectional association`(testDB: TestDB) {
         withTables(testDB, CloudTable, SnowflakeTable, CloudSnowflakeTable) {
             val snowflake1 = fakeSnowflake()
@@ -170,17 +206,26 @@ class Ex05_OneToMany_Via: AbstractExposedTest() {
                 it[cloudId] = cloud.id
                 it[snowflakeId] = snowflake2.id
             }
-
-            flushCache()
             entityCache.clear()
 
             val cloud2 = Cloud.findById(cloud.id)!!
             cloud2.producedSnowflakes.count() shouldBeEqualTo 2L
             cloud2.producedSnowflakes.toSet() shouldContainSame setOf(snowflake1, snowflake2)
 
-            // Remove snowflake
-            val snowflakeToRemove = cloud2.producedSnowflakes.first()
-            snowflakeToRemove.delete()
+            // Remove first relation
+            CloudSnowflakeTable
+                .deleteWhere {
+                    (cloudId eq cloud.id) and (snowflakeId eq snowflake1.id)
+                }
+
+            // 관계된 snowflakes 개수 조회 (한개 삭제, 한개 추가)
+            CloudSnowflakeTable.selectAll()
+                .where { cloudId eq cloud.id }
+                .count() shouldBeEqualTo 1L
+
+            // 기존 정보는 삭제되지 않음 
+            Cloud.count() shouldBeEqualTo 1L
+            Snowflake.count() shouldBeEqualTo 2L
 
             val snowflake3 = fakeSnowflake()
             CloudSnowflakeTable.insert {
@@ -190,36 +235,12 @@ class Ex05_OneToMany_Via: AbstractExposedTest() {
 
             entityCache.clear()
 
-            Snowflake.count() shouldBeEqualTo 2L
+            // 관계된 snowflakes 개수 조회 (한개 삭제, 한개 추가)
+            CloudSnowflakeTable.selectAll().count() shouldBeEqualTo 2L
+
+            Snowflake.count() shouldBeEqualTo 3L
 
             val cloud3 = Cloud.findById(cloud.id)!!
-
-            /**
-             * ```sql
-             * -- Postgres
-             * SELECT COUNT(*)
-             *   FROM snowflakes INNER JOIN cloud_snowflakes ON snowflakes.id = cloud_snowflakes.snowflake_id
-             *  WHERE cloud_snowflakes.cloud_id = 1
-             * ```
-             */
-
-            /**
-             * ```sql
-             * -- Postgres
-             * SELECT COUNT(*)
-             *   FROM snowflakes INNER JOIN cloud_snowflakes ON snowflakes.id = cloud_snowflakes.snowflake_id
-             *  WHERE cloud_snowflakes.cloud_id = 1
-             * ```
-             */
-
-            /**
-             * ```sql
-             * -- Postgres
-             * SELECT COUNT(*)
-             *   FROM snowflakes INNER JOIN cloud_snowflakes ON snowflakes.id = cloud_snowflakes.snowflake_id
-             *  WHERE cloud_snowflakes.cloud_id = 1
-             * ```
-             */
 
             /**
              * ```sql
@@ -243,50 +264,10 @@ class Ex05_OneToMany_Via: AbstractExposedTest() {
              *  WHERE cloud_snowflakes.cloud_id = 1
              * ```
              */
-
-            /**
-             * ```sql
-             * -- Postgres
-             * SELECT snowflakes.id,
-             *        snowflakes."name",
-             *        snowflakes.description,
-             *        cloud_snowflakes.snowflake_id,
-             *        cloud_snowflakes.cloud_id
-             *   FROM snowflakes INNER JOIN cloud_snowflakes ON snowflakes.id = cloud_snowflakes.snowflake_id
-             *  WHERE cloud_snowflakes.cloud_id = 1
-             * ```
-             */
-
-            /**
-             * ```sql
-             * -- Postgres
-             * SELECT snowflakes.id,
-             *        snowflakes."name",
-             *        snowflakes.description,
-             *        cloud_snowflakes.snowflake_id,
-             *        cloud_snowflakes.cloud_id
-             *   FROM snowflakes INNER JOIN cloud_snowflakes ON snowflakes.id = cloud_snowflakes.snowflake_id
-             *  WHERE cloud_snowflakes.cloud_id = 1
-             * ```
-             */
-
-            /**
-             * ```sql
-             * -- Postgres
-             * SELECT snowflakes.id,
-             *        snowflakes."name",
-             *        snowflakes.description,
-             *        cloud_snowflakes.snowflake_id,
-             *        cloud_snowflakes.cloud_id
-             *   FROM snowflakes INNER JOIN cloud_snowflakes ON snowflakes.id = cloud_snowflakes.snowflake_id
-             *  WHERE cloud_snowflakes.cloud_id = 1
-             * ```
-             */
             cloud3.producedSnowflakes.toSet() shouldContainSame setOf(
-                snowflake1,
                 snowflake2,
                 snowflake3
-            ) - snowflakeToRemove
+            )
         }
     }
 

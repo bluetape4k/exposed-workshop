@@ -58,4 +58,8 @@ class Ex01_CompositeId: AbstractExposedTest() {
             SchemaUtils.drop(missingIdsTable)
         }
     }
+
+    // --------------------------------------------------------------------
+
+
 }

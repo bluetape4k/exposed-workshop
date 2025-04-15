@@ -16,6 +16,7 @@ import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
 import org.jetbrains.exposed.sql.SizedIterable
@@ -31,6 +32,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.io.Serializable
 import java.math.BigDecimal
+import kotlin.test.assertFailsWith
 
 /**
  * one-to-many relation 에서 many 쪽이 set 으로 매핑된 경우
@@ -116,6 +118,25 @@ class Ex06_OneToMany_Set: AbstractExposedTest() {
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `중복 입찰을 허용하지 않아야 합니다`(testDB: TestDB) {
+        withTables(testDB, BiddingItemTable, BidTable) {
+            val item1 = BiddingItem.new { name = "TV" }
+            val bid1 = Bid.new { amount = 100.toBigDecimal(); item = item1 }
+            val bid2 = Bid.new { amount = 200.toBigDecimal(); item = item1 }
+            val bid3 = Bid.new { amount = 300.toBigDecimal(); item = item1 }
+
+            entityCache.clear()
+
+            // 입찰 정보가 중복되지 않도록 unique key를 설정했기 때문에, 같은 입찰 정보로 다시 입찰을 시도하면 예외가 발생한다.
+            assertFailsWith<ExposedSQLException> {
+                Bid.new(bid1.id.value) { amount = 100.toBigDecimal(); item = item1 }
+                entityCache.clear()
+            }
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `one-to-many set with bidirectional`(testDB: TestDB) {
         withTables(testDB, BiddingItemTable, BidTable) {
             val item1 = BiddingItem.new { name = "TV" }
@@ -123,17 +144,17 @@ class Ex06_OneToMany_Set: AbstractExposedTest() {
             val bid2 = Bid.new { amount = 200.toBigDecimal(); item = item1 }
             val bid3 = Bid.new { amount = 300.toBigDecimal(); item = item1 }
 
-            flushCache()
             entityCache.clear()
 
             val loaded = BiddingItem.findById(item1.id)!!
             loaded shouldBeEqualTo item1
+            // 경매의 입찰 정보를 확인
             loaded.bids.toSet() shouldContainSame setOf(bid1, bid2, bid3)
 
+            // 입찰 정보 중 하나를 삭제 
             val bidToRemove = loaded.bids.first()
             bidToRemove.delete()
 
-            flushCache()
             entityCache.clear()
 
             val loaded2 = BiddingItem.findById(item1.id)!!
@@ -143,13 +164,14 @@ class Ex06_OneToMany_Set: AbstractExposedTest() {
             // SELECT bids.id, bids.amount, bids.item_id FROM bids WHERE bids.item_id = 1
             loaded2.bids.toSet() shouldContainSame setOf(bid1, bid2, bid3) - bidToRemove
 
-            log.debug { "delete bidding item" }
+            log.debug { "경매 정보 삭제 (입찰 정보도 삭제되어야 합니다." }
             loaded2.delete()
+
             entityCache.clear()
 
-            BiddingItem.all().count() shouldBeEqualTo 0L
+            BiddingItem.count() shouldBeEqualTo 0L
             // onDelete = CASCADE로 인해 bids도 삭제된다.
-            Bid.all().count() shouldBeEqualTo 0L
+            Bid.count() shouldBeEqualTo 0L
         }
     }
 

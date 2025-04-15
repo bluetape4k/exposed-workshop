@@ -13,7 +13,6 @@ import org.amshove.kluent.shouldContainSame
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
@@ -48,29 +47,27 @@ class Ex07_OneToMany_Map: AbstractExposedTest() {
             car.addOption("Audio", option2)
             car.addOption("Wheel", option3)
 
-            flushCache()
             entityCache.clear()
 
-            // eager loading
-            val loaded = Car.findById(car.id)!!
-            loaded shouldBeEqualTo car
-            car.options.values shouldContainSame listOf(option1, option2, option3)
-            val options = car.options
+            // lazy loading
+            val loadedCar = Car.findById(car.id)!!
+            loadedCar shouldBeEqualTo car
+            loadedCar.options.values shouldContainSame car.options.values
+
+            // 맵 내부를 Access 하기 위해서는 이렇게 변수로 할당 한 후 사용해야 한다.
+            val options: Map<String, CarOption> = car.options
             options["Navigation"] shouldBeEqualTo option1
             options["Audio"] shouldBeEqualTo option2
             options["Wheel"] shouldBeEqualTo option3
 
-            // Remove Option
+            // Remove Option (option2 삭제)
             car.removeOption("Audio")
-            entityCache.clear()
 
-            val loaded2 = Car.findById(car.id)!!
-            loaded2 shouldBeEqualTo car
-            loaded2.options.values shouldContainSame listOf(option1, option3)
+            // options 는 매번 읽어온다 
+            car.options.values shouldContainSame listOf(option1, option3)
 
             // Remove Car
             car.delete()
-            entityCache.clear()
 
             CarTable.selectAll().count() shouldBeEqualTo 0L
             CarOptionTable.selectAll().count() shouldBeEqualTo 0L
@@ -96,12 +93,13 @@ class Ex07_OneToMany_Map: AbstractExposedTest() {
             loaded shouldBeEqualTo car
             loaded.parts.values shouldContainSame listOf(engine, misson, fueltank)
 
+            // CarPart 엔티티를 삭제한 경우 (CarPartMapTable에 cascade 되어 있어야 한다)
             fueltank.delete()
-            entityCache.clear()
+            car.parts.values shouldContainSame listOf(engine, misson)
 
-            val loaded2 = Car.findById(car.id)!!
-            loaded2 shouldBeEqualTo car
-            loaded2.parts.values shouldContainSame listOf(engine, misson)
+            // removePart 함수를 이용해 관계만 끊는다 (part 는 보존, CarPartMapTable에서만 삭제)
+            car.removePart("mission")
+            car.parts.values shouldContainSame listOf(engine)
 
             car.delete()
             entityCache.clear()
@@ -109,7 +107,7 @@ class Ex07_OneToMany_Map: AbstractExposedTest() {
             CarTable.selectAll().count() shouldBeEqualTo 0L
             CarPartMapTable.selectAll().count() shouldBeEqualTo 0L
 
-            // `CarPart` 엔티티는 삭제되지 않는다.
+            // `CarPart` 엔티티는 삭제되지 않는다. (fueltank 만 삭제됨)
             CarPartTable.selectAll().count() shouldBeEqualTo 2L
         }
     }
@@ -168,7 +166,7 @@ class Ex07_OneToMany_Map: AbstractExposedTest() {
      */
     object CarPartTable: IntIdTable("car_part") {
         val name = varchar("part_name", 255)
-        val descriptin = text("description").nullable()
+        val description = text("description").nullable()
     }
 
     /**
@@ -264,7 +262,7 @@ class Ex07_OneToMany_Map: AbstractExposedTest() {
         companion object: IntEntityClass<CarPart>(CarPartTable)
 
         var name by CarPartTable.name
-        var description by CarPartTable.descriptin
+        var description by CarPartTable.description
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()

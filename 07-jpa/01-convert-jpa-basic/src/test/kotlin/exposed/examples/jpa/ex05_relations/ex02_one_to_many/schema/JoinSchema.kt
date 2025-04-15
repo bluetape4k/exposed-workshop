@@ -47,7 +47,7 @@ object JoinSchema {
     /**
      * ```sql
      * -- Postgres
-     * CREATE TABLE IF NOT EXISTS user_address (
+     * CREATE TABLE IF NOT EXISTS join_user_address (
      *      id SERIAL PRIMARY KEY,
      *      user_id INT NOT NULL,
      *      address_id INT NOT NULL,
@@ -60,13 +60,13 @@ object JoinSchema {
      *      REFERENCES join_address(id) ON DELETE CASCADE ON UPDATE CASCADE
      * );
      *
-     * CREATE INDEX user_address_user_id ON user_address (user_id);
+     * CREATE INDEX user_address_user_id ON join_user_address (user_id);
      *
-     * ALTER TABLE user_address
+     * ALTER TABLE join_user_address
      *      ADD CONSTRAINT user_address_addr_type_user_id_unique UNIQUE (addr_type, user_id);
      * ```
      */
-    object UserAddressTable: IntIdTable("user_address") {
+    object UserAddressTable: IntIdTable("join_user_address") {
         val userId = reference("user_id", UserTable, onDelete = CASCADE, onUpdate = CASCADE).index()
         val addressId = reference("address_id", AddressTable, onDelete = CASCADE, onUpdate = CASCADE)
 

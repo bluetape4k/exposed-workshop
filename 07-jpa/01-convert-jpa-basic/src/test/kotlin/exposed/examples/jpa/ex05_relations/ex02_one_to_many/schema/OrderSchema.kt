@@ -57,7 +57,9 @@ object OrderSchema {
         var no by OrderTable.no
 
         // one-to-many relationship
-        val items: SizedIterable<OrderItem> by OrderItem.referrersOn(OrderItemTable.orderId)
+        val items: SizedIterable<OrderItem> by OrderItem
+            .referrersOn(OrderItemTable.orderId)
+            .orderBy(OrderItemTable.name)
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()

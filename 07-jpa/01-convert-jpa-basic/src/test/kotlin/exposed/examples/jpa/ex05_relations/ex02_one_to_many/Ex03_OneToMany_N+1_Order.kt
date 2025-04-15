@@ -94,9 +94,13 @@ class `Ex03_OneToMany_N+1_Order`: AbstractExposedTest() {
              * SELECT orders.id, orders."no", order_items.id, order_items."name", order_items.price, order_items.order_id
              *   FROM orders
              *      INNER JOIN order_items ON orders.id = order_items.order_id
+             *  WHERE orders.id = 1;
              * ```
              */
-            val query: Query = OrderTable.innerJoin(OrderItemTable).selectAll()
+            val query: Query = OrderTable.innerJoin(OrderItemTable)
+                .selectAll()
+                .where { OrderTable.id eq order1.id }
+            
             // `wrapRows` 는 Query를 실행해서 엔티티로 빌드합니다.
             val orderItems: List<OrderItem> = OrderItem.wrapRows(query).toList()
             orderItems shouldHaveSize 3
@@ -110,7 +114,6 @@ class `Ex03_OneToMany_N+1_Order`: AbstractExposedTest() {
         withTables(testDB, *ordersTables) {
             val order1 = createSamples(Random.nextInt(100, 999))
 
-            flushCache()
             entityCache.clear()
 
             val item1 = order1.items.first()
