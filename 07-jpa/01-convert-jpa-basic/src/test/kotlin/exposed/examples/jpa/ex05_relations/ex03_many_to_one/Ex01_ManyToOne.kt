@@ -1,5 +1,6 @@
 package exposed.examples.jpa.ex05_relations.ex03_many_to_one
 
+import exposed.examples.jpa.ex05_relations.ex03_many_to_one.ManyToOneSchema.Beer
 import exposed.examples.jpa.ex05_relations.ex03_many_to_one.ManyToOneSchema.Brewery
 import exposed.examples.jpa.ex05_relations.ex03_many_to_one.ManyToOneSchema.Jug
 import exposed.examples.jpa.ex05_relations.ex03_many_to_one.ManyToOneSchema.JugMeter
@@ -20,6 +21,7 @@ import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.dao.with
+import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.deleteWhere
@@ -93,11 +95,11 @@ class Ex01_ManyToOne: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `many-to-one bidirectional eager loading`(testDB: TestDB) {
         withBeerTables(testDB) { brewerys, beers ->
-            val berlin = Brewery.findById(1)!!
+            val berlin: Brewery = Brewery.findById(1)!!
 
             // Eager loading
-            val loadedBrewerys = Brewery.all().with(Brewery::beers)
-            val loaded = loadedBrewerys.first()
+            val loadedBrewerys: SizedIterable<Brewery> = Brewery.all().with(Brewery::beers)
+            val loaded: Brewery = loadedBrewerys.first()
             loaded shouldBeEqualTo berlin
             loaded.beers shouldHaveSize 3
             log.debug { "loaded=$loaded" }
@@ -105,6 +107,45 @@ class Ex01_ManyToOne: AbstractExposedTest() {
             loadedBrewerys.forEach {
                 it.beers.size() shouldBeGreaterThan 0
             }
+        }
+    }
+
+    /**
+     * Lazy loading
+     * ```sql
+     * -- Postgres
+     * SELECT beer.id, beer."name", beer.brewery_id FROM beer WHERE beer.id = 1
+     * SELECT beer.id, beer."name", beer.brewery_id FROM beer WHERE beer.id = 2
+     * -- Access to berr1.brewery
+     * SELECT brewery.id, brewery."name" FROM brewery WHERE brewery.id = 1
+     * ```
+     *
+     * Eager loading
+     * ```sql
+     * -- Postgres
+     * SELECT beer.id, beer."name", beer.brewery_id FROM beer WHERE beer.id = 1
+     * SELECT brewery.id, brewery."name" FROM brewery WHERE brewery.id = 1
+     * SELECT beer.id, beer."name", beer.brewery_id FROM beer WHERE beer.id = 2
+     *  Access to berr1.brewery
+     * ```
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `many-to-one reference eager loading`(testDB: TestDB) {
+        log.debug { "Lazy loading brewery" }
+        withBeerTables(testDB) { brewerys, beers ->
+            val beer1 = Beer.findById(1)!!
+            val beer2 = Beer.findById(2)!!
+            log.debug { "Access to berr1.brewery" }
+            beer2.brewery shouldBeEqualTo beer1.brewery
+        }
+        log.debug { "Eager loading brewery" }
+        withBeerTables(testDB) { brewerys, beers ->
+            // Eager loading
+            val beer1 = Beer.findById(1)!!.load(Beer::brewery)
+            val beer2 = Beer.findById(2)!!
+            log.debug { "Access to berr1.brewery" }
+            beer2.brewery shouldBeEqualTo beer1.brewery
         }
     }
 

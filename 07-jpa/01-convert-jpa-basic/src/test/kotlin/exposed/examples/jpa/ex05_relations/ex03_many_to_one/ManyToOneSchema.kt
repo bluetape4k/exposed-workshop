@@ -91,7 +91,6 @@ object ManyToOneSchema {
             val beer4 = Beer.new { name = "Black"; this.brewery = brewery2 }
             val beer5 = Beer.new { name = "White"; this.brewery = brewery2 }
 
-            commit()
             entityCache.clear()
 
             statement(BreweryTable, BeerTable)
