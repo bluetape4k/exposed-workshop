@@ -1,4 +1,4 @@
-package exposed.examples.jpa.ex05_cte
+package exposed.examples.jpa.ex06_cte
 
 import exposed.examples.jpa.ex04_tree.TreeNodeSchema.TreeNodeTable
 import exposed.examples.jpa.ex04_tree.TreeNodeSchema.buildTreeNodes
