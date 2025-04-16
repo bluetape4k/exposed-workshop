@@ -53,16 +53,16 @@ class Ex01_Connection: AbstractExposedTest() {
             }
 
             val idColumnMeta = if ((db.dialect as H2Dialect).isSecondVersion) {
-                ColumnMetadata("ID", Types.BIGINT, false, 64, null, true, null)
+                ColumnMetadata("ID", Types.BIGINT, "BIGINT", false, 64, null, true, null)
             } else {
-                ColumnMetadata("ID", Types.BIGINT, false, 19, null, true, null)
+                ColumnMetadata("ID", Types.BIGINT, "BIGINT", false, 19, null, true, null)
             }
 
             val expected = setOf(
                 idColumnMeta,
-                ColumnMetadata("FIRSTNAME", Types.VARCHAR, true, 80, null, false, null),
-                ColumnMetadata("LASTNAME", Types.VARCHAR, false, 42, null, false, "Doe"),
-                ColumnMetadata("AGE", Types.INTEGER, false, 32, null, false, "18"),
+                ColumnMetadata("FIRSTNAME", Types.VARCHAR, "VARCHAR(80)", true, 80, null, false, null),
+                ColumnMetadata("LASTNAME", Types.VARCHAR, "VARCHAR(42)", false, 42, null, false, "Doe"),
+                ColumnMetadata("AGE", Types.INTEGER, "INT", false, 32, null, false, "18"),
             )
 
             columnMetadata shouldContainSame expected
