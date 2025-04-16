@@ -34,7 +34,9 @@ class Ex01_SubQuery: AbstractExposedTest() {
 
     /**
      * `notEqSubQuery` 를 이용한 예제
+     * 
      * ```sql
+     * -- Postgres
      * SELECT persons.id,
      *        persons.first_name,
      *        persons.last_name,
@@ -70,18 +72,6 @@ class Ex01_SubQuery: AbstractExposedTest() {
     /**
      * ```sql
      * -- Postgres:
-     * SELECT persons.id,
-     *        persons.first_name,
-     *        persons.last_name,
-     *        persons.birth_date,
-     *        persons.employeed,
-     *        persons.occupation,
-     *        persons.address_id
-     *   FROM persons
-     *  WHERE persons.id = (SELECT MAX(persons.id) FROM persons)
-     * ```
-     * ```sql
-     * -- MySQL V8:
      * SELECT persons.id,
      *        persons.first_name,
      *        persons.last_name,
@@ -163,6 +153,7 @@ class Ex01_SubQuery: AbstractExposedTest() {
 
     /**
      * ```sql
+     * -- Postgres
      * SELECT persons.id,
      *        persons.first_name,
      *        persons.last_name,

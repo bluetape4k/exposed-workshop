@@ -7,6 +7,7 @@ import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.Table
 
@@ -25,8 +26,8 @@ object BookSchema {
      * ```
      */
     object AuthorTable: LongIdTable("authors") {
-        val name = varchar("name", 50)
-        val description = text("description")
+        val name: Column<String> = varchar("name", 50)
+        val description: Column<String?> = text("description").nullable()
     }
 
     /**
@@ -42,8 +43,8 @@ object BookSchema {
      * ```
      */
     object BookTable: LongIdTable("books") {
-        val title = varchar("title", 255)
-        val description = text("description")
+        val title: Column<String> = varchar("title", 255)
+        val description: Column<String?> = text("description").nullable()
     }
 
     /**

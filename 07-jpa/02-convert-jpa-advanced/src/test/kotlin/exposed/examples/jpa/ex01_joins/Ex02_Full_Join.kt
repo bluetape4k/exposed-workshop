@@ -10,11 +10,13 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.alias
+import org.jetbrains.exposed.sql.fullJoin
 import org.jetbrains.exposed.sql.innerJoin
 import org.jetbrains.exposed.sql.leftJoin
 import org.jetbrains.exposed.sql.rightJoin
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.union
+import org.jetbrains.exposed.sql.vendors.PostgreSQLDialect
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -41,24 +43,9 @@ class Ex02_Full_Join: AbstractExposedTest() {
      *
      * ```sql
      * -- Postgres
-     * SELECT om.id order_id,
-     *        ol.quantity,
-     *        im.id item_id,
-     *        im.description
-     *   FROM orders om
-     *      INNER JOIN order_lines ol ON (om.id = ol.order_id)
-     *       LEFT JOIN items im ON (ol.item_id = im.id)
-     *
-     *  UNION
-     *
-     * SELECT om.id order_id,
-     *        ol.quantity,
-     *        im.id item_id,
-     *        im.description
-     *   FROM orders om
-     *      INNER JOIN order_lines ol ON (om.id = ol.order_id)
-     *      RIGHT JOIN items im ON (ol.item_id = im.id)
-     *
+     * SELECT om.id order_id, ol.quantity, im.id item_id, im.description
+     *   FROM orders om FULL JOIN order_lines ol ON  (om.id = ol.order_id)
+     *                  FULL JOIN items im ON  (ol.item_id = im.id)
      *  ORDER BY order_id ASC NULLS FIRST,
      *           item_id ASC NULLS FIRST
      * ```
@@ -104,17 +91,28 @@ class Ex02_Full_Join: AbstractExposedTest() {
                 itemIdAlias,
                 im[items.description]
             )
+            val fullJoinQuery = when (this.db.dialect) {
+                is PostgreSQLDialect -> {
+                    om
+                        .fullJoin(ol) { om[orders.id] eq ol[orderLines.orderId] }
+                        .fullJoin(im) { ol[orderLines.itemId] eq im[items.id] }
+                        .select(slice)
+                }
+                else -> {
+                    // MySQL 은 FULL JOIN 을 지원하지 않으므로, LEFT JOIN 과 RIGHT JOIN 을 UNION 한다
+                    val leftJoin = om
+                        .innerJoin(ol) { om[orders.id] eq ol[orderLines.orderId] }
+                        .leftJoin(im) { ol[orderLines.itemId] eq im[items.id] }
 
-            val leftJoin = om
-                .innerJoin(ol) { om[orders.id] eq ol[orderLines.orderId] }
-                .leftJoin(im) { ol[orderLines.itemId] eq im[items.id] }
+                    val rightJoin = om
+                        .innerJoin(ol) { om[orders.id] eq ol[orderLines.orderId] }
+                        .rightJoin(im) { ol[orderLines.itemId] eq im[items.id] }
 
-            val rightJoin = om
-                .innerJoin(ol) { om[orders.id] eq ol[orderLines.orderId] }
-                .rightJoin(im) { ol[orderLines.itemId] eq im[items.id] }
+                    leftJoin.select(slice).union(rightJoin.select(slice))
+                }
+            }
 
-
-            val records = leftJoin.select(slice).union(rightJoin.select(slice))
+            val records: List<OrderRecord> = fullJoinQuery
                 .orderBy(orderIdAlias, SortOrder.ASC_NULLS_FIRST)
                 .orderBy(itemIdAlias, SortOrder.ASC_NULLS_FIRST)
                 .map {
@@ -140,38 +138,19 @@ class Ex02_Full_Join: AbstractExposedTest() {
      *
      * ```sql
      * -- Postgres
-     * SELECT om.id order_id,
-     *        ol.quantity,
-     *        im.id item_id,
-     *        im.description
-     *   FROM (SELECT orders.id, orders.order_date FROM orders) om
-     *      INNER JOIN (SELECT order_lines.id,
-     *                         order_lines.order_id,
-     *                         order_lines.item_id,
-     *                         order_lines.line_number,
-     *                         order_lines.quantity
-     *                    FROM order_lines) ol ON  (om.id = ol.order_id)
-     *       LEFT JOIN (SELECT items.id,
-     *                         items.description
-     *                    FROM items) im ON  (ol.item_id = im.id)
-     *
-     *  UNION
-     *
-     * SELECT om.id order_id,
-     *        ol.quantity,
-     *        im.id item_id,
-     *        im.description
-     *   FROM (SELECT orders.id, orders.order_date FROM orders) om
-     *      INNER JOIN (SELECT order_lines.id,
-     *                         order_lines.order_id,
-     *                         order_lines.item_id,
-     *                         order_lines.line_number,
-     *                         order_lines.quantity
-     *                    FROM order_lines) ol ON  (om.id = ol.order_id)
-     *      RIGHT JOIN (SELECT items.id,
-     *                         items.description
-     *                    FROM items) im ON  (ol.item_id = im.id)
-     *
+     * SELECT om.id order_id, ol.quantity, im.id item_id, im.description
+     *   FROM (SELECT orders.id,
+     *                orders.order_date
+     *           FROM orders) om
+     *           FULL JOIN (SELECT order_lines.id,
+     *                             order_lines.order_id,
+     *                             order_lines.item_id,
+     *                             order_lines.line_number,
+     *                             order_lines.quantity
+     *                        FROM order_lines) ol ON  (om.id = ol.order_id)
+     *           FULL JOIN (SELECT items.id,
+     *                             items.description
+     *                        FROM items) im ON  (ol.item_id = im.id)
      *   ORDER BY order_id ASC NULLS FIRST,
      *            item_id ASC NULLS FIRST
      * ```
@@ -233,18 +212,28 @@ class Ex02_Full_Join: AbstractExposedTest() {
                 itemIdAlias,
                 im[items.description]
             )
+            val fullJoinQuery = when (this.db.dialect) {
+                is PostgreSQLDialect -> {
+                    om
+                        .fullJoin(ol) { om[orders.id] eq ol[orderLines.orderId] }
+                        .fullJoin(im) { ol[orderLines.itemId] eq im[items.id] }
+                        .select(slice)
+                }
+                else -> {
+                    // MySQL 은 FULL JOIN 을 지원하지 않으므로, LEFT JOIN 과 RIGHT JOIN 을 UNION 한다
+                    val leftJoin = om
+                        .innerJoin(ol) { om[orders.id] eq ol[orderLines.orderId] }
+                        .leftJoin(im) { ol[orderLines.itemId] eq im[items.id] }
 
-            val leftJoin = om
-                .innerJoin(ol) { om[orders.id] eq ol[orderLines.orderId] }
-                .leftJoin(im) { ol[orderLines.itemId] eq im[items.id] }
+                    val rightJoin = om
+                        .innerJoin(ol) { om[orders.id] eq ol[orderLines.orderId] }
+                        .rightJoin(im) { ol[orderLines.itemId] eq im[items.id] }
 
-            val rightJoin = om
-                .innerJoin(ol) { om[orders.id] eq ol[orderLines.orderId] }
-                .rightJoin(im) { ol[orderLines.itemId] eq im[items.id] }
+                    leftJoin.select(slice).union(rightJoin.select(slice))
+                }
+            }
 
-            val records = leftJoin
-                .select(slice)
-                .union(rightJoin.select(slice))
+            val records = fullJoinQuery
                 .orderBy(orderIdAlias, SortOrder.ASC_NULLS_FIRST)
                 .orderBy(itemIdAlias, SortOrder.ASC_NULLS_FIRST)
                 .map {
@@ -270,24 +259,13 @@ class Ex02_Full_Join: AbstractExposedTest() {
      *
      * ```sql
      * -- Postgres
-     * SELECT orders.id order_id,
+     * SELECT orders.id
+     *        order_id,
      *        order_lines.quantity,
      *        items.id item_id,
      *        items.description
-     *   FROM orders
-     *      INNER JOIN order_lines ON (orders.id = order_lines.order_id)
-     *      LEFT JOIN items ON (order_lines.item_id = items.id)
-     *
-     *  UNION
-     *
-     * SELECT orders.id order_id,
-     *        order_lines.quantity,
-     *        items.id item_id,
-     *        items.description
-     *   FROM orders
-     *      INNER JOIN order_lines ON (orders.id = order_lines.order_id)
-     *      RIGHT JOIN items ON (order_lines.item_id = items.id)
-     *
+     *   FROM orders FULL JOIN order_lines ON (orders.id = order_lines.order_id)
+     *               FULL JOIN items ON (order_lines.item_id = items.id)
      *  ORDER BY order_id ASC NULLS FIRST,
      *           item_id ASC NULLS FIRST
      * ```
@@ -321,18 +299,9 @@ class Ex02_Full_Join: AbstractExposedTest() {
     fun `full join without aliases`(testDB: TestDB) {
         withOrdersTables(testDB) { orders, _, items, orderLines, _ ->
 
-            val leftJoin = orders
-                .innerJoin(orderLines) { orders.id eq orderLines.orderId }
-                .leftJoin(items) { orderLines.itemId eq items.id }
-
-            val rightJoin = orders
-                .innerJoin(orderLines) { orders.id eq orderLines.orderId }
-                .rightJoin(items) { orderLines.itemId eq items.id }
-
             // Ordering 을 위해 alias 를 사용한다
             val orderIdAlias = orders.id.alias("order_id")
             val itemIdAlias = items.id.alias("item_id")
-
 
             val slice = listOf(
                 orderIdAlias,
@@ -341,9 +310,26 @@ class Ex02_Full_Join: AbstractExposedTest() {
                 items.description
             )
 
-            val records = leftJoin
-                .select(slice)
-                .union(rightJoin.select(slice))
+            val fullJoinQuery = when (this.db.dialect) {
+                is PostgreSQLDialect -> {
+                    orders
+                        .fullJoin(orderLines) { orders.id eq orderLines.orderId }
+                        .fullJoin(items) { orderLines.itemId eq items.id }
+                        .select(slice)
+                }
+                else -> {
+                    val leftJoin = orders
+                        .innerJoin(orderLines) { orders.id eq orderLines.orderId }
+                        .leftJoin(items) { orderLines.itemId eq items.id }
+                    val rightJoin = orders
+                        .innerJoin(orderLines) { orders.id eq orderLines.orderId }
+                        .rightJoin(items) { orderLines.itemId eq items.id }
+
+                    leftJoin.select(slice).union(rightJoin.select(slice))
+                }
+            }
+
+            val records = fullJoinQuery
                 .orderBy(orderIdAlias, SortOrder.ASC_NULLS_FIRST)
                 .orderBy(itemIdAlias, SortOrder.ASC_NULLS_FIRST)
                 .map {

@@ -7,6 +7,7 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
+import org.jetbrains.exposed.sql.QueryAlias
 import org.jetbrains.exposed.sql.alias
 import org.jetbrains.exposed.sql.innerJoin
 import org.jetbrains.exposed.sql.selectAll
@@ -43,13 +44,13 @@ class Ex06_Convering_Index: AbstractExposedTest() {
         
         withPersonsAndAddress(testDB) { persons, _ ->
             // convering index 에 해당하는 subquery
-            val p2 = persons
+            val indexQuery: QueryAlias = persons
                 .select(persons.id)
                 .where { persons.addressId eq 2L }
                 .alias("p2")
 
             val rows = persons
-                .innerJoin(p2) { persons.id eq p2[persons.id] }
+                .innerJoin(indexQuery) { persons.id eq indexQuery[persons.id] }
                 .selectAll()
                 .where { persons.id less 5L }
                 .toList()
@@ -87,13 +88,13 @@ class Ex06_Convering_Index: AbstractExposedTest() {
         
         withPersonsAndAddress(testDB) { persons, _ ->
             // Subquery 용 alias
-            val p2 = persons.select(persons.id)
+            val indexQuery: QueryAlias = persons.select(persons.id)
                 .where { persons.addressId eq 2L }
                 .orderBy(persons.id)
                 .alias("p2")
 
             val rows = persons
-                .innerJoin(p2) { persons.id eq p2[persons.id] }
+                .innerJoin(indexQuery) { persons.id eq indexQuery[persons.id] }
                 .selectAll()
                 .where { persons.id less 5L }
                 .toList()

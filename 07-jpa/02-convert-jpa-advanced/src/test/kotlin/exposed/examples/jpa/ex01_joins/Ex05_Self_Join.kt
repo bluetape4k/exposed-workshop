@@ -1,11 +1,14 @@
 package exposed.examples.jpa.ex01_joins
 
+import exposed.shared.mapping.OrderSchema.UserTable
 import exposed.shared.mapping.OrderSchema.withOrdersTables
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
+import org.jetbrains.exposed.sql.Alias
+import org.jetbrains.exposed.sql.Join
 import org.jetbrains.exposed.sql.alias
 import org.jetbrains.exposed.sql.innerJoin
 import org.junit.jupiter.api.Assumptions
@@ -51,10 +54,10 @@ class Ex05_Self_Join: AbstractExposedTest() {
         Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB }
 
         withOrdersTables(testDB) { _, _, _, _, users ->
-            val u1 = users.alias("u1")
-            val u2 = users.alias("u2")
+            val u1: Alias<UserTable> = users.alias("u1")
+            val u2: Alias<UserTable> = users.alias("u2")
 
-            val join = u1
+            val join: Join = u1
                 .innerJoin(u2) { u1[users.id] eq u2[users.parentId] }
 
             val rows = join
@@ -102,11 +105,11 @@ class Ex05_Self_Join: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `self join with new alias`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB }
-        
-        withOrdersTables(testDB) { _, _, _, _, users ->
-            val u2 = users.alias("u2")
 
-            val join = users.innerJoin(u2) { users.id eq u2[users.parentId] }
+        withOrdersTables(testDB) { _, _, _, _, users ->
+            val u2: Alias<UserTable> = users.alias("u2")
+
+            val join: Join = users.innerJoin(u2) { users.id eq u2[users.parentId] }
 
             val rows = join
                 .select(

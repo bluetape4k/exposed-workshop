@@ -54,8 +54,8 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
      */
     object BillingTable: IntIdTable("billing") {
 
-        val owner = varchar("owner", 255).index()
-        val swift = varchar("swift", 255)
+        val owner = varchar("owner", 64).index()
+        val swift = varchar("swift", 16)
 
         /**
          * 지불 방식 ([CreditCard] or [BankAccount])을 구분하는 컬럼
@@ -63,7 +63,7 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
         val dtype = enumerationByName<BillingType>("dtype", 32).default(BillingType.UNKNOWN)
 
         // CreditCard (공통 속성을 제외하면 모든 속성은 nullable 이어야 합니다)
-        val cardNumber = varchar("card_number", 32).nullable()
+        val cardNumber = varchar("card_number", 24).nullable()
         val companyName = varchar("company_name", 255).nullable()
         val expMonth = integer("exp_month").nullable()
         val expYear = integer("exp_year").nullable()

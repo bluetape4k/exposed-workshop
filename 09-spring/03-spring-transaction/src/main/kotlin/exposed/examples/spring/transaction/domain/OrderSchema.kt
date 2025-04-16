@@ -7,18 +7,19 @@ import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
+import org.jetbrains.exposed.sql.Column
 import java.util.*
 
 object OrderSchema {
 
     object CustomerTable: UUIDTable("customers") {
-        val name = varchar("name", 255).uniqueIndex()
-        val mobile = varchar("mobile", 255).nullable()
+        val name: Column<String> = varchar("name", 255).uniqueIndex()
+        val mobile: Column<String?> = varchar("mobile", 255).nullable()
     }
 
     object OrderTable: UUIDTable("orders") {
-        val customer = reference("customer", CustomerTable)
-        val productName = varchar("product_name", 255)
+        val customerId: Column<EntityID<UUID>> = reference("customer_id", CustomerTable)
+        val productName: Column<String> = varchar("product_name", 255)
     }
 
     class CustomerEntity(id: EntityID<UUID>): UUIDEntity(id) {
@@ -38,7 +39,7 @@ object OrderSchema {
     class OrderEntity(id: EntityID<UUID>): UUIDEntity(id) {
         companion object: UUIDEntityClass<OrderEntity>(OrderTable)
 
-        var customer: CustomerEntity by CustomerEntity referencedOn OrderTable.customer  // many-to-one
+        var customer: CustomerEntity by CustomerEntity referencedOn OrderTable.customerId  // many-to-one
         var productName: String by OrderTable.productName
 
         override fun equals(other: Any?): Boolean = idEquals(other)
