@@ -22,26 +22,35 @@ object PersonSchema {
 
     /**
      * ```sql
+     * -- MySQL V8
      * CREATE TABLE IF NOT EXISTS addresses (
-     *      id BIGSERIAL PRIMARY KEY,
+     *      id BIGINT AUTO_INCREMENT PRIMARY KEY,
      *      street VARCHAR(255) NOT NULL,
      *      city VARCHAR(255) NOT NULL,
-     *      "state" VARCHAR(2) NOT NULL,
+     *      `state` VARCHAR(32) NOT NULL,
      *      zip VARCHAR(10) NULL
      * );
+     *
+     * CREATE INDEX idx_address_city_zip ON addresses (city, zip, id)
+     *
      * ```
      */
     object AddressTable: LongIdTable("addresses") {
         val street = varchar("street", 255)
         val city = varchar("city", 255)
-        val state = varchar("state", 2)
+        val state = varchar("state", 32)
         val zip = varchar("zip", 10).nullable()
+
+        init {
+            index("idx_address_city_zip", false, city, zip, id)
+        }
     }
 
     /**
      * ```sql
+     * -- MySQL V8
      * CREATE TABLE IF NOT EXISTS persons (
-     *      id BIGSERIAL PRIMARY KEY,
+     *      id BIGINT AUTO_INCREMENT PRIMARY KEY,
      *      first_name VARCHAR(50) NOT NULL,
      *      last_name VARCHAR(50) NOT NULL,
      *      birth_date DATE NOT NULL,
@@ -52,6 +61,9 @@ object PersonSchema {
      *      CONSTRAINT fk_persons_address_id__id FOREIGN KEY (address_id)
      *      REFERENCES addresses(id) ON DELETE RESTRICT ON UPDATE RESTRICT
      * );
+     *
+     * ALTER TABLE persons ADD CONSTRAINT idx_person_addr UNIQUE (id, address_id)
+     * ```
      */
     object PersonTable: LongIdTable("persons") {
         val firstName = varchar("first_name", 50)
@@ -60,6 +72,10 @@ object PersonSchema {
         val employeed = bool("employeed").default(true)
         val occupation = varchar("occupation", 255).nullable()
         val addressId = reference("address_id", AddressTable)  // many to one
+
+        init {
+            uniqueIndex("idx_person_addr", id, addressId)
+        }
     }
 
     /**
@@ -175,6 +191,13 @@ fun AbstractExposedTest.withPersonsAndAddress(
             state = "IN"
             zip = "12345"
         }
+
+        val addr3 = PersonSchema.Address.new {
+            street = "165 Kangnam-daero"
+            city = "Seoul"
+            state = "Seoul"
+            zip = "11111"
+        }
         flushCache()
 
         PersonSchema.Person.new {
@@ -224,6 +247,24 @@ fun AbstractExposedTest.withPersonsAndAddress(
             employeed = false
             address = addr2
         }
+
+        PersonSchema.Person.new {
+            firstName = "Sunghyouk"
+            lastName = "Bae"
+            birthDate = LocalDate.of(1968, 10, 14)
+            employeed = false
+            address = addr3
+        }
+
+        PersonSchema.Person.new {
+            firstName = "Jehyoung"
+            lastName = "Bae"
+            birthDate = LocalDate.of(1996, 5, 22)
+            employeed = false
+            address = addr3
+        }
+
+
         flushCache()
 
         statement(persons, addresses)
