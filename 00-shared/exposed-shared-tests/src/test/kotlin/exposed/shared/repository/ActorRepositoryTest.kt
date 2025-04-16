@@ -81,7 +81,7 @@ class ActorRepositoryTest: AbstractExposedTest() {
             val savedActor = repository.save(actor).toActorDTO()
             savedActor.id.shouldNotBeNull()
 
-            val deletedCount = repository.deleteById(savedActor.id)
+            val deletedCount = repository.deleteById(savedActor.id!!)
             deletedCount shouldBeEqualTo 1
         }
     }
@@ -187,10 +187,10 @@ class ActorRepositoryTest: AbstractExposedTest() {
             savedActor.id.shouldNotBeNull()
 
             // Delete savedActor
-            repository.deleteById(savedActor.id) shouldBeEqualTo 1
+            repository.deleteById(savedActor.id!!) shouldBeEqualTo 1
 
             // Already deleted
-            repository.deleteById(savedActor.id) shouldBeEqualTo 0
+            repository.deleteById(savedActor.id!!) shouldBeEqualTo 0
         }
     }
 
@@ -207,6 +207,9 @@ class ActorRepositoryTest: AbstractExposedTest() {
         }
     }
 
+    /**
+     * `deleteAllIgnore` 는 MySQL/MariaDB 에서만 지원됨
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `delete all with ignore`(testDB: TestDB) {

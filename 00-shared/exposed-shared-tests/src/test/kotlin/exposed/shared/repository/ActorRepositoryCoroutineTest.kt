@@ -82,7 +82,7 @@ class ActorRepositoryCoroutineTest: AbstractExposedTest() {
             val savedActor = repository.save(actor).toActorDTO()
             savedActor.id.shouldNotBeNull()
 
-            val deletedCount = repository.deleteById(savedActor.id)
+            val deletedCount = repository.deleteById(savedActor.id!!)
             deletedCount shouldBeEqualTo 1
         }
     }
@@ -188,10 +188,10 @@ class ActorRepositoryCoroutineTest: AbstractExposedTest() {
             savedActor.id.shouldNotBeNull()
 
             // Delete savedActor
-            repository.deleteById(savedActor.id) shouldBeEqualTo 1
+            repository.deleteById(savedActor.id!!) shouldBeEqualTo 1
 
             // Already deleted
-            repository.deleteById(savedActor.id) shouldBeEqualTo 0
+            repository.deleteById(savedActor.id!!) shouldBeEqualTo 0
         }
     }
 

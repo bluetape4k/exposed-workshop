@@ -41,6 +41,4 @@ class ActorRepository: ExposedRepository<ActorEntity, Long> {
             birthday = actor.birthday?.let { LocalDate.parse(it) }
         }
     }
-
-
 }
