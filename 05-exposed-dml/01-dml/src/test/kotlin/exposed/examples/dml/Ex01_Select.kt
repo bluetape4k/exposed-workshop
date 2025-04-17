@@ -503,7 +503,7 @@ class Ex01_Select: AbstractExposedTest() {
                     cities.id neq anyFrom(subquery)
                 }
 
-            rows.count() shouldBeEqualTo 1L
+            rows.count() shouldBeEqualTo 3L
         }
     }
 

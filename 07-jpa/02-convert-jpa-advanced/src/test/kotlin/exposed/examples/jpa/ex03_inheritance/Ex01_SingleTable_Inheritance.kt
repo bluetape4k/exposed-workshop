@@ -12,12 +12,14 @@ import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.javatime.date
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import java.time.LocalDate
 
 /**
  * 한 테이블에서 여러가지 종류의 엔티티를 표현하는 방식
@@ -54,25 +56,25 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
      */
     object BillingTable: IntIdTable("billing") {
 
-        val owner = varchar("owner", 64).index()
-        val swift = varchar("swift", 16)
+        val owner: Column<String> = varchar("owner", 64).index()
+        val swift: Column<String> = varchar("swift", 16)
 
         /**
          * 지불 방식 ([CreditCard] or [BankAccount])을 구분하는 컬럼
          */
-        val dtype = enumerationByName<BillingType>("dtype", 32).default(BillingType.UNKNOWN)
+        val dtype: Column<BillingType> = enumerationByName<BillingType>("dtype", 32).default(BillingType.UNKNOWN)
 
         // CreditCard (공통 속성을 제외하면 모든 속성은 nullable 이어야 합니다)
-        val cardNumber = varchar("card_number", 24).nullable()
-        val companyName = varchar("company_name", 255).nullable()
-        val expMonth = integer("exp_month").nullable()
-        val expYear = integer("exp_year").nullable()
-        val startDate = date("start_date").nullable()
-        val endDate = date("end_date").nullable()
+        val cardNumber: Column<String?> = varchar("card_number", 24).nullable()
+        val companyName: Column<String?> = varchar("company_name", 255).nullable()
+        val expMonth: Column<Int?> = integer("exp_month").nullable()
+        val expYear: Column<Int?> = integer("exp_year").nullable()
+        val startDate: Column<LocalDate?> = date("start_date").nullable()
+        val endDate: Column<LocalDate?> = date("end_date").nullable()
 
         // BankAccount (공통 속성을 제외하면 모든 속성은 nullable 이어야 합니다)
-        val accountNumber = varchar("account_number", 255).nullable()
-        val bankName = varchar("bank_name", 255).nullable()
+        val accountNumber: Column<String?> = varchar("account_number", 255).nullable()
+        val bankName: Column<String?> = varchar("bank_name", 255).nullable()
     }
 
     /**
@@ -90,7 +92,7 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
     abstract class Billing(id: EntityID<Int>): IntEntity(id) {
         var owner by BillingTable.owner
         var swift by BillingTable.swift
-        var dtype: BillingType by BillingTable.dtype
+        protected var dtype: BillingType by BillingTable.dtype
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -132,7 +134,7 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
                     .where { BillingTable.id eq id }
                     .andWhere { BillingTable.dtype eq BillingType.CREDIT_CARD }
 
-                return CreditCard.wrapRows(query).singleOrNull()
+                return wrapRows(query).singleOrNull()
             }
 
             fun countCreditCard(): Long = super.count(BillingTable.dtype eq BillingType.CREDIT_CARD)
@@ -187,7 +189,7 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
                     .where { BillingTable.id eq id }
                     .andWhere { BillingTable.dtype eq BillingType.BANK_ACCOUNT }
 
-                return BankAccount.wrapRows(query).singleOrNull()
+                return wrapRows(query).singleOrNull()
             }
 
 
