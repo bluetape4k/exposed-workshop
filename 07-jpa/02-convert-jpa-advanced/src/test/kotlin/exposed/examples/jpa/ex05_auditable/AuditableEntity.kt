@@ -80,7 +80,7 @@ abstract class AuditableLongIdTable(name: String = ""): AuditableIdTable<Long>(n
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 }
 
-abstract class AuditableUUIDIdTable(name: String = ""): AuditableIdTable<UUID>(name) {
+abstract class AuditableUUIDTable(name: String = ""): AuditableIdTable<UUID>(name) {
     final override val id = uuid("id").clientDefault { UUID.randomUUID() }.entityId()
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 }

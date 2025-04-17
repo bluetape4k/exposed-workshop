@@ -31,17 +31,20 @@ class Ex01_CTE: AbstractExposedTest() {
 
     private val stmt =
         """
-        WITH RECURSIVE cte AS (
+        WITH RECURSIVE deep_nodes AS (
+            -- Anchor 쿼리 (루트 노드)
             SELECT id, title, parent_id, depth, id::TEXT as path
               FROM tree_nodes 
              WHERE parent_id IS NULL
              
             UNION ALL
-            
-            SELECT tn.id, tn.title, tn.parent_id, tn.depth, (cte.path || '.' || tn.id::TEXT) as path 
-              FROM tree_nodes tn JOIN cte ON tn.parent_id = cte.id
+                        
+            -- Recursive 쿼리 (자식 노드)
+            SELECT tn.id, tn.title, tn.parent_id, tn.depth, (deep_nodes.path || '.' || tn.id::TEXT) as path 
+              FROM tree_nodes tn JOIN deep_nodes ON tn.parent_id = deep_nodes.id
         )
-        SELECT id, title, parent_id, depth, path FROM cte
+        -- 최종 결과 
+        SELECT id, title, parent_id, depth, path FROM deep_nodes
         """.trimIndent()
 
     @ParameterizedTest

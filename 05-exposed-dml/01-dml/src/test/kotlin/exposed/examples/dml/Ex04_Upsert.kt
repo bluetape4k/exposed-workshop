@@ -81,12 +81,14 @@ class Ex04_Upsert: AbstractExposedTest() {
             } get AutoIncTable.id
 
 
+            // INSERT
             AutoIncTable.upsert {
                 if (testDB in upsertViaMergeDB)
                     it[id] = 2
                 it[name] = "B"
             }
 
+            // UPDATE
             AutoIncTable.upsert {
                 it[id] = id1
                 it[name] = "C"

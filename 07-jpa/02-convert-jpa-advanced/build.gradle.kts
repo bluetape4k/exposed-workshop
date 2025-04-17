@@ -18,6 +18,8 @@ dependencies {
     implementation(Libs.exposed_dao)
     implementation(Libs.exposed_java_time)
 
+    implementation(Libs.bluetape4k_exposed)
+
     // Coroutines
     implementation(Libs.bluetape4k_coroutines)
     implementation(Libs.kotlinx_coroutines_core)
