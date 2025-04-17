@@ -290,7 +290,8 @@ class Ex02_Joined_Table_Inheritance: AbstractExposedTest() {
              * SELECT joined_employee.id, joined_employee.emp_no, joined_employee.emp_title, joined_employee.manager_id FROM joined_employee WHERE joined_employee.id = 2
              * ```
              */
-            val loadedCustomer = Customer.findById(customer.id)!!.load(Customer::contactEmployee)
+            val loadedCustomer = Customer.findById(customer.id)!!.load(Customer::person, Customer::contactEmployee)
+            loadedCustomer.ssn shouldBeEqualTo customer.ssn
             loadedCustomer.contactEmployee shouldBeEqualTo emp2
 
             // 엔티티 삭제 (one-to-one 관계에서 child 를 삭제한다고, owner 가 삭제되지는 않는다 -> delete 함수를 재정의해야 한다)

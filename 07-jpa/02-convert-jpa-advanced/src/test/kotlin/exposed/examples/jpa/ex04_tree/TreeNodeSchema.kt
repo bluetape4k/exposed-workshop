@@ -32,7 +32,7 @@ object TreeNodeSchema {
         val description = text("description").nullable()
         val depth = integer("depth").default(0)
 
-        val parentId = reference("parent_id", TreeNodeTable).nullable()
+        val parentId = optReference("parent_id", TreeNodeTable)
     }
 
     class TreeNode(id: EntityID<Long>): LongEntity(id) {

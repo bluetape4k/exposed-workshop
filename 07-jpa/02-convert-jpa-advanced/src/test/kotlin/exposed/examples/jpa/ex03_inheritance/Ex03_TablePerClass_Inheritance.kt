@@ -3,17 +3,16 @@ package exposed.examples.jpa.ex03_inheritance
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.id.TimebasedUUIDEntity
+import io.bluetape4k.exposed.dao.id.TimebasedUUIDEntityClass
+import io.bluetape4k.exposed.dao.id.TimebasedUUIDTable
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.exposed.dao.UUIDEntity
-import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.flushCache
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.javatime.date
 import org.junit.jupiter.params.ParameterizedTest
@@ -32,7 +31,7 @@ class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
      * JPA의 Table Per Class Inheritance 의 경우 다중의 테이블에서 고유한 값을 사용해야 해서,
      * UUID 같은 수형으로 전역적으로 Unique 하게 관리해야 한다.
      */
-    abstract class AbstractBillingTable(name: String): UUIDTable(name) {
+    abstract class AbstractBillingTable(name: String = ""): TimebasedUUIDTable(name) {
         val owner = varchar("owner", 64).index()
         val swift = varchar("swift", 16)
     }
@@ -57,12 +56,16 @@ class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
      * ```
      */
     object CreditCardTable: AbstractBillingTable("credit_card") {
-        val cardNumber = varchar("card_number", 24)
+        val cardNumber = varchar("card_number", 24).uniqueIndex()
         val companyName = varchar("company_name", 128)
         val expYear = integer("exp_year")
         val expMonth = integer("exp_month")
         val startDate = date("start_date")
         val endDate = date("end_date")
+
+        init {
+            index("idx_credit_card_number", false, cardNumber, owner)
+        }
     }
 
     /**
@@ -81,18 +84,35 @@ class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
      *```
      */
     object BankAccountTable: AbstractBillingTable("bank_account") {
-        val accountNumber = varchar("account_number", 24)
+        val accountNumber = varchar("account_number", 24).uniqueIndex()
         val bankName = varchar("bank_name", 128)
+
+        init {
+            index("idx_bank_account_number", false, accountNumber, owner)
+        }
+    }
+
+    abstract class AbstractBillingEntity(id: EntityID<UUID>): TimebasedUUIDEntity(id) {
+        abstract var owner: String
+        abstract var swift: String
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
+        override fun toString(): String = toStringBuilder()
+            .add("owner", owner)
+            .add("swift", swift)
+            .toString()
     }
 
     /**
      * CreditCard Entity
      */
-    class CreditCard(id: EntityID<UUID>): UUIDEntity(id) {
-        companion object: UUIDEntityClass<CreditCard>(CreditCardTable)
+    class CreditCard(id: EntityID<UUID>): AbstractBillingEntity(id) {
+        companion object: TimebasedUUIDEntityClass<CreditCard>(CreditCardTable)
 
-        var owner by CreditCardTable.owner
-        var swift by CreditCardTable.swift
+        // AbstractBillingEntity 상속받은 컬럼입니다.
+        override var owner by CreditCardTable.owner
+        override var swift by CreditCardTable.swift
 
         var cardNumber by CreditCardTable.cardNumber
         var companyName by CreditCardTable.companyName
@@ -101,8 +121,6 @@ class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
         var startDate by CreditCardTable.startDate
         var endDate by CreditCardTable.endDate
 
-        override fun equals(other: Any?): Boolean = idEquals(other)
-        override fun hashCode(): Int = idHashCode()
         override fun toString(): String = toStringBuilder()
             .add("owner", owner)
             .add("swift", swift)
@@ -114,17 +132,16 @@ class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
     /**
      * BankAccount Entity
      */
-    class BankAccount(id: EntityID<UUID>): UUIDEntity(id) {
-        companion object: UUIDEntityClass<BankAccount>(BankAccountTable)
+    class BankAccount(id: EntityID<UUID>): AbstractBillingEntity(id) {
+        companion object: TimebasedUUIDEntityClass<BankAccount>(BankAccountTable)
 
-        var owner by BankAccountTable.owner
-        var swift by BankAccountTable.swift
+        // AbstractBillingTable 속송으로 상속받은 컬럼입니다.
+        override var owner by BankAccountTable.owner
+        override var swift by BankAccountTable.swift
 
         var accountNumber by BankAccountTable.accountNumber
         var bankName by BankAccountTable.bankName
 
-        override fun equals(other: Any?): Boolean = idEquals(other)
-        override fun hashCode(): Int = idHashCode()
         override fun toString(): String = toStringBuilder()
             .add("owner", owner)
             .add("swift", swift)
@@ -155,7 +172,6 @@ class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
                 endDate = LocalDate.now().plusYears(5)
             }
 
-            flushCache()
             entityCache.clear()
 
             /**

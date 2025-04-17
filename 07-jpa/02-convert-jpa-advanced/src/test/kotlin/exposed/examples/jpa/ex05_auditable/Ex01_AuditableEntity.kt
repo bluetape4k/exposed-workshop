@@ -3,6 +3,9 @@ package exposed.examples.jpa.ex05_auditable
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
+import io.bluetape4k.exposed.dao.toStringBuilder
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeGreaterOrEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -32,6 +35,18 @@ class Ex01_AuditableEntity: AbstractExposedTest() {
         override var createdAt by TaskTable.createdAt
         override var updatedBy by TaskTable.updatedBy
         override var updatedAt by TaskTable.updatedAt
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
+        override fun toString(): String = toStringBuilder()
+            .add("title", title)
+            .add("description", description)
+            .add("status", status)
+            .add("createdBy", createdBy)
+            .add("createdAt", createdAt)
+            .add("updatedBy", updatedBy)
+            .add("updatedAt", updatedAt)
+            .toString()
     }
 
     @ParameterizedTest
@@ -41,6 +56,7 @@ class Ex01_AuditableEntity: AbstractExposedTest() {
             UserContext.withUser("test") {
                 val now = java.time.Instant.now()
 
+                // Task Create
                 val task = TaskEntity.new {
                     title = "Test Task"
                     description = "This is a test task."
@@ -48,15 +64,18 @@ class Ex01_AuditableEntity: AbstractExposedTest() {
                 }
                 entityCache.clear()
 
+                // 생성 관련 정보만 있음 
                 val loaded = TaskEntity.findById(task.id)!!
                 loaded.createdAt.shouldNotBeNull() shouldBeGreaterOrEqualTo now
                 loaded.createdBy.shouldNotBeNull() shouldBeEqualTo UserContext.getCurrentUser() // "test"
                 loaded.updatedAt.shouldBeNull()
                 loaded.updatedBy.shouldBeNull()
 
+                // Task Update
                 loaded.title = "Test Task - Updated"
                 entityCache.clear()
 
+                // 업데이트 관련 정보가 설정됨
                 val updated = TaskEntity.findById(task.id)!!
                 updated.createdAt.shouldNotBeNull() shouldBeGreaterOrEqualTo now
                 updated.createdBy.shouldNotBeNull() shouldBeEqualTo UserContext.getCurrentUser()
