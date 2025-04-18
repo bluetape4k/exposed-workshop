@@ -9,6 +9,7 @@ import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -18,6 +19,7 @@ import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldNotBeEmpty
+import org.amshove.kluent.shouldNotBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
@@ -82,27 +84,38 @@ class Ex01_Coroutines: AbstractExposedTest() {
     /**
      * Coroutines 환경 하에서 여러 작업을 순차적으로 수행합니다.
      *
-     * ```console
-     * 10:59:10.999 DEBUG [1-thread-1 @coroutine#32] Exposed :37: SELECT coroutines_tester.id FROM coroutines_tester WHERE coroutines_tester.id = 1
-     * 10:59:11.014 DEBUG [1-thread-1 @coroutine#34] Exposed :37: SELECT coroutines_tester.id FROM coroutines_tester WHERE coroutines_tester.id = 1
-     * 10:59:11.016 DEBUG [r-worker-1 @coroutine#35] Exposed :37: SELECT coroutines_tester.id FROM coroutines_tester WHERE coroutines_tester.id = 1
+     * 최상단 `withSuspendedTables` 는 xxxx-worker-2 스레드에서 실행되고,
+     * 내부에서는 `singleThreadDispatcher` 를 사용하여 하나의 Thread 에서 수행됩니다.
+     * 비동기로 실행시키고 싶지만, 내부 코드가 한 스레드에서 실행되도록 하고 싶을 때 사용하는 기법입나다.
+     *
+     * ```shell
+     * 07:56:23.937 DEBUG [r-worker-2 @coroutine#30] Exposed                             :37: DROP TABLE IF EXISTS coroutines_tester
+     * 07:56:23.954 DEBUG [r-worker-2 @coroutine#30] Exposed                             :37: CREATE TABLE IF NOT EXISTS coroutines_tester (id SERIAL PRIMARY KEY)
+     * 07:56:23.984 DEBUG [1-thread-1 @coroutine#31] Exposed                             :37: INSERT INTO coroutines_tester  DEFAULT VALUES
+     * 07:56:23.987 DEBUG [1-thread-1 @coroutine#32] Exposed                             :37: SELECT coroutines_tester.id FROM coroutines_tester WHERE coroutines_tester.id = 1
+     * 07:56:24.018 DEBUG [1-thread-1 @coroutine#34] Exposed                             :37: SELECT coroutines_tester.id FROM coroutines_tester WHERE coroutines_tester.id = 1
+     * 07:56:24.022 DEBUG [r-worker-2 @coroutine#35] Exposed                             :37: SELECT coroutines_tester.id FROM coroutines_tester WHERE coroutines_tester.id = 1
+     * 07:56:24.025 DEBUG [r-worker-2 @coroutine#30] Exposed                             :37: DROP TABLE IF EXISTS coroutines_tester
      * ```
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `suspended transaction으로 시퀀셜 작업 수행하기`(testDB: TestDB) = runSuspendIO {
         withSuspendedTables(testDB, Tester) {
+            // 새로운 트랜잭션을 만들고, 코루틴 환경에서 내부 코드를 실행한다
             newSuspendedTransaction(context = singleThreadDispatcher) {
                 val id = Tester.insertAndGetId { }
-                flushCache()
                 entityCache.clear()
+                // 내부적으로 새로운 트랜잭션을 생성하여 코루틴 작업을 수행한다
                 getTesterById(id.value)!![Tester.id].value shouldBeEqualTo id.value
             }
 
-            val result = newSuspendedTransaction(context = singleThreadDispatcher) {
+            // Async 작업을 수행합니다
+            val result = suspendedTransactionAsync(context = singleThreadDispatcher) {
                 getTesterById(1)!![Tester.id].value
-            }
+            }.await()
             result shouldBeEqualTo 1
+            entityCache.clear()
 
             getTesterById(1)!![Tester.id].value shouldBeEqualTo 1
         }
@@ -251,19 +264,24 @@ class Ex01_Coroutines: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `중첩된 suspend transaction async 실행`(testDB: TestDB) = runSuspendIO {
-        val recordCount = 10
-
         withSuspendedTables(testDB, Tester, context = Dispatchers.IO) {
+            val recordCount = 10
+
             newSuspendedTransaction {
-                // 하나의 Connection을 이용하여 시퀀스하게 작업한다.
-                repeat(recordCount) {
-                    Tester.insert { }
-                }
+                // recordCount 만큼의 Connection을 이용하여 동시에 작업합니다.
+                List(recordCount) {
+                    suspendedTransactionAsync(Dispatchers.IO) {
+                        log.debug { "task[$it]: inserting ..." }
+                        // insert 를 수행하는 트랜잭션을 생성한다
+                        Tester.insert { }
+                    }
+                }.awaitAll()
                 commit()
 
                 // nested transaction 에서 동시에 여러 개의 작업을 수행한다
-                val tasks = List(recordCount) {
+                val tasks: List<Deferred<List<ResultRow>>> = List(recordCount) {
                     suspendedTransactionAsync(context = Dispatchers.IO) {
+                        log.debug { "task[$it]: selected" }
                         Tester.selectAll().toList()
                     }
                 }
@@ -307,16 +325,16 @@ class Ex01_Coroutines: AbstractExposedTest() {
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `다중의 비동기 작업을 수행 후 대기`(testDB: TestDB) = runSuspendIO {
-        val recordCount = 10
-
+    fun `다수의 비동기 작업을 수행 후 대기`(testDB: TestDB) = runSuspendIO {
         withSuspendedTables(testDB, Tester) {
+            val recordCount = 10
+
             // 복수의 INSERT 작업을 동시에 수행합니다.
-            val results = List(recordCount) { index ->
+            val results: List<Int> = List(recordCount) { index ->
                 suspendedTransactionAsync(Dispatchers.IO, db = db) {
                     maxAttempts = 5
+                    log.debug { "task[$index]: inserting ..." }
                     Tester.insert { }
-                    log.debug { "task[$index]: inserted" }
                     index + 1
                 }
             }.awaitAll()
@@ -328,7 +346,7 @@ class Ex01_Coroutines: AbstractExposedTest() {
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `suspended 와 일반 transaction 혼합 사용하기`(testDB: TestDB) = runSuspendIO {
+    fun `suspended 와 일반 transaction 혼용하기`(testDB: TestDB) = runSuspendIO {
         withSuspendedTables(testDB, Tester) {
             val db = this.db
             var suspendedOk = true
@@ -367,23 +385,27 @@ class Ex01_Coroutines: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `coroutines with exception within`(testDB: TestDB) = runSuspendIO {
         withSuspendedTables(testDB, Tester) {
+            val database = this.db
+            val outerConn = this.connection
             val id = TesterEntity.new { }.id
             commit()
 
             var innerConn: ExposedConnection<*>? = null
 
             assertFailsWith<ExposedSQLException> {
-                newSuspendedTransaction(context = singleThreadDispatcher, db = db) {
+                // context를 지정해야 새로운 coroutine scope 에서 실행된다.
+                newSuspendedTransaction(context = Dispatchers.IO, db = database) {
+                    maxAttempts = 1
                     innerConn = this.connection
-                    innerConn!!.isClosed.shouldBeFalse()
+                    innerConn.isClosed.shouldBeFalse()
+                    innerConn shouldNotBeEqualTo outerConn
                     // 중복된 ID를 삽입하려고 하면 예외가 발생한다.
                     TesterEntity.new(id.value) { }
                 }
             }
 
             // Nested transaction은 예외가 발생하고, 해당 connection은 닫힌다.
-            innerConn.shouldNotBeNull()
-            innerConn!!.isClosed.shouldBeTrue()
+            innerConn.shouldNotBeNull().isClosed.shouldBeTrue()
 
             // Outer transaction은 아무 문제없이 수행된다.
             TesterEntity.count() shouldBeEqualTo 1L

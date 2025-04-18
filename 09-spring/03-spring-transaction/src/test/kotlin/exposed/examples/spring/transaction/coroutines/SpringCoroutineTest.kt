@@ -70,7 +70,7 @@ class SpringCoroutineTest: AbstractSpringTransactionTest() {
                 }
             }.awaitAll()
 
-            newSuspendedTransaction {
+            newSuspendedTransaction(readOnly = true) {
                 log.debug { "Load Tester records ..." }
                 Tester.selectAll().count() shouldBeEqualTo recordCount.toLong()
             }
