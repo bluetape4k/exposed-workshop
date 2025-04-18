@@ -192,8 +192,6 @@ enum class TestDB(
             configure()
         }
 
-        // NOTE: 테스트 시에는 HikariDataSource 를 사용하지 않습니다.
-        // NOTE: HikariCP 는 성능을 위해 캐시 등 다양한 기능을 사용하는데, 테스트 시에 prepared statement 캐시 등에 의해 예외가 발생합니다.
         return Database.connect(
             url = connection(),
             databaseConfig = config,
@@ -203,6 +201,8 @@ enum class TestDB(
             setupConnection = { afterConnection(it) },
         )
 
+        // NOTE: 테스트 시에는 HikariDataSource 를 사용하지 않습니다.
+        // NOTE: HikariCP 는 성능을 위해 캐시 등 다양한 기능을 사용하는데, 테스트 시에 prepared statement 캐시 등에 의해 예외가 발생합니다.
 //        return Database.connect(
 //            datasource = getDataSource(),
 //            setupConnection = { afterConnection(it) },
@@ -216,8 +216,8 @@ enum class TestDB(
             driverClassName = driver
             username = user
             password = pass
-            maximumPoolSize = 30
-            minimumIdle = 1
+            maximumPoolSize = 80
+            minimumIdle = 10
         }
         return HikariDataSource(config)
     }

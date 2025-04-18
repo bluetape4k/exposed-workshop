@@ -22,9 +22,12 @@ fun withTables(
     withDb(testDB, configure = configure) {
         runCatching {
             SchemaUtils.drop(*tables)
+            commit()
         }
 
         SchemaUtils.create(*tables)
+        commit()
+
         try {
             statement(testDB)
             commit()               // Need commit to persist data before drop tables
@@ -35,7 +38,10 @@ fun withTables(
             } catch (ex: Exception) {
                 log.error(ex) { "Drop Tables 에서 예외가 발생했습니다. 삭제할 테이블: ${tables.joinToString { it.tableName }}" }
                 val database = testDB.db!!
-                inTopLevelTransaction(database.transactionManager.defaultIsolationLevel, db = database) {
+                inTopLevelTransaction(
+                    transactionIsolation = database.transactionManager.defaultIsolationLevel,
+                    db = database
+                ) {
                     maxAttempts = 1
                     SchemaUtils.drop(*tables)
                 }
@@ -52,12 +58,13 @@ suspend fun withSuspendedTables(
     statement: suspend Transaction.(TestDB) -> Unit,
 ) {
     withSuspendedDb(testDB, context, configure) {
-        try {
+        runCatching {
             SchemaUtils.drop(*tables)
-        } catch (_: Throwable) {
+            commit()
         }
 
         SchemaUtils.create(*tables)
+        commit()
 
         try {
             statement(testDB)
