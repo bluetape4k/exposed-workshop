@@ -18,8 +18,7 @@ class ExposedConfig {
     @Bean
     fun databaseConfig(): DatabaseConfig {
         return DatabaseConfig {
-            maxEntitiesToStoreInCachePerEntity = 100
-            useNestedTransactions = true
+            maxEntitiesToStoreInCachePerEntity = 500
         }
     }
 

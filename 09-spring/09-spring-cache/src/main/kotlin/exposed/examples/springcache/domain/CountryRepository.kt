@@ -4,6 +4,7 @@ import exposed.examples.springcache.domain.CountryRepository.Companion.COUNTRY_C
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.CacheConfig
@@ -20,24 +21,29 @@ class CountryRepository(private val cacheManager: CacheManager) {
         const val COUNTRY_CACHE_NAME = "cache:code:country"
     }
 
-    @Transactional(readOnly = true)
     @Cacheable(key = "'country:' + #code")
     fun findByCode(code: String): CountryDTO? {
         log.debug { "----> Loading country with code[$code] and caching in redis ..." }
 
-        val row = CountryTable.selectAll().where { CountryTable.code eq code }.singleOrNull() ?: return null
+        // @Transactional 을 사용하지 않고, transaction {} 블록을 사용하여 DB에 접근합니다.
+        // 캐시에 이미 값이 있다면, Transaction을 사용하지 않고 캐시에서 값을 반환하도록 합니다.
+        return transaction {
+            val row =
+                CountryTable.selectAll().where { CountryTable.code eq code }.singleOrNull() ?: return@transaction null
 
-        return CountryDTO(
-            code = row[CountryTable.code],
-            name = row[CountryTable.name],
-            description = row[CountryTable.description]
-        )
+            CountryDTO(
+                code = row[CountryTable.code],
+                name = row[CountryTable.name],
+                description = row[CountryTable.description]
+            )
+        }
     }
 
     @Transactional
     @CacheEvict(key = "'country:' + #countryDTO.code")
     fun update(countryDTO: CountryDTO): Int {
         log.debug { "----> Updating country with code[${countryDTO.code}] ..." }
+
         return CountryTable.update({ CountryTable.code eq countryDTO.code }) {
             it[name] = countryDTO.name
             it[description] = countryDTO.description

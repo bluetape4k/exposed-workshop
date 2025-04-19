@@ -30,8 +30,6 @@ dependencies {
     // bluetape4k
     implementation(Libs.bluetape4k_redis)
     implementation(Libs.bluetape4k_testcontainers)
-    implementation(Libs.bluetape4k_jdbc)
-    testImplementation(Libs.bluetape4k_spring_tests)
     testImplementation(Libs.bluetape4k_junit5)
 
 
@@ -49,28 +47,9 @@ dependencies {
     // H2
     implementation(Libs.h2_v2)
 
-    // MySQL
-    implementation(Libs.bluetape4k_testcontainers)
-    implementation(Libs.testcontainers_mysql)
-    implementation(Libs.mysql_connector_j)
-
-    // PostgreSQL
-    implementation(Libs.bluetape4k_testcontainers)
-    implementation(Libs.testcontainers_postgresql)
-    implementation(Libs.postgresql_driver)
-
     // Spring Boot
-    implementation(Libs.springBoot("autoconfigure"))
-    annotationProcessor(Libs.springBoot("autoconfigure-processor"))
-    annotationProcessor(Libs.springBoot("configuration-processor"))
-    runtimeOnly(Libs.springBoot("devtools"))
-
-    implementation(Libs.springBootStarter("webflux"))
     implementation(Libs.springBootStarter("cache"))
     implementation(Libs.springBootStarter("data-redis"))
-    implementation(Libs.springBootStarter("aop"))
-
-    testImplementation(Libs.bluetape4k_spring_tests)
     testImplementation(Libs.springBootStarter("test")) {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
@@ -82,31 +61,8 @@ dependencies {
     implementation(Libs.commons_pool2)
 
     // Codecs
-    implementation(Libs.kryo)
     implementation(Libs.fury_kotlin)
 
     // Compressor
-    implementation(Libs.commons_compress)
     implementation(Libs.lz4_java)
-    implementation(Libs.snappy_java)
-    implementation(Libs.zstd_jni)
-
-    // DataFaker
-    implementation(Libs.datafaker)
-
-    // Coroutines
-    implementation(Libs.bluetape4k_coroutines)
-    implementation(Libs.kotlinx_coroutines_core)
-    implementation(Libs.kotlinx_coroutines_reactor)
-    testImplementation(Libs.kotlinx_coroutines_test)
-
-    // Reactor
-    implementation(Libs.reactor_netty)
-    implementation(Libs.reactor_kotlin_extensions)
-    testImplementation(Libs.reactor_test)
-
-    // SpringDoc - OpenAPI 3.0
-    implementation(Libs.springdoc_openapi_starter_webflux_ui)
-
-    implementation(Libs.hibernate_validator)
 }

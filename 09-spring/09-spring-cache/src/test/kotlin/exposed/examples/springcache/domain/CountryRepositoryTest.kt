@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.Cache
 import org.springframework.cache.CacheManager
-import org.springframework.http.codec.CodecConfigurer
 import kotlin.system.measureTimeMillis
 
 class CountryRepositoryTest(
@@ -18,20 +17,15 @@ class CountryRepositoryTest(
     @Autowired private val cacheManager: CacheManager,
 ): AbstractSpringCacheApplicationTest() {
 
-    @Autowired
-    private lateinit var codecConfigurer: CodecConfigurer
-
-    companion object: KLogging() {
-
-    }
+    companion object: KLogging()
 
     /**
      * Redis Cache를 사용하여 Country를 조회하는 테스트
      *
      * ```shell
      * # 테스트 실행 결과
-     * databaseLoadingTime=744 msec
-     * cacheLoadingTime=143 msec
+     * databaseLoadingTime=749 msec
+     * cacheLoadingTime=169 msec
      * ```
      */
     @Test
@@ -64,9 +58,9 @@ class CountryRepositoryTest(
      * Country를 업데이트 할 때 캐시를 evict하는 테스트
      *
      * ```shell
-     * databaseLoadingTime=297 msec
-     * reloadLoadingTime=297 msec
-     * cacheLoadingTime=94 msec
+     * databaseLoadingTime=767 msec
+     * reloadLoadingTime=384 msec
+     * cacheLoadingTime=120 msec
      * ```
      */
     @Test

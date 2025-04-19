@@ -43,7 +43,7 @@ class DataPopulator: ApplicationListener<ApplicationReadyEvent> {
             CountryTable.batchInsert(COUNTRY_CODES, shouldReturnGeneratedValues = false) { code ->
                 this[CountryTable.code] = code
                 this[CountryTable.name] = "$code Country"
-                this[CountryTable.description] = "Country code for $code"
+                this[CountryTable.description] = "Country code for $code" + "동해물과 백두산이 마르고 닳도록".repeat(100)
             }
         }
         log.info { "Populate country data done." }

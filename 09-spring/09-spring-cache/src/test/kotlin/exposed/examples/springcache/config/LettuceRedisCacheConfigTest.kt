@@ -13,15 +13,13 @@ class LettuceRedisCacheConfigTest(
 
     companion object: KLogging()
 
-
     @Test
-    fun `context loading`() {
-        cacheManager.shouldNotBeNull()
-    }
-
-    @Test
-    fun `countries cache 를 생성한다`() {
+    fun `countries cache를 생성해서 캐시 작업을 수행한다`() {
         val countryCache = cacheManager.getCache("countries")
         countryCache.shouldNotBeNull()
+
+        countryCache.put("KR", "South Korea")
+        val country = countryCache.get("KR", String::class.java)
+        country.shouldNotBeNull()
     }
 }

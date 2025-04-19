@@ -7,7 +7,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 
 object CountryTable: IntIdTable("countries") {
-    val code = varchar("code", 2).uniqueIndex()
+    val code = char("code", 2).uniqueIndex()
     val name = varchar("name", 50)
     val description = text("description").nullable()
 }

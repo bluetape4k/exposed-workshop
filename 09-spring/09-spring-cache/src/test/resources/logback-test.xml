@@ -12,11 +12,11 @@
     </appender>
 
     <logger name="exposed.examples.springcache" level="DEBUG"/>
-
     <logger name="Exposed" level="DEBUG"/>
+    <logger name="io.lettuce.core.RedisChannelHandler" level="DEBUG"/>
 
-    <logger name="org.springframework.boot" level="DEBUG"/>
     <logger name="org.springframework.transaction" level="DEBUG"/>
+    <logger name="org.jetbrains.exposed.spring" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="Console"/>
