@@ -11,9 +11,7 @@
         </encoder>
     </appender>
 
-    <logger name="exposed.examples.springboot" level="DEBUG"/>
-    <logger name="exposed.shared" level="DEBUG"/>
-    <logger name="io.bluetape4k" level="DEBUG"/>
+    <logger name="exposed.examples.springcache" level="DEBUG"/>
 
     <logger name="Exposed" level="DEBUG"/>
 

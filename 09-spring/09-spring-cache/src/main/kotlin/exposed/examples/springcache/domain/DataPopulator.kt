@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component
 class DataPopulator: ApplicationListener<ApplicationReadyEvent> {
 
     companion object: KLogging() {
-
         val COUNTRY_CODES: List<String> =
             listOf(
                 "AF", "AX",
@@ -41,10 +40,10 @@ class DataPopulator: ApplicationListener<ApplicationReadyEvent> {
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
         log.info { "Populate country data ..." }
         transaction {
-            CountryCodeTable.batchInsert(COUNTRY_CODES, shouldReturnGeneratedValues = false) { code ->
-                this[CountryCodeTable.code] = code
-                this[CountryCodeTable.name] = "$code Country"
-                this[CountryCodeTable.description] = "Country code for $code"
+            CountryTable.batchInsert(COUNTRY_CODES, shouldReturnGeneratedValues = false) { code ->
+                this[CountryTable.code] = code
+                this[CountryTable.name] = "$code Country"
+                this[CountryTable.description] = "Country code for $code"
             }
         }
         log.info { "Populate country data done." }

@@ -11,7 +11,7 @@ import javax.sql.DataSource
 
 @Configuration
 @EnableTransactionManagement
-class ExposedDatabaseConfig {
+class ExposedConfig {
 
     companion object: KLogging()
 
