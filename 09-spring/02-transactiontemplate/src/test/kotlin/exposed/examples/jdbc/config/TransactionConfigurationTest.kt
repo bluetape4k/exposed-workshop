@@ -1,6 +1,6 @@
 package exposed.examples.jdbc.config
 
-import exposed.examples.jdbc.AbstractJdbcApplicationTest
+import exposed.examples.jdbc.AbstractTransactionApplicationTest
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.support.uninitialized
 import org.amshove.kluent.shouldNotBeNull
@@ -12,7 +12,7 @@ import org.springframework.transaction.support.TransactionOperations
 /**
  * Spring Transaction을 수행하는 [TransactionOperations] Bean 을 사용하기 위한 설정이 제대로 되었는지 확인합니다.
  */
-class JdbcConfigurationTest: AbstractJdbcApplicationTest() {
+class TransactionConfigurationTest: AbstractTransactionApplicationTest() {
 
     companion object: KLogging()
 

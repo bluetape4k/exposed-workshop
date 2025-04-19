@@ -9,4 +9,4 @@ Spring의 `JdbcTemplate` 를 Exposed 와 함께 사용하는 밥법을 알아보
 
 ## 문서
 
-[Spring Boot AutoConfiguration](https://debop.notion.site/Spring-Boot-AutoConfiguration-1c32744526b080079af9eb44b62466d0)
+* [Spring TransactionTemplate](https://debop.notion.site/JdbcTemplate-1c32744526b080959c0fcf671247e082)

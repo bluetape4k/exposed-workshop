@@ -10,5 +10,5 @@ import org.springframework.boot.test.context.SpringBootTest
         "spring.exposed.generate-ddl=true"
     ]
 )
-abstract class AbstractJdbcApplicationTest {
+abstract class AbstractTransactionApplicationTest {
 }

@@ -1,6 +1,6 @@
 package exposed.examples.jdbc.domain
 
-import exposed.examples.jdbc.AbstractJdbcApplicationTest
+import exposed.examples.jdbc.AbstractTransactionApplicationTest
 import exposed.examples.jdbc.domain.BookSchema.AuthorTable
 import exposed.examples.jdbc.domain.BookSchema.BookTable
 import io.bluetape4k.logging.KLogging
@@ -14,9 +14,9 @@ import org.junit.jupiter.api.TestMethodOrder
 import org.springframework.beans.factory.annotation.Autowired
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
-class JdbcTemplateTest(
+class TransactionTemplateTest(
     @Autowired private val bookService: BookService,
-): AbstractJdbcApplicationTest() {
+): AbstractTransactionApplicationTest() {
 
     companion object: KLogging() {
         private const val REPEAT_SIZE = 5
