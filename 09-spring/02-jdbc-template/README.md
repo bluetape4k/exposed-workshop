@@ -6,3 +6,7 @@ Spring의 `JdbcTemplate` 를 Exposed 와 함께 사용하는 밥법을 알아보
 2. Exposed의 `SpringTransactionManager` 를 이용하여 `TransactionTemplate`를 사용하는 방법
 
 에 대한 예제를 제공합니다.
+
+## 문서
+
+[Spring Boot AutoConfiguration](https://debop.notion.site/Spring-Boot-AutoConfiguration-1c32744526b080079af9eb44b62466d0)

@@ -1,6 +1,7 @@
 package exposed.multitenant.webflux.tenant
 
 import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.debug
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kotlinx.coroutines.reactor.mono
 import org.springframework.stereotype.Component
@@ -27,8 +28,9 @@ class TenantFilter: WebFilter {
     }
 
     override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> = mono {
-        val tenantId = exchange.request.headers.getFirst(TENANT_HEADER) ?: Tenants.DEFAULT_TENANT.id
-        val tenant = Tenants.getById(tenantId)
+        val tenantId = exchange.request.headers.getFirst(TENANT_HEADER)
+        log.debug { "Request tenantId: $tenantId" }
+        val tenant = Tenants.getById(tenantId ?: Tenants.DEFAULT_TENANT.id)
 
         chain
             .filter(exchange)

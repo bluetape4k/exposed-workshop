@@ -5,6 +5,7 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
 import io.bluetape4k.support.uninitialized
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.spring.DatabaseInitializer
 import org.jetbrains.exposed.spring.SpringTransactionManager
@@ -18,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.boot.test.context.runner.ApplicationContextRunner
 import org.springframework.context.annotation.Bean
+import kotlin.test.Ignore
 import kotlin.test.assertFailsWith
 
 /**
@@ -27,12 +29,26 @@ import kotlin.test.assertFailsWith
     classes = [Application::class, ExposedAutoConfigurationTest.CustomDatabaseConfigConfiguration::class],
     properties = [
         "spring.datasource.url=jdbc:h2:mem:test",
-        "spring.datasource.driver-class-name=org.h2.Driver"
+        "spring.datasource.driver-class-name=org.h2.Driver",
+        "spring.exposed.generate-ddl=false",    // DDL 자동 생성 여부
+        "spring.exposed.show-sql=true"         // SQL 로그 출력 여부
     ]
 )
 class ExposedAutoConfigurationTest {
 
     companion object: KLogging()
+
+    @TestConfiguration
+    class CustomDatabaseConfigConfiguration {
+        companion object {
+            val DEFAULT_EXPOSED_DATABASE_CONFIG = DatabaseConfig {
+                maxEntitiesToStoreInCachePerEntity = 100
+            }
+        }
+
+        @Bean
+        fun customDatabaseConfig(): DatabaseConfig = DEFAULT_EXPOSED_DATABASE_CONFIG
+    }
 
     /**
      * Exposed 의 [SpringTransactionManager] 빈이 생성되었는지 확인
@@ -56,6 +72,9 @@ class ExposedAutoConfigurationTest {
     fun `데이터베이스 커넥션이 초기화 되어야 합니다`() {
         springTransactionManager.shouldNotBeNull()
         databaseConfig.shouldNotBeNull()
+
+        // spring.exposed.generate-ddl=false 이므로 
+        databaseInitializer.shouldBeNull()
     }
 
     @Test
@@ -74,6 +93,7 @@ class ExposedAutoConfigurationTest {
     /**
      * Application 에서 [DataSourceTransactionManagerAutoConfiguration] 이 제외되었다.
      */
+    @Ignore("누구나 다아는 AutoConfiguration 제외하는 기능이라 생략")
     @Test
     fun `auto configuration 로 부터 특정 클래스를 제외할 수 있습니다`() {
         // Application 만 사용하면 DataSourceTransactionManagerAutoConfiguration 빈이 제외되었습니다.
@@ -87,15 +107,5 @@ class ExposedAutoConfigurationTest {
         }
     }
 
-    @TestConfiguration
-    class CustomDatabaseConfigConfiguration {
-        companion object {
-            val DEFAULT_EXPOSED_DATABASE_CONFIG = DatabaseConfig {
-                maxEntitiesToStoreInCachePerEntity = 100
-            }
-        }
 
-        @Bean
-        fun customDatabaseConfig(): DatabaseConfig = DEFAULT_EXPOSED_DATABASE_CONFIG
-    }
 }

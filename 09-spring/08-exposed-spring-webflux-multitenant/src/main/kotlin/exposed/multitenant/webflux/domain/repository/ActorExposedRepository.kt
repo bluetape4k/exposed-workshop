@@ -17,7 +17,7 @@ class ActorExposedRepository: ExposedRepository<ActorEntity, Long> {
 
     companion object: KLogging()
 
-    override val table = ActorTable
+    override val table = ActorEntity.table
     override fun ResultRow.toEntity(): ActorEntity = ActorEntity.wrapRow(this)
 
     fun searchActor(params: Map<String, String?>): List<ActorEntity> {
