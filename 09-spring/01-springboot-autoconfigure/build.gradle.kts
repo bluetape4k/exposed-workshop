@@ -19,14 +19,7 @@ dependencies {
     implementation(Libs.exposed_java_time)
     implementation(Libs.exposed_spring_boot_starter)
 
-    // Bluetape4k
-    implementation(Libs.bluetape4k_io)
-    implementation(Libs.bluetape4k_jdbc)
-    implementation(Libs.bluetape4k_spring_core)
-    testImplementation(Libs.bluetape4k_spring_tests)
-
     // Spring Boot
-    implementation(Libs.springBootStarter("jdbc"))
     testImplementation(Libs.springBootStarter("test")) {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
@@ -36,6 +29,5 @@ dependencies {
     // Coroutines
     implementation(Libs.bluetape4k_coroutines)
     testImplementation(Libs.kotlinx_coroutines_core)
-    testImplementation(Libs.kotlinx_coroutines_reactor)
     testImplementation(Libs.kotlinx_coroutines_test)
 }
