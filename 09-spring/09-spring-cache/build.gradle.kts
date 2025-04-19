@@ -24,19 +24,23 @@ configurations {
 
 dependencies {
 
-
+    implementation(platform(Libs.exposed_bom))
     testImplementation(project(":exposed-shared-tests"))
 
     // bluetape4k
+    implementation(Libs.bluetape4k_redis)
+    implementation(Libs.bluetape4k_testcontainers)
     implementation(Libs.bluetape4k_jdbc)
     testImplementation(Libs.bluetape4k_spring_tests)
+    testImplementation(Libs.bluetape4k_junit5)
+
 
     // Exposed
     implementation(Libs.bluetape4k_exposed)
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_jdbc)
+    implementation(Libs.exposed_dao)
     implementation(Libs.exposed_java_time)
-    implementation(Libs.exposed_migration)
     implementation(Libs.exposed_spring_boot_starter)
 
     // Database Drivers
@@ -63,9 +67,8 @@ dependencies {
 
     implementation(Libs.springBootStarter("webflux"))
     implementation(Libs.springBootStarter("cache"))
+    implementation(Libs.springBootStarter("data-redis"))
     implementation(Libs.springBootStarter("aop"))
-    implementation(Libs.springBootStarter("actuator"))
-    implementation(Libs.springBootStarter("validation"))
 
     testImplementation(Libs.bluetape4k_spring_tests)
     testImplementation(Libs.springBootStarter("test")) {
@@ -73,6 +76,23 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
     }
+
+    // Redis Cache
+    implementation(Libs.lettuce_core)
+    implementation(Libs.commons_pool2)
+
+    // Codecs
+    implementation(Libs.kryo)
+    implementation(Libs.fury_kotlin)
+
+    // Compressor
+    implementation(Libs.commons_compress)
+    implementation(Libs.lz4_java)
+    implementation(Libs.snappy_java)
+    implementation(Libs.zstd_jni)
+
+    // DataFaker
+    implementation(Libs.datafaker)
 
     // Coroutines
     implementation(Libs.bluetape4k_coroutines)
@@ -85,10 +105,8 @@ dependencies {
     implementation(Libs.reactor_kotlin_extensions)
     testImplementation(Libs.reactor_test)
 
-    // Monitoring
-    implementation(Libs.micrometer_core)
-    implementation(Libs.micrometer_registry_prometheus)
-
     // SpringDoc - OpenAPI 3.0
     implementation(Libs.springdoc_openapi_starter_webflux_ui)
+
+    implementation(Libs.hibernate_validator)
 }
