@@ -10,6 +10,7 @@ import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeTrue
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.spring.DatabaseInitializer
+import org.jetbrains.exposed.spring.autoconfigure.ExposedAutoConfiguration
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.exists
 import org.jetbrains.exposed.sql.selectAll
@@ -25,6 +26,7 @@ import kotlin.test.assertFailsWith
  */
 @SpringBootTest(
     classes = [Application::class],
+    // 매뉴얼로 DatabaseInitializer 를 사용하기 위해 ExposedAutoConfiguration 를 제외합니다.
     properties = [
         "spring.autoconfigure.exclude=org.jetbrains.exposed.spring.boot.autoconfigure.ExposedAutoConfiguration"
     ]
@@ -40,9 +42,9 @@ class DatabaseInitializerTest {
     fun `TestTable에 대해 스키마를 생성하고 IgnoreTable에 대해서는 생성하지 않아야 합니다`() {
 
         // H2 DB에 연결
-        val db = Database.connect("jdbc:h2:mem:test-spring", driver = "org.h2.Driver", user = "sa")
+        val database = Database.connect("jdbc:h2:mem:test-spring", driver = "org.h2.Driver", user = "sa")
 
-        transaction(db) {
+        transaction(database) {
             // `IgnoredTable` 은 `DatabaseInitializer` 에서 제외합니다.
             val excludedPackages: List<String> = listOf(IgnoredTable::class.java.`package`.name)
             log.info { "Excluded packages: $excludedPackages" }

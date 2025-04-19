@@ -1,5 +1,10 @@
 package exposed.example.springboot.tables
 
+import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.toStringBuilder
+import org.jetbrains.exposed.dao.IntEntity
+import org.jetbrains.exposed.dao.IntEntityClass
+import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.javatime.CurrentDateTime
 import org.jetbrains.exposed.sql.javatime.datetime
@@ -19,4 +24,19 @@ import org.jetbrains.exposed.sql.javatime.datetime
 object TestTable: IntIdTable("test_table") {
     val name = varchar("name", 100)
     val createdAt = datetime("created_at").defaultExpression(CurrentDateTime)
+}
+
+
+class TestEntity(id: EntityID<Int>): IntEntity(id) {
+    companion object: IntEntityClass<TestEntity>(TestTable)
+
+    var name by TestTable.name
+    var createdAt by TestTable.createdAt
+
+    override fun equals(other: Any?): Boolean = idEquals(other)
+    override fun hashCode(): Int = id.value.hashCode()
+    override fun toString(): String = toStringBuilder()
+        .add("name", name)
+        .add("createdAt", createdAt)
+        .toString()
 }
