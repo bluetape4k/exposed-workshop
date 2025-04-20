@@ -1,5 +1,3 @@
-import jdk.tools.jlink.resources.plugins
-
 plugins {
     kotlin("plugin.spring")
     id(Plugins.spring_boot)
@@ -7,12 +5,12 @@ plugins {
 
 
 springBoot {
-    mainClass.set("exposed.examples.springcache.SpringCacheApplicationKt")
+    mainClass.set("exposed.examples.suspendedcache.SpringSuspendedCacheApplicationKt")
 
     buildInfo {
         properties {
-            additional.put("name", "Exposed Cache Application")
-            additional.put("description", "Exposed 와 Spring Boot Cache 를 활용한 분산 캐시 예제")
+            additional.put("name", "Exposed SuspendedCache Application")
+            additional.put("description", "Exposed 와 SuspendedCacheRepository를 이용하여 비동기방식으로 DB 및 Redis에 접근하는 예제")
             version = "1.0.0"
             additional.put("java.version", JavaVersion.current())
         }
@@ -31,6 +29,7 @@ dependencies {
 
     // bluetape4k
     implementation(Libs.bluetape4k_redis)
+    implementation(Libs.bluetape4k_grpc)
     implementation(Libs.bluetape4k_testcontainers)
     testImplementation(Libs.bluetape4k_junit5)
 
@@ -50,6 +49,7 @@ dependencies {
     implementation(Libs.h2_v2)
 
     // Spring Boot
+    implementation(Libs.springBootStarter("webflux"))
     implementation(Libs.springBootStarter("cache"))
     implementation(Libs.springBootStarter("data-redis"))
     testImplementation(Libs.springBootStarter("test")) {
@@ -64,7 +64,17 @@ dependencies {
 
     // Codecs
     implementation(Libs.fury_kotlin)
-
     // Compressor
     implementation(Libs.lz4_java)
+
+    // Coroutines
+    implementation(Libs.bluetape4k_coroutines)
+    implementation(Libs.kotlinx_coroutines_core)
+    implementation(Libs.kotlinx_coroutines_reactor)
+    testImplementation(Libs.kotlinx_coroutines_test)
+
+    // Reactor
+    implementation(Libs.reactor_netty)
+    implementation(Libs.reactor_kotlin_extensions)
+    testImplementation(Libs.reactor_test)
 }

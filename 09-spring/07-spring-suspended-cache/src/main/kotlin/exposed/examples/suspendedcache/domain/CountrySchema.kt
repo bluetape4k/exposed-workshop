@@ -1,4 +1,4 @@
-package exposed.examples.springcache.domain
+package exposed.examples.suspendedcache.domain
 
 import io.bluetape4k.exposed.dao.toStringBuilder
 import org.jetbrains.exposed.dao.IntEntity

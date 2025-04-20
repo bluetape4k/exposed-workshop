@@ -1,0 +1,27 @@
+spring:
+    data:
+        redis:
+            host: ${testcontainers.redis.host}
+            port: ${testcontainers.redis.port}
+            lettuce:
+                pool:
+                    enabled: true
+                    max-active: 64
+                    max-idle: 16
+                    min-idle: 2
+
+    datasource:
+        url: jdbc:h2:mem:countrydb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        username: root
+        password: sa
+        driver-class-name: org.h2.Driver
+        hikari:
+            maximum-pool-size: 10
+            minimum-idle: 2
+            idle-timeout: 30000
+            connection-timeout: 30000
+            max-lifetime: 1800000
+
+    exposed:
+        generate-ddl: true
+        show-sql: false
