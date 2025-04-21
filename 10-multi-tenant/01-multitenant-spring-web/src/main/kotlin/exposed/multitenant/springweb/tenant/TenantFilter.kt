@@ -26,5 +26,4 @@ class TenantFilter: Filter {
         val tenantHeader = request.getHeader(TENANT_HEADER) ?: return Tenants.DEFAULT_TENANT
         return Tenants.getById(tenantHeader)
     }
-
 }

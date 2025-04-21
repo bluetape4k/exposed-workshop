@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 @Aspect
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
-class TransactionSchemaAspect {
+class TenantSchemaAspect {
 
     companion object: KLogging()
 
@@ -28,7 +28,6 @@ class TransactionSchemaAspect {
         transaction {
             val schema = TenantContext.getCurrentTenantSchema()
             log.info { "Use schema=$schema" }
-            SchemaUtils.createSchema(schema)
             SchemaUtils.setSchema(schema)
             commit()
         }

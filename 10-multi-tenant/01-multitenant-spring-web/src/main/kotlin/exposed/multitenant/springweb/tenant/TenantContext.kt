@@ -14,7 +14,10 @@ object TenantContext {
 
     fun clear() = currentTenant.remove()
 
-    inline fun withTenant(tenant: Tenants.Tenant, block: () -> Unit) {
+    inline fun withTenant(
+        tenant: Tenants.Tenant = getCurrentTenant(),
+        block: () -> Unit,
+    ) {
         setCurrentTenant(tenant)
         try {
             block()

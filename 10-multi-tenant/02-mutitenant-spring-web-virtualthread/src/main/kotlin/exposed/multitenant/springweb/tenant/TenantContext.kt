@@ -11,4 +11,12 @@ object TenantContext {
 
     fun getCurrentTenantSchema(): Schema = getSchemaDefinition(getCurrentTenant())
 
+    inline fun withTenant(
+        tenant: Tenants.Tenant = getCurrentTenant(),
+        crossinline block: () -> Unit,
+    ) {
+        ScopedValue.where(CURRENT_TENANT, tenant).run {
+            block()
+        }
+    }
 }
