@@ -67,6 +67,7 @@ class ExposedMutitenantConfig {
         val tenantDataSource = TenantAwareDataSource()
 
         val targetDataSources = Tenant.entries.associateWith {
+            // 여기에서 Database 경로를 변경해주어야 합니다.
             HikariDataSource(getHikariConfig())
         }
 
