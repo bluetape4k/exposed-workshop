@@ -22,7 +22,7 @@ import javax.sql.DataSource
 
 @Configuration
 @EnableTransactionManagement
-class SchemaRoutingConfig {
+class ExposedMultitenantConfig {
 
     companion object: KLogging()
 
@@ -62,7 +62,6 @@ class SchemaRoutingConfig {
      * Active Profile 에 해당하는 DataSource (H2, PostgreSQL) 를 입력받아, Tenant 별로 DataSource 를 설정합니다.
      */
     @Suppress("UNCHECKED_CAST")
-    @Primary
     @Bean
     fun tenantAwareDataSource(): TenantAwareDataSource {
         val tenantDataSource = TenantAwareDataSource()
@@ -78,17 +77,10 @@ class SchemaRoutingConfig {
         return tenantDataSource
     }
 
-    @Bean
-    fun exposedDatabaseConfig(): DatabaseConfig {
-        return DatabaseConfig {
-            maxEntitiesToStoreInCachePerEntity = 100
-            useNestedTransactions = true
-        }
-    }
-
     /**
      * 하나의 Shared Database 를 사용하여, Separate Schema 방식으로 멀티 테넌시를 지원합니다.
      */
+    @Primary
     @Bean
     fun dataSource(): DataSource {
         val hikariConfig = getHikariConfig()
@@ -104,5 +96,13 @@ class SchemaRoutingConfig {
         log.info { "Database connection: $dataSource" }
 
         return Database.connect(dataSource, databaseConfig = databaseConfig)
+    }
+
+    @Bean
+    fun exposedDatabaseConfig(): DatabaseConfig {
+        return DatabaseConfig {
+            maxEntitiesToStoreInCachePerEntity = 100
+            useNestedTransactions = true
+        }
     }
 }

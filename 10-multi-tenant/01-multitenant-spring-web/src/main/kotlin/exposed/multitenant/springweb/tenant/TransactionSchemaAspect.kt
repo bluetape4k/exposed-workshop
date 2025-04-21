@@ -18,7 +18,7 @@ class TransactionSchemaAspect {
     companion object: KLogging()
 
     /**
-     * `@Transactional` 이 적용된 메소드에 대해 Multitenncy 를 지원하기 위한 Schema 설정을 수행합니다.
+     * `@Transactional` 이 적용된 클래스나 메소드에 대해 Multitenncy 를 지원하기 위한 Schema 설정을 수행합니다.
      */
     @Before(
         "@within(org.springframework.transaction.annotation.Transactional) || " +
