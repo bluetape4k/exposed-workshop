@@ -2,7 +2,7 @@ package exposed.examples.springwebflux.service
 
 import exposed.examples.springwebflux.domain.dtos.MovieDTO
 import exposed.examples.springwebflux.domain.model.MovieSchema.MovieEntity
-import exposed.examples.springwebflux.domain.repository.MovieRepository
+import exposed.examples.springwebflux.domain.repository.MovieExposedRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.springframework.stereotype.Component
@@ -15,7 +15,7 @@ import java.time.LocalDate
  */
 @Component
 class MovieTransactionalService(
-    private val movieRepository: MovieRepository,
+    private val movieRepository: MovieExposedRepository,
 ) {
 
     companion object: KLogging()

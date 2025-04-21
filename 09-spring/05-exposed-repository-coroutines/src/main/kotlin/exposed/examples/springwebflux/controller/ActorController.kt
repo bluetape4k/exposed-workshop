@@ -2,7 +2,7 @@ package exposed.examples.springwebflux.controller
 
 import exposed.examples.springwebflux.domain.dtos.ActorDTO
 import exposed.examples.springwebflux.domain.model.toActorDTO
-import exposed.examples.springwebflux.domain.repository.ActorRepository
+import exposed.examples.springwebflux.domain.repository.ActorExposedRepository
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,14 +19,15 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/actors")
 class ActorController(
-    private val actorRepository: ActorRepository,
+    private val actorRepository: ActorExposedRepository,
 ): CoroutineScope by CoroutineScope(Dispatchers.IO) {
     companion object: KLogging()
 
     @GetMapping("/{id}")
-    suspend fun getActorById(@PathVariable("id") actorId: Long): ActorDTO? = newSuspendedTransaction(readOnly = true) {
-        actorRepository.findById(actorId)
-    }.toActorDTO()
+    suspend fun getActorById(@PathVariable("id") actorId: Long): ActorDTO? =
+        newSuspendedTransaction(readOnly = true) {
+            actorRepository.findById(actorId)
+        }.toActorDTO()
 
     @GetMapping
     suspend fun searchActors(request: ServerHttpRequest): List<ActorDTO> {
@@ -35,19 +36,21 @@ class ActorController(
         return when {
             params.isEmpty() -> emptyList()
             else -> newSuspendedTransaction(readOnly = true) {
-                actorRepository.searchActor(params)
-            }.map { it.toActorDTO() }
+                actorRepository.searchActor(params).map { it.toActorDTO() }
+            }
         }
     }
 
     @PostMapping
-    suspend fun createActor(@RequestBody actor: ActorDTO): ActorDTO = newSuspendedTransaction {
-        actorRepository.create(actor)
-    }.toActorDTO()
+    suspend fun createActor(@RequestBody actor: ActorDTO): ActorDTO =
+        newSuspendedTransaction {
+            actorRepository.create(actor).toActorDTO()
+        }
 
     @DeleteMapping("/{id}")
-    suspend fun deleteActor(@PathVariable("id") actorId: Long): Int = newSuspendedTransaction {
-        actorRepository.deleteById(actorId)
-    }
+    suspend fun deleteActor(@PathVariable("id") actorId: Long): Int =
+        newSuspendedTransaction {
+            actorRepository.deleteById(actorId)
+        }
 
 }

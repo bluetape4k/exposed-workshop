@@ -1,5 +1,6 @@
 package exposed.workshop.springwebflux.domain.repository
 
+import exposed.workshop.springwebflux.domain.ActorDTO
 import exposed.workshop.springwebflux.domain.MovieActorCountDTO
 import exposed.workshop.springwebflux.domain.MovieDTO
 import exposed.workshop.springwebflux.domain.MovieSchema.ActorInMovieTable
@@ -9,10 +10,12 @@ import exposed.workshop.springwebflux.domain.MovieSchema.MovieTable
 import exposed.workshop.springwebflux.domain.MovieWithActorDTO
 import exposed.workshop.springwebflux.domain.MovieWithProducingActorDTO
 import exposed.workshop.springwebflux.domain.toActorDTO
+import exposed.workshop.springwebflux.domain.toMovieDTO
 import exposed.workshop.springwebflux.domain.toMovieWithActorDTO
 import exposed.workshop.springwebflux.domain.toMovieWithProducingActorDTO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import org.eclipse.collections.impl.factory.Multimaps
 import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.sql.Join
 import org.jetbrains.exposed.sql.Query
@@ -120,7 +123,8 @@ class MovieRepository {
     suspend fun getAllMoviesWithActors(): List<MovieWithActorDTO> {
         log.debug { "Get all movies with actors." }
 
-        val movies = MovieActorJoin
+        val join = MovieTable.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
+        val movies = join
             .select(
                 MovieTable.id,
                 MovieTable.name,
@@ -130,28 +134,23 @@ class MovieRepository {
                 ActorTable.firstName,
                 ActorTable.lastName,
                 ActorTable.birthday
-            )
-            .groupingBy { it[MovieTable.id] }
-            .fold(mutableListOf<MovieWithActorDTO>()) { acc, row ->
-                val lastMovieId = acc.lastOrNull()?.id
-                if (lastMovieId != row[MovieTable.id].value) {
-                    val movie = MovieWithActorDTO(
-                        id = row[MovieTable.id].value,
-                        name = row[MovieTable.name],
-                        producerName = row[MovieTable.producerName],
-                        releaseDate = row[MovieTable.releaseDate].toString(),
-                    )
-                    acc.add(movie)
-                } else {
-                    acc.lastOrNull()?.actors?.let {
-                        val actor = row.toActorDTO()
-                        it.add(actor)
-                    }
-                }
-                acc
-            }
+            ).toList()
 
-        return movies.values.flatten()
+        val movieDtos = hashMapOf<Long, MovieDTO>()
+        val actorDtos = Multimaps.mutable.set.of<Long, ActorDTO>()
+
+        movies.forEach { row ->
+            val movieId = row[MovieTable.id].value
+
+            if (!movieDtos.containsKey(movieId)) {
+                movieDtos[movieId] = row.toMovieDTO()
+            }
+            actorDtos.getIfAbsentPutAll(movieId, mutableSetOf(row.toActorDTO()))
+        }
+
+        return movieDtos.map { (id, movie) ->
+            movie.toMovieWithActorDTO(actorDtos.get(id) ?: emptySet())
+        }
     }
 
     /**

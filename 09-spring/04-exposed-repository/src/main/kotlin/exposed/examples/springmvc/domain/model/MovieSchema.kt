@@ -9,21 +9,23 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
+import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.date
+import java.time.LocalDate
 
 object MovieSchema {
 
     object MovieTable: LongIdTable("movies") {
-        val name = varchar("name", 255)
-        val producerName = varchar("producer_name", 255)
-        val releaseDate = date("release_date")
+        val name: Column<String> = varchar("name", 255)
+        val producerName: Column<String> = varchar("producer_name", 255)
+        val releaseDate: Column<LocalDate> = date("release_date")
     }
 
     object ActorTable: LongIdTable("actors") {
-        val firstName = varchar("first_name", 255)
-        val lastName = varchar("last_name", 255)
-        val birthday = date("birthday").nullable()
+        val firstName: Column<String> = varchar("first_name", 255)
+        val lastName: Column<String> = varchar("last_name", 255)
+        val birthday: Column<LocalDate?> = date("birthday").nullable()
     }
 
     object ActorInMovieTable: Table("actors_in_movies") {
@@ -36,11 +38,11 @@ object MovieSchema {
     class MovieEntity(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<MovieEntity>(MovieTable)
 
-        var name by MovieTable.name
-        var producerName by MovieTable.producerName
-        var releaseDate by MovieTable.releaseDate
+        var name: String by MovieTable.name
+        var producerName: String by MovieTable.producerName
+        var releaseDate: LocalDate by MovieTable.releaseDate
 
-        val actors by ActorEntity via ActorInMovieTable
+        val actors: SizedIterable<ActorEntity> by ActorEntity via ActorInMovieTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -54,11 +56,11 @@ object MovieSchema {
     class ActorEntity(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<ActorEntity>(ActorTable)
 
-        var firstName by ActorTable.firstName
-        var lastName by ActorTable.lastName
-        var birthday by ActorTable.birthday
+        var firstName: String by ActorTable.firstName
+        var lastName: String by ActorTable.lastName
+        var birthday: LocalDate? by ActorTable.birthday
 
-        val movies by MovieEntity via ActorInMovieTable
+        val movies: SizedIterable<MovieEntity> by MovieEntity via ActorInMovieTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()

@@ -35,7 +35,7 @@ fun ResultRow.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
     actors = actors.toMutableList(),
 )
 
-fun MovieDTO.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
+fun MovieDTO.toMovieWithActorDTO(actors: Collection<ActorDTO>) = MovieWithActorDTO(
     id = this.id,
     name = this.name,
     producerName = this.producerName,

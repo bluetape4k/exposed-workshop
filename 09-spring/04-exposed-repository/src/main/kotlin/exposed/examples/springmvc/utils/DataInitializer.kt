@@ -27,7 +27,8 @@ class DataInitializer: ApplicationListener<ApplicationReadyEvent> {
 
     @Transactional
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
-        log.info { "데이터베이스 초기화 및 샘플 데이터 추가" }
+        // `spring.exposed.generate-ddl` 속성을 true 로 설정하면 Exposed 가 자동으로 DDL 을 생성합니다.
+        log.info { "데이터베이스 샘플 데이터 추가" }
         populateData()
     }
 

@@ -1,5 +1,6 @@
 package exposed.workshop.springmvc.domain.repository
 
+import exposed.workshop.springmvc.domain.ActorDTO
 import exposed.workshop.springmvc.domain.MovieActorCountDTO
 import exposed.workshop.springmvc.domain.MovieDTO
 import exposed.workshop.springmvc.domain.MovieSchema.ActorInMovieTable
@@ -14,6 +15,7 @@ import exposed.workshop.springmvc.domain.toMovieWithActorDTO
 import exposed.workshop.springmvc.domain.toMovieWithProducingActorDTO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import org.eclipse.collections.impl.factory.Multimaps
 import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -127,27 +129,23 @@ class MovieRepository(
                 ActorTable.firstName,
                 ActorTable.lastName,
                 ActorTable.birthday
-            )
-            .groupingBy { it[MovieTable.id] }
-            .fold(mutableListOf<MovieWithActorDTO>()) { acc, row ->
-                val lastMovieId = acc.lastOrNull()?.id
-                if (lastMovieId != row[MovieTable.id].value) {
-                    val movie = MovieWithActorDTO(
-                        id = row[MovieTable.id].value,
-                        name = row[MovieTable.name],
-                        producerName = row[MovieTable.producerName],
-                        releaseDate = row[MovieTable.releaseDate].toString(),
-                    )
-                    acc.add(movie)
-                } else {
-                    acc.lastOrNull()?.actors?.let {
-                        val actor = row.toActorDTO()
-                        it.add(actor)
-                    }
-                }
-                acc
+            ).toList()
+
+        val movieDtos = hashMapOf<Long, MovieDTO>()
+        val actorDtos = Multimaps.mutable.set.of<Long, ActorDTO>()
+
+        movies.forEach { row ->
+            val movieId = row[MovieTable.id].value
+
+            if (!movieDtos.containsKey(movieId)) {
+                movieDtos[movieId] = row.toMovieDTO()
             }
-        return movies.values.flatten()
+            actorDtos.getIfAbsentPutAll(movieId, mutableSetOf(row.toActorDTO()))
+        }
+
+        return movieDtos.map { (id, movie) ->
+            movie.toMovieWithActorDTO(actorDtos.get(id) ?: emptySet())
+        }
     }
 
     /**

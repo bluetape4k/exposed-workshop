@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
 @Repository
-class ActorRepository: ExposedRepository<ActorEntity, Long> {
+class ActorExposedRepository: ExposedRepository<ActorEntity, Long> {
 
     companion object: KLogging()
 

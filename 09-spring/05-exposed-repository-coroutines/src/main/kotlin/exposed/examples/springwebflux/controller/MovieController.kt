@@ -2,7 +2,7 @@ package exposed.examples.springwebflux.controller
 
 import exposed.examples.springwebflux.domain.dtos.MovieDTO
 import exposed.examples.springwebflux.domain.model.toMovieDTO
-import exposed.examples.springwebflux.domain.repository.MovieRepository
+import exposed.examples.springwebflux.domain.repository.MovieExposedRepository
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/movies")
 @Transactional
 class MovieController(
-    private val movieRepository: MovieRepository,
+    private val movieRepository: MovieExposedRepository,
 ): CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
     companion object: KLogging()

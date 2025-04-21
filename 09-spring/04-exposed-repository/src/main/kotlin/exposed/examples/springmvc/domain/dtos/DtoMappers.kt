@@ -36,7 +36,7 @@ fun ResultRow.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
     id = this[MovieSchema.MovieTable.id].value
 )
 
-fun MovieDTO.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
+fun MovieDTO.toMovieWithActorDTO(actors: Collection<ActorDTO>) = MovieWithActorDTO(
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate,

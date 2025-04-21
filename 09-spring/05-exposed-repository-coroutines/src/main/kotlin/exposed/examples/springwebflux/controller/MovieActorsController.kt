@@ -3,7 +3,7 @@ package exposed.examples.springwebflux.controller
 import exposed.examples.springwebflux.domain.dtos.MovieActorCountDTO
 import exposed.examples.springwebflux.domain.dtos.MovieWithActorDTO
 import exposed.examples.springwebflux.domain.dtos.MovieWithProducingActorDTO
-import exposed.examples.springwebflux.domain.repository.MovieRepository
+import exposed.examples.springwebflux.domain.repository.MovieExposedRepository
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/movie-actors")
 @Transactional(readOnly = true)
 class MovieActorsController(
-    private val movieRepository: MovieRepository,
+    private val movieRepository: MovieExposedRepository,
 ): CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
     companion object: KLogging()
