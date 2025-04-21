@@ -31,8 +31,8 @@ class SpringMultiContainerTransactionTest {
 
     companion object: KLogging()
 
-    val orderContainer = AnnotationConfigApplicationContext(OrderConfig::class.java)
-    val paymentContainer = AnnotationConfigApplicationContext(PaymentConfig::class.java)
+    private val orderContainer = AnnotationConfigApplicationContext(OrderConfig::class.java)
+    private val paymentContainer = AnnotationConfigApplicationContext(PaymentConfig::class.java)
 
     val orders: OrderService = orderContainer.getBean(OrderService::class.java)
     val payments: PaymentService = paymentContainer.getBean(PaymentService::class.java)

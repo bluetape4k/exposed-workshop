@@ -29,7 +29,8 @@ class SpringTransactionSingleConnectionTest {
         val c1 = varchar("c1", Int.MIN_VALUE.toString().length)
     }
 
-    val singleConnectionH2TestContainer = AnnotationConfigApplicationContext(SingleConnectionH2TestConfig::class.java)
+    private val singleConnectionH2TestContainer =
+        AnnotationConfigApplicationContext(SingleConnectionH2TestConfig::class.java)
     val dataSource: DataSource = singleConnectionH2TestContainer.getBean(DataSource::class.java)
     val transactionManager = singleConnectionH2TestContainer.getBean(PlatformTransactionManager::class.java)
 

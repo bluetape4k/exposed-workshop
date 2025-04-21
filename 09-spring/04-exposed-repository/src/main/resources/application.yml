@@ -17,8 +17,8 @@ server:
 spring:
     exposed:
         excluded-packages: org.springframework.boot.autoconfigure.web.servlet
-        generate-ddl: false
-        show-sql: true
+        generate-ddl: true
+        show-sql: false
 
     application:
         name: Spring MVC with Exposed

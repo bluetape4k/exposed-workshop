@@ -15,6 +15,10 @@ spring:
         active: "h2"    # postgres | h2 를 선택할 수 있습니다.
         default: "h2"
 
+    exposed:
+        generate-ddl: false
+        show-sql: false
+
     jackson:
         serialization:
             indent-output: true
@@ -23,17 +27,6 @@ spring:
 
     netty:
         leak-detection: simple
-
-    exposed:
-        generate-ddl: true
-        show-sql: true
-
-    db:
-        default:
-            driver: org.h2.Driver
-            url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-            user: sa
-            password: sa
 
 management:
     endpoints:

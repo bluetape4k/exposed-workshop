@@ -6,16 +6,12 @@ import exposed.examples.springwebflux.domain.model.toMovieDTO
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import kotlinx.coroutines.reactor.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
-import org.junit.jupiter.api.Disabled
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.annotation.Commit
-import org.springframework.transaction.annotation.Transactional
 
-@Disabled("suspend 함수에 대해 @Transactional 이 적용되지 않습니다. newSuspendedTransaction 을 사용하세요")
-class MovieTransactionServiceTest(
+class MovieSuspendedServiceTest(
     @Autowired private val movieService: MovieTransactionalService,
 ): AbstractCoroutineExposedRepositoryTest() {
 
@@ -27,16 +23,16 @@ class MovieTransactionServiceTest(
         )
     }
 
-    @Transactional
-    @Commit
     @Test
     fun `reactor 함수에서 @Transactional 적용하면 Transaction이 적용된다`(): Unit = runSuspendIO {
         log.debug { "reactor 함수에서 @Transactional 적용하면 Transaction이 적용된다" }
 
-        val movie = newMovieDTO()
-        val movieEntity = movieService.monoSave(movie).awaitSingle()
+        newSuspendedTransaction {
+            val movie = newMovieDTO()
+            val movieEntity = movieService.suspendedSave(movie)
 
-        val savedMovie = movieEntity.toMovieDTO()
-        savedMovie shouldBeEqualTo movie.copy(id = savedMovie.id)
+            val savedMovie = movieEntity.toMovieDTO()
+            savedMovie shouldBeEqualTo movie.copy(id = savedMovie.id)
+        }
     }
 }

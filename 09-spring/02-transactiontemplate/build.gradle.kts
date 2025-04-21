@@ -18,11 +18,11 @@ dependencies {
     implementation(Libs.exposed_dao)
     implementation(Libs.exposed_spring_boot_starter)
 
+    implementation(Libs.h2_v2)
+    implementation(Libs.hikaricp)
+
     // Bluetape4k
     implementation(Libs.bluetape4k_io)
-    implementation(Libs.bluetape4k_jdbc)
-    implementation(Libs.bluetape4k_spring_core)
-    testImplementation(Libs.bluetape4k_spring_tests)
 
     // Spring Boot
     implementation(Libs.springBootStarter("jdbc"))
@@ -32,11 +32,7 @@ dependencies {
         exclude(module = "mockito-core")
     }
 
+    // 랜덤 데이터를 생성
     implementation(Libs.datafaker)
 
-    // Coroutines
-    implementation(Libs.bluetape4k_coroutines)
-    testImplementation(Libs.kotlinx_coroutines_core)
-    testImplementation(Libs.kotlinx_coroutines_reactor)
-    testImplementation(Libs.kotlinx_coroutines_test)
 }

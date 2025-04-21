@@ -1,12 +1,7 @@
-package exposed.examples.jdbc.domain
+package exposed.examples.transaction.domain
 
-import exposed.examples.jdbc.AbstractTransactionApplicationTest
-import exposed.examples.jdbc.domain.BookSchema.AuthorTable
-import exposed.examples.jdbc.domain.BookSchema.BookTable
+import exposed.examples.transaction.AbstractTransactionApplicationTest
 import io.bluetape4k.logging.KLogging
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.RepeatedTest
@@ -22,13 +17,6 @@ class TransactionTemplateTest(
         private const val REPEAT_SIZE = 5
     }
 
-    @BeforeAll
-    fun beforeAll() {
-        transaction {
-            SchemaUtils.create(AuthorTable, BookTable)
-        }
-    }
-
     @Order(1)
     @RepeatedTest(REPEAT_SIZE)
     fun `without spring transaction`() {
@@ -38,7 +26,7 @@ class TransactionTemplateTest(
     @Order(2)
     @RepeatedTest(REPEAT_SIZE)
     fun `with spring transaction`() {
-        bookService.execWithSpringTransaction()
+        bookService.executeSpringTransaction()
     }
 
     @Order(3)
@@ -51,5 +39,11 @@ class TransactionTemplateTest(
     @RepeatedTest(REPEAT_SIZE)
     fun `with spring and exposed transaction`() {
         bookService.execWithSpringAndExposedTransactions()
+    }
+
+    @Order(5)
+    @RepeatedTest(REPEAT_SIZE)
+    fun `with Transactional annotation`() {
+        bookService.execTransactionalAnnotation()
     }
 }

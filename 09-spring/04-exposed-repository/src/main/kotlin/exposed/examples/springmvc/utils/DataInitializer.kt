@@ -6,15 +6,13 @@ import exposed.examples.springmvc.domain.model.MovieSchema.ActorInMovieTable
 import exposed.examples.springmvc.domain.model.MovieSchema.ActorTable
 import exposed.examples.springmvc.domain.model.MovieSchema.MovieTable
 import io.bluetape4k.logging.KLogging
-import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.info
-import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
-import org.springframework.boot.ApplicationArguments
-import org.springframework.boot.ApplicationRunner
+import org.springframework.boot.context.event.ApplicationReadyEvent
+import org.springframework.context.ApplicationListener
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -23,23 +21,16 @@ import java.time.LocalDate
  * Application 시작 시 DB 스키마 생성 및 샘플 데이터를 삽입하는 클래스
  */
 @Component
-@Transactional
-class DataInitializer: ApplicationRunner {
+class DataInitializer: ApplicationListener<ApplicationReadyEvent> {
 
     companion object: KLogging()
 
-    override fun run(args: ApplicationArguments?) {
+    @Transactional
+    override fun onApplicationEvent(event: ApplicationReadyEvent) {
         log.info { "데이터베이스 초기화 및 샘플 데이터 추가" }
-        createSchema()
         populateData()
     }
 
-    private fun createSchema() {
-        log.debug { "Creating schema and test data ..." }
-
-        @Suppress("DEPRECATION")
-        SchemaUtils.createMissingTablesAndColumns(ActorTable, MovieTable, ActorInMovieTable)
-    }
 
     private fun populateData() {
         val totalActors = ActorTable.selectAll().count()

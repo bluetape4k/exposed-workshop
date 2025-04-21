@@ -1,4 +1,4 @@
-package exposed.examples.jdbc.domain
+package exposed.examples.transaction.domain
 
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode

@@ -14,6 +14,10 @@ spring:
     application:
         name: Spring MVC with Exposed
 
+    exposed:
+        generate-ddl: false
+        show-sql: false
+
     profiles:
         active: h2        # postgres | h2
 
@@ -23,11 +27,6 @@ spring:
     lifecycle:
         timeout-per-shutdown-phase: 10s     # Graceful Shutdown 시간
 
-    datasource:
-        hikari:
-            maximum-pool-size: 100
-            minimum-idle: 10
-            connection-timeout: 1000
 
 management:
     endpoints:

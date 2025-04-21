@@ -1,12 +1,12 @@
-package exposed.examples.jdbc
+package exposed.examples.transaction
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class JdbcApplication
+class TransactionTemplateApplication
 
 
 fun main(vararg args: String) {
-    runApplication<JdbcApplication>(*args)
+    runApplication<TransactionTemplateApplication>(*args)
 }
