@@ -19,7 +19,7 @@ spring:
         show-sql: false
 
     profiles:
-        active: h2        # postgres | h2
+        active: postgres        # postgres | h2
 
     jackson:
         serialization:

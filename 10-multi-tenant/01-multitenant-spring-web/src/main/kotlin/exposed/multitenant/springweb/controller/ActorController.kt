@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/actors")
+@Transactional(readOnly = true)
 class ActorController(
     private val actorRepository: ActorExposedRepository,
 ) {
@@ -18,7 +19,6 @@ class ActorController(
     companion object: KLogging()
 
     @GetMapping
-    @Transactional(readOnly = true)
     fun getAllActors(): List<ActorDTO> {
         return actorRepository.findAll().map { it.toActorDTO() }
     }

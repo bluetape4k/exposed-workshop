@@ -26,4 +26,15 @@ class SchemaRoutingConfigTest: AbstractMultitenantTest() {
             }
         }
     }
+
+    @Test
+    fun `get actors in english`() {
+        ScopedValue.where(TenantContext.CURRENT_TENANT, Tenants.Tenant.ENGLISH).run {
+            val actors = ActorTable.selectAll().map { it.toActorDTO() }
+
+            actors.forEach {
+                log.debug { "English Actor: $it" }
+            }
+        }
+    }
 }

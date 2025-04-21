@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.core.env.Environment
 import org.springframework.transaction.annotation.EnableTransactionManagement
+import javax.sql.DataSource
 
 @Configuration
 @EnableTransactionManagement
@@ -57,6 +58,7 @@ class SchemaRoutingConfig {
     }
 
     /**
+     * [TenantAwareDataSource] 는 `Database per Tenant` 방식으로 멀티 테넌시를 지원합니다.
      * Active Profile 에 해당하는 DataSource (H2, PostgreSQL) 를 입력받아, Tenant 별로 DataSource 를 설정합니다.
      */
     @Suppress("UNCHECKED_CAST")
@@ -84,8 +86,21 @@ class SchemaRoutingConfig {
         }
     }
 
+    /**
+     * 하나의 Shared Database 를 사용하여, Separate Schema 방식으로 멀티 테넌시를 지원합니다.
+     */
     @Bean
-    fun database(dataSource: TenantAwareDataSource, databaseConfig: DatabaseConfig): Database {
+    fun dataSource(): DataSource {
+        val hikariConfig = getHikariConfig()
+        return HikariDataSource(hikariConfig)
+    }
+
+    /**
+     * * 일반 DataSource 를 사용하면, Shared Database, Separate Schema 방식으로 멀티 테넌시를 지원할 수 있습니다.
+     * * [TenantAwareDataSource] 를 사용하면, Database per Tenant 방식으로 멀티 테넌시를 지원할 수 있습니다.
+     */
+    @Bean
+    fun database(dataSource: DataSource, databaseConfig: DatabaseConfig): Database {
         log.info { "Database connection: $dataSource" }
 
         return Database.connect(dataSource, databaseConfig = databaseConfig)

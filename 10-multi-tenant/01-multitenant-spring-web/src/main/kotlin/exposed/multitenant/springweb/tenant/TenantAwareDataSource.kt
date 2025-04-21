@@ -2,6 +2,9 @@ package exposed.multitenant.springweb.tenant
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource
 
+/**
+ * TenantAwareDataSource 는 Database per Tenant 패턴을 구현하기 위한 DataSource 입니다.
+ */
 class TenantAwareDataSource: AbstractRoutingDataSource() {
 
     override fun determineCurrentLookupKey(): Any? {

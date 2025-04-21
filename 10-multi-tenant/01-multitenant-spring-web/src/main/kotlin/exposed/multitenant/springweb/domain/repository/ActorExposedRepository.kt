@@ -40,6 +40,7 @@ class ActorExposedRepository: ExposedRepository<ActorEntity, Long> {
         return ActorEntity.wrapRows(query).toList()
     }
 
+    @Transactional
     fun create(actor: ActorDTO): ActorEntity {
         log.debug { "Create new actor. actor: $actor" }
 

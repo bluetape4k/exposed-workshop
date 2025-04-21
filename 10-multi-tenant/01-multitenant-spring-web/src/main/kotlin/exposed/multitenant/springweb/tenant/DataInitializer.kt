@@ -61,14 +61,38 @@ class DataInitializer {
             Tenant.ENGLISH -> ActorDTO("Johnny", "Depp", "1973-06-09")
             else -> ActorDTO("조니", "뎁", "1979-10-28")
         }
-        val bradPitt = ActorDTO("Brad", "Pitt", "1982-05-16")
-        val angelinaJolie = ActorDTO("Angelina", "Jolie", "1983-11-10")
-        val jenniferAniston = ActorDTO("Jennifer", "Aniston", "1975-07-23")
-        val angelinaGrace = ActorDTO("Angelina", "Grace", "1988-09-02")
-        val craigDaniel = ActorDTO("Craig", "Daniel", "1970-11-12")
-        val ellenPaige = ActorDTO("Ellen", "Paige", "1981-12-20")
-        val russellCrowe = ActorDTO("Russell", "Crowe", "1970-01-20")
-        val edwardNorton = ActorDTO("Edward", "Norton", "1975-04-03")
+        val bradPitt = when (tenant) {
+            Tenant.ENGLISH -> ActorDTO("Brad", "Pitt", "1970-12-18")
+            else -> ActorDTO("브래드", "피트", "1982-05-16")
+        }
+        val angelinaJolie = when (tenant) {
+            Tenant.ENGLISH -> ActorDTO("Angelina", "Jolie", "1983-11-10")
+            else -> ActorDTO("안제리나", "졸리", "1983-11-10")
+        }
+        val jenniferAniston = when (tenant) {
+            Tenant.ENGLISH -> ActorDTO("Jennifer", "Aniston", "1975-07-23")
+            else -> ActorDTO("제니퍼", "애니스톤", "1975-07-23")
+        }
+        val angelinaGrace = when (tenant) {
+            Tenant.ENGLISH -> ActorDTO("Angelina", "Grace", "1988-09-02")
+            else -> ActorDTO("안젤리나", "그레이스", "1988-09-02")
+        }
+        val craigDaniel = when (tenant) {
+            Tenant.ENGLISH -> ActorDTO("Craig", "Daniel", "1970-11-12")
+            else -> ActorDTO("다니엘", "크레이그", "1970-11-12")
+        }
+        val ellenPaige = when (tenant) {
+            Tenant.ENGLISH -> ActorDTO("Ellen", "Paige", "1981-12-20")
+            else -> ActorDTO("엘렌", "페이지", "1981-12-20")
+        }
+        val russellCrowe = when (tenant) {
+            Tenant.ENGLISH -> ActorDTO("Russell", "Crowe", "1970-01-20")
+            else -> ActorDTO("러셀", "크로우", "1970-01-20")
+        }
+        val edwardNorton = when (tenant) {
+            Tenant.ENGLISH -> ActorDTO("Edward", "Norton", "1975-04-03")
+            else -> ActorDTO("에드워드", "노튼", "1975-04-03")
+        }
 
         val actors = listOf(
             johnnyDepp,
@@ -96,13 +120,13 @@ class DataInitializer {
                 mutableListOf(angelinaGrace, bradPitt, ellenPaige, angelinaJolie, johnnyDepp)
             ),
             MovieWithActorDTO(
-                "Fight club",
+                if (tenant == Tenant.KOREAN) "싸움 클럽" else "Fight club",
                 craigDaniel.firstName,
                 "1999-09-13",
                 mutableListOf(bradPitt, jenniferAniston, edwardNorton)
             ),
             MovieWithActorDTO(
-                "13 Reasons Why",
+                if (tenant == Tenant.KOREAN) "13가지 이유" else "13 Reasons Why",
                 "Suzuki",
                 "2016-01-01",
                 mutableListOf(angelinaJolie, jenniferAniston)
