@@ -3,13 +3,11 @@ package exposed.examples.springmvc.domain.repository
 import exposed.examples.springmvc.AbstractExposedRepositoryTest
 import exposed.examples.springmvc.domain.dtos.ActorDTO
 import exposed.examples.springmvc.domain.dtos.toActorDTO
-import exposed.examples.springmvc.domain.model.MovieSchema.ActorTable
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
-import org.jetbrains.exposed.sql.selectAll
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
@@ -32,7 +30,7 @@ class ActorExposedRepositoryTest(
     fun `find actor by id`() {
         val actorId = 1L
 
-        val actor = actorRepo.findById(actorId).toActorDTO()
+        val actor = actorRepo.findByIdOrNull(actorId)?.toActorDTO()
         actor.shouldNotBeNull()
         actor.id shouldBeEqualTo actorId
     }
@@ -53,12 +51,12 @@ class ActorExposedRepositoryTest(
     fun `create new actor`() {
         val actor = newActorDTO()
 
-        val currentCount = ActorTable.selectAll().count()
+        val currentCount = actorRepo.count()
 
         val savedActor = actorRepo.create(actor).toActorDTO()
         savedActor shouldBeEqualTo actor.copy(id = savedActor.id)
 
-        val newCount = ActorTable.selectAll().count()
+        val newCount = actorRepo.count()
         newCount shouldBeEqualTo currentCount + 1
     }
 

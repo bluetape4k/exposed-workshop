@@ -26,8 +26,8 @@ class ActorController(
     @GetMapping("/{id}")
     suspend fun getActorById(@PathVariable("id") actorId: Long): ActorDTO? =
         newSuspendedTransaction(readOnly = true) {
-            actorRepository.findById(actorId)
-        }.toActorDTO()
+            actorRepository.findByIdOrNull(actorId)?.toActorDTO()
+        }
 
     @GetMapping
     suspend fun searchActors(request: ServerHttpRequest): List<ActorDTO> {

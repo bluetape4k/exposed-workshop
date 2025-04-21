@@ -1,4 +1,4 @@
-# Exposed Spring Repository
+# ExposedRepository with Coroutines
 
 Repository 패턴을 사용한 ExposedRepository 를 Coroutines 환경에서 사용하기
 
