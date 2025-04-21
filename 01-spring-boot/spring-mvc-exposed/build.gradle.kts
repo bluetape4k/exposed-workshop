@@ -26,8 +26,6 @@ dependencies {
 
     // bluetape4k
     implementation(Libs.bluetape4k_io)
-    implementation(Libs.bluetape4k_jdbc)
-    testImplementation(Libs.bluetape4k_spring_tests)
 
     // Exposed
     implementation(Libs.bluetape4k_exposed)

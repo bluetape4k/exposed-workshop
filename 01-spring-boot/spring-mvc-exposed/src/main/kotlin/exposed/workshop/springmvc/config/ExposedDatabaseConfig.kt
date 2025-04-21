@@ -54,7 +54,7 @@ class ExposedDatabaseConfig {
 
     @Bean
     fun database(dataSource: DataSource): Database {
-        log.info { "Database connection: $dataSource" }
+        log.info { "Create Database instance with dataSource: $dataSource" }
         return Database.connect(dataSource)
     }
 }

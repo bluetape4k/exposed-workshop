@@ -4,36 +4,26 @@ import exposed.workshop.springmvc.domain.MovieSchema.ActorInMovieTable
 import exposed.workshop.springmvc.domain.MovieSchema.ActorTable
 import exposed.workshop.springmvc.domain.MovieSchema.MovieTable
 import io.bluetape4k.logging.KLogging
-import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.info
-import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
-import org.springframework.boot.ApplicationArguments
-import org.springframework.boot.ApplicationRunner
+import org.springframework.boot.context.event.ApplicationReadyEvent
+import org.springframework.context.ApplicationListener
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Component
-class DatabaseInitializer: ApplicationRunner {
+class DataInitializer: ApplicationListener<ApplicationReadyEvent> {
 
     companion object: KLogging()
 
     @Transactional
-    override fun run(args: ApplicationArguments?) {
-        log.info { "데이터베이스 초기화 및 샘플 데이터 추가" }
-        createSchema()
+    override fun onApplicationEvent(event: ApplicationReadyEvent) {
+        log.info { "데이터베이스 샘플 데이터 추가" }
         populateData()
-    }
-
-    private fun createSchema() {
-        log.debug { "Creating schema and test data ..." }
-
-        @Suppress("DEPRECATION")
-        SchemaUtils.createMissingTablesAndColumns(ActorTable, MovieTable, ActorInMovieTable)
     }
 
     private fun populateData() {
@@ -128,4 +118,5 @@ class DatabaseInitializer: ApplicationRunner {
             }
         }
     }
+
 }
