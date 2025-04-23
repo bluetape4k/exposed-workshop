@@ -1,5 +1,4 @@
-/*
-Kotlin Exposed 를 활용한 예제를 작성한다
+# Kotlin Exposed 를 활용한 예제를 작성한다
 
 - Java 가 아닌 Kotlin 으로 작성한다
 - 최대한 Kotlin extensions 을 활용한다.
@@ -17,4 +16,3 @@ Kotlin Exposed 를 활용한 예제를 작성한다
 - 코드에 Kotlin Doc 형식의 주석을 포함한다
 - 커밋 메시지는 한국어로 작성한다
 - 커밋 메시지는 머릿말을 둔다 (예: feat, fix, docs, style, refactor, perf, test, chore)
-  */
