@@ -9,7 +9,7 @@ object Plugins {
         const val detekt = "1.23.8"     // https://mvnrepository.com/artifact/io.gitlab.arturbosch.detekt/detekt-gradle-plugin
         const val dependency_management = "1.1.7"  // https://mvnrepository.com/artifact/io.spring.gradle/dependency-management-plugin
         const val jooq = "9.0"       // https://mvnrepository.com/artifact/nu.studer.jooq/jooq-gradle-plugin
-        const val protobuf = "0.9.4"    // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-gradle-plugin
+        const val protobuf = "0.9.5"    // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-gradle-plugin
         const val avro = "1.9.1"  // https://mvnrepository.com/artifact/com.github.davidmc24.gradle.plugin.avro/com.github.davidmc24.gradle.plugin.avro.gradle.plugin
 
         const val jacoco = "0.8.11"
@@ -18,7 +18,7 @@ object Plugins {
         const val shadow = "7.1.2"
         const val kotlinx_benchmark = "0.4.13" // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-benchmark-plugin
 
-        const val spring_boot = "3.4.4"  // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies
+        const val spring_boot = "3.4.5"  // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies
         const val quarkus = "3.19.4"      // https://mvnrepository.com/artifact/io.quarkus/quarkus-bom
 
         const val docker_compose = "0.17.12"  // https://plugins.gradle.org/plugin/com.avast.gradle.docker-compose
@@ -64,19 +64,19 @@ object Versions {
     const val bluetape4k = "0.0.6-SNAPSHOT"              // Bluetape4k Github Package 로 배포됩니다.
 
     const val kotlin = "2.1.20"                 // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
-    const val kotlinx_coroutines = "1.10.1"      // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-    const val kotlinx_serialization = "1.8.0"   // https://mvnrepository.com/search?q=kotlinx-serialization
+    const val kotlinx_coroutines = "1.10.2"      // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
+    const val kotlinx_serialization = "1.8.1"   // https://mvnrepository.com/search?q=kotlinx-serialization
 
     const val kotlinx_atomicfu = "0.27.0"       // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/atomicfu
 
     const val kotlinx_benchmark = Plugins.Versions.kotlinx_benchmark
 
     const val spring_boot = Plugins.Versions.spring_boot
-    const val spring_cloud = "2024.0.0"     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies
-    const val spring_integration = "6.4.2"  // https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-core
-    const val reactor_bom = "2024.0.3"      // https://mvnrepository.com/artifact/io.projectreactor/reactor-bom
+    const val spring_cloud = "2024.0.1"     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies
+    const val spring_integration = "6.4.4"  // https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-core
+    const val reactor_bom = "2024.0.5"      // https://mvnrepository.com/artifact/io.projectreactor/reactor-bom
     const val spring_statemachine = "4.0.0" // https://mvnrepository.com/artifact/org.springframework.statemachine/spring-statemachine-core
-    const val spring_modulith = "1.3.3"     // https://mvnrepository.com/artifact/org.springframework.modulith/spring-modulith-bom
+    const val spring_modulith = "1.3.4"     // https://mvnrepository.com/artifact/org.springframework.modulith/spring-modulith-bom
 
     const val chaos_monkey = "3.1.3"        // https://mvnrepository.com/artifact/de.codecentric/chaos-monkey-spring-boot
     const val blockhound = "1.0.10.RELEASE"  // https://mvnrepository.com/artifact/io.projectreactor.tools/blockhound
@@ -143,8 +143,8 @@ object Versions {
     // NOTE: 이 경우 기존 javax 를 사용하는 버전과 충돌이 생길 수 있으니 조심하세요
     // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
 
-    const val hibernate = "6.6.9.Final"           // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
-    const val hibernate_reactive = "2.4.5.Final"  // https://mvnrepository.com/artifact/org.hibernate.reactive/hibernate-reactive-core
+    const val hibernate = "6.6.13.Final"           // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
+    const val hibernate_reactive = "2.4.6.Final"  // https://mvnrepository.com/artifact/org.hibernate.reactive/hibernate-reactive-core
     const val hibernate_validator = "8.0.2.Final" // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
     const val querydsl = "5.1.0"                  // https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
 
@@ -152,11 +152,11 @@ object Versions {
 
     const val agroal = "2.6"          // https://mvnrepository.com/artifact/io.agroal/agroal-api
 
-    const val blaze_persistence = "3.19.2" // https://mvnrepository.com/artifact/io.quarkus.platform/quarkus-blaze-persistence-bom
+    const val blaze_persistence = "3.21.4" // https://mvnrepository.com/artifact/io.quarkus.platform/quarkus-blaze-persistence-bom
     const val javers = "7.8.0"             // https://mvnrepository.com/artifact/org.javers/javers-core
 
     const val slf4j = "2.0.17"      // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-    const val logback = "1.5.17"     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    const val logback = "1.5.18"     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
     const val log4j = "2.24.3"      // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
 
     const val metrics = "4.2.29"        // https://mvnrepository.com/artifact/io.dropwizard.metrics/metrics-core
@@ -191,8 +191,8 @@ object Versions {
 
     const val ow2_asm = "9.7.1"               // https://mvnrepository.com/artifact/org.ow2.asm/asm
 
-    const val junit_jupiter = "5.11.4"      // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-    const val junit_platform = "1.11.4"     // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher
+    const val junit_jupiter = "5.12.2"      // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    const val junit_platform = "1.12.2"     // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher
     const val assertj_core = "3.27.3"       // https://mvnrepository.com/artifact/org.assertj/assertj-core
     const val kluent = "1.73"               // https://mvnrepository.com/artifact/org.amshove.kluent/kluent
     const val mockk = "1.13.17"             // https://mvnrepository.com/artifact/io.mockk/mockk
@@ -200,11 +200,11 @@ object Versions {
     const val awaitility = "4.3.0"          // https://mvnrepository.com/artifact/org.awaitility/awaitility
     const val jmh = "1.37"                  // https://mvnrepository.com/artifact/org.openjdk.jmh/jmh-core
     const val testcontainers = "1.20.6"     // https://mvnrepository.com/artifact/org.testcontainers/testcontainers
-    const val jna = "5.16.0"                // https://mvnrepository.com/artifact/net.java.dev.jna/jna
+    const val jna = "5.17.0"                // https://mvnrepository.com/artifact/net.java.dev.jna/jna
     const val archunit = "1.4.0"           // https://mvnrepository.com/artifact/com.tngtech.archunit/archunit-junit5
     const val rest_assured = "5.5.1"        // https://mvnrepository.com/artifact/io.rest-assured/rest-assured
 
-    const val datafaker = "2.4.2"          // https://mvnrepository.com/artifact/net.datafaker/datafaker
+    const val datafaker = "2.4.3"          // https://mvnrepository.com/artifact/net.datafaker/datafaker
     const val snakeyaml = "2.4"            // https://mvnrepository.com/artifact/org.yaml/snakeyaml
     const val random_beans = "3.9.0"
 
@@ -212,7 +212,7 @@ object Versions {
 
     const val sentry_logback = "7.18.1"  // https://mvnrepository.com/artifact/io.sentry/sentry-logback
 
-    const val scrimage = "4.3.0"  // https://mvnrepository.com/artifact/com.sksamuel.scrimage/scrimage-core
+    const val scrimage = "4.3.1"  // https://mvnrepository.com/artifact/com.sksamuel.scrimage/scrimage-core
 
     // Gatling
     const val gatling = "3.13.5" // https://mvnrepository.com/artifact/io.gatling/gatling-core
