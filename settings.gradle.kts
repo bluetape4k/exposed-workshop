@@ -26,6 +26,7 @@ includeModules("07-jpa", false, false)
 includeModules("08-coroutines", false, false)
 includeModules("09-spring", false, false)
 includeModules("10-multi-tenant", false, false)
+includeModules("11-high-performance", false, false)
 
 fun includeModules(baseDir: String, withProjectName: Boolean = true, withBaseDir: Boolean = true) {
     files("$rootDir/$baseDir").files
