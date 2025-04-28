@@ -30,7 +30,6 @@ import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.statements.api.ExposedConnection
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.concurrent.ExecutionException
@@ -39,13 +38,6 @@ import kotlin.test.assertFailsWith
 class Ex01_VritualThreads: AbstractExposedTest() {
 
     companion object: KLogging()
-
-    /**
-     * NOTE: [withTables] 가 사용하는 withDB 함수에서 TestDB 를 캐시하는 문제로 @ParameterizedTest 와 충돌이 생김
-     * 그래서 여러 DB를 한번에 테스트를 못하고, 한번에 하나씩만 테스트가 가능함.
-     * 이건 @ParameterizedTest 가 내부적으로 병렬로 작업하려고 해서 그러함
-     */
-    private val supportVirtualThreads = setOf(TestDB.POSTGRESQL)
 
     /**
      * ```sql
@@ -78,8 +70,6 @@ class Ex01_VritualThreads: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `virtual threads 를 이용하여 순차 작업 수행하기`(testDB: TestDB) {
-        Assumptions.assumeTrue { testDB in supportVirtualThreads }
-
         withTables(testDB, VTester) {
 
             newVirtualThreadTransaction {
@@ -98,8 +88,6 @@ class Ex01_VritualThreads: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `중첩된 virtual thread 용 트랜잭션을 async로 실행`(testDB: TestDB) {
-        Assumptions.assumeTrue { testDB in supportVirtualThreads }
-
         withTables(testDB, VTester) {
             val recordCount = 10
 
@@ -135,8 +123,6 @@ class Ex01_VritualThreads: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `다수의 비동기 작업을 수행 후 대기`(testDB: TestDB) {
-        Assumptions.assumeTrue { testDB in supportVirtualThreads }
-
         withTables(testDB, VTester) {
             val recordCount = 10
 
@@ -159,8 +145,6 @@ class Ex01_VritualThreads: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `virtual threads 용 트랜잭션과 일반 transaction 홉용하기`(testDB: TestDB) {
-        Assumptions.assumeTrue { testDB in supportVirtualThreads }
-
         withTables(testDB, VTester) {
             // val database = this.db // Transaction 에서 db 를 가져온다
             var virtualThreadOk = true
@@ -200,8 +184,6 @@ class Ex01_VritualThreads: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `virtual thread 트랜잭션에서 예외 처리`(testDB: TestDB) {
-        Assumptions.assumeTrue { testDB in supportVirtualThreads }
-
         withTables(testDB, VTester) {
             val database = this.db
             val outerConn = this.connection

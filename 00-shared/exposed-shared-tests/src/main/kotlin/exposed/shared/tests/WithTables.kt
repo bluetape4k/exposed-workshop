@@ -16,7 +16,7 @@ private val log = KotlinLogging.logger {}
 fun withTables(
     testDB: TestDB,
     vararg tables: Table,
-    configure: (DatabaseConfig.Builder.() -> Unit)? = null,
+    configure: (DatabaseConfig.Builder.() -> Unit)? = {},
     statement: Transaction.(TestDB) -> Unit,
 ) {
     withDb(testDB, configure = configure) {
