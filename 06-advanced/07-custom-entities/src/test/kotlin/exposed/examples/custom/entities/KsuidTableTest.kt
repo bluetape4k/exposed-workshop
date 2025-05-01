@@ -56,7 +56,7 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
     data class Record(val name: String, val age: Int)
 
     @ParameterizedTest(name = "{0} - {1}개 레코드")
-    @MethodSource("getTestDBAndEntityCount")
+    @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `Ksuid id를 가진 레코드를 생성한다`(testDB: TestDB, recordCount: Int) {
         withTables(testDB, T1) {
             List(recordCount) {
@@ -66,13 +66,14 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                 }
             }
             entityCache.clear()
+            commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
     }
 
     @ParameterizedTest(name = "{0} - {1}개 레코드")
-    @MethodSource("getTestDBAndEntityCount")
+    @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `Ksuid id를 가진 레코드를 배치로 생성한다`(testDB: TestDB, recordCount: Int) {
         withTables(testDB, T1) {
             val records = List(recordCount) {
@@ -82,18 +83,21 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                 )
             }
 
-            T1.batchInsert(records) {
-                this[T1.name] = it.name
-                this[T1.age] = it.age
+            records.chunked(100).forEach { chunk ->
+                T1.batchInsert(chunk, shouldReturnGeneratedValues = false) {
+                    this[T1.name] = it.name
+                    this[T1.age] = it.age
+                }
             }
             entityCache.clear()
+            commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
     }
 
     @ParameterizedTest(name = "{0} - {1}개 레코드")
-    @MethodSource("getTestDBAndEntityCount")
+    @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `코루틴 환경에서 레코드를 배치로 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
         withSuspendedTables(testDB, T1) {
             val records = List(recordCount) {
@@ -102,19 +106,24 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                     age = Random.nextInt(10, 80)
                 )
             }
-
-            T1.batchInsert(records) {
-                this[T1.name] = it.name
-                this[T1.age] = it.age
-            }
+            records.chunked(100).map { chunk ->
+                suspendedTransactionAsync(Dispatchers.IO) {
+                    T1.batchInsert(chunk, shouldReturnGeneratedValues = false) {
+                        this[T1.name] = it.name
+                        this[T1.age] = it.age
+                    }
+                }
+            }.awaitAll()
+            
             entityCache.clear()
+            commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
     }
 
     @ParameterizedTest(name = "{0} - {1}개 레코드")
-    @MethodSource("getTestDBAndEntityCount")
+    @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `Ksuid id를 가진 엔티티를 생성한다`(testDB: TestDB, recordCount: Int) {
         withTables(testDB, T1) {
             List(recordCount) {
@@ -124,13 +133,14 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                 }
             }
             entityCache.clear()
+            commit()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
         }
     }
 
     @ParameterizedTest(name = "{0} - {1}개 레코드")
-    @MethodSource("getTestDBAndEntityCount")
+    @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `코루틴 환경에서 엔티티를 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
         withSuspendedTables(testDB, T1) {
             val tasks = List(recordCount) {
@@ -140,11 +150,11 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                         age = Random.nextInt(10, 80)
                     }
                 }
-
             }
 
             tasks.awaitAll()
             entityCache.clear()
+            commit()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
         }
