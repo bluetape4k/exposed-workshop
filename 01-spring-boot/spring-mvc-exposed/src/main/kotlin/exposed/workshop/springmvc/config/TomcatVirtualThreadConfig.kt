@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 import java.util.concurrent.Executors
 
 @Configuration
-@ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true")
+@ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true", matchIfMissing = true)
 class TomcatVirtualThreadConfig {
 
     companion object: KLogging()

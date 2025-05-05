@@ -13,7 +13,7 @@ import java.util.concurrent.Executors
  * Java 21 부터 지원하는 Virtual Threads 를 Tomcat 에서 사용하도록 설정
  */
 @Configuration
-@ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true")
+@ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true", matchIfMissing = true)
 class TomcatVirtualThreadConfig {
 
     companion object: KLogging()
