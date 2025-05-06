@@ -16,7 +16,8 @@ private val log = KotlinLogging.logger {}
 fun withTables(
     testDB: TestDB,
     vararg tables: Table,
-    configure: (DatabaseConfig.Builder.() -> Unit)? = null,
+    configure: (DatabaseConfig.Builder.() -> Unit)? = {},
+    dropTables: Boolean = true,
     statement: Transaction.(TestDB) -> Unit,
 ) {
     withDb(testDB, configure = configure) {
@@ -32,18 +33,20 @@ fun withTables(
             statement(testDB)
             commit()               // Need commit to persist data before drop tables
         } finally {
-            try {
-                SchemaUtils.drop(*tables)
-                commit()
-            } catch (ex: Exception) {
-                log.error(ex) { "Drop Tables 에서 예외가 발생했습니다. 삭제할 테이블: ${tables.joinToString { it.tableName }}" }
-                val database = testDB.db!!
-                inTopLevelTransaction(
-                    transactionIsolation = database.transactionManager.defaultIsolationLevel,
-                    db = database
-                ) {
-                    maxAttempts = 1
+            if (dropTables) {
+                try {
                     SchemaUtils.drop(*tables)
+                    commit()
+                } catch (ex: Exception) {
+                    log.error(ex) { "Drop Tables 에서 예외가 발생했습니다. 삭제할 테이블: ${tables.joinToString { it.tableName }}" }
+                    val database = testDB.db!!
+                    inTopLevelTransaction(
+                        transactionIsolation = database.transactionManager.defaultIsolationLevel,
+                        db = database
+                    ) {
+                        maxAttempts = 1
+                        SchemaUtils.drop(*tables)
+                    }
                 }
             }
         }
@@ -54,7 +57,8 @@ suspend fun withSuspendedTables(
     testDB: TestDB,
     vararg tables: Table,
     context: CoroutineContext? = Dispatchers.IO,
-    configure: (DatabaseConfig.Builder.() -> Unit)? = null,
+    configure: (DatabaseConfig.Builder.() -> Unit)? = { },
+    dropTables: Boolean = true,
     statement: suspend Transaction.(TestDB) -> Unit,
 ) {
     withSuspendedDb(testDB, context, configure) {
@@ -70,15 +74,17 @@ suspend fun withSuspendedTables(
             statement(testDB)
             commit()
         } finally {
-            try {
-                SchemaUtils.drop(*tables)
-                commit()
-            } catch (ex: Exception) {
-                log.error(ex) { "Fail to drop tables, ${tables.joinToString { it.tableName }}" }
-                val database = testDB.db!!
-                inTopLevelTransaction(database.transactionManager.defaultIsolationLevel, db = database) {
-                    maxAttempts = 1
+            if (dropTables) {
+                try {
                     SchemaUtils.drop(*tables)
+                    commit()
+                } catch (ex: Exception) {
+                    log.error(ex) { "Fail to drop tables, ${tables.joinToString { it.tableName }}" }
+                    val database = testDB.db!!
+                    inTopLevelTransaction(database.transactionManager.defaultIsolationLevel, db = database) {
+                        maxAttempts = 1
+                        SchemaUtils.drop(*tables)
+                    }
                 }
             }
         }

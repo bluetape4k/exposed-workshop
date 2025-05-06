@@ -7,15 +7,18 @@ import org.junit.jupiter.params.provider.Arguments
 
 abstract class AbstractCustomIdTableTest: AbstractExposedTest() {
 
-    companion object: KLogging()
+    companion object: KLogging() {
+        const val GET_TESTDB_AND_ENTITY_COUNT = "getTestDBAndEntityCount"
 
-    fun getTestDBAndEntityCount(): List<Arguments> {
-        val recordCounts = listOf(50, 500)
+        @JvmStatic
+        fun getTestDBAndEntityCount(): List<Arguments> {
+            val recordCounts = listOf(100, 500)
 
-        return TestDB.enabledDialects().map { testDB ->
-            recordCounts.map { entityCount ->
-                Arguments.of(testDB, entityCount)
-            }
-        }.flatten()
+            return TestDB.enabledDialects().map { testDB ->
+                recordCounts.map { entityCount ->
+                    Arguments.of(testDB, entityCount)
+                }
+            }.flatten()
+        }
     }
 }

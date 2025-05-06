@@ -1,4 +1,4 @@
-package exposed.examples.springmvc.config
+package exposed.examples.cache.config
 
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
@@ -9,9 +9,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.util.concurrent.Executors
 
-/**
- * Java 21 부터 지원하는 Virtual Threads 를 Tomcat 에서 사용하도록 설정
- */
 @Configuration
 @ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true", matchIfMissing = true)
 class TomcatVirtualThreadConfig {
