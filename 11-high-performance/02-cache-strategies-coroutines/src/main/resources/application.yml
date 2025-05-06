@@ -1,0 +1,28 @@
+server:
+    port: 8080
+    compression:
+        enabled: true
+
+    shutdown: graceful  # WebServer Graceful shutdown (https://www.baeldung.com/spring-boot-web-server-shutdown)
+
+spring:
+    data:
+        redis:
+            host: ${testcontainers.redis.host}
+            port: ${testcontainers.redis.port}
+
+    datasource:
+        url: jdbc:h2:mem:cache-strategy;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
+        username: root
+        password: sa
+        driver-class-name: org.h2.Driver
+        hikari:
+            maximum-pool-size: 80
+            minimum-idle: 4
+            idle-timeout: 30000
+            connection-timeout: 30000
+            max-lifetime: 1800000
+
+    exposed:
+        generate-ddl: true
+        show-sql: false
