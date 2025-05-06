@@ -3,8 +3,12 @@ package alternative.hibernate.reactive.example.controller
 import alternative.hibernate.reactive.example.AbstractHibernateReactiveTest
 import alternatives.hibernate.reactive.example.domain.dto.TeamAndMemberDTO
 import alternatives.hibernate.reactive.example.domain.dto.TeamDTO
+import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.reactive.awaitFirst
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeGreaterOrEqualTo
 import org.amshove.kluent.shouldHaveSize
@@ -13,8 +17,7 @@ import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.test.web.reactive.server.expectBody
-import org.springframework.test.web.reactive.server.expectBodyList
+import org.springframework.test.web.reactive.server.returnResult
 
 class TeamControllerTest(
     @Autowired private val client: WebTestClient,
@@ -23,15 +26,15 @@ class TeamControllerTest(
     companion object: KLogging()
 
     @Test
-    fun `find team by id`() {
+    fun `find team by id`() = runSuspendIO {
         val teamId = 1L
 
         val team = client.get()
             .uri("/teams/$teamId")
             .exchange()
             .expectStatus().isOk
-            .expectBody<TeamDTO>()
-            .returnResult().responseBody
+            .returnResult<TeamDTO>().responseBody
+            .awaitFirst()
 
         log.debug { "Team[1]: $team" }
         team.shouldNotBeNull()
@@ -40,13 +43,14 @@ class TeamControllerTest(
     }
 
     @Test
-    fun `find all teams`() {
+    fun `find all teams`() = runSuspendIO {
         val teams = client.get()
             .uri("/teams")
             .exchange()
             .expectStatus().isOk
-            .expectBodyList<TeamDTO>()
-            .returnResult().responseBody
+            .returnResult<TeamDTO>().responseBody
+            .asFlow()
+            .toList()
 
         teams.shouldNotBeNull()
         teams.size shouldBeGreaterOrEqualTo 2
@@ -57,15 +61,16 @@ class TeamControllerTest(
     }
 
     @Test
-    fun `find team by name`() {
+    fun `find team by name`() = runSuspendIO {
         val teamName = "Team A"
 
         val teams = client.get()
             .uri("/teams/name/$teamName")
             .exchange()
             .expectStatus().isOk
-            .expectBodyList<TeamDTO>()
-            .returnResult().responseBody!!
+            .returnResult<TeamDTO>().responseBody
+            .asFlow()
+            .toList()
 
         teams.size shouldBeEqualTo 1
         teams.forEach {
@@ -74,15 +79,15 @@ class TeamControllerTest(
     }
 
     @Test
-    fun `find team by id with members`() {
+    fun `find team by id with members`() = runSuspendIO {
         val teamId = 1L
 
         val team = client.get()
             .uri("/teams/$teamId/members")
             .exchange()
             .expectStatus().isOk
-            .expectBody<TeamAndMemberDTO>()
-            .returnResult().responseBody
+            .returnResult<TeamAndMemberDTO>().responseBody
+            .awaitFirst()
 
         log.debug { "Team[1]: $team" }
         team.shouldNotBeNull()
@@ -92,15 +97,16 @@ class TeamControllerTest(
     }
 
     @Test
-    fun `find team by member name`() {
+    fun `find team by member name`() = runSuspendIO {
         val memberName = "Member 1"
 
         val teams = client.get()
             .uri("/teams/member/$memberName")
             .exchange()
             .expectStatus().isOk
-            .expectBodyList<TeamAndMemberDTO>()
-            .returnResult().responseBody!!
+            .returnResult<TeamAndMemberDTO>().responseBody
+            .asFlow()
+            .toList()
 
         teams shouldHaveSize 1
         val team = teams.first()

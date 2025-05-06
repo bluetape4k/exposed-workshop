@@ -6,11 +6,15 @@ import exposed.examples.cache.domain.model.UserTable
 import exposed.examples.cache.domain.model.newUserDTO
 import exposed.examples.cache.domain.repository.UserCacheRepository
 import io.bluetape4k.exposed.sql.statements.api.toExposedBlob
+import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
 import io.bluetape4k.spring.tests.httpPost
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.reactive.awaitFirst
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
@@ -22,8 +26,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.test.web.reactive.server.expectBody
-import org.springframework.test.web.reactive.server.expectBodyList
+import org.springframework.test.web.reactive.server.returnResult
 import java.time.LocalDate
 import java.util.concurrent.atomic.AtomicLong
 
@@ -65,60 +68,63 @@ class UserControllerTest(
     }
 
     @Test
-    fun `모든 사용자를 조회`() {
-        transaction {
-            val users = client.httpGet("/users")
-                .expectBodyList<UserDTO>()
-                .returnResult().responseBody
+    fun `모든 사용자를 조회`() = runSuspendIO {
+        val users = client
+            .httpGet("/users")
+            .returnResult<UserDTO>().responseBody
+            .asFlow()
+            .toList()
 
-            users.shouldNotBeNull() shouldHaveSize userIdsInDB.size
-        }
+        users.shouldNotBeNull() shouldHaveSize userIdsInDB.size
     }
 
     @Test
-    fun `User ID로 User를 Read-Through 방식으로 조회`() {
+    fun `User ID로 User를 Read-Through 방식으로 조회`() = runSuspendIO {
         userIdsInDB.forEach { userId ->
-            val user = client.httpGet("/users/$userId")
-                .expectBody<UserDTO>().returnResult().responseBody!!
+            val user = client
+                .httpGet("/users/$userId")
+                .returnResult<UserDTO>().responseBody
+                .awaitFirst()
 
             user.id shouldBeEqualTo userId
         }
     }
 
     @Test
-    fun `복수의 User ID로 User를 Read-Through 방식으로 조회`() {
+    fun `복수의 User ID로 User를 Read-Through 방식으로 조회`() = runSuspendIO {
         val userIds = userIdsInDB.shuffled().take(5)
         log.debug { "User IDs to search: $userIds" }
 
         val users = client
             .httpGet("/users/all?ids=${userIds.joinToString(",")}")
-            .expectBodyList<UserDTO>()
-            .returnResult().responseBody!!
+            .returnResult<UserDTO>().responseBody
+            .asFlow()
+            .toList()
 
         users shouldHaveSize userIds.size
         users.map { it.id } shouldContainSame userIds
     }
 
     @Test
-    fun `새로운 User를 write through 로 저장하기`() {
+    fun `새로운 User를 write through 로 저장하기`() = runSuspendIO {
         val userDTO = newUserDTO(kotlin.random.Random.nextLong(1000L, 9999L))
         val user = client
             .httpPost("/users", userDTO)
-            .expectBody<UserDTO>()
-            .returnResult().responseBody!!
+            .returnResult<UserDTO>().responseBody
+            .awaitFirst()
 
         user.id shouldBeEqualTo userDTO.id
     }
 
     @Test
-    fun `invalidate specified id cached user`() {
+    fun `invalidate specified id cached user`() = runSuspendIO {
         repository.getAll(userIdsInDB)
 
         val invalidatedId = userIdsInDB.shuffled().take(3)
         val invalidedCount = client
             .httpDelete("/users/invalidate?ids=${invalidatedId.joinToString(",")}")
-            .expectBody<Long>()
-            .returnResult().responseBody!!
+            .returnResult<Long>().responseBody
+            .awaitFirst()
 
         invalidedCount shouldBeEqualTo invalidatedId.size.toLong()
     }

@@ -3,16 +3,19 @@ package alternative.hibernate.reactive.example.controller
 import alternative.hibernate.reactive.example.AbstractHibernateReactiveTest
 import alternatives.hibernate.reactive.example.domain.dto.MemberAndTeamDTO
 import alternatives.hibernate.reactive.example.domain.dto.MemberDTO
+import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.reactive.awaitFirst
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.test.web.reactive.server.expectBody
-import org.springframework.test.web.reactive.server.expectBodyList
+import org.springframework.test.web.reactive.server.returnResult
 
 class MemberControllerTest(
     @Autowired private val client: WebTestClient,
@@ -21,13 +24,14 @@ class MemberControllerTest(
     companion object: KLogging()
 
     @Test
-    fun `find all members`() {
+    fun `find all members`() = runSuspendIO {
         val members = client.get()
             .uri("/members")
             .exchange()
             .expectStatus().isOk
-            .expectBodyList<MemberDTO>()
-            .returnResult().responseBody!!
+            .returnResult<MemberDTO>().responseBody
+            .asFlow()
+            .toList()
 
         members.shouldNotBeEmpty()
         members.forEach {
@@ -36,15 +40,15 @@ class MemberControllerTest(
     }
 
     @Test
-    fun `find member by id`() {
+    fun `find member by id`() = runSuspendIO {
         val memberId = 1L
 
         val member = client.get()
             .uri("/members/$memberId")
             .exchange()
             .expectStatus().isOk
-            .expectBody<MemberDTO>()
-            .returnResult().responseBody!!
+            .returnResult<MemberDTO>().responseBody
+            .awaitFirst()
 
         log.debug { "Member[1]: $member" }
         member.shouldNotBeNull()
@@ -52,15 +56,15 @@ class MemberControllerTest(
     }
 
     @Test
-    fun `find member by id with team`() {
+    fun `find member by id with team`() = runSuspendIO {
         val memberId = 1L
 
         val member = client.get()
             .uri("/members/$memberId/team")
             .exchange()
             .expectStatus().isOk
-            .expectBody<MemberAndTeamDTO>()
-            .returnResult().responseBody!!
+            .returnResult<MemberAndTeamDTO>().responseBody
+            .awaitFirst()
 
         log.debug { "Member[1]: $member" }
         member.shouldNotBeNull()

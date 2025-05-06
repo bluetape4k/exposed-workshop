@@ -25,7 +25,7 @@ class UserEventController(
 
     @PostMapping("/bulk")
     fun insertBulk(@RequestBody userEvents: List<UserEventDTO>): Boolean {
-        log.debug { "Inserting user events: $userEvents" }
+        log.debug { "Inserting bulk user events. size=${userEvents.size}" }
         repository.putAll(userEvents)
         return true
     }

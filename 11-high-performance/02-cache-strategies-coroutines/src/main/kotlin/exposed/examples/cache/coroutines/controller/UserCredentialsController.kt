@@ -21,7 +21,7 @@ class UserCredentialsController(private val repository: UserCredentialsCacheRepo
     @GetMapping
     suspend fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserCredentialsDTO> {
         log.debug { "Finding all user credentials with limit: $limit" }
-        return newSuspendedTransaction {
+        return newSuspendedTransaction(readOnly = true) {
             repository.findAll(limit = limit)
         }
     }
@@ -29,7 +29,7 @@ class UserCredentialsController(private val repository: UserCredentialsCacheRepo
     @GetMapping("/{id}")
     suspend fun get(@PathVariable(name = "id") id: String): UserCredentialsDTO? {
         log.debug { "Getting user credentials with id: $id" }
-        return newSuspendedTransaction {
+        return newSuspendedTransaction(readOnly = true) {
             repository.get(id)
         }
     }
@@ -37,7 +37,7 @@ class UserCredentialsController(private val repository: UserCredentialsCacheRepo
     @GetMapping("/all")
     suspend fun getAll(@RequestParam(name = "ids") ids: List<String>): List<UserCredentialsDTO> {
         log.debug { "Getting all user credentials with ids: $ids" }
-        return newSuspendedTransaction {
+        return newSuspendedTransaction(readOnly = true) {
             repository.getAll(ids)
         }
     }

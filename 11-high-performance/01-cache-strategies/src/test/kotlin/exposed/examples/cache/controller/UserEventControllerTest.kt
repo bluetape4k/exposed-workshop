@@ -3,8 +3,10 @@ package exposed.examples.cache.controller
 import exposed.examples.cache.AbstractCacheStrategyTest
 import exposed.examples.cache.domain.model.UserEventTable
 import exposed.examples.cache.domain.model.newUserEventDTO
+import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.spring.tests.httpPost
+import kotlinx.coroutines.reactive.awaitFirst
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.awaitility.kotlin.await
@@ -13,7 +15,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.test.web.reactive.server.expectBody
+import org.springframework.test.web.reactive.server.returnResult
 import java.time.Duration
 
 class UserEventControllerTest(
@@ -27,13 +29,14 @@ class UserEventControllerTest(
     }
 
     @Test
-    fun `insert user event`() {
+    fun `insert user event`() = runSuspendIO {
         val prevCount = getCountOfUserEvents()
 
         val userEvent = newUserEventDTO()
-        val response = client.httpPost("/user-events", userEvent)
-            .expectBody<Boolean>()
-            .returnResult().responseBody!!
+        val response = client
+            .httpPost("/user-events", userEvent)
+            .returnResult<Boolean>().responseBody
+            .awaitFirst()
 
         response.shouldBeTrue()
 
@@ -49,14 +52,15 @@ class UserEventControllerTest(
     }
 
     @Test
-    fun `bulk insert user events`() {
-        val insertCount = 500
+    fun `bulk insert user events`() = runSuspendIO {
+        val insertCount = 1000
         val prevCount = getCountOfUserEvents()
 
         val userEvents = List(insertCount) { newUserEventDTO() }
-        val response = client.httpPost("/user-events/bulk", userEvents)
-            .expectBody<Boolean>()
-            .returnResult().responseBody!!
+        val response = client
+            .httpPost("/user-events/bulk", userEvents)
+            .returnResult<Boolean>().responseBody
+            .awaitFirst()
 
         response.shouldBeTrue()
 

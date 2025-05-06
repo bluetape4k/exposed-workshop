@@ -74,10 +74,9 @@ class UserControllerTest(
 
     @Test
     fun `모든 사용자를 조회`() = runSuspendIO {
-
-        val users = client.httpGet("/users")
-            .returnResult<UserDTO>()
-            .responseBody
+        val users = client
+            .httpGet("/users")
+            .returnResult<UserDTO>().responseBody
             .asFlow()
             .toList()
 
@@ -87,7 +86,8 @@ class UserControllerTest(
     @Test
     fun `User ID로 User를 Read-Through 방식으로 조회`() = runSuspendIO {
         idsInDB.forEach { userId ->
-            val user = client.httpGet("/users/$userId")
+            val user = client
+                .httpGet("/users/$userId")
                 .returnResult<UserDTO>().responseBody
                 .awaitLast()
 

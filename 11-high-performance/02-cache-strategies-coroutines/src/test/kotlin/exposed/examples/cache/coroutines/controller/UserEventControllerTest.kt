@@ -25,9 +25,10 @@ class UserEventControllerTest(
 
     companion object: KLogging()
 
-    private suspend fun getCountOfUserEvents(): Long = newSuspendedTransaction {
-        UserEventTable.selectAll().count()
-    }
+    private suspend fun getCountOfUserEvents(): Long =
+        newSuspendedTransaction(readOnly = true) {
+            UserEventTable.selectAll().count()
+        }
 
     @Test
     fun `insert user event`() = runSuspendIO {

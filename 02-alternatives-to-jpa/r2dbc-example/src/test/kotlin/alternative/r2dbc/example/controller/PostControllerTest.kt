@@ -2,8 +2,12 @@ package alternative.r2dbc.example.controller
 
 import alternative.r2dbc.example.AbstractR2dbcTest
 import alternative.r2dbc.example.domain.model.Post
+import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.reactive.awaitFirst
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeGreaterThan
 import org.amshove.kluent.shouldNotBeEmpty
@@ -11,8 +15,7 @@ import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.test.web.reactive.server.expectBody
-import org.springframework.test.web.reactive.server.expectBodyList
+import org.springframework.test.web.reactive.server.returnResult
 
 class PostControllerTest(
     @Autowired private val client: WebTestClient,
@@ -21,12 +24,13 @@ class PostControllerTest(
     companion object: KLogging()
 
     @Test
-    fun `find all posts`() {
+    fun `find all posts`() = runSuspendIO {
         val posts = client.get().uri("/posts")
             .exchange()
             .expectStatus().isOk
-            .expectBodyList<Post>()
-            .returnResult().responseBody!!
+            .returnResult<Post>().responseBody
+            .asFlow()
+            .toList()
 
         posts.shouldNotBeEmpty()
         posts.forEach { post ->
@@ -35,12 +39,12 @@ class PostControllerTest(
     }
 
     @Test
-    fun `find one post by id`() {
+    fun `find one post by id`() = runSuspendIO {
         val post = client.get().uri("/posts/1")
             .exchange()
             .expectStatus().isOk
-            .expectBody<Post>()
-            .returnResult().responseBody!!
+            .returnResult<Post>().responseBody
+            .awaitFirst()
 
         log.debug { "Post[1]=$post" }
         post.id shouldBeEqualTo 1L
@@ -54,22 +58,22 @@ class PostControllerTest(
     }
 
     @Test
-    fun `save new post`() {
+    fun `save new post`() = runSuspendIO {
         val newPost = createPost()
 
         val savedPost = client.post().uri("/posts")
             .bodyValue(newPost)
             .exchange()
             .expectStatus().is2xxSuccessful
-            .expectBody<Post>()
-            .returnResult().responseBody!!
+            .returnResult<Post>().responseBody
+            .awaitFirst()
 
         savedPost.id.shouldNotBeNull()
         savedPost shouldBeEqualTo newPost.copy(id = savedPost.id)
     }
 
     @Test
-    fun `count of comments by post id`() {
+    fun `count of comments by post id`() = runSuspendIO {
         val commentCount1 = countOfCommentByPostId(1L)
         val commentCount2 = countOfCommentByPostId(2L)
 
@@ -78,15 +82,15 @@ class PostControllerTest(
     }
 
     @Test
-    fun `count of comments by non-existing post id`() {
+    fun `count of comments by non-existing post id`() = runSuspendIO {
         countOfCommentByPostId(9999L) shouldBeEqualTo 0L
     }
 
-    private fun countOfCommentByPostId(postId: Long): Long {
+    private suspend fun countOfCommentByPostId(postId: Long): Long {
         return client.get().uri("/posts/$postId/comments/count")
             .exchange()
             .expectStatus().isOk
-            .expectBody<Long>()
-            .returnResult().responseBody!!
+            .returnResult<Long>().responseBody
+            .awaitFirst()
     }
 }

@@ -52,7 +52,7 @@ class UserCredentialsCacheRepositoryTest(
 
     @Test
     fun `Read Through 로 기존 DB정보를 캐시에서 읽어오기`() = runSuspendIO {
-        newSuspendedTransaction {
+        newSuspendedTransaction(readOnly = true) {
             idsInDB.forEach { ucId ->
                 val userCredentialsFromCache = repository.get(ucId)
                 log.debug { "Loaded user credentials from cache. id=$ucId, $userCredentialsFromCache" }
@@ -67,7 +67,7 @@ class UserCredentialsCacheRepositoryTest(
 
     @Test
     fun `Read Through 로 검색해서 가져오기`() = runSuspendIO {
-        newSuspendedTransaction {
+        newSuspendedTransaction(readOnly = true) {
             val userCredentialsFromCache = repository.findAll {
                 UserCredentialsTable.id inList idsInDB
             }
@@ -77,7 +77,7 @@ class UserCredentialsCacheRepositoryTest(
 
     @Test
     fun `Read Through 로 모든 ID 가져오기`() = runSuspendIO {
-        newSuspendedTransaction {
+        newSuspendedTransaction(readOnly = true) {
             val userCredentialsFromCache = repository.getAll(idsInDB)
             userCredentialsFromCache shouldHaveSize idsInDB.size
         }

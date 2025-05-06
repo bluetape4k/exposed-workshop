@@ -58,7 +58,7 @@ class UserCacheRepositoryTest(
 
     @Test
     fun `Read Through 로 기존 DB정보를 캐시에서 읽어오기`() = runSuspendIO {
-        newSuspendedTransaction {
+        newSuspendedTransaction(readOnly = true) {
             val userId = idsInDB.random()
 
             val cachedUser = repository.get(userId)!!
@@ -84,7 +84,7 @@ class UserCacheRepositoryTest(
     @Test
     fun `Read Through 로 복수의 User를 캐시에서 읽어오기`() = runSuspendIO {
         val userIdToSearch = idsInDB.shuffled().take(5)
-        newSuspendedTransaction {
+        newSuspendedTransaction(readOnly = true) {
             // DB에 있는 User를 검색
             val users = repository.getAll(userIdToSearch)
             users shouldHaveSize userIdToSearch.size
@@ -100,7 +100,7 @@ class UserCacheRepositoryTest(
 
     @Test
     fun `Read Through로 User를 검색한다`() = runSuspendIO {
-        val users = newSuspendedTransaction {
+        val users = newSuspendedTransaction(readOnly = true) {
             repository.findAll()
         }
         users shouldHaveSize idsInDB.size
@@ -112,7 +112,7 @@ class UserCacheRepositoryTest(
     @Test
     fun `Read Through 로 검색한 User가 없을 때에는 빈 리스트 반환`() = runSuspendIO {
         val userIdToSearch = listOf(-1L, -3L, -5L, -7L, -9L)
-        val users = newSuspendedTransaction {
+        val users = newSuspendedTransaction(readOnly = true) {
             repository.findAll { UserTable.id inList userIdToSearch }
         }
         users.shouldBeEmpty()

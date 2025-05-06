@@ -4,10 +4,14 @@ import exposed.examples.cache.AbstractCacheStrategyTest
 import exposed.examples.cache.domain.model.UserCredentialsDTO
 import exposed.examples.cache.domain.model.UserCredentialsTable
 import exposed.examples.cache.domain.repository.UserCredentialsCacheRepository
+import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.reactive.awaitFirst
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
@@ -18,8 +22,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.test.web.reactive.server.expectBody
-import org.springframework.test.web.reactive.server.expectBodyList
+import org.springframework.test.web.reactive.server.returnResult
 import java.time.Instant
 
 class UserCredentialsControllerTest(
@@ -56,50 +59,49 @@ class UserCredentialsControllerTest(
     }
 
     @Test
-    fun `findAll user credentials`() {
-        transaction {
-            val ucs = client
-                .httpGet("/user-credentials")
-                .expectBodyList<UserCredentialsDTO>()
-                .returnResult().responseBody!!
+    fun `findAll user credentials`() = runSuspendIO {
 
-            ucs shouldHaveSize idsInDB.size
-        }
+        val ucs = client
+            .httpGet("/user-credentials")
+            .returnResult<UserCredentialsDTO>().responseBody
+            .asFlow().toList()
+
+        ucs shouldHaveSize idsInDB.size
     }
 
     @Test
-    fun `find by id with read-through`() {
+    fun `find by id with read-through`() = runSuspendIO {
         idsInDB.forEach { id ->
             val uc = client
                 .httpGet("/user-credentials/$id")
-                .expectBody<UserCredentialsDTO>()
-                .returnResult().responseBody!!
+                .returnResult<UserCredentialsDTO>().responseBody
+                .awaitFirst()
             uc.id shouldBeEqualTo id
         }
     }
 
     @Test
-    fun `복수의 ID로 UserCredentials를 Read-Through 방식으로 조회`() {
+    fun `복수의 ID로 UserCredentials를 Read-Through 방식으로 조회`() = runSuspendIO {
         val ids = idsInDB.shuffled().take(5)
         log.debug { "User credentials IDs to search: $ids" }
         val ucs = client
             .httpGet("/user-credentials/all?ids=${ids.joinToString(",")}")
-            .expectBodyList<UserCredentialsDTO>()
-            .returnResult().responseBody!!
+            .returnResult<UserCredentialsDTO>().responseBody
+            .asFlow().toList()
 
         ucs shouldHaveSize ids.size
         ucs.map { it.id } shouldContainSame ids
     }
 
     @Test
-    fun `invalidate specified cached user credentials`() {
+    fun `invalidate specified cached user credentials`() = runSuspendIO {
         repository.getAll(idsInDB)
 
         val invalidatedIds = idsInDB.shuffled().take(3)
         val invalidateCount = client
             .httpDelete("/user-credentials/invalidate?ids=${invalidatedIds.joinToString(",")}")
-            .expectBody<Long>()
-            .returnResult().responseBody!!
+            .returnResult<Long>().responseBody
+            .awaitFirst()
 
         invalidateCount shouldBeEqualTo invalidatedIds.size.toLong()
     }

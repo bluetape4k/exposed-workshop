@@ -69,6 +69,7 @@ dependencies {
     // Mutiny & Coroutines
     implementation(Libs.mutiny_kotlin)
     implementation(Libs.kotlinx_coroutines_core)
+    testImplementation(Libs.kotlinx_coroutines_reactor)
     testImplementation(Libs.kotlinx_coroutines_test)
 
     // Vaidators

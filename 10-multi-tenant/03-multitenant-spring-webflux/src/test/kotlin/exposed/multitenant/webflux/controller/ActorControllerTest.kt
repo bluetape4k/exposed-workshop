@@ -4,8 +4,12 @@ import exposed.multitenant.webflux.AbstractMultitenantTest
 import exposed.multitenant.webflux.domain.dtos.ActorDTO
 import exposed.multitenant.webflux.tenant.TenantFilter
 import exposed.multitenant.webflux.tenant.Tenants
+import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.reactive.awaitFirst
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
@@ -13,8 +17,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.test.web.reactive.server.expectBody
-import org.springframework.test.web.reactive.server.expectBodyList
+import org.springframework.test.web.reactive.server.returnResult
 
 class ActorControllerTest(
     @Autowired private val client: WebTestClient,
@@ -24,15 +27,15 @@ class ActorControllerTest(
 
     @ParameterizedTest(name = "tenant={0}")
     @EnumSource(Tenants.Tenant::class)
-    fun `get all actors by tenant`(tenant: Tenants.Tenant) {
+    fun `get all actors by tenant`(tenant: Tenants.Tenant) = runSuspendIO {
         val actors = client
             .get()
             .uri("/actors")
             .header(TenantFilter.TENANT_HEADER, tenant.id)
             .exchange()
             .expectStatus().isOk
-            .expectBodyList<ActorDTO>()
-            .returnResult().responseBody!!
+            .returnResult<ActorDTO>().responseBody
+            .asFlow().toList()
 
         actors.forEach {
             log.debug { "Tenant: ${tenant.id}, Actor: $it" }
@@ -50,15 +53,15 @@ class ActorControllerTest(
 
     @ParameterizedTest(name = "tenant={0}")
     @EnumSource(Tenants.Tenant::class)
-    fun `get actor by id with tenant`(tenant: Tenants.Tenant) {
+    fun `get actor by id with tenant`(tenant: Tenants.Tenant) = runSuspendIO {
         val actor = client
             .get()
             .uri("/actors/2")
             .header(TenantFilter.TENANT_HEADER, tenant.id)
             .exchange()
             .expectStatus().isOk
-            .expectBody<ActorDTO>()
-            .returnResult().responseBody!!
+            .returnResult<ActorDTO>().responseBody
+            .awaitFirst()
 
         log.debug { "Tenant: ${tenant.id}, Actor: $actor" }
 

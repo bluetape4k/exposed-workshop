@@ -24,7 +24,7 @@ class UserController(private val repository: UserCacheRepository) {
     @GetMapping
     suspend fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserDTO> {
         log.debug { "Finding all users with limit: $limit" }
-        return newSuspendedTransaction {
+        return newSuspendedTransaction(readOnly = true) {
             repository.findAll(limit = limit, where = { Op.TRUE })
         }
     }
@@ -32,7 +32,7 @@ class UserController(private val repository: UserCacheRepository) {
     @GetMapping("/{id}")
     suspend fun get(@PathVariable(name = "id") id: Long): UserDTO? {
         log.debug { "Getting user with id: $id" }
-        return newSuspendedTransaction {
+        return newSuspendedTransaction(readOnly = true) {
             repository.get(id)
         }
     }
@@ -40,7 +40,7 @@ class UserController(private val repository: UserCacheRepository) {
     @GetMapping("/all")
     suspend fun getAll(@RequestParam(name = "ids") ids: List<Long>): List<UserDTO> {
         log.debug { "Getting all users with ids: $ids" }
-        return newSuspendedTransaction {
+        return newSuspendedTransaction(readOnly = true) {
             repository.getAll(ids)
         }
     }
