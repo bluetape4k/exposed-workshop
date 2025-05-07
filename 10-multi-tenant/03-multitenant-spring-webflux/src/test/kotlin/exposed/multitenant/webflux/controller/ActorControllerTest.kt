@@ -43,12 +43,11 @@ class ActorControllerTest(
 
         actors shouldHaveSize 9
 
-        when (tenant) {
-            Tenants.Tenant.KOREAN ->
-                actors.any { it.firstName == "조니" }.shouldBeTrue()
-            Tenants.Tenant.ENGLISH ->
-                actors.any { it.firstName == "Johnny" }.shouldBeTrue()
-        }
+        val expectedFirstName = mapOf(
+            Tenants.Tenant.KOREAN to "조니",
+            Tenants.Tenant.ENGLISH to "Johnny"
+        )
+        actors.any { it.firstName == expectedFirstName[tenant] }.shouldBeTrue()
     }
 
     @ParameterizedTest(name = "tenant={0}")
@@ -65,9 +64,10 @@ class ActorControllerTest(
 
         log.debug { "Tenant: ${tenant.id}, Actor: $actor" }
 
-        when (tenant) {
-            Tenants.Tenant.KOREAN -> actor.firstName shouldBeEqualTo "브래드"
-            Tenants.Tenant.ENGLISH -> actor.firstName shouldBeEqualTo "Brad"
-        }
+        val expectedFirstName = mapOf(
+            Tenants.Tenant.KOREAN to "브래드",
+            Tenants.Tenant.ENGLISH to "Brad"
+        )
+        actor.firstName shouldBeEqualTo expectedFirstName[tenant]
     }
 }
