@@ -181,6 +181,8 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `defaults with explicit 01`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB + TestDB.MYSQL_V5 }
+
         withTables(testDB, TableWithDBDefault) {
             val created = listOf(
                 DBDefault.new { field = "1" },
@@ -210,6 +212,8 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `defaults with explicit 02`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB + TestDB.MYSQL_V5 }
+
         withTables(testDB, TableWithDBDefault) {
             val created = listOf(
                 DBDefault.new {
@@ -239,6 +243,8 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `defaults invoked only once per entity`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB + TestDB.MYSQL_V5 }
+
         withTables(testDB, TableWithDBDefault) {
             TableWithDBDefault.cIndex.set(0)
             val db1 = DBDefault.new { field = "1" }
@@ -262,6 +268,8 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `defaults can be overriden`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB + TestDB.MYSQL_V5 }
+
         withTables(testDB, TableWithDBDefault) {
             TableWithDBDefault.cIndex.set(0)
 
@@ -297,6 +305,8 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `raw batch insert fails 01`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB + TestDB.MYSQL_V5 }
+
         withTables(testDB, TableWithDBDefault) {
             expectException<BatchDataInconsistentException> {
                 BatchInsertStatement(TableWithDBDefault).run {
@@ -320,6 +330,8 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `batch insert not fails 01`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB + TestDB.MYSQL_V5 }
+
         withTables(testDB, TableWithDBDefault) {
             TableWithDBDefault.batchInsert(initBatch) {
                 it(this)
@@ -333,6 +345,8 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `batch insert fails 01`(testDB: TestDB) {
+        Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB + TestDB.MYSQL_V5 }
+
         withTables(testDB, TableWithDBDefault) {
             expectException<BatchDataInconsistentException> {
                 TableWithDBDefault.batchInsert(initBatch) {
