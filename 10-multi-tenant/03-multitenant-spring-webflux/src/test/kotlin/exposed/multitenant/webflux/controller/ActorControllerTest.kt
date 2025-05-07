@@ -9,7 +9,7 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
-import kotlinx.coroutines.reactive.awaitFirst
+import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
@@ -60,7 +60,7 @@ class ActorControllerTest(
             .exchange()
             .expectStatus().isOk
             .returnResult<ActorDTO>().responseBody
-            .awaitFirst()
+            .awaitSingle()
 
         log.debug { "Tenant: ${tenant.id}, Actor: $actor" }
 

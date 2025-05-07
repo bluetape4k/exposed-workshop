@@ -3,8 +3,9 @@ package exposed.workshop.springwebflux.controller
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.spring.tests.httpGet
-import kotlinx.coroutines.reactive.awaitFirst
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.amshove.kluent.shouldNotBeEmpty
+import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -19,7 +20,8 @@ class IndexControllerTest(
         client.httpGet("/")
             .expectStatus().isOk
             .returnResult<String>().responseBody
-            .awaitFirst()
+            .awaitFirstOrNull()
+            .shouldNotBeNull()
             .shouldNotBeEmpty()
     }
 }

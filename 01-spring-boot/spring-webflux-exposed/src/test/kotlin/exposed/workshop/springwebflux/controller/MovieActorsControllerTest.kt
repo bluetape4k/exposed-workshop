@@ -10,7 +10,7 @@ import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpGet
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
-import kotlinx.coroutines.reactive.awaitFirstOrNull
+import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
@@ -32,7 +32,7 @@ class MovieActorsControllerTest(
         val movieWithActors = client
             .httpGet("/movie-actors/$movieId")
             .returnResult<MovieWithActorDTO>().responseBody
-            .awaitFirstOrNull()
+            .awaitSingle()
 
         log.debug { "movieWithActors[$movieId]=$movieWithActors" }
 

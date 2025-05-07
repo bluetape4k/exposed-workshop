@@ -14,7 +14,7 @@ import io.bluetape4k.spring.tests.httpGet
 import io.bluetape4k.spring.tests.httpPost
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
-import kotlinx.coroutines.reactive.awaitFirst
+import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
@@ -84,7 +84,7 @@ class UserControllerTest(
             val user = client
                 .httpGet("/users/$userId")
                 .returnResult<UserDTO>().responseBody
-                .awaitFirst()
+                .awaitSingle()
 
             user.id shouldBeEqualTo userId
         }
@@ -111,7 +111,7 @@ class UserControllerTest(
         val user = client
             .httpPost("/users", userDTO)
             .returnResult<UserDTO>().responseBody
-            .awaitFirst()
+            .awaitSingle()
 
         user.id shouldBeEqualTo userDTO.id
     }
@@ -124,7 +124,7 @@ class UserControllerTest(
         val invalidedCount = client
             .httpDelete("/users/invalidate?ids=${invalidatedId.joinToString(",")}")
             .returnResult<Long>().responseBody
-            .awaitFirst()
+            .awaitSingle()
 
         invalidedCount shouldBeEqualTo invalidatedId.size.toLong()
     }

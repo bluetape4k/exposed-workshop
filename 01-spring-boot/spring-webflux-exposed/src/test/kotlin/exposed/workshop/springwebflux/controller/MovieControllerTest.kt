@@ -10,8 +10,7 @@ import io.bluetape4k.spring.tests.httpGet
 import io.bluetape4k.spring.tests.httpPost
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
-import kotlinx.coroutines.reactive.awaitFirst
-import kotlinx.coroutines.reactive.awaitFirstOrNull
+import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
@@ -39,7 +38,7 @@ class MovieControllerTest(
         val movie = client
             .httpGet("/movies/$id")
             .returnResult<MovieDTO>().responseBody
-            .awaitFirstOrNull()
+            .awaitSingle()
 
         log.debug { "movie=$movie" }
 
@@ -66,7 +65,7 @@ class MovieControllerTest(
         val saved = client
             .httpPost("/movies", newMovie)
             .returnResult<MovieDTO>().responseBody
-            .awaitFirstOrNull()
+            .awaitSingle()
 
         log.debug { "saved=$saved" }
         saved.shouldNotBeNull() shouldBeEqualTo newMovie.copy(id = saved.id)
@@ -79,12 +78,12 @@ class MovieControllerTest(
         val saved = client
             .httpPost("/movies", newMovie)
             .returnResult<MovieDTO>().responseBody
-            .awaitFirst()
+            .awaitSingle()
 
         val deletedCount = client
             .httpDelete("/movies/${saved.id}")
             .returnResult<Int>().responseBody
-            .awaitFirst()
+            .awaitSingle()
 
         deletedCount shouldBeEqualTo 1
     }

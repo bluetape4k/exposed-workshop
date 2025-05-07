@@ -76,7 +76,7 @@ class Ex01_VritualThreads: AbstractExposedTest() {
                 val id = VTester.insertAndGetId { }
                 commit()
 
-                // 내부적으로 새로운 트랜잭션을 생성하여 코루틴 작업을 수행한다
+                // 내부적으로 새로운 트랜잭션을 생성하여 비동기 작업을 수행한다
                 getTesterById(id.value)!![VTester.id].value shouldBeEqualTo id.value
             }
 

@@ -7,7 +7,7 @@ import io.bluetape4k.junit5.awaitility.coUntil
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.spring.tests.httpPost
-import kotlinx.coroutines.reactive.awaitFirst
+import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.awaitility.kotlin.await
@@ -37,7 +37,7 @@ class UserEventControllerTest(
         val userEvent = newUserEventDTO()
         val response = client.httpPost("/user-events", userEvent)
             .returnResult<Boolean>().responseBody
-            .awaitFirst()
+            .awaitSingle()
 
         response.shouldBeTrue()
 
@@ -60,7 +60,7 @@ class UserEventControllerTest(
         val userEvents = List(insertCount) { newUserEventDTO() }
         val response = client.httpPost("/user-events/bulk", userEvents)
             .returnResult<Boolean>().responseBody
-            .awaitFirst()
+            .awaitSingle()
 
         response.shouldBeTrue()
 

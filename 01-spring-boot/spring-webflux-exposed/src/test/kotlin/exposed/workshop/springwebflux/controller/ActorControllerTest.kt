@@ -10,8 +10,7 @@ import io.bluetape4k.spring.tests.httpGet
 import io.bluetape4k.spring.tests.httpPost
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
-import kotlinx.coroutines.reactive.awaitFirst
-import kotlinx.coroutines.reactive.awaitFirstOrNull
+import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
@@ -39,7 +38,7 @@ class ActorControllerTest(
         val actor = client
             .httpGet("/actors/$id")
             .returnResult<ActorDTO>().responseBody
-            .awaitFirstOrNull()
+            .awaitSingle()
 
         log.debug { "actor=$actor" }
 
@@ -80,7 +79,7 @@ class ActorControllerTest(
         val newActor = client
             .httpPost("/actors", actor)
             .returnResult<ActorDTO>().responseBody
-            .awaitFirstOrNull()
+            .awaitSingle()
 
         log.debug { "newActor=$newActor" }
 
@@ -95,7 +94,7 @@ class ActorControllerTest(
         val newActor = client
             .httpPost("/actors", actor)
             .returnResult<ActorDTO>().responseBody
-            .awaitFirstOrNull()
+            .awaitSingle()
 
         log.debug { "newActor=$newActor" }
         newActor.shouldNotBeNull()
@@ -103,7 +102,7 @@ class ActorControllerTest(
         val deletedCount = client
             .httpDelete("/actors/${newActor.id}")
             .returnResult<Int>().responseBody
-            .awaitFirst()
+            .awaitSingle()
 
         log.debug { "deletedCount=$deletedCount" }
 

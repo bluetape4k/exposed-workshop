@@ -3,7 +3,7 @@ package exposed.examples.cache.controller
 import exposed.examples.cache.AbstractCacheStrategyTest
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.spring.tests.httpGet
-import kotlinx.coroutines.reactive.awaitFirstOrNull
+import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
@@ -19,7 +19,7 @@ class IndexControllerTest(
     fun `call index`() = runSuspendIO {
         client.httpGet("/")
             .returnResult<String>().responseBody
-            .awaitFirstOrNull()
+            .awaitSingle()
             .shouldNotBeNull()
             .shouldNotBeEmpty()
     }

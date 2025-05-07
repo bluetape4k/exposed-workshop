@@ -7,7 +7,7 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
-import kotlinx.coroutines.reactive.awaitFirst
+import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeGreaterThan
 import org.amshove.kluent.shouldNotBeEmpty
@@ -44,7 +44,7 @@ class PostControllerTest(
             .exchange()
             .expectStatus().isOk
             .returnResult<Post>().responseBody
-            .awaitFirst()
+            .awaitSingle()
 
         log.debug { "Post[1]=$post" }
         post.id shouldBeEqualTo 1L
@@ -66,7 +66,7 @@ class PostControllerTest(
             .exchange()
             .expectStatus().is2xxSuccessful
             .returnResult<Post>().responseBody
-            .awaitFirst()
+            .awaitSingle()
 
         savedPost.id.shouldNotBeNull()
         savedPost shouldBeEqualTo newPost.copy(id = savedPost.id)
@@ -91,6 +91,6 @@ class PostControllerTest(
             .exchange()
             .expectStatus().isOk
             .returnResult<Long>().responseBody
-            .awaitFirst()
+            .awaitSingle()
     }
 }

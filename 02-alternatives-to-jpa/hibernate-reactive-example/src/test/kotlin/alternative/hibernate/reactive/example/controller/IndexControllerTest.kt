@@ -4,7 +4,8 @@ import alternative.hibernate.reactive.example.AbstractHibernateReactiveTest
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import kotlinx.coroutines.reactive.awaitFirst
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.reactive.asFlow
 import org.amshove.kluent.shouldNotBeEmpty
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,7 +25,9 @@ class IndexControllerTest(
             .exchange()
             .expectStatus().isOk
             .returnResult<String>().responseBody
-            .awaitFirst()
+            .asFlow()
+            .toList()
+            .joinToString("")
 
         log.debug { "Response: $response" }
         response.shouldNotBeEmpty()

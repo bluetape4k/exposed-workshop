@@ -8,7 +8,7 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
-import kotlinx.coroutines.reactive.awaitFirst
+import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
@@ -48,7 +48,7 @@ class MemberControllerTest(
             .exchange()
             .expectStatus().isOk
             .returnResult<MemberDTO>().responseBody
-            .awaitFirst()
+            .awaitSingle()
 
         log.debug { "Member[1]: $member" }
         member.shouldNotBeNull()
@@ -64,7 +64,7 @@ class MemberControllerTest(
             .exchange()
             .expectStatus().isOk
             .returnResult<MemberAndTeamDTO>().responseBody
-            .awaitFirst()
+            .awaitSingle()
 
         log.debug { "Member[1]: $member" }
         member.shouldNotBeNull()
