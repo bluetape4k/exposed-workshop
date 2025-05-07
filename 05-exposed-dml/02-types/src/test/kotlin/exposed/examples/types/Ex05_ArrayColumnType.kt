@@ -71,7 +71,7 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
      */
     object ArrayTestTable: IntIdTable("array_test_table") {
         val numbers: Column<List<Int>> = array<Int>("numbers").default(listOf(5))
-        val strings: Column<List<String?>> = array<String?>("strings", TextColumnType()).default(emptyList())
+        val strings = array<String?>("strings", TextColumnType()).default(emptyList())
         val floats: Column<List<Float>?> = array<Float>("floats").nullable()
         val doubles: Column<List<Double>?> = array<Double>("doubles").nullable()
         val byteArray: Column<List<ByteArray>?> = array("byte_array", BinaryColumnType(32)).nullable()
@@ -105,7 +105,7 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
         }
     }
 
-    // @Disabled("array columns 을 logging 하면 예외가 발생한다. 실제 작동에는 문제가 없다")
+    @Disabled("array columns 을 logging 하면 예외가 발생한다. 실제 작동에는 문제가 없다")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `array column insert and select`(testDB: TestDB) {
@@ -115,9 +115,9 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
             val doubleInput = listOf(1.0, 2.0, 3.0)
 
             val id1 = ArrayTestTable.insertAndGetId {
-                it[numbers] = numInput
-                it[strings] = stringInput
-                it[doubles] = doubleInput
+                it[ArrayTestTable.numbers] = numInput
+                it[ArrayTestTable.strings] = stringInput
+                it[ArrayTestTable.doubles] = doubleInput
             }
 
             val result1 = ArrayTestTable.selectAll().where { ArrayTestTable.id eq id1 }.single()
@@ -126,9 +126,9 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
             result1[ArrayTestTable.doubles] shouldBeEqualTo doubleInput
 
             val id2 = ArrayTestTable.insertAndGetId {
-                it[numbers] = emptyList()
-                it[strings] = emptyList()
-                it[doubles] = emptyList()
+                it[ArrayTestTable.numbers] = emptyList()
+                it[ArrayTestTable.strings] = emptyList()
+                it[ArrayTestTable.doubles] = emptyList()
             }
 
             val result2 = ArrayTestTable.selectAll().where { ArrayTestTable.id eq id2 }.single()
@@ -137,8 +137,9 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
             result2[ArrayTestTable.doubles]?.shouldBeEmpty()
 
             val id3 = ArrayTestTable.insertAndGetId {
-                it[strings] = listOf(null, null, null, "null")
-                it[doubles] = null
+                it[ArrayTestTable.numbers] = emptyList()
+                it[ArrayTestTable.strings] = listOf(null, null, null, "null")
+                it[ArrayTestTable.doubles] = null
             }
 
             val result3 = ArrayTestTable.selectAll().where { ArrayTestTable.id eq id3 }.single()

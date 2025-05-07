@@ -4,7 +4,7 @@ import exposed.workshop.springmvc.AbstractSpringMvcTest
 import exposed.workshop.springmvc.domain.MovieSchema.ActorTable
 import io.bluetape4k.concurrent.virtualthread.virtualFuture
 import io.bluetape4k.junit5.concurrency.MultithreadingTester
-import io.bluetape4k.junit5.concurrency.VirtualthreadTester
+import io.bluetape4k.junit5.concurrency.StructuredTaskScopeTester
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldNotBeEmpty
 import org.jetbrains.exposed.sql.selectAll
@@ -60,9 +60,8 @@ class DomainSQLTest: AbstractSpringMvcTest() {
 
         @Test
         open fun `get all actors in multiple virtual threads`() {
-            VirtualthreadTester()
-                .numThreads(Runtime.getRuntime().availableProcessors() * 2)
-                .roundsPerThread(4)
+            StructuredTaskScopeTester()
+                .roundsPerTask(Runtime.getRuntime().availableProcessors() * 8)
                 .add {
                     transaction {
                         val actors = ActorTable.selectAll().map { it.toActorDTO() }

@@ -3,8 +3,8 @@ package exposed.workshop.springwebflux.domain
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
 import exposed.workshop.springwebflux.domain.MovieSchema.ActorTable
 import io.bluetape4k.concurrent.virtualthread.virtualFuture
-import io.bluetape4k.junit5.concurrency.VirtualthreadTester
-import io.bluetape4k.junit5.coroutines.MultijobTester
+import io.bluetape4k.junit5.concurrency.StructuredTaskScopeTester
+import io.bluetape4k.junit5.coroutines.SuspendedJobTester
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldNotBeEmpty
@@ -36,9 +36,9 @@ class DomainSQLTest: AbstractSpringWebfluxTest() {
 
         @Test
         fun `get all actors in multiple platform threads`() = runSuspendIO {
-            MultijobTester()
+            SuspendedJobTester()
                 .numThreads(Runtime.getRuntime().availableProcessors() * 2)
-                .roundsPerJob(4)
+                .roundsPerJob(Runtime.getRuntime().availableProcessors() * 2 * 4)
                 .add {
                     val actors = newSuspendedTransaction(readOnly = true) {
                         ActorTable.selectAll().map { it.toActorDTO() }
@@ -64,9 +64,8 @@ class DomainSQLTest: AbstractSpringWebfluxTest() {
 
         @Test
         open fun `get all actors in multiple virtual threads`() {
-            VirtualthreadTester()
-                .numThreads(Runtime.getRuntime().availableProcessors() * 2)
-                .roundsPerThread(4)
+            StructuredTaskScopeTester()
+                .roundsPerTask(Runtime.getRuntime().availableProcessors() * 2 * 4)
                 .add {
                     transaction {
                         val actors = ActorTable.selectAll().map { it.toActorDTO() }

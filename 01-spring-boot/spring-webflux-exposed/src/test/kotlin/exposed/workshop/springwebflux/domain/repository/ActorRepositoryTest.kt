@@ -27,7 +27,7 @@ class ActorRepositoryTest(
 
     @Test
     fun `find actor by id`() = runSuspendIO {
-        newSuspendedTransaction {
+        newSuspendedTransaction(readOnly = true) {
             val actorId = 1L
 
             val actor = actorRepository.findById(actorId)?.toActorDTO()
@@ -47,7 +47,7 @@ class ActorRepositoryTest(
      */
     @Test
     fun `search actors by lastName`() = runSuspendIO {
-        newSuspendedTransaction {
+        newSuspendedTransaction(readOnly = true) {
             val params = mapOf("lastName" to "Depp")
             val actors = actorRepository.searchActor(params).toList()
 
@@ -67,7 +67,7 @@ class ActorRepositoryTest(
      */
     @Test
     fun `search actors by firstName`() = runSuspendIO {
-        newSuspendedTransaction {
+        newSuspendedTransaction(readOnly = true) {
             val params = mapOf("firstName" to "Angelina")
             val actors = actorRepository.searchActor(params).toList()
 

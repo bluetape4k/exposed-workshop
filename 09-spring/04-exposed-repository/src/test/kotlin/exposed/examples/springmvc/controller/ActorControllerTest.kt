@@ -21,7 +21,7 @@ class ActorControllerTest(
         private fun newActor(): ActorDTO = ActorDTO(
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
-            birthday = faker.date().birthdayLocalDate().toString()
+            birthday = faker.timeAndDate().birthday().toString()
         )
     }
 
