@@ -30,9 +30,9 @@ class MovieRepositoryTest(
     fun `find movie by id`() = runSuspendIO {
         val movieId = 1L
 
-        val movie = newSuspendedTransaction {
-            movieRepository.findById(movieId)
-        }.toMovieDTO()
+        val movie = newSuspendedTransaction(readOnly = true) {
+            movieRepository.findById(movieId).toMovieDTO()
+        }
 
         log.debug { "movie: $movie" }
         movie.shouldNotBeNull()
@@ -54,9 +54,9 @@ class MovieRepositoryTest(
     fun `search movies`() = runSuspendIO {
         val params = mapOf("producerName" to "Johnny")
 
-        val movies = newSuspendedTransaction {
-            movieRepository.searchMovie(params)
-        }.toList()
+        val movies = newSuspendedTransaction(readOnly = true) {
+            movieRepository.searchMovie(params).toList()
+        }
 
         movies.forEach {
             log.debug { "movie: $it" }
@@ -113,7 +113,7 @@ class MovieRepositoryTest(
 
     @Test
     fun `get movie and actors`() = runSuspendIO {
-        newSuspendedTransaction {
+        newSuspendedTransaction(readOnly = true) {
             val movieId = 1L
 
             val movieWithActors = movieRepository.getMovieWithActors(movieId)
@@ -127,7 +127,7 @@ class MovieRepositoryTest(
 
     @Test
     fun `get movie and actors count`() = runSuspendIO {
-        newSuspendedTransaction {
+        newSuspendedTransaction(readOnly = true) {
             val movieActorsCount = movieRepository.getMovieActorsCount()
             movieActorsCount.shouldNotBeEmpty()
             movieActorsCount.forEach {
@@ -138,7 +138,7 @@ class MovieRepositoryTest(
 
     @Test
     fun `find movies with acting producers`() = runSuspendIO {
-        newSuspendedTransaction {
+        newSuspendedTransaction(readOnly = true) {
             val movies = movieRepository.findMoviesWithActingProducers().toList()
 
             movies.forEach {

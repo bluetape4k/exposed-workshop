@@ -4,8 +4,8 @@ import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorTable
 import exposed.examples.springwebflux.domain.model.toActorDTO
 import io.bluetape4k.concurrent.virtualthread.virtualFuture
-import io.bluetape4k.junit5.concurrency.VirtualthreadTester
-import io.bluetape4k.junit5.coroutines.MultijobTester
+import io.bluetape4k.junit5.concurrency.StructuredTaskScopeTester
+import io.bluetape4k.junit5.coroutines.SuspendedJobTester
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldNotBeEmpty
@@ -37,9 +37,9 @@ class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
         @Test
         fun `get all actors in multiple platform threads`() = runSuspendIO {
             newSuspendedTransaction(readOnly = true) {
-                MultijobTester()
+                SuspendedJobTester()
                     .numThreads(Runtime.getRuntime().availableProcessors() * 2)
-                    .roundsPerJob(4)
+                    .roundsPerJob(Runtime.getRuntime().availableProcessors() * 2 * 4)
                     .add {
                         suspendedTransactionAsync {
                             val actors = ActorTable.selectAll().map { it.toActorDTO() }
@@ -66,9 +66,8 @@ class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
 
         @Test
         open fun `get all actors in multiple virtual threads`() {
-            VirtualthreadTester()
-                .numThreads(Runtime.getRuntime().availableProcessors() * 2)
-                .roundsPerThread(4)
+            StructuredTaskScopeTester()
+                .roundsPerTask(Runtime.getRuntime().availableProcessors() * 2 * 4)
                 .add {
                     transaction {
                         val actors = ActorTable.selectAll().map { it.toActorDTO() }
