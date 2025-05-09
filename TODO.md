@@ -141,3 +141,13 @@
 
 - [ ] MigrationUtils in Exposed
 - [ ] Using Flyway for Migration
+
+## 11. Exposed with Redisson (Cache Strategy)
+
+- [ ] Read Through
+- [ ] Write Through
+- [ ] Write Behind
+
+## 12. Exposed with Spring Modulith
+
+- [ ] Spring Modulith & Application Events
