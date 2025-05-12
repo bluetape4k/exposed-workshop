@@ -13,7 +13,6 @@ import io.bluetape4k.spring.tests.httpGet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
-import kotlinx.coroutines.reactive.awaitLast
 import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBeEqualTo
@@ -110,7 +109,7 @@ class UserCredentialsControllerTest(
         val invalidateCount = client
             .httpDelete("/user-credentials/invalidate?ids=${invalidatedIds.joinToString(",")}")
             .returnResult<Long>().responseBody
-            .awaitLast()
+            .awaitSingle()
 
         invalidateCount shouldBeEqualTo invalidatedIds.size.toLong()
     }
