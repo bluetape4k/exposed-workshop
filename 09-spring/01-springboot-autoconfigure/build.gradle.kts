@@ -27,7 +27,7 @@ dependencies {
     }
 
     // Coroutines
-    implementation(Libs.bluetape4k_coroutines)
+    testImplementation(Libs.bluetape4k_coroutines)
     testImplementation(Libs.kotlinx_coroutines_core)
     testImplementation(Libs.kotlinx_coroutines_test)
 }
