@@ -7,7 +7,7 @@ import io.bluetape4k.collections.intRangeOf
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +49,7 @@ import kotlin.test.assertFailsWith
 
 class Ex01_Coroutines: AbstractExposedTest() {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
 
         private val singleThreadDispatcher: ExecutorCoroutineDispatcher =
             Executors.newSingleThreadExecutor().asCoroutineDispatcher()
