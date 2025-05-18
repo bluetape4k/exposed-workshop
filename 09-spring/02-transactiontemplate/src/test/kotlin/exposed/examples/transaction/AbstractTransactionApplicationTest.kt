@@ -1,5 +1,6 @@
 package exposed.examples.transaction
 
+import io.bluetape4k.logging.KLogging
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest(
@@ -11,4 +12,5 @@ import org.springframework.boot.test.context.SpringBootTest
     ]
 )
 abstract class AbstractTransactionApplicationTest {
+    companion object: KLogging()
 }
