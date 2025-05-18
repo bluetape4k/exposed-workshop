@@ -13,7 +13,7 @@ import exposed.workshop.springwebflux.domain.toActorDTO
 import exposed.workshop.springwebflux.domain.toMovieDTO
 import exposed.workshop.springwebflux.domain.toMovieWithActorDTO
 import exposed.workshop.springwebflux.domain.toMovieWithProducingActorDTO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.eclipse.collections.impl.factory.Multimaps
 import org.jetbrains.exposed.dao.load
@@ -31,7 +31,7 @@ import java.time.LocalDateTime
 @Repository
 class MovieRepository {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         private val MovieActorJoin by lazy {
             MovieTable
                 .innerJoin(ActorInMovieTable)

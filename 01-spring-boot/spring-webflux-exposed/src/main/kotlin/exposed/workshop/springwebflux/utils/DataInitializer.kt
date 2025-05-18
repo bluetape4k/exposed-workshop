@@ -5,7 +5,7 @@ import exposed.workshop.springwebflux.domain.MovieSchema.ActorInMovieTable
 import exposed.workshop.springwebflux.domain.MovieSchema.ActorTable
 import exposed.workshop.springwebflux.domain.MovieSchema.MovieTable
 import exposed.workshop.springwebflux.domain.MovieWithActorDTO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.batchInsert
@@ -21,7 +21,7 @@ import java.time.LocalDate
 @Transactional
 class DataInitializer: ApplicationListener<ApplicationReadyEvent> {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
         log.info { "샘플 데이터 추가" }

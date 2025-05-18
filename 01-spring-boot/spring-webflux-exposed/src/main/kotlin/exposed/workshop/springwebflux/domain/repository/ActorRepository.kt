@@ -3,7 +3,7 @@ package exposed.workshop.springwebflux.domain.repository
 import exposed.workshop.springwebflux.domain.ActorDTO
 import exposed.workshop.springwebflux.domain.MovieSchema.ActorEntity
 import exposed.workshop.springwebflux.domain.MovieSchema.ActorTable
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.andWhere
@@ -15,7 +15,7 @@ import java.time.LocalDate
 @Repository
 class ActorRepository {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     suspend fun count(): Long =
         ActorTable.selectAll().count()

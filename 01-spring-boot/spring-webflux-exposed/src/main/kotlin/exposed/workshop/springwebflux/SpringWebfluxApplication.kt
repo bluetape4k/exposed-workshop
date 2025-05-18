@@ -1,6 +1,6 @@
 package exposed.workshop.springwebflux
 
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.springframework.boot.WebApplicationType
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -8,7 +8,7 @@ import org.springframework.boot.runApplication
 @SpringBootApplication
 class SpringWebfluxApplication {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
 }
 

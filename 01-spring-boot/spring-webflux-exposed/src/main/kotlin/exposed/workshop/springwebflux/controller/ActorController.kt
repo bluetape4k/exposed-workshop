@@ -3,7 +3,7 @@ package exposed.workshop.springwebflux.controller
 import exposed.workshop.springwebflux.domain.ActorDTO
 import exposed.workshop.springwebflux.domain.repository.ActorRepository
 import exposed.workshop.springwebflux.domain.toActorDTO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +23,7 @@ class ActorController(
     private val actorRepository: ActorRepository,
 ): CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @GetMapping("/{id}")
     suspend fun getActorById(@PathVariable("id") actorId: Long): ActorDTO? {

@@ -3,7 +3,7 @@ package exposed.workshop.springwebflux.controller
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
 import exposed.workshop.springwebflux.domain.MovieDTO
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
@@ -23,7 +23,7 @@ class MovieControllerTest(
     @Autowired private val client: WebTestClient,
 ): AbstractSpringWebfluxTest() {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         private fun newMovieDTO(): MovieDTO = MovieDTO(
             name = faker.book().title(),
             producerName = faker.name().fullName(),

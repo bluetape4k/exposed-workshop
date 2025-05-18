@@ -3,7 +3,7 @@ package exposed.workshop.springwebflux.controller
 import exposed.workshop.springwebflux.domain.MovieDTO
 import exposed.workshop.springwebflux.domain.repository.MovieRepository
 import exposed.workshop.springwebflux.domain.toMovieDTO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
@@ -22,7 +22,7 @@ class MovieController(
     private val movieRepository: MovieRepository,
 ): CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @GetMapping("/{id}")
     suspend fun getMovieById(@PathVariable("id") movieId: Long): MovieDTO? =

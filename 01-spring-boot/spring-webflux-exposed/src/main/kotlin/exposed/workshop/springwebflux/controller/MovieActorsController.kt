@@ -4,7 +4,7 @@ import exposed.workshop.springwebflux.domain.MovieActorCountDTO
 import exposed.workshop.springwebflux.domain.MovieWithActorDTO
 import exposed.workshop.springwebflux.domain.MovieWithProducingActorDTO
 import exposed.workshop.springwebflux.domain.repository.MovieRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
@@ -19,7 +19,7 @@ class MovieActorsController(
     private val movieRepository: MovieRepository,
 ): CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @GetMapping("/{movieId}")
     suspend fun getMovieWithActors(@PathVariable movieId: Long): MovieWithActorDTO? =

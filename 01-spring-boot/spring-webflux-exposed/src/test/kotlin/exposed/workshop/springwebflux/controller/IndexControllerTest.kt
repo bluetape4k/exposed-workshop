@@ -2,6 +2,7 @@ package exposed.workshop.springwebflux.controller
 
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
 import io.bluetape4k.junit5.coroutines.runSuspendIO
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.spring.tests.httpGet
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.amshove.kluent.shouldNotBeEmpty
@@ -14,6 +15,8 @@ import org.springframework.test.web.reactive.server.returnResult
 class IndexControllerTest(
     @Autowired private val client: WebTestClient,
 ): AbstractSpringWebfluxTest() {
+
+    companion object: KLoggingChannel()
 
     @Test
     fun `get index`() = runSuspendIO {
