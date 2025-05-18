@@ -14,7 +14,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.transactions.transactionManager
 import kotlin.coroutines.CoroutineContext
 
-private val logger = KotlinLogging.logger {}
+private val logger by lazy { KotlinLogging.logger {} }
 
 private val registeredOnShutdown = mutableSetOf<TestDB>()
 

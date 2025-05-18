@@ -11,7 +11,7 @@ import org.jetbrains.exposed.sql.transactions.inTopLevelTransaction
 import org.jetbrains.exposed.sql.transactions.transactionManager
 import kotlin.coroutines.CoroutineContext
 
-private val log = KotlinLogging.logger {}
+private val log by lazy { KotlinLogging.logger {} }
 
 fun withTables(
     testDB: TestDB,

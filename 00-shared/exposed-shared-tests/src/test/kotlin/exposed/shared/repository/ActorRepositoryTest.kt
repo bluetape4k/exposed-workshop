@@ -4,7 +4,7 @@ import exposed.shared.repository.MovieSchema.ActorTable
 import exposed.shared.repository.MovieSchema.withMovieAndActors
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
@@ -22,7 +22,7 @@ import org.junit.jupiter.params.provider.MethodSource
 
 class ActorRepositoryTest: AbstractExposedTest() {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         fun newActorDTO(): ActorDTO = ActorDTO(
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
