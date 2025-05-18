@@ -1,6 +1,6 @@
 package exposed.multitenant.webflux.tenant
 
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kotlinx.coroutines.reactor.mono
@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono
 @Component
 class TenantFilter: WebFilter {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         const val TENANT_HEADER = "X-TENANT-ID"
     }
 

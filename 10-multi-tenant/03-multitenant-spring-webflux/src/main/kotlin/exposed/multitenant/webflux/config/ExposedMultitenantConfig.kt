@@ -5,7 +5,7 @@ import com.zaxxer.hikari.HikariDataSource
 import exposed.multitenant.webflux.tenant.TenantAwareDataSource
 import exposed.multitenant.webflux.tenant.Tenants
 import io.bluetape4k.exceptions.NotSupportedException
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import io.bluetape4k.support.uninitialized
 import io.bluetape4k.testcontainers.database.PostgreSQLServer
@@ -26,7 +26,7 @@ import javax.sql.DataSource
 @Configuration
 class ExposedMultitenantConfig {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Autowired
     private val environment: Environment = uninitialized()

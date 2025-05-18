@@ -7,7 +7,7 @@ import exposed.multitenant.webflux.tenant.Tenants
 import exposed.multitenant.webflux.tenant.newSuspendedTransactionWithTenant
 import exposed.shared.repository.MovieSchema.ActorTable
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.uninitialized
 import org.amshove.kluent.shouldNotBeEmpty
@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 class ExposedConfigTest: AbstractMultitenantTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Autowired
     private val actorRepository: ActorExposedRepository = uninitialized()

@@ -12,7 +12,7 @@ import exposed.multitenant.webflux.domain.model.toActorDTO
 import exposed.multitenant.webflux.domain.model.toMovieWithActorDTO
 import exposed.multitenant.webflux.domain.model.toMovieWithProducingActorDTO
 import io.bluetape4k.exposed.repository.ExposedRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.sql.Join
@@ -28,7 +28,7 @@ import java.time.LocalDate
 @Repository
 class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         private val MovieActorJoin by lazy {
             MovieTable
                 .innerJoin(ActorInMovieTable)

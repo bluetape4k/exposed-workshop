@@ -4,7 +4,7 @@ import exposed.multitenant.webflux.domain.dtos.ActorDTO
 import exposed.multitenant.webflux.domain.model.MovieSchema.ActorEntity
 import exposed.multitenant.webflux.domain.model.MovieSchema.ActorTable
 import io.bluetape4k.exposed.repository.ExposedRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.andWhere
@@ -15,7 +15,7 @@ import java.time.LocalDate
 @Repository
 class ActorExposedRepository: ExposedRepository<ActorEntity, Long> {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     override val table = ActorEntity.table
     override fun ResultRow.toEntity(): ActorEntity = ActorEntity.wrapRow(this)

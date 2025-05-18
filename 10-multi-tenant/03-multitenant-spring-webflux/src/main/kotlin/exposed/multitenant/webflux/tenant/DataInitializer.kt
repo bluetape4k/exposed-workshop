@@ -6,7 +6,7 @@ import exposed.multitenant.webflux.domain.model.MovieSchema.ActorInMovieTable
 import exposed.multitenant.webflux.domain.model.MovieSchema.ActorTable
 import exposed.multitenant.webflux.domain.model.MovieSchema.MovieTable
 import exposed.multitenant.webflux.tenant.Tenants.Tenant
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.info
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -24,7 +24,7 @@ import java.time.LocalDate
 @Component
 class DataInitializer {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     suspend fun initialize(tenant: Tenants.Tenant) {
         log.info { "데이터베이스 초기화 및 샘플 데이터 추가" }
