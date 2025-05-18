@@ -1,6 +1,6 @@
 package exposed.examples.springwebflux.config
 
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.utils.Runtimex
 import io.netty.channel.ChannelOption
 import io.netty.handler.timeout.ReadTimeoutHandler
@@ -21,7 +21,7 @@ import kotlin.time.toJavaDuration
  */
 @Configuration
 class NettyConfig {
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Bean
     fun nettyReactiveWebServerFactory(): NettyReactiveWebServerFactory {
@@ -54,7 +54,7 @@ class NettyConfig {
             loopResources = LoopResources.create(
                 "event-loop",
                 4,
-                maxOf(Runtimex.availableProcessors * 2, 8),
+                maxOf(Runtimex.availableProcessors * 8, 64),
                 true
             )
         }

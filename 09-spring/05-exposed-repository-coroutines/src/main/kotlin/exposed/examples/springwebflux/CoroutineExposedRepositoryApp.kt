@@ -1,15 +1,13 @@
 package exposed.examples.springwebflux
 
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.springframework.boot.WebApplicationType
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
 class CoroutineExposedRepositoryApp {
-
-    companion object: KLogging()
-
+    companion object: KLoggingChannel()
 }
 
 fun main(vararg args: String) {

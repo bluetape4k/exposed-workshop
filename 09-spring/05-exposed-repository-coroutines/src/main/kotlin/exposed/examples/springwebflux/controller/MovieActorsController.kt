@@ -4,9 +4,10 @@ import exposed.examples.springwebflux.domain.dtos.MovieActorCountDTO
 import exposed.examples.springwebflux.domain.dtos.MovieWithActorDTO
 import exposed.examples.springwebflux.domain.dtos.MovieWithProducingActorDTO
 import exposed.examples.springwebflux.domain.repository.MovieExposedRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -17,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/movie-actors")
 class MovieActorsController(
     private val movieRepository: MovieExposedRepository,
-): CoroutineScope by CoroutineScope(Dispatchers.IO) {
+): CoroutineScope by CoroutineScope(Dispatchers.IO + SupervisorJob()) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @GetMapping("/{movieId}")
     suspend fun getMovieWithActors(@PathVariable movieId: Long): MovieWithActorDTO? =

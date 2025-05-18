@@ -4,7 +4,7 @@ import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
 import exposed.examples.springwebflux.domain.dtos.MovieDTO
 import exposed.examples.springwebflux.domain.model.toMovieDTO
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
@@ -15,7 +15,7 @@ class MovieSuspendedServiceTest(
     @Autowired private val movieService: MovieTransactionalService,
 ): AbstractCoroutineExposedRepositoryTest() {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         private fun newMovieDTO() = MovieDTO(
             name = faker.book().title(),
             producerName = faker.name().fullName(),

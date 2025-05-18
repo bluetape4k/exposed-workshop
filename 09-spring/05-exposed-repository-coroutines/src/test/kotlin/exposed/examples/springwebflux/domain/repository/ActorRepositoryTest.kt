@@ -4,7 +4,7 @@ import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
 import exposed.examples.springwebflux.domain.dtos.ActorDTO
 import exposed.examples.springwebflux.domain.model.toActorDTO
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeEmpty
@@ -17,7 +17,7 @@ class ActorRepositoryTest(
     @Autowired private val actorRepository: ActorExposedRepository,
 ): AbstractCoroutineExposedRepositoryTest() {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         fun newActorDTO() = ActorDTO(
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),

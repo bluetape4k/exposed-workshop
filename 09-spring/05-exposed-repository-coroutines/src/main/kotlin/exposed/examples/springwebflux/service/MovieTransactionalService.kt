@@ -3,7 +3,7 @@ package exposed.examples.springwebflux.service
 import exposed.examples.springwebflux.domain.dtos.MovieDTO
 import exposed.examples.springwebflux.domain.model.MovieSchema.MovieEntity
 import exposed.examples.springwebflux.domain.repository.MovieExposedRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -18,7 +18,7 @@ class MovieTransactionalService(
     private val movieRepository: MovieExposedRepository,
 ) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Transactional
     fun monoSave(movieDto: MovieDTO): Mono<MovieEntity> {

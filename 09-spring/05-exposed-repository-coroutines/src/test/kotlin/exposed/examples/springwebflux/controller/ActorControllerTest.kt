@@ -3,7 +3,7 @@ package exposed.examples.springwebflux.controller
 import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
 import exposed.examples.springwebflux.domain.dtos.ActorDTO
 import exposed.examples.springwebflux.domain.repository.ActorRepositoryTest.Companion.newActorDTO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
@@ -21,7 +21,7 @@ class ActorControllerTest(
     @Autowired private val client: WebTestClient,
 ): AbstractCoroutineExposedRepositoryTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Test
     fun `find actors by firstName`() {

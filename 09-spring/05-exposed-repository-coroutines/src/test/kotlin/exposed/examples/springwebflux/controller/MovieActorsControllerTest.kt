@@ -4,7 +4,7 @@ import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
 import exposed.examples.springwebflux.domain.dtos.MovieActorCountDTO
 import exposed.examples.springwebflux.domain.dtos.MovieWithActorDTO
 import exposed.examples.springwebflux.domain.dtos.MovieWithProducingActorDTO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpGet
 import org.amshove.kluent.shouldBeEqualTo
@@ -19,7 +19,7 @@ class MovieActorsControllerTest(
     @Autowired private val client: WebTestClient,
 ): AbstractCoroutineExposedRepositoryTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Test
     fun `get movie with actors`() {

@@ -2,7 +2,7 @@ package exposed.examples.springwebflux.config
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import io.bluetape4k.testcontainers.database.MySQL8Server
 import io.bluetape4k.testcontainers.database.PostgreSQLServer
@@ -21,7 +21,7 @@ import javax.sql.DataSource
 @Configuration
 class ExposedDbConfig {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Bean
     @Profile("h2")

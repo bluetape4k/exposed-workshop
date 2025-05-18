@@ -3,9 +3,10 @@ package exposed.examples.springwebflux.controller
 import exposed.examples.springwebflux.domain.dtos.ActorDTO
 import exposed.examples.springwebflux.domain.model.toActorDTO
 import exposed.examples.springwebflux.domain.repository.ActorExposedRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -20,8 +21,9 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/actors")
 class ActorController(
     private val actorRepository: ActorExposedRepository,
-): CoroutineScope by CoroutineScope(Dispatchers.IO) {
-    companion object: KLogging()
+): CoroutineScope by CoroutineScope(Dispatchers.IO + SupervisorJob()) {
+
+    companion object: KLoggingChannel()
 
     @GetMapping("/{id}")
     suspend fun getActorById(@PathVariable("id") actorId: Long): ActorDTO? =

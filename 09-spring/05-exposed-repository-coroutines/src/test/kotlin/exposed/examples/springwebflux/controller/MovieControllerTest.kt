@@ -2,7 +2,7 @@ package exposed.examples.springwebflux.controller
 
 import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
 import exposed.examples.springwebflux.domain.dtos.MovieDTO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
@@ -18,7 +18,7 @@ class MovieControllerTest(
     @Autowired private val client: WebTestClient,
 ): AbstractCoroutineExposedRepositoryTest() {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         private fun newMovieDTO(): MovieDTO = MovieDTO(
             name = faker.book().title(),
             producerName = faker.name().fullName(),
