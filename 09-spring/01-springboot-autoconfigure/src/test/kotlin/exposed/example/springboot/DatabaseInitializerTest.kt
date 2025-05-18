@@ -2,7 +2,7 @@ package exposed.example.springboot
 
 import exposed.example.springboot.tables.TestTable
 import exposed.example.springboot.tables.ignored.IgnoredTable
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import io.bluetape4k.support.uninitialized
 import org.amshove.kluent.shouldBeEqualTo
@@ -33,7 +33,7 @@ import kotlin.test.assertFailsWith
 )
 class DatabaseInitializerTest {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Autowired
     private val applicationContext: ApplicationContext = uninitialized()

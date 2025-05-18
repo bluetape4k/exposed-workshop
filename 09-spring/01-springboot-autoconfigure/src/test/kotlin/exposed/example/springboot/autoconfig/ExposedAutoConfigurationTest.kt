@@ -1,7 +1,7 @@
 package exposed.example.springboot.autoconfig
 
 import exposed.example.springboot.Application
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import io.bluetape4k.support.uninitialized
 import org.amshove.kluent.shouldBeEqualTo
@@ -36,7 +36,7 @@ import kotlin.test.assertFailsWith
 )
 class ExposedAutoConfigurationTest {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @TestConfiguration
     class CustomDatabaseConfigConfiguration {

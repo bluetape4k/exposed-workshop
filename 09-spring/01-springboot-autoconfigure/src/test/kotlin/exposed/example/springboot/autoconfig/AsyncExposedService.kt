@@ -3,6 +3,7 @@ package exposed.example.springboot.autoconfig
 import exposed.example.springboot.tables.TestEntity
 import exposed.example.springboot.tables.TestTable
 import io.bluetape4k.concurrent.virtualthread.virtualFuture
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.scheduling.annotation.Async
@@ -12,6 +13,8 @@ import java.util.concurrent.CompletableFuture
 @Async
 @Service
 class AsyncExposedService {
+
+    companion object: KLoggingChannel()
 
     /**
      * 비동기 방식으로 [TestTable]의 모든 데이터를 조회합니다.
