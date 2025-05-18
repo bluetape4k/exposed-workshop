@@ -1,7 +1,7 @@
 package alternative.r2dbc.example.domain.repository
 
 import alternative.r2dbc.example.domain.model.Comment
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.spring.r2dbc.coroutines.coCount
 import io.bluetape4k.spring.r2dbc.coroutines.coCountAll
 import io.bluetape4k.spring.r2dbc.coroutines.coInsert
@@ -23,7 +23,7 @@ class CommentRepository(
     private val operations: R2dbcEntityOperations,
 ) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     suspend fun count(): Long = operations.coCountAll<Comment>()
 

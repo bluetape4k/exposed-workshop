@@ -1,7 +1,7 @@
 package alternative.r2dbc.example.config
 
 import alternative.r2dbc.example.domain.repository.CustomerRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.r2dbc.connection.init.connectionFactoryInitializer
 import io.bluetape4k.r2dbc.connection.init.resourceDatabasePopulatorOf
 import io.bluetape4k.testcontainers.database.PostgreSQLServer
@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableR2dbcRepositories(basePackageClasses = [CustomerRepository::class])
 class R2dbcConfig: AbstractR2dbcConfiguration() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Bean("connectionUrl")
     @Profile("h2")

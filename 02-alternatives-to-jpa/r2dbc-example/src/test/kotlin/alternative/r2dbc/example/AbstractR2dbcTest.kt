@@ -3,6 +3,7 @@ package alternative.r2dbc.example
 import alternative.r2dbc.example.domain.model.Comment
 import alternative.r2dbc.example.domain.model.Post
 import io.bluetape4k.junit5.faker.Fakers
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 
@@ -13,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles
 )
 abstract class AbstractR2dbcTest {
 
-    companion object {
+    companion object: KLoggingChannel() {
         @JvmStatic
         val faker = Fakers.faker
     }

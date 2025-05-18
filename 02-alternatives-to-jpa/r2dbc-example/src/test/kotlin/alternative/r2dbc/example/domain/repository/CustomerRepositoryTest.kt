@@ -3,7 +3,7 @@ package alternative.r2dbc.example.domain.repository
 import alternative.r2dbc.example.AbstractR2dbcTest
 import alternative.r2dbc.example.domain.model.Customer
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
@@ -22,7 +22,7 @@ class CustomerRepositoryTest(
     @Autowired private val database: DatabaseClient,
 ): AbstractR2dbcTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @BeforeEach
     fun beforeEach() {

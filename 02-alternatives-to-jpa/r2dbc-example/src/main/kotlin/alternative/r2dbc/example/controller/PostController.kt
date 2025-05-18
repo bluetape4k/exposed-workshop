@@ -5,7 +5,7 @@ import alternative.r2dbc.example.domain.model.Post
 import alternative.r2dbc.example.domain.repository.CommentRepository
 import alternative.r2dbc.example.domain.repository.PostRepository
 import alternative.r2dbc.example.exceptions.PostNotFoundException
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -24,7 +24,7 @@ class PostController(
     private val commentRepository: CommentRepository,
 ): CoroutineScope by CoroutineScope(Dispatchers.IO + SupervisorJob()) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @GetMapping
     fun findAll(): Flow<Post> = postRepository.findAll()

@@ -2,7 +2,7 @@ package alternative.r2dbc.example.domain.repository
 
 import alternative.r2dbc.example.AbstractR2dbcTest
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.flow.toList
 import org.amshove.kluent.shouldBeEqualTo
@@ -15,7 +15,7 @@ class PostRepositoryTest(
     @Autowired private val postRepository: PostRepository,
 ): AbstractR2dbcTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Test
     fun `find all posts`() = runSuspendIO {

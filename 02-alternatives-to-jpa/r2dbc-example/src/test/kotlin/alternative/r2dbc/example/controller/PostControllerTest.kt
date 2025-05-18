@@ -3,7 +3,7 @@ package alternative.r2dbc.example.controller
 import alternative.r2dbc.example.AbstractR2dbcTest
 import alternative.r2dbc.example.domain.model.Post
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
@@ -21,7 +21,7 @@ class PostControllerTest(
     @Autowired private val client: WebTestClient,
 ): AbstractR2dbcTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Test
     fun `find all posts`() = runSuspendIO {

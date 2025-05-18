@@ -2,7 +2,7 @@ package alternative.r2dbc.example.utils
 
 import alternative.r2dbc.example.domain.repository.CommentRepository
 import alternative.r2dbc.example.domain.repository.PostRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import kotlinx.coroutines.runBlocking
 import org.springframework.boot.ApplicationArguments
@@ -15,7 +15,7 @@ class DatabaseInitializer(
     private val commentRepository: CommentRepository,
 ): ApplicationRunner {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
 
     override fun run(args: ApplicationArguments) {

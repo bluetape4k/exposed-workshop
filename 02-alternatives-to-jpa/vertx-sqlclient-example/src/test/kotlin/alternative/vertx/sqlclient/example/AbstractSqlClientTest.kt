@@ -1,7 +1,7 @@
 package alternative.vertx.sqlclient.example
 
 import io.bluetape4k.junit5.faker.Fakers
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.support.requireNotBlank
 import io.bluetape4k.testcontainers.database.MySQL8Server
 import io.bluetape4k.testcontainers.database.PostgreSQLServer
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(VertxExtension::class)  // VertxTestContext 를 사용하기 위해서 추가합니다.
 abstract class AbstractSqlClientTest {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
 
         @JvmStatic
         val faker = Fakers.faker

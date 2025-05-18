@@ -1,7 +1,7 @@
 package alternative.r2dbc.example.config
 
 import alternative.r2dbc.example.AbstractR2dbcTest
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.uninitialized
 import io.r2dbc.spi.ConnectionFactory
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 class R2dbcConfigTest: AbstractR2dbcTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Autowired
     private val cf: ConnectionFactory = uninitialized()
