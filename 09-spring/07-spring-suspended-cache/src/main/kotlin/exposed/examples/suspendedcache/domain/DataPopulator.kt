@@ -1,6 +1,6 @@
 package exposed.examples.suspendedcache.domain
 
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 @Component
 class DataPopulator: ApplicationListener<ApplicationReadyEvent> {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         val COUNTRY_CODES: List<String> =
             listOf(
                 "AF", "AX",

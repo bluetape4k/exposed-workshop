@@ -2,11 +2,14 @@ package exposed.examples.suspendedcache.domain.repository
 
 import exposed.examples.suspendedcache.domain.CountryDTO
 import exposed.examples.suspendedcache.domain.CountryTable
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.update
 
 class DefaultCountrySuspendedRepository: CountrySuspendedRepository {
+
+    companion object: KLoggingChannel()
 
     override suspend fun findByCode(code: String): CountryDTO? = newSuspendedTransaction {
         CountryTable.selectAll()

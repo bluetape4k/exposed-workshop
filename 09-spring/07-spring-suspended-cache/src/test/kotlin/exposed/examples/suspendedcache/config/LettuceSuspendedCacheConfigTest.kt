@@ -4,7 +4,7 @@ import exposed.examples.suspendedcache.AbstractSpringSuspendedCacheApplicationTe
 import exposed.examples.suspendedcache.domain.CountryDTO
 import exposed.examples.suspendedcache.lettuce.LettuceSuspendedCacheManager
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.delay
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
@@ -15,8 +15,7 @@ class LettuceSuspendedCacheConfigTest(
     @Autowired private val lettuceSuspendedCacheManager: LettuceSuspendedCacheManager,
 ): AbstractSpringSuspendedCacheApplicationTest() {
 
-    companion object: KLogging()
-
+    companion object: KLoggingChannel()
 
     @Test
     fun `context loading`() {

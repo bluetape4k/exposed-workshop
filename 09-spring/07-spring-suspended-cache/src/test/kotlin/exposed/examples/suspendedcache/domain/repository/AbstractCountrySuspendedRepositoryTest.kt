@@ -3,14 +3,14 @@ package exposed.examples.suspendedcache.domain.repository
 import exposed.examples.suspendedcache.AbstractSpringSuspendedCacheApplicationTest
 import exposed.examples.suspendedcache.domain.DataPopulator
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
 
 abstract class AbstractCountrySuspendedRepositoryTest: AbstractSpringSuspendedCacheApplicationTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     abstract val countrySuspendedRepository: CountrySuspendedRepository
 

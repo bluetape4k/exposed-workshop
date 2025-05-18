@@ -4,6 +4,7 @@ import exposed.examples.suspendedcache.domain.CountryDTO
 import exposed.examples.suspendedcache.domain.DataPopulator
 import exposed.examples.suspendedcache.lettuce.LettuceSuspendedCacheManager
 import io.bluetape4k.junit5.coroutines.runSuspendIO
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.support.uninitialized
 import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier
 class CachedCountrySuspendedRepositoryTest(
     @Autowired private val suspendedCacheManager: LettuceSuspendedCacheManager,
 ): AbstractCountrySuspendedRepositoryTest() {
+
+    companion object: KLoggingChannel()
 
     @Autowired
     @Qualifier("cachedCountrySuspendedRepository")

@@ -4,6 +4,7 @@ import exposed.examples.suspendedcache.domain.repository.CachedCountrySuspendedR
 import exposed.examples.suspendedcache.domain.repository.CountrySuspendedRepository
 import exposed.examples.suspendedcache.domain.repository.DefaultCountrySuspendedRepository
 import exposed.examples.suspendedcache.lettuce.LettuceSuspendedCacheManager
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -11,6 +12,8 @@ import org.springframework.context.annotation.Configuration
 class SuspendedRepositoryConfig(
     private val suspendedCacheManager: LettuceSuspendedCacheManager,
 ) {
+
+    companion object: KLoggingChannel() 
 
     @Bean(name = ["countrySuspendedRepository", "defaultCountrySuspendedRepository"])
     fun countrySuspendedRepository(): CountrySuspendedRepository {

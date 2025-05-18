@@ -3,14 +3,14 @@ package exposed.examples.suspendedcache.domain.repository
 import exposed.examples.suspendedcache.domain.CountryDTO
 import exposed.examples.suspendedcache.lettuce.LettuceSuspendedCache
 import exposed.examples.suspendedcache.lettuce.LettuceSuspendedCacheManager
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 
 class CachedCountrySuspendedRepository(
     private val delegate: CountrySuspendedRepository,
     private val cacheManager: LettuceSuspendedCacheManager,
 ): CountrySuspendedRepository {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         const val CACHE_NAME = "caches:country:code"
     }
 

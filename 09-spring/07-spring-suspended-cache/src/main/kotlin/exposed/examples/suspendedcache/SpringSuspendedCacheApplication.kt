@@ -1,6 +1,6 @@
 package exposed.examples.suspendedcache
 
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.testcontainers.storage.RedisServer
 import io.lettuce.core.RedisClient
 import io.lettuce.core.RedisURI
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean
 @SpringBootApplication
 class SpringSuspendedCacheApplication {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         @JvmStatic
         val redisServer = RedisServer.Launcher.redis
     }

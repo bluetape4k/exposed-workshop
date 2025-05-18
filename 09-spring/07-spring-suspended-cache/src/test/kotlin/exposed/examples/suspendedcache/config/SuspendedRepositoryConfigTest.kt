@@ -3,7 +3,7 @@ package exposed.examples.suspendedcache.config
 import exposed.examples.suspendedcache.AbstractSpringSuspendedCacheApplicationTest
 import exposed.examples.suspendedcache.domain.repository.CountrySuspendedRepository
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +14,7 @@ class SuspendedRepositoryConfigTest(
     @Autowired @Qualifier("cachedCountrySuspendedRepository") private val cachedCountrySuspendedRepository: CountrySuspendedRepository,
 ): AbstractSpringSuspendedCacheApplicationTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Test
     fun `defaultCountrySuspendedRepository가 생성되어야 한다`() = runSuspendIO {

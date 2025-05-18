@@ -3,7 +3,7 @@ package exposed.examples.suspendedcache.config
 import exposed.examples.suspendedcache.AbstractSpringSuspendedCacheApplicationTest
 import exposed.examples.suspendedcache.domain.CountryTable
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.amshove.kluent.shouldBeGreaterThan
 import org.amshove.kluent.shouldBeTrue
 import org.jetbrains.exposed.sql.exists
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 
 class ExposedConfigTest: AbstractSpringSuspendedCacheApplicationTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Test
     fun `Schema 가 자동 생성되어야 한다`() = runSuspendIO {

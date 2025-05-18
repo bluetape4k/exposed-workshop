@@ -1,5 +1,6 @@
 package exposed.examples.suspendedcache.lettuce
 
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.redis.lettuce.codec.LettuceBinaryCodec
 import io.lettuce.core.ExperimentalLettuceCoroutinesApi
 import io.lettuce.core.RedisClient
@@ -12,6 +13,8 @@ class LettuceSuspendedCacheManager(
     val ttlSeconds: Long? = null,
     val codec: LettuceBinaryCodec<Any>? = null,
 ) {
+
+    companion object: KLoggingChannel()
 
     private val caches = ConcurrentHashMap<String, LettuceSuspendedCache<out Any, out Any>>()
 
