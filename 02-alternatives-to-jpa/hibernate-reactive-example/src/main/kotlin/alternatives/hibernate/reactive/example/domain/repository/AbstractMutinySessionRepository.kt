@@ -1,5 +1,6 @@
 package alternatives.hibernate.reactive.example.domain.repository
 
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.smallrye.mutiny.coroutines.awaitSuspending
 import org.hibernate.reactive.mutiny.Mutiny.Session
 import org.hibernate.reactive.mutiny.Mutiny.SessionFactory
@@ -9,6 +10,9 @@ import kotlin.reflect.KClass
 abstract class AbstractMutinySessionRepository<T: Any, ID: Serializable>(
     val sf: SessionFactory,
 ) {
+
+    companion object: KLoggingChannel()
+
     suspend fun findById(session: Session, clazz: KClass<T>, id: ID): T? {
         return session.find(clazz.java, id).awaitSuspending()
     }

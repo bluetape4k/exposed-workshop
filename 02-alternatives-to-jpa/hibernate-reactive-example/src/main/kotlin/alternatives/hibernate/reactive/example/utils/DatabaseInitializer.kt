@@ -5,7 +5,7 @@ import alternatives.hibernate.reactive.example.domain.model.teamOf
 import alternatives.hibernate.reactive.example.domain.repository.MemberSessionRepository
 import alternatives.hibernate.reactive.example.domain.repository.TeamSessionRepository
 import io.bluetape4k.hibernate.reactive.mutiny.withTransactionSuspending
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.uninitialized
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component
 @Component
 class DatabaseInitializer: ApplicationRunner {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Autowired
     private val sf: SessionFactory = uninitialized()

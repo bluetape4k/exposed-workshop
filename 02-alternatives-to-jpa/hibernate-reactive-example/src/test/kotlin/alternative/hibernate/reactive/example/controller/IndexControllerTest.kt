@@ -2,7 +2,7 @@ package alternative.hibernate.reactive.example.controller
 
 import alternative.hibernate.reactive.example.AbstractHibernateReactiveTest
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
@@ -16,7 +16,7 @@ class IndexControllerTest(
     @Autowired private val client: WebTestClient,
 ): AbstractHibernateReactiveTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Test
     fun `get root path`() = runSuspendIO {

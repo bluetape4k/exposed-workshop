@@ -2,7 +2,7 @@ package alternatives.hibernate.reactive.example.domain.repository
 
 import alternatives.hibernate.reactive.example.domain.model.Member
 import alternatives.hibernate.reactive.example.domain.model.Member_
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.smallrye.mutiny.coroutines.awaitSuspending
 import org.hibernate.reactive.mutiny.Mutiny.Session
 import org.hibernate.reactive.mutiny.Mutiny.SessionFactory
@@ -13,7 +13,7 @@ class MemberSessionRepository(
     sf: SessionFactory,
 ): AbstractMutinySessionRepository<Member, Long>(sf) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     suspend fun findById(session: Session, id: Long): Member? {
         return findById(session, Member::class, id)

@@ -4,7 +4,7 @@ import alternative.hibernate.reactive.example.AbstractHibernateReactiveTest
 import alternatives.hibernate.reactive.example.domain.dto.MemberAndTeamDTO
 import alternatives.hibernate.reactive.example.domain.dto.MemberDTO
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
@@ -21,7 +21,7 @@ class MemberControllerTest(
     @Autowired private val client: WebTestClient,
 ): AbstractHibernateReactiveTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Test
     fun `find all members`() = runSuspendIO {

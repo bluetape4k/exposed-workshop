@@ -1,7 +1,7 @@
 package alternatives.hibernate.reactive.example.config
 
 import io.bluetape4k.hibernate.reactive.mutiny.asMutinySessionFactory
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import io.bluetape4k.testcontainers.database.PostgreSQLServer
 import jakarta.persistence.EntityManagerFactory
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class HibernateReactiveConfig {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Bean
     fun entityManagerFactory(): EntityManagerFactory {

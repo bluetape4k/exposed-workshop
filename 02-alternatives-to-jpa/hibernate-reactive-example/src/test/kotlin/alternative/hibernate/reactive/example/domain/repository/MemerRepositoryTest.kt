@@ -7,6 +7,7 @@ import alternatives.hibernate.reactive.example.domain.repository.TeamSessionRepo
 import io.bluetape4k.hibernate.reactive.mutiny.withSessionSuspending
 import io.bluetape4k.hibernate.reactive.mutiny.withTransactionSuspending
 import io.bluetape4k.junit5.coroutines.runSuspendIO
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeGreaterOrEqualTo
 import org.amshove.kluent.shouldBeGreaterThan
@@ -23,6 +24,8 @@ class MemerRepositoryTest @Autowired constructor(
     private val memberRepository: MemberSessionRepository,
     private val teamRepository: TeamSessionRepository,
 ): AbstractHibernateReactiveTest() {
+
+    companion object: KLoggingChannel()
 
     @Test
     fun `find member by id`() = runSuspendIO {

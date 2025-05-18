@@ -6,6 +6,7 @@ import alternatives.hibernate.reactive.example.domain.mapper.toDto
 import alternatives.hibernate.reactive.example.domain.mapper.toTeamAndMemberDTO
 import alternatives.hibernate.reactive.example.domain.repository.TeamSessionRepository
 import io.bluetape4k.hibernate.reactive.mutiny.withSessionSuspending
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.smallrye.mutiny.coroutines.awaitSuspending
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +23,8 @@ class TeamController(
     private val sf: SessionFactory,
     private val teamRepository: TeamSessionRepository,
 ): CoroutineScope by CoroutineScope(Dispatchers.IO + SupervisorJob()) {
+
+    companion object: KLoggingChannel()
 
     @GetMapping
     suspend fun findAll(): List<TeamDTO> {

@@ -1,11 +1,11 @@
 package alternatives.hibernate.reactive.example.config
 
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 class DataSourceConfig {
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
 //    @Bean
 //    fun dataSource(): DataSource {

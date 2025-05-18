@@ -3,7 +3,7 @@ package alternatives.hibernate.reactive.example.domain.repository
 import alternatives.hibernate.reactive.example.domain.model.Member_
 import alternatives.hibernate.reactive.example.domain.model.Team
 import alternatives.hibernate.reactive.example.domain.model.Team_
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.smallrye.mutiny.coroutines.awaitSuspending
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
@@ -17,7 +17,7 @@ class TeamSessionRepository(
     sf: SessionFactory,
 ): AbstractMutinySessionRepository<Team, Long>(sf) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     suspend fun findById(session: Session, id: Long): Team? {
         return findById(session, Team::class, id)
