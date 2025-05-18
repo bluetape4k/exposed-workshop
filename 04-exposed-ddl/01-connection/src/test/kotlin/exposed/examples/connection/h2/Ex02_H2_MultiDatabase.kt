@@ -4,7 +4,7 @@ import exposed.shared.dml.DMLTestData
 import exposed.shared.samples.CountryTable
 import exposed.shared.tests.TestDB
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.support.ifTrue
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -35,7 +35,8 @@ import java.util.concurrent.Executors
 
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class Ex02_H2_MultiDatabase {
-    companion object: KLogging()
+
+    companion object: KLoggingChannel()
 
     private val db1 by lazy {
         Database.connect(

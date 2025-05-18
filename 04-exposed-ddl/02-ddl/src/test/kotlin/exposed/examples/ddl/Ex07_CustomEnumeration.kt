@@ -6,6 +6,7 @@ import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
+import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
@@ -35,6 +36,8 @@ import org.postgresql.util.PGobject
  * Exposed의 column transformation 기능을 사용하는 것을 추천합니다.
  */
 class Ex07_CustomEnumeration: AbstractExposedTest() {
+
+    companion object: KLogging()
 
     private val supportsCustomEnumerationDB =
         TestDB.ALL_POSTGRES + TestDB.ALL_H2 + TestDB.ALL_MYSQL

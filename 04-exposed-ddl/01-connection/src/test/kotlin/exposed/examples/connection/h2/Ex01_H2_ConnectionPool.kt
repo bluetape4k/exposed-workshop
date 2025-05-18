@@ -6,7 +6,7 @@ import exposed.shared.tests.TestDB
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test
 
 class Ex01_H2_ConnectionPool {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     private val hikariDataSource1 by lazy {
         HikariDataSource(

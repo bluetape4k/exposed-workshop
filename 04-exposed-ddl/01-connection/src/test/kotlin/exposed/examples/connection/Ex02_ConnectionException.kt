@@ -1,7 +1,7 @@
 package exposed.examples.connection
 
 import exposed.shared.tests.TestDB
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.amshove.kluent.fail
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeTrue
@@ -20,7 +20,7 @@ import java.sql.SQLTransientException
 
 class Ex02_ConnectionException {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     abstract class ConnectionSpy(private val connection: Connection): Connection by connection {
         var commitCalled = false

@@ -1,7 +1,7 @@
 package exposed.examples.connection
 
 import exposed.shared.tests.AbstractExposedTest
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.amshove.kluent.fail
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
@@ -15,7 +15,7 @@ import java.sql.SQLTransientException
 
 class Ex03_ConnectionTimeout: AbstractExposedTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     /**
      * Connect 수행 시 [GetConnectException]을 발생 시키는 DataSource입니다.

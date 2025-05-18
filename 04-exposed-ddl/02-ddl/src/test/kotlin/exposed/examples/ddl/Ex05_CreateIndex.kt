@@ -5,6 +5,7 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.sql.getIndices
+import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
@@ -22,6 +23,8 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
 class Ex05_CreateIndex: AbstractExposedTest() {
+
+    companion object: KLogging()
 
     /**
      * 일반적인 인덱스 생성하기

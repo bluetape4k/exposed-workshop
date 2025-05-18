@@ -5,6 +5,7 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.sql.selectImplicitAll
+import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -21,6 +22,8 @@ import java.sql.SQLException
 import kotlin.test.assertFails
 
 class Ex04_ColumnDefinition: AbstractExposedTest() {
+
+    companion object: KLogging()
 
     // 컬럼 주석을 지원하는 DB - H2, MySQL 8, NOT Postgres
     val columnCommentSupportedDB = TestDB.ALL_H2 + TestDB.MYSQL_V8
