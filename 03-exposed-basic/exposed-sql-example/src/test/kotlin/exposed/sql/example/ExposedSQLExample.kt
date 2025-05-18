@@ -5,6 +5,7 @@ import exposed.shared.tests.TestDB
 import exposed.sql.example.Schema.CityTable
 import exposed.sql.example.Schema.UserTable
 import exposed.sql.example.Schema.withCityUsers
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
@@ -19,6 +20,8 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
 class ExposedSQLExample: AbstractExposedTest() {
+
+    companion object: KLoggingChannel()
 
     /**
      * 특정 조건에 맞는 행을 UPDATE 합니다.

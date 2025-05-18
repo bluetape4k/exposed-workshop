@@ -7,7 +7,7 @@ import exposed.dao.example.Schema.UserTable
 import exposed.dao.example.Schema.withCityUsers
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
@@ -22,7 +22,7 @@ import org.junit.jupiter.params.provider.MethodSource
  */
 class ExposedDaoExample: AbstractExposedTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     /**
      * DAO Entity 를 사용하여 도시 정보를 조회합니다.
@@ -96,7 +96,7 @@ class ExposedDaoExample: AbstractExposedTest() {
     fun `DAO Entity를 조건절로 검색하기 02`(testDB: TestDB) {
         withCityUsers(testDB) {
             val users = User.find { UserTable.age greaterEq intLiteral(18) }.with(User::city).toList()
-            
+
             users shouldHaveSize 4
             users.forEach { user ->
                 log.info { "${user.name} lives in ${user.city?.name ?: "unknown"}" }
