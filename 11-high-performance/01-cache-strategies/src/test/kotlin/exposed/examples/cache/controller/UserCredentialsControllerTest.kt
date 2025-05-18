@@ -5,7 +5,7 @@ import exposed.examples.cache.domain.model.UserCredentialsDTO
 import exposed.examples.cache.domain.model.UserCredentialsTable
 import exposed.examples.cache.domain.repository.UserCredentialsCacheRepository
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
@@ -30,7 +30,7 @@ class UserCredentialsControllerTest(
     @Autowired private val repository: UserCredentialsCacheRepository,
 ): AbstractCacheStrategyTest() {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         private const val REPEAT_SIZE = 5
     }
 

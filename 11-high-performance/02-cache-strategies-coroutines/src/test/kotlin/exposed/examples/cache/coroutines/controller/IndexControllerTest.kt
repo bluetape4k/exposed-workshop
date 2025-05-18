@@ -2,7 +2,7 @@ package exposed.examples.cache.coroutines.controller
 
 import exposed.examples.cache.coroutines.AbstractCacheStrategyTest
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpGet
 import org.amshove.kluent.shouldContainAll
@@ -15,7 +15,7 @@ class IndexControllerTest(
     @Autowired private val client: WebTestClient,
 ): AbstractCacheStrategyTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Test
     fun `call index`() = runSuspendIO {

@@ -1,5 +1,6 @@
 package exposed.examples.cache
 
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.testcontainers.storage.RedisServer
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -7,7 +8,7 @@ import org.springframework.boot.runApplication
 @SpringBootApplication
 class CacheStrategyApplication {
 
-    companion object {
+    companion object: KLoggingChannel() {
         @JvmStatic
         val redis = RedisServer.Launcher.redis
     }

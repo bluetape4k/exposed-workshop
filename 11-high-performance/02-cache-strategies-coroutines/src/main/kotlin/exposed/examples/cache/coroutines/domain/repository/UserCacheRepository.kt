@@ -4,7 +4,7 @@ import exposed.examples.cache.coroutines.domain.model.UserDTO
 import exposed.examples.cache.coroutines.domain.model.UserTable
 import exposed.examples.cache.coroutines.domain.model.toUserDTO
 import io.bluetape4k.exposed.redisson.repository.AbstractSuspendedExposedCacheRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.redis.redisson.cache.RedisCacheConfig
 import org.jetbrains.exposed.sql.ResultRow
@@ -24,7 +24,7 @@ class UserCacheRepository(redissonClient: RedissonClient): AbstractSuspendedExpo
     cacheName = "exposed:coroutines:users",
     config = RedisCacheConfig.READ_WRITE_THROUGH_WITH_NEAR_CACHE.copy(deleteFromDBOnInvalidate = true)
 ) {
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     override val entityTable = UserTable
     override fun ResultRow.toEntity() = toUserDTO()

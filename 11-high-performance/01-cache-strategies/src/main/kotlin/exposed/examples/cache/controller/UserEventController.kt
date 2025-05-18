@@ -2,7 +2,7 @@ package exposed.examples.cache.controller
 
 import exposed.examples.cache.domain.model.UserEventDTO
 import exposed.examples.cache.domain.repository.UserEventCacheRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 class UserEventController(
     private val repository: UserEventCacheRepository,
 ) {
-
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @PostMapping
     fun insert(@RequestBody userEvent: UserEventDTO): Boolean {

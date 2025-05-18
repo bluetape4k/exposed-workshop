@@ -1,6 +1,7 @@
 package exposed.examples.cache.config
 
 import exposed.examples.cache.CacheStrategyApplication.Companion.redis
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.redisson.Redisson
 import org.redisson.api.RedissonClient
 import org.redisson.config.Config
@@ -9,6 +10,8 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class RedissonConfig {
+
+    companion object: KLoggingChannel()
 
     @Bean
     fun redissonClient(): RedissonClient {

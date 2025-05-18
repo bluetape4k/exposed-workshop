@@ -2,7 +2,7 @@ package exposed.examples.cache.controller
 
 import exposed.examples.cache.domain.model.UserDTO
 import exposed.examples.cache.domain.repository.UserCacheRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.sql.Op
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/users")
 class UserController(private val repository: UserCacheRepository) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @GetMapping
     fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserDTO> {

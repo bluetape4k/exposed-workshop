@@ -9,9 +9,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy
 @SpringBootApplication
 @EnableAspectJAutoProxy
 class ExposedMultitenantApplication {
-
     companion object: KLogging()
-
 }
 
 fun main(vararg args: String) {

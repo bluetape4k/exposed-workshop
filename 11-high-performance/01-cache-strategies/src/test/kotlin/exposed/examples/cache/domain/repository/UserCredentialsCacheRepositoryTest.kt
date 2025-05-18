@@ -2,7 +2,7 @@ package exposed.examples.cache.domain.repository
 
 import exposed.examples.cache.AbstractCacheStrategyTest
 import exposed.examples.cache.domain.model.UserCredentialsTable
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
@@ -20,7 +20,7 @@ class UserCredentialsCacheRepositoryTest(
     @Autowired private val repository: UserCredentialsCacheRepository,
 ): AbstractCacheStrategyTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     private val userCredentialsIdsInDB = mutableListOf<String>()
 

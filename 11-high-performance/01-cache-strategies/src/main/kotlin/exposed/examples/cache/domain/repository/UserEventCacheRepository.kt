@@ -4,7 +4,7 @@ import exposed.examples.cache.domain.model.UserEventDTO
 import exposed.examples.cache.domain.model.UserEventTable
 import exposed.examples.cache.domain.model.toUserEventDTO
 import io.bluetape4k.exposed.redisson.repository.AbstractExposedCacheRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.redis.redisson.cache.RedisCacheConfig
 import org.jetbrains.exposed.dao.id.IdTable
@@ -26,7 +26,7 @@ class UserEventCacheRepository(
     config = RedisCacheConfig.WRITE_BEHIND_WITH_NEAR_CACHE,
 ) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     override val entityTable: IdTable<Long> = UserEventTable
     override fun ResultRow.toEntity(): UserEventDTO = toUserEventDTO()

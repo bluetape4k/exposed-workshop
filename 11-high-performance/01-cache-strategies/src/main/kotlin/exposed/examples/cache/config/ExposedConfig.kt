@@ -1,6 +1,6 @@
 package exposed.examples.cache.config
 
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.DatabaseConfig
@@ -13,7 +13,7 @@ import javax.sql.DataSource
 @EnableTransactionManagement
 class ExposedConfig {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @Bean
     fun databaseConfig(): DatabaseConfig {

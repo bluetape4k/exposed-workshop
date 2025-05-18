@@ -2,7 +2,7 @@ package exposed.examples.cache.coroutines.controller
 
 import exposed.examples.cache.coroutines.domain.model.UserEventDTO
 import exposed.examples.cache.coroutines.domain.repository.UserEventCacheRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 class UserEventController(
     private val repository: UserEventCacheRepository,
 ) {
-
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @PostMapping
     suspend fun insert(@RequestBody userEvent: UserEventDTO): Boolean {

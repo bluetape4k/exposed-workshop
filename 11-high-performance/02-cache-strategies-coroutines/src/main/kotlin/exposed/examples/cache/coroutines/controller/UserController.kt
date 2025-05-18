@@ -2,7 +2,7 @@ package exposed.examples.cache.coroutines.controller
 
 import exposed.examples.cache.coroutines.domain.model.UserDTO
 import exposed.examples.cache.coroutines.domain.repository.UserCacheRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.sql.Op
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/users")
 class UserController(private val repository: UserCacheRepository) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @GetMapping
     suspend fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserDTO> {

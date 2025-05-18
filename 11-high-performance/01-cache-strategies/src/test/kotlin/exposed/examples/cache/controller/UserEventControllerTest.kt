@@ -4,7 +4,7 @@ import exposed.examples.cache.AbstractCacheStrategyTest
 import exposed.examples.cache.domain.model.UserEventTable
 import exposed.examples.cache.domain.model.newUserEventDTO
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.spring.tests.httpPost
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
@@ -22,7 +22,7 @@ class UserEventControllerTest(
     @Autowired private val client: WebTestClient,
 ): AbstractCacheStrategyTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     private fun getCountOfUserEvents(): Long = transaction {
         UserEventTable.selectAll().count()

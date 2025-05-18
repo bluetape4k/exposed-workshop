@@ -3,7 +3,7 @@ package exposed.examples.cache.domain.repository
 import exposed.examples.cache.AbstractCacheStrategyTest
 import exposed.examples.cache.domain.model.UserEventTable
 import exposed.examples.cache.domain.model.newUserEventDTO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.amshove.kluent.shouldBeEqualTo
 import org.awaitility.kotlin.await
 import org.awaitility.kotlin.withPollInterval
@@ -19,7 +19,7 @@ class UserEventCacheRepositoryTest(
     @Autowired private val repository: UserEventCacheRepository,
 ): AbstractCacheStrategyTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @BeforeEach
     fun setup() {

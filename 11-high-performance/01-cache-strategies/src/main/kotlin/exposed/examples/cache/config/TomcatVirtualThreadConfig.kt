@@ -1,6 +1,6 @@
 package exposed.examples.cache.config
 
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import org.apache.coyote.ProtocolHandler
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
@@ -13,7 +13,7 @@ import java.util.concurrent.Executors
 @ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true", matchIfMissing = true)
 class TomcatVirtualThreadConfig {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     /**
      * Tomcat ProtocolHandler의 executor 를 Virtual Thread 를 사용하는 Executor를 사용하도록 설정

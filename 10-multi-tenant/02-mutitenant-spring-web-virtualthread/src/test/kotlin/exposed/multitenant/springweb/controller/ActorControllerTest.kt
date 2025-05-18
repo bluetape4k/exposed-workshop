@@ -5,7 +5,7 @@ import exposed.multitenant.springweb.domain.dtos.ActorDTO
 import exposed.multitenant.springweb.tenant.TenantFilter
 import exposed.multitenant.springweb.tenant.Tenants
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
@@ -21,7 +21,7 @@ class ActorControllerTest(
     @Autowired private val client: WebTestClient,
 ): AbstractMultitenantTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @ParameterizedTest(name = "Tenant: {0}")
     @EnumSource(Tenants.Tenant::class)

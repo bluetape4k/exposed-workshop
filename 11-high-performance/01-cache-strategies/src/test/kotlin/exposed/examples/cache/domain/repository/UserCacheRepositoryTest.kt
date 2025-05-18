@@ -4,7 +4,7 @@ package exposed.examples.cache.domain.repository
 import exposed.examples.cache.AbstractCacheStrategyTest
 import exposed.examples.cache.domain.model.UserTable
 import io.bluetape4k.exposed.sql.statements.api.toExposedBlob
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
@@ -25,7 +25,7 @@ class UserCacheRepositoryTest(
     @Autowired private val repository: UserCacheRepository,
 ): AbstractCacheStrategyTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     private val idsInDB = mutableListOf<Long>()
 

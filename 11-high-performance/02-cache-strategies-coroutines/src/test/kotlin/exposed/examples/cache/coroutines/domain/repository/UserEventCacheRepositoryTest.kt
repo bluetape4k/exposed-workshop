@@ -5,7 +5,7 @@ import exposed.examples.cache.coroutines.domain.model.UserEventTable
 import exposed.examples.cache.coroutines.domain.model.newUserEventDTO
 import io.bluetape4k.junit5.awaitility.coUntil
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.flow.chunked
 import kotlinx.coroutines.flow.flow
@@ -25,7 +25,7 @@ class UserEventCacheRepositoryTest(
     @Autowired private val repository: UserEventCacheRepository,
 ): AbstractCacheStrategyTest() {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @BeforeEach
     fun setup() {

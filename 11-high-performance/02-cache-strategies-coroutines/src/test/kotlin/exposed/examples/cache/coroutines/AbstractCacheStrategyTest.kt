@@ -1,7 +1,7 @@
 package exposed.examples.cache.coroutines
 
 import io.bluetape4k.junit5.faker.Fakers
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest(
@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest
 )
 abstract class AbstractCacheStrategyTest {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         @JvmStatic
         val faker = Fakers.faker
     }

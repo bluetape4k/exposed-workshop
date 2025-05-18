@@ -2,7 +2,7 @@ package exposed.examples.cache.coroutines.controller
 
 import exposed.examples.cache.coroutines.domain.model.UserCredentialsDTO
 import exposed.examples.cache.coroutines.domain.repository.UserCredentialsCacheRepository
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/user-credentials")
 class UserCredentialsController(private val repository: UserCredentialsCacheRepository) {
 
-    companion object: KLogging()
+    companion object: KLoggingChannel()
 
     @GetMapping
     suspend fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserCredentialsDTO> {

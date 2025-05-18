@@ -7,7 +7,7 @@ import exposed.examples.cache.domain.model.newUserDTO
 import exposed.examples.cache.domain.repository.UserCacheRepository
 import io.bluetape4k.exposed.sql.statements.api.toExposedBlob
 import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
@@ -35,7 +35,7 @@ class UserControllerTest(
     @Autowired private val repository: UserCacheRepository,
 ): AbstractCacheStrategyTest() {
 
-    companion object: KLogging() {
+    companion object: KLoggingChannel() {
         private const val REPEAT_SIZE = 5
     }
 
