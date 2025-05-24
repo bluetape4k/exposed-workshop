@@ -27,6 +27,8 @@ plugins {
     id(Plugins.testLogger) version Plugins.Versions.testLogger
     id(Plugins.shadow) version Plugins.Versions.shadow apply false
 
+    id(Plugins.graalvm_native) version Plugins.Versions.graalvm_native apply false
+
     // for JMolecules
     id("net.bytebuddy.byte-buddy-gradle-plugin") version "1.15.10" apply false
 }
