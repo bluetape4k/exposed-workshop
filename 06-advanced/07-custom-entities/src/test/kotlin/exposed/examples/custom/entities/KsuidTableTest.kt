@@ -11,7 +11,6 @@ import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitAll
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.exposed.dao.entityCache
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
@@ -65,7 +64,6 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                     it[T1.age] = Random.nextInt(10, 80)
                 }
             }
-            entityCache.clear()
             commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
@@ -89,7 +87,6 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                     this[T1.age] = it.age
                 }
             }
-            entityCache.clear()
             commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
@@ -115,7 +112,6 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                 }
             }.awaitAll()
             
-            entityCache.clear()
             commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
@@ -132,7 +128,6 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                     age = Random.nextInt(10, 80)
                 }
             }
-            entityCache.clear()
             commit()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
@@ -151,9 +146,7 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                     }
                 }
             }
-
             tasks.awaitAll()
-            entityCache.clear()
             commit()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()

@@ -111,6 +111,15 @@ subprojects {
             )
             freeCompilerArgs.addAll(experimentalAnnotations.map { "-opt-in=$it" })
         }
+
+        @Suppress("OPT_IN_USAGE")
+        kotlinDaemonJvmArgs = listOf(
+            "-Xmx2G",
+            "-XX:MaxMetaspaceSize=512m",
+            "-XX:+UseZGC",
+            "-XX:+UseStringDeduplication",
+            "-XX:+EnableDynamicAgentLoading"
+        )
     }
 
     tasks {
@@ -123,7 +132,11 @@ subprojects {
 
             // 테스트 시 아래와 같은 예외 메시지를 제거하기 위해서
             // OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
-            jvmArgs("-Xshare:off", "-Xmx8G")
+            jvmArgs(
+                "-Xshare:off",
+                "-Xmx8G",
+                "-XX:+EnableDynamicAgentLoading"
+            )
 
             if (project.name.contains("quarkus")) {
                 // [Quarkus Logging](https://quarkus.io/guides/logging)
