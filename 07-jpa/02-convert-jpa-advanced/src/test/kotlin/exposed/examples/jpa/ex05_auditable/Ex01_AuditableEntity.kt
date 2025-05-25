@@ -55,6 +55,7 @@ class Ex01_AuditableEntity: AbstractExposedTest() {
         withTables(testDB, TaskTable) {
             UserContext.withUser("test") {
                 val now = java.time.Instant.now()
+                Thread.sleep(100)
 
                 // Task Create
                 val task = TaskEntity.new {
