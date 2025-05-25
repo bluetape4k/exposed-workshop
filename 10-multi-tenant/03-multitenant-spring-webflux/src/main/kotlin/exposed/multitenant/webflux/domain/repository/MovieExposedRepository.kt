@@ -1,89 +1,75 @@
 package exposed.multitenant.webflux.domain.repository
 
+
 import exposed.multitenant.webflux.domain.dtos.MovieActorCountDTO
 import exposed.multitenant.webflux.domain.dtos.MovieDTO
 import exposed.multitenant.webflux.domain.dtos.MovieWithActorDTO
 import exposed.multitenant.webflux.domain.dtos.MovieWithProducingActorDTO
+import exposed.multitenant.webflux.domain.model.MovieSchema
 import exposed.multitenant.webflux.domain.model.MovieSchema.ActorInMovieTable
 import exposed.multitenant.webflux.domain.model.MovieSchema.ActorTable
 import exposed.multitenant.webflux.domain.model.MovieSchema.MovieEntity
 import exposed.multitenant.webflux.domain.model.MovieSchema.MovieTable
 import exposed.multitenant.webflux.domain.model.toActorDTO
+import exposed.multitenant.webflux.domain.model.toMovieDTO
 import exposed.multitenant.webflux.domain.model.toMovieWithActorDTO
 import exposed.multitenant.webflux.domain.model.toMovieWithProducingActorDTO
 import io.bluetape4k.exposed.repository.ExposedRepository
-import io.bluetape4k.logging.coroutines.KLoggingChannel
+import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.jetbrains.exposed.dao.load
-import org.jetbrains.exposed.sql.Join
-import org.jetbrains.exposed.sql.Query
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.andWhere
-import org.jetbrains.exposed.sql.count
-import org.jetbrains.exposed.sql.innerJoin
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.core.ResultRow
+import org.jetbrains.exposed.v1.core.count
+import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
+import org.jetbrains.exposed.v1.core.innerJoin
+import org.jetbrains.exposed.v1.dao.load
+import org.jetbrains.exposed.v1.jdbc.andWhere
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Repository
-class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
+class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
 
-    companion object: KLoggingChannel() {
-        private val MovieActorJoin by lazy {
-            MovieTable
-                .innerJoin(ActorInMovieTable)
-                .innerJoin(ActorTable)
-        }
-
-        private val moviesWithActingProducersJoin: Join by lazy {
-            MovieTable
-                .innerJoin(ActorInMovieTable)
-                .innerJoin(
-                    ActorTable,
-                    onColumn = { ActorTable.id },
-                    otherColumn = { ActorInMovieTable.actorId }
-                ) {
-                    MovieTable.producerName eq ActorTable.firstName
-                }
-        }
-    }
+    companion object: KLogging()
 
     override val table = MovieTable
-    override fun ResultRow.toEntity(): MovieEntity = MovieEntity.wrapRow(this)
+    override fun ResultRow.toEntity() = toMovieDTO()
 
-    fun searchMovie(params: Map<String, String?>): List<MovieEntity> {
-        log.debug { "Search Movie by params. params: $params" }
+    @Transactional(readOnly = true)
+    fun searchMovies(params: Map<String, String?>): List<MovieDTO> {
+        log.debug { "Search Movie by params. params=$params" }
 
-        val query = MovieTable.selectAll()
+        val query = table.selectAll()
 
         params.forEach { (key, value) ->
             when (key) {
-                MovieTable::id.name -> value?.run { query.andWhere { MovieTable.id eq value.toLong() } }
+                LongIdTable::id.name -> value?.run { query.andWhere { MovieTable.id eq value.toLong() } }
+
                 MovieTable::name.name -> value?.run { query.andWhere { MovieTable.name eq value } }
-                MovieTable::producerName.name -> value?.run { query.andWhere { MovieTable.producerName eq value } }
+                MovieTable::producerName.name -> value?.run {
+                    query.andWhere { MovieTable.producerName eq value }
+                }
                 MovieTable::releaseDate.name -> value?.run {
-                    query.andWhere {
-                        MovieTable.releaseDate eq LocalDate.parse(value)
-                    }
+                    query.andWhere { MovieTable.releaseDate eq LocalDate.parse(value) }
                 }
             }
         }
 
-        return MovieEntity.wrapRows(query).toList()
+        return query.map { it.toEntity() }
     }
 
-    suspend fun create(movie: MovieDTO): MovieEntity {
-        log.debug { "Create Movie. movie: $movie" }
+    fun create(movieDto: MovieDTO): MovieDTO {
+        log.debug { "Create new movie. movie: $movieDto" }
 
-        val newMovie = MovieEntity.new {
-            name = movie.name
-            producerName = movie.producerName
-            if (movie.releaseDate.isNotBlank()) {
-                releaseDate = LocalDate.parse(movie.releaseDate)
-            }
+        val id = MovieTable.insertAndGetId {
+            it[name] = movieDto.name
+            it[producerName] = movieDto.producerName
+            it[releaseDate] = LocalDate.parse(movieDto.releaseDate)
         }
-
-        return newMovie
+        return movieDto.copy(id = id.value)
     }
 
 
@@ -100,12 +86,14 @@ class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
      *   FROM MOVIES
      *          INNER JOIN ACTORS_IN_MOVIES ON MOVIES.ID = ACTORS_IN_MOVIES.MOVIE_ID
      *          INNER JOIN ACTORS ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID
-     * ```
      */
-    suspend fun getAllMoviesWithActors(): List<MovieWithActorDTO> {
+    fun getAllMoviesWithActors(): List<MovieWithActorDTO> {
         log.debug { "Get all movies with actors." }
 
-        val movies = MovieActorJoin
+        val join = table.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
+
+        // TODO: bufferedUntilChange() 를 사용하여 성능 개선 가능
+        val movies = join
             .select(
                 MovieTable.id,
                 MovieTable.name,
@@ -139,8 +127,10 @@ class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
         return movies.values.flatten()
     }
 
+
     /**
-     * `movieId`에 해당하는 [Movie] 와 출현한 [Actor]들의 정보를 eager loading 으로 가져온다.
+     * `movieId` 에 대한 영화와 그 영화에 출연한 배우를 조회합니다.
+     *
      * ```sql
      * -- H2
      * SELECT MOVIES.ID, MOVIES."name", MOVIES.PRODUCER_NAME, MOVIES.RELEASE_DATE
@@ -154,16 +144,21 @@ class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
      *        ACTORS_IN_MOVIES.MOVIE_ID,
      *        ACTORS_IN_MOVIES.ACTOR_ID
      *   FROM ACTORS INNER JOIN ACTORS_IN_MOVIES ON ACTORS_IN_MOVIES.ACTOR_ID = ACTORS.ID
-     *  WHERE ACTORS_IN_MOVIES.MOVIE_ID = 1
+     *  WHERE ACTORS_IN_MOVIES.MOVIE_ID = 1;
      * ```
      */
-    suspend fun getMovieWithActors(movieId: Long): MovieWithActorDTO? {
+    fun getMovieWithActors(movieId: Long): MovieWithActorDTO? {
         log.debug { "Get Movie with actors. movieId=$movieId" }
-        return MovieEntity.findById(movieId)?.load(MovieEntity::actors)?.toMovieWithActorDTO()
+
+        return MovieSchema.MovieEntity.findById(movieId)
+            ?.load(MovieEntity::actors)
+            ?.toMovieWithActorDTO()
     }
+
 
     /**
      * ```sql
+     * -- H2
      * SELECT MOVIES.ID,
      *        MOVIES."name",
      *        COUNT(ACTORS.ID)
@@ -173,10 +168,12 @@ class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
      *  GROUP BY MOVIES.ID
      * ```
      */
-    suspend fun getMovieActorsCount(): List<MovieActorCountDTO> {
+    fun getMovieActorsCount(): List<MovieActorCountDTO> {
         log.debug { "Get Movie actors count." }
 
-        return MovieActorJoin
+        val join = table.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
+
+        return join
             .select(MovieTable.id, MovieTable.name, ActorTable.id.count())
             .groupBy(MovieTable.id)
             .map {
@@ -191,21 +188,27 @@ class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
      * ```sql
      * SELECT MOVIES."name",
      *        ACTORS.FIRST_NAME,
-     *        ACTORS.LAST_NAME
+     *        ACTORS.LAST_NAME,
      *   FROM MOVIES
-     *          INNER JOIN ACTORS_IN_MOVIES ON MOVIES.ID = ACTORS_IN_MOVIES.MOVIE_ID
-     *          INNER JOIN ACTORS ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID AND (MOVIES.PRODUCER_NAME = ACTORS.FIRST_NAME)
+     *        INNER JOIN ACTORS_IN_MOVIES
+     *          ON MOVIES.ID = ACTORS_IN_MOVIES.MOVIE_ID
+     *        INNER JOIN ACTORS
+     *          ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID AND (MOVIES.PRODUCER_NAME = ACTORS.FIRST_NAME)
      * ```
      */
-    suspend fun findMoviesWithActingProducers(): List<MovieWithProducingActorDTO> {
+    fun findMoviesWithActingProducers(): List<MovieWithProducingActorDTO> {
         log.debug { "Find movies with acting producers." }
 
-        val query: Query = moviesWithActingProducersJoin
-            .select(
-                MovieTable.name,
-                ActorTable.firstName,
-                ActorTable.lastName
-            )
+        val query = table
+            .innerJoin(ActorInMovieTable)
+            .innerJoin(
+                ActorTable,
+                onColumn = { ActorTable.id },
+                otherColumn = { ActorInMovieTable.actorId }
+            ) {
+                MovieTable.producerName eq ActorTable.firstName
+            }
+            .select(MovieTable.name, ActorTable.firstName, ActorTable.lastName)
 
         return query.map { it.toMovieWithProducingActorDTO() }
     }

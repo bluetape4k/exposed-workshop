@@ -7,17 +7,16 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.Join
-import org.jetbrains.exposed.sql.JoinType
-import org.jetbrains.exposed.sql.JoinType.LEFT
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.alias
-import org.jetbrains.exposed.sql.batchInsert
-import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.joinQuery
-import org.jetbrains.exposed.sql.lastQueryAlias
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.core.Join
+import org.jetbrains.exposed.v1.core.JoinType
+import org.jetbrains.exposed.v1.core.alias
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.joinQuery
+import org.jetbrains.exposed.v1.core.lastQueryAlias
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.batchInsert
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.FieldSource
@@ -212,12 +211,12 @@ class Ex40_LateralJoin: AbstractExposedTest() {
         withTestTables(dialect) { parent, child ->
             // Lateral 적용 시, 명시적으로 테이블 간의 JOIN 조건의 컬럼을 지정하면 예외가 발생합니다. (쿼리를 사용해야 합니다)
             expectException<IllegalArgumentException> {
-                parent.join(child, LEFT, onColumn = parent.id, otherColumn = child.parent, lateral = true)
+                parent.join(child, JoinType.LEFT, onColumn = parent.id, otherColumn = child.parent, lateral = true)
             }
 
             // Lateral 적용 시, 암묵적인 테이블 간의 JOIN 조건의 컬럼을 지정하면 예외가 발생합니다. (쿼리를 사용해야 합니다)
             expectException<IllegalArgumentException> {
-                parent.join(child, LEFT, lateral = true).selectAll().toList()
+                parent.join(child, JoinType.LEFT, lateral = true).selectAll().toList()
             }
         }
     }
@@ -257,7 +256,7 @@ class Ex40_LateralJoin: AbstractExposedTest() {
         val value = integer("value")
     }
 
-    private fun withTestTables(testDB: TestDB, statement: Transaction.(Parent, Child) -> Unit) {
+    private fun withTestTables(testDB: TestDB, statement: JdbcTransaction.(Parent, Child) -> Unit) {
         withTables(testDB, Parent, Child) {
             statement(Parent, Child)
         }
@@ -265,7 +264,7 @@ class Ex40_LateralJoin: AbstractExposedTest() {
 
     private fun withTestTablesAndDefaultData(
         testDB: TestDB,
-        statement: Transaction.(Parent, Child) -> Unit,
+        statement: JdbcTransaction.(Parent, Child) -> Unit,
     ) {
         withTestTables(testDB) { parent, child ->
             val id = parent.insertAndGetId { it[value] = 20 }

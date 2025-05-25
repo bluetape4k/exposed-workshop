@@ -2,7 +2,6 @@ package exposed.examples.springmvc.domain.repository
 
 import exposed.examples.springmvc.AbstractExposedRepositoryTest
 import exposed.examples.springmvc.domain.dtos.MovieDTO
-import exposed.examples.springmvc.domain.dtos.toMovieDTO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -30,7 +29,7 @@ class MovieExposedRepositoryTest(
     fun `find movie by id`() {
         val movieId = 1L
 
-        val movie = movieRepo.findByIdOrNull(movieId)?.toMovieDTO()
+        val movie = movieRepo.findByIdOrNull(movieId)
 
         log.debug { "movie: $movie" }
         movie.shouldNotBeNull()
@@ -55,7 +54,7 @@ class MovieExposedRepositoryTest(
 
         val currentCount = movieRepo.count()
 
-        val savedMovie = movieRepo.create(movie).toMovieDTO()
+        val savedMovie = movieRepo.create(movie)
         savedMovie shouldBeEqualTo movie.copy(id = savedMovie.id)
 
         val newCount = movieRepo.count()
@@ -66,9 +65,9 @@ class MovieExposedRepositoryTest(
     @Transactional
     fun `delete movie`() {
         val newMovie = newMovieDTO()
-        val saved = movieRepo.create(newMovie).toMovieDTO()
+        val saved = movieRepo.create(newMovie)
 
-        val deletedCount = movieRepo.deleteById(saved.id!!)
+        val deletedCount = movieRepo.deleteById(saved.id)
         deletedCount shouldBeEqualTo 1
     }
 

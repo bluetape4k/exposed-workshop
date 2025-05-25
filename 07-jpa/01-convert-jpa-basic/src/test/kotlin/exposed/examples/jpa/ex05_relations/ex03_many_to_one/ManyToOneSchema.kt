@@ -6,14 +6,14 @@ import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.idValue
 import io.bluetape4k.exposed.dao.toStringBuilder
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
-import org.jetbrains.exposed.sql.SizedIterable
-import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.v1.core.ReferenceOption.CASCADE
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.dao.entityCache
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.SizedIterable
 
 object ManyToOneSchema {
 
@@ -78,7 +78,7 @@ object ManyToOneSchema {
 
     fun withBeerTables(
         testDB: TestDB,
-        statement: Transaction.(brewerys: BreweryTable, beers: BeerTable) -> Unit,
+        statement: JdbcTransaction.(brewerys: BreweryTable, beers: BeerTable) -> Unit,
     ) {
         withTables(testDB, BreweryTable, BeerTable) {
             val brewery1 = Brewery.new { name = "Berlin" }
@@ -156,7 +156,7 @@ object ManyToOneSchema {
 
     fun withJugTables(
         testDB: TestDB,
-        statement: Transaction.(jugs: JugTable, jugMeters: JugMeterTable) -> Unit,
+        statement: JdbcTransaction.(jugs: JugTable, jugMeters: JugMeterTable) -> Unit,
     ) {
         withTables(testDB, JugTable, JugMeterTable) {
             val jug = Jug.new { name = "Jug Summer camp" }
@@ -233,7 +233,7 @@ object ManyToOneSchema {
 
     fun withSalesTables(
         testDB: TestDB,
-        statement: Transaction.(salesForces: SalesForceTable, salesGuys: SalesGuyTable) -> Unit,
+        statement: JdbcTransaction.(salesForces: SalesForceTable, salesGuys: SalesGuyTable) -> Unit,
     ) {
         withTables(testDB, SalesForceTable, SalesGuyTable) {
             statement(SalesForceTable, SalesGuyTable)

@@ -10,19 +10,20 @@ import io.bluetape4k.support.asLong
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
-import org.jetbrains.exposed.sql.CustomOperator
-import org.jetbrains.exposed.sql.Expression
-import org.jetbrains.exposed.sql.IntegerColumnType
-import org.jetbrains.exposed.sql.LongColumnType
-import org.jetbrains.exposed.sql.SortOrder
-import org.jetbrains.exposed.sql.alias
-import org.jetbrains.exposed.sql.intLiteral
-import org.jetbrains.exposed.sql.longLiteral
-import org.jetbrains.exposed.sql.max
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.update
-import org.jetbrains.exposed.sql.vendors.MariaDBDialect
-import org.jetbrains.exposed.sql.vendors.currentDialect
+import org.jetbrains.exposed.v1.core.CustomOperator
+import org.jetbrains.exposed.v1.core.Expression
+import org.jetbrains.exposed.v1.core.IntegerColumnType
+import org.jetbrains.exposed.v1.core.LongColumnType
+import org.jetbrains.exposed.v1.core.SortOrder
+import org.jetbrains.exposed.v1.core.alias
+import org.jetbrains.exposed.v1.core.intLiteral
+import org.jetbrains.exposed.v1.core.longLiteral
+import org.jetbrains.exposed.v1.core.max
+import org.jetbrains.exposed.v1.core.vendors.MariaDBDialect
+import org.jetbrains.exposed.v1.core.vendors.currentDialect
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.jdbc.update
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -34,7 +35,7 @@ class Ex01_SubQuery: AbstractExposedTest() {
 
     /**
      * `notEqSubQuery` 를 이용한 예제
-     * 
+     *
      * ```sql
      * -- Postgres
      * SELECT persons.id,
@@ -59,7 +60,7 @@ class Ex01_SubQuery: AbstractExposedTest() {
                 }
 
             val rows = query.toList()
-            rows shouldHaveSize 5
+            rows shouldHaveSize 7
 
             // Query를 Entity로 만들기
             val personEntities = Person.wrapRows(query).toList()
@@ -102,7 +103,7 @@ class Ex01_SubQuery: AbstractExposedTest() {
                 log.debug { "person: $person" }
             }
 
-            val expectedId = if (currentDialect is MariaDBDialect) 8L else 6L
+            val expectedId = if (currentDialect is MariaDBDialect) 10L else 8L
             personEntities.single().id.value shouldBeEqualTo expectedId
         }
     }
@@ -185,8 +186,8 @@ class Ex01_SubQuery: AbstractExposedTest() {
             entities.forEach { person ->
                 log.debug { "person: $person" }
             }
-            entities shouldHaveSize 3
-            entities.map { it.id.value } shouldBeEqualTo listOf(1L, 2L, 3L)
+            entities shouldHaveSize 5
+            entities.map { it.id.value } shouldBeEqualTo listOf(1L, 2L, 3L, 7L, 8L)
         }
     }
 
@@ -214,7 +215,7 @@ class Ex01_SubQuery: AbstractExposedTest() {
             affectedRows shouldBeEqualTo 1
 
             val person = Person.findById(3L)!!
-            person.address.id.value shouldBeEqualTo 1L      // 2 - 1
+            person.address.id.value shouldBeEqualTo 2L      // 2 - 1
         }
     }
 
@@ -252,7 +253,7 @@ class Ex01_SubQuery: AbstractExposedTest() {
             affectedRows shouldBeEqualTo 1
 
             val person = Person.findById(5L)!!
-            person.address.id.value shouldBeEqualTo 1L      // 2 - 1
+            person.address.id.value shouldBeEqualTo 2L      // 2 - 1
         }
     }
 

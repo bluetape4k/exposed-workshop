@@ -11,13 +11,13 @@ import io.bluetape4k.logging.info
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.DatabaseConfig
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.transactions.TransactionManager
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.inTopLevelTransaction
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.v1.core.DatabaseConfig
+import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.inTopLevelTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -211,8 +211,6 @@ class Ex01_TransactionIsolation: AbstractExposedTest() {
     }
 
 
-
-
     private fun setupHikariConfig(testDB: TestDB, isolation: String): HikariConfig {
         return HikariConfig().apply {
             jdbcUrl = testDB.connection.invoke()
@@ -226,7 +224,7 @@ class Ex01_TransactionIsolation: AbstractExposedTest() {
         }
     }
 
-    private fun Transaction.assertTransactionIsolationLevel(testDB: TestDB, expected: Int) {
+    private fun JdbcTransaction.assertTransactionIsolationLevel(testDB: TestDB, expected: Int) {
         val (sql, repeatable, committed, serializable) = when (testDB) {
             TestDB.POSTGRESQL -> listOf(
                 "SHOW TRANSACTION ISOLATION LEVEL",

@@ -1,7 +1,6 @@
 package exposed.examples.springmvc.controller
 
 import exposed.examples.springmvc.domain.dtos.MovieDTO
-import exposed.examples.springmvc.domain.dtos.toMovieDTO
 import exposed.examples.springmvc.domain.repository.MovieExposedRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -24,7 +23,7 @@ class MovieController(private val movieRepository: MovieExposedRepository) {
 
     @GetMapping("/{id}")
     fun getMovieById(@PathVariable("id") movieId: Long): MovieDTO? {
-        return movieRepository.findByIdOrNull(movieId)?.toMovieDTO()
+        return movieRepository.findByIdOrNull(movieId)
     }
 
     @GetMapping
@@ -32,13 +31,13 @@ class MovieController(private val movieRepository: MovieExposedRepository) {
         val params = request.parameterMap.map { it.key to it.value.firstOrNull() }.toMap()
         log.debug { "Search Movies... params=$params" }
 
-        return movieRepository.searchMovies(params).map { it.toMovieDTO() }
+        return movieRepository.searchMovies(params)
     }
 
     @Transactional
     @PostMapping
     fun createMovie(@RequestBody movieDTO: MovieDTO): MovieDTO {
-        return movieRepository.create(movieDTO).toMovieDTO()
+        return movieRepository.create(movieDTO)
     }
 
     @Transactional

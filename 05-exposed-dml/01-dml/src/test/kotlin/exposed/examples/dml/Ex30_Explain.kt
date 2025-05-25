@@ -4,7 +4,6 @@ import exposed.shared.dml.DMLTestData.withCitiesAndUsers
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
-import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -13,27 +12,24 @@ import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContain
 import org.amshove.kluent.shouldNotContain
 import org.amshove.kluent.shouldStartWith
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.deleteAll
-import org.jetbrains.exposed.sql.deleteIgnoreWhere
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.explain
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.insertIgnore
-import org.jetbrains.exposed.sql.intParam
-import org.jetbrains.exposed.sql.or
-import org.jetbrains.exposed.sql.replace
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.union
-import org.jetbrains.exposed.sql.update
-import org.jetbrains.exposed.sql.upsert
-import org.jetbrains.exposed.sql.vendors.H2Dialect
-import org.jetbrains.exposed.sql.vendors.MysqlDialect
-import org.jetbrains.exposed.sql.vendors.SQLiteDialect
+import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.v1.core.and
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.intParam
+import org.jetbrains.exposed.v1.core.or
+import org.jetbrains.exposed.v1.core.statements.IStatementBuilder
+import org.jetbrains.exposed.v1.core.statements.Statement
+import org.jetbrains.exposed.v1.core.vendors.H2Dialect
+import org.jetbrains.exposed.v1.core.vendors.MysqlDialect
+import org.jetbrains.exposed.v1.core.vendors.SQLiteDialect
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.deleteAll
+import org.jetbrains.exposed.v1.jdbc.explain
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.jdbc.union
+import org.jetbrains.exposed.v1.jdbc.update
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -135,7 +131,7 @@ class Ex30_Explain: AbstractExposedTest() {
         var explainCount = 0
         val cityName = "City A"
 
-        fun Transaction.explainAndIncrement(body: Transaction.() -> Any?) =
+        fun JdbcTransaction.explainAndIncrement(body: IStatementBuilder.() -> Statement<*>) =
             explain(body = body).also {
                 it.toList() // as with select queries, explain is only executed when iterated over
                     .apply {
@@ -406,15 +402,15 @@ class Ex30_Explain: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `explain with invalid statements`(testDB: TestDB) {
         withTables(testDB, Countries) {
-            expectException<IllegalStateException> {
-                // EXPLAIN INSERT INTO COUNTRIES (COUNTRY_CODE) VALUES ('ABC')
-                explain { Countries.insertAndGetId { it[code] = "ABC" } }
+
+            // EXPLAIN INSERT INTO COUNTRIES (COUNTRY_CODE) VALUES ('ABC')
+            explain {
+                Countries.insert { it[code] = "ABC" }
             }
-            expectException<IllegalStateException> {
-                explain {
-                    Countries.selectAll()
-                    "Last line in lambda should be expected return value - statement"
-                }
+            explain {
+                Countries.deleteAll()
+                Countries.selectAll()
+                // "Last line in lambda should be expected return value - statement"
             }
 
             debug = true

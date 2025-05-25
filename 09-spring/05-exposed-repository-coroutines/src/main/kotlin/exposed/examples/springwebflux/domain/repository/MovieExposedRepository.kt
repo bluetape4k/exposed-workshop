@@ -17,19 +17,21 @@ import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.eclipse.collections.impl.factory.Multimaps
-import org.jetbrains.exposed.dao.load
-import org.jetbrains.exposed.sql.Join
-import org.jetbrains.exposed.sql.Query
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.andWhere
-import org.jetbrains.exposed.sql.count
-import org.jetbrains.exposed.sql.innerJoin
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.core.Join
+import org.jetbrains.exposed.v1.core.ResultRow
+import org.jetbrains.exposed.v1.core.count
+import org.jetbrains.exposed.v1.core.innerJoin
+import org.jetbrains.exposed.v1.dao.load
+import org.jetbrains.exposed.v1.jdbc.Query
+import org.jetbrains.exposed.v1.jdbc.andWhere
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
 @Repository
-class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
+class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
 
     companion object: KLoggingChannel() {
         private val MovieActorJoin by lazy {
@@ -52,9 +54,9 @@ class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
     }
 
     override val table = MovieTable
-    override fun ResultRow.toEntity(): MovieEntity = MovieEntity.wrapRow(this)
+    override fun ResultRow.toEntity() = toMovieDTO()
 
-    fun searchMovie(params: Map<String, String?>): List<MovieEntity> {
+    fun searchMovie(params: Map<String, String?>): List<MovieDTO> {
         log.debug { "Search Movie by params. params: $params" }
 
         val query = MovieTable.selectAll()
@@ -72,21 +74,20 @@ class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
             }
         }
 
-        return MovieEntity.wrapRows(query).toList()
+        return query.map { it.toEntity() }
     }
 
-    suspend fun create(movie: MovieDTO): MovieEntity {
+    suspend fun create(movie: MovieDTO): MovieDTO {
         log.debug { "Create Movie. movie: $movie" }
 
-        val newMovie = MovieEntity.new {
-            name = movie.name
-            producerName = movie.producerName
+        val id = MovieTable.insertAndGetId {
+            it[name] = movie.name
+            it[producerName] = movie.producerName
             if (movie.releaseDate.isNotBlank()) {
-                releaseDate = LocalDate.parse(movie.releaseDate)
+                it[releaseDate] = LocalDate.parse(movie.releaseDate)
             }
         }
-
-        return newMovie
+        return movie.copy(id = id.value)
     }
 
 

@@ -8,23 +8,19 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
-import org.jetbrains.exposed.sql.Column
-import org.jetbrains.exposed.sql.SortOrder
-import org.jetbrains.exposed.sql.SortOrder.ASC_NULLS_FIRST
-import org.jetbrains.exposed.sql.SortOrder.ASC_NULLS_LAST
-import org.jetbrains.exposed.sql.SortOrder.DESC_NULLS_FIRST
-import org.jetbrains.exposed.sql.SortOrder.DESC_NULLS_LAST
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.count
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.substring
-import org.jetbrains.exposed.sql.vendors.H2Dialect
-import org.jetbrains.exposed.sql.vendors.H2Dialect.H2CompatibilityMode
-import org.jetbrains.exposed.sql.vendors.OracleDialect
-import org.jetbrains.exposed.sql.vendors.PostgreSQLDialect
-import org.jetbrains.exposed.sql.vendors.h2Mode
-import org.jetbrains.exposed.sql.wrapAsExpression
+import org.jetbrains.exposed.v1.core.Column
+import org.jetbrains.exposed.v1.core.SortOrder
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.count
+import org.jetbrains.exposed.v1.core.substring
+import org.jetbrains.exposed.v1.core.vendors.H2Dialect
+import org.jetbrains.exposed.v1.core.vendors.OracleDialect
+import org.jetbrains.exposed.v1.core.vendors.PostgreSQLDialect
+import org.jetbrains.exposed.v1.core.vendors.h2Mode
+import org.jetbrains.exposed.v1.core.wrapAsExpression
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertContentEquals
@@ -64,8 +60,8 @@ class Ex10_OrderBy: AbstractExposedTest() {
         is OracleDialect, is PostgreSQLDialect -> true
         is H2Dialect ->
             currentDialectTest.h2Mode in listOf(
-                H2CompatibilityMode.PostgreSQL,
-                H2CompatibilityMode.Oracle
+                H2Dialect.H2CompatibilityMode.PostgreSQL,
+                H2Dialect.H2CompatibilityMode.Oracle
             )
 
         else -> false
@@ -358,10 +354,10 @@ class Ex10_OrderBy: AbstractExposedTest() {
                 ordered shouldBeEqualTo expected
                 assertContentEquals(expected, ordered)
             }
-            assertOrdered(listOf(4, 2, 1, 3), DESC_NULLS_LAST) // c, b, a, null
-            assertOrdered(listOf(1, 2, 4, 3), ASC_NULLS_LAST) // a, b, c, null
-            assertOrdered(listOf(3, 4, 2, 1), DESC_NULLS_FIRST) // null, c, b, a
-            assertOrdered(listOf(3, 1, 2, 4), ASC_NULLS_FIRST) // null, a, b, c
+            assertOrdered(listOf(4, 2, 1, 3), SortOrder.DESC_NULLS_LAST) // c, b, a, null
+            assertOrdered(listOf(1, 2, 4, 3), SortOrder.ASC_NULLS_LAST) // a, b, c, null
+            assertOrdered(listOf(3, 4, 2, 1), SortOrder.DESC_NULLS_FIRST) // null, c, b, a
+            assertOrdered(listOf(3, 1, 2, 4), SortOrder.ASC_NULLS_FIRST) // null, a, b, c
         }
     }
 }

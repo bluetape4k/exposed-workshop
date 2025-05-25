@@ -9,11 +9,11 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.load
-import org.jetbrains.exposed.dao.with
-import org.jetbrains.exposed.sql.SortOrder
-import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.v1.core.SortOrder
+import org.jetbrains.exposed.v1.dao.entityCache
+import org.jetbrains.exposed.v1.dao.load
+import org.jetbrains.exposed.v1.dao.with
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -83,7 +83,7 @@ class Ex01_OneToMany_Bidirectional_Batch: AbstractExposedTest() {
         }
     }
 
-    private fun Transaction.createSamples(): Batch {
+    private fun JdbcTransaction.createSamples(): Batch {
         val batch1 = Batch.new { name = "B-123" }
 
         BatchItem.new { name = "Item 1"; batch = batch1 }

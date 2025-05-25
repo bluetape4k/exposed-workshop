@@ -2,9 +2,9 @@ package exposed.examples.custom.columns.encrypt
 
 import io.bluetape4k.crypto.encrypt.Encryptor
 import io.bluetape4k.crypto.encrypt.Encryptors
-import org.jetbrains.exposed.sql.BinaryColumnType
-import org.jetbrains.exposed.sql.ColumnTransformer
-import org.jetbrains.exposed.sql.ColumnWithTransform
+import org.jetbrains.exposed.v1.core.BinaryColumnType
+import org.jetbrains.exposed.v1.core.ColumnTransformer
+import org.jetbrains.exposed.v1.core.ColumnWithTransform
 
 class BluetapeEncryptedBinaryColumnType(
     length: Int,

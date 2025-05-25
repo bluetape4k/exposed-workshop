@@ -1,0 +1,3 @@
+spring:
+    aot:
+        enabled: true

@@ -4,8 +4,8 @@ import exposed.examples.cache.domain.model.UserDTO
 import exposed.examples.cache.domain.repository.UserCacheRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
-import org.jetbrains.exposed.sql.Op
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.v1.core.Op
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

@@ -6,8 +6,8 @@ import exposed.examples.spring.transaction.service.OrderService
 import io.bluetape4k.codec.Base58
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
-import org.jetbrains.exposed.spring.SpringTransactionManager
-import org.jetbrains.exposed.sql.DatabaseConfig
+import org.jetbrains.exposed.v1.core.DatabaseConfig
+import org.jetbrains.exposed.v1.spring.transaction.SpringTransactionManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.transaction.TransactionManager

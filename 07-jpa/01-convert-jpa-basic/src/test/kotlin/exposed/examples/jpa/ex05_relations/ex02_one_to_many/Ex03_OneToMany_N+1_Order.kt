@@ -12,12 +12,12 @@ import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
-import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.flushCache
-import org.jetbrains.exposed.dao.with
-import org.jetbrains.exposed.sql.Query
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.dao.entityCache
+import org.jetbrains.exposed.v1.dao.flushCache
+import org.jetbrains.exposed.v1.dao.with
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.Query
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.random.Random
@@ -100,7 +100,7 @@ class `Ex03_OneToMany_N+1_Order`: AbstractExposedTest() {
             val query: Query = OrderTable.innerJoin(OrderItemTable)
                 .selectAll()
                 .where { OrderTable.id eq order1.id }
-            
+
             // `wrapRows` 는 Query를 실행해서 엔티티로 빌드합니다.
             val orderItems: List<OrderItem> = OrderItem.wrapRows(query).toList()
             orderItems shouldHaveSize 3
@@ -206,7 +206,7 @@ class `Ex03_OneToMany_N+1_Order`: AbstractExposedTest() {
         }
     }
 
-    private fun Transaction.createSamples(orderNo: Int): Order {
+    private fun JdbcTransaction.createSamples(orderNo: Int): Order {
         val order1 = Order.new { no = "N-$orderNo" }
 
         OrderItem.new { name = "Item 1 in $orderNo"; order = order1 }

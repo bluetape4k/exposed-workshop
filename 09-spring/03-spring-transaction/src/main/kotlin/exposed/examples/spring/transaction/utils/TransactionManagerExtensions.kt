@@ -15,7 +15,7 @@ fun PlatformTransactionManager.execute(
     timeout: Int? = null,
     block: (TransactionStatus) -> Unit,
 ) {
-    if (this !is org.jetbrains.exposed.spring.SpringTransactionManager) {
+    if (this !is org.jetbrains.exposed.v1.spring.transaction.SpringTransactionManager) {
         error("Wrong transaction manager. ${this.javaClass.name}, use Exposed's SpringTransactionManager")
     }
 

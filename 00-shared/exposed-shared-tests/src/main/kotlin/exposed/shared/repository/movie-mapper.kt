@@ -5,7 +5,7 @@ import exposed.shared.repository.MovieSchema.ActorEntity
 import exposed.shared.repository.MovieSchema.ActorTable
 import exposed.shared.repository.MovieSchema.MovieEntity
 import exposed.shared.repository.MovieSchema.MovieTable
-import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.v1.core.ResultRow
 
 
 fun ResultRow.toActorDTO() = ActorDTO(

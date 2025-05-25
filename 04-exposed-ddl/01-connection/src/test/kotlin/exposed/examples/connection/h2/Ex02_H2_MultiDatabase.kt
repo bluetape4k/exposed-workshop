@@ -14,23 +14,24 @@ import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeTrue
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.DatabaseConfig
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.exists
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.name
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.TransactionManager
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.experimental.withSuspendTransaction
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.transactions.transactionManager
+import org.jetbrains.exposed.v1.core.DatabaseConfig
+import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.exists
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.name
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.withSuspendTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
+import org.jetbrains.exposed.v1.jdbc.transactions.transactionManager
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import java.sql.Connection
 import java.util.concurrent.Executors
 
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
@@ -45,7 +46,7 @@ class Ex02_H2_MultiDatabase {
             user = "root",
             password = "",
             databaseConfig = DatabaseConfig {
-                defaultIsolationLevel = java.sql.Connection.TRANSACTION_READ_COMMITTED
+                defaultIsolationLevel = Connection.TRANSACTION_READ_COMMITTED
             }
         )
     }
@@ -56,7 +57,7 @@ class Ex02_H2_MultiDatabase {
             user = "root",
             password = "",
             databaseConfig = DatabaseConfig {
-                defaultIsolationLevel = java.sql.Connection.TRANSACTION_READ_COMMITTED
+                defaultIsolationLevel = Connection.TRANSACTION_READ_COMMITTED
             }
         )
     }

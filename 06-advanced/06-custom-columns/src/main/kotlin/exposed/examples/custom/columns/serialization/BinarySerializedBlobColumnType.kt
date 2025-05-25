@@ -2,10 +2,10 @@ package exposed.examples.custom.columns.serialization
 
 import io.bluetape4k.io.serializer.BinarySerializer
 import io.bluetape4k.io.serializer.BinarySerializers
-import org.jetbrains.exposed.sql.BlobColumnType
-import org.jetbrains.exposed.sql.ColumnTransformer
-import org.jetbrains.exposed.sql.ColumnWithTransform
-import org.jetbrains.exposed.sql.statements.api.ExposedBlob
+import org.jetbrains.exposed.v1.core.BlobColumnType
+import org.jetbrains.exposed.v1.core.ColumnTransformer
+import org.jetbrains.exposed.v1.core.ColumnWithTransform
+import org.jetbrains.exposed.v1.core.statements.api.ExposedBlob
 
 class BinarySerializedBlobColumnType<T: Any>(
     serializer: BinarySerializer = BinarySerializers.Fury,

@@ -36,7 +36,7 @@ class MovieTransactionalService(
         }
     }
 
-    suspend fun suspendedSave(movieDto: MovieDTO): MovieEntity {
+    suspend fun suspendedSave(movieDto: MovieDTO): MovieDTO {
         log.debug { "suspendedSave movieDto: $movieDto" }
         return movieRepository.create(movieDto)
     }

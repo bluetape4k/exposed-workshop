@@ -2,14 +2,13 @@ package exposed.examples.springwebflux.domain.repository
 
 import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
 import exposed.examples.springwebflux.domain.dtos.ActorDTO
-import exposed.examples.springwebflux.domain.model.toActorDTO
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -30,7 +29,7 @@ class ActorRepositoryTest(
         newSuspendedTransaction(readOnly = true) {
             val actorId = 1L
 
-            val actor = actorRepository.findById(actorId).toActorDTO()
+            val actor = actorRepository.findById(actorId)
 
             log.debug { "Actor: $actor" }
             actor.shouldNotBeNull()
@@ -85,10 +84,10 @@ class ActorRepositoryTest(
 
             val actor = newActorDTO()
 
-            val savedActor = actorRepository.create(actor).toActorDTO()
+            val savedActor = actorRepository.create(actor)
             savedActor shouldBeEqualTo actor.copy(id = savedActor.id)
 
-            val newActor = actorRepository.findById(savedActor.id!!).toActorDTO()
+            val newActor = actorRepository.findById(savedActor.id)
             newActor shouldBeEqualTo savedActor
 
             actorRepository.count() shouldBeEqualTo prevCount + 1L
@@ -99,11 +98,11 @@ class ActorRepositoryTest(
     fun `delete actor by id`() = runSuspendIO {
         newSuspendedTransaction {
             val actor = newActorDTO()
-            val savedActor = actorRepository.create(actor).toActorDTO()
+            val savedActor = actorRepository.create(actor)
             savedActor.shouldNotBeNull()
             savedActor.id.shouldNotBeNull()
 
-            val deletedCount = actorRepository.deleteById(savedActor.id!!)
+            val deletedCount = actorRepository.deleteById(savedActor.id)
             deletedCount shouldBeEqualTo 1
         }
     }

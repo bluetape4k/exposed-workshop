@@ -10,15 +10,16 @@ import io.bluetape4k.idgenerators.uuid.TimebasedUuid.Epoch
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
-import org.jetbrains.exposed.sql.Query
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.batchReplace
-import org.jetbrains.exposed.sql.deleteAll
-import org.jetbrains.exposed.sql.longLiteral
-import org.jetbrains.exposed.sql.replace
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.stringLiteral
-import org.jetbrains.exposed.sql.trim
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.longLiteral
+import org.jetbrains.exposed.v1.core.stringLiteral
+import org.jetbrains.exposed.v1.core.trim
+import org.jetbrains.exposed.v1.jdbc.Query
+import org.jetbrains.exposed.v1.jdbc.batchReplace
+import org.jetbrains.exposed.v1.jdbc.deleteAll
+import org.jetbrains.exposed.v1.jdbc.replace
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -180,7 +181,7 @@ class Ex13_Replace: AbstractExposedTest() {
 
             /**
              * 일치하는 데이터가 없으므로 INSERT 된다.
-             * 
+             *
              * ```sql
              * REPLACE INTO new_auth (username, `session`)
              *  VALUES ('username', session)

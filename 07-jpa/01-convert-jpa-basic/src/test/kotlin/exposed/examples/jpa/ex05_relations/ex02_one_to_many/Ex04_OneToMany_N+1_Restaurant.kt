@@ -10,9 +10,9 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.with
-import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.v1.dao.entityCache
+import org.jetbrains.exposed.v1.dao.with
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.random.Random
@@ -59,7 +59,7 @@ class `Ex04_OneToMany_N+1_Restaurant`: AbstractExposedTest() {
         }
     }
 
-    private fun Transaction.createSamples(name: String): Restaurant {
+    private fun JdbcTransaction.createSamples(name: String): Restaurant {
         val restaurant = Restaurant.new {
             this.name = name
         }

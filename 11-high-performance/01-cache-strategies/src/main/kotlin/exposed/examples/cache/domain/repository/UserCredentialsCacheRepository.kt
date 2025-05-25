@@ -6,7 +6,7 @@ import exposed.examples.cache.domain.model.toUserCredentialsDTO
 import io.bluetape4k.exposed.redisson.repository.AbstractExposedCacheRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.redis.redisson.cache.RedisCacheConfig
-import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.v1.core.ResultRow
 import org.redisson.api.RedissonClient
 import org.springframework.stereotype.Repository
 

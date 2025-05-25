@@ -11,9 +11,9 @@ import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
-import org.jetbrains.exposed.dao.flushCache
-import org.jetbrains.exposed.dao.with
-import org.jetbrains.exposed.sql.intLiteral
+import org.jetbrains.exposed.v1.core.intLiteral
+import org.jetbrains.exposed.v1.dao.flushCache
+import org.jetbrains.exposed.v1.dao.with
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 

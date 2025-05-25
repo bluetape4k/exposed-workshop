@@ -2,8 +2,8 @@ package exposed.examples.custom.columns.encrypt
 
 import io.bluetape4k.crypto.encrypt.Encryptor
 import io.bluetape4k.crypto.encrypt.Encryptors
-import org.jetbrains.exposed.sql.Column
-import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.v1.core.Column
+import org.jetbrains.exposed.v1.core.Table
 
 fun Table.bluetapeEncryptedBinary(
     name: String,

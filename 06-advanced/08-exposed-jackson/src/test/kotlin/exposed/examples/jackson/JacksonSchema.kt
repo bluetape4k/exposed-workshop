@@ -5,13 +5,13 @@ import io.bluetape4k.exposed.sql.jackson.jacksonb
 import io.bluetape4k.exposed.tests.AbstractExposedTest
 import io.bluetape4k.exposed.tests.TestDB
 import io.bluetape4k.exposed.tests.withTables
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.junit.jupiter.api.Assumptions
 
 @Suppress("UnusedReceiverParameter")
@@ -106,7 +106,7 @@ object JacksonSchema {
 
     fun AbstractExposedTest.withJacksonTable(
         testDB: TestDB,
-        statement: Transaction.(tester: JacksonSchema.JacksonTable, user1: User, data1: DataHolder) -> Unit,
+        statement: JdbcTransaction.(tester: JacksonSchema.JacksonTable, user1: User, data1: DataHolder) -> Unit,
     ) {
         val tester = JacksonSchema.JacksonTable
 
@@ -124,7 +124,7 @@ object JacksonSchema {
 
     fun AbstractExposedTest.withJacksonBTable(
         testDB: TestDB,
-        statement: Transaction.(tester: JacksonSchema.JacksonBTable, user1: User, data1: DataHolder) -> Unit,
+        statement: JdbcTransaction.(tester: JacksonSchema.JacksonBTable, user1: User, data1: DataHolder) -> Unit,
     ) {
         val tester = JacksonSchema.JacksonBTable
 
@@ -142,7 +142,7 @@ object JacksonSchema {
 
     fun AbstractExposedTest.withJacksonArrays(
         testDB: TestDB,
-        statement: Transaction.(
+        statement: JdbcTransaction.(
             tester: JacksonSchema.JacksonArrayTable,
             singleId: EntityID<Int>,
             tripleId: EntityID<Int>,
@@ -168,7 +168,7 @@ object JacksonSchema {
 
     fun AbstractExposedTest.withJacksonBArrays(
         testDB: TestDB,
-        statement: Transaction.(
+        statement: JdbcTransaction.(
             tester: JacksonSchema.JacksonBArrayTable,
             singleId: EntityID<Int>,
             tripleId: EntityID<Int>,

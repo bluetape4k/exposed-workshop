@@ -10,23 +10,23 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.flushCache
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.exceptions.ExposedSQLException
-import org.jetbrains.exposed.sql.Column
-import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
-import org.jetbrains.exposed.sql.SizedIterable
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.batchInsert
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.javatime.date
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.core.Column
+import org.jetbrains.exposed.v1.core.ReferenceOption
+import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.inList
+import org.jetbrains.exposed.v1.core.and
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.dao.entityCache
+import org.jetbrains.exposed.v1.dao.flushCache
+import org.jetbrains.exposed.v1.exceptions.ExposedSQLException
+import org.jetbrains.exposed.v1.javatime.date
+import org.jetbrains.exposed.v1.jdbc.SizedIterable
+import org.jetbrains.exposed.v1.jdbc.batchInsert
+import org.jetbrains.exposed.v1.jdbc.deleteWhere
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -78,7 +78,7 @@ class Ex06_OneToMany_Set: AbstractExposedTest() {
      */
     object BidTable: IntIdTable("bids") {
         val amount = decimal("amount", 10, 2).default(0.toBigDecimal())
-        val itemId = reference("item_id", BiddingItemTable, onDelete = CASCADE)
+        val itemId = reference("item_id", BiddingItemTable, onDelete = ReferenceOption.CASCADE)
 
         init {
             // one-to-many relation 에서 SET 방식으로 매핑하기 위해 unique key를 설정한다.
@@ -226,7 +226,7 @@ class Ex06_OneToMany_Set: AbstractExposedTest() {
         val sizeX = integer("size_x").nullable()
         val sizeY = integer("size_y").nullable()
         val productId: Column<EntityID<Int>?> =
-            optReference("product_id", ProductTable, onDelete = CASCADE)
+            optReference("product_id", ProductTable, onDelete = ReferenceOption.CASCADE)
 
         init {
             uniqueIndex("product_image_name_product_id", name, productId)

@@ -1,6 +1,6 @@
 package exposed.multitenant.webflux.tenant
 
-import org.jetbrains.exposed.sql.Schema
+import org.jetbrains.exposed.v1.core.Schema
 
 /**
  * 테넌트에 대한 정보를 관리합니다.

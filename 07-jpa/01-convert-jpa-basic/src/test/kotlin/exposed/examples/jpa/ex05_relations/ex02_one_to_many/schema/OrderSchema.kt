@@ -3,12 +3,12 @@ package exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
-import org.jetbrains.exposed.sql.SizedIterable
+import org.jetbrains.exposed.v1.core.ReferenceOption
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.jdbc.SizedIterable
 
 object OrderSchema {
 
@@ -48,7 +48,12 @@ object OrderSchema {
         val price = decimal("price", 10, 2).nullable()
 
         // reference to Order
-        val orderId = reference("order_id", OrderTable, onDelete = CASCADE, onUpdate = CASCADE).index()
+        val orderId = reference(
+            "order_id",
+            OrderTable,
+            onDelete = ReferenceOption.CASCADE,
+            onUpdate = ReferenceOption.CASCADE
+        ).index()
     }
 
     class Order(id: EntityID<Int>): IntEntity(id) {

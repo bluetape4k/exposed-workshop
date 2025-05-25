@@ -7,15 +7,15 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.SizedIterable
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.dao.entityCache
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.SizedIterable
+import org.jetbrains.exposed.v1.jdbc.insert
 
 /**
  * 은행 계좌 - 계좌 소유자에 대한 Many-to-Many 관계를 나타내는 스키마
@@ -126,7 +126,7 @@ object BankSchema {
 
     fun AbstractExposedTest.withBankTables(
         testDB: TestDB,
-        block: Transaction.(accounts: BankAccountTable, owners: AccountOwnerTable) -> Unit,
+        block: JdbcTransaction.(accounts: BankAccountTable, owners: AccountOwnerTable) -> Unit,
     ) {
         withTables(testDB, *BankSchema.allTables) {
             val owner1 = AccountOwner.new { ssn = faker.idNumber().ssnValid() }
@@ -162,6 +162,6 @@ object BankSchema {
         }
     }
 
-    fun Transaction.getAccount(accountId: Int): BankAccount = BankAccount.findById(accountId)!!
-    fun Transaction.getOwner(ownerId: Int): AccountOwner = AccountOwner.findById(ownerId)!!
+    fun JdbcTransaction.getAccount(accountId: Int): BankAccount = BankAccount.findById(accountId)!!
+    fun JdbcTransaction.getOwner(ownerId: Int): AccountOwner = AccountOwner.findById(ownerId)!!
 }

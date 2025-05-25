@@ -2,7 +2,6 @@ package exposed.examples.springwebflux.domain.repository
 
 import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
 import exposed.examples.springwebflux.domain.dtos.MovieDTO
-import exposed.examples.springwebflux.domain.model.toMovieDTO
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -10,7 +9,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -31,7 +30,7 @@ class MovieRepositoryTest(
         val movieId = 1L
 
         val movie = newSuspendedTransaction(readOnly = true) {
-            movieRepository.findById(movieId).toMovieDTO()
+            movieRepository.findById(movieId)
         }
 
         log.debug { "movie: $movie" }
@@ -55,7 +54,7 @@ class MovieRepositoryTest(
         val params = mapOf("producerName" to "Johnny")
 
         val movies = newSuspendedTransaction(readOnly = true) {
-            movieRepository.searchMovie(params).toList()
+            movieRepository.searchMovie(params)
         }
 
         movies.forEach {
@@ -70,7 +69,7 @@ class MovieRepositoryTest(
             val prevCount = movieRepository.count()
 
             val newMovie = newMovieDTO()
-            val saved = movieRepository.create(newMovie).toMovieDTO()
+            val saved = movieRepository.create(newMovie)
 
             saved.shouldNotBeNull()
             saved shouldBeEqualTo newMovie.copy(id = saved.id)
@@ -84,11 +83,11 @@ class MovieRepositoryTest(
         newSuspendedTransaction {
 
             val newMovie = newMovieDTO()
-            val saved = movieRepository.create(newMovie).toMovieDTO()
+            val saved = movieRepository.create(newMovie)
 
             val prevCount = movieRepository.count()
 
-            val deletedCount = movieRepository.deleteById(saved.id!!)
+            val deletedCount = movieRepository.deleteById(saved.id)
             deletedCount shouldBeEqualTo 1
 
             movieRepository.count() shouldBeEqualTo prevCount - 1

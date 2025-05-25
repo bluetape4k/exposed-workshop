@@ -1,26 +1,27 @@
 package exposed.examples.springwebflux.domain.repository
 
 import exposed.examples.springwebflux.domain.dtos.ActorDTO
-import exposed.examples.springwebflux.domain.model.MovieSchema.ActorEntity
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorTable
+import exposed.examples.springwebflux.domain.model.toActorDTO
 import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.andWhere
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.core.ResultRow
+import org.jetbrains.exposed.v1.jdbc.andWhere
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
 @Repository
-class ActorExposedRepository: ExposedRepository<ActorEntity, Long> {
+class ActorExposedRepository: ExposedRepository<ActorDTO, Long> {
 
     companion object: KLoggingChannel()
 
     override val table = ActorTable
-    override fun ResultRow.toEntity(): ActorEntity = ActorEntity.wrapRow(this)
+    override fun ResultRow.toEntity() = toActorDTO()
 
-    fun searchActor(params: Map<String, String?>): List<ActorEntity> {
+    fun searchActor(params: Map<String, String?>): List<ActorDTO> {
         log.debug { "Search Actor by params. params: $params" }
 
         val query = ActorTable.selectAll()
@@ -35,20 +36,21 @@ class ActorExposedRepository: ExposedRepository<ActorEntity, Long> {
                 }
             }
         }
-        return ActorEntity.wrapRows(query).toList()
+        return query.map { it.toEntity() }
     }
 
-    fun create(actor: ActorDTO): ActorEntity {
+    fun create(actor: ActorDTO): ActorDTO {
         log.debug { "Create Actor. actor: $actor" }
 
-        val actorEntity = ActorEntity.new {
-            firstName = actor.firstName
-            lastName = actor.lastName
-            actor.birthday?.let {
-                birthday = runCatching { LocalDate.parse(actor.birthday) }.getOrNull()
+        val id = ActorTable.insertAndGetId {
+            it[ActorTable.firstName] = actor.firstName
+            it[ActorTable.lastName] = actor.lastName
+            actor.birthday?.let { birthday ->
+                it[ActorTable.birthday] = runCatching { LocalDate.parse(birthday) }.getOrNull()
             }
         }
 
-        return actorEntity
+        return actor.copy(id = id.value)
+
     }
 }

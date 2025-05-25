@@ -7,7 +7,7 @@ import exposed.examples.spring.transaction.domain.OrderSchema.OrderTable
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.info
-import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

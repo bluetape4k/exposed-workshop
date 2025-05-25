@@ -6,15 +6,15 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
-import org.jetbrains.exposed.dao.LongEntity
-import org.jetbrains.exposed.dao.LongEntityClass
-import org.jetbrains.exposed.dao.flushCache
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.LongIdTable
-import org.jetbrains.exposed.sql.Column
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.javatime.date
+import org.jetbrains.exposed.v1.core.Column
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
+import org.jetbrains.exposed.v1.dao.LongEntity
+import org.jetbrains.exposed.v1.dao.LongEntityClass
+import org.jetbrains.exposed.v1.dao.flushCache
+import org.jetbrains.exposed.v1.javatime.date
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
 import java.time.LocalDate
 
 object PersonSchema {
@@ -141,7 +141,7 @@ object PersonSchema {
 
     fun withPersons(
         testDB: TestDB,
-        block: Transaction.(PersonTable, AddressTable) -> Unit,
+        block: JdbcTransaction.(PersonTable, AddressTable) -> Unit,
     ) {
         withTables(testDB, *allPersonTables) {
             block(PersonTable, AddressTable)
@@ -152,7 +152,7 @@ object PersonSchema {
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withPersonAndAddress(
         testDB: TestDB,
-        statement: Transaction.(
+        statement: JdbcTransaction.(
             persons: PersonSchema.PersonTable,
             addresses: PersonSchema.AddressTable,
         ) -> Unit,

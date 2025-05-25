@@ -1,13 +1,12 @@
 package exposed.examples.springwebflux.controller
 
 import exposed.examples.springwebflux.domain.dtos.MovieDTO
-import exposed.examples.springwebflux.domain.model.toMovieDTO
 import exposed.examples.springwebflux.domain.repository.MovieExposedRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -28,7 +27,7 @@ class MovieController(
     @GetMapping("/{id}")
     suspend fun getMovieById(@PathVariable("id") movieId: Long): MovieDTO? =
         newSuspendedTransaction(readOnly = true) {
-            movieRepository.findByIdOrNull(movieId)?.toMovieDTO()
+            movieRepository.findByIdOrNull(movieId)
         }
 
     @GetMapping
@@ -37,7 +36,7 @@ class MovieController(
         return when {
             params.isEmpty() -> emptyList()
             else -> newSuspendedTransaction(readOnly = true) {
-                movieRepository.searchMovie(params).map { it.toMovieDTO() }
+                movieRepository.searchMovie(params)
             }
         }
     }
@@ -45,7 +44,7 @@ class MovieController(
     @PostMapping
     suspend fun createMovie(@RequestBody movie: MovieDTO): MovieDTO =
         newSuspendedTransaction {
-            movieRepository.create(movie).toMovieDTO()
+            movieRepository.create(movie)
         }
 
     @DeleteMapping("/{id}")

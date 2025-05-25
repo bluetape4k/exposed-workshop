@@ -5,9 +5,9 @@ import exposed.examples.springcache.domain.CountryTable
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeGreaterThan
 import org.amshove.kluent.shouldBeTrue
-import org.jetbrains.exposed.sql.exists
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.v1.jdbc.exists
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.junit.jupiter.api.Test
 
 class ExposedConfigTest: AbstractSpringCacheApplicationTest() {

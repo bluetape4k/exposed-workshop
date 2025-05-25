@@ -8,11 +8,12 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
-import org.jetbrains.exposed.sql.Join
-import org.jetbrains.exposed.sql.SortOrder
-import org.jetbrains.exposed.sql.alias
-import org.jetbrains.exposed.sql.innerJoin
-import org.jetbrains.exposed.sql.leftJoin
+import org.jetbrains.exposed.v1.core.Join
+import org.jetbrains.exposed.v1.core.SortOrder
+import org.jetbrains.exposed.v1.core.alias
+import org.jetbrains.exposed.v1.core.innerJoin
+import org.jetbrains.exposed.v1.core.leftJoin
+import org.jetbrains.exposed.v1.jdbc.select
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -78,8 +79,10 @@ class Ex03_Left_Join: AbstractExposedTest() {
             val leftJoin: Join = om.innerJoin(ol) { om[orders.id] eq ol[orderLines.orderId] }
                 .leftJoin(im) { ol[orderLines.itemId] eq im[items.id] }
 
-            val records = leftJoin.select(slice).orderBy(om[orders.id], SortOrder.ASC_NULLS_FIRST)
-                .orderBy(im[items.id], SortOrder.ASC_NULLS_FIRST).map {
+            val records = leftJoin.select(slice)
+                .orderBy(om[orders.id], SortOrder.ASC_NULLS_FIRST)
+                .orderBy(im[items.id], SortOrder.ASC_NULLS_FIRST)
+                .map {
                     OrderRecord(
                         itemId = it[im[items.id]]?.value,
                         orderId = it[om[orders.id]]?.value,

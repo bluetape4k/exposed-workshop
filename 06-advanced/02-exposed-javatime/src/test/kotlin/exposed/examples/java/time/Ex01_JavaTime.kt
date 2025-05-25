@@ -9,6 +9,7 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.KotlinLogging
 import io.bluetape4k.logging.debug
+import io.mockk.impl.InternalPlatform.time
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -21,50 +22,33 @@ import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
-import org.jetbrains.exposed.dao.flushCache
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.exceptions.UnsupportedByDialectException
-import org.jetbrains.exposed.sql.Cast
-import org.jetbrains.exposed.sql.Column
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.Table.Dual
-import org.jetbrains.exposed.sql.castTo
-import org.jetbrains.exposed.sql.get
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.javatime.CurrentDate
-import org.jetbrains.exposed.sql.javatime.CurrentDateTime
-import org.jetbrains.exposed.sql.javatime.JavaLocalDateColumnType
-import org.jetbrains.exposed.sql.javatime.JavaLocalDateTimeColumnType
-import org.jetbrains.exposed.sql.javatime.date
-import org.jetbrains.exposed.sql.javatime.dateParam
-import org.jetbrains.exposed.sql.javatime.dateTimeParam
-import org.jetbrains.exposed.sql.javatime.datetime
-import org.jetbrains.exposed.sql.javatime.day
-import org.jetbrains.exposed.sql.javatime.hour
-import org.jetbrains.exposed.sql.javatime.minute
-import org.jetbrains.exposed.sql.javatime.month
-import org.jetbrains.exposed.sql.javatime.second
-import org.jetbrains.exposed.sql.javatime.time
-import org.jetbrains.exposed.sql.javatime.timeLiteral
-import org.jetbrains.exposed.sql.javatime.timestamp
-import org.jetbrains.exposed.sql.javatime.timestampWithTimeZone
-import org.jetbrains.exposed.sql.javatime.year
-import org.jetbrains.exposed.sql.json.extract
-import org.jetbrains.exposed.sql.json.jsonb
-import org.jetbrains.exposed.sql.max
-import org.jetbrains.exposed.sql.min
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.slice
-import org.jetbrains.exposed.sql.vendors.H2Dialect
-import org.jetbrains.exposed.sql.vendors.MariaDBDialect
-import org.jetbrains.exposed.sql.vendors.MysqlDialect
-import org.jetbrains.exposed.sql.vendors.OracleDialect
-import org.jetbrains.exposed.sql.vendors.PostgreSQLDialect
-import org.jetbrains.exposed.sql.vendors.SQLServerDialect
-import org.jetbrains.exposed.sql.vendors.SQLiteDialect
-import org.jetbrains.exposed.sql.vendors.currentDialect
+import org.jetbrains.exposed.v1.core.Cast
+import org.jetbrains.exposed.v1.core.Column
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.castTo
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.get
+import org.jetbrains.exposed.v1.core.max
+import org.jetbrains.exposed.v1.core.min
+import org.jetbrains.exposed.v1.core.slice
+import org.jetbrains.exposed.v1.core.vendors.H2Dialect
+import org.jetbrains.exposed.v1.core.vendors.MariaDBDialect
+import org.jetbrains.exposed.v1.core.vendors.MysqlDialect
+import org.jetbrains.exposed.v1.core.vendors.OracleDialect
+import org.jetbrains.exposed.v1.core.vendors.PostgreSQLDialect
+import org.jetbrains.exposed.v1.core.vendors.SQLServerDialect
+import org.jetbrains.exposed.v1.core.vendors.SQLiteDialect
+import org.jetbrains.exposed.v1.core.vendors.currentDialect
+import org.jetbrains.exposed.v1.dao.flushCache
+import org.jetbrains.exposed.v1.exceptions.UnsupportedByDialectException
+import org.jetbrains.exposed.v1.javatime.*
+import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.json.extract
+import org.jetbrains.exposed.v1.json.jsonb
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -742,7 +726,7 @@ class Ex01_JavaTime: AbstractExposedTest() {
         Assumptions.assumeTrue { testDB !in TestDB.ALL_H2_V1 }
 
         withDb(testDB) {
-            val dateTime = Dual.select(CurrentDateTime).first()[CurrentDateTime]
+            val dateTime = Table.Dual.select(CurrentDateTime).first()[CurrentDateTime]
 
             // CurrentDateTime=2025-02-27T11:35:17.419449
             log.debug { "CurrentDateTime=$dateTime" }

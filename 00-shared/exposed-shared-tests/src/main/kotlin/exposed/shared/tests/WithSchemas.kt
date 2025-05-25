@@ -1,17 +1,17 @@
 package exposed.shared.tests
 
 import kotlinx.coroutines.Dispatchers
-import org.jetbrains.exposed.sql.DatabaseConfig
-import org.jetbrains.exposed.sql.Schema
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.v1.core.DatabaseConfig
+import org.jetbrains.exposed.v1.core.Schema
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import kotlin.coroutines.CoroutineContext
 
 fun withSchemas(
     dialect: TestDB,
     vararg schemas: Schema,
     configure: (DatabaseConfig.Builder.() -> Unit)? = {},
-    statement: Transaction.() -> Unit,
+    statement: JdbcTransaction.() -> Unit,
 ) {
     withDb(dialect, configure) {
         if (currentDialectTest.supportsCreateSchema) {
@@ -33,7 +33,7 @@ suspend fun withSuspendedSchemas(
     vararg schemas: Schema,
     configure: (DatabaseConfig.Builder.() -> Unit)? = {},
     context: CoroutineContext? = Dispatchers.IO,
-    statement: Transaction.() -> Unit,
+    statement: suspend JdbcTransaction.() -> Unit,
 ) {
     withSuspendedDb(dialect, configure = configure, context = context) {
         if (currentDialectTest.supportsCreateSchema) {

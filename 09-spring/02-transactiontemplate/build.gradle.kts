@@ -1,5 +1,6 @@
 plugins {
     kotlin("plugin.spring")
+    id(Plugins.spring_boot)
 }
 
 @Suppress("UnstableApiUsage")

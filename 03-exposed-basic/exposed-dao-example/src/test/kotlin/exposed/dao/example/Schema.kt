@@ -3,14 +3,14 @@ package exposed.dao.example
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.flushCache
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.SizedIterable
-import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.dao.entityCache
+import org.jetbrains.exposed.v1.dao.flushCache
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.SizedIterable
 
 object Schema {
 
@@ -76,7 +76,7 @@ object Schema {
         override fun toString(): String = "User(id=$id, name=$name, age=$age, city=$city)"
     }
 
-    fun withCityUsers(testDB: TestDB, statement: Transaction.() -> Unit) {
+    fun withCityUsers(testDB: TestDB, statement: JdbcTransaction.() -> Unit) {
         withTables(testDB, CityTable, UserTable) {
             populateSamples()
 
@@ -87,7 +87,7 @@ object Schema {
         }
     }
 
-    suspend fun withSuspendedCityUsers(testDB: TestDB, statement: suspend Transaction.() -> Unit) {
+    suspend fun withSuspendedCityUsers(testDB: TestDB, statement: suspend JdbcTransaction.() -> Unit) {
         withSuspendedTables(testDB, CityTable, UserTable) {
             populateSamples()
 

@@ -1,7 +1,7 @@
 package exposed.examples.transactions
 
 import exposed.shared.tests.TestDB
-import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 
 /**
  * ```sql

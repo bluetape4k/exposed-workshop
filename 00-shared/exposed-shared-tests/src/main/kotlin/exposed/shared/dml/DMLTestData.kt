@@ -5,14 +5,14 @@ import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.v1.core.ResultRow
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.insert
 import java.math.BigDecimal
 
 object DMLTestData {
@@ -120,7 +120,7 @@ object DMLTestData {
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withCitiesAndUsers(
         testDB: TestDB,
-        statement: Transaction.(
+        statement: JdbcTransaction.(
             cities: Cities,
             users: Users,
             userData: UserData,
@@ -209,7 +209,7 @@ object DMLTestData {
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withSales(
         dialect: TestDB,
-        statement: Transaction.(testDB: TestDB, sales: Sales) -> Unit,
+        statement: JdbcTransaction.(testDB: TestDB, sales: Sales) -> Unit,
     ) {
         val sales = Sales
 
@@ -239,7 +239,7 @@ object DMLTestData {
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withSomeAmounts(
         dialect: TestDB,
-        statement: Transaction.(testDB: TestDB, someAmounts: SomeAmounts) -> Unit,
+        statement: JdbcTransaction.(testDB: TestDB, someAmounts: SomeAmounts) -> Unit,
     ) {
         val someAmounts = SomeAmounts
 
@@ -260,7 +260,7 @@ object DMLTestData {
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withSalesAndSomeAmounts(
         dialect: TestDB,
-        statement: Transaction.(
+        statement: JdbcTransaction.(
             testDB: TestDB,
             sales: Sales,
             someAmounts: SomeAmounts,

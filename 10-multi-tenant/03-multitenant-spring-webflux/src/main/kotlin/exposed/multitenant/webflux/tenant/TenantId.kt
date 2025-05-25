@@ -3,10 +3,10 @@ package exposed.multitenant.webflux.tenant
 import exposed.multitenant.webflux.tenant.Tenants.Tenant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.reactor.ReactorContext
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
 
@@ -51,7 +51,7 @@ suspend fun <T> newSuspendedTransactionWithTenant(
     db: Database? = null,
     transactionIsolation: Int? = null,
     readOnly: Boolean? = null,
-    statement: suspend Transaction.() -> T,
+    statement: suspend JdbcTransaction.() -> T,
 ): T {
     val currentTenant = tenant ?: currentTenant()
     val context = Dispatchers.IO + TenantId(currentTenant)
@@ -69,7 +69,7 @@ suspend fun <T> newSuspendedTransactionWithCurrentReactorTenant(
     db: Database? = null,
     transactionIsolation: Int? = null,
     readOnly: Boolean? = null,
-    statement: suspend Transaction.() -> T,
+    statement: suspend JdbcTransaction.() -> T,
 ): T = newSuspendedTransactionWithTenant(
     currentReactorTenant(),
     db,

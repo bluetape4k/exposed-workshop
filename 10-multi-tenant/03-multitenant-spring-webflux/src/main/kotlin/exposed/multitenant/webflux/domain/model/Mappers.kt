@@ -8,7 +8,7 @@ import exposed.multitenant.webflux.domain.model.MovieSchema.ActorEntity
 import exposed.multitenant.webflux.domain.model.MovieSchema.ActorTable
 import exposed.multitenant.webflux.domain.model.MovieSchema.MovieEntity
 import exposed.multitenant.webflux.domain.model.MovieSchema.MovieTable
-import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.v1.core.ResultRow
 
 fun ResultRow.toActorDTO() = ActorDTO(
     id = this[ActorTable.id].value,

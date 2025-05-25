@@ -13,16 +13,16 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainNone
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldStartWith
-import org.jetbrains.exposed.crypt.Algorithms
-import org.jetbrains.exposed.crypt.Encryptor
-import org.jetbrains.exposed.crypt.encryptedBinary
-import org.jetbrains.exposed.crypt.encryptedVarchar
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.Column
-import org.jetbrains.exposed.sql.exposedLogger
-import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.update
+import org.jetbrains.exposed.v1.core.Column
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.exposedLogger
+import org.jetbrains.exposed.v1.crypt.Algorithms
+import org.jetbrains.exposed.v1.crypt.Encryptor
+import org.jetbrains.exposed.v1.crypt.encryptedBinary
+import org.jetbrains.exposed.v1.crypt.encryptedVarchar
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.jdbc.update
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 

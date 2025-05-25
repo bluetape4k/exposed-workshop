@@ -11,10 +11,11 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldNotBeNull
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.stringLiteral
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.stringLiteral
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.jdbc.statements.jdbc.JdbcResult
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -114,17 +115,19 @@ class Ex04_ColumnDefinition: AbstractExposedTest() {
              *  WHERE TESTER.AMOUNT > 100
              * ```
              */
-            tester.selectImplicitAll()
-                .where { tester.amount greater 100 }
-                .execute(this)  // HINT: 이렇게 Statement.execute(transaction) 을 수행하면 java.sql.ResultSet 를 반환합니다.
-                .use { rs ->
-                    rs!!.next()
-                    rs.getInt(tester.amount.name) shouldBeEqualTo 999
+            val result = (
+                    tester.selectImplicitAll()
+                        .where { tester.amount greater 100 }
+                        .execute(this) as JdbcResult
+                    ).result
+            result.shouldNotBeNull()
+            result.next()
+            result.getInt(tester.amount.name) shouldBeEqualTo 999
 
-                    expectException<SQLException> {
-                        rs.getBoolean(tester.active.name)
-                    }
-                }
+            expectException<SQLException> {
+                result.getBoolean(tester.active.name)
+            }
+
 
             assertFails {
                 val row = tester.selectImplicitAll()
@@ -145,15 +148,17 @@ class Ex04_ColumnDefinition: AbstractExposedTest() {
              *  WHERE TESTER.AMOUNT > 100
              * ```
              */
-            tester.selectAll()
-                .where { tester.amount greater 100 }
-                .execute(this)   // HINT: 이렇게 Statement.execute(transaction) 을 수행하면 java.sql.ResultSet 를 반환합니다.
-                .use { rs ->
-                    rs.shouldNotBeNull()
-                    rs.next()
-                    rs.getInt(tester.amount.name) shouldBeEqualTo 999
-                    rs.getBoolean(tester.active.name).shouldBeTrue()
-                }
+            val result2 = (
+                    tester.selectAll()
+                        .where { tester.amount greater 100 }
+                        .execute(this) as JdbcResult
+                    ).result
+
+            result2.shouldNotBeNull()
+            result2.next()
+            result2.getInt(tester.amount.name) shouldBeEqualTo 999
+            result2.getBoolean(tester.active.name).shouldBeTrue()
+
         }
     }
 }

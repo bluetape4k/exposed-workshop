@@ -1,10 +1,10 @@
 package exposed.examples.custom.entities
 
 import io.bluetape4k.idgenerators.snowflake.Snowflakers
-import org.jetbrains.exposed.dao.LongEntity
-import org.jetbrains.exposed.dao.LongEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IdTable
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IdTable
+import org.jetbrains.exposed.v1.dao.LongEntity
+import org.jetbrains.exposed.v1.dao.LongEntityClass
 
 /**
  * 테이블의 `id` 컬럼을 클라이언트에서 생성한 Snowflake ID 값을 사용하는 Table

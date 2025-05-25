@@ -5,10 +5,11 @@ import exposed.workshop.springmvc.domain.MovieSchema.ActorTable
 import exposed.workshop.springmvc.domain.MovieSchema.MovieTable
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.batchInsert
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.core.and
+import org.jetbrains.exposed.v1.jdbc.batchInsert
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.ApplicationListener
 import org.springframework.stereotype.Component
@@ -36,15 +37,15 @@ class DataInitializer: ApplicationListener<ApplicationReadyEvent> {
 
         log.info { "Inserting sample actors and movies ..." }
 
-        val johnnyDepp = ActorDTO("Johnny", "Depp", "1979-10-28")
-        val bradPitt = ActorDTO("Brad", "Pitt", "1982-05-16")
-        val angelinaJolie = ActorDTO("Angelina", "Jolie", "1983-11-10")
-        val jenniferAniston = ActorDTO("Jennifer", "Aniston", "1975-07-23")
-        val angelinaGrace = ActorDTO("Angelina", "Grace", "1988-09-02")
-        val craigDaniel = ActorDTO("Craig", "Daniel", "1970-11-12")
-        val ellenPaige = ActorDTO("Ellen", "Paige", "1981-12-20")
-        val russellCrowe = ActorDTO("Russell", "Crowe", "1970-01-20")
-        val edwardNorton = ActorDTO("Edward", "Norton", "1975-04-03")
+        val johnnyDepp = ActorDTO(0L, "Johnny", "Depp", "1979-10-28")
+        val bradPitt = ActorDTO(0L, "Brad", "Pitt", "1982-05-16")
+        val angelinaJolie = ActorDTO(0L, "Angelina", "Jolie", "1983-11-10")
+        val jenniferAniston = ActorDTO(0L, "Jennifer", "Aniston", "1975-07-23")
+        val angelinaGrace = ActorDTO(0L, "Angelina", "Grace", "1988-09-02")
+        val craigDaniel = ActorDTO(0L, "Craig", "Daniel", "1970-11-12")
+        val ellenPaige = ActorDTO(0L, "Ellen", "Paige", "1981-12-20")
+        val russellCrowe = ActorDTO(0L, "Russell", "Crowe", "1970-01-20")
+        val edwardNorton = ActorDTO(0L, "Edward", "Norton", "1975-04-03")
 
         val actors = listOf(
             johnnyDepp,
@@ -60,24 +61,28 @@ class DataInitializer: ApplicationListener<ApplicationReadyEvent> {
 
         val movies = listOf(
             MovieWithActorDTO(
+                0L,
                 "Gladiator",
                 johnnyDepp.firstName,
                 "2000-05-01",
                 mutableListOf(russellCrowe, ellenPaige, craigDaniel)
             ),
             MovieWithActorDTO(
+                0L,
                 "Guardians of the galaxy",
                 johnnyDepp.firstName,
                 "2014-07-21",
                 mutableListOf(angelinaGrace, bradPitt, ellenPaige, angelinaJolie, johnnyDepp)
             ),
             MovieWithActorDTO(
+                0L,
                 "Fight club",
                 craigDaniel.firstName,
                 "1999-09-13",
                 mutableListOf(bradPitt, jenniferAniston, edwardNorton)
             ),
             MovieWithActorDTO(
+                0L,
                 "13 Reasons Why",
                 "Suzuki",
                 "2016-01-01",

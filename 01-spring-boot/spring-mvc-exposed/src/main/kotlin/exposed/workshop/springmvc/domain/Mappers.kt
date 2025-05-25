@@ -3,7 +3,7 @@ package exposed.workshop.springmvc.domain
 import exposed.workshop.springmvc.domain.MovieSchema.ActorEntity
 import exposed.workshop.springmvc.domain.MovieSchema.ActorTable
 import exposed.workshop.springmvc.domain.MovieSchema.MovieEntity
-import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.v1.core.ResultRow
 
 fun ResultRow.toActorDTO() = ActorDTO(
     id = this[ActorTable.id].value,

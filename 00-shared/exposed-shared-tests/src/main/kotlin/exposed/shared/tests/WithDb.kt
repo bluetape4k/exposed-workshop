@@ -4,14 +4,14 @@ import io.bluetape4k.logging.KotlinLogging
 import io.bluetape4k.logging.info
 import io.bluetape4k.utils.Runtimex
 import kotlinx.coroutines.Dispatchers
-import org.jetbrains.exposed.sql.DatabaseConfig
-import org.jetbrains.exposed.sql.Key
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.statements.StatementInterceptor
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.nullableTransactionScope
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.transactions.transactionManager
+import org.jetbrains.exposed.v1.core.DatabaseConfig
+import org.jetbrains.exposed.v1.core.Key
+import org.jetbrains.exposed.v1.core.statements.StatementInterceptor
+import org.jetbrains.exposed.v1.core.transactions.nullableTransactionScope
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
+import org.jetbrains.exposed.v1.jdbc.transactions.transactionManager
 import kotlin.coroutines.CoroutineContext
 
 private val logger by lazy { KotlinLogging.logger {} }
@@ -29,7 +29,7 @@ object CurrentTestDBInterceptor: StatementInterceptor {
 fun withDb(
     testDB: TestDB,
     configure: (DatabaseConfig.Builder.() -> Unit)? = {},
-    statement: Transaction.(TestDB) -> Unit,
+    statement: JdbcTransaction.(TestDB) -> Unit,
 ) {
     logger.info { "Running `withDb` for $testDB" }
 
@@ -71,7 +71,7 @@ suspend fun withSuspendedDb(
     testDB: TestDB,
     context: CoroutineContext? = Dispatchers.IO,
     configure: (DatabaseConfig.Builder.() -> Unit)? = { },
-    statement: suspend Transaction.(TestDB) -> Unit,
+    statement: suspend JdbcTransaction.(TestDB) -> Unit,
 ) {
     logger.info { "Running withSuspendedDb for $testDB" }
 

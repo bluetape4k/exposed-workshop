@@ -7,7 +7,7 @@ import exposed.multitenant.springweb.tenant.Tenants
 import exposed.shared.repository.toActorDTO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.api.Test
 import org.springframework.test.annotation.Commit
 import org.springframework.transaction.annotation.Transactional

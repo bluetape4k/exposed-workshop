@@ -6,14 +6,14 @@ import io.bluetape4k.jdbc.JdbcDrivers
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.exposed.dao.id.LongIdTable
-import org.jetbrains.exposed.spring.SpringTransactionManager
-import org.jetbrains.exposed.sql.DatabaseConfig
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.deleteAll
-import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.core.DatabaseConfig
+import org.jetbrains.exposed.v1.core.ResultRow
+import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
+import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.deleteAll
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.spring.transaction.SpringTransactionManager
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
@@ -214,7 +214,7 @@ class SpringMultiContainerTransactionTest {
         fun findAll(): List<ResultRow> = Order.selectAll().toList()
 
         fun findAllWithExposedTrxBlock(): List<ResultRow> =
-            org.jetbrains.exposed.sql.transactions.transaction {
+            org.jetbrains.exposed.v1.jdbc.transactions.transaction {
                 findAll()
             }
 
@@ -224,7 +224,7 @@ class SpringMultiContainerTransactionTest {
             }.value
 
         fun createWithExposedTxBlock(buyerId: Long = 123L): Long =
-            org.jetbrains.exposed.sql.transactions.transaction {
+            org.jetbrains.exposed.v1.jdbc.transactions.transaction {
                 create(buyerId)
             }
 
@@ -276,7 +276,7 @@ class SpringMultiContainerTransactionTest {
         fun findAll(): List<ResultRow> = Payment.selectAll().toList()
 
         fun findAllWithExposedTxBlock(): List<ResultRow> =
-            org.jetbrains.exposed.sql.transactions.transaction {
+            org.jetbrains.exposed.v1.jdbc.transactions.transaction {
                 findAll()
             }
 
@@ -286,7 +286,7 @@ class SpringMultiContainerTransactionTest {
             }.value
 
         fun createWithExposedTxBlock(state: String = "created"): Long =
-            org.jetbrains.exposed.sql.transactions.transaction {
+            org.jetbrains.exposed.v1.jdbc.transactions.transaction {
                 create(state)
             }
 

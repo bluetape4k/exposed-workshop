@@ -6,14 +6,14 @@ import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.junit5.faker.Fakers
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
-import org.jetbrains.exposed.sql.SizedIterable
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.core.ReferenceOption
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.SizedIterable
+import org.jetbrains.exposed.v1.jdbc.selectAll
 
 object JoinSchema {
 
@@ -21,7 +21,7 @@ object JoinSchema {
 
     val allTables = arrayOf(AddressTable, UserAddressTable, UserTable)
 
-    fun withJoinSchema(testDB: TestDB, statement: Transaction.() -> Unit) {
+    fun withJoinSchema(testDB: TestDB, statement: JdbcTransaction.() -> Unit) {
         withTables(testDB, *allTables) {
             statement()
         }
@@ -67,8 +67,18 @@ object JoinSchema {
      * ```
      */
     object UserAddressTable: IntIdTable("join_user_address") {
-        val userId = reference("user_id", UserTable, onDelete = CASCADE, onUpdate = CASCADE).index()
-        val addressId = reference("address_id", AddressTable, onDelete = CASCADE, onUpdate = CASCADE)
+        val userId = reference(
+            "user_id",
+            UserTable,
+            onDelete = ReferenceOption.CASCADE,
+            onUpdate = ReferenceOption.CASCADE
+        ).index()
+        val addressId = reference(
+            "address_id",
+            AddressTable,
+            onDelete = ReferenceOption.CASCADE,
+            onUpdate = ReferenceOption.CASCADE
+        )
 
         val type = varchar("addr_type", 255)
 

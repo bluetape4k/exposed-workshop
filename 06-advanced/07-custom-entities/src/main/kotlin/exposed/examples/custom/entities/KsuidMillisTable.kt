@@ -1,11 +1,11 @@
 package exposed.examples.custom.entities
 
 import io.bluetape4k.idgenerators.ksuid.KsuidMillis
-import org.jetbrains.exposed.dao.Entity
-import org.jetbrains.exposed.dao.EntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IdTable
-import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.v1.core.Column
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IdTable
+import org.jetbrains.exposed.v1.dao.Entity
+import org.jetbrains.exposed.v1.dao.EntityClass
 
 /**
  * Primary Key 를 Client에서 생성되는 [KsuidMillis] 값으로 사용하는 Table

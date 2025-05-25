@@ -2,10 +2,10 @@ package exposed.examples.custom.columns.compress
 
 import io.bluetape4k.io.compressor.Compressor
 import io.bluetape4k.io.compressor.Compressors
-import org.jetbrains.exposed.sql.BlobColumnType
-import org.jetbrains.exposed.sql.ColumnTransformer
-import org.jetbrains.exposed.sql.ColumnWithTransform
-import org.jetbrains.exposed.sql.statements.api.ExposedBlob
+import org.jetbrains.exposed.v1.core.BlobColumnType
+import org.jetbrains.exposed.v1.core.ColumnTransformer
+import org.jetbrains.exposed.v1.core.ColumnWithTransform
+import org.jetbrains.exposed.v1.core.statements.api.ExposedBlob
 
 /**
  * 주어진 `compressor` 를 이용하여, 압축하여 DB Blob 컬럼에 저장하고,

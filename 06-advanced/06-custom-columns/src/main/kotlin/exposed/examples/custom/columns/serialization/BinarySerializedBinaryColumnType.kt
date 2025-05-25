@@ -2,9 +2,9 @@ package exposed.examples.custom.columns.serialization
 
 import io.bluetape4k.io.serializer.BinarySerializer
 import io.bluetape4k.io.serializer.BinarySerializers
-import org.jetbrains.exposed.sql.BinaryColumnType
-import org.jetbrains.exposed.sql.ColumnTransformer
-import org.jetbrains.exposed.sql.ColumnWithTransform
+import org.jetbrains.exposed.v1.core.BinaryColumnType
+import org.jetbrains.exposed.v1.core.ColumnTransformer
+import org.jetbrains.exposed.v1.core.ColumnWithTransform
 
 class BinarySerializedBinaryColumnType<T: Any>(
     length: Int,

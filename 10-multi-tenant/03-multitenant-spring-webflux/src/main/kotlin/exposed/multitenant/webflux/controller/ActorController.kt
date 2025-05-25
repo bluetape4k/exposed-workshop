@@ -1,7 +1,6 @@
 package exposed.multitenant.webflux.controller
 
 import exposed.multitenant.webflux.domain.dtos.ActorDTO
-import exposed.multitenant.webflux.domain.model.toActorDTO
 import exposed.multitenant.webflux.domain.repository.ActorExposedRepository
 import exposed.multitenant.webflux.tenant.newSuspendedTransactionWithCurrentReactorTenant
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -23,12 +22,12 @@ class ActorController(
 
     @GetMapping
     suspend fun getAllActors(): List<ActorDTO> = newSuspendedTransactionWithCurrentReactorTenant {
-        actorRepository.findAll().map { it.toActorDTO() }
+        actorRepository.findAll()
     }
 
     @GetMapping("/{id}")
     suspend fun findById(@PathVariable("id") id: Long): ActorDTO? =
         newSuspendedTransactionWithCurrentReactorTenant {
-            actorRepository.findByIdOrNull(id)?.toActorDTO()
+            actorRepository.findByIdOrNull(id)
         }
 }

@@ -1,9 +1,7 @@
 plugins {
     kotlin("plugin.spring")
     id(Plugins.spring_boot)
-    id(Plugins.graalvm_native)
 }
-
 
 springBoot {
     mainClass.set("exposed.examples.suspendedcache.SpringSuspendedCacheApplicationKt")

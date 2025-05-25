@@ -10,17 +10,17 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeLessOrEqualTo
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.entityCache
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.Column
-import org.jetbrains.exposed.sql.SizedIterable
-import org.jetbrains.exposed.sql.SortOrder.DESC
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.v1.core.Column
+import org.jetbrains.exposed.v1.core.SortOrder
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.dao.entityCache
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.SizedIterable
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -128,7 +128,7 @@ class Ex13_OrderedReference: AbstractExposedTest() {
 
     private val unsortedRatingValues = listOf(0, 3, 1, 2, 4, 4, 5, 4, 5, 6, 9, 8)
 
-    private fun withOrderedReferenceTestTables(testDB: TestDB, statement: Transaction.(TestDB) -> Unit) {
+    private fun withOrderedReferenceTestTables(testDB: TestDB, statement: JdbcTransaction.(TestDB) -> Unit) {
         withTables(testDB, Users, UserRatings, UserNullableRatings) {
             val userId = Users.insertAndGetId {}
             unsortedRatingValues.forEach { value ->
@@ -234,8 +234,8 @@ class Ex13_OrderedReference: AbstractExposedTest() {
          */
         val ratings: SizedIterable<UserRatingMultiColumn> by UserRatingMultiColumn
             .referrersOn(UserRatings.userId)
-            .orderBy(UserRatings.value to DESC)
-            .orderBy(UserRatings.id to DESC)
+            .orderBy(UserRatings.value to SortOrder.DESC)
+            .orderBy(UserRatings.id to SortOrder.DESC)
 
         /**
          * nullableRatings 을 [UserNullableRatings.value], [UserNullableRatings.id]로 내림차순 정렬합니다.
@@ -243,8 +243,8 @@ class Ex13_OrderedReference: AbstractExposedTest() {
         val nullableRatings: SizedIterable<UserNullableRatingMultiColumn> by UserNullableRatingMultiColumn
             .optionalReferrersOn(UserNullableRatings.userId)
             .orderBy(
-                UserNullableRatings.value to DESC,
-                UserNullableRatings.id to DESC
+                UserNullableRatings.value to SortOrder.DESC,
+                UserNullableRatings.id to SortOrder.DESC
             )
 
         override fun equals(other: Any?): Boolean = idEquals(other)
@@ -338,8 +338,8 @@ class Ex13_OrderedReference: AbstractExposedTest() {
          */
         val ratings: SizedIterable<UserRatingChainedColumn> by UserRatingChainedColumn
             .referrersOn(UserRatings.userId)
-            .orderBy(UserRatings.value to DESC)       // value DESC
-            .orderBy(UserRatings.id to DESC)          // id DESC
+            .orderBy(UserRatings.value to SortOrder.DESC)       // value DESC
+            .orderBy(UserRatings.id to SortOrder.DESC)          // id DESC
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()

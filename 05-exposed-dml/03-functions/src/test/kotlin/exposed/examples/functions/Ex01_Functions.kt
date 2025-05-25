@@ -17,51 +17,51 @@ import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.AndBitOp
-import org.jetbrains.exposed.sql.CharLength
-import org.jetbrains.exposed.sql.Coalesce
-import org.jetbrains.exposed.sql.Concat
-import org.jetbrains.exposed.sql.CustomFunction
-import org.jetbrains.exposed.sql.CustomLongFunction
-import org.jetbrains.exposed.sql.CustomOperator
-import org.jetbrains.exposed.sql.CustomStringFunction
-import org.jetbrains.exposed.sql.DecimalColumnType
-import org.jetbrains.exposed.sql.DivideOp
-import org.jetbrains.exposed.sql.Expression
-import org.jetbrains.exposed.sql.ExpressionWithColumnType
-import org.jetbrains.exposed.sql.IntegerColumnType
-import org.jetbrains.exposed.sql.LongColumnType
-import org.jetbrains.exposed.sql.LowerCase
-import org.jetbrains.exposed.sql.ModOp
-import org.jetbrains.exposed.sql.Op
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.SqlExpressionBuilder
-import org.jetbrains.exposed.sql.Sum
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.Table.Dual
-import org.jetbrains.exposed.sql.UpperCase
-import org.jetbrains.exposed.sql.alias
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.andIfNotNull
-import org.jetbrains.exposed.sql.charLength
-import org.jetbrains.exposed.sql.exists
-import org.jetbrains.exposed.sql.function
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.intLiteral
-import org.jetbrains.exposed.sql.intParam
-import org.jetbrains.exposed.sql.locate
-import org.jetbrains.exposed.sql.lowerCase
-import org.jetbrains.exposed.sql.or
-import org.jetbrains.exposed.sql.orIfNotNull
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.stringLiteral
-import org.jetbrains.exposed.sql.stringParam
-import org.jetbrains.exposed.sql.substring
-import org.jetbrains.exposed.sql.sum
-import org.jetbrains.exposed.sql.upperCase
-import org.jetbrains.exposed.sql.vendors.MysqlDialect
-import org.jetbrains.exposed.sql.vendors.SQLServerDialect
+import org.jetbrains.exposed.v1.core.AndBitOp
+import org.jetbrains.exposed.v1.core.CharLength
+import org.jetbrains.exposed.v1.core.Coalesce
+import org.jetbrains.exposed.v1.core.Concat
+import org.jetbrains.exposed.v1.core.CustomFunction
+import org.jetbrains.exposed.v1.core.CustomLongFunction
+import org.jetbrains.exposed.v1.core.CustomOperator
+import org.jetbrains.exposed.v1.core.CustomStringFunction
+import org.jetbrains.exposed.v1.core.DecimalColumnType
+import org.jetbrains.exposed.v1.core.DivideOp
+import org.jetbrains.exposed.v1.core.Expression
+import org.jetbrains.exposed.v1.core.ExpressionWithColumnType
+import org.jetbrains.exposed.v1.core.IntegerColumnType
+import org.jetbrains.exposed.v1.core.LongColumnType
+import org.jetbrains.exposed.v1.core.LowerCase
+import org.jetbrains.exposed.v1.core.ModOp
+import org.jetbrains.exposed.v1.core.Op
+import org.jetbrains.exposed.v1.core.ResultRow
+import org.jetbrains.exposed.v1.core.SqlExpressionBuilder
+import org.jetbrains.exposed.v1.core.Sum
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.UpperCase
+import org.jetbrains.exposed.v1.core.alias
+import org.jetbrains.exposed.v1.core.and
+import org.jetbrains.exposed.v1.core.andIfNotNull
+import org.jetbrains.exposed.v1.core.charLength
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.exists
+import org.jetbrains.exposed.v1.core.function
+import org.jetbrains.exposed.v1.core.intLiteral
+import org.jetbrains.exposed.v1.core.intParam
+import org.jetbrains.exposed.v1.core.locate
+import org.jetbrains.exposed.v1.core.lowerCase
+import org.jetbrains.exposed.v1.core.or
+import org.jetbrains.exposed.v1.core.orIfNotNull
+import org.jetbrains.exposed.v1.core.stringLiteral
+import org.jetbrains.exposed.v1.core.stringParam
+import org.jetbrains.exposed.v1.core.substring
+import org.jetbrains.exposed.v1.core.sum
+import org.jetbrains.exposed.v1.core.upperCase
+import org.jetbrains.exposed.v1.core.vendors.MysqlDialect
+import org.jetbrains.exposed.v1.core.vendors.SQLServerDialect
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.math.BigDecimal
@@ -825,9 +825,9 @@ class Ex01_Functions: Ex00_FunctionBase() {
                 cities.insert { it[name] = "city-1" }
             }
 
-            val rand = org.jetbrains.exposed.sql.Random()  // BigDecimal 을 반환한다.
+            val rand = org.jetbrains.exposed.v1.core.Random()  // BigDecimal 을 반환한다.
 
-            val resultRow = Dual.select(rand).single()
+            val resultRow = Table.Dual.select(rand).single()
 
             resultRow[rand].shouldNotBeNull().apply {
                 log.debug { "Random=$this" }
@@ -910,7 +910,7 @@ class Ex01_Functions: Ex00_FunctionBase() {
                 stringLiteral("Foo"),
                 stringLiteral("Bar")
             )
-            val result = Dual.select(concatField).single()
+            val result = Table.Dual.select(concatField).single()
             result[concatField] shouldBeEqualTo "FooBar"
 
             val concatField2: Concat = SqlExpressionBuilder
@@ -922,7 +922,7 @@ class Ex01_Functions: Ex00_FunctionBase() {
                     )
                 )
 
-            val result2 = Dual.select(concatField2).single()
+            val result2 = Table.Dual.select(concatField2).single()
             result2[concatField2] shouldBeEqualTo "Foo!Bar"
         }
     }

@@ -5,6 +5,7 @@ import exposed.multitenant.springweb.domain.dtos.MovieDTO
 import exposed.multitenant.springweb.domain.dtos.MovieWithActorDTO
 import exposed.multitenant.springweb.domain.dtos.MovieWithProducingActorDTO
 import exposed.multitenant.springweb.domain.dtos.toActorDTO
+import exposed.multitenant.springweb.domain.dtos.toMovieDTO
 import exposed.multitenant.springweb.domain.dtos.toMovieWithActorDTO
 import exposed.multitenant.springweb.domain.dtos.toMovieWithProducingActorDTO
 import exposed.multitenant.springweb.domain.model.MovieSchema.ActorInMovieTable
@@ -14,26 +15,28 @@ import exposed.multitenant.springweb.domain.model.MovieSchema.MovieTable
 import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.jetbrains.exposed.dao.load
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.andWhere
-import org.jetbrains.exposed.sql.count
-import org.jetbrains.exposed.sql.innerJoin
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.core.ResultRow
+import org.jetbrains.exposed.v1.core.count
+import org.jetbrains.exposed.v1.core.innerJoin
+import org.jetbrains.exposed.v1.dao.load
+import org.jetbrains.exposed.v1.jdbc.andWhere
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Repository
-class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
+class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
 
     companion object: KLogging()
 
     override val table = MovieTable
-    override fun ResultRow.toEntity(): MovieEntity = MovieEntity.wrapRow(this)
+    override fun ResultRow.toEntity() = toMovieDTO()
 
     @Transactional(readOnly = true)
-    fun searchMovies(params: Map<String, String?>): List<MovieEntity> {
+    fun searchMovies(params: Map<String, String?>): List<MovieDTO> {
         log.debug { "Search Movie by params. params=$params" }
 
         val query = table.selectAll()
@@ -52,17 +55,18 @@ class MovieExposedRepository: ExposedRepository<MovieEntity, Long> {
             }
         }
 
-        return MovieEntity.wrapRows(query).toList()
+        return query.map { it.toEntity() }
     }
 
-    fun create(movieDto: MovieDTO): MovieEntity {
+    fun create(movieDto: MovieDTO): MovieDTO {
         log.debug { "Create new movie. movie: $movieDto" }
 
-        return MovieEntity.new {
-            name = movieDto.name
-            producerName = movieDto.producerName
-            releaseDate = LocalDate.parse(movieDto.releaseDate)
+        val id = MovieTable.insertAndGetId {
+            it[name] = movieDto.name
+            it[producerName] = movieDto.producerName
+            it[releaseDate] = LocalDate.parse(movieDto.releaseDate)
         }
+        return movieDto.copy(id = id.value)
     }
 
 

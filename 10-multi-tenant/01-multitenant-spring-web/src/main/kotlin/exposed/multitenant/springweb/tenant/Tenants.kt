@@ -1,6 +1,6 @@
 package exposed.multitenant.springweb.tenant
 
-import org.jetbrains.exposed.sql.Schema
+import org.jetbrains.exposed.v1.core.Schema
 
 object Tenants {
 

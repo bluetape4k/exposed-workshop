@@ -7,9 +7,7 @@ import org.springframework.boot.runApplication
 
 @SpringBootApplication
 class SpringWebfluxApplication {
-
     companion object: KLoggingChannel()
-
 }
 
 fun main(vararg args: String) {

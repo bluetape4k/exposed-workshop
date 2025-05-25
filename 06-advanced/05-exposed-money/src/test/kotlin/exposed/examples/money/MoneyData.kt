@@ -3,13 +3,12 @@ package exposed.examples.money
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
-import org.jetbrains.exposed.dao.EntityClass
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.money.CompositeMoneyColumn
-import org.jetbrains.exposed.sql.money.compositeMoney
-import org.jetbrains.exposed.sql.money.nullable
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.EntityClass
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.money.compositeMoney
+import org.jetbrains.exposed.v1.money.nullable
 import java.math.BigDecimal
 import javax.money.CurrencyUnit
 import javax.money.MonetaryAmount
@@ -44,7 +43,7 @@ internal const val AMOUNT_SCALE = 5
  * ```
  */
 internal object AccountTable: IntIdTable("Accounts") {
-    val composite_money: CompositeMoneyColumn<BigDecimal?, CurrencyUnit?, MonetaryAmount?> =
+    val composite_money =
         compositeMoney(8, AMOUNT_SCALE, "composite_money").nullable()
 
     init {

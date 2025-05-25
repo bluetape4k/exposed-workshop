@@ -4,13 +4,13 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.stringLiteral
-import org.jetbrains.exposed.sql.substring
-import org.jetbrains.exposed.sql.trim
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.stringLiteral
+import org.jetbrains.exposed.v1.core.substring
+import org.jetbrains.exposed.v1.core.trim
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.selectAll
 
 object Schema {
 
@@ -61,7 +61,7 @@ object Schema {
     /**
      * [CityTable], [UserTable]을 이용하여 [statement]를 수행합니다.
      */
-    fun withCityUsers(testDB: TestDB, statement: Transaction.() -> Unit) {
+    fun withCityUsers(testDB: TestDB, statement: JdbcTransaction.() -> Unit) {
         withTables(testDB, CityTable, UserTable) {
             insertSampleData()
             commit()
@@ -73,7 +73,7 @@ object Schema {
     /**
      * [CityTable], [UserTable]을 이용하여 Coroutines 환경에서 [statement]를 수행합니다.
      */
-    suspend fun withSuspendedCityUsers(testDB: TestDB, statement: suspend Transaction.() -> Unit) {
+    suspend fun withSuspendedCityUsers(testDB: TestDB, statement: suspend JdbcTransaction.() -> Unit) {
         withSuspendedTables(testDB, CityTable, UserTable) {
             insertSampleData()
             commit()

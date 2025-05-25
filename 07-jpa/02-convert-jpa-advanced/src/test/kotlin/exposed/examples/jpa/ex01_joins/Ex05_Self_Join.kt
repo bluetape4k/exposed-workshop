@@ -7,10 +7,11 @@ import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
-import org.jetbrains.exposed.sql.Alias
-import org.jetbrains.exposed.sql.Join
-import org.jetbrains.exposed.sql.alias
-import org.jetbrains.exposed.sql.innerJoin
+import org.jetbrains.exposed.v1.core.Alias
+import org.jetbrains.exposed.v1.core.Join
+import org.jetbrains.exposed.v1.core.alias
+import org.jetbrains.exposed.v1.core.innerJoin
+import org.jetbrains.exposed.v1.jdbc.select
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource

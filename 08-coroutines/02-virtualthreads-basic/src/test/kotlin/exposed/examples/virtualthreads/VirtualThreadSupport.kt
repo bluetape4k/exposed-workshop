@@ -3,10 +3,10 @@ package exposed.examples.virtualthreads
 import io.bluetape4k.concurrent.virtualthread.VirtualFuture
 import io.bluetape4k.concurrent.virtualthread.VirtualThreadExecutor
 import io.bluetape4k.concurrent.virtualthread.virtualFuture
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.transactions.transactionManager
+import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
+import org.jetbrains.exposed.v1.jdbc.transactions.transactionManager
 import java.util.concurrent.ExecutorService
 
 /**
@@ -17,7 +17,7 @@ fun <T> newVirtualThreadTransaction(
     db: Database? = null,
     transactionIsolation: Int? = null,
     readOnly: Boolean = false,
-    statement: Transaction.() -> T,
+    statement: JdbcTransaction.() -> T,
 ): T =
     virtualThreadTransactionAsync(executor, db, transactionIsolation, readOnly, statement).await()
 
@@ -30,7 +30,7 @@ fun <T> virtualThreadTransactionAsync(
     db: Database? = null,
     transactionIsolation: Int? = null,
     readOnly: Boolean = false,
-    statement: Transaction.() -> T,
+    statement: JdbcTransaction.() -> T,
 ): VirtualFuture<T> = virtualFuture(executor = executor ?: VirtualThreadExecutor) {
     val isolationLevel = transactionIsolation ?: db.transactionManager.defaultIsolationLevel
     transaction(db = db, transactionIsolation = isolationLevel, readOnly = readOnly) {

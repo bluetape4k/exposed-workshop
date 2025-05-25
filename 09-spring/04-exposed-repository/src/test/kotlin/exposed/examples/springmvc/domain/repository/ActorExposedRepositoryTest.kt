@@ -2,7 +2,6 @@ package exposed.examples.springmvc.domain.repository
 
 import exposed.examples.springmvc.AbstractExposedRepositoryTest
 import exposed.examples.springmvc.domain.dtos.ActorDTO
-import exposed.examples.springmvc.domain.dtos.toActorDTO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -30,7 +29,7 @@ class ActorExposedRepositoryTest(
     fun `find actor by id`() {
         val actorId = 1L
 
-        val actor = actorRepo.findByIdOrNull(actorId)?.toActorDTO()
+        val actor = actorRepo.findByIdOrNull(actorId)
         actor.shouldNotBeNull()
         actor.id shouldBeEqualTo actorId
     }
@@ -39,7 +38,7 @@ class ActorExposedRepositoryTest(
     @Transactional(readOnly = true)
     fun `search actors by lastName`() {
         val params = mapOf("lastName" to "Depp")
-        val actors = actorRepo.searchActors(params).map { it.toActorDTO() }
+        val actors = actorRepo.searchActors(params)
 
         actors.shouldNotBeEmpty()
         actors.forEach {
@@ -53,7 +52,7 @@ class ActorExposedRepositoryTest(
 
         val currentCount = actorRepo.count()
 
-        val savedActor = actorRepo.create(actor).toActorDTO()
+        val savedActor = actorRepo.create(actor)
         savedActor shouldBeEqualTo actor.copy(id = savedActor.id)
 
         val newCount = actorRepo.count()
@@ -63,7 +62,7 @@ class ActorExposedRepositoryTest(
     @Test
     fun `delete actor by id`() {
         val actor = newActorDTO()
-        val savedActor = actorRepo.create(actor).toActorDTO()
+        val savedActor = actorRepo.create(actor)
         savedActor.shouldNotBeNull()
 
         val deletedCount = actorRepo.deleteById(savedActor.id!!)

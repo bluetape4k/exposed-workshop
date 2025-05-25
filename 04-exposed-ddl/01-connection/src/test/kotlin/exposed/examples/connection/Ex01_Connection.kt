@@ -8,9 +8,9 @@ import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
-import org.jetbrains.exposed.dao.id.LongIdTable
-import org.jetbrains.exposed.sql.vendors.ColumnMetadata
-import org.jetbrains.exposed.sql.vendors.H2Dialect
+import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
+import org.jetbrains.exposed.v1.core.vendors.ColumnMetadata
+import org.jetbrains.exposed.v1.core.vendors.H2Dialect
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

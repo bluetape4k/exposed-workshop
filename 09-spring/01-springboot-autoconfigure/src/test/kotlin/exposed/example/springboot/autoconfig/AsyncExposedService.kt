@@ -4,8 +4,8 @@ import exposed.example.springboot.tables.TestEntity
 import exposed.example.springboot.tables.TestTable
 import io.bluetape4k.concurrent.virtualthread.virtualFuture
 import io.bluetape4k.logging.coroutines.KLoggingChannel
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
 import java.util.concurrent.CompletableFuture

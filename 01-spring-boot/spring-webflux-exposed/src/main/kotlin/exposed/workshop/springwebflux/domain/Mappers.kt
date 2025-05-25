@@ -4,7 +4,7 @@ import exposed.workshop.springwebflux.domain.MovieSchema.ActorEntity
 import exposed.workshop.springwebflux.domain.MovieSchema.ActorTable
 import exposed.workshop.springwebflux.domain.MovieSchema.MovieEntity
 import exposed.workshop.springwebflux.domain.MovieSchema.MovieTable
-import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.v1.core.ResultRow
 
 fun ResultRow.toActorDTO() = ActorDTO(
     id = this[ActorTable.id].value,

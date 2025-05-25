@@ -12,23 +12,23 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.times
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.alias
-import org.jetbrains.exposed.sql.batchInsert
-import org.jetbrains.exposed.sql.deleteReturning
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.insertReturning
-import org.jetbrains.exposed.sql.lowerCase
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.statements.ReturningStatement
-import org.jetbrains.exposed.sql.updateReturning
-import org.jetbrains.exposed.sql.upsertReturning
+import org.jetbrains.exposed.v1.core.ResultRow
+import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.times
+import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.alias
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.lowerCase
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.jdbc.batchInsert
+import org.jetbrains.exposed.v1.jdbc.deleteReturning
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.insertReturning
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.jdbc.statements.ReturningBlockingExecutable
+import org.jetbrains.exposed.v1.jdbc.updateReturning
+import org.jetbrains.exposed.v1.jdbc.upsertReturning
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -329,11 +329,11 @@ class Ex15_Returning: AbstractExposedTest() {
         withTables(testDB, Items) {
             // 실행이 되려면, `singleOrNull()` 또는 `single()`을 호출해야 합니다.
             // 실행이 되지 않았으므로 `ReturningStatement`가 반환됩니다.
-            val stmt: ReturningStatement = Items.insertReturning {
+            val stmt = Items.insertReturning {
                 it[name] = "A"
                 it[price] = 99.0
             } //.singleOrNull()
-            assertIs<ReturningStatement>(stmt)
+            assertIs<ReturningBlockingExecutable>(stmt)
 
             Items.selectAll().count() shouldBeEqualTo 0L
 

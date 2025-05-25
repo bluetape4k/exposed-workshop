@@ -1,6 +1,6 @@
 package exposed.multitenant.webflux.tenant
 
-import org.jetbrains.exposed.sql.Schema
+import org.jetbrains.exposed.v1.core.Schema
 
 
 internal fun getSchemaDefinition(tenant: Tenants.Tenant): Schema =

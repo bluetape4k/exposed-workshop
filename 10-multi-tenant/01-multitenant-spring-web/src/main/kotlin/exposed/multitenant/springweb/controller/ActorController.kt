@@ -1,7 +1,6 @@
 package exposed.multitenant.springweb.controller
 
 import exposed.multitenant.springweb.domain.dtos.ActorDTO
-import exposed.multitenant.springweb.domain.dtos.toActorDTO
 import exposed.multitenant.springweb.domain.repository.ActorExposedRepository
 import io.bluetape4k.logging.KLogging
 import org.springframework.transaction.annotation.Transactional
@@ -20,6 +19,6 @@ class ActorController(
 
     @GetMapping
     fun getAllActors(): List<ActorDTO> {
-        return actorRepository.findAll().map { it.toActorDTO() }
+        return actorRepository.findAll()
     }
 }

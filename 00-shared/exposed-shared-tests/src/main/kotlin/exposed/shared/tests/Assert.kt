@@ -1,6 +1,7 @@
 package exposed.shared.tests
 
-import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.v1.core.Transaction
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
@@ -16,7 +17,7 @@ fun Transaction.assertFalse(actual: Boolean) = assertFalse(!actual, "Failed on $
 fun <T> Transaction.assertEquals(exp: T, act: T) = assertEquals(exp, act, "Failed on $failedOn")
 fun <T> Transaction.assertEquals(exp: T, act: Collection<T>) = assertEquals(exp, act.single(), "Failed on $failedOn")
 
-fun Transaction.assertFailAndRollback(message: String, block: () -> Unit) {
+fun JdbcTransaction.assertFailAndRollback(message: String, block: () -> Unit) {
     commit()
     assertFails("Failed on ${currentDialectTest.name}. $message") {
         block()

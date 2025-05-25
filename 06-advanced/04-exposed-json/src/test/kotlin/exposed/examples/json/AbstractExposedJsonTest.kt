@@ -8,10 +8,10 @@ import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.insertAndGetId
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.junit.jupiter.api.Assumptions
 
 abstract class AbstractExposedJsonTest: AbstractExposedTest() {
@@ -21,7 +21,7 @@ abstract class AbstractExposedJsonTest: AbstractExposedTest() {
 
     protected fun withJsonTable(
         testDB: TestDB,
-        statement: Transaction.(tester: JsonTable, user1: User, data1: DataHolder) -> Unit,
+        statement: JdbcTransaction.(tester: JsonTable, user1: User, data1: DataHolder) -> Unit,
     ) {
         val tester = JsonTable
 
@@ -45,7 +45,7 @@ abstract class AbstractExposedJsonTest: AbstractExposedTest() {
 
     protected fun withJsonBTable(
         testDB: TestDB,
-        statement: Transaction.(tester: JsonBTable, user1: User, data1: DataHolder) -> Unit,
+        statement: JdbcTransaction.(tester: JsonBTable, user1: User, data1: DataHolder) -> Unit,
     ) {
         val tester = JsonBTable
 
@@ -61,7 +61,7 @@ abstract class AbstractExposedJsonTest: AbstractExposedTest() {
 
     protected fun withJsonArrays(
         testDB: TestDB,
-        statement: Transaction.(
+        statement: JdbcTransaction.(
             tester: JsonArrayTable,
             singleId: EntityID<Int>,
             tripleId: EntityID<Int>,
@@ -105,7 +105,7 @@ abstract class AbstractExposedJsonTest: AbstractExposedTest() {
 
     protected fun withJsonBArrays(
         testDB: TestDB,
-        statement: Transaction.(
+        statement: JdbcTransaction.(
             tester: JsonBArrayTable,
             singleId: EntityID<Int>,
             tripleId: EntityID<Int>,

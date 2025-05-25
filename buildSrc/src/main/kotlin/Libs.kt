@@ -153,7 +153,9 @@ object Versions {
     const val hibernate_validator = "8.0.2.Final" // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
     const val querydsl = "5.1.0"                  // https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
 
-    const val exposed = "0.61.0"       // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-core
+    const val exposed = "1.0.0-beta-2"       // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-core
+
+    const val r2dbc = "1.0.0.RELEASE"        // https://mvnrepository.com/artifact/io.r2dbc/r2dbc-spi
 
     const val agroal = "2.6"          // https://mvnrepository.com/artifact/io.agroal/agroal-api
 
@@ -1315,17 +1317,18 @@ object Libs {
     val exposed_kotlin_datetime = exposed("kotlin-datetime")
     val exposed_migration = exposed("migration")
     val exposed_money = exposed("money")
+    val exposed_r2dbc = exposed("r2dbc")
     val exposed_tests = exposed("tests")
 
     val exposed_spring_boot_starter = exposed("spring-boot-starter")
     const val exposed_spring_transaction = "org.jetbrains.exposed:spring-transaction:${Versions.exposed}"
 
-
     // R2DBC (버전은 spring-data 버전을 사용한다)
-    fun r2dbc(module: String): String = "io.r2dbc:r2dbc-$module"
-    val r2dbc_h2 = r2dbc("h2")
-    val r2dbc_pool = r2dbc("pool")
+    fun r2dbc(module: String, version: String = Versions.r2dbc): String = "io.r2dbc:r2dbc-$module:${Versions.r2dbc}"
     val r2dbc_spi = r2dbc("spi")
+    val r2dbc_h2 = r2dbc("h2")
+    val r2dbc_pool = r2dbc("pool", "1.0.2.RELEASE")
+    val r2dbc_proxy = r2dbc("spi", "1.1.6.RELEASE")
 
     // 참고 : https://github.com/asyncer-io/r2dbc-mysql
     // NOTE: Spring Boot 3.3+ 에서는 asyncer 1.3.0 를 사용
@@ -1334,13 +1337,8 @@ object Libs {
     // NOTE: Spring Boot 2.6 에서는 miku 것을 사용
     // https://github.com/mirromutth/r2dbc-mysql
     // https://github.com/asyncer-io/r2dbc-mysql
-    const val r2dbc_mysql_1_4 = "io.asyncer:r2dbc-mysql:1.4.0"  // https://mvnrepository.com/artifact/io.asyncer/r2dbc-mysql
-    const val r2dbc_mysql_1_3 = "io.asyncer:r2dbc-mysql:1.3.2"  // https://mvnrepository.com/artifact/io.asyncer/r2dbc-mysql
-    const val r2dbc_mysql_1_0 = "io.asyncer:r2dbc-mysql:1.0.3"  // https://mvnrepository.com/artifact/io.asyncer/r2dbc-mysql
-    const val r2dbc_mysql_0_9 = "io.asyncer:r2dbc-mysql:0.9.7"  // https://mvnrepository.com/artifact/io.asyncer/r2dbc-mysql
-    const val r2dbc_mysql_0_8 = "dev.miku:r2dbc-mysql:0.8.2.RELEASE"
-
-    const val r2dbc_mariadb = "org.mariadb:r2dbc-mariadb:1.3.0" // https://github.com/mariadb-corporation/mariadb-connector-r2dbc
+    const val r2dbc_mysql = "io.asyncer:r2dbc-mysql:1.4.1"  // https://mvnrepository.com/artifact/io.asyncer/r2dbc-mysql
+    const val r2dbc_mariadb = "org.mariadb:r2dbc-mariadb:1.3.0"  // https://github.com/mariadb-corporation/mariadb-connector-r2dbc
 
     // https://github.com/pgjdbc/r2dbc-postgresql
     const val r2dbc_postgresql = "org.postgresql:r2dbc-postgresql:1.0.7.RELEASE" // https://mvnrepository.com/artifact/org.postgresql/r2dbc-postgresql

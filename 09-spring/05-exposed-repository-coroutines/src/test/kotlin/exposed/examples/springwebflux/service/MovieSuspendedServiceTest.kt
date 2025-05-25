@@ -2,12 +2,11 @@ package exposed.examples.springwebflux.service
 
 import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
 import exposed.examples.springwebflux.domain.dtos.MovieDTO
-import exposed.examples.springwebflux.domain.model.toMovieDTO
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -29,9 +28,7 @@ class MovieSuspendedServiceTest(
 
         newSuspendedTransaction(coroutineContext) {
             val movie = newMovieDTO()
-            val movieEntity = movieService.suspendedSave(movie)
-
-            val savedMovie = movieEntity.toMovieDTO()
+            val savedMovie = movieService.suspendedSave(movie)
             savedMovie shouldBeEqualTo movie.copy(id = savedMovie.id)
         }
     }

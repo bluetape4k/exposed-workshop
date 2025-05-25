@@ -5,7 +5,7 @@ import exposed.multitenant.springweb.domain.model.MovieSchema.ActorEntity
 import exposed.multitenant.springweb.domain.model.MovieSchema.ActorTable
 import exposed.multitenant.springweb.domain.model.MovieSchema.MovieEntity
 import exposed.multitenant.springweb.domain.model.MovieSchema.MovieTable
-import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.v1.core.ResultRow
 
 
 fun ResultRow.toActorDTO() = ActorDTO(

@@ -3,13 +3,13 @@ package exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.Column
-import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
-import org.jetbrains.exposed.sql.SizedIterable
+import org.jetbrains.exposed.v1.core.Column
+import org.jetbrains.exposed.v1.core.ReferenceOption
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.jdbc.SizedIterable
 
 /**
  * One-To-Many bidirectional Relationship
@@ -46,7 +46,8 @@ object BatchSchema {
         val name: Column<String> = varchar("name", 255)
 
         // reference to Batch
-        val batchId: Column<EntityID<Int>> = reference("batch_id", BatchTable, onDelete = CASCADE).index()
+        val batchId: Column<EntityID<Int>> =
+            reference("batch_id", BatchTable, onDelete = ReferenceOption.CASCADE).index()
     }
 
     class Batch(id: EntityID<Int>): IntEntity(id) {

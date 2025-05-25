@@ -5,25 +5,25 @@ import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.CustomFunction
-import org.jetbrains.exposed.sql.DecimalColumnType
-import org.jetbrains.exposed.sql.Expression
-import org.jetbrains.exposed.sql.ExpressionWithColumnType
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.div
-import org.jetbrains.exposed.sql.decimalLiteral
-import org.jetbrains.exposed.sql.doubleLiteral
-import org.jetbrains.exposed.sql.functions.math.AbsFunction
-import org.jetbrains.exposed.sql.functions.math.CeilingFunction
-import org.jetbrains.exposed.sql.functions.math.ExpFunction
-import org.jetbrains.exposed.sql.functions.math.FloorFunction
-import org.jetbrains.exposed.sql.functions.math.PowerFunction
-import org.jetbrains.exposed.sql.functions.math.RoundFunction
-import org.jetbrains.exposed.sql.functions.math.SignFunction
-import org.jetbrains.exposed.sql.functions.math.SqrtFunction
-import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.intLiteral
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.core.CustomFunction
+import org.jetbrains.exposed.v1.core.DecimalColumnType
+import org.jetbrains.exposed.v1.core.Expression
+import org.jetbrains.exposed.v1.core.ExpressionWithColumnType
+import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.div
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.decimalLiteral
+import org.jetbrains.exposed.v1.core.doubleLiteral
+import org.jetbrains.exposed.v1.core.functions.math.AbsFunction
+import org.jetbrains.exposed.v1.core.functions.math.CeilingFunction
+import org.jetbrains.exposed.v1.core.functions.math.ExpFunction
+import org.jetbrains.exposed.v1.core.functions.math.FloorFunction
+import org.jetbrains.exposed.v1.core.functions.math.PowerFunction
+import org.jetbrains.exposed.v1.core.functions.math.RoundFunction
+import org.jetbrains.exposed.v1.core.functions.math.SignFunction
+import org.jetbrains.exposed.v1.core.functions.math.SqrtFunction
+import org.jetbrains.exposed.v1.core.intLiteral
+import org.jetbrains.exposed.v1.jdbc.insertAndGetId
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -228,6 +228,10 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
                 in TestDB.ALL_MYSQL_MARIADB ->
                     SqrtFunction(intLiteral(-100)) shouldExpressionEqualTo null
 
+                in TestDB.ALL_H2 ->
+                    expectException<IllegalStateException> {
+                        SqrtFunction(intLiteral(-100)) shouldExpressionEqualTo null
+                    }
                 else ->
                     expectException<SQLException> {
                         SqrtFunction(intLiteral(-100)) shouldExpressionEqualTo null

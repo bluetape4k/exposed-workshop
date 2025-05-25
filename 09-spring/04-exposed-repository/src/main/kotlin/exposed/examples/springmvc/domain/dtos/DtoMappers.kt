@@ -4,8 +4,7 @@ import exposed.examples.springmvc.domain.model.MovieSchema
 import exposed.examples.springmvc.domain.model.MovieSchema.ActorEntity
 import exposed.examples.springmvc.domain.model.MovieSchema.ActorTable
 import exposed.examples.springmvc.domain.model.MovieSchema.MovieEntity
-import org.jetbrains.exposed.sql.ResultRow
-
+import org.jetbrains.exposed.v1.core.ResultRow
 
 fun ResultRow.toActorDTO() = ActorDTO(
     id = this[ActorTable.id].value,

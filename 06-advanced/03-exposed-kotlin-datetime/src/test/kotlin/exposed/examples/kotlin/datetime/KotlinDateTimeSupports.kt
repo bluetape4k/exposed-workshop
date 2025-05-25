@@ -3,8 +3,8 @@ package exposed.examples.kotlin.datetime
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import org.jetbrains.exposed.sql.CustomFunction
-import org.jetbrains.exposed.sql.kotlin.datetime.KotlinOffsetDateTimeColumnType
+import org.jetbrains.exposed.v1.core.CustomFunction
+import org.jetbrains.exposed.v1.datetime.KotlinOffsetDateTimeColumnType
 import java.time.OffsetDateTime
 
 

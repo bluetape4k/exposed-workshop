@@ -5,8 +5,9 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import io.bluetape4k.logging.KLogging
-import org.jetbrains.exposed.dao.id.CompositeIdTable
-import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.v1.core.dao.id.CompositeIdTable
+import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.select
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 

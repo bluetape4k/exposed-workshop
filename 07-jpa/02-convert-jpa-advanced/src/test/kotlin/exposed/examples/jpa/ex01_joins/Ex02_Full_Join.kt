@@ -8,15 +8,16 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
-import org.jetbrains.exposed.sql.SortOrder
-import org.jetbrains.exposed.sql.alias
-import org.jetbrains.exposed.sql.fullJoin
-import org.jetbrains.exposed.sql.innerJoin
-import org.jetbrains.exposed.sql.leftJoin
-import org.jetbrains.exposed.sql.rightJoin
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.union
-import org.jetbrains.exposed.sql.vendors.PostgreSQLDialect
+import org.jetbrains.exposed.v1.core.SortOrder
+import org.jetbrains.exposed.v1.core.alias
+import org.jetbrains.exposed.v1.core.fullJoin
+import org.jetbrains.exposed.v1.core.innerJoin
+import org.jetbrains.exposed.v1.core.leftJoin
+import org.jetbrains.exposed.v1.core.rightJoin
+import org.jetbrains.exposed.v1.core.vendors.PostgreSQLDialect
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.jetbrains.exposed.v1.jdbc.union
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -113,8 +114,8 @@ class Ex02_Full_Join: AbstractExposedTest() {
             }
 
             val records: List<OrderRecord> = fullJoinQuery
-                .orderBy(orderIdAlias, SortOrder.ASC_NULLS_FIRST)
-                .orderBy(itemIdAlias, SortOrder.ASC_NULLS_FIRST)
+                .orderBy(orderIdAlias to SortOrder.ASC_NULLS_FIRST)
+                .orderBy(itemIdAlias to SortOrder.ASC_NULLS_FIRST)
                 .map {
                     OrderRecord(
                         itemId = it[itemIdAlias]?.value,
@@ -234,8 +235,8 @@ class Ex02_Full_Join: AbstractExposedTest() {
             }
 
             val records = fullJoinQuery
-                .orderBy(orderIdAlias, SortOrder.ASC_NULLS_FIRST)
-                .orderBy(itemIdAlias, SortOrder.ASC_NULLS_FIRST)
+                .orderBy(orderIdAlias to SortOrder.ASC_NULLS_FIRST)
+                .orderBy(itemIdAlias to SortOrder.ASC_NULLS_FIRST)
                 .map {
                     OrderRecord(
                         itemId = it[itemIdAlias]?.value,
@@ -310,28 +311,29 @@ class Ex02_Full_Join: AbstractExposedTest() {
                 items.description
             )
 
-            val fullJoinQuery = when (this.db.dialect) {
-                is PostgreSQLDialect -> {
-                    orders
-                        .fullJoin(orderLines) { orders.id eq orderLines.orderId }
-                        .fullJoin(items) { orderLines.itemId eq items.id }
-                        .select(slice)
-                }
-                else -> {
-                    val leftJoin = orders
-                        .innerJoin(orderLines) { orders.id eq orderLines.orderId }
-                        .leftJoin(items) { orderLines.itemId eq items.id }
-                    val rightJoin = orders
-                        .innerJoin(orderLines) { orders.id eq orderLines.orderId }
-                        .rightJoin(items) { orderLines.itemId eq items.id }
+            val fullJoinQuery =
+                when (this.db.dialect) {
+                    is PostgreSQLDialect -> {
+                        orders
+                            .fullJoin(orderLines) { orders.id eq orderLines.orderId }
+                            .fullJoin(items) { orderLines.itemId eq items.id }
+                            .select(slice)
+                    }
+                    else -> {
+                        val leftJoin = orders
+                            .innerJoin(orderLines) { orders.id eq orderLines.orderId }
+                            .leftJoin(items) { orderLines.itemId eq items.id }
+                        val rightJoin = orders
+                            .innerJoin(orderLines) { orders.id eq orderLines.orderId }
+                            .rightJoin(items) { orderLines.itemId eq items.id }
 
-                    leftJoin.select(slice).union(rightJoin.select(slice))
+                        leftJoin.select(slice).union(rightJoin.select(slice))
+                    }
                 }
-            }
 
             val records = fullJoinQuery
-                .orderBy(orderIdAlias, SortOrder.ASC_NULLS_FIRST)
-                .orderBy(itemIdAlias, SortOrder.ASC_NULLS_FIRST)
+                .orderBy(orderIdAlias to SortOrder.ASC_NULLS_FIRST)
+                .orderBy(itemIdAlias to SortOrder.ASC_NULLS_FIRST)
                 .map {
                     OrderRecord(
                         itemId = it[itemIdAlias]?.value,

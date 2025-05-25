@@ -3,13 +3,13 @@ package exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
-import org.jetbrains.exposed.sql.SortOrder.ASC
-import org.jetbrains.exposed.sql.javatime.date
+import org.jetbrains.exposed.v1.core.ReferenceOption
+import org.jetbrains.exposed.v1.core.SortOrder
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.javatime.date
 
 /**
  * one-to-many unidirectional 관계를 Exposed로 구현한 예제
@@ -50,7 +50,7 @@ object FamilySchema {
         val birthday = date("birthday")
 
         // reference to Father
-        val father = reference("father_id", FatherTable, onDelete = CASCADE).index()
+        val father = reference("father_id", FatherTable, onDelete = ReferenceOption.CASCADE).index()
     }
 
     class Father(id: EntityID<Int>): IntEntity(id) {
@@ -61,7 +61,7 @@ object FamilySchema {
         // Ordered by birthday
         // one-to-many relationship
         val children by Child.referrersOn(ChildTable.father)
-            .orderBy(ChildTable.birthday to ASC)
+            .orderBy(ChildTable.birthday to SortOrder.ASC)
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
