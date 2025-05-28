@@ -3,9 +3,9 @@ package exposed.examples.custom.columns
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.core.ksuidMillisGenerated
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.toStringBuilder
-import io.bluetape4k.exposed.sql.ksuidMillisGenerated
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.core.Column

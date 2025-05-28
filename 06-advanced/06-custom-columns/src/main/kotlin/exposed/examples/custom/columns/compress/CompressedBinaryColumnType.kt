@@ -1,6 +1,6 @@
 package exposed.examples.custom.columns.compress
 
-import io.bluetape4k.exposed.sql.compress.CompressedBinaryTransformer
+import io.bluetape4k.exposed.core.compress.CompressedBinaryTransformer
 import io.bluetape4k.io.compressor.Compressor
 import io.bluetape4k.io.compressor.Compressors
 import org.jetbrains.exposed.v1.core.BinaryColumnType
