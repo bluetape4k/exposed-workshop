@@ -15,6 +15,9 @@ server:
     shutdown: graceful  # WebServer Graceful shutdown (https://www.baeldung.com/spring-boot-web-server-shutdown)
 
 spring:
+    #    aot:
+    #        enabled: true # AOT 컴파일 활성화
+
     exposed:
         excluded-packages: org.springframework.boot.autoconfigure.web.servlet
         generate-ddl: true

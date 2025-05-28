@@ -4,7 +4,7 @@ import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.RestaurantSch
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.RestaurantSchema.MenuTable
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.RestaurantSchema.Restaurant
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.RestaurantSchema.RestaurantTable
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -17,7 +17,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.random.Random
 
-class `Ex04_OneToMany_N+1_Restaurant`: AbstractExposedTest() {
+class `Ex04_OneToMany_N+1_Restaurant`: JdbcExposedTestBase() {
 
 
     companion object: KLogging()

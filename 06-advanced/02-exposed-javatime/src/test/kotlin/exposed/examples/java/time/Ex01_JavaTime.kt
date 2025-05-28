@@ -1,6 +1,6 @@
 package exposed.examples.java.time
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
@@ -67,7 +67,7 @@ import java.util.*
 /**
  * Exposed에서 제공하는 Java Time 수형을 사용하는 테스트
  */
-class Ex01_JavaTime: AbstractExposedTest() {
+class Ex01_JavaTime: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

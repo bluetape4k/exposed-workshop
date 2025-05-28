@@ -1,6 +1,6 @@
 package exposed.examples.jpa.ex05_relations.ex02_one_to_many
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -39,7 +39,7 @@ import kotlin.test.assertFailsWith
  *
  * Exposed 에서는 명시적으로 SET 을 지원하지 않지만, Table 정의 시 unique key를 설정하면 SET 처럼 동작한다.
  */
-class Ex06_OneToMany_Set: AbstractExposedTest() {
+class Ex06_OneToMany_Set: JdbcExposedTestBase() {
 
 
     companion object: KLogging()

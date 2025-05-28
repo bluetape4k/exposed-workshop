@@ -1,6 +1,6 @@
 package exposed.examples.dml
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
@@ -23,7 +23,7 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * Postgres와 H2 에서만 지원됩니다. MySQL과 MariaDB에서는 지원되지 않습니다.
  */
-class Ex07_DistinctOn: AbstractExposedTest() {
+class Ex07_DistinctOn: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

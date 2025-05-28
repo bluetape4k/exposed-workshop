@@ -1,6 +1,6 @@
 package exposed.examples.entities
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -28,7 +28,7 @@ import org.junit.jupiter.params.provider.MethodSource
  * one-to-many 관계에서 referrersOn, optionalReferrersOn 함수를 사용하여
  * 참조되는 엔티티 ([SizedIterable]) 들을 정렬하는 방법을 설명합니다.
  */
-class Ex13_OrderedReference: AbstractExposedTest() {
+class Ex13_OrderedReference: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

@@ -8,8 +8,8 @@ server:
     shutdown: graceful  # WebServer Graceful shutdown (https://www.baeldung.com/spring-boot-web-server-shutdown)
 
 spring:
-    aot:
-        enabled: true
+    #    aot:
+    #        enabled: true
 
     application:
         name: Spring Webflux with Exposed

@@ -1,6 +1,6 @@
 package exposed.examples.entities
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger
 /**
  * 자동 증가가 아닌 Identifier를 가진 Entity 테스트
  */
-class Ex06_NonAutoIncEntities: AbstractExposedTest() {
+class Ex06_NonAutoIncEntities: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

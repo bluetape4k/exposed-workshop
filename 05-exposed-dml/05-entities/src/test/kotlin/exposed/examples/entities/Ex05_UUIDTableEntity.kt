@@ -8,7 +8,7 @@ import exposed.examples.entities.UUIDTables.People
 import exposed.examples.entities.UUIDTables.Person
 import exposed.examples.entities.UUIDTables.Town
 import exposed.examples.entities.UUIDTables.Towns
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -173,7 +173,7 @@ object UUIDTables {
 /**
  * Primary Key 가 UUID 인 테이블을 사용하는 예
  */
-class Ex05_UUIDTableEntity: AbstractExposedTest() {
+class Ex05_UUIDTableEntity: JdbcExposedTestBase() {
 
 
     @ParameterizedTest

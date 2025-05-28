@@ -1,7 +1,7 @@
 package exposed.examples.jpa.ex05_relations.ex02_one_to_many
 
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.Ex07_OneToMany_Map.CarOptionTable
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -31,7 +31,7 @@ import java.io.Serializable
 /**
  * one-to-many relation 방식을 List가 아닌 Map으로 표현하는 방법
  */
-class Ex07_OneToMany_Map: AbstractExposedTest() {
+class Ex07_OneToMany_Map: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

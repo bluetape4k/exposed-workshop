@@ -1,7 +1,7 @@
 package exposed.examples.dml
 
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import io.bluetape4k.logging.KLogging
@@ -19,7 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.math.BigDecimal
 
-class Ex21_Arithmetic: AbstractExposedTest() {
+class Ex21_Arithmetic: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

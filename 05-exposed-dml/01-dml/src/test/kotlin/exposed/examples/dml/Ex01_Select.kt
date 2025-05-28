@@ -10,7 +10,7 @@ import exposed.shared.entities.BoardSchema.Categories
 import exposed.shared.entities.BoardSchema.Category
 import exposed.shared.entities.BoardSchema.Post
 import exposed.shared.entities.BoardSchema.Posts
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
@@ -44,7 +44,7 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex01_Select: AbstractExposedTest() {
+class Ex01_Select: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

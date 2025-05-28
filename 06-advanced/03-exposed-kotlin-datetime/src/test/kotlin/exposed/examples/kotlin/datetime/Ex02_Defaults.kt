@@ -1,6 +1,6 @@
 package exposed.examples.kotlin.datetime
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.constraintNamePart
 import exposed.shared.tests.currentDialectTest
@@ -90,7 +90,7 @@ import kotlin.time.DurationUnit
 import kotlin.time.DurationUnit.DAYS
 import kotlin.time.toDuration
 
-class Ex02_Defaults: AbstractExposedTest() {
+class Ex02_Defaults: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

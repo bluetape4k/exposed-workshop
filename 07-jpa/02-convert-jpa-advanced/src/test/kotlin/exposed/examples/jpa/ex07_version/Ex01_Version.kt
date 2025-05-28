@@ -1,6 +1,6 @@
 package exposed.examples.jpa.ex07_version
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -32,7 +32,7 @@ import kotlin.test.assertFailsWith
 /**
  * 05-exposed-dml/01-dml/ Ex04_Upsert 를 참고하세요.
  */
-class Ex01_Version: AbstractExposedTest() {
+class Ex01_Version: JdbcExposedTestBase() {
 
     // these DB require key columns from ON clause to be included in the derived source table (USING clause)
     private val upsertViaMergeDB = TestDB.ALL_H2

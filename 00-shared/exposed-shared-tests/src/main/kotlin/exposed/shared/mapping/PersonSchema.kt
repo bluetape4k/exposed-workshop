@@ -1,6 +1,6 @@
 package exposed.shared.mapping
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -167,7 +167,7 @@ object PersonSchema {
 
 
 @Suppress("UnusedReceiverParameter")
-fun AbstractExposedTest.withPersonsAndAddress(
+fun JdbcExposedTestBase.withPersonsAndAddress(
     testDB: TestDB,
     statement: JdbcTransaction.(
         persons: PersonSchema.PersonTable,

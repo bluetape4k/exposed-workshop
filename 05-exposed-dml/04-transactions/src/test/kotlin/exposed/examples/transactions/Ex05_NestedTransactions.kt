@@ -1,7 +1,7 @@
 package exposed.examples.transactions
 
 import exposed.shared.dml.DMLTestData
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -28,7 +28,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.sql.SQLException
 import kotlin.test.fail
 
-class Ex05_NestedTransactions: AbstractExposedTest() {
+class Ex05_NestedTransactions: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

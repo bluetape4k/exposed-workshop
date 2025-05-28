@@ -1,6 +1,6 @@
 package exposed.examples.jpa.ex05_auditable
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -16,7 +16,7 @@ import org.jetbrains.exposed.v1.dao.entityCache
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex01_AuditableEntity: AbstractExposedTest() {
+class Ex01_AuditableEntity: JdbcExposedTestBase() {
 
     object TaskTable: AuditableIntIdTable("tasks") {
         val title = varchar("title", 200)

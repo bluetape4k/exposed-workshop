@@ -1,10 +1,10 @@
 package exposed.examples.ddl
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
-import io.bluetape4k.exposed.sql.getIndices
+import io.bluetape4k.exposed.core.getIndices
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeTrue
@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex05_CreateIndex: AbstractExposedTest() {
+class Ex05_CreateIndex: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

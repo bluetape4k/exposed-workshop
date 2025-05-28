@@ -2,7 +2,7 @@ package exposed.examples.transactions
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import io.bluetape4k.logging.KLogging
@@ -26,7 +26,7 @@ import java.sql.Connection
 /**
  * Connection의 Transaction Isolation Level을 설정하는 방법에 대한 테스트 코드입니다.
  */
-class Ex01_TransactionIsolation: AbstractExposedTest() {
+class Ex01_TransactionIsolation: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

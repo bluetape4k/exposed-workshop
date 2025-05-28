@@ -1,6 +1,6 @@
 package exposed.examples.transactions
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.withTables
@@ -29,7 +29,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.testcontainers.utility.Base58
 import java.sql.ResultSet
 
-class Ex02_TransactionExec: AbstractExposedTest() {
+class Ex02_TransactionExec: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

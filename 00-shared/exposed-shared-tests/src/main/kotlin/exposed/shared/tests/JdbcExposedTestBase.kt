@@ -7,7 +7,7 @@ import org.jetbrains.exposed.v1.core.Schema
 import org.jetbrains.exposed.v1.core.statements.StatementInterceptor
 import java.util.*
 
-abstract class AbstractExposedTest {
+abstract class JdbcExposedTestBase {
 
     companion object: KLogging() {
         @JvmStatic

@@ -1,6 +1,6 @@
 package exposed.shared.mapping
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -137,7 +137,7 @@ object OrderSchema {
                 ?: 0
     }
 
-    fun AbstractExposedTest.withOrdersTables(
+    fun JdbcExposedTestBase.withOrdersTables(
         testDB: TestDB,
         statement: JdbcTransaction.(
             orders: OrderTable,

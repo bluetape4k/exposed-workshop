@@ -3,7 +3,7 @@ package exposed.examples.dml
 import exposed.shared.dml.DMLTestData
 import exposed.shared.dml.DMLTestData.Cities
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.assertFailAndRollback
 import exposed.shared.tests.inProperCase
@@ -11,10 +11,10 @@ import exposed.shared.tests.withDb
 import exposed.shared.tests.withSuspendedDb
 import exposed.shared.tests.withTables
 import io.bluetape4k.codec.Base58
+import io.bluetape4k.exposed.core.BatchInsertOnConflictDoNothing
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
-import io.bluetape4k.exposed.sql.BatchInsertOnConflictDoNothing
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
@@ -59,7 +59,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.*
 
-class Ex02_Insert: AbstractExposedTest() {
+class Ex02_Insert: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

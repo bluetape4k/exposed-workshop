@@ -1,6 +1,6 @@
 package exposed.examples.jpa.ex05_relations.ex01_one_to_one
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -24,7 +24,7 @@ import kotlin.test.assertFailsWith
  *
  * [Cavalier] 와 [Horse] 가 1:1 관계를 맺고, [Cavalier] 가 [Horse] 를 소유하는 경우
  */
-class Ex01_OneToOne_Unidirectional: AbstractExposedTest() {
+class Ex01_OneToOne_Unidirectional: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

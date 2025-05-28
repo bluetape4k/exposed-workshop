@@ -1,11 +1,11 @@
 package exposed.examples.custom.entities
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import org.junit.jupiter.params.provider.Arguments
 
-abstract class AbstractCustomIdTableTest: AbstractExposedTest() {
+abstract class AbstractCustomIdTableTest: JdbcExposedTestBase() {
 
     companion object: KLogging() {
         const val GET_TESTDB_AND_ENTITY_COUNT = "getTestDBAndEntityCount"

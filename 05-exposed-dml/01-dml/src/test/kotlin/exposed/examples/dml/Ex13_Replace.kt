@@ -3,7 +3,7 @@ package exposed.examples.dml
 import exposed.shared.dml.DMLTestData
 import exposed.shared.dml.DMLTestData.toCityNameList
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid.Epoch
@@ -29,7 +29,7 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * **`REPLACE INTO` 문은 MySQL, MariaDB 에서만 지원한다.**
  */
-class Ex13_Replace: AbstractExposedTest() {
+class Ex13_Replace: JdbcExposedTestBase() {
 
     private val replaceSupported = TestDB.ALL_MYSQL_LIKE + TestDB.ALL_MARIADB_LIKE
 

@@ -1,6 +1,6 @@
 package exposed.examples.jpa.ex03_inheritance
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -25,7 +25,7 @@ import java.time.LocalDate
 /**
  * 한 테이블에서 여러가지 종류의 엔티티를 표현하는 방식
  */
-class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
+class Ex01_SingleTable_Inheritance: JdbcExposedTestBase() {
 
     /**
      * 한 테이블에 2가지 종류의 컬럼 정보를 저장하는 테이블

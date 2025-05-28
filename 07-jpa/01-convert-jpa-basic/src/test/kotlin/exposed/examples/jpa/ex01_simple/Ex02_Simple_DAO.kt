@@ -2,7 +2,7 @@ package exposed.examples.jpa.ex01_simple
 
 import exposed.examples.jpa.ex01_simple.SimpleSchema.SimpleEntity
 import exposed.examples.jpa.ex01_simple.SimpleSchema.SimpleTable
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -18,7 +18,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertFailsWith
 
-class Ex02_Simple_DAO: AbstractExposedTest() {
+class Ex02_Simple_DAO: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

@@ -1,7 +1,7 @@
 package exposed.examples.dml
 
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
@@ -35,7 +35,7 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * 참조: [5 Infographics to Understand SQL Joins visually](https://datalemur.com/blog/sql-joins-infographics)
  */
-class Ex11_Join: AbstractExposedTest() {
+class Ex11_Join: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

@@ -3,7 +3,7 @@ package exposed.examples.jpa.ex01_simple
 import exposed.examples.jpa.ex01_simple.SimpleSchema.SimpleEntity
 import exposed.examples.jpa.ex01_simple.SimpleSchema.SimpleTable
 import exposed.examples.jpa.ex01_simple.SimpleSchema.toSimpleDTOs
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -22,7 +22,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * [SimpleTable] 을 DSL 을 이용하여 작업하는 예제
  */
-class Ex01_Simple_DSL: AbstractExposedTest() {
+class Ex01_Simple_DSL: JdbcExposedTestBase() {
 
     companion object: KLogging() {
         private const val ENTITY_COUNT = 10

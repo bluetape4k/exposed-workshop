@@ -1,7 +1,7 @@
 package exposed.examples.jpa.ex05_relations.ex02_one_to_many
 
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.Ex05_OneToMany_Via.CloudSnowflakeTable.cloudId
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -33,7 +33,7 @@ import kotlin.test.assertFailsWith
 /**
  * JPA 의 one-to-many 관계를 @JoinTable 방식을 Exposed 로 구현 한 예l
  */
-class Ex05_OneToMany_Via: AbstractExposedTest() {
+class Ex05_OneToMany_Via: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

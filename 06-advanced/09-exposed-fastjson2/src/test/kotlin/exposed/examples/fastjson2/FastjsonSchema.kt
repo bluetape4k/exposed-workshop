@@ -1,7 +1,7 @@
 package exposed.examples.fastjson2
 
-import io.bluetape4k.exposed.sql.fastjson2.fastjson
-import io.bluetape4k.exposed.sql.fastjson2.fastjsonb
+import io.bluetape4k.exposed.core.fastjson2.fastjson
+import io.bluetape4k.exposed.core.fastjson2.fastjsonb
 import io.bluetape4k.exposed.tests.AbstractExposedTest
 import io.bluetape4k.exposed.tests.TestDB
 import io.bluetape4k.exposed.tests.withTables

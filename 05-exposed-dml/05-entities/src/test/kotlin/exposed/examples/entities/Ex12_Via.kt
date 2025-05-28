@@ -5,7 +5,7 @@ import exposed.examples.entities.ViaTestData.ConnectionTable
 import exposed.examples.entities.ViaTestData.IConnectionTable
 import exposed.examples.entities.ViaTestData.VNumber
 import exposed.examples.entities.ViaTestData.VString
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -194,7 +194,7 @@ object ViaTestData {
 /**
  * many-to-many 에서 relation table 을 통해 연결된 entity 들을 다루는 예제입니다.
  */
-class Ex12_Via: AbstractExposedTest() {
+class Ex12_Via: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

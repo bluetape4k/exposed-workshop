@@ -7,7 +7,7 @@ import exposed.examples.entities.Ex31_SelfReference.TestTables.StrangeTable
 import exposed.shared.dml.DMLTestData.Cities
 import exposed.shared.dml.DMLTestData.UserData
 import exposed.shared.dml.DMLTestData.Users
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
@@ -22,7 +22,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * 테이블 간의 참조 관계에 따라 Schema 생성과 관련된 검증
  */
-class Ex31_SelfReference: AbstractExposedTest() {
+class Ex31_SelfReference: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

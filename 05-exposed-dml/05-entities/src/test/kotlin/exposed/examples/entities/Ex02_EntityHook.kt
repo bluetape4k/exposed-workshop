@@ -7,7 +7,7 @@ import exposed.shared.samples.CountryTable
 import exposed.shared.samples.User
 import exposed.shared.samples.UserTable
 import exposed.shared.samples.UserToCityTable
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -52,7 +52,7 @@ import kotlin.reflect.KProperty
  *
  * Hibernate의 `EntityListener` 와 유사한 기능을 제공합니다.
  */
-class Ex02_EntityHook: AbstractExposedTest() {
+class Ex02_EntityHook: JdbcExposedTestBase() {
 
     companion object: KLogging()
 
@@ -461,7 +461,7 @@ class Ex02_EntityHook: AbstractExposedTest() {
     }
 }
 
-class Ex02_EntityHook_Auditable: AbstractExposedTest() {
+class Ex02_EntityHook_Auditable: JdbcExposedTestBase() {
 
     interface AuditableEntity {
         var createdAt: Instant?

@@ -1,7 +1,4 @@
 spring:
-    aot:
-        enabled: true
-
     data:
         redis:
             host: ${testcontainers.redis.host}

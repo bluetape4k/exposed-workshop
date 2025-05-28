@@ -1,6 +1,6 @@
 package exposed.examples.kotlin.datetime
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
@@ -82,7 +82,7 @@ import java.time.ZoneOffset
 import java.time.temporal.ChronoUnit.MILLIS
 import kotlin.time.Duration
 
-class Ex01_KotlinDateTime: AbstractExposedTest() {
+class Ex01_KotlinDateTime: JdbcExposedTestBase() {
 
     private val timestampWithTimeZoneUnsupportedDB = TestDB.ALL_MARIADB + TestDB.MYSQL_V5
 

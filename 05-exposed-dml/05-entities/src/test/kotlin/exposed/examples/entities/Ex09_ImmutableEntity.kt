@@ -3,7 +3,7 @@ package exposed.examples.entities
 import exposed.examples.entities.Ex09_ImmutableEntity.Schema.CachedOrganization
 import exposed.examples.entities.Ex09_ImmutableEntity.Schema.Organization
 import exposed.examples.entities.Ex09_ImmutableEntity.Schema.Organizations
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -27,7 +27,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * 읽기 전용 / 캐싱된 엔티티 사용 예
  */
-class Ex09_ImmutableEntity: AbstractExposedTest() {
+class Ex09_ImmutableEntity: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

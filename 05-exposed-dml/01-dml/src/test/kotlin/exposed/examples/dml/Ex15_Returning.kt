@@ -1,6 +1,6 @@
 package exposed.examples.dml
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -40,7 +40,7 @@ import kotlin.test.assertIs
  *
  * 단, 이 함수들은 Postgres, MariaDB 에서만 지원합니다.
  */
-class Ex15_Returning: AbstractExposedTest() {
+class Ex15_Returning: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

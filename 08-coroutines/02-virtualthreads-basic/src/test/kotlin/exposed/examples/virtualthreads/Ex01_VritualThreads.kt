@@ -1,11 +1,13 @@
 package exposed.examples.virtualthreads
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.collections.intRangeOf
 import io.bluetape4k.concurrent.virtualthread.VirtualFuture
 import io.bluetape4k.concurrent.virtualthread.awaitAll
+import io.bluetape4k.exposed.core.transactions.newVirtualThreadTransaction
+import io.bluetape4k.exposed.core.transactions.virtualThreadTransactionAsync
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -35,7 +37,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.concurrent.ExecutionException
 import kotlin.test.assertFailsWith
 
-class Ex01_VritualThreads: AbstractExposedTest() {
+class Ex01_VritualThreads: JdbcExposedTestBase() {
 
     companion object: KLoggingChannel()
 
@@ -60,6 +62,7 @@ class Ex01_VritualThreads: AbstractExposedTest() {
         override val primaryKey = PrimaryKey(id)
     }
 
+    @Suppress("UnusedReceiverParameter")
     fun JdbcTransaction.getTesterById(id: Int): ResultRow? =
         newVirtualThreadTransaction {
             VTester.selectAll()

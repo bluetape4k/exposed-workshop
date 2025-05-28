@@ -1,11 +1,11 @@
 package exposed.examples.jasypt
 
 import io.bluetape4k.crypto.encrypt.Encryptors
+import io.bluetape4k.exposed.core.jasypt.jasyptBinary
+import io.bluetape4k.exposed.core.jasypt.jasyptVarChar
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
-import io.bluetape4k.exposed.sql.jasypt.jasyptBinary
-import io.bluetape4k.exposed.sql.jasypt.jasyptVarChar
 import io.bluetape4k.exposed.tests.AbstractExposedTest
 import io.bluetape4k.exposed.tests.TestDB
 import io.bluetape4k.exposed.tests.withTables

@@ -4,7 +4,7 @@ import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.BatchSchema.B
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.BatchSchema.BatchItem
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.BatchSchema.BatchItemTable
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.BatchSchema.batchTables
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -20,7 +20,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * one-to-many bidirectional 관계를 Exposed로 구현한 예제
  */
-class Ex01_OneToMany_Bidirectional_Batch: AbstractExposedTest() {
+class Ex01_OneToMany_Bidirectional_Batch: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

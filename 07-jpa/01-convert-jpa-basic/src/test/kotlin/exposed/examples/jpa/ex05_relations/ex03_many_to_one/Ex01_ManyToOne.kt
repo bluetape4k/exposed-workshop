@@ -9,7 +9,7 @@ import exposed.examples.jpa.ex05_relations.ex03_many_to_one.ManyToOneSchema.Sale
 import exposed.examples.jpa.ex05_relations.ex03_many_to_one.ManyToOneSchema.withBeerTables
 import exposed.examples.jpa.ex05_relations.ex03_many_to_one.ManyToOneSchema.withJugTables
 import exposed.examples.jpa.ex05_relations.ex03_many_to_one.ManyToOneSchema.withSalesTables
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.collections.size
 import io.bluetape4k.logging.KLogging
@@ -29,7 +29,7 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex01_ManyToOne: AbstractExposedTest() {
+class Ex01_ManyToOne: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

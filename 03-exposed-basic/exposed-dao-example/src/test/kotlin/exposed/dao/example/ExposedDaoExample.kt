@@ -5,7 +5,7 @@ import exposed.dao.example.Schema.CityTable
 import exposed.dao.example.Schema.User
 import exposed.dao.example.Schema.UserTable
 import exposed.dao.example.Schema.withCityUsers
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
@@ -20,7 +20,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * Exposed DAO 를 사용하는 예제입니다.
  */
-class ExposedDaoExample: AbstractExposedTest() {
+class ExposedDaoExample: JdbcExposedTestBase() {
 
     companion object: KLoggingChannel()
 

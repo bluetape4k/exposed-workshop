@@ -6,7 +6,7 @@ import exposed.examples.jpa.ex05_relations.ex04_many_to_many.BankSchema.OwnerAcc
 import exposed.examples.jpa.ex05_relations.ex04_many_to_many.BankSchema.getAccount
 import exposed.examples.jpa.ex05_relations.ex04_many_to_many.BankSchema.getOwner
 import exposed.examples.jpa.ex05_relations.ex04_many_to_many.BankSchema.withBankTables
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.collections.size
 import io.bluetape4k.logging.KLogging
@@ -25,7 +25,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * many-to-many 관계를 owner 와 account 로 각각 조회하는 예제
  */
-class Ex01_ManyToMany_Bank: AbstractExposedTest() {
+class Ex01_ManyToMany_Bank: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

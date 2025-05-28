@@ -1,6 +1,6 @@
 package exposed.examples.types
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -51,7 +51,7 @@ private inline fun <reified T: Any> Table.array2(
 /**
  * 다차원 배열은 Postgres 만 지원합니다.
  */
-class Ex06_MultiArrayColumnType: AbstractExposedTest() {
+class Ex06_MultiArrayColumnType: JdbcExposedTestBase() {
 
     companion object: KLogging() {
         private val multiArrayTypeSupportedDb = TestDB.ALL_POSTGRES

@@ -1,6 +1,6 @@
 package exposed.examples.connection
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -17,7 +17,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.sql.Types
 
-class Ex01_Connection: AbstractExposedTest() {
+class Ex01_Connection: JdbcExposedTestBase() {
 
     companion object: KLoggingChannel()
 

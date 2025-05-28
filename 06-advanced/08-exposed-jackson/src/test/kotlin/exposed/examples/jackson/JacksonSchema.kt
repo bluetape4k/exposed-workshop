@@ -1,7 +1,7 @@
 package exposed.examples.jackson
 
-import io.bluetape4k.exposed.sql.jackson.jackson
-import io.bluetape4k.exposed.sql.jackson.jacksonb
+import io.bluetape4k.exposed.core.jackson.jackson
+import io.bluetape4k.exposed.core.jackson.jacksonb
 import io.bluetape4k.exposed.tests.AbstractExposedTest
 import io.bluetape4k.exposed.tests.TestDB
 import io.bluetape4k.exposed.tests.withTables

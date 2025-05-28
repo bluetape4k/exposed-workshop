@@ -2,7 +2,7 @@ package exposed.examples.jpa.ex01_joins
 
 import com.impossibl.postgres.jdbc.PGSQLSimpleException
 import exposed.shared.mapping.OrderSchema.withOrdersTables
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -17,7 +17,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertFailsWith
 
-class Ex07_Misc_Join: AbstractExposedTest() {
+class Ex07_Misc_Join: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

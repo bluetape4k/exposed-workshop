@@ -1,6 +1,6 @@
 package exposed.examples.jpa.ex03_inheritance
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDEntity
@@ -23,7 +23,7 @@ import java.util.*
 /**
  * JPA의 Table Per Class Inheritance 를 Exposed 로 구현한 예
  */
-class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
+class Ex03_TablePerClass_Inheritance: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

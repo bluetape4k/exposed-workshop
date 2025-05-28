@@ -1,6 +1,6 @@
 package exposed.examples.springwebflux.domain.dtos
 
-import io.bluetape4k.exposed.dao.HasIdentifier
+import io.bluetape4k.exposed.core.HasIdentifier
 import java.io.Serializable
 
 /**

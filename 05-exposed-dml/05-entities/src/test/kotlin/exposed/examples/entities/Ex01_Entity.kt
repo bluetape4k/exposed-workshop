@@ -8,7 +8,7 @@ import exposed.examples.entities.EntityTestData.XType.A
 import exposed.examples.entities.EntityTestData.XType.B
 import exposed.examples.entities.EntityTestData.YEntity
 import exposed.examples.entities.EntityTestData.YTable
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.TestDB.H2_V1
 import exposed.shared.tests.TestDB.POSTGRESQL
@@ -74,7 +74,7 @@ import java.sql.Connection
 import kotlin.test.assertFailsWith
 
 @Suppress("UNUSED_VARIABLE")
-class Ex01_Entity: AbstractExposedTest() {
+class Ex01_Entity: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

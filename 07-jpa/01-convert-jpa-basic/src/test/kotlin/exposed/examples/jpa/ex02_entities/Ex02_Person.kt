@@ -4,7 +4,7 @@ import exposed.examples.jpa.ex02_entities.PersonSchema.Address
 import exposed.examples.jpa.ex02_entities.PersonSchema.Person
 import exposed.examples.jpa.ex02_entities.PersonSchema.PersonRecord
 import exposed.examples.jpa.ex02_entities.PersonSchema.withPersonAndAddress
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
@@ -34,7 +34,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDate
 
-class Ex02_Person: AbstractExposedTest() {
+class Ex02_Person: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

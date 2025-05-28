@@ -1,7 +1,7 @@
 package exposed.shared.dml
 
 import exposed.shared.dml.DMLTestData.Users.Flags
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid
@@ -118,7 +118,7 @@ object DMLTestData {
 
 
     @Suppress("UnusedReceiverParameter")
-    fun AbstractExposedTest.withCitiesAndUsers(
+    fun JdbcExposedTestBase.withCitiesAndUsers(
         testDB: TestDB,
         statement: JdbcTransaction.(
             cities: Cities,
@@ -207,7 +207,7 @@ object DMLTestData {
     }
 
     @Suppress("UnusedReceiverParameter")
-    fun AbstractExposedTest.withSales(
+    fun JdbcExposedTestBase.withSales(
         dialect: TestDB,
         statement: JdbcTransaction.(testDB: TestDB, sales: Sales) -> Unit,
     ) {
@@ -237,7 +237,7 @@ object DMLTestData {
     }
 
     @Suppress("UnusedReceiverParameter")
-    fun AbstractExposedTest.withSomeAmounts(
+    fun JdbcExposedTestBase.withSomeAmounts(
         dialect: TestDB,
         statement: JdbcTransaction.(testDB: TestDB, someAmounts: SomeAmounts) -> Unit,
     ) {
@@ -258,7 +258,7 @@ object DMLTestData {
     }
 
     @Suppress("UnusedReceiverParameter")
-    fun AbstractExposedTest.withSalesAndSomeAmounts(
+    fun JdbcExposedTestBase.withSalesAndSomeAmounts(
         dialect: TestDB,
         statement: JdbcTransaction.(
             testDB: TestDB,

@@ -2,7 +2,7 @@ package exposed.shared.repository
 
 import exposed.shared.repository.MovieSchema.ActorTable
 import exposed.shared.repository.MovieSchema.withSuspendedMovieAndActors
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class ActorRepositoryCoroutineTest: AbstractExposedTest() {
+class ActorRepositoryCoroutineTest: JdbcExposedTestBase() {
 
     companion object: KLoggingChannel() {
         fun newActorDTO(): ActorDTO = ActorDTO(

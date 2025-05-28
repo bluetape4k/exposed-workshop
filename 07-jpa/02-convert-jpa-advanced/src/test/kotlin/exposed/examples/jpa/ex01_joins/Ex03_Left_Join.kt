@@ -2,7 +2,7 @@ package exposed.examples.jpa.ex01_joins
 
 import exposed.shared.mapping.OrderSchema.OrderRecord
 import exposed.shared.mapping.OrderSchema.withOrdersTables
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -20,7 +20,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * Left Join
  */
-class Ex03_Left_Join: AbstractExposedTest() {
+class Ex03_Left_Join: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

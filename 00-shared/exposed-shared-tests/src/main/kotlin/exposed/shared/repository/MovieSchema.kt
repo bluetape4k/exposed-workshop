@@ -1,6 +1,6 @@
 package exposed.shared.repository
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
@@ -78,7 +78,7 @@ object MovieSchema: KLogging() {
             toStringBuilder().add("firstName", firstName).add("lastName", lastName).add("birthday", birthday).toString()
     }
 
-    fun AbstractExposedTest.withMovieAndActors(
+    fun JdbcExposedTestBase.withMovieAndActors(
         testDB: TestDB,
         statement: JdbcTransaction.() -> Unit,
     ) {
@@ -88,7 +88,7 @@ object MovieSchema: KLogging() {
         }
     }
 
-    suspend fun AbstractExposedTest.withSuspendedMovieAndActors(
+    suspend fun JdbcExposedTestBase.withSuspendedMovieAndActors(
         testDB: TestDB,
         statement: suspend JdbcTransaction.() -> Unit,
     ) {

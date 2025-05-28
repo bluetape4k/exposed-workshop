@@ -1,6 +1,6 @@
 package exposed.examples.custom.columns.encrypt
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.crypto.encrypt.Encryptors
@@ -25,7 +25,7 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class BluetapeEncryptedBinaryColumnTypeTest: AbstractExposedTest() {
+class BluetapeEncryptedBinaryColumnTypeTest: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

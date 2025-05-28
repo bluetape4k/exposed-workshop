@@ -4,7 +4,7 @@ import exposed.examples.json.JsonTestData.JsonArrayTable
 import exposed.examples.json.JsonTestData.JsonBArrayTable
 import exposed.examples.json.JsonTestData.JsonBTable
 import exposed.examples.json.JsonTestData.JsonTable
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -14,7 +14,7 @@ import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.junit.jupiter.api.Assumptions
 
-abstract class AbstractExposedJsonTest: AbstractExposedTest() {
+abstract class AbstractExposedJsonTest: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

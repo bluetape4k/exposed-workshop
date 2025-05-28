@@ -4,11 +4,11 @@ import exposed.examples.jackson.JacksonSchema.DataHolder
 import exposed.examples.jackson.JacksonSchema.User
 import exposed.examples.jackson.JacksonSchema.withJacksonBArrays
 import exposed.examples.jackson.JacksonSchema.withJacksonBTable
-import io.bluetape4k.exposed.sql.jackson.DefaultJacksonSerializer
-import io.bluetape4k.exposed.sql.jackson.contains
-import io.bluetape4k.exposed.sql.jackson.exists
-import io.bluetape4k.exposed.sql.jackson.extract
-import io.bluetape4k.exposed.sql.jackson.jacksonb
+import io.bluetape4k.exposed.core.jackson.DefaultJacksonSerializer
+import io.bluetape4k.exposed.core.jackson.contains
+import io.bluetape4k.exposed.core.jackson.exists
+import io.bluetape4k.exposed.core.jackson.extract
+import io.bluetape4k.exposed.core.jackson.jacksonb
 import io.bluetape4k.exposed.tests.AbstractExposedTest
 import io.bluetape4k.exposed.tests.TestDB
 import io.bluetape4k.exposed.tests.currentDialectTest

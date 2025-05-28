@@ -7,9 +7,7 @@ import org.springframework.boot.runApplication
 
 @SpringBootApplication
 class ExposedRepositoryApp {
-
     companion object: KLogging()
-
 }
 
 fun main(vararg args: String) {

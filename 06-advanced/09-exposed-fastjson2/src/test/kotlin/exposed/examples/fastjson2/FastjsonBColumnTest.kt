@@ -4,10 +4,10 @@ import exposed.examples.fastjson2.FastjsonSchema.DataHolder
 import exposed.examples.fastjson2.FastjsonSchema.User
 import exposed.examples.fastjson2.FastjsonSchema.withFastjsonBArrays
 import exposed.examples.fastjson2.FastjsonSchema.withFastjsonBTable
-import io.bluetape4k.exposed.sql.fastjson2.contains
-import io.bluetape4k.exposed.sql.fastjson2.exists
-import io.bluetape4k.exposed.sql.fastjson2.extract
-import io.bluetape4k.exposed.sql.fastjson2.fastjsonb
+import io.bluetape4k.exposed.core.fastjson2.contains
+import io.bluetape4k.exposed.core.fastjson2.exists
+import io.bluetape4k.exposed.core.fastjson2.extract
+import io.bluetape4k.exposed.core.fastjson2.fastjsonb
 import io.bluetape4k.exposed.tests.AbstractExposedTest
 import io.bluetape4k.exposed.tests.TestDB
 import io.bluetape4k.exposed.tests.currentDialectTest

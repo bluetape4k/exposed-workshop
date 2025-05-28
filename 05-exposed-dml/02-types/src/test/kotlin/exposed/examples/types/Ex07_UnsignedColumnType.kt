@@ -1,6 +1,6 @@
 package exposed.examples.types
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.assertFailAndRollback
 import exposed.shared.tests.currentDialectTest
@@ -25,7 +25,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * Unsigned 수형을 가진 컬럼에 대한 예제
  */
-class Ex07_UnsignedColumnType: AbstractExposedTest() {
+class Ex07_UnsignedColumnType: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

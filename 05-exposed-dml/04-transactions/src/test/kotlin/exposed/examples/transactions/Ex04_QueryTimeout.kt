@@ -1,7 +1,7 @@
 package exposed.examples.transactions
 
 import com.impossibl.postgres.jdbc.PGSQLSimpleException
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import io.bluetape4k.logging.KLogging
@@ -25,7 +25,7 @@ import kotlin.test.DefaultAsserter.fail
  * - [org.jetbrains.exposed.sql.Transaction.queryTimeout] = 0 이면 Timeout 이 없음을 의미
  * - [org.jetbrains.exposed.sql.Transaction.queryTimeout] < 0 이면 예외가 발생
  */
-class Ex04_QueryTimeout: AbstractExposedTest() {
+class Ex04_QueryTimeout: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

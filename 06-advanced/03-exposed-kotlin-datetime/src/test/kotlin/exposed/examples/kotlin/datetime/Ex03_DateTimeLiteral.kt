@@ -1,6 +1,6 @@
 package exposed.examples.kotlin.datetime
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import kotlinx.datetime.Instant
@@ -24,7 +24,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * DATE, DATEIME 컬럼을 [dateLiteral], [dateTimeLiteral] 으로 사용하는 예
  */
-class Ex03_DateTimeLiteral: AbstractExposedTest() {
+class Ex03_DateTimeLiteral: JdbcExposedTestBase() {
 
     private val defaultDate = LocalDate(2000, 1, 1)
     private val futureDate = LocalDate(3000, 1, 1)

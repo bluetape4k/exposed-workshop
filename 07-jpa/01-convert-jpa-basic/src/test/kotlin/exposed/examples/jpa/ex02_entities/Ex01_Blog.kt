@@ -3,7 +3,7 @@ package exposed.examples.jpa.ex02_entities
 import exposed.examples.jpa.ex02_entities.BlogSchema.Post
 import exposed.examples.jpa.ex02_entities.BlogSchema.PostDetail
 import exposed.examples.jpa.ex02_entities.BlogSchema.blogTables
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
@@ -19,7 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDate
 
-class Ex01_Blog: AbstractExposedTest() {
+class Ex01_Blog: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

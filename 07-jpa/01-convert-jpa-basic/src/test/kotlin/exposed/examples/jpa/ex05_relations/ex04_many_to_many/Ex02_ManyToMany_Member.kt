@@ -6,7 +6,7 @@ import exposed.examples.jpa.ex05_relations.ex04_many_to_many.MemberSchema.Member
 import exposed.examples.jpa.ex05_relations.ex04_many_to_many.MemberSchema.User
 import exposed.examples.jpa.ex05_relations.ex04_many_to_many.MemberSchema.UserStatus
 import exposed.examples.jpa.ex05_relations.ex04_many_to_many.MemberSchema.UserTable
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
@@ -25,7 +25,7 @@ import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTrans
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex02_ManyToMany_Member: AbstractExposedTest() {
+class Ex02_ManyToMany_Member: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

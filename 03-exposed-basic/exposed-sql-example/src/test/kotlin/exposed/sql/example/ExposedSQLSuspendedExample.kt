@@ -1,6 +1,6 @@
 package exposed.sql.example
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.sql.example.Schema.CityTable
 import exposed.sql.example.Schema.UserTable
@@ -21,7 +21,7 @@ import org.jetbrains.exposed.v1.jdbc.update
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class ExposedSQLSuspendedExample: AbstractExposedTest() {
+class ExposedSQLSuspendedExample: JdbcExposedTestBase() {
 
     companion object: KLoggingChannel()
 

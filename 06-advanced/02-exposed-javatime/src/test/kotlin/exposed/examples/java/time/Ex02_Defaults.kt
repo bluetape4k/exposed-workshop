@@ -1,6 +1,6 @@
 package exposed.examples.java.time
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.constraintNamePart
 import exposed.shared.tests.currentDialectTest
@@ -86,7 +86,7 @@ private val dbTimestampNow: CustomFunction<OffsetDateTime>
 /**
  * Java Time 형식의 컬럼에 기본값 설정과 관련된 테스트
  */
-class Ex02_Defaults: AbstractExposedTest() {
+class Ex02_Defaults: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

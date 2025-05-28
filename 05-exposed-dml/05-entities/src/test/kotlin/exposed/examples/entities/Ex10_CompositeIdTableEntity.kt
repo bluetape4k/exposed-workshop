@@ -11,7 +11,7 @@ import exposed.shared.mapping.compositeId.BookSchema.Publisher
 import exposed.shared.mapping.compositeId.BookSchema.Publishers
 import exposed.shared.mapping.compositeId.BookSchema.Review
 import exposed.shared.mapping.compositeId.BookSchema.Reviews
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.TestDB.H2_V1
 import exposed.shared.tests.currentTestDB
@@ -63,7 +63,7 @@ import java.util.*
 import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 
-class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
+class Ex10_CompositeIdTableEntity: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

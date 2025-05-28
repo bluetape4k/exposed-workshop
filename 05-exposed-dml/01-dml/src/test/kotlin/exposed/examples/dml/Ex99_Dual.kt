@@ -1,6 +1,6 @@
 package exposed.examples.dml
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import io.bluetape4k.logging.KLogging
@@ -20,7 +20,7 @@ import java.time.LocalDateTime
 /**
  * 더미 테이블인 "DUAL" 테이블을 이용하는 예제입니다.
  */
-class Ex99_Dual: AbstractExposedTest() {
+class Ex99_Dual: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

@@ -1,6 +1,6 @@
 package exposed.examples.types
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
@@ -50,7 +50,7 @@ import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex05_ArrayColumnType: AbstractExposedTest() {
+class Ex05_ArrayColumnType: JdbcExposedTestBase() {
     companion object: KLogging()
 
     /**

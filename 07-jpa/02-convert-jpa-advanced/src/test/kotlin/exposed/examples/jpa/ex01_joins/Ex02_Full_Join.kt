@@ -2,7 +2,7 @@ package exposed.examples.jpa.ex01_joins
 
 import exposed.shared.mapping.OrderSchema.OrderRecord
 import exposed.shared.mapping.OrderSchema.withOrdersTables
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -26,7 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * [mysql에서 full outer join 사용하기](https://wkdgusdn3.tistory.com/entry/mysql%EC%97%90%EC%84%9C-full-outer-join-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
  */
-class Ex02_Full_Join: AbstractExposedTest() {
+class Ex02_Full_Join: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

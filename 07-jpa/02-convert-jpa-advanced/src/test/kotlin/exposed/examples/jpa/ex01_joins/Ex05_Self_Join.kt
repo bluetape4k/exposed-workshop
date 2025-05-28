@@ -2,7 +2,7 @@ package exposed.examples.jpa.ex01_joins
 
 import exposed.shared.mapping.OrderSchema.UserTable
 import exposed.shared.mapping.OrderSchema.withOrdersTables
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex05_Self_Join: AbstractExposedTest() {
+class Ex05_Self_Join: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

@@ -1,6 +1,6 @@
 package exposed.examples.jpa.ex03_customId
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
@@ -32,7 +32,7 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * JPA 의 `@Convert` 와 유사합니다.
  */
-class Ex01_CustomId: AbstractExposedTest() {
+class Ex01_CustomId: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

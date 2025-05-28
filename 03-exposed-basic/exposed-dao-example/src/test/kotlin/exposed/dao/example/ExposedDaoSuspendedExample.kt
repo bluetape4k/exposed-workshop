@@ -5,7 +5,7 @@ import exposed.dao.example.Schema.CityTable
 import exposed.dao.example.Schema.User
 import exposed.dao.example.Schema.UserTable
 import exposed.dao.example.Schema.withSuspendedCityUsers
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -17,7 +17,7 @@ import org.jetbrains.exposed.v1.dao.with
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class ExposedDaoSuspendedExample: AbstractExposedTest() {
+class ExposedDaoSuspendedExample: JdbcExposedTestBase() {
 
     companion object: KLoggingChannel()
 

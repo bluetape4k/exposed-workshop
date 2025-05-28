@@ -1,12 +1,12 @@
 package exposed.examples.entities
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.core.statements.api.toUtf8String
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
-import io.bluetape4k.exposed.sql.statements.api.toUtf8String
 import io.bluetape4k.junit5.faker.Fakers
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.support.toUtf8Bytes
@@ -26,7 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * [ExposedBlob] 필드를 가지는 엔티티를 다루는 예제입니다.
  */
-class Ex07_EntityWithBlob: AbstractExposedTest() {
+class Ex07_EntityWithBlob: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

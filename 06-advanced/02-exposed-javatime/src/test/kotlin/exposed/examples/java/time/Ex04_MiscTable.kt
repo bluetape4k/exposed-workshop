@@ -4,7 +4,7 @@ import exposed.shared.MiscTable
 import exposed.shared.MiscTable.E
 import exposed.shared.checkInsert
 import exposed.shared.checkRow
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
@@ -95,7 +95,7 @@ object Misc: MiscTable() {
 }
 
 
-class Ex04_MiscTable: AbstractExposedTest() {
+class Ex04_MiscTable: JdbcExposedTestBase() {
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)

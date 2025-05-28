@@ -2,7 +2,7 @@ package exposed.examples.cache.coroutines.domain.model
 
 import exposed.examples.cache.coroutines.utils.faker
 import io.bluetape4k.codec.Base58
-import io.bluetape4k.exposed.dao.HasIdentifier
+import io.bluetape4k.exposed.core.HasIdentifier
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62Entity
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62EntityClass
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62Table

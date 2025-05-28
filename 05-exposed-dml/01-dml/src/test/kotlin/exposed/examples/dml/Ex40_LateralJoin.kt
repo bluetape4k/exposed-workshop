@@ -1,6 +1,6 @@
 package exposed.examples.dml
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
@@ -41,7 +41,7 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * 참고: [Lateral 기능](https://www.perplexity.ai/search/sql-joinsi-lateral-yi-gineunge-dEWB59TDTqOYIIW0bB86pQ)
  */
-class Ex40_LateralJoin: AbstractExposedTest() {
+class Ex40_LateralJoin: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

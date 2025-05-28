@@ -2,7 +2,7 @@ package exposed.examples.dml
 
 import exposed.shared.dml.DMLTestData.toCityNameList
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
@@ -38,7 +38,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * 조건을 표현하는 다양한 [Op] 에 대한 예제 모음
  */
-class Ex23_Conditions: AbstractExposedTest() {
+class Ex23_Conditions: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

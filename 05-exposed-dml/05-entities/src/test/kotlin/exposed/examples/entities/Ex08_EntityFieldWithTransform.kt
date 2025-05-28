@@ -1,6 +1,6 @@
 package exposed.examples.entities
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -26,7 +26,7 @@ import kotlin.random.Random
 /**
  * 엔티티 필드의 수형이나 값을 변환하여 DB 컬럼 수형에 맞게 변환하는 작업에 대한 예
  */
-class Ex08_EntityFieldWithTransform: AbstractExposedTest() {
+class Ex08_EntityFieldWithTransform: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

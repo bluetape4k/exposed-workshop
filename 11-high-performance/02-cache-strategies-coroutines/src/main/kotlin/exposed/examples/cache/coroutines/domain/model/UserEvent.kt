@@ -1,7 +1,7 @@
 package exposed.examples.cache.coroutines.domain.model
 
 import exposed.examples.cache.coroutines.utils.faker
-import io.bluetape4k.exposed.dao.HasIdentifier
+import io.bluetape4k.exposed.core.HasIdentifier
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder

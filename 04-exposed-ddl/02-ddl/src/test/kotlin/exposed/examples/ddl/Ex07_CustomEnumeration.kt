@@ -2,7 +2,7 @@ package exposed.examples.ddl
 
 import exposed.examples.ddl.Ex07_CustomEnumeration.Status.ACTIVE
 import exposed.examples.ddl.Ex07_CustomEnumeration.Status.INACTIVE
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
@@ -35,7 +35,7 @@ import org.postgresql.util.PGobject
  * JPA의  `@Enumerated(EnumType.STRING)` 과 같은 방식으로 사용하시던 분들은
  * Exposed의 column transformation 기능을 사용하는 것을 추천합니다.
  */
-class Ex07_CustomEnumeration: AbstractExposedTest() {
+class Ex07_CustomEnumeration: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

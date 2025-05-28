@@ -4,7 +4,7 @@ import exposed.shared.dml.DMLTestData
 import exposed.shared.dml.DMLTestData.UserData
 import exposed.shared.dml.DMLTestData.toCityNameList
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
@@ -33,7 +33,7 @@ import java.util.*
  *
  * **단, `autoIncrement` 컬럼이 없는 테이블에 대해서는 사용할 수 없습니다.**
  */
-class Ex16_FetchBatchedResults: AbstractExposedTest() {
+class Ex16_FetchBatchedResults: JdbcExposedTestBase() {
 
 
     companion object: KLogging() {

@@ -1,6 +1,6 @@
 package exposed.examples.jpa.ex04_compositeId
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
@@ -11,7 +11,7 @@ import org.jetbrains.exposed.v1.jdbc.select
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex01_CompositeId: AbstractExposedTest() {
+class Ex01_CompositeId: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

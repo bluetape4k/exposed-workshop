@@ -1,6 +1,6 @@
 package exposed.examples.connection
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.amshove.kluent.fail
 import org.amshove.kluent.shouldBeEqualTo
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 import java.sql.Connection
 import java.sql.SQLTransientException
 
-class Ex03_ConnectionTimeout: AbstractExposedTest() {
+class Ex03_ConnectionTimeout: JdbcExposedTestBase() {
 
     companion object: KLoggingChannel()
 

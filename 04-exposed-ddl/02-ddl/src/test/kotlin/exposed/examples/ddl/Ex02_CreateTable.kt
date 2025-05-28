@@ -1,6 +1,6 @@
 package exposed.examples.ddl
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.withDb
@@ -21,7 +21,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertFails
 
-class Ex02_CreateTable: AbstractExposedTest() {
+class Ex02_CreateTable: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

@@ -1,6 +1,6 @@
 package exposed.examples.jpa.ex03_inheritance
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -28,7 +28,7 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * 단 CRUD 를 위해서는 따로 Repository 를 만들어야 한다.
  */
-class Ex02_Joined_Table_Inheritance: AbstractExposedTest() {
+class Ex02_Joined_Table_Inheritance: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

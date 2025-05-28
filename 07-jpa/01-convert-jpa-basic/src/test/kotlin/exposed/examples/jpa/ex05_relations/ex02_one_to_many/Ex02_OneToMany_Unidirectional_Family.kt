@@ -4,7 +4,7 @@ import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.FamilySchema.
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.FamilySchema.ChildTable
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.FamilySchema.Father
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.FamilySchema.familyTables
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -18,7 +18,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDate
 
-class Ex02_OneToMany_Unidirectional_Family: AbstractExposedTest() {
+class Ex02_OneToMany_Unidirectional_Family: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

@@ -12,8 +12,7 @@ spring:
         name: Spring Webflux with Exposed
 
     profiles:
-        active: "h2"    # postgres | h2 를 선택할 수 있습니다.
-        default: "h2"
+        default: "h2"   # postgres | h2 를 선택할 수 있습니다.
 
     exposed:
         generate-ddl: false

@@ -1,6 +1,6 @@
 package exposed.examples.entities
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -34,7 +34,7 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * one-to-one, one-to-many, many-to-one 관계를 모두 포함하고 있습니다.
  */
-class Ex11_ForeignIdEntity: AbstractExposedTest() {
+class Ex11_ForeignIdEntity: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

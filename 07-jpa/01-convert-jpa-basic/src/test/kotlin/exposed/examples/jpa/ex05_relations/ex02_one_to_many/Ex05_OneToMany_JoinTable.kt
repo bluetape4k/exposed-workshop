@@ -2,7 +2,7 @@ package exposed.examples.jpa.ex05_relations.ex02_one_to_many
 
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.JoinSchema
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.JoinSchema.User
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import io.bluetape4k.logging.KLogging
@@ -17,7 +17,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * JPA 의 one-to-many 관계를 @JoinTable 방식을 Exposed 로 구현 한 예
  */
-class Ex05_OneToMany_JoinTable: AbstractExposedTest() {
+class Ex05_OneToMany_JoinTable: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

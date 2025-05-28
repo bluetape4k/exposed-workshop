@@ -1,6 +1,6 @@
 package exposed.examples.springmvc.domain.dtos
 
-import io.bluetape4k.exposed.dao.HasIdentifier
+import io.bluetape4k.exposed.core.HasIdentifier
 import java.io.Serializable
 
 /**

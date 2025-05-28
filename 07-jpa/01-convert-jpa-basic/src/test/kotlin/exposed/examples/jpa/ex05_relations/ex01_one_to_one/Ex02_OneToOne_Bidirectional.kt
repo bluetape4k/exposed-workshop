@@ -1,6 +1,6 @@
 package exposed.examples.jpa.ex05_relations.ex01_one_to_one
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
@@ -23,7 +23,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * one-to-one bidirectional 관계를 Exposed로 구현한 예제
  */
-class Ex02_OneToOne_Bidirectional: AbstractExposedTest() {
+class Ex02_OneToOne_Bidirectional: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

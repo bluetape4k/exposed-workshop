@@ -1,6 +1,6 @@
 package exposed.examples.types
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -26,7 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * Boolean column type 사용 예
  */
-class Ex01_BooleanColumnType: AbstractExposedTest() {
+class Ex01_BooleanColumnType: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

@@ -2,11 +2,11 @@ package exposed.examples.cache.domain.model
 
 import exposed.examples.cache.utils.faker
 import io.bluetape4k.codec.Base58
-import io.bluetape4k.exposed.dao.HasIdentifier
+import io.bluetape4k.exposed.core.HasIdentifier
+import io.bluetape4k.exposed.core.statements.api.toExposedBlob
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
-import io.bluetape4k.exposed.sql.statements.api.toExposedBlob
 import net.datafaker.Faker
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.dao.id.EntityID

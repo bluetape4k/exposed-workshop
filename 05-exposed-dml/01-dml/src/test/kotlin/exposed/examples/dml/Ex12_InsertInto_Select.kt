@@ -1,7 +1,7 @@
 package exposed.examples.dml
 
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
@@ -26,7 +26,7 @@ import java.math.BigDecimal
 /**
  * `INSERT INTO ... SELECT ... FROM ...` 구문 예제 모음
  */
-class Ex12_InsertInto_Select: AbstractExposedTest() {
+class Ex12_InsertInto_Select: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

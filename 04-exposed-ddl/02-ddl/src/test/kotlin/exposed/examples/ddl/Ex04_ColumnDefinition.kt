@@ -1,10 +1,10 @@
 package exposed.examples.ddl
 
-import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
-import io.bluetape4k.exposed.sql.selectImplicitAll
+import io.bluetape4k.exposed.core.selectImplicitAll
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
@@ -22,7 +22,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.sql.SQLException
 import kotlin.test.assertFails
 
-class Ex04_ColumnDefinition: AbstractExposedTest() {
+class Ex04_ColumnDefinition: JdbcExposedTestBase() {
 
     companion object: KLogging()
 

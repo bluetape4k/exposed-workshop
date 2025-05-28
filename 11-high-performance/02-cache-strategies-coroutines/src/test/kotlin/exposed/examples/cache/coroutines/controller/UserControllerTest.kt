@@ -5,7 +5,7 @@ import exposed.examples.cache.coroutines.domain.model.UserDTO
 import exposed.examples.cache.coroutines.domain.model.UserTable
 import exposed.examples.cache.coroutines.domain.model.newUserDTO
 import exposed.examples.cache.coroutines.domain.repository.UserCacheRepository
-import io.bluetape4k.exposed.sql.statements.api.toExposedBlob
+import io.bluetape4k.exposed.core.statements.api.toExposedBlob
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
