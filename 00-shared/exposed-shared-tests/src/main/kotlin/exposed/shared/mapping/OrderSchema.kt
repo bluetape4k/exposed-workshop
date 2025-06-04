@@ -137,6 +137,7 @@ object OrderSchema {
                 ?: 0
     }
 
+    @Suppress("UnusedReceiverParameter")
     fun JdbcExposedTestBase.withOrdersTables(
         testDB: TestDB,
         statement: JdbcTransaction.(

@@ -163,109 +163,108 @@ object PersonSchema {
             block(PersonTable, AddressTable)
         }
     }
-}
 
+    @Suppress("UnusedReceiverParameter")
+    fun JdbcExposedTestBase.withPersonsAndAddress(
+        testDB: TestDB,
+        statement: JdbcTransaction.(
+            persons: PersonSchema.PersonTable,
+            addresses: PersonSchema.AddressTable,
+        ) -> Unit,
+    ) {
+        val persons = PersonSchema.PersonTable
+        val addresses = PersonSchema.AddressTable
 
-@Suppress("UnusedReceiverParameter")
-fun JdbcExposedTestBase.withPersonsAndAddress(
-    testDB: TestDB,
-    statement: JdbcTransaction.(
-        persons: PersonSchema.PersonTable,
-        addresses: PersonSchema.AddressTable,
-    ) -> Unit,
-) {
-    val persons = PersonSchema.PersonTable
-    val addresses = PersonSchema.AddressTable
+        withTables(testDB, *PersonSchema.allPersonTables) {
 
-    withTables(testDB, *PersonSchema.allPersonTables) {
+            val addr1 = PersonSchema.Address.new {
+                street = "123 Main St"
+                city = "Bedrock"
+                state = "IN"
+                zip = "12345"
+            }
+            val addr2 = PersonSchema.Address.new {
+                street = "456 Elm St"
+                city = "Bedrock"
+                state = "IN"
+                zip = "12345"
+            }
 
-        val addr1 = PersonSchema.Address.new {
-            street = "123 Main St"
-            city = "Bedrock"
-            state = "IN"
-            zip = "12345"
-        }
-        val addr2 = PersonSchema.Address.new {
-            street = "456 Elm St"
-            city = "Bedrock"
-            state = "IN"
-            zip = "12345"
-        }
+            val addr3 = PersonSchema.Address.new {
+                street = "165 Kangnam-daero"
+                city = "Seoul"
+                state = "Seoul"
+                zip = "11111"
+            }
+            flushCache()
 
-        val addr3 = PersonSchema.Address.new {
-            street = "165 Kangnam-daero"
-            city = "Seoul"
-            state = "Seoul"
-            zip = "11111"
-        }
-        flushCache()
+            PersonSchema.Person.new {
+                firstName = "Fred"
+                lastName = "Flintstone"
+                birthDate = LocalDate.of(1935, 2, 1)
+                employeed = true
+                occupation = "Brontosaurus Operator"
+                address = addr1
+            }
+            PersonSchema.Person.new {
+                firstName = "Wilma"
+                lastName = "Flintstone"
+                birthDate = LocalDate.of(1940, 2, 1)
+                employeed = false
+                occupation = "Accountant"
+                address = addr1
+            }
+            PersonSchema.Person.new {
+                firstName = "Pebbles"
+                lastName = "Flintstone"
+                birthDate = LocalDate.of(1960, 5, 6)
+                employeed = false
+                address = addr1
+            }
+            flushCache()
+            PersonSchema.Person.new {
+                firstName = "Barney"
+                lastName = "Rubble"
+                birthDate = LocalDate.of(1937, 2, 1)
+                employeed = true
+                occupation = "Brontosaurus Operator"
+                address = addr2
+            }
+            PersonSchema.Person.new {
+                firstName = "Betty"
+                lastName = "Rubble"
+                birthDate = LocalDate.of(1943, 2, 1)
+                employeed = false
+                occupation = "Engineer"
+                address = addr2
+            }
+            PersonSchema.Person.new {
+                firstName = "Bamm Bamm"
+                lastName = "Rubble"
+                birthDate = LocalDate.of(1963, 7, 8)
+                employeed = false
+                address = addr2
+            }
 
-        PersonSchema.Person.new {
-            firstName = "Fred"
-            lastName = "Flintstone"
-            birthDate = LocalDate.of(1935, 2, 1)
-            employeed = true
-            occupation = "Brontosaurus Operator"
-            address = addr1
-        }
-        PersonSchema.Person.new {
-            firstName = "Wilma"
-            lastName = "Flintstone"
-            birthDate = LocalDate.of(1940, 2, 1)
-            employeed = false
-            occupation = "Accountant"
-            address = addr1
-        }
-        PersonSchema.Person.new {
-            firstName = "Pebbles"
-            lastName = "Flintstone"
-            birthDate = LocalDate.of(1960, 5, 6)
-            employeed = false
-            address = addr1
-        }
-        flushCache()
-        PersonSchema.Person.new {
-            firstName = "Barney"
-            lastName = "Rubble"
-            birthDate = LocalDate.of(1937, 2, 1)
-            employeed = true
-            occupation = "Brontosaurus Operator"
-            address = addr2
-        }
-        PersonSchema.Person.new {
-            firstName = "Betty"
-            lastName = "Rubble"
-            birthDate = LocalDate.of(1943, 2, 1)
-            employeed = false
-            occupation = "Engineer"
-            address = addr2
-        }
-        PersonSchema.Person.new {
-            firstName = "Bamm Bamm"
-            lastName = "Rubble"
-            birthDate = LocalDate.of(1963, 7, 8)
-            employeed = false
-            address = addr2
-        }
+            PersonSchema.Person.new {
+                firstName = "Sunghyouk"
+                lastName = "Bae"
+                birthDate = LocalDate.of(1968, 10, 14)
+                employeed = false
+                address = addr3
+            }
 
-        PersonSchema.Person.new {
-            firstName = "Sunghyouk"
-            lastName = "Bae"
-            birthDate = LocalDate.of(1968, 10, 14)
-            employeed = false
-            address = addr3
+            PersonSchema.Person.new {
+                firstName = "Jehyoung"
+                lastName = "Bae"
+                birthDate = LocalDate.of(1996, 5, 22)
+                employeed = false
+                address = addr3
+            }
+
+            flushCache()
+
+            statement(persons, addresses)
         }
-
-        PersonSchema.Person.new {
-            firstName = "Jehyoung"
-            lastName = "Bae"
-            birthDate = LocalDate.of(1996, 5, 22)
-            employeed = false
-            address = addr3
-        }
-
-        flushCache()
-
-        statement(persons, addresses)
     }
 }

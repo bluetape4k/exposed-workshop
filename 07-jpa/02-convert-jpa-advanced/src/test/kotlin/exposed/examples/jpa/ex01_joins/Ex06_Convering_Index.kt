@@ -1,6 +1,6 @@
 package exposed.examples.jpa.ex01_joins
 
-import exposed.shared.mapping.withPersonsAndAddress
+import exposed.shared.mapping.PersonSchema.withPersonsAndAddress
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging

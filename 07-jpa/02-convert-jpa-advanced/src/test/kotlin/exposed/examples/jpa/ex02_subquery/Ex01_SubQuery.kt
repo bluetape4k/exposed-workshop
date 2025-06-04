@@ -1,7 +1,7 @@
 package exposed.examples.jpa.ex02_subquery
 
 import exposed.shared.mapping.PersonSchema.Person
-import exposed.shared.mapping.withPersonsAndAddress
+import exposed.shared.mapping.PersonSchema.withPersonsAndAddress
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
