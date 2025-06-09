@@ -66,7 +66,7 @@ object Plugins {
 object Versions {
 
     // Java 21, Kotlin 2.0 이상에서 사용하세요
-    const val bluetape4k = "0.0.9"              // Bluetape4k Github Package 로 배포됩니다.
+    const val bluetape4k = "0.0.9"    // Bluetape4k Github Package 로 배포됩니다.
 
     const val kotlin = "2.1.21"                 // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
     const val kotlinx_coroutines = "1.10.2"      // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
@@ -249,7 +249,7 @@ object Libs {
         }
     }
 
-    const val jetbrains_annotations = "org.jetbrains:annotations:24.1.0" // https://mvnrepository.com/artifact/org.jetbrains/annotations
+    const val jetbrains_annotations = "org.jetbrains:annotations:26.0.2" // https://mvnrepository.com/artifact/org.jetbrains/annotations
 
 
     // bluetape4k
@@ -441,38 +441,38 @@ object Libs {
     const val javamoney_moneta = "org.javamoney:moneta:1.4.4"  // https://mvnrepository.com/artifact/org.javamoney/moneta
 
     // jakarta
-    const val jakarta_activation_api = "jakarta.activation:jakarta.activation-api:2.1.2"
-    const val jakarta_annotation_api = "jakarta.annotation:jakarta.annotation-api:2.1.1"
-    const val jakarta_el_api = "jakarta.el:jakarta.el-api:6.0.0"    // https://mvnrepository.com/artifact/jakarta.el/jakarta.el-api
-    const val jakarta_inject_api = "jakarta.inject:jakarta.inject-api:2.0.1"
-    const val jakarta_interceptor_api = "jakarta.interceptor:jakarta.interceptor-api:2.1.0"
-    const val jakarta_jms_api = "jakarta.jms:jakarta.jms-api:3.1.0"
-    const val jakarta_json_api = "jakarta.json:jakarta.json-api:2.1.2"
-    const val jakarta_json = "org.glassfish:jakarta.json:2.0.1"
-    const val jakarta_persistence_api = "jakarta.persistence:jakarta.persistence-api:3.1.0"
-    const val jakarta_servlet_api = "jakarta.servlet:jakarta.servlet-api:6.0.0"
-    const val jakarta_transaction_api = "jakarta.transaction:jakarta.transaction-api:2.0.1"
-    const val jakarta_validation_api = "jakarta.validation:jakarta.validation-api:3.0.2"
-    const val jakarta_ws_rs_api = "jakarta.ws.rs:jakarta.ws.rs-api:3.1.0"
-    const val jakarta_xml_bind = "jakarta.xml.bind:jakarta.xml.bind-api:4.0.0"
+    const val jakarta_activation_api = "jakarta.activation:jakarta.activation-api:2.1.3"  // https://mvnrepository.com/artifact/jakarta.activation/jakarta.activation-api
+    const val jakarta_annotation_api = "jakarta.annotation:jakarta.annotation-api:3.0.0"  // https://mvnrepository.com/artifact/jakarta.annotation/jakarta.annotation-api
+    const val jakarta_el_api = "jakarta.el:jakarta.el-api:6.0.1"    // https://mvnrepository.com/artifact/jakarta.el/jakarta.el-api
+    const val jakarta_inject_api = "jakarta.inject:jakarta.inject-api:2.0.1"   // https://mvnrepository.com/artifact/jakarta.inject/jakarta.inject-api
+    const val jakarta_interceptor_api = "jakarta.interceptor:jakarta.interceptor-api:2.2.0" // https://mvnrepository.com/artifact/jakarta.interceptor/jakarta.interceptor-api
+    const val jakarta_jms_api = "jakarta.jms:jakarta.jms-api:3.1.0"  // https://mvnrepository.com/artifact/jakarta.jms/jakarta.jms-api
+    const val jakarta_json_api = "jakarta.json:jakarta.json-api:2.1.3"  // https://mvnrepository.com/artifact/jakarta.json/jakarta.json-api
+    const val jakarta_json = "org.glassfish:jakarta.json:2.0.1"         // https://mvnrepository.com/artifact/org.glassfish/jakarta.json
+    const val jakarta_persistence_api = "jakarta.persistence:jakarta.persistence-api:3.1.0"  // https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api
+    const val jakarta_servlet_api = "jakarta.servlet:jakarta.servlet-api:6.1.0"              // https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
+    const val jakarta_transaction_api = "jakarta.transaction:jakarta.transaction-api:2.0.1"  // https://mvnrepository.com/artifact/jakarta.transaction/jakarta.transaction-api
+    const val jakarta_validation_api = "jakarta.validation:jakarta.validation-api:3.1.1"    // https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api
+    const val jakarta_ws_rs_api = "jakarta.ws.rs:jakarta.ws.rs-api:4.0.0"                   // https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api
+    const val jakarta_xml_bind = "jakarta.xml.bind:jakarta.xml.bind-api:4.0.2"              // https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api
 
     // Apache Commons
-    const val commons_beanutils = "commons-beanutils:commons-beanutils:1.9.4"     // https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils
-    const val commons_compress = "org.apache.commons:commons-compress:1.26.1"     // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
-    const val commons_codec = "commons-codec:commons-codec:1.17.0"                // https://mvnrepository.com/artifact/commons-codec/commons-codec
-    const val commons_collections4 = "org.apache.commons:commons-collections4:4.4"  // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
+    const val commons_beanutils = "commons-beanutils:commons-beanutils:1.11.0"     // https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils
+    const val commons_compress = "org.apache.commons:commons-compress:1.27.1"     // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
+    const val commons_codec = "commons-codec:commons-codec:1.18.0"                // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    const val commons_collections4 = "org.apache.commons:commons-collections4:4.5.0"  // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
     const val commons_cryto = "org.apache.commons:commons-crypto:1.2.0"             // https://mvnrepository.com/artifact/org.apache.commons/commons-crypto
-    const val commons_csv = "org.apache.commons:commons-csv:1.11.0"                 // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
+    const val commons_csv = "org.apache.commons:commons-csv:1.14.0"                 // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
     const val commons_digest3 = "org.apache.commons:commons-digester3:3.2"          // https://mvnrepository.com/artifact/org.apache.commons/commons-digester3
-    const val commons_exec = "org.apache.commons:commons-exec:1.4.0"                // https://mvnrepository.com/artifact/org.apache.commons/commons-exec
-    const val commons_io = "commons-io:commons-io:2.16.1"                           // https://mvnrepository.com/artifact/commons-io/commons-io
-    const val commons_lang3 = "org.apache.commons:commons-lang3:3.14.0"             // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-    const val commons_logging = "commons-logging:commons-logging:1.3.2"             // https://mvnrepository.com/artifact/commons-logging/commons-logging
+    const val commons_exec = "org.apache.commons:commons-exec:1.5.0"                // https://mvnrepository.com/artifact/org.apache.commons/commons-exec
+    const val commons_io = "commons-io:commons-io:2.19.0"                           // https://mvnrepository.com/artifact/commons-io/commons-io
+    const val commons_lang3 = "org.apache.commons:commons-lang3:3.17.0"             // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    const val commons_logging = "commons-logging:commons-logging:1.3.5"             // https://mvnrepository.com/artifact/commons-logging/commons-logging
     const val commons_math3 = "org.apache.commons:commons-math3:3.6.1"              // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
-    const val commons_pool2 = "org.apache.commons:commons-pool2:2.12.0"             // https://mvnrepository.com/artifact/org.apache.commons/commons-pool2
-    const val commons_rng_simple = "org.apache.commons:commons-rng-simple:1.5"      // https://mvnrepository.com/artifact/org.apache.commons/commons-rng-simple
-    const val commons_text = "org.apache.commons:commons-text:1.12.0"               // https://mvnrepository.com/artifact/org.apache.commons/commons-text
-    const val commons_validator = "commons-validator:commons-validator:1.8.0"       // https://mvnrepository.com/artifact/commons-validator/commons-validator
+    const val commons_pool2 = "org.apache.commons:commons-pool2:2.12.1"             // https://mvnrepository.com/artifact/org.apache.commons/commons-pool2
+    const val commons_rng_simple = "org.apache.commons:commons-rng-simple:1.6"      // https://mvnrepository.com/artifact/org.apache.commons/commons-rng-simple
+    const val commons_text = "org.apache.commons:commons-text:1.13.1"               // https://mvnrepository.com/artifact/org.apache.commons/commons-text
+    const val commons_validator = "commons-validator:commons-validator:1.9.0"       // https://mvnrepository.com/artifact/commons-validator/commons-validator
 
     fun slf4j(module: String, version: String = Versions.slf4j) = "org.slf4j:$module:$version"
     val slf4j_api = slf4j("slf4j-api")
