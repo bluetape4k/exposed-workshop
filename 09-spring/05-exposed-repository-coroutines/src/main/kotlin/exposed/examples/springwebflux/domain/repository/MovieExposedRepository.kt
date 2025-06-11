@@ -12,14 +12,9 @@ import exposed.examples.springwebflux.domain.model.toActorDTO
 import exposed.examples.springwebflux.domain.model.toMovieDTO
 import exposed.examples.springwebflux.domain.model.toMovieWithActorDTO
 import exposed.examples.springwebflux.domain.model.toMovieWithProducingActorDTO
-import io.bluetape4k.coroutines.flow.extensions.bufferUntilChanged
 import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.v1.core.Join
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.count
@@ -112,39 +107,30 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
     suspend fun getAllMoviesWithActors(): List<MovieWithActorDTO> {
         log.debug { "Get all movies with actors." }
 
-        // TODO: Iterable 의 확장함수로 bufferUntilChanged 함수를 추가해야 합니다.
-        return runBlocking {
-            val join = table.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
-            join
-                .select(
-                    MovieTable.id,
-                    MovieTable.name,
-                    MovieTable.producerName,
-                    MovieTable.releaseDate,
-                    ActorTable.id,
-                    ActorTable.firstName,
-                    ActorTable.lastName,
-                    ActorTable.birthday
-                )
-                .map { row ->
-                    val movie = row.toMovieDTO()
-                    val actor = row.toActorDTO()
+        val join = table.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
 
-                    movie to actor
-                }
-                .asFlow()
-                .bufferUntilChanged { it.first.id }
-                .mapNotNull { pairs ->
-                    val movie = pairs.first().first
-                    val actors = pairs.map { it.second }
-                    movie.toMovieWithActorDTO(actors)
-                }
-                .toList()
-        }
+        return join
+            .select(
+                MovieTable.id,
+                MovieTable.name,
+                MovieTable.producerName,
+                MovieTable.releaseDate,
+                ActorTable.id,
+                ActorTable.firstName,
+                ActorTable.lastName,
+                ActorTable.birthday
+            )
+            .groupBy { it[MovieTable.id] }
+            .map { (_, rows) ->
+                val movie = rows.first().toMovieDTO()
+                val actor = rows.map { it.toActorDTO() }
+
+                movie.toMovieWithActorDTO(actor)
+            }
     }
 
     /**
-     * `movieId`에 해당하는 [Movie] 와 출현한 [Actor]들의 정보를 eager loading 으로 가져온다.
+     * `movieId`에 해당하는 [MovieDTO] 와 출현한 [ActorDTO]들의 정보를 eager loading 으로 가져온다.
      * ```sql
      * -- H2
      * SELECT MOVIES.ID, MOVIES."name", MOVIES.PRODUCER_NAME, MOVIES.RELEASE_DATE
