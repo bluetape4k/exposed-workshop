@@ -22,6 +22,7 @@ import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.Test
 
+@Suppress("DEPRECATION")
 class Ex01_H2_ConnectionPool {
 
     companion object: KLoggingChannel()

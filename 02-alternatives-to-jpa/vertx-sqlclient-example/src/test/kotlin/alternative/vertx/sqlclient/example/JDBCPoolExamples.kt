@@ -3,8 +3,8 @@ package alternative.vertx.sqlclient.example
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
-import io.bluetape4k.vertx.sqlclient.tests.testWithTransactionSuspending
-import io.bluetape4k.vertx.sqlclient.withTransactionSuspending
+import io.bluetape4k.vertx.sqlclient.tests.testWithSuspendTransaction
+import io.bluetape4k.vertx.sqlclient.withSuspendTransaction
 import io.vertx.core.Vertx
 import io.vertx.junit5.VertxTestContext
 import io.vertx.kotlin.core.json.json
@@ -39,7 +39,7 @@ class JDBCPoolExamples: AbstractSqlClientTest() {
 
             val insertSQL = "INSERT INTO test VALUES (1, 'Hello'), (2, 'World')"
 
-            pool.withTransactionSuspending { conn ->
+            pool.withSuspendTransaction { conn ->
                 conn.query(schemaSQL).execute().coAwait()
                 conn.query(insertSQL).execute().coAwait()
             }
@@ -50,7 +50,7 @@ class JDBCPoolExamples: AbstractSqlClientTest() {
     @Test
     fun `connect to database`(vertx: Vertx, testContext: VertxTestContext) = runSuspendIO {
         val pool = vertx.getH2Pool()
-        vertx.testWithTransactionSuspending(testContext, pool) {
+        vertx.testWithSuspendTransaction(testContext, pool) {
             val rows = pool.query("SELECT * from test").execute().coAwait()
 
             val records = rows.map { it.toJson() }
@@ -66,7 +66,7 @@ class JDBCPoolExamples: AbstractSqlClientTest() {
     fun `query with parameters`(vertx: Vertx, testContext: VertxTestContext) = runSuspendIO {
         val pool = vertx.getH2Pool()
 
-        vertx.testWithTransactionSuspending(testContext, pool) {
+        vertx.testWithSuspendTransaction(testContext, pool) {
             val query = pool.preparedQuery("SELECT * from test WHERE id = ?")
             val rows = query.execute(Tuple.of(1)).coAwait()
             val records = rows.map { it.toJson() }
@@ -83,8 +83,8 @@ class JDBCPoolExamples: AbstractSqlClientTest() {
     fun `query with explicit transaction`(vertx: Vertx, testContext: VertxTestContext) = runSuspendIO {
         val pool = vertx.getH2Pool()
 
-        vertx.testWithTransactionSuspending(testContext, pool) {
-            val records = pool.withTransactionSuspending {
+        vertx.testWithSuspendTransaction(testContext, pool) {
+            val records = pool.withSuspendTransaction { conn ->
                 val query = pool.preparedQuery("SELECT COUNT(*) FROM test")
                 val rows = query.execute().coAwait()
                 rows.map { it.toJson() }

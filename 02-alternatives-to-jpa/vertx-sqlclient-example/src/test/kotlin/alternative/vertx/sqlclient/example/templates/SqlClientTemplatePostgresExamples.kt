@@ -7,8 +7,8 @@ import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.vertx.sqlclient.templates.tupleMapperOfRecord
-import io.bluetape4k.vertx.sqlclient.tests.testWithTransactionSuspending
-import io.bluetape4k.vertx.sqlclient.withTransactionSuspending
+import io.bluetape4k.vertx.sqlclient.tests.testWithSuspendTransaction
+import io.bluetape4k.vertx.sqlclient.withSuspendTransaction
 import io.vertx.core.Vertx
 import io.vertx.junit5.VertxTestContext
 import io.vertx.kotlin.core.json.json
@@ -33,7 +33,7 @@ class SqlClientTemplatePostgresExamples: AbstractSqlClientTest() {
         runBlocking(vertx.dispatcher()) {
             val pool = vertx.getPostgresPool()
             try {
-                pool.withTransactionSuspending { conn ->
+                pool.withSuspendTransaction { conn ->
                     // conn.query("DROP TABLE customers IF EXISTS;").execute().coAwait()
                     conn.query(
                         """
@@ -62,7 +62,7 @@ class SqlClientTemplatePostgresExamples: AbstractSqlClientTest() {
     fun `query with parameters`(vertx: Vertx, testContext: VertxTestContext) = runSuspendIO {
         val pool = vertx.getPostgresPool()
         try {
-            vertx.testWithTransactionSuspending(testContext, pool) { conn ->
+            vertx.testWithSuspendTransaction(testContext, pool) { conn ->
                 val query = "SELECT * FROM customers WHERE id = #{ID}"
                 val parameters = mapOf("ID" to 1)
                 val rowSet = SqlTemplate.forQuery(pool, query).execute(parameters).coAwait()
@@ -89,7 +89,7 @@ class SqlClientTemplatePostgresExamples: AbstractSqlClientTest() {
     fun `insert with parameters`(vertx: Vertx, testContext: VertxTestContext) = runSuspendIO {
         val pool = vertx.getPostgresPool()
         try {
-            vertx.testWithTransactionSuspending(testContext, pool) { conn ->
+            vertx.testWithSuspendTransaction(testContext, pool) { conn ->
                 val insertStmt =
                     "INSERT INTO customers (id, first_name, last_name) VALUES (#{id}, #{firstName}, #{lastName});"
                 val parameters = mapOf(
@@ -113,7 +113,7 @@ class SqlClientTemplatePostgresExamples: AbstractSqlClientTest() {
     fun `query with row mapper`(vertx: Vertx, testContext: VertxTestContext) = runSuspendIO {
         val pool = vertx.getPostgresPool()
         try {
-            vertx.testWithTransactionSuspending(testContext, pool) { conn ->
+            vertx.testWithSuspendTransaction(testContext, pool) { conn ->
                 val query = "SELECT * FROM customers WHERE id = #{ID}"
                 val parameters = mapOf("ID" to 1)
 
@@ -141,7 +141,7 @@ class SqlClientTemplatePostgresExamples: AbstractSqlClientTest() {
     fun `binding row with anemic JsonMapper`(vertx: Vertx, testContext: VertxTestContext) = runSuspendIO {
         val pool = vertx.getPostgresPool()
         try {
-            vertx.testWithTransactionSuspending(testContext, pool) { conn ->
+            vertx.testWithSuspendTransaction(testContext, pool) { conn ->
                 val query = "SELECT * FROM customers WHERE id = #{ID}"
                 val parameters = mapOf("ID" to 1)
 
@@ -165,7 +165,7 @@ class SqlClientTemplatePostgresExamples: AbstractSqlClientTest() {
     fun `insert with parameters binding customer mapper`(vertx: Vertx, testContext: VertxTestContext) = runSuspendIO {
         val pool = vertx.getPostgresPool()
         try {
-            vertx.testWithTransactionSuspending(testContext, pool) { conn ->
+            vertx.testWithSuspendTransaction(testContext, pool) { conn ->
                 val insertStmt =
                     "INSERT INTO customers (id, first_name, last_name) VALUES (#{id}, #{firstName}, #{lastName});"
                 val customer = Customer(
@@ -192,7 +192,7 @@ class SqlClientTemplatePostgresExamples: AbstractSqlClientTest() {
         runSuspendIO {
             val pool = vertx.getPostgresPool()
             try {
-                vertx.testWithTransactionSuspending(testContext, pool) { conn ->
+                vertx.testWithSuspendTransaction(testContext, pool) { conn ->
                     val insertStmt =
                         "INSERT INTO customers (id, first_name, last_name) VALUES (#{id}, #{firstName}, #{lastName});"
                     val customer = json {
@@ -220,7 +220,7 @@ class SqlClientTemplatePostgresExamples: AbstractSqlClientTest() {
     fun `insert with parameters binding jackson databind`(vertx: Vertx, testContext: VertxTestContext) = runSuspendIO {
         val pool = vertx.getPostgresPool()
         try {
-            vertx.testWithTransactionSuspending(testContext, pool) { conn ->
+            vertx.testWithSuspendTransaction(testContext, pool) { conn ->
                 val insertStmt =
                     "INSERT INTO customers (id, first_name, last_name) VALUES (#{id}, #{firstName}, #{lastName});"
                 val customer = Customer(6, faker.name().firstName(), faker.name().lastName())

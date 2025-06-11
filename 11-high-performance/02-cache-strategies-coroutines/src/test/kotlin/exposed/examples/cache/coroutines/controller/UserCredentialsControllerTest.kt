@@ -28,6 +28,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.returnResult
 import java.time.Instant
 
+@Suppress("DEPRECATION")
 class UserCredentialsControllerTest(
     @Autowired private val client: WebTestClient,
     @Autowired private val repository: UserCredentialsCacheRepository,
