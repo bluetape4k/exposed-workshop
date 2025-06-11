@@ -19,6 +19,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.returnResult
 import java.time.Duration
 
+@Suppress("DEPRECATION")
 class UserEventControllerTest(
     @Autowired private val client: WebTestClient,
 ): AbstractCacheStrategyTest() {

@@ -19,6 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.random.Random
 
+@Suppress("DEPRECATION")
 class KsuidMillisTableTest: AbstractCustomIdTableTest() {
 
     companion object: KLogging()

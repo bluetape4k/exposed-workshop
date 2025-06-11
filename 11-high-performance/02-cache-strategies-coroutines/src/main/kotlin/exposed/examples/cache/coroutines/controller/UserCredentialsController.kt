@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
+@Suppress("DEPRECATION")
 @RestController
 @RequestMapping("/user-credentials")
 class UserCredentialsController(private val repository: UserCredentialsCacheRepository) {

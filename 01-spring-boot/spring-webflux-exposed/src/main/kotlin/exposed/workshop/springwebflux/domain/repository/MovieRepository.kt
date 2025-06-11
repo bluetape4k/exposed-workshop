@@ -13,9 +13,13 @@ import exposed.workshop.springwebflux.domain.toActorDTO
 import exposed.workshop.springwebflux.domain.toMovieDTO
 import exposed.workshop.springwebflux.domain.toMovieWithActorDTO
 import exposed.workshop.springwebflux.domain.toMovieWithProducingActorDTO
+import io.bluetape4k.coroutines.flow.extensions.bufferUntilChanged
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
-import org.eclipse.collections.impl.factory.Multimaps
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.v1.core.Join
 import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.v1.core.count
@@ -124,33 +128,34 @@ class MovieRepository {
     suspend fun getAllMoviesWithActors(): List<MovieWithActorDTO> {
         log.debug { "Get all movies with actors." }
 
-        val join = MovieTable.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
-        val movies = join
-            .select(
-                MovieTable.id,
-                MovieTable.name,
-                MovieTable.producerName,
-                MovieTable.releaseDate,
-                ActorTable.id,
-                ActorTable.firstName,
-                ActorTable.lastName,
-                ActorTable.birthday
-            ).toList()
+        // TODO: Iterable 의 확장함수로 bufferUntilChanged 함수를 추가해야 합니다.
+        return runBlocking {
+            val join = MovieTable.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
+            join
+                .select(
+                    MovieTable.id,
+                    MovieTable.name,
+                    MovieTable.producerName,
+                    MovieTable.releaseDate,
+                    ActorTable.id,
+                    ActorTable.firstName,
+                    ActorTable.lastName,
+                    ActorTable.birthday
+                )
+                .map { row ->
+                    val movie = row.toMovieDTO()
+                    val actor = row.toActorDTO()
 
-        val movieDtos = hashMapOf<Long, MovieDTO>()
-        val actorDtos = Multimaps.mutable.set.of<Long, ActorDTO>()
-
-        movies.forEach { row ->
-            val movieId = row[MovieTable.id].value
-
-            if (!movieDtos.containsKey(movieId)) {
-                movieDtos[movieId] = row.toMovieDTO()
-            }
-            actorDtos.getIfAbsentPutAll(movieId, mutableSetOf(row.toActorDTO()))
-        }
-
-        return movieDtos.map { (id, movie) ->
-            movie.toMovieWithActorDTO(actorDtos.get(id) ?: emptySet())
+                    movie to actor
+                }
+                .asFlow()
+                .bufferUntilChanged { it.first.id }
+                .mapNotNull { pairs ->
+                    val movie = pairs.first().first
+                    val actors = pairs.map { it.second }
+                    movie.toMovieWithActorDTO(actors)
+                }
+                .toList()
         }
     }
 

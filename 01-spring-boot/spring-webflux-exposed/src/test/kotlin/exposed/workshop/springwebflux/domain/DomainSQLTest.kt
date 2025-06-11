@@ -16,6 +16,7 @@ import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
 import org.springframework.transaction.annotation.Transactional
 
+@Suppress("DEPRECATION")
 class DomainSQLTest: AbstractSpringWebfluxTest() {
 
     companion object: KLoggingChannel() {

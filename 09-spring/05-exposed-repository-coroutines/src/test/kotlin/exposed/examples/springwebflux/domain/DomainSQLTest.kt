@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
 
+@Suppress("DEPRECATION")
 class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
 
     companion object: KLoggingChannel() {

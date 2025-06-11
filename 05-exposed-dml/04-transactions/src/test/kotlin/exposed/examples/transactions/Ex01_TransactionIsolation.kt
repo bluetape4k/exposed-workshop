@@ -26,6 +26,7 @@ import java.sql.Connection
 /**
  * Connection의 Transaction Isolation Level을 설정하는 방법에 대한 테스트 코드입니다.
  */
+@Suppress("DEPRECATION")
 class Ex01_TransactionIsolation: JdbcExposedTestBase() {
 
     companion object: KLogging()

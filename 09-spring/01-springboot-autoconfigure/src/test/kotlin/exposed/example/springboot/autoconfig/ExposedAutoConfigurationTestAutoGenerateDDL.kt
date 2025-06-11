@@ -38,6 +38,7 @@ import org.springframework.transaction.annotation.Transactional
  * );
  * ```
  */
+@Suppress("DEPRECATION")
 @SpringBootTest(
     classes = [Application::class],
     properties = [

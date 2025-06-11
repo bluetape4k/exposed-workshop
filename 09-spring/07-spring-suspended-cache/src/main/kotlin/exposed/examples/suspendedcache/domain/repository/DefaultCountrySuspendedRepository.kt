@@ -7,6 +7,7 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.v1.jdbc.update
 
+@Suppress("DEPRECATION")
 class DefaultCountrySuspendedRepository: CountrySuspendedRepository {
 
     companion object: KLoggingChannel()

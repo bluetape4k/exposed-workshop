@@ -1,6 +1,5 @@
 package exposed.examples.springmvc.domain.repository
 
-import exposed.examples.springmvc.domain.dtos.ActorDTO
 import exposed.examples.springmvc.domain.dtos.MovieActorCountDTO
 import exposed.examples.springmvc.domain.dtos.MovieDTO
 import exposed.examples.springmvc.domain.dtos.MovieWithActorDTO
@@ -13,10 +12,14 @@ import exposed.examples.springmvc.domain.model.MovieSchema.ActorInMovieTable
 import exposed.examples.springmvc.domain.model.MovieSchema.ActorTable
 import exposed.examples.springmvc.domain.model.MovieSchema.MovieEntity
 import exposed.examples.springmvc.domain.model.MovieSchema.MovieTable
+import io.bluetape4k.coroutines.flow.extensions.bufferUntilChanged
 import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.eclipse.collections.impl.factory.Multimaps
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.count
 import org.jetbrains.exposed.v1.core.innerJoin
@@ -90,38 +93,36 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
     fun getAllMoviesWithActors(): List<MovieWithActorDTO> {
         log.debug { "Get all movies with actors." }
 
-        val join = table.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
+        // TODO: Iterable 의 확장함수로 bufferUntilChanged 함수를 추가해야 합니다.
+        return runBlocking {
+            val join = table.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
+            join
+                .select(
+                    MovieTable.id,
+                    MovieTable.name,
+                    MovieTable.producerName,
+                    MovieTable.releaseDate,
+                    ActorTable.id,
+                    ActorTable.firstName,
+                    ActorTable.lastName,
+                    ActorTable.birthday
+                )
+                .map { row ->
+                    val movie = row.toMovieDTO()
+                    val actor = row.toActorDTO()
 
-        val movies = join
-            .select(
-                MovieTable.id,
-                MovieTable.name,
-                MovieTable.producerName,
-                MovieTable.releaseDate,
-                ActorTable.id,
-                ActorTable.firstName,
-                ActorTable.lastName,
-                ActorTable.birthday
-            )
-            .toList()
-
-        val movieDtos = hashMapOf<Long, MovieDTO>()
-        val actorsInMovie = Multimaps.mutable.set.of<Long, ActorDTO>()
-
-        movies.forEach { row ->
-            val movieId = row[MovieTable.id].value
-
-            if (!movieDtos.containsKey(movieId)) {
-                movieDtos[movieId] = row.toMovieDTO()
-            }
-            actorsInMovie.getIfAbsentPutAll(movieId, mutableListOf(row.toActorDTO()))
-        }
-
-        return movieDtos.map { (id, movie) ->
-            movie.toMovieWithActorDTO(actorsInMovie.get(id) ?: emptySet())
+                    movie to actor
+                }
+                .asFlow()
+                .bufferUntilChanged { it.first.id }
+                .mapNotNull { pairs ->
+                    val movie = pairs.first().first
+                    val actors = pairs.map { it.second }
+                    movie.toMovieWithActorDTO(actors)
+                }
+                .toList()
         }
     }
-
 
     /**
      * `movieId` 에 대한 영화와 그 영화에 출연한 배우를 조회합니다.

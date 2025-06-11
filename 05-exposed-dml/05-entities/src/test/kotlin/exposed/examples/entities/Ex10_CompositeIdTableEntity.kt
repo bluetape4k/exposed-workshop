@@ -63,6 +63,7 @@ import java.util.*
 import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 
+@Suppress("DEPRECATION")
 class Ex10_CompositeIdTableEntity: JdbcExposedTestBase() {
 
     companion object: KLogging()

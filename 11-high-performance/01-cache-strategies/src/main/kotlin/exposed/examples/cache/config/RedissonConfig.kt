@@ -7,6 +7,7 @@ import org.redisson.api.RedissonClient
 import org.redisson.config.Config
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import java.time.Duration
 
 @Configuration
 class RedissonConfig {
@@ -25,7 +26,7 @@ class RedissonConfig {
                 .setIdleConnectionTimeout(1000)
                 .setTimeout(1000)
                 .setRetryAttempts(3)
-                .setRetryInterval(300)
+                .setRetryDelay { Duration.ofMillis(it * 100L) }
         }
 
         return Redisson.create(config)

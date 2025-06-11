@@ -60,6 +60,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * JSON 컬럼에 Kotlinx Serialization을 이용하여 JSON 객체를 저장/조회하는 예제
  */
+@Suppress("DEPRECATION")
 class Ex01_JsonColumn: AbstractExposedJsonTest() {
 
     companion object: KLogging()

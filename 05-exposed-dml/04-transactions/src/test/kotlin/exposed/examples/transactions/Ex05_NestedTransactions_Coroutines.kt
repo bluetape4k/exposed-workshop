@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package exposed.examples.transactions
 
 import exposed.shared.dml.DMLTestData
@@ -93,6 +95,7 @@ suspend fun <T> runWithSavepointOrNewTransaction(
 }
 
 
+@Suppress("DEPRECATION")
 class Ex05_NestedTransactions_Coroutines: JdbcExposedTestBase() {
 
     companion object: KLogging()

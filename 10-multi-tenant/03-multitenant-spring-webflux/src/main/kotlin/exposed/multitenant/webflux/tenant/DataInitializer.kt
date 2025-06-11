@@ -22,6 +22,7 @@ import java.time.LocalDate
 /**
  * Application 시작 시 DB 스키마 생성 및 샘플 데이터를 삽입하는 클래스
  */
+@Suppress("DEPRECATION")
 @Component
 class DataInitializer {
 

@@ -33,6 +33,7 @@ import java.time.LocalDate
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.random.Random
 
+@Suppress("DEPRECATION")
 class UserControllerTest(
     @Autowired private val client: WebTestClient,
     @Autowired private val repository: UserCacheRepository,

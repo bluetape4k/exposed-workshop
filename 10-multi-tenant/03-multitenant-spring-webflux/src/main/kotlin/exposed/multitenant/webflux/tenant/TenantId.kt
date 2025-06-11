@@ -46,6 +46,7 @@ suspend fun currentTenant(): Tenants.Tenant =
 /**
  * [newSuspendedTransaction] 함수를 수행할 때, [tenant] 를 전달하도록 합니다.
  */
+@Suppress("DEPRECATION")
 suspend fun <T> newSuspendedTransactionWithTenant(
     tenant: Tenant? = null,
     db: Database? = null,

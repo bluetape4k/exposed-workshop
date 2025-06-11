@@ -28,6 +28,7 @@ import kotlin.concurrent.thread
 import kotlin.test.assertFails
 import kotlin.test.fail
 
+@Suppress("DEPRECATION")
 class Ex07_ThreadLocalManager: JdbcExposedTestBase() {
 
     companion object: KLogging()

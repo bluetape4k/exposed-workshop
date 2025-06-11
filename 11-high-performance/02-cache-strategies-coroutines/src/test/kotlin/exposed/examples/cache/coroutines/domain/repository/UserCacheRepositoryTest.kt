@@ -21,6 +21,7 @@ import org.testcontainers.utility.Base58
 import java.time.LocalDate
 import kotlin.system.measureTimeMillis
 
+@Suppress("DEPRECATION")
 class UserCacheRepositoryTest(
     @Autowired private val repository: UserCacheRepository,
 ): AbstractCacheStrategyTest() {

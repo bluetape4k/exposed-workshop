@@ -47,6 +47,7 @@ import java.sql.Connection
 import java.util.concurrent.Executors
 import kotlin.test.assertFailsWith
 
+@Suppress("DEPRECATION")
 class Ex01_Coroutines: JdbcExposedTestBase() {
 
     companion object: KLoggingChannel() {

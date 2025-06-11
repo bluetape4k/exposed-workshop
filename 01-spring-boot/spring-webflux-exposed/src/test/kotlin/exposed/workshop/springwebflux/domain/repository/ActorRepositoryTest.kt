@@ -13,6 +13,7 @@ import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTrans
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
+@Suppress("DEPRECATION")
 class ActorRepositoryTest(
     @Autowired private val actorRepository: ActorRepository,
 ): AbstractSpringWebfluxTest() {

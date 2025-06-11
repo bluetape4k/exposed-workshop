@@ -2,11 +2,11 @@ package alternative.r2dbc.example.domain.repository
 
 import alternative.r2dbc.example.domain.model.Comment
 import io.bluetape4k.logging.coroutines.KLoggingChannel
-import io.bluetape4k.spring.r2dbc.coroutines.coCount
-import io.bluetape4k.spring.r2dbc.coroutines.coCountAll
-import io.bluetape4k.spring.r2dbc.coroutines.coInsert
-import io.bluetape4k.spring.r2dbc.coroutines.coSelect
-import io.bluetape4k.spring.r2dbc.coroutines.coSelectAll
+import io.bluetape4k.spring.r2dbc.coroutines.suspendCount
+import io.bluetape4k.spring.r2dbc.coroutines.suspendCountAll
+import io.bluetape4k.spring.r2dbc.coroutines.suspendInsert
+import io.bluetape4k.spring.r2dbc.coroutines.suspendSelect
+import io.bluetape4k.spring.r2dbc.coroutines.suspendSelectAll
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.r2dbc.core.R2dbcEntityOperations
 import org.springframework.data.relational.core.query.Criteria
@@ -25,23 +25,23 @@ class CommentRepository(
 
     companion object: KLoggingChannel()
 
-    suspend fun count(): Long = operations.coCountAll<Comment>()
+    suspend fun count(): Long = operations.suspendCountAll<Comment>()
 
-    fun findAll(): Flow<Comment> = operations.coSelectAll<Comment>()
+    fun findAll(): Flow<Comment> = operations.suspendSelectAll<Comment>()
 
     @Transactional
     suspend fun save(comment: Comment): Comment {
-        return operations.coInsert(comment)
+        return operations.suspendInsert(comment)
     }
 
     suspend fun countByPostId(postId: Long): Long {
         val query = Query.query(Criteria.where(Comment::postId.name).isEqual(postId))
-        return operations.coCount<Comment>(query)
+        return operations.suspendCount<Comment>(query)
     }
 
     fun findAllByPostId(postId: Long): Flow<Comment> {
         val query = Query.query(Criteria.where(Comment::postId.name).isEqual(postId))
-        return operations.coSelect(query)
+        return operations.suspendSelect(query)
     }
 
     @Transactional

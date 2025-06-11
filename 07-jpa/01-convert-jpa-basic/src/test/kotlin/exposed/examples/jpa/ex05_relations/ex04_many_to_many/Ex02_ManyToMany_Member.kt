@@ -25,6 +25,7 @@ import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTrans
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+@Suppress("DEPRECATION")
 class Ex02_ManyToMany_Member: JdbcExposedTestBase() {
 
     companion object: KLogging()

@@ -11,6 +11,7 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.junit.jupiter.api.Test
 
+@Suppress("DEPRECATION")
 class ExposedConfigTest: AbstractSpringSuspendedCacheApplicationTest() {
 
     companion object: KLoggingChannel()

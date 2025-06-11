@@ -14,6 +14,7 @@ import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTrans
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
+@Suppress("DEPRECATION")
 class MovieRepositoryTest(
     @Autowired private val movieRepository: MovieRepository,
 ): AbstractSpringWebfluxTest() {

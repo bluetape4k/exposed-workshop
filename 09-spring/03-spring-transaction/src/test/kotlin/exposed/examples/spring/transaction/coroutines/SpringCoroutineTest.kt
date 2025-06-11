@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional
 /**
  * Coroutines 환경에서 `@Transactional` 을 지원하는 방법에 대한 예제입니다.
  */
+@Suppress("DEPRECATION")
 class SpringCoroutineTest: AbstractSpringTransactionTest() {
 
     companion object {

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import java.time.Duration
 
+@Suppress("DEPRECATION")
 class UserEventCacheRepositoryTest(
     @Autowired private val repository: UserEventCacheRepository,
 ): AbstractCacheStrategyTest() {
