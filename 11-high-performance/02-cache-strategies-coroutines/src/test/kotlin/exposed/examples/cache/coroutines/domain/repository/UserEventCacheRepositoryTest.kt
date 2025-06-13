@@ -3,7 +3,7 @@ package exposed.examples.cache.coroutines.domain.repository
 import exposed.examples.cache.coroutines.AbstractCacheStrategyTest
 import exposed.examples.cache.coroutines.domain.model.UserEventTable
 import exposed.examples.cache.coroutines.domain.model.newUserEventDTO
-import io.bluetape4k.junit5.awaitility.coUntil
+import io.bluetape4k.junit5.awaitility.suspendUntil
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -59,7 +59,7 @@ class UserEventCacheRepositoryTest(
             await
                 .atMost(Duration.ofSeconds(10))
                 .withPollInterval(Duration.ofMillis(500))
-                .coUntil {
+                .suspendUntil {
                     val countInDB = newSuspendedTransaction { UserEventTable.selectAll().count() }
                     log.debug { "countInDB: $countInDB" }
                     countInDB == totalCount.toLong()

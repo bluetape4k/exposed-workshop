@@ -67,6 +67,7 @@ fun withDb(
     }
 }
 
+@Suppress("DEPRECATION")
 suspend fun withSuspendedDb(
     testDB: TestDB,
     context: CoroutineContext? = Dispatchers.IO,
