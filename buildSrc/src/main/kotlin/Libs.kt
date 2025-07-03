@@ -18,7 +18,7 @@ object Plugins {
         const val shadow = "7.1.2"
         const val kotlinx_benchmark = "0.4.13" // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-benchmark-plugin
 
-        const val spring_boot = "3.5.0"  // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies
+        const val spring_boot = "3.5.3"  // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies
         const val quarkus = "3.22.2"      // https://mvnrepository.com/artifact/io.quarkus/quarkus-bom
 
         const val docker_compose = "0.17.12"  // https://plugins.gradle.org/plugin/com.avast.gradle.docker-compose
@@ -68,11 +68,11 @@ object Versions {
     // Java 21, Kotlin 2.0 이상에서 사용하세요
     const val bluetape4k = "0.1.0-SNAPSHOT"    // Bluetape4k Github Package 로 배포됩니다.
 
-    const val kotlin = "2.1.21"                 // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
+    const val kotlin = "2.2.0"                 // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
     const val kotlinx_coroutines = "1.10.2"      // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-    const val kotlinx_serialization = "1.8.1"   // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-serialization-json-jvm
+    const val kotlinx_serialization = "1.9.0"   // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-serialization-json-jvm
 
-    const val kotlinx_atomicfu = "0.27.0"       // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/atomicfu
+    const val kotlinx_atomicfu = "0.29.0"       // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/atomicfu
 
     const val kotlinx_benchmark = Plugins.Versions.kotlinx_benchmark
 
@@ -153,7 +153,7 @@ object Versions {
     const val hibernate_validator = "8.0.2.Final" // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
     const val querydsl = "5.1.0"                  // https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
 
-    const val exposed = "1.0.0-beta-2"       // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-core
+    const val exposed = "1.0.0-beta-3"       // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-core
 
     const val r2dbc = "1.0.0.RELEASE"        // https://mvnrepository.com/artifact/io.r2dbc/r2dbc-spi
 
@@ -198,15 +198,15 @@ object Versions {
 
     const val ow2_asm = "9.8"               // https://mvnrepository.com/artifact/org.ow2.asm/asm
 
-    const val junit_jupiter = "5.13.1"      // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-    const val junit_platform = "1.13.1"     // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher
+    const val junit_jupiter = "5.13.2"      // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    const val junit_platform = "1.13.2"     // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher
     const val assertj_core = "3.27.3"       // https://mvnrepository.com/artifact/org.assertj/assertj-core
     const val kluent = "1.73"               // https://mvnrepository.com/artifact/org.amshove.kluent/kluent
     const val mockk = "1.13.17"             // https://mvnrepository.com/artifact/io.mockk/mockk
     const val springmockk = "4.0.2"         // https://mvnrepository.com/artifact/com.ninja-squad/springmockk
     const val awaitility = "4.3.0"          // https://mvnrepository.com/artifact/org.awaitility/awaitility
     const val jmh = "1.37"                  // https://mvnrepository.com/artifact/org.openjdk.jmh/jmh-core
-    const val testcontainers = "1.21.1"     // https://mvnrepository.com/artifact/org.testcontainers/testcontainers
+    const val testcontainers = "1.21.3"     // https://mvnrepository.com/artifact/org.testcontainers/testcontainers
     const val jna = "5.17.0"                // https://mvnrepository.com/artifact/net.java.dev.jna/jna
     const val archunit = "1.4.0"           // https://mvnrepository.com/artifact/com.tngtech.archunit/archunit-junit5
     const val rest_assured = "5.5.1"        // https://mvnrepository.com/artifact/io.rest-assured/rest-assured
