@@ -38,11 +38,9 @@ springBoot {
     }
 }
 
-@Suppress("UnstableApiUsage")
 configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
-
 
 dependencies {
     implementation(Libs.bluetape4k_hibernate_reactive)
@@ -67,7 +65,6 @@ dependencies {
     kaptTest(Libs.hibernate_jpamodelgen)
 
     // Mutiny & Coroutines
-    implementation(Libs.mutiny_kotlin)
     implementation(Libs.kotlinx_coroutines_core)
     testImplementation(Libs.kotlinx_coroutines_reactor)
     testImplementation(Libs.kotlinx_coroutines_test)
