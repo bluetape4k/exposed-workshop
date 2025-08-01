@@ -7,15 +7,14 @@ import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.debug
-import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atTime
 import kotlinx.datetime.minus
+import kotlinx.datetime.number
 import kotlinx.datetime.plus
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toKotlinLocalDate
@@ -80,8 +79,12 @@ import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.temporal.ChronoUnit.MILLIS
+import kotlin.time.Clock
 import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
+@OptIn(ExperimentalTime::class)
 class Ex01_KotlinDateTime: JdbcExposedTestBase() {
 
     private val timestampWithTimeZoneUnsupportedDB = TestDB.ALL_MARIADB + TestDB.MYSQL_V5
@@ -118,41 +121,29 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
 
             // NOTE: MYSQL V8 에서 year(), month(), day(), hour(), minute(), second() functions 이 제대로 작동하지 않는다.
             if (testDB != TestDB.MYSQL_V8) {
-                val insertedYear = CitiesTime
-                    .select(CitiesTime.local_time.year())
-                    .where { CitiesTime.id.eq(cityID) }
+                val insertedYear = CitiesTime.select(CitiesTime.local_time.year()).where { CitiesTime.id.eq(cityID) }
                     .single()[CitiesTime.local_time.year()]
 
                 insertedYear shouldBeEqualTo now.year
             }
-            val insertedMonth = CitiesTime
-                .select(CitiesTime.local_time.month())
-                .where { CitiesTime.id.eq(cityID) }
+            val insertedMonth = CitiesTime.select(CitiesTime.local_time.month()).where { CitiesTime.id.eq(cityID) }
                 .single()[CitiesTime.local_time.month()]
 
-            val insertedDay = CitiesTime
-                .select(CitiesTime.local_time.day())
-                .where { CitiesTime.id.eq(cityID) }
+            val insertedDay = CitiesTime.select(CitiesTime.local_time.day()).where { CitiesTime.id.eq(cityID) }
                 .single()[CitiesTime.local_time.day()]
 
-            val insertedHour = CitiesTime
-                .select(CitiesTime.local_time.hour())
-                .where { CitiesTime.id.eq(cityID) }
+            val insertedHour = CitiesTime.select(CitiesTime.local_time.hour()).where { CitiesTime.id.eq(cityID) }
                 .single()[CitiesTime.local_time.hour()]
 
-            val insertedMinute = CitiesTime
-                .select(CitiesTime.local_time.minute())
-                .where { CitiesTime.id.eq(cityID) }
+            val insertedMinute = CitiesTime.select(CitiesTime.local_time.minute()).where { CitiesTime.id.eq(cityID) }
                 .single()[CitiesTime.local_time.minute()]
 
-            val insertedSecond = CitiesTime
-                .select(CitiesTime.local_time.second())
-                .where { CitiesTime.id.eq(cityID) }
+            val insertedSecond = CitiesTime.select(CitiesTime.local_time.second()).where { CitiesTime.id.eq(cityID) }
                 .single()[CitiesTime.local_time.second()]
 
 
-            insertedMonth shouldBeEqualTo now.month.value
-            insertedDay shouldBeEqualTo now.dayOfMonth
+            insertedMonth shouldBeEqualTo now.month.number
+            insertedDay shouldBeEqualTo now.day
             insertedHour shouldBeEqualTo now.hour
             insertedMinute shouldBeEqualTo now.minute
             insertedSecond shouldBeEqualTo now.second
@@ -319,9 +310,7 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
             sameDateResult shouldHaveSize 1
             sameDateResult.single()[tester.deleted] shouldBeEqualTo mayTheFourth
 
-            val sameMonthResult = tester.selectAll()
-                .where { tester.created.month() eq tester.deleted.month() }
-                .toList()
+            val sameMonthResult = tester.selectAll().where { tester.created.month() eq tester.deleted.month() }.toList()
             sameMonthResult shouldHaveSize 2
 
             val year2023 = if (currentDialectTest is PostgreSQLDialect) {
@@ -330,10 +319,7 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
             } else {
                 dateParam(mayTheFourth).year()
             }
-            val createdIn2023 = tester
-                .selectAll()
-                .where { tester.created.year() eq year2023 }
-                .toList()
+            val createdIn2023 = tester.selectAll().where { tester.created.year() eq year2023 }.toList()
 
             createdIn2023 shouldHaveSize 2
         }
@@ -401,19 +387,13 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
                 in requiresExplicitDTCast -> Cast(dateTimeParam(mayTheFourthDT), KotlinLocalDateTimeColumnType())
                 else -> dateTimeParam(mayTheFourthDT)
             }
-            val createdMayFourth = tester.selectAll()
-                .where { tester.created eq dateTime }
-                .count()
+            val createdMayFourth = tester.selectAll().where { tester.created eq dateTime }.count()
             createdMayFourth shouldBeEqualTo 2
 
-            val modifiedAtSameDT = tester.selectAll()
-                .where { tester.modified eq tester.created }
-                .single()
+            val modifiedAtSameDT = tester.selectAll().where { tester.modified eq tester.created }.single()
             modifiedAtSameDT[tester.id] shouldBeEqualTo id1
 
-            val modifiedAtLaterDT = tester.selectAll()
-                .where { tester.modified greater tester.created }
-                .single()
+            val modifiedAtLaterDT = tester.selectAll().where { tester.modified greater tester.created }.single()
             modifiedAtLaterDT[tester.id] shouldBeEqualTo id2
         }
     }
@@ -570,41 +550,36 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
                 it[timestampWithTimeZone] = cairoNow
             }
 
-            val cairoNowInsertedInCairoTimeZone = tester.selectAll()
-                .where { tester.id eq cairoId }
-                .single()[tester.timestampWithTimeZone]
+            val cairoNowInsertedInCairoTimeZone =
+                tester.selectAll().where { tester.id eq cairoId }.single()[tester.timestampWithTimeZone]
 
             // UTC time zone
             java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone(ZoneOffset.UTC))
             ZoneId.systemDefault().id shouldBeEqualTo "UTC"
 
-            val cairoNowRetrievedInUTCTimeZone: OffsetDateTime = tester.selectAll()
-                .where { tester.id eq cairoId }
-                .single()[tester.timestampWithTimeZone]
+            val cairoNowRetrievedInUTCTimeZone: OffsetDateTime =
+                tester.selectAll().where { tester.id eq cairoId }.single()[tester.timestampWithTimeZone]
 
             val utcID = tester.insertAndGetId {
                 it[timestampWithTimeZone] = cairoNow
             }
 
-            val cairoNowInsertedInUTCTimeZone = tester.selectAll()
-                .where { tester.id eq utcID }
-                .single()[tester.timestampWithTimeZone]
+            val cairoNowInsertedInUTCTimeZone =
+                tester.selectAll().where { tester.id eq utcID }.single()[tester.timestampWithTimeZone]
 
             // Seoul time zone
             java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone("Asia/Seoul"))
             ZoneId.systemDefault().id shouldBeEqualTo "Asia/Seoul"
 
-            val cairoNowRetrievedInSeoulTimeZone = tester.selectAll()
-                .where { tester.id eq cairoId }
-                .single()[tester.timestampWithTimeZone]
+            val cairoNowRetrievedInSeoulTimeZone =
+                tester.selectAll().where { tester.id eq cairoId }.single()[tester.timestampWithTimeZone]
 
             val seoulID = tester.insertAndGetId {
                 it[timestampWithTimeZone] = cairoNow
             }
 
-            val cairoNowInsertedInTokyoTimeZone = tester.selectAll()
-                .where { tester.id eq seoulID }
-                .single()[tester.timestampWithTimeZone]
+            val cairoNowInsertedInTokyoTimeZone =
+                tester.selectAll().where { tester.id eq seoulID }.single()[tester.timestampWithTimeZone]
 
             // PostgreSQL and MySQL always store the timestamp in UTC, thereby losing the original time zone.
             // To preserve the original time zone, store the time zone information in a separate column.
@@ -699,47 +674,38 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
                 it[tester.timestampWithTimeZone] = now
             }
 
-            tester.select(tester.timestampWithTimeZone.date())
-                .where { tester.id eq nowId }
+            tester.select(tester.timestampWithTimeZone.date()).where { tester.id eq nowId }
                 .single()[tester.timestampWithTimeZone.date()] shouldBeEqualTo now.toLocalDate().toKotlinLocalDate()
 
-            val expectedTime =
-                when (testDB) {
-                    // TestDB.SQLITE -> OffsetDateTime.parse("2023-05-04T05:04:01.123+00:00")
-                    TestDB.MYSQL_V8, // TestDB.SQLSERVER,
-                        // in TestDB.ALL_ORACLE_LIKE,
-                    in TestDB.ALL_POSTGRES_LIKE,
-                        -> OffsetDateTime.parse("2023-05-04T05:04:01.123123+00:00")
-                    else -> now
-                }.toLocalTime().toKotlinLocalTime()
+            val expectedTime = when (testDB) {
+                // TestDB.SQLITE -> OffsetDateTime.parse("2023-05-04T05:04:01.123+00:00")
+                TestDB.MYSQL_V8, // TestDB.SQLSERVER,
+                    // in TestDB.ALL_ORACLE_LIKE,
+                in TestDB.ALL_POSTGRES_LIKE,
+                    -> OffsetDateTime.parse("2023-05-04T05:04:01.123123+00:00")
+                else -> now
+            }.toLocalTime().toKotlinLocalTime()
 
-            tester.select(tester.timestampWithTimeZone.time())
-                .where { tester.id eq nowId }
+            tester.select(tester.timestampWithTimeZone.time()).where { tester.id eq nowId }
                 .single()[tester.timestampWithTimeZone.time()] shouldBeEqualTo expectedTime
 
-            tester.select(tester.timestampWithTimeZone.year())
-                .where { tester.id eq nowId }
+            tester.select(tester.timestampWithTimeZone.year()).where { tester.id eq nowId }
                 .single()[tester.timestampWithTimeZone.year()] shouldBeEqualTo now.year
 
-            tester.select(tester.timestampWithTimeZone.month())
-                .where { tester.id eq nowId }
+            tester.select(tester.timestampWithTimeZone.month()).where { tester.id eq nowId }
                 .single()[tester.timestampWithTimeZone.month()] shouldBeEqualTo now.month.value
 
 
-            tester.select(tester.timestampWithTimeZone.day())
-                .where { tester.id eq nowId }
+            tester.select(tester.timestampWithTimeZone.day()).where { tester.id eq nowId }
                 .single()[tester.timestampWithTimeZone.day()] shouldBeEqualTo now.dayOfMonth
 
-            tester.select(tester.timestampWithTimeZone.hour())
-                .where { tester.id eq nowId }
+            tester.select(tester.timestampWithTimeZone.hour()).where { tester.id eq nowId }
                 .single()[tester.timestampWithTimeZone.hour()] shouldBeEqualTo now.hour
 
-            tester.select(tester.timestampWithTimeZone.minute())
-                .where { tester.id eq nowId }
+            tester.select(tester.timestampWithTimeZone.minute()).where { tester.id eq nowId }
                 .single()[tester.timestampWithTimeZone.minute()] shouldBeEqualTo now.minute
 
-            tester.select(tester.timestampWithTimeZone.second())
-                .where { tester.id eq nowId }
+            tester.select(tester.timestampWithTimeZone.second()).where { tester.id eq nowId }
                 .single()[tester.timestampWithTimeZone.second()] shouldBeEqualTo now.second
         }
     }
@@ -792,10 +758,7 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
                 it[duration] = Duration.INFINITE
             }
 
-            val row = tester
-                .selectAll()
-                .where { tester.duration eq Duration.INFINITE }
-                .single()
+            val row = tester.selectAll().where { tester.duration eq Duration.INFINITE }.single()
             row[tester.duration] shouldBeEqualTo Duration.INFINITE
         }
     }
@@ -844,8 +807,9 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
             val result1 = tester.selectAll().single()
             result1[tester.dates] shouldBeEqualTo defaultDates
             if (testDB == TestDB.POSTGRESQL) {
-                result1[tester.datetimes] shouldBeEqualTo defaultDateTimes
-                    .map { it.toJavaLocalDateTime().truncatedTo(MILLIS).toKotlinLocalDateTime() }
+                result1[tester.datetimes] shouldBeEqualTo defaultDateTimes.map {
+                    it.toJavaLocalDateTime().truncatedTo(MILLIS).toKotlinLocalDateTime()
+                }
             } else {
                 result1[tester.datetimes] shouldBeEqualTo defaultDateTimes
             }
@@ -861,9 +825,7 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
 
             val lastDate = tester.dates[3]
             val firstTwoDatetimes = tester.datetimes.slice(1, 2)
-            val result2 = tester.select(lastDate, firstTwoDatetimes)
-                .where { tester.dates[1].year() eq 2020 }
-                .single()
+            val result2 = tester.select(lastDate, firstTwoDatetimes).where { tester.dates[1].year() eq 2020 }.single()
             result2[lastDate] shouldDateTimeEqualTo datesInput.last()
             result2[firstTwoDatetimes] shouldBeEqualTo datetimeInput.take(2)
         }
@@ -906,8 +868,7 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
                 it[time] = localTime
             }
 
-            tableWithTime.select(tableWithTime.id, tableWithTime.time)
-                .where { tableWithTime.time eq localTimeLiteral }
+            tableWithTime.select(tableWithTime.id, tableWithTime.time).where { tableWithTime.time eq localTimeLiteral }
                 .single()[tableWithTime.time] shouldBeEqualTo localTime
 
         }
@@ -926,6 +887,7 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
     }
 }
 
+@OptIn(ExperimentalTime::class)
 infix fun <T> T.shouldDateTimeEqualTo(d2: T?) {
     val d1 = this
     when {
@@ -939,8 +901,8 @@ infix fun <T> T.shouldDateTimeEqualTo(d2: T?) {
             }
         }
         d1 is LocalDateTime && d2 is LocalDateTime -> {
-            d1.toJavaLocalDateTime().toEpochSecond(ZoneOffset.UTC) shouldBeEqualTo
-                    d2.toJavaLocalDateTime().toEpochSecond(ZoneOffset.UTC)
+            d1.toJavaLocalDateTime().toEpochSecond(ZoneOffset.UTC) shouldBeEqualTo d2.toJavaLocalDateTime()
+                .toEpochSecond(ZoneOffset.UTC)
             d1.nanosecond shouldFractionalPartEqualTo d2.nanosecond
         }
         d1 is Instant && d2 is Instant -> {
@@ -948,8 +910,8 @@ infix fun <T> T.shouldDateTimeEqualTo(d2: T?) {
             d1.nanosecondsOfSecond shouldFractionalPartEqualTo d2.nanosecondsOfSecond
         }
         d1 is OffsetDateTime && d2 is OffsetDateTime -> {
-            d1.toLocalDateTime().toKotlinLocalDateTime() shouldDateTimeEqualTo
-                    d2.toLocalDateTime().toKotlinLocalDateTime()
+            d1.toLocalDateTime().toKotlinLocalDateTime() shouldDateTimeEqualTo d2.toLocalDateTime()
+                .toKotlinLocalDateTime()
             d1.offset shouldBeEqualTo d2.offset
         }
         else -> d1 shouldBeEqualTo d2
@@ -962,11 +924,9 @@ private infix fun Int.shouldFractionalPartEqualTo(nano2: Int) {
     val db = dialect.name
     when (dialect) {
         // accurate to 100 nanoseconds
-        is SQLServerDialect ->
-            nano1.nanoRoundTo100Nanos() shouldBeEqualTo nano2.nanoRoundTo100Nanos()
+        is SQLServerDialect -> nano1.nanoRoundTo100Nanos() shouldBeEqualTo nano2.nanoRoundTo100Nanos()
         // microseconds
-        is MariaDBDialect ->
-            nano1.nanoFloorToMicro() shouldBeEqualTo nano2.nanoFloorToMicro()
+        is MariaDBDialect -> nano1.nanoFloorToMicro() shouldBeEqualTo nano2.nanoFloorToMicro()
 
         is H2Dialect, is PostgreSQLDialect, is MysqlDialect -> {
             when ((dialect as? MysqlDialect)?.isFractionDateTimeSupported()) {
@@ -977,10 +937,8 @@ private infix fun Int.shouldFractionalPartEqualTo(nano2: Int) {
             }
         }
         // milliseconds
-        is OracleDialect ->
-            nano1.nanoRoundToMilli() shouldBeEqualTo nano2.nanoRoundToMilli()
-        is SQLiteDialect ->
-            nano1.nanoFloorToMilli() shouldBeEqualTo nano2.nanoFloorToMilli()
+        is OracleDialect -> nano1.nanoRoundToMilli() shouldBeEqualTo nano2.nanoRoundToMilli()
+        is SQLiteDialect -> nano1.nanoFloorToMilli() shouldBeEqualTo nano2.nanoFloorToMilli()
         else -> org.amshove.kluent.fail("Unknown dialect $db")
     }
 }
@@ -988,8 +946,7 @@ private infix fun Int.shouldFractionalPartEqualTo(nano2: Int) {
 private fun Int.nanoRoundTo100Nanos(): Int =
     this.toBigDecimal().divide(100.toBigDecimal(), RoundingMode.HALF_UP).toInt()
 
-private fun Int.nanoRoundToMicro(): Int =
-    this.toBigDecimal().divide(1_000.toBigDecimal(), RoundingMode.HALF_UP).toInt()
+private fun Int.nanoRoundToMicro(): Int = this.toBigDecimal().divide(1_000.toBigDecimal(), RoundingMode.HALF_UP).toInt()
 
 private fun Int.nanoRoundToMilli(): Int =
     this.toBigDecimal().divide(1_000_000.toBigDecimal(), RoundingMode.HALF_UP).toInt()

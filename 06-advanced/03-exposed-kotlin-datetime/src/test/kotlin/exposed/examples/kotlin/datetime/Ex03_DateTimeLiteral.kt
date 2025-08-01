@@ -3,7 +3,6 @@ package exposed.examples.kotlin.datetime
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import org.amshove.kluent.shouldBeEqualTo
@@ -20,10 +19,13 @@ import org.jetbrains.exposed.v1.jdbc.select
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 /**
  * DATE, DATEIME 컬럼을 [dateLiteral], [dateTimeLiteral] 으로 사용하는 예
  */
+@OptIn(ExperimentalTime::class)
 class Ex03_DateTimeLiteral: JdbcExposedTestBase() {
 
     private val defaultDate = LocalDate(2000, 1, 1)
