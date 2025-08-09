@@ -22,7 +22,7 @@ object Plugins {
         const val docker_compose = "0.17.12"  // https://plugins.gradle.org/plugin/com.avast.gradle.docker-compose
 
         // 참고: https://docs.gatling.io/reference/integrations/build-tools/gradle-plugin/
-        const val gatling = "3.14.1"  // https://plugins.gradle.org/plugin/io.gatling.gradle
+        const val gatling = "3.14.3"  // https://plugins.gradle.org/plugin/io.gatling.gradle
 
         const val graalvm_native = "0.10.6" // https://mvnrepository.com/artifact/org.graalvm.buildtools.native/org.graalvm.buildtools.native.gradle.plugin
     }
@@ -74,9 +74,9 @@ object Versions {
     const val kotlinx_benchmark = Plugins.Versions.kotlinx_benchmark
 
     const val spring_boot = Plugins.Versions.spring_boot
-    const val spring_cloud = "2024.0.1"     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies
-    const val spring_integration = "6.4.4"  // https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-core
-    const val reactor_bom = "2024.0.5"      // https://mvnrepository.com/artifact/io.projectreactor/reactor-bom
+    const val spring_cloud = "2025.0.0"     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies
+    const val spring_integration = "6.4.5"  // https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-core
+    const val reactor_bom = "2024.0.6"      // https://mvnrepository.com/artifact/io.projectreactor/reactor-bom
     const val spring_statemachine = "4.0.0" // https://mvnrepository.com/artifact/org.springframework.statemachine/spring-statemachine-core
     const val spring_modulith = "1.3.5"     // https://mvnrepository.com/artifact/org.springframework.modulith/spring-modulith-bom
 
@@ -108,12 +108,12 @@ object Versions {
     const val grpc_google_common_protos = "2.50.0" // https://mvnrepository.com/artifact/com.google.api.grpc/proto-google-common-protos
     const val avro = "1.12.0"       // https://mvnrepository.com/artifact/org.apache.avro/avro
 
-    const val feign = "13.5"        // https://mvnrepository.com/artifact/io.github.openfeign/feign-core
-    const val httpclient5 = "5.4.2"   // https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5
-    const val httpcore5 = "5.3.3"    // https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5
-    const val retrofit2 = "2.11.0"   // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
+    const val feign = "13.6"        // https://mvnrepository.com/artifact/io.github.openfeign/feign-core
+    const val httpclient5 = "5.5"   // https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5
+    const val httpcore5 = "5.3.4"    // https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5
+    const val retrofit2 = "2.12.0"   // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
     const val okhttp3 = "5.1.0"     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
-    const val okio = "3.10.2"         // https://mvnrepository.com/artifact/com.squareup.okio/okio
+    const val okio = "3.16.0"         // https://mvnrepository.com/artifact/com.squareup.okio/okio
     const val asynchttpclient = "2.12.4"  // https://mvnrepository.com/artifact/org.asynchttpclient/async-http-client
 
     const val jackson = "2.19.2" // https://mvnrepository.com/artifact/com.fasterxml.jackson/jackson-bom
@@ -125,7 +125,7 @@ object Versions {
 
     const val mongo_driver = "5.5.0"   // https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync
     const val lettuce = "6.7.1.RELEASE" // https://mvnrepository.com/artifact/io.lettuce/lettuce-core
-    const val redisson = "3.49.0"       // https://mvnrepository.com/artifact/org.redisson/redisson
+    const val redisson = "3.50.0"       // https://mvnrepository.com/artifact/org.redisson/redisson
 
     // NOTE: Hibernate 는 jakarta 버전인 경우 orm, validator 등이 group 에 포함됩니다.
     // NOTE: 이 경우 기존 javax 를 사용하는 버전과 충돌이 생길 수 있으니 조심하세요
@@ -133,7 +133,7 @@ object Versions {
 
     const val hibernate = "6.6.14.Final"           // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
     const val hibernate_reactive = "2.4.7.Final"  // https://mvnrepository.com/artifact/org.hibernate.reactive/hibernate-reactive-core
-    const val hibernate_validator = "8.0.2.Final" // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
+    const val hibernate_validator = "8.0.3.Final" // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
     const val querydsl = "5.1.0"                  // https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
 
     const val exposed = "1.0.0-beta-5"       // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-core
@@ -491,7 +491,7 @@ object Libs {
 
     const val kryo = "com.esotericsoftware:kryo:5.6.0" // https://mvnrepository.com/artifact/com.esotericsoftware/kryo
     const val kryo5 = "com.esotericsoftware:kryo:5.6.0" // https://mvnrepository.com/artifact/com.esotericsoftware/kryo
-    const val fury_kotlin = "org.apache.fury:fury-kotlin:0.9.0" // https://mvnrepository.com/artifact/org.apache.fury
+    const val fury_kotlin = "org.apache.fury:fury-kotlin:0.10.3" // https://mvnrepository.com/artifact/org.apache.fury
 
 
     // Spring Boot
@@ -956,7 +956,7 @@ object Libs {
     val jjwt_extensions = jjwt("extensions")
 
     // Compression
-    const val snappy_java = "org.xerial.snappy:snappy-java:1.1.10.7"  // https://mvnrepository.com/artifact/org.xerial.snappy/snappy-java
+    const val snappy_java = "org.xerial.snappy:snappy-java:1.1.10.8"  // https://mvnrepository.com/artifact/org.xerial.snappy/snappy-java
     const val lz4_java = "org.lz4:lz4-java:1.8.0"                     // https://mvnrepository.com/artifact/org.lz4/lz4-java
 
     // https://github.com/hyperxpro/Brotli4j
@@ -978,7 +978,7 @@ object Libs {
 
     // Hashing
     // https://mvnrepository.com/artifact/net.openhft/zero-allocation-hashing
-    const val zero_allocation_hashing = "net.openhft:zero-allocation-hashing:0.27ea"
+    const val zero_allocation_hashing = "net.openhft:zero-allocation-hashing:0.27ea1"
 
     // MVEL
     const val mvel2 = "org.mvel:mvel2:2.5.2.Final"  // https://mvnrepository.com/artifact/org.mvel/mvel2
