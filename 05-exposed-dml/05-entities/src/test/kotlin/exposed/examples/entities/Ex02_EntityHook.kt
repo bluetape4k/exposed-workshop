@@ -21,7 +21,6 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.core.Column
-import org.jetbrains.exposed.v1.core.Slf4jSqlDebugLogger
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
 import org.jetbrains.exposed.v1.dao.Entity
@@ -149,7 +148,6 @@ class Ex02_EntityHook: JdbcExposedTestBase() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `withHook example`(testDB: TestDB) {
-        Slf4jSqlDebugLogger
         withTables(testDB, UserTable) {
             withHook(
                 action = { change ->
@@ -548,7 +546,10 @@ class Ex02_EntityHook_Auditable: JdbcExposedTestBase() {
 
     /**
      * NOTE: 이 작업은 다른 속성 UPDATE 후 updatedAt 속성을 또 UPDATE 하므로 좋은 방법이 아닙니다.
-     * 아래의 property deletegate 를 이용하는 방법을 사용하세요.
+     *
+     * NOTE: 아래의 property deletegate 를 이용하는 방법도 좋지 않습니다.
+     *
+     * NOTE: 엔티티의 flush 함수를 재정의해서 사용하는 것이 제일 좋습니다. (참고: AuditableEntity)
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
