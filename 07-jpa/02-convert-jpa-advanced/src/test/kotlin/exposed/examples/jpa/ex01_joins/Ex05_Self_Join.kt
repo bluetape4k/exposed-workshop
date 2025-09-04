@@ -10,6 +10,7 @@ import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.core.Alias
 import org.jetbrains.exposed.v1.core.Join
 import org.jetbrains.exposed.v1.core.alias
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.innerJoin
 import org.jetbrains.exposed.v1.jdbc.select
 import org.junit.jupiter.api.Assumptions

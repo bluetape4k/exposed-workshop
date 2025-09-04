@@ -8,17 +8,17 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.Op
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.greater
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.plus
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.times
 import org.jetbrains.exposed.v1.core.alias
 import org.jetbrains.exposed.v1.core.and
 import org.jetbrains.exposed.v1.core.dao.id.IdTable
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.greater
+import org.jetbrains.exposed.v1.core.inList
 import org.jetbrains.exposed.v1.core.intLiteral
+import org.jetbrains.exposed.v1.core.plus
 import org.jetbrains.exposed.v1.core.stringLiteral
+import org.jetbrains.exposed.v1.core.times
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
@@ -40,11 +40,10 @@ class Ex14_MergeTable: Ex14_MergeBase() {
 
     companion object: KLogging()
 
-    private fun SqlExpressionBuilder.defaultOnCondition(): Op<Boolean> =
-        Source.key eq Dest.key
+    private fun defaultOnCondition(): Op<Boolean> = Source.key eq Dest.key
 
     /**
-     * [mergeFrom] 함수를 사용하여 [org.jetbrains.exposed.sql.statements.MergeStatement.whenNotMatchedInsert] 를 테스트합니다.
+     * [mergeFrom] 함수를 사용하여 [org.jetbrains.exposed.v1.core.statements.MergeStatement.whenNotMatchedInsert] 를 테스트합니다.
      *
      * `whenNotMatchedInsert` 는 매치되는 행이 없을 때에 `INSERT` 구문을 실행합니다.
      *
@@ -86,7 +85,7 @@ class Ex14_MergeTable: Ex14_MergeBase() {
 
 
     /**
-     * [mergeFrom] 함수를 사용하여 [org.jetbrains.exposed.sql.statements.MergeStatement.whenNotMatchedInsert] 를 테스트합니다.
+     * [mergeFrom] 함수를 사용하여 [org.jetbrains.exposed.v1.core.statements.MergeStatement.whenNotMatchedInsert] 를 테스트합니다.
      *
      * ```sql
      * -- Postgres
@@ -124,7 +123,7 @@ class Ex14_MergeTable: Ex14_MergeBase() {
     }
 
     /**
-     * [mergeFrom] 함수를 사용하여 [org.jetbrains.exposed.sql.statements.MergeStatement.whenMatchedUpdate] 를 테스트합니다.
+     * [mergeFrom] 함수를 사용하여 [org.jetbrains.exposed.v1.core.statements.MergeStatement.whenMatchedUpdate] 를 테스트합니다.
      *
      * `whenMatchedUpdate` 는 매치되는 행이 있을 때에 `UPDATE` 구문을 실행합니다.
      *

@@ -13,6 +13,7 @@ import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.byteParam
 import org.jetbrains.exposed.v1.core.decimalParam
 import org.jetbrains.exposed.v1.core.doubleParam
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.floatParam
 import org.jetbrains.exposed.v1.core.functions.math.RoundFunction
 import org.jetbrains.exposed.v1.core.intParam

@@ -17,7 +17,7 @@ dependencies {
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
     implementation(Libs.exposed_json)
-    implementation(Libs.exposed_migration)
+    implementation(Libs.exposed_migration_jdbc)
 
     // java time 지원 라이브러리
     implementation(Libs.exposed_kotlin_datetime)

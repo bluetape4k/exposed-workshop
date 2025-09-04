@@ -5,6 +5,7 @@ import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.stringLiteral
 import org.jetbrains.exposed.v1.core.substring
 import org.jetbrains.exposed.v1.core.trim

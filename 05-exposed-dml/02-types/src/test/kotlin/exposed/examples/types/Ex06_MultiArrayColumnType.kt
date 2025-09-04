@@ -17,7 +17,9 @@ import org.jetbrains.exposed.v1.core.arrayLiteral
 import org.jetbrains.exposed.v1.core.arrayParam
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.get
+import org.jetbrains.exposed.v1.core.greater
 import org.jetbrains.exposed.v1.core.slice
 import org.jetbrains.exposed.v1.dao.IntEntity
 import org.jetbrains.exposed.v1.dao.IntEntityClass

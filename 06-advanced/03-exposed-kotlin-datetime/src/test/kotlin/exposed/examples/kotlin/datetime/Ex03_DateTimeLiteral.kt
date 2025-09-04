@@ -8,6 +8,8 @@ import kotlinx.datetime.LocalDateTime
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.less
 import org.jetbrains.exposed.v1.datetime.date
 import org.jetbrains.exposed.v1.datetime.dateLiteral
 import org.jetbrains.exposed.v1.datetime.dateTimeLiteral

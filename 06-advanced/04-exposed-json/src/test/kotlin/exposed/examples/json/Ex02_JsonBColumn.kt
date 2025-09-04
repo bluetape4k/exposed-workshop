@@ -25,12 +25,13 @@ import org.jetbrains.exposed.v1.core.ComparisonOp
 import org.jetbrains.exposed.v1.core.Expression
 import org.jetbrains.exposed.v1.core.ExpressionWithColumnType
 import org.jetbrains.exposed.v1.core.IntegerColumnType
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.greaterEq
 import org.jetbrains.exposed.v1.core.StdOutSqlLogger
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.castTo
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.greaterEq
+import org.jetbrains.exposed.v1.core.like
 import org.jetbrains.exposed.v1.core.stringLiteral
 import org.jetbrains.exposed.v1.core.vendors.OracleDialect
 import org.jetbrains.exposed.v1.core.vendors.PostgreSQLDialect
@@ -366,7 +367,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
             val result = tester.selectAll().where { userIsInactive }.toList()
             result.shouldBeEmpty()
 
-            val alphaTreamUserAsJson = """{"user":${Json.Default.encodeToString(alphaTeamUser)}}"""
+            val alphaTreamUserAsJson = """{"user":${Json.encodeToString(alphaTeamUser)}}"""
             val userIsInAlphaTeam = JsonBTable.jsonBColumn.contains(stringLiteral(alphaTreamUserAsJson))
             tester.selectAll().where { userIsInAlphaTeam }.count() shouldBeEqualTo 1L
 

@@ -14,15 +14,23 @@ import org.amshove.kluent.shouldBeTrue
 import org.jetbrains.exposed.v1.core.Case
 import org.jetbrains.exposed.v1.core.Coalesce
 import org.jetbrains.exposed.v1.core.Op
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.greater
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.greaterEq
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.less
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.lessEq
 import org.jetbrains.exposed.v1.core.alias
+import org.jetbrains.exposed.v1.core.between
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.greater
+import org.jetbrains.exposed.v1.core.greaterEq
 import org.jetbrains.exposed.v1.core.intLiteral
+import org.jetbrains.exposed.v1.core.isDistinctFrom
+import org.jetbrains.exposed.v1.core.isNotDistinctFrom
+import org.jetbrains.exposed.v1.core.isNotNull
+import org.jetbrains.exposed.v1.core.isNull
+import org.jetbrains.exposed.v1.core.isNullOrEmpty
+import org.jetbrains.exposed.v1.core.less
+import org.jetbrains.exposed.v1.core.lessEq
+import org.jetbrains.exposed.v1.core.like
+import org.jetbrains.exposed.v1.core.neq
 import org.jetbrains.exposed.v1.core.stringLiteral
 import org.jetbrains.exposed.v1.dao.entityCache
 import org.jetbrains.exposed.v1.exceptions.ExposedSQLException
@@ -166,8 +174,8 @@ class Ex23_Conditions: JdbcExposedTestBase() {
             val amount = long("amount")
         }
 
-        fun selectIdWhere(condition: SqlExpressionBuilder.() -> Op<Boolean>): List<Long> {
-            val query = longTable.select(longTable.id).where(SqlExpressionBuilder.condition())
+        fun selectIdWhere(condition: () -> Op<Boolean>): List<Long> {
+            val query = longTable.select(longTable.id).where(condition())
             return query.map { it[longTable.id].value }
         }
 
@@ -388,7 +396,7 @@ class Ex23_Conditions: JdbcExposedTestBase() {
     fun `nullOp in case`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, _, _ ->
             val caseCondition = Case()
-                .When(Op.build { cities.id eq 1 }, Op.nullOp<String>())
+                .When(cities.id eq 1, Op.nullOp<String>())
                 .Else(cities.name)
 
             var nullBranchWasExecuted = false
@@ -426,7 +434,7 @@ class Ex23_Conditions: JdbcExposedTestBase() {
         withCitiesAndUsers(testDB) { cities, _, _ ->
             val original = "ORIGINAL"
             val copy = "COPY"
-            val condition = Op.build { cities.id eq 1 }
+            val condition = cities.id eq 1
 
             val caseCondition1 = Case()
                 .When(condition, stringLiteral(original))
@@ -483,13 +491,13 @@ class Ex23_Conditions: JdbcExposedTestBase() {
         withCitiesAndUsers(testDB) { cities, _, _ ->
             val nestedCondition = Case()
                 // .When(cities.id eq 1, intLiteral(1)) 처럼 Op.build {} 를 안 써도 된다.
-                .When(Op.build { cities.id eq 1 }, intLiteral(1))
+                .When(cities.id eq 1, intLiteral(1))
                 .Else(intLiteral(-1))
 
             val chainedCondition = Case()
-                .When(Op.build { cities.name like "M%" }, intLiteral(0))
-                .When(Op.build { cities.name like "St. %" }, nestedCondition)
-                .When(Op.build { cities.name like "P%" }, intLiteral(2))
+                .When(cities.name like "M%", intLiteral(0))
+                .When(cities.name like "St. %", nestedCondition)
+                .When(cities.name like "P%", intLiteral(2))
                 .Else(intLiteral(-1))
 
             val results = cities.select(cities.name, chainedCondition)

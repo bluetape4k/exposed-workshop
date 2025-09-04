@@ -11,7 +11,7 @@ dependencies {
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
-    implementation(Libs.exposed_migration)
+    implementation(Libs.exposed_migration_jdbc)
     implementation(Libs.exposed_java_time)
 
     compileOnly(Libs.h2_v2)

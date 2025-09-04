@@ -37,7 +37,7 @@ dependencies {
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_java_time)
-    implementation(Libs.exposed_migration)
+    implementation(Libs.exposed_migration_jdbc)
     implementation(Libs.exposed_spring_boot_starter)
 
     // Database Drivers

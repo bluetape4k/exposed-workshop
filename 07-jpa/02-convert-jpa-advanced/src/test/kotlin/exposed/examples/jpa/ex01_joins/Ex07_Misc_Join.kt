@@ -8,6 +8,8 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.core.alias
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.eqSubQuery
 import org.jetbrains.exposed.v1.core.innerJoin
 import org.jetbrains.exposed.v1.core.max
 import org.jetbrains.exposed.v1.exceptions.ExposedSQLException

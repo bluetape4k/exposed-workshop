@@ -7,7 +7,6 @@ import org.jetbrains.exposed.v1.core.CustomFunction
 import org.jetbrains.exposed.v1.datetime.KotlinOffsetDateTimeColumnType
 import java.time.OffsetDateTime
 
-
 fun now() = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 
 internal val dbTimestampNow: CustomFunction<OffsetDateTime>

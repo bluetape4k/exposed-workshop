@@ -23,6 +23,7 @@ import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.dao.Entity
 import org.jetbrains.exposed.v1.dao.EntityChange
 import org.jetbrains.exposed.v1.dao.EntityChangeType
@@ -571,7 +572,7 @@ class Ex02_EntityHook_Auditable: JdbcExposedTestBase() {
 
             article1.refresh(true)
 
-            articleListener.unsubscribe()
+            runCatching { articleListener.unsubscribe() }
         }
     }
 

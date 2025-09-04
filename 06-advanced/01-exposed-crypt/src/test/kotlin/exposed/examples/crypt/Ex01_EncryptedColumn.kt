@@ -15,6 +15,7 @@ import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldStartWith
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.exposedLogger
 import org.jetbrains.exposed.v1.crypt.Algorithms
 import org.jetbrains.exposed.v1.crypt.Encryptor

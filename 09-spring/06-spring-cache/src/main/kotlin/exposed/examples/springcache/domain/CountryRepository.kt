@@ -3,6 +3,7 @@ package exposed.examples.springcache.domain
 import exposed.examples.springcache.domain.CountryRepository.Companion.COUNTRY_CACHE_NAME
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.jetbrains.exposed.v1.jdbc.update

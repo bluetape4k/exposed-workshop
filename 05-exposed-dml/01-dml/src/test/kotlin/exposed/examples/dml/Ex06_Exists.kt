@@ -10,9 +10,11 @@ import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.core.Expression
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.case
 import org.jetbrains.exposed.v1.core.booleanLiteral
+import org.jetbrains.exposed.v1.core.case
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.exists
+import org.jetbrains.exposed.v1.core.like
 import org.jetbrains.exposed.v1.core.notExists
 import org.jetbrains.exposed.v1.core.or
 import org.jetbrains.exposed.v1.core.vendors.OracleDialect

@@ -15,6 +15,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeEqualTo
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.dao.ImmutableCachedEntityClass
 import org.jetbrains.exposed.v1.dao.ImmutableEntityClass
 import org.jetbrains.exposed.v1.dao.LongEntity

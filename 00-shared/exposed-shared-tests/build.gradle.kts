@@ -22,7 +22,7 @@ dependencies {
     implementation(Libs.exposed_java_time)
     implementation(Libs.exposed_crypt)
     implementation(Libs.exposed_json)
-    implementation(Libs.exposed_migration)
+    implementation(Libs.exposed_migration_jdbc)
     implementation(Libs.exposed_money)
     implementation(Libs.exposed_spring_boot_starter)
 

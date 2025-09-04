@@ -5,7 +5,7 @@ import exposed.workshop.springmvc.domain.MovieSchema.ActorTable
 import exposed.workshop.springmvc.domain.toActorDTO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.Query
 import org.jetbrains.exposed.v1.jdbc.andWhere
 import org.jetbrains.exposed.v1.jdbc.deleteWhere

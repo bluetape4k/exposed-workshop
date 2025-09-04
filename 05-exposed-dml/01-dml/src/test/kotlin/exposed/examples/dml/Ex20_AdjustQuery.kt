@@ -16,6 +16,7 @@ import org.jetbrains.exposed.v1.core.Op
 import org.jetbrains.exposed.v1.core.QueryBuilder
 import org.jetbrains.exposed.v1.core.and
 import org.jetbrains.exposed.v1.core.count
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.max
 import org.jetbrains.exposed.v1.core.or
 import org.jetbrains.exposed.v1.jdbc.Query
@@ -36,9 +37,8 @@ class Ex20_AdjustQuery: JdbcExposedTestBase() {
 
     companion object: KLogging()
 
-    private val predicate = Op.build {
+    private val predicate =
         (DMLTestData.Users.id eq "andrey") or (DMLTestData.Users.name eq "Sergey")
-    }
 
     private fun Query.assertQueryResultValid() {
         val users = DMLTestData.Users
@@ -230,9 +230,8 @@ class Ex20_AdjustQuery: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `adjust query having`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, users, _ ->
-            val predicateHaving: Op<Boolean> = Op.build {
+            val predicateHaving: Op<Boolean> =
                 DMLTestData.Users.id.count().eq<Number, Long, Int>(DMLTestData.Cities.id.max())
-            }
 
             val queryAdjusted: Query = (cities innerJoin users)
                 .select(cities.name)
@@ -268,9 +267,8 @@ class Ex20_AdjustQuery: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `query and having`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, users, _ ->
-            val predicateHaving = Op.build {
+            val predicateHaving =
                 DMLTestData.Users.id.count().eq<Number, Long, Int>(DMLTestData.Cities.id.max())
-            }
 
             val queryAdjusted = (cities innerJoin users)
                 .select(cities.name)
@@ -307,9 +305,8 @@ class Ex20_AdjustQuery: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `query or having`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, users, _ ->
-            val predicateHaving = Op.build {
+            val predicateHaving =
                 DMLTestData.Users.id.count().eq<Number, Long, Int>(DMLTestData.Cities.id.max())
-            }
 
             val queryAdjusted = (cities innerJoin users)
                 .select(cities.name)

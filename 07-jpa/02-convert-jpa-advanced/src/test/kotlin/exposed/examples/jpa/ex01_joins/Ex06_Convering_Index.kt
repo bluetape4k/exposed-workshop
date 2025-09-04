@@ -8,7 +8,9 @@ import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.core.QueryAlias
 import org.jetbrains.exposed.v1.core.alias
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.innerJoin
+import org.jetbrains.exposed.v1.core.less
 import org.jetbrains.exposed.v1.jdbc.select
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
