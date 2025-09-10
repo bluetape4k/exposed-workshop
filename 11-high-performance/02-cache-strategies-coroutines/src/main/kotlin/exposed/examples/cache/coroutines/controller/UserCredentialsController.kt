@@ -4,7 +4,6 @@ import exposed.examples.cache.coroutines.domain.model.UserCredentialsDTO
 import exposed.examples.cache.coroutines.domain.repository.UserCredentialsCacheRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
-import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -22,25 +21,19 @@ class UserCredentialsController(private val repository: UserCredentialsCacheRepo
     @GetMapping
     suspend fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserCredentialsDTO> {
         log.debug { "Finding all user credentials with limit: $limit" }
-        return newSuspendedTransaction(readOnly = true) {
-            repository.findAll(limit = limit)
-        }
+        return repository.findAll(limit = limit)
     }
 
     @GetMapping("/{id}")
     suspend fun get(@PathVariable(name = "id") id: String): UserCredentialsDTO? {
         log.debug { "Getting user credentials with id: $id" }
-        return newSuspendedTransaction(readOnly = true) {
-            repository.get(id)
-        }
+        return repository.get(id)
     }
 
     @GetMapping("/all")
     suspend fun getAll(@RequestParam(name = "ids") ids: List<String>): List<UserCredentialsDTO> {
         log.debug { "Getting all user credentials with ids: $ids" }
-        return newSuspendedTransaction(readOnly = true) {
-            repository.getAll(ids)
-        }
+        return repository.getAll(ids)
     }
 
     @DeleteMapping("/invalidate")
@@ -49,18 +42,13 @@ class UserCredentialsController(private val repository: UserCredentialsCacheRepo
             return 0
         }
         log.debug { "Invalidating cache for ids: $ids" }
-        return newSuspendedTransaction {
-            repository.invalidate(*ids.toTypedArray())
-        }
+        return repository.invalidate(*ids.toTypedArray())
     }
 
     @DeleteMapping("/invalidate/all")
     suspend fun invalidateAll() {
-        newSuspendedTransaction {
-            log.debug { "Invalidating all user credentials cache" }
-            repository.invalidateAll()
-        }
-
+        log.debug { "Invalidating all user credentials cache" }
+        repository.invalidateAll()
     }
 
     @DeleteMapping("/invalidate/pattern")
@@ -69,9 +57,6 @@ class UserCredentialsController(private val repository: UserCredentialsCacheRepo
             return 0
         }
         log.debug { "Invalidating cache for pattern: $pattern" }
-        return newSuspendedTransaction {
-            repository.invalidateByPattern(pattern)
-        }
+        return repository.invalidateByPattern(pattern)
     }
-
 }

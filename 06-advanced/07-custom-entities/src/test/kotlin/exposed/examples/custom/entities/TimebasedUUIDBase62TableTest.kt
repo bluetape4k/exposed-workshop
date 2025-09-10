@@ -60,13 +60,12 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `TimebasedUUID Base62 id를 가진 레코드를 생성한다`(testDB: TestDB, recordCount: Int) {
         withTables(testDB, T1) {
-            List(recordCount) {
+            repeat(recordCount) {
                 T1.insert {
                     it[T1.name] = faker.name().fullName()
                     it[T1.age] = Random.nextInt(10, 80)
                 }
             }
-            commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -88,7 +87,6 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
                     this[T1.age] = it.age
                 }
             }
-            commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -112,7 +110,6 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
                     }
                 }
             }.awaitAll()
-            commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -122,13 +119,12 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `TimebasedUUID Base62 Id를 가진 엔티티를 생성한다`(testDB: TestDB, recordCount: Int) {
         withTables(testDB, T1) {
-            List(recordCount) {
+            repeat(recordCount) {
                 E1.new {
                     name = faker.name().fullName()
                     age = Random.nextInt(10, 80)
                 }
             }
-            commit()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -147,7 +143,6 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
                 }
             }
             tasks.awaitAll()
-            commit()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
         }

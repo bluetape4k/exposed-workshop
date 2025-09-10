@@ -5,7 +5,6 @@ import exposed.examples.cache.coroutines.domain.repository.UserCacheRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.Op
-import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -25,25 +24,19 @@ class UserController(private val repository: UserCacheRepository) {
     @GetMapping
     suspend fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserDTO> {
         log.debug { "Finding all users with limit: $limit" }
-        return newSuspendedTransaction(readOnly = true) {
-            repository.findAll(limit = limit, where = { Op.TRUE })
-        }
+        return repository.findAll(limit = limit, where = { Op.TRUE })
     }
 
     @GetMapping("/{id}")
     suspend fun get(@PathVariable(name = "id") id: Long): UserDTO? {
         log.debug { "Getting user with id: $id" }
-        return newSuspendedTransaction(readOnly = true) {
-            repository.get(id)
-        }
+        return repository.get(id)
     }
 
     @GetMapping("/all")
     suspend fun getAll(@RequestParam(name = "ids") ids: List<Long>): List<UserDTO> {
         log.debug { "Getting all users with ids: $ids" }
-        return newSuspendedTransaction(readOnly = true) {
-            repository.getAll(ids)
-        }
+        return repository.getAll(ids)
     }
 
     @DeleteMapping("/invalidate")
@@ -52,29 +45,23 @@ class UserController(private val repository: UserCacheRepository) {
             return 0
         }
         log.debug { "Invalidating cache for ids: $ids" }
-        return newSuspendedTransaction {
-            repository.invalidate(*ids.toTypedArray())
-        }
+        return repository.invalidate(*ids.toTypedArray())
     }
 
     @DeleteMapping("/invalidate/all")
     suspend fun invalidateAll() {
-        newSuspendedTransaction {
-            repository.invalidateAll()
-        }
+        repository.invalidateAll()
     }
 
     @DeleteMapping("/invalidate/pattern")
     suspend fun invalidateByPattern(@RequestParam(name = "patterns") pattern: String): Long {
-        return newSuspendedTransaction {
-            repository.invalidateByPattern(pattern)
-        }
+        return repository.invalidateByPattern(pattern)
     }
 
     @PostMapping
     suspend fun put(@RequestBody userDTO: UserDTO): UserDTO {
         log.debug { "Updating user with id: ${userDTO.id}" }
-        newSuspendedTransaction { repository.put(userDTO) }
+        repository.put(userDTO)
         return userDTO
     }
 }

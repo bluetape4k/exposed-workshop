@@ -59,13 +59,12 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `Ksuid id를 가진 레코드를 생성한다`(testDB: TestDB, recordCount: Int) {
         withTables(testDB, T1) {
-            List(recordCount) {
+            repeat(recordCount) {
                 T1.insert {
                     it[T1.name] = faker.name().fullName()
                     it[T1.age] = Random.nextInt(10, 80)
                 }
             }
-            commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -88,7 +87,6 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                     this[T1.age] = it.age
                 }
             }
-            commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -112,8 +110,6 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                     }
                 }
             }.awaitAll()
-            
-            commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -129,7 +125,6 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                     age = Random.nextInt(10, 80)
                 }
             }
-            commit()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -148,7 +143,6 @@ class KsuidTableTest: AbstractCustomIdTableTest() {
                 }
             }
             tasks.awaitAll()
-            commit()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
         }

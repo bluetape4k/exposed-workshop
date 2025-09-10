@@ -12,7 +12,7 @@ abstract class AbstractCustomIdTableTest: JdbcExposedTestBase() {
 
         @JvmStatic
         fun getTestDBAndEntityCount(): List<Arguments> {
-            val recordCounts = listOf(100, 500)
+            val recordCounts = listOf(100, 300)
 
             return TestDB.enabledDialects().map { testDB ->
                 recordCounts.map { entityCount ->

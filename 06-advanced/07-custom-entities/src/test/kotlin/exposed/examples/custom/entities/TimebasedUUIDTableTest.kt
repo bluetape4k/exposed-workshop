@@ -88,7 +88,6 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
                     this[T1.age] = it.age
                 }
             }
-            commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -113,7 +112,6 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
                     }
                 }
             }.awaitAll()
-            commit()
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -129,7 +127,6 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
                     age = Random.nextInt(10, 80)
                 }
             }
-            commit()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
         }
@@ -148,7 +145,6 @@ class TimebasedUUIDTableTest: AbstractCustomIdTableTest() {
                 }
             }
             tasks.awaitAll()
-            commit()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
         }
