@@ -15,6 +15,7 @@ import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
@@ -228,6 +229,7 @@ class Ex04_LongIdTableEntity: JdbcExposedTestBase() {
              * ```
              */
             val town1 = Town.findById(tId)!!
+            town1.shouldNotBeNull()
 
             /**
              * eager loaded referencedOn (`load(Town::city)`)
@@ -238,6 +240,7 @@ class Ex04_LongIdTableEntity: JdbcExposedTestBase() {
              * ```
              */
             val town1WithCity = Town.findById(tId2)!!.load(Town::city)
+            town1WithCity.shouldNotBeNull()
 
             /**
              * lazy loaded referrersOn
@@ -247,6 +250,7 @@ class Ex04_LongIdTableEntity: JdbcExposedTestBase() {
              * ```
              */
             val city1 = City.all().single()
+            city1.shouldNotBeNull()
 
             /**
              * eager loaded referrersOn (`with(City::towns)`)

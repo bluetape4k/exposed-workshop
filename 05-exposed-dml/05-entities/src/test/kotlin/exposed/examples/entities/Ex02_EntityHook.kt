@@ -16,6 +16,7 @@ import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.dao.EntityChange
 import org.jetbrains.exposed.v1.dao.EntityChangeType
@@ -163,10 +164,12 @@ class Ex02_EntityHook: JdbcExposedTestBase() {
                 val ru: Country = Country.new {
                     name = "RU"
                 }
+                ru.shouldNotBeNull()
                 val moscow = City.new {
                     name = "Moscow"
                     country = ru
                 }
+                moscow.shouldNotBeNull()
             }
 
             events.forEach {
@@ -314,6 +317,7 @@ class Ex02_EntityHook: JdbcExposedTestBase() {
                 val ru = Country.new { name = "RU" }
                 val de = Country.new { name = "DE" }
                 val moscow = City.new { name = "Moscow"; country = ru }
+                moscow.id.shouldNotBeNull()
                 val berlin = City.new { name = "Berlin"; country = de }
                 val john = User.new { name = "John"; age = 30 }
 
@@ -351,6 +355,7 @@ class Ex02_EntityHook: JdbcExposedTestBase() {
                 val de = Country.new { name = "DE" }
                 val moscow = City.new { name = "Moscow"; country = ru }
                 val berlin = City.new { name = "Berlin"; country = de }
+                berlin.id.shouldNotBeNull()
                 val john = User.new { name = "John"; age = 30 }
 
                 john.cities = SizedCollection(listOf(moscow))

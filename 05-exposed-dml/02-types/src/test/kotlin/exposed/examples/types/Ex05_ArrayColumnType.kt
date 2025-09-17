@@ -281,7 +281,7 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
             val numInput = listOf(1, 2, 3)
             ArrayTestTable.insert {
                 it[numbers] = numInput
-                it[strings] = listOf<String?>(null, null, null, "hello")
+                it[strings] = listOf(null, null, null, "hello")
                 it[doubles] = null
             }
 

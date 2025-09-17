@@ -847,10 +847,12 @@ class Ex10_CompositeIdTableEntity: JdbcExposedTestBase() {
                 title = "Book A"
                 author = authorB
             }
+            bookA.id.shouldNotBeNull()
             val bookB = Book.new {
                 title = "Book B"
                 author = authorB
             }
+            bookB.id.shouldNotBeNull()
             val reviewIdValue = CompositeID {
                 it[Reviews.content] = "Not bad"
                 it[Reviews.rank] = 12345L
@@ -912,10 +914,12 @@ class Ex10_CompositeIdTableEntity: JdbcExposedTestBase() {
                 publisher = publisherA
                 penName = "Author A"
             }
+            authorA.id.shouldNotBeNull()
             val authorB = Author.new {
                 publisher = publisherA
                 penName = "Author B"
             }
+            authorB.id.shouldNotBeNull()
             val officeAIdValue = CompositeID {
                 it[Offices.zipCode] = "1A2 3B4"
                 it[Offices.name] = "Office A"

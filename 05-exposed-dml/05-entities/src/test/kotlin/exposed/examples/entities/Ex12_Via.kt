@@ -18,6 +18,8 @@ import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeEmpty
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.ReferenceOption
 import org.jetbrains.exposed.v1.core.ResultRow
@@ -243,6 +245,8 @@ class Ex12_Via: JdbcExposedTestBase() {
         withTables(testDB, *ViaTestData.allTables) {
             val n1 = VNumber.new { number = 1 }
             val n2 = VNumber.new { number = 2 }
+            n1.id._value.shouldNotBeNull()
+            n2.id._value.shouldNotBeNull()
 
             val s1 = VString.new { text = "foo" }
             val s2 = VString.new { text = "bar" }
@@ -528,6 +532,7 @@ class Ex12_Via: JdbcExposedTestBase() {
              * ```
              */
             val nodeWithChildren = Node.all().with(Node::children).toList()
+            nodeWithChildren.shouldNotBeEmpty()
 
             checkChildrenReferences(child1, emptyList())
             checkChildrenReferences(child2, emptyList())
@@ -557,6 +562,8 @@ class Ex12_Via: JdbcExposedTestBase() {
              * ```
              */
             val nodeWithParents = Node.all().with(Node::parents).toList()
+            nodeWithParents.shouldNotBeEmpty()
+            
             checkParentsReferences(child1, listOf(root1, root2))
             checkParentsReferences(child2, listOf(root2))
             checkParentsReferences(root1, emptyList())

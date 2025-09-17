@@ -826,7 +826,7 @@ class Ex01_Functions: Ex00_FunctionBase() {
     }
 
     /**
-     * [org.jetbrains.exposed.sql.Random] function
+     * [org.jetbrains.exposed.v1.core.Random] function
      *
      * ```sql
      * -- Postgres
@@ -1265,7 +1265,7 @@ class Ex01_Functions: Ex00_FunctionBase() {
     }
 
     /**
-     * [SqlExpressionBuilder.coalesce] 함수 사용하기
+     * [coalesce] 함수 사용하기
      *
      * coalesce: 첫번째 인자가 null 이면 두번째 인자를 반환한다.
      *
@@ -1315,9 +1315,6 @@ class Ex01_Functions: Ex00_FunctionBase() {
         }
     }
 
-    /**
-     * [SqlExpressionBuilder] 를 사용하여 함수 만들기
-     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `concat using plus operator`(testDB: TestDB) {

@@ -108,7 +108,7 @@ class Ex09_ImmutableEntity: JdbcExposedTestBase() {
             }
 
             transaction {
-                // NOTE: 읽기전용이므로, new 작업은 불가하다 (컴파일 예외 발생)
+                // HINT: 읽기전용이므로, new 작업은 불가하다 (컴파일 예외 발생)
                 // Organization.new {
                 //    name = "Platform"
                 //    etag = 10

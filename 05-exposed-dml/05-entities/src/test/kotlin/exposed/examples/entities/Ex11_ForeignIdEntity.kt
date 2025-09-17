@@ -11,6 +11,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContainSame
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IdTable
@@ -181,13 +182,14 @@ class Ex11_ForeignIdEntity: JdbcExposedTestBase() {
                  * INSERT INTO project_configs (id, owner_id, setting) VALUES (2, 'jane', TRUE);
                  * ```
                  */
-                val project2 = Project.new { name = "Earth" }
-                ProjectConfig.new(project2.id.value) {
-                    ownerId = "jane"
-                    setting = true
+                Project.new { name = "Earth" }.also { project ->
+                    ProjectConfig.new(project.id.value) {
+                        ownerId = "jane"
+                        setting = true
+                    }
                 }
-                project2
             }
+            project2.shouldNotBeNull()
 
             transaction {
                 // UPDATE project_configs SET setting=FALSE WHERE id = 1

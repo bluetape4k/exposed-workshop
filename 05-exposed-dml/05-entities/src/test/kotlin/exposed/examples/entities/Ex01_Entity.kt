@@ -957,7 +957,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
             item.price shouldBeEqualTo newPrice   // 기존 엔티티도 갱신된다.
 
             /**
-             * NOTE: refresh(flush=false)이면 Cache 값이 다시 채워진다.
+             * HINT: refresh(flush=false)이면 Cache 값이 다시 채워진다.
              *
              * ```sql
              * SELECT items.id, items."name", items.price FROM items
@@ -1013,7 +1013,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
             item.price shouldBeEqualTo newPrice
 
             /**
-             * NOTE: refresh(flush=false)이면 Cache 값이 다시 채워진다.
+             * HINT: refresh(flush=false)이면 Cache 값이 다시 채워진다.
              *
              * ```sql
              * SELECT ITEMS.ID, ITEMS."name", ITEMS.PRICE

@@ -211,7 +211,7 @@ class Ex10_OrderBy: JdbcExposedTestBase() {
         withCitiesAndUsers(testDB) { cities, users, _ ->
             // NOTE: wrapAsExpression 은 subquery를 wrap해서 expression으로 사용할 수 있다.
             val expression = wrapAsExpression<Int>(
-                users
+                query = users
                     .select(users.id.count())
                     .where { cities.id eq users.cityId }
             )
