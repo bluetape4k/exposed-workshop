@@ -41,7 +41,7 @@ class MemberController(
 //        return sf.withSessionSuspending { session ->
 //            memberRepository.findById(session, id)?.toDto()
 //        }
-        // NOTE: 성능이 중요한 경우, StatelessSession 을 사용하는 것이 좋습니다.
+        // HINT: 성능이 중요한 경우, StatelessSession 을 사용하는 것이 좋습니다.
         return sf.withStatelessSessionSuspending { session ->
             session.get(Member::class.java, id).awaitSuspending().toDto()
         }

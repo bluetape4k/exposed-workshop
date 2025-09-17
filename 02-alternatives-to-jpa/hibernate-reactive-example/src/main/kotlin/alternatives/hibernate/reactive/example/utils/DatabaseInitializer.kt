@@ -46,6 +46,5 @@ class DatabaseInitializer: ApplicationRunner {
                 memberRepository.saveAll(session, *members.toTypedArray())
             }
         }
-
     }
 }
