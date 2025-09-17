@@ -69,7 +69,7 @@ class MovieRepositoryTest(
         val newMovie = newMovieDTO()
         val saved = movieRepo.create(newMovie)
 
-        val deletedCount = movieRepo.deleteById(saved.id!!)
+        val deletedCount = movieRepo.deleteById(saved.id)
         deletedCount shouldBeEqualTo 1
     }
 
