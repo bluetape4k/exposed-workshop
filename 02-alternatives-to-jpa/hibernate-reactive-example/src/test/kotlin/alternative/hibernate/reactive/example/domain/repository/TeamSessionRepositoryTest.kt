@@ -23,8 +23,8 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.beans.factory.annotation.Autowired
 
 class TeamSessionRepositoryTest(
-    @Autowired private val sf: SessionFactory,
-    @Autowired private val teamRepository: TeamSessionRepository,
+    @param:Autowired private val sf: SessionFactory,
+    @param:Autowired private val teamRepository: TeamSessionRepository,
 ): AbstractHibernateReactiveTest() {
 
     companion object: KLoggingChannel()

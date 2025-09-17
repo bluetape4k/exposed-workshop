@@ -18,8 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.r2dbc.core.DatabaseClient
 
 class CustomerRepositoryTest(
-    @Autowired private val customerRepository: CustomerRepository,
-    @Autowired private val database: DatabaseClient,
+    @param:Autowired private val customerRepository: CustomerRepository,
+    @param:Autowired private val database: DatabaseClient,
 ): AbstractR2dbcTest() {
 
     companion object: KLoggingChannel()
