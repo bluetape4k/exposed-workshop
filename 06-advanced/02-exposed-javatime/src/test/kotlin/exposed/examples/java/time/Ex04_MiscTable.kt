@@ -1435,7 +1435,7 @@ fun Misc.checkRowFull(
     checkRowDates(row, d, dn, t, tn, dt, dtn, ts, tsn, dr, drn)
 }
 
-@Suppress("LongParameterList")
+@Suppress("LongParameterList", "UnusedReceiverParameter")
 fun Misc.checkRowDates(
     row: ResultRow,
     d: LocalDate,

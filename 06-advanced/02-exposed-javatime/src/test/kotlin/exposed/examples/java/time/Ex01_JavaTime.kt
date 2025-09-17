@@ -22,6 +22,7 @@ import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.Cast
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.Table
@@ -458,10 +459,14 @@ class Ex01_JavaTime: JdbcExposedTestBase() {
                 it[created] = dateTimeNow.minusYears(1)
                 it[modified] = ModifierData(1, dateTimeNow)
             }
+            id1.shouldNotBeNull()
+            
             val id2 = tester.insert {
                 it[created] = dateTimeNow.plusYears(1)
                 it[modified] = ModifierData(2, dateTimeNow)
             }
+            id2.shouldNotBeNull()
+
 
             val prefix = if (currentDialectTest is PostgreSQLDialect) "" else "."
 
