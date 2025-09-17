@@ -3,6 +3,7 @@ package exposed.dao.example
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.IntEntity
@@ -102,6 +103,10 @@ object Schema {
         val seoul = City.new { name = "Seoul" }
         val busan = City.new { name = "Busan" }
         val daegu = City.new { name = "Daegu" }
+
+        seoul.shouldNotBeNull()
+        busan.shouldNotBeNull()
+        daegu.shouldNotBeNull()
 
         User.new {
             name = "debop"
