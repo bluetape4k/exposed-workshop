@@ -127,7 +127,7 @@ object DMLTestData {
         ) -> Unit,
     ) {
         val users = Users
-        val userFlags = Flags
+        // val userFlags = Flags
         val cities = Cities
         val userData = UserData
 

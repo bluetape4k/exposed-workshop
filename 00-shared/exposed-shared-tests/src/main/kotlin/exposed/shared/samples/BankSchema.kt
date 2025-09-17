@@ -124,6 +124,7 @@ object BankSchema {
             .toString()
     }
 
+    @Suppress("UnusedReceiverParameter")
     fun JdbcExposedTestBase.withBankTables(
         testDB: TestDB,
         block: JdbcTransaction.(accounts: BankAccountTable, owners: AccountOwnerTable) -> Unit,
@@ -162,6 +163,9 @@ object BankSchema {
         }
     }
 
+    @Suppress("UnusedReceiverParameter")
     fun JdbcTransaction.getAccount(accountId: Int): BankAccount = BankAccount.findById(accountId)!!
+
+    @Suppress("UnusedReceiverParameter")
     fun JdbcTransaction.getOwner(ownerId: Int): AccountOwner = AccountOwner.findById(ownerId)!!
 }

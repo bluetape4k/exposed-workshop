@@ -79,6 +79,7 @@ object MovieSchema: KLogging() {
             toStringBuilder().add("firstName", firstName).add("lastName", lastName).add("birthday", birthday).toString()
     }
 
+    @Suppress("UnusedReceiverParameter")
     fun JdbcExposedTestBase.withMovieAndActors(
         testDB: TestDB,
         statement: JdbcTransaction.() -> Unit,
@@ -89,6 +90,7 @@ object MovieSchema: KLogging() {
         }
     }
 
+    @Suppress("UnusedReceiverParameter")
     suspend fun JdbcExposedTestBase.withSuspendedMovieAndActors(
         testDB: TestDB,
         statement: suspend JdbcTransaction.() -> Unit,

@@ -159,13 +159,13 @@ object OrderSchema {
             val order1 = Order.new {
                 orderDate = LocalDate.of(2017, 1, 17)
             }
-            val orderDetail1 = OrderDetail.new {
+            OrderDetail.new {
                 order = order1
                 lineNumber = 1
                 description = "Tennis Ball"
                 quantity = 3
             }
-            val orderDetail2 = OrderDetail.new {
+            OrderDetail.new {
                 order = order1
                 lineNumber = 2
                 description = "Tennis Racket"
@@ -175,7 +175,7 @@ object OrderSchema {
             val order2 = Order.new {
                 orderDate = LocalDate.of(2017, 1, 18)
             }
-            val orderDetail3 = OrderDetail.new {
+            OrderDetail.new {
                 order = order2
                 lineNumber = 1
                 description = "Football"
@@ -191,35 +191,35 @@ object OrderSchema {
             val item3 = Item.new(44) {
                 description = "Outfield Glove"
             }
-            val item4 = Item.new(55) {
+            Item.new(55) {
                 description = "Catcher Glove"
             }
 
-            val orderLine1 = OrderLine.new {
+            OrderLine.new {
                 order = order1
                 item = item1
                 lineNumber = 1
                 quantity = 1
             }
-            val orderLine2 = OrderLine.new {
+            OrderLine.new {
                 order = order1
                 item = item2
                 lineNumber = 2
                 quantity = 1
             }
-            val orderLine3 = OrderLine.new {
+            OrderLine.new {
                 order = order2
                 item = item1
                 lineNumber = 1
                 quantity = 1
             }
-            val orderLine4 = OrderLine.new {
+            OrderLine.new {
                 order = order2
                 item = item3
                 lineNumber = 2
                 quantity = 1
             }
-            val orderLine5 = OrderLine.new {
+            OrderLine.new {
                 order = order2
                 item = null
                 lineNumber = 3
