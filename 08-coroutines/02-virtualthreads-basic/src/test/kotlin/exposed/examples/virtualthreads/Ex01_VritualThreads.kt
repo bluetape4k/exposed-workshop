@@ -163,6 +163,8 @@ class Ex01_VritualThreads: JdbcExposedTestBase() {
                 }
             }
 
+            row.shouldNotBeNull()
+
             val row2 = transaction {
                 try {
                     VTester.selectAll().toList()
@@ -171,6 +173,7 @@ class Ex01_VritualThreads: JdbcExposedTestBase() {
                     null
                 }
             }
+            row2.shouldNotBeNull()
 
             virtualThreadOk.shouldBeTrue()
             platformThreadOk.shouldBeTrue()
@@ -189,7 +192,6 @@ class Ex01_VritualThreads: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `virtual thread 트랜잭션에서 예외 처리`(testDB: TestDB) {
         withTables(testDB, VTester) {
-            val database = this.db
             val outerConn = this.connection
             val id = TesterEntity.new { }.id
             commit()
