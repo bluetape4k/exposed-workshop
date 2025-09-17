@@ -303,7 +303,7 @@ class FastjsonBColumnTest: AbstractExposedTest() {
             val hasLogins = tester.fastjsonBColumn.exists(".logins", optional = optional)
             tester.selectAll().where { hasLogins }.count() shouldBeEqualTo 2L
 
-            // test data at path exists with filter condition & optional arguments
+            // test data at path exists with filter condition and optional arguments
             if (currentDialectTest is PostgreSQLDialect) {
                 // SELECT fastjson_b_table.id FROM fastjson_b_table
                 //  WHERE JSONB_PATH_EXISTS(fastjson_b_table.fastjson_b_column, '$.logins ? (@ == 1000)')

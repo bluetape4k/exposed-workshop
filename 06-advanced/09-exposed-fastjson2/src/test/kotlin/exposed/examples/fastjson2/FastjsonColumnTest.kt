@@ -344,7 +344,7 @@ class FastjsonColumnTest: AbstractExposedTest() {
             val hasLogins = tester.fastjsonColumn.exists(".logins", optional = optional)
             tester.selectAll().where { hasLogins }.count() shouldBeEqualTo 2L
 
-            // test data at path exists with filter condition & optional arguments
+            // test data at path exists with filter condition and optional arguments
             val testDialect = currentDialectTest
             if (testDialect is OracleDialect || testDialect is SQLServerDialect) {
                 val filterPath = when (testDialect) {
