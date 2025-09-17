@@ -89,7 +89,7 @@ class ActorRepositoryTest(
             val savedActor = actorRepository.create(actor).toActorDTO()
             savedActor shouldBeEqualTo actor.copy(id = savedActor.id)
 
-            val newActor = actorRepository.findById(savedActor.id!!)?.toActorDTO()
+            val newActor = actorRepository.findById(savedActor.id)?.toActorDTO()
             newActor shouldBeEqualTo savedActor
 
             actorRepository.count() shouldBeEqualTo prevCount + 1L

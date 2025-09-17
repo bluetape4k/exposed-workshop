@@ -88,7 +88,7 @@ class MovieRepositoryTest(
 
             val prevCount = movieRepository.count()
 
-            val deletedCount = movieRepository.deleteById(saved.id!!)
+            val deletedCount = movieRepository.deleteById(saved.id)
             deletedCount shouldBeEqualTo 1
 
             movieRepository.count() shouldBeEqualTo prevCount - 1
