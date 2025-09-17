@@ -14,7 +14,6 @@ import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.IntEntity
 import org.jetbrains.exposed.v1.dao.IntEntityClass
 import org.jetbrains.exposed.v1.dao.entityCache
-import org.jetbrains.exposed.v1.dao.flushCache
 import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
@@ -73,7 +72,7 @@ class CustomClientDefaultFunctionsTest: JdbcExposedTestBase() {
             val entityCount = 100
             val values = List(entityCount) { it + 1 }
             ClientGenerated.batchInsert(values) {}
-            flushCache()
+
             entityCache.clear()
 
             val rows = ClientGenerated.selectAll().toList()
@@ -91,10 +90,9 @@ class CustomClientDefaultFunctionsTest: JdbcExposedTestBase() {
     fun `DAO - 클라이언트에서 기본값으로 생성하는 함수`(testDB: TestDB) {
         withTables(testDB, ClientGenerated) {
             val entityCount = 100
-            val entities = List(entityCount) {
+            List(entityCount) {
                 ClientGeneratedEntity.new {}
             }
-            flushCache()
             entityCache.clear()
 
             val loaded = ClientGeneratedEntity.all().toList()

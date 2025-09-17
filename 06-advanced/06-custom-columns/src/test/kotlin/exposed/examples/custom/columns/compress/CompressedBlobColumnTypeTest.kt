@@ -17,7 +17,6 @@ import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.dao.IntEntity
 import org.jetbrains.exposed.v1.dao.IntEntityClass
 import org.jetbrains.exposed.v1.dao.entityCache
-import org.jetbrains.exposed.v1.dao.flushCache
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
@@ -77,7 +76,6 @@ class CompressedBlobColumnTypeTest: JdbcExposedTestBase() {
                 it[zstdData] = bytes
             }
 
-            flushCache()
             entityCache.clear()
 
             val row = T1.selectAll().where { T1.id eq id }.single()
@@ -96,7 +94,7 @@ class CompressedBlobColumnTypeTest: JdbcExposedTestBase() {
                 it[snappyData] = null
                 it[zstdData] = null
             }
-            flushCache()
+
             entityCache.clear()
 
             val row = T1.selectAll().where { T1.id eq id }.single()
@@ -118,7 +116,7 @@ class CompressedBlobColumnTypeTest: JdbcExposedTestBase() {
                 snappyData = bytes
                 zstdData = bytes
             }
-            flushCache()
+
             entityCache.clear()
 
             val loaded = E1.findById(e1.id)!!

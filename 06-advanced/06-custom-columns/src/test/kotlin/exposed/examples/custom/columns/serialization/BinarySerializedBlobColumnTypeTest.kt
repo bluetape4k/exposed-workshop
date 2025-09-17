@@ -130,6 +130,7 @@ class BinarySerializedBlobColumnTypeTest: JdbcExposedTestBase() {
                 zstdFury = embedded2
                 zstdKryo = embedded2
             }
+
             entityCache.clear()
 
             val loaded = E1.findById(e1.id)!!

@@ -95,6 +95,7 @@ class CompressedBinaryColumnTypeTest: JdbcExposedTestBase() {
                 it[snappyData] = null
                 it[zstdData] = null
             }
+
             entityCache.clear()
 
             val row = T1.selectAll().where { T1.id eq id }.single()

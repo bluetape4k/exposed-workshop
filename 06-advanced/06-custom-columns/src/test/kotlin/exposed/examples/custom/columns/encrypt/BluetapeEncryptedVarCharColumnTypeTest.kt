@@ -10,6 +10,7 @@ import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.junit5.faker.Fakers
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
@@ -125,6 +126,7 @@ class BluetapeEncryptedVarCharColumnTypeTest: JdbcExposedTestBase() {
                 it[T1.rc4String] = text
                 it[T1.tripleDesString] = text
             }
+            id._value.shouldNotBeNull()
 
             entityCache.clear()
 
