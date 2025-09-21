@@ -175,7 +175,7 @@ object Versions {
     const val spring_kafka = "3.3.3"    // https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
 
     const val pods4k = "0.7.0"              // https://mvnrepository.com/artifact/com.danrusu.pods4k/bom
-    const val eclipse_collections = "11.1.0"  // https://mvnrepository.com/artifact/org.eclipse.collections/eclipse-collections
+    const val eclipse_collections = "13.0.0"  // https://mvnrepository.com/artifact/org.eclipse.collections/eclipse-collections
     const val jctools = "4.0.5"             // https://mvnrepository.com/artifact/org.jctools/jctools-core
 
     const val ow2_asm = "9.8"               // https://mvnrepository.com/artifact/org.ow2.asm/asm
@@ -478,7 +478,7 @@ object Libs {
     val log4j_web = log4j("web")
 
     const val findbugs = "com.google.code.findbugs:jsr305:3.0.2"
-    const val guava = "com.google.guava:guava:33.2.0-jre"
+    const val guava = "com.google.guava:guava:33.5.0-jre"
 
     const val eclipse_collections = "org.eclipse.collections:eclipse-collections:${Versions.eclipse_collections}"
     const val eclipse_collections_forkjoin =
@@ -489,8 +489,8 @@ object Libs {
     // https://github.com/JCTools/JCTools
     const val jctools_core = "org.jctools:jctools-core:${Versions.jctools}"
 
-    const val kryo = "com.esotericsoftware:kryo:5.6.0" // https://mvnrepository.com/artifact/com.esotericsoftware/kryo
-    const val kryo5 = "com.esotericsoftware:kryo:5.6.0" // https://mvnrepository.com/artifact/com.esotericsoftware/kryo
+    const val kryo = "com.esotericsoftware:kryo:5.6.2" // https://mvnrepository.com/artifact/com.esotericsoftware/kryo
+    const val kryo5 = "com.esotericsoftware:kryo:5.6.2" // https://mvnrepository.com/artifact/com.esotericsoftware/kryo
     const val fury_kotlin = "org.apache.fury:fury-kotlin:0.10.3" // https://mvnrepository.com/artifact/org.apache.fury
 
 
@@ -945,7 +945,7 @@ object Libs {
     const val jsonassert = "org.skyscreamer:jsonassert:1.5.3"   // https://mvnrepository.com/artifact/org.skyscreamer/jsonassert
 
     // GSON
-    const val gson = "com.google.code.gson:gson:2.11.0"    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    const val gson = "com.google.code.gson:gson:2.13.2"    // https://mvnrepository.com/artifact/com.google.code.gson/gson
     const val gson_javatime_serializers = "com.fatboyindustrial.gson-javatime-serialisers:gson-javatime-serialisers:1.1.2"
 
     // JWT
@@ -1221,7 +1221,7 @@ object Libs {
     const val exposed_spring_transaction = "org.jetbrains.exposed:spring-transaction:${Versions.exposed}"
 
     // R2DBC (버전은 spring-data 버전을 사용한다)
-    fun r2dbc(module: String, version: String = Versions.r2dbc): String = "io.r2dbc:r2dbc-$module:${Versions.r2dbc}"
+    fun r2dbc(module: String, version: String = Versions.r2dbc): String = "io.r2dbc:r2dbc-$module:$version"
     val r2dbc_spi = r2dbc("spi")
     val r2dbc_h2 = r2dbc("h2")
     val r2dbc_pool = r2dbc("pool", "1.0.2.RELEASE")
