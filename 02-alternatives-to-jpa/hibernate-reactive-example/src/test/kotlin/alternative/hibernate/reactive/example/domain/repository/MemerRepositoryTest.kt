@@ -19,7 +19,7 @@ import org.hibernate.reactive.mutiny.Mutiny.SessionFactory
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
-class MemerRepositoryTest @Autowired constructor(
+class MemerRepositoryTest @param:Autowired constructor(
     private val sf: SessionFactory,
     private val memberRepository: MemberSessionRepository,
     private val teamRepository: TeamSessionRepository,

@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import java.time.Instant
 
 class UserCredentialsCacheRepositoryTest(
-    @Autowired private val repository: UserCredentialsCacheRepository,
+    @param:Autowired private val repository: UserCredentialsCacheRepository,
 ): AbstractCacheStrategyTest() {
 
     companion object: KLoggingChannel()

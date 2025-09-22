@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.annotation.Commit
 
 class SpringTransactionEntityTest(
-    @Autowired private val orderService: OrderService,
+    @param:Autowired private val orderService: OrderService,
 ): AbstractSpringTransactionTest() {
 
     companion object: KLogging()

@@ -12,7 +12,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
 
 class MovieControllerTest(
-    @Autowired private val client: WebTestClient,
+    @param:Autowired private val client: WebTestClient,
 ): AbstractExposedRepositoryTest() {
 
     companion object: KLogging()

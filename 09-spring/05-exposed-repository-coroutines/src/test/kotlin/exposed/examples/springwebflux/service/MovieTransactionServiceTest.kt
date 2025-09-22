@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Disabled("suspend 함수에 대해 @Transactional 이 적용되지 않습니다. newSuspendedTransaction 을 사용하세요")
 class MovieTransactionServiceTest(
-    @Autowired private val movieService: MovieTransactionalService,
+    @param:Autowired private val movieService: MovieTransactionalService,
 ): AbstractCoroutineExposedRepositoryTest() {
 
     companion object: KLoggingChannel() {

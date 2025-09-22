@@ -23,7 +23,7 @@ import java.time.Duration
 
 @Suppress("DEPRECATION")
 class UserEventCacheRepositoryTest(
-    @Autowired private val repository: UserEventCacheRepository,
+    @param:Autowired private val repository: UserEventCacheRepository,
 ): AbstractCacheStrategyTest() {
 
     companion object: KLoggingChannel()

@@ -24,7 +24,7 @@ import kotlin.system.measureTimeMillis
 
 @Suppress("DEPRECATION")
 class UserCacheRepositoryTest(
-    @Autowired private val repository: UserCacheRepository,
+    @param:Autowired private val repository: UserCacheRepository,
 ): AbstractCacheStrategyTest() {
 
     companion object: KLoggingChannel()

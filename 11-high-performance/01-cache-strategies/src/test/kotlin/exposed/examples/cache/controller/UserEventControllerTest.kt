@@ -19,7 +19,7 @@ import org.springframework.test.web.reactive.server.returnResult
 import java.time.Duration
 
 class UserEventControllerTest(
-    @Autowired private val client: WebTestClient,
+    @param:Autowired private val client: WebTestClient,
 ): AbstractCacheStrategyTest() {
 
     companion object: KLoggingChannel()

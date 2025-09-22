@@ -26,8 +26,8 @@ import org.springframework.test.web.reactive.server.returnResult
 import java.time.Instant
 
 class UserCredentialsControllerTest(
-    @Autowired private val client: WebTestClient,
-    @Autowired private val repository: UserCredentialsCacheRepository,
+    @param:Autowired private val client: WebTestClient,
+    @param:Autowired private val repository: UserCredentialsCacheRepository,
 ): AbstractCacheStrategyTest() {
 
     companion object: KLoggingChannel() {

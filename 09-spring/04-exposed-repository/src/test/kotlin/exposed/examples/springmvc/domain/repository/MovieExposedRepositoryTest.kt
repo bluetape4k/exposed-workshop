@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Transactional
 class MovieExposedRepositoryTest(
-    @Autowired private val movieRepo: MovieExposedRepository,
+    @param:Autowired private val movieRepo: MovieExposedRepository,
 ): AbstractExposedRepositoryTest() {
 
     companion object: KLogging() {

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 
 
 class ActorRepositoryTest(
-    @Autowired private val actorRepo: ActorRepository,
+    @param:Autowired private val actorRepo: ActorRepository,
 ): AbstractSpringMvcTest() {
 
     companion object: KLogging() {

@@ -14,7 +14,7 @@ import org.springframework.test.web.reactive.server.expectBody
 import org.springframework.test.web.reactive.server.expectBodyList
 
 class ActorControllerTest(
-    @Autowired private val client: WebTestClient,
+    @param:Autowired private val client: WebTestClient,
 ): AbstractSpringMvcTest() {
 
     companion object: KLogging() {

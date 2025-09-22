@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 @Suppress("DEPRECATION")
 class ActorRepositoryTest(
-    @Autowired private val actorRepository: ActorRepository,
+    @param:Autowired private val actorRepository: ActorRepository,
 ): AbstractSpringWebfluxTest() {
 
     companion object: KLoggingChannel() {

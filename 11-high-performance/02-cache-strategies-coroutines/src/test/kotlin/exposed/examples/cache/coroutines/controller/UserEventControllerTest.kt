@@ -21,7 +21,7 @@ import java.time.Duration
 
 @Suppress("DEPRECATION")
 class UserEventControllerTest(
-    @Autowired private val client: WebTestClient,
+    @param:Autowired private val client: WebTestClient,
 ): AbstractCacheStrategyTest() {
 
     companion object: KLoggingChannel()

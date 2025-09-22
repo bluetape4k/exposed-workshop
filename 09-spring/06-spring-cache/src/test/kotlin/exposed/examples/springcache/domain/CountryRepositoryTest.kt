@@ -13,8 +13,8 @@ import org.springframework.cache.CacheManager
 import kotlin.system.measureTimeMillis
 
 class CountryRepositoryTest(
-    @Autowired private val countryRepository: CountryRepository,
-    @Autowired private val cacheManager: CacheManager,
+    @param:Autowired private val countryRepository: CountryRepository,
+    @param:Autowired private val cacheManager: CacheManager,
 ): AbstractSpringCacheApplicationTest() {
 
     companion object: KLogging()

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class TransactionTemplateTest(
-    @Autowired private val bookService: BookService,
+    @param:Autowired private val bookService: BookService,
 ): AbstractTransactionApplicationTest() {
 
     companion object: KLogging() {

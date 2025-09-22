@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 @Suppress("DEPRECATION")
 class MovieSuspendedServiceTest(
-    @Autowired private val movieService: MovieTransactionalService,
+    @param:Autowired private val movieService: MovieTransactionalService,
 ): AbstractCoroutineExposedRepositoryTest() {
 
     companion object: KLoggingChannel() {

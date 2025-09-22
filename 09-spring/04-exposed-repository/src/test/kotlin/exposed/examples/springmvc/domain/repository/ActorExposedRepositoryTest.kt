@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Transactional
 class ActorExposedRepositoryTest(
-    @Autowired private val actorRepo: ActorExposedRepository,
+    @param:Autowired private val actorRepo: ActorExposedRepository,
 ): AbstractExposedRepositoryTest() {
 
     companion object: KLogging() {

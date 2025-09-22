@@ -30,8 +30,8 @@ import java.time.Instant
 
 @Suppress("DEPRECATION")
 class UserCredentialsControllerTest(
-    @Autowired private val client: WebTestClient,
-    @Autowired private val repository: UserCredentialsCacheRepository,
+    @param:Autowired private val client: WebTestClient,
+    @param:Autowired private val repository: UserCredentialsCacheRepository,
 ): AbstractCacheStrategyTest() {
 
     companion object: KLoggingChannel() {

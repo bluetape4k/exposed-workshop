@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 
 class SuspendedRepositoryConfigTest(
-    @Autowired @Qualifier("defaultCountrySuspendedRepository") private val defaultCountrySuspendedRepository: CountrySuspendedRepository,
-    @Autowired @Qualifier("cachedCountrySuspendedRepository") private val cachedCountrySuspendedRepository: CountrySuspendedRepository,
+    @param:Autowired @Qualifier("defaultCountrySuspendedRepository") private val defaultCountrySuspendedRepository: CountrySuspendedRepository,
+    @param:Autowired @Qualifier("cachedCountrySuspendedRepository") private val cachedCountrySuspendedRepository: CountrySuspendedRepository,
 ): AbstractSpringSuspendedCacheApplicationTest() {
 
     companion object: KLoggingChannel()

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 class LettuceSuspendedCacheConfigTest(
-    @Autowired private val lettuceSuspendedCacheManager: LettuceSuspendedCacheManager,
+    @param:Autowired private val lettuceSuspendedCacheManager: LettuceSuspendedCacheManager,
 ): AbstractSpringSuspendedCacheApplicationTest() {
 
     companion object: KLoggingChannel()

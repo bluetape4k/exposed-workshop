@@ -22,7 +22,7 @@ import java.time.Instant
 
 @Suppress("DEPRECATION")
 class UserCredentialsCacheRepositoryTest(
-    @Autowired private val repository: UserCredentialsCacheRepository,
+    @param:Autowired private val repository: UserCredentialsCacheRepository,
 ): AbstractCacheStrategyTest() {
 
     companion object: KLoggingChannel()

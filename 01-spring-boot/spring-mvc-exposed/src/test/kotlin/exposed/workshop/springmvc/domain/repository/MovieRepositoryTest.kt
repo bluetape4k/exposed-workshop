@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Transactional(readOnly = true)
 class MovieRepositoryTest(
-    @Autowired private val movieRepo: MovieRepository,
+    @param:Autowired private val movieRepo: MovieRepository,
 ): AbstractSpringMvcTest() {
 
     companion object: KLogging() {

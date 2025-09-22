@@ -31,8 +31,8 @@ import java.time.LocalDate
 import java.util.concurrent.atomic.AtomicLong
 
 class UserControllerTest(
-    @Autowired private val client: WebTestClient,
-    @Autowired private val repository: UserCacheRepository,
+    @param:Autowired private val client: WebTestClient,
+    @param:Autowired private val repository: UserCacheRepository,
 ): AbstractCacheStrategyTest() {
 
     companion object: KLoggingChannel() {

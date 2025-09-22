@@ -20,7 +20,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.returnResult
 
 class MovieActorsControllerTest(
-    @Autowired private val client: WebTestClient,
+    @param:Autowired private val client: WebTestClient,
 ): AbstractSpringWebfluxTest() {
 
     companion object: KLoggingChannel()

@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 @Suppress("DEPRECATION")
 class MovieRepositoryTest(
-    @Autowired private val movieRepository: MovieExposedRepository,
+    @param:Autowired private val movieRepository: MovieExposedRepository,
 ): AbstractCoroutineExposedRepositoryTest() {
 
     companion object: KLoggingChannel() {

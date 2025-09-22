@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 
 class CachedCountrySuspendedRepositoryTest(
-    @Autowired private val suspendedCacheManager: LettuceSuspendedCacheManager,
+    @param:Autowired private val suspendedCacheManager: LettuceSuspendedCacheManager,
 ): AbstractCountrySuspendedRepositoryTest() {
 
     companion object: KLoggingChannel()

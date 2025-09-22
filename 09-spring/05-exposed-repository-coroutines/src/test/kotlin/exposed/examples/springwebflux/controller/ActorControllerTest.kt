@@ -21,7 +21,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.returnResult
 
 class ActorControllerTest(
-    @Autowired private val client: WebTestClient,
+    @param:Autowired private val client: WebTestClient,
 ): AbstractCoroutineExposedRepositoryTest() {
 
     companion object: KLoggingChannel()
