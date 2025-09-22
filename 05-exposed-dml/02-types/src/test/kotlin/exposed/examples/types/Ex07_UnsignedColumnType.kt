@@ -160,7 +160,8 @@ class Ex07_UnsignedColumnType: JdbcExposedTestBase() {
                 val number2 = (Byte.MAX_VALUE + 1).toUByte()
                 assertFailAndRollback("Out-of-range (OoR) error") {
                     UByteTable.insert { it[unsignedByte] = number2 }
-                    UByteTable.selectAll().where { UByteTable.unsignedByte less 0u }.count().toInt() shouldBeEqualTo 0
+                    UByteTable.selectAll().where { UByteTable.unsignedByte less 0u.toUByte() }.count()
+                        .toInt() shouldBeEqualTo 0
                 }
 
                 // modify column to now have SMALLINT type
@@ -239,7 +240,7 @@ class Ex07_UnsignedColumnType: JdbcExposedTestBase() {
                 val number2 = (Short.MAX_VALUE + 1).toUShort()
                 assertFailAndRollback("Out-of-range (OoR) error") {
                     UShortTable.insert { it[unsignedShort] = number2 }
-                    UShortTable.selectAll().where { UShortTable.unsignedShort less 0u }.count()
+                    UShortTable.selectAll().where { UShortTable.unsignedShort less 0u.toUShort() }.count()
                         .toInt() shouldBeEqualTo 0
                 }
 
