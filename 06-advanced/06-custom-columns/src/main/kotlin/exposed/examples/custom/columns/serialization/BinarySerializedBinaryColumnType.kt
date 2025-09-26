@@ -8,7 +8,7 @@ import org.jetbrains.exposed.v1.core.ColumnWithTransform
 
 class BinarySerializedBinaryColumnType<T: Any>(
     length: Int,
-    serializer: BinarySerializer = BinarySerializers.Fury,
+    serializer: BinarySerializer = BinarySerializers.Fory,
 ): ColumnWithTransform<ByteArray, T>(BinaryColumnType(length), BinarySerializedBinaryTransformer(serializer))
 
 class BinarySerializedBinaryTransformer<T>(

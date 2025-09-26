@@ -29,9 +29,9 @@ class BinarySerializedBlobColumnTypeTest: JdbcExposedTestBase() {
      *  CREATE TABLE IF NOT EXISTS t1 (
      *      id SERIAL PRIMARY KEY,
      *      "name" VARCHAR(50) NOT NULL,
-     *      lz4_fury bytea NULL,
+     *      lz4_fory bytea NULL,
      *      lz4_kryo bytea NULL,
-     *      zstd_fury bytea NULL,
+     *      zstd_fory bytea NULL,
      *      zstd_kryo bytea NULL
      * )
      * ```
@@ -40,9 +40,9 @@ class BinarySerializedBlobColumnTypeTest: JdbcExposedTestBase() {
      * CREATE TABLE IF NOT EXISTS T1 (
      *      id INT AUTO_INCREMENT PRIMARY KEY,
      *      `name` VARCHAR(50) NOT NULL,
-     *      lz4_fury BLOB NULL,
+     *      lz4_fory BLOB NULL,
      *      lz4_kryo BLOB NULL,
-     *      zstd_fury BLOB NULL,
+     *      zstd_fory BLOB NULL,
      *      zstd_kryo BLOB NULL
      * )
      * ```
@@ -50,9 +50,9 @@ class BinarySerializedBlobColumnTypeTest: JdbcExposedTestBase() {
     private object T1: IntIdTable() {
         val name = varchar("name", 50)
 
-        val lz4Fury = binarySerializedBlob<Embeddable>("lz4_fury", BinarySerializers.LZ4Fury).nullable()
+        val lz4Fory = binarySerializedBlob<Embeddable>("lz4_fory", BinarySerializers.LZ4Fory).nullable()
         val lz4Kryo = binarySerializedBlob<Embeddable>("lz4_kryo", BinarySerializers.LZ4Kryo).nullable()
-        val zstdFury = binarySerializedBlob<Embeddable2>("zstd_fury", BinarySerializers.ZstdFury).nullable()
+        val zstdFory = binarySerializedBlob<Embeddable2>("zstd_fory", BinarySerializers.ZstdFory).nullable()
         val zstdKryo = binarySerializedBlob<Embeddable2>("zstd_kryo", BinarySerializers.ZstdKryo).nullable()
     }
 
@@ -61,10 +61,10 @@ class BinarySerializedBlobColumnTypeTest: JdbcExposedTestBase() {
 
         var name by T1.name
 
-        var lz4Fury by T1.lz4Fury
+        var lz4Fory by T1.lz4Fory
         var lz4Kryo by T1.lz4Kryo
 
-        var zstdFury by T1.zstdFury
+        var zstdFory by T1.zstdFory
         var zstdKryo by T1.zstdKryo
 
         override fun equals(other: Any?): Boolean = idEquals(other)
@@ -96,9 +96,9 @@ class BinarySerializedBlobColumnTypeTest: JdbcExposedTestBase() {
             val id = T1.insertAndGetId {
                 it[T1.name] = "Alice"
 
-                it[T1.lz4Fury] = embedded
+                it[T1.lz4Fory] = embedded
                 it[T1.lz4Kryo] = embedded
-                it[T1.zstdFury] = embedded2
+                it[T1.zstdFory] = embedded2
                 it[T1.zstdKryo] = embedded2
             }
 
@@ -108,9 +108,9 @@ class BinarySerializedBlobColumnTypeTest: JdbcExposedTestBase() {
 
             row[T1.id] shouldBeEqualTo id
 
-            row[T1.lz4Fury] shouldBeEqualTo embedded
+            row[T1.lz4Fory] shouldBeEqualTo embedded
             row[T1.lz4Kryo] shouldBeEqualTo embedded
-            row[T1.zstdFury] shouldBeEqualTo embedded2
+            row[T1.zstdFory] shouldBeEqualTo embedded2
             row[T1.zstdKryo] shouldBeEqualTo embedded2
         }
     }
@@ -125,9 +125,9 @@ class BinarySerializedBlobColumnTypeTest: JdbcExposedTestBase() {
             val e1 = E1.new {
                 name = "Alice"
 
-                lz4Fury = embedded
+                lz4Fory = embedded
                 lz4Kryo = embedded
-                zstdFury = embedded2
+                zstdFory = embedded2
                 zstdKryo = embedded2
             }
 
@@ -137,9 +137,9 @@ class BinarySerializedBlobColumnTypeTest: JdbcExposedTestBase() {
 
             loaded shouldBeEqualTo e1
 
-            loaded.lz4Fury shouldBeEqualTo embedded
+            loaded.lz4Fory shouldBeEqualTo embedded
             loaded.lz4Kryo shouldBeEqualTo embedded
-            loaded.zstdFury shouldBeEqualTo embedded2
+            loaded.zstdFory shouldBeEqualTo embedded2
             loaded.zstdKryo shouldBeEqualTo embedded2
         }
     }

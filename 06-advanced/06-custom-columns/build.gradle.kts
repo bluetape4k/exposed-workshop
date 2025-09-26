@@ -26,7 +26,7 @@ dependencies {
 
     // Serialization
     implementation(Libs.kryo5)
-    implementation(Libs.fury_kotlin)
+    implementation(Libs.fory_kotlin)
 
     // Encryption
     implementation(Libs.bluetape4k_crypto)

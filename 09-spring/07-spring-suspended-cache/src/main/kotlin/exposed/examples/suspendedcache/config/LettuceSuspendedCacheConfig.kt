@@ -19,7 +19,7 @@ class LettuceSuspendedCacheConfig(
         return LettuceSuspendedCacheManager(
             redisClient = redisClient,
             ttlSeconds = 60L,
-            codec = LettuceBinaryCodecs.lz4Fury(),
+            codec = LettuceBinaryCodecs.lz4Fory(),
         )
     }
 }

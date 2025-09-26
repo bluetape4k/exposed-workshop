@@ -63,7 +63,7 @@ object Plugins {
 object Versions {
 
     // Java 21, Kotlin 2.0 이상에서 사용하세요
-    const val bluetape4k = "0.1.0-SNAPSHOT"    // Bluetape4k Github Package 로 배포됩니다.
+    const val bluetape4k = "0.1.3"    // Bluetape4k Github Package 로 배포됩니다.
 
     const val kotlin = "2.2.20"                 // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
     const val kotlinx_coroutines = "1.10.2"      // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
@@ -491,7 +491,7 @@ object Libs {
 
     const val kryo = "com.esotericsoftware:kryo:5.6.2" // https://mvnrepository.com/artifact/com.esotericsoftware/kryo
     const val kryo5 = "com.esotericsoftware:kryo:5.6.2" // https://mvnrepository.com/artifact/com.esotericsoftware/kryo
-    const val fury_kotlin = "org.apache.fury:fury-kotlin:0.10.3" // https://mvnrepository.com/artifact/org.apache.fury
+    const val fory_kotlin = "org.apache.fory:fory-kotlin:0.12.3" // https://mvnrepository.com/artifact/org.apache.fory/fory-kotlin
 
 
     // Spring Boot

@@ -8,7 +8,7 @@ import org.jetbrains.exposed.v1.core.ColumnWithTransform
 import org.jetbrains.exposed.v1.core.statements.api.ExposedBlob
 
 class BinarySerializedBlobColumnType<T: Any>(
-    serializer: BinarySerializer = BinarySerializers.Fury,
+    serializer: BinarySerializer = BinarySerializers.Fory,
 ): ColumnWithTransform<ExposedBlob, T>(BlobColumnType(), BinarySerializedBlobTransformer(serializer))
 
 class BinarySerializedBlobTransformer<T>(
