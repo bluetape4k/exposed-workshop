@@ -74,7 +74,10 @@ class Ex07_ThreadLocalManager: JdbcExposedTestBase() {
         withTables(testDB, RollbackTable) {
             assertFails {
                 // read-only 이므로 INSERT 작업은 실패합니다.
-                inTopLevelTransaction(db.transactionManager.defaultIsolationLevel, true) {
+                inTopLevelTransaction(
+                    transactionIsolation = db.transactionManager.defaultIsolationLevel,
+                    readOnly = true
+                ) {
                     maxAttempts = 1
                     RollbackTable.insert { it[value] = "random-something" }
                 }

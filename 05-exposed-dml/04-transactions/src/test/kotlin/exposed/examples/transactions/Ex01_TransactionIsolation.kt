@@ -54,7 +54,7 @@ class Ex01_TransactionIsolation: JdbcExposedTestBase() {
         withDb(testDB) {
             isolations.forEach { isolation ->
                 log.debug { "db: ${testDB.name}, isolation: $isolation" }
-                inTopLevelTransaction(isolation) {
+                inTopLevelTransaction(transactionIsolation = isolation) {
                     maxAttempts = 1
                     this.connection.transactionIsolation shouldBeEqualTo isolation
                 }

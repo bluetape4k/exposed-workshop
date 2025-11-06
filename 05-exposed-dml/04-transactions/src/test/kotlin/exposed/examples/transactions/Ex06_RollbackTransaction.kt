@@ -36,7 +36,7 @@ class Ex06_RollbackTransaction: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `rollback without save points`(testDB: TestDB) {
         withTables(testDB, RollbackTable) {
-            inTopLevelTransaction(db.transactionManager.defaultIsolationLevel) {
+            inTopLevelTransaction(transactionIsolation = db.transactionManager.defaultIsolationLevel) {
                 maxAttempts = 1
                 RollbackTable.insert { it[value] = "before-dummy" }
 
@@ -68,7 +68,7 @@ class Ex06_RollbackTransaction: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `rollback with save points`(testDB: TestDB) {
         withTables(testDB, RollbackTable, configure = { useNestedTransactions = true }) {
-            inTopLevelTransaction(db.transactionManager.defaultIsolationLevel) {
+            inTopLevelTransaction(transactionIsolation = db.transactionManager.defaultIsolationLevel) {
                 maxAttempts = 1
                 RollbackTable.insert { it[value] = "before-dummy" }
 

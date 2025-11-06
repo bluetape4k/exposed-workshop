@@ -70,7 +70,7 @@ fun ResultRow.toUserCredentialsDTO() = UserCredentialsDTO(
 
 fun newUserCredentialsDTO() = UserCredentialsDTO(
     id = TimebasedUuid.Reordered.nextIdAsString(),
-    username = faker.internet().username() + "." + Base58.randomString(4),
+    username = faker.credentials().username() + "." + Base58.randomString(4),
     email = faker.internet().emailAddress(),
     lastLoginAt = Instant.now(),
     createdAt = null,

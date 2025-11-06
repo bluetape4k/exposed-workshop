@@ -42,7 +42,7 @@ class UserCredentialsCacheRepositoryTest(
 
     private fun insertUserCredentials(): String {
         return UserCredentialsTable.insertAndGetId {
-            it[UserCredentialsTable.username] = faker.internet().username()
+            it[UserCredentialsTable.username] = faker.credentials().username()
             it[UserCredentialsTable.email] = faker.internet().emailAddress()
             it[UserCredentialsTable.lastLoginAt] = Instant.now()
         }.value

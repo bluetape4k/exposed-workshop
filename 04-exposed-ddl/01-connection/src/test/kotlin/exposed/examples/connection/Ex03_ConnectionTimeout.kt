@@ -41,7 +41,7 @@ class Ex03_ConnectionTimeout: JdbcExposedTestBase() {
         val db = Database.connect(datasource = datasource)
 
         try {
-            transaction(Connection.TRANSACTION_SERIALIZABLE, db = db) {
+            transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 3
                 exec("SELECT 1;")
                 // NO OP
@@ -69,7 +69,7 @@ class Ex03_ConnectionTimeout: JdbcExposedTestBase() {
 
         try {
             // transaction block should use default DatabaseConfig values when no property is set
-            transaction(Connection.TRANSACTION_SERIALIZABLE, db = db) {
+            transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 exec("SELECT 1;")
             }
             fail("Should have thrown ${GetConnectException::class.simpleName}")
@@ -82,7 +82,7 @@ class Ex03_ConnectionTimeout: JdbcExposedTestBase() {
 
         try {
             // property set in transaction block should override default DatabaseConfig
-            transaction(Connection.TRANSACTION_SERIALIZABLE, db = db) {
+            transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 5
                 exec("SELECT 1;")
             }

@@ -8,9 +8,7 @@ import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContainIgnoringCase
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.jdbc.Database
-import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.Test
 import java.sql.Connection
@@ -75,11 +73,6 @@ class Ex02_ConnectionException {
         }
     }
 
-    @AfterEach
-    fun afterEach() {
-        TransactionManager.resetCurrent(null)
-    }
-
     @Test
     fun `transaction repetition works even if rollback throws exception`() {
         `_transaction repetition works even if rollback throws exception`(::ExceptionOnRollbackConnection)
@@ -94,7 +87,7 @@ class Ex02_ConnectionException {
         val wrappingDataSource = WrappingDataSource(TestDB.H2, connectionDecorator)
         val db = Database.connect(datasource = wrappingDataSource)
         try {
-            transaction(Connection.TRANSACTION_SERIALIZABLE, db = db) {
+            transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 5
                 this.exec("BROKEN_SQL_THAT_CAUSES_EXCEPTION()")
             }
@@ -126,7 +119,7 @@ class Ex02_ConnectionException {
         val db = Database.connect(wrappingDataSource)
 
         try {
-            transaction(Connection.TRANSACTION_SERIALIZABLE, db = db) {
+            transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 5
                 this.exec("SELECT 1;")
             }
@@ -156,7 +149,7 @@ class Ex02_ConnectionException {
         val db = Database.connect(wrappingDataSource)
 
         try {
-            transaction(Connection.TRANSACTION_SERIALIZABLE, db = db) {
+            transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 5
                 this.exec("SELECT 1;")
             }

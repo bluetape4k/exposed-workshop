@@ -563,7 +563,7 @@ class Ex12_Via: JdbcExposedTestBase() {
              */
             val nodeWithParents = Node.all().with(Node::parents).toList()
             nodeWithParents.shouldNotBeEmpty()
-            
+
             checkParentsReferences(child1, listOf(root1, root2))
             checkParentsReferences(child2, listOf(root2))
             checkParentsReferences(root1, emptyList())
@@ -792,7 +792,7 @@ class Ex12_Via: JdbcExposedTestBase() {
             commit()
 
             // 캐시를 공유하지 않도록, 다른 트랜잭션에서 조회 작업을 수행합니다.
-            inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
+            inTopLevelTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 1
 
                 /**

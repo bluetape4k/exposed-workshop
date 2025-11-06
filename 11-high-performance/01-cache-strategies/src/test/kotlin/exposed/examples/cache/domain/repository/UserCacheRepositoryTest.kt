@@ -46,7 +46,7 @@ class UserCacheRepositoryTest(
 
     private fun insertUser(): Long {
         return UserTable.insertAndGetId {
-            it[username] = faker.internet().username()
+            it[username] = faker.credentials().username()
             it[firstName] = faker.name().firstName()
             it[lastName] = faker.name().lastName()
             it[address] = faker.address().fullAddress()

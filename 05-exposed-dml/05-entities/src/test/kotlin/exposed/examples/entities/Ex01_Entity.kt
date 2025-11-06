@@ -1358,13 +1358,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
     }
 
     private fun <T> newTransaction(statement: JdbcTransaction.() -> T): T =
-        inTopLevelTransaction(
-            TransactionManager.manager.defaultIsolationLevel,
-            readOnly = false,
-            db = null,
-            outerTransaction = null,
-            statement = statement
-        )
+        inTopLevelTransaction(db = null, statement = statement)
 
     /**
      * 트랜잭션마다 새로운 `EntityCache`를 생성합니다.
@@ -1663,7 +1657,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             commit()
 
-            inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
+            inTopLevelTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 /**
                  * `with` 를 이용하여 eager loading 을 수행한다.
                  *
@@ -1709,7 +1703,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             commit()
 
-            inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
+            inTopLevelTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 debug = true
 
                 /**
@@ -1751,7 +1745,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
             }
 
             // 로딩 후 SizedIterable 쿼리가 변경되면 캐시된 결과가 전파되지 않는지 테스트
-            inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
+            inTopLevelTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 debug = true
 
                 /**
@@ -1807,7 +1801,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
             }
             commit()
 
-            inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
+            inTopLevelTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 1
 
                 val school2 = School
@@ -1854,7 +1848,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             commit()
 
-            inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
+            inTopLevelTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 1
 
                 val cache = TransactionManager.current().entityCache
@@ -1907,7 +1901,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             commit()
 
-            inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
+            inTopLevelTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 1
 
                 val cache = TransactionManager.current().entityCache
@@ -1960,7 +1954,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             commit()
 
-            inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
+            inTopLevelTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 1
                 val cache = TransactionManager.current().entityCache
 
@@ -2021,7 +2015,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             commit()
 
-            inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
+            inTopLevelTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 1
                 val cache = TransactionManager.current().entityCache
 
@@ -2174,7 +2168,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             commit()
 
-            inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
+            inTopLevelTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 1
                 val cache = TransactionManager.current().entityCache
 
@@ -2212,7 +2206,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             commit()
 
-            inTopLevelTransaction(Connection.TRANSACTION_SERIALIZABLE) {
+            inTopLevelTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                 maxAttempts = 1
                 val cache = TransactionManager.current().entityCache
 

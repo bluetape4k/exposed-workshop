@@ -186,7 +186,7 @@ class Ex05_NestedTransactions_Coroutines: JdbcExposedTestBase() {
             cityCounts() shouldBeEqualTo 1
 
             try {
-                inTopLevelTransaction(db.transactionManager.defaultIsolationLevel, db = db) {
+                inTopLevelTransaction(db = db, transactionIsolation = db.transactionManager.defaultIsolationLevel) {
                     val innerTxId = this.id
                     innerTxId shouldNotBeEqualTo outerTxId
 
@@ -253,7 +253,7 @@ class Ex05_NestedTransactions_Coroutines: JdbcExposedTestBase() {
             cityCounts() shouldBeEqualTo 1
 
             try {
-                inTopLevelTransaction(db.transactionManager.defaultIsolationLevel, db = db) {
+                inTopLevelTransaction(db = db, transactionIsolation = db.transactionManager.defaultIsolationLevel) {
                     val innerTxId = this.id
                     innerTxId shouldNotBeEqualTo outerTxId
 

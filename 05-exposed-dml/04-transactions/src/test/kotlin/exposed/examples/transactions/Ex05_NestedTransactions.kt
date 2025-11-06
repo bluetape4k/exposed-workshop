@@ -92,7 +92,7 @@ class Ex05_NestedTransactions: JdbcExposedTestBase() {
             TransactionManager.currentOrNull().shouldNotBeNull()
 
             try {
-                inTopLevelTransaction(this.transactionIsolation) {
+                inTopLevelTransaction(transactionIsolation = this.transactionIsolation) {
                     maxAttempts = 1
                     throw IllegalStateException("Should be rethrow")
                 }
@@ -121,7 +121,7 @@ class Ex05_NestedTransactions: JdbcExposedTestBase() {
             cityCounts() shouldBeEqualTo 1
 
             try {
-                inTopLevelTransaction(db.transactionManager.defaultIsolationLevel, db = db) {
+                inTopLevelTransaction(db = db, transactionIsolation = db.transactionManager.defaultIsolationLevel) {
                     val innerTxId = this.id
                     innerTxId shouldNotBeEqualTo outerTxId
 
@@ -179,7 +179,7 @@ class Ex05_NestedTransactions: JdbcExposedTestBase() {
             cities.selectAll().count().toInt() shouldBeEqualTo 1
 
             try {
-                inTopLevelTransaction(db.transactionManager.defaultIsolationLevel, db = db) {
+                inTopLevelTransaction(db = db, transactionIsolation = db.transactionManager.defaultIsolationLevel) {
                     val innerTxId = this.id
                     innerTxId shouldNotBeEqualTo outerTxId
 

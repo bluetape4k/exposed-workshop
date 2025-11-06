@@ -85,7 +85,7 @@ fun ResultRow.toUserEventDTO() = UserEventDTO(
 )
 
 fun newUserEventDTO() = UserEventDTO(
-    username = faker.internet().username(),
+    username = faker.credentials().username(),
     eventSource = faker.app().name(),
     eventType = UserEventType.entries.random(),
     eventDetails = faker.lorem().sentence(),

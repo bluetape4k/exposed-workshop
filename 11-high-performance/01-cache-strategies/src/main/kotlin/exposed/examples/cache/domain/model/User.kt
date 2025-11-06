@@ -114,7 +114,7 @@ fun UserEntity.toUserDTO() = UserDTO(
 
 fun newUserDTO(newId: Long = 0L) = UserDTO(
     id = newId,
-    username = faker.internet().username() + "." + Base58.randomString(4),
+    username = faker.credentials().username() + "." + Base58.randomString(4),
     firstName = faker.name().firstName(),
     lastName = faker.name().lastName(),
     address = faker.address().fullAddress(),
@@ -127,7 +127,7 @@ fun newUserDTO(newId: Long = 0L) = UserDTO(
 }
 
 fun newUserEntity(faker: Faker): UserEntity = UserEntity.new {
-    username = faker.internet().username() + "." + Base58.randomString(4)
+    username = faker.credentials().username() + "." + Base58.randomString(4)
     firstName = faker.name().firstName()
     lastName = faker.name().lastName()
     address = faker.address().fullAddress()

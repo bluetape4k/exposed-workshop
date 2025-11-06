@@ -77,7 +77,7 @@ class SpringTransactionManagerTest {
         tm2.executeAssert(false) {
             tm1.executeAssert(false)
 
-            val database = TransactionManager.currentOrNull()?.db
+            val database = TransactionManager.current().db
             TransactionManager.managerFor(database) shouldBeEqualTo TransactionManager.manager
         }
     }
@@ -132,7 +132,7 @@ class SpringTransactionManagerTest {
         tm1.executeAssert {
             tm2.executeAssert()
 
-            val database = TransactionManager.currentOrNull()?.db
+            val database = TransactionManager.current().db
             TransactionManager.managerFor(database) shouldBeEqualTo TransactionManager.manager
         }
 
@@ -157,7 +157,7 @@ class SpringTransactionManagerTest {
                 tm2.executeAssert {
                     throw ex
                 }
-                val database = TransactionManager.currentOrNull()?.db
+                val database = TransactionManager.current().db
                 TransactionManager.managerFor(database) shouldBeEqualTo TransactionManager.manager
             }
         } catch (e: RuntimeException) {
@@ -433,9 +433,10 @@ class SpringTransactionManagerTest {
         }
 
         txTemplate.executeWithoutResult { txStatus ->
-            val db = TransactionManager.currentOrNull()?.db
-            log.debug { "db=$db" }
-            TransactionManager.managerFor(db) shouldBeEqualTo TransactionManager.manager
+            TransactionManager.currentOrNull()?.db?.let { db ->
+                log.debug { "db = $db" }
+                TransactionManager.current().transactionManager shouldBeEqualTo TransactionManager.managerFor(db)
+            }
 
             if (initializeConnection) {
                 TransactionManager.current().connection
