@@ -22,7 +22,7 @@ object Plugins {
         const val docker_compose = "0.17.19"  // https://plugins.gradle.org/plugin/com.avast.gradle.docker-compose
 
         // 참고: https://docs.gatling.io/reference/integrations/build-tools/gradle-plugin/
-        const val gatling = "3.14.7"  // https://plugins.gradle.org/plugin/io.gatling.gradle
+        const val gatling = "3.14.9"  // https://plugins.gradle.org/plugin/io.gatling.gradle
 
         const val graalvm_native = "0.11.2" // https://mvnrepository.com/artifact/org.graalvm.buildtools.native/org.graalvm.buildtools.native.gradle.plugin
     }
@@ -83,7 +83,7 @@ object Versions {
     const val chaos_monkey = "3.2.0"        // https://mvnrepository.com/artifact/de.codecentric/chaos-monkey-spring-boot
     const val blockhound = "1.0.11.RELEASE"  // https://mvnrepository.com/artifact/io.projectreactor.tools/blockhound
 
-    const val vertx = "4.5.21"               // https://mvnrepository.com/artifact/io.vertx/vertx-core
+    const val vertx = "4.5.22"               // https://mvnrepository.com/artifact/io.vertx/vertx-core
 
     const val swagger = "2.2.36"              // https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations
     const val springdoc_openapi = "2.8.13"     // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
@@ -191,7 +191,7 @@ object Versions {
     const val archunit = "1.4.0"           // https://mvnrepository.com/artifact/com.tngtech.archunit/archunit-junit5
     const val rest_assured = "5.5.6"        // https://mvnrepository.com/artifact/io.rest-assured/rest-assured
 
-    const val datafaker = "2.5.2"          // https://mvnrepository.com/artifact/net.datafaker/datafaker
+    const val datafaker = "2.5.3"          // https://mvnrepository.com/artifact/net.datafaker/datafaker
     const val snakeyaml = "2.5"            // https://mvnrepository.com/artifact/org.yaml/snakeyaml
     const val random_beans = "3.9.0"
 
@@ -202,7 +202,7 @@ object Versions {
     const val scrimage = "4.3.5"  // https://mvnrepository.com/artifact/com.sksamuel.scrimage/scrimage-core
 
     // Gatling
-    const val gatling = "3.14.7" // https://mvnrepository.com/artifact/io.gatling/gatling-core
+    const val gatling = "3.14.9" // https://mvnrepository.com/artifact/io.gatling/gatling-core
 }
 
 object Libs {
