@@ -53,7 +53,7 @@ class Ex03_Update: JdbcExposedTestBase() {
             alexName shouldBeEqualTo "Alex"
 
             val newName = "Alexey"
-            users.update({ users.id eq alexId }) {
+            users.update(where = { users.id eq alexId }) {
                 it[users.name] = newName
             }
 
@@ -95,7 +95,7 @@ class Ex03_Update: JdbcExposedTestBase() {
                     .map { it[users.name] }
                 aNames.size shouldBeEqualTo 2
 
-                users.update({ users.id like "a%" }, limit = 1) {
+                users.update(where = { users.id like "a%" }, limit = 1) {
                     it[users.id] = "NewName"
                 }
 
@@ -158,18 +158,24 @@ class Ex03_Update: JdbcExposedTestBase() {
              *    AND  (users.id = 'smth')
              * ```
              */
-            val joinWithConstraint = users.innerJoin(userData, { users.id }, { userData.userId }) {
+            val joinWithConstraint = users.innerJoin(
+                otherTable = userData,
+                onColumn = { users.id },
+                otherColumn = { userData.userId }
+            ) {
                 users.id eq "smth"
             }
+
             joinWithConstraint.update {
                 it[userData.comment] = users.name
                 it[userData.value] = 0
             }
 
-            joinWithConstraint.selectAll().forEach {
-                it[userData.comment] shouldBeEqualTo it[users.name]
-                it[userData.value] shouldBeEqualTo 0
-            }
+            joinWithConstraint.selectAll()
+                .forEach {
+                    it[userData.comment] shouldBeEqualTo it[users.name]
+                    it[userData.value] shouldBeEqualTo 0
+                }
         }
     }
 
@@ -241,16 +247,20 @@ class Ex03_Update: JdbcExposedTestBase() {
         Assumptions.assumeTrue { testDB !in TestDB.ALL_H2 }
 
         withCitiesAndUsers(testDB) { cities, users, userData ->
-            val join = cities.innerJoin(users).innerJoin(userData)
+            val join = cities
+                .innerJoin(users)
+                .innerJoin(userData)
+
             join.update {
                 it[userData.comment] = users.name
                 it[userData.value] = 123
             }
 
-            join.selectAll().forEach {
-                it[userData.comment] shouldBeEqualTo it[users.name]
-                it[userData.value] shouldBeEqualTo 123
-            }
+            join.selectAll()
+                .forEach {
+                    it[userData.comment] shouldBeEqualTo it[users.name]
+                    it[userData.value] shouldBeEqualTo 123
+                }
         }
     }
 
@@ -358,8 +368,16 @@ class Ex03_Update: JdbcExposedTestBase() {
              *  WHERE userdata.user_id = u2.id
              * ```
              */
-            val userAlias = users.selectAll().where { users.cityId eq 1 }.alias("u2")
-            val joinWithSubQuery = userData.innerJoin(userAlias, { userData.userId }, { userAlias[users.id] })
+            val userAlias = users.selectAll()
+                .where { users.cityId eq 1 }
+                .alias("u2")
+
+            val joinWithSubQuery = userData
+                .innerJoin(
+                    otherTable = userAlias,
+                    onColumn = { userData.userId },
+                    otherColumn = { userAlias[users.id] }
+                )
             joinWithSubQuery.update {
                 it[userData.value] = 123
             }
@@ -391,9 +409,10 @@ class Ex03_Update: JdbcExposedTestBase() {
                 it[userData.value] = 42
             }
 
-            joinWithSubQuery.selectAll().forEach {
-                it[userData.value] shouldBeEqualTo 42
-            }
+            joinWithSubQuery.selectAll()
+                .forEach {
+                    it[userData.value] shouldBeEqualTo 42
+                }
 
             /**
              * multiple join queries using [joinQuery]
@@ -449,9 +468,10 @@ class Ex03_Update: JdbcExposedTestBase() {
                 it[userData.value] = 99
             }
 
-            doubleJoinQuery.selectAll().forEach {
-                it[userData.value] shouldBeEqualTo 99
-            }
+            doubleJoinQuery.selectAll()
+                .forEach {
+                    it[userData.value] shouldBeEqualTo 99
+                }
         }
     }
 }

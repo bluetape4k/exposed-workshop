@@ -1107,7 +1107,10 @@ class Ex04_Upsert: JdbcExposedTestBase() {
              *       WHERE (tester."name" LIKE 'A%') AND (tester."name" LIKE '%a') AND (tester."name" <> 'Anna')
              * ```
              */
-            tester.upsert(tester.name, where = { nameStartsWithA and nameEndsWithA and nameIsNotAnna }) {
+            tester.upsert(
+                keys = arrayOf(tester.name),
+                where = { nameStartsWithA and nameEndsWithA and nameIsNotAnna }
+            ) {
                 it[name] = "Anya"
                 it[age] = updatedAge
             }

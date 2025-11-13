@@ -173,7 +173,6 @@ class Ex01_Select: JdbcExposedTestBase() {
         }
     }
 
-
     /**
      * [SizedIterable] 을 이용한 쿼리 실행
      */
