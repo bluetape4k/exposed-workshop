@@ -2,10 +2,15 @@ package exposed.examples.cache.coroutines.domain.repository
 
 import exposed.examples.cache.coroutines.AbstractCacheStrategyTest
 import exposed.examples.cache.coroutines.domain.model.UserTable
+import io.bluetape4k.coroutines.flow.extensions.flowFromSuspend
 import io.bluetape4k.exposed.core.statements.api.toExposedBlob
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
@@ -20,6 +25,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.testcontainers.utility.Base58
 import java.time.LocalDate
+import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.system.measureTimeMillis
 
 @Suppress("DEPRECATION")
@@ -29,17 +35,18 @@ class UserCacheRepositoryTest(
 
     companion object: KLoggingChannel()
 
-    private val idsInDB = mutableListOf<Long>()
+    private val idsInDB = CopyOnWriteArrayList<Long>()
+    private val idSize = 100
 
     @BeforeEach
     fun beforeEach() {
-        runBlocking {
+        runBlocking(Dispatchers.IO) {
             repository.invalidateAll()
             idsInDB.clear()
 
             newSuspendedTransaction {
                 UserTable.deleteAll()
-                repeat(10) {
+                repeat(idSize) {
                     idsInDB.add(insertUser())
                 }
             }
@@ -48,7 +55,7 @@ class UserCacheRepositoryTest(
 
     private fun insertUser(): Long {
         return UserTable.insertAndGetId {
-            it[username] = faker.internet().username()
+            it[username] = faker.credentials().username()
             it[firstName] = faker.name().firstName()
             it[lastName] = faker.name().lastName()
             it[address] = faker.address().fullAddress()
@@ -68,15 +75,19 @@ class UserCacheRepositoryTest(
         }
 
         val timeForDB = measureTimeMillis {
-            idsInDB.forEach { id ->
-                repository.get(id)!!
-            }
+            idsInDB.asFlow()
+                .flatMapMerge { id ->
+                    flowFromSuspend { repository.get(id)!! }
+                }
+                .collect()
         }
 
         val timeForCache = measureTimeMillis {
-            idsInDB.forEach { id ->
-                repository.get(id)!!
-            }
+            idsInDB.asFlow()
+                .flatMapMerge { id ->
+                    flowFromSuspend { repository.get(id)!! }
+                }
+                .collect()
         }
 
         log.debug { "Load Time. time for DB=$timeForDB, time for Cache=$timeForCache" }

@@ -73,7 +73,7 @@ class Ex02_ManyToMany_Member: JdbcExposedTestBase() {
 
             // rollback()을 호출하면 transaction은 롤백된다.
             User.new {
-                username = faker.internet().username()
+                username = faker.credentials().username()
                 firstName = faker.name().firstName()
                 lastName = faker.name().lastName()
                 status = UserStatus.ACTIVE
@@ -81,7 +81,7 @@ class Ex02_ManyToMany_Member: JdbcExposedTestBase() {
 
             newSuspendedTransaction {
                 User.new {
-                    username = faker.internet().username()
+                    username = faker.credentials().username()
                     firstName = faker.name().firstName()
                     lastName = faker.name().lastName()
                     status = UserStatus.INACTIVE
@@ -144,21 +144,21 @@ class Ex02_ManyToMany_Member: JdbcExposedTestBase() {
 
     private fun JdbcTransaction.createSample() {
         val user1 = User.new {
-            username = faker.internet().username()
+            username = faker.credentials().username()
             firstName = faker.name().firstName()
             lastName = faker.name().lastName()
             status = UserStatus.ACTIVE
         }
 
         val user2 = User.new {
-            username = faker.internet().username()
+            username = faker.credentials().username()
             firstName = faker.name().firstName()
             lastName = faker.name().lastName()
             status = UserStatus.ACTIVE
         }
 
         val user3 = User.new {
-            username = faker.internet().username()
+            username = faker.credentials().username()
             firstName = faker.name().firstName()
             lastName = faker.name().lastName()
             status = UserStatus.ACTIVE

@@ -19,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import java.time.Instant
+import java.util.concurrent.CopyOnWriteArrayList
 
 @Suppress("DEPRECATION")
 class UserCredentialsCacheRepositoryTest(
@@ -27,7 +28,8 @@ class UserCredentialsCacheRepositoryTest(
 
     companion object: KLoggingChannel()
 
-    private val idsInDB = mutableListOf<String>()
+    private val idsInDB = CopyOnWriteArrayList<String>()
+    private val idSize = 100
 
     @BeforeEach
     fun setup() {
@@ -38,7 +40,7 @@ class UserCredentialsCacheRepositoryTest(
             newSuspendedTransaction {
                 UserCredentialsTable.deleteAll()
 
-                repeat(10) {
+                repeat(idSize) {
                     idsInDB.add(insertUserCredentials())
                 }
             }
@@ -47,7 +49,7 @@ class UserCredentialsCacheRepositoryTest(
 
     private fun insertUserCredentials(): String {
         return UserCredentialsTable.insertAndGetId {
-            it[UserCredentialsTable.username] = faker.internet().username()
+            it[UserCredentialsTable.username] = faker.credentials().username()
             it[UserCredentialsTable.email] = faker.internet().emailAddress()
             it[UserCredentialsTable.lastLoginAt] = Instant.now()
         }.value
