@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.returnResult
 import java.time.LocalDate
+import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.random.Random
 
@@ -43,7 +44,8 @@ class UserControllerTest(
         private const val REPEAT_SIZE = 5
     }
 
-    private val idsInDB = mutableListOf<Long>()
+    private val idsInDB = CopyOnWriteArrayList<Long>()
+    private val idSize = 100
     private val lastUserId = AtomicLong(0L)
 
     @BeforeEach
@@ -54,7 +56,7 @@ class UserControllerTest(
 
             newSuspendedTransaction {
                 UserTable.deleteAll()
-                repeat(10) {
+                repeat(idSize) {
                     idsInDB.add(insertUser())
                 }
             }

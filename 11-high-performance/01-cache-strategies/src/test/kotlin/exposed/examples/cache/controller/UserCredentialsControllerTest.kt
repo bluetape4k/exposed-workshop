@@ -35,6 +35,7 @@ class UserCredentialsControllerTest(
     }
 
     private val idsInDB = mutableListOf<String>()
+    private val idSize = 100
 
     @BeforeEach
     fun beforeEach() {
@@ -44,7 +45,7 @@ class UserCredentialsControllerTest(
         transaction {
             UserCredentialsTable.deleteAll()
 
-            repeat(10) {
+            repeat(idSize) {
                 idsInDB.add(insertUserCredentials())
             }
         }
