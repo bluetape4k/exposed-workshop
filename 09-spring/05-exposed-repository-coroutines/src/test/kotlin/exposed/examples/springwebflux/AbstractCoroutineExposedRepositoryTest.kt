@@ -16,5 +16,4 @@ abstract class AbstractCoroutineExposedRepositoryTest {
         @JvmStatic
         val faker = Fakers.faker
     }
-
 }
