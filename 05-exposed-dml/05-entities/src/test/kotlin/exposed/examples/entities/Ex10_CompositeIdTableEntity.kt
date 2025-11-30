@@ -155,7 +155,6 @@ class Ex10_CompositeIdTableEntity: JdbcExposedTestBase() {
             Publishers.insert {
                 it[Publishers.name] = "Publisher A"
             }
-            entityCache.clear()
 
             val result: ResultRow = Publishers.selectAll().single()
             result[Publishers.name] shouldBeEqualTo "Publisher A"
@@ -293,8 +292,6 @@ class Ex10_CompositeIdTableEntity: JdbcExposedTestBase() {
                 it[Publishers.isbn] = UUID.randomUUID()
                 it[Publishers.name] = "Publisher A"
             }
-            entityCache.clear()
-
             id1.value[Publishers.pubId].value shouldBeEqualTo 725
 
             val id2 = Publishers.insertAndGetId {
@@ -368,7 +365,6 @@ class Ex10_CompositeIdTableEntity: JdbcExposedTestBase() {
                 it[Publishers.isbn] = UUID.randomUUID()
                 it[Publishers.name] = "Publisher A"
             }
-            entityCache.clear()
 
             Publishers.selectAll().single()[Publishers.pubId].value shouldBeEqualTo 725
 
@@ -407,7 +403,6 @@ class Ex10_CompositeIdTableEntity: JdbcExposedTestBase() {
                 it[Publishers.isbn] = UUID.randomUUID()
                 it[Publishers.name] = "Publisher A"
             }
-            entityCache.clear()
 
             /**
              * CompositeID를 구성하는 `pubId` 와 `isbn` 컬럼의 값으로 엔티티를 조회한다.
@@ -534,8 +529,6 @@ class Ex10_CompositeIdTableEntity: JdbcExposedTestBase() {
                 it[id] = publisherId
                 it[Publishers.name] = "Publisher A"
             }
-
-            entityCache.clear()
 
             /**
              * Publishers.id 에 해당하는 CompositeID의 parameters 에 publisherEntityId 를 지정한다.
@@ -730,8 +723,6 @@ class Ex10_CompositeIdTableEntity: JdbcExposedTestBase() {
                     it[id] = townAValue
                     it[Towns.population] = 4
                 }
-
-            entityCache.clear()
 
             /**
              * Towns.id 에 해당하는 CompositeID의 parameters 에 townAId 를 지정한다.

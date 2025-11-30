@@ -174,8 +174,8 @@ class Ex06_NonAutoIncEntities: JdbcExposedTestBase() {
             }
 
             /**
-             * Soft delete the entity
-             *
+             *  Soft delete the entity
+             * 
              * ```sql
              * UPDATE requests
              *    SET deleted=TRUE
