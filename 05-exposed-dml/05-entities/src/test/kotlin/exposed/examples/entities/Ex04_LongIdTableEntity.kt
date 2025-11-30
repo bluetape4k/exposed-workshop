@@ -267,6 +267,7 @@ class Ex04_LongIdTableEntity: JdbcExposedTestBase() {
              * ```
              */
             val city2 = City.all().with(City::towns).single()
+            city2.shouldNotBeNull()
         }
     }
 }
