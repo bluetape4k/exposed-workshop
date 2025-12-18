@@ -100,7 +100,7 @@ class Member: AbstractValueObject() {
     }
 
     override fun hashCode(): Int {
-        return id?.hashCode() ?: name.hashCode()
+        return if (id != 0L) id.hashCode() else name.hashCode()
     }
 
     override fun buildStringHelper(): ToStringBuilder {

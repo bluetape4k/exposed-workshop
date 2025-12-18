@@ -56,7 +56,7 @@ class Ex02_EntityHook: JdbcExposedTestBase() {
         return transaction {
             val result = statement()
             flushCache()
-            Triple(result, registeredChanges().drop(alreadyChanged), id)
+            Triple(result, registeredChanges().drop(alreadyChanged), transactionId)
         }
     }
 

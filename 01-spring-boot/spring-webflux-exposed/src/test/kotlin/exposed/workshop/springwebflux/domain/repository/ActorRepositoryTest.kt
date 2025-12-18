@@ -104,7 +104,7 @@ class ActorRepositoryTest(
             savedActor.shouldNotBeNull()
             savedActor.id.shouldNotBeNull()
 
-            val deletedCount = actorRepository.deleteById(savedActor.id!!)
+            val deletedCount = actorRepository.deleteById(savedActor.id)
             deletedCount shouldBeEqualTo 1
         }
     }
