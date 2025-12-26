@@ -73,7 +73,7 @@ class Ex01_TransactionIsolation: JdbcExposedTestBase() {
         val db = Database.connect(
             HikariDataSource(setupHikariConfig(testDB, "TRANSACTION_REPEATABLE_READ"))
         )
-        val manager: TransactionManager = TransactionManager.managerFor(db)!!
+        val manager: TransactionManager = TransactionManager.managerFor(db)
 
         transaction(db) {
             // transaction manager should use database default since no level is provided other than hikari
@@ -124,7 +124,7 @@ class Ex01_TransactionIsolation: JdbcExposedTestBase() {
             databaseConfig = DatabaseConfig { defaultIsolationLevel = Connection.TRANSACTION_READ_COMMITTED }
         )
 
-        val manager = TransactionManager.managerFor(db)!!
+        val manager = TransactionManager.managerFor(db)
 
         transaction(db) {
             // transaction manager should default to use DatabaseConfig level
@@ -175,7 +175,7 @@ class Ex01_TransactionIsolation: JdbcExposedTestBase() {
             databaseConfig = DatabaseConfig { defaultIsolationLevel = Connection.TRANSACTION_READ_COMMITTED }
         )
 
-        val manager = TransactionManager.managerFor(db)!!
+        val manager = TransactionManager.managerFor(db)
 
         newSuspendedTransaction(db = db) {
             // transaction manager should default to use DatabaseConfig level
