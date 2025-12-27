@@ -63,7 +63,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `groupBy example 01`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, users, _ ->
-            val cAlias: ExpressionWithColumnTypeAlias<Long> = users.id.count().alias("c")
+            val cAlias = users.id.count().alias("c")
 
             val rows: List<ResultRow> = cities.innerJoin(users)
                 .select(
