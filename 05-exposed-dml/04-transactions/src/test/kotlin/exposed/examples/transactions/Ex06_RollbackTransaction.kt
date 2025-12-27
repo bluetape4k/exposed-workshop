@@ -110,14 +110,14 @@ class Ex06_RollbackTransaction: JdbcExposedTestBase() {
         // database exception triggers rollback from inner to outer tx
         transaction {
             val fakeSQLString = "BROKEN_SQL_THAT_CAUSES_EXCEPTION"
-            val outerTxId = this.id
+            val outerTxId = this.transactionId
 
             RollbackTable.insert { it[value] = "City A" }
             allCount() shouldBeEqualTo 1
 
             try {
                 transaction {
-                    val innerTxId = this.id
+                    val innerTxId = this.transactionId
                     innerTxId shouldBeEqualTo outerTxId
 
                     RollbackTable.insert { it[value] = "City B" }
@@ -135,14 +135,14 @@ class Ex06_RollbackTransaction: JdbcExposedTestBase() {
         // db 예외가 아닌 경우 내부 Tx 에서 rollback이 발생하지 않으며, 외부 Tx에서 rollback이 발생하지 않도록 처리해야 함
         // 만약 이런 예외를 처리하지 않으면, 외부 Tx에서 rollback이 발생하게 되어 데이터가 삭제된다.
         transaction {
-            val outerTxId = this.id
+            val outerTxId = this.transactionId
 
             RollbackTable.insert { it[value] = "City A" }
             allCount() shouldBeEqualTo 1
 
             try {
                 transaction(db) {
-                    val innerTxId = this.id
+                    val innerTxId = this.transactionId
                     innerTxId shouldBeEqualTo outerTxId
 
                     RollbackTable.insert { it[value] = "City B" }
