@@ -57,3 +57,4 @@ atlassian-ide-plugin.xml
 
 # JavaMoney's default ResourceCache (filesystem)
 **/money/.resourceCache/
+/.profileconfig.json
