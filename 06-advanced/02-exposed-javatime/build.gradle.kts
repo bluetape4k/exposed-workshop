@@ -1,10 +1,13 @@
+plugins {
+    kotlin("plugin.serialization")
+}
+
 configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
 
 dependencies {
     implementation(platform(Libs.exposed_bom))
-
 
     testImplementation(project(":exposed-shared-tests"))
 
@@ -17,6 +20,10 @@ dependencies {
 
     // java time 지원 라이브러리
     implementation(Libs.exposed_java_time)
+
+    // Kotlin Serialization Json
+    implementation(platform(Libs.kotlinx_serialization_bom))
+    implementation(Libs.kotlinx_serialization_json)
 
     implementation(Libs.h2_v2)
     implementation(Libs.mysql_connector_j)
