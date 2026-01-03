@@ -7,6 +7,7 @@ import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContain
@@ -83,7 +84,9 @@ class Ex30_Explain: JdbcExposedTestBase() {
             explain { Countries.insert { it[code] = originalCode } }.toList().apply {
                 log.debug { "EXPLAIN Insert: $this" }
             }
-            Countries.selectAll().empty().shouldBeTrue()
+            Countries.selectAll().shouldBeEmpty()
+
+            // INSERT 1 row
             Countries.insert { it[code] = originalCode }
             Countries.selectAll().count() shouldBeEqualTo 1L
 
@@ -105,7 +108,7 @@ class Ex30_Explain: JdbcExposedTestBase() {
             Countries.selectAll().count() shouldBeEqualTo 1L
 
             Countries.deleteAll() shouldBeEqualTo 1
-            Countries.selectAll().empty().shouldBeTrue()
+            Countries.selectAll().shouldBeEmpty()
         }
     }
 

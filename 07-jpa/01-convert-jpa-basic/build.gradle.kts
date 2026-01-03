@@ -9,7 +9,6 @@ configurations {
 dependencies {
     implementation(platform(Libs.exposed_bom))
 
-
     testImplementation(project(":exposed-shared-tests"))
 
     implementation(Libs.bluetape4k_exposed)

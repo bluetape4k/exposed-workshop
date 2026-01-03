@@ -17,17 +17,16 @@ springBoot {
     }
 }
 
-@Suppress("UnstableApiUsage")
 configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
 
 dependencies {
 
-
     testImplementation(project(":exposed-shared-tests"))
 
     // bluetape4k
+    implementation(Libs.bluetape4k_jackson)
     implementation(Libs.bluetape4k_jdbc)
     testImplementation(Libs.bluetape4k_spring_tests)
 
@@ -61,10 +60,10 @@ dependencies {
     annotationProcessor(Libs.springBoot("configuration-processor"))
     runtimeOnly(Libs.springBoot("devtools"))
 
-    implementation(Libs.springBootStarter("webflux"))
-    implementation(Libs.springBootStarter("aop"))
     implementation(Libs.springBootStarter("actuator"))
+    implementation(Libs.springBootStarter("aop"))
     implementation(Libs.springBootStarter("validation"))
+    implementation(Libs.springBootStarter("webflux"))
 
     testImplementation(Libs.bluetape4k_spring_tests)
     testImplementation(Libs.springBootStarter("test")) {

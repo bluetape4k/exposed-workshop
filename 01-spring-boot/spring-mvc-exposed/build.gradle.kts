@@ -16,7 +16,6 @@ springBoot {
     }
 }
 
-@Suppress("UnstableApiUsage")
 configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
@@ -25,10 +24,11 @@ dependencies {
     testImplementation(project(":exposed-shared-tests"))
 
     // bluetape4k
+    implementation(Libs.bluetape4k_exposed)
+    implementation(Libs.bluetape4k_jackson)
     implementation(Libs.bluetape4k_io)
 
     // Exposed
-    implementation(Libs.bluetape4k_exposed)
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
@@ -58,10 +58,10 @@ dependencies {
     annotationProcessor(Libs.springBoot("configuration-processor"))
     runtimeOnly(Libs.springBoot("devtools"))
 
-    implementation(Libs.springBootStarter("web"))
-    implementation(Libs.springBootStarter("aop"))
     implementation(Libs.springBootStarter("actuator"))
+    implementation(Libs.springBootStarter("aop"))
     implementation(Libs.springBootStarter("validation"))
+    implementation(Libs.springBootStarter("web"))
 
     testImplementation(Libs.bluetape4k_spring_tests)
     testImplementation(Libs.springBootStarter("test")) {

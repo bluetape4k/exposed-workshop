@@ -13,6 +13,7 @@ configurations {
 
 dependencies {
     implementation(Libs.bluetape4k_io)
+    implementation(Libs.bluetape4k_jackson)
     testImplementation(Libs.bluetape4k_junit5)
 
     // PostgreSql Server

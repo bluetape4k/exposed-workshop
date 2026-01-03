@@ -16,7 +16,6 @@ springBoot {
     }
 }
 
-@Suppress("UnstableApiUsage")
 configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
@@ -27,6 +26,7 @@ dependencies {
     testImplementation(project(":exposed-shared-tests"))
 
     // bluetape4k
+    implementation(Libs.bluetape4k_io)
     implementation(Libs.bluetape4k_redis)
     implementation(Libs.bluetape4k_grpc)
     implementation(Libs.bluetape4k_testcontainers)
@@ -48,9 +48,9 @@ dependencies {
     implementation(Libs.h2_v2)
 
     // Spring Boot
-    implementation(Libs.springBootStarter("webflux"))
     implementation(Libs.springBootStarter("cache"))
     implementation(Libs.springBootStarter("data-redis"))
+    implementation(Libs.springBootStarter("webflux"))
     testImplementation(Libs.springBootStarter("test")) {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
@@ -63,8 +63,12 @@ dependencies {
 
     // Codecs
     implementation(Libs.fory_kotlin)
+    implementation(Libs.kryo5)
+
     // Compressor
     implementation(Libs.lz4_java)
+    implementation(Libs.snappy_java)
+    implementation(Libs.zstd_jni)
 
     // Coroutines
     implementation(Libs.bluetape4k_coroutines)

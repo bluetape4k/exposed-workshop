@@ -10,8 +10,14 @@ dependencies {
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
 
-    implementation(Libs.bluetape4k_exposed_jackson3)
+    implementation(Libs.bluetape4k_exposed)
     testImplementation(Libs.bluetape4k_exposed_tests)
+
+    // Jackson 3
+    implementation(Libs.bluetape4k_exposed_jackson3)
+    implementation(Libs.jackson3_module_kotlin)
+    implementation(Libs.jackson3_module_blackbird)
+
     testImplementation(Libs.bluetape4k_junit5)
 
     // Coroutines

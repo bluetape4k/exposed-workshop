@@ -1,7 +1,3 @@
-plugins {
-    kotlin("plugin.serialization")
-}
-
 configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
@@ -22,14 +18,10 @@ dependencies {
     // java time 지원 라이브러리
     implementation(Libs.exposed_java_time)
 
-    // Kotlin Serialization Json
-    implementation(platform(Libs.kotlinx_serialization_bom))
-    implementation(Libs.kotlinx_serialization_json)
-
-    compileOnly(Libs.h2_v2)
-    compileOnly(Libs.mysql_connector_j)
-    compileOnly(Libs.postgresql_driver)
-    compileOnly(Libs.pgjdbc_ng)
+    implementation(Libs.h2_v2)
+    implementation(Libs.mysql_connector_j)
+    implementation(Libs.postgresql_driver)
+    implementation(Libs.pgjdbc_ng)
 
     testImplementation(Libs.bluetape4k_junit5)
     testImplementation(Libs.bluetape4k_testcontainers)

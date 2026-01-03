@@ -74,9 +74,9 @@ dependencies {
     runtimeOnly(Libs.jakarta_validation_api)
 
     // Spring Boot Webflux
-    implementation(Libs.springBootStarter("webflux"))
+    implementation(Libs.springBoot("autoconfigure"))
     implementation(Libs.springBootStarter("validation"))
-    testImplementation(Libs.springBoot("autoconfigure"))
+    implementation(Libs.springBootStarter("webflux"))
     testImplementation(Libs.springBootStarter("test")) {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

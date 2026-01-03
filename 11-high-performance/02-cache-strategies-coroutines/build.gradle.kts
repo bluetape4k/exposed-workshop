@@ -3,7 +3,6 @@ plugins {
     id(Plugins.spring_boot)
 }
 
-
 springBoot {
     mainClass.set("exposed.examples.cache.coroutines.CacheStrategyApplicationKt")
 
@@ -17,7 +16,6 @@ springBoot {
     }
 }
 
-@Suppress("UnstableApiUsage")
 configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
@@ -25,6 +23,7 @@ configurations {
 dependencies {
 
     implementation(platform(Libs.exposed_bom))
+
     testImplementation(project(":exposed-shared-tests"))
 
     // bluetape4k
@@ -43,11 +42,14 @@ dependencies {
     implementation(Libs.exposed_java_time)
     implementation(Libs.exposed_spring_boot_starter)
 
-    // Compressor
-    implementation(Libs.lz4_java)
-
     // Codecs
     implementation(Libs.fory_kotlin)
+    implementation(Libs.kryo5)
+
+    // Compressor
+    implementation(Libs.lz4_java)
+    implementation(Libs.snappy_java)
+    implementation(Libs.zstd_jni)
 
     // Near Cache
     implementation(Libs.caffeine)
@@ -69,6 +71,7 @@ dependencies {
     implementation(Libs.datafaker)
 
     // Coroutines
+    implementation(Libs.bluetape4k_coroutines)
     implementation(Libs.kotlinx_coroutines_core)
     implementation(Libs.kotlinx_coroutines_reactor)
     testImplementation(Libs.kotlinx_coroutines_test)

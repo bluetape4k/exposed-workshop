@@ -1,14 +1,9 @@
-plugins {
-    kotlin("plugin.serialization")
-}
-
 configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
 
 dependencies {
     implementation(platform(Libs.exposed_bom))
-
 
     testImplementation(project(":exposed-shared-tests"))
 
@@ -17,8 +12,6 @@ dependencies {
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
     implementation(Libs.exposed_java_time)
-
-    implementation(Libs.bluetape4k_exposed)
 
     // Coroutines
     implementation(Libs.bluetape4k_coroutines)

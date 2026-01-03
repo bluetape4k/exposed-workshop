@@ -37,7 +37,6 @@ import java.util.*
  */
 class Ex16_FetchBatchedResults: JdbcExposedTestBase() {
 
-
     companion object: KLogging() {
         private const val BATCH_SIZE = 25
     }

@@ -17,7 +17,6 @@ springBoot {
     }
 }
 
-@Suppress("UnstableApiUsage")
 configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
@@ -28,10 +27,10 @@ dependencies {
     testImplementation(project(":exposed-shared-tests"))
 
     // bluetape4k
+    implementation(Libs.bluetape4k_io)
     implementation(Libs.bluetape4k_redis)
     implementation(Libs.bluetape4k_testcontainers)
     testImplementation(Libs.bluetape4k_junit5)
-
 
     // Exposed
     implementation(Libs.bluetape4k_exposed)
@@ -62,7 +61,10 @@ dependencies {
 
     // Codecs
     implementation(Libs.fory_kotlin)
+    implementation(Libs.kryo5)
 
     // Compressor
     implementation(Libs.lz4_java)
+    implementation(Libs.snappy_java)
+    implementation(Libs.zstd_jni)
 }

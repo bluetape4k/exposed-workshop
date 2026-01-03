@@ -17,7 +17,6 @@ springBoot {
     }
 }
 
-@Suppress("UnstableApiUsage")
 configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
@@ -43,11 +42,14 @@ dependencies {
     implementation(Libs.exposed_java_time)
     implementation(Libs.exposed_spring_boot_starter)
 
-    // Compressor
-    implementation(Libs.lz4_java)
-
     // Codecs
     implementation(Libs.fory_kotlin)
+    implementation(Libs.kryo5)
+
+    // Compressor
+    implementation(Libs.lz4_java)
+    implementation(Libs.snappy_java)
+    implementation(Libs.zstd_jni)
 
     // Near Cache
     implementation(Libs.caffeine)
@@ -68,6 +70,7 @@ dependencies {
 
     implementation(Libs.datafaker)
 
+    implementation(Libs.bluetape4k_coroutines)
     implementation(Libs.kotlinx_coroutines_reactor)
     testImplementation(Libs.kotlinx_coroutines_test)
 

@@ -10,6 +10,7 @@ dependencies {
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
 
+    implementation(Libs.bluetape4k_exposed)
     implementation(Libs.bluetape4k_exposed_fastjson2)
     testImplementation(Libs.bluetape4k_exposed_tests)
     testImplementation(Libs.bluetape4k_junit5)

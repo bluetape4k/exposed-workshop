@@ -9,13 +9,12 @@ configurations {
 dependencies {
     implementation(platform(Libs.exposed_bom))
 
-
     testImplementation(project(":exposed-shared-tests"))
 
-    implementation(Libs.bluetape4k_exposed)
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
+    implementation(Libs.bluetape4k_exposed)
 
     // Money
     implementation(Libs.exposed_money)

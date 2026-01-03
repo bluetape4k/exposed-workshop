@@ -14,12 +14,12 @@ dependencies {
     testImplementation(project(":exposed-shared-tests"))
 
     // Exposed
-    implementation(Libs.bluetape4k_exposed)
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_dao)
     implementation(Libs.exposed_spring_boot_starter)
 
     // Bluetape4k
+    implementation(Libs.bluetape4k_exposed)
     implementation(Libs.bluetape4k_io)
     implementation(Libs.bluetape4k_jdbc)
     implementation(Libs.bluetape4k_spring_core)
@@ -36,9 +36,9 @@ dependencies {
     implementation(Libs.datafaker)
 
     // Coroutines
-    testImplementation(Libs.bluetape4k_coroutines)
-    testImplementation(Libs.kotlinx_coroutines_core)
-    testImplementation(Libs.kotlinx_coroutines_reactor)
+    implementation(Libs.bluetape4k_coroutines)
+    implementation(Libs.kotlinx_coroutines_core)
+    implementation(Libs.kotlinx_coroutines_reactor)
     testImplementation(Libs.kotlinx_coroutines_debug)
     testImplementation(Libs.kotlinx_coroutines_test)
 }

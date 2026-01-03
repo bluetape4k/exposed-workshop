@@ -5,18 +5,17 @@ configurations {
 dependencies {
     implementation(platform(Libs.exposed_bom))
 
-
     testImplementation(project(":exposed-shared-tests"))
 
-    implementation(Libs.bluetape4k_exposed)
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
+    implementation(Libs.bluetape4k_exposed)
 
-    compileOnly(Libs.h2_v2)
-    compileOnly(Libs.mysql_connector_j)
-    compileOnly(Libs.postgresql_driver)
-    compileOnly(Libs.pgjdbc_ng)
+    implementation(Libs.h2_v2)
+    implementation(Libs.mysql_connector_j)
+    implementation(Libs.postgresql_driver)
+    implementation(Libs.pgjdbc_ng)
 
     testImplementation(Libs.bluetape4k_junit5)
     testImplementation(Libs.bluetape4k_testcontainers)
