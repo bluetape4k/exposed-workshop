@@ -65,6 +65,7 @@ testImplementation(project(":exposed-shared-tests"))
     implementation(Libs.springBootStarter("web"))
 
     testImplementation(Libs.bluetape4k_spring_tests)
+    testImplementation(Libs.springBootStarter("webflux"))
     testImplementation(Libs.springBootStarter("test")) {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

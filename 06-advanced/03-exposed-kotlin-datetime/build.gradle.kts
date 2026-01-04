@@ -1,3 +1,7 @@
+plugins {
+    kotlin("plugin.serialization")
+}
+
 configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
@@ -5,23 +9,26 @@ configurations {
 dependencies {
     implementation(platform(Libs.exposed_bom))
 
-
-    testImplementation(project(":exposed-shared-tests"))
+    implementation(project(":exposed-shared-tests"))
 
     implementation(Libs.bluetape4k_exposed)
     implementation(Libs.exposed_core)
-    implementation(Libs.exposed_jdbc)
-    implementation(Libs.exposed_dao)
-    implementation(Libs.exposed_json)
-    implementation(Libs.exposed_migration_jdbc)
+    testImplementation(Libs.exposed_jdbc)
+    testImplementation(Libs.exposed_dao)
+    testImplementation(Libs.exposed_json)
+    testImplementation(Libs.exposed_migration_jdbc)
 
     // java time 지원 라이브러리
-    implementation(Libs.exposed_kotlin_datetime)
+    testImplementation(Libs.exposed_kotlin_datetime)
 
-    implementation(Libs.h2_v2)
-    implementation(Libs.mysql_connector_j)
-    implementation(Libs.postgresql_driver)
-    implementation(Libs.pgjdbc_ng)
+    // Kotlin Serialization Json
+    testImplementation(platform(Libs.kotlinx_serialization_bom))
+    testImplementation(Libs.kotlinx_serialization_json)
+
+    testImplementation(Libs.h2_v2)
+    testImplementation(Libs.mysql_connector_j)
+    testImplementation(Libs.postgresql_driver)
+    testImplementation(Libs.pgjdbc_ng)
 
     testImplementation(Libs.bluetape4k_junit5)
     testImplementation(Libs.bluetape4k_testcontainers)
@@ -30,7 +37,7 @@ dependencies {
     testImplementation(Libs.testcontainers_postgresql)
 
     // Coroutines
-    implementation(Libs.bluetape4k_coroutines)
-    implementation(Libs.kotlinx_coroutines_core)
+    testImplementation(Libs.bluetape4k_coroutines)
+    testImplementation(Libs.kotlinx_coroutines_core)
     testImplementation(Libs.kotlinx_coroutines_test)
 }

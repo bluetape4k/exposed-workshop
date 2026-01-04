@@ -18,16 +18,16 @@ dependencies {
     implementation(Libs.exposed_dao)
 
     // Exposed Json 지원 라이브러리 (kotlinx.serialization 을 사용합니다)
-    implementation(Libs.exposed_json)
+    testImplementation(Libs.exposed_json)
 
     // Kotlin Serialization Json
-    implementation(platform(Libs.kotlinx_serialization_bom))
-    implementation(Libs.kotlinx_serialization_json)
+    testImplementation(platform(Libs.kotlinx_serialization_bom))
+    testImplementation(Libs.kotlinx_serialization_json)
 
-    implementation(Libs.h2_v2)
-    implementation(Libs.mysql_connector_j)
-    implementation(Libs.postgresql_driver)
-    implementation(Libs.pgjdbc_ng)
+    testImplementation(Libs.h2_v2)
+    testImplementation(Libs.mysql_connector_j)
+    testImplementation(Libs.postgresql_driver)
+    testImplementation(Libs.pgjdbc_ng)
 
     testImplementation(Libs.bluetape4k_junit5)
     testImplementation(Libs.bluetape4k_testcontainers)
@@ -36,7 +36,7 @@ dependencies {
     testImplementation(Libs.testcontainers_postgresql)
 
     // Coroutines
-    implementation(Libs.bluetape4k_coroutines)
-    implementation(Libs.kotlinx_coroutines_core)
+    testImplementation(Libs.bluetape4k_coroutines)
+    testImplementation(Libs.kotlinx_coroutines_core)
     testImplementation(Libs.kotlinx_coroutines_test)
 }

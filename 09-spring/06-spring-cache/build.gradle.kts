@@ -49,6 +49,7 @@ dependencies {
     // Spring Boot
     implementation(Libs.springBootStarter("cache"))
     implementation(Libs.springBootStarter("data-redis"))
+    testImplementation(Libs.springBootStarter("webflux"))
     testImplementation(Libs.springBootStarter("test")) {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

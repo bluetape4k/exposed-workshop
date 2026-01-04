@@ -44,13 +44,14 @@ dependencies {
     // H2
     implementation(Libs.h2_v2)
 
-    // MySQL
+    // Docker
     implementation(Libs.bluetape4k_testcontainers)
+
+    // MySQL
     implementation(Libs.testcontainers_mysql)
     implementation(Libs.mysql_connector_j)
 
     // PostgreSQL
-    implementation(Libs.bluetape4k_testcontainers)
     implementation(Libs.testcontainers_postgresql)
     implementation(Libs.postgresql_driver)
 
@@ -66,6 +67,7 @@ dependencies {
     implementation(Libs.springBootStarter("web"))
 
     testImplementation(Libs.bluetape4k_spring_tests)
+    testImplementation(Libs.springBootStarter("webflux"))
     testImplementation(Libs.springBootStarter("test")) {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
