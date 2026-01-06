@@ -43,12 +43,10 @@ configurations {
 }
 
 dependencies {
-    implementation(Libs.bluetape4k_hibernate_reactive)
-    implementation(Libs.bluetape4k_coroutines)
     implementation(Libs.bluetape4k_testcontainers)
 
-    testImplementation(Libs.bluetape4k_crypto)
-    testImplementation(Libs.bluetape4k_jackson)
+    implementation(Libs.bluetape4k_crypto)
+    implementation(Libs.bluetape4k_jackson)
     testImplementation(Libs.bluetape4k_junit5)
     testImplementation(Libs.bluetape4k_spring_tests)
 
@@ -56,7 +54,8 @@ dependencies {
     api(Libs.jakarta_persistence_api)
 
     // Hibernate Reactive
-    api(Libs.hibernate_reactive_core)
+    implementation(Libs.bluetape4k_hibernate_reactive)
+    implementation(Libs.hibernate_reactive_core)
     implementation("com.ongres.scram:common:2.1") // vert.x sql client 에서 사용하는데 제외되었다.
     implementation("com.ongres.scram:client:2.1") // vert.x sql client 에서 사용하는데 제외되었다.
 
@@ -65,13 +64,14 @@ dependencies {
     kaptTest(Libs.hibernate_jpamodelgen)
 
     // Mutiny & Coroutines
+    implementation(Libs.bluetape4k_coroutines)
     implementation(Libs.kotlinx_coroutines_core)
     testImplementation(Libs.kotlinx_coroutines_reactor)
     testImplementation(Libs.kotlinx_coroutines_test)
 
     // Vaidators
     implementation(Libs.hibernate_validator)
-    runtimeOnly(Libs.jakarta_validation_api)
+    implementation(Libs.jakarta_validation_api)
 
     // Spring Boot Webflux
     implementation(Libs.springBoot("autoconfigure"))
@@ -89,7 +89,7 @@ dependencies {
 
     // Testcontainers MySQL 에서 검증을 위해 사용하기 위해 불가피하게 필요합니다
     // reactive 방식에서는 항상 verx-pg-client 를 사용합니다
-    implementation(Libs.postgresql_driver)
+    runtimeOnly(Libs.postgresql_driver)
 
     // MySQL
 //    implementation(Libs.testcontainers_mysql)

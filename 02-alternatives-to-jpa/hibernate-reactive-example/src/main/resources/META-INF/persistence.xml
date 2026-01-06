@@ -7,17 +7,14 @@
         <provider>org.hibernate.reactive.provider.ReactivePersistenceProvider</provider>
 
         <!-- 테스트 시에는 build/classes 에 있는 entity 를 scan 한다  -->
-        <jar-file>build/classes</jar-file>
-        <!-- bluetape4k-hibernate 테스트 코드의 Entity 정보를 사용한다 -->
-        <!-- 이를 위해서는 build.gradle.kts 에서 bluetape4k-hibernate의 testArchives 를 참조해야 한다 -->
-        <!--<jar-file>../hibernate/build/classes/kotlin/test/io/bluetape4k/hibernate/mapping</jar-file>-->
+        <!--        <jar-file>build/classes</jar-file>-->
 
-        <!--        <class>Author</class>-->
-        <!--        <class>Book</class>-->
+        <class>alternatives.hibernate.reactive.example.domain.model.Member</class>
+        <class>alternatives.hibernate.reactive.example.domain.model.Team</class>
 
         <!-- TODO: 지정하지 않아도 모두 포함시키도록 한다 : 이것 만으로는 안된다. jar-file 로 명시해줘야 한다 -->
         <!-- TODO: persistence.xml 말고 프로그래밍 방식으로 정의하는 방법을 찾자 -->
-        <!-- <exclude-unlisted-classes>false</exclude-unlisted-classes>-->
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
         <properties>
             <!-- Automatic schema export -->

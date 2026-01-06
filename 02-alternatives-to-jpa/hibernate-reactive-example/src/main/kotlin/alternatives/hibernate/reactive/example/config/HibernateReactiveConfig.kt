@@ -23,6 +23,10 @@ class HibernateReactiveConfig {
         props["jakarta.persistence.jdbc.password"] = PostgreSQLServer.Launcher.postgres.getPassword()
         props["jakarta.persistence.jdbc.driver_class"] = PostgreSQLServer.Launcher.postgres.getDriverClassName()
 
+        // 스캐닝 시 발생할 수 있는 파일 시스템 문제를 방지하기 위해 추가적인 힌트를 제공합니다.
+        // 엔티티가 포함된 패키지를 명시적으로 지정하거나 스캔 범위를 조정합니다.
+        props["hibernate.archive.autodetection"] = "class"
+
         log.info { "Create EntityManagerFactory. props=$props" }
 
         return Persistence.createEntityManagerFactory("default", props)
