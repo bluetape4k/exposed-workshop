@@ -10,18 +10,23 @@ dependencies {
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
+
     implementation(Libs.bluetape4k_exposed)
-
-    implementation(Libs.h2_v2)
-    implementation(Libs.mysql_connector_j)
-    implementation(Libs.postgresql_driver)
-    implementation(Libs.pgjdbc_ng)
-
     testImplementation(Libs.bluetape4k_junit5)
+
     testImplementation(Libs.bluetape4k_testcontainers)
     testImplementation(Libs.testcontainers)
     testImplementation(Libs.testcontainers_mysql)
     testImplementation(Libs.testcontainers_postgresql)
+
+    testImplementation(Libs.hikaricp)
+
+    // Jdbc Drivers
+    testRuntimeOnly(Libs.h2_v2)
+    testRuntimeOnly(Libs.mariadb_java_client)
+    testRuntimeOnly(Libs.mysql_connector_j)
+    testRuntimeOnly(Libs.postgresql_driver)
+    testRuntimeOnly(Libs.pgjdbc_ng)
 
     // Coroutines
     implementation(Libs.bluetape4k_coroutines)
