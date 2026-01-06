@@ -1,11 +1,11 @@
 package exposed.examples.jasypt
 
+import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.TestDB
+import exposed.shared.tests.withTables
 import io.bluetape4k.crypto.encrypt.Encryptors
 import io.bluetape4k.exposed.core.jasypt.jasyptBinary
 import io.bluetape4k.exposed.core.jasypt.jasyptVarChar
-import io.bluetape4k.exposed.tests.AbstractExposedTest
-import io.bluetape4k.exposed.tests.TestDB
-import io.bluetape4k.exposed.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.support.toUtf8Bytes
 import io.bluetape4k.support.toUtf8String

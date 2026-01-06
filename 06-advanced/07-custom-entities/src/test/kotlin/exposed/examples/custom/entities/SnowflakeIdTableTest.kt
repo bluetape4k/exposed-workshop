@@ -3,6 +3,10 @@ package exposed.examples.custom.entities
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.id.SnowflakeIdEntity
+import io.bluetape4k.exposed.dao.id.SnowflakeIdEntityClass
+import io.bluetape4k.exposed.dao.id.SnowflakeIdEntityID
+import io.bluetape4k.exposed.dao.id.SnowflakeIdTable
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
@@ -40,8 +44,8 @@ class SnowflakeIdTableTest: AbstractCustomIdTableTest() {
         val age = integer("age")
     }
 
-    class E1(id: SnowflakeEntityID): SnowflakeIdEntity(id) {
-        companion object: SnowflakeEntityClass<E1>(T1)
+    class E1(id: SnowflakeIdEntityID): SnowflakeIdEntity(id) {
+        companion object: SnowflakeIdEntityClass<E1>(T1)
 
         var name by T1.name
         var age by T1.age

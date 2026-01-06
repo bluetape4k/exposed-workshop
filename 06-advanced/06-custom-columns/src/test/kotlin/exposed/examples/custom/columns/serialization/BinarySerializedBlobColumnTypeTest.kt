@@ -3,6 +3,7 @@ package exposed.examples.custom.columns.serialization
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.core.serializable.binarySerializedBlob
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.io.serializer.BinarySerializers
 import io.bluetape4k.logging.KLogging

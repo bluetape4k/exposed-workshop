@@ -3,6 +3,10 @@ package exposed.examples.custom.entities
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.id.KsuidEntity
+import io.bluetape4k.exposed.dao.id.KsuidEntityClass
+import io.bluetape4k.exposed.dao.id.KsuidEntityID
+import io.bluetape4k.exposed.dao.id.KsuidTable
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder

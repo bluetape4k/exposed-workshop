@@ -3,6 +3,9 @@ package exposed.examples.custom.entities
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.id.KsuidMillisEntity
+import io.bluetape4k.exposed.dao.id.KsuidMillisEntityClass
+import io.bluetape4k.exposed.dao.id.KsuidMillisTable
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
@@ -11,6 +14,7 @@ import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitAll
 import org.amshove.kluent.shouldBeEqualTo
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.selectAll
@@ -39,7 +43,7 @@ class KsuidMillisTableTest: AbstractCustomIdTableTest() {
         val age = integer("age")
     }
 
-    class E1(id: KsuidMillisEntityID): KsuidMillisEntity(id) {
+    class E1(id: EntityID<String>): KsuidMillisEntity(id) {
         companion object: KsuidMillisEntityClass<E1>(T1)
 
         var name by T1.name

@@ -7,33 +7,47 @@ dependencies {
 
     testImplementation(project(":exposed-shared-tests"))
 
-    implementation(Libs.exposed_core)
-    implementation(Libs.exposed_jdbc)
-    implementation(Libs.exposed_dao)
-    implementation(Libs.bluetape4k_exposed)
-    testImplementation(Libs.bluetape4k_exposed_tests)
+    testImplementation(Libs.exposed_core)
+    testImplementation(Libs.exposed_jdbc)
+    testImplementation(Libs.exposed_dao)
+    testImplementation(Libs.bluetape4k_exposed)
 
     implementation(Libs.bluetape4k_io)
 
     // Compression
-    implementation(Libs.lz4_java)
-    implementation(Libs.snappy_java)
-    implementation(Libs.zstd_jni)
+    testRuntimeOnly(Libs.lz4_java)
+    testRuntimeOnly(Libs.snappy_java)
+    testRuntimeOnly(Libs.zstd_jni)
 
     // Serialization
-    implementation(Libs.kryo5)
-    implementation(Libs.fory_kotlin)
+    testRuntimeOnly(Libs.kryo5)
+    testRuntimeOnly(Libs.fory_kotlin)
 
     // Encryption
-    implementation(Libs.bluetape4k_crypto)
-    implementation(Libs.jasypt)
+    testImplementation(Libs.bluetape4k_crypto)
+    testImplementation(Libs.jasypt)
 
     // Identifier 자동 생성
-    implementation(Libs.bluetape4k_idgenerators)
-    implementation(Libs.java_uuid_generator)
+    testRuntimeOnly(Libs.bluetape4k_idgenerators)
+    testRuntimeOnly(Libs.java_uuid_generator)
+
+    testImplementation(Libs.bluetape4k_junit5)
+
+    testImplementation(Libs.bluetape4k_testcontainers)
+    testImplementation(Libs.testcontainers)
+    testImplementation(Libs.testcontainers_mariadb)
+    testImplementation(Libs.testcontainers_mysql)
+    testImplementation(Libs.testcontainers_postgresql)
+
+    // Jdbc Drivers
+    testRuntimeOnly(Libs.h2_v2)
+    testRuntimeOnly(Libs.mariadb_java_client)
+    testRuntimeOnly(Libs.mysql_connector_j)
+    testRuntimeOnly(Libs.postgresql_driver)
+    testRuntimeOnly(Libs.pgjdbc_ng)
 
     // Coroutines
-    implementation(Libs.bluetape4k_coroutines)
-    implementation(Libs.kotlinx_coroutines_core)
+    testImplementation(Libs.bluetape4k_coroutines)
+    testImplementation(Libs.kotlinx_coroutines_core)
     testImplementation(Libs.kotlinx_coroutines_test)
 }

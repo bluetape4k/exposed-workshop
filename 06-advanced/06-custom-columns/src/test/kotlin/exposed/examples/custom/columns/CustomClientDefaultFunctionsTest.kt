@@ -3,7 +3,10 @@ package exposed.examples.custom.columns
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.core.ksuidGenerated
 import io.bluetape4k.exposed.core.ksuidMillisGenerated
+import io.bluetape4k.exposed.core.snowflakeGenerated
+import io.bluetape4k.exposed.core.timebasedGenerated
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
@@ -38,8 +41,8 @@ class CustomClientDefaultFunctionsTest: JdbcExposedTestBase() {
      * ```
      */
     object ClientGenerated: IntIdTable() {
-        val timebasedUuid: Column<UUID> = uuid("timebased_uuid").timebasedUUIDGenerated()
-        val timebasedUuidString: Column<String> = varchar("timebased_uuid_string", 36).timebasedUUIDGenerated()
+        val timebasedUuid: Column<UUID> = uuid("timebased_uuid").timebasedGenerated()
+        val timebasedUuidString: Column<String> = varchar("timebased_uuid_string", 36).timebasedGenerated()
         val snowflake: Column<Long> = long("snowflake").snowflakeGenerated()
         val ksuid: Column<String> = varchar("ksuid", 27).ksuidGenerated()
         val ksuidMillis: Column<String> = varchar("ksuid_millis", 27).ksuidMillisGenerated()

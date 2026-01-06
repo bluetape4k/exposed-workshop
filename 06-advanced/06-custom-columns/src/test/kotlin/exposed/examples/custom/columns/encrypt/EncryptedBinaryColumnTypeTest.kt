@@ -4,6 +4,7 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.crypto.encrypt.Encryptors
+import io.bluetape4k.exposed.core.encrypt.encryptedBinary
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
@@ -25,7 +26,7 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class BluetapeEncryptedBinaryColumnTypeTest: JdbcExposedTestBase() {
+class EncryptedBinaryColumnTypeTest: JdbcExposedTestBase() {
 
     companion object: KLogging()
 
@@ -55,10 +56,10 @@ class BluetapeEncryptedBinaryColumnTypeTest: JdbcExposedTestBase() {
     private object T1: IntIdTable("T1") {
         val name = varchar("name", 50)
 
-        val aesBinary: Column<ByteArray?> = bluetapeEncryptedBinary("aes_binary", 1024, Encryptors.AES).nullable()
-        val rc4Binary: Column<ByteArray?> = bluetapeEncryptedBinary("rc4_binary", 1024, Encryptors.RC4).nullable()
+        val aesBinary: Column<ByteArray?> = encryptedBinary("aes_binary", 1024, Encryptors.AES).nullable()
+        val rc4Binary: Column<ByteArray?> = encryptedBinary("rc4_binary", 1024, Encryptors.RC4).nullable()
         val tripleDesBinary: Column<ByteArray?> =
-            bluetapeEncryptedBinary("triple_des_binary", 1024, Encryptors.TripleDES).nullable()
+            encryptedBinary("triple_des_binary", 1024, Encryptors.TripleDES).nullable()
     }
 
     class E1(id: EntityID<Int>): IntEntity(id) {

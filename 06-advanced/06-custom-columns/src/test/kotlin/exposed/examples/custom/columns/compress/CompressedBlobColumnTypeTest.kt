@@ -3,6 +3,7 @@ package exposed.examples.custom.columns.compress
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.core.compress.compressedBlob
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.io.compressor.Compressors
 import io.bluetape4k.junit5.faker.Fakers
