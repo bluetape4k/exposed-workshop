@@ -23,11 +23,6 @@ configurations {
 dependencies {
     testImplementation(project(":exposed-shared-tests"))
 
-    // bluetape4k
-    implementation(Libs.bluetape4k_exposed)
-    implementation(Libs.bluetape4k_jackson)
-    implementation(Libs.bluetape4k_io)
-
     // Exposed
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_jdbc)
@@ -36,21 +31,25 @@ dependencies {
     implementation(Libs.exposed_migration_jdbc)
     implementation(Libs.exposed_spring_boot_starter)
 
+    // bluetape4k
+    implementation(Libs.bluetape4k_exposed)
+    implementation(Libs.bluetape4k_jackson)
+    implementation(Libs.bluetape4k_io)
+    implementation(Libs.bluetape4k_testcontainers)
+
     // Database Drivers
-    implementation(Libs.hikaricp)
+    runtimeOnly(Libs.hikaricp)
 
     // H2
-    implementation(Libs.h2_v2)
+    runtimeOnly(Libs.h2_v2)
 
     // MySQL
-    implementation(Libs.bluetape4k_testcontainers)
     implementation(Libs.testcontainers_mysql)
-    implementation(Libs.mysql_connector_j)
+    runtimeOnly(Libs.mysql_connector_j)
 
     // PostgreSQL
-    implementation(Libs.bluetape4k_testcontainers)
     implementation(Libs.testcontainers_postgresql)
-    implementation(Libs.postgresql_driver)
+    runtimeOnly(Libs.postgresql_driver)
 
     // Spring Boot
     implementation(Libs.springBoot("autoconfigure"))

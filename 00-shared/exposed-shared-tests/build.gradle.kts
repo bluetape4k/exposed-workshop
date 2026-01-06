@@ -26,44 +26,44 @@ dependencies {
     implementation(Libs.exposed_money)
     implementation(Libs.exposed_spring_boot_starter)
 
-    api(Libs.bluetape4k_jdbc)
-    api(Libs.bluetape4k_junit5)
+    implementation(Libs.bluetape4k_jdbc)
+    implementation(Libs.bluetape4k_junit5)
+    implementation(Libs.kluent)
 
-    api(Libs.hikaricp)
+    runtimeOnly(Libs.hikaricp)
 
-    api(Libs.h2_v2)
-    api(Libs.mariadb_java_client)
-    api(Libs.mysql_connector_j)
-    api(Libs.postgresql_driver)
-    api(Libs.pgjdbc_ng)
+    compileOnly(Libs.h2_v2)
+    compileOnly(Libs.mariadb_java_client)
+    compileOnly(Libs.mysql_connector_j)
+    compileOnly(Libs.postgresql_driver)
+    compileOnly(Libs.pgjdbc_ng)
 
-    api(Libs.bluetape4k_testcontainers)
-    api(Libs.testcontainers)
-    api(Libs.testcontainers_junit_jupiter)
-    api(Libs.testcontainers_mariadb)
-    api(Libs.testcontainers_mysql)
-    api(Libs.testcontainers_postgresql)
-    api(Libs.testcontainers_cockroachdb)
+    implementation(Libs.bluetape4k_testcontainers)
+    implementation(Libs.testcontainers)
+    implementation(Libs.testcontainers_mariadb)
+    implementation(Libs.testcontainers_mysql)
+    implementation(Libs.testcontainers_postgresql)
+    implementation(Libs.testcontainers_cockroachdb)
 
     // Identifier 자동 생성
-    api(Libs.bluetape4k_idgenerators)
-    api(Libs.java_uuid_generator)
+    implementation(Libs.bluetape4k_idgenerators)
+    implementation(Libs.java_uuid_generator)
 
     // Coroutines
-    implementation(Libs.bluetape4k_coroutines)
-    implementation(Libs.kotlinx_coroutines_core)
-    implementation(Libs.kotlinx_coroutines_test)
+    testImplementation(Libs.bluetape4k_coroutines)
+    testImplementation(Libs.kotlinx_coroutines_core)
+    testImplementation(Libs.kotlinx_coroutines_test)
 
     // Kotlin Serialization Json
-    implementation(platform(Libs.kotlinx_serialization_bom))
-    implementation(Libs.kotlinx_serialization_json)
+    testImplementation(platform(Libs.kotlinx_serialization_bom))
+    testImplementation(Libs.kotlinx_serialization_json)
 
     // Java Money
-    implementation(Libs.bluetape4k_money)
-    implementation(Libs.javax_money_api)
-    implementation(Libs.javamoney_moneta)
+    testImplementation(Libs.bluetape4k_money)
+    testImplementation(Libs.javax_money_api)
+    testImplementation(Libs.javamoney_moneta)
 
     // Logcaptor
-    api("io.github.hakky54:logcaptor:2.10.0")
+    testImplementation("io.github.hakky54:logcaptor:2.10.0")
 
 }
