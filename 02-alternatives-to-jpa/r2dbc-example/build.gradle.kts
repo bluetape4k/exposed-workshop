@@ -34,9 +34,9 @@ dependencies {
     // R2DBC
     implementation(Libs.bluetape4k_spring_r2dbc)
     implementation(Libs.springBootStarter("data-r2dbc"))
-    implementation(Libs.r2dbc_postgresql)
-    implementation(Libs.r2dbc_h2)
-    implementation(Libs.r2dbc_pool)
+    runtimeOnly(Libs.r2dbc_postgresql)
+    runtimeOnly(Libs.r2dbc_h2)
+    runtimeOnly(Libs.r2dbc_pool)
 
     implementation(Libs.springBootStarter("webflux"))
 
