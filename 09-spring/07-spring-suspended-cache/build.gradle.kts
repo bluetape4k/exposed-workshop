@@ -27,8 +27,8 @@ dependencies {
 
     // bluetape4k
     implementation(Libs.bluetape4k_io)
-    implementation(Libs.bluetape4k_redis)
     implementation(Libs.bluetape4k_grpc)
+    implementation(Libs.bluetape4k_redis)
     implementation(Libs.bluetape4k_testcontainers)
     testImplementation(Libs.bluetape4k_junit5)
 
@@ -39,13 +39,14 @@ dependencies {
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
     implementation(Libs.exposed_java_time)
+    testImplementation(Libs.bluetape4k_junit5)
     implementation(Libs.exposed_spring_boot_starter)
 
     // Database Drivers
     implementation(Libs.hikaricp)
 
     // H2
-    implementation(Libs.h2_v2)
+    runtimeOnly(Libs.h2_v2)
 
     // Spring Boot
     implementation(Libs.springBootStarter("cache"))
@@ -58,17 +59,17 @@ dependencies {
     }
 
     // Redis Cache
-    implementation(Libs.lettuce_core)
-    implementation(Libs.commons_pool2)
+    runtimeOnly(Libs.lettuce_core)
+    runtimeOnly(Libs.commons_pool2)
 
     // Codecs
-    implementation(Libs.fory_kotlin)
-    implementation(Libs.kryo5)
+    runtimeOnly(Libs.fory_kotlin)
+    runtimeOnly(Libs.kryo5)
 
     // Compressor
-    implementation(Libs.lz4_java)
-    implementation(Libs.snappy_java)
-    implementation(Libs.zstd_jni)
+    runtimeOnly(Libs.lz4_java)
+    runtimeOnly(Libs.snappy_java)
+    runtimeOnly(Libs.zstd_jni)
 
     // Coroutines
     implementation(Libs.bluetape4k_coroutines)

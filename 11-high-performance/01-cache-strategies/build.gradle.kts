@@ -26,30 +26,30 @@ dependencies {
     implementation(platform(Libs.exposed_bom))
     testImplementation(project(":exposed-shared-tests"))
 
-    // bluetape4k
-    implementation(Libs.bluetape4k_idgenerators)
-    implementation(Libs.bluetape4k_redis)
-    implementation(Libs.bluetape4k_testcontainers)
-    testImplementation(Libs.bluetape4k_junit5)
-    testImplementation(Libs.bluetape4k_spring_tests)
-
     // Exposed
-    implementation(Libs.bluetape4k_exposed)
-    implementation(Libs.bluetape4k_exposed_redisson)
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_dao)
     implementation(Libs.exposed_java_time)
     implementation(Libs.exposed_spring_boot_starter)
 
+    // bluetape4k
+    implementation(Libs.bluetape4k_exposed)
+    implementation(Libs.bluetape4k_exposed_redisson)
+    implementation(Libs.bluetape4k_idgenerators)
+    implementation(Libs.bluetape4k_redis)
+    implementation(Libs.bluetape4k_testcontainers)
+    testImplementation(Libs.bluetape4k_junit5)
+    testImplementation(Libs.bluetape4k_spring_tests)
+
     // Codecs
-    implementation(Libs.fory_kotlin)
-    implementation(Libs.kryo5)
+    runtimeOnly(Libs.fory_kotlin)
+    runtimeOnly(Libs.kryo5)
 
     // Compressor
-    implementation(Libs.lz4_java)
-    implementation(Libs.snappy_java)
-    implementation(Libs.zstd_jni)
+    runtimeOnly(Libs.lz4_java)
+    runtimeOnly(Libs.snappy_java)
+    runtimeOnly(Libs.zstd_jni)
 
     // Near Cache
     implementation(Libs.caffeine)
@@ -58,7 +58,15 @@ dependencies {
     implementation(Libs.hikaricp)
 
     // H2
-    implementation(Libs.h2_v2)
+    runtimeOnly(Libs.h2_v2)
+
+    // MySQL
+    implementation(Libs.testcontainers_mysql)
+    runtimeOnly(Libs.mysql_connector_j)
+
+    // PostgreSQL
+    implementation(Libs.testcontainers_postgresql)
+    runtimeOnly(Libs.postgresql_driver)
 
     // Spring Boot
     implementation(Libs.springBootStarter("web"))

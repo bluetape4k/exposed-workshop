@@ -16,6 +16,7 @@ dependencies {
     // Exposed
     implementation(Libs.exposed_core)
     implementation(Libs.exposed_dao)
+    implementation(Libs.exposed_jdbc)
     implementation(Libs.exposed_spring_boot_starter)
 
     // Bluetape4k
@@ -32,6 +33,9 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
     }
+
+    runtimeOnly(Libs.h2_v2)
+    runtimeOnly(Libs.hikaricp)
 
     implementation(Libs.datafaker)
 

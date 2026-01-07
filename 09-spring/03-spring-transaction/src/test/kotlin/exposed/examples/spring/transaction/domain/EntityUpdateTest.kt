@@ -2,6 +2,7 @@ package exposed.examples.spring.transaction.domain
 
 import exposed.examples.spring.transaction.AbstractSpringTransactionTest
 import exposed.examples.spring.transaction.utils.execute
+import io.bluetape4k.codec.Base58
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
@@ -20,7 +21,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
 import org.springframework.test.annotation.Commit
 import org.springframework.transaction.annotation.Transactional
-import org.testcontainers.utility.Base58
 import kotlin.test.fail
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)

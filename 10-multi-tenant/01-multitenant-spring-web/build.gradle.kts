@@ -23,12 +23,6 @@ dependencies {
 
 testImplementation(project(":exposed-shared-tests"))
 
-    // bluetape4k
-    implementation(Libs.bluetape4k_io)
-    implementation(Libs.bluetape4k_jackson)
-    implementation(Libs.bluetape4k_jdbc)
-    testImplementation(Libs.bluetape4k_spring_tests)
-
     // Exposed
     implementation(Libs.bluetape4k_exposed)
     implementation(Libs.exposed_core)
@@ -38,22 +32,29 @@ testImplementation(project(":exposed-shared-tests"))
     implementation(Libs.exposed_migration_jdbc)
     implementation(Libs.exposed_spring_boot_starter)
 
+    // bluetape4k
+    implementation(Libs.bluetape4k_io)
+    implementation(Libs.bluetape4k_jackson)
+    implementation(Libs.bluetape4k_jdbc)
+    testImplementation(Libs.bluetape4k_junit5)
+    testImplementation(Libs.bluetape4k_spring_tests)
+
     // Database Drivers
     implementation(Libs.hikaricp)
 
     // H2
-    implementation(Libs.h2_v2)
+    runtimeOnly(Libs.h2_v2)
 
     // Docker
     implementation(Libs.bluetape4k_testcontainers)
 
     // MySQL
     implementation(Libs.testcontainers_mysql)
-    implementation(Libs.mysql_connector_j)
+    runtimeOnly(Libs.mysql_connector_j)
 
     // PostgreSQL
     implementation(Libs.testcontainers_postgresql)
-    implementation(Libs.postgresql_driver)
+    runtimeOnly(Libs.postgresql_driver)
 
     // Spring Boot
     implementation(Libs.springBoot("autoconfigure"))
@@ -66,7 +67,6 @@ testImplementation(project(":exposed-shared-tests"))
     implementation(Libs.springBootStarter("validation"))
     implementation(Libs.springBootStarter("web"))
 
-    testImplementation(Libs.bluetape4k_spring_tests)
     testImplementation(Libs.springBootStarter("webflux"))
     testImplementation(Libs.springBootStarter("test")) {
         exclude(group = "junit", module = "junit")
@@ -74,8 +74,8 @@ testImplementation(project(":exposed-shared-tests"))
         exclude(module = "mockito-core")
     }
 
-    testImplementation(Libs.bluetape4k_coroutines)
-    testImplementation(Libs.kotlinx_coroutines_reactor)
+    implementation(Libs.bluetape4k_coroutines)
+    implementation(Libs.kotlinx_coroutines_reactor)
     testImplementation(Libs.kotlinx_coroutines_test)
     testImplementation(Libs.reactor_kotlin_extensions)
 

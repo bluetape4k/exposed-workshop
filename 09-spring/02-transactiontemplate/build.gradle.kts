@@ -21,9 +21,10 @@ dependencies {
     // Bluetape4k
     implementation(Libs.bluetape4k_exposed)
     implementation(Libs.bluetape4k_io)
+    testImplementation(Libs.bluetape4k_junit5)
 
-    implementation(Libs.h2_v2)
-    implementation(Libs.hikaricp)
+    runtimeOnly(Libs.h2_v2)
+    runtimeOnly(Libs.hikaricp)
 
     // Spring Boot
     implementation(Libs.springBootStarter("jdbc"))
