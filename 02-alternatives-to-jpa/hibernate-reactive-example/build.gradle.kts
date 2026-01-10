@@ -47,17 +47,18 @@ dependencies {
 
     implementation(Libs.bluetape4k_crypto)
     implementation(Libs.bluetape4k_jackson)
+    implementation(Libs.bluetape4k_vertx_core)
     testImplementation(Libs.bluetape4k_junit5)
     testImplementation(Libs.bluetape4k_spring_tests)
 
     api(Libs.jakarta_annotation_api)
     api(Libs.jakarta_persistence_api)
+    api(Libs.jakarta_transaction_api)
 
     // Hibernate Reactive
     implementation(Libs.bluetape4k_hibernate_reactive)
     implementation(Libs.hibernate_reactive_core)
-    implementation("com.ongres.scram:common:2.1") // vert.x sql client 에서 사용하는데 제외되었다.
-    implementation("com.ongres.scram:client:2.1") // vert.x sql client 에서 사용하는데 제외되었다.
+    implementation("com.ongres.scram:scram-client:3.2") // vert.x sql client 에서 사용하는데 제외되었다.
 
     // NOTE: hibernate-reactive 는 querydsl 을 사용하지 못한다. 대신 jpamodelgen 을 사용합니다.
     kapt(Libs.hibernate_jpamodelgen)
@@ -90,11 +91,6 @@ dependencies {
     // Testcontainers MySQL 에서 검증을 위해 사용하기 위해 불가피하게 필요합니다
     // reactive 방식에서는 항상 verx-pg-client 를 사용합니다
     runtimeOnly(Libs.postgresql_driver)
-
-    // MySQL
-//    implementation(Libs.testcontainers_mysql)
-//    implementation(Libs.vertx_mysql_client)
-//    implementation(Libs.mysql_connector_j)
 
     // Monitoring
     implementation(Libs.micrometer_core)

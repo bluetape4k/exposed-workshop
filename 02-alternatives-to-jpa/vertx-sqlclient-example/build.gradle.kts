@@ -27,8 +27,7 @@ dependencies {
     runtimeOnly(Libs.vertx_mysql_client)
     runtimeOnly(Libs.vertx_pg_client)
 
-    implementation("com.ongres.scram:common:2.1") // vert.x sql client 에서 사용하는데 제외되었다.
-    implementation("com.ongres.scram:client:2.1") // vert.x sql client 에서 사용하는데 제외되었다.
+    implementation("com.ongres.scram:scram-client:3.2") // vert.x sql client 에서 사용하는데 제외되었다.
 
     // Vertx Jdbc (MySQL, Postgres 를 제외한 H2 같은 것은 기존 JDBC 를 Wrapping한 것을 사용합니다)
     runtimeOnly(Libs.vertx_jdbc_client)
