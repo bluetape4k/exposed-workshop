@@ -1323,8 +1323,8 @@ object Libs {
     val javers_spring_boot_starter_sql = javers("spring-boot-starter-sql")
 
     // MyBatis Mapping 에 사용한다
-    const val byte_buddy = "net.bytebuddy:byte-buddy:1.17.8"   // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent
-    const val byte_buddy_agent = "net.bytebuddy:byte-buddy-agent:1.17.8"   // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent
+    const val byte_buddy = "net.bytebuddy:byte-buddy:1.18.3"   // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent
+    const val byte_buddy_agent = "net.bytebuddy:byte-buddy-agent:1.18.3"   // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent
 
     const val hikaricp = "com.zaxxer:HikariCP:7.0.2"                    // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
 
@@ -1336,7 +1336,7 @@ object Libs {
     val agroal_spring_boot_starter = agroal("spring-boot-starter")
 
     const val mysql_connector_j = "com.mysql:mysql-connector-j:9.5.0"  // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
-    const val mariadb_java_client = "org.mariadb.jdbc:mariadb-java-client:3.5.6"  // https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
+    const val mariadb_java_client = "org.mariadb.jdbc:mariadb-java-client:3.5.7"  // https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
     const val postgresql_driver = "org.postgresql:postgresql:42.7.8"  // https://mvnrepository.com/artifact/org.postgresql/postgresql
     const val pgjdbc_ng = "com.impossibl.pgjdbc-ng:pgjdbc-ng:0.8.9"  // https://mvnrepository.com/artifact/com.impossibl.pgjdbc-ng/pgjdbc-ng
     const val oracle_ojdbc8 = "com.oracle.ojdbc:ojdbc8:19.3.0.0"
@@ -1348,10 +1348,10 @@ object Libs {
     // MyBatis 테스트 시에 h2 v2 를 사용한다
     const val h2_v2 = "com.h2database:h2:2.4.240"    // https://mvnrepository.com/artifact/com.h2database/h2
     const val hsqldb = "org.hsqldb:hsqldb:2.7.4"     // https://mvnrepository.com/artifact/org.hsqldb/hsqldb
-    const val flyway_core = "org.flywaydb:flyway-core:11.18.0"  // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
+    const val flyway_core = "org.flywaydb:flyway-core:11.20.1"  // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
 
     // UUID Generator
-    const val java_uuid_generator = "com.fasterxml.uuid:java-uuid-generator:5.1.0"   // https://mvnrepository.com/artifact/com.fasterxml.uuid/java-uuid-generator
+    const val java_uuid_generator = "com.fasterxml.uuid:java-uuid-generator:5.2.0"   // https://mvnrepository.com/artifact/com.fasterxml.uuid/java-uuid-generator
     const val uuid_creator = "com.github.f4b6a3:uuid-creator:5.3.2"
 
     // Cache2K
