@@ -193,6 +193,12 @@ class Ex08_EntityFieldWithTransform: JdbcExposedTestBase() {
                 wrap = { it.toInt() },
                 unwrap = { it.toBigDecimal() },
             )
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
+        override fun toString(): String = toStringBuilder()
+            .add("value", value)
+            .toString()
     }
 
     /**

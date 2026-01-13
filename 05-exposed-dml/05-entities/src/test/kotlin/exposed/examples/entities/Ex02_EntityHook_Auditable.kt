@@ -169,6 +169,12 @@ class Ex02_EntityHook_Auditable: JdbcExposedTestBase() {
 
         override var createdAt: Instant? by Articles.createdAt
         override var updatedAt: Instant? by Articles.updatedAt
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
+        override fun toString(): String = toStringBuilder()
+            .add("title", title)
+            .toString()
     }
 
     @ParameterizedTest

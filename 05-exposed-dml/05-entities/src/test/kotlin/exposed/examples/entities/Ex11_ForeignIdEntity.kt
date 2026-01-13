@@ -5,6 +5,7 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
+import io.bluetape4k.exposed.dao.idValue
 import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
@@ -127,6 +128,8 @@ class Ex11_ForeignIdEntity: JdbcExposedTestBase() {
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
         override fun toString(): String = toStringBuilder()
+            .add("project id", project.idValue)
+            .add("ownerId", ownerId)
             .add("setting", setting)
             .toString()
     }
@@ -148,7 +151,9 @@ class Ex11_ForeignIdEntity: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder().toString()
+        override fun toString(): String = toStringBuilder()
+            .add("actor id", actor.idValue)
+            .toString()
     }
 
     /**
@@ -270,6 +275,7 @@ class Ex11_ForeignIdEntity: JdbcExposedTestBase() {
         override fun hashCode(): Int = idHashCode()
         override fun toString(): String = toStringBuilder()
             .add("bio", bio)
+            .add("user id", user.idValue)
             .toString()
     }
 

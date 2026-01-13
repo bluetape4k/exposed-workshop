@@ -1549,8 +1549,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
+        override fun toString(): String = toStringBuilder()
                 .add("name", name)
                 .toString()
     }
@@ -1581,6 +1580,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
         var student by Student referencedOn StudentBios.student
         var dateOfBirth by StudentBios.dateOfBirth
+
 
         override fun toString(): String = toStringBuilder()
             .add("date of birth", dateOfBirth)
@@ -2384,7 +2384,6 @@ class Ex01_Entity: JdbcExposedTestBase() {
             .add("number", number)
             .add("spendingLimit", spendingLimit)
             .toString()
-
     }
 
     /**
