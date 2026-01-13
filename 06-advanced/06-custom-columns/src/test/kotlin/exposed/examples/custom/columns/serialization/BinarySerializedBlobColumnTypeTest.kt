@@ -5,6 +5,8 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.core.serializable.binarySerializedBlob
 import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
+import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.io.serializer.BinarySerializers
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
@@ -69,8 +71,10 @@ class BinarySerializedBlobColumnTypeTest: JdbcExposedTestBase() {
         var zstdKryo by T1.zstdKryo
 
         override fun equals(other: Any?): Boolean = idEquals(other)
-        override fun hashCode(): Int = id.hashCode()
-        override fun toString(): String = "E1(id=$id)"
+        override fun hashCode(): Int = idHashCode()
+        override fun toString(): String = toStringBuilder()
+            .add("name", name)
+            .toString()
     }
 
     data class Embeddable(

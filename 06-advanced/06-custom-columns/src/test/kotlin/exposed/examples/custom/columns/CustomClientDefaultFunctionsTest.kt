@@ -8,6 +8,7 @@ import io.bluetape4k.exposed.core.ksuidMillisGenerated
 import io.bluetape4k.exposed.core.snowflakeGenerated
 import io.bluetape4k.exposed.core.timebasedGenerated
 import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldHaveSize
@@ -58,7 +59,7 @@ class CustomClientDefaultFunctionsTest: JdbcExposedTestBase() {
         var ksuidMillis by ClientGenerated.ksuidMillis
 
         override fun equals(other: Any?): Boolean = idEquals(other)
-        override fun hashCode(): Int = id.hashCode()
+        override fun hashCode(): Int = idHashCode()
         override fun toString(): String = toStringBuilder()
             .add("timebasedUuid", timebasedUuid)
             .add("timebasedUuidString", timebasedUuidString)

@@ -5,6 +5,8 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.core.compress.compressedBinary
 import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
+import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.io.compressor.Compressors
 import io.bluetape4k.junit5.faker.Fakers
 import io.bluetape4k.logging.KLogging
@@ -61,8 +63,8 @@ class CompressedBinaryColumnTypeTest: JdbcExposedTestBase() {
         var zstdData: ByteArray? by T1.zstdData
 
         override fun equals(other: Any?): Boolean = idEquals(other)
-        override fun hashCode(): Int = id.hashCode()
-        override fun toString(): String = "E1(id=$id)"
+        override fun hashCode(): Int = idHashCode()
+        override fun toString(): String = toStringBuilder().toString()
     }
 
     @ParameterizedTest
