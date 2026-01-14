@@ -4,6 +4,7 @@ import exposed.examples.cache.AbstractCacheStrategyTest
 import exposed.examples.cache.domain.model.UserEventTable
 import exposed.examples.cache.domain.model.newUserEventDTO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
+import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.awaitility.kotlin.await
 import org.awaitility.kotlin.withPollInterval
@@ -34,7 +35,7 @@ class UserEventCacheRepositoryTest(
     @Test
     fun `write behind 로 대량의 데이테를 추가한다`() {
         transaction {
-            val totalCount = 1000
+            val totalCount = 10_000
             generateSequence { newUserEventDTO() }
                 .take(totalCount)
                 .chunked(100) { chunk ->
@@ -44,9 +45,14 @@ class UserEventCacheRepositoryTest(
 
             await
                 .atMost(Duration.ofSeconds(10))
-                .withPollInterval(Duration.ofMillis(500))
+                .withPollInterval(Duration.ofMillis(50))
                 .until {
-                    transaction { UserEventTable.selectAll().count() == totalCount.toLong() }
+                    transaction {
+                        // 캐시뿐 아니라 Write behind로 DB에 저장될 때까지 대기합니다.
+                        val savedEventCount = UserEventTable.selectAll().count()
+                        log.debug { "Saved event count:$savedEventCount" }
+                        savedEventCount >= totalCount.toLong()
+                    }
                 }
 
             UserEventTable.selectAll().count() shouldBeEqualTo totalCount.toLong()

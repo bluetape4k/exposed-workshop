@@ -18,7 +18,6 @@ import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
-import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.jdbc.deleteAll
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
@@ -75,7 +74,7 @@ class UserControllerTest(
             .asFlow()
             .toList()
 
-        users.shouldNotBeNull() shouldHaveSize userIdsInDB.size
+        users shouldHaveSize userIdsInDB.size
     }
 
     @Test
@@ -86,6 +85,7 @@ class UserControllerTest(
                 .returnResult<UserDTO>().responseBody
                 .awaitSingle()
 
+            log.debug { "User[$userId]: $user" }
             user.id shouldBeEqualTo userId
         }
     }
@@ -113,6 +113,7 @@ class UserControllerTest(
             .returnResult<UserDTO>().responseBody
             .awaitSingle()
 
+        log.debug { "Created user: $user" }
         user.id shouldBeEqualTo userDTO.id
     }
 
@@ -121,11 +122,12 @@ class UserControllerTest(
         repository.getAll(userIdsInDB)
 
         val invalidatedId = userIdsInDB.shuffled().take(3)
-        val invalidedCount = client
+        val invalidatedCount = client
             .httpDelete("/users/invalidate?ids=${invalidatedId.joinToString(",")}")
             .returnResult<Long>().responseBody
             .awaitSingle()
 
-        invalidedCount shouldBeEqualTo invalidatedId.size.toLong()
+        log.debug { "invalidated count: $invalidatedCount" }
+        invalidatedCount shouldBeEqualTo invalidatedId.size.toLong()
     }
 }

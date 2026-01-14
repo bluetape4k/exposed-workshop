@@ -41,7 +41,6 @@ class UserCacheRepositoryTest(
                 idsInDB.add(insertUser())
             }
         }
-        Thread.sleep(10)
     }
 
     private fun insertUser(): Long {
@@ -86,13 +85,15 @@ class UserCacheRepositoryTest(
         transaction {
             // DB에 있는 User를 검색
             val users = repository.getAll(userIdToSearch)
-            users shouldHaveSize userIdToSearch.size
+            log.debug { "Loaded users from DB: ${users.size}" }
             users.forEach {
                 log.debug { "Found user: $it" }
             }
+            users shouldHaveSize userIdToSearch.size
 
             // 캐시에서 검색
             val users2 = repository.getAll(userIdToSearch)
+            log.debug { "Loaded users from cache: ${users2.size}" }
             users2 shouldHaveSize userIdToSearch.size
         }
     }
@@ -102,10 +103,10 @@ class UserCacheRepositoryTest(
         val users = transaction {
             repository.findAll()
         }
-        users shouldHaveSize idsInDB.size
         users.forEach {
             log.debug { "Found user: $it" }
         }
+        users shouldHaveSize idsInDB.size
     }
 
     @Test
@@ -124,7 +125,9 @@ class UserCacheRepositoryTest(
         transaction {
             val userId = idsInDB.random()
 
+            log.debug { "Find user. userId: $userId" }
             val cachedUser = repository.get(userId)!!
+
             val updatedUser = cachedUser.copy(
                 firstName = "updatedFirstName-${Base58.randomString(8)}",
                 lastName = "updatedLastName-${Base58.randomString(8)}",
@@ -133,9 +136,12 @@ class UserCacheRepositoryTest(
             ).also {
                 it.avatar = faker.image().base64JPG().toByteArray()
             }
+            //  Writr through 로 DB에 저장
             repository.put(updatedUser)
 
+            // Write through로 DB에 저장되었는지, Cache가 아닌 DB에서 직접 읽어온다.
             val userFromDB = repository.findFreshById(userId)
+            log.debug { "User from DB: $userFromDB" }
             userFromDB shouldBeEqualTo updatedUser.copy(updatedAt = userFromDB!!.updatedAt)
         }
     }

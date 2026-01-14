@@ -65,7 +65,8 @@ class UserCredentialsControllerTest(
         val ucs = client
             .httpGet("/user-credentials")
             .returnResult<UserCredentialsDTO>().responseBody
-            .asFlow().toList()
+            .asFlow()
+            .toList()
 
         ucs shouldHaveSize idsInDB.size
     }
@@ -77,6 +78,8 @@ class UserCredentialsControllerTest(
                 .httpGet("/user-credentials/$id")
                 .returnResult<UserCredentialsDTO>().responseBody
                 .awaitSingle()
+
+            log.debug { "UserCredentials[$id]: $uc" }
             uc.id shouldBeEqualTo id
         }
     }
@@ -88,7 +91,8 @@ class UserCredentialsControllerTest(
         val ucs = client
             .httpGet("/user-credentials/all?ids=${ids.joinToString(",")}")
             .returnResult<UserCredentialsDTO>().responseBody
-            .asFlow().toList()
+            .asFlow()
+            .toList()
 
         ucs shouldHaveSize ids.size
         ucs.map { it.id } shouldContainSame ids
@@ -99,11 +103,12 @@ class UserCredentialsControllerTest(
         repository.getAll(idsInDB)
 
         val invalidatedIds = idsInDB.shuffled().take(3)
-        val invalidateCount = client
+        val invalidatedCount = client
             .httpDelete("/user-credentials/invalidate?ids=${invalidatedIds.joinToString(",")}")
             .returnResult<Long>().responseBody
             .awaitSingle()
 
-        invalidateCount shouldBeEqualTo invalidatedIds.size.toLong()
+        log.debug { "invalidated count: $invalidatedCount" }
+        invalidatedCount shouldBeEqualTo invalidatedIds.size.toLong()
     }
 }

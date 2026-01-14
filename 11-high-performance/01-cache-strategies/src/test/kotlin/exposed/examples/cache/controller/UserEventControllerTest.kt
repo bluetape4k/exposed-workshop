@@ -5,6 +5,7 @@ import exposed.examples.cache.domain.model.UserEventTable
 import exposed.examples.cache.domain.model.newUserEventDTO
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
+import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpPost
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
@@ -41,13 +42,15 @@ class UserEventControllerTest(
         response.shouldBeTrue()
 
         // 비동기로 처리되므로, await를 사용하여 결과를 기다림
-        await.atMost(Duration.ofSeconds(4))
+        await
+            .atMost(Duration.ofSeconds(4))
             .pollInterval(Duration.ofMillis(100))
             .until {
                 getCountOfUserEvents() == prevCount + 1L
             }
 
         val currCount = getCountOfUserEvents()
+        log.debug { "current count: $currCount, prev count: $prevCount" }
         currCount shouldBeEqualTo prevCount + 1L
     }
 
@@ -65,13 +68,15 @@ class UserEventControllerTest(
         response.shouldBeTrue()
 
         // 비동기로 처리되므로, await를 사용하여 결과를 기다림
-        await.atMost(Duration.ofSeconds(10))
+        await
+            .atMost(Duration.ofSeconds(10))
             .pollInterval(Duration.ofMillis(100))
             .until {
                 getCountOfUserEvents() == prevCount + insertCount
             }
 
         val currCount = getCountOfUserEvents()
+        log.debug { "current count: $currCount, insertCount: $insertCount, prev count: $prevCount" }
         currCount shouldBeEqualTo prevCount + insertCount
     }
 }

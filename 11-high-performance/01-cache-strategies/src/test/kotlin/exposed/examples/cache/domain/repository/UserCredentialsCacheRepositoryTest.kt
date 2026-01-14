@@ -5,6 +5,7 @@ import exposed.examples.cache.domain.model.UserCredentialsTable
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.eq
@@ -52,7 +53,9 @@ class UserCredentialsCacheRepositoryTest(
     fun `Read Through 로 기존 DB정보를 캐시에서 읽어오기`() {
         transaction {
             userCredentialsIdsInDB.forEach { ucId ->
+                log.debug { "Get user credentials. id: $ucId" }
                 val userCredentialsFromCache = repository.get(ucId)
+
                 log.debug { "Loaded user credentials from cache. id=$ucId, $userCredentialsFromCache" }
                 userCredentialsFromCache.shouldNotBeNull()
                 userCredentialsFromCache.id shouldBeEqualTo ucId
@@ -69,7 +72,11 @@ class UserCredentialsCacheRepositoryTest(
             val userCredentialsFromCache = repository.findAll {
                 UserCredentialsTable.id inList userCredentialsIdsInDB
             }
+            userCredentialsFromCache.forEach { uc ->
+                log.debug { "Founded user credentials: $uc" }
+            }
             userCredentialsFromCache shouldHaveSize userCredentialsIdsInDB.size
+            userCredentialsFromCache.map { it.id } shouldContainSame userCredentialsIdsInDB
         }
     }
 
@@ -78,6 +85,7 @@ class UserCredentialsCacheRepositoryTest(
         transaction {
             val userCredentialsFromCache = repository.getAll(userCredentialsIdsInDB)
             userCredentialsFromCache shouldHaveSize userCredentialsIdsInDB.size
+            userCredentialsFromCache.map { it.id } shouldContainSame userCredentialsIdsInDB
         }
     }
 }
