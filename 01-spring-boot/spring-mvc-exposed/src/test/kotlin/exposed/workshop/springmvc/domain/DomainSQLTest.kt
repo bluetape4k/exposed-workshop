@@ -12,6 +12,8 @@ import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.condition.EnabledOnJre
+import org.junit.jupiter.api.condition.JRE
 import org.springframework.transaction.annotation.Transactional
 
 class DomainSQLTest: AbstractSpringMvcTest() {
@@ -45,9 +47,13 @@ class DomainSQLTest: AbstractSpringMvcTest() {
         }
     }
 
+    @EnabledOnJre(JRE.JAVA_21)
     @Nested
     open inner class VirtualThread {
 
+        /**
+         * Retrieves and validates actors within virtual thread
+         */
         @RepeatedTest(REPEAT_SIZE)
         open fun `get all actors`() {
             virtualFuture {
@@ -58,6 +64,9 @@ class DomainSQLTest: AbstractSpringMvcTest() {
             }.await()
         }
 
+        /**
+         * Tests actor retrieval across multiple virtual threads
+         */
         @Test
         open fun `get all actors in multiple virtual threads`() {
             StructuredTaskScopeTester()

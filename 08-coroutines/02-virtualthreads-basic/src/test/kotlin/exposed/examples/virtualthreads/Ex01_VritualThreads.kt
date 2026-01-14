@@ -10,6 +10,7 @@ import io.bluetape4k.exposed.core.transactions.newVirtualThreadTransaction
 import io.bluetape4k.exposed.core.transactions.virtualThreadTransactionAsync
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
+import io.bluetape4k.exposed.dao.idValue
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -33,11 +34,14 @@ import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.statements.api.ExposedConnection
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
+import org.junit.jupiter.api.condition.EnabledOnJre
+import org.junit.jupiter.api.condition.JRE
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.concurrent.ExecutionException
 import kotlin.test.assertFailsWith
 
+@EnabledOnJre(JRE.JAVA_21)
 class Ex01_VritualThreads: JdbcExposedTestBase() {
 
     companion object: KLoggingChannel()
@@ -185,7 +189,7 @@ class Ex01_VritualThreads: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = "TesterEntity(id=$id)"
+        override fun toString(): String = "TesterEntity(id=$idValue)"
     }
 
     @ParameterizedTest

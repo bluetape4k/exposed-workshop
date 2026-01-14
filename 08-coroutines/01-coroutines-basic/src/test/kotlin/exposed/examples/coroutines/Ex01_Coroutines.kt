@@ -90,14 +90,14 @@ class Ex01_Coroutines: JdbcExposedTestBase() {
      * 내부에서는 `singleThreadDispatcher` 를 사용하여 하나의 Thread 에서 수행됩니다.
      * 비동기로 실행시키고 싶지만, 내부 코드가 한 스레드에서 실행되도록 하고 싶을 때 사용하는 기법입나다.
      *
-     * ```shell
-     * 07:56:23.937 DEBUG [r-worker-2 @coroutine#30] Exposed                             :37: DROP TABLE IF EXISTS coroutines_tester
-     * 07:56:23.954 DEBUG [r-worker-2 @coroutine#30] Exposed                             :37: CREATE TABLE IF NOT EXISTS coroutines_tester (id SERIAL PRIMARY KEY)
-     * 07:56:23.984 DEBUG [1-thread-1 @coroutine#31] Exposed                             :37: INSERT INTO coroutines_tester  DEFAULT VALUES
-     * 07:56:23.987 DEBUG [1-thread-1 @coroutine#32] Exposed                             :37: SELECT coroutines_tester.id FROM coroutines_tester WHERE coroutines_tester.id = 1
-     * 07:56:24.018 DEBUG [1-thread-1 @coroutine#34] Exposed                             :37: SELECT coroutines_tester.id FROM coroutines_tester WHERE coroutines_tester.id = 1
-     * 07:56:24.022 DEBUG [r-worker-2 @coroutine#35] Exposed                             :37: SELECT coroutines_tester.id FROM coroutines_tester WHERE coroutines_tester.id = 1
-     * 07:56:24.025 DEBUG [r-worker-2 @coroutine#30] Exposed                             :37: DROP TABLE IF EXISTS coroutines_tester
+     * ```console
+     * 07:56:23.937 DEBUG [r-worker-2 @coroutine#30] Exposed :37: DROP TABLE IF EXISTS coroutines_tester
+     * 07:56:23.954 DEBUG [r-worker-2 @coroutine#30] Exposed :37: CREATE TABLE IF NOT EXISTS coroutines_tester (id SERIAL PRIMARY KEY)
+     * 07:56:23.984 DEBUG [1-thread-1 @coroutine#31] Exposed :37: INSERT INTO coroutines_tester  DEFAULT VALUES
+     * 07:56:23.987 DEBUG [1-thread-1 @coroutine#32] Exposed :37: SELECT coroutines_tester.id FROM coroutines_tester WHERE coroutines_tester.id = 1
+     * 07:56:24.018 DEBUG [1-thread-1 @coroutine#34] Exposed :37: SELECT coroutines_tester.id FROM coroutines_tester WHERE coroutines_tester.id = 1
+     * 07:56:24.022 DEBUG [r-worker-2 @coroutine#35] Exposed :37: SELECT coroutines_tester.id FROM coroutines_tester WHERE coroutines_tester.id = 1
+     * 07:56:24.025 DEBUG [r-worker-2 @coroutine#30] Exposed :37: DROP TABLE IF EXISTS coroutines_tester
      * ```
      */
     @ParameterizedTest
@@ -302,6 +302,7 @@ class Ex01_Coroutines: JdbcExposedTestBase() {
      * 복수의 INSERT 작업을 동시에 수행하기
      *
      * Postgres 에 대한 작업 수행 로그
+     *
      * ```console
      * 12:16:01.574 DEBUG [-worker-17 @coroutine#53] Exposed                        :INSERT INTO coroutines_tester  DEFAULT VALUES
      * 12:16:01.574 DEBUG [r-worker-9 @coroutine#52] Exposed                        :INSERT INTO coroutines_tester  DEFAULT VALUES
