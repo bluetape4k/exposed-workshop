@@ -16,6 +16,8 @@ import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.condition.EnabledOnJre
+import org.junit.jupiter.api.condition.JRE
 
 @Suppress("DEPRECATION")
 class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
@@ -52,6 +54,7 @@ class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
         }
     }
 
+    @EnabledOnJre(JRE.JAVA_21)
     @Nested
     open inner class VirtualThread {
 

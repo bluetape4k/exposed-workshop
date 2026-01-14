@@ -9,6 +9,8 @@ import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.condition.EnabledOnJre
+import org.junit.jupiter.api.condition.JRE
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional
@@ -16,6 +18,7 @@ class SchemaRoutingConfigTest: AbstractMultitenantTest() {
 
     companion object: KLoggingChannel()
 
+    @EnabledOnJre(JRE.JAVA_21)
     @Test
     fun `get actors in korean`() {
         ScopedValue.where(TenantContext.CURRENT_TENANT, Tenants.Tenant.KOREAN).run {
@@ -27,6 +30,7 @@ class SchemaRoutingConfigTest: AbstractMultitenantTest() {
         }
     }
 
+    @EnabledOnJre(JRE.JAVA_21)
     @Test
     fun `get actors in english`() {
         ScopedValue.where(TenantContext.CURRENT_TENANT, Tenants.Tenant.ENGLISH).run {

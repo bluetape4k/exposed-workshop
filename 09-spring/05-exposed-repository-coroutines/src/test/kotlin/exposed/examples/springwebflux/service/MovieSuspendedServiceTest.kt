@@ -25,11 +25,12 @@ class MovieSuspendedServiceTest(
 
     @Test
     fun `newSuspendedTransaction 함수 안에서 사용하면 Transaction이 적용된다`(): Unit = runSuspendIO {
-        log.debug { "reactor 함수에서 @Transactional 적용하면 Transaction이 적용된다" }
+        log.debug { "suspend 함수는 newSuspendedTransaction 함수를 사용하면 Transaction이 적용된다." }
 
         newSuspendedTransaction(coroutineContext) {
             val movie = newMovieDTO()
             val savedMovie = movieService.suspendedSave(movie)
+            log.debug { "saved movie: $savedMovie" }
             savedMovie shouldBeEqualTo movie.copy(id = savedMovie.id)
         }
     }
