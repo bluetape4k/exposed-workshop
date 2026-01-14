@@ -1,5 +1,7 @@
 package exposed.examples.jpa.ex05_auditable
 
+import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
@@ -18,6 +20,9 @@ interface Auditable {
     val updatedAt: Instant?
 }
 
+/**
+ * Virtual Threads 를 사용할 경우에는 [ScopedValue]를 사용하고, 아니라면 ThreadLocal 을 사용하면 됩니다.
+ */
 object UserContext {
     const val DEFAULT_USERNAME = "system"
     val CURRENT_USER: ScopedValue<String?> = ScopedValue.newInstance()
@@ -67,8 +72,10 @@ abstract class AuditableEntity<ID: Any>(id: EntityID<ID>): Entity<ID>(id), Audit
         }
         return super.flush(batch)
     }
-}
 
+    override fun equals(other: Any?): Boolean = idEquals(other)
+    override fun hashCode(): Int = idHashCode()
+}
 
 abstract class AuditableIntIdTable(name: String = ""): AuditableIdTable<Int>(name) {
     final override val id = integer("id").autoIncrement().entityId()

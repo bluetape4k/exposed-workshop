@@ -3,8 +3,6 @@ package exposed.examples.jpa.ex05_auditable
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.exposed.dao.idEquals
-import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeGreaterOrEqualTo
@@ -13,9 +11,12 @@ import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.dao.EntityClass
 import org.jetbrains.exposed.v1.dao.entityCache
+import org.junit.jupiter.api.condition.EnabledOnJre
+import org.junit.jupiter.api.condition.JRE
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+@EnabledOnJre(JRE.JAVA_21)
 class Ex01_AuditableEntity: JdbcExposedTestBase() {
 
     object TaskTable: AuditableIntIdTable("tasks") {
@@ -36,8 +37,6 @@ class Ex01_AuditableEntity: JdbcExposedTestBase() {
         override var updatedBy by TaskTable.updatedBy
         override var updatedAt by TaskTable.updatedAt
 
-        override fun equals(other: Any?): Boolean = idEquals(other)
-        override fun hashCode(): Int = idHashCode()
         override fun toString(): String = toStringBuilder()
             .add("title", title)
             .add("description", description)

@@ -72,8 +72,9 @@ class Ex01_TreeNode: JdbcExposedTestBase() {
             val roots = TreeNode.find { TreeNodeTable.parentId.isNull() }.toList()
             roots shouldBeEqualTo listOf(root)
 
-            // child1 및 자손들을 모두 삭제
             /**
+             * child1 및 자손들을 모두 삭제
+             *
              * ```sql
              * -- Postgres
              * DELETE FROM tree_nodes WHERE tree_nodes.id = 5;

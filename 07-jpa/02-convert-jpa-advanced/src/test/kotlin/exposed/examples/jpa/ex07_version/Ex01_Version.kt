@@ -7,6 +7,7 @@ import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.debug
+import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.and
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
@@ -96,7 +97,7 @@ class Ex01_Version: JdbcExposedTestBase() {
                 it[price] = 100.0.toBigDecimal()
             }
             Products.selectAll().forEach {
-                println("Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}")
+                log.info { "Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}" }
             }
 
             // Check the initial version
@@ -105,7 +106,7 @@ class Ex01_Version: JdbcExposedTestBase() {
                 it[version] = Products.version + 1
             }
             Products.selectAll().forEach {
-                println("Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}")
+                log.info { "Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}" }
             }
             updatedRows shouldBeEqualTo 1
 
@@ -115,7 +116,7 @@ class Ex01_Version: JdbcExposedTestBase() {
                 it[version] = Products.version + 1
             }
             Products.selectAll().forEach {
-                println("Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}")
+                log.info { "Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}" }
             }
             updatedRows2 shouldBeEqualTo 0
         }
@@ -133,7 +134,7 @@ class Ex01_Version: JdbcExposedTestBase() {
             flushCache()
 
             Product.all().forEach {
-                println(it)
+                log.info { it }
             }
 
             // 2. p1 엔티티 를 업데이트 한다. (버전이 1로 올라간다)
@@ -142,7 +143,7 @@ class Ex01_Version: JdbcExposedTestBase() {
             entityCache.clear()
 
             Product.all().forEach {
-                println(it)
+                log.info { it }
             }
 
             // 3. DSL 로 업데이트 한다. (버전이 100로 올라간다)
@@ -174,7 +175,7 @@ class Ex01_Version: JdbcExposedTestBase() {
                 it[Products.version] = 0
             }
             Products.selectAll().forEach {
-                println("Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}")
+                log.info { "Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}" }
             }
 
             // UPDATE 된다. (id=2, version=1)
@@ -188,7 +189,7 @@ class Ex01_Version: JdbcExposedTestBase() {
                 it[Products.version] = 0
             }
             Products.selectAll().forEach {
-                println("Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}")
+                log.info { "Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}" }
             }
             results.insertedCount shouldBeEqualTo 1
 
@@ -206,10 +207,8 @@ class Ex01_Version: JdbcExposedTestBase() {
             failed.insertedCount shouldBeEqualTo 0
             // }
             Products.selectAll().forEach {
-                println("Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}")
+                log.info { "Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}" }
             }
         }
     }
-
-
 }
