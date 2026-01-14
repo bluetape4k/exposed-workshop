@@ -64,6 +64,6 @@ dependencies {
     testImplementation(Libs.javamoney_moneta)
 
     // Logcaptor
-    testImplementation("io.github.hakky54:logcaptor:2.10.0")
+    testImplementation(Libs.logcaptor)
 
 }
