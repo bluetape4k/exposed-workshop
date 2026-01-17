@@ -6,6 +6,7 @@ plugins {
     kotlin("kapt")
 
     id(Plugins.spring_boot)
+    id(Plugins.graalvm_native)
 }
 
 

@@ -22,6 +22,7 @@ plugins {
     id(Plugins.spring_boot) version Plugins.Versions.spring_boot apply false
 
     id(Plugins.testLogger) version Plugins.Versions.testLogger
+    id(Plugins.graalvm_native) version Plugins.Versions.graalvm_native apply false
 }
 
 // NOTE: Github 에 등록된 Package 를 다운받기 위해서 사용합니다.

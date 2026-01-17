@@ -1,5 +1,6 @@
 plugins {
     kotlin("plugin.spring")
+    id(Plugins.graalvm_native)
 }
 
 @Suppress("UnstableApiUsage")

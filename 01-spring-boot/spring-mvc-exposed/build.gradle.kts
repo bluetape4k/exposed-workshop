@@ -1,6 +1,7 @@
 plugins {
     kotlin("plugin.spring")
     id(Plugins.spring_boot)
+    id(Plugins.graalvm_native)
     id(Plugins.gatling) version Plugins.Versions.gatling
 }
 
