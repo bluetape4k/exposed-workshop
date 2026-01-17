@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     base
-    `maven-publish`
     // jacoco
     kotlin("jvm") version Versions.kotlin
 
@@ -22,14 +21,7 @@ plugins {
     id(Plugins.dependency_management) version Plugins.Versions.dependency_management
     id(Plugins.spring_boot) version Plugins.Versions.spring_boot apply false
 
-    id(Plugins.dokka) version Plugins.Versions.dokka
     id(Plugins.testLogger) version Plugins.Versions.testLogger
-    id(Plugins.shadow) version Plugins.Versions.shadow apply false
-
-    id(Plugins.graalvm_native) version Plugins.Versions.graalvm_native apply false
-
-    // for JMolecules
-    id("net.bytebuddy.byte-buddy-gradle-plugin") version "1.15.10" apply false
 }
 
 // NOTE: Github 에 등록된 Package 를 다운받기 위해서 사용합니다.
@@ -61,22 +53,11 @@ allprojects {
 }
 
 subprojects {
-    if (name == "bluetape4k-bom") {
-        return@subprojects
-    }
-
     apply {
         plugin<JavaLibraryPlugin>()
-
         // Kotlin 1.9.20 부터는 pluginId 를 지정해줘야 합니다.
         plugin("org.jetbrains.kotlin.jvm")
-
-        // plugin("jacoco")
-        plugin("maven-publish")
-
         plugin(Plugins.dependency_management)
-
-        plugin(Plugins.dokka)
         plugin(Plugins.testLogger)
     }
 
@@ -167,25 +148,6 @@ subprojects {
             finalizedBy(reportMerge)
             reportMerge.configure {
                 input.from(this@detekt.xmlReportFile)
-            }
-        }
-
-
-        // https://kotlin.github.io/dokka/1.6.0/user_guide/gradle/usage/
-        withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
-            val javadocDir = layout.buildDirectory.asFile.get().resolve("javadoc")
-            outputDirectory.set(javadocDir)
-            // outputDirectory.set(layout.buildDirectory.asFile.get().resolve("javadoc"))
-            dokkaSourceSets {
-                configureEach {
-                    includes.from("README.md")
-                }
-            }
-        }
-
-        dokka {
-            dokkaPublications.html {
-                outputDirectory.set(project.file("docs/api"))
             }
         }
 
@@ -460,7 +422,6 @@ subprojects {
         compileOnly(platform(Libs.kotlinx_coroutines_bom))
 
         api(Libs.kotlin_stdlib)
-        api(Libs.kotlin_stdlib_jdk8)
         api(Libs.kotlin_reflect)
         api(Libs.kotlinx_atomicfu)
         testImplementation(Libs.kotlin_test)
@@ -472,15 +433,11 @@ subprojects {
         api(Libs.slf4j_api)
         api(Libs.bluetape4k_logging)
         implementation(Libs.logback)
-        testImplementation(Libs.jcl_over_slf4j)
-        testImplementation(Libs.jul_to_slf4j)
-        testImplementation(Libs.log4j_over_slf4j)
 
         // JUnit 5
         testImplementation(Libs.bluetape4k_junit5)
         testImplementation(Libs.junit_jupiter)
         testRuntimeOnly(Libs.junit_platform_engine)
-        testImplementation(Libs.junit_jupiter_migrationsupport)
 
         testImplementation(Libs.kluent)
         testImplementation(Libs.mockk)

@@ -2,152 +2,158 @@
 
 ## 1. Exposed Quick starts examples
 
-- [ ] Spring Boot MVC Rest API with Exposed
-- [ ] Spring Boot Webflux REST API with Exposed Suspended
+- [X] Spring Boot MVC Rest API with Exposed
+- [X] Spring Boot Webflux REST API with Exposed Suspended
 
 ## 2. Alternatives to JPA - Asynchronous Database Access
 
-- [ ] Hibernate Reactive
-- [ ] R2DBC
-- [ ] Vertx SQL Client (with MyBatis SQL Builder)
-- [ ] Exposed with Coroutines
-- [ ] Virtual Threads with JPA
+- [X] Hibernate Reactive
+- [X] R2DBC
+- [X] Vertx SQL Client (with MyBatis SQL Builder)
+- [X] Exposed with Coroutines
+- [X] Virtual Threads with JPA
 
 ## 3. Test enviroment for Exposed
 
-- [ ] JUnit 5
-- [ ] TestContainers
-- [ ] Databases
-    - [ ] H2
-    - [ ] Postgres
-    - [ ] MySQL V8
+- [X] JUnit 5
+- [X] TestContainers
+- [X] Databases
+    - [X] H2
+    - [X] Postgres
+    - [X] MySQL V8
 
 ## 3. Basic Features in Exposed
 
-- [ ] SQL DSL
-- [ ] Table 정의 및 생성
-    - [ ] Table 종류
-    - [ ] 다양한 컬럼 정의
-    - [ ] Primary Key
-        - [ ] Auto Increment
-        - [ ] Client Generated
-    - [ ] Foreign Key
-    - [ ] Index
-    - [ ] Unique Index
-    - [ ] Default Value (DB Default Value, Client Default Value)
+- [X] SQL DSL
+- [X] Table 정의 및 생성
+    - [X] Table 종류
+    - [X] 다양한 컬럼 정의
+    - [X] Primary Key
+        - [X] Auto Increment
+        - [X] Client Generated
+    - [X] Foreign Key
+    - [X] Index
+    - [X] Unique Index
+    - [X] Default Value (DB Default Value, Client Default Value)
 
-- [ ] SELECT
-- [ ] INSERT
-- [ ] UPDATE
-- [ ] DELETE
-- [ ] ORDER BY
-- [ ] JOIN
-- [ ] GROUP BY
-- [ ] HAVING
-- [ ] LIMIT & OFFSET
-- [ ] Subquery
-- [ ] Aggregation
-- [ ] Transaction
-- [ ] Batch Insert
-- [ ] Batch Update
-- [ ] Batch Delete
-- [ ] INSERT INTO SELECT
-- [ ] MergeFrom
+- [X] SELECT
+- [X] INSERT
+- [X] UPDATE
+- [X] DELETE
+- [X] ORDER BY
+- [X] JOIN
+- [X] GROUP BY
+- [X] HAVING
+- [X] LIMIT & OFFSET
+- [X] Subquery
+- [X] Aggregation
+- [X] Transaction
+- [X] Batch Insert
+- [X] Batch Update
+- [X] Batch Delete
+- [X] INSERT INTO SELECT
+- [X] MergeFrom
 
 ## 4. Advanced Features in Exposed
 
-- [ ] Expressions
-- [ ] Functions
-- [ ] Transformation (Column Values)
-- [ ] Composite Primary Key
-- [ ] CTE (Common Table Expression)
+- [X] Expressions
+- [X] Functions
+- [X] Transformation (Column Values)
+- [X] Composite Primary Key
+- [X] CTE (Common Table Expression)
 
 ## 5. Define Custom ID Table & Entity
 
-- [ ] Entity
-    - [ ] Auto Increment ID
-    - [ ] Client Generated ID
+- [X] Entity
+    - [X] Auto Increment ID
+    - [X] Client Generated ID
 
 ## 6. Advanded Data types
 
-- [ ] Array Column for Postgres
-- [ ] JSON
-    - [ ] JSON Column
-    - [ ] JSONB Column
-- [ ] Java Time Column
-- [ ] Kotlin DateTime Column
-- [ ] Money Column
+- [X] Array Column for Postgres
+- [X] JSON
+    - [X] JSON Column
+    - [X] JSONB Column
+- [X] Java Time Column
+- [X] Kotlin DateTime Column
+- [X] Money Column
 
 ## 7. Define Other Data Types
 
 - Custom EntityID
-    - [ ] Snowflake ID for EntityID
-    - [ ] Timebased UUID for EntityID
-    - [ ] Base62 encoded UUID for EntityID
+    - [X] Snowflake ID for EntityID
+    - [X] Timebased UUID for EntityID
+    - [X] Base62 encoded UUID for EntityID
 - Object Column
-    - [ ] Binary Serialized Column
-        - [ ] JDK Built-in Serializer
-        - [ ] Kryo Serializer
-        - [ ] Protobuf Serializer
-        - [ ] Avro Serializer
-        - [ ] Fury Serializer
-    - [ ] Compressed Column
-        - [ ] GZIP Column
-        - [ ] LZ4 Column
-        - [ ] Snappy Column
-        - [ ] ZSTD Column
-    - [ ] Encrypted Column
+    - [X] Binary Serialized Column
+        - [X] JDK Built-in Serializer
+        - [X] Kryo Serializer
+        - [X] Protobuf Serializer
+        - [X] Avro Serializer
+        - [X] Fury Serializer
+    - [X] Compressed Column
+        - [X] GZIP Column
+        - [X] LZ4 Column
+        - [X] Snappy Column
+        - [X] ZSTD Column
+    - [X] Encrypted Column
 - JSON Column using Jackson
-    - [ ] jackson function for JSON Column
+    - [X] jackson function for JSON Column
 
 ## 7. Migration JPA Entity to Exposed Entity
 
-- [ ] Simple Entity
-- [ ] Relationships
-    - [ ] One To One
-    - [ ] One To Many
-        - [ ] List
-        - [ ] Set
-        - [ ] Map
-    - [ ] Many To One
-    - [ ] Many To Many
-- [ ] Hierarchy
-    - [ ] Self Referencing
-    - [ ] Relation Table
-- [ ] Inheritance
-    - [ ] Single Table
-    - [ ] Table Per Class
-    - [ ] Joined Table
+- [X] Simple Entity
+- [X] Relationships
+    - [X] One To One
+    - [X] One To Many
+        - [X] List
+        - [X] Set
+        - [X] Map
+    - [X] Many To One
+    - [X] Many To Many
+- [X] Hierarchy
+    - [X] Self Referencing
+    - [X] Relation Table
+- [X] Inheritance
+    - [X] Single Table
+    - [X] Table Per Class
+    - [X] Joined Table
 
 ## 8. Exposed with Coroutines
 
-- [ ] Transactional Coroutines
-    - [ ] newSuspendedTransaction
+- [X] Transactional Coroutines
+    - [X] newSuspendedTransaction
 
-- [ ] Dispatchers
-    - [ ] Dispatchers.IO
-    - [ ] Dispatchers.VT
+- [X] Dispatchers
+    - [X] Dispatchers.IO
+    - [X] Dispatchers.VT
 
 ## 9. Integration with Spring Boot
 
-- [ ] Using Spring Transaction
-- [ ] Spring Boot MVC
-    - [ ] Platform Threads
-    - [ ] Virtual Threads
-- [ ] Spring Boot Webflux + Coroutines
-- [ ] Implement ExposedRepository
+- [X] Using Spring Transaction
+- [X] Spring Boot MVC
+    - [X] Platform Threads
+    - [X] Virtual Threads
+- [X] Spring Boot Webflux + Coroutines
+- [X] Implement ExposedRepository
 
-## 10. Migration Existing Database (Flyway)
+## 10. Multi-tenant Application
+
+- [X] Multitenant with Spring MVC
+- [X] Multitenant with Spring MVC and Virtual Threads
+- [X] Multitenant with Spring Webflux and Coroutines
+
+## 11. Exposed with Redisson (Cache Strategy)
+
+- [X] Read Through
+- [X] Write Through
+- [X] Write Behind
+
+## 12. Migration Existing Database (Flyway)
 
 - [ ] MigrationUtils in Exposed
 - [ ] Using Flyway for Migration
 
-## 11. Exposed with Redisson (Cache Strategy)
-
-- [ ] Read Through
-- [ ] Write Through
-- [ ] Write Behind
-
-## 12. Exposed with Spring Modulith
+## 13. Exposed with Spring Modulith
 
 - [ ] Spring Modulith & Application Events
