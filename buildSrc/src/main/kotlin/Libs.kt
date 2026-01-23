@@ -63,7 +63,7 @@ object Plugins {
 object Versions {
 
     // Java 21, Kotlin 2.0 이상에서 사용하세요
-    const val bluetape4k = "0.1.5"    // Bluetape4k Github Package 로 배포됩니다.
+    const val bluetape4k = "0.1.6-SNAPSHOT"    // Bluetape4k Github Package 로 배포됩니다.
 
     const val kotlin = "2.3.0"                 // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
     const val kotlinx_coroutines = "1.10.2"      // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
@@ -302,10 +302,16 @@ object Libs {
 
     // AWS
     val bluetape4k_aws_core = bluetape4k("aws-core")
-    // val bluetape4k_aws_dynamodb = bluetape4k("aws-dynamodb")
+    val bluetape4k_aws_dynamodb = bluetape4k("aws-dynamodb")
     val bluetape4k_aws_s3 = bluetape4k("aws-s3")
-    // val bluetape4k_aws_ses = bluetape4k("aws-ses")
+    val bluetape4k_aws_ses = bluetape4k("aws-ses")
     val bluetape4k_aws_sqs = bluetape4k("aws-sqs")
+
+    val bluetape4k_aws_kotlin_core = bluetape4k("aws-kotlin-core")
+    val bluetape4k_aws_kotlin_dynamodb = bluetape4k("aws-kotlin-dynamodb")
+    val bluetape4k_aws_kotlin_s3 = bluetape4k("aws-kotlin-s3")
+    val bluetape4k_aws_kotlin_ses = bluetape4k("aws-kotlin-ses")
+    val bluetape4k_aws_kotlin_sqs = bluetape4k("aws-kotlin-sqs")
 
     // UTILS
     val bluetape4k_captcha = bluetape4k("captcha")
@@ -314,12 +320,12 @@ object Libs {
     val bluetape4k_geoip2 = bluetape4k("geoip2")
     val bluetape4k_idgenerators = bluetape4k("idgenerators")
     val bluetape4k_images = bluetape4k("images")
+    val bluetape4k_javatimes = bluetape4k("javatimes")
     val bluetape4k_jwt = bluetape4k("jwt")
     val bluetape4k_math = bluetape4k("math")
     val bluetape4k_mutiny = bluetape4k("mutiny")
     val bluetape4k_money = bluetape4k("money")
-    val bluetape4k_times = bluetape4k("times")
-    val bluetape4k_units = bluetape4k("unit")
+    val bluetape4k_units = bluetape4k("units")
 
     // VERTX
     val bluetape4k_vertx_core = bluetape4k("vertx-core")
@@ -332,8 +338,6 @@ object Libs {
     val kotlin_bom = kotlin("bom")
     val kotlin_stdlib = kotlin("stdlib")
     val kotlin_stdlib_common = kotlin("stdlib-common")
-    val kotlin_stdlib_jdk7 = kotlin("stdlib-jdk7")
-    val kotlin_stdlib_jdk8 = kotlin("stdlib-jdk8")
     val kotlin_reflect = kotlin("reflect")
     val kotlin_test = kotlin("test")
     val kotlin_test_common = kotlin("test-common")
