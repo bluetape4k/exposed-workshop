@@ -6,6 +6,7 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IdTable
+import org.jetbrains.exposed.v1.core.java.javaUUID
 import org.jetbrains.exposed.v1.dao.Entity
 import org.jetbrains.exposed.v1.dao.EntityBatchUpdate
 import org.jetbrains.exposed.v1.javatime.CurrentTimestamp
@@ -88,7 +89,7 @@ abstract class AuditableLongIdTable(name: String = ""): AuditableIdTable<Long>(n
 }
 
 abstract class AuditableUUIDTable(name: String = ""): AuditableIdTable<UUID>(name) {
-    final override val id = uuid("id").clientDefault { UUID.randomUUID() }.entityId()
+    final override val id = javaUUID("id").clientDefault { UUID.randomUUID() }.entityId()
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 }
 

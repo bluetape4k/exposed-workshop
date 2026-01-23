@@ -14,6 +14,7 @@ import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.transactions.JdbcTransactionManager
 import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.v1.jdbc.transactions.inTopLevelTransaction
@@ -73,7 +74,7 @@ class Ex01_TransactionIsolation: JdbcExposedTestBase() {
         val db = Database.connect(
             HikariDataSource(setupHikariConfig(testDB, "TRANSACTION_REPEATABLE_READ"))
         )
-        val manager: TransactionManager = TransactionManager.managerFor(db)
+        val manager: JdbcTransactionManager = TransactionManager.managerFor(db)
 
         transaction(db) {
             // transaction manager should use database default since no level is provided other than hikari

@@ -22,11 +22,12 @@ import org.amshove.kluent.shouldContain
 import org.amshove.kluent.shouldContainSame
 import org.jetbrains.exposed.v1.core.SortOrder
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
-import org.jetbrains.exposed.v1.core.dao.id.UUIDTable
-import org.jetbrains.exposed.v1.dao.UUIDEntity
-import org.jetbrains.exposed.v1.dao.UUIDEntityClass
+import org.jetbrains.exposed.v1.core.dao.id.java.UUIDTable
+import org.jetbrains.exposed.v1.core.java.javaUUID
 import org.jetbrains.exposed.v1.dao.entityCache
 import org.jetbrains.exposed.v1.dao.flushCache
+import org.jetbrains.exposed.v1.dao.java.UUIDEntity
+import org.jetbrains.exposed.v1.dao.java.UUIDEntityClass
 import org.jetbrains.exposed.v1.dao.with
 import org.jetbrains.exposed.v1.jdbc.SizedIterable
 import org.jetbrains.exposed.v1.jdbc.exists
@@ -111,7 +112,7 @@ object UUIDTables {
      * ```
      */
     object Towns: UUIDTable("towns") {
-        val cityId = uuid("city_id").references(Cities.id)
+        val cityId = javaUUID("city_id").references(Cities.id)
     }
 
     class City(id: EntityID<UUID>): UUIDEntity(id) {

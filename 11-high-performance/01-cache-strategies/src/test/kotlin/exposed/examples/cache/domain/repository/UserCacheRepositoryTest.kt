@@ -140,7 +140,7 @@ class UserCacheRepositoryTest(
             repository.put(updatedUser)
 
             // Write through로 DB에 저장되었는지, Cache가 아닌 DB에서 직접 읽어온다.
-            val userFromDB = repository.findFreshById(userId)
+            val userFromDB = repository.findByIdFromDb(userId)
             log.debug { "User from DB: $userFromDB" }
             userFromDB shouldBeEqualTo updatedUser.copy(updatedAt = userFromDB!!.updatedAt)
         }

@@ -15,6 +15,7 @@ import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.java.javaUUID
 import org.jetbrains.exposed.v1.dao.IntEntity
 import org.jetbrains.exposed.v1.dao.IntEntityClass
 import org.jetbrains.exposed.v1.dao.entityCache
@@ -42,7 +43,7 @@ class CustomClientDefaultFunctionsTest: JdbcExposedTestBase() {
      * ```
      */
     object ClientGenerated: IntIdTable() {
-        val timebasedUuid: Column<UUID> = uuid("timebased_uuid").timebasedGenerated()
+        val timebasedUuid: Column<UUID> = javaUUID("timebased_uuid").timebasedGenerated()
         val timebasedUuidString: Column<String> = varchar("timebased_uuid_string", 36).timebasedGenerated()
         val snowflake: Column<Long> = long("snowflake").snowflakeGenerated()
         val ksuid: Column<String> = varchar("ksuid", 27).ksuidGenerated()

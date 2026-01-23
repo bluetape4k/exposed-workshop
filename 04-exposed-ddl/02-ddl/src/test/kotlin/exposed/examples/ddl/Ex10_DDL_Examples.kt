@@ -41,6 +41,7 @@ import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.greaterEq
 import org.jetbrains.exposed.v1.core.isNotNull
+import org.jetbrains.exposed.v1.core.java.javaUUID
 import org.jetbrains.exposed.v1.core.less
 import org.jetbrains.exposed.v1.core.neq
 import org.jetbrains.exposed.v1.core.vendors.H2Dialect
@@ -1015,7 +1016,7 @@ class Ex10_DDL_Examples: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `uuid column type`(testDB: TestDB) {
         val node = object: IntIdTable("node") {
-            val uuid = uuid("uuid")
+            val uuid = javaUUID("uuid")
         }
 
         withTables(testDB, node) {
