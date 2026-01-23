@@ -246,7 +246,9 @@ class Ex10_DDL_Examples: JdbcExposedTestBase() {
             val q = db.identifierManager.quoteString
 
             // MySQL 테이블 명에는 back-quote(`) 를 사용하지 않네요.
-            val tableName = if (currentDialectTest.needsQuotesWhenSymbolsInNames && testDB !in TestDB.ALL_MYSQL) {
+            val shouldBeQuoted = currentDialectTest.needsQuotesWhenSymbolsInNames &&
+                    db.identifierManager.needQuotes("unnamedTable$1")
+            val tableName = if (shouldBeQuoted) {
                 "$q${"unnamedTable$1".inProperCase()}$q"
             } else {
                 "unnamedTable$1".inProperCase()
@@ -258,7 +260,8 @@ class Ex10_DDL_Examples: JdbcExposedTestBase() {
 
             val expectedDDL =
                 "CREATE TABLE " + addIfNotExistsIfSupported() + "$tableName " +
-                        "(${"id".inProperCase()} $integerType PRIMARY KEY," + " $q${"name".inProperCase()}$q $varCharType NOT NULL)"
+                        "(${"id".inProperCase()} $integerType PRIMARY KEY," +
+                        " $q${"name".inProperCase()}$q $varCharType NOT NULL)"
 
             val unnamedTableDDL = unnamedTable.ddl.single()
             log.debug { "Expected DDL: $expectedDDL" }
