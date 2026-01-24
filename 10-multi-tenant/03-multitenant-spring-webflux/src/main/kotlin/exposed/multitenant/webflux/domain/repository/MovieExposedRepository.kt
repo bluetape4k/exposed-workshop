@@ -93,8 +93,7 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
 
         val join = table.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
 
-        // TODO: bufferedUntilChange() 를 사용하여 성능 개선 가능
-        val movies = join
+        return join
             .select(
                 MovieTable.id,
                 MovieTable.name,
@@ -105,27 +104,13 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
                 ActorTable.lastName,
                 ActorTable.birthday
             )
-            .groupingBy { it[MovieTable.id] }
-            .fold(mutableListOf<MovieWithActorDTO>()) { acc, row ->
-                val lastMovieId = acc.lastOrNull()?.id
-                if (lastMovieId != row[MovieTable.id].value) {
-                    val movie = MovieWithActorDTO(
-                        id = row[MovieTable.id].value,
-                        name = row[MovieTable.name],
-                        producerName = row[MovieTable.producerName],
-                        releaseDate = row[MovieTable.releaseDate].toString(),
-                    )
-                    acc.add(movie)
-                } else {
-                    acc.lastOrNull()?.actors?.let {
-                        val actor = row.toActorDTO()
-                        it.add(actor)
-                    }
-                }
-                acc
-            }
+            .groupBy { it[MovieTable.id] }
+            .map { (_, rows) ->
+                val movie = rows.first().toMovieDTO()
+                val actor = rows.map { it.toActorDTO() }
 
-        return movies.values.flatten()
+                movie.toMovieWithActorDTO(actor)
+            }
     }
 
 
