@@ -25,7 +25,7 @@ class ActorExposedRepository: ExposedRepository<ActorDTO, Long> {
     override fun ResultRow.toEntity() = toActorDTO()
 
     /**
-     * 주어진 조건에 맞는 [ActorEntity]를 조회합니다.
+     * 주어진 조건에 맞는 [ActorDTO]를 조회합니다.
      */
     @Transactional(readOnly = true)
     fun searchActors(params: Map<String, String?>): List<ActorDTO> {
@@ -43,6 +43,9 @@ class ActorExposedRepository: ExposedRepository<ActorDTO, Long> {
         return query.map { it.toEntity() }
     }
 
+    /**
+     * 새로운 Actor 레코드를 INSERT 합니다.
+     */
     @Transactional
     fun create(actor: ActorDTO): ActorDTO {
         log.debug { "Create new actor. actor: $actor" }
@@ -50,7 +53,9 @@ class ActorExposedRepository: ExposedRepository<ActorDTO, Long> {
         val id = ActorTable.insertAndGetId {
             it[firstName] = actor.firstName
             it[lastName] = actor.lastName
-            it[birthday] = actor.birthday?.let { LocalDate.parse(it) }
+            actor.birthday?.let { day ->
+                it[birthday] = runCatching { LocalDate.parse(day) }.getOrNull()
+            }
         }
         return actor.copy(id = id.value)
     }

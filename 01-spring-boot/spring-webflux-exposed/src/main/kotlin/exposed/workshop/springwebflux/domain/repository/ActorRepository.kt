@@ -53,8 +53,8 @@ class ActorRepository {
         return ActorEntity.new {
             firstName = actor.firstName
             lastName = actor.lastName
-            actor.birthday?.let {
-                birthday = runCatching { LocalDate.parse(actor.birthday) }.getOrNull()
+            actor.birthday?.let { day ->
+                birthday = runCatching { LocalDate.parse(day) }.getOrNull()
             }
         }
     }

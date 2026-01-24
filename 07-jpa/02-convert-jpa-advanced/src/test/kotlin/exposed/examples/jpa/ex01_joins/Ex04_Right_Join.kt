@@ -83,8 +83,8 @@ class Ex04_Right_Join: JdbcExposedTestBase() {
                 .orderBy(im[items.id], SortOrder.ASC_NULLS_FIRST)
                 .map {
                     OrderRecord(
-                        itemId = it[im[items.id]]?.value,
                         orderId = it[om[orders.id]]?.value,
+                        itemId = it[im[items.id]].value,
                         quantity = it[ol[orderLines.quantity]],
                         description = it[im[items.description]]
                     )
@@ -163,8 +163,8 @@ class Ex04_Right_Join: JdbcExposedTestBase() {
                 .orderBy(im[items.id], SortOrder.ASC_NULLS_FIRST)
                 .map {
                     OrderRecord(
-                        itemId = it[im[items.id]]?.value,
                         orderId = it[om[orders.id]]?.value,
+                        itemId = it[im[items.id]].value,
                         quantity = it[ol[orderLines.quantity]],
                         description = it[im[items.description]]
                     )
@@ -211,7 +211,7 @@ class Ex04_Right_Join: JdbcExposedTestBase() {
     fun `right join without aliases`(testDB: TestDB) {
         withOrdersTables(testDB) { orders, _, items, orderLines, _ ->
 
-            val slice = listOf(
+            val columns = listOf(
                 orders.id,
                 orderLines.quantity,
                 items.id,
@@ -223,13 +223,13 @@ class Ex04_Right_Join: JdbcExposedTestBase() {
                 .rightJoin(items) { orderLines.itemId eq items.id }
 
             val records = rightJoin
-                .select(slice)
+                .select(columns)
                 .orderBy(orders.id, SortOrder.ASC_NULLS_FIRST)
                 .orderBy(items.id, SortOrder.ASC_NULLS_FIRST)
                 .map {
                     OrderRecord(
-                        itemId = it[items.id]?.value,
                         orderId = it[orders.id]?.value,
+                        itemId = it[items.id].value,
                         quantity = it[orderLines.quantity],
                         description = it[items.description]
                     )

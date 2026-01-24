@@ -44,10 +44,10 @@ class ActorExposedRepository: ExposedRepository<ActorDTO, Long> {
         log.debug { "Create Actor. actor: $actor" }
 
         val id = ActorTable.insertAndGetId {
-            it[ActorTable.firstName] = actor.firstName
-            it[ActorTable.lastName] = actor.lastName
-            actor.birthday?.let { birthday ->
-                it[ActorTable.birthday] = runCatching { LocalDate.parse(birthday) }.getOrNull()
+            it[firstName] = actor.firstName
+            it[lastName] = actor.lastName
+            actor.birthday?.let { day ->
+                it[birthday] = runCatching { LocalDate.parse(day) }.getOrNull()
             }
         }
 

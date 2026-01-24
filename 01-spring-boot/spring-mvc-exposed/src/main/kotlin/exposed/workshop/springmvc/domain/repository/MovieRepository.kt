@@ -155,10 +155,12 @@ class MovieRepository(
     fun getMovieWithActors(movieId: Long): MovieWithActorDTO? {
         log.debug { "Get Movie with actors. movieId=$movieId" }
 
+        // DAO 방식
         return MovieEntity.findById(movieId)
             ?.load(MovieEntity::actors)
             ?.toMovieWithActorDTO()
 
+        // SQL 방식
 //        return MovieTable.selectAll()
 //            .where { MovieTable.id eq movieId }
 //            .singleOrNull()?.let {
@@ -176,7 +178,11 @@ class MovieRepository(
         val join = MovieTable.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
 
         return join
-            .select(MovieTable.id, MovieTable.name, ActorTable.id.count())
+            .select(
+                MovieTable.id,
+                MovieTable.name,
+                ActorTable.id.count()
+            )
             .groupBy(MovieTable.id)
             .map {
                 MovieActorCountDTO(
@@ -208,7 +214,11 @@ class MovieRepository(
             ) {
                 MovieTable.producerName eq ActorTable.firstName
             }
-            .select(MovieTable.name, ActorTable.firstName, ActorTable.lastName)
+            .select(
+                MovieTable.name,
+                ActorTable.firstName,
+                ActorTable.lastName
+            )
 
         return query.map { it.toMovieWithProducingActorDTO() }
     }

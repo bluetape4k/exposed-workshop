@@ -126,8 +126,9 @@ object OrderSchema {
     }
 
     data class OrderRecord(
-        val itemId: Long? = null,
         val orderId: Long? = null,
+        val itemId: Long? = null,
+
         val quantity: Int? = null,
         val description: String? = null,
     ): Comparable<OrderRecord>, Serializable {

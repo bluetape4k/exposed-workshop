@@ -56,7 +56,7 @@ class ActorRepository {
             it[firstName] = actor.firstName
             it[lastName] = actor.lastName
             actor.birthday?.let { day ->
-                it[birthday] = LocalDate.parse(day)
+                it[birthday] = runCatching { LocalDate.parse(day) }.getOrNull()
             }
         }
         return actor.copy(id = actorId.value)
