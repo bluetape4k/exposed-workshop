@@ -8,9 +8,9 @@ import exposed.shared.tests.expectException
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.insertAndWait
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
@@ -142,13 +142,12 @@ class Ex02_Defaults: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("field", field)
-                .add("t1", t1)
-                .add("t2", t2)
-                .add("clientDefault", clientDefault)
-                .toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("field", field)
+            .add("t1", t1)
+            .add("t2", t2)
+            .add("clientDefault", clientDefault)
+            .toString()
     }
 
     @Test
@@ -964,10 +963,9 @@ class Ex02_Defaults: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("timestamp", timestamp)
-                .toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("timestamp", timestamp)
+            .toString()
     }
 
     /**

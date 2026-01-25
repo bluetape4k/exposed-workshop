@@ -3,12 +3,12 @@ package exposed.examples.cache.domain.model
 import exposed.examples.cache.utils.faker
 import io.bluetape4k.codec.Base58
 import io.bluetape4k.exposed.core.HasIdentifier
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62Entity
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62EntityClass
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62Table
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
@@ -41,7 +41,7 @@ class UserCredentialsEntity(id: EntityID<String>): TimebasedUUIDBase62Entity(id)
 
     override fun equals(other: Any?): Boolean = idEquals(other)
     override fun hashCode(): Int = idHashCode()
-    override fun toString(): String = toStringBuilder()
+    override fun toString(): String = entityToStringBuilder()
         .add("username", username)
         .add("email", email)
         .add("lastLoginAt", lastLoginAt)

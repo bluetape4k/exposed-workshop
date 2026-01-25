@@ -2,9 +2,9 @@ package exposed.examples.cache.coroutines.domain.model
 
 import exposed.examples.cache.coroutines.utils.faker
 import io.bluetape4k.exposed.core.HasIdentifier
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.idgenerators.snowflake.Snowflakers
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
@@ -57,7 +57,7 @@ class UserEventEntity(id: EntityID<Long>): LongEntity(id) {
 
     override fun equals(other: Any?): Boolean = idEquals(other)
     override fun hashCode(): Int = idHashCode()
-    override fun toString(): String = toStringBuilder()
+    override fun toString(): String = entityToStringBuilder()
         .add("username", username)
         .add("eventSource", eventSource)
         .add("eventType", eventType)

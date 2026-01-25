@@ -2,10 +2,12 @@ package exposed.examples.jpa.ex05_relations.ex03_many_to_one
 
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.idValue
-import io.bluetape4k.exposed.dao.toStringBuilder
+import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.ReferenceOption.CASCADE
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
@@ -15,7 +17,7 @@ import org.jetbrains.exposed.v1.dao.entityCache
 import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
 import org.jetbrains.exposed.v1.jdbc.SizedIterable
 
-object ManyToOneSchema {
+object ManyToOneSchema: KLogging() {
 
     /**
      * 양조장 테이블
@@ -57,7 +59,7 @@ object ManyToOneSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("name", name)
             .toString()
     }
@@ -70,7 +72,7 @@ object ManyToOneSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("name", name)
             .add("brewery id", brewery.idValue)
             .toString()
@@ -88,8 +90,12 @@ object ManyToOneSchema {
             val beer2 = Beer.new { name = "Special"; this.brewery = brewery1 }
             val beer3 = Beer.new { name = "Extra"; this.brewery = brewery1 }
 
+            log.debug { "beer1=$beer1, beer2=$beer2, beer3=$beer3" }
+
             val beer4 = Beer.new { name = "Black"; this.brewery = brewery2 }
             val beer5 = Beer.new { name = "White"; this.brewery = brewery2 }
+
+            log.debug { "beer4=$beer4, beer5=$beer5" }
 
             entityCache.clear()
 
@@ -135,7 +141,7 @@ object ManyToOneSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("name", name)
             .toString()
     }
@@ -148,7 +154,7 @@ object ManyToOneSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("name", name)
             .add("jug id", memberOf.idValue)
             .toString()
@@ -162,6 +168,8 @@ object ManyToOneSchema {
             val jug = Jug.new { name = "Jug Summer camp" }
             val emmanuel = JugMeter.new { name = "Emmanuel Bernard"; this.memberOf = jug }
             val jerome = JugMeter.new { name = "Jerome"; this.memberOf = jug }
+
+            log.debug { "jug=$jug emmanuel=$emmanuel, jerome=$jerome" }
 
             commit()
             entityCache.clear()
@@ -210,11 +218,9 @@ object ManyToOneSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String {
-            return toStringBuilder()
-                .add("name", name)
-                .toString()
-        }
+        override fun toString(): String = entityToStringBuilder()
+            .add("name", name)
+            .toString()
     }
 
     class SalesGuy(id: EntityID<Int>): IntEntity(id) {
@@ -225,7 +231,7 @@ object ManyToOneSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("name", name)
             .add("salesForce id", salesForce.idValue)
             .toString()

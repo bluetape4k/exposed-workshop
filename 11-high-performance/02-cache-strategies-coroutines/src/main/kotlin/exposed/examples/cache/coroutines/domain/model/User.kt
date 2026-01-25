@@ -4,9 +4,9 @@ import exposed.examples.cache.coroutines.utils.faker
 import io.bluetape4k.codec.Base58
 import io.bluetape4k.exposed.core.HasIdentifier
 import io.bluetape4k.exposed.core.statements.api.toExposedBlob
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import net.datafaker.Faker
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
@@ -59,7 +59,7 @@ class UserEntity(id: EntityID<Long>): LongEntity(id) {
 
     override fun equals(other: Any?): Boolean = idEquals(other)
     override fun hashCode(): Int = idHashCode()
-    override fun toString(): String = toStringBuilder()
+    override fun toString(): String = entityToStringBuilder()
         .add("firstName", firstName)
         .add("lastName", lastName)
         .add("address", address)

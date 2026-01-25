@@ -1,9 +1,11 @@
 package exposed.examples.jpa.ex04_tree
 
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.idValue
-import io.bluetape4k.exposed.dao.toStringBuilder
+import io.bluetape4k.logging.KLogging
+import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
 import org.jetbrains.exposed.v1.core.eq
@@ -13,7 +15,7 @@ import org.jetbrains.exposed.v1.dao.flushCache
 import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
 import org.jetbrains.exposed.v1.jdbc.SizedIterable
 
-object TreeNodeSchema {
+object TreeNodeSchema: KLogging() {
 
     /**
      * 트리 노드 테이블
@@ -65,7 +67,7 @@ object TreeNodeSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("title", title)
             .add("description", description)
             .add("depth", depth)
@@ -79,10 +81,13 @@ object TreeNodeSchema {
 
         val child1 = TreeNode.new { title = "child1"; parent = root }
         val child2 = TreeNode.new { title = "child2"; parent = root }
+        log.debug { "child1=$child1, child2=$child2" }
+
         commit()
 
         val grandChild1 = TreeNode.new { title = "grandChild1"; parent = child1; }
         val grandChild2 = TreeNode.new { title = "grandChild2"; parent = child1; }
+        log.debug { "grandChild1=$grandChild1, grandChild2=$grandChild2" }
 
         flushCache()
     }

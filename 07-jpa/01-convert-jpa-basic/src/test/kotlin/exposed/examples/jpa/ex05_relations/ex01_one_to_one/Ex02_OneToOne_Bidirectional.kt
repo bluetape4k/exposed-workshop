@@ -3,10 +3,10 @@ package exposed.examples.jpa.ex05_relations.ex01_one_to_one
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.idValue
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
@@ -70,11 +70,10 @@ class Ex02_OneToOne_Bidirectional: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("name", name)
-                .add("wife id", wife?.idValue)
-                .toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("name", name)
+            .add("wife id", wife?.idValue)
+            .toString()
     }
 
     class Wife(id: EntityID<Int>): IntEntity(id) {
@@ -89,11 +88,10 @@ class Ex02_OneToOne_Bidirectional: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("name", name)
-                .add("husband id", husband?.idValue)
-                .toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("name", name)
+            .add("husband id", husband?.idValue)
+            .toString()
     }
 
     @ParameterizedTest

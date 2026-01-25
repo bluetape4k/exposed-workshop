@@ -12,9 +12,9 @@ import exposed.shared.tests.withSuspendedDb
 import exposed.shared.tests.withTables
 import io.bluetape4k.codec.Base58
 import io.bluetape4k.exposed.core.BatchInsertOnConflictDoNothing
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
@@ -667,11 +667,10 @@ class Ex02_Insert: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("name", name)
-                .add("order", order)
-                .toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("name", name)
+            .add("order", order)
+            .toString()
     }
 
     /**

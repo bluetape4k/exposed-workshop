@@ -8,8 +8,9 @@ import exposed.shared.tests.expectException
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.insertAndWait
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
-import io.bluetape4k.exposed.dao.toStringBuilder
+import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEmpty
@@ -126,8 +127,8 @@ class Ex02_Defaults: JdbcExposedTestBase() {
         var clientDefault by TableWithDBDefault.clientDefault
 
         override fun equals(other: Any?): Boolean = idEquals(other)
-        override fun hashCode(): Int = id.value.hashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun hashCode(): Int = idHashCode()
+        override fun toString(): String = entityToStringBuilder()
             .add("field", field)
             .add("t1", t1)
             .add("clientDefault", clientDefault)

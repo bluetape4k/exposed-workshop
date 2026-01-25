@@ -1,9 +1,9 @@
 package exposed.shared.entities
 
 import io.bluetape4k.exposed.core.timebasedGenerated
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
@@ -87,7 +87,7 @@ class BoardSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("name", name)
             .toString()
     }
@@ -103,7 +103,10 @@ class BoardSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder().toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("board id", board?.id)
+            .add("parent id", parent?.id)
+            .toString()
     }
 
     class Category(id: EntityID<Int>): IntEntity(id) {
@@ -115,7 +118,7 @@ class BoardSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("uniqueId", uniqueId)
             .add("title", title)
             .toString()

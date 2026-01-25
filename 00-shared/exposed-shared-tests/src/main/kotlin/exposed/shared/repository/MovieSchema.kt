@@ -4,9 +4,9 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
 import org.jetbrains.exposed.v1.core.Column
@@ -59,9 +59,11 @@ object MovieSchema: KLogging() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder().add("name", name).add("producerName", producerName).add("releaseDate", releaseDate)
-                .toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("name", name)
+            .add("producerName", producerName)
+            .add("releaseDate", releaseDate)
+            .toString()
     }
 
     class ActorEntity(id: EntityID<Long>): LongEntity(id) {
@@ -75,8 +77,11 @@ object MovieSchema: KLogging() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder().add("firstName", firstName).add("lastName", lastName).add("birthday", birthday).toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("firstName", firstName)
+            .add("lastName", lastName)
+            .add("birthday", birthday)
+            .toString()
     }
 
     @Suppress("UnusedReceiverParameter")

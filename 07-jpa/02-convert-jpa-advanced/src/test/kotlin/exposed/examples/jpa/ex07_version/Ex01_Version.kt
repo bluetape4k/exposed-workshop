@@ -3,9 +3,9 @@ package exposed.examples.jpa.ex07_version
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
@@ -59,7 +59,7 @@ class Ex01_Version: JdbcExposedTestBase() {
 
         /**
          * Optimistic locking 적용
-         * NOTE: Exposed 에서는 findByIdAndUpdate() 처럼 DB의 Pessimistic Locking 을 사용하세요.
+         * HINT: Exposed 에서는 findByIdAndUpdate() 처럼 DB의 Pessimistic Locking 을 사용하세요.
          */
         override fun flush(batch: EntityBatchUpdate?): Boolean {
             log.debug { "flush() called" }
@@ -80,7 +80,7 @@ class Ex01_Version: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("name", name)
             .add("price", price)
             .add("version", version)
@@ -168,12 +168,14 @@ class Ex01_Version: JdbcExposedTestBase() {
         withTables(testDB, Products) {
             // INSERT
             val upsertedRows = Products.upsert(onUpdate = { it[Products.version] = Products.version + 1 }) {
-                if (testDB in upsertViaMergeDB)
+                if (testDB in upsertViaMergeDB) {
                     it[Products.id] = 1
+                }
                 it[Products.name] = "Product B"
                 it[Products.price] = 200.0.toBigDecimal()
                 it[Products.version] = 0
             }
+            log.debug { "upserted rows=$upsertedRows" }
             Products.selectAll().forEach {
                 log.info { "Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}" }
             }

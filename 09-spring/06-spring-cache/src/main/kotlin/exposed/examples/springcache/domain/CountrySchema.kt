@@ -1,6 +1,8 @@
 package exposed.examples.springcache.domain
 
-import io.bluetape4k.exposed.dao.toStringBuilder
+import io.bluetape4k.exposed.dao.entityToStringBuilder
+import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.IntEntity
@@ -20,7 +22,9 @@ class Country(id: EntityID<Int>): IntEntity(id) {
     var name by CountryTable.name
     var description by CountryTable.description
 
-    override fun toString(): String = toStringBuilder()
+    override fun equals(other: Any?): Boolean = idEquals(other)
+    override fun hashCode(): Int = idHashCode()
+    override fun toString(): String = entityToStringBuilder()
         .add("code", code)
         .add("name", name)
         .add("description", description)

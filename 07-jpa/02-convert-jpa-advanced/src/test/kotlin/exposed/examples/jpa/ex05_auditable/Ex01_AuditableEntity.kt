@@ -3,7 +3,7 @@ package exposed.examples.jpa.ex05_auditable
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.exposed.dao.toStringBuilder
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeGreaterOrEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -37,7 +37,7 @@ class Ex01_AuditableEntity: JdbcExposedTestBase() {
         override var updatedBy by TaskTable.updatedBy
         override var updatedAt by TaskTable.updatedAt
 
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("title", title)
             .add("description", description)
             .add("status", status)

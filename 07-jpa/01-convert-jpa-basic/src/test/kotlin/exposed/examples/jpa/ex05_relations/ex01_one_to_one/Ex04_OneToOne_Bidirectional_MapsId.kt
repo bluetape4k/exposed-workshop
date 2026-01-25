@@ -3,10 +3,10 @@ package exposed.examples.jpa.ex05_relations.ex01_one_to_one
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.idValue
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -106,7 +106,7 @@ class Ex04_OneToOne_Bidirectional_MapsId: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("name", name)
             .toString()
     }
@@ -121,7 +121,7 @@ class Ex04_OneToOne_Bidirectional_MapsId: JdbcExposedTestBase() {
         // NOTE: id 속성 중 table 이 one-to-one 의 owner 테이블을 가르킨다.
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("path", path)
             .add("author id", author.idValue)
             .toString()
@@ -137,11 +137,10 @@ class Ex04_OneToOne_Bidirectional_MapsId: JdbcExposedTestBase() {
         // NOTE: id 속성 중 table 이 one-to-one 의 owner 테이블을 가르킨다.
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("infomation", infomation)
-                .add("author id", author.idValue)
-                .toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("infomation", infomation)
+            .add("author id", author.idValue)
+            .toString()
     }
 
     @ParameterizedTest
@@ -191,6 +190,7 @@ class Ex04_OneToOne_Bidirectional_MapsId: JdbcExposedTestBase() {
              * ```
              */
             val author3 = Author.findById(author.id)!!.load(Author::picture, Author::biography)
+            log.debug { "author with picture and biography. author3: $author3, picture:${author3.picture}, biography:${author3.biography}" }
 
             entityCache.clear()
 

@@ -6,9 +6,9 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.crypto.encrypt.Encryptors
 import io.bluetape4k.exposed.core.jasypt.jasyptBinary
 import io.bluetape4k.exposed.core.jasypt.jasyptVarChar
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.support.toUtf8Bytes
 import org.amshove.kluent.shouldBeEqualTo
@@ -40,7 +40,7 @@ class JasyptColumnTypeDaoTest: AbstractExposedTest() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("varchar", varchar)
             .add("binary", binary)
             .toString()

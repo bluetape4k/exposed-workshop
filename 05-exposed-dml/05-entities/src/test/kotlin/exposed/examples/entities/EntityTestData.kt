@@ -1,8 +1,8 @@
 package exposed.examples.entities
 
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
@@ -63,11 +63,10 @@ object EntityTestData {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("b1", b1)
-                .add("b2", b2)
-                .toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("b1", b1)
+            .add("b2", b2)
+            .toString()
     }
 
     enum class XType {
@@ -92,10 +91,9 @@ object EntityTestData {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("b1", b1)
-                .toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("b1", b1)
+            .toString()
     }
 
     open class BEntity(id: EntityID<Int>): AEntity(id) {
@@ -111,12 +109,11 @@ object EntityTestData {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("b1", b1)
-                .add("b2", b2)
-                .add("y", y)
-                .toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("b1", b1)
+            .add("b2", b2)
+            .add("y", y)
+            .toString()
     }
 
     class YEntity(id: EntityID<String>): Entity<String>(id) {
@@ -127,10 +124,9 @@ object EntityTestData {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String =
-            toStringBuilder()
-                .add("x", x)
-                .add("b", b)
-                .toString()
+        override fun toString(): String = entityToStringBuilder()
+            .add("x", x)
+            .add("b", b)
+            .toString()
     }
 }

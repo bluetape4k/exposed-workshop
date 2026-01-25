@@ -3,12 +3,12 @@ package exposed.examples.custom.entities
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.id.KsuidMillisEntity
 import io.bluetape4k.exposed.dao.id.KsuidMillisEntityClass
 import io.bluetape4k.exposed.dao.id.KsuidMillisTable
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.Dispatchers
@@ -51,7 +51,7 @@ class KsuidMillisTableTest: AbstractCustomIdTableTest() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("name", name)
             .add("age", age)
             .toString()

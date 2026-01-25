@@ -3,13 +3,13 @@ package exposed.examples.custom.entities
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.id.SnowflakeIdEntity
 import io.bluetape4k.exposed.dao.id.SnowflakeIdEntityClass
 import io.bluetape4k.exposed.dao.id.SnowflakeIdEntityID
 import io.bluetape4k.exposed.dao.id.SnowflakeIdTable
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.Deferred
@@ -52,7 +52,7 @@ class SnowflakeIdTableTest: AbstractCustomIdTableTest() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("name", name)
             .add("age", age)
             .toString()

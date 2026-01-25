@@ -6,9 +6,9 @@ import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
@@ -237,10 +237,7 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
              *  WHERE array_test_table.strings[2] = 'hello'
              * ```
              */
-            val result2 = ArrayTestTable
-                .selectAll()
-                .where { ArrayTestTable.strings[2] eq "hello" }
-                .single()
+            val result2 = ArrayTestTable.selectAll().where { ArrayTestTable.strings[2] eq "hello" }.single()
             result2[ArrayTestTable.strings] shouldBeEqualTo listOf("hi", "hello")
             result2[ArrayTestTable.doubles].shouldBeNull()
 
@@ -255,10 +252,9 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
              *  WHERE array_test_table.numbers[1] >= array_test_table.numbers[3]
              * ```
              */
-            val result3 = ArrayTestTable
-                .selectAll()
-                .where { ArrayTestTable.numbers[1] greaterEq ArrayTestTable.numbers[3] }
-                .toList()
+            val result3 =
+                ArrayTestTable.selectAll().where { ArrayTestTable.numbers[1] greaterEq ArrayTestTable.numbers[3] }
+                    .toList()
             result3.shouldBeEmpty()
 
             /**
@@ -346,8 +342,7 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
              *    AND (array_test_table.strings <> ARRAY[])
              * ```
              */
-            val result1 = ArrayTestTable.selectAll()
-                .andWhere { ArrayTestTable.numbers eq numInput }
+            val result1 = ArrayTestTable.selectAll().andWhere { ArrayTestTable.numbers eq numInput }
                 .andWhere { ArrayTestTable.strings neq emptyList() }
             result1.single()[ArrayTestTable.id] shouldBeEqualTo id1
 
@@ -358,9 +353,8 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
              *  WHERE array_test_table.doubles = ARRAY[1.0,2.0,3.0,4.0,5.0]
              * ```
              */
-            val result2 = ArrayTestTable
-                .select(ArrayTestTable.id)
-                .where { ArrayTestTable.doubles eq arrayParam(doublesInput) }
+            val result2 =
+                ArrayTestTable.select(ArrayTestTable.id).where { ArrayTestTable.doubles eq arrayParam(doublesInput) }
 
             result2.single()[ArrayTestTable.id] shouldBeEqualTo id1
 
@@ -374,9 +368,8 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
                  * ```
                  */
                 val lastStrings = ArrayTestTable.strings.slice(lower = 4) // strings[4:]
-                val result3 = ArrayTestTable
-                    .select(ArrayTestTable.id)
-                    .where { lastStrings eq arrayParam(listOf("hello")) }
+                val result3 =
+                    ArrayTestTable.select(ArrayTestTable.id).where { lastStrings eq arrayParam(listOf("hello")) }
                 result3.single()[ArrayTestTable.id] shouldBeEqualTo id1
             }
         }
@@ -471,7 +464,7 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("numbers", numbers)
             .add("strings", strings)
             .add("doubles", doubles)
@@ -547,8 +540,8 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
              *  WHERE array_test_table.id = ANY (array_test_table.numbers)
              * ```
              */
-            val result1 = ArrayTestTable.select(ArrayTestTable.id)
-                .where { ArrayTestTable.id eq anyFrom(ArrayTestTable.numbers) }
+            val result1 =
+                ArrayTestTable.select(ArrayTestTable.id).where { ArrayTestTable.id eq anyFrom(ArrayTestTable.numbers) }
             result1.single()[ArrayTestTable.id] shouldBeEqualTo id1
 
             /**

@@ -119,8 +119,8 @@ class Ex02_Full_Join: JdbcExposedTestBase() {
                 .orderBy(itemIdAlias to SortOrder.ASC_NULLS_FIRST)
                 .map {
                     OrderRecord(
-                        itemId = it[itemIdAlias]?.value,
                         orderId = it[orderIdAlias]?.value,
+                        itemId = it[itemIdAlias]?.value,
                         quantity = it[ol[orderLines.quantity]],
                         description = it[im[items.description]]
                     )
@@ -240,8 +240,8 @@ class Ex02_Full_Join: JdbcExposedTestBase() {
                 .orderBy(itemIdAlias to SortOrder.ASC_NULLS_FIRST)
                 .map {
                     OrderRecord(
-                        itemId = it[itemIdAlias]?.value,
                         orderId = it[orderIdAlias]?.value,
+                        itemId = it[itemIdAlias]?.value,
                         quantity = it[ol[orderLines.quantity]],
                         description = it[im[items.description]]
                     )
@@ -337,8 +337,8 @@ class Ex02_Full_Join: JdbcExposedTestBase() {
                 .orderBy(itemIdAlias to SortOrder.ASC_NULLS_FIRST)
                 .map {
                     OrderRecord(
-                        itemId = it[itemIdAlias]?.value,
                         orderId = it[orderIdAlias]?.value,
+                        itemId = it[itemIdAlias]?.value,
                         quantity = it[orderLines.quantity],
                         description = it[items.description]
                     )

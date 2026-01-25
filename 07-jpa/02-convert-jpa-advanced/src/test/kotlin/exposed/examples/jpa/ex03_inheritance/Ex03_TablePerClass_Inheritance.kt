@@ -3,12 +3,12 @@ package exposed.examples.jpa.ex03_inheritance
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDEntity
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDEntityClass
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDTable
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
@@ -98,7 +98,7 @@ class Ex03_TablePerClass_Inheritance: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("owner", owner)
             .add("swift", swift)
             .toString()
@@ -121,7 +121,9 @@ class Ex03_TablePerClass_Inheritance: JdbcExposedTestBase() {
         var startDate by CreditCardTable.startDate
         var endDate by CreditCardTable.endDate
 
-        override fun toString(): String = toStringBuilder()
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
+        override fun toString(): String = entityToStringBuilder()
             .add("owner", owner)
             .add("swift", swift)
             .add("card number", cardNumber)
@@ -142,7 +144,9 @@ class Ex03_TablePerClass_Inheritance: JdbcExposedTestBase() {
         var accountNumber by BankAccountTable.accountNumber
         var bankName by BankAccountTable.bankName
 
-        override fun toString(): String = toStringBuilder()
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
+        override fun toString(): String = entityToStringBuilder()
             .add("owner", owner)
             .add("swift", swift)
             .add("account number", accountNumber)

@@ -3,9 +3,9 @@ package exposed.shared.mapping
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
 import org.jetbrains.exposed.v1.dao.LongEntity
@@ -56,7 +56,7 @@ object OrderSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("orderDate", orderDate)
             .toString()
     }
@@ -73,7 +73,7 @@ object OrderSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("orderId", orderId)
             .add("lineNumber", lineNumber)
             .add("description", description)
@@ -88,7 +88,7 @@ object OrderSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("description", description)
             .toString()
     }
@@ -103,7 +103,7 @@ object OrderSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("orderId", order.id.value)
             .add("itemId", item?.id?.value)
             .add("lineNumber", lineNumber)
@@ -119,7 +119,7 @@ object OrderSchema {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = toStringBuilder()
+        override fun toString(): String = entityToStringBuilder()
             .add("userName", userName)
             .add("parentId", parent?.id?._value)
             .toString()
@@ -128,7 +128,6 @@ object OrderSchema {
     data class OrderRecord(
         val orderId: Long? = null,
         val itemId: Long? = null,
-
         val quantity: Int? = null,
         val description: String? = null,
     ): Comparable<OrderRecord>, Serializable {

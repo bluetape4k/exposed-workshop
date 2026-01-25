@@ -1,8 +1,8 @@
 package exposed.examples.money
 
+import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.exposed.dao.toStringBuilder
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.EntityClass
@@ -62,7 +62,7 @@ internal class AccountEntity(id: EntityID<Int>): IntEntity(id) {
 
     override fun equals(other: Any?): Boolean = idEquals(other)
     override fun hashCode(): Int = idHashCode()
-    override fun toString(): String = toStringBuilder()
+    override fun toString(): String = entityToStringBuilder()
         .add("money", money)
         .toString()
 }
