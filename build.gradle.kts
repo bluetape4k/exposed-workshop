@@ -13,7 +13,6 @@ plugins {
     kotlin("plugin.noarg") version Versions.kotlin apply false
     kotlin("plugin.jpa") version Versions.kotlin apply false
     kotlin("plugin.serialization") version Versions.kotlin apply false
-    kotlin("plugin.atomicfu") version Versions.kotlin
     kotlin("kapt") version Versions.kotlin apply false
 
     id(Plugins.detekt) version Plugins.Versions.detekt
@@ -69,9 +68,7 @@ subprojects {
     }
 
     kotlin {
-        jvmToolchain {
-            languageVersion.set(JavaLanguageVersion.of(21))
-        }
+        jvmToolchain(21)
         compilerOptions {
             languageVersion.set(KotlinVersion.KOTLIN_2_3)
             apiVersion.set(KotlinVersion.KOTLIN_2_3)
@@ -202,9 +199,6 @@ subprojects {
             dependency(Libs.kotlinx_coroutines_bom)
             dependency(Libs.kotlinx_coroutines_core)
             dependency(Libs.kotlinx_coroutines_core_jvm)
-            dependency(Libs.kotlinx_coroutines_jdk8)
-            dependency(Libs.kotlinx_coroutines_jdk9)
-            dependency(Libs.kotlinx_coroutines_jdk8)
             dependency(Libs.kotlinx_coroutines_reactive)
             dependency(Libs.kotlinx_coroutines_reactor)
             dependency(Libs.kotlinx_coroutines_rx2)
@@ -319,18 +313,6 @@ subprojects {
             dependency(Libs.mongo_bson)
             dependency(Libs.mongodb_driver_core)
             dependency(Libs.mongodb_driver_reactivestreams)
-
-            // Kafka
-            dependency(Libs.kafka_clients)
-            dependency(Libs.kafka_generator)
-            dependency(Libs.kafka_metadata)
-            dependency(Libs.kafka_raft)
-            dependency(Libs.kafka_server_common)
-            dependency(Libs.kafka_storage)
-            dependency(Libs.kafka_storage_api)
-            dependency(Libs.kafka_streams)
-            dependency(Libs.kafka_streams_test_utils)
-            dependency(Libs.kafka_2_13)
 
             // Hibernate
             dependency(Libs.hibernate_core)
