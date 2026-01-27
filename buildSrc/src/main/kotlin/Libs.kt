@@ -117,12 +117,10 @@ object Versions {
     const val jackson = "2.20.1" // https://mvnrepository.com/artifact/com.fasterxml.jackson/jackson-bom
     const val jackson3 = "3.0.3" // https://mvnrepository.com/artifact/tools.jackson/jackson-bom
     const val fastjson2 = "2.0.60" // https://mvnrepository.com/artifact/com.alibaba.fastjson2/fastjson2
-    const val jjwt = "0.11.5"    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
 
     const val mapstruct = "1.6.3" // https://mvnrepository.com/artifact/org.mapstruct/mapstruct
     const val reflectasm = "1.11.9"     // https://mvnrepository.com/artifact/com.esotericsoftware/reflectasm
 
-    const val mongo_driver = "5.5.2"   // https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync
     const val lettuce = "6.8.1.RELEASE" // https://mvnrepository.com/artifact/io.lettuce/lettuce-core
     const val redisson = "3.52.0"       // https://mvnrepository.com/artifact/org.redisson/redisson
 
@@ -138,9 +136,6 @@ object Versions {
     const val exposed = "1.0.0"       // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-core
     const val r2dbc = "1.0.0.RELEASE"        // https://mvnrepository.com/artifact/io.r2dbc/r2dbc-spi
     const val agroal = "2.8"          // https://mvnrepository.com/artifact/io.agroal/agroal-api
-
-    const val blaze_persistence = "3.29.0" // https://mvnrepository.com/artifact/io.quarkus.platform/quarkus-blaze-persistence-bom
-    const val javers = "7.8.6"             // https://mvnrepository.com/artifact/org.javers/javers-core
 
     const val slf4j = "2.0.17"      // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     const val logback = "1.5.18"     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
@@ -972,21 +967,9 @@ object Libs {
     val fastjson2_kotlin = fastjson2("fastjson2-kotlin")
     val fastjson2_extension_spring6 = fastjson2("fastjson2-extension-spring6")
 
-
     // Json assertions
-    const val jsonpath = "com.jayway.jsonpath:json-path:2.9.0"  // https://mvnrepository.com/artifact/com.jayway.jsonpath/json-path
+    const val jsonpath = "com.jayway.jsonpath:json-path:2.10.0"  // https://mvnrepository.com/artifact/com.jayway.jsonpath/json-path
     const val jsonassert = "org.skyscreamer:jsonassert:1.5.3"   // https://mvnrepository.com/artifact/org.skyscreamer/jsonassert
-
-    // GSON
-    const val gson = "com.google.code.gson:gson:2.13.2"    // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    const val gson_javatime_serializers = "com.fatboyindustrial.gson-javatime-serialisers:gson-javatime-serialisers:1.1.2"
-
-    // JWT
-    fun jjwt(module: String) = "io.jsonwebtoken:jjwt-$module:${Versions.jjwt}"
-    val jjwt_api = jjwt("api")
-    val jjwt_impl = jjwt("impl")
-    val jjwt_jackson = jjwt("jackson")
-    val jjwt_extensions = jjwt("extensions")
 
     // Compression
     const val snappy_java = "org.xerial.snappy:snappy-java:1.1.10.8"  // https://mvnrepository.com/artifact/org.xerial.snappy/snappy-java
@@ -1129,14 +1112,6 @@ object Libs {
 
     const val reflectasm = "com.esotericsoftware:reflectasm:${Versions.reflectasm}"
 
-    // mongodb 4.x
-    fun mongo(module: String, version: String = Versions.mongo_driver) = "org.mongodb:$module:$version"
-    val mongo_bson = mongo("bson")
-    val mongodb_driver_core = mongo("mongodb-driver-core")
-    val mongodb_driver_sync = mongo("mongodb-driver-sync")
-    val mongodb_driver_reactivestreams = mongo("mongodb-driver-reactivestreams")
-    val mongodb_driver_legacy = mongo("mongodb-driver-legacy")
-
     // Redis
     const val lettuce_core = "io.lettuce:lettuce-core:${Versions.lettuce}"
 
@@ -1225,35 +1200,6 @@ object Libs {
     const val mybatis_spring = "org.mybatis:mybatis-spring:3.0.4"   // https://mvnrepository.com/artifact/org.mybatis/mybatis-spring
     const val mybatis_dynamic_sql = "org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.5.2"  // https://mvnrepository.com/artifact/org.mybatis.dynamic-sql/mybatis-dynamic-sql
 
-    // blaze-persistence
-    fun blazePersistence(module: String, version: String = Versions.blaze_persistence): String =
-        "com.blazebit:blaze-persistence-$module:$version"
-
-    val blaze_persistence_core_api = blazePersistence("core-api")
-    val blaze_persistence_core_impl = blazePersistence("core-impl")
-    val blaze_persistence_entity_view_processor = blazePersistence("entity-view-processor")
-    val blaze_persistence_jpa_criteria_api = blazePersistence("jpa-criteria-api")
-    val blaze_persistence_jpa_criteria_impl = blazePersistence("jpa-criteria-impl")
-
-    fun blazePersistenceIntegration(module: String) = blazePersistence("integration-$module")
-
-    val blaze_persistence_integration_quarkus = blazePersistenceIntegration("quarkus")
-    val blaze_persistence_integration_hibernate_5 = blazePersistenceIntegration("hibernate-5")
-    val blaze_persistence_integration_hibernate_5_6 = blazePersistenceIntegration("hibernate-5.6")
-    val blaze_persistence_integration_jackson = blazePersistenceIntegration("jackson")
-    val blaze_persistence_integration_jaxrs_jackson = blazePersistenceIntegration("jaxrs-jackson")
-    val blaze_persistence_integration_entity_view_spring = blazePersistenceIntegration("entity-view-spring")
-
-    // Javers (https://javers.org - Java Audit library)
-    fun javers(module: String) = "org.javers:javers-$module:${Versions.javers}"
-    val javers_core = javers("core")
-    val javers_spring = javers("spring")
-    val javers_spring_jpa = javers("spring-jpa")
-    val javers_spring_mongo = javers("spring-mongo")
-    val javers_persistence_mongo = javers("persistence-mongo")
-    val javers_persistence_sql = javers("persistence-sql")
-    val javers_spring_boot_starter_sql = javers("spring-boot-starter-sql")
-
     // MyBatis Mapping 에 사용한다
     const val byte_buddy = "net.bytebuddy:byte-buddy:1.18.3"   // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent
     const val byte_buddy_agent = "net.bytebuddy:byte-buddy-agent:1.18.3"   // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent
@@ -1269,12 +1215,11 @@ object Libs {
 
     const val mysql_connector_j = "com.mysql:mysql-connector-j:9.5.0"  // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
     const val mariadb_java_client = "org.mariadb.jdbc:mariadb-java-client:3.5.7"  // https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
-    const val postgresql_driver = "org.postgresql:postgresql:42.7.8"  // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    const val postgresql_driver = "org.postgresql:postgresql:42.7.9"  // https://mvnrepository.com/artifact/org.postgresql/postgresql
     const val pgjdbc_ng = "com.impossibl.pgjdbc-ng:pgjdbc-ng:0.8.9"  // https://mvnrepository.com/artifact/com.impossibl.pgjdbc-ng/pgjdbc-ng
     const val oracle_ojdbc8 = "com.oracle.ojdbc:ojdbc8:19.3.0.0"
-    const val clickhouse_jdbc = "com.clickhouse:clickhouse-jdbc:0.9.4" // https://mvnrepository.com/artifact/com.clickhouse/clickhouse-jdbc
+    const val clickhouse_jdbc = "com.clickhouse:clickhouse-jdbc:0.9.6" // https://mvnrepository.com/artifact/com.clickhouse/clickhouse-jdbc
 
-    // NOTE: Apache Ignite 에서는 꼭 1.4.197 를 써야 합니다.
     const val h2 = "com.h2database:h2:1.4.197"
 
     // MyBatis 테스트 시에 h2 v2 를 사용한다

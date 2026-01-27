@@ -77,8 +77,8 @@ subprojects {
                 "-jvm-default=enable",
                 "-Xinline-classes",
                 "-Xstring-concat=indy",         // since Kotlin 1.4.20 for JVM 9+
-                // "-Xenable-builder-inference",   // since Kotlin 1.6
-                "-Xcontext-parameters",           // since Kotlin 1.6
+                "-Xenable-builder-inference",   // since Kotlin 1.6
+                "-Xcontext-parameters",         // since Kotlin 1.6
                 "-Xannotation-default-target=param-property"
             )
             val experimentalAnnotations = listOf(
@@ -310,10 +310,6 @@ subprojects {
 
             dependency(Libs.grpc_kotlin_stub)
 
-            dependency(Libs.mongo_bson)
-            dependency(Libs.mongodb_driver_core)
-            dependency(Libs.mongodb_driver_reactivestreams)
-
             // Hibernate
             dependency(Libs.hibernate_core)
             dependency(Libs.hibernate_jcache)
@@ -341,8 +337,6 @@ subprojects {
 
             dependency(Libs.objenesis)
             dependency(Libs.ow2_asm)
-
-            dependency(Libs.reflectasm)
 
             dependency(Libs.junit_bom)
             dependency(Libs.junit_jupiter)
