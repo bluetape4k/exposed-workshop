@@ -114,8 +114,8 @@ object Versions {
     const val okio = "3.16.2"         // https://mvnrepository.com/artifact/com.squareup.okio/okio
     const val asynchttpclient = "2.12.4"  // https://mvnrepository.com/artifact/org.asynchttpclient/async-http-client
 
-    const val jackson = "2.20.1" // https://mvnrepository.com/artifact/com.fasterxml.jackson/jackson-bom
-    const val jackson3 = "3.0.3" // https://mvnrepository.com/artifact/tools.jackson/jackson-bom
+    const val jackson = "2.20.2" // https://mvnrepository.com/artifact/com.fasterxml.jackson/jackson-bom
+    const val jackson3 = "3.0.4" // https://mvnrepository.com/artifact/tools.jackson/jackson-bom
     const val fastjson2 = "2.0.60" // https://mvnrepository.com/artifact/com.alibaba.fastjson2/fastjson2
 
     const val mapstruct = "1.6.3" // https://mvnrepository.com/artifact/org.mapstruct/mapstruct
