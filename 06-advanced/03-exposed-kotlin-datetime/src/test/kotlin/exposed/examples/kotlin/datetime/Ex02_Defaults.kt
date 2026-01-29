@@ -12,6 +12,7 @@ import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
+import kotlinx.atomicfu.atomic
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
@@ -86,7 +87,6 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
-import java.util.concurrent.atomic.AtomicInteger
 import kotlin.time.Clock
 import kotlin.time.DurationUnit
 import kotlin.time.DurationUnit.DAYS
@@ -125,11 +125,18 @@ class Ex02_Defaults: JdbcExposedTestBase() {
      * ```
      */
     object TableWithDBDefault: IntIdTable() {
-        val cIndex = AtomicInteger(0)
+        private val cIndex = atomic(0)
+        internal var index by cIndex
+
+
         val field = varchar("field", 100)
         val t1 = datetime("t1").defaultExpression(CurrentDateTime)
         val t2 = date("t2").defaultExpression(CurrentDate)
         val clientDefault = integer("clientDefault").clientDefault { cIndex.getAndIncrement() }
+
+        internal fun resetIndex(value: Int = 0) {
+            cIndex.lazySet(value)
+        }
     }
 
     class DBDefault(id: EntityID<Int>): IntEntity(id) {
@@ -250,7 +257,8 @@ class Ex02_Defaults: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testDefaultsInvokedOnlyOncePerEntity(testDB: TestDB) {
         withTables(testDB, TableWithDBDefault) {
-            TableWithDBDefault.cIndex.set(0)
+            TableWithDBDefault.resetIndex(0)
+
             val db1 = DBDefault.new { field = "1" }
             val db2 = DBDefault.new { field = "2" }
 
@@ -258,7 +266,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
 
             db1.clientDefault shouldBeEqualTo 0
             db2.clientDefault shouldBeEqualTo 1
-            TableWithDBDefault.cIndex.get() shouldBeEqualTo 2
+            TableWithDBDefault.index shouldBeEqualTo 2
         }
     }
 

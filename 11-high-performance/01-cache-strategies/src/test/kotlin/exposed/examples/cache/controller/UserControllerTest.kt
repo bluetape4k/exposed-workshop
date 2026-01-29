@@ -27,7 +27,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.returnResult
 import java.time.LocalDate
-import java.util.concurrent.atomic.AtomicLong
+import java.util.concurrent.CopyOnWriteArrayList
+import kotlin.random.Random
 
 class UserControllerTest(
     @param:Autowired private val client: WebTestClient,
@@ -38,8 +39,7 @@ class UserControllerTest(
         private const val REPEAT_SIZE = 5
     }
 
-    private val userIdsInDB = mutableListOf<Long>()
-    private val lastUserId = AtomicLong(0L)
+    private val userIdsInDB = CopyOnWriteArrayList<Long>()
 
     @BeforeEach
     fun beforeEach() {
@@ -107,7 +107,7 @@ class UserControllerTest(
 
     @Test
     fun `새로운 User를 write through 로 저장하기`() = runSuspendIO {
-        val userDTO = newUserDTO(kotlin.random.Random.nextLong(1000L, 9999L))
+        val userDTO = newUserDTO(Random.nextLong(1000L, 9999L))
         val user = client
             .httpPost("/users", userDTO)
             .returnResult<UserDTO>().responseBody

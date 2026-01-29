@@ -28,10 +28,10 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 import java.time.LocalDate
 import java.util.concurrent.CopyOnWriteArrayList
-import java.util.concurrent.atomic.AtomicLong
 import kotlin.random.Random
 
 @Suppress("DEPRECATION")
@@ -46,7 +46,6 @@ class UserControllerTest(
 
     private val idsInDB = CopyOnWriteArrayList<Long>()
     private val idSize = 100
-    private val lastUserId = AtomicLong(0L)
 
     @BeforeEach
     fun beforeEach() {
@@ -79,9 +78,8 @@ class UserControllerTest(
     fun `모든 사용자를 조회`() = runSuspendIO {
         val users = client
             .httpGet("/users")
-            .returnResult<UserDTO>().responseBody
-            .asFlow()
-            .toList()
+            .expectBodyList<UserDTO>()
+            .returnResult().responseBody
 
         users.shouldNotBeNull() shouldHaveSize idsInDB.size
     }

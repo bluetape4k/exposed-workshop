@@ -74,7 +74,6 @@ class Ex06_NonAutoIncEntities: JdbcExposedTestBase() {
             .add("b1", b1)
             .add("defaultedInNew", defaultedInNew)
             .toString()
-
     }
 
     /**

@@ -8,6 +8,7 @@ import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.money.moneyOf
+import kotlinx.atomicfu.atomic
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
@@ -19,7 +20,6 @@ import org.jetbrains.exposed.v1.money.compositeMoney
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.math.BigDecimal
-import java.util.concurrent.atomic.AtomicInteger
 
 class Ex01_MoneyDefaults: JdbcExposedTestBase() {
 
@@ -41,12 +41,17 @@ class Ex01_MoneyDefaults: JdbcExposedTestBase() {
      */
     object TableWithDBDefault: IntIdTable("TableWithDBDefault") {
         internal val defaultValue = moneyOf(BigDecimal.ONE, "USD") // 컬럼이 아닙니다.
-        internal val cIndex = AtomicInteger(0)  // 컬럼이 아닙니다.
+        private val cIndex = atomic(0)  // 컬럼이 아닙니다.
+        internal var index by cIndex
 
         val field = varchar("field", 100)
         val t1 = compositeMoney(10, 0, "t1").default(defaultValue)
         val t2 = compositeMoney(10, 0, "t2").nullable()
         val clientDefault = integer("clientDefault").clientDefault { cIndex.getAndIncrement() }
+
+        internal fun resetIndex(value: Int = 0) {
+            cIndex.lazySet(value)
+        }
     }
 
     class DBDefault(id: EntityID<Int>): IntEntity(id) {
@@ -119,7 +124,7 @@ class Ex01_MoneyDefaults: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `defaults invoked only once per entity`(testDB: TestDB) {
         withTables(testDB, TableWithDBDefault) {
-            TableWithDBDefault.cIndex.set(0)
+            TableWithDBDefault.resetIndex(0)
 
             val db1 = DBDefault.new { field = "1" }
             val db2 = DBDefault.new { field = "2" }
@@ -128,7 +133,7 @@ class Ex01_MoneyDefaults: JdbcExposedTestBase() {
 
             db1.clientDefault shouldBeEqualTo 0
             db2.clientDefault shouldBeEqualTo 1
-            TableWithDBDefault.cIndex.get() shouldBeEqualTo 2
+            TableWithDBDefault.index shouldBeEqualTo 2
 
             db1.t1 shouldBeEqualTo TableWithDBDefault.defaultValue
         }
@@ -154,7 +159,7 @@ class Ex01_MoneyDefaults: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `nullable composite column type`(testDB: TestDB) {
         withTables(testDB, TableWithDBDefault) {
-            TableWithDBDefault.cIndex.set(0)
+            TableWithDBDefault.resetIndex(0)
 
             val db1 = DBDefault.new { field = "1" }
             flushCache()
