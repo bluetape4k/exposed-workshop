@@ -42,7 +42,7 @@ class ActorController(
                 actorRepository.findAll().map { it.toActorDTO() }
             }
             else -> newSuspendedTransaction(readOnly = true) {
-                actorRepository.searchActor(params).map { it.toActorDTO() }
+                actorRepository.searchActor(params)
             }
         }
     }

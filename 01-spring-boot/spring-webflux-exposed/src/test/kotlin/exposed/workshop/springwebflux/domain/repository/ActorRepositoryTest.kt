@@ -50,7 +50,7 @@ class ActorRepositoryTest(
     fun `search actors by lastName`() = runSuspendIO {
         newSuspendedTransaction(readOnly = true) {
             val params = mapOf("lastName" to "Depp")
-            val actors = actorRepository.searchActor(params).toList()
+            val actors = actorRepository.searchActor(params)
 
             actors.shouldNotBeEmpty()
             actors.forEach {
@@ -70,7 +70,7 @@ class ActorRepositoryTest(
     fun `search actors by firstName`() = runSuspendIO {
         newSuspendedTransaction(readOnly = true) {
             val params = mapOf("firstName" to "Angelina")
-            val actors = actorRepository.searchActor(params).toList()
+            val actors = actorRepository.searchActor(params)
 
             actors.shouldNotBeEmpty()
             actors.forEach {

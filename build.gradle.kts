@@ -77,7 +77,6 @@ subprojects {
                 "-jvm-default=enable",
                 "-Xinline-classes",
                 "-Xstring-concat=indy",         // since Kotlin 1.4.20 for JVM 9+
-                "-Xenable-builder-inference",   // since Kotlin 1.6
                 "-Xcontext-parameters",         // since Kotlin 1.6
                 "-Xannotation-default-target=param-property"
             )

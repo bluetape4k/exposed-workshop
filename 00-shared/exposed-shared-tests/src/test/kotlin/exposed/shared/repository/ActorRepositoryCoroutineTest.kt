@@ -50,7 +50,7 @@ class ActorRepositoryCoroutineTest: JdbcExposedTestBase() {
     fun `search actors by lastName`(testDB: TestDB) = runSuspendIO {
         withSuspendedMovieAndActors(testDB) {
             val params = mapOf("lastName" to "Depp")
-            val actors = repository.searchActors(params).map { it.toActorDTO() }
+            val actors = repository.searchActors(params)
 
             actors.shouldNotBeEmpty()
             actors.forEach {

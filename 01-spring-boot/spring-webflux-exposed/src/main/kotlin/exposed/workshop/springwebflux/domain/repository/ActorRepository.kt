@@ -3,6 +3,7 @@ package exposed.workshop.springwebflux.domain.repository
 import exposed.workshop.springwebflux.domain.ActorDTO
 import exposed.workshop.springwebflux.domain.MovieSchema.ActorEntity
 import exposed.workshop.springwebflux.domain.MovieSchema.ActorTable
+import exposed.workshop.springwebflux.domain.toActorDTO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.eq
@@ -29,7 +30,7 @@ class ActorRepository {
         return ActorEntity.wrapRows(ActorTable.selectAll()).toList()
     }
 
-    suspend fun searchActor(params: Map<String, String?>): List<ActorEntity> {
+    suspend fun searchActor(params: Map<String, String?>): List<ActorDTO> {
         log.debug { "Search Actor by params. params: $params" }
 
         val query = ActorTable.selectAll()
@@ -44,7 +45,7 @@ class ActorRepository {
                 }
             }
         }
-        return ActorEntity.wrapRows(query).toList()
+        return query.map { it.toActorDTO() }
     }
 
     suspend fun create(actor: ActorDTO): ActorEntity {

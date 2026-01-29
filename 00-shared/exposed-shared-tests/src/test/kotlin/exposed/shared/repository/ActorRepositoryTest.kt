@@ -49,7 +49,7 @@ class ActorRepositoryTest: JdbcExposedTestBase() {
     fun `search actors by lastName`(testDB: TestDB) {
         withMovieAndActors(testDB) {
             val params = mapOf("lastName" to "Depp")
-            val actors = repository.searchActors(params).map { it.toActorDTO() }
+            val actors = repository.searchActors(params)
 
             actors.shouldNotBeEmpty()
             actors.forEach {

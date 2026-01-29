@@ -1,6 +1,5 @@
 package exposed.shared.repository
 
-import exposed.shared.repository.MovieSchema.ActorEntity
 import exposed.shared.repository.MovieSchema.ActorTable
 import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.KLogging
@@ -19,7 +18,7 @@ class ActorRepository: ExposedRepository<ActorDTO, Long> {
     override val table = ActorTable
     override fun ResultRow.toEntity(): ActorDTO = toActorDTO()
 
-    fun searchActors(params: Map<String, String?>): List<ActorEntity> {
+    fun searchActors(params: Map<String, String?>): List<ActorDTO> {
         val query = ActorTable.selectAll()
 
         params.forEach { (key, value) ->
@@ -31,7 +30,7 @@ class ActorRepository: ExposedRepository<ActorDTO, Long> {
             }
         }
 
-        return ActorEntity.wrapRows(query).toList()
+        return query.map { it.toEntity() }
     }
 
     fun save(actor: ActorDTO): ActorDTO {
