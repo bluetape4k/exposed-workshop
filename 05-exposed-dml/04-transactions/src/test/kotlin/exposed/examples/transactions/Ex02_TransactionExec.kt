@@ -4,6 +4,7 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.ifTrue
@@ -59,7 +60,7 @@ class Ex02_TransactionExec: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `exec with single statement query`(testDB: TestDB) {
         withTables(testDB, ExecTable) {
-            val amounts = (90..99).toList()
+            val amounts = (90..99).toFastList()
 
             ExecTable.batchInsert(amounts, shouldReturnGeneratedValues = false) { amount ->
                 this[ExecTable.id] = (amount % 10 + 1)  // autoIncrement 이지만, custom 으로 설정 

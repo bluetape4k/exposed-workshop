@@ -34,7 +34,9 @@ class CachedCountrySuspendedRepositoryTest(
         // 캐시를 채운다.
         DataPopulator.COUNTRY_CODES.asFlow()
             .flatMapMerge { code ->
-                flowFromSuspend { countrySuspendedRepository.findByCode(code) }
+                flowFromSuspend {
+                    countrySuspendedRepository.findByCode(code)
+                }
             }
             .collect()
         DataPopulator.COUNTRY_CODES.all { code -> countryCache.get(code) != null }.shouldBeTrue()

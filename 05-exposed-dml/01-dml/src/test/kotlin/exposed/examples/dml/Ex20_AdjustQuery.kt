@@ -4,6 +4,7 @@ import exposed.shared.dml.DMLTestData
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -105,7 +106,7 @@ class Ex20_AdjustQuery: JdbcExposedTestBase() {
             val originalQuery = cities.select(cities.name)
 
             assertFailsWith<IllegalArgumentException> {
-                originalQuery.adjustSelect { select(emptyList()) }.toList()
+                originalQuery.adjustSelect { select(emptyList()) }.toFastList()
             }
         }
     }
@@ -245,7 +246,7 @@ class Ex20_AdjustQuery: JdbcExposedTestBase() {
             val actualHaving = queryAdjusted.having
 
             actualHaving!!.repr() shouldBeEqualTo predicateHaving.repr()
-            val rows = queryAdjusted.orderBy(cities.name).toList()
+            val rows = queryAdjusted.orderBy(cities.name).toFastList()
             rows shouldHaveSize 2
             rows[0][cities.name] shouldBeEqualTo "Munich"
             rows[1][cities.name] shouldBeEqualTo "St. Petersburg"
@@ -282,7 +283,7 @@ class Ex20_AdjustQuery: JdbcExposedTestBase() {
             val actualHaving = queryAdjusted.having
             actualHaving!!.repr() shouldBeEqualTo (predicateHaving and predicateHaving).repr()
 
-            val rows = queryAdjusted.orderBy(cities.name).toList()
+            val rows = queryAdjusted.orderBy(cities.name).toFastList()
             rows shouldHaveSize 2
             rows[0][cities.name] shouldBeEqualTo "Munich"
             rows[1][cities.name] shouldBeEqualTo "St. Petersburg"
@@ -320,7 +321,7 @@ class Ex20_AdjustQuery: JdbcExposedTestBase() {
             val actualHaving = queryAdjusted.having
             actualHaving!!.repr() shouldBeEqualTo (predicateHaving or predicateHaving).repr()
 
-            val rows = queryAdjusted.orderBy(cities.name).toList()
+            val rows = queryAdjusted.orderBy(cities.name).toFastList()
             rows shouldHaveSize 2
             rows[0][cities.name] shouldBeEqualTo "Munich"
             rows[1][cities.name] shouldBeEqualTo "St. Petersburg"

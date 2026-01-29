@@ -6,6 +6,7 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -248,7 +249,7 @@ class Ex23_Conditions: JdbcExposedTestBase() {
             val row = cities
                 .select(cities.name, cities.name, cities.id)
                 .where { cities.name eq "Munich" }
-                .toList()
+                .toFastList()
                 .single()
 
             row[cities.id] shouldBeEqualTo 2
@@ -264,7 +265,7 @@ class Ex23_Conditions: JdbcExposedTestBase() {
     fun `throw when slice with empty list`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, _, _ ->
             expectException<IllegalArgumentException> {
-                cities.select(emptyList()).toList()
+                cities.select(emptyList()).toFastList()
             }
         }
     }
@@ -453,7 +454,7 @@ class Ex23_Conditions: JdbcExposedTestBase() {
             log.debug { "Query: $query1" }
             query1 shouldBeEqualTo query2
 
-            val results1 = cities.select(cities.id, function1).toList()
+            val results1 = cities.select(cities.id, function1).toFastList()
 
             cities.select(cities.id, function2).forEachIndexed { i, row ->
                 val currentId = row[cities.id]

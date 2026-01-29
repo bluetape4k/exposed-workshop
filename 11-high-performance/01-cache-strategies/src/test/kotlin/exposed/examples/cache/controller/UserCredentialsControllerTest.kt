@@ -9,12 +9,11 @@ import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.jdbc.deleteAll
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
@@ -22,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 import java.time.Instant
 
@@ -64,9 +64,10 @@ class UserCredentialsControllerTest(
 
         val ucs = client
             .httpGet("/user-credentials")
-            .returnResult<UserCredentialsDTO>().responseBody
-            .asFlow()
-            .toList()
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<UserCredentialsDTO>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
 
         ucs shouldHaveSize idsInDB.size
     }
@@ -90,9 +91,11 @@ class UserCredentialsControllerTest(
         log.debug { "User credentials IDs to search: $ids" }
         val ucs = client
             .httpGet("/user-credentials/all?ids=${ids.joinToString(",")}")
-            .returnResult<UserCredentialsDTO>().responseBody
-            .asFlow()
-            .toList()
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<UserCredentialsDTO>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
+
 
         ucs shouldHaveSize ids.size
         ucs.map { it.id } shouldContainSame ids
@@ -105,6 +108,7 @@ class UserCredentialsControllerTest(
         val invalidatedIds = idsInDB.shuffled().take(3)
         val invalidatedCount = client
             .httpDelete("/user-credentials/invalidate?ids=${invalidatedIds.joinToString(",")}")
+            .expectStatus().is2xxSuccessful
             .returnResult<Long>().responseBody
             .awaitSingle()
 

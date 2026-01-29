@@ -6,6 +6,7 @@ import exposed.examples.jpa.ex01_simple.SimpleSchema.toSimpleDTOs
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldHaveSize
@@ -75,7 +76,7 @@ class Ex01_Simple_DSL: JdbcExposedTestBase() {
                 .where { SimpleTable.name inList names }
 
             // ResultRow 를 엔티티로 만든다.
-            val entities: List<SimpleEntity> = SimpleEntity.wrapRows(query).toList()
+            val entities: List<SimpleEntity> = SimpleEntity.wrapRows(query).toFastList()
             entities shouldHaveSize names.size
         }
     }

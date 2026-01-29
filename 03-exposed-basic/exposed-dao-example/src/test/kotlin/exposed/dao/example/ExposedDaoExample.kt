@@ -7,6 +7,7 @@ import exposed.dao.example.Schema.UserTable
 import exposed.dao.example.Schema.withCityUsers
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
@@ -67,9 +68,12 @@ class ExposedDaoExample: JdbcExposedTestBase() {
     fun `DAO Entity를 조건절로 검색하기 01`(testDB: TestDB) {
         withCityUsers(testDB) {
             // 도시 정보와 함께 User 정보를 eager loading 합니다.
-            val seoul = City.find { CityTable.name eq "Seoul" }.with(City::users).single()
+            val seoul = City
+                .find { CityTable.name eq "Seoul" }
+                .with(City::users)
+                .single()
 
-            val usersInSeoul = seoul.users.toList()
+            val usersInSeoul = seoul.users.toFastList()
             usersInSeoul shouldHaveSize 2
             usersInSeoul.map { it.city } shouldBeEqualTo listOf(seoul, seoul)
 
@@ -97,7 +101,10 @@ class ExposedDaoExample: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `DAO Entity를 조건절로 검색하기 02`(testDB: TestDB) {
         withCityUsers(testDB) {
-            val users = User.find { UserTable.age greaterEq intLiteral(18) }.with(User::city).toList()
+            val users = User
+                .find { UserTable.age greaterEq intLiteral(18) }
+                .with(User::city)
+                .toFastList()
 
             users shouldHaveSize 4
             users.forEach { user ->

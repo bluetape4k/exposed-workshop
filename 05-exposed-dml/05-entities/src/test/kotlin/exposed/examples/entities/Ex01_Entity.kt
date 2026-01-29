@@ -13,6 +13,7 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.TestDB.H2_V1
 import exposed.shared.tests.TestDB.POSTGRESQL
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -623,7 +624,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
             val post1 = Post.new { board = board1 }
 
             Board.all().forEach { board ->
-                board.posts.count() to board.posts.toList()
+                board.posts.count() to board.posts.toFastList()
 
                 val text = Post
                     .find { Posts.boardId eq board.id }
@@ -1180,10 +1181,10 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             commit()
 
-            category1.posts.limit(1).toList() shouldHaveSize 1
+            category1.posts.limit(1).toFastList() shouldHaveSize 1
             category1.posts.limit(1).count() shouldBeEqualTo 1L
             category1.posts.count() shouldBeEqualTo 2L
-            category1.posts.toList() shouldHaveSize 2
+            category1.posts.toFastList() shouldHaveSize 2
         }
     }
 
@@ -1214,17 +1215,17 @@ class Ex01_Entity: JdbcExposedTestBase() {
             val category3 = Category.new { title = "Test3" }
             val category2 = Category.new { title = "Test2" }
 
-            Category.all().toList() shouldBeEqualTo listOf(category1, category3, category2)
+            Category.all().toFastList() shouldBeEqualTo listOf(category1, category3, category2)
 
             // 올림차순 정렬
             Category.all()
                 .orderBy(Categories.title to SortOrder.ASC)
-                .toList() shouldBeEqualTo listOf(category1, category2, category3)
+                .toFastList() shouldBeEqualTo listOf(category1, category2, category3)
 
             // 내림차순 정렬
             Category.all()
                 .orderBy(Categories.title to SortOrder.DESC)
-                .toList() shouldBeEqualTo listOf(category3, category2, category1)
+                .toFastList() shouldBeEqualTo listOf(category3, category2, category1)
         }
     }
 
@@ -1714,7 +1715,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
                  * SELECT regions.id, regions."name" FROM regions WHERE regions.id = 1;
                  * ```
                  */
-                val allSchools = School.all().with(School::region).toList()
+                val allSchools = School.all().with(School::region).toFastList()
 
                 allSchools shouldHaveSize 2
 
@@ -1734,7 +1735,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
                  * SELECT regions.id, regions."name" FROM regions WHERE regions.id = 1;
                  * ```
                  */
-                val oneSchool = School.all().limit(1).with(School::region).toList()
+                val oneSchool = School.all().limit(1).with(School::region).toFastList()
 
                 oneSchool shouldHaveSize 1
                 statementCount shouldBeEqualTo 2
@@ -1757,7 +1758,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
                  * SELECT schools.id, schools."name", schools.region_id, schools.secondary_region_id FROM schools LIMIT 1;
                  * ```
                  */
-                val oneSchool = School.all().with(School::region).limit(1).toList()
+                val oneSchool = School.all().with(School::region).limit(1).toFastList()
 
                 oneSchool shouldHaveSize 1
                 // 기대:
@@ -1854,16 +1855,16 @@ class Ex01_Entity: JdbcExposedTestBase() {
                 val cache = TransactionManager.current().entityCache
 
                 // School 엔티티 조회 시 Student 도 eager loading 한다.
-                School.all().with(School::students).toList()
+                School.all().with(School::students).toFastList()
 
                 cache.getReferrers<Student>(school1.id, Students.school)
-                    ?.toList().orEmpty() shouldBeEqualTo listOf(student1)
+                    ?.toFastList().orEmpty() shouldBeEqualTo listOf(student1)
 
                 cache.getReferrers<Student>(school2.id, Students.school)
-                    ?.toList().orEmpty() shouldBeEqualTo listOf(student2)
+                    ?.toFastList().orEmpty() shouldBeEqualTo listOf(student2)
 
                 cache.getReferrers<Student>(school3.id, Students.school)
-                    ?.toList().orEmpty() shouldBeEqualTo listOf(student3, student4)
+                    ?.toFastList().orEmpty() shouldBeEqualTo listOf(student3, student4)
             }
         }
     }
@@ -1909,7 +1910,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
                 School.find { Schools.id eq school1.id }.first().load(School::students)
 
                 cache.getReferrers<Student>(school1.id, Students.school)
-                    ?.toList().orEmpty() shouldBeEqualTo listOf(student1, student2, student3)
+                    ?.toFastList().orEmpty() shouldBeEqualTo listOf(student1, student2, student3)
             }
         }
     }
@@ -1962,13 +1963,13 @@ class Ex01_Entity: JdbcExposedTestBase() {
                 School.all().with(School::students, Student::detentions)
 
                 cache.getReferrers<Student>(school1.id, Students.school)
-                    ?.toList().orEmpty() shouldBeEqualTo listOf(student1, student2)
+                    ?.toFastList().orEmpty() shouldBeEqualTo listOf(student1, student2)
 
                 cache.getReferrers<Detention>(student1.id, Detentions.student)
-                    ?.toList().orEmpty() shouldBeEqualTo listOf(detention1, detention2)
+                    ?.toFastList().orEmpty() shouldBeEqualTo listOf(detention1, detention2)
 
                 cache.getReferrers<Detention>(student2.id, Detentions.student)
-                    ?.toList().orEmpty().shouldBeEmpty()
+                    ?.toFastList().orEmpty().shouldBeEmpty()
             }
         }
     }
@@ -2023,13 +2024,13 @@ class Ex01_Entity: JdbcExposedTestBase() {
                 School.all().with(School::holidays)
 
                 cache.getReferrers<Holiday>(school1.id, SchoolHolidays.school)
-                    ?.toList().orEmpty() shouldBeEqualTo listOf(holiday1, holiday2)
+                    ?.toFastList().orEmpty() shouldBeEqualTo listOf(holiday1, holiday2)
 
                 cache.getReferrers<Holiday>(school2.id, SchoolHolidays.school)
-                    ?.toList().orEmpty() shouldBeEqualTo listOf(holiday3)
+                    ?.toFastList().orEmpty() shouldBeEqualTo listOf(holiday3)
 
                 cache.getReferrers<Holiday>(school3.id, SchoolHolidays.school)
-                    ?.toList().orEmpty().shouldBeEmpty()
+                    ?.toFastList().orEmpty().shouldBeEmpty()
             }
         }
     }
@@ -2089,7 +2090,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             val cache = TransactionManager.current().entityCache
 
-            cache.getReferrers<Holiday>(school1.id, SchoolHolidays.school)?.toList().orEmpty() shouldBeEqualTo
+            cache.getReferrers<Holiday>(school1.id, SchoolHolidays.school)?.toFastList().orEmpty() shouldBeEqualTo
                     listOf(holiday1, holiday2, holiday3)
         }
     }
@@ -2132,7 +2133,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             val cache = TransactionManager.current().entityCache
 
-            cache.getReferrers<Student>(school1.id, Students.school)?.toList().orEmpty() shouldBeEqualTo
+            cache.getReferrers<Student>(school1.id, Students.school)?.toFastList().orEmpty() shouldBeEqualTo
                     listOf(student1, student2)
             cache.getReferrers<Note>(student1.id, Notes.student)?.single() shouldBeEqualTo note1
             cache.getReferrers<Note>(student2.id, Notes.student)?.single() shouldBeEqualTo note2
@@ -2213,10 +2214,10 @@ class Ex01_Entity: JdbcExposedTestBase() {
                 Student.all().first().load(Student::bio)
 
                 cache.getReferrers<StudentBio>(student1.id, StudentBios.student)
-                    ?.toList().orEmpty() shouldBeEqualTo listOf(bio1)
+                    ?.toFastList().orEmpty() shouldBeEqualTo listOf(bio1)
 
                 cache.getReferrers<StudentBio>(student2.id, StudentBios.student)
-                    ?.toList().orEmpty().shouldBeEmpty()
+                    ?.toFastList().orEmpty().shouldBeEmpty()
             }
         }
     }
@@ -2739,10 +2740,10 @@ class Ex01_Entity: JdbcExposedTestBase() {
             val cache = TransactionManager.current().entityCache
 
             cache.getReferrers<Order>(customer1.id, Orders.customer)
-                ?.toList().orEmpty() shouldBeEqualTo listOf(order1, order2)
+                ?.toFastList().orEmpty() shouldBeEqualTo listOf(order1, order2)
 
             cache.getReferrers<Order>(customer2.id, Orders.customer)
-                ?.toList().orEmpty() shouldBeEqualTo listOf(order3)
+                ?.toFastList().orEmpty() shouldBeEqualTo listOf(order3)
         }
     }
 
@@ -2808,7 +2809,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
 
             // SELECT testtable.id, testtable."value" FROM testtable;
-            TestTable.selectAll().toList().map { it[TestTable.value] } shouldBeEqualTo listOf(1, 2)
+            TestTable.selectAll().toFastList().map { it[TestTable.value] } shouldBeEqualTo listOf(1, 2)
 
             // UPDATE testtable SET "value"=3 WHERE id = 1
             // UPDATE testtable SET "value"=4 WHERE id = 2
@@ -2818,7 +2819,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
             entityCache.clear()
 
             // SELECT testtable.id, testtable."value" FROM testtable;
-            TestTable.selectAll().toList().map { it[TestTable.value] } shouldBeEqualTo listOf(3, 4)
+            TestTable.selectAll().toFastList().map { it[TestTable.value] } shouldBeEqualTo listOf(3, 4)
 
             entityCache.clear()
 

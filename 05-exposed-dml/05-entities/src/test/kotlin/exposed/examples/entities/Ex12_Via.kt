@@ -8,6 +8,7 @@ import exposed.examples.entities.ViaTestData.VString
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -213,7 +214,7 @@ class Ex12_Via: JdbcExposedTestBase() {
                 is ConnectionAutoTable -> connectedAutoStrings = SizedCollection(valuesToSet)
             }
 
-            val result = ct.selectAll().toList()
+            val result = ct.selectAll().toFastList()
             body(ct, result)
         }
     }
@@ -277,15 +278,15 @@ class Ex12_Via: JdbcExposedTestBase() {
             n1.testWithBothTables(listOf(s1, s2)) { _, _ -> }
             n2.testWithBothTables(listOf(s1, s2)) { _, row ->
                 row shouldHaveSize 4
-                n1.connectedStrings.toList() shouldBeEqualTo listOf(s1, s2)
-                n2.connectedStrings.toList() shouldBeEqualTo listOf(s1, s2)
+                n1.connectedStrings.toFastList() shouldBeEqualTo listOf(s1, s2)
+                n2.connectedStrings.toFastList() shouldBeEqualTo listOf(s1, s2)
             }
             n1.testWithBothTables(emptyList()) { table, row ->
                 row shouldHaveSize 2
                 row[0][table.numId] shouldBeEqualTo n2.id
                 row[1][table.numId] shouldBeEqualTo n2.id
-                n1.connectedStrings.toList().shouldBeEmpty()
-                n2.connectedStrings.toList() shouldBeEqualTo listOf(s1, s2)
+                n1.connectedStrings.toFastList().shouldBeEmpty()
+                n2.connectedStrings.toFastList() shouldBeEqualTo listOf(s1, s2)
             }
         }
     }
@@ -306,14 +307,14 @@ class Ex12_Via: JdbcExposedTestBase() {
             n1.testWithBothTables(listOf(s1, s2)) { _, _ -> }
             n2.testWithBothTables(listOf(s1, s2)) { _, row ->
                 row shouldHaveSize 4
-                n1.connectedStrings.toList() shouldBeEqualTo listOf(s1, s2)
-                n2.connectedStrings.toList() shouldBeEqualTo listOf(s1, s2)
+                n1.connectedStrings.toFastList() shouldBeEqualTo listOf(s1, s2)
+                n2.connectedStrings.toFastList() shouldBeEqualTo listOf(s1, s2)
             }
             // SizedCollection에서 제거하면 cascade delete 되어 s2 가 삭제된다.
             n1.testWithBothTables(listOf(s1)) { _, row ->
                 row shouldHaveSize 3
-                n1.connectedStrings.toList() shouldBeEqualTo listOf(s1)
-                n2.connectedStrings.toList() shouldBeEqualTo listOf(s1, s2)
+                n1.connectedStrings.toFastList() shouldBeEqualTo listOf(s1)
+                n2.connectedStrings.toFastList() shouldBeEqualTo listOf(s1, s2)
             }
         }
     }
@@ -513,7 +514,7 @@ class Ex12_Via: JdbcExposedTestBase() {
                 val sourceColumn = (Node::children
                     .apply { isAccessible = true }.getDelegate(node) as InnerTableLink<*, *, *, *>).sourceColumn
                 val children = entityCache.getReferrers<Node>(node.id, sourceColumn)
-                children?.toList() shouldBeEqualTo values
+                children?.toFastList() shouldBeEqualTo values
             }
 
             /**
@@ -531,7 +532,7 @@ class Ex12_Via: JdbcExposedTestBase() {
              *  WHERE nodetonodes.parent_node_id IN (1, 2, 3, 4)
              * ```
              */
-            val nodeWithChildren = Node.all().with(Node::children).toList()
+            val nodeWithChildren = Node.all().with(Node::children).toFastList()
             nodeWithChildren.shouldNotBeEmpty()
 
             checkChildrenReferences(child1, emptyList())
@@ -543,7 +544,7 @@ class Ex12_Via: JdbcExposedTestBase() {
                 val sourceColumn = (Node::parents
                     .apply { isAccessible = true }.getDelegate(node) as InnerTableLink<*, *, *, *>).sourceColumn
                 val parents = entityCache.getReferrers<Node>(node.id, sourceColumn)
-                parents?.toList() shouldBeEqualTo values
+                parents?.toFastList() shouldBeEqualTo values
             }
 
             /**
@@ -561,7 +562,7 @@ class Ex12_Via: JdbcExposedTestBase() {
              *  WHERE nodetonodes.child_node_id IN (1, 2, 3, 4)
              * ```
              */
-            val nodeWithParents = Node.all().with(Node::parents).toList()
+            val nodeWithParents = Node.all().with(Node::parents).toFastList()
             nodeWithParents.shouldNotBeEmpty()
 
             checkParentsReferences(child1, listOf(root1, root2))
@@ -810,16 +811,16 @@ class Ex12_Via: JdbcExposedTestBase() {
                  *  WHERE project_tasks.project_id IN (1, 2)
                  * ```
                  */
-                Project.all().with(Project::tasks).toList()
+                Project.all().with(Project::tasks).toFastList()
                 val cache = TransactionManager.current().entityCache
 
                 // eager load 되었으므로 캐시에 존재한다.
-                val p1Tasks = cache.getReferrers<Task>(p1.id, ProjectTasks.projectId)?.toList().orEmpty()
+                val p1Tasks = cache.getReferrers<Task>(p1.id, ProjectTasks.projectId)?.toFastList().orEmpty()
                 p1Tasks.map { it.id } shouldBeEqualTo listOf(t1.id)
                 p1Tasks.all { it.approved }.shouldBeTrue()
 
                 // eager load 되었으므로 캐시에 존재한다.
-                val p2Tasks = cache.getReferrers<Task>(p2.id, ProjectTasks.projectId)?.toList().orEmpty()
+                val p2Tasks = cache.getReferrers<Task>(p2.id, ProjectTasks.projectId)?.toFastList().orEmpty()
                 p2Tasks.map { it.id } shouldBeEqualTo listOf(t2.id, t3.id)
                 p2Tasks.all { !it.approved }.shouldBeTrue()
 

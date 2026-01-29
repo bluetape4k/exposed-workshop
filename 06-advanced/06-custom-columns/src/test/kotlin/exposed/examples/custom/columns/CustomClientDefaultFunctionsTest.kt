@@ -3,6 +3,7 @@ package exposed.examples.custom.columns
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.core.ksuidGenerated
 import io.bluetape4k.exposed.core.ksuidMillisGenerated
 import io.bluetape4k.exposed.core.snowflakeGenerated
@@ -80,7 +81,7 @@ class CustomClientDefaultFunctionsTest: JdbcExposedTestBase() {
 
             entityCache.clear()
 
-            val rows = ClientGenerated.selectAll().toList()
+            val rows = ClientGenerated.selectAll().toFastList()
 
             rows.map { it[ClientGenerated.timebasedUuid] }.distinct() shouldHaveSize entityCount
             rows.map { it[ClientGenerated.timebasedUuidString] }.distinct() shouldHaveSize entityCount
@@ -100,7 +101,7 @@ class CustomClientDefaultFunctionsTest: JdbcExposedTestBase() {
             }
             entityCache.clear()
 
-            val loaded = ClientGeneratedEntity.all().toList()
+            val loaded = ClientGeneratedEntity.all().toFastList()
 
             loaded.map { it.timebasedUuid }.distinct() shouldHaveSize entityCount
             loaded.map { it.timebasedUuidString }.distinct() shouldHaveSize entityCount

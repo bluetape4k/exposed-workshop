@@ -4,6 +4,7 @@ import exposed.shared.mapping.OrderSchema.UserTable
 import exposed.shared.mapping.OrderSchema.withOrdersTables
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
@@ -69,7 +70,7 @@ class Ex05_Self_Join: JdbcExposedTestBase() {
                     u1[users.parentId],
                 )
                 .where { u2[users.id] eq 4L }
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 1
             assertUsers(
@@ -120,7 +121,7 @@ class Ex05_Self_Join: JdbcExposedTestBase() {
                     users.parentId,
                 )
                 .where { u2[users.id] eq 4L }
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 1
             assertUsers(

@@ -2,6 +2,7 @@ package exposed.examples.springwebflux.domain.repository
 
 import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
 import exposed.examples.springwebflux.domain.dtos.MovieDTO
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -139,7 +140,7 @@ class MovieRepositoryTest(
     @Test
     fun `find movies with acting producers`() = runSuspendIO {
         newSuspendedTransaction(readOnly = true) {
-            val movies = movieRepository.findMoviesWithActingProducers().toList()
+            val movies = movieRepository.findMoviesWithActingProducers().toFastList()
 
             movies.forEach {
                 log.debug { "movie: ${it.movieName}, actor: ${it.producerActorName}" }

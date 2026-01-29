@@ -5,6 +5,7 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
@@ -47,7 +48,7 @@ class Ex10_OrderBy: JdbcExposedTestBase() {
             val rows = users
                 .selectAll()
                 .orderBy(users.id)
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 5
             rows.map { it[users.id] } shouldBeEqualTo listOf("alex", "andrey", "eugene", "sergey", "smth")
@@ -85,7 +86,7 @@ class Ex10_OrderBy: JdbcExposedTestBase() {
             val rows = users.selectAll()
                 .orderBy(users.cityId, SortOrder.DESC)
                 .orderBy(users.id)
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 5
             val usersWithoutCities = listOf("alex", "smth")
@@ -117,7 +118,7 @@ class Ex10_OrderBy: JdbcExposedTestBase() {
         withCitiesAndUsers(testDB) { _, users, _ ->
             val rows = users.selectAll()
                 .orderBy(users.cityId to SortOrder.DESC, users.id to SortOrder.ASC)
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 5
             val usersWithoutCities = listOf("alex", "smth")
@@ -155,7 +156,7 @@ class Ex10_OrderBy: JdbcExposedTestBase() {
                 )
                 .groupBy(cities.name)
                 .orderBy(cities.name)  // ASC 가 기본값
-                .toList()
+                .toFastList()
 
             r shouldHaveSize 2
             r[0][cities.name] shouldBeEqualTo "Munich"
@@ -182,7 +183,7 @@ class Ex10_OrderBy: JdbcExposedTestBase() {
             val orderByExpression = users.id.substring(2, 1)
             val rows = users.selectAll()
                 .orderBy(orderByExpression to SortOrder.ASC)
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 5
             rows.map { it[users.id] } shouldBeEqualTo listOf("sergey", "alex", "smth", "andrey", "eugene")
@@ -282,7 +283,7 @@ class Ex10_OrderBy: JdbcExposedTestBase() {
                         users.cityId to sortOrder,
                         users.id to SortOrder.ASC
                     )
-                    .toList()
+                    .toFastList()
 
                 rows shouldHaveSize 5
                 expected.forEachIndexed { index, expect ->

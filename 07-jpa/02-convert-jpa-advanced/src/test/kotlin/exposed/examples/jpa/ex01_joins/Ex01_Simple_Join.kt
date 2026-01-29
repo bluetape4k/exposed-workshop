@@ -4,6 +4,7 @@ import exposed.shared.mapping.OrderSchema
 import exposed.shared.mapping.OrderSchema.withOrdersTables
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -70,7 +71,7 @@ class Ex01_Simple_Join: JdbcExposedTestBase() {
                     od[details.quantity]
                 )
                 .orderBy(om[orders.id])
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 3
 
@@ -109,7 +110,7 @@ class Ex01_Simple_Join: JdbcExposedTestBase() {
             val orderEntities = OrderSchema.Order
                 .all()
                 .with(OrderSchema.Order::details)
-                .toList()
+                .toFastList()
 
             orderEntities shouldHaveSize 2
             orderEntities.forEach { order ->
@@ -161,7 +162,7 @@ class Ex01_Simple_Join: JdbcExposedTestBase() {
                     details.quantity
                 )
                 .orderBy(orders.id)
-                .toList()
+                .toFastList()
 
             rows.forEach { row ->
                 log.debug { "orderId=${row[orders.id]}, orderData=${row[orders.orderDate]}, lineNumber=${row[details.lineNumber]}" }
@@ -205,7 +206,7 @@ class Ex01_Simple_Join: JdbcExposedTestBase() {
                 items.description
             )
                 .where { orders.id eq 2L }
-                .toList()
+                .toFastList()
 
             rows.forEach { row ->
                 log.debug { "orderId=${row[orders.id]}, lineNumber=${row[orderLines.lineNumber]}, item des=${row[items.description]}" }

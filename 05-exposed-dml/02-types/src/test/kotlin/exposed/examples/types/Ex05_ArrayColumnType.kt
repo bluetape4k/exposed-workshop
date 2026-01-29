@@ -6,6 +6,7 @@ import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -254,7 +255,7 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
              */
             val result3 =
                 ArrayTestTable.selectAll().where { ArrayTestTable.numbers[1] greaterEq ArrayTestTable.numbers[3] }
-                    .toList()
+                    .toFastList()
             result3.shouldBeEmpty()
 
             /**
@@ -554,7 +555,7 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
              */
             val result2 = ArrayTestTable.select(ArrayTestTable.id)
                 .where { ArrayTestTable.id eq anyFrom(ArrayTestTable.numbers.slice(2, 3)) }
-            result2.toList().shouldBeEmpty()
+            result2.toFastList().shouldBeEmpty()
 
             /**
              * ```sql
@@ -576,7 +577,7 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
              */
             val result4 = ArrayTestTable.select(ArrayTestTable.id)
                 .where { ArrayTestTable.id greater allFrom(ArrayTestTable.numbers) }
-            result4.toList().shouldBeEmpty()
+            result4.toFastList().shouldBeEmpty()
         }
     }
 

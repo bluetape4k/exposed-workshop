@@ -11,6 +11,7 @@ import exposed.examples.jpa.ex05_relations.ex03_many_to_one.ManyToOneSchema.with
 import exposed.examples.jpa.ex05_relations.ex03_many_to_one.ManyToOneSchema.withSalesTables
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.collections.size
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -195,7 +196,7 @@ class Ex01_ManyToOne: JdbcExposedTestBase() {
             val loaded = SalesForce.findById(salesForce.id)!!.load(SalesForce::salesGuys)
             log.debug { "loaded=$loaded" }
             loaded shouldBeEqualTo salesForce
-            loaded.salesGuys.toList() shouldBeEqualTo listOf(salesGuy1, salesGuy2, salesGuy3)
+            loaded.salesGuys.toFastList() shouldBeEqualTo listOf(salesGuy1, salesGuy2, salesGuy3)
 
             val guyToRemove = loaded.salesGuys.last()
             guyToRemove.delete()
@@ -206,7 +207,7 @@ class Ex01_ManyToOne: JdbcExposedTestBase() {
             // eager loading
             val loaded2 = SalesForce.findById(salesForce.id)!!.load(SalesForce::salesGuys)
             loaded2 shouldBeEqualTo salesForce
-            loaded2.salesGuys.toList() shouldBeEqualTo listOf(salesGuy1, salesGuy2)
+            loaded2.salesGuys.toFastList() shouldBeEqualTo listOf(salesGuy1, salesGuy2)
         }
     }
 }

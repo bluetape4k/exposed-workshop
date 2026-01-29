@@ -14,6 +14,7 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.toBigDecimal
@@ -167,7 +168,7 @@ class Ex01_Select: JdbcExposedTestBase() {
         withCitiesAndUsers(testDB) { _, users, _ ->
             val rows = users.selectAll()
                 .where { users.id neq "andrey" }
-                .toList()
+                .toFastList()
 
             rows.map { it[users.id] } shouldNotContain "andrey"
         }
@@ -225,7 +226,7 @@ class Ex01_Select: JdbcExposedTestBase() {
                 .selectAll()
                 .where { users.id inList listOf("andrey", "alex") }
                 .orderBy(users.name)
-                .toList()
+                .toFastList()
 
             r1.size shouldBeEqualTo 2
             r1[0][users.name] shouldBeEqualTo "Alex"
@@ -241,7 +242,7 @@ class Ex01_Select: JdbcExposedTestBase() {
              */
             val r2 = users.selectAll()
                 .where { users.id notInList setOf("ABC", "DEF") }
-                .toList()
+                .toFastList()
 
             users.selectAll().count() shouldBeEqualTo r2.size.toLong()
         }
@@ -266,7 +267,7 @@ class Ex01_Select: JdbcExposedTestBase() {
                     (users.id to users.name) inList
                             listOf("andrey" to "Andrey", "sergey" to "Sergey")
                 }
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 2
             rows[0][users.name] shouldBeEqualTo "Andrey"
@@ -543,7 +544,7 @@ class Ex01_Select: JdbcExposedTestBase() {
                     users.id eq anyFrom(arrayOf("andrey", "alex"))
                 }
                 .orderBy(users.name)
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 2
             rows[0][users.name] shouldBeEqualTo "Alex"
@@ -576,7 +577,7 @@ class Ex01_Select: JdbcExposedTestBase() {
                     users.id eq anyFrom(listOf("andrey", "alex"))
                 }
                 .orderBy(users.name)
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 2
             rows[0][users.name] shouldBeEqualTo "Alex"
@@ -821,7 +822,7 @@ class Ex01_Select: JdbcExposedTestBase() {
                 .where {
                     sales.amount greaterEq allFrom(amounts)
                 }
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 3
             rows.all { it[sales.product] == "coffee" }.shouldBeTrue()
@@ -853,7 +854,7 @@ class Ex01_Select: JdbcExposedTestBase() {
                 .where {
                     sales.amount greaterEq allFrom(amounts)
                 }
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 3
             rows.all { it[sales.product] == "coffee" }.shouldBeTrue()
@@ -880,7 +881,7 @@ class Ex01_Select: JdbcExposedTestBase() {
             val rows = sales
                 .selectAll()
                 .where { sales.amount greaterEq allFrom(someAmounts) }
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 3
             rows.all { it[sales.product] == "coffee" }.shouldBeTrue()
@@ -1062,7 +1063,7 @@ class Ex01_Select: JdbcExposedTestBase() {
 
             // 이미 query에는 comment가 존재하므로 IllegalStateException 발생
             expectException<IllegalStateException> {
-                query.comment("Testing").toList()
+                query.comment("Testing").toFastList()
             }
 
             val commentedBackSql = query
@@ -1089,7 +1090,7 @@ class Ex01_Select: JdbcExposedTestBase() {
         }
 
         withTables(testDB, alphabet) {
-            val allLetters = ('A'..'Z').toList()
+            val allLetters = ('A'..'Z').toFastList()
             val amount = 10
             val start = 8L
 

@@ -3,6 +3,7 @@ package exposed.examples.dml
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -341,7 +342,7 @@ class Ex15_Returning: JdbcExposedTestBase() {
             Items.selectAll().count() shouldBeEqualTo 0L
 
             // 삭제될 것이 없으므로, 삭제된 레코드가 없습니다.
-            Items.deleteReturning().toList().shouldBeEmpty()
+            Items.deleteReturning().toFastList().shouldBeEmpty()
         }
     }
 

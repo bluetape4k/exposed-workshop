@@ -5,6 +5,7 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
@@ -53,7 +54,7 @@ class Ex07_ThreadLocalManager: JdbcExposedTestBase() {
             thread {
                 db2 = TestDB.MYSQL_V5.connect()
                 transaction {
-                    DMLTestData.Cities.selectAll().toList()
+                    DMLTestData.Cities.selectAll().toFastList()
                     secondThreadTm = db2.transactionManager
                     secondThreadTm shouldNotBeEqualTo firstThreadTm
                 }

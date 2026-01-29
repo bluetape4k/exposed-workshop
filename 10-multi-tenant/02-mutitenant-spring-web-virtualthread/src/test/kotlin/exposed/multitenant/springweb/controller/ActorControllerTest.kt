@@ -7,15 +7,14 @@ import exposed.multitenant.springweb.tenant.Tenants
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.reactive.asFlow
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.test.web.reactive.server.returnResult
+import org.springframework.test.web.reactive.server.expectBodyList
 
 class ActorControllerTest(
     @param:Autowired private val client: WebTestClient,
@@ -31,10 +30,10 @@ class ActorControllerTest(
             .uri("/actors")
             .header(TenantFilter.TENANT_HEADER, tenant.id)
             .exchange()
-            .expectStatus().isOk
-            .returnResult<ActorDTO>().responseBody
-            .asFlow()
-            .toList()
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<ActorDTO>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
 
         actors.forEach {
             log.debug { "Tenant: ${tenant.id}, Actor: $it" }

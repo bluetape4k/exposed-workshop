@@ -3,6 +3,7 @@ package exposed.examples.money
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -101,7 +102,7 @@ class Ex01_MoneyDefaults: JdbcExposedTestBase() {
                 DBDefault.removeFromCache(it)
             }
 
-            val entities = DBDefault.all().toList()
+            val entities = DBDefault.all().toFastList()
             entities shouldBeEqualTo created
         }
     }

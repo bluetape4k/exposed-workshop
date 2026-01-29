@@ -6,6 +6,7 @@ import exposed.examples.jpa.ex04_tree.TreeNodeSchema.buildTreeNodes
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -69,7 +70,7 @@ class Ex01_TreeNode: JdbcExposedTestBase() {
              *  WHERE tree_nodes.parent_id IS NULL
              * ```
              */
-            val roots = TreeNode.find { TreeNodeTable.parentId.isNull() }.toList()
+            val roots = TreeNode.find { TreeNodeTable.parentId.isNull() }.toFastList()
             roots shouldBeEqualTo listOf(root)
 
             /**
@@ -165,7 +166,7 @@ class Ex01_TreeNode: JdbcExposedTestBase() {
             val query = TreeNodeTable.selectAll()
                 .where { TreeNodeTable.id inSubQuery subQuery }
 
-            val nodes = TreeNode.wrapRows(query).toList()
+            val nodes = TreeNode.wrapRows(query).toFastList()
             nodes shouldHaveSize 1
             nodes.single().title shouldBeEqualTo "child1"
         }
@@ -205,7 +206,7 @@ class Ex01_TreeNode: JdbcExposedTestBase() {
                 .select(TreeNodeTable.columns)
 
             // Query 결과인 ResultSet 으로 Entity 만들기
-            val nodes = TreeNode.wrapRows(joinQuery).toList()
+            val nodes = TreeNode.wrapRows(joinQuery).toFastList()
             nodes shouldHaveSize 2
             nodes.map { it.title } shouldContainSame listOf("grandChild1", "grandChild2")
         }

@@ -13,6 +13,7 @@ import exposed.workshop.springwebflux.domain.toActorDTO
 import exposed.workshop.springwebflux.domain.toMovieDTO
 import exposed.workshop.springwebflux.domain.toMovieWithActorDTO
 import exposed.workshop.springwebflux.domain.toMovieWithProducingActorDTO
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.Join
@@ -64,7 +65,7 @@ class MovieRepository {
     }
 
     suspend fun findAll(): List<MovieEntity> {
-        return MovieEntity.wrapRows(MovieTable.selectAll()).toList()
+        return MovieEntity.wrapRows(MovieTable.selectAll()).toFastList()
     }
 
     suspend fun searchMovie(params: Map<String, String?>): List<MovieEntity> {
@@ -85,7 +86,7 @@ class MovieRepository {
             }
         }
 
-        return MovieEntity.wrapRows(query).toList()
+        return MovieEntity.wrapRows(query).toFastList()
     }
 
     suspend fun create(movie: MovieDTO): MovieEntity {

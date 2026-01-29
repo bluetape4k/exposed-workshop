@@ -4,6 +4,7 @@ import exposed.examples.jpa.ex05_relations.ex02_one_to_many.Ex05_OneToMany_Via.C
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -182,7 +183,7 @@ class Ex05_OneToMany_Via: JdbcExposedTestBase() {
             cloud2.producedSnowflakes.toSet() shouldContainSame setOf(snowflake1, snowflake2)
 
             // Remove snowflake
-            val snowflakes: List<Snowflake> = cloud2.producedSnowflakes.toList()
+            val snowflakes: List<Snowflake> = cloud2.producedSnowflakes.toFastList()
             cloud2.producedSnowflakes = SizedCollection(snowflakes.drop(1))
 
             entityCache.clear()

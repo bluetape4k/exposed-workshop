@@ -5,13 +5,13 @@ import exposed.examples.cache.coroutines.AbstractCacheStrategyTest
 import exposed.examples.cache.coroutines.domain.model.UserCredentialsDTO
 import exposed.examples.cache.coroutines.domain.model.UserCredentialsTable
 import exposed.examples.cache.coroutines.domain.repository.UserCredentialsCacheRepository
+import io.bluetape4k.coroutines.flow.extensions.toFastList
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.runBlocking
@@ -70,7 +70,7 @@ class UserCredentialsControllerTest(
             .httpGet("/user-credentials")
             .returnResult<UserCredentialsDTO>().responseBody
             .asFlow()
-            .toList()
+            .toFastList()
 
         ucs shouldHaveSize idsInDB.size
     }
@@ -96,7 +96,7 @@ class UserCredentialsControllerTest(
             .httpGet("/user-credentials/all?ids=${ids.joinToString(",")}")
             .returnResult<UserCredentialsDTO>().responseBody
             .asFlow()
-            .toList()
+            .toFastList()
 
         ucs shouldHaveSize ids.size
         ucs.map { it.id } shouldContainSame ids

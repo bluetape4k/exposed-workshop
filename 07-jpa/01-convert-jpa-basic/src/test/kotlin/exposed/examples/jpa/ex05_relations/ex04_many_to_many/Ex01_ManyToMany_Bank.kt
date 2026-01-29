@@ -8,6 +8,7 @@ import exposed.examples.jpa.ex05_relations.ex04_many_to_many.BankSchema.getOwner
 import exposed.examples.jpa.ex05_relations.ex04_many_to_many.BankSchema.withBankTables
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.collections.size
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
@@ -58,7 +59,7 @@ class Ex01_ManyToMany_Bank: JdbcExposedTestBase() {
              *  WHERE owner_account_map.owner_id IN (1, 2)
              * ```
              */
-            val ownersWithAccounts = AccountOwner.all().with(AccountOwner::accounts).toList()
+            val ownersWithAccounts = AccountOwner.all().with(AccountOwner::accounts).toFastList()
             ownersWithAccounts shouldHaveSize 2
 
             /**

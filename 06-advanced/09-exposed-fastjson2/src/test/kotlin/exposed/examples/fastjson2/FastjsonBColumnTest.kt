@@ -10,6 +10,7 @@ import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.core.fastjson2.contains
 import io.bluetape4k.exposed.core.fastjson2.exists
 import io.bluetape4k.exposed.core.fastjson2.extract
@@ -618,10 +619,16 @@ class FastjsonBColumnTest: AbstractExposedTest() {
         Assumptions.assumeTrue(testDB in TestDB.ALL_POSTGRES)
 
         withFastjsonBTable(testDB) { tester, _, data1 ->
-            val topLevelKeyResult = tester.selectAll().where { tester.fastjsonBColumn keyExists "logins" }.single()
+            val topLevelKeyResult = tester
+                .selectAll()
+                .where { tester.fastjsonBColumn keyExists "logins" }
+                .single()
             topLevelKeyResult[tester.fastjsonBColumn] shouldBeEqualTo data1
 
-            val nestedKeyResult = tester.selectAll().where { tester.fastjsonBColumn keyExists "name" }.toList()
+            val nestedKeyResult = tester
+                .selectAll()
+                .where { tester.fastjsonBColumn keyExists "name" }
+                .toFastList()
             nestedKeyResult.shouldBeEmpty()
         }
     }

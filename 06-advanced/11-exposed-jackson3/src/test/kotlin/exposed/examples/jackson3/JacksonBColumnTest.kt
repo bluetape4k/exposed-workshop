@@ -10,6 +10,7 @@ import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.core.jackson3.DefaultJacksonSerializer
 import io.bluetape4k.exposed.core.jackson3.contains
 import io.bluetape4k.exposed.core.jackson3.exists
@@ -618,10 +619,16 @@ class JacksonBColumnTest: AbstractExposedTest() {
         Assumptions.assumeTrue(testDB in TestDB.ALL_POSTGRES)
 
         withJacksonBTable(testDB) { tester, _, data1 ->
-            val topLevelKeyResult = tester.selectAll().where { tester.jacksonBColumn keyExists "logins" }.single()
+            val topLevelKeyResult = tester
+                .selectAll()
+                .where { tester.jacksonBColumn keyExists "logins" }
+                .single()
             topLevelKeyResult[tester.jacksonBColumn] shouldBeEqualTo data1
 
-            val nestedKeyResult = tester.selectAll().where { tester.jacksonBColumn keyExists "name" }.toList()
+            val nestedKeyResult = tester
+                .selectAll()
+                .where { tester.jacksonBColumn keyExists "name" }
+                .toFastList()
             nestedKeyResult.shouldBeEmpty()
         }
     }

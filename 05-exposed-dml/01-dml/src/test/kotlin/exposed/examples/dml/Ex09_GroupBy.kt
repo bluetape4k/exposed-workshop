@@ -4,6 +4,7 @@ import exposed.shared.dml.DMLTestData.withCitiesAndUsers
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.warn
@@ -14,7 +15,6 @@ import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContain
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
-import org.jetbrains.exposed.v1.core.ExpressionWithColumnTypeAlias
 import org.jetbrains.exposed.v1.core.GroupConcat
 import org.jetbrains.exposed.v1.core.Max
 import org.jetbrains.exposed.v1.core.ResultRow
@@ -72,7 +72,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                     cAlias
                 )
                 .groupBy(cities.name)
-                .toList()
+                .toFastList()
 
             rows.forEach {
                 val cityName = it[cities.name]
@@ -114,7 +114,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                 .select(cities.name, users.id.count())
                 .groupBy(cities.name)
                 .having { users.id.count() eq 1 }
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 1
             rows[0][cities.name] shouldBeEqualTo "St. Petersburg"
@@ -147,7 +147,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                 .groupBy(cities.name)
                 .having { users.id.count().eq<Number, Long, Int>(maxExpr) }
                 .orderBy(cities.name)
-                .toList()
+                .toFastList()
 
             rows.forEach { row ->
                 log.debug { "city name=${row[cities.name]}, maxExpr=${row[maxExpr]}" }
@@ -192,7 +192,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                 .groupBy(cities.name)
                 .having { users.id.count() lessEq 42L }
                 .orderBy(cities.name)
-                .toList()
+                .toFastList()
 
             rows shouldHaveSize 2
 

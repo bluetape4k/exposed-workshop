@@ -8,14 +8,13 @@ import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
 import io.bluetape4k.spring.tests.httpPost
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 
 
@@ -37,6 +36,7 @@ class MovieControllerTest(
 
         val movie = client
             .httpGet("/movies/$id")
+            .expectStatus().is2xxSuccessful
             .returnResult<MovieDTO>().responseBody
             .awaitSingle()
 
@@ -50,10 +50,12 @@ class MovieControllerTest(
     fun `search movies by producer name`() = runSuspendIO {
         val producerName = "Johnny"
 
-        val movies = client.httpGet("/movies?producerName=$producerName")
-            .returnResult<MovieDTO>().responseBody
-            .asFlow()
-            .toList()
+        val movies = client
+            .httpGet("/movies?producerName=$producerName")
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<MovieDTO>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
 
         movies.size shouldBeEqualTo 2
     }
@@ -64,6 +66,7 @@ class MovieControllerTest(
 
         val saved = client
             .httpPost("/movies", newMovie)
+            .expectStatus().is2xxSuccessful
             .returnResult<MovieDTO>().responseBody
             .awaitSingle()
 
@@ -77,11 +80,13 @@ class MovieControllerTest(
 
         val saved = client
             .httpPost("/movies", newMovie)
+            .expectStatus().is2xxSuccessful
             .returnResult<MovieDTO>().responseBody
             .awaitSingle()
 
         val deletedCount = client
             .httpDelete("/movies/${saved.id}")
+            .expectStatus().is2xxSuccessful
             .returnResult<Int>().responseBody
             .awaitSingle()
 

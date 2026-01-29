@@ -3,6 +3,7 @@ package exposed.examples.coroutines
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.collections.intRangeOf
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -284,7 +285,7 @@ class Ex01_Coroutines: JdbcExposedTestBase() {
                 val tasks: List<Deferred<List<ResultRow>>> = List(recordCount) {
                     suspendedTransactionAsync(context = Dispatchers.IO) {
                         log.debug { "task[$it]: selected" }
-                        Tester.selectAll().toList()
+                        Tester.selectAll().toFastList()
                     }
                 }
                 val rows = tasks.awaitAll().flatten()
@@ -357,7 +358,7 @@ class Ex01_Coroutines: JdbcExposedTestBase() {
 
             newSuspendedTransaction(db = db) {
                 try {
-                    Tester.selectAll().toList()
+                    Tester.selectAll().toFastList()
                 } catch (e: Throwable) {
                     suspendedOk = false
                 }
@@ -365,7 +366,7 @@ class Ex01_Coroutines: JdbcExposedTestBase() {
 
             transaction(db) {
                 try {
-                    Tester.selectAll().toList()
+                    Tester.selectAll().toFastList()
                 } catch (e: Throwable) {
                     normalOk = false
                 }

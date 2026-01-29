@@ -3,6 +3,7 @@ package exposed.examples.virtualthreads
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.collections.intRangeOf
 import io.bluetape4k.concurrent.virtualthread.VirtualFuture
 import io.bluetape4k.concurrent.virtualthread.awaitAll
@@ -113,7 +114,7 @@ class Ex01_VritualThreads: JdbcExposedTestBase() {
                 val futures: List<VirtualFuture<List<ResultRow>>> = List(recordCount) { index ->
                     virtualThreadTransactionAsync {
                         log.debug { "Task[$index] selecting ..." }
-                        VTester.selectAll().toList()
+                        VTester.selectAll().toFastList()
                     }
                 }
                 // recordCount 개의 행을 가지는 `ResultRow` 를 recordCount 수만큼 가지는 List 
@@ -160,7 +161,7 @@ class Ex01_VritualThreads: JdbcExposedTestBase() {
 
             val row = newVirtualThreadTransaction {
                 try {
-                    VTester.selectAll().toList()
+                    VTester.selectAll().toFastList()
                 } catch (e: Throwable) {
                     virtualThreadOk = false
                     null
@@ -171,7 +172,7 @@ class Ex01_VritualThreads: JdbcExposedTestBase() {
 
             val row2 = transaction {
                 try {
-                    VTester.selectAll().toList()
+                    VTester.selectAll().toFastList()
                 } catch (e: Throwable) {
                     platformThreadOk = false
                     null

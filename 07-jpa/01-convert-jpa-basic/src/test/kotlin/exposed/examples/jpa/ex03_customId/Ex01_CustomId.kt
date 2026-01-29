@@ -4,6 +4,7 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -225,7 +226,7 @@ class Ex01_CustomId: JdbcExposedTestBase() {
                 .where { CustomIdTable.id inList entities.map { it.id } }
                 .orderBy(CustomIdTable.name to SortOrder.ASC)
 
-            val loaded = CustomIdEntity.wrapRows(rows).toList()
+            val loaded = CustomIdEntity.wrapRows(rows).toFastList()
 
             loaded shouldBeEqualTo entities.sortedBy { it.name }
         }
@@ -259,7 +260,7 @@ class Ex01_CustomId: JdbcExposedTestBase() {
             val loaded = CustomIdEntity
                 .find { CustomIdTable.id inList entities.map { it.id } }
                 .orderBy(CustomIdTable.name to SortOrder.ASC)
-                .toList()
+                .toFastList()
 
             loaded shouldBeEqualTo entities.sortedBy { it.name }
         }

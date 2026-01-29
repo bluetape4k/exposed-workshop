@@ -2,6 +2,7 @@ package exposed.examples.spring.transaction.containers
 
 import exposed.examples.spring.transaction.utils.execute
 import io.bluetape4k.codec.Base58
+import io.bluetape4k.collections.eclipse.toFastList
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.core.Table
@@ -57,7 +58,7 @@ class SpringTransactionSingleConnectionTest {
         transactionManager.execute(
             isolationLevel = TransactionDefinition.ISOLATION_SERIALIZABLE,
         ) {
-            T1.selectAll().toList()
+            T1.selectAll().toFastList()
         }
     }
 
@@ -66,7 +67,7 @@ class SpringTransactionSingleConnectionTest {
         transactionManager.execute(
             isolationLevel = TransactionDefinition.ISOLATION_SERIALIZABLE,
         ) {
-            T1.selectAll().toList()
+            T1.selectAll().toFastList()
 
             // 중첩된 transaction 이라면 같은 connection 을 사용하기 때문에 부모 transaction 의 isolation level 을 상속받는다.
             // 단, propagation 이 PROPAGATION_REQUIRES_NEW 이라면 기본 isolation level 이 적용된다.
@@ -76,9 +77,9 @@ class SpringTransactionSingleConnectionTest {
                 DataSourceUtils.getConnection(dataSource).use { conn ->
                     conn.transactionIsolation shouldBeEqualTo TransactionDefinition.ISOLATION_SERIALIZABLE
                 }
-                T1.selectAll().toList()
+                T1.selectAll().toFastList()
             }
-            T1.selectAll().toList()
+            T1.selectAll().toFastList()
         }
     }
 

@@ -6,8 +6,7 @@ import alternatives.hibernate.reactive.example.domain.dto.MemberDTO
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.reactive.asFlow
+import io.bluetape4k.spring.tests.httpGet
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeEmpty
@@ -15,6 +14,7 @@ import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 
 class MemberControllerTest(
@@ -25,13 +25,12 @@ class MemberControllerTest(
 
     @Test
     fun `find all members`() = runSuspendIO {
-        val members = client.get()
-            .uri("/members")
-            .exchange()
-            .expectStatus().isOk
-            .returnResult<MemberDTO>().responseBody
-            .asFlow()
-            .toList()
+        val members = client
+            .httpGet("/members")
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<MemberDTO>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
 
         members.shouldNotBeEmpty()
         members.forEach {
@@ -43,10 +42,9 @@ class MemberControllerTest(
     fun `find member by id`() = runSuspendIO {
         val memberId = 1L
 
-        val member = client.get()
-            .uri("/members/$memberId")
-            .exchange()
-            .expectStatus().isOk
+        val member = client
+            .httpGet("/members/$memberId")
+            .expectStatus().is2xxSuccessful
             .returnResult<MemberDTO>().responseBody
             .awaitSingle()
 
@@ -59,10 +57,9 @@ class MemberControllerTest(
     fun `find member by id with team`() = runSuspendIO {
         val memberId = 1L
 
-        val member = client.get()
-            .uri("/members/$memberId/team")
-            .exchange()
-            .expectStatus().isOk
+        val member = client
+            .httpGet("/members/$memberId/team")
+            .expectStatus().is2xxSuccessful
             .returnResult<MemberAndTeamDTO>().responseBody
             .awaitSingle()
 

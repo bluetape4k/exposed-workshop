@@ -2,11 +2,12 @@ package alternative.r2dbc.example.domain.repository
 
 import alternative.r2dbc.example.AbstractR2dbcTest
 import alternative.r2dbc.example.domain.model.Customer
+import io.bluetape4k.collections.eclipse.toFastList
+import io.bluetape4k.coroutines.flow.extensions.toFastList
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -59,7 +60,7 @@ class CustomerRepositoryTest(
 
         insertCustomers(dave, carter)
 
-        val customers = customerRepository.findAll().toList()
+        val customers = customerRepository.findAll().toFastList()
 
         customers shouldBeEqualTo listOf(dave, carter)
     }
@@ -87,6 +88,6 @@ class CustomerRepositoryTest(
     }
 
     private suspend fun insertCustomers(vararg customers: Customer) {
-        customerRepository.saveAll(customers.toList()).collect()
+        customerRepository.saveAll(customers.toFastList()).collect()
     }
 }

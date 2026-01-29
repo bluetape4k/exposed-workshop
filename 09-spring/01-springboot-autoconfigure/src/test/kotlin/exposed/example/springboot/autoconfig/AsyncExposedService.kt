@@ -2,6 +2,7 @@ package exposed.example.springboot.autoconfig
 
 import exposed.example.springboot.tables.TestEntity
 import exposed.example.springboot.tables.TestTable
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.concurrent.virtualthread.virtualFuture
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.jetbrains.exposed.v1.jdbc.selectAll
@@ -22,17 +23,17 @@ class AsyncExposedService {
     fun allTestDataAsync(): CompletableFuture<List<TestEntity>> = CompletableFuture.supplyAsync {
         transaction {
             val query = TestTable.selectAll()
-            TestEntity.wrapRows(query).toList()
+            TestEntity.wrapRows(query).toFastList()
         }
     }
 
     /**
      * Virtual Threads 를 이용하여 비동기 방식으로 [TestTable]의 모든 데이터를 조회합니다.
      */
-    fun allTestDataVirtualThreads(): CompletableFuture<List<TestEntity>> = virtualFuture {
+    fun allTestDataVirtualThreads() = virtualFuture {
         transaction {
             val query = TestTable.selectAll()
-            TestEntity.wrapRows(query).toList()
+            TestEntity.wrapRows(query).toFastList()
         }
     }.toCompletableFuture()
 }

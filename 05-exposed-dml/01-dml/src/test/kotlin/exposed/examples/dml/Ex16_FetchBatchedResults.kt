@@ -8,6 +8,7 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid.Epoch
 import io.bluetape4k.logging.KLogging
@@ -101,7 +102,7 @@ class Ex16_FetchBatchedResults: JdbcExposedTestBase() {
             // 50개의 도시 이름을 가져옵니다. (배치 사이즈: 25 - 2번 나눠서 가져옵니다.)
             val batches = cities.selectAll().where { cities.id less 51 }
                 .fetchBatchedResults(batchSize = BATCH_SIZE)
-                .toList()
+                .toFastList()
                 .map { it.toCityNameList() }
 
             batches shouldHaveSize 2
@@ -152,7 +153,7 @@ class Ex16_FetchBatchedResults: JdbcExposedTestBase() {
 
             val batches = cities.selectAll().where { cities.id less 51 }
                 .fetchBatchedResults(batchSize = BATCH_SIZE, sortOrder = SortOrder.DESC)
-                .toList()
+                .toFastList()
                 .map { it.toCityNameList() }
 
             batches shouldHaveSize 2
@@ -194,7 +195,7 @@ class Ex16_FetchBatchedResults: JdbcExposedTestBase() {
 
             val batches = cities.selectAll()
                 .fetchBatchedResults(batchSize = 100)
-                .toList()
+                .toFastList()
                 .map { it.toCityNameList() }
 
             batches shouldHaveSize 1
@@ -224,7 +225,7 @@ class Ex16_FetchBatchedResults: JdbcExposedTestBase() {
         withTables(testDB, cities, users) {
             val batches = cities.selectAll()
                 .fetchBatchedResults(batchSize = 100)
-                .toList()
+                .toFastList()
                 .map { it.toCityNameList() }
 
             batches.shouldBeEmpty()
@@ -254,7 +255,7 @@ class Ex16_FetchBatchedResults: JdbcExposedTestBase() {
 
             val batches = cities.selectAll().where { cities.id greater 50 }
                 .fetchBatchedResults(batchSize = 100)
-                .toList()
+                .toFastList()
                 .map { it.toCityNameList() }
 
             batches.shouldBeEmpty()

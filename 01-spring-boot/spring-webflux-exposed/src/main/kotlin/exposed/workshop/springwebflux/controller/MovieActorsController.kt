@@ -4,6 +4,7 @@ import exposed.workshop.springwebflux.domain.MovieActorCountDTO
 import exposed.workshop.springwebflux.domain.MovieWithActorDTO
 import exposed.workshop.springwebflux.domain.MovieWithProducingActorDTO
 import exposed.workshop.springwebflux.domain.repository.MovieRepository
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +38,6 @@ class MovieActorsController(
     @GetMapping("/acting-producers")
     suspend fun findMoviesWithActingProducers(): List<MovieWithProducingActorDTO> =
         newSuspendedTransaction(readOnly = true) {
-            movieRepository.findMoviesWithActingProducers().toList()
+            movieRepository.findMoviesWithActingProducers().toFastList()
         }
 }

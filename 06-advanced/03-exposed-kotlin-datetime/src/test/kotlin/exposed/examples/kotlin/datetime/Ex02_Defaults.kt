@@ -8,6 +8,7 @@ import exposed.shared.tests.expectException
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.insertAndWait
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -210,7 +211,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
                 DBDefault.removeFromCache(it)
             }
 
-            val entities = DBDefault.all().toList()
+            val entities = DBDefault.all().toFastList()
             entities shouldBeEqualTo created
         }
     }
@@ -245,7 +246,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
             created.forEach {
                 DBDefault.removeFromCache(it)
             }
-            val entities = DBDefault.all().toList()
+            val entities = DBDefault.all().toFastList()
             entities shouldBeEqualTo created
         }
     }

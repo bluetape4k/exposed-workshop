@@ -2,6 +2,7 @@ package exposed.examples.spring.transaction.containers
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.jdbc.JdbcDrivers
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEmpty
@@ -211,7 +212,7 @@ class SpringMultiContainerTransactionTest {
     @Transactional
     class OrderService {
 
-        fun findAll(): List<ResultRow> = Order.selectAll().toList()
+        fun findAll(): List<ResultRow> = Order.selectAll().toFastList()
 
         fun findAllWithExposedTrxBlock(): List<ResultRow> =
             org.jetbrains.exposed.v1.jdbc.transactions.transaction {
@@ -273,7 +274,7 @@ class SpringMultiContainerTransactionTest {
     @Transactional
     class PaymentService {
 
-        fun findAll(): List<ResultRow> = Payment.selectAll().toList()
+        fun findAll(): List<ResultRow> = Payment.selectAll().toFastList()
 
         fun findAllWithExposedTxBlock(): List<ResultRow> =
             org.jetbrains.exposed.v1.jdbc.transactions.transaction {

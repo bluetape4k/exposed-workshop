@@ -7,6 +7,7 @@ import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.RestaurantSch
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -48,7 +49,7 @@ class `Ex04_OneToMany_N+1_Restaurant`: JdbcExposedTestBase() {
              *  WHERE menu.restaurant_id IN (1, 2);
              * ```
              */
-            val restaurants = Restaurant.all().with(Restaurant::menus).toList()
+            val restaurants = Restaurant.all().with(Restaurant::menus).toFastList()
             val restaurant = restaurants.first()
             log.debug { "Restaurant: $restaurant" }
 

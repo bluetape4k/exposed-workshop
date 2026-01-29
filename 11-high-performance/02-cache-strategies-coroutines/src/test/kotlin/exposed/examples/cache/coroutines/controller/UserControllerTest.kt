@@ -5,6 +5,7 @@ import exposed.examples.cache.coroutines.domain.model.UserDTO
 import exposed.examples.cache.coroutines.domain.model.UserTable
 import exposed.examples.cache.coroutines.domain.model.newUserDTO
 import exposed.examples.cache.coroutines.domain.repository.UserCacheRepository
+import io.bluetape4k.coroutines.flow.extensions.toFastList
 import io.bluetape4k.exposed.core.statements.api.toExposedBlob
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -13,7 +14,6 @@ import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
 import io.bluetape4k.spring.tests.httpPost
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.runBlocking
@@ -105,7 +105,7 @@ class UserControllerTest(
             .httpGet("/users/all?ids=${userIds.joinToString(",")}")
             .returnResult<UserDTO>().responseBody
             .asFlow()
-            .toList()
+            .toFastList()
 
         users shouldHaveSize userIds.size
         users.map { it.id } shouldContainSame userIds

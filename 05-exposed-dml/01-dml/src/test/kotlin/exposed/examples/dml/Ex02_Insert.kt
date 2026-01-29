@@ -11,6 +11,7 @@ import exposed.shared.tests.withDb
 import exposed.shared.tests.withSuspendedDb
 import exposed.shared.tests.withTables
 import io.bluetape4k.codec.Base58
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.core.BatchInsertOnConflictDoNothing
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
@@ -696,7 +697,7 @@ class Ex02_Insert: JdbcExposedTestBase() {
 
             val orders: List<OrderedData> = OrderedData.all()
                 .orderBy(OrderedDataTable.order to SortOrder.ASC)
-                .toList()
+                .toFastList()
 
             orders shouldBeEqualTo listOf(bar, foo)
         }

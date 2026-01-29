@@ -3,6 +3,7 @@ package exposed.examples.jpa.ex03_inheritance
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -276,7 +277,7 @@ class Ex02_Joined_Table_Inheritance: JdbcExposedTestBase() {
              * SELECT joined_person.id, joined_person.person_name, joined_person.ssn FROM joined_person WHERE joined_person.id IN (1, 2)
              * ```
              */
-            val emps = Employee.all().with(Employee::person).toList()
+            val emps = Employee.all().with(Employee::person).toFastList()
             emps.forEach {
                 log.debug { it }
             }

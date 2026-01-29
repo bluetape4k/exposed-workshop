@@ -12,12 +12,11 @@ import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
 import io.bluetape4k.spring.tests.httpPost
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.jdbc.deleteAll
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
@@ -25,6 +24,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 import java.time.LocalDate
 import java.util.concurrent.CopyOnWriteArrayList
@@ -70,9 +70,11 @@ class UserControllerTest(
     fun `모든 사용자를 조회`() = runSuspendIO {
         val users = client
             .httpGet("/users")
-            .returnResult<UserDTO>().responseBody
-            .asFlow()
-            .toList()
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<UserDTO>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
+
 
         users shouldHaveSize userIdsInDB.size
     }
@@ -97,9 +99,10 @@ class UserControllerTest(
 
         val users = client
             .httpGet("/users/all?ids=${userIds.joinToString(",")}")
-            .returnResult<UserDTO>().responseBody
-            .asFlow()
-            .toList()
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<UserDTO>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
 
         users shouldHaveSize userIds.size
         users.map { it.id } shouldContainSame userIds

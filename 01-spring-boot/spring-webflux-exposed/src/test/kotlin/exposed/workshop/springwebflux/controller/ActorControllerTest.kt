@@ -2,13 +2,13 @@ package exposed.workshop.springwebflux.controller
 
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
 import exposed.workshop.springwebflux.domain.ActorDTO
+import io.bluetape4k.coroutines.flow.extensions.toFastList
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
 import io.bluetape4k.spring.tests.httpPost
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
@@ -17,6 +17,7 @@ import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 
 class ActorControllerTest(
@@ -53,7 +54,7 @@ class ActorControllerTest(
         val depp = client.httpGet("/actors?lastName=$lastName")
             .returnResult<ActorDTO>().responseBody
             .asFlow()
-            .toList()
+            .toFastList()
 
         log.debug { "actors=$depp" }
         depp.shouldNotBeNull() shouldHaveSize 1
@@ -63,10 +64,12 @@ class ActorControllerTest(
     fun `find actors by firstName`() = runSuspendIO {
         val firstName = "Angelina"
 
-        val angelinas = client.httpGet("/actors?firstName=$firstName")
-            .returnResult<ActorDTO>().responseBody
-            .asFlow()
-            .toList()
+        val angelinas = client
+            .httpGet("/actors?firstName=$firstName")
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<ActorDTO>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
 
         log.debug { "actors=$angelinas" }
         angelinas.shouldNotBeNull() shouldHaveSize 2
@@ -78,6 +81,7 @@ class ActorControllerTest(
 
         val newActor = client
             .httpPost("/actors", actor)
+            .expectStatus().is2xxSuccessful
             .returnResult<ActorDTO>().responseBody
             .awaitSingle()
 
@@ -93,6 +97,7 @@ class ActorControllerTest(
 
         val newActor = client
             .httpPost("/actors", actor)
+            .expectStatus().is2xxSuccessful
             .returnResult<ActorDTO>().responseBody
             .awaitSingle()
 
@@ -101,6 +106,7 @@ class ActorControllerTest(
 
         val deletedCount = client
             .httpDelete("/actors/${newActor.id}")
+            .expectStatus().is2xxSuccessful
             .returnResult<Int>().responseBody
             .awaitSingle()
 

@@ -3,6 +3,7 @@ package exposed.examples.jpa.ex04_compositeId
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -141,7 +142,7 @@ class Ex02_IdClass: JdbcExposedTestBase() {
             loaded2 shouldBeEqualTo car2
             loaded2.carIdentifier shouldBeEqualTo CarIdentifier(car2.id.value)
 
-            val allCars = IdClassCar.all().toList()
+            val allCars = IdClassCar.all().toFastList()
             allCars.forEach { log.debug { it } }
             allCars shouldHaveSize 2
 
@@ -231,7 +232,7 @@ class Ex02_IdClass: JdbcExposedTestBase() {
              *    AND (car_table.car_year = 1967)
              * ```
              */
-            IdClassCarTable.selectAll().where { IdClassCarTable.id eq entityId }.toList() shouldHaveSize 1
+            IdClassCarTable.selectAll().where { IdClassCarTable.id eq entityId }.toFastList() shouldHaveSize 1
 
             /**
              * Composite ID의 부분 컬럼만 사용하여 조회합니다.

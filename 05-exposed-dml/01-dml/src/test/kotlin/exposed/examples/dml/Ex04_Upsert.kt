@@ -5,6 +5,7 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
 import io.bluetape4k.codec.Base58
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -1033,7 +1034,7 @@ class Ex04_Upsert: JdbcExposedTestBase() {
                 it[age] = 20
             }
 
-            val rows = tester.selectAll().toList()
+            val rows = tester.selectAll().toFastList()
             rows.forEach {
                 log.debug { "id: ${it[tester.id]}, name: ${it[tester.name]}, address: ${it[tester.address]}, age: ${it[tester.age]}" }
             }

@@ -10,6 +10,7 @@ import exposed.shared.tests.withDb
 import exposed.shared.tests.withSchemas
 import exposed.shared.tests.withTables
 import io.bluetape4k.codec.Base58
+import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.toUtf8String
@@ -1047,7 +1048,7 @@ class Ex10_DDL_Examples: JdbcExposedTestBase() {
                 it[boolTable.bool] = true
             }
 
-            val result = boolTable.selectAll().toList()
+            val result = boolTable.selectAll().toFastList()
             result shouldHaveSize 1
             result.single()[boolTable.bool].shouldBeTrue()
         }
