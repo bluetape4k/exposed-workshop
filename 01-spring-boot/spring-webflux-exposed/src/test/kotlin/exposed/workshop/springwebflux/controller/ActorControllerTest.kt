@@ -2,14 +2,12 @@ package exposed.workshop.springwebflux.controller
 
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
 import exposed.workshop.springwebflux.domain.ActorDTO
-import io.bluetape4k.coroutines.flow.extensions.toFastList
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
 import io.bluetape4k.spring.tests.httpPost
-import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
@@ -38,6 +36,7 @@ class ActorControllerTest(
 
         val actor = client
             .httpGet("/actors/$id")
+            .expectStatus().is2xxSuccessful
             .returnResult<ActorDTO>().responseBody
             .awaitSingle()
 
@@ -51,13 +50,15 @@ class ActorControllerTest(
     fun `find actors by lastName`() = runSuspendIO {
         val lastName = "Depp"
 
-        val depp = client.httpGet("/actors?lastName=$lastName")
-            .returnResult<ActorDTO>().responseBody
-            .asFlow()
-            .toFastList()
+        val depp = client
+            .httpGet("/actors?lastName=$lastName")
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<ActorDTO>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
 
         log.debug { "actors=$depp" }
-        depp.shouldNotBeNull() shouldHaveSize 1
+        depp shouldHaveSize 1
     }
 
     @Test
@@ -86,8 +87,6 @@ class ActorControllerTest(
             .awaitSingle()
 
         log.debug { "newActor=$newActor" }
-
-        newActor.shouldNotBeNull()
         newActor shouldBeEqualTo actor.copy(id = newActor.id)
     }
 
@@ -102,7 +101,6 @@ class ActorControllerTest(
             .awaitSingle()
 
         log.debug { "newActor=$newActor" }
-        newActor.shouldNotBeNull()
 
         val deletedCount = client
             .httpDelete("/actors/${newActor.id}")
@@ -111,7 +109,6 @@ class ActorControllerTest(
             .awaitSingle()
 
         log.debug { "deletedCount=$deletedCount" }
-
         deletedCount shouldBeEqualTo 1
     }
 }

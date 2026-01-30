@@ -10,6 +10,7 @@ import io.bluetape4k.spring.tests.httpGet
 import io.bluetape4k.spring.tests.httpPost
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -57,7 +58,7 @@ class MovieControllerTest(
             .returnResult().responseBody
             .shouldNotBeNull()
 
-        movies.size shouldBeEqualTo 2
+        movies shouldHaveSize 2
     }
 
     @Test
@@ -71,7 +72,7 @@ class MovieControllerTest(
             .awaitSingle()
 
         log.debug { "saved=$saved" }
-        saved.shouldNotBeNull() shouldBeEqualTo newMovie.copy(id = saved.id)
+        saved shouldBeEqualTo newMovie.copy(id = saved.id)
     }
 
     @Test
