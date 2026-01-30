@@ -77,6 +77,7 @@ class UserCredentialsControllerTest(
         idsInDB.forEach { id ->
             val uc = client
                 .httpGet("/user-credentials/$id")
+                .expectStatus().is2xxSuccessful
                 .returnResult<UserCredentialsDTO>().responseBody
                 .awaitSingle()
 

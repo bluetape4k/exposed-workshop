@@ -25,17 +25,18 @@ class UserEventControllerTest(
 
     companion object: KLoggingChannel()
 
-    private fun getCountOfUserEvents(): Long = transaction {
+    private fun getCountOfUserEventsFromDB(): Long = transaction {
         UserEventTable.selectAll().count()
     }
 
     @Test
     fun `insert user event`() = runSuspendIO {
-        val prevCount = getCountOfUserEvents()
+        val prevCount = getCountOfUserEventsFromDB()
 
         val userEvent = newUserEventDTO()
         val response = client
             .httpPost("/user-events", userEvent)
+            .expectStatus().is2xxSuccessful
             .returnResult<Boolean>().responseBody
             .awaitSingle()
 
@@ -46,10 +47,10 @@ class UserEventControllerTest(
             .atMost(Duration.ofSeconds(4))
             .pollInterval(Duration.ofMillis(100))
             .until {
-                getCountOfUserEvents() == prevCount + 1L
+                getCountOfUserEventsFromDB() == prevCount + 1L
             }
 
-        val currCount = getCountOfUserEvents()
+        val currCount = getCountOfUserEventsFromDB()
         log.debug { "current count: $currCount, prev count: $prevCount" }
         currCount shouldBeEqualTo prevCount + 1L
     }
@@ -57,25 +58,27 @@ class UserEventControllerTest(
     @Test
     fun `bulk insert user events`() = runSuspendIO {
         val insertCount = 1000
-        val prevCount = getCountOfUserEvents()
+        val prevCount = getCountOfUserEventsFromDB()
 
         val userEvents = List(insertCount) { newUserEventDTO() }
+
         val response = client
             .httpPost("/user-events/bulk", userEvents)
+            .expectStatus().is2xxSuccessful
             .returnResult<Boolean>().responseBody
             .awaitSingle()
 
         response.shouldBeTrue()
 
-        // 비동기로 처리되므로, await를 사용하여 결과를 기다림
+        // 비동기로 처리되므로, await를 사용하여 백그라운드로 DB에 저장된 결과를 기다림
         await
             .atMost(Duration.ofSeconds(10))
             .pollInterval(Duration.ofMillis(100))
             .until {
-                getCountOfUserEvents() == prevCount + insertCount
+                getCountOfUserEventsFromDB() == prevCount + insertCount
             }
 
-        val currCount = getCountOfUserEvents()
+        val currCount = getCountOfUserEventsFromDB()
         log.debug { "current count: $currCount, insertCount: $insertCount, prev count: $prevCount" }
         currCount shouldBeEqualTo prevCount + insertCount
     }

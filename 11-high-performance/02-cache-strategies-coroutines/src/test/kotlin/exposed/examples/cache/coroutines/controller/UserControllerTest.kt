@@ -5,7 +5,6 @@ import exposed.examples.cache.coroutines.domain.model.UserDTO
 import exposed.examples.cache.coroutines.domain.model.UserTable
 import exposed.examples.cache.coroutines.domain.model.newUserDTO
 import exposed.examples.cache.coroutines.domain.repository.UserCacheRepository
-import io.bluetape4k.coroutines.flow.extensions.toFastList
 import io.bluetape4k.exposed.core.statements.api.toExposedBlob
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -14,7 +13,6 @@ import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
 import io.bluetape4k.spring.tests.httpPost
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBeEqualTo
@@ -78,10 +76,12 @@ class UserControllerTest(
     fun `모든 사용자를 조회`() = runSuspendIO {
         val users = client
             .httpGet("/users")
+            .expectStatus().is2xxSuccessful
             .expectBodyList<UserDTO>()
             .returnResult().responseBody
+            .shouldNotBeNull()
 
-        users.shouldNotBeNull() shouldHaveSize idsInDB.size
+        users shouldHaveSize idsInDB.size
     }
 
     @Test
@@ -89,6 +89,7 @@ class UserControllerTest(
         idsInDB.forEach { userId ->
             val user = client
                 .httpGet("/users/$userId")
+                .expectStatus().is2xxSuccessful
                 .returnResult<UserDTO>().responseBody
                 .awaitSingle()
 
@@ -103,9 +104,10 @@ class UserControllerTest(
 
         val users = client
             .httpGet("/users/all?ids=${userIds.joinToString(",")}")
-            .returnResult<UserDTO>().responseBody
-            .asFlow()
-            .toFastList()
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<UserDTO>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
 
         users shouldHaveSize userIds.size
         users.map { it.id } shouldContainSame userIds
@@ -116,6 +118,7 @@ class UserControllerTest(
         val userDTO = newUserDTO(Random.nextLong(1000L, 9999L))
         val user = client
             .httpPost("/users", userDTO)
+            .expectStatus().is2xxSuccessful
             .returnResult<UserDTO>().responseBody
             .awaitSingle()
 
@@ -129,6 +132,7 @@ class UserControllerTest(
         val invalidatedId = idsInDB.shuffled().take(3)
         val invalidedCount = client
             .httpDelete("/users/invalidate?ids=${invalidatedId.joinToString(",")}")
+            .expectStatus().is2xxSuccessful
             .returnResult<Long>().responseBody
             .awaitSingle()
 

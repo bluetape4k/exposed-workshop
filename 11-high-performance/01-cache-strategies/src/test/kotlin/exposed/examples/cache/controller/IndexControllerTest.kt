@@ -3,6 +3,7 @@ package exposed.examples.cache.controller
 import exposed.examples.cache.AbstractCacheStrategyTest
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
+import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpGet
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldNotBeEmpty
@@ -22,6 +23,9 @@ class IndexControllerTest(
         client.httpGet("/")
             .returnResult<String>().responseBody
             .awaitSingle()
+            .apply {
+                log.debug { "Index: $this" }
+            }
             .shouldNotBeEmpty()
     }
 }

@@ -84,6 +84,7 @@ class UserControllerTest(
         userIdsInDB.forEach { userId ->
             val user = client
                 .httpGet("/users/$userId")
+                .expectStatus().is2xxSuccessful
                 .returnResult<UserDTO>().responseBody
                 .awaitSingle()
 
@@ -113,6 +114,7 @@ class UserControllerTest(
         val userDTO = newUserDTO(Random.nextLong(1000L, 9999L))
         val user = client
             .httpPost("/users", userDTO)
+            .expectStatus().is2xxSuccessful
             .returnResult<UserDTO>().responseBody
             .awaitSingle()
 
@@ -127,6 +129,7 @@ class UserControllerTest(
         val invalidatedId = userIdsInDB.shuffled().take(3)
         val invalidatedCount = client
             .httpDelete("/users/invalidate?ids=${invalidatedId.joinToString(",")}")
+            .expectStatus().is2xxSuccessful
             .returnResult<Long>().responseBody
             .awaitSingle()
 

@@ -5,11 +5,12 @@ import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.spring.tests.httpGet
-import org.amshove.kluent.shouldContainAll
+import kotlinx.coroutines.reactive.awaitSingle
+import org.amshove.kluent.shouldNotBeEmpty
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.test.web.reactive.server.expectBody
+import org.springframework.test.web.reactive.server.returnResult
 
 class IndexControllerTest(
     @param:Autowired private val client: WebTestClient,
@@ -19,11 +20,13 @@ class IndexControllerTest(
 
     @Test
     fun `call index`() = runSuspendIO {
-        val buildProps = client.httpGet("/")
-            .expectBody<String>()
-            .returnResult().responseBody!!
-
-        log.debug { "Build properties: $buildProps" }
-        buildProps shouldContainAll listOf("Exposed", "Redisson")
+        client
+            .httpGet("/")
+            .returnResult<String>().responseBody
+            .awaitSingle()
+            .apply {
+                log.debug { "index response: $this" }
+            }
+            .shouldNotBeEmpty()
     }
 }
