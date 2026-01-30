@@ -65,6 +65,7 @@ class MovieControllerTest(
 
         val saved = client
             .httpPost("/movies", newMovie)
+            .expectStatus().is2xxSuccessful
             .returnResult<MovieDTO>().responseBody
             .awaitSingle()
 
@@ -79,10 +80,13 @@ class MovieControllerTest(
 
         val saved = client
             .httpPost("/movies", newMovie)
+            .expectStatus().is2xxSuccessful
             .returnResult<MovieDTO>().responseBody
             .awaitSingle()
 
-        val deletedCount = client.httpDelete("/movies/${saved.id}")
+        val deletedCount = client
+            .httpDelete("/movies/${saved.id}")
+            .expectStatus().is2xxSuccessful
             .returnResult<Int>().responseBody
             .awaitSingle()
 

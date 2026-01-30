@@ -2,14 +2,18 @@ package exposed.examples.springmvc.controller
 
 import exposed.examples.springmvc.AbstractExposedRepositoryTest
 import exposed.examples.springmvc.domain.dtos.MovieDTO
+import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import io.bluetape4k.spring.tests.httpGet
+import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.test.web.reactive.server.expectBody
+import org.springframework.test.web.reactive.server.expectBodyList
+import org.springframework.test.web.reactive.server.returnResult
 
 class MovieControllerTest(
     @param:Autowired private val client: WebTestClient,
@@ -18,16 +22,14 @@ class MovieControllerTest(
     companion object: KLogging()
 
     @Test
-    fun `get movie by id`() {
+    fun `get movie by id`() = runSuspendIO {
         val id = 1L
 
         val movie = client
-            .get()
-            .uri("/movies/$id")
-            .exchange()
-            .expectStatus().isOk
-            .expectBody<MovieDTO>()
-            .returnResult().responseBody
+            .httpGet("/movies/$id")
+            .expectStatus().is2xxSuccessful
+            .returnResult<MovieDTO>().responseBody
+            .awaitSingle()
 
         log.debug { "movie[$id]=$movie" }
 
@@ -36,18 +38,16 @@ class MovieControllerTest(
     }
 
     @Test
-    fun `search movies by producer name`() {
+    fun `search movies by producer name`() = runSuspendIO {
         val producerName = "Johnny"
 
         val movies = client
-            .get()
-            .uri("/movies?producerName=$producerName")
-            .exchange()
-            .expectStatus().isOk
-            .expectBody<List<MovieDTO>>()
-            .returnResult().responseBody!!
+            .httpGet("/movies?producerName=$producerName")
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<MovieDTO>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
 
         movies.size shouldBeEqualTo 2
     }
-
 }
