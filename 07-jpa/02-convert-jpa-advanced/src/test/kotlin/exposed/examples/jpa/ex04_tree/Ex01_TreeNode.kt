@@ -7,6 +7,7 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.collections.eclipse.toFastList
+import io.bluetape4k.collections.eclipse.toUnifiedSet
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -59,7 +60,7 @@ class Ex01_TreeNode: JdbcExposedTestBase() {
 
             // SELECT COUNT(*) FROM tree_nodes WHERE tree_nodes.parent_id = 2
             loadedChild1.children.count() shouldBeEqualTo 2L
-            loadedChild1.children.toSet() shouldContainSame setOf(grandChild1, grandChild2)
+            loadedChild1.children.toUnifiedSet() shouldContainSame setOf(grandChild1, grandChild2)
 
             // 모든 Root 노드 조회
             /**

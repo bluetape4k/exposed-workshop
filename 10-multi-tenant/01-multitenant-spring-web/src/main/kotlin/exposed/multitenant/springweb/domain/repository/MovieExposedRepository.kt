@@ -105,7 +105,6 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
             .map { (_, rows) ->
                 val movie = rows.first().toMovieDTO()
                 val actor = rows.map { it.toActorDTO() }
-
                 movie.toMovieWithActorDTO(actor)
             }
     }

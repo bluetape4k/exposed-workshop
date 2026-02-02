@@ -5,6 +5,7 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.collections.eclipse.toFastList
+import io.bluetape4k.collections.eclipse.toUnifiedSet
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -180,7 +181,7 @@ class Ex05_OneToMany_Via: JdbcExposedTestBase() {
 
             val cloud2 = Cloud.findById(cloud.id)!!
             cloud2.producedSnowflakes.count() shouldBeEqualTo 2L
-            cloud2.producedSnowflakes.toSet() shouldContainSame setOf(snowflake1, snowflake2)
+            cloud2.producedSnowflakes.toUnifiedSet() shouldContainSame setOf(snowflake1, snowflake2)
 
             // Remove snowflake
             val snowflakes: List<Snowflake> = cloud2.producedSnowflakes.toFastList()
@@ -217,7 +218,7 @@ class Ex05_OneToMany_Via: JdbcExposedTestBase() {
 
             val cloud2 = Cloud.findById(cloud.id)!!
             cloud2.producedSnowflakes.count() shouldBeEqualTo 2L
-            cloud2.producedSnowflakes.toSet() shouldContainSame setOf(snowflake1, snowflake2)
+            cloud2.producedSnowflakes.toUnifiedSet() shouldContainSame setOf(snowflake1, snowflake2)
 
             // Remove first relation
             CloudSnowflakeTable
@@ -271,7 +272,7 @@ class Ex05_OneToMany_Via: JdbcExposedTestBase() {
              *  WHERE cloud_snowflakes.cloud_id = 1
              * ```
              */
-            cloud3.producedSnowflakes.toSet() shouldContainSame setOf(
+            cloud3.producedSnowflakes.toUnifiedSet() shouldContainSame setOf(
                 snowflake2,
                 snowflake3
             )

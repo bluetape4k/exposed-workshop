@@ -15,6 +15,8 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
 import io.bluetape4k.collections.eclipse.toFastList
+import io.bluetape4k.collections.eclipse.toUnifiedSet
+import io.bluetape4k.collections.eclipse.unifiedSetOf
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.toBigDecimal
@@ -957,7 +959,7 @@ class Ex01_Select: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `compound operations`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { _, users, _ ->
-            val allUsers = setOf(
+            val allUsers = unifiedSetOf(
                 "Andrey",
                 "Sergey",
                 "Eugene",
@@ -983,7 +985,7 @@ class Ex01_Select: JdbcExposedTestBase() {
                 .selectAll()
                 .where(orOp)
                 .map { it[users.name] }
-                .toSet()
+                .toUnifiedSet()
             userNameOr shouldBeEqualTo allUsers
 
             /**

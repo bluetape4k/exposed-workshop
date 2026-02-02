@@ -4,6 +4,7 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.money.currencyUnitOf
 import io.bluetape4k.money.inUSD
@@ -168,7 +169,7 @@ class Ex02_Money: JdbcExposedTestBase() {
                 it[composite_money] = money
             }
 
-            val predicates = listOf(
+            val predicates = fastListOf(
                 AccountTable.composite_money eq money,
                 AccountTable.composite_money.currency eq money.currency,
                 AccountTable.composite_money.amount eq money.numberStripped

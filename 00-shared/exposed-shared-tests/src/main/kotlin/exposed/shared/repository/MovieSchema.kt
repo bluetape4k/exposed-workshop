@@ -4,6 +4,7 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -22,6 +23,7 @@ import org.jetbrains.exposed.v1.dao.LongEntityClass
 import org.jetbrains.exposed.v1.dao.flushCache
 import org.jetbrains.exposed.v1.javatime.date
 import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
+import org.jetbrains.exposed.v1.jdbc.SizedIterable
 import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.select
@@ -55,7 +57,7 @@ object MovieSchema: KLogging() {
         var producerName by MovieTable.producerName
         var releaseDate by MovieTable.releaseDate
 
-        val actors by ActorEntity via ActorInMovieTable
+        val actors: SizedIterable<ActorEntity> by ActorEntity via ActorInMovieTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -73,7 +75,7 @@ object MovieSchema: KLogging() {
         var lastName by ActorTable.lastName
         var birthday by ActorTable.birthday
 
-        val movies by MovieEntity via ActorInMovieTable
+        val movies: SizedIterable<MovieEntity> by MovieEntity via ActorInMovieTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
@@ -119,7 +121,7 @@ object MovieSchema: KLogging() {
         val russellCrowe = ActorDTO(0L, "Russell", "Crowe", "1970-01-20")
         val edwardNorton = ActorDTO(0L, "Edward", "Norton", "1975-04-03")
 
-        val actors = listOf(
+        val actors = fastListOf(
             johnnyDepp,
             bradPitt,
             angelinaJolie,
@@ -131,7 +133,7 @@ object MovieSchema: KLogging() {
             edwardNorton
         )
 
-        val movies = listOf(
+        val movies = fastListOf(
             MovieWithActorDTO(
                 0L,
                 "Gladiator",

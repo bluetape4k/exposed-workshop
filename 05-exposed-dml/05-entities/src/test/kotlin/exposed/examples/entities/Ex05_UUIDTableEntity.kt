@@ -11,6 +11,7 @@ import exposed.examples.entities.UUIDTables.Towns
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.unifiedMapOf
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -284,8 +285,11 @@ class Ex05_UUIDTableEntity: JdbcExposedTestBase() {
              *  WHERE cities.id = '54ae8589-f7b9-4fd4-a0ef-fc74a598c99e'
              * ```
              */
-            val allPeople = Person.all().with(Person::city).map { it.name to it.city.name }
-            allPeople shouldContainSame listOf(
+            val allPeople = Person.all()
+                .with(Person::city)
+                .associate { it.name to it.city.name }
+
+            allPeople shouldContainSame unifiedMapOf(
                 "Debop" to "Seoul",
                 "BTS" to "Seoul",
             )

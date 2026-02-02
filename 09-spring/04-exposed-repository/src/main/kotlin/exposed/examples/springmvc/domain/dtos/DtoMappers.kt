@@ -4,6 +4,7 @@ import exposed.examples.springmvc.domain.model.MovieSchema
 import exposed.examples.springmvc.domain.model.MovieSchema.ActorEntity
 import exposed.examples.springmvc.domain.model.MovieSchema.ActorTable
 import exposed.examples.springmvc.domain.model.MovieSchema.MovieEntity
+import io.bluetape4k.collections.eclipse.toFastList
 import org.jetbrains.exposed.v1.core.ResultRow
 
 fun ResultRow.toActorDTO() = ActorDTO(
@@ -31,7 +32,7 @@ fun ResultRow.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
     name = this[MovieSchema.MovieTable.name],
     producerName = this[MovieSchema.MovieTable.producerName],
     releaseDate = this[MovieSchema.MovieTable.releaseDate].toString(),
-    actors = actors.toMutableList(),
+    actors = actors.toFastList(),
     id = this[MovieSchema.MovieTable.id].value
 )
 
@@ -39,7 +40,7 @@ fun MovieDTO.toMovieWithActorDTO(actors: Collection<ActorDTO>) = MovieWithActorD
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate,
-    actors = actors.toMutableList(),
+    actors = actors.toFastList(),
     id = this.id
 )
 
@@ -54,7 +55,7 @@ fun MovieEntity.toMovieWithActorDTO() = MovieWithActorDTO(
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate.toString(),
-    actors = this.actors.map { it.toActorDTO() }.toMutableList(),
+    actors = this.actors.map { it.toActorDTO() }.toFastList(),
     id = this.id.value
 )
 

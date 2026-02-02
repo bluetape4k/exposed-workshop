@@ -195,7 +195,10 @@ class Ex10_DDL_Examples: JdbcExposedTestBase() {
             }
 
             val expectedCreate =
-                "CREATE TABLE ${addIfNotExistsIfSupported()}$tableName (" + "$publicName ${keywordTable.public.columnType.sqlType()} NOT NULL, " + "$dataName ${keywordTable.data.columnType.sqlType()} NOT NULL, " + "$constraintName ${keywordTable.constraint.columnType.sqlType()} NOT NULL)"
+                "CREATE TABLE ${addIfNotExistsIfSupported()}$tableName (" +
+                        "$publicName ${keywordTable.public.columnType.sqlType()} NOT NULL, " +
+                        "$dataName ${keywordTable.data.columnType.sqlType()} NOT NULL, " +
+                        "$constraintName ${keywordTable.constraint.columnType.sqlType()} NOT NULL)"
 
             keywordTable.ddl.single() shouldBeEqualTo expectedCreate
 
@@ -1103,7 +1106,11 @@ class Ex10_DDL_Examples: JdbcExposedTestBase() {
 
             val concat = concat(
                 separator = " ",
-                listOf(LowerCase(testTable.txt), UpperCase(testTable.txtMed), LowerCase(testTable.txtLong))
+                listOf(
+                    LowerCase(testTable.txt),
+                    UpperCase(testTable.txtMed),
+                    LowerCase(testTable.txtLong)
+                )
             )
 
             // just to be sure new type didn't break the functions
@@ -1249,7 +1256,7 @@ class Ex10_DDL_Examples: JdbcExposedTestBase() {
             val createConstraint = checkConstraint.createStatement()
             val dropConstraint = checkConstraint.dropStatement()
 
-            if (testDB in listOf(TestDB.MYSQL_V5)) {
+            if (testDB in setOf(TestDB.MYSQL_V5)) {
                 createConstraint.shouldBeEmpty()
                 dropConstraint.shouldBeEmpty()
             } else {

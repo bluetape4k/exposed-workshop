@@ -4,6 +4,8 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.collections.eclipse.toFastList
+import io.bluetape4k.collections.eclipse.toUnifiedSet
+import io.bluetape4k.collections.eclipse.unifiedMapOf
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -357,7 +359,8 @@ class Ex15_Returning: JdbcExposedTestBase() {
         Assumptions.assumeTrue { testDB in returningSupportedDb }
 
         withTables(testDB, Items) {
-            Items.batchInsert(listOf("A" to 99.0, "B" to 100.0, "C" to 200.0)) { (n, p) ->
+            val items = unifiedMapOf("A" to 99.0, "B" to 100.0, "C" to 200.0)
+            Items.batchInsert(items.entries) { (n, p) ->
                 this[Items.name] = n
                 this[Items.price] = p
             }
@@ -406,8 +409,8 @@ class Ex15_Returning: JdbcExposedTestBase() {
         Assumptions.assumeTrue { testDB in updateReturningSupportedDb }
 
         withTables(testDB, Items) {
-            val input = listOf("A" to 99.0, "B" to 100.0, "C" to 200.0)
-            Items.batchInsert(input) { (n, p) ->
+            val input = unifiedMapOf("A" to 99.0, "B" to 100.0, "C" to 200.0)
+            Items.batchInsert(input.entries) { (n, p) ->
                 this[Items.name] = n
                 this[Items.price] = p
             }
@@ -446,7 +449,8 @@ class Ex15_Returning: JdbcExposedTestBase() {
                     it[name] = name.lowerCase()
                 }
                 .map { it[Items.name] }
-            result2.toSet() shouldBeEqualTo input.map { it.first.lowercase() }.toSet()
+
+            result2.toUnifiedSet() shouldBeEqualTo input.keys.map { it.lowercase() }.toUnifiedSet()
 
             /**
              * 모든 레코드의 price를 `0.0`으로 변경하고, price 컬럼의 alias 만 반환합니다.

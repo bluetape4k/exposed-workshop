@@ -6,6 +6,7 @@ import exposed.multitenant.webflux.domain.model.MovieSchema.ActorInMovieTable
 import exposed.multitenant.webflux.domain.model.MovieSchema.ActorTable
 import exposed.multitenant.webflux.domain.model.MovieSchema.MovieTable
 import exposed.multitenant.webflux.tenant.Tenants.Tenant
+import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.info
@@ -99,7 +100,7 @@ class DataInitializer {
                 else -> ActorDTO(0L, "에드워드", "노튼", "1975-04-03")
             }
 
-            val actors = listOf(
+            val actors = fastListOf(
                 johnnyDepp,
                 bradPitt,
                 angelinaJolie,
@@ -111,34 +112,34 @@ class DataInitializer {
                 edwardNorton
             )
 
-            val movies = listOf(
+            val movies = fastListOf(
                 MovieWithActorDTO(
                     0L,
                     if (tenant == Tenant.KOREAN) "글래디에이터" else "Gladiator",
                     johnnyDepp.firstName,
                     "2000-05-01",
-                    mutableListOf(russellCrowe, ellenPaige, craigDaniel)
+                    fastListOf(russellCrowe, ellenPaige, craigDaniel)
                 ),
                 MovieWithActorDTO(
                     0L,
                     if (tenant == Tenant.KOREAN) "가디언스 오브 갤럭시" else "Guardians of the galaxy",
                     johnnyDepp.firstName,
                     "2014-07-21",
-                    mutableListOf(angelinaGrace, bradPitt, ellenPaige, angelinaJolie, johnnyDepp)
+                    fastListOf(angelinaGrace, bradPitt, ellenPaige, angelinaJolie, johnnyDepp)
                 ),
                 MovieWithActorDTO(
                     0L,
                     if (tenant == Tenant.KOREAN) "싸움 클럽" else "Fight club",
                     craigDaniel.firstName,
                     "1999-09-13",
-                    mutableListOf(bradPitt, jenniferAniston, edwardNorton)
+                    fastListOf(bradPitt, jenniferAniston, edwardNorton)
                 ),
                 MovieWithActorDTO(
                     0L,
                     if (tenant == Tenant.KOREAN) "13가지 이유" else "13 Reasons Why",
                     "Suzuki",
                     "2016-01-01",
-                    mutableListOf(angelinaJolie, jenniferAniston)
+                    fastListOf(angelinaJolie, jenniferAniston)
                 )
             )
 

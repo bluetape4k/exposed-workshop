@@ -2133,8 +2133,8 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             val cache = TransactionManager.current().entityCache
 
-            cache.getReferrers<Student>(school1.id, Students.school)?.toFastList().orEmpty() shouldBeEqualTo
-                    listOf(student1, student2)
+            cache.getReferrers<Student>(school1.id, Students.school)
+                ?.toFastList().orEmpty() shouldBeEqualTo listOf(student1, student2)
             cache.getReferrers<Note>(student1.id, Notes.student)?.single() shouldBeEqualTo note1
             cache.getReferrers<Note>(student2.id, Notes.student)?.single() shouldBeEqualTo note2
         }
@@ -2807,9 +2807,8 @@ class Ex01_Entity: JdbcExposedTestBase() {
 
             entityCache.clear()
 
-
             // SELECT testtable.id, testtable."value" FROM testtable;
-            TestTable.selectAll().toFastList().map { it[TestTable.value] } shouldBeEqualTo listOf(1, 2)
+            TestTable.selectAll().map { it[TestTable.value] } shouldBeEqualTo listOf(1, 2)
 
             // UPDATE testtable SET "value"=3 WHERE id = 1
             // UPDATE testtable SET "value"=4 WHERE id = 2
@@ -2819,7 +2818,7 @@ class Ex01_Entity: JdbcExposedTestBase() {
             entityCache.clear()
 
             // SELECT testtable.id, testtable."value" FROM testtable;
-            TestTable.selectAll().toFastList().map { it[TestTable.value] } shouldBeEqualTo listOf(3, 4)
+            TestTable.selectAll().map { it[TestTable.value] } shouldBeEqualTo listOf(3, 4)
 
             entityCache.clear()
 

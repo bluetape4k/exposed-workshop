@@ -8,6 +8,7 @@ import exposed.shared.tests.expectException
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.insertAndWait
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
@@ -188,7 +189,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
         Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB + TestDB.MYSQL_V5 }
 
         withTables(testDB, TableWithDBDefault) {
-            val created = listOf(
+            val created = fastListOf(
                 DBDefault.new { field = "1" },
                 DBDefault.new {
                     field = "2"
@@ -219,7 +220,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
         Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB + TestDB.MYSQL_V5 }
 
         withTables(testDB, TableWithDBDefault) {
-            val created = listOf(
+            val created = fastListOf(
                 DBDefault.new {
                     field = "2"
                     t1 = LocalDateTime.now().minusDays(5)

@@ -4,6 +4,7 @@ import exposed.examples.jpa.ex05_relations.ex02_one_to_many.Ex07_OneToMany_Map.C
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -65,7 +66,7 @@ class Ex07_OneToMany_Map: JdbcExposedTestBase() {
             car.removeOption("Audio")
 
             // options 는 매번 읽어온다 
-            car.options.values shouldContainSame listOf(option1, option3)
+            car.options.values shouldContainSame fastListOf(option1, option3)
 
             // Remove Car
             car.delete()
@@ -92,15 +93,15 @@ class Ex07_OneToMany_Map: JdbcExposedTestBase() {
 
             val loaded = Car.findById(car.id)!!
             loaded shouldBeEqualTo car
-            loaded.parts.values shouldContainSame listOf(engine, misson, fueltank)
+            loaded.parts.values shouldContainSame fastListOf(engine, misson, fueltank)
 
             // CarPart 엔티티를 삭제한 경우 (CarPartMapTable에 cascade 되어 있어야 한다)
             fueltank.delete()
-            car.parts.values shouldContainSame listOf(engine, misson)
+            car.parts.values shouldContainSame fastListOf(engine, misson)
 
             // removePart 함수를 이용해 관계만 끊는다 (part 는 보존, CarPartMapTable에서만 삭제)
             car.removePart("mission")
-            car.parts.values shouldContainSame listOf(engine)
+            car.parts.values shouldContainSame fastListOf(engine)
 
             car.delete()
             entityCache.clear()
@@ -233,7 +234,7 @@ class Ex07_OneToMany_Map: JdbcExposedTestBase() {
         // JoinTable: CarPartMapTable
         val parts: Map<String, CarPart>
             get() = CarPartMapTable.innerJoin(CarPartTable)
-                .select(listOf(CarPartMapTable.partKey) + CarPartTable.columns)
+                .select(fastListOf(CarPartMapTable.partKey) + CarPartTable.columns)
                 .where { CarPartMapTable.carId eq this@Car.id }
                 .associate { it[CarPartMapTable.partKey] to CarPart.wrapRow(it) }
 

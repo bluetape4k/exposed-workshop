@@ -8,6 +8,7 @@ import exposed.examples.springwebflux.domain.model.MovieSchema.ActorEntity
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorTable
 import exposed.examples.springwebflux.domain.model.MovieSchema.MovieEntity
 import exposed.examples.springwebflux.domain.model.MovieSchema.MovieTable
+import io.bluetape4k.collections.eclipse.toFastList
 import org.jetbrains.exposed.v1.core.ResultRow
 
 fun ResultRow.toActorDTO() = ActorDTO(
@@ -36,7 +37,7 @@ fun ResultRow.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
     name = this[MovieTable.name],
     producerName = this[MovieTable.producerName],
     releaseDate = this[MovieTable.releaseDate].toString(),
-    actors = actors.toMutableList(),
+    actors = actors.toFastList(),
 )
 
 fun MovieDTO.toMovieWithActorDTO(actors: Collection<ActorDTO>) = MovieWithActorDTO(
@@ -44,7 +45,7 @@ fun MovieDTO.toMovieWithActorDTO(actors: Collection<ActorDTO>) = MovieWithActorD
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate,
-    actors = actors.toMutableList(),
+    actors = actors.toFastList(),
 )
 
 fun MovieEntity.toMovieDTO() = MovieDTO(
@@ -59,7 +60,7 @@ fun MovieEntity.toMovieWithActorDTO() = MovieWithActorDTO(
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate.toString(),
-    actors = this.actors.map { it.toActorDTO() }.toMutableList(),
+    actors = this.actors.map { it.toActorDTO() }.toFastList(),
 )
 
 

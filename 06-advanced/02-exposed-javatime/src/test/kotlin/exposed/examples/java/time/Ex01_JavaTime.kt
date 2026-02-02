@@ -391,7 +391,7 @@ class Ex01_JavaTime: JdbcExposedTestBase() {
             }
 
             // these DB take the nanosecond value 871_130_789 and round up to default precision (e.g. in Oracle: 871_131)
-            val requiresExplicitDTCast = listOf(TestDB.H2_PSQL)
+            val requiresExplicitDTCast = setOf(TestDB.H2_PSQL)
             val dateTime = when (testDB) {
                 in requiresExplicitDTCast -> Cast(dateTimeParam(mayTheFourth), JavaLocalDateTimeColumnType())
                 else -> dateTimeParam(mayTheFourth)

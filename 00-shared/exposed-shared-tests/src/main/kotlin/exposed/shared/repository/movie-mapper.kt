@@ -5,6 +5,7 @@ import exposed.shared.repository.MovieSchema.ActorEntity
 import exposed.shared.repository.MovieSchema.ActorTable
 import exposed.shared.repository.MovieSchema.MovieEntity
 import exposed.shared.repository.MovieSchema.MovieTable
+import io.bluetape4k.collections.eclipse.toFastList
 import org.jetbrains.exposed.v1.core.ResultRow
 
 
@@ -33,7 +34,7 @@ fun ResultRow.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
     name = this[MovieTable.name],
     producerName = this[MovieTable.producerName],
     releaseDate = this[MovieTable.releaseDate].toString(),
-    actors = actors.toMutableList(),
+    actors = actors.toFastList(),
     id = this[MovieTable.id].value
 )
 
@@ -41,7 +42,7 @@ fun MovieDTO.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate,
-    actors = actors.toMutableList(),
+    actors = actors.toFastList(),
     id = this.id
 )
 
@@ -56,7 +57,7 @@ fun MovieEntity.toMovieWithActorDTO() = MovieWithActorDTO(
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate.toString(),
-    actors = this.actors.map { it.toActorDTO() }.toMutableList(),
+    actors = this.actors.map { it.toActorDTO() }.toFastList(),
     id = this.id.value
 )
 

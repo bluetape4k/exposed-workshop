@@ -6,6 +6,7 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
 import io.bluetape4k.collections.eclipse.toFastList
+import io.bluetape4k.collections.eclipse.toUnifiedSet
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import nl.altindag.log.LogCaptor
@@ -248,7 +249,7 @@ class Ex11_Join: JdbcExposedTestBase() {
             )
 
             allUsersToStPetersburg.map { it.second }.distinct() shouldBeEqualTo listOf("St. Petersburg")
-            allUsersToStPetersburg.map { it.first }.toSet() shouldBeEqualTo allUsers
+            allUsersToStPetersburg.map { it.first }.toUnifiedSet() shouldBeEqualTo allUsers
         }
     }
 

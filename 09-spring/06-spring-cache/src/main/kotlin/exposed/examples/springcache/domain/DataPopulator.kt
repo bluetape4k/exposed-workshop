@@ -1,5 +1,6 @@
 package exposed.examples.springcache.domain
 
+import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
 import org.jetbrains.exposed.v1.jdbc.batchInsert
@@ -13,7 +14,7 @@ class DataPopulator: ApplicationListener<ApplicationReadyEvent> {
 
     companion object: KLogging() {
         val COUNTRY_CODES: List<String> =
-            listOf(
+            fastListOf(
                 "AF", "AX",
                 "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR", "AM", "AW", "AU", "AT",
                 "AZ", "BS", "BH", "BD", "BB", "BY", "BE", "BZ", "BJ", "BM", "BT", "BO", "BQ",

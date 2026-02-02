@@ -5,6 +5,7 @@ import com.zaxxer.hikari.HikariDataSource
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
+import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.info
@@ -38,7 +39,7 @@ class Ex01_TransactionIsolation: JdbcExposedTestBase() {
     private val transactionIsolationSupportDB =
         TestDB.ALL_MARIADB + TestDB.MYSQL_V5 + TestDB.POSTGRESQL
 
-    private val isolations = listOf(
+    private val isolations = fastListOf(
         // Connection.TRANSACTION_NONE,              // not supported
         Connection.TRANSACTION_READ_UNCOMMITTED,
         Connection.TRANSACTION_READ_COMMITTED,
@@ -228,13 +229,13 @@ class Ex01_TransactionIsolation: JdbcExposedTestBase() {
 
     private fun JdbcTransaction.assertTransactionIsolationLevel(testDB: TestDB, expected: Int) {
         val (sql, repeatable, committed, serializable) = when (testDB) {
-            TestDB.POSTGRESQL -> listOf(
+            TestDB.POSTGRESQL -> fastListOf(
                 "SHOW TRANSACTION ISOLATION LEVEL",
                 "repeatable read",
                 "read committed",
                 "serializable"
             )
-            in TestDB.ALL_MYSQL_MARIADB -> listOf(
+            in TestDB.ALL_MYSQL_MARIADB -> fastListOf(
                 "SELECT @@tx_isolation",
                 "REPEATABLE-READ",
                 "READ-COMMITTED",

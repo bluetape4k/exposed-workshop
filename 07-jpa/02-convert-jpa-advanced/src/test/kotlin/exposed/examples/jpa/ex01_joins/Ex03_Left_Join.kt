@@ -4,6 +4,7 @@ import exposed.shared.mapping.OrderSchema.OrderRecord
 import exposed.shared.mapping.OrderSchema.withOrdersTables
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
+import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -25,7 +26,7 @@ class Ex03_Left_Join: JdbcExposedTestBase() {
 
     companion object: KLogging()
 
-    private val expected = listOf(
+    private val expected = fastListOf(
         OrderRecord(itemId = 22, orderId = 1, quantity = 1, description = "Helmet"),
         OrderRecord(itemId = 33, orderId = 1, quantity = 1, description = "First Base Glove"),
         OrderRecord(itemId = null, orderId = 2, quantity = 6, description = null),
@@ -71,7 +72,7 @@ class Ex03_Left_Join: JdbcExposedTestBase() {
             val ol = orderLines.alias("ol")
             val im = items.alias("im")
 
-            val slice = listOf(
+            val slice = fastListOf(
                 om[orders.id], // orderIdAlias,
                 ol[orderLines.quantity], im[items.id], // itemIdAlias,
                 im[items.description]
@@ -149,7 +150,7 @@ class Ex03_Left_Join: JdbcExposedTestBase() {
             val ol = orderLines.select(orderLines.orderId, orderLines.itemId, orderLines.quantity).alias("ol")
             val im = items.select(items.id, items.description).alias("im")
 
-            val slice = listOf(
+            val slice = fastListOf(
                 om[orders.id], // orderIdAlias,
                 ol[orderLines.quantity], im[items.id], // itemIdAlias,
                 im[items.description]
@@ -210,7 +211,7 @@ class Ex03_Left_Join: JdbcExposedTestBase() {
     fun `left join without aliases`(testDB: TestDB) {
         withOrdersTables(testDB) { orders, _, items, orderLines, _ ->
 
-            val slice = listOf(
+            val slice = fastListOf(
                 orders.id, orderLines.quantity, items.id, items.description
             )
 

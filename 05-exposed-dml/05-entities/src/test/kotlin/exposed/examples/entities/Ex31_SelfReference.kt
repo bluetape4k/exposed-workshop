@@ -9,6 +9,7 @@ import exposed.shared.dml.DMLTestData.UserData
 import exposed.shared.dml.DMLTestData.Users
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
+import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
@@ -93,7 +94,7 @@ class Ex31_SelfReference: JdbcExposedTestBase() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `cycle references check`(testDB: TestDB) {
-        val original = listOf(
+        val original = fastListOf(
             TestTables.Cities,
             TestTables.Users,
             TestTables.StrangeTable,
@@ -102,7 +103,7 @@ class Ex31_SelfReference: JdbcExposedTestBase() {
             TestTables.ReferencedTable,
         )
         val sortedTables = SchemaUtils.sortTablesByReferences(original)
-        val expected = listOf(
+        val expected = fastListOf(
             TestTables.Users,
             TestTables.StrangeTable,
             TestTables.Cities,

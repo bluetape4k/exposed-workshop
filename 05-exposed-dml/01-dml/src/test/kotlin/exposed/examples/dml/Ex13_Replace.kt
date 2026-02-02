@@ -7,10 +7,12 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.collections.eclipse.toFastList
+import io.bluetape4k.collections.eclipse.unifiedMapOf
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid.Epoch
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldContainSame
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.inList
@@ -154,7 +156,10 @@ class Ex13_Replace: JdbcExposedTestBase() {
              *   WHERE new_auth.username = 'username1'
              * ```
              */
-            val affectedRowCount = NewAuth.replace(name1Row, columns = listOf(NewAuth.username, NewAuth.session))
+            val affectedRowCount = NewAuth.replace(
+                name1Row,
+                columns = listOf(NewAuth.username, NewAuth.session)
+            )
 
             // MySQL 은 데이터가 추가될 때마다 1을 반환하고, 충돌이 발생할 때마다 1을 증가시킨다. (1 + 1 = 2)
             // 다른 DB는 오로지 추가된 데이터만 카운트한다. (1)
@@ -376,24 +381,24 @@ class Ex13_Replace: JdbcExposedTestBase() {
             userData.deleteAll()
             users.deleteAll()
 
-            val cityUpdates = listOf(
+            val cityUpdates = unifiedMapOf(
                 munichId to "München",
                 pragueId to "Prague",
                 saintPetersburgId to "Saint Petersburg"
             )
 
-            cities.batchReplace(cityUpdates) {
-                this[cities.id] = it.first
-                this[cities.name] = it.second
+            cities.batchReplace(cityUpdates.entries) {
+                this[cities.id] = it.key
+                this[cities.name] = it.value
             }
 
             val cityNames = cities
                 .select(cities.name)
-                .where { cities.id inList cityUpdates.unzip().first }  // REPLACE 가 적용된 데이터를 조회
+                .where { cities.id inList cityUpdates.keys }  // REPLACE 가 적용된 데이터를 조회
                 .orderBy(cities.name)
                 .toCityNameList()
 
-            cityNames shouldBeEqualTo cityUpdates.unzip().second
+            cityNames shouldContainSame cityUpdates.values
         }
     }
 

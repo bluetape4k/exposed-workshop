@@ -8,6 +8,7 @@ import exposed.dao.example.Schema.withSuspendedCityUsers
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.collections.eclipse.toFastList
+import io.bluetape4k.collections.eclipse.toUnifiedSet
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
@@ -38,7 +39,7 @@ class ExposedDaoSuspendedExample: JdbcExposedTestBase() {
         withSuspendedCityUsers(testDB) {
             // 도시 정보를 조회합니다.
             City.all().count() shouldBeEqualTo 3L
-            City.all().map { it.name }.toSet() shouldBeEqualTo setOf("Seoul", "Busan", "Daegu")
+            City.all().map { it.name }.toUnifiedSet() shouldBeEqualTo setOf("Seoul", "Busan", "Daegu")
         }
     }
 

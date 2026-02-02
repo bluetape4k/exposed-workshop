@@ -332,7 +332,7 @@ class Ex04_MiscTable: JdbcExposedTestBase() {
 
     // these DB take the datetime nanosecond value and round up to default precision
     // which causes flaky comparison failures if not cast to TIMESTAMP first
-    private val requiresExplicitDTCast = listOf(TestDB.H2_PSQL)
+    private val requiresExplicitDTCast = setOf(TestDB.H2_PSQL)
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)

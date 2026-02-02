@@ -7,6 +7,8 @@ import exposed.examples.json.JsonTestData.JsonTable
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.collections.eclipse.fastList
+import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.logging.KLogging
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
@@ -79,7 +81,7 @@ abstract class AbstractExposedJsonTest: JdbcExposedTestBase() {
              * ```
              */
             val singleId = tester.insertAndGetId {
-                it[tester.groups] = UserGroup(listOf(User("Admin", "Team A")))
+                it[tester.groups] = UserGroup(fastListOf(User("Admin", "Team A")))
                 it[tester.numbers] = intArrayOf(100)
             }
 
@@ -95,7 +97,7 @@ abstract class AbstractExposedJsonTest: JdbcExposedTestBase() {
             val tripleId = tester.insertAndGetId {
                 // User name = "B", "C", "D"
                 // User team = "Team B", "Team C", "Team D"
-                it[tester.groups] = UserGroup(List(3) { i -> User("${'B' + i}", "Team ${'B' + i}") })
+                it[tester.groups] = UserGroup(fastList(3) { i -> User("${'B' + i}", "Team ${'B' + i}") })
                 it[numbers] = intArrayOf(3, 4, 5)
             }
 
@@ -117,11 +119,11 @@ abstract class AbstractExposedJsonTest: JdbcExposedTestBase() {
 
         withTables(testDB, tester) {
             val singleId = tester.insertAndGetId {
-                it[tester.groups] = UserGroup(listOf(User("Admin", "Team A")))
+                it[tester.groups] = UserGroup(fastListOf(User("Admin", "Team A")))
                 it[tester.numbers] = intArrayOf(100)
             }
             val tripleId = tester.insertAndGetId {
-                it[tester.groups] = UserGroup(List(3) { i -> User("${'B' + i}", "Team ${'B' + i}") })
+                it[tester.groups] = UserGroup(fastList(3) { i -> User("${'B' + i}", "Team ${'B' + i}") })
                 it[tester.numbers] = intArrayOf(3, 4, 5)
             }
 

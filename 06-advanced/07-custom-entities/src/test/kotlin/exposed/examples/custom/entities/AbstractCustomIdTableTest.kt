@@ -14,11 +14,11 @@ abstract class AbstractCustomIdTableTest: JdbcExposedTestBase() {
         fun getTestDBAndEntityCount(): List<Arguments> {
             val recordCounts = listOf(10, 100, 500)
 
-            return TestDB.enabledDialects().map { testDB ->
+            return TestDB.enabledDialects().flatMap { testDB ->
                 recordCounts.map { entityCount ->
                     Arguments.of(testDB, entityCount)
                 }
-            }.flatten()
+            }
         }
     }
 }
