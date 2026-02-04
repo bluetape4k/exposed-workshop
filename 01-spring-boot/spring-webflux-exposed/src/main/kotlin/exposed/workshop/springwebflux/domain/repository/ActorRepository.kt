@@ -1,9 +1,9 @@
 package exposed.workshop.springwebflux.domain.repository
 
-import exposed.workshop.springwebflux.domain.ActorDTO
-import exposed.workshop.springwebflux.domain.MovieSchema.ActorEntity
-import exposed.workshop.springwebflux.domain.MovieSchema.ActorTable
-import exposed.workshop.springwebflux.domain.toActorDTO
+import exposed.workshop.springwebflux.domain.model.ActorRecord
+import exposed.workshop.springwebflux.domain.model.MovieSchema.ActorEntity
+import exposed.workshop.springwebflux.domain.model.MovieSchema.ActorTable
+import exposed.workshop.springwebflux.domain.model.toActorRecord
 import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -31,7 +31,7 @@ class ActorRepository {
         return ActorEntity.wrapRows(ActorTable.selectAll()).toFastList()
     }
 
-    suspend fun searchActor(params: Map<String, String?>): List<ActorDTO> {
+    suspend fun searchActor(params: Map<String, String?>): List<ActorRecord> {
         log.debug { "Search Actor by params. params: $params" }
 
         val query = ActorTable.selectAll()
@@ -46,10 +46,10 @@ class ActorRepository {
                 }
             }
         }
-        return query.map { it.toActorDTO() }
+        return query.map { it.toActorRecord() }
     }
 
-    suspend fun create(actor: ActorDTO): ActorEntity {
+    suspend fun create(actor: ActorRecord): ActorEntity {
         log.debug { "Create Actor. actor: $actor" }
 
         return ActorEntity.new {

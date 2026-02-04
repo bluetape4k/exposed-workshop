@@ -1,7 +1,7 @@
 package exposed.multitenant.springweb.controller
 
 import exposed.multitenant.springweb.AbstractMultitenantTest
-import exposed.multitenant.springweb.domain.dtos.ActorDTO
+import exposed.multitenant.springweb.domain.dtos.ActorRecord
 import exposed.multitenant.springweb.tenant.TenantFilter
 import exposed.multitenant.springweb.tenant.Tenants.Tenant
 import io.bluetape4k.junit5.coroutines.runSuspendIO
@@ -35,7 +35,7 @@ class ActorControllerTest(
             .header(TenantFilter.TENANT_HEADER, tenant.id)
             .exchange()
             .expectStatus().is2xxSuccessful
-            .expectBodyList<ActorDTO>()
+            .expectBodyList<ActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -62,7 +62,7 @@ class ActorControllerTest(
             .header(TenantFilter.TENANT_HEADER, tenant.id)
             .exchange()
             .expectStatus().is2xxSuccessful
-            .returnResult<ActorDTO>().responseBody
+            .returnResult<ActorRecord>().responseBody
             .awaitSingle()
 
         log.debug { "Tenant: ${tenant.id}, Actor: $actor" }

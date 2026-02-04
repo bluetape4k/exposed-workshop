@@ -1,12 +1,12 @@
 package exposed.examples.suspendedcache.domain.repository
 
-import exposed.examples.suspendedcache.domain.CountryDTO
+import exposed.examples.suspendedcache.domain.CountryRecord
 
 interface CountrySuspendedRepository {
 
-    suspend fun findByCode(code: String): CountryDTO?
+    suspend fun findByCode(code: String): CountryRecord?
 
-    suspend fun update(countryDTO: CountryDTO): Int
+    suspend fun update(countryRecord: CountryRecord): Int
 
     suspend fun evictCacheAll()
 }

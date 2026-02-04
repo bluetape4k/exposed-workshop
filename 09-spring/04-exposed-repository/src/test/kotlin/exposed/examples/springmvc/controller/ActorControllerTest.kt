@@ -1,7 +1,7 @@
 package exposed.examples.springmvc.controller
 
 import exposed.examples.springmvc.AbstractExposedRepositoryTest
-import exposed.examples.springmvc.domain.dtos.ActorDTO
+import exposed.examples.springmvc.domain.model.ActorRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -24,7 +24,7 @@ class ActorControllerTest(
 ): AbstractExposedRepositoryTest() {
 
     companion object: KLogging() {
-        private fun newActor(): ActorDTO = ActorDTO(
+        private fun newActor(): ActorRecord = ActorRecord(
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             birthday = faker.timeAndDate().birthday().toString()
@@ -38,7 +38,7 @@ class ActorControllerTest(
         val actor = client
             .httpGet("/actors/$id")
             .expectStatus().is2xxSuccessful
-            .returnResult<ActorDTO>().responseBody
+            .returnResult<ActorRecord>().responseBody
             .awaitSingle()
 
         log.debug { "actor=$actor" }
@@ -54,7 +54,7 @@ class ActorControllerTest(
         val actors = client
             .httpGet("/actors?lastName=$lastName")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<ActorDTO>()
+            .expectBodyList<ActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -69,7 +69,7 @@ class ActorControllerTest(
         val angelinas = client
             .httpGet("/actors?firstName=$firstName")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<ActorDTO>()
+            .expectBodyList<ActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -84,7 +84,7 @@ class ActorControllerTest(
         val newActor = client
             .httpPost("/actors", actor)
             .expectStatus().is2xxSuccessful
-            .expectBody<ActorDTO>()
+            .expectBody<ActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -98,7 +98,7 @@ class ActorControllerTest(
         val newActor = client
             .httpPost("/actors", actor)
             .expectStatus().is2xxSuccessful
-            .expectBody<ActorDTO>()
+            .expectBody<ActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 

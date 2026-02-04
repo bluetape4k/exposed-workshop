@@ -1,8 +1,8 @@
 package alternative.hibernate.reactive.example.controller
 
 import alternative.hibernate.reactive.example.AbstractHibernateReactiveTest
-import alternatives.hibernate.reactive.example.domain.dto.TeamAndMemberDTO
-import alternatives.hibernate.reactive.example.domain.dto.TeamDTO
+import alternatives.hibernate.reactive.example.domain.dto.TeamAndMemberRecord
+import alternatives.hibernate.reactive.example.domain.dto.TeamRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -32,7 +32,7 @@ class TeamControllerTest(
         val team = client
             .httpGet("/teams/$teamId")
             .expectStatus().is2xxSuccessful
-            .returnResult<TeamDTO>().responseBody
+            .returnResult<TeamRecord>().responseBody
             .awaitSingle()
 
         log.debug { "Team[1]: $team" }
@@ -46,7 +46,7 @@ class TeamControllerTest(
         val teams = client
             .httpGet("/teams")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<TeamDTO>()
+            .expectBodyList<TeamRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -64,7 +64,7 @@ class TeamControllerTest(
         val teams = client
             .httpGet("/teams/name/$teamName")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<TeamDTO>()
+            .expectBodyList<TeamRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -81,7 +81,7 @@ class TeamControllerTest(
         val team = client
             .httpGet("/teams/$teamId/members")
             .expectStatus().is2xxSuccessful
-            .returnResult<TeamAndMemberDTO>().responseBody
+            .returnResult<TeamAndMemberRecord>().responseBody
             .awaitSingle()
 
         log.debug { "Team[1]: $team" }
@@ -98,7 +98,7 @@ class TeamControllerTest(
         val teams = client
             .httpGet("/teams/member/$memberName")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<TeamAndMemberDTO>()
+            .expectBodyList<TeamAndMemberRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 

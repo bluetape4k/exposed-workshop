@@ -23,7 +23,7 @@ class CountryRepository(private val cacheManager: CacheManager) {
     }
 
     @Cacheable(key = "'country:' + #code")
-    fun findByCode(code: String): CountryDTO? {
+    fun findByCode(code: String): CountryRecord? {
         log.debug { "----> Loading country with code[$code] and caching in redis ..." }
 
         // @Transactional 을 사용하지 않고, transaction {} 블록을 사용하여 DB에 접근합니다.
@@ -32,7 +32,7 @@ class CountryRepository(private val cacheManager: CacheManager) {
             val row =
                 CountryTable.selectAll().where { CountryTable.code eq code }.singleOrNull() ?: return@transaction null
 
-            CountryDTO(
+            CountryRecord(
                 code = row[CountryTable.code],
                 name = row[CountryTable.name],
                 description = row[CountryTable.description]
@@ -41,13 +41,13 @@ class CountryRepository(private val cacheManager: CacheManager) {
     }
 
     @Transactional
-    @CacheEvict(key = "'country:' + #countryDTO.code")
-    fun update(countryDTO: CountryDTO): Int {
-        log.debug { "----> Updating country with code[${countryDTO.code}] ..." }
+    @CacheEvict(key = "'country:' + #countryRecord.code")
+    fun update(countryRecord: CountryRecord): Int {
+        log.debug { "----> Updating country with code[${countryRecord.code}] ..." }
 
-        return CountryTable.update({ CountryTable.code eq countryDTO.code }) {
-            it[name] = countryDTO.name
-            it[description] = countryDTO.description
+        return CountryTable.update({ CountryTable.code eq countryRecord.code }) {
+            it[name] = countryRecord.name
+            it[description] = countryRecord.description
         }
     }
 

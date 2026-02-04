@@ -1,8 +1,8 @@
 package exposed.workshop.springwebflux.domain.repository
 
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
-import exposed.workshop.springwebflux.domain.ActorDTO
-import exposed.workshop.springwebflux.domain.toActorDTO
+import exposed.workshop.springwebflux.domain.model.ActorRecord
+import exposed.workshop.springwebflux.domain.model.toActorRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -19,7 +19,7 @@ class ActorRepositoryTest(
 ): AbstractSpringWebfluxTest() {
 
     companion object: KLoggingChannel() {
-        fun newActorDTO() = ActorDTO(
+        fun newActorRecord() = ActorRecord(
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             birthday = faker.timeAndDate().birthday(20, 80).toString()
@@ -31,7 +31,7 @@ class ActorRepositoryTest(
         newSuspendedTransaction(readOnly = true) {
             val actorId = 1L
 
-            val actor = actorRepository.findById(actorId)?.toActorDTO()
+            val actor = actorRepository.findById(actorId)?.toActorRecord()
 
             log.debug { "Actor: $actor" }
             actor.shouldNotBeNull()
@@ -84,12 +84,12 @@ class ActorRepositoryTest(
         newSuspendedTransaction {
             val prevCount = actorRepository.count()
 
-            val actor = newActorDTO()
+            val actor = newActorRecord()
 
-            val savedActor = actorRepository.create(actor).toActorDTO()
+            val savedActor = actorRepository.create(actor).toActorRecord()
             savedActor shouldBeEqualTo actor.copy(id = savedActor.id)
 
-            val newActor = actorRepository.findById(savedActor.id)?.toActorDTO()
+            val newActor = actorRepository.findById(savedActor.id)?.toActorRecord()
             newActor shouldBeEqualTo savedActor
 
             actorRepository.count() shouldBeEqualTo prevCount + 1L
@@ -99,8 +99,8 @@ class ActorRepositoryTest(
     @Test
     fun `delete actor by id`() = runSuspendIO {
         newSuspendedTransaction {
-            val actor = newActorDTO()
-            val savedActor = actorRepository.create(actor).toActorDTO()
+            val actor = newActorRecord()
+            val savedActor = actorRepository.create(actor).toActorRecord()
             savedActor.shouldNotBeNull()
             savedActor.id.shouldNotBeNull()
 

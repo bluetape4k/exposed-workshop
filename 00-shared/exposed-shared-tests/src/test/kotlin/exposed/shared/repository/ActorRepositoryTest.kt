@@ -1,7 +1,9 @@
 package exposed.shared.repository
 
-import exposed.shared.repository.MovieSchema.ActorTable
-import exposed.shared.repository.MovieSchema.withMovieAndActors
+import exposed.shared.repository.model.ActorRecord
+import exposed.shared.repository.model.MovieSchema.ActorTable
+import exposed.shared.repository.model.MovieSchema.withMovieAndActors
+import exposed.shared.repository.repository.ActorRepository
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -24,7 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource
 class ActorRepositoryTest: JdbcExposedTestBase() {
 
     companion object: KLoggingChannel() {
-        fun newActorDTO(): ActorDTO = ActorDTO(
+        fun newActorRecord(): ActorRecord = ActorRecord(
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             birthday = faker.timeAndDate().birthday(20, 80).toString()
@@ -62,7 +64,7 @@ class ActorRepositoryTest: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `create new actor`(testDB: TestDB) {
         withMovieAndActors(testDB) {
-            val actor = newActorDTO()
+            val actor = newActorRecord()
 
             val currentCount = repository.count()
 
@@ -78,7 +80,7 @@ class ActorRepositoryTest: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `delete actor by id`(testDB: TestDB) {
         withMovieAndActors(testDB) {
-            val actor = newActorDTO()
+            val actor = newActorRecord()
             val savedActor = repository.save(actor)
             savedActor.id.shouldNotBeNull()
 
@@ -95,7 +97,7 @@ class ActorRepositoryTest: JdbcExposedTestBase() {
             log.debug { "count: $count" }
             count shouldBeGreaterThan 0L
 
-            repository.save(newActorDTO())
+            repository.save(newActorRecord())
 
             val newCount = repository.count()
             newCount shouldBeEqualTo count + 1L
@@ -168,7 +170,7 @@ class ActorRepositoryTest: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `delete entity`(testDB: TestDB) {
         withMovieAndActors(testDB) {
-            val actor = newActorDTO()
+            val actor = newActorRecord()
             val savedActor = repository.save(actor)
             savedActor.id.shouldNotBeNull()
 
@@ -183,7 +185,7 @@ class ActorRepositoryTest: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `delete entity by id`(testDB: TestDB) {
         withMovieAndActors(testDB) {
-            val actor = newActorDTO()
+            val actor = newActorRecord()
             val savedActor = repository.save(actor)
             savedActor.id.shouldNotBeNull()
 

@@ -1,9 +1,9 @@
 package alternatives.hibernate.reactive.example.controller
 
-import alternatives.hibernate.reactive.example.domain.dto.TeamAndMemberDTO
-import alternatives.hibernate.reactive.example.domain.dto.TeamDTO
-import alternatives.hibernate.reactive.example.domain.mapper.toDto
-import alternatives.hibernate.reactive.example.domain.mapper.toTeamAndMemberDTO
+import alternatives.hibernate.reactive.example.domain.dto.TeamAndMemberRecord
+import alternatives.hibernate.reactive.example.domain.dto.TeamRecord
+import alternatives.hibernate.reactive.example.domain.mapper.toRecord
+import alternatives.hibernate.reactive.example.domain.mapper.toTeamAndMemberRecord
 import alternatives.hibernate.reactive.example.domain.repository.TeamSessionRepository
 import io.bluetape4k.hibernate.reactive.mutiny.withSessionSuspending
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -27,42 +27,42 @@ class TeamController(
     companion object: KLoggingChannel()
 
     @GetMapping
-    suspend fun findAll(): List<TeamDTO> {
+    suspend fun findAll(): List<TeamRecord> {
         return sf.withSessionSuspending { session ->
-            teamRepository.findAll(session).map { it.toDto() }
+            teamRepository.findAll(session).map { it.toRecord() }
         }
     }
 
     @GetMapping("/{id}")
-    suspend fun findById(@PathVariable id: Long): TeamDTO? {
+    suspend fun findById(@PathVariable id: Long): TeamRecord? {
         return sf.withSessionSuspending { session ->
-            teamRepository.findById(session, id)?.toDto()
+            teamRepository.findById(session, id)?.toRecord()
         }
     }
 
     @GetMapping("/name/{name}")
-    suspend fun findByName(@PathVariable name: String): List<TeamDTO> {
+    suspend fun findByName(@PathVariable name: String): List<TeamRecord> {
         return sf.withSessionSuspending { session ->
-            teamRepository.findAllByName(session, name).map { it.toDto() }
+            teamRepository.findAllByName(session, name).map { it.toRecord() }
         }
     }
 
     @GetMapping("/{id}/members")
-    suspend fun findMembers(@PathVariable id: Long): TeamAndMemberDTO? {
+    suspend fun findMembers(@PathVariable id: Long): TeamAndMemberRecord? {
         return sf.withSessionSuspending { session ->
             val team = teamRepository.findById(session, id)
             team?.let {
                 // Lazy Loading 시에는 이렇게 fetch 를 해줘야 합니다.
                 session.fetch(team.members).awaitSuspending()
-                team.toTeamAndMemberDTO()
+                team.toTeamAndMemberRecord()
             }
         }
     }
 
     @GetMapping("/member/{name}")
-    suspend fun findTeamsByMemberName(@PathVariable name: String): List<TeamAndMemberDTO> {
+    suspend fun findTeamsByMemberName(@PathVariable name: String): List<TeamAndMemberRecord> {
         return sf.withSessionSuspending { session ->
-            teamRepository.findAllByMemberName(session, name).map { it.toTeamAndMemberDTO() }
+            teamRepository.findAllByMemberName(session, name).map { it.toTeamAndMemberRecord() }
         }
     }
 }

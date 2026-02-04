@@ -1,6 +1,6 @@
 package exposed.examples.springwebflux.controller
 
-import exposed.examples.springwebflux.domain.dtos.ActorDTO
+import exposed.examples.springwebflux.domain.model.ActorRecord
 import exposed.examples.springwebflux.domain.repository.ActorExposedRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.CoroutineScope
@@ -26,13 +26,13 @@ class ActorController(
     companion object: KLoggingChannel()
 
     @GetMapping("/{id}")
-    suspend fun getActorById(@PathVariable("id") actorId: Long): ActorDTO? =
+    suspend fun getActorById(@PathVariable("id") actorId: Long): ActorRecord? =
         newSuspendedTransaction(readOnly = true) {
             actorRepository.findByIdOrNull(actorId)
         }
 
     @GetMapping
-    suspend fun searchActors(request: ServerHttpRequest): List<ActorDTO> {
+    suspend fun searchActors(request: ServerHttpRequest): List<ActorRecord> {
         val params = request.queryParams.map { it.key to it.value.first() }.toMap()
 
         return when {
@@ -44,7 +44,7 @@ class ActorController(
     }
 
     @PostMapping
-    suspend fun createActor(@RequestBody actor: ActorDTO): ActorDTO =
+    suspend fun createActor(@RequestBody actor: ActorRecord): ActorRecord =
         newSuspendedTransaction {
             actorRepository.create(actor)
         }

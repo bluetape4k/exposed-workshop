@@ -1,7 +1,7 @@
 package exposed.multitenant.springweb.tenant
 
-import exposed.multitenant.springweb.domain.dtos.ActorDTO
-import exposed.multitenant.springweb.domain.dtos.MovieWithActorDTO
+import exposed.multitenant.springweb.domain.dtos.ActorRecord
+import exposed.multitenant.springweb.domain.dtos.MovieWithActorRecord
 import exposed.multitenant.springweb.domain.model.MovieSchema.ActorInMovieTable
 import exposed.multitenant.springweb.domain.model.MovieSchema.ActorTable
 import exposed.multitenant.springweb.domain.model.MovieSchema.MovieTable
@@ -61,40 +61,40 @@ class DataInitializer {
         log.info { "Inserting sample actors and movies ..." }
 
         val johnnyDepp = when (tenant) {
-            Tenant.ENGLISH -> ActorDTO(0L, "Johnny", "Depp", "1973-06-09")
-            else -> ActorDTO(0L, "조니", "뎁", "1979-10-28")
+            Tenant.ENGLISH -> ActorRecord(0L, "Johnny", "Depp", "1973-06-09")
+            else -> ActorRecord(0L, "조니", "뎁", "1979-10-28")
         }
         val bradPitt = when (tenant) {
-            Tenant.ENGLISH -> ActorDTO(0L, "Brad", "Pitt", "1970-12-18")
-            else -> ActorDTO(0L, "브래드", "피트", "1982-05-16")
+            Tenant.ENGLISH -> ActorRecord(0L, "Brad", "Pitt", "1970-12-18")
+            else -> ActorRecord(0L, "브래드", "피트", "1982-05-16")
         }
         val angelinaJolie = when (tenant) {
-            Tenant.ENGLISH -> ActorDTO(0L, "Angelina", "Jolie", "1983-11-10")
-            else -> ActorDTO(0L, "안제리나", "졸리", "1983-11-10")
+            Tenant.ENGLISH -> ActorRecord(0L, "Angelina", "Jolie", "1983-11-10")
+            else -> ActorRecord(0L, "안제리나", "졸리", "1983-11-10")
         }
         val jenniferAniston = when (tenant) {
-            Tenant.ENGLISH -> ActorDTO(0L, "Jennifer", "Aniston", "1975-07-23")
-            else -> ActorDTO(0L, "제니퍼", "애니스톤", "1975-07-23")
+            Tenant.ENGLISH -> ActorRecord(0L, "Jennifer", "Aniston", "1975-07-23")
+            else -> ActorRecord(0L, "제니퍼", "애니스톤", "1975-07-23")
         }
         val angelinaGrace = when (tenant) {
-            Tenant.ENGLISH -> ActorDTO(0L, "Angelina", "Grace", "1988-09-02")
-            else -> ActorDTO(0L, "안젤리나", "그레이스", "1988-09-02")
+            Tenant.ENGLISH -> ActorRecord(0L, "Angelina", "Grace", "1988-09-02")
+            else -> ActorRecord(0L, "안젤리나", "그레이스", "1988-09-02")
         }
         val craigDaniel = when (tenant) {
-            Tenant.ENGLISH -> ActorDTO(0L, "Craig", "Daniel", "1970-11-12")
-            else -> ActorDTO(0L, "다니엘", "크레이그", "1970-11-12")
+            Tenant.ENGLISH -> ActorRecord(0L, "Craig", "Daniel", "1970-11-12")
+            else -> ActorRecord(0L, "다니엘", "크레이그", "1970-11-12")
         }
         val ellenPaige = when (tenant) {
-            Tenant.ENGLISH -> ActorDTO(0L, "Ellen", "Paige", "1981-12-20")
-            else -> ActorDTO(0L, "엘렌", "페이지", "1981-12-20")
+            Tenant.ENGLISH -> ActorRecord(0L, "Ellen", "Paige", "1981-12-20")
+            else -> ActorRecord(0L, "엘렌", "페이지", "1981-12-20")
         }
         val russellCrowe = when (tenant) {
-            Tenant.ENGLISH -> ActorDTO(0L, "Russell", "Crowe", "1970-01-20")
-            else -> ActorDTO(0L, "러셀", "크로우", "1970-01-20")
+            Tenant.ENGLISH -> ActorRecord(0L, "Russell", "Crowe", "1970-01-20")
+            else -> ActorRecord(0L, "러셀", "크로우", "1970-01-20")
         }
         val edwardNorton = when (tenant) {
-            Tenant.ENGLISH -> ActorDTO(0L, "Edward", "Norton", "1975-04-03")
-            else -> ActorDTO(0L, "에드워드", "노튼", "1975-04-03")
+            Tenant.ENGLISH -> ActorRecord(0L, "Edward", "Norton", "1975-04-03")
+            else -> ActorRecord(0L, "에드워드", "노튼", "1975-04-03")
         }
 
         val actors = fastListOf(
@@ -110,28 +110,28 @@ class DataInitializer {
         )
 
         val movies = fastListOf(
-            MovieWithActorDTO(
+            MovieWithActorRecord(
                 0L,
                 if (tenant == Tenant.KOREAN) "글래디에이터" else "Gladiator",
                 johnnyDepp.firstName,
                 "2000-05-01",
                 fastListOf(russellCrowe, ellenPaige, craigDaniel)
             ),
-            MovieWithActorDTO(
+            MovieWithActorRecord(
                 0L,
                 if (tenant == Tenant.KOREAN) "가디언스 오브 갤럭시" else "Guardians of the galaxy",
                 johnnyDepp.firstName,
                 "2014-07-21",
                 fastListOf(angelinaGrace, bradPitt, ellenPaige, angelinaJolie, johnnyDepp)
             ),
-            MovieWithActorDTO(
+            MovieWithActorRecord(
                 0L,
                 if (tenant == Tenant.KOREAN) "싸움 클럽" else "Fight club",
                 craigDaniel.firstName,
                 "1999-09-13",
                 fastListOf(bradPitt, jenniferAniston, edwardNorton)
             ),
-            MovieWithActorDTO(
+            MovieWithActorRecord(
                 0L,
                 if (tenant == Tenant.KOREAN) "13가지 이유" else "13 Reasons Why",
                 "Suzuki",

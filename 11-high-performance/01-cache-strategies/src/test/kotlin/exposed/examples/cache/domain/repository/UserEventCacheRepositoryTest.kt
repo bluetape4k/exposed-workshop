@@ -2,7 +2,7 @@ package exposed.examples.cache.domain.repository
 
 import exposed.examples.cache.AbstractCacheStrategyTest
 import exposed.examples.cache.domain.model.UserEventTable
-import exposed.examples.cache.domain.model.newUserEventDTO
+import exposed.examples.cache.domain.model.newUserEventRecord
 import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -37,7 +37,7 @@ class UserEventCacheRepositoryTest(
     fun `write behind 로 대량의 데이테를 추가한다`() {
         transaction {
             val totalCount = 10_000
-            generateSequence { newUserEventDTO() }
+            generateSequence { newUserEventRecord() }
                 .take(totalCount)
                 .chunked(100) { chunk ->
                     repository.putAll(chunk)

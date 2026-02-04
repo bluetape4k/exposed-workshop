@@ -1,7 +1,7 @@
 package exposed.examples.springwebflux.domain.repository
 
 import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
-import exposed.examples.springwebflux.domain.dtos.MovieDTO
+import exposed.examples.springwebflux.domain.model.MovieRecord
 import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -20,7 +20,7 @@ class MovieRepositoryTest(
 ): AbstractCoroutineExposedRepositoryTest() {
 
     companion object: KLoggingChannel() {
-        private fun newMovieDTO() = MovieDTO(
+        private fun newMovieRecord() = MovieRecord(
             name = faker.book().title(),
             producerName = faker.name().fullName(),
             releaseDate = faker.timeAndDate().birthday(20, 80).toString()
@@ -47,8 +47,8 @@ class MovieRepositoryTest(
      *  WHERE MOVIES.PRODUCER_NAME = 'Johnny'
      * ```
      * ```
-     * MovieDTO(name=Gladiator, producerName=Johnny, releaseDate=2000-05-01T00:00, id=1)
-     * MovieDTO(name=Guardians of the galaxy, producerName=Johnny, releaseDate=2014-07-21T00:00, id=2)
+     * MovieRecord(name=Gladiator, producerName=Johnny, releaseDate=2000-05-01T00:00, id=1)
+     * MovieRecord(name=Guardians of the galaxy, producerName=Johnny, releaseDate=2014-07-21T00:00, id=2)
      * ```
      */
     @Test
@@ -70,7 +70,7 @@ class MovieRepositoryTest(
         newSuspendedTransaction {
             val prevCount = movieRepository.count()
 
-            val newMovie = newMovieDTO()
+            val newMovie = newMovieRecord()
             val saved = movieRepository.create(newMovie)
 
             saved.shouldNotBeNull()
@@ -84,7 +84,7 @@ class MovieRepositoryTest(
     fun `delete movie`() = runSuspendIO {
         newSuspendedTransaction {
 
-            val newMovie = newMovieDTO()
+            val newMovie = newMovieRecord()
             val saved = movieRepository.create(newMovie)
 
             val prevCount = movieRepository.count()

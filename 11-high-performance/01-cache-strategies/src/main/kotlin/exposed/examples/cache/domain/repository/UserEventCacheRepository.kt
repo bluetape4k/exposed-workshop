@@ -1,8 +1,8 @@
 package exposed.examples.cache.domain.repository
 
-import exposed.examples.cache.domain.model.UserEventDTO
+import exposed.examples.cache.domain.model.UserEventRecord
 import exposed.examples.cache.domain.model.UserEventTable
-import exposed.examples.cache.domain.model.toUserEventDTO
+import exposed.examples.cache.domain.model.toUserEventRecord
 import io.bluetape4k.exposed.redisson.repository.AbstractExposedCacheRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class UserEventCacheRepository(
     redissonClient: RedissonClient,
-): AbstractExposedCacheRepository<UserEventDTO, Long>(
+): AbstractExposedCacheRepository<UserEventRecord, Long>(
     redissonClient = redissonClient,
     cacheName = "exposed:user-events",
     config = RedisCacheConfig.WRITE_BEHIND_WITH_NEAR_CACHE,
@@ -29,11 +29,11 @@ class UserEventCacheRepository(
     companion object: KLoggingChannel()
 
     override val entityTable: IdTable<Long> = UserEventTable
-    override fun ResultRow.toEntity(): UserEventDTO = toUserEventDTO()
+    override fun ResultRow.toEntity(): UserEventRecord = toUserEventRecord()
 
     override fun doInsertEntity(
         statement: BatchInsertStatement,
-        entity: UserEventDTO,
+        entity: UserEventRecord,
     ) {
         log.debug { "Insert entity: $entity" }
 
@@ -50,7 +50,7 @@ class UserEventCacheRepository(
 
     override fun doUpdateEntity(
         statement: UpdateStatement,
-        entity: UserEventDTO,
+        entity: UserEventRecord,
     ) {
         log.debug { "Update entity: $entity" }
 

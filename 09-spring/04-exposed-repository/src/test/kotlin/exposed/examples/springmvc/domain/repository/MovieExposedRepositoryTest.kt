@@ -1,7 +1,7 @@
 package exposed.examples.springmvc.domain.repository
 
 import exposed.examples.springmvc.AbstractExposedRepositoryTest
-import exposed.examples.springmvc.domain.dtos.MovieDTO
+import exposed.examples.springmvc.domain.model.MovieRecord
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -18,7 +18,7 @@ class MovieExposedRepositoryTest(
 ): AbstractExposedRepositoryTest() {
 
     companion object: KLogging() {
-        private fun newMovieDTO(): MovieDTO = MovieDTO(
+        private fun newMovieRecord(): MovieRecord = MovieRecord(
             name = faker.book().title(),
             producerName = faker.name().fullName(),
             releaseDate = faker.timeAndDate().birthday(20, 80).toString()
@@ -50,7 +50,7 @@ class MovieExposedRepositoryTest(
     @Test
     @Transactional
     fun `create movie`() {
-        val movie = newMovieDTO()
+        val movie = newMovieRecord()
 
         val currentCount = movieRepo.count()
 
@@ -64,7 +64,7 @@ class MovieExposedRepositoryTest(
     @Test
     @Transactional
     fun `delete movie`() {
-        val newMovie = newMovieDTO()
+        val newMovie = newMovieRecord()
         val saved = movieRepo.create(newMovie)
 
         val deletedCount = movieRepo.deleteById(saved.id)

@@ -2,7 +2,7 @@ package exposed.examples.springwebflux.domain
 
 import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorTable
-import exposed.examples.springwebflux.domain.model.toActorDTO
+import exposed.examples.springwebflux.domain.model.toActorRecord
 import io.bluetape4k.concurrent.virtualthread.virtualFuture
 import io.bluetape4k.junit5.concurrency.StructuredTaskScopeTester
 import io.bluetape4k.junit5.coroutines.SuspendedJobTester
@@ -32,7 +32,7 @@ class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
         @RepeatedTest(REPEAT_SIZE)
         open fun `get all actors`() = runSuspendIO {
             newSuspendedTransaction(readOnly = true) {
-                val actors = ActorTable.selectAll().map { it.toActorDTO() }
+                val actors = ActorTable.selectAll().map { it.toActorRecord() }
                 actors.shouldNotBeEmpty()
             }
         }
@@ -45,7 +45,7 @@ class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
                     .roundsPerJob(Runtime.getRuntime().availableProcessors() * 2 * 4)
                     .add {
                         suspendedTransactionAsync {
-                            val actors = ActorTable.selectAll().map { it.toActorDTO() }
+                            val actors = ActorTable.selectAll().map { it.toActorRecord() }
                             actors.shouldNotBeEmpty()
                         }.await()
                     }
@@ -62,7 +62,7 @@ class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
         open fun `get all actors`() {
             virtualFuture {
                 transaction {
-                    val actors = ActorTable.selectAll().map { it.toActorDTO() }
+                    val actors = ActorTable.selectAll().map { it.toActorRecord() }
                     actors.shouldNotBeEmpty()
                 }
             }.await()
@@ -74,7 +74,7 @@ class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
                 .roundsPerTask(Runtime.getRuntime().availableProcessors() * 2 * 4)
                 .add {
                     transaction {
-                        val actors = ActorTable.selectAll().map { it.toActorDTO() }
+                        val actors = ActorTable.selectAll().map { it.toActorRecord() }
                         actors.shouldNotBeEmpty()
                     }
                 }

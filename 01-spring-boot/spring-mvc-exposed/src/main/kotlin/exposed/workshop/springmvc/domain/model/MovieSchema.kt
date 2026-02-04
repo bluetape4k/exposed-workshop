@@ -1,4 +1,4 @@
-package exposed.workshop.springmvc.domain
+package exposed.workshop.springmvc.domain.model
 
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals

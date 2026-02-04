@@ -1,8 +1,8 @@
 package exposed.workshop.springwebflux.controller
 
-import exposed.workshop.springwebflux.domain.MovieDTO
+import exposed.workshop.springwebflux.domain.model.MovieRecord
+import exposed.workshop.springwebflux.domain.model.toMovieRecord
 import exposed.workshop.springwebflux.domain.repository.MovieRepository
-import exposed.workshop.springwebflux.domain.toMovieDTO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,28 +26,28 @@ class MovieController(
     companion object: KLoggingChannel()
 
     @GetMapping("/{id}")
-    suspend fun getMovieById(@PathVariable("id") movieId: Long): MovieDTO? =
+    suspend fun getMovieById(@PathVariable("id") movieId: Long): MovieRecord? =
         newSuspendedTransaction(readOnly = true) {
-            movieRepository.findById(movieId)?.toMovieDTO()
+            movieRepository.findById(movieId)?.toMovieRecord()
         }
 
     @GetMapping
-    suspend fun searchMovies(request: ServerHttpRequest): List<MovieDTO> {
+    suspend fun searchMovies(request: ServerHttpRequest): List<MovieRecord> {
         val params = request.queryParams.map { it.key to it.value.first() }.toMap()
         return when {
             params.isEmpty() -> newSuspendedTransaction(readOnly = true) {
-                movieRepository.findAll().map { it.toMovieDTO() }
+                movieRepository.findAll().map { it.toMovieRecord() }
             }
             else -> newSuspendedTransaction(readOnly = true) {
-                movieRepository.searchMovie(params).map { it.toMovieDTO() }
+                movieRepository.searchMovie(params).map { it.toMovieRecord() }
             }
         }
     }
 
     @PostMapping
-    suspend fun createMovie(@RequestBody movie: MovieDTO): MovieDTO =
+    suspend fun createMovie(@RequestBody movie: MovieRecord): MovieRecord =
         newSuspendedTransaction {
-            movieRepository.create(movie).toMovieDTO()
+            movieRepository.create(movie).toMovieRecord()
         }
 
     @DeleteMapping("/{id}")

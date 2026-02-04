@@ -2,7 +2,7 @@ package exposed.examples.jpa.ex01_simple
 
 import exposed.examples.jpa.ex01_simple.SimpleSchema.SimpleEntity
 import exposed.examples.jpa.ex01_simple.SimpleSchema.SimpleTable
-import exposed.examples.jpa.ex01_simple.SimpleSchema.toSimpleDTOs
+import exposed.examples.jpa.ex01_simple.SimpleSchema.toSimpleRecords
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
@@ -83,18 +83,18 @@ class Ex01_Simple_DSL: JdbcExposedTestBase() {
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `projection DTO`(testDB: TestDB) {
+    fun `projection Record`(testDB: TestDB) {
         withTables(testDB, SimpleTable) {
             persistSimpleEntities()
 
             val query = SimpleTable.selectAll()
 
-            // ResultRow 를 DTO 로 만든다.
-            val dtos = query.toSimpleDTOs()
-            dtos.forEach { dto ->
-                log.debug { "DTO=$dto" }
+            // ResultRow 를 Record 로 만든다.
+            val records = query.toSimpleRecords()
+            records.forEach { record ->
+                log.debug { "Record=$record" }
             }
-            dtos shouldHaveSize ENTITY_COUNT
+            records shouldHaveSize ENTITY_COUNT
         }
     }
 }

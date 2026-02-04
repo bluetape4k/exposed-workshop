@@ -1,6 +1,6 @@
 package exposed.examples.cache.coroutines.controller
 
-import exposed.examples.cache.coroutines.domain.model.UserEventDTO
+import exposed.examples.cache.coroutines.domain.model.UserEventRecord
 import exposed.examples.cache.coroutines.domain.repository.UserEventCacheRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -18,13 +18,13 @@ class UserEventController(
     companion object: KLoggingChannel()
 
     @PostMapping
-    suspend fun insert(@RequestBody userEvent: UserEventDTO): Boolean {
+    suspend fun insert(@RequestBody userEvent: UserEventRecord): Boolean {
         log.debug { "Inserting user event: $userEvent" }
         return repository.put(userEvent)
     }
 
     @PostMapping("/bulk")
-    suspend fun insertBulk(@RequestBody userEvents: List<UserEventDTO>): Boolean {
+    suspend fun insertBulk(@RequestBody userEvents: List<UserEventRecord>): Boolean {
         log.debug { "Inserting user events: $userEvents" }
         repository.putAll(userEvents)
         return true

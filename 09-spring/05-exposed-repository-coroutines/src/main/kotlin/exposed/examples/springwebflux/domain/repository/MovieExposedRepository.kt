@@ -1,17 +1,17 @@
 package exposed.examples.springwebflux.domain.repository
 
-import exposed.examples.springwebflux.domain.dtos.MovieActorCountDTO
-import exposed.examples.springwebflux.domain.dtos.MovieDTO
-import exposed.examples.springwebflux.domain.dtos.MovieWithActorDTO
-import exposed.examples.springwebflux.domain.dtos.MovieWithProducingActorDTO
+import exposed.examples.springwebflux.domain.model.MovieActorCountRecord
+import exposed.examples.springwebflux.domain.model.MovieRecord
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorInMovieTable
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorTable
 import exposed.examples.springwebflux.domain.model.MovieSchema.MovieEntity
 import exposed.examples.springwebflux.domain.model.MovieSchema.MovieTable
-import exposed.examples.springwebflux.domain.model.toActorDTO
-import exposed.examples.springwebflux.domain.model.toMovieDTO
-import exposed.examples.springwebflux.domain.model.toMovieWithActorDTO
-import exposed.examples.springwebflux.domain.model.toMovieWithProducingActorDTO
+import exposed.examples.springwebflux.domain.model.MovieWithActorRecord
+import exposed.examples.springwebflux.domain.model.MovieWithProducingActorRecord
+import exposed.examples.springwebflux.domain.model.toActorRecord
+import exposed.examples.springwebflux.domain.model.toMovieRecord
+import exposed.examples.springwebflux.domain.model.toMovieWithActorRecord
+import exposed.examples.springwebflux.domain.model.toMovieWithProducingActorRecord
 import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
 @Repository
-class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
+class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
 
     companion object: KLoggingChannel() {
         private val MovieActorJoin by lazy {
@@ -53,9 +53,9 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
     }
 
     override val table = MovieTable
-    override fun ResultRow.toEntity() = toMovieDTO()
+    override fun ResultRow.toEntity() = toMovieRecord()
 
-    fun searchMovie(params: Map<String, String?>): List<MovieDTO> {
+    fun searchMovie(params: Map<String, String?>): List<MovieRecord> {
         log.debug { "Search Movie by params. params: $params" }
 
         val query = MovieTable.selectAll()
@@ -76,7 +76,7 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
         return query.map { it.toEntity() }
     }
 
-    suspend fun create(movie: MovieDTO): MovieDTO {
+    suspend fun create(movie: MovieRecord): MovieRecord {
         log.debug { "Create Movie. movie: $movie" }
 
         val id = MovieTable.insertAndGetId {
@@ -105,7 +105,7 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
      *          INNER JOIN ACTORS ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID
      * ```
      */
-    suspend fun getAllMoviesWithActors(): List<MovieWithActorDTO> {
+    suspend fun getAllMoviesWithActors(): List<MovieWithActorRecord> {
         log.debug { "Get all movies with actors." }
 
         val join = table.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
@@ -123,15 +123,15 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
             )
             .groupBy { it[MovieTable.id] }
             .map { (_, rows) ->
-                val movie = rows.first().toMovieDTO()
-                val actor = rows.map { it.toActorDTO() }
+                val movie = rows.first().toMovieRecord()
+                val actor = rows.map { it.toActorRecord() }
 
-                movie.toMovieWithActorDTO(actor)
+                movie.toMovieWithActorRecord(actor)
             }
     }
 
     /**
-     * `movieId`에 해당하는 [MovieDTO] 와 출현한 [ActorDTO]들의 정보를 eager loading 으로 가져온다.
+     * `movieId`에 해당하는 [MovieRecord] 와 출현한 [ActorRecord]들의 정보를 eager loading 으로 가져온다.
      * ```sql
      * -- H2
      * SELECT MOVIES.ID, MOVIES."name", MOVIES.PRODUCER_NAME, MOVIES.RELEASE_DATE
@@ -148,9 +148,9 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
      *  WHERE ACTORS_IN_MOVIES.MOVIE_ID = 1
      * ```
      */
-    suspend fun getMovieWithActors(movieId: Long): MovieWithActorDTO? {
+    suspend fun getMovieWithActors(movieId: Long): MovieWithActorRecord? {
         log.debug { "Get Movie with actors. movieId=$movieId" }
-        return MovieEntity.findById(movieId)?.load(MovieEntity::actors)?.toMovieWithActorDTO()
+        return MovieEntity.findById(movieId)?.load(MovieEntity::actors)?.toMovieWithActorRecord()
     }
 
     /**
@@ -164,14 +164,14 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
      *  GROUP BY MOVIES.ID
      * ```
      */
-    suspend fun getMovieActorsCount(): List<MovieActorCountDTO> {
+    suspend fun getMovieActorsCount(): List<MovieActorCountRecord> {
         log.debug { "Get Movie actors count." }
 
         return MovieActorJoin
             .select(MovieTable.id, MovieTable.name, ActorTable.id.count())
             .groupBy(MovieTable.id)
             .map {
-                MovieActorCountDTO(
+                MovieActorCountRecord(
                     movieName = it[MovieTable.name],
                     actorCount = it[ActorTable.id.count()].toInt()
                 )
@@ -188,7 +188,7 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
      *          INNER JOIN ACTORS ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID AND (MOVIES.PRODUCER_NAME = ACTORS.FIRST_NAME)
      * ```
      */
-    suspend fun findMoviesWithActingProducers(): List<MovieWithProducingActorDTO> {
+    suspend fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
         log.debug { "Find movies with acting producers." }
 
         val query: Query = moviesWithActingProducersJoin
@@ -198,6 +198,6 @@ class MovieExposedRepository: ExposedRepository<MovieDTO, Long> {
                 ActorTable.lastName
             )
 
-        return query.map { it.toMovieWithProducingActorDTO() }
+        return query.map { it.toMovieWithProducingActorRecord() }
     }
 }

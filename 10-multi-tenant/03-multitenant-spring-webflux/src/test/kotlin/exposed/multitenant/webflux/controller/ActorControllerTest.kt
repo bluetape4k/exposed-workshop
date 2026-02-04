@@ -1,7 +1,7 @@
 package exposed.multitenant.webflux.controller
 
 import exposed.multitenant.webflux.AbstractMultitenantTest
-import exposed.multitenant.webflux.domain.dtos.ActorDTO
+import exposed.multitenant.webflux.domain.model.ActorRecord
 import exposed.multitenant.webflux.tenant.TenantFilter
 import exposed.multitenant.webflux.tenant.Tenants
 import io.bluetape4k.junit5.coroutines.runSuspendIO
@@ -34,7 +34,7 @@ class ActorControllerTest(
             .header(TenantFilter.TENANT_HEADER, tenant.id)
             .exchange()
             .expectStatus().is2xxSuccessful
-            .expectBodyList<ActorDTO>()
+            .expectBodyList<ActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -60,7 +60,7 @@ class ActorControllerTest(
             .header(TenantFilter.TENANT_HEADER, tenant.id)
             .exchange()
             .expectStatus().is2xxSuccessful
-            .returnResult<ActorDTO>().responseBody
+            .returnResult<ActorRecord>().responseBody
             .awaitSingle()
 
         log.debug { "Tenant: ${tenant.id}, Actor: $actor" }

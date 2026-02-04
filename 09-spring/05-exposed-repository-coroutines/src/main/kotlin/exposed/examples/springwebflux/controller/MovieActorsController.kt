@@ -1,8 +1,8 @@
 package exposed.examples.springwebflux.controller
 
-import exposed.examples.springwebflux.domain.dtos.MovieActorCountDTO
-import exposed.examples.springwebflux.domain.dtos.MovieWithActorDTO
-import exposed.examples.springwebflux.domain.dtos.MovieWithProducingActorDTO
+import exposed.examples.springwebflux.domain.model.MovieActorCountRecord
+import exposed.examples.springwebflux.domain.model.MovieWithActorRecord
+import exposed.examples.springwebflux.domain.model.MovieWithProducingActorRecord
 import exposed.examples.springwebflux.domain.repository.MovieExposedRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import kotlinx.coroutines.CoroutineScope
@@ -24,19 +24,19 @@ class MovieActorsController(
     companion object: KLoggingChannel()
 
     @GetMapping("/{movieId}")
-    suspend fun getMovieWithActors(@PathVariable movieId: Long): MovieWithActorDTO? =
+    suspend fun getMovieWithActors(@PathVariable movieId: Long): MovieWithActorRecord? =
         newSuspendedTransaction(readOnly = true) {
             movieRepository.getMovieWithActors(movieId)
         }
 
     @GetMapping("/count")
-    suspend fun getMovieActorsCount(): List<MovieActorCountDTO> =
+    suspend fun getMovieActorsCount(): List<MovieActorCountRecord> =
         newSuspendedTransaction(readOnly = true) {
             movieRepository.getMovieActorsCount()
         }
 
     @GetMapping("/acting-producers")
-    suspend fun findMoviesWithActingProducers(): List<MovieWithProducingActorDTO> =
+    suspend fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> =
         newSuspendedTransaction(readOnly = true) {
             movieRepository.findMoviesWithActingProducers()
         }

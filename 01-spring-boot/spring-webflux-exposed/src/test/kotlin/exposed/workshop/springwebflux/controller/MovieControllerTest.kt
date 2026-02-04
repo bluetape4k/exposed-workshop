@@ -1,7 +1,7 @@
 package exposed.workshop.springwebflux.controller
 
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
-import exposed.workshop.springwebflux.domain.MovieDTO
+import exposed.workshop.springwebflux.domain.model.MovieRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -24,7 +24,7 @@ class MovieControllerTest(
 ): AbstractSpringWebfluxTest() {
 
     companion object: KLoggingChannel() {
-        private fun newMovieDTO(): MovieDTO = MovieDTO(
+        private fun newMovieRecord(): MovieRecord = MovieRecord(
             name = faker.book().title(),
             producerName = faker.name().fullName(),
             releaseDate = faker.timeAndDate().birthday(20, 80).atTime(0, 0).toString()
@@ -38,7 +38,7 @@ class MovieControllerTest(
         val movie = client
             .httpGet("/movies/$id")
             .expectStatus().is2xxSuccessful
-            .returnResult<MovieDTO>().responseBody
+            .returnResult<MovieRecord>().responseBody
             .awaitSingle()
 
         log.debug { "movie=$movie" }
@@ -54,7 +54,7 @@ class MovieControllerTest(
         val movies = client
             .httpGet("/movies?producerName=$producerName")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<MovieDTO>()
+            .expectBodyList<MovieRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -63,12 +63,12 @@ class MovieControllerTest(
 
     @Test
     fun `create new movie`() = runSuspendIO {
-        val newMovie = newMovieDTO()
+        val newMovie = newMovieRecord()
 
         val saved = client
             .httpPost("/movies", newMovie)
             .expectStatus().is2xxSuccessful
-            .returnResult<MovieDTO>().responseBody
+            .returnResult<MovieRecord>().responseBody
             .awaitSingle()
 
         log.debug { "saved=$saved" }
@@ -77,12 +77,12 @@ class MovieControllerTest(
 
     @Test
     fun `delete movie`() = runSuspendIO {
-        val newMovie = newMovieDTO()
+        val newMovie = newMovieRecord()
 
         val saved = client
             .httpPost("/movies", newMovie)
             .expectStatus().is2xxSuccessful
-            .returnResult<MovieDTO>().responseBody
+            .returnResult<MovieRecord>().responseBody
             .awaitSingle()
 
         val deletedCount = client

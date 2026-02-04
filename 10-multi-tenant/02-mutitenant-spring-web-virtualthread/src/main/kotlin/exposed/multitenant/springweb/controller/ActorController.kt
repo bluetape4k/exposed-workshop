@@ -1,6 +1,6 @@
 package exposed.multitenant.springweb.controller
 
-import exposed.multitenant.springweb.domain.dtos.ActorDTO
+import exposed.multitenant.springweb.domain.dtos.ActorRecord
 import exposed.multitenant.springweb.domain.repository.ActorExposedRepository
 import io.bluetape4k.logging.KLogging
 import org.springframework.transaction.annotation.Transactional
@@ -20,13 +20,13 @@ class ActorController(
 
     @GetMapping
     @Transactional(readOnly = true)
-    fun getAllActors(): List<ActorDTO> {
+    fun getAllActors(): List<ActorRecord> {
         return actorRepository.findAll()
     }
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
-    fun findById(@PathVariable id: Long): ActorDTO? {
+    fun findById(@PathVariable id: Long): ActorRecord? {
         return actorRepository.findByIdOrNull(id)
     }
 }

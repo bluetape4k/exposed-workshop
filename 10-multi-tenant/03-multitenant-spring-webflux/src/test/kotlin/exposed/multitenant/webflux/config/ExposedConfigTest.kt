@@ -1,11 +1,11 @@
 package exposed.multitenant.webflux.config
 
 import exposed.multitenant.webflux.AbstractMultitenantTest
-import exposed.multitenant.webflux.domain.model.toActorDTO
+import exposed.multitenant.webflux.domain.model.toActorRecord
 import exposed.multitenant.webflux.domain.repository.ActorExposedRepository
 import exposed.multitenant.webflux.tenant.Tenants
 import exposed.multitenant.webflux.tenant.newSuspendedTransactionWithTenant
-import exposed.shared.repository.MovieSchema.ActorTable
+import exposed.shared.repository.model.MovieSchema.ActorTable
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -34,7 +34,7 @@ class ExposedConfigTest: AbstractMultitenantTest() {
     @EnumSource(Tenants.Tenant::class)
     fun `load all actors by tenant`(tenant: Tenants.Tenant) = runSuspendIO {
         newSuspendedTransactionWithTenant(tenant) {
-            val actors = ActorTable.selectAll().map { it.toActorDTO() }
+            val actors = ActorTable.selectAll().map { it.toActorRecord() }
             actors.shouldNotBeEmpty()
 
             actors.forEach { actor ->

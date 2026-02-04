@@ -1,9 +1,9 @@
 package exposed.examples.springmvc.controller
 
 import exposed.examples.springmvc.AbstractExposedRepositoryTest
-import exposed.examples.springmvc.domain.dtos.MovieActorCountDTO
-import exposed.examples.springmvc.domain.dtos.MovieWithActorDTO
-import exposed.examples.springmvc.domain.dtos.MovieWithProducingActorDTO
+import exposed.examples.springmvc.domain.model.MovieActorCountRecord
+import exposed.examples.springmvc.domain.model.MovieWithActorRecord
+import exposed.examples.springmvc.domain.model.MovieWithProducingActorRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -31,7 +31,7 @@ class MovieActorControllerTest(
         val movieWithActors = client
             .httpGet("/movie-actors/$movieId")
             .expectStatus().is2xxSuccessful
-            .returnResult<MovieWithActorDTO>().responseBody
+            .returnResult<MovieWithActorRecord>().responseBody
             .awaitSingle()
 
         log.debug { "movieWithActors[$movieId]=$movieWithActors" }
@@ -45,7 +45,7 @@ class MovieActorControllerTest(
         val movieActorCounts = client
             .httpGet("/movie-actors/count")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<MovieActorCountDTO>()
+            .expectBodyList<MovieActorCountRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -60,7 +60,7 @@ class MovieActorControllerTest(
         val movieWithProducers = client
             .httpGet("/movie-actors/acting-producers")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<MovieWithProducingActorDTO>()
+            .expectBodyList<MovieWithProducingActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 

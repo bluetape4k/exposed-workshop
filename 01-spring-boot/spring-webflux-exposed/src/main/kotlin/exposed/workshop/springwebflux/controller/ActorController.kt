@@ -1,8 +1,8 @@
 package exposed.workshop.springwebflux.controller
 
-import exposed.workshop.springwebflux.domain.ActorDTO
+import exposed.workshop.springwebflux.domain.model.ActorRecord
+import exposed.workshop.springwebflux.domain.model.toActorRecord
 import exposed.workshop.springwebflux.domain.repository.ActorRepository
-import exposed.workshop.springwebflux.domain.toActorDTO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.CoroutineScope
@@ -27,19 +27,19 @@ class ActorController(
     companion object: KLoggingChannel()
 
     @GetMapping("/{id}")
-    suspend fun getActorById(@PathVariable("id") actorId: Long): ActorDTO? {
+    suspend fun getActorById(@PathVariable("id") actorId: Long): ActorRecord? {
         return newSuspendedTransaction(readOnly = true) {
             log.debug { "current transaction=$this" }
-            actorRepository.findById(actorId)?.toActorDTO()
+            actorRepository.findById(actorId)?.toActorRecord()
         }
     }
 
     @GetMapping
-    suspend fun searchActors(request: ServerHttpRequest): List<ActorDTO> {
+    suspend fun searchActors(request: ServerHttpRequest): List<ActorRecord> {
         val params = request.queryParams.map { it.key to it.value.first() }.toMap()
         return when {
             params.isEmpty() -> newSuspendedTransaction(readOnly = true) {
-                actorRepository.findAll().map { it.toActorDTO() }
+                actorRepository.findAll().map { it.toActorRecord() }
             }
             else -> newSuspendedTransaction(readOnly = true) {
                 actorRepository.searchActor(params)
@@ -48,9 +48,9 @@ class ActorController(
     }
 
     @PostMapping
-    suspend fun createActor(@RequestBody actor: ActorDTO): ActorDTO =
+    suspend fun createActor(@RequestBody actor: ActorRecord): ActorRecord =
         newSuspendedTransaction {
-            actorRepository.create(actor).toActorDTO()
+            actorRepository.create(actor).toActorRecord()
         }
 
     @DeleteMapping("/{id}")

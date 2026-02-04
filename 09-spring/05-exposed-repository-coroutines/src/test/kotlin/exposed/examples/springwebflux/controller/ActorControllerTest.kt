@@ -1,7 +1,7 @@
 package exposed.examples.springwebflux.controller
 
 import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
-import exposed.examples.springwebflux.domain.dtos.ActorDTO
+import exposed.examples.springwebflux.domain.model.ActorRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -23,7 +23,7 @@ class ActorControllerTest(
 ): AbstractCoroutineExposedRepositoryTest() {
 
     companion object: KLoggingChannel() {
-        fun newActorDTO() = ActorDTO(
+        fun newActorRecord() = ActorRecord(
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             birthday = faker.timeAndDate().birthday(20, 80).toString()
@@ -37,7 +37,7 @@ class ActorControllerTest(
         val angelinas = client
             .httpGet("/actors?firstName=$firstName")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<ActorDTO>()
+            .expectBodyList<ActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -47,12 +47,12 @@ class ActorControllerTest(
 
     @Test
     fun `create new actor`() = runSuspendIO {
-        val actor = newActorDTO()
+        val actor = newActorRecord()
 
         val newActor = client
             .httpPost("/actors", actor)
             .expectStatus().is2xxSuccessful
-            .returnResult<ActorDTO>().responseBody
+            .returnResult<ActorRecord>().responseBody
             .awaitSingle()
 
         log.debug { "newActor=$newActor" }
@@ -63,12 +63,12 @@ class ActorControllerTest(
 
     @Test
     fun `delete actor`() = runSuspendIO {
-        val actor = newActorDTO()
+        val actor = newActorRecord()
 
         val newActor = client
             .httpPost("/actors", actor)
             .expectStatus().is2xxSuccessful
-            .returnResult<ActorDTO>().responseBody
+            .returnResult<ActorRecord>().responseBody
             .awaitSingle()
 
         log.debug { "newActor=$newActor" }

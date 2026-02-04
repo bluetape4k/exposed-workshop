@@ -1,8 +1,8 @@
 package exposed.workshop.springwebflux.domain.repository
 
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
-import exposed.workshop.springwebflux.domain.MovieDTO
-import exposed.workshop.springwebflux.domain.toMovieDTO
+import exposed.workshop.springwebflux.domain.model.MovieRecord
+import exposed.workshop.springwebflux.domain.model.toMovieRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -20,7 +20,7 @@ class MovieRepositoryTest(
 ): AbstractSpringWebfluxTest() {
 
     companion object: KLoggingChannel() {
-        private fun newMovieDTO() = MovieDTO(
+        private fun newMovieRecord() = MovieRecord(
             name = faker.book().title(),
             producerName = faker.name().fullName(),
             releaseDate = faker.timeAndDate().birthday(20, 80).atTime(0, 0).toString()
@@ -33,7 +33,7 @@ class MovieRepositoryTest(
 
         val movie = newSuspendedTransaction(readOnly = true) {
             movieRepository.findById(movieId)
-        }?.toMovieDTO()
+        }?.toMovieRecord()
 
         log.debug { "movie: $movie" }
         movie.shouldNotBeNull()
@@ -47,8 +47,8 @@ class MovieRepositoryTest(
      *  WHERE MOVIES.PRODUCER_NAME = 'Johnny'
      * ```
      * ```
-     * MovieDTO(name=Gladiator, producerName=Johnny, releaseDate=2000-05-01T00:00, id=1)
-     * MovieDTO(name=Guardians of the galaxy, producerName=Johnny, releaseDate=2014-07-21T00:00, id=2)
+     * MovieRecord(name=Gladiator, producerName=Johnny, releaseDate=2000-05-01T00:00, id=1)
+     * MovieRecord(name=Guardians of the galaxy, producerName=Johnny, releaseDate=2014-07-21T00:00, id=2)
      * ```
      */
     @Test
@@ -57,7 +57,7 @@ class MovieRepositoryTest(
 
         val movies = newSuspendedTransaction(readOnly = true) {
             movieRepository.searchMovie(params)
-        }.map { it.toMovieDTO() }
+        }.map { it.toMovieRecord() }
 
         movies.forEach {
             log.debug { "movie: $it" }
@@ -70,8 +70,8 @@ class MovieRepositoryTest(
         newSuspendedTransaction {
             val prevCount = movieRepository.count()
 
-            val newMovie = newMovieDTO()
-            val saved = movieRepository.create(newMovie).toMovieDTO()
+            val newMovie = newMovieRecord()
+            val saved = movieRepository.create(newMovie).toMovieRecord()
 
             saved.shouldNotBeNull()
             saved shouldBeEqualTo newMovie.copy(id = saved.id)
@@ -83,8 +83,8 @@ class MovieRepositoryTest(
     @Test
     fun `delete movie`() = runSuspendIO {
         newSuspendedTransaction {
-            val newMovie = newMovieDTO()
-            val saved = movieRepository.create(newMovie).toMovieDTO()
+            val newMovie = newMovieRecord()
+            val saved = movieRepository.create(newMovie).toMovieRecord()
 
             val prevCount = movieRepository.count()
 

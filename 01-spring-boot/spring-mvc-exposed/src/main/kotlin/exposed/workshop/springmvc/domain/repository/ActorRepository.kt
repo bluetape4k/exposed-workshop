@@ -1,8 +1,8 @@
 package exposed.workshop.springmvc.domain.repository
 
-import exposed.workshop.springmvc.domain.ActorDTO
-import exposed.workshop.springmvc.domain.MovieSchema.ActorTable
-import exposed.workshop.springmvc.domain.toActorDTO
+import exposed.workshop.springmvc.domain.model.ActorRecord
+import exposed.workshop.springmvc.domain.model.MovieSchema.ActorTable
+import exposed.workshop.springmvc.domain.model.toActorRecord
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.eq
@@ -21,19 +21,19 @@ class ActorRepository {
 
     companion object: KLogging()
 
-    fun findById(actorId: Long): ActorDTO? {
+    fun findById(actorId: Long): ActorRecord? {
         log.debug { "Find Actor by id. id: $actorId" }
 
         return ActorTable.selectAll()
             .where { ActorTable.id eq actorId }
             .firstOrNull()
-            ?.toActorDTO()
+            ?.toActorRecord()
 
         // Entity로 조회하는 방법
-        // ActorEntity.findById(actorId)?.toActorDTO()
+        // ActorEntity.findById(actorId)?.toActorRecord()
     }
 
-    fun searchActors(params: Map<String, String?>): List<ActorDTO> {
+    fun searchActors(params: Map<String, String?>): List<ActorRecord> {
         val query: Query = ActorTable.selectAll()
 
         params.forEach { (key, value) ->
@@ -45,11 +45,11 @@ class ActorRepository {
             }
         }
 
-        return query.map { it.toActorDTO() }
+        return query.map { it.toActorRecord() }
     }
 
     @Transactional
-    fun create(actor: ActorDTO): ActorDTO {
+    fun create(actor: ActorRecord): ActorRecord {
         log.debug { "Create Actor. actor: $actor" }
 
         val actorId = ActorTable.insertAndGetId {

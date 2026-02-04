@@ -1,9 +1,9 @@
 package exposed.examples.cache.coroutines.controller
 
 import exposed.examples.cache.coroutines.AbstractCacheStrategyTest
-import exposed.examples.cache.coroutines.domain.model.UserDTO
+import exposed.examples.cache.coroutines.domain.model.UserRecord
 import exposed.examples.cache.coroutines.domain.model.UserTable
-import exposed.examples.cache.coroutines.domain.model.newUserDTO
+import exposed.examples.cache.coroutines.domain.model.newUserRecord
 import exposed.examples.cache.coroutines.domain.repository.UserCacheRepository
 import io.bluetape4k.exposed.core.statements.api.toExposedBlob
 import io.bluetape4k.junit5.coroutines.runSuspendIO
@@ -77,7 +77,7 @@ class UserControllerTest(
         val users = client
             .httpGet("/users")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<UserDTO>()
+            .expectBodyList<UserRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -90,7 +90,7 @@ class UserControllerTest(
             val user = client
                 .httpGet("/users/$userId")
                 .expectStatus().is2xxSuccessful
-                .returnResult<UserDTO>().responseBody
+                .returnResult<UserRecord>().responseBody
                 .awaitSingle()
 
             user.id shouldBeEqualTo userId
@@ -105,7 +105,7 @@ class UserControllerTest(
         val users = client
             .httpGet("/users/all?ids=${userIds.joinToString(",")}")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<UserDTO>()
+            .expectBodyList<UserRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -115,14 +115,14 @@ class UserControllerTest(
 
     @Test
     fun `새로운 User를 write through 로 저장하기`() = runSuspendIO {
-        val userDTO = newUserDTO(Random.nextLong(1000L, 9999L))
+        val newUser = newUserRecord(Random.nextLong(1000L, 9999L))
         val user = client
-            .httpPost("/users", userDTO)
+            .httpPost("/users", newUser)
             .expectStatus().is2xxSuccessful
-            .returnResult<UserDTO>().responseBody
+            .returnResult<UserRecord>().responseBody
             .awaitSingle()
 
-        user.id shouldBeEqualTo userDTO.id
+        user.id shouldBeEqualTo newUser.id
     }
 
     @Test

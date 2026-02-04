@@ -2,7 +2,9 @@ package alternatives.hibernate.reactive.example.domain.dto
 
 import java.io.Serializable
 
-data class TeamDTO(
+data class TeamRecord(
     val id: Long,
     val name: String,
-): Serializable 
+): Serializable {
+    fun withId(id: Long) = copy(id = id)
+}

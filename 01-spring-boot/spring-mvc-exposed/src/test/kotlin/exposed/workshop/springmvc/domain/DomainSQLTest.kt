@@ -1,7 +1,8 @@
 package exposed.workshop.springmvc.domain
 
 import exposed.workshop.springmvc.AbstractSpringMvcTest
-import exposed.workshop.springmvc.domain.MovieSchema.ActorTable
+import exposed.workshop.springmvc.domain.model.MovieSchema.ActorTable
+import exposed.workshop.springmvc.domain.model.toActorRecord
 import io.bluetape4k.concurrent.virtualthread.virtualFuture
 import io.bluetape4k.junit5.concurrency.MultithreadingTester
 import io.bluetape4k.junit5.concurrency.StructuredTaskScopeTester
@@ -28,7 +29,7 @@ class DomainSQLTest: AbstractSpringMvcTest() {
         @Transactional(readOnly = true)
         @RepeatedTest(REPEAT_SIZE)
         open fun `get all actors`() {
-            val actors = ActorTable.selectAll().map { it.toActorDTO() }
+            val actors = ActorTable.selectAll().map { it.toActorRecord() }
             actors.shouldNotBeEmpty()
         }
 
@@ -39,7 +40,7 @@ class DomainSQLTest: AbstractSpringMvcTest() {
                 .roundsPerThread(4)
                 .add {
                     transaction {
-                        val actors = ActorTable.selectAll().map { it.toActorDTO() }
+                        val actors = ActorTable.selectAll().map { it.toActorRecord() }
                         actors.shouldNotBeEmpty()
                     }
                 }
@@ -58,7 +59,7 @@ class DomainSQLTest: AbstractSpringMvcTest() {
         open fun `get all actors`() {
             virtualFuture {
                 transaction {
-                    val actors = ActorTable.selectAll().map { it.toActorDTO() }
+                    val actors = ActorTable.selectAll().map { it.toActorRecord() }
                     actors.shouldNotBeEmpty()
                 }
             }.await()
@@ -73,7 +74,7 @@ class DomainSQLTest: AbstractSpringMvcTest() {
                 .roundsPerTask(Runtime.getRuntime().availableProcessors() * 8)
                 .add {
                     transaction {
-                        val actors = ActorTable.selectAll().map { it.toActorDTO() }
+                        val actors = ActorTable.selectAll().map { it.toActorRecord() }
                         actors.shouldNotBeEmpty()
                     }
                 }

@@ -1,6 +1,6 @@
 package exposed.examples.cache.coroutines.controller
 
-import exposed.examples.cache.coroutines.domain.model.UserCredentialsDTO
+import exposed.examples.cache.coroutines.domain.model.UserCredentialsRecord
 import exposed.examples.cache.coroutines.domain.repository.UserCredentialsCacheRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -19,19 +19,19 @@ class UserCredentialsController(private val repository: UserCredentialsCacheRepo
     companion object: KLoggingChannel()
 
     @GetMapping
-    suspend fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserCredentialsDTO> {
+    suspend fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserCredentialsRecord> {
         log.debug { "Finding all user credentials with limit: $limit" }
         return repository.findAll(limit = limit)
     }
 
     @GetMapping("/{id}")
-    suspend fun get(@PathVariable(name = "id") id: String): UserCredentialsDTO? {
+    suspend fun get(@PathVariable(name = "id") id: String): UserCredentialsRecord? {
         log.debug { "Getting user credentials with id: $id" }
         return repository.get(id)
     }
 
     @GetMapping("/all")
-    suspend fun getAll(@RequestParam(name = "ids") ids: List<String>): List<UserCredentialsDTO> {
+    suspend fun getAll(@RequestParam(name = "ids") ids: List<String>): List<UserCredentialsRecord> {
         log.debug { "Getting all user credentials with ids: $ids" }
         return repository.getAll(ids)
     }

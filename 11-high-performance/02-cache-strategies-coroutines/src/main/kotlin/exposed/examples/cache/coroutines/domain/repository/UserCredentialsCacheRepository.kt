@@ -1,8 +1,8 @@
 package exposed.examples.cache.coroutines.domain.repository
 
-import exposed.examples.cache.coroutines.domain.model.UserCredentialsDTO
+import exposed.examples.cache.coroutines.domain.model.UserCredentialsRecord
 import exposed.examples.cache.coroutines.domain.model.UserCredentialsTable
-import exposed.examples.cache.coroutines.domain.model.toUserCredentialsDTO
+import exposed.examples.cache.coroutines.domain.model.toUserCredentialsRecord
 import io.bluetape4k.exposed.redisson.repository.AbstractSuspendedExposedCacheRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.redis.redisson.cache.RedisCacheConfig
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class UserCredentialsCacheRepository(
     redissonClient: RedissonClient,
-): AbstractSuspendedExposedCacheRepository<UserCredentialsDTO, String>(
+): AbstractSuspendedExposedCacheRepository<UserCredentialsRecord, String>(
     redissonClient = redissonClient,
     cacheName = "exposed:coroutines:user-credentials",
     config = RedisCacheConfig.READ_ONLY_WITH_NEAR_CACHE,
@@ -25,7 +25,7 @@ class UserCredentialsCacheRepository(
     companion object: KLoggingChannel()
 
     override val entityTable = UserCredentialsTable
-    override fun ResultRow.toEntity() = toUserCredentialsDTO()
+    override fun ResultRow.toEntity() = toUserCredentialsRecord()
 
     // READ-ONLY 이므로, doUpdateEntity, doInsertEntity 를 구현하지 않습니다.
 }

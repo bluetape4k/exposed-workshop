@@ -1,8 +1,8 @@
 package alternative.hibernate.reactive.example.controller
 
 import alternative.hibernate.reactive.example.AbstractHibernateReactiveTest
-import alternatives.hibernate.reactive.example.domain.dto.MemberAndTeamDTO
-import alternatives.hibernate.reactive.example.domain.dto.MemberDTO
+import alternatives.hibernate.reactive.example.domain.dto.MemberAndTeamRecord
+import alternatives.hibernate.reactive.example.domain.dto.MemberRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -28,7 +28,7 @@ class MemberControllerTest(
         val members = client
             .httpGet("/members")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<MemberDTO>()
+            .expectBodyList<MemberRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -45,7 +45,7 @@ class MemberControllerTest(
         val member = client
             .httpGet("/members/$memberId")
             .expectStatus().is2xxSuccessful
-            .returnResult<MemberDTO>().responseBody
+            .returnResult<MemberRecord>().responseBody
             .awaitSingle()
 
         log.debug { "Member[1]: $member" }
@@ -60,7 +60,7 @@ class MemberControllerTest(
         val member = client
             .httpGet("/members/$memberId/team")
             .expectStatus().is2xxSuccessful
-            .returnResult<MemberAndTeamDTO>().responseBody
+            .returnResult<MemberAndTeamRecord>().responseBody
             .awaitSingle()
 
         log.debug { "Member[1]: $member" }

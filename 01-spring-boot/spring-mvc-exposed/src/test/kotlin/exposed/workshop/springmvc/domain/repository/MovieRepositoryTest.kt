@@ -1,8 +1,8 @@
 package exposed.workshop.springmvc.domain.repository
 
 import exposed.workshop.springmvc.AbstractSpringMvcTest
-import exposed.workshop.springmvc.domain.MovieDTO
-import exposed.workshop.springmvc.domain.MovieSchema.MovieTable
+import exposed.workshop.springmvc.domain.model.MovieRecord
+import exposed.workshop.springmvc.domain.model.MovieSchema.MovieTable
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -20,7 +20,7 @@ class MovieRepositoryTest(
 ): AbstractSpringMvcTest() {
 
     companion object: KLogging() {
-        private fun newMovieDTO(): MovieDTO = MovieDTO(
+        private fun newMovieRecord(): MovieRecord = MovieRecord(
             name = faker.book().title(),
             producerName = faker.name().fullName(),
             releaseDate = faker.timeAndDate().birthday(20, 80).toString()
@@ -52,7 +52,7 @@ class MovieRepositoryTest(
     @Test
     @Transactional
     fun `create movie`() {
-        val movie = newMovieDTO()
+        val movie = newMovieRecord()
 
         val currentCount = MovieTable.selectAll().count()
 
@@ -66,7 +66,7 @@ class MovieRepositoryTest(
     @Test
     @Transactional
     fun `delete movie`() {
-        val newMovie = newMovieDTO()
+        val newMovie = newMovieRecord()
         val saved = movieRepo.create(newMovie)
 
         val deletedCount = movieRepo.deleteById(saved.id)

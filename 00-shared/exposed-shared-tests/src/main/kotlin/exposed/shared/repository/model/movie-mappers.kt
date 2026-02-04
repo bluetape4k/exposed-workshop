@@ -1,36 +1,34 @@
-package exposed.shared.repository
+package exposed.shared.repository.model
 
 
-import exposed.shared.repository.MovieSchema.ActorEntity
-import exposed.shared.repository.MovieSchema.ActorTable
-import exposed.shared.repository.MovieSchema.MovieEntity
-import exposed.shared.repository.MovieSchema.MovieTable
+import exposed.shared.repository.model.MovieSchema.ActorTable
+import exposed.shared.repository.model.MovieSchema.MovieTable
 import io.bluetape4k.collections.eclipse.toFastList
 import org.jetbrains.exposed.v1.core.ResultRow
 
 
-fun ResultRow.toActorDTO() = ActorDTO(
+fun ResultRow.toActorRecord() = ActorRecord(
     id = this[ActorTable.id].value,
     firstName = this[ActorTable.firstName],
     lastName = this[ActorTable.lastName],
     birthday = this[ActorTable.birthday]?.toString()
 )
 
-fun ActorEntity.toActorDTO() = ActorDTO(
+fun MovieSchema.ActorEntity.toActorRecord() = ActorRecord(
     id = this.id.value,
     firstName = this.firstName,
     lastName = this.lastName,
     birthday = this.birthday?.toString()
 )
 
-fun ResultRow.toMovieDTO() = MovieDTO(
-    name = this[MovieSchema.MovieTable.name],
-    producerName = this[MovieSchema.MovieTable.producerName],
-    releaseDate = this[MovieSchema.MovieTable.releaseDate].toString(),
-    id = this[MovieSchema.MovieTable.id].value
+fun ResultRow.toMovieRecord() = MovieRecord(
+    name = this[MovieTable.name],
+    producerName = this[MovieTable.producerName],
+    releaseDate = this[MovieTable.releaseDate].toString(),
+    id = this[MovieTable.id].value
 )
 
-fun ResultRow.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
+fun ResultRow.toMovieWithActorRecord(actors: List<ActorRecord>) = MovieWithActorRecord(
     name = this[MovieTable.name],
     producerName = this[MovieTable.producerName],
     releaseDate = this[MovieTable.releaseDate].toString(),
@@ -38,7 +36,7 @@ fun ResultRow.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
     id = this[MovieTable.id].value
 )
 
-fun MovieDTO.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
+fun MovieRecord.toMovieWithActorRecord(actors: List<ActorRecord>) = MovieWithActorRecord(
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate,
@@ -46,23 +44,23 @@ fun MovieDTO.toMovieWithActorDTO(actors: List<ActorDTO>) = MovieWithActorDTO(
     id = this.id
 )
 
-fun MovieEntity.toMovieDTO() = MovieDTO(
+fun MovieSchema.MovieEntity.toMovieRecord() = MovieRecord(
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate.toString(),
     id = this.id.value
 )
 
-fun MovieEntity.toMovieWithActorDTO() = MovieWithActorDTO(
+fun MovieSchema.MovieEntity.toMovieWithActorRecord() = MovieWithActorRecord(
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate.toString(),
-    actors = this.actors.map { it.toActorDTO() }.toFastList(),
+    actors = this.actors.map { it.toActorRecord() }.toFastList(),
     id = this.id.value
 )
 
 
-fun ResultRow.toMovieWithProducingActorDTO() = MovieWithProducingActorDTO(
+fun ResultRow.toMovieWithProducingActorRecord() = MovieWithProducingActorRecord(
     movieName = this[MovieTable.name],
     producerActorName = this[ActorTable.firstName] + " " + this[ActorTable.lastName]
 )

@@ -1,7 +1,7 @@
 package exposed.examples.springwebflux.domain.repository
 
 import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
-import exposed.examples.springwebflux.domain.dtos.ActorDTO
+import exposed.examples.springwebflux.domain.model.ActorRecord
 import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -19,7 +19,7 @@ class ActorRepositoryTest(
 ): AbstractCoroutineExposedRepositoryTest() {
 
     companion object: KLoggingChannel() {
-        fun newActorDTO() = ActorDTO(
+        fun newActorRecord() = ActorRecord(
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             birthday = faker.timeAndDate().birthday(20, 80).toString()
@@ -84,7 +84,7 @@ class ActorRepositoryTest(
         newSuspendedTransaction {
             val prevCount = actorRepository.count()
 
-            val actor = newActorDTO()
+            val actor = newActorRecord()
 
             val savedActor = actorRepository.create(actor)
             savedActor shouldBeEqualTo actor.copy(id = savedActor.id)
@@ -99,7 +99,7 @@ class ActorRepositoryTest(
     @Test
     fun `delete actor by id`() = runSuspendIO {
         newSuspendedTransaction {
-            val actor = newActorDTO()
+            val actor = newActorRecord()
             val savedActor = actorRepository.create(actor)
             savedActor.shouldNotBeNull()
             savedActor.id.shouldNotBeNull()

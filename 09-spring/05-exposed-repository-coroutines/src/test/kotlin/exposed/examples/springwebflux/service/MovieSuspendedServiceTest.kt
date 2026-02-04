@@ -1,7 +1,7 @@
 package exposed.examples.springwebflux.service
 
 import exposed.examples.springwebflux.AbstractCoroutineExposedRepositoryTest
-import exposed.examples.springwebflux.domain.dtos.MovieDTO
+import exposed.examples.springwebflux.domain.model.MovieRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -16,7 +16,7 @@ class MovieSuspendedServiceTest(
 ): AbstractCoroutineExposedRepositoryTest() {
 
     companion object: KLoggingChannel() {
-        private fun newMovieDTO() = MovieDTO(
+        private fun newMovieRecord() = MovieRecord(
             name = faker.book().title(),
             producerName = faker.name().fullName(),
             releaseDate = faker.timeAndDate().birthday(20, 80).toString()
@@ -28,7 +28,7 @@ class MovieSuspendedServiceTest(
         log.debug { "suspend 함수는 newSuspendedTransaction 함수를 사용하면 Transaction이 적용된다." }
 
         newSuspendedTransaction(coroutineContext) {
-            val movie = newMovieDTO()
+            val movie = newMovieRecord()
             val savedMovie = movieService.suspendedSave(movie)
             log.debug { "saved movie: $savedMovie" }
             savedMovie shouldBeEqualTo movie.copy(id = savedMovie.id)

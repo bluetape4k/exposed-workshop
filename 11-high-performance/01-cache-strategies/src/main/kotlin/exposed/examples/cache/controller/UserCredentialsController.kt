@@ -1,6 +1,6 @@
 package exposed.examples.cache.controller
 
-import exposed.examples.cache.domain.model.UserCredentialsDTO
+import exposed.examples.cache.domain.model.UserCredentialsRecord
 import exposed.examples.cache.domain.repository.UserCredentialsCacheRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -19,7 +19,7 @@ class UserCredentialsController(private val repository: UserCredentialsCacheRepo
     companion object: KLoggingChannel()
 
     @GetMapping
-    fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserCredentialsDTO> {
+    fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserCredentialsRecord> {
         log.debug { "Finding all user credentials with limit: $limit" }
         return transaction {
             repository.findAll(limit = limit)
@@ -27,7 +27,7 @@ class UserCredentialsController(private val repository: UserCredentialsCacheRepo
     }
 
     @GetMapping("/{id}")
-    fun get(@PathVariable(name = "id") id: String): UserCredentialsDTO? {
+    fun get(@PathVariable(name = "id") id: String): UserCredentialsRecord? {
         log.debug { "Getting user credentials with id: $id" }
         return transaction {
             repository.get(id)
@@ -35,7 +35,7 @@ class UserCredentialsController(private val repository: UserCredentialsCacheRepo
     }
 
     @GetMapping("/all")
-    fun getAll(@RequestParam(name = "ids") ids: List<String>): List<UserCredentialsDTO> {
+    fun getAll(@RequestParam(name = "ids") ids: List<String>): List<UserCredentialsRecord> {
         log.debug { "Getting all user credentials with ids: $ids" }
         return transaction {
             repository.getAll(ids)

@@ -70,7 +70,7 @@ class UserEntity(id: EntityID<Long>): LongEntity(id) {
         .toString()
 }
 
-data class UserDTO(
+data class UserRecord(
     override val id: Long = 0L,
     val username: String,
     val firstName: String,
@@ -82,9 +82,10 @@ data class UserDTO(
     val updatedAt: Instant? = null,
 ): HasIdentifier<Long> {
     var avatar: ByteArray? = null
+    fun withId(id: Long) = copy(id = id)
 }
 
-fun ResultRow.toUserDTO() = UserDTO(
+fun ResultRow.toUserRecord() = UserRecord(
     id = this[UserTable.id].value,
     username = this[UserTable.username],
     firstName = this[UserTable.firstName],
@@ -98,7 +99,7 @@ fun ResultRow.toUserDTO() = UserDTO(
     it.avatar = this[UserTable.avatar]?.bytes
 }
 
-fun UserEntity.toUserDTO() = UserDTO(
+fun UserEntity.toUserRecord() = UserRecord(
     id = this.id.value,
     username = this.username,
     firstName = this.firstName,
@@ -112,7 +113,7 @@ fun UserEntity.toUserDTO() = UserDTO(
     it.avatar = this.avatar?.bytes
 }
 
-fun newUserDTO(newId: Long = 0L) = UserDTO(
+fun newUserRecord(newId: Long = 0L) = UserRecord(
     id = newId,
     username = faker.credentials().username() + "." + Base58.randomString(4),
     firstName = faker.name().firstName(),

@@ -1,22 +1,22 @@
 package alternatives.hibernate.reactive.example.domain.mapper
 
-import alternatives.hibernate.reactive.example.domain.dto.MemberAndTeamDTO
-import alternatives.hibernate.reactive.example.domain.dto.MemberDTO
-import alternatives.hibernate.reactive.example.domain.dto.TeamAndMemberDTO
-import alternatives.hibernate.reactive.example.domain.dto.TeamDTO
+import alternatives.hibernate.reactive.example.domain.dto.MemberAndTeamRecord
+import alternatives.hibernate.reactive.example.domain.dto.MemberRecord
+import alternatives.hibernate.reactive.example.domain.dto.TeamAndMemberRecord
+import alternatives.hibernate.reactive.example.domain.dto.TeamRecord
 import alternatives.hibernate.reactive.example.domain.model.Member
 import alternatives.hibernate.reactive.example.domain.model.Team
 
-fun Member.toDto() = MemberDTO(this)
-fun Member.toMemberAndTeamDTO() = MemberAndTeamDTO(this)
+fun Member.toRecord() = MemberRecord(this)
+fun Member.toMemberAndTeamRecord() = MemberAndTeamRecord(this)
 
-fun Team.toDto() = TeamDTO(
+fun Team.toRecord() = TeamRecord(
     id = this.id,
     name = this.name
 )
 
-fun Team.toTeamAndMemberDTO() = TeamAndMemberDTO(
+fun Team.toTeamAndMemberRecord() = TeamAndMemberRecord(
     teamId = this.id,
     teamName = this.name,
-    members = this.members.map { it.toDto() }
+    members = this.members.map { it.toRecord() }
 )

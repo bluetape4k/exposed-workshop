@@ -2,7 +2,7 @@ package exposed.examples.cache.coroutines.controller
 
 
 import exposed.examples.cache.coroutines.AbstractCacheStrategyTest
-import exposed.examples.cache.coroutines.domain.model.UserCredentialsDTO
+import exposed.examples.cache.coroutines.domain.model.UserCredentialsRecord
 import exposed.examples.cache.coroutines.domain.model.UserCredentialsTable
 import exposed.examples.cache.coroutines.domain.repository.UserCredentialsCacheRepository
 import io.bluetape4k.junit5.coroutines.runSuspendIO
@@ -69,7 +69,7 @@ class UserCredentialsControllerTest(
         val ucs = client
             .httpGet("/user-credentials")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<UserCredentialsDTO>()
+            .expectBodyList<UserCredentialsRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -82,7 +82,7 @@ class UserCredentialsControllerTest(
             val uc = client
                 .httpGet("/user-credentials/$id")
                 .expectStatus().is2xxSuccessful
-                .returnResult<UserCredentialsDTO>().responseBody
+                .returnResult<UserCredentialsRecord>().responseBody
                 .awaitSingle()
 
             uc.id shouldBeEqualTo id
@@ -97,7 +97,7 @@ class UserCredentialsControllerTest(
         val ucs = client
             .httpGet("/user-credentials/all?ids=${ids.joinToString(",")}")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<UserCredentialsDTO>()
+            .expectBodyList<UserCredentialsRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 

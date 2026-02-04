@@ -1,8 +1,8 @@
 package exposed.examples.springmvc.controller
 
-import exposed.examples.springmvc.domain.dtos.MovieActorCountDTO
-import exposed.examples.springmvc.domain.dtos.MovieWithActorDTO
-import exposed.examples.springmvc.domain.dtos.MovieWithProducingActorDTO
+import exposed.examples.springmvc.domain.model.MovieActorCountRecord
+import exposed.examples.springmvc.domain.model.MovieWithActorRecord
+import exposed.examples.springmvc.domain.model.MovieWithProducingActorRecord
 import exposed.examples.springmvc.domain.repository.MovieExposedRepository
 import io.bluetape4k.logging.KLogging
 import org.springframework.transaction.annotation.Transactional
@@ -19,17 +19,17 @@ class MovieActorsController(private val movieRepository: MovieExposedRepository)
     companion object: KLogging()
 
     @GetMapping("/{movieId}")
-    fun getMovieWithActors(@PathVariable movieId: Long): MovieWithActorDTO? {
+    fun getMovieWithActors(@PathVariable movieId: Long): MovieWithActorRecord? {
         return movieRepository.getMovieWithActors(movieId)
     }
 
     @GetMapping("/count")
-    fun getMovieActorsCount(): List<MovieActorCountDTO> {
+    fun getMovieActorsCount(): List<MovieActorCountRecord> {
         return movieRepository.getMovieActorsCount()
     }
 
     @GetMapping("/acting-producers")
-    fun findMoviesWithActingProducers(): List<MovieWithProducingActorDTO> {
+    fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
         return movieRepository.findMoviesWithActingProducers()
     }
 }

@@ -1,7 +1,7 @@
 package exposed.examples.springmvc.domain.repository
 
 import exposed.examples.springmvc.AbstractExposedRepositoryTest
-import exposed.examples.springmvc.domain.dtos.ActorDTO
+import exposed.examples.springmvc.domain.model.ActorRecord
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -17,7 +17,7 @@ class ActorExposedRepositoryTest(
 ): AbstractExposedRepositoryTest() {
 
     companion object: KLogging() {
-        fun newActorDTO(): ActorDTO = ActorDTO(
+        fun newActorRecord(): ActorRecord = ActorRecord(
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             birthday = faker.timeAndDate().birthday(20, 80).toString()
@@ -48,7 +48,7 @@ class ActorExposedRepositoryTest(
 
     @Test
     fun `create new actor`() {
-        val actor = newActorDTO()
+        val actor = newActorRecord()
 
         val currentCount = actorRepo.count()
 
@@ -61,7 +61,7 @@ class ActorExposedRepositoryTest(
 
     @Test
     fun `delete actor by id`() {
-        val actor = newActorDTO()
+        val actor = newActorRecord()
         val savedActor = actorRepo.create(actor)
         savedActor.shouldNotBeNull()
 

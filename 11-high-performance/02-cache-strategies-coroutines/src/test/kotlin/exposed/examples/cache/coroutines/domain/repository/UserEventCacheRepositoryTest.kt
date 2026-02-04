@@ -2,7 +2,7 @@ package exposed.examples.cache.coroutines.domain.repository
 
 import exposed.examples.cache.coroutines.AbstractCacheStrategyTest
 import exposed.examples.cache.coroutines.domain.model.UserEventTable
-import exposed.examples.cache.coroutines.domain.model.newUserEventDTO
+import exposed.examples.cache.coroutines.domain.model.newUserEventRecord
 import io.bluetape4k.junit5.awaitility.suspendUntil
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -46,7 +46,7 @@ class UserEventCacheRepositoryTest(
 
             flow {
                 repeat(totalCount) {
-                    emit(newUserEventDTO())
+                    emit(newUserEventRecord())
                 }
             }
                 .chunked(100)

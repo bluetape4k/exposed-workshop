@@ -1,7 +1,7 @@
 package exposed.workshop.springwebflux.controller
 
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
-import exposed.workshop.springwebflux.domain.ActorDTO
+import exposed.workshop.springwebflux.domain.model.ActorRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -23,7 +23,7 @@ class ActorControllerTest(
 ): AbstractSpringWebfluxTest() {
 
     companion object: KLoggingChannel() {
-        private fun newActorDTO(): ActorDTO = ActorDTO(
+        private fun newActorRecord(): ActorRecord = ActorRecord(
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             birthday = faker.timeAndDate().birthday().toString()
@@ -37,7 +37,7 @@ class ActorControllerTest(
         val actor = client
             .httpGet("/actors/$id")
             .expectStatus().is2xxSuccessful
-            .returnResult<ActorDTO>().responseBody
+            .returnResult<ActorRecord>().responseBody
             .awaitSingle()
 
         log.debug { "actor=$actor" }
@@ -53,7 +53,7 @@ class ActorControllerTest(
         val depp = client
             .httpGet("/actors?lastName=$lastName")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<ActorDTO>()
+            .expectBodyList<ActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -68,7 +68,7 @@ class ActorControllerTest(
         val angelinas = client
             .httpGet("/actors?firstName=$firstName")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<ActorDTO>()
+            .expectBodyList<ActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -78,12 +78,12 @@ class ActorControllerTest(
 
     @Test
     fun `create new actor`() = runSuspendIO {
-        val actor = newActorDTO()
+        val actor = newActorRecord()
 
         val newActor = client
             .httpPost("/actors", actor)
             .expectStatus().is2xxSuccessful
-            .returnResult<ActorDTO>().responseBody
+            .returnResult<ActorRecord>().responseBody
             .awaitSingle()
 
         log.debug { "newActor=$newActor" }
@@ -92,12 +92,12 @@ class ActorControllerTest(
 
     @Test
     fun `delete actor`() = runSuspendIO {
-        val actor = newActorDTO()
+        val actor = newActorRecord()
 
         val newActor = client
             .httpPost("/actors", actor)
             .expectStatus().is2xxSuccessful
-            .returnResult<ActorDTO>().responseBody
+            .returnResult<ActorRecord>().responseBody
             .awaitSingle()
 
         log.debug { "newActor=$newActor" }

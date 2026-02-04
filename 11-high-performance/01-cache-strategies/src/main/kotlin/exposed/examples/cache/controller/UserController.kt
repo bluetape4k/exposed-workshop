@@ -1,6 +1,6 @@
 package exposed.examples.cache.controller
 
-import exposed.examples.cache.domain.model.UserDTO
+import exposed.examples.cache.domain.model.UserRecord
 import exposed.examples.cache.domain.repository.UserCacheRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -22,7 +22,7 @@ class UserController(private val repository: UserCacheRepository) {
     companion object: KLoggingChannel()
 
     @GetMapping
-    fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserDTO> {
+    fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserRecord> {
         log.debug { "Finding all users with limit: $limit" }
         return transaction {
             repository.findAll(limit = limit, where = { Op.TRUE })
@@ -30,7 +30,7 @@ class UserController(private val repository: UserCacheRepository) {
     }
 
     @GetMapping("/{id}")
-    fun get(@PathVariable(name = "id") id: Long): UserDTO? {
+    fun get(@PathVariable(name = "id") id: Long): UserRecord? {
         log.debug { "Getting user with id: $id" }
         return transaction {
             repository.get(id)
@@ -38,7 +38,7 @@ class UserController(private val repository: UserCacheRepository) {
     }
 
     @GetMapping("/all")
-    fun getAll(@RequestParam(name = "ids") ids: List<Long>): List<UserDTO> {
+    fun getAll(@RequestParam(name = "ids") ids: List<Long>): List<UserRecord> {
         log.debug { "Getting all users with ids: $ids" }
         return transaction {
             repository.getAll(ids)
@@ -65,9 +65,9 @@ class UserController(private val repository: UserCacheRepository) {
     }
 
     @PostMapping
-    fun put(@RequestBody userDTO: UserDTO): UserDTO {
-        log.debug { "Updating user with id: ${userDTO.id}" }
-        repository.put(userDTO)
-        return userDTO
+    fun put(@RequestBody userRecord: UserRecord): UserRecord {
+        log.debug { "Updating user with id: ${userRecord.id}" }
+        repository.put(userRecord)
+        return userRecord
     }
 }

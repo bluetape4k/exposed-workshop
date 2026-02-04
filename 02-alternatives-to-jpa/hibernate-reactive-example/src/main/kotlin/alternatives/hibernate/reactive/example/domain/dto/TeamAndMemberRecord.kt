@@ -1,7 +1,7 @@
 package alternatives.hibernate.reactive.example.domain.dto
 
-data class TeamAndMemberDTO(
+data class TeamAndMemberRecord(
     val teamId: Long,
     val teamName: String,
-    val members: List<MemberDTO>,
+    val members: List<MemberRecord>,
 )

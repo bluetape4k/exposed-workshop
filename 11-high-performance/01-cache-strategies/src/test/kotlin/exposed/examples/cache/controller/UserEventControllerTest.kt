@@ -2,7 +2,7 @@ package exposed.examples.cache.controller
 
 import exposed.examples.cache.AbstractCacheStrategyTest
 import exposed.examples.cache.domain.model.UserEventTable
-import exposed.examples.cache.domain.model.newUserEventDTO
+import exposed.examples.cache.domain.model.newUserEventRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -33,7 +33,7 @@ class UserEventControllerTest(
     fun `insert user event`() = runSuspendIO {
         val prevCount = getCountOfUserEventsFromDB()
 
-        val userEvent = newUserEventDTO()
+        val userEvent = newUserEventRecord()
         val response = client
             .httpPost("/user-events", userEvent)
             .expectStatus().is2xxSuccessful
@@ -60,7 +60,7 @@ class UserEventControllerTest(
         val insertCount = 1000
         val prevCount = getCountOfUserEventsFromDB()
 
-        val userEvents = List(insertCount) { newUserEventDTO() }
+        val userEvents = List(insertCount) { newUserEventRecord() }
 
         val response = client
             .httpPost("/user-events/bulk", userEvents)

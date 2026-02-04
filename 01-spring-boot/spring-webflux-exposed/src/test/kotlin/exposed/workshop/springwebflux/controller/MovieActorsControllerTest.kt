@@ -1,9 +1,9 @@
 package exposed.workshop.springwebflux.controller
 
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
-import exposed.workshop.springwebflux.domain.MovieActorCountDTO
-import exposed.workshop.springwebflux.domain.MovieWithActorDTO
-import exposed.workshop.springwebflux.domain.MovieWithProducingActorDTO
+import exposed.workshop.springwebflux.domain.model.MovieActorCountRecord
+import exposed.workshop.springwebflux.domain.model.MovieWithActorRecord
+import exposed.workshop.springwebflux.domain.model.MovieWithProducingActorRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -31,7 +31,7 @@ class MovieActorsControllerTest(
         val movieWithActors = client
             .httpGet("/movie-actors/$movieId")
             .expectStatus().is2xxSuccessful
-            .returnResult<MovieWithActorDTO>().responseBody
+            .returnResult<MovieWithActorRecord>().responseBody
             .awaitSingle()
 
         log.debug { "movieWithActors[$movieId]=$movieWithActors" }
@@ -45,7 +45,7 @@ class MovieActorsControllerTest(
         val movieActorCounts = client
             .httpGet("/movie-actors/count")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<MovieActorCountDTO>()
+            .expectBodyList<MovieActorCountRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -60,7 +60,7 @@ class MovieActorsControllerTest(
         val movieWithProducers = client
             .httpGet("/movie-actors/acting-producers")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<MovieWithProducingActorDTO>()
+            .expectBodyList<MovieWithProducingActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 

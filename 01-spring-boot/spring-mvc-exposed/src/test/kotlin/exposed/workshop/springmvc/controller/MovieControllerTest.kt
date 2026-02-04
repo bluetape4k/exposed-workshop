@@ -1,7 +1,7 @@
 package exposed.workshop.springmvc.controller
 
 import exposed.workshop.springmvc.AbstractSpringMvcTest
-import exposed.workshop.springmvc.domain.MovieDTO
+import exposed.workshop.springmvc.domain.model.MovieRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -29,7 +29,7 @@ class MovieControllerTest(
         val movie = client
             .httpGet("/movies/$id")
             .expectStatus().is2xxSuccessful
-            .returnResult<MovieDTO>().responseBody
+            .returnResult<MovieRecord>().responseBody
             .awaitSingle()
 
         log.debug { "movie[$id]=$movie" }
@@ -43,7 +43,7 @@ class MovieControllerTest(
         val movies = client
             .httpGet("/movies?producerName=$producerName")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<MovieDTO>()
+            .expectBodyList<MovieRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 

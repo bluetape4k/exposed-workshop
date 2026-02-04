@@ -1,9 +1,9 @@
 package alternatives.hibernate.reactive.example.controller
 
-import alternatives.hibernate.reactive.example.domain.dto.MemberAndTeamDTO
-import alternatives.hibernate.reactive.example.domain.dto.MemberDTO
-import alternatives.hibernate.reactive.example.domain.mapper.toDto
-import alternatives.hibernate.reactive.example.domain.mapper.toMemberAndTeamDTO
+import alternatives.hibernate.reactive.example.domain.dto.MemberAndTeamRecord
+import alternatives.hibernate.reactive.example.domain.dto.MemberRecord
+import alternatives.hibernate.reactive.example.domain.mapper.toMemberAndTeamRecord
+import alternatives.hibernate.reactive.example.domain.mapper.toRecord
 import alternatives.hibernate.reactive.example.domain.model.Member
 import alternatives.hibernate.reactive.example.domain.repository.MemberSessionRepository
 import alternatives.hibernate.reactive.example.domain.repository.TeamSessionRepository
@@ -30,30 +30,30 @@ class MemberController(
     companion object: KLoggingChannel()
 
     @RequestMapping
-    suspend fun findAll(): List<MemberDTO> {
+    suspend fun findAll(): List<MemberRecord> {
         return sf.withSessionSuspending { session ->
-            memberRepository.findAll(session).map { it.toDto() }
+            memberRepository.findAll(session).map { it.toRecord() }
         }
     }
 
     @RequestMapping("/{id}")
-    suspend fun findById(@PathVariable id: Long): MemberDTO? {
+    suspend fun findById(@PathVariable id: Long): MemberRecord? {
 //        return sf.withSessionSuspending { session ->
 //            memberRepository.findById(session, id)?.toDto()
 //        }
         // HINT: 성능이 중요한 경우, StatelessSession 을 사용하는 것이 좋습니다.
         return sf.withStatelessSessionSuspending { session ->
-            session.get(Member::class.java, id).awaitSuspending().toDto()
+            session.get(Member::class.java, id).awaitSuspending().toRecord()
         }
     }
 
     @RequestMapping("/{id}/team")
-    suspend fun findByIdWithTeam(@PathVariable id: Long): MemberAndTeamDTO? {
+    suspend fun findByIdWithTeam(@PathVariable id: Long): MemberAndTeamRecord? {
         return sf.withSessionSuspending { session ->
             memberRepository.findById(session, id)?.let { member ->
                 // Lazy Loading 시에는 이렇게 fetch 를 해줘야 합니다. member.team 은 Eager loading 이므로 fetch 를 할 필요가 없습니다.
                 // session.fetch(member.team).awaitSuspending()
-                member.toMemberAndTeamDTO()
+                member.toMemberAndTeamRecord()
             }
         }
     }

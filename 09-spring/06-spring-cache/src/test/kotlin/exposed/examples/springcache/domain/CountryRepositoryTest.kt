@@ -67,7 +67,7 @@ class CountryRepositoryTest(
     fun `Country Update 할 때 cache evict를 수행한다`() {
         countryRepository.evictCacheAll()
 
-        val countries: List<CountryDTO>
+        val countries: List<CountryRecord>
 
         log.debug { "처음 Country를 조회합니다. (DB로부터 읽어온다)" }
         val databaseLoadingTime = measureTimeMillis {
@@ -81,7 +81,7 @@ class CountryRepositoryTest(
         }
 
         log.debug { "Update 된 Country 를 조회합니다. (DB로부터 읽어온다)" }
-        val updatedCountries: List<CountryDTO>
+        val updatedCountries: List<CountryRecord>
         val reloadLoadingTime = measureTimeMillis {
             updatedCountries = DataPopulator.COUNTRY_CODES.mapNotNull { code -> countryRepository.findByCode(code) }
         }
@@ -92,7 +92,7 @@ class CountryRepositoryTest(
         log.debug { "reloadLoadingTime=$reloadLoadingTime msec" }
 
         log.debug { "모든 Country 를 조회합니다 (캐시로부터 읽어온다)" }
-        val cachedCountries: List<CountryDTO>
+        val cachedCountries: List<CountryRecord>
         val cacheLoadingTime = measureTimeMillis {
             cachedCountries = DataPopulator.COUNTRY_CODES.mapNotNull { code -> countryRepository.findByCode(code) }
         }

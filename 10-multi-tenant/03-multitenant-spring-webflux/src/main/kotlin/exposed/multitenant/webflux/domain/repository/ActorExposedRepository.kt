@@ -1,8 +1,8 @@
 package exposed.multitenant.webflux.domain.repository
 
-import exposed.multitenant.webflux.domain.dtos.ActorDTO
+import exposed.multitenant.webflux.domain.model.ActorRecord
 import exposed.multitenant.webflux.domain.model.MovieSchema.ActorTable
-import exposed.multitenant.webflux.domain.model.toActorDTO
+import exposed.multitenant.webflux.domain.model.toActorRecord
 import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -17,18 +17,18 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Repository
-class ActorExposedRepository: ExposedRepository<ActorDTO, Long> {
+class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
 
     companion object: KLogging()
 
     override val table = ActorTable
-    override fun ResultRow.toEntity() = toActorDTO()
+    override fun ResultRow.toEntity() = toActorRecord()
 
     /**
-     * 주어진 조건에 맞는 [ActorDTO]를 조회합니다.
+     * 주어진 조건에 맞는 [ActorRecord]를 조회합니다.
      */
     @Transactional(readOnly = true)
-    fun searchActors(params: Map<String, String?>): List<ActorDTO> {
+    fun searchActors(params: Map<String, String?>): List<ActorRecord> {
         val query = ActorTable.selectAll()
 
         params.forEach { (key, value) ->
@@ -47,7 +47,7 @@ class ActorExposedRepository: ExposedRepository<ActorDTO, Long> {
      * 새로운 Actor 레코드를 INSERT 합니다.
      */
     @Transactional
-    fun create(actor: ActorDTO): ActorDTO {
+    fun create(actor: ActorRecord): ActorRecord {
         log.debug { "Create new actor. actor: $actor" }
 
         val id = ActorTable.insertAndGetId {

@@ -1,6 +1,6 @@
 package exposed.examples.cache.controller
 
-import exposed.examples.cache.domain.model.UserEventDTO
+import exposed.examples.cache.domain.model.UserEventRecord
 import exposed.examples.cache.domain.repository.UserEventCacheRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -17,13 +17,13 @@ class UserEventController(
     companion object: KLoggingChannel()
 
     @PostMapping
-    fun insert(@RequestBody userEvent: UserEventDTO): Boolean {
+    fun insert(@RequestBody userEvent: UserEventRecord): Boolean {
         log.debug { "Inserting user event: $userEvent" }
         return repository.put(userEvent)
     }
 
     @PostMapping("/bulk")
-    fun insertBulk(@RequestBody userEvents: List<UserEventDTO>): Boolean {
+    fun insertBulk(@RequestBody userEvents: List<UserEventRecord>): Boolean {
         log.debug { "Inserting bulk user events. size=${userEvents.size}" }
         repository.putAll(userEvents)
         return true

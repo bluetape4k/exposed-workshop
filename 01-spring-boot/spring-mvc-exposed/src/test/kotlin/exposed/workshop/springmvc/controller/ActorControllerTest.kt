@@ -1,7 +1,7 @@
 package exposed.workshop.springmvc.controller
 
 import exposed.workshop.springmvc.AbstractSpringMvcTest
-import exposed.workshop.springmvc.domain.ActorDTO
+import exposed.workshop.springmvc.domain.model.ActorRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -23,7 +23,7 @@ class ActorControllerTest(
 ): AbstractSpringMvcTest() {
 
     companion object: KLogging() {
-        private fun newActor(): ActorDTO = ActorDTO(
+        private fun newActor(): ActorRecord = ActorRecord(
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             birthday = faker.timeAndDate().birthday().toString()
@@ -37,7 +37,7 @@ class ActorControllerTest(
         val actor = client
             .httpGet("/actors/$id")
             .expectStatus().is2xxSuccessful
-            .returnResult<ActorDTO>().responseBody
+            .returnResult<ActorRecord>().responseBody
             .awaitSingle()
             .shouldNotBeNull()
 
@@ -53,7 +53,7 @@ class ActorControllerTest(
         val actors = client
             .httpGet("/actors?lastName=$lastName")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<ActorDTO>()
+            .expectBodyList<ActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -68,7 +68,7 @@ class ActorControllerTest(
         val angelinas = client
             .httpGet("/actors?firstName=$firstName")
             .expectStatus().is2xxSuccessful
-            .expectBodyList<ActorDTO>()
+            .expectBodyList<ActorRecord>()
             .returnResult().responseBody
             .shouldNotBeNull()
 
@@ -83,7 +83,7 @@ class ActorControllerTest(
         val newActor = client
             .httpPost("/actors", actor)
             .expectStatus().is2xxSuccessful
-            .returnResult<ActorDTO>().responseBody
+            .returnResult<ActorRecord>().responseBody
             .awaitSingle()
 
         newActor shouldBeEqualTo actor.copy(id = newActor.id)
@@ -96,7 +96,7 @@ class ActorControllerTest(
         val newActor = client
             .httpPost("/actors", actor)
             .expectStatus().is2xxSuccessful
-            .returnResult<ActorDTO>().responseBody
+            .returnResult<ActorRecord>().responseBody
             .awaitSingle()
 
         val deletedCount = client

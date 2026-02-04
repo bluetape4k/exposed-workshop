@@ -1,6 +1,6 @@
 package exposed.examples.springwebflux.service
 
-import exposed.examples.springwebflux.domain.dtos.MovieDTO
+import exposed.examples.springwebflux.domain.model.MovieRecord
 import exposed.examples.springwebflux.domain.model.MovieSchema.MovieEntity
 import exposed.examples.springwebflux.domain.repository.MovieExposedRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -21,23 +21,23 @@ class MovieTransactionalService(
     companion object: KLoggingChannel()
 
     @Transactional
-    fun monoSave(movieDto: MovieDTO): Mono<MovieEntity> {
-        log.debug { "save movieDto: $movieDto" }
+    fun monoSave(movieRecord: MovieRecord): Mono<MovieEntity> {
+        log.debug { "save movieDto: $movieRecord" }
         // movieRepository.create(movieDto)
 
         return Mono.fromCallable {
             MovieEntity.new {
-                name = movieDto.name
-                producerName = movieDto.producerName
-                if (movieDto.releaseDate.isNotBlank()) {
-                    releaseDate = LocalDate.parse(movieDto.releaseDate)
+                name = movieRecord.name
+                producerName = movieRecord.producerName
+                if (movieRecord.releaseDate.isNotBlank()) {
+                    releaseDate = LocalDate.parse(movieRecord.releaseDate)
                 }
             }
         }
     }
 
-    suspend fun suspendedSave(movieDto: MovieDTO): MovieDTO {
-        log.debug { "suspendedSave movieDto: $movieDto" }
-        return movieRepository.create(movieDto)
+    suspend fun suspendedSave(movieRecord: MovieRecord): MovieRecord {
+        log.debug { "suspendedSave movieDto: $movieRecord" }
+        return movieRepository.create(movieRecord)
     }
 }

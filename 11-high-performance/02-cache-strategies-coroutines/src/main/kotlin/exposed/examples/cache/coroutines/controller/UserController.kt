@@ -1,6 +1,6 @@
 package exposed.examples.cache.coroutines.controller
 
-import exposed.examples.cache.coroutines.domain.model.UserDTO
+import exposed.examples.cache.coroutines.domain.model.UserRecord
 import exposed.examples.cache.coroutines.domain.repository.UserCacheRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -22,19 +22,19 @@ class UserController(private val repository: UserCacheRepository) {
     companion object: KLoggingChannel()
 
     @GetMapping
-    suspend fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserDTO> {
+    suspend fun findAll(@RequestParam(name = "limit") limit: Int? = null): List<UserRecord> {
         log.debug { "Finding all users with limit: $limit" }
         return repository.findAll(limit = limit, where = { Op.TRUE })
     }
 
     @GetMapping("/{id}")
-    suspend fun get(@PathVariable(name = "id") id: Long): UserDTO? {
+    suspend fun get(@PathVariable(name = "id") id: Long): UserRecord? {
         log.debug { "Getting user with id: $id" }
         return repository.get(id)
     }
 
     @GetMapping("/all")
-    suspend fun getAll(@RequestParam(name = "ids") ids: List<Long>): List<UserDTO> {
+    suspend fun getAll(@RequestParam(name = "ids") ids: List<Long>): List<UserRecord> {
         log.debug { "Getting all users with ids: $ids" }
         return repository.getAll(ids)
     }
@@ -59,9 +59,9 @@ class UserController(private val repository: UserCacheRepository) {
     }
 
     @PostMapping
-    suspend fun put(@RequestBody userDTO: UserDTO): UserDTO {
-        log.debug { "Updating user with id: ${userDTO.id}" }
-        repository.put(userDTO)
-        return userDTO
+    suspend fun put(@RequestBody userRecord: UserRecord): UserRecord {
+        log.debug { "Updating user with id: ${userRecord.id}" }
+        repository.put(userRecord)
+        return userRecord
     }
 }

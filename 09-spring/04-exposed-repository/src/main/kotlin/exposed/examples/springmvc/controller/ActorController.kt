@@ -1,6 +1,6 @@
 package exposed.examples.springmvc.controller
 
-import exposed.examples.springmvc.domain.dtos.ActorDTO
+import exposed.examples.springmvc.domain.model.ActorRecord
 import exposed.examples.springmvc.domain.repository.ActorExposedRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -22,12 +22,12 @@ class ActorController(private val actorRepository: ActorExposedRepository) {
     companion object: KLogging()
 
     @GetMapping("/{id}")
-    fun getActorById(@PathVariable("id") actorId: Long): ActorDTO? {
+    fun getActorById(@PathVariable("id") actorId: Long): ActorRecord? {
         return actorRepository.findByIdOrNull(actorId)
     }
 
     @GetMapping
-    fun searchActors(request: HttpServletRequest): List<ActorDTO> {
+    fun searchActors(request: HttpServletRequest): List<ActorRecord> {
         val params = request.parameterMap.map { it.key to it.value.firstOrNull() }.toMap()
         log.debug { "Search Actors... params=$params" }
 
@@ -36,7 +36,7 @@ class ActorController(private val actorRepository: ActorExposedRepository) {
 
     @PostMapping
     @Transactional
-    fun createActor(@RequestBody actor: ActorDTO): ActorDTO {
+    fun createActor(@RequestBody actor: ActorRecord): ActorRecord {
         return actorRepository.create(actor)
     }
 

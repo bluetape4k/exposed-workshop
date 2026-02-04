@@ -1,7 +1,7 @@
 package exposed.multitenant.springweb.domain.repository
 
-import exposed.multitenant.springweb.domain.dtos.ActorDTO
-import exposed.multitenant.springweb.domain.dtos.toActorDTO
+import exposed.multitenant.springweb.domain.dtos.ActorRecord
+import exposed.multitenant.springweb.domain.dtos.toActorRecord
 import exposed.multitenant.springweb.domain.model.MovieSchema.ActorEntity
 import exposed.multitenant.springweb.domain.model.MovieSchema.ActorTable
 import io.bluetape4k.exposed.repository.ExposedRepository
@@ -17,18 +17,18 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Repository
-class ActorExposedRepository: ExposedRepository<ActorDTO, Long> {
+class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
 
     companion object: KLogging()
 
     override val table = ActorTable
-    override fun ResultRow.toEntity() = toActorDTO()
+    override fun ResultRow.toEntity() = toActorRecord()
 
     /**
      * 주어진 조건에 맞는 [ActorEntity]를 조회합니다.
      */
     @Transactional(readOnly = true)
-    fun searchActors(params: Map<String, String?>): List<ActorDTO> {
+    fun searchActors(params: Map<String, String?>): List<ActorRecord> {
         val query = ActorTable.selectAll()
 
         params.forEach { (key, value) ->
@@ -43,7 +43,7 @@ class ActorExposedRepository: ExposedRepository<ActorDTO, Long> {
         return query.map { it.toEntity() }
     }
 
-    fun create(actor: ActorDTO): ActorDTO {
+    fun create(actor: ActorRecord): ActorRecord {
         log.debug { "Create new actor. actor: $actor" }
 
         val id = ActorTable.insertAndGetId {

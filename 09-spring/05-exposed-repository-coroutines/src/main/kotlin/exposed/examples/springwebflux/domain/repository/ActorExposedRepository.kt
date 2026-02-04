@@ -1,8 +1,8 @@
 package exposed.examples.springwebflux.domain.repository
 
-import exposed.examples.springwebflux.domain.dtos.ActorDTO
+import exposed.examples.springwebflux.domain.model.ActorRecord
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorTable
-import exposed.examples.springwebflux.domain.model.toActorDTO
+import exposed.examples.springwebflux.domain.model.toActorRecord
 import io.bluetape4k.exposed.repository.ExposedRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -15,14 +15,14 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
 @Repository
-class ActorExposedRepository: ExposedRepository<ActorDTO, Long> {
+class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
 
     companion object: KLoggingChannel()
 
     override val table = ActorTable
-    override fun ResultRow.toEntity() = toActorDTO()
+    override fun ResultRow.toEntity() = toActorRecord()
 
-    fun searchActor(params: Map<String, String?>): List<ActorDTO> {
+    fun searchActor(params: Map<String, String?>): List<ActorRecord> {
         log.debug { "Search Actor by params. params: $params" }
 
         val query = ActorTable.selectAll()
@@ -40,7 +40,7 @@ class ActorExposedRepository: ExposedRepository<ActorDTO, Long> {
         return query.map { it.toEntity() }
     }
 
-    fun create(actor: ActorDTO): ActorDTO {
+    fun create(actor: ActorRecord): ActorRecord {
         log.debug { "Create Actor. actor: $actor" }
 
         val id = ActorTable.insertAndGetId {

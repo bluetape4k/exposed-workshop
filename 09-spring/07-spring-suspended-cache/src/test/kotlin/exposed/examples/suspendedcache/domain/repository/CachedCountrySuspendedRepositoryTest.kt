@@ -1,6 +1,6 @@
 package exposed.examples.suspendedcache.domain.repository
 
-import exposed.examples.suspendedcache.domain.CountryDTO
+import exposed.examples.suspendedcache.domain.CountryRecord
 import exposed.examples.suspendedcache.domain.DataPopulator
 import exposed.examples.suspendedcache.lettuce.LettuceSuspendedCacheManager
 import io.bluetape4k.coroutines.flow.extensions.flowFromSuspend
@@ -28,7 +28,7 @@ class CachedCountrySuspendedRepositoryTest(
     @Test
     fun `모든 캐시를 삭제한다`() = runSuspendIO {
         val countryCache =
-            suspendedCacheManager.getOrCreate<String, CountryDTO>(CachedCountrySuspendedRepository.CACHE_NAME)
+            suspendedCacheManager.getOrCreate<String, CountryRecord>(CachedCountrySuspendedRepository.CACHE_NAME)
 
 
         // 캐시를 채운다.

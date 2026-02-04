@@ -1,8 +1,8 @@
 package exposed.workshop.springmvc.domain.repository
 
 import exposed.workshop.springmvc.AbstractSpringMvcTest
-import exposed.workshop.springmvc.domain.ActorDTO
-import exposed.workshop.springmvc.domain.MovieSchema.ActorTable
+import exposed.workshop.springmvc.domain.model.ActorRecord
+import exposed.workshop.springmvc.domain.model.MovieSchema.ActorTable
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -19,7 +19,7 @@ class ActorRepositoryTest(
 ): AbstractSpringMvcTest() {
 
     companion object: KLogging() {
-        fun newActorDTO(): ActorDTO = ActorDTO(
+        fun newActorRecord(): ActorRecord = ActorRecord(
             firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             birthday = faker.timeAndDate().birthday(20, 80).toString()
@@ -51,7 +51,7 @@ class ActorRepositoryTest(
     @Test
     @Transactional
     fun `create new actor`() {
-        val actor = newActorDTO()
+        val actor = newActorRecord()
 
         val currentCount = ActorTable.selectAll().count()
 
@@ -65,7 +65,7 @@ class ActorRepositoryTest(
     @Test
     @Transactional
     fun `delete actor by id`() {
-        val actor = newActorDTO()
+        val actor = newActorRecord()
         val savedActor = actorRepo.create(actor)
         savedActor.shouldNotBeNull()
 

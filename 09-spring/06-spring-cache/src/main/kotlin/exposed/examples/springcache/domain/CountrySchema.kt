@@ -7,6 +7,7 @@ import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.IntEntity
 import org.jetbrains.exposed.v1.dao.IntEntityClass
+import java.io.Serializable
 
 object CountryTable: IntIdTable("countries") {
     val code = char("code", 2).uniqueIndex()
@@ -14,7 +15,7 @@ object CountryTable: IntIdTable("countries") {
     val description = text("description").nullable()
 }
 
-// 예제에서는 사용하지 않고, [Country] DTO 를 사용합니다.
+// 예제에서는 사용하지 않고, [Country] Record 를 사용합니다.
 class Country(id: EntityID<Int>): IntEntity(id) {
     companion object: IntEntityClass<Country>(CountryTable)
 
@@ -31,8 +32,8 @@ class Country(id: EntityID<Int>): IntEntity(id) {
         .toString()
 }
 
-data class CountryDTO(
+data class CountryRecord(
     val code: String,
     val name: String,
     val description: String? = null,
-)
+): Serializable 

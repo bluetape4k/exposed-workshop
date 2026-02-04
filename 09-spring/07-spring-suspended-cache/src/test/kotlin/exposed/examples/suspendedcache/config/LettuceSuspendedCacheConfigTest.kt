@@ -1,7 +1,7 @@
 package exposed.examples.suspendedcache.config
 
 import exposed.examples.suspendedcache.AbstractSpringSuspendedCacheApplicationTest
-import exposed.examples.suspendedcache.domain.CountryDTO
+import exposed.examples.suspendedcache.domain.CountryRecord
 import exposed.examples.suspendedcache.lettuce.LettuceSuspendedCacheManager
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -24,11 +24,11 @@ class LettuceSuspendedCacheConfigTest(
 
     @Test
     fun `get cache`() = runSuspendIO {
-        val cache = lettuceSuspendedCacheManager.getOrCreate<String, CountryDTO>("countries")
+        val cache = lettuceSuspendedCacheManager.getOrCreate<String, CountryRecord>("countries")
         cache.shouldNotBeNull()
 
-        val countryKr = CountryDTO("KR", "South Korea", "동해물과 백두산이 마르고 닳도록")
-        val countryUs = CountryDTO("US", "United States of America", "미국 국가는 몰라요")
+        val countryKr = CountryRecord("KR", "South Korea", "동해물과 백두산이 마르고 닳도록")
+        val countryUs = CountryRecord("US", "United States of America", "미국 국가는 몰라요")
 
         cache.put(countryKr.code, countryKr)
         cache.put(countryUs.code, countryUs)

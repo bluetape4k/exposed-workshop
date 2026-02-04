@@ -1,8 +1,10 @@
 package exposed.workshop.springmvc.domain
 
-import exposed.workshop.springmvc.domain.MovieSchema.ActorInMovieTable
-import exposed.workshop.springmvc.domain.MovieSchema.ActorTable
-import exposed.workshop.springmvc.domain.MovieSchema.MovieTable
+import exposed.workshop.springmvc.domain.model.ActorRecord
+import exposed.workshop.springmvc.domain.model.MovieSchema.ActorInMovieTable
+import exposed.workshop.springmvc.domain.model.MovieSchema.ActorTable
+import exposed.workshop.springmvc.domain.model.MovieSchema.MovieTable
+import exposed.workshop.springmvc.domain.model.MovieWithActorRecord
 import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
@@ -39,15 +41,15 @@ class DataInitializer: ApplicationListener<ApplicationReadyEvent> {
 
         log.info { "Inserting sample actors and movies ..." }
 
-        val johnnyDepp = ActorDTO(0L, "Johnny", "Depp", "1979-10-28")
-        val bradPitt = ActorDTO(0L, "Brad", "Pitt", "1982-05-16")
-        val angelinaJolie = ActorDTO(0L, "Angelina", "Jolie", "1983-11-10")
-        val jenniferAniston = ActorDTO(0L, "Jennifer", "Aniston", "1975-07-23")
-        val angelinaGrace = ActorDTO(0L, "Angelina", "Grace", "1988-09-02")
-        val craigDaniel = ActorDTO(0L, "Craig", "Daniel", "1970-11-12")
-        val ellenPaige = ActorDTO(0L, "Ellen", "Paige", "1981-12-20")
-        val russellCrowe = ActorDTO(0L, "Russell", "Crowe", "1970-01-20")
-        val edwardNorton = ActorDTO(0L, "Edward", "Norton", "1975-04-03")
+        val johnnyDepp = ActorRecord(0L, "Johnny", "Depp", "1979-10-28")
+        val bradPitt = ActorRecord(0L, "Brad", "Pitt", "1982-05-16")
+        val angelinaJolie = ActorRecord(0L, "Angelina", "Jolie", "1983-11-10")
+        val jenniferAniston = ActorRecord(0L, "Jennifer", "Aniston", "1975-07-23")
+        val angelinaGrace = ActorRecord(0L, "Angelina", "Grace", "1988-09-02")
+        val craigDaniel = ActorRecord(0L, "Craig", "Daniel", "1970-11-12")
+        val ellenPaige = ActorRecord(0L, "Ellen", "Paige", "1981-12-20")
+        val russellCrowe = ActorRecord(0L, "Russell", "Crowe", "1970-01-20")
+        val edwardNorton = ActorRecord(0L, "Edward", "Norton", "1975-04-03")
 
         val actors = fastListOf(
             johnnyDepp,
@@ -62,28 +64,28 @@ class DataInitializer: ApplicationListener<ApplicationReadyEvent> {
         )
 
         val movies = fastListOf(
-            MovieWithActorDTO(
+            MovieWithActorRecord(
                 0L,
                 "Gladiator",
                 johnnyDepp.firstName,
                 "2000-05-01",
                 fastListOf(russellCrowe, ellenPaige, craigDaniel)
             ),
-            MovieWithActorDTO(
+            MovieWithActorRecord(
                 0L,
                 "Guardians of the galaxy",
                 johnnyDepp.firstName,
                 "2014-07-21",
                 fastListOf(angelinaGrace, bradPitt, ellenPaige, angelinaJolie, johnnyDepp)
             ),
-            MovieWithActorDTO(
+            MovieWithActorRecord(
                 0L,
                 "Fight club",
                 craigDaniel.firstName,
                 "1999-09-13",
                 fastListOf(bradPitt, jenniferAniston, edwardNorton)
             ),
-            MovieWithActorDTO(
+            MovieWithActorRecord(
                 0L,
                 "13 Reasons Why",
                 "Suzuki",

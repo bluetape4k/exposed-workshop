@@ -1,4 +1,4 @@
-package exposed.workshop.springwebflux.domain
+package exposed.workshop.springwebflux.domain.model
 
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
