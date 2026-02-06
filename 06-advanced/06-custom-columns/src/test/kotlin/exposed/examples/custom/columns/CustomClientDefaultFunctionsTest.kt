@@ -45,7 +45,11 @@ class CustomClientDefaultFunctionsTest: JdbcExposedTestBase() {
      */
     object ClientGenerated: IntIdTable() {
         val timebasedUuid: Column<UUID> = javaUUID("timebased_uuid").timebasedGenerated()
-        val timebasedUuidString: Column<String> = varchar("timebased_uuid_string", 36).timebasedGenerated()
+
+        // NOTE: MySQL 계열은 collate 를 지정하지 않으면 case insensitive 이므로, 중복이 발생할 수 있습니다.
+        // NOTE: MySQL 을 테스트 시에는 varchar 컬럼에 collate=`utf8mb4_bin` 를 지정해주면 case sensitive 하여 unique 를 유지할 수 있습니다.
+        val timebasedUuidString: Column<String> = varchar("timebased_uuid_string", 24).timebasedGenerated()
+
         val snowflake: Column<Long> = long("snowflake").snowflakeGenerated()
         val ksuid: Column<String> = varchar("ksuid", 27).ksuidGenerated()
         val ksuidMillis: Column<String> = varchar("ksuid_millis", 27).ksuidMillisGenerated()

@@ -4,10 +4,10 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.entityToStringBuilder
-import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62Entity
-import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62EntityClass
+import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62EntityClassMySql
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62EntityID
-import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62Table
+import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62EntityMySql
+import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62TableMySql
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.junit5.coroutines.runSuspendIO
@@ -26,7 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import kotlin.random.Random
 
 @Suppress("DEPRECATION")
-class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
+class TimebasedUUIDBase62TableForMySqlTest: AbstractCustomIdTableTest() {
 
     companion object: KLogging()
 
@@ -40,13 +40,13 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
      * )
      * ```
      */
-    object T1: TimebasedUUIDBase62Table("t_timebased_uuid_base62") {
+    object T1: TimebasedUUIDBase62TableMySql("t_timebased_uuid_base62") {
         val name = varchar("name", 255)
         val age = integer("age")
     }
 
-    class E1(id: TimebasedUUIDBase62EntityID): TimebasedUUIDBase62Entity(id) {
-        companion object: TimebasedUUIDBase62EntityClass<E1>(T1)
+    class E1(id: TimebasedUUIDBase62EntityID): TimebasedUUIDBase62EntityMySql(id) {
+        companion object: TimebasedUUIDBase62EntityClassMySql<E1>(T1)
 
         var name by T1.name
         var age by T1.age
@@ -64,7 +64,7 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `TimebasedUUID Base62 id를 가진 레코드를 생성한다`(testDB: TestDB, recordCount: Int) {
-        Assumptions.assumeTrue { testDB !in TestDB.ALL_MYSQL_LIKE }
+        Assumptions.assumeTrue { testDB in TestDB.ALL_MYSQL_LIKE }
 
         withTables(testDB, T1) {
             repeat(recordCount) {
@@ -81,7 +81,7 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `TimebasedUUID Base62 id를 가진 레코드를 배치로 생성한다`(testDB: TestDB, recordCount: Int) {
-        Assumptions.assumeTrue { testDB !in TestDB.ALL_MYSQL_LIKE }
+        Assumptions.assumeTrue { testDB in TestDB.ALL_MYSQL_LIKE }
 
         withTables(testDB, T1) {
             val records = List(recordCount) {
@@ -104,8 +104,8 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `코루틴 환경에서 레코드를 배치로 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
-        Assumptions.assumeTrue { testDB !in TestDB.ALL_MYSQL_LIKE }
-        
+        Assumptions.assumeTrue { testDB in TestDB.ALL_MYSQL_LIKE }
+
         withSuspendedTables(testDB, T1) {
             val records = List(recordCount) {
                 Record(
@@ -129,7 +129,7 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `TimebasedUUID Base62 Id를 가진 엔티티를 생성한다`(testDB: TestDB, recordCount: Int) {
-        Assumptions.assumeTrue { testDB !in TestDB.ALL_MYSQL_LIKE }
+        Assumptions.assumeTrue { testDB in TestDB.ALL_MYSQL_LIKE }
 
         withTables(testDB, T1) {
             repeat(recordCount) {
@@ -146,8 +146,8 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `코루틴 환경에서 엔티티를 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
-        Assumptions.assumeTrue { testDB !in TestDB.ALL_MYSQL_LIKE }
-        
+        Assumptions.assumeTrue { testDB in TestDB.ALL_MYSQL_LIKE }
+
         withSuspendedTables(testDB, T1) {
             val tasks: List<Deferred<E1>> = List(recordCount) {
                 suspendedTransactionAsync(Dispatchers.IO) {
