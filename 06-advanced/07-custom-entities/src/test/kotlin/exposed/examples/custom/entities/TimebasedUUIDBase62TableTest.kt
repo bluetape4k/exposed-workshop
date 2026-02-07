@@ -15,9 +15,17 @@ import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.take
 import org.amshove.kluent.shouldBeEqualTo
+import org.jetbrains.exposed.v1.dao.flushCache
 import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.insertIgnore
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.suspendedTransactionAsync
 import org.junit.jupiter.api.Assumptions
@@ -64,8 +72,6 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `TimebasedUUID Base62 id를 가진 레코드를 생성한다`(testDB: TestDB, recordCount: Int) {
-        Assumptions.assumeTrue { testDB !in TestDB.ALL_MYSQL_LIKE }
-
         withTables(testDB, T1) {
             repeat(recordCount) {
                 T1.insert {
@@ -81,8 +87,6 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `TimebasedUUID Base62 id를 가진 레코드를 배치로 생성한다`(testDB: TestDB, recordCount: Int) {
-        Assumptions.assumeTrue { testDB !in TestDB.ALL_MYSQL_LIKE }
-
         withTables(testDB, T1) {
             val records = List(recordCount) {
                 Record(
@@ -104,8 +108,6 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `코루틴 환경에서 레코드를 배치로 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
-        Assumptions.assumeTrue { testDB !in TestDB.ALL_MYSQL_LIKE }
-        
         withSuspendedTables(testDB, T1) {
             val records = List(recordCount) {
                 Record(
@@ -129,8 +131,6 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `TimebasedUUID Base62 Id를 가진 엔티티를 생성한다`(testDB: TestDB, recordCount: Int) {
-        Assumptions.assumeTrue { testDB !in TestDB.ALL_MYSQL_LIKE }
-
         withTables(testDB, T1) {
             repeat(recordCount) {
                 E1.new {
@@ -146,8 +146,6 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `코루틴 환경에서 엔티티를 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
-        Assumptions.assumeTrue { testDB !in TestDB.ALL_MYSQL_LIKE }
-        
         withSuspendedTables(testDB, T1) {
             val tasks: List<Deferred<E1>> = List(recordCount) {
                 suspendedTransactionAsync(Dispatchers.IO) {
@@ -160,6 +158,44 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
             tasks.awaitAll()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
+        }
+    }
+
+    /**
+     * ```sql
+     * INSERT INTO T1 (ID, "name", AGE)
+     * VALUES ('1efe3b58-c940-6036-9ee6-897d7aeb3be7', 'Miss Hung Kautzer', 30) ON CONFLICT DO NOTHING
+     * ```
+     */
+    @ParameterizedTest(name = "{0} - {1}개 레코드")
+    @MethodSource("getTestDBAndEntityCount")
+    fun `insertIgnore as flow`(testDB: TestDB, entityCount: Int) = runSuspendIO {
+        Assumptions.assumeTrue { testDB in TestDB.ALL_MYSQL_MARIADB + TestDB.POSTGRESQL }
+
+        withSuspendedTables(testDB, T1) {
+            val entities: Sequence<Pair<String, Int>> = generateSequence {
+                val name = faker.name().fullName()
+                val age = faker.number().numberBetween(8, 80)
+                name to age
+            }
+
+            entities.asFlow()
+                .buffer(16)
+                .take(entityCount)
+                .flatMapMerge(16) { (name, age) ->
+                    flow {
+                        val insertCount = T1.insertIgnore {
+                            it[T1.name] = name
+                            it[T1.age] = age
+                        }
+                        emit(insertCount)
+                    }
+                }
+                .collect()
+
+            flushCache()
+
+            T1.selectAll().count().toInt() shouldBeEqualTo entityCount
         }
     }
 }

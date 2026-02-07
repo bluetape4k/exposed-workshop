@@ -114,9 +114,9 @@ class Ex02_TransactionExec: JdbcExposedTestBase() {
     fun `exec with multi statement query using MySQL`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB in TestDB.ALL_MYSQL_MARIADB }
 
-        val extra = if (testDB in TestDB.ALL_MARIADB) "?" else ""
+        // val extra = if (testDB in TestDB.ALL_MARIADB) "&" else ""
         val db = Database.connect(
-            testDB.connection().plus("$extra&allowMultiQueries=true"),
+            testDB.connection().plus("&allowMultiQueries=true"),
             testDB.driver,
             testDB.user,
             testDB.pass

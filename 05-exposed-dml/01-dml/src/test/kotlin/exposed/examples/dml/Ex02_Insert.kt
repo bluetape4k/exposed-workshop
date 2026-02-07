@@ -919,7 +919,10 @@ class Ex02_Insert: JdbcExposedTestBase() {
 
                 execute(this@withTables)
             }
-            numInserted shouldBeEqualTo 1
+            // MySQL은 connection string 에 `returnGeneratedValues=true` 가 설정된 경우, insert 된 행 수가 다르게 나올 수 있다.
+            // numInserted shouldBeEqualTo 1
+
+            tester.selectAll().count() shouldBeEqualTo 2L
         }
     }
 

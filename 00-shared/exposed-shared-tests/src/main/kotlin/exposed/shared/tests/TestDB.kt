@@ -90,11 +90,11 @@ enum class TestDB(
             val options = "?useSSL=false" +
                     "&characterEncoding=UTF-8" +
                     "&useLegacyDatetimeCode=false&serverTimezone=UTC" +  // TimeZone 을 UTC 로 설정
-                    "&zeroDateTimeBehavior=convertToNull"  // +
-            // "&rewriteBatchedStatements=true"
+                    "&zeroDateTimeBehavior=convertToNull" +
+                    "&rewriteBatchedStatements=true"
 
             if (USE_TESTCONTAINERS) {
-                ContainerProvider.mariadb.jdbcUrl + options
+                Containers.MariaDB.jdbcUrl + options
             } else {
                 "jdbc:mariadb://localhost:3306/exposed$options"
             }
@@ -108,10 +108,10 @@ enum class TestDB(
                     "&characterEncoding=UTF-8" +
                     "&useLegacyDatetimeCode=false" +
                     "&serverTimezone=UTC" +  // TimeZone 을 UTC 로 설정
-                    "&zeroDateTimeBehavior=convertToNull"  // +
-            // "&rewriteBatchedStatements=true"
+                    "&zeroDateTimeBehavior=convertToNull" +
+                    "&rewriteBatchedStatements=true"
             if (USE_TESTCONTAINERS) {
-                ContainerProvider.mysql5.jdbcUrl + options
+                Containers.MySql5.jdbcUrl + options
             } else {
                 "jdbc:mysql://localhost:3306/exposed$options"
             }
@@ -126,11 +126,11 @@ enum class TestDB(
                     "&zeroDateTimeBehavior=convertToNull" +
                     "&useLegacyDatetimeCode=false" +
                     "&serverTimezone=UTC" +  // TimeZone 을 UTC 로 설정
-                    "&allowPublicKeyRetrieval=true" // +
-            //  "&rewriteBatchedStatements=true"                        // Batch 처리를 위한 설정
+                    "&allowPublicKeyRetrieval=true" +
+                    "&rewriteBatchedStatements=true"   // Batch 처리를 위한 설정
 
             if (USE_TESTCONTAINERS) {
-                ContainerProvider.mysql8.jdbcUrl + options
+                Containers.MySql8.jdbcUrl + options
             } else {
                 "jdbc:mysql://localhost:3306/exposed$options"
             }
@@ -144,7 +144,7 @@ enum class TestDB(
         connection = {
             val options = "?lc_messages=en_US.UTF-8"
             if (USE_TESTCONTAINERS) {
-                ContainerProvider.postgres.jdbcUrl + options
+                Containers.Postgres.jdbcUrl + options
             } else {
                 "jdbc:postgresql://localhost:5432/exposed$options"
             }
@@ -171,7 +171,7 @@ enum class TestDB(
 
     COCKROACH(
         connection = {
-            ContainerProvider.cockroach.getJdbcUrl() + "?allowMultiQueries=true" // + "?sslmode=disable"
+            Containers.Cockroach.getJdbcUrl() + "?allowMultiQueries=true" // + "?sslmode=disable"
         },
         driver = JdbcDrivers.DRIVER_CLASS_POSTGRESQL,
         afterConnection = { connection ->

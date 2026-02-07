@@ -13,12 +13,21 @@ import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.take
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.dao.flushCache
 import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.jdbc.insertIgnore
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.suspendedTransactionAsync
+import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.random.Random
@@ -150,6 +159,45 @@ class KsuidMillisTableTest: AbstractCustomIdTableTest() {
             tasks.awaitAll()
 
             E1.all().count() shouldBeEqualTo recordCount.toLong()
+        }
+    }
+
+
+    /**
+     * ```sql
+     * INSERT INTO T1 (ID, "name", AGE)
+     * VALUES ('1efe3b58-c940-6036-9ee6-897d7aeb3be7', 'Miss Hung Kautzer', 30) ON CONFLICT DO NOTHING
+     * ```
+     */
+    @ParameterizedTest(name = "{0} - {1}개 레코드")
+    @MethodSource("getTestDBAndEntityCount")
+    fun `insertIgnore as flow`(testDB: TestDB, entityCount: Int) = runSuspendIO {
+        Assumptions.assumeTrue { testDB in TestDB.ALL_MYSQL_MARIADB + TestDB.POSTGRESQL }
+
+        withSuspendedTables(testDB, T1) {
+            val entities: Sequence<Pair<String, Int>> = generateSequence {
+                val name = faker.name().fullName()
+                val age = faker.number().numberBetween(8, 80)
+                name to age
+            }
+
+            entities.asFlow()
+                .buffer(16)
+                .take(entityCount)
+                .flatMapMerge(16) { (name, age) ->
+                    flow {
+                        val insertCount = T1.insertIgnore {
+                            it[T1.name] = name
+                            it[T1.age] = age
+                        }
+                        emit(insertCount)
+                    }
+                }
+                .collect()
+
+            flushCache()
+
+            T1.selectAll().count().toInt() shouldBeEqualTo entityCount
         }
     }
 }
