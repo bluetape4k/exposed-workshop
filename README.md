@@ -221,9 +221,9 @@ Spring Webflux Application 에서 Coroutines, Exposed 를 이용하여 Multitena
 
 다양한 캐시 전략에 대해 Redisson + Exposed 로 구현한 예제를 제공합니다.
 
-### [캐시 전략 (Caching Strategies) for Coroutines](11-high-performance/02-cache-strategies-coroutines/README.md)
+### [캐시 전략 (Caching Strategies) with Coroutines](11-high-performance/02-cache-strategies-coroutines/README.md)
 
-다양한 캐시 전략에 대해 Redisson + Exposed 로 구현한 예제를 제공합니다.
+다양한 캐시 전략에 대해 Coroutines 환경에서 비동기로 작동하는 Redisson + Exposed 로 구현한 예제를 제공합니다.
 
 ### [고성능을 위한 유연한 RoutingDataSource 구성](11-high-performance/03-routing-datasource/README.md)
 
