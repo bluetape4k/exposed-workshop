@@ -13,6 +13,7 @@ dependencies {
     testImplementation(Libs.exposed_java_time)
     testImplementation(Libs.bluetape4k_exposed)
 
+    testImplementation(Libs.bluetape4k_jdbc)
     testImplementation(Libs.bluetape4k_idgenerators)
     testImplementation(Libs.bluetape4k_junit5)
 
