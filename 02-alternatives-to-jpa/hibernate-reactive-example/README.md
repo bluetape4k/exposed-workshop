@@ -1,12 +1,52 @@
-# Hibernate Reactive Example
+# 02 Alternatives to JPA: Hibernate Reactive Example
 
-Async/Non-Blocking 기능을 제공하는 [Hibernate Reactive](https://hibernate.org/reactive/)를 사용하여 Spring Boot에서 Reactive 프로그래밍을
-적용하는 예제입니다.
+This module (
+`hibernate-reactive-example`) demonstrates how to build a reactive Spring Boot application using Hibernate Reactive as the Object-Relational Mapping (ORM) solution. It serves as a practical example for those looking into alternatives to traditional JPA or Exposed for reactive and non-blocking database interactions. The module manages a simple "Team" database, including teams and their members, exposed through reactive RESTful endpoints.
 
-# 블로그 글
+## Key Features and Components:
 
-* [Hibernate Reacitve 소개](https://debop.notion.site/Hibernate-Reactive-1b92744526b080eb8d1dfd93654a16b3)
+### 1. Spring Boot Application Core (`HibernateReactiveApplication.kt`)
 
-# 주의 사항
+- Standard Spring Boot entry point, configured as a
+  `REACTIVE` web application, likely leveraging Spring WebFlux for its web layer.
 
-hibernate-reactive 의 최신 버전이 사용하는 Hibernate 버전, Vert.x 버전 등이 충돌하고, 해결해야 할 문제가 있어, 실행되지 않습니다. 
+### 2. Domain Model (`alternatives.hibernate.reactive.example.domain.model` package)
+
+- **Hibernate Reactive Entities (`Team.kt`, `Member.kt`)
+  **: Defines the database entities using Jakarta Persistence annotations (`@Entity`, `@Id`, `@GeneratedValue`,
+  `@OneToMany`, `@ManyToOne`).
+    - `Team`: Represents a team with an `id` and `name`, having a one-to-many relationship with `Member` entities.
+    - `Member`: Represents a team member with an `id`, `name`, `age`, and a many-to-one relationship with a `Team`.
+- **Relationships**: Establishes a standard parent-child relationship between `Team` and
+  `Member` entities, demonstrating how to define and manage these relationships with Hibernate Reactive.
+
+### 3. Data Access Layer (`alternatives.hibernate.reactive.example.domain.repository` package)
+
+- Contains repository interfaces or classes (e.g., `TeamRepository.kt`,
+  `MemberRepository.kt`) responsible for performing asynchronous database operations on `Team` and
+  `Member` entities using Hibernate Reactive.
+
+### 4. RESTful API Controllers (`alternatives.hibernate.reactive.example.domain.controller` package)
+
+- **`TeamController.kt`
+  **: Handles reactive HTTP requests for managing team-related operations (e.g., fetching teams, adding new teams).
+- **`MemberController.kt`
+  **: Manages reactive HTTP requests for member-related operations (e.g., retrieving members, associating members with teams).
+- **`IndexController.kt`**: Serves the application's root or home page.
+
+### 5. Other Components (`alternatives.hibernate.reactive.example.domain.dto`, `mapper`, `utils` packages)
+
+- **DTOs**: Data Transfer Objects for efficient data exchange.
+- **Mappers**: Utility classes for mapping between entities and DTOs.
+- **Utils**: General utility functions supporting the application.
+
+## Getting Started:
+
+This module provides a fully functional Spring Boot WebFlux application showcasing reactive database operations with Hibernate Reactive. To run this application, you would typically:
+
+1. Configure your database connection in `application.properties` or `application.yml` (located in
+   `src/main/resources`).
+2. Build the project using Gradle.
+3. Run the `HibernateReactiveApplication.kt` as a standard Kotlin/Spring Boot application.
+
+This example provides a clear understanding of integrating Hibernate Reactive into a Spring Boot WebFlux environment, highlighting its capabilities for building scalable and non-blocking data-driven applications.

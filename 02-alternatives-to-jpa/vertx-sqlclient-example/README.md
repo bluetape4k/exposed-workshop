@@ -1,38 +1,41 @@
-# Vert.x Sql Client Example
+# 02 Alternatives to JPA: Vert.x SQL Client Example
 
-## 븦로그 글
+This module (
+`vertx-sqlclient-example`) provides a collection of test-based examples demonstrating how to perform reactive database operations using the Vert.x SQL Client. It serves as an alternative to traditional JPA, Exposed, or Spring Data R2DBC for building non-blocking and event-driven data access layers. The examples primarily focus on interacting with a PostgreSQL database and feature a simple
+`Customer` domain model.
 
-* [Vert.x Sql Client 소개](https://debop.notion.site/Vert-x-Sql-Client-1ad2744526b08072b431f5b00e0874d9)
+## Key Features and Components:
 
-[Vert.x Sql Client](https://vertx.io/docs/vertx-sql-client/java/) 와
-[MyBatis Dynamic SQL](https://mybatis.org/mybatis-dynamic-sql/docs/introduction.html) 을
-사용하여 Async/Non-Blocking 방식으로 데이터베이스를 사용하는 예제입니다.
+### 1. Core Test Utilities (`alternative.vertx.sqlclient.example` package)
 
-이 방식은 MyBatis의 SQL Mapper 기능과 Vert.x의 Sql Client를 조합하여 사용하는 방식입니다.
+- **`AbstractSqlClientTest.kt`
+  **: A base class for tests, providing common setup and utilities for Vert.x SQL Client test cases.
+- **`JDBCPoolExamples.kt`
+  **: Demonstrates the usage of Vert.x's JDBC client pool, showcasing how to integrate traditional JDBC drivers into a reactive Vert.x environment.
 
-## Mapping with Vert.x data objects
+### 2. Domain Model (`alternative.vertx.sqlclient.example.model` package)
 
-Vert SqlClient 의 RowMapper 를 사용하지 않고, Rows 를 바로 Record 에 매핑할 수 있다
-dataobject 폴더의 UserDataObject 구현을 참고
+- **`Customer.kt`**: Defines a simple `Customer` data class, serving as the domain entity for the examples.
 
-1. `io.vertx:vertx-codegen:4.3.1:processor` 를 dependency 에 추가한다
+### 3. PostgreSQL Specific Examples (`alternative.vertx.sqlclient.example.templates` package)
 
-```
-compileOnly(Libs.vertx_codegen)
-kapt(Libs.vertx_codegen)
-kaptTest(Libs.vertx_codegen)
-```
+- **`SqlClientTemplatePostgresExamples.kt`**: Contains examples specific to using
+  `SqlClientTemplate` with a PostgreSQL database, illustrating common CRUD (Create, Read, Update, Delete) operations and other database interactions in a reactive manner.
 
-2. module에 package-info.java 를 추가한다
+## Purpose:
 
-[package-info.java](src/main/java/io/bluetape4k/workshop/sqlclient/package-info.java)
+This module highlights the capabilities of Vert.x SQL Client for:
 
-```java
-@ModuleGen(name = "vertx-sqlclient-demo", groupPackage = "io.bluetape4k.workshop.sqlclient")
-package io.bluetape4k.workshop.sqlclient;
+- Performing asynchronous and non-blocking database operations.
+- Integrating with various database systems (with specific examples for PostgreSQL).
+- Providing a reactive alternative for data persistence layers in Vert.x-based applications.
 
-import io.vertx.codegen.annotations.ModuleGen;
-```
+## Getting Started:
 
-참고 자료 :
-[Mapping with Vert.x data objects](https://vertx.io/docs/vertx-sql-client-templates/java/#_mapping_with_vert_x_data_objects)
+To explore these examples:
+
+1. Ensure you have a PostgreSQL database instance running and configured for testing.
+2. Review the test cases in the `src/test/kotlin` directory to understand the implementation details.
+3. Run the tests using your IDE or Gradle to see the Vert.x SQL Client in action.
+
+This example provides valuable insights into building reactive data access components using the Vert.x ecosystem.

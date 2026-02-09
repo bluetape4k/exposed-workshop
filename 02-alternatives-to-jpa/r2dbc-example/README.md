@@ -1,68 +1,51 @@
-# Spring Data R2DBC Demo
+# 02 Alternatives to JPA: R2DBC Example
 
-## 블로그 글
+This module (
+`r2dbc-example`) demonstrates how to build a reactive Spring Boot application leveraging R2DBC (Reactive Relational Database Connectivity) through Spring Data R2DBC. It serves as a practical example for those exploring alternatives to traditional JPA or Exposed for reactive and non-blocking database interactions. The module manages a "Post and Comment" database, showcasing reactive data access patterns, exposed through RESTful endpoints.
 
-* [R2DBC + Spring Data R2DBC](https://debop.notion.site/R2DBC-Spring-Data-R2DBC-1ad2744526b080adadc7c737672f32a1)
+## Key Features and Components:
 
-## 참고
+### 1. Spring Boot Application Core (`R2dbcApplication.kt`)
 
-* [Spring Data Examples - r2dbc/example](https://github.com/spring-projects/spring-data-examples/tree/main/r2dbc/example)
-* [Spring Data Examples - r2dbc/query-by-example](https://github.com/spring-projects/spring-data-examples/tree/main/r2dbc/query-by-example)
+- Standard Spring Boot entry point, configured as a
+  `REACTIVE` web application, likely utilizing Spring WebFlux for its web layer.
 
-* [Spring Data R2DBC and Kotlin Coroutines](https://xebia.com/blog/spring-data-r2dbc-and-kotlin-coroutines/)
-* [Kotlin + Spring Webflux + R2DBC](https://dgahn.tistory.com/8)
+### 2. Domain Model (`alternative.r2dbc.example.domain.model` package)
 
-This projects shows some sample usage of the work-in-progress R2DBC support for Spring Data.
+- **R2DBC Entities (`Post.kt`, `Comment.kt`, `Customer.kt`)
+  **: Defines the database entities using Spring Data R2DBC annotations (`@Table`, `@Column`, `@Id`).
+    - `Post`: Represents a blog post with an `id`, `title`, and `content`.
+    - `Comment`: Represents a comment on a post with an `id`, `content`, and a
+      `postId` establishing a many-to-one relationship with `Post`.
+    - `Customer`: (Assumed) Represents a customer entity, demonstrating additional data models.
+- **Relationships**: Establishes a standard parent-child relationship between `Post` and
+  `Comment` entities, demonstrating how to define and manage these relationships with Spring Data R2DBC.
 
-### Interesting bits to look at
+### 3. Reactive Data Access Layer (`alternative.r2dbc.example.domain.repository` package)
 
-- `InfrastructureConfiguration` - sets up a R2DBC `ConnectionFactory` based on the R2DBC H2
-  driver (https://github.com/r2dbc/r2dbc-h2[r2dbc-h2]), a `DatabaseClient` and a `R2dbcRepositoryFactory` to eventually
-  create a `CustomerRepository`.
-- `CustomerRepository` - a standard Spring Data reactive CRUD repository exposing query methods using manually defined
-  queries
-- `CustomerRepositoryIntegrationTests` - to initialize the database with some setup SQL and the inserting and
-  reading `Customer` instances.
-- `TransactionalService` - uses declarative transaction to apply a transactional boundary to repository operations.
+- **`PostRepository.kt`**: Provides an interface for reactive database operations on
+  `Post` entities, typically extending `ReactiveCrudRepository`.
+- **`CommentRepository.kt`**: Provides an interface for reactive database operations on `Comment` entities.
+- **`CustomerRepository.kt`**: Provides an interface for reactive database operations on `Customer` entities.
 
-This project contains samples of Query-by-Example of Spring Data R2DBC.
+### 4. RESTful API Controllers (`alternative.r2dbc.example.controller` package)
 
-### Support for Query-by-Example
+- (Assumed) Contains controllers like `PostController.kt`, `CommentController.kt`, and
+  `CustomerController.kt` to handle reactive HTTP requests for managing posts, comments, and customers respectively. These would expose the reactive data access layer through a RESTful API.
 
-Query by Example (QBE) is a user-friendly querying technique with a simple interface.
-It allows dynamic query creation and does not require to write queries containing field names.
-In fact, Query by Example does not require to write queries using SQL at all.
+### 5. Other Components (`alternative.r2dbc.example.config`, `exceptions`, `utils` packages)
 
-An `Example` takes a data object (usually the entity object or a subtype of it) and a specification how to match
-properties.
-You can use Query by Example with Repositories.
+- **Config**: Application configuration, including R2DBC specific settings.
+- **Exceptions**: Custom exception handling for the reactive application.
+- **Utils**: General utility functions supporting the application.
 
-```java
-interface PersonRepository extends ReactiveCrudRepository<Person, Long>, ReactiveQueryByExampleExecutor<Person> {
-}
-```
+## Getting Started:
 
-```java
-Example<Person> example = Example.of(new Person("Jon", "Snow"));
-        repo.
+This module provides a fully functional Spring Boot WebFlux application showcasing reactive database operations with R2DBC. To run this application, you would typically:
 
-findAll(example);
+1. Configure your database connection in `application.properties` or `application.yml` (located in
+   `src/main/resources`).
+2. Build the project using Gradle.
+3. Run the `R2dbcApplication.kt` as a standard Kotlin/Spring Boot application.
 
-
-ExampleMatcher matcher = ExampleMatcher.matching().
-        .
-
-withMatcher("firstname",endsWith())
-        .
-
-withMatcher("lastname",startsWith().
-
-ignoreCase());
-
-Example<Person> example = Example.of(new Person("Jon", "Snow"), matcher);
-        repo.
-
-count(example);
-```
-
-This example contains shows the usage with `PersonRepositoryIntegrationTests`.
+This example provides a clear understanding of integrating R2DBC into a Spring Boot WebFlux environment, highlighting its capabilities for building scalable and non-blocking data-driven applications with a reactive programming model.
