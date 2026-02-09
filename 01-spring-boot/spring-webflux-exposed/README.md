@@ -1,54 +1,85 @@
 # 01 Spring Boot: Spring WebFlux with Exposed
 
-This module (
-`spring-webflux-exposed`) demonstrates how to build a reactive Spring Boot application using the Spring WebFlux framework, with Exposed as the Object-Relational Mapping (ORM) library for asynchronous database interactions. It provides a practical example of managing a movie database, including actors, movies, and their many-to-many relationships, exposed through reactive RESTful endpoints.
+이 모듈(`spring-webflux-exposed`)은 초보자를 위한 **Spring WebFlux + Exposed** 예제입니다. 영화와 배우 데이터를 다루며, **비동기 REST API
+**를 만드는 흐름을 쉽게 따라갈 수 있도록 구성되어 있습니다.
 
-## Key Features and Components:
+## 이 모듈에서 배우는 것
 
-### 1. Spring Boot Application Core (`SpringWebfluxApplication.kt`)
+- WebFlux 기반의 비동기 API 구조
+- Exposed DAO로 데이터 저장/조회
+- 영화와 배우 **다대다 관계** 모델링
+- Repository → Controller로 이어지는 기본 구조
 
-- Standard Spring Boot entry point, configured as a `REACTIVE` web application.
+## Movie 스키마 (이미지 + 테이블 정의)
 
-### 2. Domain Model (`exposed.workshop.springwebflux.domain.model` package)
+![Movie Schema](MovieSchema_Dark.png)
 
-- **Movie Schema (`MovieSchema.kt`)
-  **: Defines the database tables for the movie domain (identical to the Spring MVC example):
-    - `MovieTable`: Stores movie details such as `name`, `producerName`, and `releaseDate`.
-    - `ActorTable`: Stores actor details including `firstName`, `lastName`, and `birthday`.
-    - `ActorInMovieTable`: A join table establishing a many-to-many relationship between movies and actors.
-- **Exposed DAO Entities**: `MovieEntity` and
-  `ActorEntity` classes provide an object-oriented interface for interacting with the `MovieTable` and
-  `ActorTable` respectively, including navigation properties for the many-to-many relationship.
-- **Data Transfer Objects (`MovieRecords.kt`)**: Contains data classes like `ActorRecord` and
-  `MovieWithActorRecord` for representing and transferring movie and actor data within the application.
-- **Mappers (`MovieMappers.kt`)**: Provides utility functions for mapping between Exposed
-  `ResultRow` objects and the domain-specific data classes.
+아래는 이 모듈에서 사용하는 테이블 정의입니다. 영화/배우는 다대다 관계이며, `actors_in_movies`가 조인 테이블입니다.
 
-### 3. Reactive Data Access (`exposed.workshop.springwebflux.domain.repository` package)
+```kotlin
+object MovieTable: LongIdTable("movies") {
+  val name = varchar("name", 255).index()
+  val producerName = varchar("producer_name", 255).index()
+  val releaseDate = datetime("release_date")
+}
 
-- **`MovieRepository.kt`
-  **: Handles asynchronous database operations for movies using Exposed, returning reactive types (e.g., `Mono`,
-  `Flux`).
-- **`ActorRepository.kt`**: Manages asynchronous database operations for actors using Exposed, returning reactive types.
+object ActorTable: LongIdTable("actors") {
+  val firstName = varchar("first_name", 255).index()
+  val lastName = varchar("last_name", 255).index()
+  val birthday = date("birthday").nullable()
+}
 
-### 4. Reactive RESTful API Controllers (`exposed.workshop.springwebflux.controller` package)
+object ActorInMovieTable: Table("actors_in_movies") {
+  val movieId = reference("movie_id", MovieTable, onDelete = ReferenceOption.CASCADE)
+  val actorId = reference("actor_id", ActorTable, onDelete = ReferenceOption.CASCADE)
 
-- **`MovieController.kt`**: Handles reactive HTTP requests related to movie operations.
-- **`ActorController.kt`**: Manages reactive HTTP requests for actor-related operations.
-- **`MovieActorsController.kt`**: Provides reactive endpoints for managing the relationships between movies and actors.
-- **`IndexController.kt`**: Serves the application's root or home page.
+  override val primaryKey = PrimaryKey(movieId, actorId)
+}
+```
 
-### 5. Utility Classes (`exposed.workshop.springwebflux.utils` package)
+## 프로젝트 구성 (쉽게 보기)
 
-- Contains general utility functions supporting the WebFlux application.
+### 1) 시작점
 
-## Getting Started:
+- `SpringWebfluxApplication.kt`
+  - Spring Boot 실행 클래스
+  - WebFlux(REACTIVE) 앱으로 설정
 
-This module provides a fully functional Spring WebFlux application showcasing asynchronous database operations with Exposed. To run this application, you would typically:
+### 2) 도메인 모델 (테이블/엔티티)
 
-1. Configure your database connection in `application.properties` or `application.yml` (located in
-   `src/main/resources`).
-2. Build the project using Gradle.
-3. Run the `SpringWebfluxApplication.kt` as a standard Kotlin/Spring Boot application.
+- `MovieSchema.kt`
+  - `MovieTable`, `ActorTable`, `ActorInMovieTable` 정의
+  - 영화-배우 다대다 관계를 조인 테이블로 표현
+- `MovieEntity`, `ActorEntity`
+  - Exposed DAO 엔티티
+  - 테이블을 객체로 다루기 위한 클래스
+- `MovieRecords.kt`
+  - API 응답용 DTO (예: `MovieWithActorRecord`)
+- `MovieMappers.kt`
+  - `ResultRow`를 DTO로 변환하는 함수 모음
 
-This setup offers a clear blueprint for integrating Exposed into a robust Spring Boot WebFlux environment, leveraging reactive programming for efficient, non-blocking operations.
+### 3) Repository (비동기 데이터 접근)
+
+- `MovieRepository.kt`
+- `ActorRepository.kt`
+
+Exposed 쿼리를 실행하고, `Mono`/`Flux`로 결과를 반환합니다.
+
+### 4) Controller (REST API)
+
+- `MovieController.kt` : 영화 API
+- `ActorController.kt` : 배우 API
+- `MovieActorsController.kt` : 영화-배우 관계 API
+- `IndexController.kt` : 기본 페이지
+
+### 5) 기타 유틸
+
+- `exposed.workshop.springwebflux.utils` 패키지에 보조 함수들이 있습니다.
+
+## 실행 방법 (처음 보는 사람 기준)
+
+1. `src/main/resources/application.yml`에 DB 연결 정보를 설정합니다.
+2. Gradle로 빌드합니다.
+3. `SpringWebfluxApplication.kt`를 실행합니다.
+
+이 모듈은 **Spring WebFlux에서 Exposed를 어떻게 쓰는지**를 빠르게 감 잡기 위한 예제입니다.

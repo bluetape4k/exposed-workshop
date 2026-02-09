@@ -1,50 +1,93 @@
 # 01 Spring Boot: Spring MVC with Exposed
 
-This module (
-`spring-mvc-exposed`) demonstrates how to build a Spring Boot application using the Spring MVC framework, with Exposed as the Object-Relational Mapping (ORM) library for database interactions. It provides a practical example of managing a movie database, including actors, movies, and their many-to-many relationships, exposed through RESTful endpoints.
+이 모듈(`spring-mvc-exposed`)은 초보자를 위한 **Spring MVC + Exposed** 예제입니다. 영화와 배우 데이터를 다루며, **동기 REST API
+**를 만드는 흐름을 쉽게 따라갈 수 있도록 구성되어 있습니다.
 
-## Key Features and Components:
+## 이 모듈에서 배우는 것
 
-### 1. Spring Boot Application Core (`SpringMvcApplication.kt`)
+- Spring MVC 기반의 동기 API 구조
+- Exposed DAO로 데이터 저장/조회
+- 영화와 배우 **다대다 관계** 모델링
+- Repository → Controller로 이어지는 기본 구조
 
-- Standard Spring Boot entry point, configured as a `SERVLET` web application.
+## Movie 스키마 (이미지 + 테이블 정의)
 
-### 2. Domain Model (`exposed.workshop.springmvc.domain.model` package)
+![Movie Schema](MovieSchema_Dark.png)
 
-- **Movie Schema (`MovieSchema.kt`)**: Defines the database tables for the movie domain:
-    - `MovieTable`: Stores movie details such as `name`, `producerName`, and `releaseDate`.
-    - `ActorTable`: Stores actor details including `firstName`, `lastName`, and `birthday`.
-    - `ActorInMovieTable`: A join table establishing a many-to-many relationship between movies and actors.
-- **Exposed DAO Entities**: `MovieEntity` and
-  `ActorEntity` classes provide a clean, object-oriented interface for interacting with the `MovieTable` and
-  `ActorTable` respectively, including navigation properties for the many-to-many relationship.
-- **Data Transfer Objects (`MovieRecords.kt`)**: Contains data classes like `ActorRecord` and
-  `MovieWithActorRecord` for representing and transferring movie and actor data within the application.
-- **Mappers (`MovieMappers.kt`)**: Provides utility functions for mapping between Exposed
-  `ResultRow` objects and the domain-specific data classes.
+아래는 이 모듈에서 사용하는 테이블 정의입니다. 영화/배우는 다대다 관계이며, `actors_in_movies`가 조인 테이블입니다.
 
-### 3. Data Initialization (`DataInitializer.kt`)
+```kotlin
+object MovieTable: LongIdTable("movies") {
+  val name: Column<String> = varchar("name", 255)
+  val producerName: Column<String> = varchar("producer_name", 255)
+  val releaseDate: Column<LocalDateTime> = datetime("release_date")
+}
 
-- Implements
-  `ApplicationListener<ApplicationReadyEvent>` to populate the database with sample movie and actor data when the application starts.
-- Utilizes Exposed's `batchInsert` and
-  `insert` operations to efficiently add initial data, demonstrating data seeding techniques.
+object ActorTable: LongIdTable("actors") {
+  val firstName: Column<String> = varchar("first_name", 255)
+  val lastName: Column<String> = varchar("last_name", 255)
+  val birthday: Column<LocalDate?> = date("birthday").nullable()
+}
 
-### 4. RESTful API Controllers (`exposed.workshop.springmvc.controller` package)
+object ActorInMovieTable: Table("actors_in_movies") {
+  val movieId: Column<EntityID<Long>> = reference("movie_id", MovieTable, onDelete = ReferenceOption.CASCADE)
+  val actorId: Column<EntityID<Long>> = reference("actor_id", ActorTable, onDelete = ReferenceOption.CASCADE)
 
-- **`MovieController.kt`
-  **: Handles HTTP requests related to movie operations (e.g., fetching all movies, fetching a single movie).
-- **`ActorController.kt`**: Manages HTTP requests for actor-related operations (e.g., retrieving actor details).
-- **`MovieActorsController.kt`**: Provides endpoints for managing the relationships between movies and actors.
-- **`IndexController.kt`**: Serves the application's root or home page.
+  override val primaryKey = PrimaryKey(movieId, actorId)
+}
+```
 
-## Getting Started:
+## 프로젝트 구성 (쉽게 보기)
 
-This module provides a fully functional Spring MVC application showcasing database operations with Exposed. To run this application, you would typically:
+### 1) 시작점
 
-1. Configure your database connection in `application.properties` or `application.yml` (located in
-   `src/main/resources`).
-2. Build the project using Gradle.
-3. Run the `SpringMvcApplication.kt` as a standard Kotlin/Spring Boot application.
+- `SpringMvcApplication.kt`
+  - Spring Boot 실행 클래스
+  - MVC(SERVLET) 앱으로 설정
 
-This setup offers a clear blueprint for integrating Exposed into a robust Spring Boot MVC environment.
+### 2) 도메인 모델 (테이블/엔티티)
+
+- `MovieSchema.kt`
+  - `MovieTable`, `ActorTable`, `ActorInMovieTable` 정의
+  - 영화-배우 다대다 관계를 조인 테이블로 표현
+- `MovieEntity`, `ActorEntity`
+  - Exposed DAO 엔티티
+  - 테이블을 객체로 다루기 위한 클래스
+- `MovieRecords.kt`
+  - API 응답용 DTO (예: `MovieWithActorRecord`)
+- `MovieMappers.kt`
+  - `ResultRow`를 DTO로 변환하는 함수 모음
+
+### 3) Repository (동기 데이터 접근)
+
+- `MovieRepository.kt`
+- `ActorRepository.kt`
+
+Exposed 쿼리를 실행하고, 동기 방식으로 결과를 반환합니다.
+
+### 4) 데이터 초기화
+
+- `DataInitializer.kt`
+  - 앱 시작 시 샘플 데이터를 삽입
+  - `batchInsert`, `insert` 사용
+
+### 5) Controller (REST API)
+
+- `MovieController.kt` : 영화 API
+- `ActorController.kt` : 배우 API
+- `MovieActorsController.kt` : 영화-배우 관계 API
+- `IndexController.kt` : 기본 페이지
+
+### 6) 설정
+
+- `ExposedDatabaseConfig.kt` : DB 연결 설정
+- `SwaggerConfig.kt` : Swagger UI 설정
+- `AsyncVirtualThreadConfig.kt`, `TomcatVirtualThreadConfig.kt` : 가상 스레드 설정
+
+## 실행 방법 (처음 보는 사람 기준)
+
+1. `src/main/resources/application.yml`에 DB 연결 정보를 설정합니다.
+2. Gradle로 빌드합니다.
+3. `SpringMvcApplication.kt`를 실행합니다.
+
+이 모듈은 **Spring MVC에서 Exposed를 어떻게 쓰는지**를 빠르게 감 잡기 위한 예제입니다.
