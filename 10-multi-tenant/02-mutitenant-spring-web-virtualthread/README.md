@@ -35,7 +35,10 @@
 2. `02-mutitenant-spring-web-virtualthread` 디렉토리로 이동합니다.
 3. Java 21 이상이 설치되어 있는지 확인합니다.
 4. Gradle을 사용하여 애플리케이션을 실행합니다: `./gradlew bootRun`
-5. 애플리케이션이 실행되면, Postman 또는 cURL과 같은 도구를 사용하여 API를 테스트할 수 있습니다. 예: `GET /api/public/actors` 또는 `GET /api/tenant1/actors`
-   (테넌트 ID는 경로 변수 또는 헤더로 전달될 수 있습니다.)
+5. 애플리케이션이 실행되면, Postman 또는 cURL과 같은 도구를 사용하여 API를 테스트할 수 있습니다.
+   1. 테넌트 ID는 헤더로 전달합니다.
+      1. 예: `GET /actors` with header `X-Tenant-Id: tenant1`
+   2. path variable로 전달하는 방식을 사용하려면 ActorController의 매핑을 `/api/{tenantId}/actors`로 변경합니다.
+      1. 예: `GET /api/tenant1/actors`
 
 이 모듈을 통해 Spring Web, Exposed, 그리고 Java 21 가상 스레드를 활용하여 고성능 멀티테넌트 웹 애플리케이션을 구축하는 데 필요한 지식과 실용적인 예제를 얻을 수 있습니다.

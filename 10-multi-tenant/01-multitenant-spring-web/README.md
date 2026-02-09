@@ -31,7 +31,10 @@
 1. 프로젝트를 클론합니다.
 2. `01-multitenant-spring-web` 디렉토리로 이동합니다.
 3. Gradle을 사용하여 애플리케이션을 실행합니다: `./gradlew bootRun`
-4. 애플리케이션이 실행되면, Postman 또는 cURL과 같은 도구를 사용하여 API를 테스트할 수 있습니다. 예: `GET /api/public/actors` 또는 `GET /api/tenant1/actors`
-   (테넌트 ID는 경로 변수 또는 헤더로 전달될 수 있습니다.)
+4. 애플리케이션이 실행되면, Postman 또는 cURL과 같은 도구를 사용하여 API를 테스트할 수 있습니다.
+   1. 테넌트 ID는 헤더로 전달합니다.
+      1. 예: `GET /actors` with header `X-Tenant-Id: tenant1`
+   2. path variable로 전달하는 방식을 사용하려면 ActorController의 매핑을 `/api/{tenantId}/actors`로 변경합니다.
+      1. 예: `GET /api/tenant1/actors`
 
 이 모듈을 통해 Spring Web 환경에서 Exposed와 함께 안전하고 확장 가능한 멀티테넌시 솔루션을 구축하는 데 필요한 기반 지식을 얻을 수 있습니다.

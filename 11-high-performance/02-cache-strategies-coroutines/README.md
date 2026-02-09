@@ -144,6 +144,15 @@ DB 데이터를 읽기 전용으로 캐시합니다. `UserCredentialsCacheReposi
 | `DELETE` | `/users/invalidate?ids=` | 지정 ID 캐시 무효화              |
 | `DELETE` | `/users/invalidate/all`  | 전체 캐시 무효화                 |
 
+### UserCredentialsController (`/user-credentials`) - Read-Only
+
+| Method   | Path                                            | 설명                                |
+|----------|-------------------------------------------------|-----------------------------------|
+| `GET`    | `/user-credentials/{id}`                        | 단일 사용자 인증 정보 조회 (Read-Only Cache) |
+| `DELETE` | `/user-credentials/invalidate?ids=`             | 지정 ID 캐시 무효화                      |
+| `DELETE` | `/user-credentials/invalidate/all`              | 전체 캐시 무효화                         |
+| `DELETE` | `/user-credentials/invalidate/pattern?pattern=` | 패턴 매칭 캐시 무효화                      |
+
 ### UserEventController (`/user-events`) - Write Behind
 
 | Method | Path                | 설명                       |
