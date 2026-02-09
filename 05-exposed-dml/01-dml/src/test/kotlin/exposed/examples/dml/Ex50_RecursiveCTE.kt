@@ -17,6 +17,7 @@ import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import java.io.Serializable
 import java.sql.ResultSet
 
 class Ex50_RecursiveCTE: JdbcExposedTestBase() {
@@ -35,7 +36,7 @@ class Ex50_RecursiveCTE: JdbcExposedTestBase() {
         val parentId: Int?,
         val name: String,
         val path: String,
-    )
+    ): Serializable
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -82,7 +83,7 @@ class Ex50_RecursiveCTE: JdbcExposedTestBase() {
                         name = rs.getString("name"),
                         path = rs.getString("path")
                     ).apply {
-                        log.debug { "Found category: name:${name}, path=${path}" }
+                        log.debug { "Found category: $this" }
                     }
                 }
             }
