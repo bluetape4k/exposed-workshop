@@ -1,49 +1,133 @@
-# 06 Advanced: Exposed Kotlinx-Datetime Integration
+# Exposed-Kotlin-Datetime: kotlinx.datetime Support
 
-This module (`03-exposed-kotlin-datetime`) provides examples and test cases demonstrating the integration of
-`kotlinx.datetime` API types with the Exposed framework using the
-`exposed-kotlin-datetime` extension. It showcases how to effectively define and manipulate date and time data in your database using Kotlin-native date/time objects, offering a modern and idiomatic alternative to
-`java.time` for Kotlin applications.
+This module demonstrates how to use the
+`exposed-kotlin-datetime` extension, which provides seamless integration with the
+`kotlinx.datetime` library. This is the recommended approach for handling date and time in modern, multiplatform Kotlin projects.
 
-## Key Features and Components:
+## Learning Objectives
 
-### 1. Basic Kotlinx-Datetime Usage (`Ex01_KotlinDateTime.kt`)
+- Understand how to map database date/time types to `kotlinx.datetime` objects like `LocalDate`, `LocalDateTime`, and
+  `Instant`.
+- Use built-in SQL functions for date/time manipulation (e.g., `year()`, `month()`, `day()`).
+- Define server-side default values for date/time columns using expressions like `CurrentDateTime`.
+- Correctly use date/time literals in `WHERE` clauses for type-safe comparisons.
+- Be aware of the differences in date/time handling across various database backends.
 
-- Illustrates the fundamental process of defining columns using `kotlinx.datetime` types such as `LocalDate`,
-  `LocalDateTime`, `Instant`, and `TimeZone` in Exposed table schemas.
-- Covers basic CRUD operations involving these Kotlin-native date and time types.
+## Key Column Types and Functions
 
-### 2. Default Values for Date/Time Columns (`Ex02_Defaults.kt`)
+The `exposed-kotlin-datetime` module provides a set of column types and functions that parallel the
+`exposed-java-time` module, but for the `kotlinx.datetime` library.
 
-- Demonstrates how to assign default values to
-  `kotlinx.datetime` columns, including dynamic defaults for automatically recording creation or update times.
+### Column Types
 
-### 3. Date/Time Literals in Queries (`Ex03_DateTimeLiteral.kt`)
+- `date(name)`: Maps to `kotlinx.datetime.LocalDate`.
+- `time(name)`: Maps to `kotlinx.datetime.LocalTime`.
+- `datetime(name)`: Maps to `kotlinx.datetime.LocalDateTime`.
+- `timestamp(name)`: Maps to `kotlinx.datetime.Instant`.
+- `timestampWithTimeZone(name)`: Maps to `java.time.OffsetDateTime` (as
+  `kotlinx.datetime` does not have a native offset-aware type).
+- `duration(name)`: Maps to `kotlin.time.Duration`.
 
-- Focuses on using
-  `kotlinx.datetime` literals directly within Exposed queries, enabling precise filtering and comparisons based on date and time values.
+### Default Expressions
 
-### 4. Kotlinx-Datetime Support Helpers (`KotlinDateTimeSupports.kt`)
+Use these expressions to set database-generated default values.
 
-- Contains helper functions, utilities, or configurations specifically designed to facilitate testing and usage of
-  `kotlinx.datetime` support within Exposed.
+- `CurrentDate`: Represents the database's `CURRENT_DATE` function.
+- `CurrentDateTime` / `CurrentTimestamp`: Represent the database's `CURRENT_TIMESTAMP` or equivalent function.
+- `CurrentTimestampWithTimeZone`: Represents `CURRENT_TIMESTAMP WITH TIME ZONE`.
 
-## Purpose:
+### Literals for Queries
 
-This module is designed to help users understand:
+To ensure correct SQL generation across different database dialects, use these literal functions when making comparisons in
+`WHERE` clauses.
 
-- How to effectively integrate
-  `kotlinx.datetime` types into their Exposed-based database applications for Kotlin-native date/time handling.
-- Defining date and time columns with precision and proper handling using `kotlinx.datetime`.
-- Utilizing default values and literals for date/time fields in queries.
-- Leveraging the `exposed-kotlin-datetime` extension as a modern alternative to `java.time` integration.
+- `dateLiteral(LocalDate)`
+- `timeLiteral(LocalTime)`
+- `dateTimeLiteral(LocalDateTime)`
+- `timestampLiteral(Instant)`
+- `timestampWithTimeZoneLiteral(OffsetDateTime)`
 
-## Getting Started:
+## Examples Overview
 
-To explore these examples:
+The examples in this module mirror those in the `exposed-java-time` module, demonstrating parallel functionality for
+`kotlinx.datetime`.
 
-1. Review the source code in `src/test/kotlin/exposed/examples/kotlin/datetime`.
-2. Run the test cases using your IDE or Gradle to observe how
-   `exposed-kotlin-datetime` simplifies date and time handling in Kotlin.
+### `Ex01_KotlinDateTime.kt` - Basic Usage and Functions
 
-This module provides a clear guide to mastering `kotlinx.datetime` integration with Exposed.
+This file demonstrates core functionality:
+
+- Using date part extraction functions (`.year()`, `.month()`) in queries.
+- Storing and retrieving `kotlinx.datetime` types, including nanosecond precision.
+- Working with time zones via `timestampWithTimeZone`.
+
+### `Ex02_Defaults.kt` - Default Values
+
+This file explores setting default values for `kotlinx.datetime` columns.
+
+- `default(value)`: A constant, client-side default.
+- `clientDefault { ... }`: A client-side default generated by a lambda.
+- `defaultExpression(...)`: A server-side default using database functions like `CurrentDateTime`.
+
+### `Ex03_DateTimeLiteral.kt` - Querying with Literals
+
+This file highlights the correct way to use `kotlinx.datetime` values in
+`WHERE` clauses by wrapping them in literal functions (`dateLiteral`,
+`dateTimeLiteral`, etc.) to ensure proper SQL formatting.
+
+## Code Snippets
+
+### 1. Defining a Table with `kotlinx.datetime` Columns
+
+```kotlin
+import kotlinx.datetime.LocalDateTime
+import org.jetbrains.exposed.v1.datetime.datetime
+import org.jetbrains.exposed.v1.datetime.CurrentDateTime
+
+object CitiesTime: IntIdTable("CitiesTime") {
+    val name: Column<String> = varchar("name", 50)
+
+    // A nullable kotlinx.datetime.LocalDateTime column
+    val local_time: Column<LocalDateTime?> = datetime("local_time").nullable()
+}
+
+object TableWithDBDefault: IntIdTable() {
+    // A non-nullable kotlinx.datetime.LocalDateTime column with a server-side default
+    val t1: Column<LocalDateTime> = datetime("t1").defaultExpression(CurrentDateTime)
+}
+```
+
+### 2. Inserting and Querying `kotlinx.datetime` Values
+
+```kotlin
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.exposed.v1.datetime.dateLiteral
+
+// Inserting a value
+val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+val cityID = CitiesTime.insertAndGetId {
+    it[name] = "Tunisia"
+    it[local_time] = now
+}
+
+// Querying using a date part function
+val insertedMonth = CitiesTime.select(CitiesTime.local_time.month())
+    .where { CitiesTime.id eq cityID }
+    .single()[CitiesTime.local_time.month()]
+
+// Querying using a literal in a WHERE clause
+val result = TableWithDate.selectAll()
+    .where { TableWithDate.date less dateLiteral(LocalDate(3000, 1, 1)) }
+    .firstOrNull()
+```
+
+## Test Execution
+
+```bash
+# Run all tests in this module
+./gradlew :06-advanced:03-exposed-kotlin-datetime:test
+
+# Run a specific test class
+./gradlew :06-advanced:03-exposed-kotlin-datetime:test --tests "exposed.examples.kotlin.datetime.Ex01_KotlinDateTime"
+```

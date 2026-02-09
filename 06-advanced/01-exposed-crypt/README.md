@@ -1,34 +1,103 @@
-# 06 Advanced: Exposed Crypt
+# Exposed-Crypt: Transparent Column Encryption
 
-This module (
-`01-exposed-crypt`) provides examples and test cases demonstrating the integration of encryption into Exposed applications using the
-`exposed-crypt` extension. It showcases how to define and utilize encrypted columns for sensitive data, ensuring data security within your database, whether you're using Exposed's SQL DSL or its powerful Entity API.
+This module demonstrates how to use the
+`exposed-crypt` extension to transparently encrypt and decrypt data in your database columns. This is useful for protecting sensitive information like personal data, secrets, or financial details at rest.
 
-## Key Features and Components:
+## Learning Objectives
 
-### 1. Encrypted Columns with SQL DSL (`Ex01_EncryptedColumn.kt`)
+- Understand how to define encrypted columns in Exposed tables.
+- Learn to use different encryption algorithms (`AES`, `Blowfish`, `Triple DES`).
+- Apply encrypted columns in both DSL and DAO styles.
+- Recognize the limitations of searching on encrypted columns.
 
-- Illustrates how to define and interact with encrypted columns using Exposed's SQL Domain Specific Language (DSL).
-- Covers the process of writing and reading data to/from encrypted fields, demonstrating transparent encryption and decryption at the database level.
+## Key Concepts
 
-### 2. Encrypted Columns with Entity API (`Ex02_EncryptedColumnWithEntity.kt`)
+The core of this functionality lies in custom column types that handle encryption and decryption automatically.
 
-- Demonstrates the usage of encrypted columns when working with Exposed's Entity API.
-- Shows how to seamlessly integrate encryption into your entity definitions, allowing for secure data handling through object-oriented models.
+- `encryptedVarchar(name: String, colLength: Int, encryptor: Encryptor)`: Defines a
+  `VARCHAR` column that stores its content as an encrypted string.
+- `encryptedBinary(name: String, colLength: Int, encryptor: Encryptor)`: Defines a `VARBINARY` or
+  `BYTEA` column that stores its content as encrypted binary data.
+- `Encryptor`: An interface for the encryption/decryption logic. The library provides several implementations in the
+  `org.jetbrains.exposed.v1.crypt.Algorithms` object.
 
-## Purpose:
+**Important Note:** The default
+`Encryptor` implementations in Exposed use algorithms that produce different ciphertexts for the same plaintext on each encryption call. This is a security feature to prevent pattern analysis. However, it means you
+**cannot** perform direct equality checks (
+`where { table.column eq "value" }`) on these columns. For searchable encryption, you would need a deterministic encryption algorithm, like the one provided by Jasypt (see the
+`10-exposed-jasypt` example).
 
-This module is designed to help users understand:
+## Examples Overview
 
-- How to enhance the security of their Exposed applications by encrypting sensitive data in database columns.
-- The implementation of `exposed-crypt` with both Exposed's SQL DSL and Entity API.
-- Best practices for handling encrypted data within a Kotlin/Exposed environment.
+### `Ex01_EncryptedColumn.kt` (DSL-style)
 
-## Getting Started:
+This file demonstrates the basic usage of encrypted columns with the DSL API.
 
-To explore these examples:
+- **Table Definition**: Shows how to define a table with multiple columns, each using a different encryption algorithm (
+  `AES_256_PBE_CBC`, `AES_256_PBE_GCM`, `BLOW_FISH`, `TRIPLE_DES`).
+- **Insert & Update
+  **: When you insert or update a value, it is automatically encrypted before being sent to the database. The application code only deals with plain text.
+- **Select**: When you retrieve data, the column value is automatically decrypted.
+- **Search Limitation**: Explicitly shows that a `select` query with a
+  `where` clause on an encrypted column will not work as expected.
 
-1. Review the source code in `src/test/kotlin/exposed/examples/crypt`.
-2. Run the test cases using your IDE or Gradle to observe how `exposed-crypt` facilitates data encryption.
+### `Ex02_EncryptedColumnWithEntity.kt` (DAO-style)
 
-This module provides a clear guide to implementing encryption in your Exposed projects.
+This file shows how to integrate encrypted columns with the DAO API for an entity-like experience.
+
+- **Entity Definition**: An `IntEntity` is defined with properties (`varchar`, `binary`) that are mapped to
+  `encryptedVarchar` and `encryptedBinary` columns.
+- **CRUD Operations**: Creating (`ETest.new { ... }`), reading (
+  `ETest.all()`), and updating entities works seamlessly. The encryption and decryption are completely transparent to the developer.
+- **Search Limitation**: Reinforces that finding entities by an encrypted property (
+  `ETest.find { TestTable.varchar eq "value" }`) will fail.
+
+## Code Snippets
+
+### 1. Defining a Table with Encrypted Columns (DSL)
+
+```kotlin
+val nameEncryptor = Algorithms.AES_256_PBE_CBC("passwd", "5c0744940b5c369b")
+
+object StringTable: IntIdTable("StringTable") {
+    val name: Column<String> = encryptedVarchar("name", 80, nameEncryptor)
+    val city: Column<String> =
+        encryptedVarchar("city", 80, Algorithms.AES_256_PBE_GCM("passwd", "5c0744940b5c369b"))
+    val address: Column<String> = encryptedVarchar("address", 100, Algorithms.BLOW_FISH("key"))
+}
+```
+
+### 2. Using Encrypted Columns with an Entity (DAO)
+
+```kotlin
+object TestTable: IntIdTable() {
+    private val encryptor = Algorithms.AES_256_PBE_GCM("passwd", "12345678")
+    val varchar = encryptedVarchar("varchar", 100, encryptor)
+    val binary = encryptedBinary("binary", 100, encryptor)
+}
+
+class ETest(id: EntityID<Int>): IntEntity(id) {
+    companion object: IntEntityClass<ETest>(TestTable)
+
+    var varchar: String by TestTable.varchar
+    var binary: ByteArray by TestTable.binary
+}
+
+// Usage is transparent
+val entity = ETest.new {
+    varchar = "my secret value"
+    binary = "another secret".toByteArray()
+}
+
+println(entity.varchar) // Prints "my secret value"
+```
+
+## Test Execution
+
+```bash
+# Run all tests in this module
+./gradlew :06-advanced:01-exposed-crypt:test
+
+# Run a specific test class
+./gradlew :06-advanced:01-exposed-crypt:test --tests "exposed.examples.crypt.Ex01_EncryptedColumn"
+```
