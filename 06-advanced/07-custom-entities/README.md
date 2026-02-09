@@ -107,3 +107,7 @@ The tests in this module demonstrate creating, batch-inserting, and retrieving r
 # Run tests for a specific entity type, e.g., Snowflake
 ./gradlew :06-advanced:07-custom-entities:test --tests "exposed.examples.custom.entities.SnowflakeIdTableTest"
 ```
+
+## Further Reading
+
+- [Custom IdTable & Entities](https://debop.notion.site/Custom-Table-Entities-1c32744526b0804bad10ea3a0dce6c13)

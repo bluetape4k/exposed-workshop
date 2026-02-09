@@ -195,3 +195,7 @@ retrievedProfile.settings["theme"] shouldBeEqualTo "dark"
 # Run tests for a specific feature, e.g., compression
 ./gradlew :06-advanced:06-custom-columns:test --tests "exposed.examples.custom.columns.compress.*"
 ```
+
+## Further Reading
+
+- [Exposed Custom ColumnTypes](https://debop.notion.site/Custom-Columns-1c32744526b0802aa7a8e2e5f08042cb)

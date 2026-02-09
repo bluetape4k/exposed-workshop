@@ -126,3 +126,7 @@ val result = TableWithDate.selectAll()
 # Run a specific test class
 ./gradlew :06-advanced:02-exposed-javatime:test --tests "exposed.examples.java.time.Ex01_JavaTime"
 ```
+
+## Further Reading
+
+- [Exposed Java Time Module](https://debop.notion.site/Exposed-Java-Time-1c32744526b0809d85e1d0425038dfdd)

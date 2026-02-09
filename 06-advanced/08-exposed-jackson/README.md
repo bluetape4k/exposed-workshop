@@ -1,4 +1,5 @@
 # Exposed-Jackson: JSON/JSONB Support with the Jackson Library
+# Exposed-Jackson: JSON/JSONB Support with the Jackson Library
 
 This module demonstrates how to use `JSON` and `JSONB` column types in Exposed by leveraging the popular **Jackson
 ** library for serialization and deserialization. It provides an alternative to the `exposed-json` module (which uses
@@ -124,3 +125,7 @@ println(entity.data.info.name) // Prints "dao_user"
 # Run tests for the JSONB column type specifically
 ./gradlew :06-advanced:08-exposed-jackson:test --tests "exposed.examples.jackson.JacksonBColumnTest"
 ```
+
+## Further Reading
+
+- [Exposed Jackson](https://debop.notion.site/Exposed-Jackson-1c32744526b0809599a7db2e629a597a)

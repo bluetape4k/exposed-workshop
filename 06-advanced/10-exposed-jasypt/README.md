@@ -107,3 +107,8 @@ userByApiKey[UserSecrets.username] shouldBeEqualTo "john.doe"
 # Run tests for a specific class
 ./gradlew :06-advanced:10-exposed-jasypt:test --tests "exposed.examples.jasypt.JasyptColumnTypeTest"
 ```
+
+## Further Reading
+
+- [Exposed Jasypt](https://debop.notion.site/Exposed-Jasypt-1c32744526b080f08ab2f3e21149e9d7)
+- [Exposed Crypt](https://debop.notion.site/Exposed-Crypt-1c32744526b0802da419d5ce74d2c5f3)

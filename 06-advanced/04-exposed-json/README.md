@@ -125,3 +125,7 @@ val result = UserTable.selectAll().where { userIsInactive }.toList()
 # Run tests for the JSONB column type
 ./gradlew :06-advanced:04-exposed-json:test --tests "exposed.examples.json.Ex02_JsonBColumn"
 ```
+
+## Further Reading
+
+- [Exposed Json](https://debop.notion.site/Exposed-Json-1c32744526b080a9bee3d7b92463e90c)

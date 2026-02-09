@@ -121,3 +121,7 @@ println(entity.data.info.name) // Prints "dao_user"
 # Run tests for the FastjsonB column type specifically
 ./gradlew :06-advanced:09-exposed-fastjson2:test --tests "exposed.examples.fastjson2.FastjsonBColumnTest"
 ```
+
+## Further Reading
+
+- [Exposed Fastjson2](https://debop.notion.site/Exposed-Fastjson2-1c32744526b08050a9d4de947c3b3f0d)

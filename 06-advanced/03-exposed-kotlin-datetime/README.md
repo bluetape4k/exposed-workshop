@@ -131,3 +131,7 @@ val result = TableWithDate.selectAll()
 # Run a specific test class
 ./gradlew :06-advanced:03-exposed-kotlin-datetime:test --tests "exposed.examples.kotlin.datetime.Ex01_KotlinDateTime"
 ```
+
+## Further Reading
+
+- [Exposed Kotlin DateTime Module](https://debop.notion.site/Exposed-Kotlin-DateTime-1c32744526b0807bb3e8f149ef88f5f5)

@@ -101,3 +101,7 @@ println(entity.varchar) // Prints "my secret value"
 # Run a specific test class
 ./gradlew :06-advanced:01-exposed-crypt:test --tests "exposed.examples.crypt.Ex01_EncryptedColumn"
 ```
+
+## Further Reading
+
+- [Exposed Crypt 모듈](https://debop.notion.site/Exposed-Crypt-1c32744526b0802da419d5ce74d2c5f3)

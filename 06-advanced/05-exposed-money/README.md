@@ -132,3 +132,7 @@ val usdAccounts = AccountTable.selectAll().where { AccountTable.composite_money.
 # Run a specific test class
 ./gradlew :06-advanced:05-exposed-money:test --tests "exposed.examples.money.Ex02_Money"
 ```
+
+## Further Reading
+
+- [Exposed Money](https://debop.notion.site/Exposed-Money-1c32744526b08051a216d87ca750d73f)
