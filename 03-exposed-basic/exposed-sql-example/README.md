@@ -50,3 +50,89 @@ To explore these examples:
 2. Run the test cases using your IDE or Gradle to observe Exposed's SQL DSL functionality in action, both synchronously and asynchronously.
 
 This module provides a clear and concise guide to mastering the direct SQL DSL capabilities of Exposed.
+
+## City-User 스키마 한눈에 보기
+
+![City-User Schema](CityUserSchema.png)
+
+이 모듈의 모든 예제는 위 스키마를 기준으로 동작합니다. City는 `cities` 테이블, User는 `users` 테이블에 저장되며,
+`users.city_id -> cities.id` 외래키 관계를 가집니다.
+
+## 스키마와 Exposed 코드 (초보자용 요약)
+
+### 1) DB 스키마 (DDL 요약)
+
+```sql
+CREATE TABLE cities (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE users (
+    id VARCHAR(10) PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    city_id INT NULL,
+    CONSTRAINT fk_users_city_id__id
+        FOREIGN KEY (city_id) REFERENCES cities(id)
+);
+```
+
+### 2) Exposed Table 코드 (이 모듈에서 실제 사용)
+
+`src/test/kotlin/exposed/sql/example/Schema.kt` 에 정의되어 있습니다.
+
+```kotlin
+object CityTable: Table("cities") {
+  val id = integer("id").autoIncrement()
+  val name = varchar("name", length = 50)
+  override val primaryKey = PrimaryKey(id, name = "PK_Cities_ID")
+}
+
+object UserTable: Table("users") {
+  val id = varchar("id", length = 10)
+  val name = varchar("name", length = 50)
+  val cityId = optReference("city_id", CityTable.id)
+  override val primaryKey = PrimaryKey(id, name = "PK_User_ID")
+}
+```
+
+### 3) Exposed Entity 코드 (DAO 방식 참고용)
+
+이 모듈은 SQL DSL만 사용하므로 Entity를 직접 사용하지 않습니다. 다만, 같은 스키마를 DAO 방식으로 매핑하면 아래와 같이 표현할 수 있습니다.
+
+```kotlin
+object CityTable: IntIdTable("cities") {
+  val name = varchar("name", 50)
+}
+
+object UserTable: IdTable<String>("users") {
+  val id = varchar("id", 10).entityId()
+  val name = varchar("name", 50)
+  val cityId = optReference("city_id", CityTable)
+  override val primaryKey = PrimaryKey(id)
+}
+
+class City(id: EntityID<Int>): IntEntity(id) {
+  companion object: IntEntityClass<City>(CityTable)
+
+  var name by CityTable.name
+  val users by User optionalReferrersOn UserTable.cityId
+}
+
+class User(id: EntityID<String>): Entity<String>(id) {
+  companion object: EntityClass<String, User>(UserTable)
+
+  var name by UserTable.name
+  var city by City optionalReferencedOn UserTable.cityId
+}
+```
+
+## DAO vs SQL DSL (간단 비교)
+
+| 구분    | DAO                               | SQL DSL                     |
+|-------|-----------------------------------|-----------------------------|
+| 중심 개념 | `Entity` / `EntityClass`          | `Table` / `Query`           |
+| 조회 방식 | `City.all()`, `User.find { ... }` | `CityTable.select { ... }`  |
+| 관계 접근 | `city.users`, `user.city`         | `innerJoin`, `reference` 컬럼 |
+| 변경 감지 | 엔티티 프로퍼티 변경 → flush               | 명시적 `update`/`insert`       |
+| 사용 적합 | 객체 중심 도메인 모델                      | SQL 중심, 복잡한 쿼리              |

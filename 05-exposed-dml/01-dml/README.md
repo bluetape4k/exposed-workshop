@@ -1,51 +1,278 @@
-# 05 DML Basic Operations (01-dml)
+# 05 Exposed DML: 기본 연산 (01-dml)
 
-This module provides a comprehensive set of examples demonstrating various Data Manipulation Language (DML) operations using the Exposed framework. It covers fundamental and advanced techniques for
-`SELECT`, `INSERT`, and `UPDATE` statements, showcasing how to interact with your database using idiomatic Kotlin code.
+Exposed DSL로 **조회(SELECT), 삽입(INSERT), 수정(UPDATE)
+** 의 기본 패턴을 정리한 모듈입니다. 각 예제는 테스트 케이스로 구성되어 있어, 다양한 DB Dialect에서 동일한 동작을 검증할 수 있습니다.
 
-## Examples Covered:
+## 학습 목표
 
-### 1. SELECT Operations (Ex01_Select.kt)
+- Exposed DSL의 기본 DML 문법 흐름을 익힌다.
+- 조건식 조합, 서브쿼리, 페이징 등 실무에서 자주 쓰는 패턴을 익힌다.
+- insert/update 시 ID 반환, conflict 처리, batch 처리 등 부가 기능을 이해한다.
 
-- **Basic Selection**: Simple `SELECT` queries with `WHERE` clauses for filtering data.
-- **Conditional Logic**: Combining `WHERE` conditions using `AND` and `OR` operators.
-- **Comparison Operators**: Usage of `NOT EQUAL` (`<>`) and other comparison operators.
-- **List-based Filtering**: Utilizing `inList` and `notInList` for single values, paired expressions, and
-  `EntityID` columns.
-- **Subquery Filtering**: Demonstrations of `inSubQuery` and `notInSubQuery` for complex filtering criteria.
-- **Table-based Filtering**: Examples using `inTable` and `notInTable` to filter based on another table's content.
-- **Quantified Comparisons**: Usage of `ANY` and
-  `ALL` with subqueries, arrays, and lists in conjunction with operators like `eq`, `neq`, and `greaterEq`.
-- **Distinct Results**: Achieving unique results with `SELECT DISTINCT` and `SELECT DISTINCT ON` clauses.
-- **Compound Conditions**: Combining multiple `Op` objects with `compoundAnd` and `compoundOr`.
-- **Query Customization**: Adding comments to SQL queries.
-- **Pagination**: Implementing `LIMIT` and `OFFSET` for result set control.
+## 예제 구성
 
-### 2. INSERT Operations (Ex02_Insert.kt)
+모든 예제는 `src/test/kotlin/exposed/examples/dml` 아래에 있습니다.
 
-- **Basic Insertion**: Simple `INSERT` statements.
-- **Retrieving IDs**: Using `insertAndGetId` for tables with auto-incrementing integer IDs (
-  `IntIdTable`) and custom ID columns.
-- **Conflict Handling**: Employing `insertIgnoreAndGetId` and
-  `insertIgnore` to gracefully handle unique constraint violations.
-- **Predefined IDs**: Inserting records with explicitly provided `EntityID` values (e.g., String or UUID).
-- **Batch Insertion**: Efficiently inserting multiple rows using `batchInsert`.
-- **Expression-based Inserts**: Inserting values derived from database functions (e.g., `SUBSTRING`,
-  `TRIM`) or subqueries.
-- **DAO-style Inserts**: Demonstrating data insertion using Exposed's DAO (Data Access Object) pattern.
-- **Client-side Defaults**: Utilizing `clientDefault` for values generated on the client.
-- **Transaction Rollback
-  **: Examples of transaction rollback in both regular and suspended contexts when constraint exceptions occur.
-- **Generated Columns**: Inserting data into tables with database-generated columns.
-- **Default Expressions**: Inserting records where some columns have default values (e.g., `CURRENT_TIMESTAMP`).
-- **UUID Primary Keys**: Demonstrating the use of `databaseGenerated` UUIDs as primary keys.
+### Ex01_Select.kt - SELECT 기본
 
-### 3. UPDATE Operations (Ex03_Update.kt)
+기본 조건/조합, `inList`, 서브쿼리, `distinct`, `limit/offset`까지 SELECT의 전반을 다룹니다.
 
-- **Basic Updates**: Standard `UPDATE` statements with `WHERE` clauses.
-- **Limited Updates**: Applying `LIMIT` to `UPDATE` statements (with notes on dialect compatibility).
-- **Joined Updates**: Updating records across multiple tables using `INNER JOIN`.
-- **Conditional Joined Updates**: `UPDATE` operations involving joins with additional `WHERE` conditions.
-- **Subquery Joins in Updates**: Utilizing subqueries within `JOIN` clauses for more complex update scenarios.
+```kotlin
+users.selectAll()
+  .where { users.id eq "andrey" }
+  .andWhere { users.name.isNotNull() }
+```
 
-Each example is provided as a test case, making it easy to understand and verify the functionality against different database dialects.
+### Ex02_Insert.kt - INSERT 기본
+
+`insertAndGetId`, `insertIgnore`, `batchInsert`, 표현식 기반 insert, DAO insert 등.
+
+```kotlin
+val id = idTable.insertAndGetId { it[name] = "name-1" }
+id.value shouldBeEqualTo 1
+```
+
+### Ex03_Update.kt - UPDATE 기본
+
+기본 update, limit update, join update, 다중 join update.
+
+```kotlin
+users.update(where = { users.id eq "alex" }) {
+  it[users.name] = "Alexey"
+}
+```
+
+### Ex04_Upsert.kt - UPSERT
+
+PK/복합키 기준 upsert와 batch upsert, update/insert 분기 로직.
+
+```kotlin
+AutoIncTable.upsert {
+  it[id] = id1
+  it[name] = "C"
+}
+```
+
+### Ex05_Delete.kt - DELETE
+
+`deleteWhere`, `deleteIgnoreWhere`, `deleteAll`, join 기반 delete, limit delete.
+
+```kotlin
+users.deleteWhere { users.name like "%thing" }
+```
+
+### Ex06_Exists.kt - EXISTS / NOT EXISTS
+
+`exists`, `notExists` 조건식 사용과 DB별 boolean 처리.
+
+```kotlin
+users.selectAll().where {
+  exists(userData.select(userData.userId).where { userData.userId eq users.id })
+}
+```
+
+### Ex07_DistinctOn.kt - DISTINCT ON
+
+Postgres/H2 전용 `withDistinctOn` 사용과 정렬 조합.
+
+```kotlin
+tester.selectAll()
+  .withDistinctOn(tester.v1)
+  .orderBy(tester.v1 to SortOrder.ASC)
+```
+
+### Ex08_Count.kt - COUNT / COUNT DISTINCT
+
+`count`, `countDistinct`, groupBy/limit/offset과 함께 동작하는 count.
+
+```kotlin
+val cityCount = cities.id.countDistinct()
+cities.select(cityCount).single()[cityCount]
+```
+
+### Ex09_GroupBy.kt - GROUP BY / HAVING
+
+집계 함수, `groupBy`, `having`, `groupConcat`, `max` 등.
+
+```kotlin
+cities.innerJoin(users)
+  .select(cities.name, users.id.count())
+  .groupBy(cities.name)
+```
+
+### Ex10_OrderBy.kt - ORDER BY
+
+NULL 정렬 차이, expression/subquery 기반 정렬.
+
+```kotlin
+users.selectAll()
+  .orderBy(users.cityId, SortOrder.DESC)
+  .orderBy(users.id)
+```
+
+### Ex11_Join.kt - JOIN
+
+inner/cross join, 다중 join, many-to-many join, alias join.
+
+```kotlin
+cities.innerJoin(users).innerJoin(userData)
+  .selectAll()
+  .orderBy(users.id)
+```
+
+### Ex12_InsertInto_Select.kt - INSERT INTO SELECT
+
+select 결과를 insert로 넣기, expression/limit/columns 지정.
+
+```kotlin
+cities.insert(users.select(slice).orderBy(users.id).limit(2))
+```
+
+### Ex13_Replace.kt - REPLACE INTO (MySQL/MariaDB)
+
+`replace`, `batchReplace`, select 기반 replace.
+
+```kotlin
+NewAuth.replace {
+  it[username] = "username"
+  it[session] = "session".toByteArray()
+}
+```
+
+### Ex14_MergeBase.kt - MERGE 테스트 기반
+
+`MERGE INTO` 테스트용 공통 테이블/데이터 구성.
+
+```kotlin
+Source.insert(key = "only-in-source-1", value = 1)
+Dest.insert(key = "only-in-dest-1", value = 10)
+```
+
+### Ex14_MergeTable.kt - MERGE FROM (Table)
+
+`whenNotMatchedInsert`, `whenMatchedUpdate`, `whenMatchedDelete`.
+
+```kotlin
+dest.mergeFrom(source, on = { Source.key eq Dest.key }) {
+  whenMatchedUpdate { it[dest.value] = (source.value + dest.value) * 2 }
+}
+```
+
+### Ex14_MergeSelect.kt - MERGE FROM (Select)
+
+subquery를 소스로 사용하는 MERGE.
+
+```kotlin
+dest.mergeFrom(sourceQuery, on = { Dest.key eq sourceQuery[Source.key] }) {
+  whenNotMatchedInsert { it[dest.key] = sourceQuery[Source.key] }
+}
+```
+
+### Ex15_Returning.kt - RETURNING
+
+`insertReturning`, `upsertReturning`, `updateReturning`, `deleteReturning` (Postgres/MariaDB).
+
+```kotlin
+val row = Items.insertReturning { it[name] = "A"; it[price] = 99.0 }.single()
+```
+
+### Ex16_FetchBatchedResults.kt - 배치 조회
+
+`fetchBatchedResults`로 대량 결과를 배치 단위로 가져오기.
+
+```kotlin
+cities.selectAll()
+  .where { cities.id less 51 }
+  .fetchBatchedResults(batchSize = 25)
+```
+
+### Ex17_Union.kt - UNION / INTERSECT / EXCEPT
+
+`union`, `unionAll`, `intersect`, `except`, `orderBy`, `limit/offset`.
+
+```kotlin
+andreyQuery.union(sergeyQuery).limit(1).offset(1)
+```
+
+### Ex20_AdjustQuery.kt - Query 조정
+
+`adjustSelect`, `adjustColumnSet`, `adjustWhere`, `adjustHaving`으로 기존 쿼리 수정.
+
+```kotlin
+query.adjustSelect { select(users.name, cities.name) }
+query.adjustWhere { (users.id eq "andrey") or (users.name eq "Sergey") }
+```
+
+### Ex21_Arithmetic.kt - 산술 연산
+
+컬럼/리터럴 산술 연산, scale 있는 나눗셈.
+
+```kotlin
+val expr = ((userData.value - 5) * 2) / 2
+userData.select(userData.value, expr)
+```
+
+### Ex22_ColumnWithTransform.kt - Column 변환
+
+`ColumnTransformer`, `ColumnWithTransform`, 중첩 transform.
+
+```kotlin
+val v1 = integer("v1").transform(
+  wrap = { Holder(it) },
+  unwrap = { it.value }
+)
+```
+
+### Ex23_Conditions.kt - 조건식 모음
+
+`isDistinctFrom`, `between`, `Coalesce`, `Case`, `Op.TRUE/FALSE` 등.
+
+```kotlin
+table.selectAll().where { table.number1 isNotDistinctFrom table.number2 }
+```
+
+### Ex30_Explain.kt - EXPLAIN
+
+`explain { ... }`로 실행 계획 출력, `ANALYZE` 옵션 차이.
+
+```kotlin
+explain { Countries.insert { it[code] = "ABC" } }.toFastList()
+```
+
+### Ex40_LateralJoin.kt - LATERAL JOIN
+
+Postgres 전용 LATERAL JOIN과 alias 사용.
+
+```kotlin
+parent.joinQuery(joinType = JoinType.CROSS, lateral = true) {
+  child.selectAll().where { child.value greater parent.value }.limit(1)
+}
+```
+
+### Ex50_RecursiveCTE.kt - 재귀 CTE
+
+Raw SQL로 recursive CTE 실행 (Postgres/MySQL/MariaDB).
+
+```kotlin
+exec(sql, explicitStatementType = StatementType.SELECT) { rs -> /* map */ }
+```
+
+### Ex99_Dual.kt - DUAL 테이블
+
+`Table.Dual`로 단일 값/현재 날짜 조회.
+
+```kotlin
+val result = Table.Dual.select(intLiteral(1)).single()
+```
+
+### join_diagram.png - JOIN 다이어그램
+
+`Ex11_Join.kt` 이해를 돕기 위한 조인 다이어그램입니다.
+
+## 테스트 실행
+
+```bash
+./gradlew :exposed-05-exposed-dml-01-dml:test
+```
+
+모든 테스트는 `@ParameterizedTest`로 H2, MySQL, PostgreSQL 등 여러 DB에서 실행됩니다.
