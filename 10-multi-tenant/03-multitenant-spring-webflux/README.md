@@ -43,3 +43,7 @@
       1. 예: `GET /api/tenant1/actors`
 
 이 모듈을 통해 Spring WebFlux, Kotlin Coroutines, Exposed를 활용하여 고성능, 반응형 멀티테넌트 웹 애플리케이션을 구축하는 데 필요한 지식과 실용적인 예제를 얻을 수 있습니다.
+
+## 참고 자료
+
+- [Multi-tenant App with Spring Webflux and Coroutines](https://debop.notion.site/Multi-tenant-App-with-Spring-Webflux-and-Coroutines-1dc2744526b0802e926de76e268bd2a8)

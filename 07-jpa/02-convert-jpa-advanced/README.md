@@ -106,6 +106,7 @@ object BillingTable: IntIdTable("billing") {
 
     // CreditCard 전용 (nullable)
     val cardNumber = varchar("card_number", 24).nullable()
+
     // BankAccount 전용 (nullable)
     val accountNumber = varchar("account_number", 255).nullable()
 }
@@ -128,6 +129,7 @@ override fun findById(id: EntityID<Int>): CreditCard? {
 object PersonTable: IntIdTable("joined_person") {
     val personName = varchar("person_name", 128)
 }
+
 // 자식 테이블 (PK가 부모의 FK)
 object EmployeeTable: IdTable<Int>("joined_employee") {
     override val id = reference("id", PersonTable)  // FK = PK
@@ -306,3 +308,7 @@ Products.upsert(onUpdate = { it[Products.version] = Products.version + 1 }) {
 
 모든 테스트는 `@ParameterizedTest`로 H2, MySQL, PostgreSQL 등 여러 DB에서 실행됩니다.
 `ex05_auditable`은 Java 21의 `ScopedValue`를 사용하므로 `@EnabledOnJre(JRE.JAVA_21)` 조건이 적용됩니다.
+
+## Further Reading
+
+- [9.2 JPA 고급 기능을 Exposed로 변환하기](https://debop.notion.site/1c32744526b0801897c4dba89f5a119e?v=1c32744526b08102a87c000c10445e4a)

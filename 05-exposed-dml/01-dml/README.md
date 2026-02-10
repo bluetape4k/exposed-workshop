@@ -19,8 +19,8 @@ Exposed DSL로 **조회(SELECT), 삽입(INSERT), 수정(UPDATE)
 
 ```kotlin
 users.selectAll()
-  .where { users.id eq "andrey" }
-  .andWhere { users.name.isNotNull() }
+    .where { users.id eq "andrey" }
+    .andWhere { users.name.isNotNull() }
 ```
 
 ### Ex02_Insert.kt - INSERT 기본
@@ -38,7 +38,7 @@ id.value shouldBeEqualTo 1
 
 ```kotlin
 users.update(where = { users.id eq "alex" }) {
-  it[users.name] = "Alexey"
+    it[users.name] = "Alexey"
 }
 ```
 
@@ -48,8 +48,8 @@ PK/복합키 기준 upsert와 batch upsert, update/insert 분기 로직.
 
 ```kotlin
 AutoIncTable.upsert {
-  it[id] = id1
-  it[name] = "C"
+    it[id] = id1
+    it[name] = "C"
 }
 ```
 
@@ -67,7 +67,7 @@ users.deleteWhere { users.name like "%thing" }
 
 ```kotlin
 users.selectAll().where {
-  exists(userData.select(userData.userId).where { userData.userId eq users.id })
+    exists(userData.select(userData.userId).where { userData.userId eq users.id })
 }
 ```
 
@@ -77,8 +77,8 @@ Postgres/H2 전용 `withDistinctOn` 사용과 정렬 조합.
 
 ```kotlin
 tester.selectAll()
-  .withDistinctOn(tester.v1)
-  .orderBy(tester.v1 to SortOrder.ASC)
+    .withDistinctOn(tester.v1)
+    .orderBy(tester.v1 to SortOrder.ASC)
 ```
 
 ### Ex08_Count.kt - COUNT / COUNT DISTINCT
@@ -96,8 +96,8 @@ cities.select(cityCount).single()[cityCount]
 
 ```kotlin
 cities.innerJoin(users)
-  .select(cities.name, users.id.count())
-  .groupBy(cities.name)
+    .select(cities.name, users.id.count())
+    .groupBy(cities.name)
 ```
 
 ### Ex10_OrderBy.kt - ORDER BY
@@ -106,8 +106,8 @@ NULL 정렬 차이, expression/subquery 기반 정렬.
 
 ```kotlin
 users.selectAll()
-  .orderBy(users.cityId, SortOrder.DESC)
-  .orderBy(users.id)
+    .orderBy(users.cityId, SortOrder.DESC)
+    .orderBy(users.id)
 ```
 
 ### Ex11_Join.kt - JOIN
@@ -116,8 +116,8 @@ inner/cross join, 다중 join, many-to-many join, alias join.
 
 ```kotlin
 cities.innerJoin(users).innerJoin(userData)
-  .selectAll()
-  .orderBy(users.id)
+    .selectAll()
+    .orderBy(users.id)
 ```
 
 ### Ex12_InsertInto_Select.kt - INSERT INTO SELECT
@@ -134,8 +134,8 @@ cities.insert(users.select(slice).orderBy(users.id).limit(2))
 
 ```kotlin
 NewAuth.replace {
-  it[username] = "username"
-  it[session] = "session".toByteArray()
+    it[username] = "username"
+    it[session] = "session".toByteArray()
 }
 ```
 
@@ -154,7 +154,7 @@ Dest.insert(key = "only-in-dest-1", value = 10)
 
 ```kotlin
 dest.mergeFrom(source, on = { Source.key eq Dest.key }) {
-  whenMatchedUpdate { it[dest.value] = (source.value + dest.value) * 2 }
+    whenMatchedUpdate { it[dest.value] = (source.value + dest.value) * 2 }
 }
 ```
 
@@ -164,7 +164,7 @@ subquery를 소스로 사용하는 MERGE.
 
 ```kotlin
 dest.mergeFrom(sourceQuery, on = { Dest.key eq sourceQuery[Source.key] }) {
-  whenNotMatchedInsert { it[dest.key] = sourceQuery[Source.key] }
+    whenNotMatchedInsert { it[dest.key] = sourceQuery[Source.key] }
 }
 ```
 
@@ -182,8 +182,8 @@ val row = Items.insertReturning { it[name] = "A"; it[price] = 99.0 }.single()
 
 ```kotlin
 cities.selectAll()
-  .where { cities.id less 51 }
-  .fetchBatchedResults(batchSize = 25)
+    .where { cities.id less 51 }
+    .fetchBatchedResults(batchSize = 25)
 ```
 
 ### Ex17_Union.kt - UNION / INTERSECT / EXCEPT
@@ -218,8 +218,8 @@ userData.select(userData.value, expr)
 
 ```kotlin
 val v1 = integer("v1").transform(
-  wrap = { Holder(it) },
-  unwrap = { it.value }
+    wrap = { Holder(it) },
+    unwrap = { it.value }
 )
 ```
 
@@ -245,7 +245,7 @@ Postgres 전용 LATERAL JOIN과 alias 사용.
 
 ```kotlin
 parent.joinQuery(joinType = JoinType.CROSS, lateral = true) {
-  child.selectAll().where { child.value greater parent.value }.limit(1)
+    child.selectAll().where { child.value greater parent.value }.limit(1)
 }
 ```
 
@@ -276,3 +276,7 @@ val result = Table.Dual.select(intLiteral(1)).single()
 ```
 
 모든 테스트는 `@ParameterizedTest`로 H2, MySQL, PostgreSQL 등 여러 DB에서 실행됩니다.
+
+## Further Reading
+
+- [7.1 DML 함수](https://debop.notion.site/1ad2744526b0800baf1ce81c31f3cbf9?v=1ad2744526b08007ab62000c0901bcfa)

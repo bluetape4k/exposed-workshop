@@ -51,3 +51,7 @@ To explore these examples:
 2. Run the test cases using your IDE or Gradle to observe how different SQL functions are implemented and used with Exposed.
 
 This module serves as a practical guide to mastering the use of SQL functions in Exposed.
+
+## Further Reading
+
+- [7.3 Functions](https://debop.notion.site/1ca2744526b0805e9689efa4a03d01df?v=1ca2744526b08138857a000c9847c052)

@@ -1,5 +1,4 @@
 # Exposed-Jackson: JSON/JSONB Support with the Jackson Library
-# Exposed-Jackson: JSON/JSONB Support with the Jackson Library
 
 This module demonstrates how to use `JSON` and `JSONB` column types in Exposed by leveraging the popular **Jackson
 ** library for serialization and deserialization. It provides an alternative to the `exposed-json` module (which uses

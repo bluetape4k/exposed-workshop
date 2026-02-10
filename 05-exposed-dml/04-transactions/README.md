@@ -49,3 +49,7 @@ To explore these examples:
 2. Run the test cases using your IDE or Gradle to observe Exposed's transaction management features in action.
 
 This module provides a comprehensive guide to mastering transaction handling with Exposed.
+
+## Further Reading
+
+- [7.4 Transactions](https://debop.notion.site/1ca2744526b080a69567d993571e21aa?v=1ca2744526b081bdab55000c5928063a)

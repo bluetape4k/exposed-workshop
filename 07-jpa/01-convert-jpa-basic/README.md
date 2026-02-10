@@ -227,3 +227,7 @@ class Tag(id: EntityID<Long>): LongEntity(id) {
 ```
 
 모든 테스트는 `@ParameterizedTest`로 H2, MySQL, PostgreSQL 등 여러 DB에서 실행됩니다.
+
+## Further Reading
+
+- [9.1 JPA 기본기능 구현하기](https://debop.notion.site/1c32744526b080458ca0f7eee791cab3?v=1c32744526b081ca8b00000c231b9b43)
