@@ -25,6 +25,7 @@ plugins {
     id(Plugins.graalvm_native) version Plugins.Versions.graalvm_native apply false
 }
 
+
 // NOTE: Github 에 등록된 Package 를 다운받기 위해서 사용합니다.
 // NOTE: ~/.gradle/gradle.properties gpr.user,gpr.key 를 정의하던가
 // NOTE: ~/.zshrc 에 GITHUB_USERNAME, GITHUB_TOKEN 을 정의합니다.
@@ -101,7 +102,8 @@ subprojects {
             "-XX:MaxMetaspaceSize=512m",
             "-XX:+UseZGC",
             "-XX:+UseStringDeduplication",
-            "-XX:+EnableDynamicAgentLoading"
+            "-XX:+EnableDynamicAgentLoading",
+            "--enable-preview",
         )
     }
 
@@ -115,17 +117,39 @@ subprojects {
             options.isIncremental = true
         }
 
+        compileKotlin {
+            compilerOptions {
+                incremental = true
+            }
+        }
+
+        // 멀티 모듈들을 테스트 시에 동시에 실행되지 않게 하기 위해 Mutex 를 활용합니다.
+        abstract class TestMutexService: BuildService<BuildServiceParameters.None>
+
+        val testMutex = gradle.sharedServices.registerIfAbsent(
+            "test-mutex",
+            TestMutexService::class
+        ) {
+            maxParallelUsages.set(1)
+        }
+
         test {
+            // 멀티 모듈들을 테스트 시에 동시에 실행되지 않게 하기 위해 Mutex 를 활용합니다.
+            usesService(testMutex)
+
             useJUnitPlatform()
 
             // 테스트 시 아래와 같은 예외 메시지를 제거하기 위해서
             // OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
             jvmArgs(
                 "-Xshare:off",
-                "-XX:+UseZGC",
                 "-Xms2G",
                 "-Xmx4G",
-                "-XX:+EnableDynamicAgentLoading"
+                "-XX:+UseZGC",
+                "-XX:+UnlockExperimentalVMOptions",
+                "-XX:+EnableDynamicAgentLoading",
+                "--enable-preview",
+                "-Didea.io.use.nio2=true"
             )
 
             testLogging {
