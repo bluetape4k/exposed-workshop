@@ -7,7 +7,6 @@ import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.BatchSchema.b
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.SortOrder
@@ -33,7 +32,7 @@ class Ex01_OneToMany_Bidirectional_Batch: JdbcExposedTestBase() {
     fun `one-to-many with bidirectional relationship`(testDB: TestDB) {
         withTables(testDB, *batchTables) {
             val batch1 = createSamples()
-            val batchItems = batch1.items.toFastList()
+            val batchItems = batch1.items.toList()
 
             entityCache.clear()
 
@@ -42,15 +41,15 @@ class Ex01_OneToMany_Bidirectional_Batch: JdbcExposedTestBase() {
             // items 조회시 쿼리를 실행합니다.
             loaded.items
                 .orderBy(BatchItemTable.id to SortOrder.ASC)
-                .toFastList() shouldBeEqualTo batchItems
+                .toList() shouldBeEqualTo batchItems
 
             // eager loading
             val loaded2 = Batch.all().with(Batch::items).single()
-            loaded2.items.toFastList() shouldBeEqualTo batchItems
+            loaded2.items.toList() shouldBeEqualTo batchItems
 
             // eager loading
             val loaded3 = Batch.findById(batch1.id)?.load(Batch::items)
-            loaded3?.items?.toFastList() shouldBeEqualTo batchItems
+            loaded3?.items?.toList() shouldBeEqualTo batchItems
         }
     }
 
@@ -62,13 +61,13 @@ class Ex01_OneToMany_Bidirectional_Batch: JdbcExposedTestBase() {
     fun `one-to-many with bidirectional - delete`(testDB: TestDB) {
         withTables(testDB, *batchTables) {
             val batch1 = createSamples()
-            val batchItems = batch1.items.toFastList()
+            val batchItems = batch1.items.toList()
 
             entityCache.clear()
 
             val loaded = Batch.findById(batch1.id)!!
             loaded shouldBeEqualTo batch1
-            loaded.items.toFastList() shouldBeEqualTo batchItems
+            loaded.items.toList() shouldBeEqualTo batchItems
 
             // DELETE FROM batch_item WHERE batch_item.id = 1
             batchItems.first().delete()
@@ -76,7 +75,7 @@ class Ex01_OneToMany_Bidirectional_Batch: JdbcExposedTestBase() {
 
             val loaded2 = Batch.findById(batch1.id)!!
             loaded2.items.count() shouldBeEqualTo 2L
-            loaded2.items.toFastList() shouldBeEqualTo batchItems.drop(1)
+            loaded2.items.toList() shouldBeEqualTo batchItems.drop(1)
 
             // batch 를 삭제하면, 관련된 batchItem 도 삭제된다. (onDelete = CASCADE)
             loaded2.delete()

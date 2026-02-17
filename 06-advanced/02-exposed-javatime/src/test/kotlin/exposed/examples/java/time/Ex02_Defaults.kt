@@ -8,8 +8,6 @@ import exposed.shared.tests.expectException
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.insertAndWait
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.fastListOf
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -189,7 +187,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
         Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB + TestDB.MYSQL_V5 }
 
         withTables(testDB, TableWithDBDefault) {
-            val created = fastListOf(
+            val created = listOf(
                 DBDefault.new { field = "1" },
                 DBDefault.new {
                     field = "2"
@@ -201,7 +199,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
                 DBDefault.removeFromCache(it)
             }
 
-            val entities = DBDefault.all().toFastList()
+            val entities = DBDefault.all().toList()
             entities shouldBeEqualTo created
         }
     }
@@ -220,7 +218,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
         Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB + TestDB.MYSQL_V5 }
 
         withTables(testDB, TableWithDBDefault) {
-            val created = fastListOf(
+            val created = listOf(
                 DBDefault.new {
                     field = "2"
                     t1 = LocalDateTime.now().minusDays(5)
@@ -232,7 +230,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
                 DBDefault.removeFromCache(it)
             }
 
-            val entities = DBDefault.all().toFastList()
+            val entities = DBDefault.all().toList()
             entities shouldBeEqualTo created
         }
     }
@@ -480,7 +478,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
 
             log.debug { "Expected: $expected" }
             log.debug { "Actual: ${testTable.ddl}" }
-            testTable.ddl shouldBeEqualTo expected.toFastList()
+            testTable.ddl shouldBeEqualTo expected.toList()
 
             val id1 = testTable.insertAndGetId { }
 

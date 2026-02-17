@@ -8,7 +8,6 @@ import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
@@ -365,7 +364,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
             }
 
             val userIsInactive = JsonBTable.jsonBColumn.contains("""{"active":false}""")
-            val result = tester.selectAll().where { userIsInactive }.toFastList()
+            val result = tester.selectAll().where { userIsInactive }.toList()
             result.shouldBeEmpty()
 
             val alphaTreamUserAsJson = """{"user":${Json.encodeToString(alphaTeamUser)}}"""
@@ -877,7 +876,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
             val nestedKeyResult = tester
                 .selectAll()
                 .where { JsonBTable.jsonBColumn keyExists "name" }
-                .toFastList()
+                .toList()
             nestedKeyResult.shouldBeEmpty()
 
         }

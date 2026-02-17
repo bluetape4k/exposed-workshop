@@ -6,8 +6,6 @@ import exposed.examples.jpa.ex04_tree.TreeNodeSchema.buildTreeNodes
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
-import io.bluetape4k.collections.eclipse.toUnifiedSet
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -60,7 +58,7 @@ class Ex01_TreeNode: JdbcExposedTestBase() {
 
             // SELECT COUNT(*) FROM tree_nodes WHERE tree_nodes.parent_id = 2
             loadedChild1.children.count() shouldBeEqualTo 2L
-            loadedChild1.children.toUnifiedSet() shouldContainSame setOf(grandChild1, grandChild2)
+            loadedChild1.children.toSet() shouldContainSame setOf(grandChild1, grandChild2)
 
             // 모든 Root 노드 조회
             /**
@@ -71,7 +69,7 @@ class Ex01_TreeNode: JdbcExposedTestBase() {
              *  WHERE tree_nodes.parent_id IS NULL
              * ```
              */
-            val roots = TreeNode.find { TreeNodeTable.parentId.isNull() }.toFastList()
+            val roots = TreeNode.find { TreeNodeTable.parentId.isNull() }.toList()
             roots shouldBeEqualTo listOf(root)
 
             /**
@@ -167,7 +165,7 @@ class Ex01_TreeNode: JdbcExposedTestBase() {
             val query = TreeNodeTable.selectAll()
                 .where { TreeNodeTable.id inSubQuery subQuery }
 
-            val nodes = TreeNode.wrapRows(query).toFastList()
+            val nodes = TreeNode.wrapRows(query).toList()
             nodes shouldHaveSize 1
             nodes.single().title shouldBeEqualTo "child1"
         }
@@ -207,7 +205,7 @@ class Ex01_TreeNode: JdbcExposedTestBase() {
                 .select(TreeNodeTable.columns)
 
             // Query 결과인 ResultSet 으로 Entity 만들기
-            val nodes = TreeNode.wrapRows(joinQuery).toFastList()
+            val nodes = TreeNode.wrapRows(joinQuery).toList()
             nodes shouldHaveSize 2
             nodes.map { it.title } shouldContainSame listOf("grandChild1", "grandChild2")
         }

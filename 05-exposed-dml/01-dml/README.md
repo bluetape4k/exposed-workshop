@@ -236,7 +236,7 @@ table.selectAll().where { table.number1 isNotDistinctFrom table.number2 }
 `explain { ... }`로 실행 계획 출력, `ANALYZE` 옵션 차이.
 
 ```kotlin
-explain { Countries.insert { it[code] = "ABC" } }.toFastList()
+explain { Countries.insert { it[code] = "ABC" } }.toList()
 ```
 
 ### Ex40_LateralJoin.kt - LATERAL JOIN

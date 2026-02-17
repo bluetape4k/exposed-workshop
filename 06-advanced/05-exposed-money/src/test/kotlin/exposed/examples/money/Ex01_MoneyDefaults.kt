@@ -3,8 +3,6 @@ package exposed.examples.money
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.fastListOf
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -91,7 +89,7 @@ class Ex01_MoneyDefaults: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `defaults with explicit`(testDB: TestDB) {
         withTables(testDB, TableWithDBDefault) {
-            val created = fastListOf(
+            val created = listOf(
                 DBDefault.new { field = "1" },
                 DBDefault.new {
                     field = "2"
@@ -103,7 +101,7 @@ class Ex01_MoneyDefaults: JdbcExposedTestBase() {
                 DBDefault.removeFromCache(it)
             }
 
-            val entities = DBDefault.all().toFastList()
+            val entities = DBDefault.all().toList()
             entities shouldBeEqualTo created
         }
     }

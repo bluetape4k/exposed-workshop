@@ -7,7 +7,6 @@ import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.FamilySchema.
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.SortOrder
@@ -72,7 +71,7 @@ class Ex02_OneToMany_Unidirectional_Family: JdbcExposedTestBase() {
              *  ORDER BY child.birthday ASC;
              *  ```
              */
-            val expectedChildren = Child.all().orderBy(ChildTable.birthday to SortOrder.ASC).toFastList()
+            val expectedChildren = Child.all().orderBy(ChildTable.birthday to SortOrder.ASC).toList()
 
             /**
              * Lazy loading
@@ -88,7 +87,7 @@ class Ex02_OneToMany_Unidirectional_Family: JdbcExposedTestBase() {
              *  ORDER BY child.birthday ASC,
              * ```
              */
-            loadedFather.children.toFastList() shouldBeEqualTo expectedChildren
+            loadedFather.children.toList() shouldBeEqualTo expectedChildren
         }
     }
 }

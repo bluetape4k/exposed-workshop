@@ -10,7 +10,6 @@ import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.core.fastjson2.contains
 import io.bluetape4k.exposed.core.fastjson2.exists
 import io.bluetape4k.exposed.core.fastjson2.extract
@@ -280,7 +279,7 @@ class FastjsonColumnTest: AbstractExposedTest() {
             }
 
             val userIsInactive = tester.fastjsonColumn.contains("""{"active":false}""")
-            val rows = tester.selectAll().where { userIsInactive }.toFastList()
+            val rows = tester.selectAll().where { userIsInactive }.toList()
             rows.shouldBeEmpty()
 
             val alphaTeamUserAsJson = """{"user":${FastjsonSerializer.Default.serializeAsString(alphaTeamUser)}}"""

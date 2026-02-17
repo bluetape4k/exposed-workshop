@@ -6,7 +6,6 @@ import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.junit5.faker.Fakers
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.support.toUtf8Bytes
@@ -211,7 +210,7 @@ class Ex08_BlobColumnType: JdbcExposedTestBase() {
                     it[tester.blobCol] = blobParam(defaultBlob, useObjectIdentifier = true)
                 }
 
-                val result2 = tester.selectAll().toFastList()
+                val result2 = tester.selectAll().toList()
                 result2 shouldHaveSize 3
                 result2.all { it[tester.blobCol].bytes.contentEquals(defaultBytes) }.shouldBeTrue()
 

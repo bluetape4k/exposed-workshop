@@ -3,7 +3,6 @@ package exposed.examples.cache.domain.repository
 import exposed.examples.cache.AbstractCacheStrategyTest
 import exposed.examples.cache.domain.model.UserEventTable
 import exposed.examples.cache.domain.model.newUserEventRecord
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -42,7 +41,7 @@ class UserEventCacheRepositoryTest(
                 .chunked(100) { chunk ->
                     repository.putAll(chunk)
                 }
-                .toFastList()
+                .toList()
 
             await
                 .atMost(Duration.ofSeconds(10))

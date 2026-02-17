@@ -3,8 +3,6 @@ package exposed.examples.entities
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.fastListOf
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -234,11 +232,11 @@ class Ex11_ForeignIdEntity: JdbcExposedTestBase() {
             entityCache.clear()
 
             // SELECT roles.id, roles.guild_id FROM roles WHERE roles.guild_id = '3746529'
-            actorA.roles.toFastList() shouldContainSame fastListOf(roleA, roleB)
+            actorA.roles.toList() shouldContainSame listOf(roleA, roleB)
 
             // SELECT roles.id, roles.guild_id FROM roles;
-            val roles = Role.all().toFastList()
-            roles shouldContainSame fastListOf(roleA, roleB)
+            val roles = Role.all().toList()
+            roles shouldContainSame listOf(roleA, roleB)
             // SELECT actors.guild_id FROM actors WHERE actors.guild_id = '3746529'
             roles.all { it.actor == actorA }.shouldBeTrue()
 

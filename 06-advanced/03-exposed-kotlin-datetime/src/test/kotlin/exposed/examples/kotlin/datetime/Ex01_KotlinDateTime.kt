@@ -6,7 +6,6 @@ import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.debug
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
@@ -310,12 +309,12 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
                 it[deleted] = mayTheFourth.plus(1, DateTimeUnit.DAY)
             }
 
-            val sameDateResult = tester.selectAll().where { tester.created eq tester.deleted }.toFastList()
+            val sameDateResult = tester.selectAll().where { tester.created eq tester.deleted }.toList()
             sameDateResult shouldHaveSize 1
             sameDateResult.single()[tester.deleted] shouldBeEqualTo mayTheFourth
 
             val sameMonthResult =
-                tester.selectAll().where { tester.created.month() eq tester.deleted.month() }.toFastList()
+                tester.selectAll().where { tester.created.month() eq tester.deleted.month() }.toList()
             sameMonthResult shouldHaveSize 2
 
             val year2023 = if (currentDialectTest is PostgreSQLDialect) {
@@ -324,7 +323,7 @@ class Ex01_KotlinDateTime: JdbcExposedTestBase() {
             } else {
                 dateParam(mayTheFourth).year()
             }
-            val createdIn2023 = tester.selectAll().where { tester.created.year() eq year2023 }.toFastList()
+            val createdIn2023 = tester.selectAll().where { tester.created.year() eq year2023 }.toList()
 
             createdIn2023 shouldHaveSize 2
         }

@@ -3,7 +3,6 @@ package exposed.workshop.springwebflux.domain
 import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
 import exposed.workshop.springwebflux.domain.model.MovieSchema.ActorTable
 import exposed.workshop.springwebflux.domain.model.toActorRecord
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.concurrent.virtualthread.virtualFuture
 import io.bluetape4k.junit5.concurrency.StructuredTaskScopeTester
 import io.bluetape4k.junit5.coroutines.SuspendedJobTester
@@ -32,7 +31,7 @@ class DomainSQLTest: AbstractSpringWebfluxTest() {
         @RepeatedTest(REPEAT_SIZE)
         open fun `get all actors`() = runSuspendIO {
             val actors = newSuspendedTransaction(readOnly = true) {
-                ActorTable.selectAll().toFastList()
+                ActorTable.selectAll().toList()
             }.map { it.toActorRecord() }
             actors.shouldNotBeEmpty()
         }

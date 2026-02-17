@@ -3,7 +3,6 @@ package exposed.examples.connection
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toUnifiedSet
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldContainSame
@@ -47,7 +46,7 @@ class Ex01_Connection: JdbcExposedTestBase() {
         withTables(TestDB.H2, People) {
             val columnMetadata = connection.metadata {
                 columns(People)[People].shouldNotBeNull()
-            }.toUnifiedSet()
+            }.toSet()
 
             columnMetadata.forEach { cm: ColumnMetadata ->
                 log.debug { "Column Meta: $cm" }

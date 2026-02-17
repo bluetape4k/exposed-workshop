@@ -4,7 +4,6 @@ import exposed.examples.springwebflux.domain.model.MovieSchema.ActorEntity
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorTable
 import exposed.examples.springwebflux.domain.model.MovieSchema.MovieEntity
 import exposed.examples.springwebflux.domain.model.MovieSchema.MovieTable
-import io.bluetape4k.collections.eclipse.toFastList
 import org.jetbrains.exposed.v1.core.ResultRow
 
 fun ResultRow.toActorRecord() = ActorRecord(
@@ -28,21 +27,23 @@ fun ResultRow.toMovieRecord() = MovieRecord(
     releaseDate = this[MovieTable.releaseDate].toString(),
 )
 
-fun ResultRow.toMovieWithActorRecord(actors: List<ActorRecord>) = MovieWithActorRecord(
-    id = this[MovieTable.id].value,
-    name = this[MovieTable.name],
-    producerName = this[MovieTable.producerName],
-    releaseDate = this[MovieTable.releaseDate].toString(),
-    actors = actors.toFastList(),
-)
+fun ResultRow.toMovieWithActorRecord(actors: List<ActorRecord>) =
+    MovieWithActorRecord(
+        id = this[MovieTable.id].value,
+        name = this[MovieTable.name],
+        producerName = this[MovieTable.producerName],
+        releaseDate = this[MovieTable.releaseDate].toString(),
+        actors = actors,
+    )
 
-fun MovieRecord.toMovieWithActorRecord(actors: Collection<ActorRecord>) = MovieWithActorRecord(
-    id = this.id,
-    name = this.name,
-    producerName = this.producerName,
-    releaseDate = this.releaseDate,
-    actors = actors.toFastList(),
-)
+fun MovieRecord.toMovieWithActorRecord(actors: Collection<ActorRecord>) =
+    MovieWithActorRecord(
+        id = this.id,
+        name = this.name,
+        producerName = this.producerName,
+        releaseDate = this.releaseDate,
+        actors = actors.toList(),
+    )
 
 fun MovieEntity.toMovieRecord() = MovieRecord(
     id = this.id.value,
@@ -56,7 +57,7 @@ fun MovieEntity.toMovieWithActorRecord() = MovieWithActorRecord(
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate.toString(),
-    actors = this.actors.map { it.toActorRecord() }.toFastList(),
+    actors = this.actors.map { it.toActorRecord() }.toList(),
 )
 
 

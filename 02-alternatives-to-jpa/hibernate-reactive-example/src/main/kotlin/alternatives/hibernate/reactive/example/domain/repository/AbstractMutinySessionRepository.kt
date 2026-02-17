@@ -1,6 +1,5 @@
 package alternatives.hibernate.reactive.example.domain.repository
 
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.smallrye.mutiny.coroutines.awaitSuspending
 import org.hibernate.reactive.mutiny.Mutiny.Session
@@ -36,7 +35,7 @@ abstract class AbstractMutinySessionRepository<T: Any, ID: Serializable>(
     suspend fun saveAll(session: Session, vararg entities: T): List<T> {
         session.persistAll(*entities).awaitSuspending()
         session.flush().awaitSuspending()
-        return entities.toFastList()
+        return entities.toList()
     }
 
     suspend fun deleteById(session: Session, clazz: KClass<T>, id: ID): Boolean {

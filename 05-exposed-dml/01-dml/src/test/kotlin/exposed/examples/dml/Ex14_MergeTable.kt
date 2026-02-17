@@ -2,7 +2,6 @@ package exposed.examples.dml
 
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
@@ -530,7 +529,7 @@ class Ex14_MergeTable: Ex14_MergeBase() {
             // source.value > 1 이라 DELETE 된다
             dest.selectAll()
                 .where { dest.key inList listOf("in-source-and-dest-2", "in-source-and-dest-3") }
-                .toFastList()
+                .toList()
                 .shouldBeEmpty()
         }
     }

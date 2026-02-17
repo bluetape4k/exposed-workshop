@@ -18,7 +18,6 @@ import exposed.shared.tests.currentTestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -141,7 +140,7 @@ class Ex10_CompositeIdTableEntity: JdbcExposedTestBase() {
 
             entityCache.clear()
 
-            val result2 = Publisher.all().toFastList()
+            val result2 = Publisher.all().toList()
             result2 shouldHaveSize 3
         }
     }
@@ -883,12 +882,12 @@ class Ex10_CompositeIdTableEntity: JdbcExposedTestBase() {
             // parent entity references
             // 부모 엔티티 참조 (Book -> Review, Publisher -> Author, Office)
             bookA.review.shouldNotBeNull() shouldBeEqualTo reviewA
-            publisherA.authors.toFastList() shouldContainSame listOf(authorA, authorB)
+            publisherA.authors.toList() shouldContainSame listOf(authorA, authorB)
             publisherA.office.shouldNotBeNull()
 
             // 만약 복수 개의 자식이 부모 엔티티를 참조하면, `backReference` 와 `optBackReferencedOn` 은 마지막 것을 저장한다.
             publisherA.office shouldBeEqualTo officeB
-            publisherA.allOffices.toFastList() shouldContainSame listOf(officeB)
+            publisherA.allOffices.toList() shouldContainSame listOf(officeB)
         }
     }
 

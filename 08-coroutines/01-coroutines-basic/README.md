@@ -91,7 +91,7 @@ val (insertResult, updateResult) = listOf(
 // Coroutine 트랜잭션과 일반 블로킹 트랜잭션의 혼용 가능성
 newSuspendedTransaction(db = db) {
     try {
-        Tester.selectAll().toFastList()
+        Tester.selectAll().toList()
     } catch (e: Throwable) {
         suspendedOk = false
     }
@@ -99,7 +99,7 @@ newSuspendedTransaction(db = db) {
 
 transaction(db) {
     try {
-        Tester.selectAll().toFastList()
+        Tester.selectAll().toList()
     } catch (e: Throwable) {
         normalOk = false
     }

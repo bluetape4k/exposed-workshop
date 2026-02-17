@@ -5,7 +5,6 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEmpty
@@ -82,7 +81,7 @@ class Ex30_Explain: JdbcExposedTestBase() {
 
             // INSERT 작업에 대한 실행계획을 얻는다
             // EXPLAIN INSERT INTO countries (country_code) VALUES ('ABC');
-            explain { Countries.insert { it[code] = originalCode } }.toFastList().apply {
+            explain { Countries.insert { it[code] = originalCode } }.toList().apply {
                 log.debug { "EXPLAIN Insert: $this" }
             }
             Countries.selectAll().shouldBeEmpty()
@@ -93,7 +92,7 @@ class Ex30_Explain: JdbcExposedTestBase() {
 
             // UPDATE 작업의 실행 계획을 얻는다
             // EXPLAIN UPDATE COUNTRIES SET COUNTRY_CODE = 'DEF'
-            explain { Countries.update { it[code] = "DEF" } }.toFastList().apply {
+            explain { Countries.update { it[code] = "DEF" } }.toList().apply {
                 log.debug { "EXPLAIN Update: $this" }
             }
             Countries.selectAll().single()[Countries.code] shouldBeEqualTo originalCode
@@ -102,7 +101,7 @@ class Ex30_Explain: JdbcExposedTestBase() {
 
             // DELETE 작업의 실행계획을 얻는다
             // EXPLAIN DELETE FROM COUNTRIES
-            explain { Countries.deleteAll() }.toFastList().apply {
+            explain { Countries.deleteAll() }.toList().apply {
                 log.debug { "EXPLAIN Delete: $this" }
             }
 
@@ -138,7 +137,7 @@ class Ex30_Explain: JdbcExposedTestBase() {
 
         fun JdbcTransaction.explainAndIncrement(body: StatementBuilder.() -> Statement<*>) =
             explain(body = body).also {
-                it.toFastList() // as with select queries, explain is only executed when iterated over
+                it.toList() // as with select queries, explain is only executed when iterated over
                     .apply {
                         log.debug { "EXPLAIN:\n${this.joinToString("\n")}" }
                     }
@@ -263,19 +262,19 @@ class Ex30_Explain: JdbcExposedTestBase() {
             if (testDB !in TestDB.ALL_MYSQL) {
                 // `analyze` 옵션을 적용하면 모든 래핑된 구문도 실행된다.
                 // EXPLAIN ANALYZE INSERT INTO COUNTRIES (COUNTRY_CODE) VALUES ('ABC')
-                explain(analyze = true) { Countries.insert { it[code] = originalCode } }.toFastList().apply {
+                explain(analyze = true) { Countries.insert { it[code] = originalCode } }.toList().apply {
                     log.debug { "EXPLAIN Insert:\n${this.joinToString("\n")}" }
                 }
                 Countries.selectAll().count().toInt() shouldBeEqualTo 1
 
                 // EXPLAIN ANALYZE UPDATE COUNTRIES SET COUNTRY_CODE='DEF'
-                explain(analyze = true) { Countries.update { it[code] = "DEF" } }.toFastList().apply {
+                explain(analyze = true) { Countries.update { it[code] = "DEF" } }.toList().apply {
                     log.debug { "EXPLAIN Update:\n${this.joinToString("\n")}" }
                 }
                 Countries.selectAll().single()[Countries.code] shouldBeEqualTo "DEF"
 
                 // EXPLAIN ANALYZE DELETE FROM COUNTRIES
-                explain(analyze = true) { Countries.deleteAll() }.toFastList().apply {
+                explain(analyze = true) { Countries.deleteAll() }.toList().apply {
                     log.debug { "EXPLAIN Delete:\n${this.joinToString("\n")}" }
                 }
                 Countries.selectAll().empty().shouldBeTrue()
@@ -284,7 +283,7 @@ class Ex30_Explain: JdbcExposedTestBase() {
             // MySQL V8 이전 버전은 EXPLAIN 명령어에 ANALYZE 옵션을 지원하지 않는다.
             val analyze = testDB != TestDB.MYSQL_V5
             // EXPLAIN ANALYZE SELECT COUNTRIES.ID, COUNTRIES.COUNTRY_CODE FROM COUNTRIES
-            explain(analyze = analyze) { Countries.selectAll() }.toFastList().apply {
+            explain(analyze = analyze) { Countries.selectAll() }.toList().apply {
                 log.debug { "EXPLAIN Select:\n${this.joinToString("\n")}" }
             }
         }
@@ -378,13 +377,13 @@ class Ex30_Explain: JdbcExposedTestBase() {
             // test multiple options only
             if (testDB in TestDB.ALL_POSTGRES) {
                 // EXPLAIN (VERBOSE TRUE, COSTS FALSE) SELECT countries.id FROM countries WHERE countries.country_code LIKE 'A%'
-                explain(options = "VERBOSE TRUE, COSTS FALSE") { query }.toFastList()
+                explain(options = "VERBOSE TRUE, COSTS FALSE") { query }.toList()
             }
 
             // test analyze + options
             val analyze = testDB != TestDB.MYSQL_V5
             val combinedOption = if (testDB == TestDB.MYSQL_V8) "FORMAT=TREE" else formatOption
-            explain(analyze, combinedOption) { query }.toFastList().apply {
+            explain(analyze, combinedOption) { query }.toList().apply {
                 log.debug { "EXPLAIN ANALYZE FORMAT=TREE:\n${this.toString().substringAfter("=")}" }
             }
         }
@@ -427,7 +426,7 @@ class Ex30_Explain: JdbcExposedTestBase() {
                 Countries.deleteAll()
                 // EXPLAIN SELECT COUNTRIES.ID, COUNTRIES.COUNTRY_CODE FROM COUNTRIES -> 실행됩니다.
                 Countries.selectAll()
-            }.toFastList().apply {
+            }.toList().apply {
                 // 마지막 구문인 select 구문만 실행된다.
                 log.debug { "EXPLAIN Select:\n${this.joinToString("\n")}" }
             }

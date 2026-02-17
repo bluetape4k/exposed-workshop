@@ -4,7 +4,6 @@ import exposed.shared.mapping.OrderSchema.OrderRecord
 import exposed.shared.mapping.OrderSchema.withOrdersTables
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
-import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -22,12 +21,12 @@ class Ex04_Right_Join: JdbcExposedTestBase() {
 
     companion object: KLogging()
 
-    private val expected = fastListOf(
-        OrderRecord(itemId = 55, orderId = null, quantity = null, description = "Catcher Glove"),
-        OrderRecord(itemId = 22, orderId = 1, quantity = 1, description = "Helmet"),
-        OrderRecord(itemId = 33, orderId = 1, quantity = 1, description = "First Base Glove"),
-        OrderRecord(itemId = 22, orderId = 2, quantity = 1, description = "Helmet"),
-        OrderRecord(itemId = 44, orderId = 2, quantity = 1, description = "Outfield Glove")
+    private val expected = listOf(
+        OrderRecord(orderId = null, itemId = 55, quantity = null, description = "Catcher Glove"),
+        OrderRecord(orderId = 1, itemId = 22, quantity = 1, description = "Helmet"),
+        OrderRecord(orderId = 1, itemId = 33, quantity = 1, description = "First Base Glove"),
+        OrderRecord(orderId = 2, itemId = 22, quantity = 1, description = "Helmet"),
+        OrderRecord(orderId = 2, itemId = 44, quantity = 1, description = "Outfield Glove")
     )
 
     /**
@@ -67,7 +66,7 @@ class Ex04_Right_Join: JdbcExposedTestBase() {
             val ol = orderLines.alias("ol")
             val im = items.alias("im")
 
-            val slice = fastListOf(
+            val slice = listOf(
                 om[orders.id], // orderIdAlias,
                 ol[orderLines.quantity],
                 im[items.id], // itemIdAlias,
@@ -147,7 +146,7 @@ class Ex04_Right_Join: JdbcExposedTestBase() {
             val ol = orderLines.select(orderLines.orderId, orderLines.itemId, orderLines.quantity).alias("ol")
             val im = items.select(items.id, items.description).alias("im")
 
-            val slice = fastListOf(
+            val slice = listOf(
                 om[orders.id], // orderIdAlias,
                 ol[orderLines.quantity],
                 im[items.id], // itemIdAlias,
@@ -212,7 +211,7 @@ class Ex04_Right_Join: JdbcExposedTestBase() {
     fun `right join without aliases`(testDB: TestDB) {
         withOrdersTables(testDB) { orders, _, items, orderLines, _ ->
 
-            val columns = fastListOf(
+            val columns = listOf(
                 orders.id,
                 orderLines.quantity,
                 items.id,

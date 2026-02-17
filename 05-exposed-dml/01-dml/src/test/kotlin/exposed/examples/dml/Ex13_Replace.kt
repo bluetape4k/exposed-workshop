@@ -6,8 +6,6 @@ import exposed.shared.dml.DMLTestData.withCitiesAndUsers
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
-import io.bluetape4k.collections.eclipse.unifiedMapOf
 import io.bluetape4k.idgenerators.uuid.TimebasedUuid.Epoch
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
@@ -81,7 +79,7 @@ class Ex13_Replace: JdbcExposedTestBase() {
                 this[NewAuth.session] = "session".toByteArray()
             }
 
-            val result1 = NewAuth.selectAll().toFastList()
+            val result1 = NewAuth.selectAll().toList()
             result1.all { it[NewAuth.timestamp] == 0L }.shouldBeTrue()
             result1.all { it[NewAuth.serverID].isEmpty() }.shouldBeTrue()
 
@@ -110,7 +108,7 @@ class Ex13_Replace: JdbcExposedTestBase() {
             val expectedRowCount = if (testDB in TestDB.ALL_MYSQL_LIKE) 4 else 2
             affectedRowCount shouldBeEqualTo expectedRowCount
 
-            val result2 = NewAuth.selectAll().toFastList()
+            val result2 = NewAuth.selectAll().toList()
             result2.all { it[NewAuth.timestamp] == timeNow }.shouldBeTrue()
             result2.all { it[NewAuth.serverID] == specialId }.shouldBeTrue()
         }
@@ -381,7 +379,7 @@ class Ex13_Replace: JdbcExposedTestBase() {
             userData.deleteAll()
             users.deleteAll()
 
-            val cityUpdates = unifiedMapOf(
+            val cityUpdates = mapOf(
                 munichId to "München",
                 pragueId to "Prague",
                 saintPetersburgId to "Saint Petersburg"

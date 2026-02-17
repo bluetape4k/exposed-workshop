@@ -6,7 +6,6 @@ import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.KotlinLogging
 import io.bluetape4k.logging.debug
@@ -320,7 +319,7 @@ class Ex01_JavaTime: JdbcExposedTestBase() {
             val sameDateResult = testTable
                 .selectAll()
                 .where { testTable.created eq testTable.deleted }
-                .toFastList()
+                .toList()
             sameDateResult shouldHaveSize 1
             sameDateResult.single()[testTable.deleted] shouldBeEqualTo mayTheFourth
 
@@ -328,7 +327,7 @@ class Ex01_JavaTime: JdbcExposedTestBase() {
             val sameMonthResult = testTable
                 .selectAll()
                 .where { testTable.created.month() eq testTable.deleted.month() }
-                .toFastList()
+                .toList()
             sameMonthResult shouldHaveSize 2
 
             // Same Year
@@ -342,7 +341,7 @@ class Ex01_JavaTime: JdbcExposedTestBase() {
             val createdIn2025 = testTable
                 .selectAll()
                 .where { testTable.created.year() eq year2024 }
-                .toFastList()
+                .toList()
             createdIn2025 shouldHaveSize 2
         }
     }

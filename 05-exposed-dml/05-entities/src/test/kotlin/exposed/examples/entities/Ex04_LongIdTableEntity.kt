@@ -9,7 +9,6 @@ import exposed.examples.entities.LongIdTables.Towns
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.unifiedMapOf
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -166,7 +165,7 @@ class Ex04_LongIdTableEntity: JdbcExposedTestBase() {
             allCities shouldContainSame listOf("Seoul", "Busan")
 
             val allPeople = Person.all().associate { it.name to it.city.name }
-            allPeople shouldContainSame unifiedMapOf(
+            allPeople shouldContainSame mapOf(
                 "Sunghyouk Bae" to "Seoul",
                 "Minseok Kim" to "Seoul",
                 "Sunghoon Lee" to "Busan"

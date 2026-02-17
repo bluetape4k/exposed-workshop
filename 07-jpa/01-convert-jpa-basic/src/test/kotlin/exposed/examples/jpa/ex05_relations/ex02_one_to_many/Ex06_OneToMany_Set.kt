@@ -3,7 +3,6 @@ package exposed.examples.jpa.ex05_relations.ex02_one_to_many
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toUnifiedSet
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -152,7 +151,7 @@ class Ex06_OneToMany_Set: JdbcExposedTestBase() {
             val loaded = BiddingItem.findById(item1.id)!!
             loaded shouldBeEqualTo item1
             // 경매의 입찰 정보를 확인
-            loaded.bids.toUnifiedSet() shouldContainSame setOf(bid1, bid2, bid3)
+            loaded.bids.toSet() shouldContainSame setOf(bid1, bid2, bid3)
 
             // 입찰 정보 중 하나를 삭제 
             val bidToRemove = loaded.bids.first()
@@ -165,7 +164,7 @@ class Ex06_OneToMany_Set: JdbcExposedTestBase() {
 
             // 이미 DB 상에서 Unique 하기 때문에, 굳이 `toSet()` 하지 않아도 된다.
             // SELECT bids.id, bids.amount, bids.item_id FROM bids WHERE bids.item_id = 1
-            loaded2.bids.toUnifiedSet() shouldContainSame setOf(bid1, bid2, bid3) - bidToRemove
+            loaded2.bids.toSet() shouldContainSame setOf(bid1, bid2, bid3) - bidToRemove
 
             log.debug { "경매 정보 삭제 (입찰 정보도 삭제되어야 합니다." }
             loaded2.delete()
@@ -276,7 +275,7 @@ class Ex06_OneToMany_Set: JdbcExposedTestBase() {
                         sizeY = it[ProductImageTable.sizeY]
                     )
                 }
-                .toUnifiedSet()
+                .toSet()
 
         fun addImages(vararg imagesToAdd: ProductImage) {
             // 중복된 값이 들어가지 않도록 image name, productId 조합이 unique key로 설정되어 있다.

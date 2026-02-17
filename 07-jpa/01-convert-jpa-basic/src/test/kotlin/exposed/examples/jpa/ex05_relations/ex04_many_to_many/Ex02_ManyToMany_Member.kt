@@ -10,7 +10,6 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -54,7 +53,7 @@ class Ex02_ManyToMany_Member: JdbcExposedTestBase() {
             // 현재는 데이터가 없으므로 빈 리스트가 반환된다.
             val users = UserTable.selectAll()
                 .where { UserTable.firstName eq "Alice" }
-                .toFastList()
+                .toList()
             users.shouldBeEmpty()
         }
     }
@@ -135,7 +134,7 @@ class Ex02_ManyToMany_Member: JdbcExposedTestBase() {
                 .withDistinct()
 
             // Exposed SQL DSL로부터 DAO Entity 만들기
-            val groups: List<Group> = Group.wrapRows(query).toFastList()
+            val groups: List<Group> = Group.wrapRows(query).toList()
 
             groups.forEach {
                 log.debug { "Group: $it" }

@@ -1,9 +1,9 @@
 package alternative.r2dbc.example.domain.repository
 
 import alternative.r2dbc.example.AbstractR2dbcTest
-import io.bluetape4k.coroutines.flow.extensions.toFastList
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
+import kotlinx.coroutines.flow.toList
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeGreaterOrEqualTo
@@ -20,14 +20,14 @@ class CommentRespositoryTest(
 
     @Test
     fun `find comments by post id`() = runSuspendIO {
-        val comments = commentRepository.findAllByPostId(1L).toFastList()
+        val comments = commentRepository.findAllByPostId(1L).toList()
         comments.shouldNotBeEmpty()
         comments.size shouldBeGreaterOrEqualTo 2
     }
 
     @Test
     fun `find comments by non-existing post id`() = runSuspendIO {
-        val comments = commentRepository.findAllByPostId(-1L).toFastList()
+        val comments = commentRepository.findAllByPostId(-1L).toList()
         comments.shouldBeEmpty()
     }
 

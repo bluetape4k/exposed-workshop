@@ -4,7 +4,6 @@ import exposed.workshop.springwebflux.domain.model.ActorRecord
 import exposed.workshop.springwebflux.domain.model.MovieSchema.ActorEntity
 import exposed.workshop.springwebflux.domain.model.MovieSchema.ActorTable
 import exposed.workshop.springwebflux.domain.model.toActorRecord
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.eq
@@ -28,7 +27,7 @@ class ActorRepository {
     }
 
     suspend fun findAll(): List<ActorEntity> {
-        return ActorEntity.wrapRows(ActorTable.selectAll()).toFastList()
+        return ActorEntity.wrapRows(ActorTable.selectAll()).toList()
     }
 
     suspend fun searchActor(params: Map<String, String?>): List<ActorRecord> {

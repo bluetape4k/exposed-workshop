@@ -1,6 +1,5 @@
 package exposed.examples.springmvc.domain.model
 
-import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.exposed.core.HasIdentifier
 import java.io.Serializable
 
@@ -54,7 +53,7 @@ data class MovieWithActorRecord(
     val name: String,
     val producerName: String,
     val releaseDate: String,
-    val actors: MutableList<ActorRecord> = fastListOf(),
+    val actors: List<ActorRecord> = emptyList(),
 ): HasIdentifier<Long>
 
 

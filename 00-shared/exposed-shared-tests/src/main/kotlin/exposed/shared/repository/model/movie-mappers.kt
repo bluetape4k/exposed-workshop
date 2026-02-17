@@ -3,7 +3,6 @@ package exposed.shared.repository.model
 
 import exposed.shared.repository.model.MovieSchema.ActorTable
 import exposed.shared.repository.model.MovieSchema.MovieTable
-import io.bluetape4k.collections.eclipse.toFastList
 import org.jetbrains.exposed.v1.core.ResultRow
 
 
@@ -32,7 +31,7 @@ fun ResultRow.toMovieWithActorRecord(actors: List<ActorRecord>) = MovieWithActor
     name = this[MovieTable.name],
     producerName = this[MovieTable.producerName],
     releaseDate = this[MovieTable.releaseDate].toString(),
-    actors = actors.toFastList(),
+    actors = actors.toList(),
     id = this[MovieTable.id].value
 )
 
@@ -40,7 +39,7 @@ fun MovieRecord.toMovieWithActorRecord(actors: List<ActorRecord>) = MovieWithAct
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate,
-    actors = actors.toFastList(),
+    actors = actors.toList(),
     id = this.id
 )
 
@@ -55,7 +54,7 @@ fun MovieSchema.MovieEntity.toMovieWithActorRecord() = MovieWithActorRecord(
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate.toString(),
-    actors = this.actors.map { it.toActorRecord() }.toFastList(),
+    actors = this.actors.map { it.toActorRecord() }.toList(),
     id = this.id.value
 )
 

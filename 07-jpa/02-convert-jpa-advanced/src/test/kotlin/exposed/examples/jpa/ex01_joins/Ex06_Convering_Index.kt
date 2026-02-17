@@ -3,7 +3,6 @@ package exposed.examples.jpa.ex01_joins
 import exposed.shared.mapping.PersonSchema.withPersonsAndAddress
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldHaveSize
@@ -77,7 +76,7 @@ class Ex06_Convering_Index: JdbcExposedTestBase() {
             val rows = persons
                 .innerJoin(indexQuery) { persons.id eq indexQuery[persons.id] }
                 .select(persons.columns)
-                .toFastList()
+                .toList()
 
             rows.forEach {
                 log.debug { it }
@@ -146,7 +145,7 @@ class Ex06_Convering_Index: JdbcExposedTestBase() {
                 .innerJoin(indexQuery) { persons.id eq indexQuery[persons.id] }
                 .select(persons.columns)
                 .where { persons.id less 100L }
-                .toFastList()
+                .toList()
 
             rows.forEach {
                 log.debug { it }

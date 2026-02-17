@@ -8,7 +8,6 @@ import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.OrderSchema.o
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
@@ -36,7 +35,7 @@ class `Ex03_OneToMany_N+1_Order`: JdbcExposedTestBase() {
     fun `one-to-many bidirectional`(testDB: TestDB) {
         withTables(testDB, *ordersTables) {
             val order1 = createSamples(Random.nextInt(100, 999))
-            val items = order1.items.toFastList()
+            val items = order1.items.toList()
 
             flushCache()
             entityCache.clear()
@@ -66,7 +65,7 @@ class `Ex03_OneToMany_N+1_Order`: JdbcExposedTestBase() {
              *  WHERE order_items.order_id = 1
              * ```
              */
-            loaded.items.toFastList() shouldBeEqualTo items
+            loaded.items.toList() shouldBeEqualTo items
 
             entityCache.clear()
 
@@ -85,7 +84,7 @@ class `Ex03_OneToMany_N+1_Order`: JdbcExposedTestBase() {
             val loaded2 = Order.all().with(Order::items).single()
             loaded2 shouldBeEqualTo order1
             loaded2.items.count() shouldBeEqualTo 3
-            loaded2.items.toFastList() shouldBeEqualTo items
+            loaded2.items.toList() shouldBeEqualTo items
 
             entityCache.clear()
 
@@ -104,7 +103,7 @@ class `Ex03_OneToMany_N+1_Order`: JdbcExposedTestBase() {
                 .where { OrderTable.id eq order1.id }
 
             // `wrapRows` 는 Query를 실행해서 엔티티로 빌드합니다.
-            val orderItems: List<OrderItem> = OrderItem.wrapRows(query).toFastList()
+            val orderItems: List<OrderItem> = OrderItem.wrapRows(query).toList()
             orderItems shouldHaveSize 3
             orderItems.all { it.order == order1 }.shouldBeTrue()
         }
@@ -159,10 +158,10 @@ class `Ex03_OneToMany_N+1_Order`: JdbcExposedTestBase() {
 
             entityCache.clear()
 
-            val loaded2 = Order.all().offset(2).limit(3).with(Order::items).toFastList()
+            val loaded2 = Order.all().offset(2).limit(3).with(Order::items).toList()
             loaded2 shouldHaveSize 3
             loaded2.forEach {
-                it.items.toFastList() shouldHaveSize 3 // 각 order 마다 3개의 item 이 있다.
+                it.items.toList() shouldHaveSize 3 // 각 order 마다 3개의 item 이 있다.
             }
         }
     }
@@ -199,11 +198,11 @@ class `Ex03_OneToMany_N+1_Order`: JdbcExposedTestBase() {
 
             entityCache.clear()
 
-            val loaded2 = Order.all().offset(2).limit(3).toFastList()
+            val loaded2 = Order.all().offset(2).limit(3).toList()
 
             loaded2 shouldHaveSize 3
             loaded2.forEach {
-                it.items.toFastList() shouldHaveSize 3  // 각 order 마다 3개의 item 이 있다.
+                it.items.toList() shouldHaveSize 3  // 각 order 마다 3개의 item 이 있다.
             }
         }
     }

@@ -10,7 +10,6 @@ import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.core.jackson.DefaultJacksonSerializer
 import io.bluetape4k.exposed.core.jackson.contains
 import io.bluetape4k.exposed.core.jackson.exists
@@ -632,7 +631,7 @@ class JacksonBColumnTest: AbstractExposedTest() {
             val nestedKeyResult = tester
                 .selectAll()
                 .where { tester.jacksonBColumn keyExists "name" }
-                .toFastList()
+                .toList()
             nestedKeyResult.shouldBeEmpty()
         }
     }

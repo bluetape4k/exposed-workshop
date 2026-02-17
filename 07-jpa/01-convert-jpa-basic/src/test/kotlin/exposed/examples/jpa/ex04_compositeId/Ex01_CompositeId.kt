@@ -4,7 +4,6 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withDb
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import org.jetbrains.exposed.v1.core.dao.id.CompositeIdTable
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
@@ -54,7 +53,7 @@ class Ex01_CompositeId: JdbcExposedTestBase() {
 
             expectException<IllegalStateException> {
                 // but trying to use id property requires idColumns not being empty
-                missingIdsTable.select(missingIdsTable.id).toFastList()
+                missingIdsTable.select(missingIdsTable.id).toList()
             }
 
             SchemaUtils.drop(missingIdsTable)

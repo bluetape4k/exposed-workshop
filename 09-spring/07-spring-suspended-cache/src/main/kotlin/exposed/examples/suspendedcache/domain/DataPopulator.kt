@@ -1,6 +1,5 @@
 package exposed.examples.suspendedcache.domain
 
-import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import org.jetbrains.exposed.v1.jdbc.batchInsert
@@ -14,7 +13,7 @@ class DataPopulator: ApplicationListener<ApplicationReadyEvent> {
 
     companion object: KLoggingChannel() {
         val COUNTRY_CODES: List<String> =
-            fastListOf(
+            listOf(
                 "AF", "AX",
                 "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR", "AM", "AW", "AU", "AT",
                 "AZ", "BS", "BH", "BD", "BB", "BY", "BE", "BZ", "BJ", "BM", "BT", "BO", "BQ",

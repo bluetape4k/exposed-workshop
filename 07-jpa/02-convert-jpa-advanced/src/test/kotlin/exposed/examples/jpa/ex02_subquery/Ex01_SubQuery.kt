@@ -4,7 +4,6 @@ import exposed.shared.mapping.PersonSchema.Person
 import exposed.shared.mapping.PersonSchema.withPersonsAndAddress
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.asLong
@@ -65,11 +64,11 @@ class Ex01_SubQuery: JdbcExposedTestBase() {
                     persons.id notEqSubQuery persons.select(persons.id.max())
                 }
 
-            val rows = query.toFastList()
+            val rows = query.toList()
             rows shouldHaveSize 7
 
             // Query를 Entity로 만들기
-            val personEntities = Person.wrapRows(query).toFastList()
+            val personEntities = Person.wrapRows(query).toList()
             personEntities.forEach { person ->
                 log.debug { "person: $person" }
             }
@@ -100,11 +99,11 @@ class Ex01_SubQuery: JdbcExposedTestBase() {
                     persons.id eqSubQuery persons.select(persons.id.max())
                 }
 
-            val rows = query.toFastList()
+            val rows = query.toList()
             rows shouldHaveSize 1
 
             // Query를 Entity로 만들기
-            val personEntities = Person.wrapRows(query).toFastList()
+            val personEntities = Person.wrapRows(query).toList()
             personEntities.forEach { person ->
                 log.debug { "person: $person" }
             }
@@ -140,11 +139,11 @@ class Ex01_SubQuery: JdbcExposedTestBase() {
                     persons.id inSubQuery persons.select(persons.id).where { persons.lastName eq "Rubble" }
                 }
 
-            val rows = query.toFastList()
+            val rows = query.toList()
             rows shouldHaveSize 3
 
             // Query를 Entity로 만들기
-            val entities = Person.wrapRows(query).toFastList()
+            val entities = Person.wrapRows(query).toList()
             entities.forEach { person ->
                 log.debug { "person: $person" }
             }
@@ -188,7 +187,7 @@ class Ex01_SubQuery: JdbcExposedTestBase() {
                                 .where { persons.lastName eq "Rubble" }
                 }
 
-            val entities = Person.wrapRows(query).toFastList()
+            val entities = Person.wrapRows(query).toList()
             entities.forEach { person ->
                 log.debug { "person: $person" }
             }

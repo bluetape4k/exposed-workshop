@@ -4,7 +4,6 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -121,7 +120,7 @@ object MovieSchema: KLogging() {
         val russellCrowe = ActorRecord(0L, "Russell", "Crowe", "1970-01-20")
         val edwardNorton = ActorRecord(0L, "Edward", "Norton", "1975-04-03")
 
-        val actors = fastListOf(
+        val actors = listOf(
             johnnyDepp,
             bradPitt,
             angelinaJolie,
@@ -133,7 +132,7 @@ object MovieSchema: KLogging() {
             edwardNorton
         )
 
-        val movies = fastListOf(
+        val movies = listOf(
             MovieWithActorRecord(
                 0L,
                 "Gladiator",

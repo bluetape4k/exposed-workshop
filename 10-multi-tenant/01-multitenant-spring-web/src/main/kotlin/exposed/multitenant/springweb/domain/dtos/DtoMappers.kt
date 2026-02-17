@@ -5,7 +5,6 @@ import exposed.multitenant.springweb.domain.model.MovieSchema.ActorEntity
 import exposed.multitenant.springweb.domain.model.MovieSchema.ActorTable
 import exposed.multitenant.springweb.domain.model.MovieSchema.MovieEntity
 import exposed.multitenant.springweb.domain.model.MovieSchema.MovieTable
-import io.bluetape4k.collections.eclipse.toFastList
 import org.jetbrains.exposed.v1.core.ResultRow
 
 
@@ -30,19 +29,21 @@ fun ResultRow.toMovieRecord() = MovieRecord(
     id = this[MovieTable.id].value
 )
 
-fun ResultRow.toMovieWithActorRecord(actors: List<ActorRecord>) = MovieWithActorRecord(
+fun ResultRow.toMovieWithActorRecord(actors: List<ActorRecord>) =
+    MovieWithActorRecord(
     name = this[MovieTable.name],
     producerName = this[MovieTable.producerName],
     releaseDate = this[MovieTable.releaseDate].toString(),
-    actors = actors.toFastList(),
+        actors = actors.toList(),
     id = this[MovieTable.id].value
 )
 
-fun MovieRecord.toMovieWithActorRecord(actors: List<ActorRecord>) = MovieWithActorRecord(
+fun MovieRecord.toMovieWithActorRecord(actors: List<ActorRecord>) =
+    MovieWithActorRecord(
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate,
-    actors = actors.toFastList(),
+        actors = actors.toList(),
     id = this.id
 )
 
@@ -57,7 +58,7 @@ fun MovieEntity.toMovieWithActorRecord() = MovieWithActorRecord(
     name = this.name,
     producerName = this.producerName,
     releaseDate = this.releaseDate.toString(),
-    actors = this.actors.map { it.toActorRecord() }.toFastList(),
+    actors = this.actors.map { it.toActorRecord() }.toList(),
     id = this.id.value
 )
 

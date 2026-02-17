@@ -4,7 +4,6 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -83,7 +82,7 @@ class Ex40_LateralJoin: JdbcExposedTestBase() {
 
             val subqueryAlias = query.lastQueryAlias ?: error("Alias must exist!")
 
-            val rows = query.selectAll().toFastList()
+            val rows = query.selectAll().toList()
             rows.map { it[subqueryAlias[child.value]] } shouldBeEqualTo listOf(30)
             rows.forEach {
                 log.debug { "parent.id=${it[parent.id]}, parent.value=${it[parent.value]}, child.value=${it[subqueryAlias[child.value]]}" }
@@ -218,7 +217,7 @@ class Ex40_LateralJoin: JdbcExposedTestBase() {
 
             // Lateral 적용 시, 암묵적인 테이블 간의 JOIN 조건의 컬럼을 지정하면 예외가 발생합니다. (쿼리를 사용해야 합니다)
             expectException<IllegalArgumentException> {
-                parent.join(child, JoinType.LEFT, lateral = true).selectAll().toFastList()
+                parent.join(child, JoinType.LEFT, lateral = true).selectAll().toList()
             }
         }
     }

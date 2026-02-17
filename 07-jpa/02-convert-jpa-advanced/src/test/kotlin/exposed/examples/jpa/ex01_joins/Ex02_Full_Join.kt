@@ -4,7 +4,6 @@ import exposed.shared.mapping.OrderSchema.OrderRecord
 import exposed.shared.mapping.OrderSchema.withOrdersTables
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
-import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -32,7 +31,7 @@ class Ex02_Full_Join: JdbcExposedTestBase() {
 
     companion object: KLogging()
 
-    private val expected = fastListOf(
+    private val expected = listOf(
         OrderRecord(itemId = 55, orderId = null, quantity = null, description = "Catcher Glove"),
         OrderRecord(itemId = 22, orderId = 1, quantity = 1, description = "Helmet"),
         OrderRecord(itemId = 33, orderId = 1, quantity = 1, description = "First Base Glove"),
@@ -88,7 +87,7 @@ class Ex02_Full_Join: JdbcExposedTestBase() {
             val orderIdAlias = om[orders.id].alias("order_id")
             val itemIdAlias = im[items.id].alias("item_id")
 
-            val slice = fastListOf(
+            val slice = listOf(
                 orderIdAlias,
                 ol[orderLines.quantity],
                 itemIdAlias,
@@ -209,7 +208,7 @@ class Ex02_Full_Join: JdbcExposedTestBase() {
             val orderIdAlias = om[orders.id].alias("order_id")
             val itemIdAlias = im[items.id].alias("item_id")
 
-            val slice = fastListOf(
+            val slice = listOf(
                 orderIdAlias,
                 ol[orderLines.quantity],
                 itemIdAlias,
@@ -306,7 +305,7 @@ class Ex02_Full_Join: JdbcExposedTestBase() {
             val orderIdAlias = orders.id.alias("order_id")
             val itemIdAlias = items.id.alias("item_id")
 
-            val slice = fastListOf(
+            val slice = listOf(
                 orderIdAlias,
                 orderLines.quantity,
                 itemIdAlias,

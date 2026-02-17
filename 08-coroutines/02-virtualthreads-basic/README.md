@@ -77,7 +77,7 @@ val results: List<Int> = List(recordCount) { index ->
 // Virtual Thread 트랜잭션과 일반 블로킹 트랜잭션의 혼용 가능성
 val row = newVirtualThreadTransaction {
     try {
-        VTester.selectAll().toFastList()
+        VTester.selectAll().toList()
     } catch (e: Throwable) {
         virtualThreadOk = false
         null
@@ -86,7 +86,7 @@ val row = newVirtualThreadTransaction {
 
 val row2 = transaction {
     try {
-        VTester.selectAll().toFastList()
+        VTester.selectAll().toList()
     } catch (e: Throwable) {
         platformThreadOk = false
         null

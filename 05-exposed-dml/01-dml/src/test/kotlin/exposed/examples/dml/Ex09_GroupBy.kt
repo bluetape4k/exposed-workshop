@@ -4,7 +4,6 @@ import exposed.shared.dml.DMLTestData.withCitiesAndUsers
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.warn
@@ -72,7 +71,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                     cAlias
                 )
                 .groupBy(cities.name)
-                .toFastList()
+                .toList()
 
             rows.forEach {
                 val cityName = it[cities.name]
@@ -114,7 +113,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                 .select(cities.name, users.id.count())
                 .groupBy(cities.name)
                 .having { users.id.count() eq 1 }
-                .toFastList()
+                .toList()
 
             rows shouldHaveSize 1
             rows[0][cities.name] shouldBeEqualTo "St. Petersburg"
@@ -147,7 +146,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                 .groupBy(cities.name)
                 .having { users.id.count().eq<Number, Long, Int>(maxExpr) }
                 .orderBy(cities.name)
-                .toFastList()
+                .toList()
 
             rows.forEach { row ->
                 log.debug { "city name=${row[cities.name]}, maxExpr=${row[maxExpr]}" }
@@ -192,7 +191,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                 .groupBy(cities.name)
                 .having { users.id.count() lessEq 42L }
                 .orderBy(cities.name)
-                .toFastList()
+                .toList()
 
             rows shouldHaveSize 2
 

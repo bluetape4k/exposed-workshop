@@ -4,7 +4,6 @@ import exposed.shared.mapping.OrderSchema.OrderRecord
 import exposed.shared.mapping.OrderSchema.withOrdersTables
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
-import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -26,7 +25,7 @@ class Ex03_Left_Join: JdbcExposedTestBase() {
 
     companion object: KLogging()
 
-    private val expected = fastListOf(
+    private val expected = listOf(
         OrderRecord(itemId = 22, orderId = 1, quantity = 1, description = "Helmet"),
         OrderRecord(itemId = 33, orderId = 1, quantity = 1, description = "First Base Glove"),
         OrderRecord(itemId = null, orderId = 2, quantity = 6, description = null),
@@ -72,7 +71,7 @@ class Ex03_Left_Join: JdbcExposedTestBase() {
             val ol = orderLines.alias("ol")
             val im = items.alias("im")
 
-            val slice = fastListOf(
+            val slice = listOf(
                 om[orders.id], // orderIdAlias,
                 ol[orderLines.quantity], im[items.id], // itemIdAlias,
                 im[items.description]
@@ -150,7 +149,7 @@ class Ex03_Left_Join: JdbcExposedTestBase() {
             val ol = orderLines.select(orderLines.orderId, orderLines.itemId, orderLines.quantity).alias("ol")
             val im = items.select(items.id, items.description).alias("im")
 
-            val slice = fastListOf(
+            val slice = listOf(
                 om[orders.id], // orderIdAlias,
                 ol[orderLines.quantity], im[items.id], // itemIdAlias,
                 im[items.description]
@@ -159,8 +158,10 @@ class Ex03_Left_Join: JdbcExposedTestBase() {
             val leftJoin: Join = om.innerJoin(ol) { om[orders.id] eq ol[orderLines.orderId] }
                 .leftJoin(im) { ol[orderLines.itemId] eq im[items.id] }
 
-            val records = leftJoin.select(slice).orderBy(om[orders.id], SortOrder.ASC_NULLS_FIRST)
-                .orderBy(im[items.id], SortOrder.ASC_NULLS_FIRST).map {
+            val records = leftJoin.select(slice)
+                .orderBy(om[orders.id], SortOrder.ASC_NULLS_FIRST)
+                .orderBy(im[items.id], SortOrder.ASC_NULLS_FIRST)
+                .map {
                     OrderRecord(
                         itemId = it[im[items.id]]?.value,
                         orderId = it[om[orders.id]]?.value,
@@ -211,18 +212,23 @@ class Ex03_Left_Join: JdbcExposedTestBase() {
     fun `left join without aliases`(testDB: TestDB) {
         withOrdersTables(testDB) { orders, _, items, orderLines, _ ->
 
-            val slice = fastListOf(
-                orders.id, orderLines.quantity, items.id, items.description
+            val slice = listOf(
+                orders.id,
+                orderLines.quantity,
+                items.id,
+                items.description
             )
 
             val leftJoin: Join = orders.innerJoin(orderLines) { orders.id eq orderLines.orderId }
                 .leftJoin(items) { orderLines.itemId eq items.id }
 
-            val records = leftJoin.select(slice).orderBy(orders.id, SortOrder.ASC_NULLS_FIRST)
-                .orderBy(items.id, SortOrder.ASC_NULLS_FIRST).map {
+            val records = leftJoin.select(slice)
+                .orderBy(orders.id, SortOrder.ASC_NULLS_FIRST)
+                .orderBy(items.id, SortOrder.ASC_NULLS_FIRST)
+                .map {
                     OrderRecord(
-                        itemId = it[items.id]?.value,
                         orderId = it[orders.id]?.value,
+                        itemId = it[items.id]?.value,
                         quantity = it[orderLines.quantity],
                         description = it[items.description]
                     )

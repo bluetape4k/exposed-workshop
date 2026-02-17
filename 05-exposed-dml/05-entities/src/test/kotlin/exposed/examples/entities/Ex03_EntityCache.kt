@@ -3,7 +3,6 @@ package exposed.examples.entities
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -82,7 +81,7 @@ class Ex03_EntityCache: JdbcExposedTestBase() {
                     }
                 }
 
-                val allEntities = TestEntity.all().toFastList()
+                val allEntities = TestEntity.all().toList()
                 allEntities shouldHaveSize entitiesCount
 
                 // 엔티티 캐시로부터 특정 엔티티 수형을 조회하기
@@ -132,7 +131,7 @@ class Ex03_EntityCache: JdbcExposedTestBase() {
 
             entityCache.clear()
             // Load all into cache
-            TestEntity.all().toFastList()
+            TestEntity.all().toList()
 
             entityIds.forEach {
                 TestEntity[it]
@@ -150,7 +149,7 @@ class Ex03_EntityCache: JdbcExposedTestBase() {
         transaction(dbNoCache) {
             entityCache.clear()
             debug = true
-            TestEntity.all().toFastList()
+            TestEntity.all().toList()
             statementCount shouldBeEqualTo 1
 
             val initialStatementCount = statementCount
@@ -184,7 +183,7 @@ class Ex03_EntityCache: JdbcExposedTestBase() {
                 }
             }
 
-            val allEntities = TestEntity.all().toFastList()
+            val allEntities = TestEntity.all().toList()
             allEntities shouldHaveSize entitiesCount
 
             val allCachedEntities = entityCache.findAll(TestEntity)
@@ -207,11 +206,11 @@ class Ex03_EntityCache: JdbcExposedTestBase() {
             }
             entityCache.clear()
 
-            TestEntity.all().limit(15).toFastList()
+            TestEntity.all().limit(15).toList()
             entityCache.findAll(TestEntity) shouldHaveSize 15
 
             entityCache.maxEntitiesToStore = 18
-            TestEntity.all().toFastList()
+            TestEntity.all().toList()
             entityCache.findAll(TestEntity) shouldHaveSize 18
 
             // Resize current cache
@@ -219,7 +218,7 @@ class Ex03_EntityCache: JdbcExposedTestBase() {
             entityCache.findAll(TestEntity) shouldHaveSize 10
 
             entityCache.maxEntitiesToStore = 18
-            TestEntity.all().toFastList()
+            TestEntity.all().toList()
             entityCache.findAll(TestEntity) shouldHaveSize 18
 
             // 캐시를 사용하지 않는다.

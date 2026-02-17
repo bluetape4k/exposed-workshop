@@ -9,7 +9,6 @@ import exposed.shared.tests.inProperCase
 import exposed.shared.tests.insertAndWait
 import exposed.shared.tests.withTables
 import io.bluetape4k.collections.eclipse.fastListOf
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -200,7 +199,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testDefaultsWithExplicit01(testDB: TestDB) {
         withTables(testDB, TableWithDBDefault) {
-            val created = fastListOf(
+            val created = listOf(
                 DBDefault.new { field = "1" },
                 DBDefault.new {
                     field = "2"
@@ -212,7 +211,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
                 DBDefault.removeFromCache(it)
             }
 
-            val entities = DBDefault.all().toFastList()
+            val entities = DBDefault.all().toList()
             entities shouldBeEqualTo created
         }
     }
@@ -235,7 +234,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
         // MySql 5 is excluded because it does not support `CURRENT_DATE()` as a default value
         Assumptions.assumeTrue { testDB != TestDB.MYSQL_V5 }
         withTables(testDB, TableWithDBDefault) {
-            val created = fastListOf(
+            val created = listOf(
                 DBDefault.new {
                     field = "2"
                     t1 = localDateTimeNowMinusUnit(5, DAYS)
@@ -247,7 +246,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
             created.forEach {
                 DBDefault.removeFromCache(it)
             }
-            val entities = DBDefault.all().toFastList()
+            val entities = DBDefault.all().toList()
             entities shouldBeEqualTo created
         }
     }

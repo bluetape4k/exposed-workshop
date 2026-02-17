@@ -4,7 +4,6 @@ import com.impossibl.postgres.jdbc.PGSQLSimpleException
 import exposed.shared.mapping.OrderSchema.withOrdersTables
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldHaveSize
@@ -42,11 +41,11 @@ class Ex07_Misc_Join: JdbcExposedTestBase() {
 
             if (testDB == TestDB.POSTGRESQLNG) {
                 assertFailsWith<PGSQLSimpleException> {
-                    query.toFastList()
+                    query.toList()
                 }
             } else {
                 assertFailsWith<ExposedSQLException> {
-                    query.toFastList()
+                    query.toList()
                 }
             }
         }
@@ -91,7 +90,7 @@ class Ex07_Misc_Join: JdbcExposedTestBase() {
                                 .where { ol2[orderLines.orderId] eq ol1[orderLines.orderId] }
                 }
                 .orderBy(ol1[orderLines.id])
-                .toFastList()
+                .toList()
 
             // orderId=1, line number=2
             // orderId=2, line number=3

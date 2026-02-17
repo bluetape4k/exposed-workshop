@@ -2,7 +2,6 @@ package exposed.example.springboot.autoconfig
 
 import exposed.example.springboot.tables.TestEntity
 import exposed.example.springboot.tables.TestTable
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.concurrent.virtualthread.virtualFuture
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.jetbrains.exposed.v1.jdbc.selectAll
@@ -23,7 +22,7 @@ class AsyncExposedService {
     fun allTestDataAsync(): CompletableFuture<List<TestEntity>> = CompletableFuture.supplyAsync {
         transaction {
             val query = TestTable.selectAll()
-            TestEntity.wrapRows(query).toFastList()
+            TestEntity.wrapRows(query).toList()
         }
     }
 
@@ -33,7 +32,7 @@ class AsyncExposedService {
     fun allTestDataVirtualThreads() = virtualFuture {
         transaction {
             val query = TestTable.selectAll()
-            TestEntity.wrapRows(query).toFastList()
+            TestEntity.wrapRows(query).toList()
         }
     }.toCompletableFuture()
 }

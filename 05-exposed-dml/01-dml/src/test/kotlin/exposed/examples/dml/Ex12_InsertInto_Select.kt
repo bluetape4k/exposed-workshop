@@ -3,7 +3,6 @@ package exposed.examples.dml
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
@@ -62,7 +61,7 @@ class Ex12_InsertInto_Select: JdbcExposedTestBase() {
                 .select(cities.name)
                 .orderBy(cities.id, SortOrder.DESC)
                 .limit(limit)
-                .toFastList()
+                .toList()
 
             rows shouldHaveSize 2
             rows[0][cities.name] shouldBeEqualTo "An"   // Andrey
@@ -95,7 +94,7 @@ class Ex12_InsertInto_Select: JdbcExposedTestBase() {
             val rows = userData.selectAll()
                 .where { userData.value eq 42 }
                 .orderBy(userData.userId)
-                .toFastList()
+                .toList()
 
             rows.size shouldBeEqualTo allUserData.toInt()
         }
@@ -130,7 +129,7 @@ class Ex12_InsertInto_Select: JdbcExposedTestBase() {
                     intLiteral(0)
                 )
             )
-            val rows = users.selectAll().where { users.name eq "Foo" }.toFastList()
+            val rows = users.selectAll().where { users.name eq "Foo" }.toList()
             rows.size.toLong() shouldBeEqualTo userCount
         }
     }
@@ -159,7 +158,7 @@ class Ex12_InsertInto_Select: JdbcExposedTestBase() {
                 columns = listOf(users.name, users.id)
             )
 
-            val rows = users.selectAll().where { users.name eq "Foo" }.toFastList()
+            val rows = users.selectAll().where { users.name eq "Foo" }.toList()
             rows.size shouldBeEqualTo userCount.toInt()
         }
     }

@@ -6,7 +6,6 @@ import exposed.shared.tests.assertFailAndRollback
 import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInRange
@@ -96,7 +95,7 @@ class Ex07_UnsignedColumnType: JdbcExposedTestBase() {
                 it[unsignedByte] = 123u
             }
 
-            val result = UByteTable.selectAll().toFastList()
+            val result = UByteTable.selectAll().toList()
             result shouldHaveSize 1
             result.single()[UByteTable.unsignedByte] shouldBeEqualTo 123u
         }
@@ -185,7 +184,7 @@ class Ex07_UnsignedColumnType: JdbcExposedTestBase() {
                 it[unsignedShort] = 123u
             }
 
-            val result = UShortTable.selectAll().toFastList()
+            val result = UShortTable.selectAll().toList()
             result shouldHaveSize 1
             result.single()[UShortTable.unsignedShort] shouldBeEqualTo 123u
         }
@@ -274,7 +273,7 @@ class Ex07_UnsignedColumnType: JdbcExposedTestBase() {
                 it[unsignedInt] = 123u
             }
 
-            val result = UIntTable.selectAll().toFastList()
+            val result = UIntTable.selectAll().toList()
             result shouldHaveSize 1
             result.single()[UIntTable.unsignedInt] shouldBeEqualTo 123u
         }
@@ -364,7 +363,7 @@ class Ex07_UnsignedColumnType: JdbcExposedTestBase() {
                 it[unsignedLong] = 123uL
             }
 
-            val result = ULongTable.selectAll().toFastList()
+            val result = ULongTable.selectAll().toList()
             result.size shouldBeEqualTo 1
             result.single()[ULongTable.unsignedLong] shouldBeEqualTo 123uL
         }
@@ -383,7 +382,7 @@ class Ex07_UnsignedColumnType: JdbcExposedTestBase() {
                 it[unsignedLong] = maxValue
             }
 
-            val result = ULongTable.selectAll().toFastList()
+            val result = ULongTable.selectAll().toList()
             result shouldHaveSize 1
             result.single()[ULongTable.unsignedLong] shouldBeEqualTo maxValue
         }

@@ -4,7 +4,6 @@ import exposed.shared.dml.DMLTestData.withCitiesAndUsers
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
@@ -75,7 +74,7 @@ class Ex06_Exists: JdbcExposedTestBase() {
                             .where { userData.userId eq users.id }
                             .andWhere { userData.comment like "%here%" }
                     )
-                }.toFastList()
+                }.toList()
 
             rows shouldHaveSize 1
             rows.single()[users.name] shouldBeEqualTo "Something"
@@ -194,7 +193,7 @@ class Ex06_Exists: JdbcExposedTestBase() {
                     )
                 }
                 .orderBy(users.id)
-                .toFastList()
+                .toList()
 
             rows shouldHaveSize 2
             rows[0][users.name] shouldBeEqualTo "Sergey"
@@ -245,7 +244,7 @@ class Ex06_Exists: JdbcExposedTestBase() {
                     )
                 }
                 .orderBy(users.id)
-                .toFastList()
+                .toList()
 
             rows shouldHaveSize 2
             rows[0][users.name] shouldBeEqualTo "Sergey"

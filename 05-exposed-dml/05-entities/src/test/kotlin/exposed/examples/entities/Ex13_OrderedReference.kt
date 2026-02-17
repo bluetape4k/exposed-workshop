@@ -3,7 +3,6 @@ package exposed.examples.entities
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -267,7 +266,7 @@ class Ex13_OrderedReference: JdbcExposedTestBase() {
              *           userratings.id DESC;
              * ```
              */
-            val ratings = UserMultiColumn.all().first().ratings.toFastList()
+            val ratings = UserMultiColumn.all().first().ratings.toList()
 
             /**
              * ```sql
@@ -283,7 +282,7 @@ class Ex13_OrderedReference: JdbcExposedTestBase() {
              *           usernullableratings.id DESC;
              * ```
              */
-            val nullableRatings = UserMultiColumn.all().first().nullableRatings.toFastList()
+            val nullableRatings = UserMultiColumn.all().first().nullableRatings.toList()
 
             // value 가 내림차순의 순서로 정렬되어야 합니다.
             // value 가 같다면 ID 가 내림차순으로 정렬되어야 합니다.
@@ -361,7 +360,7 @@ class Ex13_OrderedReference: JdbcExposedTestBase() {
              *           userratings.id DESC;
              * ```
              */
-            val ratings = UserChainedColumn.all().first().ratings.toFastList()
+            val ratings = UserChainedColumn.all().first().ratings.toList()
 
             // value 가 내림차순의 순서로 정렬되어야 합니다.
             // value 가 같다면 ID 가 내림차순으로 정렬되어야 합니다.

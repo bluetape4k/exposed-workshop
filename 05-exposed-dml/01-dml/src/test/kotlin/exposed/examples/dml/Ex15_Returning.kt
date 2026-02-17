@@ -3,9 +3,6 @@ package exposed.examples.dml
 import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
-import io.bluetape4k.collections.eclipse.toUnifiedSet
-import io.bluetape4k.collections.eclipse.unifiedMapOf
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -344,7 +341,7 @@ class Ex15_Returning: JdbcExposedTestBase() {
             Items.selectAll().count() shouldBeEqualTo 0L
 
             // 삭제될 것이 없으므로, 삭제된 레코드가 없습니다.
-            Items.deleteReturning().toFastList().shouldBeEmpty()
+            Items.deleteReturning().toList().shouldBeEmpty()
         }
     }
 
@@ -359,7 +356,7 @@ class Ex15_Returning: JdbcExposedTestBase() {
         Assumptions.assumeTrue { testDB in returningSupportedDb }
 
         withTables(testDB, Items) {
-            val items = unifiedMapOf("A" to 99.0, "B" to 100.0, "C" to 200.0)
+            val items = mapOf("A" to 99.0, "B" to 100.0, "C" to 200.0)
             Items.batchInsert(items.entries) { (n, p) ->
                 this[Items.name] = n
                 this[Items.price] = p
@@ -409,7 +406,7 @@ class Ex15_Returning: JdbcExposedTestBase() {
         Assumptions.assumeTrue { testDB in updateReturningSupportedDb }
 
         withTables(testDB, Items) {
-            val input = unifiedMapOf("A" to 99.0, "B" to 100.0, "C" to 200.0)
+            val input = mapOf("A" to 99.0, "B" to 100.0, "C" to 200.0)
             Items.batchInsert(input.entries) { (n, p) ->
                 this[Items.name] = n
                 this[Items.price] = p
@@ -450,7 +447,7 @@ class Ex15_Returning: JdbcExposedTestBase() {
                 }
                 .map { it[Items.name] }
 
-            result2.toUnifiedSet() shouldBeEqualTo input.keys.map { it.lowercase() }.toUnifiedSet()
+            result2.toSet() shouldBeEqualTo input.keys.map { it.lowercase() }.toSet()
 
             /**
              * 모든 레코드의 price를 `0.0`으로 변경하고, price 컬럼의 alias 만 반환합니다.

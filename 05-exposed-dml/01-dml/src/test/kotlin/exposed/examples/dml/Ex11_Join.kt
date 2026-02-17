@@ -5,8 +5,6 @@ import exposed.shared.tests.JdbcExposedTestBase
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.toFastList
-import io.bluetape4k.collections.eclipse.toUnifiedSet
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import nl.altindag.log.LogCaptor
@@ -133,7 +131,7 @@ class Ex11_Join: JdbcExposedTestBase() {
             val rows = cities.innerJoin(users).innerJoin(userData)
                 .selectAll()
                 .orderBy(users.id)
-                .toFastList()
+                .toList()
 
             rows shouldHaveSize 2
 
@@ -207,7 +205,7 @@ class Ex11_Join: JdbcExposedTestBase() {
              */
             val rows = numbers.innerJoin(map).innerJoin(names)
                 .selectAll()
-                .toFastList()
+                .toList()
 
             rows shouldHaveSize 1
             rows[0][numbers.id] shouldBeEqualTo 2
@@ -249,7 +247,7 @@ class Ex11_Join: JdbcExposedTestBase() {
             )
 
             allUsersToStPetersburg.map { it.second }.distinct() shouldBeEqualTo listOf("St. Petersburg")
-            allUsersToStPetersburg.map { it.first }.toUnifiedSet() shouldBeEqualTo allUsers
+            allUsersToStPetersburg.map { it.first }.toSet() shouldBeEqualTo allUsers
         }
     }
 
