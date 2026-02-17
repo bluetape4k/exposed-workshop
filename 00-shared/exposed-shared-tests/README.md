@@ -32,12 +32,45 @@ This module (`exposed-shared-tests`) serves as a foundational library within the
 - **Entity-Relationship Diagrams (ERDs)**: Visual representations (e.g., `CityUsersErd.png`,
   `SalesErd.png`) accompanying the data models to provide a clear understanding of the database structure.
 
+**City Users ERD**
+![CityUsersErd.png](./src/main/kotlin/exposed/shared/dml/CityUsersErd_Dark.png)
+
+**Sales ERD**
+![SalesErd.png](./src/main/kotlin/exposed/shared/dml/SalesErd_Dark.png)
+
 ### 4. Shared Entity Schemas (`exposed.shared.entities` package)
 
 - **Generic Entity Definitions**: `BoardSchema.kt` defines common entity schemas (e.g., `Boards`, `Posts`,
   `Categories`) that can be reused across different modules, promoting consistency and reducing redundancy.
 - **Entity-Relationship Diagrams (ERDs)**: Visual aids (e.g.,
   `BoardSchema.png`) to illustrate the relationships between these entities.
+
+**Board ERD**
+![BoardSchema.png](./src/main/kotlin/exposed/shared/entities/BoardSchema_Dark.png)
+
+### 5. Shared Mapping Schema (`exposed.shared.mapping` package)
+
+**Order Schema ERD**
+![Order Schema ERD](./src/main/kotlin/exposed/shared/mapping/OrderSchema_Dark.png)
+
+**Person Schema ERD**
+![Person Schema ERD](./src/main/kotlin/exposed/shared/mapping/PersonSchema_Dark.png)
+
+### 6. Shared Repository Schema (`exposed.shared.repository` package)
+
+**Movie Schema ERD**
+
+![Movie Schema ERD](./src/main/kotlin/exposed/shared/repository/MovieSchema_Dark.png)
+
+### 7. Shared Sample Schema (`exposed.shared.samples` package)
+
+**Bank Schema ERD**
+
+![Bank Schema ERD](./src/main/kotlin/exposed/shared/samples/BankSchema.png)
+
+**User & Cities Schema ERD**
+
+![User & Cities ERD](./src/main/kotlin/exposed/shared/samples/UserCities_ERD.png)
 
 By centralizing these components, `exposed-shared-tests` ensures that all examples and tests within the
 `exposed-workshop` project benefit from a consistent, robust, and easily manageable testing environment.

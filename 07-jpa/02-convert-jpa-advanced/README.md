@@ -17,6 +17,7 @@ JPA의 **고급 기능들을 Exposed로 어떻게 구현하는지
 
 JPA의 `JOIN FETCH`, `@EntityGraph`에 해당하는 Exposed의 Join 구현입니다.
 
+
 | 파일                        | 설명                              | JPA 대응 개념                    |
 |---------------------------|---------------------------------|------------------------------|
 | `Ex01_Simple_Join.kt`     | Inner Join (Lazy/Eager Loading) | `JOIN FETCH`, `@EntityGraph` |
@@ -98,6 +99,10 @@ JPA의 3가지 상속 매핑 전략을 Exposed로 구현합니다.
 
 한 테이블에 모든 서브타입의 컬럼을 모아놓고 `dtype` 컬럼으로 구분합니다.
 
+**SingleTable Inheritance ERD**
+
+![SingleTable Inheritance ERD](./src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance_ERD.png)
+
 ```kotlin
 // 하나의 billing 테이블에 CreditCard, BankAccount 정보를 모두 저장
 object BillingTable: IntIdTable("billing") {
@@ -124,6 +129,10 @@ override fun findById(id: EntityID<Int>): CreditCard? {
 
 부모 테이블과 자식 테이블을 각각 정의하고, 자식의 PK가 부모의 FK를 참조합니다.
 
+**Joined Table Inheritance ERD**
+
+![Joined Table Inheritance ERD](./src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance_ERD.png)
+
 ```kotlin
 // 부모 테이블
 object PersonTable: IntIdTable("joined_person") {
@@ -141,6 +150,43 @@ object EmployeeTable: IdTable<Int>("joined_employee") {
 
 각 서브타입이 완전히 독립된 테이블을 가집니다. UUID 등 전역 고유 키를 사용해야 합니다.
 
+**Table Per Class Inheritance ERD**
+
+![Table Per Class Inheritance ERD](./src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance_ERD.png)
+
+```kotlin
+/**
+ * JPA의 Table Per Class Inheritance 의 경우 다중의 테이블에서 고유한 값을 사용해야 해서,
+ * UUID 같은 수형으로 전역적으로 Unique 하게 관리해야 한다.
+ */
+abstract class AbstractBillingTable(name: String = ""): TimebasedUUIDTable(name) {
+    val owner = varchar("owner", 64).index()
+    val swift = varchar("swift", 16)
+}
+
+object CreditCardTable: AbstractBillingTable("credit_card") {
+    val cardNumber = varchar("card_number", 24).uniqueIndex()
+    val companyName = varchar("company_name", 128)
+    val expYear = integer("exp_year")
+    val expMonth = integer("exp_month")
+    val startDate = date("start_date")
+    val endDate = date("end_date")
+
+    init {
+        index("idx_credit_card_number", false, cardNumber, owner)
+    }
+}
+
+object BankAccountTable: AbstractBillingTable("bank_account") {
+    val accountNumber = varchar("account_number", 24).uniqueIndex()
+    val bankName = varchar("bank_name", 128)
+
+    init {
+        index("idx_bank_account_number", false, accountNumber, owner)
+    }
+}
+```
+
 ### ex04_tree - Self-Reference 트리 구조
 
 JPA의 `@ManyToOne` + `@OneToMany` Self-Reference에 해당하는 트리 구조 구현입니다.
@@ -149,6 +195,10 @@ JPA의 `@ManyToOne` + `@OneToMany` Self-Reference에 해당하는 트리 구조 
 |---------------------|-----------------------------------------|-------------------------|
 | `TreeNodeSchema.kt` | Self-Reference 테이블 및 엔티티 정의             | `@ManyToOne` Self-Ref   |
 | `Ex01_TreeNode.kt`  | 트리 CRUD, Self Join, SubQuery를 활용한 트리 탐색 | Self-referencing Entity |
+
+**Tree Node ERD**
+
+![Tree Node ERD](./src/test/kotlin/exposed/examples/jpa/ex04_tree/TreeNodeSchema_dark.png)
 
 **트리 구조 구현:**
 
