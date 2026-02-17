@@ -33,9 +33,11 @@ This module (`exposed-shared-tests`) serves as a foundational library within the
   `SalesErd.png`) accompanying the data models to provide a clear understanding of the database structure.
 
 **City Users ERD**
+
 ![CityUsersErd.png](./src/main/kotlin/exposed/shared/dml/CityUsersErd_Dark.png)
 
 **Sales ERD**
+
 ![SalesErd.png](./src/main/kotlin/exposed/shared/dml/SalesErd_Dark.png)
 
 ### 4. Shared Entity Schemas (`exposed.shared.entities` package)
