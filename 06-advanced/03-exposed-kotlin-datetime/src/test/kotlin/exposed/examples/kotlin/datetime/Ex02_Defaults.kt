@@ -8,7 +8,6 @@ import exposed.shared.tests.expectException
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.insertAndWait
 import exposed.shared.tests.withTables
-import io.bluetape4k.collections.eclipse.fastListOf
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -271,7 +270,7 @@ class Ex02_Defaults: JdbcExposedTestBase() {
         }
     }
 
-    private val initBatch = fastListOf<(BatchInsertStatement) -> Unit>(
+    private val initBatch = listOf<(BatchInsertStatement) -> Unit>(
         {
             it[TableWithDBDefault.field] = "1"
         },
@@ -314,8 +313,8 @@ class Ex02_Defaults: JdbcExposedTestBase() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testBatchInsertNotFails01(testDB: TestDB) {
         withTables(testDB, TableWithDBDefault) {
-            TableWithDBDefault.batchInsert(initBatch) { foo ->
-                foo(this)
+            TableWithDBDefault.batchInsert(initBatch) { batchBlock ->
+                batchBlock(this)
             }
         }
     }
@@ -585,20 +584,6 @@ class Ex02_Defaults: JdbcExposedTestBase() {
             tester.insert { it[dt] = dt2020 }
             tester.insert { it[dt] = LocalDateTime(2021, 1, 1, 1, 1) }
 
-            /**
-             * ```sql
-             * -- Postgres
-             * SELECT COUNT(*)
-             *   FROM tester
-             *  WHERE tester."dateTime" BETWEEN '2019-12-25T00:00:00' AND '2020-01-08T00:00:00'
-             * ```
-             * ```sql
-             * -- MySQL V8
-             * SELECT COUNT(*)
-             *   FROM tester
-             *  WHERE tester.dateTime BETWEEN '2019-12-25 00:00:00.000000' AND '2020-01-08 00:00:00.000000'
-             * ```
-             */
             /**
              * ```sql
              * -- Postgres

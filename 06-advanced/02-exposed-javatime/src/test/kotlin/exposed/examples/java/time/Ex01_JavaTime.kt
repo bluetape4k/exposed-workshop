@@ -10,13 +10,6 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.KotlinLogging
 import io.bluetape4k.logging.debug
 import io.mockk.impl.InternalPlatform.time
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
@@ -56,7 +49,6 @@ import org.jetbrains.exposed.v1.json.jsonb
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-import java.math.RoundingMode
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -977,57 +969,5 @@ infix fun Int.shouldFractionalPartEqualTo(nano2: Int) {
 
         else ->
             error("Unsupported dialect ${dialect.name}")
-    }
-}
-
-fun Int.nanoRoundTo100Nanos(): Int =
-    this.toBigDecimal().divide(100.toBigDecimal(), RoundingMode.HALF_UP).toInt()
-
-fun Int.nanoRoundToMicro(): Int =
-    this.toBigDecimal().divide(1_000.toBigDecimal(), RoundingMode.HALF_UP).toInt()
-
-fun Int.nanoRoundToMilli(): Int =
-    this.toBigDecimal().divide(1_000_000.toBigDecimal(), RoundingMode.HALF_UP).toInt()
-
-fun Int.nanoFloorToMicro(): Int = this / 1_000
-
-fun Int.nanoFloorToMilli(): Int = this / 1_000_000
-
-
-val today: LocalDate = LocalDate.now()
-
-/**
- * ```sql
- * -- Postgres
- * CREATE TABLE IF NOT EXISTS citiestime (
- *      id SERIAL PRIMARY KEY,
- *      "name" VARCHAR(50) NOT NULL,
- *      local_time TIMESTAMP NULL
- * );
- * ```
- */
-object CitiesTime: IntIdTable("CitiesTime") {
-    val name: Column<String> = varchar("name", 50)
-    val local_time: Column<LocalDateTime?> = datetime("local_time").nullable()
-}
-
-@Serializable
-data class ModifierData(
-    val userId: Int,
-    @Serializable(with = DateTimeSerializer::class)
-    val timestamp: LocalDateTime,
-)
-
-/**
- * [LocalDateTime]을 Kotlinx Serialization 으로 직렬화하기 위한 Serializer
- */
-object DateTimeSerializer: KSerializer<LocalDateTime> {
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("LocalDateTime", PrimitiveKind.STRING)
-    override fun serialize(encoder: Encoder, value: LocalDateTime) {
-        encoder.encodeString(value.toString())
-    }
-
-    override fun deserialize(decoder: Decoder): LocalDateTime {
-        return LocalDateTime.parse(decoder.decodeString())
     }
 }

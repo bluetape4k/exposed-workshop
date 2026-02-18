@@ -3,7 +3,7 @@ package exposed.examples.cache.coroutines.controller
 import exposed.examples.cache.coroutines.AbstractCacheStrategyTest
 import exposed.examples.cache.coroutines.domain.model.UserEventTable
 import exposed.examples.cache.coroutines.domain.model.newUserEventRecord
-import io.bluetape4k.junit5.awaitility.suspendUntil
+import io.bluetape4k.junit5.awaitility.untilSuspending
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.spring.tests.httpPost
@@ -47,7 +47,7 @@ class UserEventControllerTest(
         // 비동기로 처리되므로, await를 사용하여 결과를 기다림
         await.atMost(Duration.ofSeconds(4))
             .pollInterval(Duration.ofMillis(100))
-            .suspendUntil {
+            .untilSuspending {
                 getCountOfUserEventsFromDB() == prevCount + 1L
             }
 
@@ -72,7 +72,7 @@ class UserEventControllerTest(
         // 비동기로 처리되므로, await를 사용하여 결과를 기다림
         await.atMost(Duration.ofSeconds(10))
             .pollInterval(Duration.ofMillis(100))
-            .suspendUntil {
+            .untilSuspending {
                 getCountOfUserEventsFromDB() == prevCount + insertCount
             }
 
