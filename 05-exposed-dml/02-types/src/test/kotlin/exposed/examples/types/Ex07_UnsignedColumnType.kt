@@ -101,7 +101,6 @@ class Ex07_UnsignedColumnType: JdbcExposedTestBase() {
         }
     }
 
-
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testUByteWithCheckConstraint(testDB: TestDB) {

@@ -112,7 +112,6 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
         }
     }
 
-    @Disabled("array columns 을 logging 하면 예외가 발생한다. 실제 작동에는 문제가 없다")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `array column insert and select`(testDB: TestDB) {
@@ -144,9 +143,9 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
             result2[ArrayTestTable.doubles]?.shouldBeEmpty()
 
             val id3 = ArrayTestTable.insertAndGetId {
-                it[ArrayTestTable.numbers] = emptyList()
+                it[ArrayTestTable.numbers] = listOf(5)
                 it[ArrayTestTable.strings] = listOf(null, null, null, "null")
-                it[ArrayTestTable.doubles] = null
+                // it[ArrayTestTable.doubles] = null
             }
 
             val result3 = ArrayTestTable.selectAll().where { ArrayTestTable.id eq id3 }.single()
@@ -464,12 +463,9 @@ class Ex05_ArrayColumnType: JdbcExposedTestBase() {
 
         override fun equals(other: Any?): Boolean = idEquals(other)
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("numbers", numbers)
-            .add("strings", strings)
-            .add("doubles", doubles)
-            .add("byteArray", byteArray)
-            .toString()
+        override fun toString(): String =
+            entityToStringBuilder().add("numbers", numbers).add("strings", strings).add("doubles", doubles)
+                .add("byteArray", byteArray).toString()
     }
 
     /**

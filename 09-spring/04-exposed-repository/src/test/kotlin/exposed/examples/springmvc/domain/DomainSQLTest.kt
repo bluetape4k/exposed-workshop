@@ -36,8 +36,8 @@ class DomainSQLTest: AbstractExposedRepositoryTest() {
         @Test
         fun `get all actors in multiple platform threads`() {
             MultithreadingTester()
-                .numThreads(Runtime.getRuntime().availableProcessors() * 2)
-                .roundsPerThread(4)
+                .workers(Runtime.getRuntime().availableProcessors() * 2)
+                .rounds(4)
                 .add {
                     transaction {
                         val actors = ActorTable.selectAll().map { it.toActorRecord() }
@@ -65,7 +65,7 @@ class DomainSQLTest: AbstractExposedRepositoryTest() {
         @Test
         open fun `get all actors in multiple virtual threads`() {
             StructuredTaskScopeTester()
-                .roundsPerTask(Runtime.getRuntime().availableProcessors() * 2 * 4)
+                .rounds(Runtime.getRuntime().availableProcessors() * 2 * 4)
                 .add {
                     transaction {
                         val actors = ActorTable.selectAll().map { it.toActorRecord() }

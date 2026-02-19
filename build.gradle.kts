@@ -334,9 +334,6 @@ subprojects {
             dependency(Libs.async_http_client_extras_rxjava2)
 
             dependency(Libs.httpclient5)
-            dependency(Libs.httpcore5)
-            dependency(Libs.httpcore5_h2)
-            dependency(Libs.httpcore5_reactive)
 
             dependency(Libs.grpc_kotlin_stub)
 
