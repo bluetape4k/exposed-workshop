@@ -7,6 +7,10 @@ import org.jetbrains.exposed.v1.core.Schema
 import org.jetbrains.exposed.v1.core.statements.StatementInterceptor
 import java.util.*
 
+@Deprecated(
+    message = "use AbstractExposedTest instead.",
+    replaceWith = ReplaceWith("AbstractExposedTest")
+)
 abstract class JdbcExposedTestBase {
 
     companion object: KLogging() {

@@ -1,127 +1,121 @@
-# Exposed-Fastjson2: JSON/JSONB Support with Alibaba Fastjson2
+# Exposed-Fastjson2: Alibaba Fastjson2 기반 JSON/JSONB 지원
 
-This module demonstrates how to integrate Alibaba's **Fastjson2** library with Exposed to handle `JSON` and
-`JSONB` column types. Fastjson2 is known for its exceptional performance in JSON serialization and deserialization, making this module suitable for applications where JSON processing speed is critical.
+이 모듈은 Alibaba의 **Fastjson2** 라이브러리를 Exposed와 통합하여 `JSON`과
+`JSONB` 컬럼 타입을 처리하는 방법을 보여줍니다. Fastjson2는 JSON 직렬화 및 역직렬화에서 뛰어난 성능으로 알려져 있어, JSON 처리 속도가 중요한 애플리케이션에 적합합니다.
 
-## Learning Objectives
+## 학습 목표
 
-- Define `json` and `jsonb` columns that map to Kotlin data classes using Fastjson2.
-- Store and retrieve complex, nested objects efficiently with Fastjson2.
-- Utilize Exposed's JSON query functions (`.extract<T>()`, `.contains()`, `.exists()`) with Fastjson2-backed columns.
-- Apply Fastjson2-based JSON columns in both DSL and DAO programming styles.
+- Fastjson2를 사용하여 Kotlin 데이터 클래스에 매핑되는 `json`과 `jsonb` 컬럼 정의
+- Fastjson2로 복잡하고 중첩된 객체를 효율적으로 저장 및 조회
+- Fastjson2 기반 컬럼에서 Exposed의 JSON 쿼리 함수(`.extract<T>()`, `.contains()`, `.exists()`) 활용
+- DSL과 DAO 프로그래밍 스타일 모두에 Fastjson2 기반 JSON 컬럼 적용
 
-## Key Concepts
+## 핵심 개념
 
-The API and features of this module are very similar to `exposed-json` (using `kotlinx.serialization`) and
-`exposed-jackson` (using Jackson), but with Fastjson2 as the underlying serialization engine.
+이 모듈의 API와 기능은 `exposed-json`(`kotlinx.serialization` 사용) 및
+`exposed-jackson`(Jackson 사용)과 매우 유사하지만, 기본 직렬화 엔진으로 Fastjson2를 사용합니다.
 
-### Column Types
+### 컬럼 타입
 
-- **`fastjson<T>(name)`**: Defines a column that stores any Fastjson2-compatible object of type `T` in a standard
-  `JSON` text column.
-- **`fastjsonb<T>(name)`**: Defines a column that stores any Fastjson2-compatible object of type `T` in an optimized
-  `JSONB` (binary JSON) column. This is generally recommended for databases that support it (e.g., PostgreSQL).
+- **`fastjson<T>(name)`**: Fastjson2 호환 타입 `T`의 객체를 표준 `JSON` 텍스트 컬럼에 저장하는 컬럼을 정의합니다.
+- **`fastjsonb<T>(name)`**: Fastjson2 호환 타입 `T`의 객체를 최적화된
+  `JSONB`(바이너리 JSON) 컬럼에 저장하는 컬럼을 정의합니다. 이는 일반적으로 지원하는 데이터베이스(예: PostgreSQL)에 권장됩니다.
 
-Similar to the Jackson integration, your data classes do **not
-** necessarily need special annotations. Fastjson2 can typically work with standard Kotlin data classes or POJOs using reflection.
+Jackson 통합과 마찬가지로 데이터 클래스에 특별한 어노테이션이 **필요하지 않습니다**. Fastjson2는 일반적으로 리플렉션을 사용하여 표준 Kotlin 데이터 클래스나 POJO로 작업할 수 있습니다.
 
-### Querying Functions
+### 조회 함수
 
-The same set of powerful JSON querying functions provided by Exposed are available:
+Exposed가 제공하는 동일한 강력한 JSON 조회 함수 세트를 사용할 수 있습니다:
 
-- **`.extract<T>(path, toScalar)`**: Extracts a value from a JSON document at a specific path.
-- **`.contains(value, path)`**: Checks if the JSON document contains a given JSON value.
-- **`.exists(path, optional)`**: Checks for the existence of a key or value at a given JSONPath expression.
+- **`.extract<T>(path, toScalar)`**: JSON 문서의 특정 경로에서 값을 추출합니다.
+- **`.contains(value, path)`**: JSON 문서가 주어진 JSON 값을 포함하고 있는지 확인합니다.
+- **`.exists(path, optional)`**: 주어진 JSONPath 표현식에서 키나 값의 존재 여부를 확인합니다.
 
-## Examples Overview
+## 예제 개요
 
 ### `FastjsonSchema.kt`
 
-This file defines the data classes (`User`, `DataHolder`) and the Exposed `Table` objects (`FastjsonTable`,
-`FastjsonBTable`). It also includes DAO `Entity` classes (`FastjsonEntity`,
-`FastjsonBEntity`) and test helper functions to facilitate the examples.
+이 파일은 데이터 클래스(`User`, `DataHolder`)와 Exposed `Table` 객체(`FastjsonTable`, `FastjsonBTable`)를 정의합니다. 또한 DAO `Entity` 클래스(
+`FastjsonEntity`, `FastjsonBEntity`)와 예제를 촉진하는 테스트 헬퍼 함수도 포함합니다.
 
 ### `FastjsonColumnTest.kt` (DSL & DAO with `json`)
 
-This file demonstrates the usage of the
-`fastjson` (text-based JSON) column type. It covers standard CRUD operations and JSON-specific queries using
-`.extract()`, `.contains()`, and `.exists()`. It also shows integration with the DAO pattern.
+이 파일은 `fastjson`(텍스트 기반 JSON) 컬럼 타입의 사용법을 보여줍니다. `.extract()`, `.contains()`,
+`.exists()`를 사용한 표준 CRUD 연산과 JSON 특화 쿼리를 다룹니다. 또한 DAO 패턴과의 통합도 보여줍니다.
 
 ### `FastjsonBColumnTest.kt` (DSL & DAO with `jsonb`)
 
-This file mirrors the examples in `FastjsonColumnTest.kt` but focuses on the
-`fastjsonb` column type. The code is structured similarly, emphasizing the consistent API across `json` and
-`jsonb` types.
+이 파일은 `FastjsonColumnTest.kt`의 예제를 미러링하지만 `fastjsonb` 컬럼 타입에 초점을 맞춥니다. 코드는 유사하게 구성되어 `json`과
+`jsonb` 타입 전반의 일관된 API를 강조합니다.
 
-## Code Snippets
+## 코드 스니펫
 
-### 1. Defining a Table with a `fastjsonb` Column
+### 1. `fastjsonb` 컬럼이 있는 테이블 정의
 
 ```kotlin
 import io.bluetape4k.exposed.core.fastjson2.fastjsonb
-import com.alibaba.fastjson.annotation.JSONField // Optional, but can be used for customization
+import com.alibaba.fastjson.annotation.JSONField // 선택 사항, 사용자 정의를 위해 사용 가능
 
-// Standard data class
+// 표준 데이터 클래스
 data class User(val name: String, val team: String?)
 data class UserData(val info: User, val logins: Int, val active: Boolean)
 
 object UsersTable : IntIdTable("users") {
-    // The column stores the UserData object as JSONB using Fastjson2
+    // 컬럼은 Fastjson2를 사용하여 UserData 객체를 JSONB로 저장
     val data = fastjsonb<UserData>("data")
 }
 ```
 
-### 2. Inserting and Querying with Fastjson2 (DSL)
+### 2. Fastjson2로 삽입 및 조회 (DSL)
 
 ```kotlin
 val userData = UserData(info = User("test", "A"), logins = 5, active = true)
 
-// Insert data
+// 데이터 삽입
 UsersTable.insert {
     it[data] = userData
 }
 
-// Extract a nested value and use it in a WHERE clause
-// Note: Path syntax may differ across databases
+// 중첩된 값 추출 후 WHERE 절에서 사용
+// 참고: 경로 구문은 데이터베이스마다 다를 수 있음
 val username = UsersTable.data.extract<String>(".info.name")
 val userRecord = UsersTable.selectAll().where { username eq "test" }.single()
 
-// The full object is automatically deserialized on read
+// 전체 객체는 읽을 때 자동으로 역직렬화됨
 val retrievedData = userRecord[UsersTable.data]
 retrievedData.logins shouldBeEqualTo 5
 ```
 
-### 3. Using a Fastjson2 Column in an Entity (DAO)
+### 3. Entity에서 Fastjson2 컬럼 사용 (DAO)
 
 ```kotlin
 class UserEntity(id: EntityID<Int>): IntEntity(id) {
     companion object: IntEntityClass<UserEntity>(UsersTable)
-    // The property is automatically mapped to/from JSON
+    // 프로퍼티는 JSON으로/에서 자동 매핑됨
     var data by UsersTable.data
 }
 
-// Create a new entity
+// 새 엔티티 생성
 val entity = UserEntity.new {
     data = UserData(info = User("dao_user", "B"), logins = 1, active = true)
 }
 
-// Access the property
-println(entity.data.info.name) // Prints "dao_user"
+// 프로퍼티 접근
+println(entity.data.info.name) // "dao_user" 출력
 ```
 
-## Test Execution
+## 테스트 실행
 
-**Note
-**: JSON/JSONB features are highly database-dependent. Many tests are skipped on databases with limited support (like H2). For best results, run against PostgreSQL.
+**참고**: JSON/JSONB 기능은 데이터베이스에 따라 크게 달라집니다. 많은 테스트는 지원이 제한적인 데이터베이스(예: H2)에서는 건너뜁니다. 최상의 결과를 위해 PostgreSQL에서 실행하세요.
 
 ```bash
-# Run all tests in this module
+# 이 모듈의 모든 테스트 실행
 ./gradlew :06-advanced:09-exposed-fastjson2:test
 
-# Run tests for the FastjsonB column type specifically
+# FastjsonB 컬럼 타입에 대한 테스트 실행
 ./gradlew :06-advanced:09-exposed-fastjson2:test --tests "exposed.examples.fastjson2.FastjsonBColumnTest"
 ```
 
-## Further Reading
+## 더 읽어보기
 
 - [Exposed Fastjson2](https://debop.notion.site/Exposed-Fastjson2-1c32744526b08050a9d4de947c3b3f0d)

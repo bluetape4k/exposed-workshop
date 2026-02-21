@@ -1,41 +1,38 @@
 # 07-spring-suspended-cache
 
-This module explores the integration of Spring's caching abstraction with Kotlin Coroutines for asynchronous, non-blocking cache operations within a Spring Boot application using Exposed. It demonstrates how to effectively cache results from
-`suspend` functions, ensuring that caching mechanisms are compatible with the reactive programming paradigm offered by coroutines.
+이 모듈은 Exposed를 사용하는 Spring Boot 애플리케이션 내에서 Kotlin Coroutines와 함께 Spring의 캐싱 추상화를 통합하여 비동기, 논블로킹 캐시 연산을 탐색합니다.
+`suspend` 함수의 결과를 효과적으로 캐싱하여 캐싱 메커니즘이 코루틴이 제공하는 반응형 프로그래밍 패러다임과 호환되도록 하는 방법을 보여줍니다.
 
-## Purpose
+## 목적
 
-The primary goal of this module is to illustrate:
+이 모듈의 주요 목표는 다음을 보여주는 것입니다:
 
-- How to apply Spring caching annotations (`@Cacheable`, `@CachePut`, `@CacheEvict`) to `suspend` functions.
-- The necessary setup to ensure Spring's caching infrastructure works correctly with coroutine contexts.
-- Strategies for handling asynchronous cache interactions to avoid blocking calls in a coroutine-driven application.
-- Enhancing performance of coroutine-based Exposed services by introducing a suspended caching layer.
+- `suspend` 함수에 Spring 캐싱 어노테이션(`@Cacheable`, `@CachePut`, `@CacheEvict`)을 적용하는 방법
+- Spring의 캐싱 인프라가 코루틴 컨텍스트에서 올바르게 작동하도록 하는 필요한 설정
+- 코루틴 기반 애플리케이션에서 블로킹 호출을 피하기 위한 비동기 캐시 상호작용 처리 전략
+- 중단 가능한 캐싱 계층을 도입하여 코루틴 기반 Exposed 서비스의 성능 향상
 
-## How to Run
+## 실행 방법
 
-1. Ensure you have Java Development Kit (JDK) 17 or higher installed.
-2. Build the project using Gradle: `./gradlew clean build`
-3. Run the Spring Boot application: `./gradlew bootRun`
-4. Interact with the application (e.g., via a WebFlux endpoint) that uses the suspended cached methods. Observe the console output for cache hits/misses and the non-blocking nature of the operations.
+1. JDK 17 이상이 설치되어 있는지 확인합니다.
+2. Gradle을 사용하여 프로젝트를 빌드합니다: `./gradlew clean build`
+3. Spring Boot 애플리케이션을 실행합니다: `./gradlew bootRun`
+4. 중단 가능한 캐시된 메서드를 사용하는 애플리케이션(예: WebFlux 엔드포인트)과 상호작용합니다. 캐시 히트/미스와 연산의 논블로킹 특성에 대한 콘솔 출력을 관찰합니다.
 
-## Key Features
+## 주요 기능
 
-- **Coroutine-compatible Caching:** Use Spring's caching abstraction with Kotlin `suspend` functions.
-- **Non-blocking Cache Operations:
-  ** Cache interactions (read/write/evict) are performed asynchronously, aligning with coroutine principles.
-- **Improved Responsiveness:** Leverage caching to further enhance the responsiveness of coroutine-based services.
-- **Declarative Caching for Reactive APIs:
-  ** Seamlessly apply caching to services exposed via reactive frameworks like Spring WebFlux.
+- **코루틴 호환 캐싱**: Kotlin `suspend` 함수와 함께 Spring의 캐싱 추상화 사용
+- **논블로킹 캐시 연산**: 캐시 상호작용(읽기/쓰기/제거)이 코루틴 원칙에 맞춰 비동기로 수행됨
+- **향상된 응답성**: 캐싱을 활용하여 코루틴 기반 서비스의 응답성을 더욱 향상
+- **반응형 API를 위한 선언적 캐싱**: Spring WebFlux와 같은 반응형 프레임워크를 통해 노출된 서비스에 캐싱을 원활하게 적용
 
-## Configuration
+## 설정
 
-Enabling caching and configuring a cache manager is similar to synchronous caching, but special attention might be needed for the
-`PlatformTransactionManager` and the execution context when combining with Exposed and coroutines. Often, a reactive cache manager or a custom
-`CacheAspect` might be necessary for full non-blocking behavior of the caching mechanism itself, although Spring's default
-`@Cacheable` often works with `suspend` functions by wrapping the call in a `Mono` or `Flow`.
+캐싱 활성화와 캐시 관리자 구성은 동기식 캐싱과 유사하지만, Exposed 및 코루틴과 결합할 때
+`PlatformTransactionManager`와 실행 컨텍스트에 특별한 주의가 필요할 수 있습니다. 종종 완전한 논블로킹 캐싱 메커니즘 동작을 위해 반응형 캐시 관리자나 사용자 정의
+`CacheAspect`가 필요할 수 있지만, Spring의 기본 `@Cacheable`은 종종 호출을 `Mono`나 `Flow`로 래핑하여 `suspend` 함수와 작동합니다.
 
-Example `application.properties`:
+`application.properties` 예시:
 
 ```properties
 spring.datasource.url=jdbc:h2:mem:suspended_cache_db;DB_CLOSE_DELAY=-1
@@ -44,22 +41,21 @@ spring.datasource.username=sa
 spring.datasource.password=
 spring.jpa.hibernate.ddl-auto=none
 
-# Optional: Configure a specific cache provider
+# 선택 사항: 특정 캐시 제공자 구성
 ```
 
-## Database Schema
+## 데이터베이스 스키마
 
-A typical example would involve a
-`Products` table, where product details are frequently accessed by asynchronous services.
+일반적인 예제는 비동기 서비스에서 자주 접근하는 제품 세부 정보를 위한 `Products` 테이블을 포함합니다.
 
-## Examples
+## 예제
 
-Using `@Cacheable` on a `suspend` service method interacting with an Exposed-based repository:
+Exposed 기반 리포지토리와 상호작용하는 `suspend` 서비스 메서드에 `@Cacheable` 사용:
 
 ```kotlin
 // ProductService.kt
 @Service
-class ProductService(private val productRepository: ProductRepository) { // Assume ProductRepository uses Exposed with suspend functions
+class ProductService(private val productRepository: ProductRepository) { // ProductRepository가 suspend 함수로 Exposed를 사용한다고 가정
 
     @Cacheable("products", key = "#id")
     suspend fun getProductById(id: Int): Product? {
@@ -85,12 +81,12 @@ class ProductService(private val productRepository: ProductRepository) { // Assu
     }
 }
 
-// ProductRepository.kt (Exposed-based repository with suspend functions)
+// ProductRepository.kt (suspend 함수가 있는 Exposed 기반 리포지토리)
 @Repository
 class ProductRepository {
 
     init {
-        runBlocking(Dispatchers.IO) { // Use runBlocking for initial setup that might block
+      runBlocking(Dispatchers.IO) { // 차단될 수 있는 초기 설정에 runBlocking 사용
             newSuspendedTransaction {
                 SchemaUtils.create(Products)
                 Products.insert { it[name] = "Laptop"; it[price] = 1200.0 }
@@ -124,7 +120,7 @@ class ProductRepository {
         Product(row[Products.id].value, row[Products.name], row[Products.price])
 }
 
-// Product.kt (data class)
+// Product.kt (데이터 클래스)
 data class Product(val id: Int?, val name: String, val price: Double)
 
 // Products.kt (Exposed Table)
@@ -133,7 +129,7 @@ object Products: IntIdTable("products") {
     val price = double("price")
 }
 
-// Example Controller (if using WebFlux)
+// 예제 컨트롤러 (WebFlux를 사용하는 경우)
 @RestController
 @RequestMapping("/products")
 class ProductController(private val productService: ProductService) {
@@ -150,13 +146,9 @@ class ProductController(private val productService: ProductService) {
 }
 ```
 
-*(Note: `newSuspendedTransaction` is a placeholder for a coroutine-aware Exposed transaction block. The exact
-implementation depends on the Exposed version and how it integrates with coroutines and
-Spring's `PlatformTransactionManager`.)*
+## 더 읽어보기
 
-## Further Reading
-
-- [Exppose with Spring Suspended Cache](https://debop.notion.site/Exposed-with-Suspended-Spring-Cache-1db2744526b080769d2ef307e4a3c6c9)
+- [Exposed with Spring Suspended Cache](https://debop.notion.site/Exposed-with-Suspended-Spring-Cache-1db2744526b080769d2ef307e4a3c6c9)
 - [Spring Caching Abstraction](https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache)
 - [Kotlin Coroutines Guide](https://kotlinlang.org/docs/coroutines-guide.html)
 - [Spring WebFlux](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html)

@@ -1,38 +1,36 @@
 # 06-spring-cache
 
-This module demonstrates the integration of Spring's caching abstraction with Exposed database operations. It showcases how to leverage
-`@Cacheable`, `@CachePut`, and
-`@CacheEvict` annotations to cache the results of Exposed queries, thereby improving application performance and reducing database load.
+이 모듈은 Exposed 데이터베이스 연산과 Spring의 캐싱 추상화 통합을 보여줍니다. `@Cacheable`, `@CachePut`,
+`@CacheEvict` 어노테이션을 활용하여 Exposed 쿼리 결과를 캐싱함으로써 애플리케이션 성능을 향상시키고 데이터베이스 부하를 줄이는 방법을 보여줍니다.
 
-## Purpose
+## 목적
 
-The primary goal of this module is to illustrate:
+이 모듈의 주요 목표는 다음을 보여주는 것입니다:
 
-- How to enable and configure Spring's caching mechanism in a Spring Boot application.
-- Applying caching annotations to service methods that interact with Exposed repositories or directly perform Exposed queries.
-- Observing the performance benefits of caching by reducing redundant database calls.
+- Spring Boot 애플리케이션에서 Spring의 캐싱 메커니즘을 활성화하고 구성하는 방법
+- Exposed 리포지토리와 상호작용하거나 직접 Exposed 쿼리를 수행하는 서비스 메서드에 캐싱 어노테이션 적용
+- 중복 데이터베이스 호출을 줄여 캐싱의 성능 이점 관찰
 
-## How to Run
+## 실행 방법
 
-1. Ensure you have Java Development Kit (JDK) 17 or higher installed.
-2. Build the project using Gradle: `./gradlew clean build`
-3. Run the Spring Boot application: `./gradlew bootRun`
-4. Interact with the application (e.g., via a REST endpoint or a test) and observe the caching behavior (e.g., logs indicating cache hits/misses).
+1. JDK 17 이상이 설치되어 있는지 확인합니다.
+2. Gradle을 사용하여 프로젝트를 빌드합니다: `./gradlew clean build`
+3. Spring Boot 애플리케이션을 실행합니다: `./gradlew bootRun`
+4. 애플리케이션(예: REST 엔드포인트 또는 테스트)과 상호작용하고 캐싱 동작(예: 캐시 히트/미스를 나타내는 로그)을 관찰합니다.
 
-## Key Features
+## 주요 기능
 
-- **Declarative Caching:** Easily cache method results using annotations.
-- **Improved Performance:** Reduce database access times for frequently requested data.
-- **Reduced Database Load:** Less pressure on the database server.
-- **Cache Invalidation:** Mechanisms to update or remove cached data when underlying data changes.
+- **선언적 캐싱**: 어노테이션을 사용하여 쉽게 메서드 결과 캐싱
+- **성능 향상**: 자주 요청되는 데이터에 대한 데이터베이스 접근 시간 단축
+- **데이터베이스 부하 감소**: 데이터베이스 서버에 대한 부하 감소
+- **캐시 무효화**: 기본 데이터가 변경될 때 캐시된 데이터를 업데이트하거나 제거하는 메커니즘
 
-## Configuration
+## 설정
 
-To enable caching, you typically need to add
-`@EnableCaching` to a Spring configuration class and configure a cache manager. Spring Boot often auto-configures a simple
-`ConcurrentHashMapCacheManager` by default if no other cache manager is specified.
+캐싱을 활성화하려면 일반적으로 Spring 설정 클래스에 `@EnableCaching`을 추가하고 캐시 관리자를 구성해야 합니다. 다른 캐시 관리자가 지정되지 않은 경우 Spring Boot는 종종 기본적으로 간단한
+`ConcurrentHashMapCacheManager`를 자동 구성합니다.
 
-Example `application.properties`:
+`application.properties` 예시:
 
 ```properties
 spring.datasource.url=jdbc:h2:mem:cached_db;DB_CLOSE_DELAY=-1
@@ -41,33 +39,33 @@ spring.datasource.username=sa
 spring.datasource.password=
 spring.jpa.hibernate.ddl-auto=none
 
-# Optional: Configure a specific cache provider, e.g., Caffeine
+# 선택 사항: 특정 캐시 제공자 구성, 예: Caffeine
 # spring.cache.type=caffeine
 ```
 
-Example Configuration Class:
+설정 클래스 예시:
 
 ```kotlin
 @Configuration
 @EnableCaching
 class CachingConfig {
-    // You can define custom cache managers here if needed,
-    // otherwise, Spring Boot will auto-configure a default one (e.g., ConcurrentHashMapCacheManager).
+    // 필요한 경우 사용자 정의 캐시 관리자를 정의할 수 있습니다.
+    // 그렇지 않으면 Spring Boot가 기본값(예: ConcurrentHashMapCacheManager)을 자동 구성합니다.
 }
 ```
 
-## Database Schema
+## 데이터베이스 스키마
 
-A typical example involves a `Books` table where book details are frequently accessed.
+일반적인 예제는 책 세부 정보가 자주 접근되는 `Books` 테이블을 포함합니다.
 
-## Examples
+## 예제
 
-Using `@Cacheable`, `@CachePut`, and `@CacheEvict` on a service interacting with Exposed:
+Exposed와 상호작용하는 서비스에 `@Cacheable`, `@CachePut`, `@CacheEvict` 사용:
 
 ```kotlin
 // BookService.kt
 @Service
-class BookService(private val bookRepository: BookRepository) { // Assume BookRepository uses Exposed
+class BookService(private val bookRepository: BookRepository) { // BookRepository가 Exposed를 사용한다고 가정
 
     @Cacheable("books", key = "#id")
     fun getBookById(id: Int): Book? {
@@ -93,7 +91,7 @@ class BookService(private val bookRepository: BookRepository) { // Assume BookRe
     }
 }
 
-// BookRepository.kt (Exposed-based repository)
+// BookRepository.kt (Exposed 기반 리포지토리)
 @Repository
 class BookRepository {
 
@@ -129,7 +127,7 @@ class BookRepository {
     private fun toBook(row: ResultRow): Book = Book(row[Books.id].value, row[Books.title], row[Books.author])
 }
 
-// Book.kt (data class)
+// Book.kt (데이터 클래스)
 data class Book(val id: Int?, val title: String, val author: String)
 
 // Books.kt (Exposed Table)
@@ -139,8 +137,8 @@ object Books: IntIdTable("books") {
 }
 ```
 
-## Further Reading
+## 더 읽어보기
 
-- [Exppose with Spring Boot Cache](https://debop.notion.site/Exposed-with-Spring-Boot-Cache-1d82744526b08062bfcce52d6aab3ef7)
+- [Exposed with Spring Boot Cache](https://debop.notion.site/Exposed-with-Spring-Boot-Cache-1d82744526b08062bfcce52d6aab3ef7)
 - [Spring Caching Abstraction](https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache)
 - [Baeldung: Spring Cache](https://www.baeldung.com/spring-cache-tutorial)

@@ -1,55 +1,48 @@
-# 03 Exposed Basic: Exposed SQL DSL Example
+# 03 Exposed 기본: Exposed SQL DSL 예제
 
-This module (
-`exposed-sql-example`) provides practical examples of using Exposed's SQL Domain Specific Language (DSL) for direct interaction with a relational database. It demonstrates how to perform fundamental CRUD (Create, Read, Update, Delete) operations, join tables, and utilize aggregate functions using Exposed's fluent API, without relying on the DAO (Data Access Object) pattern. The examples showcase both synchronous and asynchronous (coroutine-based) approaches to data access for a simple "City and User" domain.
+이 모듈(
+`exposed-sql-example`)은 Exposed의 SQL DSL(Domain Specific Language)을 사용하여 관계형 데이터베이스와 직접 상호작용하는 실용적인 예제를 제공합니다. DAO(Data Access Object) 패턴에 의존하지 않고 Exposed의 유창한 API를 사용하여 기본적인 CRUD(Create, Read, Update, Delete) 연산, 테이블 조인, 집계 함수를 수행하는 방법을 보여줍니다. 간단한 "City와 User" 도메인을 위한 동기식과 비동기식(코루틴 기반) 데이터 접근 방식을 모두 제공합니다.
 
-## Key Features and Components:
+## 주요 기능 및 구성 요소
 
-### 1. Domain Schema (`Schema.kt`)
+### 1. 도메인 스키마 (`Schema.kt`)
 
-- **Table Definitions**: Defines `CityTable` and `UserTable` as
-  `Table` objects, establishing a schema for cities and users. These definitions include explicit primary keys and a foreign key relationship.
-- **Sample Data Insertion**:
-  `insertSampleData` function demonstrates how to insert data directly using the SQL DSL, including examples of using SQL functions (
-  `trim`, `substring`) within inserts.
-- **Test Setup Helpers**: Includes `withCityUsers` and
-  `withSuspendedCityUsers` for convenient setup of test environments, including schema creation and sample data population.
+- **테이블 정의**: `CityTable`과 `UserTable`을 `Table` 객체로 정의하여 도시와 사용자를 위한 스키마를 구축합니다. 명시적인 기본키와 외래키 관계를 포함합니다.
+- **샘플 데이터 삽입**: `insertSampleData` 함수는 SQL DSL을 직접 사용하여 데이터를 삽입하는 방법을 보여주며, 삽입 시 SQL 함수(`trim`,
+  `substring`) 사용 예제도 포함합니다.
+- **테스트 설정 헬퍼**: 스키마 생성과 샘플 데이터 채우기를 포함한 테스트 환경 구성을 위한 `withCityUsers`와 `withSuspendedCityUsers`를 제공합니다.
 
-### 2. Synchronous SQL DSL Operations (`ExposedSQLExample.kt`)
+### 2. 동기식 SQL DSL 연산 (`ExposedSQLExample.kt`)
 
-- **Updating Data**: Examples of performing `UPDATE` statements with `WHERE` clauses to modify records.
-- **Deleting Data**: Demonstrations of `DELETE` statements using `deleteWhere` with specific criteria.
-- **Joining Tables**: Examples of `INNER JOIN` operations, showing how to connect `UserTable` and
-  `CityTable` based on foreign key relationships, both implicitly and explicitly.
-- **Querying and Filtering**: Performing `SELECT` queries with various `WHERE` conditions (`eq`, `like`, `isNull`,
-  `or`) to filter and retrieve data.
-- **Aggregate Functions and Grouping**: Usage of aggregate functions like `count()` in conjunction with
-  `groupBy()` for analytical queries (e.g., counting users per city).
+- **데이터 수정**: `WHERE` 절이 있는 `UPDATE` 문으로 레코드를 수정하는 예제입니다.
+- **데이터 삭제**: `deleteWhere`와 특정 조건을 사용한 `DELETE` 문 예제입니다.
+- **테이블 조인**: 외래키 관계를 기반으로 `UserTable`과 `CityTable`을 연결하는 `INNER JOIN` 연산 예제입니다(암시적/명시적 모두 포함).
+- **쿼리 및 필터링**: 다양한 `WHERE` 조건(`eq`, `like`, `isNull`, `or`)을 사용하여 데이터를 필터링하고 조회하는 `SELECT` 쿼리를 수행합니다.
+- **집계 함수 및 그룹화**: 분석 쿼리(예: 도시별 사용자 수 계산)를 위해 `count()`와 같은 집계 함수를 `groupBy()`와 함께 사용합니다.
 
-### 3. Asynchronous SQL DSL Operations (`ExposedSQLSuspendedExample.kt`)
+### 3. 비동기 SQL DSL 연산 (`ExposedSQLSuspendedExample.kt`)
 
-- **Coroutine Integration
-  **: Showcases how to perform the same SQL DSL operations (update, delete, join, query, aggregate) within a Kotlin Coroutines suspended context.
-- **Reactive-style Data Access**: Utilizes `runSuspendIO` and
-  `withSuspendedCityUsers` to illustrate non-blocking database interactions, making Exposed's SQL DSL suitable for reactive applications.
+- **코루틴 통합**: Kotlin Coroutines의 suspend 컨텍스트 내에서 동일한 SQL DSL 연산(수정, 삭제, 조인, 쿼리, 집계)을 수행하는 방법을 보여줍니다.
+- **반응형 데이터 접근**: `runSuspendIO`와
+  `withSuspendedCityUsers`를 사용하여 논블로킹 데이터베이스 상호작용을 구현하며, Exposed의 SQL DSL이 반응형 애플리케이션에 적합함을 보여줍니다.
 
-## Purpose:
+## 목적
 
-This module serves as an excellent resource for understanding:
+이 모듈은 다음을 이해하는 데 도움이 됩니다:
 
-- The direct SQL DSL approach in Exposed for interacting with databases.
-- How to perform common database operations (CRUD, joins, aggregation) using the fluent API.
-- Integrating Exposed SQL DSL with Kotlin Coroutines for asynchronous programming.
-- The differences between Exposed's DAO and SQL DSL patterns.
+- 데이터베이스 상호작용을 위한 Exposed의 직접적인 SQL DSL 접근 방식
+- 유창한 API를 사용한 일반적인 데이터베이스 연산(CRUD, 조인, 집계) 수행 방법
+- 비동기 프로그래밍을 위한 Exposed SQL DSL과 Kotlin Coroutines 통합
+- Exposed의 DAO와 SQL DSL 패턴의 차이점
 
-## Getting Started:
+## 시작하기
 
-To explore these examples:
+이 예제들을 살펴보려면:
 
-1. Review the source code in `src/test/kotlin/exposed/sql/example`.
-2. Run the test cases using your IDE or Gradle to observe Exposed's SQL DSL functionality in action, both synchronously and asynchronously.
+1. `src/test/kotlin/exposed/sql/example`의 소스 코드를 검토합니다.
+2. IDE 또는 Gradle을 사용하여 테스트 케이스를 실행하고 Exposed의 SQL DSL 기능을 동기식 및 비동기식으로 확인합니다.
 
-This module provides a clear and concise guide to mastering the direct SQL DSL capabilities of Exposed.
+이 모듈은 Exposed의 직접 SQL DSL 기능을 마스터하기 위한 명확하고 간결한 가이드를 제공합니다.
 
 ## City-User 스키마 한눈에 보기
 
@@ -136,3 +129,16 @@ class User(id: EntityID<String>): Entity<String>(id) {
 | 관계 접근 | `city.users`, `user.city`         | `innerJoin`, `reference` 컬럼 |
 | 변경 감지 | 엔티티 프로퍼티 변경 → flush               | 명시적 `update`/`insert`       |
 | 사용 적합 | 객체 중심 도메인 모델                      | SQL 중심, 복잡한 쿼리              |
+
+## 테스트 실행
+
+```bash
+# 전체 테스트 실행
+./gradlew :03-exposed-basic:exposed-sql-example:test
+```
+
+모든 테스트는 `@ParameterizedTest`를 사용하여 H2, MySQL, PostgreSQL 등 다양한 데이터베이스 환경에서 실행됩니다.
+
+## 더 읽어보기
+
+- [7.1 DML 함수](https://debop.notion.site/1ad2744526b0800baf1ce81c31f3cbf9?v=1ad2744526b08007ab62000c0901bcfa)

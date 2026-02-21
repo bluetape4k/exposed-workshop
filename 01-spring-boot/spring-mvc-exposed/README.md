@@ -5,89 +5,165 @@
 
 ## 이 모듈에서 배우는 것
 
-- Spring MVC 기반의 동기 API 구조
-- Exposed DAO로 데이터 저장/조회
-- 영화와 배우 **다대다 관계** 모델링
-- Repository → Controller로 이어지는 기본 구조
+| 주제                  | 설명                    |
+|---------------------|-----------------------|
+| **Spring MVC 기본**   | 동기 API 구조와 컨트롤러 작성법   |
+| **Exposed DAO**     | Entity를 이용한 데이터 저장/조회 |
+| **다대다 관계**          | 영화-배우 관계 모델링과 조인 테이블  |
+| **Repository 패턴**   | 계층형 아키텍처 기본 구조        |
+| **Virtual Threads** | Java 21 가상 스레드 활용     |
 
-## Movie 스키마 (이미지 + 테이블 정의)
+## Movie 스키마
 
 ![Movie Schema](MovieSchema_Dark.png)
 
-아래는 이 모듈에서 사용하는 테이블 정의입니다. 영화/배우는 다대다 관계이며, `actors_in_movies`가 조인 테이블입니다.
+### 테이블 정의
 
 ```kotlin
 object MovieTable: LongIdTable("movies") {
-  val name: Column<String> = varchar("name", 255)
-  val producerName: Column<String> = varchar("producer_name", 255)
-  val releaseDate: Column<LocalDateTime> = datetime("release_date")
+    val name: Column<String> = varchar("name", 255)
+    val producerName: Column<String> = varchar("producer_name", 255)
+    val releaseDate: Column<LocalDateTime> = datetime("release_date")
 }
 
 object ActorTable: LongIdTable("actors") {
-  val firstName: Column<String> = varchar("first_name", 255)
-  val lastName: Column<String> = varchar("last_name", 255)
-  val birthday: Column<LocalDate?> = date("birthday").nullable()
+    val firstName: Column<String> = varchar("first_name", 255)
+    val lastName: Column<String> = varchar("last_name", 255)
+    val birthday: Column<LocalDate?> = date("birthday").nullable()
 }
 
 object ActorInMovieTable: Table("actors_in_movies") {
-  val movieId: Column<EntityID<Long>> = reference("movie_id", MovieTable, onDelete = ReferenceOption.CASCADE)
-  val actorId: Column<EntityID<Long>> = reference("actor_id", ActorTable, onDelete = ReferenceOption.CASCADE)
+    val movieId: Column<EntityID<Long>> = reference("movie_id", MovieTable, onDelete = ReferenceOption.CASCADE)
+    val actorId: Column<EntityID<Long>> = reference("actor_id", ActorTable, onDelete = ReferenceOption.CASCADE)
 
-  override val primaryKey = PrimaryKey(movieId, actorId)
+    override val primaryKey = PrimaryKey(movieId, actorId)
 }
 ```
 
-## 프로젝트 구성 (쉽게 보기)
+### 관계 설명
 
-### 1) 시작점
+```
+┌─────────────┐     ┌──────────────────┐     ┌─────────────┐
+│  Movie      │     │ ActorInMovie     │     │  Actor      │
+│─────────────│     │──────────────────│     │─────────────│
+│  id (PK)    │◄────│  movie_id (FK)   │     │  id (PK)    │
+│  name       │     │  actor_id (FK)   │────►│  firstName  │
+│  producer   │     │  (복합 PK)        │     │  lastName   │
+│  releaseDate│     └──────────────────┘     │  birthday   │
+└─────────────┘                              └─────────────┘
+```
 
-- `SpringMvcApplication.kt`
-  - Spring Boot 실행 클래스
-  - MVC(SERVLET) 앱으로 설정
+## 프로젝트 구조
 
-### 2) 도메인 모델 (테이블/엔티티)
+```
+src/main/kotlin/
+├── SpringMvcApplication.kt          # Spring Boot 진입점 (SERVLET)
+├── config/
+│   ├── ExposedDatabaseConfig.kt     # DB 연결 설정
+│   ├── SwaggerConfig.kt             # Swagger UI 설정
+│   └── TomcatVirtualThreadConfig.kt # Virtual Thread 설정
+├── domain/
+│   ├── model/
+│   │   ├── MovieSchema.kt           # 테이블 정의
+│   │   ├── MovieEntity.kt           # DAO Entity
+│   │   ├── MovieRecords.kt          # DTO (API 응답용)
+│   │   └── MovieMappers.kt          # ResultRow → DTO 변환
+│   ├── repository/
+│   │   ├── MovieRepository.kt       # 영화 리포지토리
+│   │   └── ActorRepository.kt       # 배우 리포지토리
+│   └── controller/
+│       ├── MovieController.kt       # 영화 API
+│       ├── ActorController.kt       # 배우 API
+│       └── MovieActorsController.kt # 영화-배우 관계 API
+└── DataInitializer.kt               # 샘플 데이터 초기화
+```
 
-- `MovieSchema.kt`
-  - `MovieTable`, `ActorTable`, `ActorInMovieTable` 정의
-  - 영화-배우 다대다 관계를 조인 테이블로 표현
-- `MovieEntity`, `ActorEntity`
-  - Exposed DAO 엔티티
-  - 테이블을 객체로 다루기 위한 클래스
-- `MovieRecords.kt`
-  - API 응답용 DTO (예: `MovieWithActorRecord`)
-- `MovieMappers.kt`
-  - `ResultRow`를 DTO로 변환하는 함수 모음
+## 주요 코드 예시
 
-### 3) Repository (동기 데이터 접근)
+### Entity 정의
 
-- `MovieRepository.kt`
-- `ActorRepository.kt`
+```kotlin
+class MovieEntity(id: EntityID<Long>): LongEntity(id) {
+    companion object: LongEntityClass<MovieEntity>(MovieTable)
 
-Exposed 쿼리를 실행하고, 동기 방식으로 결과를 반환합니다.
+    var name by MovieTable.name
+    var producerName by MovieTable.producerName
+    var releaseDate by MovieTable.releaseDate
 
-### 4) 데이터 초기화
+    val actors by ActorEntity via ActorInMovieTable
+}
+```
 
-- `DataInitializer.kt`
-  - 앱 시작 시 샘플 데이터를 삽입
-  - `batchInsert`, `insert` 사용
+### Repository
 
-### 5) Controller (REST API)
+```kotlin
+@Repository
+class MovieRepository {
 
-- `MovieController.kt` : 영화 API
-- `ActorController.kt` : 배우 API
-- `MovieActorsController.kt` : 영화-배우 관계 API
-- `IndexController.kt` : 기본 페이지
+    fun findById(id: Long): MovieRecord? = transaction {
+        MovieEntity.findById(id)?.toRecord()
+    }
 
-### 6) 설정
+    fun findAll(): List<MovieRecord> = transaction {
+        MovieEntity.all().map { it.toRecord() }
+    }
 
-- `ExposedDatabaseConfig.kt` : DB 연결 설정
-- `SwaggerConfig.kt` : Swagger UI 설정
-- `AsyncVirtualThreadConfig.kt`, `TomcatVirtualThreadConfig.kt` : 가상 스레드 설정
+    fun save(record: MovieRecord): MovieRecord = transaction {
+        MovieEntity.new {
+            name = record.name
+            producerName = record.producerName
+            releaseDate = record.releaseDate
+        }.toRecord()
+    }
+}
+```
 
-## 실행 방법 (처음 보는 사람 기준)
+### Controller
 
-1. `src/main/resources/application.yml`에 DB 연결 정보를 설정합니다.
-2. Gradle로 빌드합니다.
-3. `SpringMvcApplication.kt`를 실행합니다.
+```kotlin
+@RestController
+@RequestMapping("/api/movies")
+class MovieController(private val movieRepository: MovieRepository) {
 
-이 모듈은 **Spring MVC에서 Exposed를 어떻게 쓰는지**를 빠르게 감 잡기 위한 예제입니다.
+    @GetMapping("/{id}")
+    fun getMovie(@PathVariable id: Long): ResponseEntity<MovieRecord> {
+        return movieRepository.findById(id)
+            ?.let { ResponseEntity.ok(it) }
+            ?: ResponseEntity.notFound().build()
+    }
+
+    @PostMapping
+    fun createMovie(@RequestBody request: CreateMovieRequest): ResponseEntity<MovieRecord> {
+        val movie = movieRepository.save(request.toRecord())
+        return ResponseEntity.ok(movie)
+    }
+}
+```
+
+## 실행 방법
+
+```bash
+# 1. DB 설정 확인 (application.yml)
+# 2. 애플리케이션 실행
+./gradlew bootRun
+
+# 3. API 테스트
+curl http://localhost:8080/api/movies
+```
+
+## Virtual Threads 설정
+
+Java 21 이상에서 Tomcat이 Virtual Threads를 사용하도록 설정:
+
+```kotlin
+@Bean
+fun protocolHandlerVirtualThreadExecutorCustomizer(): TomcatProtocolHandlerCustomizer<*> {
+    return TomcatProtocolHandlerCustomizer<ProtocolHandler> { protocolHandler ->
+        protocolHandler.executor = Executors.newVirtualThreadPerTaskExecutor()
+    }
+}
+```
+
+## Swagger UI
+
+애플리케이션 실행 후 http://localhost:8080/swagger-ui.html 에서 API 문서를 확인할 수 있습니다.

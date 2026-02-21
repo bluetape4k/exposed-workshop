@@ -1,128 +1,122 @@
-# Exposed-Jackson3: JSON/JSONB Support with Jackson 3
+# Exposed-Jackson3: Jackson 3 기반 JSON/JSONB 지원
 
-This module is an updated version of the `Exposed-Jackson` integration, specifically designed to work with *
-*[Jackson 3.x](https://github.com/fasterxml/jackson)**. It provides `JSON` and
-`JSONB` column types in Exposed, leveraging the latest features and improvements of the Jackson 3 library for object serialization and deserialization.
+이 모듈은 **[Jackson 3.x](https://github.com/fasterxml/jackson)**에서 작동하도록 특별히 설계된
+`Exposed-Jackson` 통합의 업데이트된 버전입니다. Jackson 3 라이브러리의 최신 기능과 개선 사항을 활용하여 Exposed에서 `JSON`과 `JSONB` 컬럼 타입을 제공합니다.
 
-## Learning Objectives
+## 학습 목표
 
-- Define `json` and `jsonb` columns that map to Kotlin data classes using Jackson 3.
-- Store and retrieve complex, nested objects efficiently using Jackson 3.
-- Utilize Exposed's JSON query functions (`.extract<T>()`, `.contains()`, `.exists()`) with Jackson 3-backed columns.
-- Apply Jackson 3-based JSON columns in both DSL and DAO programming styles.
+- Jackson 3를 사용하여 Kotlin 데이터 클래스에 매핑되는 `json`과 `jsonb` 컬럼 정의
+- Jackson 3를 사용하여 복잡하고 중첩된 객체를 효율적으로 저장 및 조회
+- Jackson 3 기반 컬럼에서 Exposed의 JSON 쿼리 함수(`.extract<T>()`, `.contains()`, `.exists()`) 활용
+- DSL과 DAO 프로그래밍 스타일 모두에 Jackson 3 기반 JSON 컬럼 적용
 
-## Key Concepts
+## 핵심 개념
 
-The API and features of this module are consistent with other JSON integration modules like `exposed-json` and
-`exposed-jackson` (Jackson 2), ensuring a familiar development experience while using the newer Jackson version.
+이 모듈의 API와 기능은 `exposed-json`과
+`exposed-jackson`(Jackson 2)과 같은 다른 JSON 통합 모듈과 일관되어 친숙한 개발 경험을 보장하면서 최신 Jackson 버전을 사용합니다.
 
-### Column Types
+### 컬럼 타입
 
-- **`jackson<T>(name)`**: Defines a column that stores any Jackson 3-compatible object of type `T` in a standard
-  `JSON` text column.
-- **`jacksonb<T>(name)`**: Defines a column that stores any Jackson 3-compatible object of type `T` in an optimized
-  `JSONB` (binary JSON) column. This is the recommended choice for databases that support it, like PostgreSQL.
+- **`jackson<T>(name)`**: Jackson 3 호환 타입 `T`의 객체를 표준 `JSON` 텍스트 컬럼에 저장하는 컬럼을 정의합니다.
+- **`jacksonb<T>(name)`**: Jackson 3 호환 타입 `T`의 객체를 최적화된
+  `JSONB`(바이너리 JSON) 컬럼에 저장하는 컬럼을 정의합니다. 이는 PostgreSQL과 같이 지원하는 데이터베이스에 권장되는 선택입니다.
 
-Your data classes do **not** need to be marked with
-`@Serializable`. They can be standard Kotlin data classes or POJOs, as Jackson typically uses reflection for object mapping.
+데이터 클래스에 `@Serializable` 표시가 필요 없습니다. Jackson은 일반적으로 객체 매핑에 리플렉션을 사용하므로 표준 Kotlin 데이터 클래스나 POJO일 수 있습니다.
 
-### Querying Functions
+### 조회 함수
 
-The full suite of JSON querying functions provided by Exposed remains available:
+Exposed가 제공하는 전체 JSON 조회 함수 제품군을 사용할 수 있습니다:
 
-- **`.extract<T>(path, toScalar)`**: Extracts a value from a JSON document at a specific path.
-- **`.contains(value, path)`**: Checks if the JSON document contains a given JSON value.
-- **`.exists(path, optional)`**: Checks for the existence of a key or value at a given JSONPath expression.
+- **`.extract<T>(path, toScalar)`**: JSON 문서의 특정 경로에서 값을 추출합니다.
+- **`.contains(value, path)`**: JSON 문서가 주어진 JSON 값을 포함하고 있는지 확인합니다.
+- **`.exists(path, optional)`**: 주어진 JSONPath 표현식에서 키나 값의 존재 여부를 확인합니다.
 
-## Examples Overview
+## 예제 개요
 
 ### `JacksonSchema.kt`
 
-This file defines the data classes (`User`, `DataHolder`) and the Exposed `Table` objects (`JacksonTable`,
-`JacksonBTable`). It also includes DAO `Entity` classes (`JacksonEntity`, `JacksonBEntity`) and test helper functions.
+이 파일은 데이터 클래스(`User`, `DataHolder`)와 Exposed `Table` 객체(`JacksonTable`, `JacksonBTable`)를 정의합니다. 또한 DAO `Entity` 클래스(
+`JacksonEntity`, `JacksonBEntity`)와 테스트 헬퍼 함수도 포함합니다.
 
 ### `JacksonColumnTest.kt` (DSL & DAO with `json`)
 
-This file demonstrates the usage of the
-`jackson` (text-based JSON) column type with Jackson 3. It covers standard CRUD operations and JSON-specific queries using
-`.extract()`, `.contains()`, and `.exists()`. It also shows integration with the DAO pattern.
+이 파일은 Jackson 3와 함께 `jackson`(텍스트 기반 JSON) 컬럼 타입의 사용법을 보여줍니다. `.extract()`, `.contains()`,
+`.exists()`를 사용한 표준 CRUD 연산과 JSON 특화 쿼리를 다룹니다. 또한 DAO 패턴과의 통합도 보여줍니다.
 
 ### `JacksonBColumnTest.kt` (DSL & DAO with `jsonb`)
 
-This file mirrors the examples in `JacksonColumnTest.kt` but focuses on the
-`jacksonb` column type with Jackson 3. The code is structured similarly, emphasizing the consistent API across
-`json` and `jsonb` types.
+이 파일은 `JacksonColumnTest.kt`의 예제를 미러링하지만 Jackson 3와 함께 `jacksonb` 컬럼 타입에 초점을 맞춥니다. 코드는 유사하게 구성되어 `json`과
+`jsonb` 타입 전반의 일관된 API를 강조합니다.
 
-## Code Snippets
+## 코드 스니펫
 
-### 1. Defining a Table with a `jacksonb` Column (Jackson 3)
+### 1. `jacksonb` 컬럼이 있는 테이블 정의 (Jackson 3)
 
 ```kotlin
 import io.bluetape4k.exposed.core.jackson3.jacksonb
-import com.fasterxml.jackson.annotation.JsonCreator // Example for Jackson 3 annotations
+import com.fasterxml.jackson.annotation.JsonCreator // Jackson 3 어노테이션 예시
 
-// Standard data class
+// 표준 데이터 클래스
 data class User(val name: String, val team: String?)
 data class UserData(val info: User, val logins: Int, val active: Boolean)
 
 object UsersTable: IntIdTable("users") {
-    // The column stores the UserData object as JSONB using Jackson 3
+    // 컬럼은 Jackson 3를 사용하여 UserData 객체를 JSONB로 저장
     val data = jacksonb<UserData>("data")
 }
 ```
 
-### 2. Inserting and Querying with Jackson 3 (DSL)
+### 2. Jackson 3로 삽입 및 조회 (DSL)
 
 ```kotlin
 val userData = UserData(info = User("test", "A"), logins = 5, active = true)
 
-// Insert data
+// 데이터 삽입
 UsersTable.insert {
     it[data] = userData
 }
 
-// Extract a nested value and use it in a WHERE clause
-// Note: Path syntax may differ across databases
+// 중첩된 값 추출 후 WHERE 절에서 사용
+// 참고: 경로 구문은 데이터베이스마다 다를 수 있음
 val username = UsersTable.data.extract<String>(".info.name")
 val userRecord = UsersTable.selectAll().where { username eq "test" }.single()
 
-// The full object is automatically deserialized on read
+// 전체 객체는 읽을 때 자동으로 역직렬화됨
 val retrievedData = userRecord[UsersTable.data]
 retrievedData.logins shouldBeEqualTo 5
 ```
 
-### 3. Using a Jackson 3 Column in an Entity (DAO)
+### 3. Entity에서 Jackson 3 컬럼 사용 (DAO)
 
 ```kotlin
 class UserEntity(id: EntityID<Int>): IntEntity(id) {
     companion object: IntEntityClass<UserEntity>(UsersTable)
 
-    // The property is automatically mapped to/from JSON
+    // 프로퍼티는 JSON으로/에서 자동 매핑됨
     var data by UsersTable.data
 }
 
-// Create a new entity
+// 새 엔티티 생성
 val entity = UserEntity.new {
     data = UserData(info = User("dao_user", "B"), logins = 1, active = true)
 }
 
-// Access the property
-println(entity.data.info.name) // Prints "dao_user"
+// 프로퍼티 접근
+println(entity.data.info.name) // "dao_user" 출력
 ```
 
-## Test Execution
+## 테스트 실행
 
-**Note
-**: JSON/JSONB features are highly database-dependent. Many tests are skipped on databases with limited support (like H2). For best results, run against PostgreSQL.
+**참고**: JSON/JSONB 기능은 데이터베이스에 따라 크게 달라집니다. 많은 테스트는 지원이 제한적인 데이터베이스(예: H2)에서는 건너뜁니다. 최상의 결과를 위해 PostgreSQL에서 실행하세요.
 
 ```bash
-# Run all tests in this module
+# 이 모듈의 모든 테스트 실행
 ./gradlew :06-advanced:11-exposed-jackson3:test
 
-# Run tests for the JSONB column type specifically
+# JSONB 컬럼 타입에 대한 테스트 실행
 ./gradlew :06-advanced:11-exposed-jackson3:test --tests "exposed.examples.jackson3.JacksonBColumnTest"
 ```
 
-## Further Reading
+## 더 읽어보기
 
 - [Exposed Jackson](https://debop.notion.site/Exposed-Jackson-1c32744526b0809599a7db2e629a597a)

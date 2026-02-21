@@ -1,57 +1,66 @@
-# 01-springboot-autoconfigure
+# 09 Spring: Spring Boot AutoConfiguration
 
-This module demonstrates the automatic configuration of Exposed within a Spring Boot application. It showcases how Spring Boot's auto-configuration mechanism can simplify the setup of Exposed, allowing developers to quickly get started with database interactions using the Exposed framework without extensive manual configuration.
+이 모듈은 Spring Boot의 자동 구성을 활용하여 Exposed를 설정하는 방법을 단계별로 학습합니다. 최소한의 설정으로 Exposed를 Spring Boot 애플리케이션에 통합하는 방법을 다룹니다.
 
-## Purpose
+## 학습 목표
 
-The primary goal of this module is to illustrate:
+- Spring Boot의 Exposed 자동 구성 메커니즘 이해
+- `application.yml`을 통한 최소 설정으로 Exposed 연결
+- Spring의 `@Transactional`과 Exposed 트랜잭션 통합
+- 자동 구성된 `Database` 인스턴스 활용
 
-- How Spring Boot detects and configures Exposed components (like `Database` connection,
-  `TransactionManager`) when the necessary dependencies are present.
-- The minimal setup required in `application.properties` or `application.yml` to connect Exposed to a database.
-- The use of an `ExposedAutoConfiguration` class (or similar) that handles the creation of
-  `Database` instances and transaction management.
+## 주요 기능
 
-## How to Run
+| 기능           | 설명                                   |
+|--------------|--------------------------------------|
+| 자동 데이터베이스 연결 | `spring.datasource` 프로퍼티 기반 자동 구성    |
+| 트랜잭션 관리      | `@Transactional` 어노테이션으로 선언적 트랜잭션 관리 |
+| 단순화된 설정      | 상용구 코드 없이 Exposed 설정                 |
+| Spring 통합    | Spring 생태계와 완벽한 통합                   |
 
-1. Ensure you have Java Development Kit (JDK) 17 or higher installed.
-2. Build the project using Gradle: `./gradlew clean build`
-3. Run the Spring Boot application: `./gradlew bootRun`
-4. The application will initialize the Exposed database connection and, potentially, perform some basic schema creation or data insertion as part of its startup.
+## 설정
 
-## Key Features
+### application.yml
 
-- **Automatic Database Connection:** Spring Boot automatically configures the `Database` object for Exposed based on
-  `spring.datasource` properties.
-- **Transaction Management:** Integration with Spring's transaction management system, enabling the use of
-  `@Transactional` annotations with Exposed operations.
-- **Simplified Setup:** Reduces boilerplate code for setting up Exposed.
+```yaml
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    
+  # JPA DDL 자동 생성 비활성화 (Exposed가 관리)
+  jpa:
+    hibernate:
+      ddl-auto: none
 
-## Configuration
-
-Example `application.properties` (or `application.yml`):
-
-```properties
-spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
-spring.datasource.driver-class-name=org.h2.Driver
-spring.datasource.username=sa
-spring.datasource.password=
-spring.jpa.hibernate.ddl-auto=none # Important: Let Exposed handle DDL
-
-# Exposed specific configuration (if any custom auto-configuration is provided)
-# For example, specifying a package to scan for Exposed tables
-# exposed.scan-packages=com.example.app.tables
+# 선택적 Exposed 설정
+exposed:
+  scan-packages: com.example.app.tables
 ```
 
-## Database Schema
+### build.gradle.kts
 
-This module typically involves a simple schema (e.g.,
-`Users` table) to demonstrate basic CRUD operations via Exposed. The schema creation might happen in an
-`ApplicationRunner` or similar Spring Boot component.
+```kotlin
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
+    
+    // Spring Boot Starter for Exposed (사용 가능한 경우)
+    // implementation("org.jetbrains.exposed:exposed-spring-boot-starter:$exposedVersion")
+    
+    runtimeOnly("com.h2database:h2")
+}
+```
 
-## Examples
+## 코드 예제
 
-Basic interaction demonstrating auto-configuration:
+### 메인 애플리케이션
 
 ```kotlin
 @SpringBootApplication
@@ -60,34 +69,120 @@ class Application
 fun main(args: Array<String>) {
     runApplication<Application>(*args)
 }
+```
 
+### 데이터 초기화
+
+```kotlin
 @Component
-class DataLoader(private val transactionTemplate: TransactionTemplate): ApplicationRunner {
+class DataLoader(
+    private val transactionTemplate: TransactionTemplate
+) : ApplicationRunner {
+    
     override fun run(args: ApplicationArguments?) {
         transactionTemplate.execute {
-            // Your Exposed database operations here
-            // Example: Schema creation and data insertion
-            SchemaUtils.create(Users)
+            // 스키마 생성
+            SchemaUtils.create(Users, Posts)
+            
+            // 샘플 데이터
             Users.insert {
                 it[name] = "John Doe"
-                it[email] = "john.doe@example.com"
+                it[email] = "john@example.com"
             }
-            Users.selectAll().forEach { println("User: ${it[Users.name]}, Email: ${it[Users.email]}") }
+            
+            Users.selectAll().forEach {
+                println("User: ${it[Users.name]}, Email: ${it[Users.email]}")
+            }
         }
     }
 }
+```
 
-object Users: Table("users") {
-    val id = integer("id").autoIncrement()
+### 테이블 정의
+
+```kotlin
+object Users : IntIdTable("users") {
     val name = varchar("name", 255)
     val email = varchar("email", 255).uniqueIndex()
-    override val primaryKey = PrimaryKey(id)
+    val createdAt = datetime("created_at").defaultExpression(CurrentDateTime)
 }
 ```
 
-## Further Reading
+### 서비스 레이어
+
+```kotlin
+@Service
+class UserService {
+    
+    @Transactional
+    fun createUser(name: String, email: String): Int {
+        return Users.insertAndGetId {
+            it[Users.name] = name
+            it[Users.email] = email
+        }.value
+    }
+    
+    @Transactional(readOnly = true)
+    fun findAllUsers(): List<UserDto> {
+        return Users.selectAll().map { row ->
+            UserDto(
+                id = row[Users.id].value,
+                name = row[Users.name],
+                email = row[Users.email]
+            )
+        }
+    }
+    
+    @Transactional
+    fun updateUser(id: Int, name: String) {
+        Users.update({ Users.id eq id }) {
+            it[Users.name] = name
+        }
+    }
+}
+```
+
+## 자동 구성 커스터마이징
+
+```kotlin
+@Configuration
+class ExposedConfig {
+    
+    @Bean
+    fun databaseConfig(): DatabaseConfig {
+        return DatabaseConfig {
+            // 엔티티 캐시 크기
+            maxEntitiesToStoreInCachePerEntity = 1000
+            
+            // 중첩 트랜잭션 사용
+            useNestedTransactions = true
+            
+            // 기본 격리 수준
+            defaultIsolationLevel = TransactionIsolation.READ_COMMITTED
+        }
+    }
+    
+    @Bean
+    fun database(dataSource: DataSource): Database {
+        return Database.connect(
+            datasource = dataSource,
+            databaseConfig = databaseConfig()
+        )
+    }
+}
+```
+
+## 실행
+
+```bash
+# 애플리케이션 실행
+./gradlew bootRun
+
+# 테스트 실행
+./gradlew :09-spring:01-springboot-autoconfigure:test
+```
+
+## 더 읽어보기
 
 - [Spring Boot AutoConfiguration](https://debop.notion.site/Spring-Boot-AutoConfiguration-1c32744526b080079af9eb44b62466d0)
-- [Spring Boot Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/index.html)
-- [Exposed Wiki](https://github.com/JetBrains/Exposed/wiki)
-- [Exposed Spring Boot Starter (if applicable)](https://github.com/JetBrains/Exposed/tree/master/exposed-spring-boot-starter)
+- [Spring Boot 문서](https://docs.spring.io/spring-boot/docs/current/reference/html/index.html)
