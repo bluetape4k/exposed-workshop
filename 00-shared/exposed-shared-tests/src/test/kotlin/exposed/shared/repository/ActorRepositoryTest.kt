@@ -4,7 +4,7 @@ import exposed.shared.repository.model.ActorRecord
 import exposed.shared.repository.model.MovieSchema.ActorTable
 import exposed.shared.repository.model.MovieSchema.withMovieAndActors
 import exposed.shared.repository.repository.ActorRepository
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class ActorRepositoryTest: JdbcExposedTestBase() {
+class ActorRepositoryTest: AbstractExposedTest() {
 
     companion object: KLoggingChannel() {
         fun newActorRecord(): ActorRecord = ActorRecord(

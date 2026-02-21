@@ -4,7 +4,7 @@ import exposed.shared.repository.model.ActorRecord
 import exposed.shared.repository.model.MovieSchema.ActorTable
 import exposed.shared.repository.model.MovieSchema.withSuspendedMovieAndActors
 import exposed.shared.repository.repository.ActorRepository
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
@@ -24,14 +24,15 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class ActorRepositoryCoroutineTest: JdbcExposedTestBase() {
+class ActorRepositoryCoroutineTest: AbstractExposedTest() {
 
     companion object: KLoggingChannel() {
-        fun newActorRecord(): ActorRecord = ActorRecord(
-            firstName = faker.name().firstName(),
-            lastName = faker.name().lastName(),
-            birthday = faker.timeAndDate().birthday(20, 80).toString()
-        )
+        fun newActorRecord(): ActorRecord =
+            ActorRecord(
+                firstName = faker.name().firstName(),
+                lastName = faker.name().lastName(),
+                birthday = faker.timeAndDate().birthday(20, 80).toString(),
+            )
     }
 
     private val repository = ActorRepository()

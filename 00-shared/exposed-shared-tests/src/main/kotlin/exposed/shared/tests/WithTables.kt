@@ -22,8 +22,10 @@ fun withTables(
 ) {
     withDb(testDB, configure = configure) {
         runCatching {
-            SchemaUtils.drop(*tables)
-            commit()
+            if (dropTables) {
+                SchemaUtils.drop(*tables)
+                commit()
+            }
         }
 
         SchemaUtils.create(*tables)

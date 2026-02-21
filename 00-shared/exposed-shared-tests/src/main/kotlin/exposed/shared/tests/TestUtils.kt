@@ -2,6 +2,7 @@ package exposed.shared.tests
 
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.Table
+import org.jetbrains.exposed.v1.core.statements.InsertStatement
 import org.jetbrains.exposed.v1.core.vendors.DatabaseDialect
 import org.jetbrains.exposed.v1.core.vendors.SQLServerDialect
 import org.jetbrains.exposed.v1.jdbc.insert
@@ -29,8 +30,8 @@ fun <T> Column<T>.constraintNamePart() = (currentDialectTest as? SQLServerDialec
     " CONSTRAINT DF_${table.tableName}_$name"
 } ?: ""
 
-fun Table.insertAndWait(duration: Long) {
-    this.insert { }
+fun Table.insertAndWait(duration: Long, body: Table.(InsertStatement<Number>) -> Unit) {
+    this.insert(body)
     TransactionManager.current().commit()
     Thread.sleep(duration)
 }

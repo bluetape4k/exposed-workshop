@@ -1,6 +1,6 @@
 package exposed.shared.repository.model
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
@@ -29,7 +29,6 @@ import org.jetbrains.exposed.v1.jdbc.select
 import java.time.LocalDate
 
 object MovieSchema: KLogging() {
-
     object MovieTable: LongIdTable("movies") {
         val name = varchar("name", 255)
         val producerName = varchar("producer_name", 255)
@@ -49,7 +48,9 @@ object MovieSchema: KLogging() {
         override val primaryKey = PrimaryKey(movieId, actorId)
     }
 
-    class MovieEntity(id: EntityID<Long>): LongEntity(id) {
+    class MovieEntity(
+        id: EntityID<Long>,
+    ): LongEntity(id) {
         companion object: LongEntityClass<MovieEntity>(MovieTable)
 
         var name by MovieTable.name
@@ -59,15 +60,20 @@ object MovieSchema: KLogging() {
         val actors: SizedIterable<ActorEntity> by ActorEntity via ActorInMovieTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("name", name)
-            .add("producerName", producerName)
-            .add("releaseDate", releaseDate)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("name", name)
+                .add("producerName", producerName)
+                .add("releaseDate", releaseDate)
+                .toString()
     }
 
-    class ActorEntity(id: EntityID<Long>): LongEntity(id) {
+    class ActorEntity(
+        id: EntityID<Long>,
+    ): LongEntity(id) {
         companion object: LongEntityClass<ActorEntity>(ActorTable)
 
         var firstName by ActorTable.firstName
@@ -77,16 +83,19 @@ object MovieSchema: KLogging() {
         val movies: SizedIterable<MovieEntity> by MovieEntity via ActorInMovieTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("firstName", firstName)
-            .add("lastName", lastName)
-            .add("birthday", birthday)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("firstName", firstName)
+                .add("lastName", lastName)
+                .add("birthday", birthday)
+                .toString()
     }
 
     @Suppress("UnusedReceiverParameter")
-    fun JdbcExposedTestBase.withMovieAndActors(
+    fun AbstractExposedTest.withMovieAndActors(
         testDB: TestDB,
         statement: JdbcTransaction.() -> Unit,
     ) {
@@ -97,7 +106,7 @@ object MovieSchema: KLogging() {
     }
 
     @Suppress("UnusedReceiverParameter")
-    suspend fun JdbcExposedTestBase.withSuspendedMovieAndActors(
+    suspend fun AbstractExposedTest.withSuspendedMovieAndActors(
         testDB: TestDB,
         statement: suspend JdbcTransaction.() -> Unit,
     ) {
@@ -120,45 +129,50 @@ object MovieSchema: KLogging() {
         val russellCrowe = ActorRecord(0L, "Russell", "Crowe", "1970-01-20")
         val edwardNorton = ActorRecord(0L, "Edward", "Norton", "1975-04-03")
 
-        val actors = listOf(
-            johnnyDepp,
-            bradPitt,
-            angelinaJolie,
-            jenniferAniston,
-            angelinaGrace,
-            craigDaniel,
-            ellenPaige,
-            russellCrowe,
-            edwardNorton
-        )
-
-        val movies = listOf(
-            MovieWithActorRecord(
-                0L,
-                "Gladiator",
-                johnnyDepp.firstName,
-                "2000-05-01",
-                mutableListOf(russellCrowe, ellenPaige, craigDaniel)
-            ), MovieWithActorRecord(
-                0L,
-                "Guardians of the galaxy",
-                johnnyDepp.firstName,
-                "2014-07-21",
-                mutableListOf(angelinaGrace, bradPitt, ellenPaige, angelinaJolie, johnnyDepp)
-            ), MovieWithActorRecord(
-                0L,
-                "Fight club",
-                craigDaniel.firstName,
-                "1999-09-13",
-                mutableListOf(bradPitt, jenniferAniston, edwardNorton)
-            ), MovieWithActorRecord(
-                0L,
-                "13 Reasons Why",
-                "Suzuki",
-                "2016-01-01",
-                mutableListOf(angelinaJolie, jenniferAniston)
+        val actors =
+            listOf(
+                johnnyDepp,
+                bradPitt,
+                angelinaJolie,
+                jenniferAniston,
+                angelinaGrace,
+                craigDaniel,
+                ellenPaige,
+                russellCrowe,
+                edwardNorton,
             )
-        )
+
+        val movies =
+            listOf(
+                MovieWithActorRecord(
+                    0L,
+                    "Gladiator",
+                    johnnyDepp.firstName,
+                    "2000-05-01",
+                    mutableListOf(russellCrowe, ellenPaige, craigDaniel),
+                ),
+                MovieWithActorRecord(
+                    0L,
+                    "Guardians of the galaxy",
+                    johnnyDepp.firstName,
+                    "2014-07-21",
+                    mutableListOf(angelinaGrace, bradPitt, ellenPaige, angelinaJolie, johnnyDepp),
+                ),
+                MovieWithActorRecord(
+                    0L,
+                    "Fight club",
+                    craigDaniel.firstName,
+                    "1999-09-13",
+                    mutableListOf(bradPitt, jenniferAniston, edwardNorton),
+                ),
+                MovieWithActorRecord(
+                    0L,
+                    "13 Reasons Why",
+                    "Suzuki",
+                    "2016-01-01",
+                    mutableListOf(angelinaJolie, jenniferAniston),
+                ),
+            )
 
         ActorTable.batchInsert(actors) {
             this[ActorTable.firstName] = it.firstName
@@ -179,9 +193,11 @@ object MovieSchema: KLogging() {
                 MovieTable.select(MovieTable.id).where { MovieTable.name eq movie.name }.first()[MovieTable.id]
 
             movie.actors.forEach { actor ->
-                val actorId = ActorTable.select(ActorTable.id)
-                    .where { (ActorTable.firstName eq actor.firstName) and (ActorTable.lastName eq actor.lastName) }
-                    .first()[ActorTable.id]
+                val actorId =
+                    ActorTable
+                        .select(ActorTable.id)
+                        .where { (ActorTable.firstName eq actor.firstName) and (ActorTable.lastName eq actor.lastName) }
+                        .first()[ActorTable.id]
 
                 ActorInMovieTable.insert {
                     it[ActorInMovieTable.actorId] = actorId.value
