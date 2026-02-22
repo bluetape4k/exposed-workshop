@@ -20,9 +20,7 @@ suspend fun withTablesSuspending(
 ) {
     withDbSuspending(testDB, context, configure) {
         runCatching {
-            if (dropTables) {
-                SchemaUtils.drop(*tables)
-            }
+            SchemaUtils.drop(*tables)
         }
 
         SchemaUtils.create(*tables)

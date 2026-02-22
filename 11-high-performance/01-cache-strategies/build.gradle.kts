@@ -36,7 +36,7 @@ dependencies {
 
     // bluetape4k
     implementation(Libs.bluetape4k_exposed)
-    implementation(Libs.bluetape4k_exposed_redisson)
+    implementation(Libs.bluetape4k_exposed_jdbc_redisson)
     implementation(Libs.bluetape4k_idgenerators)
     implementation(Libs.bluetape4k_redis)
     implementation(Libs.bluetape4k_testcontainers)
