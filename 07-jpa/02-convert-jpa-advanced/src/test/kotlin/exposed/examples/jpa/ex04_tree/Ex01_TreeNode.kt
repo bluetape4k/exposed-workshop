@@ -3,7 +3,7 @@ package exposed.examples.jpa.ex04_tree
 import exposed.examples.jpa.ex04_tree.TreeNodeSchema.TreeNode
 import exposed.examples.jpa.ex04_tree.TreeNodeSchema.TreeNodeTable
 import exposed.examples.jpa.ex04_tree.TreeNodeSchema.buildTreeNodes
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -30,7 +30,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * TREE 구조를 가지는 엔티티에 대해 Self Reference Table을 이용하여 구현한다.
  */
-class Ex01_TreeNode: JdbcExposedTestBase() {
+class Ex01_TreeNode: AbstractExposedTest() {
 
     companion object: KLogging()
 

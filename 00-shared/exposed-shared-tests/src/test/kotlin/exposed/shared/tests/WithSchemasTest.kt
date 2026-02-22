@@ -38,7 +38,7 @@ class WithSchemasTest {
 
             val schema = prepareSchemaForTest("test_suspended_schema_${System.currentTimeMillis()}")
 
-            withSuspendedSchemas(testDB, schema) {
+            withSchemasSuspending(testDB, schema) {
                 currentDialectTest.supportsCreateSchema.shouldBeTrue()
             }
         }

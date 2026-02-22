@@ -2,11 +2,11 @@ package alternative.r2dbc.example.domain.repository
 
 import alternative.r2dbc.example.domain.model.Comment
 import io.bluetape4k.logging.coroutines.KLoggingChannel
-import io.bluetape4k.spring.r2dbc.coroutines.suspendCount
-import io.bluetape4k.spring.r2dbc.coroutines.suspendCountAll
-import io.bluetape4k.spring.r2dbc.coroutines.suspendInsert
-import io.bluetape4k.spring.r2dbc.coroutines.suspendSelect
-import io.bluetape4k.spring.r2dbc.coroutines.suspendSelectAll
+import io.bluetape4k.spring.r2dbc.coroutines.countAllSuspending
+import io.bluetape4k.spring.r2dbc.coroutines.countSuspending
+import io.bluetape4k.spring.r2dbc.coroutines.insertSuspending
+import io.bluetape4k.spring.r2dbc.coroutines.selectAllSuspending
+import io.bluetape4k.spring.r2dbc.coroutines.selectSuspending
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.r2dbc.core.R2dbcEntityOperations
 import org.springframework.data.relational.core.query.Criteria
@@ -25,23 +25,23 @@ class CommentRepository(
 
     companion object: KLoggingChannel()
 
-    suspend fun count(): Long = operations.suspendCountAll<Comment>()
+    suspend fun count(): Long = operations.countAllSuspending<Comment>()
 
-    fun findAll(): Flow<Comment> = operations.suspendSelectAll<Comment>()
+    fun findAll(): Flow<Comment> = operations.selectAllSuspending<Comment>()
 
     @Transactional
     suspend fun save(comment: Comment): Comment {
-        return operations.suspendInsert(comment)
+        return operations.insertSuspending(comment)
     }
 
     suspend fun countByPostId(postId: Long): Long {
         val query = Query.query(Criteria.where(Comment::postId.name).isEqual(postId))
-        return operations.suspendCount<Comment>(query)
+        return operations.countSuspending<Comment>(query)
     }
 
     fun findAllByPostId(postId: Long): Flow<Comment> {
         val query = Query.query(Criteria.where(Comment::postId.name).isEqual(postId))
-        return operations.suspendSelect(query)
+        return operations.selectSuspending<Comment>(query)
     }
 
     @Transactional

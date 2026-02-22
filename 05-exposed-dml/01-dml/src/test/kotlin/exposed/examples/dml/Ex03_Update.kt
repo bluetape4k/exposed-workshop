@@ -1,7 +1,7 @@
 package exposed.examples.dml
 
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex03_Update: JdbcExposedTestBase() {
+class Ex03_Update: AbstractExposedTest() {
 
     companion object: KLogging()
 

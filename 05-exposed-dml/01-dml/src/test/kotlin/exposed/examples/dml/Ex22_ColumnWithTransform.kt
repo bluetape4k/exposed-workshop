@@ -1,6 +1,6 @@
 package exposed.examples.dml
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.entityToStringBuilder
@@ -39,7 +39,7 @@ import java.util.*
 /**
  * 컬럼의 수형이나 값을 변환하는 [ColumnTransformer] 를 활용하는 예제
  */
-class Ex22_ColumnWithTransform: JdbcExposedTestBase() {
+class Ex22_ColumnWithTransform: AbstractExposedTest() {
 
     companion object: KLogging()
 

@@ -1,6 +1,6 @@
 package exposed.examples.crypt
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -27,7 +27,7 @@ import org.jetbrains.exposed.v1.jdbc.update
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex01_EncryptedColumn: JdbcExposedTestBase() {
+class Ex01_EncryptedColumn: AbstractExposedTest() {
 
     companion object: KLogging()
 

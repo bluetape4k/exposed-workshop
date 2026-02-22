@@ -1,6 +1,6 @@
 package exposed.examples.custom.columns.serialization
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.core.serializable.binarySerializedBlob
@@ -22,7 +22,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.io.Serializable
 
-class BinarySerializedBlobColumnTypeTest: JdbcExposedTestBase() {
+class BinarySerializedBlobColumnTypeTest: AbstractExposedTest() {
 
     companion object: KLogging()
 

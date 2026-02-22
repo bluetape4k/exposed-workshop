@@ -1,6 +1,6 @@
 package exposed.examples.money
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.entityToStringBuilder
@@ -21,7 +21,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.math.BigDecimal
 
-class Ex01_MoneyDefaults: JdbcExposedTestBase() {
+class Ex01_MoneyDefaults: AbstractExposedTest() {
 
     companion object: KLogging()
 

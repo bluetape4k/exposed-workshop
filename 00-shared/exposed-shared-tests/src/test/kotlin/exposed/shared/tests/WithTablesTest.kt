@@ -72,7 +72,7 @@ class WithTablesTest {
         @ParameterizedTest
         @MethodSource(ENABLE_DIALECTS_METHOD)
         fun `withSuspendedTables should create and drop tables`(testDB: TestDB) = runSuspendIO {
-            withSuspendedTables(testDB, TestTable) {
+            withTablesSuspending(testDB, TestTable) {
                 TestTable.insert {
                     it[name] = "test"
                 }
@@ -86,7 +86,7 @@ class WithTablesTest {
         @ParameterizedTest
         @MethodSource(ENABLE_DIALECTS_METHOD)
         fun `withSuspendedTables should pass testDB to statement`(testDB: TestDB) = runSuspendIO {
-            withSuspendedTables(testDB, TestTable) { db ->
+            withTablesSuspending(testDB, TestTable) { db ->
                 db shouldBeEqualTo testDB
             }
         }

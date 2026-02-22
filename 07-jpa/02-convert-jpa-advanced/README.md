@@ -17,7 +17,6 @@ JPA의 **고급 기능들을 Exposed로 어떻게 구현하는지
 
 JPA의 `JOIN FETCH`, `@EntityGraph`에 해당하는 Exposed의 Join 구현입니다.
 
-
 | 파일                        | 설명                              | JPA 대응 개념                    |
 |---------------------------|---------------------------------|------------------------------|
 | `Ex01_Simple_Join.kt`     | Inner Join (Lazy/Eager Loading) | `JOIN FETCH`, `@EntityGraph` |

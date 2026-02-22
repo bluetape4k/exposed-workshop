@@ -2,13 +2,14 @@ package exposed.shared.repository.model
 
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
-import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
+import exposed.shared.tests.withTablesSuspending
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
+import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.ReferenceOption
 import org.jetbrains.exposed.v1.core.Table
@@ -110,7 +111,12 @@ object MovieSchema: KLogging() {
         testDB: TestDB,
         statement: suspend JdbcTransaction.() -> Unit,
     ) {
-        withSuspendedTables(testDB, MovieTable, ActorTable, ActorInMovieTable) {
+        withTablesSuspending(
+            testDB,
+            MovieTable, ActorTable, ActorInMovieTable,
+            context = Dispatchers.IO,
+            configure = { }
+        ) {
             populateSampleData()
             statement()
         }

@@ -1,7 +1,7 @@
 package exposed.examples.jpa.ex05_relations.ex04_many_to_many
 
-import exposed.shared.tests.JdbcExposedTestBase
-import exposed.shared.tests.JdbcExposedTestBase.Companion.faker
+import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.AbstractExposedTest.Companion.faker
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.entityToStringBuilder
@@ -125,7 +125,7 @@ object BankSchema {
     }
 
     @Suppress("UnusedReceiverParameter")
-    fun JdbcExposedTestBase.withBankTables(
+    fun AbstractExposedTest.withBankTables(
         testDB: TestDB,
         block: JdbcTransaction.(accounts: BankAccountTable, owners: AccountOwnerTable) -> Unit,
     ) {

@@ -1,7 +1,7 @@
 package exposed.examples.dml
 
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
 import io.bluetape4k.logging.KLogging
@@ -30,7 +30,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * `EXISTS` 키워드를 사용하는 예제입니다.
  */
-class Ex06_Exists: JdbcExposedTestBase() {
+class Ex06_Exists: AbstractExposedTest() {
 
     companion object: KLogging()
 

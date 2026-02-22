@@ -1,5 +1,6 @@
 package exposed.shared.tests
 
+import kotlinx.coroutines.delay
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.statements.InsertStatement
@@ -30,8 +31,26 @@ fun <T> Column<T>.constraintNamePart() = (currentDialectTest as? SQLServerDialec
     " CONSTRAINT DF_${table.tableName}_$name"
 } ?: ""
 
-fun Table.insertAndWait(duration: Long, body: Table.(InsertStatement<Number>) -> Unit) {
-    this.insert(body)
+/**
+ * 기본 값으로 정보를 레코드를 생성하고, [duration]만큼 대기합니다.
+ */
+inline fun Table.insertAndWait(
+    duration: Long,
+    crossinline body: Table.(InsertStatement<Number>) -> Unit = {},
+) {
+    this.insert { body(it) }
     TransactionManager.current().commit()
     Thread.sleep(duration)
+}
+
+/**
+ * 기본 값으로 정보를 레코드를 생성하고, [duration]만큼 대기합니다.
+ */
+suspend inline fun Table.insertAndSuspending(
+    duration: Long,
+    crossinline body: Table.(InsertStatement<Number>) -> Unit = {},
+) {
+    this.insert { body(it) }
+    TransactionManager.current().commit()
+    delay(duration)
 }

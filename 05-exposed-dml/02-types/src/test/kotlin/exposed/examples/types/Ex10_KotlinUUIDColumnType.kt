@@ -1,6 +1,6 @@
 package exposed.examples.types
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
@@ -20,7 +20,7 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 @OptIn(ExperimentalUuidApi::class)
-class Ex10_KotlinUUIDColumnType: JdbcExposedTestBase() {
+class Ex10_KotlinUUIDColumnType: AbstractExposedTest() {
 
     companion object: KLogging()
 

@@ -2,7 +2,7 @@ package exposed.examples.transactions
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import io.bluetape4k.logging.KLogging
@@ -28,7 +28,7 @@ import java.sql.Connection
  * Connection의 Transaction Isolation Level을 설정하는 방법에 대한 테스트 코드입니다.
  */
 @Suppress("DEPRECATION")
-class Ex01_TransactionIsolation: JdbcExposedTestBase() {
+class Ex01_TransactionIsolation: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -246,8 +246,8 @@ class Ex01_TransactionIsolation: JdbcExposedTestBase() {
         val expectedLevel = when (expected) {
             Connection.TRANSACTION_READ_COMMITTED -> committed
             Connection.TRANSACTION_REPEATABLE_READ -> repeatable
-            Connection.TRANSACTION_SERIALIZABLE -> serializable
-            else -> throw UnsupportedOperationException("Unsupported transaction isolation level: $expected")
+            Connection.TRANSACTION_SERIALIZABLE   -> serializable
+            else                                  -> throw UnsupportedOperationException("Unsupported transaction isolation level: $expected")
         }
 
         val actual = exec("$sql;") { resultSet ->

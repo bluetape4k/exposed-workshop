@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.testcontainers.utility.Base58
 import java.util.*
 
-class TestUtilsTest: AbstractExposedTest() {
+class TestSupportTest: AbstractExposedTest() {
 
     companion object: KLogging()
 

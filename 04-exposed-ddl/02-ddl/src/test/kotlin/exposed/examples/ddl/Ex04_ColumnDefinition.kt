@@ -1,6 +1,6 @@
 package exposed.examples.ddl
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
@@ -23,7 +23,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.sql.SQLException
 import kotlin.test.assertFails
 
-class Ex04_ColumnDefinition: JdbcExposedTestBase() {
+class Ex04_ColumnDefinition: AbstractExposedTest() {
 
     companion object: KLogging()
 

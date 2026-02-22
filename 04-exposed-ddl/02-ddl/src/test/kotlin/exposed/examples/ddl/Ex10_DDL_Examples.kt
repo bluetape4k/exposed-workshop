@@ -1,6 +1,6 @@
 package exposed.examples.ddl
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.assertFailAndRollback
 import exposed.shared.tests.currentDialectTest
@@ -72,7 +72,7 @@ import kotlin.test.assertTrue
 /**
  * 다양한 DDL 예제
  */
-class Ex10_DDL_Examples: JdbcExposedTestBase() {
+class Ex10_DDL_Examples: AbstractExposedTest() {
 
     companion object: KLogging()
 

@@ -1,7 +1,7 @@
 package exposed.examples.jpa.ex01_joins
 
 import exposed.shared.mapping.PersonSchema.withPersonsAndAddress
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex06_Convering_Index: JdbcExposedTestBase() {
+class Ex06_Convering_Index: AbstractExposedTest() {
 
     companion object: KLogging()
 

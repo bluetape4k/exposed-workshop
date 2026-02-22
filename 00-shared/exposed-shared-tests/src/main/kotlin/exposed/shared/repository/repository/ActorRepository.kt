@@ -25,7 +25,7 @@ class ActorRepository: ExposedRepository<ActorRecord, Long> {
 
         params.forEach { (key, value) ->
             when (key) {
-                MovieSchema.ActorTable::id.name -> value?.run { query.andWhere { MovieSchema.ActorTable.id eq value.toLong() } }
+                MovieSchema.ActorTable::id.name       -> value?.run { query.andWhere { MovieSchema.ActorTable.id eq value.toLong() } }
                 MovieSchema.ActorTable::firstName.name -> value?.run { query.andWhere { MovieSchema.ActorTable.firstName eq value } }
                 MovieSchema.ActorTable::lastName.name -> value?.run { query.andWhere { MovieSchema.ActorTable.lastName eq value } }
                 MovieSchema.ActorTable::birthday.name -> value?.run {

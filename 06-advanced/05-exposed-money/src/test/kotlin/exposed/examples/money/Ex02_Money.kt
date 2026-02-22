@@ -1,6 +1,6 @@
 package exposed.examples.money
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
@@ -31,7 +31,7 @@ import java.math.BigDecimal
 import javax.money.CurrencyUnit
 import javax.money.MonetaryAmount
 
-class Ex02_Money: JdbcExposedTestBase() {
+class Ex02_Money: AbstractExposedTest() {
 
     companion object: KLogging()
 

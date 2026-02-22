@@ -33,7 +33,7 @@ class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
 
         params.forEach { (key, value) ->
             when (key) {
-                LongIdTable::id.name -> value?.run { query.andWhere { ActorTable.id eq value.toLong() } }
+                LongIdTable::id.name      -> value?.run { query.andWhere { ActorTable.id eq value.toLong() } }
                 ActorTable::firstName.name -> value?.run { query.andWhere { ActorTable.firstName eq value } }
                 ActorTable::lastName.name -> value?.run { query.andWhere { ActorTable.lastName eq value } }
                 ActorTable::birthday.name -> value?.run { query.andWhere { ActorTable.birthday eq LocalDate.parse(value) } }

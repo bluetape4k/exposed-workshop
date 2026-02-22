@@ -1,7 +1,7 @@
 package exposed.examples.transactions
 
 import com.impossibl.postgres.jdbc.PGSQLSimpleException
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import io.bluetape4k.logging.KLogging
@@ -25,7 +25,7 @@ import kotlin.test.DefaultAsserter.fail
  * - [org.jetbrains.exposed.sql.Transaction.queryTimeout] = 0 이면 Timeout 이 없음을 의미
  * - [org.jetbrains.exposed.sql.Transaction.queryTimeout] < 0 이면 예외가 발생
  */
-class Ex04_QueryTimeout: JdbcExposedTestBase() {
+class Ex04_QueryTimeout: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -33,7 +33,7 @@ class Ex04_QueryTimeout: JdbcExposedTestBase() {
         return when (db) {
             in TestDB.ALL_MYSQL_MARIADB -> "SELECT SLEEP($timeout) = 0;"
             in TestDB.ALL_POSTGRES -> "SELECT pg_sleep($timeout);"
-            else -> throw NotImplementedError()
+            else                   -> throw NotImplementedError()
         }
     }
 
@@ -67,7 +67,7 @@ class Ex04_QueryTimeout: JdbcExposedTestBase() {
                     TestDB.POSTGRESQL -> cause.cause shouldBeInstanceOf PSQLException::class
                     // PostgreSQLNG 은 취소된 statement message를 포함한 표준 [PGSQLSimpleException] 을 던집니다.
                     TestDB.POSTGRESQLNG -> cause.cause shouldBeInstanceOf PGSQLSimpleException::class
-                    else -> cause.cause shouldBeInstanceOf SQLTimeoutException::class
+                    else              -> cause.cause shouldBeInstanceOf SQLTimeoutException::class
                 }
             }
         }
@@ -125,7 +125,7 @@ class Ex04_QueryTimeout: JdbcExposedTestBase() {
                 when (testDB) {
                     // PostgreSQL 은 취소된 statement message를 포함한 표준 [PSQLException] 을 던집니다.
                     // Query timeout 은 0 이상의 값이어야 합니다.
-                    TestDB.POSTGRESQL -> cause.cause shouldBeInstanceOf PSQLException::class
+                    TestDB.POSTGRESQL     -> cause.cause shouldBeInstanceOf PSQLException::class
 
                     // MySQL, POSTGRESQLNG 는 -1 타임아웃 값으로 일반 [SQLException] 을 던집니다.
                     in (TestDB.ALL_MYSQL + TestDB.POSTGRESQLNG) -> cause.cause shouldBeInstanceOf SQLException::class
@@ -135,7 +135,7 @@ class Ex04_QueryTimeout: JdbcExposedTestBase() {
 
                     // SqlServer throws a regular SQLServerException with a minus timeout value
                     // TestDB.SQLSERVER -> assertTrue(cause.cause is SQLServerException)
-                    else -> throw NotImplementedError()
+                    else                  -> throw NotImplementedError()
                 }
             }
         }

@@ -31,21 +31,21 @@ fun ResultRow.toMovieRecord() = MovieRecord(
 
 fun ResultRow.toMovieWithActorRecord(actors: List<ActorRecord>) =
     MovieWithActorRecord(
-    name = this[MovieTable.name],
-    producerName = this[MovieTable.producerName],
-    releaseDate = this[MovieTable.releaseDate].toString(),
+        name = this[MovieTable.name],
+        producerName = this[MovieTable.producerName],
+        releaseDate = this[MovieTable.releaseDate].toString(),
         actors = actors.toList(),
-    id = this[MovieTable.id].value
-)
+        id = this[MovieTable.id].value
+    )
 
 fun MovieRecord.toMovieWithActorRecord(actors: List<ActorRecord>) =
     MovieWithActorRecord(
-    name = this.name,
-    producerName = this.producerName,
-    releaseDate = this.releaseDate,
+        name = this.name,
+        producerName = this.producerName,
+        releaseDate = this.releaseDate,
         actors = actors.toList(),
-    id = this.id
-)
+        id = this.id
+    )
 
 fun MovieEntity.toMovieRecord() = MovieRecord(
     name = this.name,

@@ -3,7 +3,7 @@
 package exposed.examples.transactions
 
 import exposed.shared.dml.DMLTestData
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import io.bluetape4k.codec.Base58
@@ -96,7 +96,7 @@ suspend fun <T> runWithSavepointOrNewTransaction(
 
 
 @Suppress("DEPRECATION")
-class Ex05_NestedTransactions_Coroutines: JdbcExposedTestBase() {
+class Ex05_NestedTransactions_Coroutines: AbstractExposedTest() {
 
     companion object: KLogging()
 

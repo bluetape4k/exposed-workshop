@@ -1,7 +1,7 @@
 package exposed.shared.samples
 
 import exposed.shared.tests.AbstractExposedTest
-import exposed.shared.tests.JdbcExposedTestBase.Companion.faker
+import exposed.shared.tests.AbstractExposedTest.Companion.faker
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.entityToStringBuilder

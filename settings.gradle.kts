@@ -39,8 +39,8 @@ fun includeModules(baseDir: String, withProjectName: Boolean = true, withBaseDir
                     val projectName = when {
                         !withProjectName && !withBaseDir -> dir.name
                         withProjectName && !withBaseDir -> PROJECT_NAME + "-" + dir.name
-                        withProjectName -> PROJECT_NAME + "-" + basePath + "-" + dir.name
-                        else -> basePath + "-" + dir.name
+                        withProjectName                 -> PROJECT_NAME + "-" + basePath + "-" + dir.name
+                        else                            -> basePath + "-" + dir.name
                     }
                     // println("include modules: $projectName")
 

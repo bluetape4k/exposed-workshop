@@ -1,6 +1,6 @@
 package exposed.examples.virtualthreads
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.collections.intRangeOf
@@ -42,7 +42,7 @@ import java.util.concurrent.ExecutionException
 import kotlin.test.assertFailsWith
 
 @EnabledOnJre(JRE.JAVA_21)
-class Ex01_VritualThreads: JdbcExposedTestBase() {
+class Ex01_VritualThreads: AbstractExposedTest() {
 
     companion object: KLoggingChannel()
 

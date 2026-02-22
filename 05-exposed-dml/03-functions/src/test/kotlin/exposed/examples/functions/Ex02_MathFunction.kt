@@ -233,7 +233,7 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
                     expectException<IllegalStateException> {
                         SqrtFunction(intLiteral(-100)) shouldExpressionEqualTo null
                     }
-                else ->
+                else             ->
                     expectException<SQLException> {
                         SqrtFunction(intLiteral(-100)) shouldExpressionEqualTo null
                     }

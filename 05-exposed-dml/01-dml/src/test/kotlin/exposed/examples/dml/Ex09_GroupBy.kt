@@ -1,7 +1,7 @@
 package exposed.examples.dml
 
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
 import io.bluetape4k.logging.KLogging
@@ -42,7 +42,7 @@ import org.jetbrains.exposed.v1.jdbc.select
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex09_GroupBy: JdbcExposedTestBase() {
+class Ex09_GroupBy: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -86,7 +86,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                     "Munich" -> userCount shouldBeEqualTo 2L
                     "Prague" -> userCount shouldBeEqualTo 0L
                     "St. Petersburg" -> userCount shouldBeEqualTo 1L
-                    else -> error("Unknown city $cityName")
+                    else     -> error("Unknown city $cityName")
                 }
                 userCountAlias shouldBeEqualTo userCount
             }
@@ -312,7 +312,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                         dialect.name in dialectNames -> true
                         dialect is H2Dialect && dialect.delegatedDialectNameProvider != null ->
                             dialect.delegatedDialectNameProvider!!.dialectName in dialectNames
-                        else -> false
+                        else                         -> false
                     }
                     check.shouldBeTrue()
                 }
@@ -341,7 +341,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                         listOf("Sergey, Eugene", "Eugene, Sergey") shouldContain it["Munich"]
 
                     is MysqlDialect, is SQLServerDialect -> it["Munich"] shouldBeEqualTo "Eugene, Sergey"
-                    else -> it["Munich"] shouldBeEqualTo "Sergey, Eugene"
+                    else                                -> it["Munich"] shouldBeEqualTo "Sergey, Eugene"
                 }
 
                 it["Prague"].shouldBeNull()
@@ -366,7 +366,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                             listOf("Sergey | Eugene", "Eugene | Sergey") shouldContain it["Munich"]
 
                         is MysqlDialect, is PostgreSQLDialect -> it["Munich"] shouldBeEqualTo "Eugene | Sergey"
-                        is H2Dialect -> {
+                        is H2Dialect      -> {
                             if (currentDialect.h2Mode == H2Dialect.H2CompatibilityMode.SQLServer) {
                                 it["Munich"] shouldBeEqualTo "Sergey | Eugene"
                             } else {
@@ -374,7 +374,7 @@ class Ex09_GroupBy: JdbcExposedTestBase() {
                             }
                         }
 
-                        else -> it["Munich"] shouldBeEqualTo "Sergey | Eugene"
+                        else              -> it["Munich"] shouldBeEqualTo "Sergey | Eugene"
                     }
                     it["Prague"].shouldBeNull()
                 }

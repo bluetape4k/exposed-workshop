@@ -1,6 +1,6 @@
 package exposed.examples.types
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.assertFailAndRollback
 import exposed.shared.tests.currentDialectTest
@@ -31,7 +31,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.math.BigDecimal
 
-class Ex03_NumericColumnType: JdbcExposedTestBase() {
+class Ex03_NumericColumnType: AbstractExposedTest() {
 
     companion object: KLogging()
 

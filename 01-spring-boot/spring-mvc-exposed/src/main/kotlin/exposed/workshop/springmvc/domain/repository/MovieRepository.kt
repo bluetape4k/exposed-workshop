@@ -66,9 +66,9 @@ class MovieRepository(
 
         params.forEach { (key, value) ->
             when (key) {
-                MovieTable::id.name -> value?.run { query.andWhere { MovieTable.id eq value.toLong() } }
+                MovieTable::id.name          -> value?.run { query.andWhere { MovieTable.id eq value.toLong() } }
 
-                MovieTable::name.name -> value?.run { query.andWhere { MovieTable.name eq value } }
+                MovieTable::name.name        -> value?.run { query.andWhere { MovieTable.name eq value } }
                 MovieTable::producerName.name -> value?.run {
                     query.andWhere { MovieTable.producerName eq value }
                 }

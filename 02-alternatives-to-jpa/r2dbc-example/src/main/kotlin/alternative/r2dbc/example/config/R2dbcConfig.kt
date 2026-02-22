@@ -62,7 +62,7 @@ class R2dbcConfig: AbstractR2dbcConfiguration() {
         val connectionUrl = when {
             activeProfiles.contains("h2") -> connectionUrlH2()
             activeProfiles.contains("postgres") -> connectionUrlPostgres()
-            else -> throw IllegalStateException("Unknown profile: $activeProfiles")
+            else                          -> throw IllegalStateException("Unknown profile: $activeProfiles")
         }
         return ConnectionFactories.get(connectionUrl)
     }

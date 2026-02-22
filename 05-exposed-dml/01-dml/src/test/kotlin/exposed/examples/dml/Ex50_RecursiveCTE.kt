@@ -1,6 +1,6 @@
 package exposed.examples.dml
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.jdbc.sql.getIntOrNull
@@ -20,7 +20,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.io.Serializable
 import java.sql.ResultSet
 
-class Ex50_RecursiveCTE: JdbcExposedTestBase() {
+class Ex50_RecursiveCTE: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -71,7 +71,7 @@ class Ex50_RecursiveCTE: JdbcExposedTestBase() {
             val sql = when (testDB) {
                 in TestDB.ALL_POSTGRES -> categoriesWithRecursiveForPostgres()
                 in setOf(TestDB.MYSQL_V8, TestDB.MARIADB) -> categoriesWithRecursiveForMySQL()
-                else -> throw IllegalStateException("Unsupported dialect for recursive CTE test: $testDB")
+                else                   -> throw IllegalStateException("Unsupported dialect for recursive CTE test: $testDB")
             }
 
             // val categoryRecords = mutableListOf<CategoryRecord>()

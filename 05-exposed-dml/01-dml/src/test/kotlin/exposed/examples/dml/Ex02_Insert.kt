@@ -3,12 +3,12 @@ package exposed.examples.dml
 import exposed.shared.dml.DMLTestData
 import exposed.shared.dml.DMLTestData.Cities
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.assertFailAndRollback
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.withDb
-import exposed.shared.tests.withSuspendedDb
+import exposed.shared.tests.withDbSuspending
 import exposed.shared.tests.withTables
 import io.bluetape4k.codec.Base58
 import io.bluetape4k.exposed.core.BatchInsertOnConflictDoNothing
@@ -67,7 +67,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.*
 
-class Ex02_Insert: JdbcExposedTestBase() {
+class Ex02_Insert: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -860,7 +860,7 @@ class Ex02_Insert: JdbcExposedTestBase() {
         try {
             try {
                 withContext(Dispatchers.IO) {
-                    withSuspendedDb(testDB) {
+                    withDbSuspending(testDB) {
                         SchemaUtils.create(testTable)
                         testTable.insert { it[foo] = 1 }
                         testTable.insert { it[foo] = 0 } // foo > 0 조건을 만족하지 않음 (예외 발생)
@@ -871,11 +871,11 @@ class Ex02_Insert: JdbcExposedTestBase() {
                 // log.warn(e) { "Fail to insert" }
             }
 
-            withSuspendedDb(testDB) {
+            withDbSuspending(testDB) {
                 testTable.selectAll().empty().shouldBeTrue()
             }
         } finally {
-            withSuspendedDb(testDB) {
+            withDbSuspending(testDB) {
                 SchemaUtils.drop(testTable)
             }
         }

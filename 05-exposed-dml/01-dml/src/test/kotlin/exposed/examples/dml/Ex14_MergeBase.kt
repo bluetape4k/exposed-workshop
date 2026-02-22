@@ -1,6 +1,6 @@
 package exposed.examples.dml
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -29,7 +29,7 @@ val TEST_DEFAULT_DATE_TIME: LocalDateTime = LocalDateTime.of(
  *
  * 참고: [SQL MERGE INTO 설명](https://www.perplexity.ai/search/sql-merge-into-gumune-daehae-s-y_xKDfwFR8ewN6qIY9jqJw)
  */
-abstract class Ex14_MergeBase: JdbcExposedTestBase() {
+abstract class Ex14_MergeBase: AbstractExposedTest() {
 
 
     companion object: KLogging()

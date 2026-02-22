@@ -1,6 +1,6 @@
 package exposed.examples.jpa.ex04_compositeId
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.entityToStringBuilder
@@ -28,7 +28,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertIs
 
-class Ex02_IdClass: JdbcExposedTestBase() {
+class Ex02_IdClass: AbstractExposedTest() {
 
     companion object: KLogging()
 

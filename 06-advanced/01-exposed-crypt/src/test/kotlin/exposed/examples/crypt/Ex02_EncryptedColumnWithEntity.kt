@@ -1,6 +1,6 @@
 package exposed.examples.crypt
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.entityToStringBuilder
@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex02_EncryptedColumnWithEntity: JdbcExposedTestBase() {
+class Ex02_EncryptedColumnWithEntity: AbstractExposedTest() {
 
     companion object: KLogging() {
         private val encryptor = Algorithms.AES_256_PBE_GCM("passwd", "12345678")

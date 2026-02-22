@@ -22,7 +22,7 @@ configurations {
 dependencies {
 
 
-testImplementation(project(":exposed-shared-tests"))
+    testImplementation(project(":exposed-shared-tests"))
 
     // Exposed
     implementation(Libs.bluetape4k_exposed)

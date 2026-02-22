@@ -1,6 +1,6 @@
 package exposed.examples.entities
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.entityToStringBuilder
@@ -27,7 +27,7 @@ import java.time.Instant
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-class Ex02_EntityHook_Auditable: JdbcExposedTestBase() {
+class Ex02_EntityHook_Auditable: AbstractExposedTest() {
 
     interface AuditableEntity {
         var createdAt: Instant?

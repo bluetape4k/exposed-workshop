@@ -1,6 +1,6 @@
 package exposed.examples.types
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.assertFailAndRollback
 import exposed.shared.tests.currentDialectTest
@@ -27,7 +27,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * Unsigned 수형을 가진 컬럼에 대한 예제
  */
-class Ex07_UnsignedColumnType: JdbcExposedTestBase() {
+class Ex07_UnsignedColumnType: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -108,7 +108,7 @@ class Ex07_UnsignedColumnType: JdbcExposedTestBase() {
             val ddlEnding = when (currentDialectTest) {
                 is MysqlDialect -> "(ubyte TINYINT UNSIGNED NOT NULL)"
                 is SQLServerDialect -> "(ubyte TINYINT NOT NULL)"
-                else -> "CHECK (ubyte BETWEEN 0 and ${UByte.MAX_VALUE}))"
+                else            -> "CHECK (ubyte BETWEEN 0 and ${UByte.MAX_VALUE}))"
             }
             UByteTable.ddl.single().endsWith(ddlEnding, ignoreCase = true).shouldBeTrue()
 

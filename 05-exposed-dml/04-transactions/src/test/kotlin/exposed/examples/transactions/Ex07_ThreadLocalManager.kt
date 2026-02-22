@@ -1,7 +1,7 @@
 package exposed.examples.transactions
 
 import exposed.shared.dml.DMLTestData
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
@@ -30,7 +30,7 @@ import kotlin.test.assertFails
 import kotlin.test.fail
 
 @Suppress("DEPRECATION")
-class Ex07_ThreadLocalManager: JdbcExposedTestBase() {
+class Ex07_ThreadLocalManager: AbstractExposedTest() {
 
     companion object: KLogging()
 

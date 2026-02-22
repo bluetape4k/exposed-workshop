@@ -1,7 +1,7 @@
 package exposed.examples.dml
 
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.withTables
@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex30_Explain: JdbcExposedTestBase() {
+class Ex30_Explain: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -361,7 +361,7 @@ class Ex30_Explain: JdbcExposedTestBase() {
             val formatOption = when (testDB) {
                 in TestDB.ALL_MYSQL_LIKE -> "FORMAT=JSON"
                 in TestDB.ALL_POSTGRES -> "FORMAT JSON"
-                else -> throw UnsupportedOperationException("Format option not provided for this dialect")
+                else                   -> throw UnsupportedOperationException("Format option not provided for this dialect")
             }
 
             val query = Countries.select(Countries.id).where { Countries.code like "A%" }

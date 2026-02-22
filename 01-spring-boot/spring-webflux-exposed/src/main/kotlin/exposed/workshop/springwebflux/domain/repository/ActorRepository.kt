@@ -37,7 +37,7 @@ class ActorRepository {
 
         params.forEach { (key, value) ->
             when (key) {
-                ActorTable::id.name -> value?.run { query.andWhere { ActorTable.id eq value.toLong() } }
+                ActorTable::id.name       -> value?.run { query.andWhere { ActorTable.id eq value.toLong() } }
                 ActorTable::firstName.name -> value?.run { query.andWhere { ActorTable.firstName eq value } }
                 ActorTable::lastName.name -> value?.run { query.andWhere { ActorTable.lastName eq value } }
                 ActorTable::birthday.name -> value?.run {

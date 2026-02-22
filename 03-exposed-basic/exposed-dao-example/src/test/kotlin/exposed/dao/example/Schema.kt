@@ -1,8 +1,8 @@
 package exposed.dao.example
 
 import exposed.shared.tests.TestDB
-import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
+import exposed.shared.tests.withTablesSuspending
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
@@ -89,7 +89,7 @@ object Schema {
     }
 
     suspend fun withSuspendedCityUsers(testDB: TestDB, statement: suspend JdbcTransaction.() -> Unit) {
-        withSuspendedTables(testDB, CityTable, UserTable) {
+        withTablesSuspending(testDB, CityTable, UserTable) {
             populateSamples()
 
             flushCache()

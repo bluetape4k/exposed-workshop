@@ -13,7 +13,7 @@ class SuspendedRepositoryConfig(
     private val suspendedCacheManager: LettuceSuspendedCacheManager,
 ) {
 
-    companion object: KLoggingChannel() 
+    companion object: KLoggingChannel()
 
     @Bean(name = ["countrySuspendedRepository", "defaultCountrySuspendedRepository"])
     fun countrySuspendedRepository(): CountrySuspendedRepository {

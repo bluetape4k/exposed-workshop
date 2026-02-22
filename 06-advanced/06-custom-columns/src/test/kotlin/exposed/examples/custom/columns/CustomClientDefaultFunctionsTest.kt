@@ -1,6 +1,6 @@
 package exposed.examples.custom.columns
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.core.ksuidGenerated
@@ -25,7 +25,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.*
 
-class CustomClientDefaultFunctionsTest: JdbcExposedTestBase() {
+class CustomClientDefaultFunctionsTest: AbstractExposedTest() {
 
     companion object: KLogging()
 

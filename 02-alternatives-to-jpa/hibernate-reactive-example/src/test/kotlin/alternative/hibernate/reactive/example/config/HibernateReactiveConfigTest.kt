@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 class HibernateReactiveConfigTest: AbstractHibernateReactiveTest() {
 
-    companion object: KLoggingChannel() 
+    companion object: KLoggingChannel()
 
     @Autowired
     private val entityManagerFactory: EntityManagerFactory = uninitialized()

@@ -23,7 +23,7 @@ class UserCredentialsCacheRepository(
 ) {
 
     companion object: KLoggingChannel()
-    
+
     override val entityTable = UserCredentialsTable
     override fun ResultRow.toEntity() = toUserCredentialsRecord()
 

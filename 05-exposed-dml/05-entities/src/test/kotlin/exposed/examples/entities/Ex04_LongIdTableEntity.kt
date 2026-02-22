@@ -6,7 +6,7 @@ import exposed.examples.entities.LongIdTables.People
 import exposed.examples.entities.LongIdTables.Person
 import exposed.examples.entities.LongIdTables.Town
 import exposed.examples.entities.LongIdTables.Towns
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.entityToStringBuilder
@@ -127,7 +127,7 @@ object LongIdTables {
 /**
  * 엔티티의 Id 수형이 Long 인 경우의 테스트
  */
-class Ex04_LongIdTableEntity: JdbcExposedTestBase() {
+class Ex04_LongIdTableEntity: AbstractExposedTest() {
 
     companion object: KLogging()
 

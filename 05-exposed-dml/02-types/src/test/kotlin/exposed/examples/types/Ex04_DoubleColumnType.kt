@@ -1,6 +1,6 @@
 package exposed.examples.types
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
@@ -14,7 +14,7 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex04_DoubleColumnType: JdbcExposedTestBase() {
+class Ex04_DoubleColumnType: AbstractExposedTest() {
 
     companion object: KLogging()
 

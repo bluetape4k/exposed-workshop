@@ -57,7 +57,7 @@ class Team: AbstractValueObject() {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0L
         protected set
-    
+
     var name: String = ""
 
     @OneToMany(mappedBy = "team", orphanRemoval = false)
@@ -79,7 +79,7 @@ class Team: AbstractValueObject() {
         other is Team && name == other.name
 
     override fun equals(other: Any?): Boolean = other != null && super.equals(other)
-    override fun hashCode(): Int = id.hashCode() 
+    override fun hashCode(): Int = id.hashCode()
 
     override fun buildStringHelper(): ToStringBuilder {
         return super.buildStringHelper()

@@ -70,7 +70,8 @@ object EntityTestData {
     }
 
     enum class XType {
-        A, B
+        A,
+        B
     }
 
     open class AEntity(id: EntityID<Int>): IntEntity(id) {

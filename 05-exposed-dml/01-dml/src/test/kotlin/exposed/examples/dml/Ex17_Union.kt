@@ -1,7 +1,7 @@
 package exposed.examples.dml
 
 import exposed.shared.dml.DMLTestData.withCitiesAndUsers
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import io.bluetape4k.logging.KLogging
@@ -36,7 +36,7 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * `UNION` 쿼리 예제 모음
  */
-class Ex17_Union: JdbcExposedTestBase() {
+class Ex17_Union: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -242,7 +242,7 @@ class Ex17_Union: JdbcExposedTestBase() {
                 is PostgreSQLDialect,
                 is SQLServerDialect,
                 is MariaDBDialect,
-                    -> true
+                     -> true
 
                 is H2Dialect -> (currentDialect as H2Dialect).isSecondVersion
                 else -> false

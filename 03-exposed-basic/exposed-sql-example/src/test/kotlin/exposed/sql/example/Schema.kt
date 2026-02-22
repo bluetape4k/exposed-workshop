@@ -1,8 +1,8 @@
 package exposed.sql.example
 
 import exposed.shared.tests.TestDB
-import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
+import exposed.shared.tests.withTablesSuspending
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.eq
@@ -75,7 +75,7 @@ object Schema {
      * [CityTable], [UserTable]을 이용하여 Coroutines 환경에서 [statement]를 수행합니다.
      */
     suspend fun withSuspendedCityUsers(testDB: TestDB, statement: suspend JdbcTransaction.() -> Unit) {
-        withSuspendedTables(testDB, CityTable, UserTable) {
+        withTablesSuspending(testDB, CityTable, UserTable) {
             insertSampleData()
             commit()
 

@@ -2,15 +2,15 @@ package alternative.r2dbc.example.domain.repository
 
 import alternative.r2dbc.example.domain.model.Post
 import io.bluetape4k.logging.coroutines.KLoggingChannel
-import io.bluetape4k.spring.r2dbc.coroutines.suspendCountAll
-import io.bluetape4k.spring.r2dbc.coroutines.suspendDelete
-import io.bluetape4k.spring.r2dbc.coroutines.suspendDeleteAll
-import io.bluetape4k.spring.r2dbc.coroutines.suspendFindFirstById
-import io.bluetape4k.spring.r2dbc.coroutines.suspendFindFirstByIdOrNull
-import io.bluetape4k.spring.r2dbc.coroutines.suspendFindOneById
-import io.bluetape4k.spring.r2dbc.coroutines.suspendFindOneByIdOrNull
-import io.bluetape4k.spring.r2dbc.coroutines.suspendInsert
-import io.bluetape4k.spring.r2dbc.coroutines.suspendSelectAll
+import io.bluetape4k.spring.r2dbc.coroutines.countAllSuspending
+import io.bluetape4k.spring.r2dbc.coroutines.deleteAllSuspending
+import io.bluetape4k.spring.r2dbc.coroutines.deleteSuspending
+import io.bluetape4k.spring.r2dbc.coroutines.findFirstByIdOrNullSuspending
+import io.bluetape4k.spring.r2dbc.coroutines.findFirstByIdSuspending
+import io.bluetape4k.spring.r2dbc.coroutines.findOneByIdOrNullSuspending
+import io.bluetape4k.spring.r2dbc.coroutines.findOneByIdSuspending
+import io.bluetape4k.spring.r2dbc.coroutines.insertSuspending
+import io.bluetape4k.spring.r2dbc.coroutines.selectAllSuspending
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.r2dbc.convert.MappingR2dbcConverter
 import org.springframework.data.r2dbc.core.R2dbcEntityOperations
@@ -30,29 +30,29 @@ class PostRepository(
 ) {
     companion object: KLoggingChannel()
 
-    suspend fun count(): Long = operations.suspendCountAll<Post>()
+    suspend fun count(): Long = operations.countAllSuspending<Post>()
 
-    fun findAll(): Flow<Post> = operations.suspendSelectAll()
+    fun findAll(): Flow<Post> = operations.selectAllSuspending<Post>()
 
-    suspend fun findById(id: Long): Post = operations.suspendFindOneById(id)
+    suspend fun findById(id: Long): Post = operations.findOneByIdSuspending(id)
 
-    suspend fun findByIdOrNull(id: Long): Post? = operations.suspendFindOneByIdOrNull(id)
+    suspend fun findByIdOrNull(id: Long): Post? = operations.findOneByIdOrNullSuspending(id)
 
-    suspend fun findFirstById(id: Long): Post = operations.suspendFindFirstById(id)
+    suspend fun findFirstById(id: Long): Post = operations.findFirstByIdSuspending(id)
 
-    suspend fun findFirstByIdOrNull(id: Long): Post? = operations.suspendFindFirstByIdOrNull(id)
+    suspend fun findFirstByIdOrNull(id: Long): Post? = operations.findFirstByIdOrNullSuspending(id)
 
     @Transactional
-    suspend fun deleteAll(): Long = operations.suspendDeleteAll<Post>()
+    suspend fun deleteAll(): Long = operations.deleteAllSuspending<Post>()
 
     @Transactional
     suspend fun deleteById(id: Long): Long {
         val query = query(Criteria.where(Post::id.name).isEqual(id))
-        return operations.suspendDelete<Post>(query)
+        return operations.deleteSuspending<Post>(query)
     }
 
     @Transactional
-    suspend fun save(post: Post): Post = operations.suspendInsert(post)
+    suspend fun save(post: Post): Post = operations.insertSuspending(post)
 
     @Transactional
     suspend fun init() {

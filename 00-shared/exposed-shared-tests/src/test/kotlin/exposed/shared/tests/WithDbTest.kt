@@ -58,7 +58,7 @@ class WithDbTest {
         @ParameterizedTest
         @MethodSource(ENABLE_DIALECTS_METHOD)
         fun `withSuspendedDb should provide database connection`(testDB: TestDB) = runSuspendIO {
-            withSuspendedDb(testDB) {
+            withDbSuspending(testDB) {
                 currentDialectTest.shouldNotBeNull()
             }
         }
@@ -66,7 +66,7 @@ class WithDbTest {
         @ParameterizedTest
         @MethodSource(ENABLE_DIALECTS_METHOD)
         fun `withSuspendedDb should set currentTestDB`(testDB: TestDB) = runSuspendIO {
-            withSuspendedDb(testDB) {
+            withDbSuspending(testDB) {
                 currentTestDB.shouldNotBeNull()
                 currentTestDB shouldBeEqualTo testDB
             }

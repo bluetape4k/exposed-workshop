@@ -1,6 +1,6 @@
 package exposed.examples.coroutines
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import io.bluetape4k.collections.intRangeOf
@@ -49,7 +49,7 @@ import java.util.concurrent.Executors
 import kotlin.test.assertFailsWith
 
 @Suppress("DEPRECATION")
-class Ex01_Coroutines: JdbcExposedTestBase() {
+class Ex01_Coroutines: AbstractExposedTest() {
 
     companion object: KLoggingChannel() {
 

@@ -1,6 +1,6 @@
 package exposed.examples.kotlin.datetime
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.constraintNamePart
 import exposed.shared.tests.currentDialectTest
@@ -95,7 +95,7 @@ import kotlin.time.Instant
 import kotlin.time.toDuration
 
 @OptIn(ExperimentalTime::class)
-class Ex02_Defaults: JdbcExposedTestBase() {
+class Ex02_Defaults: AbstractExposedTest() {
 
     companion object: KLogging()
 

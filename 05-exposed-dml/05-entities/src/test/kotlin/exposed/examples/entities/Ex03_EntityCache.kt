@@ -1,6 +1,6 @@
 package exposed.examples.entities
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.entityToStringBuilder
@@ -31,7 +31,7 @@ import kotlin.random.Random
  *
  * 참고: Hibernate 의 First Level Cache 인 Session과 유사한 역할을 수행함
  */
-class Ex03_EntityCache: JdbcExposedTestBase() {
+class Ex03_EntityCache: AbstractExposedTest() {
 
     companion object: KLogging()
 

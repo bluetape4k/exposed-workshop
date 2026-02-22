@@ -1,6 +1,6 @@
 package exposed.examples.java.time
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -27,7 +27,7 @@ import java.time.LocalDateTime
 /**
  * [dateLiteral], [dateTimeLiteral], [timestampLiteral] 사용 방법
  */
-class Ex03_DateTimeLiteral: JdbcExposedTestBase() {
+class Ex03_DateTimeLiteral: AbstractExposedTest() {
 
     companion object: KLogging()
 

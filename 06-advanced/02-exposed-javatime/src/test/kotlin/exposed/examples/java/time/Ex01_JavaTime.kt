@@ -1,6 +1,6 @@
 package exposed.examples.java.time
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.expectException
@@ -63,7 +63,7 @@ import java.util.*
 /**
  * Exposed에서 제공하는 Java Time 수형을 사용하는 테스트
  */
-class Ex01_JavaTime: JdbcExposedTestBase() {
+class Ex01_JavaTime: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -898,11 +898,11 @@ fun <T: Temporal> T?.isEqualDateTime(other: Temporal?): Boolean = try {
 infix fun <T: Temporal> T?.shouldTemporalEqualTo(d2: T?) {
     val d1 = this
     when {
-        d1 == null && d2 == null -> return
-        d1 == null -> error("d1 is null while d2 is not on ${currentDialectTest.name}")
-        d2 == null -> error("d1 is not null while d2 is null on ${currentDialectTest.name}")
+        d1 == null && d2 == null                   -> return
+        d1 == null                                 -> error("d1 is null while d2 is not on ${currentDialectTest.name}")
+        d2 == null                                 -> error("d1 is not null while d2 is null on ${currentDialectTest.name}")
 
-        d1 is LocalTime && d2 is LocalTime -> {
+        d1 is LocalTime && d2 is LocalTime         -> {
             d1.toSecondOfDay() shouldBeEqualTo d2.toSecondOfDay()
             // d1 이 DB에서 읽어온 Temporal 값이어야 한다. (nanos 를 지원하는 Dialect 에서만 비교한다)
             if (d1.nano != 0) {
@@ -915,7 +915,7 @@ infix fun <T: Temporal> T?.shouldTemporalEqualTo(d2: T?) {
             d1.nano shouldFractionalPartEqualTo d2.nano
         }
 
-        d1 is Instant && d2 is Instant -> {
+        d1 is Instant && d2 is Instant             -> {
             d1.epochSecond shouldBeEqualTo d2.epochSecond
             d1.nano shouldFractionalPartEqualTo d2.nano
         }
@@ -925,7 +925,7 @@ infix fun <T: Temporal> T?.shouldTemporalEqualTo(d2: T?) {
             d1.offset shouldBeEqualTo d2.offset
         }
 
-        else -> {
+        else                                       -> {
             d1 shouldBeEqualTo d2
         }
     }
@@ -943,11 +943,11 @@ infix fun Int.shouldFractionalPartEqualTo(nano2: Int) {
 
     when (dialect) {
         // accurate to 100 nanoseconds
-        is SQLServerDialect ->
+        is SQLServerDialect                                 ->
             nano1.nanoRoundTo100Nanos() shouldBeEqualTo nano2.nanoRoundTo100Nanos()
 
         // microsecond
-        is MariaDBDialect ->
+        is MariaDBDialect                                   ->
             nano1.nanoFloorToMicro() shouldBeEqualTo nano2.nanoFloorToMicro()
 
         is H2Dialect, is PostgreSQLDialect, is MysqlDialect ->
@@ -961,13 +961,13 @@ infix fun Int.shouldFractionalPartEqualTo(nano2: Int) {
             }
 
         // milliseconds
-        is OracleDialect ->
+        is OracleDialect                                    ->
             nano1.nanoRoundToMilli() shouldBeEqualTo nano2.nanoRoundToMilli()
 
-        is SQLiteDialect ->
+        is SQLiteDialect                                    ->
             nano1.nanoFloorToMilli() shouldBeEqualTo nano2.nanoFloorToMilli()
 
-        else ->
+        else                                                ->
             error("Unsupported dialect ${dialect.name}")
     }
 }

@@ -1,6 +1,6 @@
 package exposed.examples.transactions
 
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.withTables
@@ -29,7 +29,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.testcontainers.utility.Base58
 import java.sql.ResultSet
 
-class Ex02_TransactionExec: JdbcExposedTestBase() {
+class Ex02_TransactionExec: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -148,7 +148,7 @@ class Ex02_TransactionExec: JdbcExposedTestBase() {
         val selectLastIdStatement = when (testDB) {
             TestDB.POSTGRESQL -> "SELECT lastval() AS $columnAlias;"
             TestDB.MARIADB -> "SELECT LASTVAL(${ExecTable.id.autoIncColumnType?.autoincSeq}) AS $columnAlias"
-            else -> "SELECT LAST_INSERT_ID() AS $columnAlias"
+            else           -> "SELECT LAST_INSERT_ID() AS $columnAlias"
         }
 
         val insertAndSelectStatements =

@@ -2,7 +2,7 @@ package exposed.examples.jpa.ex02_subquery
 
 import exposed.shared.mapping.PersonSchema.Person
 import exposed.shared.mapping.PersonSchema.withPersonsAndAddress
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class Ex01_SubQuery: JdbcExposedTestBase() {
+class Ex01_SubQuery: AbstractExposedTest() {
 
     companion object: KLogging()
 

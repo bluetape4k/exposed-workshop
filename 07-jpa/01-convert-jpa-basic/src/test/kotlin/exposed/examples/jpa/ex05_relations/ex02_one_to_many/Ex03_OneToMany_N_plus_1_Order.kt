@@ -5,7 +5,7 @@ import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.OrderSchema.O
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.OrderSchema.OrderItemTable
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.OrderSchema.OrderTable
 import exposed.examples.jpa.ex05_relations.ex02_one_to_many.schema.OrderSchema.ordersTables
-import exposed.shared.tests.JdbcExposedTestBase
+import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
@@ -26,7 +26,7 @@ import kotlin.random.Random
 /**
  * bidirectional one-to-many relationship with eager loading and lazy loading
  */
-class `Ex03_OneToMany_N+1_Order`: JdbcExposedTestBase() {
+class Ex03_OneToMany_N_plus_1_Order: AbstractExposedTest() {
 
     companion object: KLogging()
 
@@ -98,9 +98,7 @@ class `Ex03_OneToMany_N+1_Order`: JdbcExposedTestBase() {
              *  WHERE orders.id = 1;
              * ```
              */
-            val query: Query = OrderTable.innerJoin(OrderItemTable)
-                .selectAll()
-                .where { OrderTable.id eq order1.id }
+            val query: Query = OrderTable.innerJoin(OrderItemTable).selectAll().where { OrderTable.id eq order1.id }
 
             // `wrapRows` 는 Query를 실행해서 엔티티로 빌드합니다.
             val orderItems: List<OrderItem> = OrderItem.wrapRows(query).toList()
