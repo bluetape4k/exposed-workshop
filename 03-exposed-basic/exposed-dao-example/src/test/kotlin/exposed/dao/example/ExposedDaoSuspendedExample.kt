@@ -11,10 +11,13 @@ import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.greaterEq
 import org.jetbrains.exposed.v1.core.intLiteral
+import org.jetbrains.exposed.v1.dao.flushCache
 import org.jetbrains.exposed.v1.dao.with
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -105,6 +108,45 @@ class ExposedDaoSuspendedExample: AbstractExposedTest() {
             users.forEach { user ->
                 log.info { "${user.name} lives in ${user.city?.name ?: "unknown"}" }
             }
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `DAO Entity Update 하기`(testDB: TestDB) = runSuspendIO {
+        withSuspendedCityUsers(testDB) {
+            val temp = User.new {
+                name = "temp"
+                age = 14
+            }
+            flushCache()
+
+            val loaded = User.findById(temp.id).shouldNotBeNull()
+            loaded.age = 42
+
+            flushCache()
+            val updated = User.findById(temp.id)
+            updated.shouldNotBeNull()
+            updated.age shouldBeEqualTo 42
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `DAO Entity 삭제하기`(testDB: TestDB) = runSuspendIO {
+        withSuspendedCityUsers(testDB) {
+            val temp = User.new {
+                name = "temp"
+                age = 14
+            }
+
+            val userCount = User.all().count()
+            flushCache()
+            temp.delete()
+
+            flushCache()
+            User.findById(temp.id).shouldBeNull()
+            User.all().count() shouldBeEqualTo userCount - 1
         }
     }
 }

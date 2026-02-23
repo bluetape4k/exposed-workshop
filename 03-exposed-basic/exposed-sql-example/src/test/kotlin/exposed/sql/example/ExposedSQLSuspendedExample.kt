@@ -7,8 +7,8 @@ import exposed.sql.example.Schema.UserTable
 import exposed.sql.example.Schema.withSuspendedCityUsers
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
-import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.core.count
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.isNull
@@ -102,15 +102,16 @@ class ExposedSQLSuspendedExample: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `manual inner join`(testDB: TestDB) = runSuspendIO {
         withSuspendedCityUsers(testDB) {
-            UserTable
+            val results = UserTable
                 .innerJoin(CityTable)
                 .select(UserTable.name, CityTable.name)
                 .where { (UserTable.id eq "debop") or (UserTable.name eq "Jane.Doe") }
                 .andWhere { UserTable.id eq "jane" }
                 .andWhere { UserTable.cityId eq CityTable.id }  // manual join (굳이 할 필요 없음)
-                .forEach {
-                    log.info { "${it[UserTable.name]} lives in ${it[CityTable.name]}" }
-                }
+                .map { it[UserTable.name] to it[CityTable.name] }
+
+            results shouldHaveSize 1
+            results.single() shouldBeEqualTo ("Jane.Doe" to "Busan")
         }
     }
 
@@ -131,18 +132,14 @@ class ExposedSQLSuspendedExample: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `join with foreign key`(testDB: TestDB) = runSuspendIO {
         withSuspendedCityUsers(testDB) {
-            UserTable
-                .innerJoin(CityTable)
+            val results = UserTable
+                .leftJoin(CityTable)
                 .select(UserTable.name, UserTable.cityId, CityTable.name)
                 .where { CityTable.name eq "Busan" }
                 .orWhere { UserTable.cityId.isNull() }
-                .forEach {
-                    if (it[UserTable.cityId] != null) {
-                        log.info { "${it[UserTable.name]} lives in ${it[CityTable.name]}" }
-                    } else {
-                        log.info { "${it[UserTable.name]} lives nowhere" }
-                    }
-                }
+                .map { it[UserTable.name] }
+
+            results.toSet() shouldBeEqualTo setOf("Jane.Doe", "John.Doe", "Alex", "Something")
         }
     }
 
@@ -165,16 +162,13 @@ class ExposedSQLSuspendedExample: AbstractExposedTest() {
                 .select(CityTable.name, UserTable.id.count())
                 .groupBy(CityTable.name)
 
-            query.forEach {
-                val cityName = it[CityTable.name]
-                val userCount = it[UserTable.id.count()]
-
-                if (userCount > 0) {
-                    log.info { "$cityName has $userCount users" }
-                } else {
-                    log.info { "$cityName has no users" }
-                }
+            val userCountsByCity = query.associate {
+                it[CityTable.name] to it[UserTable.id.count()]
             }
+
+            userCountsByCity.keys shouldBeEqualTo setOf("Seoul", "Busan")
+            userCountsByCity["Seoul"] shouldBeEqualTo 1L
+            userCountsByCity["Busan"] shouldBeEqualTo 2L
         }
     }
 }

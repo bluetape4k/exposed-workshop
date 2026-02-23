@@ -10,7 +10,9 @@ import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.greaterEq
 import org.jetbrains.exposed.v1.core.intLiteral
@@ -122,8 +124,13 @@ class ExposedDaoExample: AbstractExposedTest() {
             }
             flushCache()
 
-            val loaded = User.findById(temp.id)!!
+            val loaded = User.findById(temp.id).shouldNotBeNull()
             loaded.age = 42
+
+            flushCache()
+            val updated = User.findById(temp.id)
+            updated.shouldNotBeNull()
+            updated.age shouldBeEqualTo 42
         }
     }
 
@@ -135,8 +142,14 @@ class ExposedDaoExample: AbstractExposedTest() {
                 name = "temp"
                 age = 14
             }
+
+            val userCount = User.all().count()
             flushCache()
             temp.delete()
+
+            flushCache()
+            User.findById(temp.id).shouldBeNull()
+            User.all().count() shouldBeEqualTo userCount - 1
         }
     }
 }
