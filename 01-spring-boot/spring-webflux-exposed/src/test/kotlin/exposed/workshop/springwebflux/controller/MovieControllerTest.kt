@@ -11,6 +11,7 @@ import io.bluetape4k.spring.tests.httpPost
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -92,5 +93,17 @@ class MovieControllerTest(
             .awaitSingle()
 
         deletedCount shouldBeEqualTo 1
+    }
+
+    @Test
+    fun `search movies ignores invalid release date parameter`() = runSuspendIO {
+        val movies = client
+            .httpGet("/movies?releaseDate=invalid-timestamp")
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<MovieRecord>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
+
+        movies.shouldNotBeEmpty()
     }
 }

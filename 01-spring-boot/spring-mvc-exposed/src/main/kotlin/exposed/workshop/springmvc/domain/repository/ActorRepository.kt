@@ -38,10 +38,12 @@ class ActorRepository {
 
         params.forEach { (key, value) ->
             when (key) {
-                ActorTable::id.name       -> value?.run { query.andWhere { ActorTable.id eq value.toLong() } }
-                ActorTable::firstName.name -> value?.run { query.andWhere { ActorTable.firstName eq value } }
-                ActorTable::lastName.name -> value?.run { query.andWhere { ActorTable.lastName eq value } }
-                ActorTable::birthday.name -> value?.run { query.andWhere { ActorTable.birthday eq LocalDate.parse(value) } }
+                ActorTable::id.name        -> value?.let { parseLongParam(key, it) }
+                    ?.let { query.andWhere { ActorTable.id eq it } }
+                ActorTable::firstName.name -> value?.let { query.andWhere { ActorTable.firstName eq it } }
+                ActorTable::lastName.name  -> value?.let { query.andWhere { ActorTable.lastName eq it } }
+                ActorTable::birthday.name  -> value?.let { parseLocalDateParam(key, it) }
+                    ?.let { query.andWhere { ActorTable.birthday eq it } }
             }
         }
 
@@ -67,4 +69,16 @@ class ActorRepository {
         log.debug { "Delete Actor by id. id: $actorId" }
         return ActorTable.deleteWhere { ActorTable.id eq actorId }
     }
+
+    private fun parseLongParam(key: String, value: String): Long? =
+        value.toLongOrNull().also {
+            if (it == null) log.warn("Invalid numeric `$key` parameter: '$value', ignoring filter.")
+        }
+
+    private fun parseLocalDateParam(key: String, value: String): LocalDate? =
+        runCatching { LocalDate.parse(value) }
+            .onFailure {
+                log.warn("Invalid `$key` parameter: '$value', ignoring filter.")
+            }
+            .getOrNull()
 }

@@ -80,6 +80,16 @@ class ActorRepositoryTest(
     }
 
     @Test
+    fun `search actors ignores invalid birthday parameter`() = runSuspendIO {
+        newSuspendedTransaction(readOnly = true) {
+            val params = mapOf("birthday" to "not-a-date")
+            val actors = actorRepository.searchActor(params)
+
+            actors.shouldNotBeEmpty()
+        }
+    }
+
+    @Test
     fun `create new actor`() = runSuspendIO {
         newSuspendedTransaction {
             val prevCount = actorRepository.count()

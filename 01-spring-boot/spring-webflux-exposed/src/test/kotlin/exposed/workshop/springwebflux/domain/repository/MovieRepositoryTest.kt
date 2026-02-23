@@ -66,6 +66,17 @@ class MovieRepositoryTest(
     }
 
     @Test
+    fun `search movies ignores invalid releaseDate parameter`() = runSuspendIO {
+        val params = mapOf("releaseDate" to "invalid-timestamp")
+
+        val movies = newSuspendedTransaction(readOnly = true) {
+            movieRepository.searchMovie(params)
+        }.map { it.toMovieRecord() }
+
+        movies.shouldNotBeEmpty()
+    }
+
+    @Test
     fun `create movie`() = runSuspendIO {
         newSuspendedTransaction {
             val prevCount = movieRepository.count()

@@ -50,6 +50,14 @@ class MovieRepositoryTest(
     }
 
     @Test
+    fun `search movies ignores invalid releaseDate parameter`() {
+        val params = mapOf("releaseDate" to "invalid-timestamp")
+        val movies = movieRepo.searchMovies(params)
+
+        movies.shouldNotBeEmpty()
+    }
+
+    @Test
     @Transactional
     fun `create movie`() {
         val movie = newMovieRecord()

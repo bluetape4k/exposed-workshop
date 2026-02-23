@@ -49,6 +49,15 @@ class ActorRepositoryTest(
     }
 
     @Test
+    @Transactional(readOnly = true)
+    fun `search actors ignores invalid birthday parameter`() {
+        val params = mapOf("birthday" to "not-a-date")
+        val actors = actorRepo.searchActors(params)
+
+        actors.shouldNotBeEmpty()
+    }
+
+    @Test
     @Transactional
     fun `create new actor`() {
         val actor = newActorRecord()

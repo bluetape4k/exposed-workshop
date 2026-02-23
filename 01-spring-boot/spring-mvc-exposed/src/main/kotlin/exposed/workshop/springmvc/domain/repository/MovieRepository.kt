@@ -66,15 +66,13 @@ class MovieRepository(
 
         params.forEach { (key, value) ->
             when (key) {
-                MovieTable::id.name          -> value?.run { query.andWhere { MovieTable.id eq value.toLong() } }
+                MovieTable::id.name           -> value?.let { parseLongParam(key, it) }
+                    ?.let { query.andWhere { MovieTable.id eq it } }
 
-                MovieTable::name.name        -> value?.run { query.andWhere { MovieTable.name eq value } }
-                MovieTable::producerName.name -> value?.run {
-                    query.andWhere { MovieTable.producerName eq value }
-                }
-                MovieTable::releaseDate.name -> value?.run {
-                    query.andWhere { MovieTable.releaseDate eq LocalDateTime.parse(value) }
-                }
+                MovieTable::name.name         -> value?.let { query.andWhere { MovieTable.name eq it } }
+                MovieTable::producerName.name -> value?.let { query.andWhere { MovieTable.producerName eq it } }
+                MovieTable::releaseDate.name  -> value?.let { parseLocalDateTimeParam(key, it) }
+                    ?.let { query.andWhere { MovieTable.releaseDate eq it } }
             }
         }
 
@@ -98,6 +96,18 @@ class MovieRepository(
         log.debug { "Delete Movie by id. id=$movieId" }
         return MovieTable.deleteWhere { MovieTable.id eq movieId }
     }
+
+    private fun parseLongParam(key: String, value: String): Long? =
+        value.toLongOrNull().also {
+            if (it == null) log.warn("Invalid numeric `$key` parameter: '$value', ignoring filter.")
+        }
+
+    private fun parseLocalDateTimeParam(key: String, value: String): LocalDateTime? =
+        runCatching { LocalDateTime.parse(value) }
+            .onFailure {
+                log.warn("Invalid `$key` parameter: '$value', ignoring filter.")
+            }
+            .getOrNull()
 
     /**
      * ```sql

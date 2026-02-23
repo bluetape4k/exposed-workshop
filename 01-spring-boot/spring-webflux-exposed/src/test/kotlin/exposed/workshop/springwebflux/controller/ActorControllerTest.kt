@@ -11,6 +11,7 @@ import io.bluetape4k.spring.tests.httpPost
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -110,5 +111,17 @@ class ActorControllerTest(
 
         log.debug { "deletedCount=$deletedCount" }
         deletedCount shouldBeEqualTo 1
+    }
+
+    @Test
+    fun `search actors ignores invalid birthday parameter`() = runSuspendIO {
+        val actors = client
+            .httpGet("/actors?birthday=not-a-date")
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<ActorRecord>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
+
+        actors.shouldNotBeEmpty()
     }
 }
