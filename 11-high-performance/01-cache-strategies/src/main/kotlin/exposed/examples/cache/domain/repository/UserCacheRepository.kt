@@ -19,6 +19,9 @@ import java.time.Instant
  * Read Through / Write Through 를 이용해 DB의 사용자 정보를 캐시합니다.
  */
 @Repository
+/**
+ * Read/Write Through 캐시/DB 저장소입니다.
+ */
 class UserCacheRepository(redissonClient: RedissonClient): AbstractExposedCacheRepository<UserRecord, Long>(
     redissonClient = redissonClient,
     cacheName = "exposed:users",

@@ -1,123 +1,50 @@
-# JPA의 비동기/논블로킹 대안 기술
+# 02 Alternatives to JPA
 
-JPA의 블로킹 한계를 보완하기 위해 주로 비교되는 3가지 대안은 **Hibernate Reactive**, **R2DBC**, **Vert.x SQL Client
-**입니다. 각 접근 방식은 추상화 수준과 런타임 모델이 다르므로, 팀의 개발 방식과 운영 환경에 맞춰 선택하는 것이 중요합니다.
+Spring 기반 애플리케이션에서 JPA 대안 기술들을 비교/실습하며, 다양한 ORM/Reactive 클라이언트를 검증하는 챕터입니다.
 
-## 요약 비교
+## 챕터 목표
 
-| 구분           | Hibernate Reactive  | R2DBC (Spring Data R2DBC)    | Vert.x SQL Client   |
-|--------------|---------------------|------------------------------|---------------------|
-| **추상화 수준**   | ORM (JPA 유사)        | Reactive 데이터 접근 계층           | 저수준 SQL 클라이언트       |
-| **프로그래밍 모델** | Mutiny/Stage 기반 비동기 | Reactive Streams (Mono/Flux) | Future/Coroutine 지원 |
-| **SQL 제어**   | ORM 기반 (제한적 제어)     | SQL/DSL 혼합                   | SQL 직접 작성           |
-| **학습 난이도**   | 낮음 (JPA 경험 활용)      | 중간 (리액티브 개념 필요)              | 중간~높음 (SQL 직접 제어)   |
-| **성능/유연성**   | 보통                  | 좋음                           | 가장 높음               |
-| **주요 사용처**   | ORM 기반 도메인 모델       | Spring Reactive 스택           | 고성능/고제어 서비스         |
+- Exposed 외에 Hibernate Reactive, R2DBC, Vert.x SQL Client 같은 대체 스택을 소개한다.
+- 각 스택의 선언적 패턴, 트랜잭션, ID 전략 차이를 실습으로 비교한다.
+- 레거시 JPA 프로젝트에서 Exposed로 전환할 때 고려해야 할 기준을 정리한다.
 
-## 선택 가이드
+## 선수 지식
 
-### Hibernate Reactive
+- Spring Boot 및 DI/트랜잭션 기본 개념
+- Exposed/DML 흐름 (`03-exposed-basic`, `05-exposed-dml`) 소개
 
-JPA 스타일을 유지하면서 비동기로 전환하고 싶을 때. 도메인 모델 중심, ORM 편의성 필요.
+## 포함 모듈
 
-### R2DBC
+| 모듈                           | 설명                                             |
+|------------------------------|------------------------------------------------|
+| `hibernate-reactive-example` | Hibernate Reactive + Mutiny + PostgreSQL 기반 예제 |
+| `r2dbc-example`              | Spring Data R2DBC를 사용한 비동기 데이터 접근 예제           |
+| `vertx-sqlclient-example`    | Vert.x SQL Client 기반 이벤트 드리븐 예제                |
 
-Spring WebFlux 등 리액티브 스택과 잘 맞는 선택. SQL 제어와 편의성의 균형.
+## 권장 학습 순서
 
-### Vert.x SQL Client
+1. `hibernate-reactive-example`
+2. `r2dbc-example`
+3. `vertx-sqlclient-example`
 
-성능과 제어가 최우선일 때. SQL 직접 작성과 비동기 실행을 선호하는 팀에 적합.
+## 실행 방법
 
-## 사용 시나리오별 추천
-
-| 시나리오                              | 추천 기술                      |
-|-----------------------------------|----------------------------|
-| 기존 JPA 코드가 많고 마이그레이션 비용을 최소화해야 한다 | Hibernate Reactive         |
-| Spring WebFlux + Reactor 기반 서비스   | R2DBC (Spring Data R2DBC)  |
-| 고성능/저지연 서비스, SQL 튜닝이 핵심           | Vert.x SQL Client          |
-| 복잡한 도메인 모델과 연관관계 매핑이 중요           | Hibernate Reactive         |
-| CQRS/Read 모델에서 직접 SQL을 다루고 싶다     | Vert.x SQL Client          |
-| DB 벤더별 특수 기능(쿼리/힌트)을 적극 활용        | Vert.x SQL Client 또는 R2DBC |
-
----
-
-## 상세 비교
-
-### Hibernate Reactive
-
-**장점**
-
-- JPA 경험을 그대로 활용 가능 (모델/매핑 중심)
-- 도메인 모델 중심 설계에 적합
-- Hibernate의 강력한 기능 계승
-
-**단점/주의**
-
-- 완전한 JPA 기능 커버리지가 아님 (일부 기능 제약)
-- ORM 특유의 추상화로 인해 SQL 튜닝이 제한적
-- 리액티브 특성에 맞춘 트랜잭션/세션 관리 필요
-
-### R2DBC (Spring Data R2DBC)
-
-**장점**
-
-- Spring WebFlux와 자연스럽게 통합
-- Repository 기반 개발과 커스텀 SQL 병행 가능
-- 비교적 가벼운 추상화로 성능/유연성 균형
-
-**단점/주의**
-
-- JPA와 유사한 연관관계 매핑이 제한적
-- 트랜잭션/세션 관리 패턴이 JPA와 다름
-- 드라이버 품질과 DB별 기능 차이를 고려해야 함
-
-### Vert.x SQL Client
-
-**장점**
-
-- 가장 높은 성능과 SQL 제어권
-- 비동기 IO 모델이 단순하고 직관적
-- 벤더별 SQL 기능을 자유롭게 사용 가능
-
-**단점/주의**
-
-- ORM 편의 기능이 없어서 보일러플레이트 증가
-- 도메인 모델과 DB 모델 간 매핑을 직접 관리해야 함
-- 팀에 SQL 숙련도가 필요
-
----
-
-## 아키텍처 다이어그램
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Application Layer                         │
-├─────────────────────────────────────────────────────────────┤
-│                                                               │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌──────────────┐ │
-│  │    Hibernate    │  │     R2DBC       │  │   Vert.x     │ │
-│  │    Reactive     │  │                 │  │ SQL Client   │ │
-│  │  ────────────   │  │  ────────────   │  │ ───────────  │ │
-│  │  ORM Pattern    │  │  Repository     │  │ Raw SQL      │ │
-│  │  Entity 기반    │  │  Template       │  │ Pool 기반    │ │
-│  └────────┬────────┘  └────────┬────────┘  └──────┬───────┘ │
-│           │                    │                   │         │
-└───────────┼────────────────────┼───────────────────┼─────────┘
-            │                    │                   │
-            ▼                    ▼                   ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Database (PostgreSQL/MySQL)               │
-└─────────────────────────────────────────────────────────────┘
+```bash
+./gradlew :exposed-02-alternatives-to-jpa-hibernate-reactive-example:bootRun
+./gradlew :exposed-02-alternatives-to-jpa-r2dbc-example:bootRun
+./gradlew :exposed-02-alternatives-to-jpa-vertx-sqlclient-example:bootRun
 ```
 
-## 발표 자료
+## 테스트 포인트
 
-* [Alternatives to JPA 2025](https://drive.google.com/file/d/1-ISsBzdfxDufRlYpGOAW-Abed1sTqWJj/view)
+- 각 클라이언트에서 동일 도메인 결과가 일관된지 확인한다.
+- Reactive/Async 경로에서 예외/타임아웃/롤백 동작을 점검한다.
 
-## 블로그 글
+## 성능·안정성 체크포인트
 
-* [Async/Non-Blocking](https://debop.notion.site/1ad2744526b080708385fce6531752c7?v=1ad2744526b081ae899a000c87c870a1)
-* [Async/Non-Blocking 지원 DB 라이브러리](https://debop.notion.site/Async-Non-Blocking-DB-1ad2744526b080608767e69344793e60)
-* [Hibernate Reactive 소개](https://debop.notion.site/Hibernate-Reactive-1b92744526b080eb8d1dfd93654a16b3)
-* [Vert.x SQL Client 소개](https://debop.notion.site/Vert-x-SQL-Client-1ad2744526b08072b431f5b00e0874d9)
-* [Spring Data R2DBC 소개](https://debop.notion.site/R2DBC-Spring-Data-R2DBC-1ad2744526b080adadc7c737672f32a1)
+- Thread/Connection 모델 차이를 계량적으로 측정한다.
+- DB pool 설정이 각 클라이언트 특성에 맞게 조정됐는지 검증한다.
+
+## 다음 챕터
+
+- [03-exposed-basic](../03-exposed-basic/README.md): Exposed DSL/DAO 학습으로 이어집니다.

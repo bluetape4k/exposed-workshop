@@ -16,7 +16,13 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
+/**
+ * WebFlux 환경의 배우 도메인 Exposed 저장소입니다.
+ */
 @Repository
+/**
+ * WebFlux 환경용 배우 도메인 저장소입니다.
+ */
 class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
 
     companion object: KLogging()

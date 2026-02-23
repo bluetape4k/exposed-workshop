@@ -14,6 +14,9 @@ import org.jetbrains.exposed.v1.dao.LongEntityClass
 import org.jetbrains.exposed.v1.javatime.timestamp
 import java.time.Instant
 
+/**
+ * 사용자 이벤트의 분류입니다.
+ */
 enum class UserEventType {
     LOGIN,
     LOGOUT,
@@ -46,6 +49,9 @@ object UserEventTable: LongIdTable("user_action") {
     }
 }
 
+/**
+ * Write Behind 이벤트를 표현하는 엔티티입니다.
+ */
 class UserEventEntity(id: EntityID<Long>): LongEntity(id) {
     companion object: LongEntityClass<UserEventEntity>(UserEventTable)
 
@@ -66,6 +72,9 @@ class UserEventEntity(id: EntityID<Long>): LongEntity(id) {
         .toString()
 }
 
+/**
+ * 사용자 이벤트의 캐시/DB 전달용 레코드입니다.
+ */
 data class UserEventRecord(
     override val id: Long = Snowflakers.Global.nextId(),
     val username: String,
@@ -77,6 +86,9 @@ data class UserEventRecord(
     fun withId(id: Long) = copy(id = id)
 }
 
+/**
+ * 조회 결과를 [UserEventRecord]로 변환합니다.
+ */
 fun ResultRow.toUserEventRecord(): UserEventRecord = UserEventRecord(
     id = this[UserEventTable.id].value,
     username = this[UserEventTable.username],
@@ -86,6 +98,9 @@ fun ResultRow.toUserEventRecord(): UserEventRecord = UserEventRecord(
     eventTime = this[UserEventTable.eventTime],
 )
 
+/**
+ * 테스트용 임의 사용자 이벤트 레코드를 생성합니다.
+ */
 fun newUserEventRecord(): UserEventRecord = UserEventRecord(
     username = faker.credentials().username(),
     eventSource = faker.app().name(),

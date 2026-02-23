@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository
  * Read-Only 캐시를 이용하여, DB의 사용자 인증 정보를 캐시합니다.
  */
 @Repository
+/**
+ * Read-Only 인증 저장소입니다.
+ */
 class UserCredentialsCacheRepository(
     redissonClient: RedissonClient,
 ): AbstractExposedCacheRepository<UserCredentialsRecord, String>(

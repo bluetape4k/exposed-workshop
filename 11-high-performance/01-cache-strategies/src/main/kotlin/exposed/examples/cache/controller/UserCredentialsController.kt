@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * Read-Only 캐시 API 엔드포인트입니다.
+ */
 @RestController
 @RequestMapping("/user-credentials")
 class UserCredentialsController(private val repository: UserCredentialsCacheRepository) {

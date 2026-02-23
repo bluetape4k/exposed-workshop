@@ -29,6 +29,9 @@ object UserCredentialsTable: TimebasedUUIDBase62Table("user_credentials") {
     val updatedAt = timestamp("updated_at").nullable()
 }
 
+/**
+ * 사용자 인증 정보를 담은 Timebased UUID 엔티티입니다.
+ */
 class UserCredentialsEntity(id: EntityID<String>): TimebasedUUIDBase62Entity(id) {
     companion object: TimebasedUUIDBase62EntityClass<UserCredentialsEntity>(UserCredentialsTable)
 
@@ -50,6 +53,9 @@ class UserCredentialsEntity(id: EntityID<String>): TimebasedUUIDBase62Entity(id)
         .toString()
 }
 
+/**
+ * 사용자 인증 정보의 캐시/DB 전달용 레코드입니다.
+ */
 data class UserCredentialsRecord(
     override val id: String,
     val username: String,
@@ -61,6 +67,9 @@ data class UserCredentialsRecord(
     fun withId(id: String) = copy(id = id)
 }
 
+/**
+ * 조회 결과를 [UserCredentialsRecord]로 변환합니다.
+ */
 fun ResultRow.toUserCredentialsRecord() = UserCredentialsRecord(
     id = this[UserCredentialsTable.id].value,
     username = this[UserCredentialsTable.username],
@@ -70,6 +79,9 @@ fun ResultRow.toUserCredentialsRecord() = UserCredentialsRecord(
     updatedAt = this[UserCredentialsTable.updatedAt],
 )
 
+/**
+ * 테스트용 임의 사용자 인증 레코드를 생성합니다.
+ */
 fun newUserCredentialsRecord() = UserCredentialsRecord(
     id = TimebasedUuid.Reordered.nextIdAsString(),
     username = faker.credentials().username() + "." + Base58.randomString(4),

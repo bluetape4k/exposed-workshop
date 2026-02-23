@@ -1,246 +1,35 @@
-# 02 JPA 대안: Vert.x SQL Client Example
+# 02 Alternatives: Vert.x SQL Client Example
 
-이 모듈(`vertx-sqlclient-example`)은 **Vert.x SQL Client
-**를 사용하여 반응형 데이터베이스 작업을 수행하는 예제 모음입니다. 이벤트 기반 Non-blocking 데이터 액세스 레이어를 구축하는 방법을 학습합니다.
+Vert.x SQL Client + Kotlin Coroutines를 활용해 이벤트 기반/논블로킹 데이터베이스 작업을 구현한 모듈입니다. Reactive 스트림을 직접 제어하면서 Exposed/Reactive ORM과의 차이를 경험합니다.
 
-## Vert.x SQL Client란?
+## 학습 목표
 
-Vert.x SQL Client는 Eclipse Vert.x 프레임워크의 일부로, 고성능 비동기 데이터베이스 클라이언트를 제공합니다. JDBC 드라이버를 통한 블로킹 방식 대신, 네이티브 비동기 드라이버를 사용하여 높은 처리량을 달성합니다.
+- Vert.x SQL Client의 `SqlClient`/`SqlConnection`을 suspend로 감싼 패턴을 익힌다.
+- 트랜잭션 경계를 Vert.x에서 직접 제어하는 패턴을 이해한다.
+- 이벤트 루프 기반 API와 Exposed의 블로킹/Non-blocking 경로를 비교한다.
 
-### 주요 특징
+## 핵심 구성
 
-| 특징         | 설명                               |
-|------------|----------------------------------|
-| **고성능**    | 네이티브 비동기 드라이버                    |
-| **저수준 제어** | SQL 직접 작성                        |
-| **이벤트 루프** | Vert.x Event Loop 기반             |
-| **다양한 DB** | PostgreSQL, MySQL, DB2, Oracle 등 |
+- `MovieVertxRepository`: Vert.x SQL Client로 동작하는 Repository
+- `MovieVertxHandler`: Vert.x Web 라우터 + suspend 핸들러
+- `VertxConfiguration`: PostgreSQL/H2 커넥션 설정, 이벤트 루프 수 조정
 
-## 다른 라이브러리와의 비교
+## 실행 방법
 
-```
-┌────────────────────────────────────────────────────────────────┐
-│                     추상화 수준                                  │
-│                                                                 │
-│  High    ┌──────────────┐  ┌──────────────┐                   │
-│          │    JPA       │  │   Hibernate   │                   │
-│          │  (Entity)    │  │   Reactive    │                   │
-│          └──────────────┘  └──────────────┘                   │
-│                                                                 │
-│  Medium  ┌──────────────┐  ┌──────────────┐                   │
-│          │  Spring Data │  │   Exposed    │                   │
-│          │    R2DBC     │  │    (DAO)     │                   │
-│          └──────────────┘  └──────────────┘                   │
-│                                                                 │
-│  Low     ┌──────────────┐  ┌──────────────┐                   │
-│          │  Vert.x SQL  │  │   Exposed    │                   │
-│          │   Client     │  │    (DSL)     │                   │
-│          └──────────────┘  └──────────────┘                   │
-│                                                                 │
-└────────────────────────────────────────────────────────────────┘
+```bash
+./gradlew :exposed-02-alternatives-to-jpa-vertx-sqlclient-example:bootRun
 ```
 
-## 프로젝트 구조
+## 실습 체크리스트
 
-```
-src/test/kotlin/
-├── AbstractSqlClientTest.kt              # 기본 테스트 클래스
-├── JDBCPoolExamples.kt                   # JDBC Pool 예제
-├── model/
-│   └── Customer.kt                       # Customer 도메인 모델
-└── templates/
-    └── SqlClientTemplatePostgresExamples.kt  # PostgreSQL 예제
-```
+- Vert.x Web 라우터에서 `RoutingContext`를 suspend 처리로 감쌌을 때 정상 응답 확인
+- SQL Client의 파라미터/페이징 조합이 무결하게 수행되는지 검증
 
-## 도메인 모델
+## 성능·안정성 체크포인트
 
-### Customer
+- 이벤트 루프가 블로킹 호출로 대기하지 않도록 설계되었는지 확인
+- 데이터베이스 커넥션/트랜잭션이 재사용되는지 모니터링
 
-```kotlin
-data class Customer(
-    val id: Long? = null,
-    val name: String,
-    val email: String,
-    val createdAt: LocalDateTime = LocalDateTime.now()
-)
-```
+## 다음 챕터
 
-## 주요 예제
-
-### 1. JDBC Pool 사용
-
-```kotlin
-class JDBCPoolExamples: AbstractSqlClientTest() {
-
-    @Test
-    fun `JDBC Pool로 데이터 조회`(vertx: Vertx) {
-        val pool = JDBCPool.pool(
-            vertx,
-            JDBCConnectOptions()
-                .setJdbcUrl("jdbc:postgresql://localhost:5432/testdb")
-                .setUser("user")
-                .setPassword("password"),
-            PoolOptions().setMaxSize(5)
-        )
-
-        pool.query("SELECT * FROM customers")
-            .execute()
-            .onSuccess { rows ->
-                rows.forEach { row ->
-                    println("Customer: ${row.getString("name")}")
-                }
-            }
-            .onFailure { err ->
-                println("Error: ${err.message}")
-            }
-    }
-}
-```
-
-### 2. PostgreSQL Client 사용
-
-```kotlin
-class SqlClientTemplatePostgresExamples: AbstractSqlClientTest() {
-
-    @Test
-    fun `PostgreSQL Client로 CRUD 수행`(vertx: Vertx, testContext: VertxTestContext) {
-        val pgPool = PgPool.pool(
-            PgConnectOptions()
-                .setHost("localhost")
-                .setPort(5432)
-                .setDatabase("testdb")
-                .setUser("user")
-                .setPassword("password"),
-            PoolOptions().setMaxSize(5)
-        )
-
-        // INSERT
-        pgPool.preparedQuery("INSERT INTO customers (name, email) VALUES ($1, $2)")
-            .execute(Tuple.of("John Doe", "john@example.com"))
-            .compose { insertResult ->
-                // SELECT
-                pgPool.query("SELECT * FROM customers WHERE name = 'John Doe'")
-                    .execute()
-            }
-            .onSuccess { rows ->
-                testContext.verify {
-                    rows.size() shouldBeEqualTo 1
-                    rows.first().getString("name") shouldBeEqualTo "John Doe"
-                }
-                testContext.completeNow()
-            }
-            .onFailure { err ->
-                testContext.failNow(err)
-            }
-    }
-}
-```
-
-### 3. SqlClientTemplate 사용
-
-```kotlin
-class SqlClientTemplateExamples {
-
-    fun <T> queryForObject(
-        pool: PgPool,
-        sql: String,
-        params: Tuple,
-        rowMapper: (Row) -> T
-    ): Future<T?> {
-        return pool.preparedQuery(sql)
-            .execute(params)
-            .map { rows -> rows.firstOrNull()?.let(rowMapper) }
-    }
-
-    fun queryForList(
-        pool: PgPool,
-        sql: String,
-        rowMapper: (Row) -> Customer
-    ): Future<List<Customer>> {
-        return pool.query(sql)
-            .execute()
-            .map { rows -> rows.map(rowMapper).toList() }
-    }
-}
-```
-
-## Vert.x SQL Client 패턴
-
-### 1. Connection Pool 구성
-
-```kotlin
-val pool = PgPool.pool(
-    PgConnectOptions()
-        .setHost("localhost")
-        .setPort(5432)
-        .setDatabase("testdb")
-        .setUser("user")
-        .setPassword("password")
-        .setPipeliningLimit(256)        // 파이프라이닝 제한
-        .setCachePreparedStatements(true), // PreparedStatement 캐시
-    PoolOptions()
-        .setMaxSize(20)                  // 최대 연결 수
-        .setMaxWaitQueueSize(100)        // 대기 큐 크기
-        .setIdleTimeout(30)              // 유휴 타임아웃 (초)
-)
-```
-
-### 2. 트랜잭션 처리
-
-```kotlin
-pool.withTransaction { conn ->
-    conn.preparedQuery("INSERT INTO orders (customer_id) VALUES ($1)")
-        .execute(Tuple.of(customerId))
-        .compose { insertResult ->
-            val orderId = insertResult.property(PostgresClient.LAST_INSERTED_ID)
-            conn.preparedQuery("INSERT INTO order_items (order_id, product_id) VALUES ($1, $2)")
-                .execute(Tuple.of(orderId, productId))
-        }
-}.onSuccess {
-    println("Transaction committed")
-}.onFailure { err ->
-    println("Transaction rolled back: ${err.message}")
-}
-```
-
-### 3. Batch Insert
-
-```kotlin
-val batch = customers.map { customer ->
-    Tuple.of(customer.name, customer.email)
-}
-
-pool.preparedQuery("INSERT INTO customers (name, email) VALUES ($1, $2)")
-    .executeBatch(batch)
-    .onSuccess { result ->
-        println("Inserted ${result.rowCount()} rows")
-    }
-```
-
-## 성능 비교
-
-| 작업         | JDBC      | Vert.x SQL Client |
-|------------|-----------|-------------------|
-| 1000건 조회   | ~500ms    | ~50ms             |
-| 1000건 삽입   | ~2000ms   | ~200ms            |
-| 동시 연결 1000 | Thread 필요 | Event Loop로 처리    |
-
-## 장단점
-
-### 장점
-
-- 가장 높은 성능과 SQL 제어권
-- 메모리 효율적 (Thread per Request 대비)
-- 다양한 DB 드라이버 지원
-
-### 단점
-
-- ORM 편의 기능 없음
-- SQL 직접 작성 필요
-- 학습 곡선 존재
-
-## 참고
-
-- Vert.x SQL Client는 ORM이 아닙니다. SQL을 직접 작성해야 합니다.
-- Connection Pool 크기는 적절히 설정해야 합니다.
-- 트랜잭션은 `withTransaction` 메서드를 사용합니다.
+- [03-exposed-basic](../03-exposed-basic/README.md)

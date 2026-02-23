@@ -1,58 +1,47 @@
-# Kotlinx Exposed Demo
+# 01 Spring Boot Demo
 
-Kotlinx [Exposed](https://github.com/JetBrains/Exposed)를 이용한 Data Access 예제입니다.
+Spring Boot + Exposed로 MVC/Reactive 애플리케이션을 구현하며, 두 가지 웹 모델(동기/비동기)에서 Exposed 트랜잭션을 비교하는 챕터입니다.
 
-## 모듈 구성
+## 챕터 목표
 
-### spring-mvc-exposed
+- Spring MVC와 WebFlux에서 Exposed 기반 API를 비교하며 일관된 데이터 흐름을 확인한다.
+- Virtual Threads와 코루틴 각각의 트랜잭션/커넥션 처리 방식의 차이를 파악한다.
+- Swagger/자동화된 테스트를 통해 API 문서화와 검증을 병행한다.
 
-**Spring WebMVC + Virtual Threads + Exposed** 를 이용하여 H2, MySQL 데이터베이스 작업을 수행하는 예제입니다.
+## 선수 지식
 
-`Bluetape4k`의 `virtualFuture`와 Exposed의 `transaction`을 활용하여, Virtual Threads 내에서 트랜잭션을 수행할 수 있습니다.
+- Spring Boot 기본 개념
+- `00-shared/exposed-shared-tests` 내용
 
-**주요 특징:**
+## 포함 모듈
 
-- 동기식 REST API 구조
-- Java 21 Virtual Threads 활용
-- 블로킹 I/O 작업의 효율적인 처리
-- 높은 동시성 처리
+| 모듈                       | 설명                                         |
+|--------------------------|--------------------------------------------|
+| `spring-mvc-exposed`     | Tomcat + Virtual Threads 기반 Exposed MVC 예제 |
+| `spring-webflux-exposed` | Netty + Kotlin Coroutines 기반 Reactive 예제   |
 
-### spring-webflux-exposed
+## 권장 학습 순서
 
-**Spring Webflux + Kotlin Coroutines + Exposed** 를 이용하여 H2, MySQL 데이터베이스 작업을 수행하는 예제입니다.
+1. `spring-mvc-exposed`
+2. `spring-webflux-exposed`
 
-Exposed의 `newSuspendTransaction`을 활용하여, suspend 함수 내에서 트랜잭션을 수행할 수 있습니다.
-
-**주요 특징:**
-
-- 비동기식 REST API 구조
-- Kotlin Coroutines 활용
-- Non-blocking I/O
-- 반응형 프로그래밍 모델
-
-## 두 방식 비교
-
-| 항목      | spring-mvc-exposed        | spring-webflux-exposed    |
-|---------|---------------------------|---------------------------|
-| 웹 프레임워크 | Spring MVC (Servlet)      | Spring WebFlux (Reactive) |
-| 비동기 모델  | Virtual Threads           | Kotlin Coroutines         |
-| I/O 모델  | Blocking (Virtual Thread) | Non-blocking              |
-| 서버      | Tomcat                    | Netty                     |
-| 적합한 경우  | 기존 MVC 코드, 간단한 마이그레이션     | 고동시성, 마이크로서비스             |
-
-## 시작하기
+## 실행 방법
 
 ```bash
-# MVC 예제 실행
-cd spring-mvc-exposed
-./gradlew bootRun
-
-# WebFlux 예제 실행
-cd spring-webflux-exposed
-./gradlew bootRun
+./gradlew :exposed-01-spring-boot-spring-mvc-exposed:bootRun
+./gradlew :exposed-01-spring-boot-spring-webflux-exposed:bootRun
 ```
 
-## 상세 문서
+## 테스트 포인트
 
-* [Spring Boot Web with Exposed](https://debop.notion.site/Spring-Boot-Web-with-Exposed-1ad2744526b0807f86a1eaaeb4c6baae)
-* [Spring Boot Webflux with Exposed](https://debop.notion.site/Spring-Boot-Webflux-with-Exposed-1ad2744526b080db95adc241f749db58)
+- 동기/비동기 API에서 동일한 도메인 결과가 일관된지 검증한다.
+- Swagger 화면이 실행 시 자동으로 노출되는지 확인한다.
+
+## 성능·안정성 체크포인트
+
+- Virtual Threads를 늘렸을 때 커넥션 풀/DB 부하가 급등하지 않는지 점검한다.
+- Netty/WebFlux 환경에서 비동기 트랜잭션이 Reactor 컨텍스트와 충돌 없이 작동하는지 확인한다.
+
+## 다음 챕터
+
+- [02-alternatives-to-jpa](../02-alternatives-to-jpa/README.md): JPA 대안 스택을 학습하기 위한 챕터로 이어갑니다.

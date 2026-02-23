@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
+/**
+ * WebFlux + Coroutines 환경에서 캐시 전략을 실습하는 애플리케이션입니다.
+ */
 class CacheStrategyApplication {
 
     companion object: KLoggingChannel() {

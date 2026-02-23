@@ -24,6 +24,9 @@ import javax.sql.DataSource
  * 일반적으로는 Exposed의 Spring Boot 용 AutoConfiguration을 사용하면 됩니다.
  */
 @Configuration
+/**
+ * WebFlux 환경에서 테넌트 DB 설정과 Schema 초기화를 구성합니다.
+ */
 class ExposedMultitenantConfig {
 
     companion object: KLoggingChannel()

@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController
 @Suppress("DEPRECATION")
 @RestController
 @RequestMapping("/user-events")
+/**
+ * suspend 기반 Write Behind 이벤트 API입니다.
+ */
 class UserEventController(
     private val repository: UserEventCacheRepository,
 ) {

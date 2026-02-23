@@ -12,6 +12,9 @@ import org.jetbrains.exposed.v1.dao.LongEntity
 import org.jetbrains.exposed.v1.dao.LongEntityClass
 import org.jetbrains.exposed.v1.javatime.date
 
+/**
+ * 영화/배우 도메인의 Exposed 테이블 및 엔티티 정의를 모아둔 스키마 객체입니다.
+ */
 object MovieSchema {
 
     object MovieTable: LongIdTable("movies") {
@@ -33,6 +36,9 @@ object MovieSchema {
         override val primaryKey = PrimaryKey(movieId, actorId)
     }
 
+    /**
+     * 영화 엔티티입니다.
+     */
     class MovieEntity(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<MovieEntity>(MovieTable)
 
@@ -51,6 +57,9 @@ object MovieSchema {
             .toString()
     }
 
+    /**
+     * 배우 엔티티입니다.
+     */
     class ActorEntity(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<ActorEntity>(ActorTable)
 

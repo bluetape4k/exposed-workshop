@@ -1,204 +1,59 @@
-# 05 Exposed DML: SQL 함수
+# 05 Exposed DML: SQL 함수 (03-functions)
 
-이 모듈(`03-functions`)은 Exposed 쿼리 내에서 다양한 SQL 함수를 활용하는 방법을 단계별로 학습합니다. 일반 함수부터 윈도우 함수까지 실무에서 자주 사용하는 함수들을 다룹니다.
+Exposed DSL에서 SQL 함수를 조합해 분석 쿼리를 작성하는 모듈입니다. 문자열/수학/통계/윈도우 함수 중심으로 실무 패턴을 학습합니다.
 
 ## 학습 목표
 
-- Exposed에서 SQL 함수를 사용하는 기본 패턴 이해
-- 문자열, 수학, 통계 함수 활용 방법 습득
-- 날짜/시간 함수를 사용한 데이터 처리 기법 익히기
-- 윈도우 함수를 통한 고급 분석 쿼리 작성 방법 학습
+- Exposed 함수 API를 이용해 표현식 기반 쿼리를 작성한다.
+- 집계/윈도우 함수로 분석형 조회를 구현한다.
+- DB별 함수 지원 차이를 테스트로 관리한다.
 
-## 예제 구성
+## 선수 지식
 
-모든 예제는 `src/test/kotlin/exposed/examples/functions` 아래에 있습니다.
-
-| 파일                                | 설명              | 핵심 함수                                         |
-|-----------------------------------|-----------------|-----------------------------------------------|
-| `Ex00_FunctionBase.kt`            | 공통 테스트 데이터 및 설정 | 테이블 정의, 샘플 데이터                                |
-| `Ex01_Functions.kt`               | 일반 SQL 함수       | `trim()`, `lower()`, `upper()`, `substring()` |
-| `Ex02_MathFunction.kt`            | 수학 함수           | `abs()`, `round()`, `ceil()`, `floor()`       |
-| `Ex03_StatisticsFunction.kt`      | 통계/집계 함수        | `count()`, `sum()`, `avg()`, `min()`, `max()` |
-| `Ex04_TrigonometricalFunction.kt` | 삼각 함수           | `sin()`, `cos()`, `tan()`, `asin()`           |
-| `Ex05_WindowFunction.kt`          | 윈도우 함수          | `rowNumber()`, `rank()`, `lead()`, `lag()`    |
+- [`../01-dml/README.md`](../01-dml/README.md)
+- [`../02-types/README.md`](../02-types/README.md)
 
 ## 핵심 개념
 
-### 1. 문자열 함수
+- 문자열/수학 함수: `trim`, `lower`, `round`, `abs` 등
+- 집계 함수: `count`, `sum`, `avg`, `min`, `max`
+- 윈도우 함수: `rowNumber`, `rank`, `denseRank`, `lead`, `lag`
 
-```kotlin
-// 문자열 조작
-val query = Users.select(
-    Users.name.trim(),
-    Users.name.lower(),
-    Users.name.upper(),
-    Users.name.substring(1, 10)
-)
+## 예제 지도
 
-// 문자열 연결
-val fullName = Users.firstName + " " + Users.lastName
+소스 위치: `src/test/kotlin/exposed/examples/functions`
 
-// LIKE 검색
-Users.select { Users.name like "%kim%" }
-Users.select { Users.name ilike "%KIM%" }  // 대소문자 무시
-```
+| 파일                                | 설명            |
+|-----------------------------------|---------------|
+| `Ex00_FunctionBase.kt`            | 공통 테이블/데이터 구성 |
+| `Ex01_Functions.kt`               | 문자열/기본 함수     |
+| `Ex02_MathFunction.kt`            | 수학 함수         |
+| `Ex03_StatisticsFunction.kt`      | 집계/통계 함수      |
+| `Ex04_TrigonometricalFunction.kt` | 삼각 함수         |
+| `Ex05_WindowFunction.kt`          | 윈도우 함수        |
 
-### 2. 수학 함수
-
-```kotlin
-// 기본 수학 함수
-val query = Products.select(
-    Products.price.abs(),
-    Products.price.round(2),
-    Products.price.ceil(),
-    Products.price.floor()
-)
-
-// 산술 연산
-val discounted = Products.price * 0.9
-val total = Products.price + Products.tax
-```
-
-### 3. 집계/통계 함수
-
-```kotlin
-// 기본 집계
-val count = Users.selectAll().count()
-val totalPrice = Orders.select(Orders.price.sum()).single()
-val avgAge = Users.select(Users.age.avg()).single()
-val (minPrice, maxPrice) = Products.select(
-    Products.price.min(),
-    Products.price.max()
-).single()
-
-// GROUP BY와 함께 사용
-Users
-    .groupBy(Users.cityId)
-    .select(Users.cityId, Users.id.count())
-    .having { Users.id.count() greater 5L }
-```
-
-### 4. 날짜/시간 함수
-
-```kotlin
-// 날짜 부분 추출
-val query = Orders.select(
-    Orders.orderDate.year(),
-    Orders.orderDate.month(),
-    Orders.orderDate.day(),
-    Orders.orderDate.hour()
-)
-
-// 날짜 비교
-Orders.select { Orders.orderDate.date() eq LocalDate.of(2024, 1, 1) }
-
-// 현재 날짜/시간
-Orders.select(CurrentDate, CurrentDateTime, CurrentTimestamp)
-```
-
-### 5. 윈도우 함수
-
-```kotlin
-// ROW_NUMBER
-val ranked = Products
-    .select(
-        Products.name,
-        Products.price,
-        Products.id.rowNumber().over().orderBy(Products.price, SortOrder.DESC)
-    )
-
-// RANK와 DENSE_RANK
-val ranked = Sales
-    .select(
-        Sales.employeeId,
-        Sales.amount,
-        Sales.amount.rank().over().orderBy(Sales.amount, SortOrder.DESC),
-        Sales.amount.denseRank().over().orderBy(Sales.amount, SortOrder.DESC)
-    )
-
-// LEAD와 LAG (이전/다음 값)
-val withLag = DailySales
-    .select(
-        DailySales.date,
-        DailySales.amount,
-        DailySales.amount.lag(1).over().orderBy(DailySales.date),
-        DailySales.amount.lead(1).over().orderBy(DailySales.date)
-    )
-
-// 파티션별 집계
-val byCategory = Products
-    .select(
-        Products.categoryId,
-        Products.name,
-        Products.price,
-        Products.price.sum().over().partitionBy(Products.categoryId)
-    )
-```
-
-### 6. 조건부 표현식
-
-```kotlin
-// CASE WHEN
-val category = Cases(
-    When(Products.price less 1000.0, stringLiteral("저가")),
-    When(Products.price between 1000.0 and 10000.0, stringLiteral("중가")),
-    Else(stringLiteral("고가"))
-)
-
-// COALESCE
-val value = Users.nickname.coalesce(Users.name, stringLiteral("Unknown"))
-
-// NULLIF
-val result = Users.score.nullif(0)
-```
-
-## 함수 카테고리별 요약
-
-### 문자열 함수
-
-| 함수            | 설명     | 예시                           |
-|---------------|--------|------------------------------|
-| `trim()`      | 공백 제거  | `name.trim()`                |
-| `lower()`     | 소문자 변환 | `name.lower()`               |
-| `upper()`     | 대문자 변환 | `name.upper()`               |
-| `substring()` | 부분 문자열 | `name.substring(1, 10)`      |
-| `length()`    | 문자열 길이 | `name.length()`              |
-| `concat()`    | 문자열 연결 | `firstName + " " + lastName` |
-
-### 수학 함수
-
-| 함수        | 설명   | 예시               |
-|-----------|------|------------------|
-| `abs()`   | 절대값  | `price.abs()`    |
-| `round()` | 반올림  | `price.round(2)` |
-| `ceil()`  | 올림   | `price.ceil()`   |
-| `floor()` | 내림   | `price.floor()`  |
-| `sqrt()`  | 제곱근  | `value.sqrt()`   |
-| `power()` | 거듭제곱 | `value.power(2)` |
-
-### 집계 함수
-
-| 함수        | 설명  | 예시            |
-|-----------|-----|---------------|
-| `count()` | 행 수 | `id.count()`  |
-| `sum()`   | 합계  | `price.sum()` |
-| `avg()`   | 평균  | `age.avg()`   |
-| `min()`   | 최소값 | `price.min()` |
-| `max()`   | 최대값 | `price.max()` |
-
-## 테스트 실행
+## 실행 방법
 
 ```bash
-# 전체 테스트 실행
-./gradlew :05-exposed-dml:03-functions:test
-
-# 특정 테스트만 실행
-./gradlew :05-exposed-dml:03-functions:test --tests "exposed.examples.functions.Ex05_WindowFunction"
+./gradlew :exposed-05-exposed-dml-03-functions:test
 ```
 
-모든 테스트는 `@ParameterizedTest`를 사용하여 H2, MySQL, PostgreSQL 등 다양한 데이터베이스 환경에서 실행됩니다.
+## 실습 체크리스트
 
-## 더 읽어보기
+- 같은 집계를 `groupBy + having` 조합으로 직접 변형한다.
+- 윈도우 함수 결과(순위, 이전/다음 값)를 정렬 기준별로 비교한다.
+- 함수 체인(예: 문자열 정규화 -> 집계) 시 결과 타입을 확인한다.
 
-- [7.3 Functions](https://debop.notion.site/1ca2744526b0805e9689efa4a03d01df?v=1ca2744526b08138857a000c9847c052)
-- [Exposed Wiki: DSL](https://github.com/JetBrains/Exposed/wiki/DSL)
+## DB별 주의사항
+
+- 함수명/시그니처는 DB마다 미세 차이가 있으므로 Dialect별 테스트가 필요
+- `ilike` 등 대소문자 무시 검색은 DB 지원 여부 확인
+
+## 성능·안정성 체크포인트
+
+- 집계/윈도우 함수는 정렬/파티션 컬럼 인덱스 유무가 성능에 크게 영향
+- 계산식이 복잡해질수록 쿼리 가독성을 위해 표현식을 분리
+
+## 다음 모듈
+
+- [`../04-transactions/README.md`](../04-transactions/README.md)

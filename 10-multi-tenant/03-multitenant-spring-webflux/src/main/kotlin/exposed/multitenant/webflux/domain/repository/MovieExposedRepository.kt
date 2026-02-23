@@ -31,7 +31,13 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
+/**
+ * WebFlux 환경의 영화 도메인 Exposed 저장소입니다.
+ */
 @Repository
+/**
+ * WebFlux용 영화 저장소이며 Exposed DSL을 사용합니다.
+ */
 class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
 
     companion object: KLogging()

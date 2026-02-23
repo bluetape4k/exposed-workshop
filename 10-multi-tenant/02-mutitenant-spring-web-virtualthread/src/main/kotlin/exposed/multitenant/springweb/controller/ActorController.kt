@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * 배우 조회 API를 제공하는 컨트롤러입니다.
+ */
 @RestController
 @RequestMapping("/actors")
 class ActorController(

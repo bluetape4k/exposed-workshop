@@ -16,7 +16,13 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
+/**
+ * 배우 도메인에 대한 Exposed 기반 저장소입니다.
+ */
 @Repository
+/**
+ * 배우 검색/조회/생성 기능을 제공하는 Exposed 저장소입니다.
+ */
 class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
 
     companion object: KLogging()

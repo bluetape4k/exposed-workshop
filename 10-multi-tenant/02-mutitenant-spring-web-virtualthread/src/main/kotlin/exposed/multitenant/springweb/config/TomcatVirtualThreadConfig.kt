@@ -14,6 +14,9 @@ import java.util.concurrent.Executors
  */
 @Configuration
 @ConditionalOnProperty("spring.threads.virtual.enabled", havingValue = "true", matchIfMissing = true)
+/**
+ * Tomcat에서 Virtual Threads를 사용하도록 executor를 교체합니다.
+ */
 class TomcatVirtualThreadConfig {
 
     companion object: KLogging()

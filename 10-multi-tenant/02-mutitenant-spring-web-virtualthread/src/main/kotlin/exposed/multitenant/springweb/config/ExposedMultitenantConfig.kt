@@ -22,6 +22,9 @@ import javax.sql.DataSource
 
 @Configuration
 @EnableTransactionManagement
+/**
+ * Virtual Threads 환경에서 테넌트별 DataSource를 설정합니다.
+ */
 class ExposedMultitenantConfig {
 
     companion object: KLogging()

@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * 헬스 체크 및 상태 엔드포인트를 제공합니다.
+ */
 @RestController
 @RequestMapping
 class IndexController(private val buildProps: BuildProperties) {

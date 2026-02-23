@@ -15,6 +15,9 @@ import org.springframework.context.annotation.Configuration
  * Swagger 설정을 위한 Configuration
  */
 @Configuration
+/**
+ * Swagger/OpenAPI 메타 정보를 설정합니다.
+ */
 class SwaggerConfig {
 
     @Autowired

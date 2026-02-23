@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.time.Duration
 
+/**
+ * Redisson 클라이언트와 연결 설정을 제공합니다.
+ */
 @Configuration
 class RedissonConfig {
 

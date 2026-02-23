@@ -8,12 +8,18 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy
 
 @SpringBootApplication
 @EnableAspectJAutoProxy
+/**
+ * Spring MVC 기반 멀티테넌트 예제 애플리케이션입니다.
+ */
 class ExposedMultitenantApplication {
 
     companion object: KLogging()
 
 }
 
+/**
+ * 애플리케이션을 서블릿 모드로 실행합니다.
+ */
 fun main(vararg args: String) {
     runApplication<ExposedMultitenantApplication>(*args) {
         webApplicationType = WebApplicationType.SERVLET

@@ -28,7 +28,13 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
+/**
+ * 영화 도메인에 대한 Exposed 기반 저장소입니다.
+ */
 @Repository
+/**
+ * 영화 관련 데이터를 Exposed DSL로 다루는 저장소입니다.
+ */
 class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
 
     companion object: KLogging()

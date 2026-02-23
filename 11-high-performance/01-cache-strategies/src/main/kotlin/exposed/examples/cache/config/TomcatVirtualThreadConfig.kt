@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.util.concurrent.Executors
 
+/**
+ * Tomcat 요청 처리기를 Virtual Thread 기반 executor로 교체하는 설정입니다.
+ */
 @Configuration
 @ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true", matchIfMissing = true)
 class TomcatVirtualThreadConfig {

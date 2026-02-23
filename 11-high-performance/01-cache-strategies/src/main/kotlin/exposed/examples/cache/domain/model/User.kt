@@ -40,6 +40,9 @@ object UserTable: LongIdTable("users") {
     val updatedAt = timestamp("updated_at").nullable()
 }
 
+/**
+ * 사용자 엔티티입니다. 캐시/DB 간에 데이터를 동기화합니다.
+ */
 class UserEntity(id: EntityID<Long>): LongEntity(id) {
     companion object: LongEntityClass<UserEntity>(UserTable)
 
@@ -70,6 +73,9 @@ class UserEntity(id: EntityID<Long>): LongEntity(id) {
         .toString()
 }
 
+/**
+ * 사용자 도메인의 캐시/DB 전달용 레코드입니다.
+ */
 data class UserRecord(
     override val id: Long = 0L,
     val username: String,
@@ -86,6 +92,9 @@ data class UserRecord(
     fun withId(id: Long) = copy(id = id)
 }
 
+/**
+ * 조회 결과를 [UserRecord]로 변환합니다.
+ */
 fun ResultRow.toUserRecord() = UserRecord(
     id = this[UserTable.id].value,
     username = this[UserTable.username],
@@ -100,6 +109,9 @@ fun ResultRow.toUserRecord() = UserRecord(
     it.avatar = this[UserTable.avatar]?.bytes
 }
 
+/**
+ * [UserEntity]를 [UserRecord]로 변환합니다.
+ */
 fun UserEntity.toUserRecord() = UserRecord(
     id = this.id.value,
     username = this.username,
@@ -114,6 +126,9 @@ fun UserEntity.toUserRecord() = UserRecord(
     it.avatar = this.avatar?.bytes
 }
 
+/**
+ * 테스트용 임의 사용자 레코드를 생성합니다.
+ */
 fun newUserRecord(newId: Long = 0L) = UserRecord(
     id = newId,
     username = faker.credentials().username() + "." + Base58.randomString(4),
@@ -128,6 +143,9 @@ fun newUserRecord(newId: Long = 0L) = UserRecord(
     it.avatar = faker.image().base64JPG().toByteArray()
 }
 
+/**
+ * 테스트용 임의 [UserEntity]를 생성합니다.
+ */
 fun newUserEntity(faker: Faker): UserEntity = UserEntity.new {
     username = faker.credentials().username() + "." + Base58.randomString(4)
     firstName = faker.name().firstName()

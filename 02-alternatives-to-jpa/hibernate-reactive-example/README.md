@@ -1,211 +1,35 @@
-# 02 JPA 대안: Hibernate Reactive Example
+# 02 Alternatives: Hibernate Reactive Example
 
-이 모듈(`hibernate-reactive-example`)은 **Hibernate Reactive
-**를 사용하여 반응형 Spring Boot 애플리케이션을 구축하는 예제입니다. 전통적인 JPA나 Exposed의 대안으로 비동기/논블로킹 데이터베이스 작업을 수행하는 방법을 학습합니다.
+Hibernate Reactive + Mutiny + PostgreSQL 환경에서 선언적/Reactive 트랜잭션을 실습하는 모듈입니다. Exposed와 다른 Reactive ORM을 비교할 수 있도록 설계되었습니다.
 
-## Hibernate Reactive란?
+## 학습 목표
 
-Hibernate Reactive는 Hibernate ORM의 반응형 버전으로, Non-blocking 데이터베이스 액세스를 가능하게 합니다. 기존 JPA 지식을 활용하면서도 Vert.x 기반의 반응형 프로그래밍 모델을 사용할 수 있습니다.
+- Hibernate Reactive의 `Mutiny.Session` 기반 비동기 CRUD를 이해한다.
+- PostgreSQL에서 Reactive 흐름을 유지하며 이벤트를 처리한다.
+- Exposed와의 API 대응을 비교하여 마이그레이션 전략을 도출한다.
 
-### 주요 특징
+## 핵심 구성
 
-| 특징               | 설명                           |
-|------------------|------------------------------|
-| **JPA 호환**       | 기존 JPA 어노테이션 그대로 사용          |
-| **Non-blocking** | Vert.x 기반 비동기 실행             |
-| **Mutiny 지원**    | Mutiny API를 통한 반응형 스트림       |
-| **Stage API**    | CompletableFuture 스타일 API 지원 |
-
-## 프로젝트 구조
-
-```
-src/main/kotlin/
-├── HibernateReactiveApplication.kt        # Spring Boot 진입점 (REACTIVE)
-├── domain/
-│   ├── model/
-│   │   ├── Team.kt                        # Team 엔티티
-│   │   └── Member.kt                      # Member 엔티티
-│   ├── repository/
-│   │   ├── TeamRepository.kt              # Team 리포지토리
-│   │   └── MemberRepository.kt            # Member 리포지토리
-│   └── controller/
-│       ├── TeamController.kt              # Team REST API
-│       └── MemberController.kt            # Member REST API
-├── dto/
-│   └── TeamDto.kt                         # 데이터 전송 객체
-├── mapper/
-│   └── TeamMapper.kt                      # Entity ↔ DTO 변환
-└── utils/
-    └── ReactiveUtils.kt                   # 반응형 유틸리티
-```
-
-## 도메인 모델
-
-### Entity 정의
-
-```kotlin
-@Entity
-@Table(name = "teams")
-class Team {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
-
-    var name: String = ""
-
-    @OneToMany(mappedBy = "team", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    var members: MutableList<Member> = mutableListOf()
-}
-
-@Entity
-@Table(name = "members")
-class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
-
-    var name: String = ""
-    var age: Int = 0
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    var team: Team? = null
-}
-```
-
-### ERD
-
-```
-┌─────────────────┐       ┌─────────────────┐
-│     teams       │       │    members      │
-│─────────────────│       │─────────────────│
-│  id (PK)        │       │  id (PK)        │
-│  name           │       │  name           │
-│                 │       │  age            │
-│                 │       │  team_id (FK)   │
-└─────────────────┘       └─────────────────┘
-        ▲                         │
-        │                         │
-        └─────────────────────────┘
-              1 : N 관계
-```
-
-## 반응형 리포지토리
-
-### Mutiny 기반
-
-```kotlin
-@Repository
-class TeamRepository(private val sessionFactory: Mutiny.SessionFactory) {
-
-    fun findAll(): Uni<List<Team>> {
-        return sessionFactory.withSession { session ->
-            session.createQuery("FROM Team", Team::class.java)
-                .resultList
-        }
-    }
-
-    fun findById(id: Long): Uni<Team?> {
-        return sessionFactory.withSession { session ->
-            session.find(Team::class.java, id)
-        }
-    }
-
-    fun save(team: Team): Uni<Team> {
-        return sessionFactory.withTransaction { session ->
-            session.persist(team).map { team }
-        }
-    }
-}
-```
-
-### Stage 기반 (CompletableFuture)
-
-```kotlin
-@Repository
-class TeamStageRepository(private val sessionFactory: Stage.SessionFactory) {
-
-    fun findAll(): CompletionStage<List<Team>> {
-        return sessionFactory.withSession { session ->
-            session.createQuery("FROM Team", Team::class.java)
-                .getResultList()
-        }
-    }
-}
-```
-
-## REST Controller
-
-```kotlin
-@RestController
-@RequestMapping("/api/teams")
-class TeamController(private val teamRepository: TeamRepository) {
-
-    @GetMapping
-    fun getAll(): Uni<ResponseEntity<List<TeamDto>>> {
-        return teamRepository.findAll()
-            .map { teams -> teams.map { it.toDto() } }
-            .map { ResponseEntity.ok(it) }
-    }
-
-    @GetMapping("/{id}")
-    fun getById(@PathVariable id: Long): Uni<ResponseEntity<TeamDto>> {
-        return teamRepository.findById(id)
-            .map { team -> team?.toDto() }
-            .map { dto ->
-                dto?.let { ResponseEntity.ok(it) }
-                    ?: ResponseEntity.notFound().build()
-            }
-    }
-
-    @PostMapping
-    fun create(@RequestBody request: CreateTeamRequest): Uni<ResponseEntity<TeamDto>> {
-        val team = Team().apply { name = request.name }
-        return teamRepository.save(team)
-            .map { ResponseEntity.ok(it.toDto()) }
-    }
-}
-```
-
-## 설정
-
-### application.yml
-
-```yaml
-spring:
-    datasource:
-        url: jdbc:postgresql://localhost:5432/testdb
-        username: user
-        password: password
-
-quarkus:
-    hibernate-orm:
-        database:
-            generation: drop-and-create
-```
+- `ReactiveMovieRepository`: Mutiny API로 비동기 조회/수정 구현
+- `ActorResource`: Reactive REST API 핸들러
+- `Application`: Reactive `Mutiny.SessionFactory` 및 PostgreSQL 연결 설정
 
 ## 실행 방법
 
 ```bash
-# 1. DB 설정 (application.yml)
-# 2. 애플리케이션 실행
-./gradlew bootRun
-
-# 3. API 테스트
-curl http://localhost:8080/api/teams
+./gradlew :exposed-02-alternatives-to-jpa-hibernate-reactive-example:bootRun
 ```
 
-## Hibernate Reactive vs JPA vs Exposed
+## 테스트 포인트
 
-| 항목          | JPA           | Hibernate Reactive | Exposed                 |
-|-------------|---------------|--------------------|-------------------------|
-| **실행 모델**   | Blocking      | Non-blocking       | Blocking (Coroutine 지원) |
-| **API 스타일** | EntityManager | Mutiny/Stage       | DSL/DAO                 |
-| **코루틴**     | 지원 안함         | 제한적 지원             | 완벽 지원                   |
-| **학습 곡선**   | 중간            | 높음                 | 낮음                      |
+- Reactive `Uni`/`Multi` 결과가 정상적으로 commit/rollback 되는지 확인
+- PostgreSQL에서 수신한 데이터가 JSON 응답으로 정상 직렬화되는지 검증
 
-## 참고
+## 성능·안정성 체크포인트
 
-- Hibernate Reactive는 JPA의 모든 기능을 지원하지 않습니다.
-- Lazy Loading은 세션이 열려 있는 동안에만 작동합니다.
-- 트랜잭션 관리가 기존 JPA와 다릅니다.
+- Reactive 스트림이 backpressure 없이 High Throughput을 유지하는지 관측
+- 예외 발생 시 `Uni.onFailure()`/`onItem()` 경로가 정상 동작하는지 확인
+
+## 다음 모듈
+
+- [r2dbc-example](../r2dbc-example/README.md)

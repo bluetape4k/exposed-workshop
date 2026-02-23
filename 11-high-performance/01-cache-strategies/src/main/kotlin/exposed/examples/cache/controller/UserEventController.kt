@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * Write Behind 캐시 이벤트 저장 API입니다.
+ */
 @RestController
 @RequestMapping("/user-events")
 class UserEventController(

@@ -1,40 +1,60 @@
-# Exposed + Spring Web + Multitenant
+# Exposed + Spring Web + Multi-Tenant (01)
 
-이 모듈은 Spring Web Application 환경에서 Kotlin Exposed 프레임워크를 이용하여 멀티테넌시(Multi-tenancy)를 구현하는 방법을 자세히 설명합니다. 각 테넌트(tenant)별로 데이터베이스 스키마를 분리하여 데이터의 독립성과 보안을 보장하는
-`Schema-based Multi-tenancy` 방식을 채택하고 있습니다.
+Spring MVC 환경에서 Exposed 기반 Schema 멀티테넌시를 구현하는 실전 예제입니다. 요청 헤더(
+`X-Tenant-Id`)를 기준으로 테넌트 컨텍스트를 전파하고, 스키마를 분리해 데이터 격리를 보장합니다.
 
-## 주요 기술 스택
+## 학습 목표
 
-* **Spring Web:** 웹 애플리케이션의 컨트롤러 및 요청 처리를 담당합니다.
-* **Kotlin Exposed:** SQL 중심의 경량 ORM 프레임워크로, 유연한 데이터베이스 접근을 제공합니다.
-* **H2 Database:** 예제 실행을 위한 인메모리 데이터베이스로 사용됩니다. (실제 환경에서는 PostgreSQL, MySQL 등으로 대체 가능)
-* **Gradle Kotlin DSL:** 빌드 자동화 및 의존성 관리에 사용됩니다.
+- 멀티테넌트 요청 흐름(식별 -> 컨텍스트 -> 스키마 선택)을 이해한다.
+- ThreadLocal 기반 컨텍스트 관리 패턴을 익힌다.
+- 테넌트 격리 실패를 테스트로 방지한다.
 
-## 멀티테넌시 구현 방식
+## 선수 지식
 
-이 모듈에서는 `Schema-based Multi-tenancy` 방식을 사용하여 각 테넌트의 데이터를 물리적으로 분리합니다.
+- [`../09-spring/README.md`](../09-spring/README.md)
 
-1. **테넌트 식별 (Tenant Identification):** HTTP 요청 헤더(`X-Tenant-Id`)를 통해 현재 요청의 테넌트를 식별합니다.
-2. **동적 데이터소스 라우팅 (Dynamic Datasource Routing):** 식별된 테넌트 ID에 따라 적절한 데이터베이스 스키마로 라우팅되도록 Exposed 트랜잭션을 설정합니다.
-3. **데이터 격리 (Data Isolation):** 각 테넌트는 자신만의 전용 데이터베이스 스키마를 가지므로, 다른 테넌트의 데이터에 접근할 수 없습니다.
+## 핵심 개념
 
-## 주요 기능 및 예제
+- `TenantFilter`: 요청에서 `X-Tenant-Id` 추출
+- `TenantContext`: 현재 요청의 테넌트 저장/정리
+- `TenantAwareDataSource` 및 스키마 라우팅
 
-* **테넌트 컨텍스트 관리:** `TenantContext`를 사용하여 현재 스레드에 테넌트 정보를 저장하고 관리합니다.
-* **`TenantFilter`:** HTTP 요청마다 테넌트 ID를 추출하고 `TenantContext`에 설정하는 서블릿 필터 구현.
-* **`TenantAwareDataSource`:** 동적으로 현재 테넌트에 맞는 데이터베이스 스키마를 연결하도록 Exposed에 알리는 데이터소스 구현.
-* **테넌트별 데이터 초기화:** 각 테넌트 스키마 생성 및 초기 데이터를 삽입하는 예제.
-* **RESTful API 예제:** 테넌트별로 데이터를 조회하고 조작하는 간단한 Actor API (`/api/{tenantId}/actors`)를 제공합니다.
+## 주요 구성 요소
 
-## 프로젝트 실행 방법
+| 파일/영역                             | 설명             |
+|-----------------------------------|----------------|
+| `tenant/TenantFilter.kt`          | 요청 단위 테넌트 식별   |
+| `tenant/TenantContext.kt`         | 테넌트 컨텍스트 보관    |
+| `tenant/TenantAwareDataSource.kt` | 테넌트 기반 라우팅     |
+| `tenant/TenantSchemaAspect.kt`    | 스키마 적용 보조      |
+| `controller/ActorController.kt`   | 테넌트 데이터 API 예제 |
 
-1. 프로젝트를 클론합니다.
-2. `01-multitenant-spring-web` 디렉토리로 이동합니다.
-3. Gradle을 사용하여 애플리케이션을 실행합니다: `./gradlew bootRun`
-4. 애플리케이션이 실행되면, Postman 또는 cURL과 같은 도구를 사용하여 API를 테스트할 수 있습니다.
-    1. 테넌트 ID는 헤더로 전달합니다.
-        1. 예: `GET /actors` with header `X-Tenant-Id: tenant1`
-    2. path variable로 전달하는 방식을 사용하려면 ActorController의 매핑을 `/api/{tenantId}/actors`로 변경합니다.
-        1. 예: `GET /api/tenant1/actors`
+## 실행 방법
 
-이 모듈을 통해 Spring Web 환경에서 Exposed와 함께 안전하고 확장 가능한 멀티테넌시 솔루션을 구축하는 데 필요한 기반 지식을 얻을 수 있습니다.
+```bash
+./gradlew :exposed-10-multi-tenant-01-multitenant-spring-web:test
+./gradlew :exposed-10-multi-tenant-01-multitenant-spring-web:bootRun
+```
+
+## API 실습 예시
+
+```bash
+curl -H 'X-Tenant-Id: tenant1' http://localhost:8080/actors
+curl -H 'X-Tenant-Id: tenant2' http://localhost:8080/actors
+```
+
+## 실습 체크리스트
+
+- 테넌트별 동일 API 호출 시 결과가 서로 분리되는지 확인
+- 헤더 누락/잘못된 테넌트 값에 대한 실패 응답을 검증
+- 요청 종료 후 컨텍스트가 반드시 정리되는지 확인
+
+## 운영 체크포인트 (성능·안정성)
+
+- ThreadLocal 누수 방지를 위해 필터 종료 시 clear 보장
+- 로그/트레이스에 tenant 식별자 포함
+- 신규 테넌트 온보딩 시 스키마 초기화 자동화 절차 확보
+
+## 다음 모듈
+
+- [`../02-mutitenant-spring-web-virtualthread/README.md`](../02-mutitenant-spring-web-virtualthread/README.md)

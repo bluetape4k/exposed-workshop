@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * suspend 기반 캐시 API 엔드포인트 (Read/Write Through)입니다.
+ */
 @Suppress("DEPRECATION")
 @RestController
 @RequestMapping("/users")

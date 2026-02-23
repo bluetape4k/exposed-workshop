@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * Read/Write Through 캐시 API 엔드포인트입니다.
+ */
 @RestController
 @RequestMapping("/users")
 class UserController(private val repository: UserCacheRepository) {

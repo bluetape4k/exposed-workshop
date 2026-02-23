@@ -22,6 +22,9 @@ import javax.sql.DataSource
 
 @Configuration
 @EnableTransactionManagement
+/**
+ * 테넌트별 DataSource/Exposed 설정을 구성합니다.
+ */
 class ExposedMutitenantConfig {
 
     companion object: KLogging()

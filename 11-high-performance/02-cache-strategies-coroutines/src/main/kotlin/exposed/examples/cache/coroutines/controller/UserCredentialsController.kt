@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController
 @Suppress("DEPRECATION")
 @RestController
 @RequestMapping("/user-credentials")
+/**
+ * suspend 기반 Read-Only 캐시 컨트롤러입니다.
+ */
 class UserCredentialsController(private val repository: UserCredentialsCacheRepository) {
 
     companion object: KLoggingChannel()
