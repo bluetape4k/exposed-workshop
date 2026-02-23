@@ -32,6 +32,9 @@ import java.math.BigDecimal
 import java.math.MathContext
 import java.sql.SQLException
 
+/**
+ * SQL 수학 함수 사용 예제.
+ */
 class Ex02_MathFunction: Ex00_FunctionBase() {
 
     companion object: KLogging()
@@ -337,6 +340,9 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
         }
     }
 
+    /**
+     * 식에 자연로그(`LN`) 함수를 적용합니다.
+     */
     fun <T: Number?> ExpressionWithColumnType<T>.ln(): LnFunction<T> =
         LnFunction(this)
 
@@ -366,6 +372,9 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
         }
     }
 
+    /**
+     * 식에 밑(base)을 지정한 로그(`LOG`) 함수를 적용합니다.
+     */
     fun <B: Number, T: Number?> ExpressionWithColumnType<T>.log(base: Expression<B>): LogFunction<B, T> =
         LogFunction(base, this)
 
@@ -402,6 +411,9 @@ class Ex02_MathFunction: Ex00_FunctionBase() {
         expression = expression
     )
 
+    /**
+     * 식에 상용로그(`LOG10`) 함수를 적용합니다.
+     */
     fun <T: Number?> ExpressionWithColumnType<T>.log10(): Log10Function<T> =
         Log10Function(this)
 

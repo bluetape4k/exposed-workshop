@@ -13,6 +13,8 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.support.toUtf8Bytes
 import io.bluetape4k.support.toUtf8String
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
@@ -26,6 +28,9 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * 암호화된 `ByteArray` 커스텀 컬럼 타입의 저장/조회/검색 동작을 검증한다.
+ */
 class EncryptedBinaryColumnTypeTest: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -160,7 +165,8 @@ class EncryptedBinaryColumnTypeTest: AbstractExposedTest() {
 
             entityCache.clear()
 
-            val loaded = E1.findById(e1.id)!!
+            val loaded = E1.findById(e1.id).shouldNotBeNull()
+            E1.findById(-1).shouldBeNull()
 
             loaded.name shouldBeEqualTo "Encryption"
             loaded.aesBinary?.toUtf8String() shouldBeEqualTo text

@@ -18,6 +18,9 @@ import org.jetbrains.exposed.v1.jdbc.update
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Jasypt 암호화 컬럼의 DSL 기반 저장/조회/수정 예제를 검증합니다.
+ */
 class JasyptColumnTypeTest: AbstractExposedTest() {
 
     companion object: KLogging()

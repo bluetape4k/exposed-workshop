@@ -9,6 +9,7 @@ import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeLessOrEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.inList
@@ -118,6 +119,13 @@ class UserCacheRepositoryTest(
             }
         }
         users.shouldBeEmpty()
+    }
+
+    @Test
+    fun `존재하지 않는 User ID 조회 시 null을 반환한다`() {
+        transaction {
+            repository.get(-1L).shouldBeNull()
+        }
     }
 
     @Test

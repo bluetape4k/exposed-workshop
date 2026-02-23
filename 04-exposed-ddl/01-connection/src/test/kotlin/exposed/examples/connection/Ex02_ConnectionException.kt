@@ -155,7 +155,11 @@ class Ex02_ConnectionException {
             }
             fail("위의 Tx에서 예외를 발생 시켜야 합니다.")
         } catch (_: CommitException) {
-            // Nothing to do
+            wrappingDataSource.connections shouldHaveSize 5
+            wrappingDataSource.connections.forEach { connection ->
+                connection.commitCalled.shouldBeTrue()
+                connection.closeCalled.shouldBeTrue()
+            }
         }
     }
 
@@ -179,7 +183,7 @@ class Ex02_ConnectionException {
 
     @Test
     fun `transaction repetition works when commit and close throws exception`() {
-        `_transaction repetition works when commit throws exception`(::ExceptionOnCommitConnection)
+        `_transaction repetition works when commit throws exception`(::ExceptionOnCommitCloseConnection)
     }
 
     private class ExceptionOnCommitCloseConnection(connection: Connection): ConnectionSpy(connection) {

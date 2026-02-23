@@ -10,6 +10,8 @@ import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.io.serializer.BinarySerializers
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.core.eq
@@ -22,6 +24,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.io.Serializable
 
+/**
+ * 객체를 직렬화해 `VARBINARY` 컬럼에 저장하는 커스텀 컬럼 타입을 검증한다.
+ */
 class BinarySerializedBinaryColumnTypeTest: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -156,7 +161,8 @@ class BinarySerializedBinaryColumnTypeTest: AbstractExposedTest() {
             }
             entityCache.clear()
 
-            val loaded = E1.findById(e1.id)!!
+            val loaded = E1.findById(e1.id).shouldNotBeNull()
+            E1.findById(-1).shouldBeNull()
 
             loaded shouldBeEqualTo e1
 

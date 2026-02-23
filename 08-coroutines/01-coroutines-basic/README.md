@@ -12,7 +12,7 @@ Exposed를 Kotlin Coroutines와 함께 사용하는 기본 모듈입니다.
 ## 선수 지식
 
 - Kotlin Coroutines 기본
-- [`../05-exposed-dml/04-transactions/README.md`](../05-exposed-dml/04-transactions/README.md)
+- [`../../05-exposed-dml/04-transactions/README.md`](../../05-exposed-dml/04-transactions/README.md)
 
 ## 핵심 개념
 
@@ -29,7 +29,7 @@ Exposed를 Kotlin Coroutines와 함께 사용하는 기본 모듈입니다.
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-08-coroutines-01-coroutines-basic:test
+./gradlew :01-coroutines-basic:test
 ```
 
 ## 실습 체크리스트
@@ -41,6 +41,21 @@ Exposed를 Kotlin Coroutines와 함께 사용하는 기본 모듈입니다.
 
 - 이벤트 루프/기본 디스패처에서 블로킹 호출 금지
 - 트랜잭션 범위를 최소화해 경합 감소
+
+## 예제 흐름 다이어그램
+
+```mermaid
+flowchart LR
+    A["Caller"] --> B["newSuspendedTransaction"]
+    B --> C["withSuspendTransaction"]
+    C --> D["SELECT / INSERT / UPDATE"]
+    B --> E["suspendedTransactionAsync"]
+    E --> D
+    D --> F["Commit / Rollback"]
+```
+
+예제 코드: [
+`src/test/kotlin/exposed/examples/coroutines/Ex01_Coroutines.kt`](src/test/kotlin/exposed/examples/coroutines/Ex01_Coroutines.kt)
 
 ## 다음 모듈
 

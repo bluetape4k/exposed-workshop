@@ -10,6 +10,8 @@ import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.uninitialized
+import org.amshove.kluent.shouldBeTrue
+import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.jdbc.selectAll
@@ -36,6 +38,12 @@ class ExposedConfigTest: AbstractMultitenantTest() {
         newSuspendedTransactionWithTenant(tenant) {
             val actors = ActorTable.selectAll().map { it.toActorRecord() }
             actors.shouldNotBeEmpty()
+            actors shouldHaveSize 9
+            val expectedFirstName = when (tenant) {
+                Tenants.Tenant.KOREAN  -> "조니"
+                Tenants.Tenant.ENGLISH -> "Johnny"
+            }
+            actors.any { it.firstName == expectedFirstName }.shouldBeTrue()
 
             actors.forEach { actor ->
                 log.debug { "tenant:${tenant.id}, Actor: $actor" }

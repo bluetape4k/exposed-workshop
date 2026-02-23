@@ -94,6 +94,9 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 import kotlin.time.toDuration
 
+/**
+ * Kotlinx-datetime 컬럼의 기본값(client/db/defaultExpression) 동작을 검증하는 통합 예제 테스트.
+ */
 @OptIn(ExperimentalTime::class)
 class Ex02_Defaults: AbstractExposedTest() {
 

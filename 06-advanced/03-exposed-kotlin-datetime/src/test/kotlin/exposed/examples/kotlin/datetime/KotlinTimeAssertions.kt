@@ -110,5 +110,8 @@ object CitiesTime: IntIdTable("CitiesTime") {
     val local_time: Column<LocalDateTime?> = datetime("local_time").nullable() // Column<datetime>
 }
 
+/**
+ * 변경 이력을 표현하기 위한 JSON 직렬화용 DTO.
+ */
 @Serializable
 data class ModifierData(val userId: Int, val timestamp: LocalDateTime)

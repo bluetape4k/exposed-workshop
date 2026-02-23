@@ -15,6 +15,9 @@ import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.junit.jupiter.api.Assumptions
 
 @Suppress("UnusedReceiverParameter")
+/**
+ * Fastjson2 JSON/JSONB 컬럼 테스트에서 공통으로 사용하는 스키마/엔티티/픽스처를 제공합니다.
+ */
 object FastjsonSchema {
 
     /**
@@ -49,12 +52,18 @@ object FastjsonSchema {
         val fastjsonBColumn = fastjsonb<DataHolder>("fastjson_b_column")
     }
 
+    /**
+     * Fastjson `json` 컬럼 테스트용 DAO 엔티티입니다.
+     */
     class FastjsonEntity(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<FastjsonEntity>(FastjsonTable)
 
         var fastjsonColumn by FastjsonTable.fastjsonColumn
     }
 
+    /**
+     * Fastjson `jsonb` 컬럼 테스트용 DAO 엔티티입니다.
+     */
     class FastjsonBEntity(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<FastjsonBEntity>(FastjsonBTable)
 
@@ -97,13 +106,24 @@ object FastjsonSchema {
         val numbers = fastjsonb<IntArray>("numbers")
     }
 
-
+    /**
+     * JSON 컬럼 입출력 검증에 사용하는 샘플 데이터입니다.
+     */
     data class DataHolder(val user: User, val logins: Int, val active: Boolean, val team: String?)
 
+    /**
+     * 사용자 정보를 표현하는 JSON 하위 객체입니다.
+     */
     data class User(val name: String, val team: String?)
 
+    /**
+     * 사용자 목록을 감싼 JSON 객체입니다.
+     */
     data class UserGroup(val users: List<User>)
 
+    /**
+     * `FastjsonTable`을 생성하고 기본 레코드를 삽입한 뒤 테스트 본문을 실행합니다.
+     */
     fun AbstractExposedTest.withFastjsonTable(
         testDB: TestDB,
         statement: JdbcTransaction.(tester: FastjsonSchema.FastjsonTable, user1: User, data1: DataHolder) -> Unit,
@@ -122,6 +142,9 @@ object FastjsonSchema {
         }
     }
 
+    /**
+     * `FastjsonBTable`을 생성하고 기본 레코드를 삽입한 뒤 테스트 본문을 실행합니다.
+     */
     fun AbstractExposedTest.withFastjsonBTable(
         testDB: TestDB,
         statement: JdbcTransaction.(tester: FastjsonSchema.FastjsonBTable, user1: User, data1: DataHolder) -> Unit,
@@ -140,6 +163,9 @@ object FastjsonSchema {
         }
     }
 
+    /**
+     * JSON 배열/객체 예제를 위한 `FastjsonArrayTable` 초기 데이터를 준비합니다.
+     */
     fun AbstractExposedTest.withFastjsonArrays(
         testDB: TestDB,
         statement: JdbcTransaction.(
@@ -166,6 +192,9 @@ object FastjsonSchema {
         }
     }
 
+    /**
+     * JSONB 배열/객체 예제를 위한 `FastjsonBArrayTable` 초기 데이터를 준비합니다.
+     */
     fun AbstractExposedTest.withFastjsonBArrays(
         testDB: TestDB,
         statement: JdbcTransaction.(

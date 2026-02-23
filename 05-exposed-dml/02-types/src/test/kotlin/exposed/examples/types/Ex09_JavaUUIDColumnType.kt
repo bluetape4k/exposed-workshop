@@ -6,6 +6,7 @@ import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
@@ -19,6 +20,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.*
 
+/**
+ * Java UUID 컬럼 타입(`javaUUID`) 사용 예제.
+ */
 class Ex09_JavaUUIDColumnType: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -62,6 +66,25 @@ class Ex09_JavaUUIDColumnType: AbstractExposedTest() {
                 .singleOrNull()
                 ?.get(tester.uuid)
             uidByKey shouldBeEqualTo uuid
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `unknown uuid lookup returns null`(testDB: TestDB) {
+        val tester = object: IntIdTable("test_java_uuid_column_type_lookup") {
+            val uuid = javaUUID("java_uuid")
+        }
+
+        withTables(testDB, tester) {
+            tester.insertAndGetId { it[uuid] = UUID.randomUUID() }
+
+            val notExisting = tester.selectAll()
+                .where { tester.uuid eq UUID.randomUUID() }
+                .singleOrNull()
+                ?.get(tester.uuid)
+
+            notExisting.shouldBeNull()
         }
     }
 

@@ -5,6 +5,7 @@ import exposed.examples.springwebflux.domain.model.MovieRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeEmpty
@@ -12,6 +13,7 @@ import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import kotlin.test.assertFailsWith
 
 @Suppress("DEPRECATION")
 class MovieRepositoryTest(
@@ -39,6 +41,15 @@ class MovieRepositoryTest(
         movie.id shouldBeEqualTo movieId
     }
 
+    @Test
+    fun `존재하지 않는 영화 ID를 조회하면 예외를 던진다`() = runSuspendIO {
+        newSuspendedTransaction(readOnly = true) {
+            assertFailsWith<NoSuchElementException> {
+                movieRepository.findById(Long.MIN_VALUE)
+            }
+        }
+    }
+
     /**
      * ```sql
      * SELECT MOVIES.ID, MOVIES."name", MOVIES.PRODUCER_NAME, MOVIES.RELEASE_DATE
@@ -62,6 +73,14 @@ class MovieRepositoryTest(
             log.debug { "movie: $it" }
         }
         movies.shouldNotBeEmpty() shouldHaveSize 2
+    }
+
+    @Test
+    fun `존재하지 않는 producerName으로 검색하면 빈 목록을 반환한다`() = runSuspendIO {
+        val params = mapOf("producerName" to "NO_SUCH_PRODUCER")
+        newSuspendedTransaction(readOnly = true) {
+            movieRepository.searchMovie(params).shouldBeEmpty()
+        }
     }
 
     @Test

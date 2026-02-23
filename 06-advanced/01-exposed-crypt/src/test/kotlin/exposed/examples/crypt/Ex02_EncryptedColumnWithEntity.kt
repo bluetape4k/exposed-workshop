@@ -8,6 +8,7 @@ import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.core.eq
@@ -23,6 +24,9 @@ import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * 암호화 컬럼을 DAO(Entity)로 다루는 예제.
+ */
 class Ex02_EncryptedColumnWithEntity: AbstractExposedTest() {
 
     companion object: KLogging() {
@@ -95,6 +99,20 @@ class Ex02_EncryptedColumnWithEntity: AbstractExposedTest() {
                 it[TestTable.varchar] shouldBeEqualTo varcharValue
                 it[TestTable.binary] shouldBeEqualTo binaryValue
             }
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `findById with unknown id returns null`(testDB: TestDB) {
+        withTables(testDB, TestTable) {
+            ETest.new {
+                varchar = "value"
+                binary = "binary".toByteArray()
+            }
+
+            entityCache.clear()
+            ETest.findById(-1).shouldBeNull()
         }
     }
 

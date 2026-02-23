@@ -15,6 +15,9 @@ import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.junit.jupiter.api.Assumptions
 
 @Suppress("UnusedReceiverParameter")
+/**
+ * Jackson 3 JSON/JSONB 컬럼 테스트에서 공통으로 사용하는 스키마/엔티티/픽스처를 제공합니다.
+ */
 object JacksonSchema {
 
     /**
@@ -49,12 +52,18 @@ object JacksonSchema {
         val jacksonBColumn = jacksonb<DataHolder>("jackson_b_column")
     }
 
+    /**
+     * Jackson 3 `json` 컬럼 테스트용 DAO 엔티티입니다.
+     */
     class JacksonEntity(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<JacksonEntity>(JacksonTable)
 
         var jacksonColumn by JacksonTable.jacksonColumn
     }
 
+    /**
+     * Jackson 3 `jsonb` 컬럼 테스트용 DAO 엔티티입니다.
+     */
     class JacksonBEntity(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<JacksonBEntity>(JacksonBTable)
 
@@ -97,13 +106,24 @@ object JacksonSchema {
         val numbers = jacksonb<IntArray>("numbers")
     }
 
-
+    /**
+     * JSON 컬럼 입출력 검증에 사용하는 샘플 데이터입니다.
+     */
     data class DataHolder(val user: User, val logins: Int, val active: Boolean, val team: String?)
 
+    /**
+     * 사용자 정보를 표현하는 JSON 하위 객체입니다.
+     */
     data class User(val name: String, val team: String?)
 
+    /**
+     * 사용자 목록을 감싼 JSON 객체입니다.
+     */
     data class UserGroup(val users: List<User>)
 
+    /**
+     * `JacksonTable`을 생성하고 기본 레코드를 삽입한 뒤 테스트 본문을 실행합니다.
+     */
     fun AbstractExposedTest.withJacksonTable(
         testDB: TestDB,
         statement: JdbcTransaction.(tester: JacksonSchema.JacksonTable, user1: User, data1: DataHolder) -> Unit,
@@ -122,6 +142,9 @@ object JacksonSchema {
         }
     }
 
+    /**
+     * `JacksonBTable`을 생성하고 기본 레코드를 삽입한 뒤 테스트 본문을 실행합니다.
+     */
     fun AbstractExposedTest.withJacksonBTable(
         testDB: TestDB,
         statement: JdbcTransaction.(tester: JacksonSchema.JacksonBTable, user1: User, data1: DataHolder) -> Unit,
@@ -140,6 +163,9 @@ object JacksonSchema {
         }
     }
 
+    /**
+     * JSON 배열/객체 예제를 위한 `JacksonArrayTable` 초기 데이터를 준비합니다.
+     */
     fun AbstractExposedTest.withJacksonArrays(
         testDB: TestDB,
         statement: JdbcTransaction.(
@@ -166,6 +192,9 @@ object JacksonSchema {
         }
     }
 
+    /**
+     * JSONB 배열/객체 예제를 위한 `JacksonBArrayTable` 초기 데이터를 준비합니다.
+     */
     fun AbstractExposedTest.withJacksonBArrays(
         testDB: TestDB,
         statement: JdbcTransaction.(

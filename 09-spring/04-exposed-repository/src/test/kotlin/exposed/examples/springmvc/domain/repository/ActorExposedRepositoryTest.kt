@@ -4,7 +4,9 @@ import exposed.examples.springmvc.AbstractExposedRepositoryTest
 import exposed.examples.springmvc.domain.model.ActorRecord
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
@@ -36,6 +38,12 @@ class ActorExposedRepositoryTest(
 
     @Test
     @Transactional(readOnly = true)
+    fun `존재하지 않는 배우 ID를 조회하면 null을 반환한다`() {
+        actorRepo.findByIdOrNull(Long.MIN_VALUE).shouldBeNull()
+    }
+
+    @Test
+    @Transactional(readOnly = true)
     fun `search actors by lastName`() {
         val params = mapOf("lastName" to "Depp")
         val actors = actorRepo.searchActors(params)
@@ -44,6 +52,13 @@ class ActorExposedRepositoryTest(
         actors.forEach {
             log.debug { "actor: $it" }
         }
+    }
+
+    @Test
+    @Transactional(readOnly = true)
+    fun `존재하지 않는 lastName으로 검색하면 빈 목록을 반환한다`() {
+        val params = mapOf("lastName" to "NO_SUCH_LASTNAME")
+        actorRepo.searchActors(params).shouldBeEmpty()
     }
 
     @Test

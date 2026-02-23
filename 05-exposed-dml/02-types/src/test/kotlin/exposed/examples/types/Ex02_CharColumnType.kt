@@ -5,6 +5,7 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.Table
@@ -19,6 +20,9 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * `CHAR` 컬럼 타입 사용 예제.
+ */
 class Ex02_CharColumnType: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -50,6 +54,21 @@ class Ex02_CharColumnType: AbstractExposedTest() {
                 .singleOrNull()
 
             result?.get(CharTable.charColumn) shouldBeEqualTo 'A'
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `char column search with invalid value`(testDB: TestDB) {
+        withTables(testDB, CharTable) {
+            CharTable.insertAndGetId { it[charColumn] = 'A' }
+
+            val result = CharTable
+                .selectAll()
+                .where { CharTable.charColumn eq 'Z' }
+                .singleOrNull()
+
+            result.shouldBeNull()
         }
     }
 

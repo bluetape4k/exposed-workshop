@@ -4,6 +4,7 @@ import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
@@ -273,6 +274,31 @@ class Ex03_DateTimeLiteral: AbstractExposedTest() {
 
             val row = query.firstOrNull().shouldNotBeNull()
             row[TableWithTimestamp.timestamp] shouldBeEqualTo defaultTimestamp
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `search with non existing literals returns empty`(testDB: TestDB) {
+        withTables(testDB, TableWithDate, TableWithDateTime, TableWithTimestamp) {
+            TableWithDate.insert { it[date] = defaultDate }
+            TableWithDateTime.insert { it[dateTime] = defaultDateTime }
+            TableWithTimestamp.insert { it[timestamp] = defaultTimestamp }
+
+            TableWithDate.selectAll()
+                .where { TableWithDate.date eq dateLiteral(futureDate) }
+                .toList()
+                .shouldBeEmpty()
+
+            TableWithDateTime.selectAll()
+                .where { TableWithDateTime.dateTime eq dateTimeLiteral(futureDatetime) }
+                .toList()
+                .shouldBeEmpty()
+
+            TableWithTimestamp.selectAll()
+                .where { TableWithTimestamp.timestamp eq timestampLiteral(futureTimestamp) }
+                .toList()
+                .shouldBeEmpty()
         }
     }
 }

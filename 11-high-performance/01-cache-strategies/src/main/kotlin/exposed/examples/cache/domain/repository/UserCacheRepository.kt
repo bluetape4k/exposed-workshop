@@ -16,12 +16,12 @@ import org.springframework.stereotype.Repository
 import java.time.Instant
 
 /**
- * Read Through / Write Through 를 이용해 DB의 사용자 정보를 캐시합니다.
+ * 사용자 정보를 Read Through/Write Through 전략으로 조회 및 저장하는 캐시 저장소입니다.
+ *
+ * - 조회 시: 캐시에 없으면 DB에서 읽어 캐시에 채웁니다.
+ * - 저장 시: 캐시와 DB를 함께 갱신합니다.
  */
 @Repository
-/**
- * Read/Write Through 캐시/DB 저장소입니다.
- */
 class UserCacheRepository(redissonClient: RedissonClient): AbstractExposedCacheRepository<UserRecord, Long>(
     redissonClient = redissonClient,
     cacheName = "exposed:users",

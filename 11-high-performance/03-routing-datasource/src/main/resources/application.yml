@@ -1,0 +1,18 @@
+spring:
+    application:
+        name: routing-datasource-example
+
+routing:
+    datasource:
+        default-tenant: default
+        tenants:
+            default:
+                rw:
+                    url: jdbc:h2:mem:routing_default_rw;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+                ro:
+                    url: jdbc:h2:mem:routing_default_ro;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+            acme:
+                rw:
+                    url: jdbc:h2:mem:routing_acme_rw;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+                ro:
+                    url: jdbc:h2:mem:routing_acme_ro;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE

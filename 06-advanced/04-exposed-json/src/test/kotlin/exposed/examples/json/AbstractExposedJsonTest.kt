@@ -14,6 +14,9 @@ import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.junit.jupiter.api.Assumptions
 
+/**
+ * JSON/JSONB 예제 테스트에서 공통으로 사용하는 초기 데이터 생성 유틸리티를 제공한다.
+ */
 abstract class AbstractExposedJsonTest: AbstractExposedTest() {
 
     companion object: KLogging()

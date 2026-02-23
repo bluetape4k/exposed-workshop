@@ -8,7 +8,6 @@ import io.bluetape4k.logging.debug
 import io.bluetape4k.support.toUtf8Bytes
 import io.bluetape4k.support.toUtf8String
 import nl.altindag.log.LogCaptor
-import org.amshove.kluent.internal.assertFailsWith
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainNone
 import org.amshove.kluent.shouldNotBeEmpty
@@ -26,6 +25,7 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.update
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import kotlin.test.assertFailsWith
 
 class Ex01_EncryptedColumn: AbstractExposedTest() {
 

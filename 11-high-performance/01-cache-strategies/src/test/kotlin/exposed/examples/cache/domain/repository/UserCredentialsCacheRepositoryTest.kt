@@ -5,6 +5,7 @@ import exposed.examples.cache.domain.model.UserCredentialsTable
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
@@ -86,6 +87,13 @@ class UserCredentialsCacheRepositoryTest(
             val userCredentialsFromCache = repository.getAll(userCredentialsIdsInDB)
             userCredentialsFromCache shouldHaveSize userCredentialsIdsInDB.size
             userCredentialsFromCache.map { it.id } shouldContainSame userCredentialsIdsInDB
+        }
+    }
+
+    @Test
+    fun `존재하지 않는 인증 ID 조회 시 null을 반환한다`() {
+        transaction {
+            repository.get("missing-user-credentials-id").shouldBeNull()
         }
     }
 }

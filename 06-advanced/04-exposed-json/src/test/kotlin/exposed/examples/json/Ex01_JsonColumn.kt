@@ -281,6 +281,7 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
              * ```
              */
             dataEntity.findById(newUser.id)?.jsonColumn shouldBeEqualTo jsonA
+            dataEntity.findById(-1).shouldBeNull()
 
             /**
              * ```sql

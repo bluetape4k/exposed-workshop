@@ -270,6 +270,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
             entityCache.clear()
 
             dataEntity.findById(newUser.id)?.jsonBColumn shouldBeEqualTo jsonA
+            dataEntity.findById(-1).shouldBeNull()
 
             /**
              * Update by DSL

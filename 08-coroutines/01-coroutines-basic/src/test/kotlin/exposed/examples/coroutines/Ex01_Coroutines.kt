@@ -49,6 +49,9 @@ import java.util.concurrent.Executors
 import kotlin.test.assertFailsWith
 
 @Suppress("DEPRECATION")
+/**
+ * Exposed 코루틴 트랜잭션 API(`newSuspendedTransaction`, `suspendedTransactionAsync`)를 검증하는 예제 테스트입니다.
+ */
 class Ex01_Coroutines: AbstractExposedTest() {
 
     companion object: KLoggingChannel() {
@@ -76,12 +79,28 @@ class Ex01_Coroutines: AbstractExposedTest() {
         override val primaryKey = PrimaryKey(id)
     }
 
+    /**
+     * 현재 트랜잭션에서 지정한 식별자의 `Tester` 레코드를 조회합니다.
+     */
     suspend fun JdbcTransaction.getTesterById(id: Int): ResultRow? =
         withSuspendTransaction {
             Tester.selectAll()
                 .where { Tester.id eq id }
                 .singleOrNull()
         }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `존재하지 않는 식별자로 조회하면 null을 반환한다`(testDB: TestDB) = runSuspendIO {
+        withSuspendedTables(testDB, Tester) {
+            newSuspendedTransaction {
+                Tester.insert { }
+            }
+
+            val missingId = Int.MIN_VALUE
+            getTesterById(missingId).shouldBeNull()
+        }
+    }
 
     /**
      * Coroutines 환경 하에서 여러 작업을 순차적으로 수행합니다.
@@ -376,6 +395,9 @@ class Ex01_Coroutines: AbstractExposedTest() {
         }
     }
 
+    /**
+     * 코루틴 트랜잭션 예외 전파를 검증하기 위한 DAO 엔티티입니다.
+     */
     class TesterEntity(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<TesterEntity>(Tester)
 

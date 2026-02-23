@@ -14,6 +14,7 @@ import io.bluetape4k.spring.tests.httpGet
 import io.bluetape4k.spring.tests.httpPost
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
@@ -94,6 +95,14 @@ class UserControllerTest(
     }
 
     @Test
+    fun `존재하지 않는 User ID로 조회하면 빈 응답을 반환한다`() = runSuspendIO {
+        client
+            .httpGet("/users/-999999")
+            .expectStatus().is2xxSuccessful
+            .expectBody().isEmpty
+    }
+
+    @Test
     fun `복수의 User ID로 User를 Read-Through 방식으로 조회`() = runSuspendIO {
         val userIds = userIdsInDB.shuffled().take(5)
         log.debug { "User IDs to search: $userIds" }
@@ -107,6 +116,18 @@ class UserControllerTest(
 
         users shouldHaveSize userIds.size
         users.map { it.id } shouldContainSame userIds
+    }
+
+    @Test
+    fun `존재하지 않는 User ID 목록으로 조회하면 빈 리스트를 반환한다`() = runSuspendIO {
+        val users = client
+            .httpGet("/users/all?ids=-1,-2,-3")
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<UserRecord>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
+
+        users.shouldBeEmpty()
     }
 
     @Test

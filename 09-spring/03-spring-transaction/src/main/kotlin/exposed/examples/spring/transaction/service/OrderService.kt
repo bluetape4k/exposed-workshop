@@ -14,15 +14,24 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
+/**
+ * 고객/주문 엔티티 생성과 조회를 트랜잭션 경계 안에서 수행하는 서비스입니다.
+ */
 class OrderService {
 
     companion object: KLogging()
 
+    /**
+     * 고객/주문 스키마를 생성합니다.
+     */
     fun init() {
         log.info { "스키마 생성. ${CustomerTable.tableName}, ${OrderTable.tableName}" }
         SchemaUtils.create(CustomerTable, OrderTable)
     }
 
+    /**
+     * 고객 엔티티를 생성합니다.
+     */
     fun createCustomer(name: String, mobile: String? = null): CustomerEntity {
         log.debug { "고객 생성. name=$name" }
         return CustomerEntity.new {
@@ -46,6 +55,9 @@ class OrderService {
         }
     }
 
+    /**
+     * 고객 생성 후 즉시 주문을 생성합니다.
+     */
     fun doBoth(customerName: String, productName: String, customerMobile: String? = null): OrderEntity {
         val customer = createCustomer(customerName, customerMobile)
         return createOrder(customer, productName)
@@ -62,13 +74,18 @@ class OrderService {
         return OrderEntity.find { OrderTable.productName eq productName }.firstOrNull()
     }
 
+    /**
+     * 현재 트랜잭션 컨텍스트에서 블록을 실행합니다.
+     */
     fun transaction(block: () -> Unit) {
         block()
     }
 
+    /**
+     * 고객/주문 스키마를 제거합니다.
+     */
     fun cleanUp() {
         log.info { "스키마 삭제. ${CustomerTable.tableName}, ${OrderTable.tableName}" }
         SchemaUtils.drop(CustomerTable, OrderTable)
     }
-
 }

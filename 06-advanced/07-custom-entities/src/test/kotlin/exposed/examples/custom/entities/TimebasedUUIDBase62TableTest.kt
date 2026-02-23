@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.take
 import org.amshove.kluent.shouldBeEqualTo
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.dao.flushCache
 import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.insert
@@ -34,6 +35,9 @@ import org.junit.jupiter.params.provider.MethodSource
 import kotlin.random.Random
 
 @Suppress("DEPRECATION")
+/**
+ * Time-based UUID Base62 식별자를 사용하는 테이블/엔티티 동작을 검증한다.
+ */
 class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
 
     companion object: KLogging()
@@ -81,6 +85,7 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
             }
 
             T1.selectAll().count() shouldBeEqualTo recordCount.toLong()
+            E1.find { T1.name eq "__unknown__" }.count() shouldBeEqualTo 0L
         }
     }
 

@@ -21,7 +21,7 @@ Jackson 3 기반 JSON 컬럼 연동 모듈입니다. Jackson 2에서 3으로 이
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-06-advanced-11-exposed-jackson3:test
+./gradlew :11-exposed-jackson3:test
 ```
 
 ## 실습 체크리스트
@@ -36,4 +36,4 @@ Jackson 3 기반 JSON 컬럼 연동 모듈입니다. Jackson 2에서 3으로 이
 
 ## 다음 챕터
 
-- [`../07-jpa/README.md`](../07-jpa/README.md)
+- [`../../07-jpa/README.md`](../../07-jpa/README.md)

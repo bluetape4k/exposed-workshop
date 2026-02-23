@@ -17,10 +17,16 @@ import javax.sql.DataSource
 
 @Configuration
 @EnableTransactionManagement
+/**
+ * 테스트용 데이터소스와 Exposed `SpringTransactionManager` 를 구성하는 설정입니다.
+ */
 class DataSourceConfig: TransactionManagementConfigurer {
 
     companion object: KLogging()
 
+    /**
+     * 메모리 H2 기반 데이터소스를 생성합니다.
+     */
     @Bean
     fun dataSource(): DataSource {
         val config = HikariConfig().apply {
@@ -33,12 +39,18 @@ class DataSourceConfig: TransactionManagementConfigurer {
         return HikariDataSource(config)
     }
 
+    /**
+     * `@Transactional` 에서 사용할 Exposed `SpringTransactionManager` 를 등록합니다.
+     */
     @Bean
     override fun annotationDrivenTransactionManager(): TransactionManager {
         log.info { "Create Exposed's SpringTransactionManager" }
         return SpringTransactionManager(dataSource(), DatabaseConfig { useNestedTransactions = true })
     }
 
+    /**
+     * 주문 도메인 서비스를 등록합니다.
+     */
     @Bean
     fun orderService(): OrderService = OrderService()
 }

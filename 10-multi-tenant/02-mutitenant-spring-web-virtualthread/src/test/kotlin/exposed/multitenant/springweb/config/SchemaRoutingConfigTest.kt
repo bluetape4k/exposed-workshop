@@ -7,6 +7,7 @@ import exposed.multitenant.springweb.tenant.Tenants
 import exposed.shared.repository.model.toActorRecord
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
+import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.condition.EnabledOnJre
@@ -23,6 +24,7 @@ class SchemaRoutingConfigTest: AbstractMultitenantTest() {
     fun `get actors in korean`() {
         ScopedValue.where(TenantContext.CURRENT_TENANT, Tenants.Tenant.KOREAN).run {
             val actors = ActorTable.selectAll().map { it.toActorRecord() }
+            actors shouldHaveSize 9
 
             actors.forEach {
                 log.debug { "Korean Actor: $it" }
@@ -35,6 +37,7 @@ class SchemaRoutingConfigTest: AbstractMultitenantTest() {
     fun `get actors in english`() {
         ScopedValue.where(TenantContext.CURRENT_TENANT, Tenants.Tenant.ENGLISH).run {
             val actors = ActorTable.selectAll().map { it.toActorRecord() }
+            actors shouldHaveSize 9
 
             actors.forEach {
                 log.debug { "English Actor: $it" }

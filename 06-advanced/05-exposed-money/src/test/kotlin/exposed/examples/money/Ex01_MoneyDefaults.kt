@@ -21,6 +21,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.math.BigDecimal
 
+/**
+ * `compositeMoney` 컬럼의 기본값/nullable 동작을 검증하는 예제 테스트.
+ */
 class Ex01_MoneyDefaults: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -103,6 +106,7 @@ class Ex01_MoneyDefaults: AbstractExposedTest() {
 
             val entities = DBDefault.all().toList()
             entities shouldBeEqualTo created
+            DBDefault.findById(-1).shouldBeNull()
         }
     }
 
@@ -149,7 +153,7 @@ class Ex01_MoneyDefaults: AbstractExposedTest() {
      * VALUES ('1', 1, 'USD', 0)
      *
      * -- update for nullable money column
-     * UUPDATE tablewithdbdefault
+     * UPDATE tablewithdbdefault
      *     SET t2=10,
      *         "t2_C"='USD'
      *   WHERE tablewithdbdefault.id = 1

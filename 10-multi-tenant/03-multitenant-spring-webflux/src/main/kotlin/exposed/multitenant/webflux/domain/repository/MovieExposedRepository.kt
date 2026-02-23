@@ -35,9 +35,6 @@ import java.time.LocalDate
  * WebFlux 환경의 영화 도메인 Exposed 저장소입니다.
  */
 @Repository
-/**
- * WebFlux용 영화 저장소이며 Exposed DSL을 사용합니다.
- */
 class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
 
     companion object: KLogging()
@@ -45,6 +42,9 @@ class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
     override val table = MovieTable
     override fun ResultRow.toEntity() = toMovieRecord()
 
+    /**
+     * 검색 파라미터(식별자/이름/제작자/개봉일)로 영화 목록을 조회합니다.
+     */
     @Transactional(readOnly = true)
     fun searchMovies(params: Map<String, String?>): List<MovieRecord> {
         log.debug { "Search Movie by params. params=$params" }
@@ -68,6 +68,9 @@ class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
         return query.map { it.toEntity() }
     }
 
+    /**
+     * 영화 정보를 저장하고 생성된 식별자를 포함한 레코드를 반환합니다.
+     */
     fun create(movieRecord: MovieRecord): MovieRecord {
         log.debug { "Create new movie. movie: $movieRecord" }
 

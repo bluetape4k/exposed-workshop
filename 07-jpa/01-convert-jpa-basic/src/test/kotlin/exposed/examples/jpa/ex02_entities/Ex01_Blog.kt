@@ -10,6 +10,7 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.jetbrains.exposed.v1.dao.entityCache
 import org.jetbrains.exposed.v1.dao.flushCache
@@ -19,6 +20,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDate
 
+/**
+ * Blog 도메인의 1:1/1:N/N:M 매핑 중 기본 생성 흐름을 검증하는 테스트입니다.
+ */
 class Ex01_Blog: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -78,6 +82,7 @@ class Ex01_Blog: AbstractExposedTest() {
             entityCache.clear()
 
             val loadedPost = Post.findById(post.id)!!
+            Post.findById(-1L).shouldBeNull()
 
             loadedPost shouldBeEqualTo post
             loadedPost.details shouldBeEqualTo postDetail

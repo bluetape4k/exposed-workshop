@@ -16,6 +16,7 @@ import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeFalse
 import org.amshove.kluent.shouldBeInstanceOf
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeEqualTo
@@ -42,6 +43,9 @@ import java.util.concurrent.ExecutionException
 import kotlin.test.assertFailsWith
 
 @EnabledOnJre(JRE.JAVA_21)
+/**
+ * Exposed Virtual Thread 트랜잭션 API를 검증하는 예제 테스트입니다.
+ */
 class Ex01_VritualThreads: AbstractExposedTest() {
 
     companion object: KLoggingChannel()
@@ -68,12 +72,29 @@ class Ex01_VritualThreads: AbstractExposedTest() {
     }
 
     @Suppress("UnusedReceiverParameter")
+            /**
+             * 현재 트랜잭션에서 지정한 식별자의 `VTester` 레코드를 조회합니다.
+             */
     fun JdbcTransaction.getTesterById(id: Int): ResultRow? =
         newVirtualThreadTransaction {
             VTester.selectAll()
                 .where { VTester.id eq id }
                 .singleOrNull()
         }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `존재하지 않는 식별자로 조회하면 null을 반환한다`(testDB: TestDB) {
+        withTables(testDB, VTester) {
+            newVirtualThreadTransaction {
+                VTester.insert { }
+                commit()
+            }
+
+            val missingId = Int.MIN_VALUE
+            getTesterById(missingId).shouldBeNull()
+        }
+    }
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -184,6 +205,9 @@ class Ex01_VritualThreads: AbstractExposedTest() {
         }
     }
 
+    /**
+     * Virtual Thread 테스트용 DAO 엔티티입니다.
+     */
     class TesterEntity(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<TesterEntity>(VTester)
 

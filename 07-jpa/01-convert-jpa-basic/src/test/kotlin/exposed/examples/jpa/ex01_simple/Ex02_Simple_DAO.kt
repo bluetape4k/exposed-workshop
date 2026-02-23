@@ -8,6 +8,7 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.support.requireNotBlank
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeEqualTo
 import org.jetbrains.exposed.v1.dao.entityCache
 import org.jetbrains.exposed.v1.exceptions.ExposedSQLException
@@ -18,6 +19,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertFailsWith
 
+/**
+ * 단순 DAO 엔티티의 생성/동등성/제약조건을 검증하는 테스트입니다.
+ */
 class Ex02_Simple_DAO: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -42,6 +46,7 @@ class Ex02_Simple_DAO: AbstractExposedTest() {
 
             val persisted1 = SimpleEntity.findById(entity1.id)!!
             val persisted2 = SimpleEntity.findById(entity2.id)!!
+            SimpleEntity.findById(-1L).shouldBeNull()
 
             persisted1 shouldBeEqualTo entity1
             persisted2 shouldBeEqualTo entity2

@@ -15,6 +15,7 @@ import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeLessOrEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.core.inList
 import org.jetbrains.exposed.v1.jdbc.deleteAll
@@ -129,6 +130,12 @@ class UserCacheRepositoryTest(
             repository.findAll { UserTable.id inList userIdToSearch }
         }
         users.shouldBeEmpty()
+    }
+
+    @Test
+    fun `존재하지 않는 User ID 조회 시 null을 반환한다`() = runSuspendIO {
+        val user = repository.get(-1L)
+        user.shouldBeNull()
     }
 
     @Test

@@ -5,6 +5,7 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeLessThan
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -112,5 +113,10 @@ class CountryRepositoryTest(
         // 캐시를 전부 비우고, 모두 NULL 임을 확인한다.
         countryRepository.evictCacheAll()
         DataPopulator.COUNTRY_CODES.all { countryCache.get("country:$it") == null }.shouldBeTrue()
+    }
+
+    @Test
+    fun `존재하지 않는 국가 코드를 조회하면 null을 반환한다`() {
+        countryRepository.findByCode("NO_SUCH_COUNTRY").shouldBeNull()
     }
 }

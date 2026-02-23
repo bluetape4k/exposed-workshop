@@ -16,12 +16,20 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 @CacheConfig(cacheNames = [COUNTRY_CACHE_NAME])
+/**
+ * 국가 코드 기준 조회/수정과 캐시 무효화를 제공하는 동기 리포지토리입니다.
+ */
 class CountryRepository(private val cacheManager: CacheManager) {
 
     companion object: KLogging() {
         const val COUNTRY_CACHE_NAME = "cache:code:country"
     }
 
+    /**
+     * 국가 코드로 국가 정보를 조회합니다.
+     *
+     * 캐시에 값이 없으면 DB에서 읽어 캐시에 저장하고, 있으면 캐시 값을 반환합니다.
+     */
     @Cacheable(key = "'country:' + #code")
     fun findByCode(code: String): CountryRecord? {
         log.debug { "----> Loading country with code[$code] and caching in redis ..." }
@@ -40,6 +48,9 @@ class CountryRepository(private val cacheManager: CacheManager) {
         }
     }
 
+    /**
+     * 국가 정보를 수정하고 해당 국가 캐시를 즉시 무효화합니다.
+     */
     @Transactional
     @CacheEvict(key = "'country:' + #countryRecord.code")
     fun update(countryRecord: CountryRecord): Int {
@@ -51,6 +62,9 @@ class CountryRepository(private val cacheManager: CacheManager) {
         }
     }
 
+    /**
+     * 국가 캐시 엔트리를 모두 제거합니다.
+     */
     @CacheEvict(cacheNames = [COUNTRY_CACHE_NAME], allEntries = true)
     fun evictCacheAll() {
         log.debug { "----> Evicting all country cache ..." }

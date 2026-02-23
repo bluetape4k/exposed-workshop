@@ -11,12 +11,12 @@ import org.redisson.api.RedissonClient
 import org.springframework.stereotype.Repository
 
 /**
- * Read-Only 캐시를 이용하여, DB의 사용자 인증 정보를 캐시합니다.
+ * 사용자 인증 정보를 Read-Only 전략으로 조회하는 캐시 저장소입니다.
+ *
+ * - 조회 시: 캐시에 없으면 DB를 조회해 캐시에 적재합니다.
+ * - 저장/수정 시: 이 저장소에서는 처리하지 않습니다.
  */
 @Repository
-/**
- * Read-Only 인증 저장소입니다.
- */
 class UserCredentialsCacheRepository(
     redissonClient: RedissonClient,
 ): AbstractExposedCacheRepository<UserCredentialsRecord, String>(

@@ -11,6 +11,7 @@ import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
@@ -25,6 +26,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.*
 
+/**
+ * 클라이언트 기본값 생성 함수(time-based UUID, snowflake, ksuid)의 동작을 검증한다.
+ */
 class CustomClientDefaultFunctionsTest: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -111,6 +115,8 @@ class CustomClientDefaultFunctionsTest: AbstractExposedTest() {
             loaded.map { it.snowflake }.distinct() shouldHaveSize entityCount
             loaded.map { it.ksuid }.distinct() shouldHaveSize entityCount
             loaded.map { it.ksuidMillis }.distinct() shouldHaveSize entityCount
+
+            ClientGeneratedEntity.findById(-1).shouldBeNull()
         }
     }
 }

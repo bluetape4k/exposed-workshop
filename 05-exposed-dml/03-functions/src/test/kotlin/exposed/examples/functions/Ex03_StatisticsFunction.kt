@@ -3,7 +3,6 @@ package exposed.examples.functions
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
-import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.alias
@@ -77,7 +76,12 @@ class Ex03_StatisticsFunction: Ex00_FunctionBase() {
             val resultRow = SampleTestTable.select(stdDevPopExpr, stdDevSampExpr).first()
             val stdDevPop = resultRow[stdDevPopExpr]
             val stdDevSamp = resultRow[stdDevSampExpr]
-            log.debug { "stdDevPop: $stdDevPop, stdDevSamp: $stdDevSamp" }
+
+            val expectedStdDevPop = calculateStandardDeviation(isPopulation = true)
+            val expectedStdDevSamp = calculateStandardDeviation(isPopulation = false)
+
+            stdDevPop?.setScale(scale, RoundingMode.HALF_EVEN) shouldBeEqualTo expectedStdDevPop
+            stdDevSamp?.setScale(scale, RoundingMode.HALF_EVEN) shouldBeEqualTo expectedStdDevSamp
         }
     }
 
@@ -131,7 +135,12 @@ class Ex03_StatisticsFunction: Ex00_FunctionBase() {
             val resultRow = SampleTestTable.select(varPopExpr, varSampExpr).first()
             val varPop = resultRow[varPopExpr]
             val varSamp = resultRow[varSampExpr]
-            log.debug { "varPop: $varPop, varSamp: $varSamp" }
+
+            val expectedVarPop = calculateVariance(isPopulation = true)
+            val expectedVarSamp = calculateVariance(isPopulation = false)
+
+            varPop?.compareTo(expectedVarPop) shouldBeEqualTo 0
+            varSamp?.compareTo(expectedVarSamp) shouldBeEqualTo 0
         }
     }
 

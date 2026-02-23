@@ -12,6 +12,7 @@ import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.support.toUtf8Bytes
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
@@ -23,15 +24,24 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Jasypt 암호화 컬럼을 DAO 방식으로 저장/조회하는 예제를 검증합니다.
+ */
 class JasyptColumnTypeDaoTest: AbstractExposedTest() {
 
     companion object: KLogging()
 
+    /**
+     * DAO 암호화 예제 테이블입니다.
+     */
     object T1: IntIdTable() {
         val varchar = jasyptVarChar("varchar", 255, Encryptors.AES).index()
         val binary = jasyptBinary("binary", 255, Encryptors.RC4)
     }
 
+    /**
+     * DAO 암호화 예제 엔티티입니다.
+     */
     class E1(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<E1>(T1)
 
@@ -61,6 +71,7 @@ class JasyptColumnTypeDaoTest: AbstractExposedTest() {
             entityCache.clear()
 
             val saved = E1.findById(entity.id)!!
+            E1.findById(-1).shouldBeNull()
 
             saved.varchar shouldBeEqualTo insertedVarchar
             saved.binary shouldBeEqualTo insertedBinary

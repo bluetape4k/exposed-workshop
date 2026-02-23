@@ -79,6 +79,9 @@ import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
+/**
+ * Exposed의 Kotlinx-datetime 타입 매핑과 날짜/시간 연산을 검증하는 통합 예제 테스트.
+ */
 @OptIn(ExperimentalTime::class)
 class Ex01_KotlinDateTime: AbstractExposedTest() {
 

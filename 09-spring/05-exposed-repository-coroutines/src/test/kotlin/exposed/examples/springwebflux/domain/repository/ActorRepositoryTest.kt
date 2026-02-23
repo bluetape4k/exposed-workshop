@@ -5,12 +5,14 @@ import exposed.examples.springwebflux.domain.model.ActorRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import kotlin.test.assertFailsWith
 
 @Suppress("DEPRECATION")
 class ActorRepositoryTest(
@@ -35,6 +37,15 @@ class ActorRepositoryTest(
             log.debug { "Actor: $actor" }
             actor.shouldNotBeNull()
             actor.id shouldBeEqualTo actorId
+        }
+    }
+
+    @Test
+    fun `존재하지 않는 배우 ID를 조회하면 예외를 던진다`() = runSuspendIO {
+        newSuspendedTransaction(readOnly = true) {
+            assertFailsWith<NoSuchElementException> {
+                actorRepository.findById(Long.MIN_VALUE)
+            }
         }
     }
 
@@ -75,6 +86,14 @@ class ActorRepositoryTest(
             actors.forEach {
                 log.debug { "actor: $it" }
             }
+        }
+    }
+
+    @Test
+    fun `존재하지 않는 firstName으로 검색하면 빈 목록을 반환한다`() = runSuspendIO {
+        newSuspendedTransaction(readOnly = true) {
+            val params = mapOf("firstName" to "NO_SUCH_FIRSTNAME")
+            actorRepository.searchActor(params).shouldBeEmpty()
         }
     }
 

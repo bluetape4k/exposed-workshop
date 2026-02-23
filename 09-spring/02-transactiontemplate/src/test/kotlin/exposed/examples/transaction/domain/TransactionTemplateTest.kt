@@ -2,15 +2,19 @@ package exposed.examples.transaction.domain
 
 import exposed.examples.transaction.AbstractTransactionApplicationTest
 import io.bluetape4k.logging.KLogging
+import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.RepeatedTest
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.jdbc.core.JdbcTemplate
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class TransactionTemplateTest(
     @param:Autowired private val bookService: BookService,
+    @param:Autowired private val jdbcTemplate: JdbcTemplate,
 ): AbstractTransactionApplicationTest() {
 
     companion object: KLogging() {
@@ -45,5 +49,20 @@ class TransactionTemplateTest(
     @RepeatedTest(REPEAT_SIZE)
     fun `with Transactional annotation`() {
         bookService.execTransactionalAnnotation()
+    }
+
+    @Order(6)
+    @Test
+    fun `각 실행 방식은 author를 1건 생성해야 한다`() {
+        fun authorCount(): Long =
+            jdbcTemplate.queryForObject("SELECT COUNT(*) FROM AUTHORS", Long::class.java) ?: 0L
+
+        val beforeWithoutTx = authorCount()
+        bookService.execWithoutSpringTransaction()
+        authorCount() shouldBeEqualTo beforeWithoutTx + 1L
+
+        val beforeSpringTx = authorCount()
+        bookService.executeSpringTransaction()
+        authorCount() shouldBeEqualTo beforeSpringTx + 1L
     }
 }

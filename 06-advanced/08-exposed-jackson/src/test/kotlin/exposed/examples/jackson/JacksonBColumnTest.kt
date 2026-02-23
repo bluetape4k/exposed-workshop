@@ -46,6 +46,9 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Jackson 기반 JSONB 컬럼의 저장/조회/검색 기능을 검증하는 예제 테스트.
+ */
 class JacksonBColumnTest: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -210,6 +213,7 @@ class JacksonBColumnTest: AbstractExposedTest() {
                 jacksonBColumn = dataA
             }
             dataEntity.findById(newUser.id)?.jacksonBColumn shouldBeEqualTo dataA
+            dataEntity.findById(-1).shouldBeNull()
 
             val updatedUser = dataA.copy(logins = 99)
             dataTable.update({ dataTable.id eq newUser.id }) {

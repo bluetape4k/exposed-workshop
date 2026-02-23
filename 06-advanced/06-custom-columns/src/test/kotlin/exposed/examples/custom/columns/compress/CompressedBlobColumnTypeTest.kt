@@ -13,6 +13,7 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.support.toUtf8String
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
@@ -25,6 +26,9 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * 압축 `BLOB` 커스텀 컬럼 타입의 저장/복원 동작을 검증한다.
+ */
 class CompressedBlobColumnTypeTest: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -122,7 +126,8 @@ class CompressedBlobColumnTypeTest: AbstractExposedTest() {
 
             entityCache.clear()
 
-            val loaded = E1.findById(e1.id)!!
+            val loaded = E1.findById(e1.id).shouldNotBeNull()
+            E1.findById(-1).shouldBeNull()
             loaded shouldBeEqualTo e1
             loaded.lz4Data!!.toUtf8String() shouldBeEqualTo text
             loaded.snappyData!!.toUtf8String() shouldBeEqualTo text

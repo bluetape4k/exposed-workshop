@@ -20,9 +20,6 @@ import java.time.LocalDate
  * WebFlux 환경의 배우 도메인 Exposed 저장소입니다.
  */
 @Repository
-/**
- * WebFlux 환경용 배우 도메인 저장소입니다.
- */
 class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
 
     companion object: KLogging()
@@ -50,7 +47,7 @@ class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
     }
 
     /**
-     * 새로운 Actor 레코드를 INSERT 합니다.
+     * 배우 정보를 저장하고 생성된 식별자를 포함한 레코드를 반환합니다.
      */
     @Transactional
     fun create(actor: ActorRecord): ActorRecord {
@@ -65,5 +62,4 @@ class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
         }
         return actor.copy(id = id.value)
     }
-
 }

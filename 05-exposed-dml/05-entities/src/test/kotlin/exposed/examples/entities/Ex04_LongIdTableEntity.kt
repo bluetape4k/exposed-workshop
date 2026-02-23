@@ -13,6 +13,7 @@ import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldNotBeNull
@@ -29,6 +30,9 @@ import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * `LongIdTable` 기반 엔티티 테스트에 사용하는 테이블/엔티티 모음.
+ */
 object LongIdTables {
 
     /**
@@ -204,6 +208,21 @@ class Ex04_LongIdTableEntity: AbstractExposedTest() {
                 "Sunghyouk Bae" to "Seoul",
                 "Minseok Kim" to "Seoul",
             )
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `findById with unknown id returns null`(testDB: TestDB) {
+        withTables(testDB, Cities, People) {
+            val city = City.new { name = "Seoul" }
+            Person.new {
+                name = "Debop"
+                this.city = city
+            }
+
+            City.findById(999_999L).shouldBeNull()
+            Person.findById(999_999L).shouldBeNull()
         }
     }
 

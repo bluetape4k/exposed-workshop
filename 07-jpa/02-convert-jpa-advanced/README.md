@@ -21,7 +21,7 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-07-jpa-02-convert-jpa-advanced:test
+./gradlew :02-convert-jpa-advanced:test
 ```
 
 ## 실습 체크리스트
@@ -34,6 +34,33 @@
 - 지연 로딩 전제 코드를 제거해 런타임 오류 방지
 - 인덱스/쿼리 플랜 회귀를 CI 지표로 추적
 
+## JPA 엔티티 매핑 다이어그램
+
+### Single Table Inheritance
+
+![Single Table Inheritance](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance_ERD.png)
+예제 코드: [
+`src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance.kt)
+
+### Joined Table Inheritance
+
+![Joined Table Inheritance](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance_ERD.png)
+예제 코드: [
+`src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance.kt)
+
+### Table Per Class Inheritance
+
+![Table Per Class Inheritance](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance_ERD.png)
+예제 코드: [
+`src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance.kt)
+
+### Tree (Self-Reference)
+
+![Tree Node Schema](src/test/kotlin/exposed/examples/jpa/ex04_tree/TreeNodeSchema.png)
+예제 코드: [
+`src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt`](src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt), [
+`src/test/kotlin/exposed/examples/jpa/ex04_tree/TreeNodeSchema.kt`](src/test/kotlin/exposed/examples/jpa/ex04_tree/TreeNodeSchema.kt)
+
 ## 다음 챕터
 
-- [`../08-coroutines/README.md`](../08-coroutines/README.md)
+- [`../../08-coroutines/README.md`](../../08-coroutines/README.md)

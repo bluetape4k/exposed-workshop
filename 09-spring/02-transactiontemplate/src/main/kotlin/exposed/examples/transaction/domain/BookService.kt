@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.transaction.support.TransactionOperations
 
 @Component
+/**
+ * 다양한 트랜잭션 경계(Spring/Exposed/미적용)에서 저자/도서 데이터를 생성하는 서비스입니다.
+ */
 class BookService(
     @Qualifier("exposedTransactionTemplate") private val exposedTransactionTemplate: TransactionOperations,
     @Qualifier("withoutTransactionOperations") private val withoutTransactionOperations: TransactionOperations,
@@ -23,11 +26,17 @@ class BookService(
         val faker = Faker()
     }
 
+    /**
+     * Exposed 트랜잭션과 트랜잭션 미적용 실행을 순차 수행합니다.
+     */
     fun execWithSpringAndExposedTransactions() {
         execWithExposedTransaction()
         execWithoutSpringTransaction()
     }
 
+    /**
+     * Exposed용 `TransactionTemplate` 로 Spring 트랜잭션을 실행합니다.
+     */
     fun executeSpringTransaction() {
         // exposedTransactionTemplate 는 Exposed 에서 제공하는 `SpringTransactionManager` 를 사용합니다.
         log.info { "Execute with spring transaction" }
@@ -36,6 +45,9 @@ class BookService(
         }
     }
 
+    /**
+     * Exposed `transaction {}` 블록에서 도서를 생성합니다.
+     */
     fun execWithExposedTransaction() {
         log.info { "Execute with exposed transaction" }
         transaction {
@@ -46,6 +58,9 @@ class BookService(
         }
     }
 
+    /**
+     * 트랜잭션이 없는 `TransactionOperations` 에서 저자를 생성합니다.
+     */
     fun execWithoutSpringTransaction() {
         log.info { "Execute without spring transaction" }
         // withoutTransactionOperations 는 Transaction 적용이 안되어 있다.
@@ -54,6 +69,9 @@ class BookService(
         }
     }
 
+    /**
+     * `@Transactional` 경계 안에서 트랜잭션 미적용 `TransactionOperations` 를 호출합니다.
+     */
     @Transactional
     fun execTransactionalAnnotation() {
         log.info { "Execute with Transactional annotation" }

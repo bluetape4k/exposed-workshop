@@ -14,8 +14,14 @@ import org.jetbrains.exposed.v1.dao.LongEntityClass
 import org.jetbrains.exposed.v1.javatime.date
 import org.jetbrains.exposed.v1.jdbc.SizedIterable
 
+/**
+ * Blog 도메인의 JPA 전환 예제에서 사용하는 테이블/엔티티 매핑을 정의합니다.
+ */
 object BlogSchema {
 
+    /**
+     * Blog 예제에서 생성/삭제할 전체 테이블 목록입니다.
+     */
     val blogTables = arrayOf(
         PostTable, PostDetailTable, PostCommentTable, PostTagTable, TagTable
     )
@@ -110,6 +116,9 @@ object BlogSchema {
         }
     }
 
+    /**
+     * 게시글 엔티티입니다.
+     */
     class Post(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<Post>(PostTable)
 
@@ -126,6 +135,9 @@ object BlogSchema {
             .toString()
     }
 
+    /**
+     * 게시글 상세 엔티티입니다.
+     */
     class PostDetail(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<PostDetail>(PostDetailTable)
 
@@ -142,6 +154,9 @@ object BlogSchema {
             .toString()
     }
 
+    /**
+     * 게시글 댓글 엔티티입니다.
+     */
     class PostComment(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<PostComment>(PostCommentTable)
 
@@ -157,6 +172,9 @@ object BlogSchema {
             .toString()
     }
 
+    /**
+     * 태그 엔티티입니다.
+     */
     class Tag(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<Tag>(TagTable)
 

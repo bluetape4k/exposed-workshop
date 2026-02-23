@@ -8,6 +8,7 @@ import io.bluetape4k.logging.debug
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.inList
@@ -86,5 +87,11 @@ class UserCredentialsCacheRepositoryTest(
             val userCredentialsFromCache = repository.getAll(idsInDB)
             userCredentialsFromCache shouldHaveSize idsInDB.size
         }
+    }
+
+    @Test
+    fun `존재하지 않는 인증 ID 조회 시 null을 반환한다`() = runSuspendIO {
+        val uc = repository.get("missing-user-credentials-id")
+        uc.shouldBeNull()
     }
 }

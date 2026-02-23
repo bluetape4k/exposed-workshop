@@ -29,6 +29,9 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Repository
+/**
+ * 영화 도메인 조회/저장을 Exposed DSL/DAO 조합으로 처리하는 리포지토리입니다.
+ */
 class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
 
     companion object: KLogging()
@@ -36,6 +39,9 @@ class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
     override val table = MovieTable
     override fun ResultRow.toEntity(): MovieRecord = toMovieRecord()
 
+    /**
+     * 검색 파라미터(식별자/이름/제작자/개봉일)에 맞는 영화를 조회합니다.
+     */
     @Transactional(readOnly = true)
     fun searchMovies(params: Map<String, String?>): List<MovieRecord> {
         log.debug { "Search Movie by params. params=$params" }
@@ -59,6 +65,9 @@ class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
         return query.map { it.toEntity() }
     }
 
+    /**
+     * 신규 영화를 저장하고 생성된 식별자를 포함한 레코드를 반환합니다.
+     */
     fun create(movieRecord: MovieRecord): MovieRecord {
         log.debug { "Create new movie. movie: $movieRecord" }
 

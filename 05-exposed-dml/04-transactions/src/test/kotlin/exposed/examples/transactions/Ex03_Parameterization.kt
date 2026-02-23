@@ -2,6 +2,7 @@ package exposed.examples.transactions
 
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
+import exposed.shared.tests.expectException
 import exposed.shared.tests.inProperCase
 import exposed.shared.tests.withTables
 import io.bluetape4k.support.ifTrue
@@ -205,6 +206,23 @@ class Ex03_Parameterization: AbstractExposedTest() {
             )
 
             TempTable.selectAll().single()[TempTable.name].shouldBeNull()
+        }
+    }
+
+    /**
+     * Placeholder 개수와 전달 인자 수가 다르면 실행 오류가 발생해야 한다.
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `placeholder count mismatch throws exception`(testDB: TestDB) {
+        withTables(testDB, TempTable) {
+            expectException<Exception> {
+                exec(
+                    stmt = "INSERT INTO ${TempTable.tableName} (${TempTable.name.name}) VALUES (?)",
+                    args = emptyList(),
+                    explicitStatementType = StatementType.INSERT
+                )
+            }
         }
     }
 

@@ -7,11 +7,14 @@ import exposed.multitenant.webflux.tenant.Tenants
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
 import org.springframework.beans.factory.annotation.Autowired
@@ -70,5 +73,30 @@ class ActorControllerTest(
             Tenants.Tenant.ENGLISH to "Brad"
         )
         actor.firstName shouldBeEqualTo expectedFirstName[tenant]
+    }
+
+    @ParameterizedTest(name = "tenant={0}")
+    @EnumSource(Tenants.Tenant::class)
+    fun `존재하지 않는 actor id 조회 시 null 을 반환한다`(tenant: Tenants.Tenant) = runSuspendIO {
+        val actor = client
+            .get()
+            .uri("/actors/-1")
+            .header(TenantFilter.TENANT_HEADER, tenant.id)
+            .exchange()
+            .expectStatus().is2xxSuccessful
+            .returnResult<ActorRecord>().responseBody
+            .awaitFirstOrNull()
+
+        actor.shouldBeNull()
+    }
+
+    @Test
+    fun `잘못된 tenant header 로 요청하면 서버 에러가 발생한다`() {
+        client
+            .get()
+            .uri("/actors")
+            .header(TenantFilter.TENANT_HEADER, "invalid-tenant")
+            .exchange()
+            .expectStatus().is5xxServerError
     }
 }

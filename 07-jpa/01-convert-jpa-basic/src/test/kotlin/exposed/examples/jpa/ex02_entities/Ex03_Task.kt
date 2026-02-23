@@ -8,6 +8,7 @@ import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
 import org.jetbrains.exposed.v1.dao.LongEntity
@@ -18,6 +19,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDate
 
+/**
+ * 열거형 상태를 가진 Task 엔티티 매핑과 DAO 조회를 검증하는 테스트입니다.
+ */
 class Ex03_Task: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -77,6 +81,7 @@ class Ex03_Task: AbstractExposedTest() {
             entityCache.clear()
 
             val loadedTask = Task.findById(task.id.value)!!
+            Task.findById(-1L).shouldBeNull()
             loadedTask shouldBeEqualTo task
 
             loadedTask.status shouldBeEqualTo TaskStatusType.TO_DO

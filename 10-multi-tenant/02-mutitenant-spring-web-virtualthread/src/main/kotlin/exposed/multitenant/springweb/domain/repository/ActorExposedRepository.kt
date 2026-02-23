@@ -20,9 +20,6 @@ import java.time.LocalDate
  * 배우 도메인에 대한 Exposed 기반 저장소입니다.
  */
 @Repository
-/**
- * 배우 도메인을 Exposed 저장소로 구현합니다.
- */
 class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
 
     companion object: KLogging()
@@ -49,6 +46,9 @@ class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
         return query.map { it.toEntity() }
     }
 
+    /**
+     * 배우 정보를 저장하고 생성된 식별자를 포함한 레코드를 반환합니다.
+     */
     fun create(actor: ActorRecord): ActorRecord {
         log.debug { "Create new actor. actor: $actor" }
 

@@ -7,6 +7,8 @@ import org.springframework.transaction.support.TransactionTemplate
 
 /**
  * [PlatformTransactionManager] 의 Transaction 하에서 [block] 을 실행합니다.
+ *
+ * [propagationBehavior], [isolationLevel], [readOnly], [timeout] 값을 지정해 트랜잭션 속성을 제어할 수 있습니다.
  */
 fun PlatformTransactionManager.execute(
     propagationBehavior: Int = TransactionDefinition.PROPAGATION_REQUIRED,

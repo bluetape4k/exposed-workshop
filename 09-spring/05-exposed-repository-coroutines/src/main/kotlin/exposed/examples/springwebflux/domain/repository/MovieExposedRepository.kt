@@ -30,6 +30,9 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
 @Repository
+/**
+ * 코루틴 기반 WebFlux 환경에서 영화 도메인 조회/저장을 담당하는 리포지토리입니다.
+ */
 class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
 
     companion object: KLoggingChannel() {
@@ -55,6 +58,9 @@ class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
     override val table = MovieTable
     override fun ResultRow.toEntity() = toMovieRecord()
 
+    /**
+     * 검색 파라미터(식별자/이름/제작자/개봉일)로 영화를 조회합니다.
+     */
     fun searchMovie(params: Map<String, String?>): List<MovieRecord> {
         log.debug { "Search Movie by params. params: $params" }
 
@@ -76,6 +82,9 @@ class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
         return query.map { it.toEntity() }
     }
 
+    /**
+     * 신규 영화를 저장하고 생성된 식별자를 포함한 레코드를 반환합니다.
+     */
     suspend fun create(movie: MovieRecord): MovieRecord {
         log.debug { "Create Movie. movie: $movie" }
 

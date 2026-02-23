@@ -9,6 +9,7 @@ import io.bluetape4k.money.currencyUnitOf
 import io.bluetape4k.money.inUSD
 import io.bluetape4k.money.moneyOf
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.javamoney.moneta.Money
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.eq
@@ -31,6 +32,9 @@ import java.math.BigDecimal
 import javax.money.CurrencyUnit
 import javax.money.MonetaryAmount
 
+/**
+ * `compositeMoney` 컬럼의 저장/조회/조건 검색 동작을 검증하는 예제 테스트.
+ */
 class Ex02_Money: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -182,6 +186,11 @@ class Ex02_Money: AbstractExposedTest() {
                 next.currency shouldBeEqualTo money.currency
                 next.amount shouldBeEqualTo money.numberStripped.setScale(AMOUNT_SCALE)
             }
+
+            AccountEntity.findById(-1).shouldBeNull()
+
+            val unknownCurrency = AccountEntity.find { AccountTable.composite_money.currency eq currencyUnitOf("KRW") }
+            unknownCurrency.count() shouldBeEqualTo 0L
         }
     }
 

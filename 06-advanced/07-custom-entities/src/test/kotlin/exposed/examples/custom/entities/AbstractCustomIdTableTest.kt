@@ -5,6 +5,9 @@ import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import org.junit.jupiter.params.provider.Arguments
 
+/**
+ * 커스텀 ID 엔티티 테스트에서 공통으로 사용하는 테스트 DB/레코드 개수 조합을 제공한다.
+ */
 abstract class AbstractCustomIdTableTest: AbstractExposedTest() {
 
     companion object: KLogging() {

@@ -21,7 +21,7 @@ Fastjson2 기반 JSON 컬럼 처리를 다루는 모듈입니다. Jackson 대안
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-06-advanced-09-exposed-fastjson2:test
+./gradlew :09-exposed-fastjson2:test
 ```
 
 ## 실습 체크리스트

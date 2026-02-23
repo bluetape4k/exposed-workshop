@@ -17,6 +17,9 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Repository
+/**
+ * 배우 정보를 Exposed DSL 기반으로 조회/저장하는 리포지토리입니다.
+ */
 class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
 
     companion object: KLogging()
@@ -43,6 +46,9 @@ class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
         return query.map { it.toEntity() }
     }
 
+    /**
+     * 신규 배우 정보를 저장하고 생성된 식별자를 포함한 레코드를 반환합니다.
+     */
     fun create(actor: ActorRecord): ActorRecord {
         log.debug { "Create new actor. actor: $actor" }
 
@@ -55,5 +61,4 @@ class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
         }
         return actor.copy(id = id.value)
     }
-
 }

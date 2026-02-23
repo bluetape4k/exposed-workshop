@@ -8,6 +8,9 @@ import java.time.OffsetDateTime
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+/**
+ * 현재 시스템 타임존 기준의 [kotlinx.datetime.LocalDateTime] 값을 반환한다.
+ */
 @OptIn(ExperimentalTime::class)
 fun now() = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 

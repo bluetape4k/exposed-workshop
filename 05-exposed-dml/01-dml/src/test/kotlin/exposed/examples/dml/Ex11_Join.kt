@@ -92,14 +92,24 @@ class Ex11_Join: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `join with foreign key`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, users, _ ->
-            val stPetersburgUser = users.innerJoin(cities)
+            val joinedRows = users.leftJoin(cities)
                 .select(users.name, users.cityId, cities.name)
                 .where { cities.name eq "St. Petersburg" }
                 .orWhere { users.cityId.isNull() }
-                .single()
+                .orderBy(users.name)
+                .toList()
 
-            stPetersburgUser[users.name] shouldBeEqualTo "Andrey"
-            stPetersburgUser[cities.name] shouldBeEqualTo "St. Petersburg"
+            joinedRows shouldHaveSize 3
+            joinedRows[0][users.name] shouldBeEqualTo "Alex"
+            joinedRows[0][users.cityId].shouldBeNull()
+            joinedRows[0][cities.name].shouldBeNull()
+
+            joinedRows[1][users.name] shouldBeEqualTo "Andrey"
+            joinedRows[1][cities.name] shouldBeEqualTo "St. Petersburg"
+
+            joinedRows[2][users.name] shouldBeEqualTo "Something"
+            joinedRows[2][users.cityId].shouldBeNull()
+            joinedRows[2][cities.name].shouldBeNull()
         }
     }
 

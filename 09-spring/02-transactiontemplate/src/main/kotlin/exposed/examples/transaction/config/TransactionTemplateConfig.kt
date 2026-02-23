@@ -9,6 +9,9 @@ import org.springframework.transaction.support.TransactionOperations
 import org.springframework.transaction.support.TransactionTemplate
 
 @Configuration
+/**
+ * Exposed 기반 트랜잭션 템플릿과 트랜잭션 미적용 템플릿을 구성하는 설정입니다.
+ */
 class TransactionTemplateConfig {
 
     companion object: KLogging()
@@ -22,7 +25,7 @@ class TransactionTemplateConfig {
         TransactionTemplate(tm)
 
     /**
-     * Trasaction 없이 수행하는 [TransactionOperations] Bean
+     * 트랜잭션 없이 실행하는 [TransactionOperations] 빈입니다.
      */
     @Bean
     @Qualifier("withoutTransactionOperations")

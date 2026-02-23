@@ -5,6 +5,7 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
+import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
@@ -119,6 +120,7 @@ class Ex01_Connection: AbstractExposedTest() {
                 log.debug { "key: $key, constraint: $constraint" }
             }
             constraints.keys shouldHaveSize 2   // parent, child
+            constraints.values.any { it.isNotEmpty() }.shouldBeTrue()
         }
     }
 }

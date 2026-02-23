@@ -28,8 +28,8 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-07-jpa-01-convert-jpa-basic:test
-./gradlew :exposed-07-jpa-02-convert-jpa-advanced:test
+./gradlew :01-convert-jpa-basic:test
+./gradlew :02-convert-jpa-advanced:test
 ```
 
 ## 테스트 포인트

@@ -28,7 +28,7 @@ Java 21 Virtual Threads 기반으로 Exposed 트랜잭션을 실행하는 모듈
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-08-coroutines-02-virtualthreads-basic:test
+./gradlew :02-virtualthreads-basic:test
 ```
 
 ## 실습 체크리스트
@@ -41,6 +41,20 @@ Java 21 Virtual Threads 기반으로 Exposed 트랜잭션을 실행하는 모듈
 - Virtual Thread 증가와 DB 커넥션 수를 함께 조정
 - 장시간 I/O 또는 외부 호출로 인한 병목을 분리
 
+## 예제 흐름 다이어그램
+
+```mermaid
+flowchart LR
+    A["Caller"] --> B["newVirtualThreadTransaction"]
+    B --> C["DB Operation (DSL/DAO)"]
+    B --> D["virtualThreadTransactionAsync"]
+    D --> C
+    C --> E["Commit / Rollback"]
+```
+
+예제 코드: [
+`src/test/kotlin/exposed/examples/virtualthreads/Ex01_VritualThreads.kt`](src/test/kotlin/exposed/examples/virtualthreads/Ex01_VritualThreads.kt)
+
 ## 다음 챕터
 
-- [`../09-spring/README.md`](../09-spring/README.md)
+- [`../../09-spring/README.md`](../../09-spring/README.md)

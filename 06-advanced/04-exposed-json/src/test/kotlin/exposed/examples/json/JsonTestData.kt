@@ -12,6 +12,9 @@ import org.jetbrains.exposed.v1.dao.IntEntityClass
 import org.jetbrains.exposed.v1.json.json
 import org.jetbrains.exposed.v1.json.jsonb
 
+/**
+ * JSON/JSONB 테스트에서 재사용하는 테이블, 엔티티, 직렬화 모델을 모아둔 컨테이너.
+ */
 object JsonTestData {
 
     /**
@@ -46,6 +49,9 @@ object JsonTestData {
         val jsonBColumn = jsonb<DataHolder>("j_b_column", Json.Default)
     }
 
+    /**
+     * [JsonTable] 레코드를 다루는 DAO 엔티티.
+     */
     class JsonEntity(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<JsonEntity>(JsonTable)
 
@@ -58,6 +64,9 @@ object JsonTestData {
             .toString()
     }
 
+    /**
+     * [JsonBTable] 레코드를 다루는 DAO 엔티티.
+     */
     class JsonBEntity(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<JsonBEntity>(JsonBTable)
 
@@ -103,6 +112,9 @@ object JsonTestData {
     }
 }
 
+/**
+ * 사용자 정보와 로그인 상태를 JSON 컬럼에 저장하기 위한 예제 모델.
+ */
 @Serializable
 data class DataHolder(
     val user: User,
@@ -111,11 +123,17 @@ data class DataHolder(
     val team: String?,
 )
 
+/**
+ * 사용자 목록을 포함하는 JSON 배열 예제 모델.
+ */
 @Serializable
 data class UserGroup(
     val users: List<User>,
 )
 
+/**
+ * 개별 사용자 정보를 표현하는 JSON 예제 모델.
+ */
 @Serializable
 data class User(
     val name: String,

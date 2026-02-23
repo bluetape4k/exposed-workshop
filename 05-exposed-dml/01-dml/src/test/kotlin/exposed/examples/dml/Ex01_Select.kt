@@ -152,6 +152,20 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
+     * 존재하지 않는 값으로 조회하면 결과가 비어 있어야 한다.
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `SELECT ALL - 잘못된 값으로 조회 시 결과 없음`(testDB: TestDB) {
+        withCitiesAndUsers(testDB) { _, users, _ ->
+            users.selectAll()
+                .where { users.id eq "unknown-user-id" }
+                .toList()
+                .shouldBeEmpty()
+        }
+    }
+
+    /**
      * WHERE 조건에 NOT EQUAL에 해당하는 `<>` 연산자 사용
      *
      * ```sql

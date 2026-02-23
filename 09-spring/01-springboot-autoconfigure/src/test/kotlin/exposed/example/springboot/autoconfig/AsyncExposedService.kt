@@ -12,6 +12,9 @@ import java.util.concurrent.CompletableFuture
 
 @Async
 @Service
+/**
+ * Exposed 조회를 비동기 API(플랫폼 스레드/Virtual Thread)로 감싸 제공하는 테스트용 서비스입니다.
+ */
 class AsyncExposedService {
 
     companion object: KLoggingChannel()

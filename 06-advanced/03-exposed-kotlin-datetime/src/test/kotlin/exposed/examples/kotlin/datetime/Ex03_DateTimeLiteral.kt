@@ -5,6 +5,7 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
@@ -25,7 +26,7 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
 /**
- * DATE, DATEIME 컬럼을 [dateLiteral], [dateTimeLiteral] 으로 사용하는 예
+ * DATE, DATETIME, TIMESTAMP 컬럼에서 [dateLiteral], [dateTimeLiteral], [timestampLiteral]을 사용하는 예제 테스트.
  */
 @OptIn(ExperimentalTime::class)
 class Ex03_DateTimeLiteral: AbstractExposedTest() {
@@ -268,6 +269,34 @@ class Ex03_DateTimeLiteral: AbstractExposedTest() {
                     TableWithTimestamp.timestamp less timestampLiteral(futureTimestamp)
                 }
             query.single()[TableWithTimestamp.timestamp] shouldBeEqualTo defaultTimestamp
+        }
+    }
+
+    /**
+     * 존재하지 않는 리터럴 값으로 조회하면 결과가 비어 있어야 한다.
+     */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun testSearchWithNonExistingLiteralsReturnsEmpty(testDB: TestDB) {
+        withTables(testDB, TableWithDate, TableWithDatetime, TableWithTimestamp) {
+            TableWithDate.insert { it[date] = defaultDate }
+            TableWithDatetime.insert { it[datetime] = defaultDatetime }
+            TableWithTimestamp.insert { it[timestamp] = defaultTimestamp }
+
+            TableWithDate.selectAll()
+                .where { TableWithDate.date eq dateLiteral(futureDate) }
+                .toList()
+                .shouldBeEmpty()
+
+            TableWithDatetime.selectAll()
+                .where { TableWithDatetime.datetime eq dateTimeLiteral(futureDatetime) }
+                .toList()
+                .shouldBeEmpty()
+
+            TableWithTimestamp.selectAll()
+                .where { TableWithTimestamp.timestamp eq timestampLiteral(futureTimestamp) }
+                .toList()
+                .shouldBeEmpty()
         }
     }
 }

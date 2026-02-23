@@ -4,7 +4,9 @@ import exposed.examples.springmvc.AbstractExposedRepositoryTest
 import exposed.examples.springmvc.domain.model.MovieRecord
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
@@ -37,6 +39,11 @@ class MovieExposedRepositoryTest(
     }
 
     @Test
+    fun `존재하지 않는 영화 ID를 조회하면 null을 반환한다`() {
+        movieRepo.findByIdOrNull(Long.MIN_VALUE).shouldBeNull()
+    }
+
+    @Test
     fun `search movies`() {
         val params = mapOf("producerName" to "Johnny")
 
@@ -45,6 +52,12 @@ class MovieExposedRepositoryTest(
             log.debug { "movie: $it" }
         }
         movies shouldHaveSize 2
+    }
+
+    @Test
+    fun `존재하지 않는 producerName으로 검색하면 빈 목록을 반환한다`() {
+        val params = mapOf("producerName" to "NO_SUCH_PRODUCER")
+        movieRepo.searchMovies(params).shouldBeEmpty()
     }
 
     @Test

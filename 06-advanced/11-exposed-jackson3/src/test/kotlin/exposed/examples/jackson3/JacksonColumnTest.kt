@@ -47,6 +47,9 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Jackson 3 기반 JSON 컬럼(`json`) 예제를 검증하는 테스트 모음입니다.
+ */
 class JacksonColumnTest: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -228,6 +231,7 @@ class JacksonColumnTest: AbstractExposedTest() {
                 jacksonColumn = dataA
             }
             dataEntity.findById(newUser.id)?.jacksonColumn shouldBeEqualTo dataA
+            dataEntity.findById(-1).shouldBeNull()
 
             val updatedUser = dataA.copy(user = User("Lead", "Beta"))
             dataTable.update({ dataTable.id eq newUser.id }) {

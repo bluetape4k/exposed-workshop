@@ -11,6 +11,7 @@ import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
@@ -87,6 +88,14 @@ class UserCredentialsControllerTest(
     }
 
     @Test
+    fun `존재하지 않는 인증 ID로 조회하면 빈 응답을 반환한다`() = runSuspendIO {
+        client
+            .httpGet("/user-credentials/not-exists-id")
+            .expectStatus().is2xxSuccessful
+            .expectBody().isEmpty
+    }
+
+    @Test
     fun `복수의 ID로 UserCredentials를 Read-Through 방식으로 조회`() = runSuspendIO {
         val ids = idsInDB.shuffled().take(5)
         log.debug { "User credentials IDs to search: $ids" }
@@ -100,6 +109,18 @@ class UserCredentialsControllerTest(
 
         ucs shouldHaveSize ids.size
         ucs.map { it.id } shouldContainSame ids
+    }
+
+    @Test
+    fun `존재하지 않는 인증 ID 목록으로 조회하면 빈 리스트를 반환한다`() = runSuspendIO {
+        val ucs = client
+            .httpGet("/user-credentials/all?ids=missing-1,missing-2")
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<UserCredentialsRecord>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
+
+        ucs.shouldBeEmpty()
     }
 
     @Test

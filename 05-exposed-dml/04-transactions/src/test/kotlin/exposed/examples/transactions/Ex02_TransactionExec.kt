@@ -29,6 +29,9 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.testcontainers.utility.Base58
 import java.sql.ResultSet
 
+/**
+ * `Transaction.exec` 계열 API 사용 예제.
+ */
 class Ex02_TransactionExec: AbstractExposedTest() {
 
     companion object: KLogging()
@@ -72,7 +75,7 @@ class Ex02_TransactionExec: AbstractExposedTest() {
              * ```
              */
             val results: MutableList<Int> = exec(
-                """SELECT * FROM ${ExecTable.tableName.inProperCase()}""",
+                """SELECT * FROM ${ExecTable.tableName.inProperCase()} ORDER BY id""",
                 explicitStatementType = StatementType.SELECT
             ) { resultSet: ResultSet ->
                 val allAmounts = mutableListOf<Int>()

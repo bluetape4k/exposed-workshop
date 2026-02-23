@@ -17,8 +17,14 @@ import org.jetbrains.exposed.v1.javatime.date
 import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
 import java.time.LocalDate
 
+/**
+ * Person/Address 도메인의 관계 매핑과 테스트 픽스처를 제공합니다.
+ */
 object PersonSchema {
 
+    /**
+     * Person 예제에서 함께 생성/삭제할 전체 테이블 목록입니다.
+     */
     val allPersonTables = arrayOf(AddressTable, PersonTable)
 
     /**
@@ -79,6 +85,9 @@ object PersonSchema {
         override val primaryKey = PrimaryKey(id)
     }
 
+    /**
+     * 주소 엔티티입니다.
+     */
     class Address(id: EntityID<Long>): LongEntity(id), java.io.Serializable {
         companion object: LongEntityClass<Address>(AddressTable)
 
@@ -97,6 +106,9 @@ object PersonSchema {
             .toString()
     }
 
+    /**
+     * 사람 엔티티입니다.
+     */
     class Person(id: EntityID<Long>): LongEntity(id), java.io.Serializable {
         companion object: LongEntityClass<Person>(PersonTable)
 
@@ -119,6 +131,9 @@ object PersonSchema {
             .toString()
     }
 
+    /**
+     * Person 테이블 레코드 표현 DTO입니다.
+     */
     data class PersonRecord(
         val id: Long? = null,
         val firstName: String? = null,
@@ -129,6 +144,9 @@ object PersonSchema {
         val address: Long? = null,
     ): java.io.Serializable
 
+    /**
+     * 주소 정보를 조인한 사람 조회 결과 DTO입니다.
+     */
     data class PersonWithAddress(
         var id: Long? = null,
         var firstName: String? = null,
@@ -139,6 +157,9 @@ object PersonSchema {
         var address: Address? = null,
     ): java.io.Serializable
 
+    /**
+     * Person/Address 테이블을 생성한 뒤 테스트 블록을 실행합니다.
+     */
     fun withPersons(
         testDB: TestDB,
         block: JdbcTransaction.(PersonTable, AddressTable) -> Unit,
@@ -150,6 +171,9 @@ object PersonSchema {
 
 
     @Suppress("UnusedReceiverParameter")
+            /**
+             * Person/Address 기본 데이터를 생성하고 테스트 본문을 실행합니다.
+             */
     fun AbstractExposedTest.withPersonAndAddress(
         testDB: TestDB,
         statement: JdbcTransaction.(
