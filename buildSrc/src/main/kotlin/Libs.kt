@@ -63,7 +63,7 @@ object Plugins {
 object Versions {
 
     // Java 21, Kotlin 2.0 이상에서 사용하세요
-    const val bluetape4k = "1.1.0"    // Bluetape4k Github Package 로 배포됩니다.
+    const val bluetape4k = "1.2.0-SNAPSHOT"    // Bluetape4k Github Package 로 배포됩니다.
 
     const val kotlin = "2.3.10"                 // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
     const val kotlinx_coroutines = "1.10.2"      // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
@@ -218,7 +218,7 @@ object Libs {
 
 
     // bluetape4k
-    fun bluetape4k(module: String, version: String = Versions.bluetape4k) = "io.bluetape4k:bluetape4k-$module:$version"
+    fun bluetape4k(module: String, version: String = Versions.bluetape4k) = "io.github.bluetape4k:bluetape4k-$module:$version"
 
     val bluetape4k_bom = bluetape4k("bom")
 

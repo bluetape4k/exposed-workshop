@@ -25,30 +25,17 @@ plugins {
     id(Plugins.graalvm_native) version Plugins.Versions.graalvm_native apply false
 }
 
-
-// NOTE: Github 에 등록된 Package 를 다운받기 위해서 사용합니다.
-// NOTE: ~/.gradle/gradle.properties gpr.user,gpr.key 를 정의하던가
-// NOTE: ~/.zshrc 에 GITHUB_USERNAME, GITHUB_TOKEN 을 정의합니다.
-fun getEnvOrProjectProperty(propertyKey: String, envKey: String): String {
-    return project.findProperty(propertyKey) as? String ?: System.getenv()[envKey] ?: ""
-}
-
-val bluetape4kGprKey: String = getEnvOrProjectProperty("bluetape4k.gpr.key", "BLUETAPE4K_GITHUB_TOKEN")
-
 allprojects {
     repositories {
         mavenCentral()
         google()
-        mavenLocal()
         maven {
-            name = "bluetape4k"
-            url = uri("https://maven.pkg.github.com/bluetape4k/bluetape4k-projects")
-            credentials {
-                username = "debop"
-                password = bluetape4kGprKey
-            }
+            name = "central-portal-snapshots"
+            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
         }
     }
+
+    // bluetape4k snapshot 버전 사용 시만 사용하세요.
     configurations.all {
         resolutionStrategy.cacheChangingModulesFor(1, TimeUnit.DAYS)
     }
