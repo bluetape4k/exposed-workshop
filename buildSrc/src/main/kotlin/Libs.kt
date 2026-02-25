@@ -228,6 +228,11 @@ object Libs {
     val bluetape4k_junit5 = bluetape4k("junit5")
     val bluetape4k_testcontainers = bluetape4k("testcontainers")
 
+    // Virtual Thread
+    val bluetape4k_virtualthread_api = bluetape4k("virtualthread-api")
+    val bluetape4k_virtualthread_jdk21 = bluetape4k("virtualthread-jdk21")
+    val bluetape4k_virtualthread_jdk25 = bluetape4k("virtualthread-jdk25")
+
     // IO
     val bluetape4k_avro = bluetape4k("avro")
     val bluetape4k_crypto = bluetape4k("crypto")
