@@ -3,10 +3,10 @@ package exposed.examples.custom.entities
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withSuspendedTables
 import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.core.dao.id.KsuidMillisTable
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.id.KsuidMillisEntity
 import io.bluetape4k.exposed.dao.id.KsuidMillisEntityClass
-import io.bluetape4k.exposed.dao.id.KsuidMillisTable
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.junit5.coroutines.runSuspendIO

@@ -13,9 +13,10 @@ dependencies {
     testImplementation(Libs.exposed_jdbc)
 
     testImplementation(Libs.bluetape4k_exposed)
+    testImplementation(Libs.bluetape4k_exposed_jackson3)
 
     // Jackson 3
-    testImplementation(Libs.bluetape4k_exposed_jackson3)
+    testImplementation(Libs.bluetape4k_jackson3)
     testImplementation(Libs.jackson3_module_kotlin)
     testImplementation(Libs.jackson3_module_blackbird)
 

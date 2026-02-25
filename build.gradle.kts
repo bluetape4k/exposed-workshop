@@ -291,8 +291,9 @@ subprojects {
             dependency(Libs.kryo)
             dependency(Libs.fory_kotlin)
 
-            // Jackson (이상하게 mavenBom 에 적용이 안되어서 강제로 추가하였다)
+            // NOTE: Jackson (이상하게 mavenBom 에 적용이 안되어서 강제로 추가하였다)
             dependency(Libs.jackson_bom)
+            dependency(Libs.jackson_annotations)
             dependency(Libs.jackson_core)
             dependency(Libs.jackson_databind)
             dependency(Libs.jackson_datatype_jdk8)
