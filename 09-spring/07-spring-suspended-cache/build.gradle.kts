@@ -23,7 +23,6 @@ configurations {
 
 dependencies {
 
-    implementation(platform(Libs.exposed_bom))
     testImplementation(project(":exposed-shared-tests"))
 
     // bluetape4k
@@ -73,6 +72,7 @@ dependencies {
     runtimeOnly(Libs.zstd_jni)
 
     // Coroutines
+    implementation(enforcedPlatform(Libs.kotlinx_coroutines_bom))
     implementation(Libs.bluetape4k_coroutines)
     implementation(Libs.kotlinx_coroutines_core)
     implementation(Libs.kotlinx_coroutines_reactor)

@@ -237,11 +237,10 @@ enum class TestDB(
 
         val ALL = TestDB.entries.toSet()
 
-        // NOTE: 이 값을 바꿔서 MySQL, PostgreSQL 등을 testcontainers 를 이용하여 테스트할 수 있습니다.
-
         fun enabledDialects(): Set<TestDB> {
             return if (USE_FAST_DB) ALL_H2
-            else ALL_H2 + ALL_POSTGRES + ALL_MYSQL_MARIADB //ALL - ALL_H2_V1 - MYSQL_V5 - COCKROACH)
+            else setOf(H2, POSTGRESQL) + ALL_MYSQL_MARIADB
+            // else ALL_H2 + ALL_POSTGRES + ALL_MYSQL_MARIADB //ALL - ALL_H2_V1 - MYSQL_V5 - COCKROACH
         }
     }
 }

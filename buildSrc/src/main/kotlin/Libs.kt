@@ -129,7 +129,7 @@ object Versions {
     // NOTE: 이 경우 기존 javax 를 사용하는 버전과 충돌이 생길 수 있으니 조심하세요
     // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
 
-    const val hibernate = "6.6.33.Final"           // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
+    const val hibernate = "6.6.43.Final"           // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
     const val hibernate_reactive = "2.4.11.Final"  // https://mvnrepository.com/artifact/org.hibernate.reactive/hibernate-reactive-core
     const val hibernate_validator = "8.0.3.Final" // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
     const val querydsl = "5.1.0"                  // https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
@@ -164,8 +164,8 @@ object Versions {
 
     const val ow2_asm = "9.9"               // https://mvnrepository.com/artifact/org.ow2.asm/asm
 
-    const val junit_jupiter = "6.0.2"      // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-    const val junit_platform = "6.0.2"     // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher
+    const val junit_jupiter = "6.0.3"      // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    const val junit_platform = "6.0.3"     // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher
     const val assertj_core = "3.27.6"       // https://mvnrepository.com/artifact/org.assertj/assertj-core
     const val kluent = "1.73"               // https://mvnrepository.com/artifact/org.amshove.kluent/kluent
     const val mockk = "1.14.7"              // https://mvnrepository.com/artifact/io.mockk/mockk
@@ -391,23 +391,6 @@ object Libs {
 
     val kotlinx_benchmark_runtime = kotlinxBenchmark("runtime")
     val kotlinx_benchmark_runtime_jvm = kotlinxBenchmark("runtime-jvm")
-
-    // javax api
-    const val javax_activation_api = "javax.activation:javax.activation-api:1.2.0"
-    const val javax_annotation_api = "javax.annotation:javax.annotation-api:1.3.2"
-    const val javax_cache_api = "javax.cache:cache-api:1.1.1"
-    const val javax_inject = "javax.inject:javax.inject:1"
-    const val javax_interceptor_api = "javax.interceptor:javax.interceptor-api:1.2.2"
-    const val javax_persistence_api = "javax.persistence:javax.persistence-api:2.2"
-    const val javax_servlet_api = "javax.servlet:javax.servlet-api:4.0.1"
-    const val javax_transaction_api = "javax.transaction:jta:1.1"
-    const val javax_validation_api = "javax.validation:validation-api:2.0.1.Final"
-    const val javax_ws_rs_api = "javax.ws.rs:javax.ws.rs-api:2.1.1"
-    const val javax_xml_bind = "javax.xml.bind:jaxb-api:2.3.1"
-
-    // javax expression
-    const val javax_el_api = "javax.el:javax.el-api:3.0.0"      // https://mvnrepository.com/artifact/javax.el/javax.el-api
-    const val javax_el = "org.glassfish:javax.el:3.0.1-b12"     // https://mvnrepository.com/artifact/org.glassfish/javax.el
 
     // json 구현체
     const val javax_json_api = "javax.json:javax.json-api:1.1.4"
