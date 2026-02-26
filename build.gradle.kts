@@ -274,26 +274,9 @@ subprojects {
             dependency(Libs.hibernate_jcache)
             dependency(Libs.javassist)
 
-//            dependency(Libs.antlr4_runtime)  // https://github.com/spring-projects/spring-data-jpa/issues/3262
-//            dependency(Libs.antlr4_tool)
-
-//            dependency(Libs.querydsl_apt)
-//            dependency(Libs.querydsl_core)
-//            dependency(Libs.querydsl_jpa)
-
             // Validators
             dependency(Libs.hibernate_validator)
             dependency(Libs.hibernate_validator_annotation_processor)
-
-//            dependency(Libs.hikaricp)
-//            dependency(Libs.mysql_connector_j)
-//            dependency(Libs.mariadb_java_client)
-//
-//            dependency(Libs.caffeine)
-//            dependency(Libs.caffeine_jcache)
-//
-//            dependency(Libs.objenesis)
-//            dependency(Libs.ow2_asm)
 
             dependency(Libs.junit_bom)
             dependency(Libs.junit_jupiter)
@@ -305,38 +288,6 @@ subprojects {
             dependency(Libs.junit_platform_engine)
             dependency(Libs.junit_platform_launcher)
             dependency(Libs.junit_platform_runner)
-
-//            dependency(Libs.kluent)
-//            dependency(Libs.assertj_core)
-//
-//            dependency(Libs.mockk)
-//            dependency(Libs.datafaker)
-//            dependency(Libs.random_beans)
-//
-//            dependency(Libs.jsonpath)
-//            dependency(Libs.jsonassert)
-//
-//            dependency(Libs.bouncycastle_bcpkix)
-//            dependency(Libs.bouncycastle_bcprov)
-
-//            // Prometheus
-//            dependency(Libs.prometheus_simpleclient)
-//            dependency(Libs.prometheus_simpleclient_common)
-//            dependency(Libs.prometheus_simpleclient_httpserver)
-//            dependency(Libs.prometheus_simpleclient_pushgateway)
-//            dependency(Libs.prometheus_simpleclient_spring_boot)
-//            dependency(Libs.prometheus_simpleclient_tracer_common)
-//            dependency(Libs.prometheus_simpleclient_tracer_otel)
-//            dependency(Libs.prometheus_simpleclient_tracer_otel_agent)
-//
-//            // OW2 ASM
-//            dependency(Libs.ow2_asm)
-//            dependency(Libs.ow2_asm_commons)
-//            dependency(Libs.ow2_asm_util)
-//            dependency(Libs.ow2_asm_tree)
-//
-//            dependency(Libs.snakeyaml)
-//            dependency(Libs.jna)
         }
     }
 
