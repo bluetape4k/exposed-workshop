@@ -284,7 +284,6 @@ object Libs {
     val bluetape4k_cache_local = bluetape4k("cache-local")
     val bluetape4k_cache_redisson = bluetape4k("cache-redisson")
     val bluetape4k_cache_redisson_near = bluetape4k("cache-redisson-near")
-    val bluetape4k_graphql = bluetape4k("graphql")
     val bluetape4k_kafka = bluetape4k("kafka")
     val bluetape4k_micrometer = bluetape4k("micrometer")
     val bluetape4k_nats = bluetape4k("nats")
