@@ -271,7 +271,7 @@ object Libs {
     val bluetape4k_hibernate_reactive = bluetape4k("hibernate-reactive")
     val bluetape4k_jdbc = bluetape4k("jdbc")
     val bluetape4k_r2dbc = bluetape4k("r2dbc")
-    val bluetape4k_redis = bluetape4k("redis")
+
 
     // Infrastructure
     val bluetape4k_bucket4j = bluetape4k("bucket4j")
@@ -289,6 +289,7 @@ object Libs {
     val bluetape4k_micrometer = bluetape4k("micrometer")
     val bluetape4k_nats = bluetape4k("nats")
     val bluetape4k_otel = bluetape4k("otel")
+    val bluetape4k_redis = bluetape4k("redis")
     val bluetape4k_resilience4j = bluetape4k("resilience4j")
 
     // Spring
@@ -400,6 +401,9 @@ object Libs {
     val kotlinx_benchmark_runtime = kotlinxBenchmark("runtime")
     val kotlinx_benchmark_runtime_jvm = kotlinxBenchmark("runtime-jvm")
 
+    // javax api
+    const val javax_cache_api = "javax.cache:cache-api:1.1.1"
+    
     // json 구현체
     const val javax_json_api = "javax.json:javax.json-api:1.1.4"
     const val javax_json = "org.glassfish:javax.json:1.1.4"
