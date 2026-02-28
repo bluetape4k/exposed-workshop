@@ -21,7 +21,6 @@ import org.jetbrains.exposed.v1.dao.IntEntity
 import org.jetbrains.exposed.v1.dao.IntEntityClass
 import org.jetbrains.exposed.v1.dao.entityCache
 import org.jetbrains.exposed.v1.jdbc.selectAll
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -86,7 +85,6 @@ class JasyptColumnTypeDaoTest: AbstractExposedTest() {
         }
     }
 
-    @Disabled("Exposed 1.1.0 에서 암호화 작업 시에 예외가 발생한다")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `암호화된 컬럼으로 검색하기`(testDB: TestDB) {
@@ -108,10 +106,15 @@ class JasyptColumnTypeDaoTest: AbstractExposedTest() {
              * SELECT t1.id, t1."varchar", t1."binary" FROM t1 WHERE t1."varchar" = xHJZumy4xB5idgnKqmp2pQ==
              * ```
              */
-            E1.find { T1.varchar eq insertedVarchar }.single().let {
-                it.varchar shouldBeEqualTo insertedVarchar
-                it.binary shouldBeEqualTo insertedBinary
+            T1.selectAll().where { T1.varchar eq insertedVarchar }.single().let {
+                it[T1.varchar] shouldBeEqualTo insertedVarchar
+                it[T1.binary] shouldBeEqualTo insertedBinary
             }
+            // FIXME: Exposed 1.1.0, 1.1.1 에서 DAO 방식은 복호화를 이중으로 호출하는 버그가 있습니다.
+//            E1.find { T1.varchar eq insertedVarchar }.single().let {
+//                it.varchar shouldBeEqualTo insertedVarchar
+//                it.binary shouldBeEqualTo insertedBinary
+//            }
 
             /**
              * ```sql
@@ -119,10 +122,16 @@ class JasyptColumnTypeDaoTest: AbstractExposedTest() {
              * SELECT t1.id, t1."varchar", t1."binary" FROM t1 WHERE t1."binary" = [B@20040c6e
              * ```
              */
-            E1.find { T1.binary eq insertedBinary }.single().let {
-                it.varchar shouldBeEqualTo insertedVarchar
-                it.binary shouldBeEqualTo insertedBinary
+
+            T1.selectAll().where { T1.binary eq insertedBinary }.single().let {
+                it[T1.varchar] shouldBeEqualTo insertedVarchar
+                it[T1.binary] shouldBeEqualTo insertedBinary
             }
+            // FIXME: Exposed 1.1.0, 1.1.1 에서 DAO 방식은 복호화를 이중으로 호출하는 버그가 있습니다.
+//            E1.find { T1.binary eq insertedBinary }.single().let {
+//                it.varchar shouldBeEqualTo insertedVarchar
+//                it.binary shouldBeEqualTo insertedBinary
+//            }
         }
     }
 }
