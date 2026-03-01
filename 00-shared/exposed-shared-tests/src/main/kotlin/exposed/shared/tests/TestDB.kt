@@ -19,6 +19,7 @@ const val USE_TESTCONTAINERS = true
  * true 이면, InMemory DB만을 대상으로 테스트 합니다.
  * false 이면 Postgres, MySQL V8 도 포함해서 테스트 합니다.
  */
+// TODO: System Property 로 읽어들여서, `./gradlew test -PuseFastDB=true` 이런 식으로 하자.
 const val USE_FAST_DB = false
 
 /**
@@ -238,7 +239,7 @@ enum class TestDB(
         val ALL = TestDB.entries.toSet()
 
         fun enabledDialects(): Set<TestDB> {
-            return if (USE_FAST_DB) ALL_H2
+            return if (USE_FAST_DB) setOf(H2)
             else setOf(H2, POSTGRESQL, MYSQL_V8, MARIADB)
             // else ALL_H2 + ALL_POSTGRES + ALL_MYSQL_MARIADB //ALL - ALL_H2_V1 - MYSQL_V5 - COCKROACH
         }
