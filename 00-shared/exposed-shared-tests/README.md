@@ -26,7 +26,7 @@
 ## 실행 방법
 
 ```bash
-# 기본값으로 실행 (H2 + PostgreSQL + MySQL V8 + MariaDB)
+# 기본값으로 실행 (H2 + PostgreSQL + MySQL V8)
 ./gradlew :exposed-00-shared-exposed-shared-tests:test
 
 # H2 만 테스트 (빠른 로컬 개발용)
@@ -58,7 +58,7 @@
 | `POSTGRESQLNG`  | PostgreSQL NG 드라이버         |
 
 > [!NOTE]
-> 우선순위: `-PuseDB` > `-PuseFastDB` > 기본값 (H2, POSTGRESQL, MYSQL_V8, MARIADB)
+> 우선순위: `-PuseDB` > `-PuseFastDB` > 기본값 (H2, POSTGRESQL, MYSQL_V8)
 
 ## 테스트 포인트
 

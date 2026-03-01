@@ -282,7 +282,7 @@ Multi-Tenant 또는 Read Replica 구조를 위한 유연한 DataSource 라우팅
 
 ### 테스트 대상 DB 선택
 
-기본값은 **H2, PostgreSQL, MySQL V8, MariaDB** 4가지를 대상으로 테스트합니다.
+기본값은 **H2, PostgreSQL, MySQL V8** 3가지를 대상으로 테스트합니다.
 Gradle 프로퍼티로 테스트 범위를 조절할 수 있습니다.
 
 ```bash
@@ -293,7 +293,7 @@ Gradle 프로퍼티로 테스트 범위를 조절할 수 있습니다.
 ./gradlew test -PuseDB=H2,POSTGRESQL
 ./gradlew test -PuseDB=H2,POSTGRESQL,MYSQL_V8,MARIADB
 
-# 기본값으로 테스트 (H2 + PostgreSQL + MySQL V8 + MariaDB)
+# 기본값으로 테스트 (H2 + PostgreSQL + MySQL V8)
 ./gradlew test
 ```
 
