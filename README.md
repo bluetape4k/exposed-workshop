@@ -280,6 +280,40 @@ Multi-Tenant 또는 Read Replica 구조를 위한 유연한 DataSource 라우팅
 ./gradlew :05-exposed-dml:01-dml:test
 ```
 
+### 테스트 대상 DB 선택
+
+기본값은 **H2, PostgreSQL, MySQL V8, MariaDB** 4가지를 대상으로 테스트합니다.
+Gradle 프로퍼티로 테스트 범위를 조절할 수 있습니다.
+
+```bash
+# H2 만 테스트 (빠른 로컬 개발용)
+./gradlew test -PuseFastDB=true
+
+# 특정 DB만 지정해서 테스트
+./gradlew test -PuseDB=H2,POSTGRESQL
+./gradlew test -PuseDB=H2,POSTGRESQL,MYSQL_V8,MARIADB
+
+# 기본값으로 테스트 (H2 + PostgreSQL + MySQL V8 + MariaDB)
+./gradlew test
+```
+
+`-PuseDB`에 사용 가능한 값 (`TestDB` enum 이름):
+
+| 값               | 설명                          |
+|-----------------|------------------------------|
+| `H2`            | H2 (인메모리, 기본 모드)         |
+| `H2_MYSQL`      | H2 (MySQL 호환 모드)           |
+| `H2_MARIADB`    | H2 (MariaDB 호환 모드)         |
+| `H2_PSQL`       | H2 (PostgreSQL 호환 모드)      |
+| `MARIADB`       | MariaDB (Testcontainers)     |
+| `MYSQL_V5`      | MySQL 5.x (Testcontainers)   |
+| `MYSQL_V8`      | MySQL 8.x (Testcontainers)   |
+| `POSTGRESQL`    | PostgreSQL (Testcontainers)  |
+| `POSTGRESQLNG`  | PostgreSQL NG 드라이버         |
+
+> [!NOTE]
+> 우선순위: `-PuseDB` > `-PuseFastDB` > 기본값
+
 ### IDE 설정
 
 IntelliJ IDEA를 권장합니다. Kotlin 플러그인이 설치되어 있어야 합니다.

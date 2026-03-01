@@ -18,9 +18,11 @@ const val USE_TESTCONTAINERS = true
 /**
  * true 이면, InMemory DB만을 대상으로 테스트 합니다.
  * false 이면 Postgres, MySQL V8 도 포함해서 테스트 합니다.
+ *
+ * Gradle 실행 시 `-PuseFastDB=true` 로 지정하면 H2 만 테스트합니다.
+ * 예: `./gradlew test -PuseFastDB=true`
  */
-// TODO: System Property 로 읽어들여서, `./gradlew test -PuseFastDB=true` 이런 식으로 하자.
-const val USE_FAST_DB = false
+val useFastDB: Boolean = System.getProperty("exposed.test.useFastDB", "false").toBoolean()
 
 /**
  * Exposed 기능을 테스트하기 위한 대상 DB 들의 목록과 정보들을 제공합니다.
@@ -238,10 +240,29 @@ enum class TestDB(
 
         val ALL = TestDB.entries.toSet()
 
+        /**
+         * 테스트 대상 DB 목록을 반환합니다.
+         *
+         * 우선순위:
+         * 1. `-PuseDB=H2,POSTGRESQL,...` 로 명시적 지정 시 해당 DB만 테스트
+         * 2. `-PuseFastDB=true` 이면 H2 만 테스트
+         * 3. 기본값: H2, POSTGRESQL, MYSQL_V8, MARIADB
+         *
+         * 예:
+         * - `./gradlew test -PuseDB=H2,POSTGRESQL`
+         * - `./gradlew test -PuseFastDB=true`
+         */
         fun enabledDialects(): Set<TestDB> {
-            return if (USE_FAST_DB) setOf(H2)
-            else setOf(H2, POSTGRESQL, MYSQL_V8, MARIADB)
-            // else ALL_H2 + ALL_POSTGRES + ALL_MYSQL_MARIADB //ALL - ALL_H2_V1 - MYSQL_V5 - COCKROACH
+            val useDB = System.getProperty("exposed.test.useDB")
+            if (!useDB.isNullOrBlank()) {
+                return useDB.split(",")
+                    .map { it.trim() }
+                    .mapNotNull { name -> entries.find { it.name.equals(name, true) } }
+                    .toSet()
+                    .ifEmpty { setOf(H2) }
+            }
+            return if (useFastDB) setOf(H2)
+            else setOf(H2, POSTGRESQL, MYSQL_V8)
         }
     }
 }

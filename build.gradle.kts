@@ -141,6 +141,17 @@ subprojects {
                 "-Didea.io.use.nio2=true"
             )
 
+            // Gradle 프로퍼티를 JVM 시스템 프로퍼티로 전달하여 테스트 대상 DB를 제어합니다.
+            // 사용 예:
+            //   ./gradlew test -PuseFastDB=true          → H2 만 테스트
+            //   ./gradlew test -PuseDB=H2,POSTGRESQL      → 지정한 DB만 테스트
+            project.findProperty("useFastDB")?.toString()?.let {
+                systemProperty("exposed.test.useFastDB", it)
+            }
+            project.findProperty("useDB")?.toString()?.let {
+                systemProperty("exposed.test.useDB", it)
+            }
+
             testLogging {
                 showExceptions = true
                 showCauses = true
