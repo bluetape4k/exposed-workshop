@@ -22,7 +22,12 @@ hs_err_pid*
 .settings
 .checkstyle
 .kotlin
-.omc
+
+# AI/Claude Code tool directories
+.omc/
+.claude/
+.cursorrules
+.aider*
 
 .gradle/
 build/
