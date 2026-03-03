@@ -3,7 +3,7 @@ package exposed.multitenant.webflux.domain.repository
 import exposed.multitenant.webflux.domain.model.ActorRecord
 import exposed.multitenant.webflux.domain.model.MovieSchema.ActorTable
 import exposed.multitenant.webflux.domain.model.toActorRecord
-import io.bluetape4k.exposed.repository.ExposedRepository
+import io.bluetape4k.exposed.jdbc.repository.JdbcRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.ResultRow
@@ -20,7 +20,7 @@ import java.time.LocalDate
  * WebFlux 환경의 배우 도메인 Exposed 저장소입니다.
  */
 @Repository
-class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
+class ActorExposedRepository: JdbcRepository<Long, ActorTable, ActorRecord> {
 
     companion object: KLogging()
 

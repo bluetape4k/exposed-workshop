@@ -3,7 +3,7 @@ package exposed.examples.cache.domain.repository
 import exposed.examples.cache.domain.model.UserRecord
 import exposed.examples.cache.domain.model.UserTable
 import exposed.examples.cache.domain.model.toUserRecord
-import io.bluetape4k.exposed.redisson.repository.AbstractExposedCacheRepository
+import io.bluetape4k.exposed.redisson.repository.AbstractJdbcRedissonRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.redis.redisson.cache.RedisCacheConfig
@@ -22,15 +22,15 @@ import java.time.Instant
  * - 저장 시: 캐시와 DB를 함께 갱신합니다.
  */
 @Repository
-class UserCacheRepository(redissonClient: RedissonClient): AbstractExposedCacheRepository<UserRecord, Long>(
+class UserCacheRepository(redissonClient: RedissonClient): AbstractJdbcRedissonRepository<Long, UserTable, UserRecord>(
     redissonClient = redissonClient,
     cacheName = "exposed:users",
     config = RedisCacheConfig.READ_WRITE_THROUGH_WITH_NEAR_CACHE.copy(deleteFromDBOnInvalidate = true)
 ) {
     companion object: KLoggingChannel()
 
-    override val entityTable = UserTable
-    override fun ResultRow.toEntity() = toUserRecord()
+    override val entityTable: UserTable = UserTable
+    override fun ResultRow.toEntity(): UserRecord = toUserRecord()
 
     override fun doUpdateEntity(
         statement: UpdateStatement,

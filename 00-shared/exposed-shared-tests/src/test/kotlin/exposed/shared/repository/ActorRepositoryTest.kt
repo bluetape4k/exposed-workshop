@@ -175,9 +175,9 @@ class ActorRepositoryTest: AbstractExposedTest() {
             savedActor.id.shouldNotBeNull()
 
             // Delete savedActor
-            repository.delete(savedActor) shouldBeEqualTo 1
+            repository.deleteById(savedActor.id) shouldBeEqualTo 1
             // Already deleted
-            repository.delete(savedActor) shouldBeEqualTo 0
+            repository.deleteById(savedActor.id) shouldBeEqualTo 0
         }
     }
 

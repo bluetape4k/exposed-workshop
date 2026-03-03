@@ -3,7 +3,7 @@ package exposed.examples.cache.coroutines.domain.repository
 import exposed.examples.cache.coroutines.domain.model.UserCredentialsRecord
 import exposed.examples.cache.coroutines.domain.model.UserCredentialsTable
 import exposed.examples.cache.coroutines.domain.model.toUserCredentialsRecord
-import io.bluetape4k.exposed.redisson.repository.AbstractSuspendedExposedCacheRepository
+import io.bluetape4k.exposed.redisson.repository.AbstractSuspendedJdbcRedissonRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.redis.redisson.cache.RedisCacheConfig
 import org.jetbrains.exposed.v1.core.ResultRow
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class UserCredentialsCacheRepository(
     redissonClient: RedissonClient,
-): AbstractSuspendedExposedCacheRepository<UserCredentialsRecord, String>(
+): AbstractSuspendedJdbcRedissonRepository<String, UserCredentialsTable, UserCredentialsRecord>(
     redissonClient = redissonClient,
     cacheName = "exposed:coroutines:user-credentials",
     config = RedisCacheConfig.READ_ONLY_WITH_NEAR_CACHE,

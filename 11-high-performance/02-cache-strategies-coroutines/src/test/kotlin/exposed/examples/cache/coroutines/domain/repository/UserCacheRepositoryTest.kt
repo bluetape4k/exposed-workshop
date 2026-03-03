@@ -154,7 +154,7 @@ class UserCacheRepositoryTest(
             }
             repository.put(updatedUser)
 
-            val userFromDB = repository.findFreshById(userId)
+            val userFromDB = repository.findByIdFromDb(userId)
             userFromDB shouldBeEqualTo updatedUser.copy(updatedAt = userFromDB!!.updatedAt)
         }
     }

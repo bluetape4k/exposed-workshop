@@ -3,12 +3,11 @@ package exposed.examples.cache.domain.repository
 import exposed.examples.cache.domain.model.UserEventRecord
 import exposed.examples.cache.domain.model.UserEventTable
 import exposed.examples.cache.domain.model.toUserEventRecord
-import io.bluetape4k.exposed.redisson.repository.AbstractExposedCacheRepository
+import io.bluetape4k.exposed.redisson.repository.AbstractJdbcRedissonRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.redis.redisson.cache.RedisCacheConfig
 import org.jetbrains.exposed.v1.core.ResultRow
-import org.jetbrains.exposed.v1.core.dao.id.IdTable
 import org.jetbrains.exposed.v1.core.statements.BatchInsertStatement
 import org.jetbrains.exposed.v1.core.statements.UpdateStatement
 import org.redisson.api.RedissonClient
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class UserEventCacheRepository(
     redissonClient: RedissonClient,
-): AbstractExposedCacheRepository<UserEventRecord, Long>(
+): AbstractJdbcRedissonRepository<Long, UserEventTable, UserEventRecord>(
     redissonClient = redissonClient,
     cacheName = "exposed:user-events",
     config = RedisCacheConfig.WRITE_BEHIND_WITH_NEAR_CACHE,
@@ -28,7 +27,7 @@ class UserEventCacheRepository(
 
     companion object: KLoggingChannel()
 
-    override val entityTable: IdTable<Long> = UserEventTable
+    override val entityTable: UserEventTable = UserEventTable
     override fun ResultRow.toEntity(): UserEventRecord = toUserEventRecord()
 
     override fun doInsertEntity(

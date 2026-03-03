@@ -63,7 +63,7 @@ object Plugins {
 object Versions {
 
     // Java 21, Kotlin 2.0 이상에서 사용하세요
-    const val bluetape4k = "1.2.2"    // Bluetape4k Github Package 로 배포됩니다.
+    const val bluetape4k = "1.2.3"    // Bluetape4k Github Package 로 배포됩니다.
 
     const val kotlin = "2.3.10"                 // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
     const val kotlinx_coroutines = "1.10.2"      // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
@@ -270,9 +270,9 @@ object Libs {
     val bluetape4k_exposed_r2dbc_tests = bluetape4k("exposed-r2dbc-tests")
     val bluetape4k_hibernate = bluetape4k("hibernate")
     val bluetape4k_hibernate_reactive = bluetape4k("hibernate-reactive")
+    val bluetape4k_mongodb = bluetape4k("mongodb")
     val bluetape4k_jdbc = bluetape4k("jdbc")
     val bluetape4k_r2dbc = bluetape4k("r2dbc")
-
 
     // Infrastructure
     val bluetape4k_bucket4j = bluetape4k("bucket4j")
@@ -296,26 +296,32 @@ object Libs {
     val bluetape4k_spring_cassandra = bluetape4k("spring-cassandra")
     val bluetape4k_spring_core = bluetape4k("spring-core")
     val bluetape4k_spring_jpa = bluetape4k("spring-jpa")
+    val bluetape4k_spring_mongodb = bluetape4k("spring-mongodb")
     val bluetape4k_spring_r2dbc = bluetape4k("spring-r2dbc")
     val bluetape4k_spring_retrofit2 = bluetape4k("spring-retrofit2")
-    // val bluetape4k_spring_security = bluetape4k("spring-security")
     val bluetape4k_spring_tests = bluetape4k("spring-tests")
     val bluetape4k_spring_webflux = bluetape4k("spring-webflux")
 
     // AWS
+    val bluetape4k_aws_cloudwatch = bluetape4k("aws-cloudwatch")
     val bluetape4k_aws_core = bluetape4k("aws-core")
     val bluetape4k_aws_dynamodb = bluetape4k("aws-dynamodb")
+    val bluetape4k_aws_kinesis = bluetape4k("aws-kinesis")
     val bluetape4k_aws_s3 = bluetape4k("aws-s3")
     val bluetape4k_aws_ses = bluetape4k("aws-ses")
     val bluetape4k_aws_sns = bluetape4k("aws-sns")
     val bluetape4k_aws_sqs = bluetape4k("aws-sqs")
+    val bluetape4k_aws_sts = bluetape4k("aws-sts")
 
+    val bluetape4k_aws_kotlin_cloudwatch = bluetape4k("aws-kotlin-cloudwatch")
     val bluetape4k_aws_kotlin_core = bluetape4k("aws-kotlin-core")
     val bluetape4k_aws_kotlin_dynamodb = bluetape4k("aws-kotlin-dynamodb")
+    val bluetape4k_aws_kotlin_kinesis = bluetape4k("aws-kotlin-kinesis")
     val bluetape4k_aws_kotlin_s3 = bluetape4k("aws-kotlin-s3")
     val bluetape4k_aws_kotlin_ses = bluetape4k("aws-kotlin-ses")
     val bluetape4k_aws_kotlin_sns = bluetape4k("aws-kotlin-sns")
     val bluetape4k_aws_kotlin_sqs = bluetape4k("aws-kotlin-sqs")
+    val bluetape4k_aws_kotlin_sts = bluetape4k("aws-kotlin-sts")
 
     // UTILS
     val bluetape4k_ahocorasick = bluetape4k("ahocorasick")
@@ -332,6 +338,11 @@ object Libs {
     val bluetape4k_mutiny = bluetape4k("mutiny")
     val bluetape4k_money = bluetape4k("money")
     val bluetape4k_units = bluetape4k("units")
+
+    // TOKENIZER
+    val bluetape4k_tokenizer_core = bluetape4k("tokenizer-core")
+    val bluetape4k_tokenizer_japanese = bluetape4k("tokenizer-japanese")
+    val bluetape4k_tokenizer_korean = bluetape4k("tokenizer-korean")
 
     // VERTX
     val bluetape4k_vertx_core = bluetape4k("vertx-core")

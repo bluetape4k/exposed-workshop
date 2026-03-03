@@ -3,7 +3,7 @@ package exposed.examples.springwebflux.domain.repository
 import exposed.examples.springwebflux.domain.model.ActorRecord
 import exposed.examples.springwebflux.domain.model.MovieSchema.ActorTable
 import exposed.examples.springwebflux.domain.model.toActorRecord
-import io.bluetape4k.exposed.repository.ExposedRepository
+import io.bluetape4k.exposed.jdbc.repository.JdbcRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.ResultRow
@@ -18,7 +18,7 @@ import java.time.LocalDate
 /**
  * WebFlux 환경에서 배우 도메인을 조회/저장하는 Exposed 리포지토리입니다.
  */
-class ActorExposedRepository: ExposedRepository<ActorRecord, Long> {
+class ActorExposedRepository: JdbcRepository<Long, ActorTable, ActorRecord> {
 
     companion object: KLoggingChannel()
 

@@ -1,9 +1,9 @@
 package exposed.shared.repository.repository
 
 import exposed.shared.repository.model.ActorRecord
-import exposed.shared.repository.model.MovieSchema
+import exposed.shared.repository.model.MovieSchema.ActorTable
 import exposed.shared.repository.model.toActorRecord
-import io.bluetape4k.exposed.repository.ExposedRepository
+import io.bluetape4k.exposed.jdbc.repository.JdbcRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.ResultRow
@@ -13,24 +13,24 @@ import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import java.time.LocalDate
 
-class ActorRepository: ExposedRepository<ActorRecord, Long> {
+class ActorRepository: JdbcRepository<Long, ActorTable, ActorRecord> {
 
     companion object: KLogging()
 
-    override val table = MovieSchema.ActorTable
+    override val table = ActorTable
     override fun ResultRow.toEntity(): ActorRecord = toActorRecord()
 
     fun searchActors(params: Map<String, String?>): List<ActorRecord> {
-        val query = MovieSchema.ActorTable.selectAll()
+        val query = ActorTable.selectAll()
 
         params.forEach { (key, value) ->
             when (key) {
-                MovieSchema.ActorTable::id.name       -> value?.run { query.andWhere { MovieSchema.ActorTable.id eq value.toLong() } }
-                MovieSchema.ActorTable::firstName.name -> value?.run { query.andWhere { MovieSchema.ActorTable.firstName eq value } }
-                MovieSchema.ActorTable::lastName.name -> value?.run { query.andWhere { MovieSchema.ActorTable.lastName eq value } }
-                MovieSchema.ActorTable::birthday.name -> value?.run {
+                ActorTable::id.name        -> value?.run { query.andWhere { ActorTable.id eq value.toLong() } }
+                ActorTable::firstName.name -> value?.run { query.andWhere { ActorTable.firstName eq value } }
+                ActorTable::lastName.name  -> value?.run { query.andWhere { ActorTable.lastName eq value } }
+                ActorTable::birthday.name  -> value?.run {
                     query.andWhere {
-                        MovieSchema.ActorTable.birthday eq LocalDate.parse(
+                        ActorTable.birthday eq LocalDate.parse(
                             value
                         )
                     }
@@ -44,7 +44,7 @@ class ActorRepository: ExposedRepository<ActorRecord, Long> {
     fun save(actor: ActorRecord): ActorRecord {
         log.debug { "Create new actor. actor: $actor" }
 
-        val id = MovieSchema.ActorTable.insertAndGetId {
+        val id = ActorTable.insertAndGetId {
             it[firstName] = actor.firstName
             it[lastName] = actor.lastName
             actor.birthday?.let { day ->

@@ -12,7 +12,7 @@ import exposed.examples.springmvc.domain.model.toActorRecord
 import exposed.examples.springmvc.domain.model.toMovieRecord
 import exposed.examples.springmvc.domain.model.toMovieWithActorRecord
 import exposed.examples.springmvc.domain.model.toMovieWithProducingActorRecord
-import io.bluetape4k.exposed.repository.ExposedRepository
+import io.bluetape4k.exposed.jdbc.repository.JdbcRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.ResultRow
@@ -32,7 +32,7 @@ import java.time.LocalDate
 /**
  * 영화 도메인 조회/저장을 Exposed DSL/DAO 조합으로 처리하는 리포지토리입니다.
  */
-class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
+class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
 
     companion object: KLogging()
 

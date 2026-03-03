@@ -6,11 +6,11 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.collections.intRangeOf
 import io.bluetape4k.concurrent.virtualthread.VirtualFuture
 import io.bluetape4k.concurrent.virtualthread.awaitAll
-import io.bluetape4k.exposed.core.transactions.newVirtualThreadTransaction
-import io.bluetape4k.exposed.core.transactions.virtualThreadTransactionAsync
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.idValue
+import io.bluetape4k.exposed.jdbc.transactions.newVirtualThreadJdbcTransaction
+import io.bluetape4k.exposed.jdbc.transactions.virtualThreadJdbcTransactionAsync
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -76,7 +76,7 @@ class Ex01_VritualThreads: AbstractExposedTest() {
              * 현재 트랜잭션에서 지정한 식별자의 `VTester` 레코드를 조회합니다.
              */
     fun JdbcTransaction.getTesterById(id: Int): ResultRow? =
-        newVirtualThreadTransaction {
+        newVirtualThreadJdbcTransaction {
             VTester.selectAll()
                 .where { VTester.id eq id }
                 .singleOrNull()
@@ -86,7 +86,7 @@ class Ex01_VritualThreads: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `존재하지 않는 식별자로 조회하면 null을 반환한다`(testDB: TestDB) {
         withTables(testDB, VTester) {
-            newVirtualThreadTransaction {
+            newVirtualThreadJdbcTransaction {
                 VTester.insert { }
                 commit()
             }
@@ -101,7 +101,8 @@ class Ex01_VritualThreads: AbstractExposedTest() {
     fun `virtual threads 를 이용하여 순차 작업 수행하기`(testDB: TestDB) {
         withTables(testDB, VTester) {
 
-            newVirtualThreadTransaction {
+            // 내부적으로 새로운 트랜잭션을 생성하여 비동기 작업을 수행한다
+            newVirtualThreadJdbcTransaction {
                 val id = VTester.insertAndGetId { }
                 commit()
 
@@ -120,9 +121,13 @@ class Ex01_VritualThreads: AbstractExposedTest() {
         withTables(testDB, VTester) {
             val recordCount = 10
 
-            newVirtualThreadTransaction {
+            // insert 를 수행하는 트랜잭션을 생성한다
+            newVirtualThreadJdbcTransaction {
+                // 중첩 트랜잭션에서 virtual threads 를 이용하여 동시에 여러 작업을 수행한다.
+                // recordCount 개의 행을 가지는 `ResultRow` 를 recordCount 수만큼 가지는 List
                 List(recordCount) { index ->
-                    virtualThreadTransactionAsync {
+                    // insert 를 수행하는 트랜잭션을 생성한다
+                    virtualThreadJdbcTransactionAsync {
                         log.debug { "Task[$index] inserting ..." }
                         // insert 를 수행하는 트랜잭션을 생성한다
                         VTester.insert { }
@@ -132,7 +137,7 @@ class Ex01_VritualThreads: AbstractExposedTest() {
 
                 // 중첩 트랜잭션에서 virtual threads 를 이용하여 동시에 여러 작업을 수행한다.
                 val futures: List<VirtualFuture<List<ResultRow>>> = List(recordCount) { index ->
-                    virtualThreadTransactionAsync {
+                    virtualThreadJdbcTransactionAsync {
                         log.debug { "Task[$index] selecting ..." }
                         VTester.selectAll().toList()
                     }
@@ -142,9 +147,10 @@ class Ex01_VritualThreads: AbstractExposedTest() {
                 rows.shouldNotBeEmpty()
             }
 
-            val count = newVirtualThreadTransaction {
-                VTester.selectAll().count()
-            }
+            val count =
+                newVirtualThreadJdbcTransaction {
+                    VTester.selectAll().count()
+                }
             count shouldBeEqualTo recordCount.toLong()
         }
     }
@@ -156,7 +162,7 @@ class Ex01_VritualThreads: AbstractExposedTest() {
             val recordCount = 10
 
             val results: List<Int> = List(recordCount) { index ->
-                virtualThreadTransactionAsync {
+                virtualThreadJdbcTransactionAsync {
                     maxAttempts = 5
                     log.debug { "Task[$index] inserting ..." }
                     // insert 를 수행하는 트랜잭션을 생성한다
@@ -179,7 +185,7 @@ class Ex01_VritualThreads: AbstractExposedTest() {
             var virtualThreadOk = true
             var platformThreadOk = true
 
-            val row = newVirtualThreadTransaction {
+            val row = newVirtualThreadJdbcTransaction {
                 try {
                     VTester.selectAll().toList()
                 } catch (e: Throwable) {
@@ -227,10 +233,11 @@ class Ex01_VritualThreads: AbstractExposedTest() {
             // 여기서 중복된 Id 로 엔티티를 생성하려고 해서 중복 Id 예외가 발생한다
             var innerConn: ExposedConnection<*>? = null
             assertFailsWith<ExecutionException> {
-                newVirtualThreadTransaction {
+                // 중복된 ID를 삽입하려고 하면 예외가 발생한다.
+                newVirtualThreadJdbcTransaction {
                     maxAttempts = 1
 
-                    innerConn = this.connection
+                    innerConn = connection
                     innerConn.isClosed.shouldBeFalse()
                     innerConn shouldNotBeEqualTo outerConn
 

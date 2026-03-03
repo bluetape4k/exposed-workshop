@@ -3,7 +3,7 @@ package exposed.examples.cache.coroutines.domain.repository
 import exposed.examples.cache.coroutines.domain.model.UserRecord
 import exposed.examples.cache.coroutines.domain.model.UserTable
 import exposed.examples.cache.coroutines.domain.model.toUserRecord
-import io.bluetape4k.exposed.redisson.repository.AbstractSuspendedExposedCacheRepository
+import io.bluetape4k.exposed.redisson.repository.AbstractSuspendedJdbcRedissonRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import io.bluetape4k.redis.redisson.cache.RedisCacheConfig
@@ -19,11 +19,12 @@ import java.time.Instant
  * Read Through / Write Through 를 이용해 DB의 사용자 정보를 캐시합니다.
  */
 @Repository
-class UserCacheRepository(redissonClient: RedissonClient): AbstractSuspendedExposedCacheRepository<UserRecord, Long>(
-    redissonClient = redissonClient,
-    cacheName = "exposed:coroutines:users",
-    config = RedisCacheConfig.READ_WRITE_THROUGH_WITH_NEAR_CACHE.copy(deleteFromDBOnInvalidate = true)
-) {
+class UserCacheRepository(redissonClient: RedissonClient):
+    AbstractSuspendedJdbcRedissonRepository<Long, UserTable, UserRecord>(
+        redissonClient = redissonClient,
+        cacheName = "exposed:coroutines:users",
+        config = RedisCacheConfig.READ_WRITE_THROUGH_WITH_NEAR_CACHE.copy(deleteFromDBOnInvalidate = true)
+    ) {
     companion object: KLoggingChannel()
 
     override val entityTable = UserTable

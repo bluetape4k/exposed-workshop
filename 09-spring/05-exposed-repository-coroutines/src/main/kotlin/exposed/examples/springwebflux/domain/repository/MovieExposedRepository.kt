@@ -12,7 +12,7 @@ import exposed.examples.springwebflux.domain.model.toActorRecord
 import exposed.examples.springwebflux.domain.model.toMovieRecord
 import exposed.examples.springwebflux.domain.model.toMovieWithActorRecord
 import exposed.examples.springwebflux.domain.model.toMovieWithProducingActorRecord
-import io.bluetape4k.exposed.repository.ExposedRepository
+import io.bluetape4k.exposed.jdbc.repository.JdbcRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.Join
@@ -33,7 +33,7 @@ import java.time.LocalDate
 /**
  * 코루틴 기반 WebFlux 환경에서 영화 도메인 조회/저장을 담당하는 리포지토리입니다.
  */
-class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
+class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
 
     companion object: KLoggingChannel() {
         private val MovieActorJoin by lazy {

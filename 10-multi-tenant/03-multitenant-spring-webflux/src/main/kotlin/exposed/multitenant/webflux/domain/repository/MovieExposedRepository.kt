@@ -14,7 +14,7 @@ import exposed.multitenant.webflux.domain.model.toActorRecord
 import exposed.multitenant.webflux.domain.model.toMovieRecord
 import exposed.multitenant.webflux.domain.model.toMovieWithActorRecord
 import exposed.multitenant.webflux.domain.model.toMovieWithProducingActorRecord
-import io.bluetape4k.exposed.repository.ExposedRepository
+import io.bluetape4k.exposed.jdbc.repository.JdbcRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.ResultRow
@@ -35,7 +35,7 @@ import java.time.LocalDate
  * WebFlux 환경의 영화 도메인 Exposed 저장소입니다.
  */
 @Repository
-class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
+class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
 
     companion object: KLogging()
 

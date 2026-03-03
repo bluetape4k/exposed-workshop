@@ -12,7 +12,7 @@ import exposed.multitenant.springweb.domain.model.MovieSchema.ActorInMovieTable
 import exposed.multitenant.springweb.domain.model.MovieSchema.ActorTable
 import exposed.multitenant.springweb.domain.model.MovieSchema.MovieEntity
 import exposed.multitenant.springweb.domain.model.MovieSchema.MovieTable
-import io.bluetape4k.exposed.repository.ExposedRepository
+import io.bluetape4k.exposed.jdbc.repository.JdbcRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.jetbrains.exposed.v1.core.ResultRow
@@ -32,7 +32,7 @@ import java.time.LocalDate
  * 영화 도메인에 대한 Exposed 기반 저장소입니다.
  */
 @Repository
-class MovieExposedRepository: ExposedRepository<MovieRecord, Long> {
+class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
 
     companion object: KLogging()
 
