@@ -23,7 +23,7 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-09-spring-07-spring-suspended-cache:test
+./gradlew :07-spring-suspended-cache:test
 ```
 
 ## 실습 체크리스트

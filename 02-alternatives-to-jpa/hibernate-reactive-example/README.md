@@ -17,7 +17,7 @@ Hibernate Reactive + Mutiny + PostgreSQL 환경에서 선언적/Reactive 트랜�
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-02-alternatives-to-jpa-hibernate-reactive-example:bootRun
+./gradlew :hibernate-reactive-example:bootRun
 ```
 
 ## 테스트 포인트

@@ -40,7 +40,18 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-06-advanced:test
+# 개별 모듈 테스트
+./gradlew :01-exposed-crypt:test
+./gradlew :02-exposed-javatime:test
+./gradlew :03-exposed-kotlin-datetime:test
+./gradlew :04-exposed-json:test
+./gradlew :05-exposed-money:test
+./gradlew :06-custom-columns:test
+./gradlew :07-custom-entities:test
+./gradlew :08-exposed-jackson:test
+./gradlew :09-exposed-fastjson2:test
+./gradlew :10-exposed-jasypt:test
+./gradlew :11-exposed-jackson3:test
 ```
 
 ## 테스트 포인트

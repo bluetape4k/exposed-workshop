@@ -28,7 +28,7 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-06-advanced-01-exposed-crypt:test
+./gradlew :01-exposed-crypt:test
 ```
 
 ## 실습 체크리스트

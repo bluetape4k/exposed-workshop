@@ -29,7 +29,7 @@ Exposed DAO(Entity) 패턴의 기본을 학습하는 모듈입니다. Entity/Ent
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-03-exposed-basic-exposed-dao-example:test
+./gradlew :exposed-dao-example:test
 ```
 
 ## 실습 체크리스트

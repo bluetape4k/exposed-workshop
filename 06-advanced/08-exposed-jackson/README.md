@@ -21,7 +21,7 @@ Jackson 기반으로 JSON 컬럼을 직렬화/역직렬화하는 모듈입니다
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-06-advanced-08-exposed-jackson:test
+./gradlew :08-exposed-jackson:test
 ```
 
 ## 실습 체크리스트

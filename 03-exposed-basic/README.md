@@ -28,8 +28,8 @@ Exposed를 처음 만나보는 학습 적응 장치로, DSL과 DAO를 나란히 
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-03-exposed-basic-exposed-sql-example:test
-./gradlew :exposed-03-exposed-basic-exposed-dao-example:test
+./gradlew :exposed-sql-example:test
+./gradlew :exposed-dao-example:test
 ```
 
 ## 테스트 포인트

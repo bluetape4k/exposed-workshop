@@ -22,7 +22,7 @@ Spring Cache와 Exposed를 통합하는 모듈입니다.
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-09-spring-06-spring-cache:test
+./gradlew :06-spring-cache:test
 ```
 
 ## 실습 체크리스트

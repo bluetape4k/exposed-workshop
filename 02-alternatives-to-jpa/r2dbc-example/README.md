@@ -17,7 +17,7 @@ Spring Data R2DBC + Kotlin Coroutines를 이용해 비동기 데이터베이스 
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-02-alternatives-to-jpa-r2dbc-example:bootRun
+./gradlew :r2dbc-example:bootRun
 ```
 
 ## 실습 체크리스트

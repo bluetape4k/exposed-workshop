@@ -29,7 +29,7 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-06-advanced-03-exposed-kotlin-datetime:test
+./gradlew :03-exposed-kotlin-datetime:test
 ```
 
 ## 실습 체크리스트

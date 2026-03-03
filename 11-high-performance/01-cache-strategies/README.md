@@ -32,8 +32,8 @@ Spring MVC + Virtual Threads 환경에서 Redisson + Exposed로 캐시 전략을
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-11-high-performance-01-cache-strategies:test
-./gradlew :exposed-11-high-performance-01-cache-strategies:bootRun
+./gradlew :01-cache-strategies:test
+./gradlew :01-cache-strategies:bootRun
 ```
 
 ## 실습 체크리스트

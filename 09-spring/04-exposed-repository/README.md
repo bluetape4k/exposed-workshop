@@ -21,7 +21,7 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-09-spring-04-exposed-repository:test
+./gradlew :04-exposed-repository:test
 ```
 
 ## 실습 체크리스트

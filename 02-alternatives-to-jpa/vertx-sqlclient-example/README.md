@@ -17,7 +17,7 @@ Vert.x SQL Client + Kotlin Coroutines를 활용해 이벤트 기반/논블로킹
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-02-alternatives-to-jpa-vertx-sqlclient-example:bootRun
+./gradlew :vertx-sqlclient-example:bootRun
 ```
 
 ## 실습 체크리스트

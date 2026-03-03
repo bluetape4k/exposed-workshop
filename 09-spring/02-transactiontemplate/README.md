@@ -21,7 +21,7 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-09-spring-02-transactiontemplate:test
+./gradlew :02-transactiontemplate:test
 ```
 
 ## 실습 체크리스트

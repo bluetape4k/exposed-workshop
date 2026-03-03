@@ -30,7 +30,10 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-11-high-performance:test
+# 개별 모듈 테스트
+./gradlew :01-cache-strategies:test
+./gradlew :02-cache-strategies-coroutines:test
+./gradlew :03-routing-datasource:test
 ```
 
 ## 테스트 포인트
@@ -45,6 +48,7 @@
 - 이벤트 폭주 시 백프레셔/배치 크기 튜닝을 수행한다.
 - 라우팅 키 결정 로직의 오탐/누락을 방지한다.
 
-## 다음 단계
+## 참고
 
-- 하위 모듈 README를 동일한 템플릿으로 재정리하고, 예제별 실습 체크리스트를 추가하는 후속 작업을 진행합니다.
+- Redisson 기반 캐시 전략은 Redis 서버가 필요합니다. Testcontainers가 자동으로 Redis 컨테이너를 실행합니다.
+- RoutingDataSource 예제는 Read Replica 또는 멀티 테넌트 구조에서 활용 가능합니다.

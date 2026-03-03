@@ -27,13 +27,13 @@
 
 ```bash
 # 기본값으로 실행 (H2 + PostgreSQL + MySQL V8)
-./gradlew :exposed-00-shared-exposed-shared-tests:test
+./gradlew :exposed-shared-tests:test
 
 # H2 만 테스트 (빠른 로컬 개발용)
-./gradlew :exposed-00-shared-exposed-shared-tests:test -PuseFastDB=true
+./gradlew :exposed-shared-tests:test -PuseFastDB=true
 
 # 특정 DB 지정
-./gradlew :exposed-00-shared-exposed-shared-tests:test -PuseDB=H2,POSTGRESQL
+./gradlew :exposed-shared-tests:test -PuseDB=H2,POSTGRESQL
 ```
 
 ### 테스트 대상 DB 선택 옵션

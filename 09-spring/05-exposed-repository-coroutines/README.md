@@ -22,7 +22,7 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-09-spring-05-exposed-repository-coroutines:test
+./gradlew :05-exposed-repository-coroutines:test
 ```
 
 ## 실습 체크리스트

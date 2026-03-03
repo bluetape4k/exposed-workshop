@@ -31,8 +31,8 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-10-multi-tenant-02-mutitenant-spring-web-virtualthread:test
-./gradlew :exposed-10-multi-tenant-02-mutitenant-spring-web-virtualthread:bootRun
+./gradlew :02-mutitenant-spring-web-virtualthread:test
+./gradlew :02-mutitenant-spring-web-virtualthread:bootRun
 ```
 
 ## 실습 체크리스트

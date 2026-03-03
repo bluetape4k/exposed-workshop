@@ -1,6 +1,6 @@
 # 05 Exposed DML: 기본 연산 (01-dml)
 
-Exposed 1.0.0 DSL로 DML 핵심 문법(조회/삽입/수정/삭제/집계/조인)을 학습하는 모듈입니다. 모든 예제는 테스트 코드로 제공되어 DB Dialect 차이를 함께 검증할 수 있습니다.
+Exposed 1.1.1 DSL로 DML 핵심 문법(조회/삽입/수정/삭제/집계/조인)을 학습하는 모듈입니다. 모든 예제는 테스트 코드로 제공되어 DB Dialect 차이를 함께 검증할 수 있습니다.
 
 ## 학습 목표
 
@@ -33,7 +33,7 @@ Exposed 1.0.0 DSL로 DML 핵심 문법(조회/삽입/수정/삭제/집계/조인
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-05-exposed-dml-01-dml:test
+./gradlew :01-dml:test
 ```
 
 ## 실습 체크리스트

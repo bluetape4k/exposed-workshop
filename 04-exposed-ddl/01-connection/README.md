@@ -33,7 +33,7 @@ Exposed 데이터베이스 연결 설정과 연결 안정성 검증을 다루는
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-04-exposed-ddl-01-connection:test
+./gradlew :01-connection:test
 ```
 
 ## 실습 체크리스트

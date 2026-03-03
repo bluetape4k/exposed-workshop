@@ -22,7 +22,7 @@ Spring MVC + Virtual Threads 환경에서 Exposed DAO/DSL을 실습하는 모듈
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-01-spring-boot-spring-mvc-exposed:bootRun
+./gradlew :spring-mvc-exposed:bootRun
 ```
 
 ## 실습 체크리스트

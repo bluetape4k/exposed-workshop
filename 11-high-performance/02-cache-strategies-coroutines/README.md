@@ -32,8 +32,8 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-11-high-performance-02-cache-strategies-coroutines:test
-./gradlew :exposed-11-high-performance-02-cache-strategies-coroutines:bootRun
+./gradlew :02-cache-strategies-coroutines:test
+./gradlew :02-cache-strategies-coroutines:bootRun
 ```
 
 ## 실습 체크리스트

@@ -32,8 +32,8 @@ WebFlux + Coroutines 기반의 논블로킹 멀티테넌트 예제입니다. Rea
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-10-multi-tenant-03-multitenant-spring-webflux:test
-./gradlew :exposed-10-multi-tenant-03-multitenant-spring-webflux:bootRun
+./gradlew :03-multitenant-spring-webflux:test
+./gradlew :03-multitenant-spring-webflux:bootRun
 ```
 
 ## 실습 체크리스트

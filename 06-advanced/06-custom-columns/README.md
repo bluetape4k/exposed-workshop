@@ -21,7 +21,7 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-06-advanced-06-custom-columns:test
+./gradlew :06-custom-columns:test
 ```
 
 ## 실습 체크리스트

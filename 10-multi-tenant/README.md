@@ -30,7 +30,10 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-10-multi-tenant:test
+# 개별 모듈 테스트
+./gradlew :01-multitenant-spring-web:test
+./gradlew :02-mutitenant-spring-web-virtualthread:test
+./gradlew :03-multitenant-spring-webflux:test
 ```
 
 ## 테스트 포인트

@@ -30,7 +30,7 @@
 ## 실행 방법
 
 ```bash
-./gradlew :exposed-06-advanced-02-exposed-javatime:test
+./gradlew :02-exposed-javatime:test
 ```
 
 ## 실습 체크리스트
