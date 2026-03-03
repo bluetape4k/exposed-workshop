@@ -160,7 +160,7 @@ Java 8의 `java.time` API와 Exposed의 통합 방법을 학습합니다.
 
 #### [커스텀 컬럼 타입](06-advanced/06-custom-columns/README.md)
 
-사용자 정의 컬럼 타입을 구현하는 방법을 학습합니다. 암호화, 압축(GZIP/LZ4/Snappy/ZSTD), 직렬화(Kryo/Protobuf/Avro/Fury) 등의 투명한 변환을 구현합니다.
+사용자 정의 컬럼 타입을 구현하는 방법을 학습합니다. 암호화, 압축(GZIP/LZ4/Snappy/ZSTD), 직렬화(Kryo/Fury) 등의 투명한 변환을 구현합니다.
 
 #### [커스텀 Entity (ID 생성 전략)](06-advanced/07-custom-entities/README.md)
 
@@ -293,7 +293,7 @@ Multi-Tenant 또는 Read Replica 구조를 위한 유연한 DataSource 라우팅
 
 ### 테스트 대상 DB 선택
 
-기본값은 **H2, PostgreSQL, MySQL V8, MariaDB** 4가지를 대상으로 테스트합니다.
+기본값은 **H2, PostgreSQL, MySQL V8** 3가지를 대상으로 테스트합니다.
 Gradle 프로퍼티로 테스트 범위를 조절할 수 있습니다.
 
 ```bash
@@ -304,7 +304,7 @@ Gradle 프로퍼티로 테스트 범위를 조절할 수 있습니다.
 ./gradlew test -PuseDB=H2,POSTGRESQL
 ./gradlew test -PuseDB=H2,POSTGRESQL,MYSQL_V8,MARIADB
 
-# 기본값으로 테스트 (H2 + PostgreSQL + MySQL V8 + MariaDB)
+# 기본값으로 테스트 (H2 + PostgreSQL + MySQL V8)
 ./gradlew test
 ```
 
@@ -323,7 +323,7 @@ Gradle 프로퍼티로 테스트 범위를 조절할 수 있습니다.
 | `POSTGRESQLNG`  | PostgreSQL NG 드라이버         |
 
 > [!NOTE]
-> 우선순위: `-PuseDB` > `-PuseFastDB` > 기본값 (H2, POSTGRESQL, MYSQL_V8, MARIADB)
+> 우선순위: `-PuseDB` > `-PuseFastDB` > 기본값 (H2, POSTGRESQL, MYSQL_V8)
 
 ### IDE 설정
 
