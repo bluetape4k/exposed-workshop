@@ -58,8 +58,8 @@ class EncryptedVarCharColumnTypeTest: AbstractExposedTest() {
     private object T1: IntIdTable("T1") {
         val name = varchar("name", 50)
 
-        val aesString: Column<String?> = encryptedVarChar("aes_str", 1024, Encryptors.AES).nullable()
-        val rc4String: Column<String?> = encryptedVarChar("rc4_str", 1024, Encryptors.RC4).nullable()
+        val aesString: Column<String?> = encryptedVarChar("aes_str", 1024, Encryptors.DeterministicAES).nullable()
+        val rc4String: Column<String?> = encryptedVarChar("rc4_str", 1024, Encryptors.DeterministicRC4).nullable()
         val tripleDesString: Column<String?> =
             encryptedVarChar("triple_des_str", 1024, Encryptors.TripleDES).nullable()
     }

@@ -9,6 +9,7 @@ import io.bluetape4k.exposed.core.jasypt.jasyptVarChar
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.support.toUtf8Bytes
 import io.bluetape4k.support.toUtf8String
+import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.core.eq
@@ -29,8 +30,8 @@ class JasyptColumnTypeTest: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `문자열에 대해 암호화,복호화 하기`(testDB: TestDB) {
         val stringTable = object: IntIdTable("string_table") {
-            val name = jasyptVarChar("name", 255, Encryptors.AES).index()
-            val city = jasyptVarChar("city", 255, Encryptors.RC4).index()
+            val name = jasyptVarChar("name", 255, Encryptors.DeterministicAES).index()
+            val city = jasyptVarChar("city", 255, Encryptors.DeterministicRC4).index()
             val address = jasyptBinary("address", 255, Encryptors.TripleDES).nullable()
             val age = jasyptVarChar("age", 255, Encryptors.RC2).nullable()
         }
@@ -79,11 +80,11 @@ class JasyptColumnTypeTest: AbstractExposedTest() {
 
             stringTable.selectAll()
                 .where { stringTable.address eq row[stringTable.address] }
-                .count() shouldBeEqualTo 1L
+                .shouldBeEmpty()  // 비결정적 암호화이기 때문에 매번 변경되므로, 검색 조건에 넣을 수 없다.
 
             stringTable.selectAll()
                 .where { stringTable.age eq row[stringTable.age] }
-                .count() shouldBeEqualTo 1L
+                .shouldBeEmpty()  // 비결정적 암호화이기 때문에 매번 변경되므로, 검색 조건에 넣을 수 없다.
         }
     }
 
@@ -91,8 +92,8 @@ class JasyptColumnTypeTest: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `암호화된 컬럼을 Update 하기`(testDB: TestDB) {
         val stringTable = object: IntIdTable("string_table") {
-            val name = jasyptVarChar("name", 255, Encryptors.AES).index()
-            val city = jasyptVarChar("city", 255, Encryptors.RC4).index()
+            val name = jasyptVarChar("name", 255, Encryptors.DeterministicAES).index()
+            val city = jasyptVarChar("city", 255, Encryptors.DeterministicRC4).index()
             val address = jasyptBinary("address", 255, Encryptors.TripleDES).nullable()
         }
 

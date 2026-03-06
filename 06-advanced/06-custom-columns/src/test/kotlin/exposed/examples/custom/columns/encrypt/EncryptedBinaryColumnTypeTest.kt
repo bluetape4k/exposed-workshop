@@ -61,8 +61,8 @@ class EncryptedBinaryColumnTypeTest: AbstractExposedTest() {
     private object T1: IntIdTable("T1") {
         val name = varchar("name", 50)
 
-        val aesBinary: Column<ByteArray?> = encryptedBinary("aes_binary", 1024, Encryptors.AES).nullable()
-        val rc4Binary: Column<ByteArray?> = encryptedBinary("rc4_binary", 1024, Encryptors.RC4).nullable()
+        val aesBinary: Column<ByteArray?> = encryptedBinary("aes_binary", 1024, Encryptors.DeterministicAES).nullable()
+        val rc4Binary: Column<ByteArray?> = encryptedBinary("rc4_binary", 1024, Encryptors.DeterministicRC4).nullable()
         val tripleDesBinary: Column<ByteArray?> =
             encryptedBinary("triple_des_binary", 1024, Encryptors.TripleDES).nullable()
     }
