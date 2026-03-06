@@ -1,8 +1,14 @@
-package io.bluetape4k.exposed.core.tink
+package exposed.examples.tink
 
-import io.bluetape4k.exposed.tests.AbstractExposedTest
-import io.bluetape4k.exposed.tests.TestDB
-import io.bluetape4k.exposed.tests.withTables
+import exposed.shared.tests.AbstractExposedTest
+import exposed.shared.tests.TestDB
+import exposed.shared.tests.withTables
+import io.bluetape4k.exposed.core.tink.tinkAeadBinary
+import io.bluetape4k.exposed.core.tink.tinkAeadBlob
+import io.bluetape4k.exposed.core.tink.tinkAeadVarChar
+import io.bluetape4k.exposed.core.tink.tinkDaeadBinary
+import io.bluetape4k.exposed.core.tink.tinkDaeadBlob
+import io.bluetape4k.exposed.core.tink.tinkDaeadVarChar
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.support.toUtf8Bytes
 import io.bluetape4k.support.toUtf8String
