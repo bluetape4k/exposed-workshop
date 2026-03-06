@@ -28,6 +28,7 @@
 | `09-exposed-fastjson2`       | Fastjson2 연동          |
 | `10-exposed-jasypt`          | Jasypt 연동             |
 | `11-exposed-jackson3`        | Jackson3 연동           |
+| `12-exposed-tink`            | Google Tink 연동        |
 
 ## 권장 학습 순서
 
@@ -52,6 +53,7 @@
 ./gradlew :09-exposed-fastjson2:test
 ./gradlew :10-exposed-jasypt:test
 ./gradlew :11-exposed-jackson3:test
+./gradlew :12-exposed-tink:test
 ```
 
 ## 테스트 포인트

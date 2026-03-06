@@ -182,6 +182,10 @@ Jasypt를 사용하여 검색 가능한(결정적) 암호화를 구현하는 방
 
 Jackson 3.x 버전을 사용하여 JSON/JSONB 컬럼을 처리하는 방법을 학습합니다.
 
+#### [Exposed Tink (Google Tink 기반 컬럼 암호화)](06-advanced/12-exposed-tink/README.md)
+
+Google Tink 라이브러리를 사용하여 AEAD(비결정적) 및 DAEAD(결정적) 방식으로 컬럼 데이터를 암호화하는 방법을 학습합니다. DAEAD 방식은 암호화된 상태로 WHERE 절 검색이 가능합니다.
+
 ---
 
 ### JPA 마이그레이션

@@ -1,5 +1,7 @@
 # 06 Advanced: exposed-jasypt (10)
 
+> **⚠️ Deprecated**: 이 모듈은 deprecated 되었습니다. 신규 개발에서는 [`bluetape4k-exposed-tink`](../12-exposed-tink/README.md)를 사용하세요.
+
 Jasypt 기반 결정적 암호화 컬럼을 다루는 모듈입니다. 검색 가능한 암호화가 필요한 도메인에서 보안과 조회 가능성의 균형을 학습합니다.
 
 ## 학습 목표
