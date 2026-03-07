@@ -20,14 +20,10 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 /**
- * 애플리케이션 시작 시 샘플 데이터를 데이터베이스에 초기화하는 컴포넌트.
+ * 애플리케이션 시작 시 샘플 데이터를 초기화하는 컴포넌트.
  *
- * [ApplicationReadyEvent] 이벤트를 수신하여 애플리케이션이 완전히 시작된 후
- * 배우(Actor)와 영화(Movie) 샘플 데이터를 삽입합니다.
- * 이미 데이터가 존재하면 삽입을 건너뜁니다.
- *
- * @see MovieSchema.ActorTable
- * @see MovieSchema.MovieTable
+ * [ApplicationReadyEvent] 발생 시 배우 및 영화 샘플 데이터를 데이터베이스에 삽입합니다.
+ * 데이터가 이미 존재하면 삽입하지 않습니다.
  */
 @Component
 class DataInitializer: ApplicationListener<ApplicationReadyEvent> {
@@ -35,9 +31,7 @@ class DataInitializer: ApplicationListener<ApplicationReadyEvent> {
     companion object: KLogging()
 
     /**
-     * 애플리케이션 준비 완료 이벤트 핸들러.
-     *
-     * 트랜잭션 내에서 샘플 데이터 초기화를 수행합니다.
+     * 애플리케이션이 준비된 후 샘플 데이터를 삽입합니다.
      *
      * @param event 애플리케이션 준비 완료 이벤트
      */

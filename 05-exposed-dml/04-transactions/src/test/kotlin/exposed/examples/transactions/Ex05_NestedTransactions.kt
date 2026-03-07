@@ -35,7 +35,12 @@ class Ex05_NestedTransactions: AbstractExposedTest() {
 
     companion object: KLogging()
 
-    private val dbLazy = lazy {
+    @AfterAll
+    fun cleanupDatabase() {
+        TransactionManager.closeAndUnregister(db)
+    }
+
+    private val db by lazy {
         Database.connect(
             url = "jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1;",
             driver = "org.h2.Driver",
@@ -47,16 +52,8 @@ class Ex05_NestedTransactions: AbstractExposedTest() {
             }
         )
     }
-    private val db by dbLazy
 
     val cities = DMLTestData.Cities
-
-    @AfterAll
-    fun tearDown() {
-        if (dbLazy.isInitialized()) {
-            TransactionManager.closeAndUnregister(db)
-        }
-    }
 
     private fun cityCounts(): Int = cities.selectAll().count().toInt()
 

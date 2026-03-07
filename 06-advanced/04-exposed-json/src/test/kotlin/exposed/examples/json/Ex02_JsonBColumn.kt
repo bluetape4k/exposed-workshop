@@ -60,7 +60,6 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * `jsonb` 컬럼 사용 예제
  */
-// NOTE: Exposed의 레거시 JSONB API를 사용하여 교육 목적으로 유지
 @Suppress("DEPRECATION")
 class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 

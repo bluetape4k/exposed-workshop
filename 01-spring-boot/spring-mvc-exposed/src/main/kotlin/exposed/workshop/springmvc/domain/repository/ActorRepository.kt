@@ -15,12 +15,23 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
+/**
+ * 배우(Actor) 데이터에 대한 저장소.
+ *
+ * Exposed DSL을 사용하여 배우 조회, 검색, 생성, 삭제 기능을 제공합니다.
+ */
 @Repository
 @Transactional(readOnly = true)
 class ActorRepository {
 
     companion object: KLogging()
 
+    /**
+     * ID로 배우를 조회합니다.
+     *
+     * @param actorId 조회할 배우 ID
+     * @return 배우 레코드, 존재하지 않으면 null
+     */
     fun findById(actorId: Long): ActorRecord? {
         log.debug { "Find Actor by id. id: $actorId" }
 
@@ -33,6 +44,12 @@ class ActorRepository {
         // ActorEntity.findById(actorId)?.toActorRecord()
     }
 
+    /**
+     * 파라미터 조건으로 배우를 검색합니다.
+     *
+     * @param params 검색 조건 맵 (필드명 → 값)
+     * @return 조건에 맞는 배우 레코드 목록
+     */
     fun searchActors(params: Map<String, String?>): List<ActorRecord> {
         val query: Query = ActorTable.selectAll()
 
@@ -50,6 +67,12 @@ class ActorRepository {
         return query.map { it.toActorRecord() }
     }
 
+    /**
+     * 새 배우를 데이터베이스에 저장합니다.
+     *
+     * @param actor 저장할 배우 정보
+     * @return 생성된 배우 레코드 (ID 포함)
+     */
     @Transactional
     fun create(actor: ActorRecord): ActorRecord {
         log.debug { "Create Actor. actor: $actor" }
@@ -64,6 +87,12 @@ class ActorRepository {
         return actor.copy(id = actorId.value)
     }
 
+    /**
+     * ID로 배우를 삭제합니다.
+     *
+     * @param actorId 삭제할 배우 ID
+     * @return 삭제된 행 수
+     */
     @Transactional
     fun deleteById(actorId: Long): Int {
         log.debug { "Delete Actor by id. id: $actorId" }

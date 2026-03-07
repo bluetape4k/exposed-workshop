@@ -8,10 +8,7 @@ import org.springframework.boot.runApplication
 /**
  * Spring MVC + Exposed 통합 예제 애플리케이션.
  *
- * Spring Boot 기반의 서블릿(블로킹) 웹 애플리케이션으로,
- * Jetbrains Exposed DSL/DAO를 사용하여 데이터베이스에 접근하는 방법을 보여줍니다.
- *
- * @see ExposedDatabaseConfig
+ * Servlet 기반 Spring MVC 웹 서버를 Exposed ORM과 함께 사용하는 방법을 보여줍니다.
  */
 @SpringBootApplication
 class SpringMvcApplication {
@@ -19,9 +16,9 @@ class SpringMvcApplication {
 }
 
 /**
- * Spring MVC 애플리케이션 진입점.
+ * 애플리케이션 진입점.
  *
- * [WebApplicationType.SERVLET] 타입으로 서블릿 기반 웹 서버를 시작합니다.
+ * Spring MVC (Servlet) 모드로 애플리케이션을 시작합니다.
  *
  * @param args 커맨드라인 인수
  */

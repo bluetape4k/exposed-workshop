@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 /**
  * 배우(Actor) 관련 REST API 컨트롤러.
  *
- * `/actors` 경로로 배우 정보의 조회, 생성, 삭제 기능을 제공합니다.
- * 기본적으로 읽기 전용 트랜잭션으로 동작하며, 쓰기 작업은 별도로 트랜잭션을 지정합니다.
- *
- * @param actorRepository 배우 데이터 접근 레포지토리
+ * `/actors` 경로로 배우 조회, 검색, 생성, 삭제 기능을 제공합니다.
  */
 @RestController
 @Transactional(readOnly = true)
@@ -32,10 +29,8 @@ class ActorController(private val actorRepository: ActorRepository) {
     /**
      * ID로 배우를 조회합니다.
      *
-     * HTTP GET `/actors/{id}`
-     *
-     * @param actorId 조회할 배우의 고유 식별자
-     * @return 해당 ID의 [ActorRecord], 존재하지 않으면 null
+     * @param actorId 조회할 배우의 ID
+     * @return 배우 정보, 존재하지 않으면 null
      */
     @GetMapping("/{id}")
     fun getActorById(@PathVariable("id") actorId: Long): ActorRecord? {
@@ -43,14 +38,10 @@ class ActorController(private val actorRepository: ActorRepository) {
     }
 
     /**
-     * 쿼리 파라미터를 기반으로 배우를 검색합니다.
+     * 요청 파라미터를 기반으로 배우를 검색합니다.
      *
-     * HTTP GET `/actors?firstName=...&lastName=...&birthday=...`
-     *
-     * 지원 필터: `id`, `firstName`, `lastName`, `birthday`
-     *
-     * @param request HTTP 서블릿 요청 (쿼리 파라미터 포함)
-     * @return 조건에 맞는 [ActorRecord] 목록
+     * @param request 검색 조건이 포함된 HTTP 요청
+     * @return 조건에 맞는 배우 목록
      */
     @GetMapping
     fun searchActors(request: HttpServletRequest): List<ActorRecord> {
@@ -61,12 +52,10 @@ class ActorController(private val actorRepository: ActorRepository) {
     }
 
     /**
-     * 새로운 배우를 생성합니다.
+     * 새 배우를 생성합니다.
      *
-     * HTTP POST `/actors`
-     *
-     * @param actor 생성할 배우 정보가 담긴 [ActorRecord] (id는 무시됨)
-     * @return 생성된 배우의 [ActorRecord] (서버에서 할당된 id 포함)
+     * @param actor 생성할 배우 정보
+     * @return 생성된 배우 정보 (ID 포함)
      */
     @PostMapping
     @Transactional
@@ -77,10 +66,8 @@ class ActorController(private val actorRepository: ActorRepository) {
     /**
      * ID로 배우를 삭제합니다.
      *
-     * HTTP DELETE `/actors/{id}`
-     *
-     * @param actorId 삭제할 배우의 고유 식별자
-     * @return 삭제된 행 수 (성공 시 1, 존재하지 않으면 0)
+     * @param actorId 삭제할 배우의 ID
+     * @return 삭제된 행 수
      */
     @DeleteMapping("/{id}")
     @Transactional

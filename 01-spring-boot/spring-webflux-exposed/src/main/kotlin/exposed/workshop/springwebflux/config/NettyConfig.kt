@@ -23,6 +23,11 @@ import kotlin.time.toJavaDuration
 class NettyConfig {
     companion object: KLoggingChannel()
 
+    /**
+     * 커스텀 이벤트 루프 설정이 적용된 Netty 기반 Reactive 웹 서버 팩토리를 생성합니다.
+     *
+     * @return 커스터마이저가 적용된 [NettyReactiveWebServerFactory]
+     */
     @Bean
     fun nettyReactiveWebServerFactory(): NettyReactiveWebServerFactory {
         return NettyReactiveWebServerFactory().apply {
@@ -30,6 +35,9 @@ class NettyConfig {
         }
     }
 
+    /**
+     * Netty HTTP 서버에 Keep-Alive, 백로그, 읽기/쓰기 타임아웃을 설정하는 커스터마이저.
+     */
     class EventLoopNettyCustomer: NettyServerCustomizer {
         override fun apply(httpServer: HttpServer): HttpServer {
             return httpServer
@@ -42,6 +50,11 @@ class NettyConfig {
         }
     }
 
+    /**
+     * Reactor Netty의 연결 풀과 이벤트 루프 리소스를 설정합니다.
+     *
+     * @return 커스텀 연결 풀과 루프 리소스가 적용된 [ReactorResourceFactory]
+     */
     @Bean
     fun reactorResourceFactory(): ReactorResourceFactory {
         return ReactorResourceFactory().apply {

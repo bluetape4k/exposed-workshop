@@ -17,18 +17,14 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**
- * 영화 도메인의 Exposed DSL 테이블 스키마 및 DAO 엔티티 정의.
+ * 영화 관련 Exposed 스키마 정의.
  *
- * 다음 세 가지 테이블과 해당 DAO 엔티티를 포함합니다:
- * - [MovieTable]: 영화 정보 테이블
- * - [ActorTable]: 배우 정보 테이블
- * - [ActorInMovieTable]: 영화-배우 다대다 관계 테이블
+ * [MovieTable], [ActorTable], [ActorInMovieTable] 테이블과
+ * [MovieEntity], [ActorEntity] DAO 엔티티를 포함합니다.
  */
 object MovieSchema {
 
     /**
-     * 영화 정보를 저장하는 테이블.
-     *
      * ```sql
      * -- Postgres
      * CREATE TABLE IF NOT EXISTS movies (
@@ -46,8 +42,6 @@ object MovieSchema {
     }
 
     /**
-     * 배우 정보를 저장하는 테이블.
-     *
      * ```sql
      * -- Postgres
      * CREATE TABLE IF NOT EXISTS actors (
@@ -86,6 +80,11 @@ object MovieSchema {
         override val primaryKey = PrimaryKey(movieId, actorId)
     }
 
+    /**
+     * 영화 테이블의 DAO 엔티티.
+     *
+     * @param id 영화의 고유 식별자
+     */
     class MovieEntity(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<MovieEntity>(MovieTable)
 
@@ -104,6 +103,11 @@ object MovieSchema {
             .toString()
     }
 
+    /**
+     * 배우 테이블의 DAO 엔티티.
+     *
+     * @param id 배우의 고유 식별자
+     */
     class ActorEntity(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<ActorEntity>(ActorTable)
 

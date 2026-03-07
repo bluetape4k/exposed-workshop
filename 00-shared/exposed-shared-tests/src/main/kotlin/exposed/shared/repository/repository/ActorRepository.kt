@@ -16,42 +16,22 @@ import java.time.LocalDate
 /**
  * 배우(Actor) 데이터에 대한 JDBC 기반 리포지토리 구현체.
  *
- * [JdbcRepository]를 구현하며 [ActorTable]을 대상으로
- * 배우 조회, 검색, 저장 기능을 제공합니다.
- *
- * 트랜잭션 컨텍스트 내에서 사용해야 합니다.
- *
- * @see ActorTable
- * @see ActorRecord
- * @see JdbcRepository
+ * [ActorTable]을 통해 배우 정보를 조회하고 저장하는 기능을 제공합니다.
  */
 class ActorRepository: JdbcRepository<Long, ActorTable, ActorRecord> {
 
     companion object: KLogging()
 
-    /** 이 리포지토리가 대상으로 하는 [ActorTable] 참조 */
     override val table = ActorTable
-
-    /**
-     * [ResultRow]를 [ActorRecord]로 변환합니다.
-     *
-     * @return 변환된 [ActorRecord] 인스턴스
-     */
     override fun ResultRow.toEntity(): ActorRecord = toActorRecord()
 
     /**
-     * 주어진 파라미터 맵을 기반으로 배우를 동적으로 검색합니다.
+     * 주어진 검색 파라미터를 기반으로 배우 목록을 조회합니다.
      *
-     * 지원되는 파라미터 키:
-     * - `id`: 배우 ID로 필터링
-     * - `firstName`: 배우 이름으로 필터링
-     * - `lastName`: 배우 성으로 필터링
-     * - `birthday`: 생년월일로 필터링 (ISO 날짜 형식: `yyyy-MM-dd`)
+     * 지원하는 파라미터 키: `id`, `firstName`, `lastName`, `birthday`
      *
-     * 파라미터 값이 `null`인 경우 해당 조건은 무시됩니다.
-     *
-     * @param params 검색 조건을 담은 맵 (컬럼 이름 -> 값)
-     * @return 검색 조건에 일치하는 [ActorRecord] 목록
+     * @param params 검색 조건을 담은 파라미터 맵 (키: 컬럼명, 값: 검색값)
+     * @return 검색 조건에 맞는 [ActorRecord] 목록
      */
     fun searchActors(params: Map<String, String?>): List<ActorRecord> {
         val query = ActorTable.selectAll()
@@ -75,13 +55,10 @@ class ActorRepository: JdbcRepository<Long, ActorTable, ActorRecord> {
     }
 
     /**
-     * 새로운 배우 정보를 데이터베이스에 저장합니다.
+     * 새로운 배우 레코드를 데이터베이스에 저장합니다.
      *
-     * 저장 후 데이터베이스에서 생성된 ID를 포함한 [ActorRecord]를 반환합니다.
-     * `birthday` 값이 유효하지 않은 날짜 형식인 경우 `null`로 저장됩니다.
-     *
-     * @param actor 저장할 배우 정보 ([ActorRecord])
-     * @return 데이터베이스에서 생성된 ID가 설정된 [ActorRecord]
+     * @param actor 저장할 배우 정보
+     * @return 저장된 배우 정보 (생성된 ID 포함)
      */
     fun save(actor: ActorRecord): ActorRecord {
         log.debug { "Create new actor. actor: $actor" }

@@ -75,6 +75,29 @@ open class MiscTable: Table() {
 }
 
 
+/**
+ * [MiscTable]의 조회 결과 행([ResultRow])이 기대값과 일치하는지 검증합니다.
+ *
+ * @param row 검증할 결과 행
+ * @param by byte 컬럼 기대값
+ * @param byn nullable byte 컬럼 기대값
+ * @param sm short 컬럼 기대값
+ * @param smn nullable short 컬럼 기대값
+ * @param n int 컬럼 기대값
+ * @param nn nullable int 컬럼 기대값
+ * @param e 열거형 컬럼 기대값
+ * @param en nullable 열거형 컬럼 기대값
+ * @param es 문자열 기반 열거형 컬럼 기대값
+ * @param esn nullable 문자열 기반 열거형 컬럼 기대값
+ * @param c varchar(4) 컬럼 기대값
+ * @param cn nullable varchar(4) 컬럼 기대값
+ * @param s varchar(100) 컬럼 기대값
+ * @param sn nullable varchar(100) 컬럼 기대값
+ * @param dc decimal 컬럼 기대값
+ * @param dcn nullable decimal 컬럼 기대값
+ * @param fcn nullable float 컬럼 기대값
+ * @param dblcn nullable double 컬럼 기대값
+ */
 @Suppress("LongParameterList")
 fun MiscTable.checkRow(
     row: ResultRow,
@@ -117,6 +140,27 @@ fun MiscTable.checkRow(
     row[this.dblcn] shouldBeEqualTo dblcn
 }
 
+/**
+ * [MiscTable]에 삽입된 레코드([InsertStatement])가 기대값과 일치하는지 검증합니다.
+ *
+ * @param row 검증할 삽입 결과 행
+ * @param by byte 컬럼 기대값
+ * @param byn nullable byte 컬럼 기대값
+ * @param sm short 컬럼 기대값
+ * @param smn nullable short 컬럼 기대값
+ * @param n int 컬럼 기대값
+ * @param nn nullable int 컬럼 기대값
+ * @param e 열거형 컬럼 기대값
+ * @param en nullable 열거형 컬럼 기대값
+ * @param es 문자열 기반 열거형 컬럼 기대값
+ * @param esn nullable 문자열 기반 열거형 컬럼 기대값
+ * @param s varchar(100) 컬럼 기대값
+ * @param sn nullable varchar(100) 컬럼 기대값
+ * @param dc decimal 컬럼 기대값
+ * @param dcn nullable decimal 컬럼 기대값
+ * @param fcn nullable float 컬럼 기대값
+ * @param dblcn nullable double 컬럼 기대값
+ */
 @Suppress("LongParameterList")
 fun MiscTable.checkInsert(
     row: InsertStatement<Number>,

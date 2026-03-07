@@ -7,11 +7,9 @@ import org.jetbrains.exposed.v1.core.ResultRow
 
 
 /**
- * [ResultRow]를 [ActorRecord]로 변환하는 확장 함수.
+ * [ResultRow]를 [ActorRecord]로 변환합니다.
  *
- * [ActorTable]의 컬럼 값을 읽어 [ActorRecord] 데이터 클래스로 매핑합니다.
- *
- * @return 변환된 [ActorRecord] 인스턴스
+ * @return 배우 정보를 담은 [ActorRecord]
  */
 fun ResultRow.toActorRecord() = ActorRecord(
     id = this[ActorTable.id].value,
@@ -21,11 +19,9 @@ fun ResultRow.toActorRecord() = ActorRecord(
 )
 
 /**
- * [MovieSchema.ActorEntity] DAO 엔티티를 [ActorRecord]로 변환하는 확장 함수.
+ * [MovieSchema.ActorEntity]를 [ActorRecord]로 변환합니다.
  *
- * DAO 엔티티의 프로퍼티를 읽어 [ActorRecord] 데이터 클래스로 매핑합니다.
- *
- * @return 변환된 [ActorRecord] 인스턴스
+ * @return 배우 정보를 담은 [ActorRecord]
  */
 fun MovieSchema.ActorEntity.toActorRecord() = ActorRecord(
     id = this.id.value,
@@ -35,11 +31,9 @@ fun MovieSchema.ActorEntity.toActorRecord() = ActorRecord(
 )
 
 /**
- * [ResultRow]를 [MovieRecord]로 변환하는 확장 함수.
+ * [ResultRow]를 [MovieRecord]로 변환합니다.
  *
- * [MovieTable]의 컬럼 값을 읽어 [MovieRecord] 데이터 클래스로 매핑합니다.
- *
- * @return 변환된 [MovieRecord] 인스턴스
+ * @return 영화 정보를 담은 [MovieRecord]
  */
 fun ResultRow.toMovieRecord() = MovieRecord(
     name = this[MovieTable.name],
@@ -49,12 +43,10 @@ fun ResultRow.toMovieRecord() = MovieRecord(
 )
 
 /**
- * [ResultRow]를 배우 목록과 함께 [MovieWithActorRecord]로 변환하는 확장 함수.
+ * [ResultRow]와 배우 목록을 [MovieWithActorRecord]로 변환합니다.
  *
- * [MovieTable]의 컬럼 값과 별도로 조회한 배우 목록을 조합하여 [MovieWithActorRecord]를 생성합니다.
- *
- * @param actors 이 영화에 출연한 배우 목록
- * @return 변환된 [MovieWithActorRecord] 인스턴스
+ * @param actors 영화에 출연한 배우 목록
+ * @return 영화와 배우 정보를 담은 [MovieWithActorRecord]
  */
 fun ResultRow.toMovieWithActorRecord(actors: List<ActorRecord>) = MovieWithActorRecord(
     name = this[MovieTable.name],
@@ -65,12 +57,10 @@ fun ResultRow.toMovieWithActorRecord(actors: List<ActorRecord>) = MovieWithActor
 )
 
 /**
- * [MovieRecord]를 배우 목록과 함께 [MovieWithActorRecord]로 변환하는 확장 함수.
+ * [MovieRecord]와 배우 목록을 [MovieWithActorRecord]로 변환합니다.
  *
- * 기존 [MovieRecord]의 기본 정보에 배우 목록을 추가하여 [MovieWithActorRecord]를 생성합니다.
- *
- * @param actors 이 영화에 출연한 배우 목록
- * @return 변환된 [MovieWithActorRecord] 인스턴스
+ * @param actors 영화에 출연한 배우 목록
+ * @return 영화와 배우 정보를 담은 [MovieWithActorRecord]
  */
 fun MovieRecord.toMovieWithActorRecord(actors: List<ActorRecord>) = MovieWithActorRecord(
     name = this.name,
@@ -81,12 +71,9 @@ fun MovieRecord.toMovieWithActorRecord(actors: List<ActorRecord>) = MovieWithAct
 )
 
 /**
- * [MovieSchema.MovieEntity] DAO 엔티티를 [MovieRecord]로 변환하는 확장 함수.
+ * [MovieSchema.MovieEntity]를 [MovieRecord]로 변환합니다.
  *
- * DAO 엔티티의 프로퍼티를 읽어 [MovieRecord] 데이터 클래스로 매핑합니다.
- * 배우 정보는 포함되지 않습니다.
- *
- * @return 변환된 [MovieRecord] 인스턴스
+ * @return 영화 정보를 담은 [MovieRecord]
  */
 fun MovieSchema.MovieEntity.toMovieRecord() = MovieRecord(
     name = this.name,
@@ -96,12 +83,9 @@ fun MovieSchema.MovieEntity.toMovieRecord() = MovieRecord(
 )
 
 /**
- * [MovieSchema.MovieEntity] DAO 엔티티를 배우 목록을 포함한 [MovieWithActorRecord]로 변환하는 확장 함수.
+ * [MovieSchema.MovieEntity]를 배우 목록을 포함한 [MovieWithActorRecord]로 변환합니다.
  *
- * DAO 엔티티의 `actors` 연관 관계를 함께 로드하여 [MovieWithActorRecord]를 생성합니다.
- * 이 함수는 N+1 쿼리 문제를 유발할 수 있으므로 주의가 필요합니다.
- *
- * @return 배우 목록이 포함된 [MovieWithActorRecord] 인스턴스
+ * @return 영화와 배우 정보를 담은 [MovieWithActorRecord]
  */
 fun MovieSchema.MovieEntity.toMovieWithActorRecord() = MovieWithActorRecord(
     name = this.name,
@@ -113,11 +97,9 @@ fun MovieSchema.MovieEntity.toMovieWithActorRecord() = MovieWithActorRecord(
 
 
 /**
- * [ResultRow]를 영화-제작 배우 정보를 담은 [MovieWithProducingActorRecord]로 변환하는 확장 함수.
+ * [ResultRow]를 제작자 배우 정보를 포함한 [MovieWithProducingActorRecord]로 변환합니다.
  *
- * [MovieTable]과 [ActorTable]을 조인한 결과 행에서 영화 제목과 제작 배우 이름을 추출합니다.
- *
- * @return 변환된 [MovieWithProducingActorRecord] 인스턴스
+ * @return 영화명과 제작자 배우명을 담은 [MovieWithProducingActorRecord]
  */
 fun ResultRow.toMovieWithProducingActorRecord() = MovieWithProducingActorRecord(
     movieName = this[MovieTable.name],
