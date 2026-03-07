@@ -1,7 +1,8 @@
 package exposed.examples.cache.config
 
 import exposed.examples.cache.CacheStrategyApplication.Companion.redis
-import io.bluetape4k.logging.coroutines.KLoggingChannel
+import io.bluetape4k.concurrent.virtualthread.VirtualThreadExecutor
+import io.bluetape4k.logging.KLogging
 import org.redisson.Redisson
 import org.redisson.api.RedissonClient
 import org.redisson.config.Config
@@ -15,12 +16,10 @@ import java.time.Duration
 @Configuration(proxyBeanMethods = false)
 class RedissonConfig {
 
-    companion object: KLoggingChannel()
+    companion object: KLogging()
 
     @Bean
     fun redissonClient(): RedissonClient {
-//        val env = System.getenv()
-
         val config = Config().apply {
             useSingleServer()
                 .setAddress(redis.url)
@@ -29,10 +28,13 @@ class RedissonConfig {
                 .setIdleConnectionTimeout(1000)
                 .setTimeout(1000)
                 .setRetryAttempts(3)
-                .setRetryDelay { Duration.ofMillis(it * 100L) }
+                .setRetryDelay { attempt -> Duration.ofMillis((attempt + 1) * 100L) }
+
+            executor = VirtualThreadExecutor
+            nettyExecutor = VirtualThreadExecutor
+            nettyThreads = 64
         }
 
         return Redisson.create(config)
     }
-
 }
