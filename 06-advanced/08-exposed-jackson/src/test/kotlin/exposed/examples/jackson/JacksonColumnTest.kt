@@ -196,7 +196,11 @@ class JacksonColumnTest: AbstractExposedTest() {
             val tester = object: Table("tester") {
                 val jCol = jackson<Fake>("j_col")
             }
-            SchemaUtils.create(tester)
+            try {
+                SchemaUtils.create(tester)
+            } finally {
+                SchemaUtils.drop(tester)
+            }
         }
     }
 

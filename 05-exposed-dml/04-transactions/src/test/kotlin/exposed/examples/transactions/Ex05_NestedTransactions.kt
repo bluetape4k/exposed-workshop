@@ -21,18 +21,21 @@ import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.jetbrains.exposed.v1.jdbc.transactions.inTopLevelTransaction
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.jetbrains.exposed.v1.jdbc.transactions.transactionManager
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.sql.SQLException
 import kotlin.test.fail
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Ex05_NestedTransactions: AbstractExposedTest() {
 
     companion object: KLogging()
 
-    private val db by lazy {
+    private val dbLazy = lazy {
         Database.connect(
             url = "jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1;",
             driver = "org.h2.Driver",
@@ -44,8 +47,16 @@ class Ex05_NestedTransactions: AbstractExposedTest() {
             }
         )
     }
+    private val db by dbLazy
 
     val cities = DMLTestData.Cities
+
+    @AfterAll
+    fun tearDown() {
+        if (dbLazy.isInitialized()) {
+            TransactionManager.closeAndUnregister(db)
+        }
+    }
 
     private fun cityCounts(): Int = cities.selectAll().count().toInt()
 

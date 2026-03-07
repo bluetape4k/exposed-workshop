@@ -8,10 +8,17 @@ import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.ApplicationListener
 import org.springframework.stereotype.Component
 
+/**
+ * 애플리케이션 시작 시 국가 데이터를 데이터베이스에 초기화하는 컴포넌트.
+ *
+ * [ApplicationReadyEvent] 이벤트를 수신하여 [CountryTable]에 국가 코드 데이터를
+ * 일괄 삽입(batch insert)합니다.
+ */
 @Component
 class DataPopulator: ApplicationListener<ApplicationReadyEvent> {
 
     companion object: KLoggingChannel() {
+        /** ISO 3166-1 alpha-2 형식의 국가 코드 목록 */
         val COUNTRY_CODES: List<String> =
             listOf(
                 "AF", "AX",
@@ -37,6 +44,11 @@ class DataPopulator: ApplicationListener<ApplicationReadyEvent> {
             )
     }
 
+    /**
+     * 애플리케이션 준비 완료 이벤트 수신 시 국가 데이터를 일괄 삽입합니다.
+     *
+     * @param event 애플리케이션 준비 완료 이벤트
+     */
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
         log.info { "Populate country data ..." }
         transaction {
