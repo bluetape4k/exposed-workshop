@@ -16,6 +16,12 @@ import org.jetbrains.exposed.v1.jdbc.SizedIterable
 import java.time.LocalDate
 import java.time.LocalDateTime
 
+/**
+ * 영화 관련 Exposed 스키마 정의.
+ *
+ * [MovieTable], [ActorTable], [ActorInMovieTable] 테이블과
+ * [MovieEntity], [ActorEntity] DAO 엔티티를 포함합니다.
+ */
 object MovieSchema {
 
     /**
@@ -74,6 +80,11 @@ object MovieSchema {
         override val primaryKey = PrimaryKey(movieId, actorId)
     }
 
+    /**
+     * 영화 테이블의 DAO 엔티티.
+     *
+     * @param id 영화의 고유 식별자
+     */
     class MovieEntity(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<MovieEntity>(MovieTable)
 
@@ -92,6 +103,11 @@ object MovieSchema {
             .toString()
     }
 
+    /**
+     * 배우 테이블의 DAO 엔티티.
+     *
+     * @param id 배우의 고유 식별자
+     */
     class ActorEntity(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<ActorEntity>(ActorTable)
 

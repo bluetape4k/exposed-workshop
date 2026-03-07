@@ -19,11 +19,22 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
+/**
+ * 애플리케이션 시작 시 샘플 데이터를 초기화하는 컴포넌트.
+ *
+ * [ApplicationReadyEvent] 발생 시 배우 및 영화 샘플 데이터를 데이터베이스에 삽입합니다.
+ * 데이터가 이미 존재하면 삽입하지 않습니다.
+ */
 @Component
 class DataInitializer: ApplicationListener<ApplicationReadyEvent> {
 
     companion object: KLogging()
 
+    /**
+     * 애플리케이션이 준비된 후 샘플 데이터를 삽입합니다.
+     *
+     * @param event 애플리케이션 준비 완료 이벤트
+     */
     @Transactional
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
         log.info { "데이터베이스 샘플 데이터 추가" }

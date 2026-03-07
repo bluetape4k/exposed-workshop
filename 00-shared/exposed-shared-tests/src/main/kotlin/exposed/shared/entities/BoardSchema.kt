@@ -12,6 +12,11 @@ import org.jetbrains.exposed.v1.dao.IntEntityClass
 import org.jetbrains.exposed.v1.dao.LongEntity
 import org.jetbrains.exposed.v1.dao.LongEntityClass
 
+/**
+ * 게시판(Board), 게시글(Post), 카테고리(Category) 엔티티와 테이블을 포함하는 스키마 정의 클래스.
+ *
+ * DAO 패턴을 사용하여 게시판과 게시글 간의 계층적 관계 및 카테고리 연관 관계를 나타냅니다.
+ */
 class BoardSchema {
 
     /**
@@ -79,6 +84,7 @@ class BoardSchema {
     }
 
 
+    /** 게시판 엔티티. [Boards] 테이블과 매핑됩니다. */
     class Board(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<Board>(Boards)
 
@@ -92,6 +98,7 @@ class BoardSchema {
             .toString()
     }
 
+    /** 게시글 엔티티. [Posts] 테이블과 매핑됩니다. */
     class Post(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<Post>(Posts)
 
@@ -109,6 +116,7 @@ class BoardSchema {
             .toString()
     }
 
+    /** 카테고리 엔티티. [Categories] 테이블과 매핑됩니다. */
     class Category(id: EntityID<Int>): IntEntity(id) {
         companion object: IntEntityClass<Category>(Categories)
 

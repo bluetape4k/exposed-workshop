@@ -124,6 +124,12 @@ object BankSchema {
             .toString()
     }
 
+    /**
+     * 은행 계좌 관련 테이블을 생성하고 샘플 데이터를 삽입한 후 [block]을 실행합니다.
+     *
+     * @param testDB 사용할 테스트 데이터베이스
+     * @param block 테이블과 샘플 데이터가 준비된 상태에서 실행할 트랜잭션 블록
+     */
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withBankTables(
         testDB: TestDB,
@@ -163,9 +169,23 @@ object BankSchema {
         }
     }
 
+    /**
+     * 주어진 [accountId]로 은행 계좌를 조회합니다.
+     *
+     * @param accountId 조회할 계좌 ID
+     * @return 조회된 [BankAccount] 엔티티
+     * @throws IllegalArgumentException 해당 ID의 계좌가 없을 경우
+     */
     @Suppress("UnusedReceiverParameter")
     fun JdbcTransaction.getAccount(accountId: Int): BankAccount = BankAccount.findById(accountId)!!
 
+    /**
+     * 주어진 [ownerId]로 계좌 소유자를 조회합니다.
+     *
+     * @param ownerId 조회할 소유자 ID
+     * @return 조회된 [AccountOwner] 엔티티
+     * @throws IllegalArgumentException 해당 ID의 소유자가 없을 경우
+     */
     @Suppress("UnusedReceiverParameter")
     fun JdbcTransaction.getOwner(ownerId: Int): AccountOwner = AccountOwner.findById(ownerId)!!
 }

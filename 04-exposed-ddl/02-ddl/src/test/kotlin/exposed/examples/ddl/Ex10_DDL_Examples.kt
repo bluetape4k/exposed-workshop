@@ -62,8 +62,10 @@ import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.jetbrains.exposed.v1.jdbc.update
 import org.jetbrains.exposed.v1.migration.jdbc.MigrationUtils
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.*
@@ -72,9 +74,15 @@ import kotlin.test.assertTrue
 /**
  * 다양한 DDL 예제
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Ex10_DDL_Examples: AbstractExposedTest() {
 
     companion object: KLogging()
+
+    @AfterAll
+    fun afterAll() {
+        TransactionManager.closeAndUnregister(keywordFlagDB)
+    }
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -140,8 +148,6 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
 
             SchemaUtils.drop(tester)
         }
-
-        TransactionManager.closeAndUnregister(keywordFlagDB)
     }
 
     private val keywordFlagDB by lazy {

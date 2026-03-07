@@ -90,6 +90,7 @@ object UserToCityTable: Table() {
     val cityId = reference("city_id", CityTable, onDelete = ReferenceOption.CASCADE)
 }
 
+/** 국가 엔티티. [CountryTable]과 매핑됩니다. */
 class Country(id: EntityID<Int>): IntEntity(id) {
     companion object: IntEntityClass<Country>(CountryTable)
 
@@ -103,6 +104,7 @@ class Country(id: EntityID<Int>): IntEntity(id) {
         .toString()
 }
 
+/** 도시 엔티티. [CityTable]과 매핑됩니다. */
 class City(id: EntityID<Int>): IntEntity(id) {
     companion object: IntEntityClass<City>(CityTable)
 
@@ -118,6 +120,7 @@ class City(id: EntityID<Int>): IntEntity(id) {
         .toString()
 }
 
+/** 사용자 엔티티. [UserTable]과 매핑됩니다. */
 class User(id: EntityID<Int>): IntEntity(id) {
     companion object: IntEntityClass<User>(UserTable)
 

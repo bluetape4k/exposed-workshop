@@ -8,6 +8,7 @@ import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContainIgnoringCase
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.Test
@@ -101,6 +102,8 @@ class Ex02_ConnectionException {
                 connection.rollbackCalled.shouldBeTrue()
                 connection.closeCalled.shouldBeTrue()
             }
+        } finally {
+            TransactionManager.closeAndUnregister(db)
         }
     }
 
@@ -131,6 +134,8 @@ class Ex02_ConnectionException {
                 connection.commitCalled.shouldBeTrue()
                 connection.closeCalled.shouldBeTrue()
             }
+        } finally {
+            TransactionManager.closeAndUnregister(db)
         }
     }
 
@@ -160,6 +165,8 @@ class Ex02_ConnectionException {
                 connection.commitCalled.shouldBeTrue()
                 connection.closeCalled.shouldBeTrue()
             }
+        } finally {
+            TransactionManager.closeAndUnregister(db)
         }
     }
 

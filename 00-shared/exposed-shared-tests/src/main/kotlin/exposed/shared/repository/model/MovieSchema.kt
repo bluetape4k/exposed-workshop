@@ -29,19 +29,27 @@ import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.select
 import java.time.LocalDate
 
+/**
+ * 영화(Movie)와 배우(Actor) 엔티티 및 테이블을 포함하는 스키마 정의 객체.
+ *
+ * 영화와 배우 간의 다대다(Many-to-Many) 관계를 [ActorInMovieTable]을 통해 표현합니다.
+ */
 object MovieSchema: KLogging() {
+    /** 영화 테이블 정의. */
     object MovieTable: LongIdTable("movies") {
         val name = varchar("name", 255)
         val producerName = varchar("producer_name", 255)
         val releaseDate = date("release_date")
     }
 
+    /** 배우 테이블 정의. */
     object ActorTable: LongIdTable("actors") {
         val firstName = varchar("first_name", 255)
         val lastName = varchar("last_name", 255)
         val birthday = date("birthday").nullable()
     }
 
+    /** 영화-배우 간 다대다 매핑 테이블 정의. */
     object ActorInMovieTable: Table("actors_in_movies") {
         val movieId: Column<EntityID<Long>> = reference("movie_id", MovieTable, onDelete = ReferenceOption.CASCADE)
         val actorId: Column<EntityID<Long>> = reference("actor_id", ActorTable, onDelete = ReferenceOption.CASCADE)
@@ -49,6 +57,7 @@ object MovieSchema: KLogging() {
         override val primaryKey = PrimaryKey(movieId, actorId)
     }
 
+    /** 영화 엔티티. [MovieTable]과 매핑됩니다. */
     class MovieEntity(
         id: EntityID<Long>,
     ): LongEntity(id) {
@@ -72,6 +81,7 @@ object MovieSchema: KLogging() {
                 .toString()
     }
 
+    /** 배우 엔티티. [ActorTable]과 매핑됩니다. */
     class ActorEntity(
         id: EntityID<Long>,
     ): LongEntity(id) {
@@ -95,6 +105,12 @@ object MovieSchema: KLogging() {
                 .toString()
     }
 
+    /**
+     * 영화, 배우, 매핑 테이블을 생성하고 샘플 데이터를 삽입한 후 [statement]를 실행합니다.
+     *
+     * @param testDB 사용할 테스트 데이터베이스
+     * @param statement 테이블과 샘플 데이터가 준비된 상태에서 실행할 트랜잭션 블록
+     */
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withMovieAndActors(
         testDB: TestDB,
@@ -106,6 +122,12 @@ object MovieSchema: KLogging() {
         }
     }
 
+    /**
+     * 코루틴 환경에서 영화, 배우, 매핑 테이블을 생성하고 샘플 데이터를 삽입한 후 [statement]를 실행합니다.
+     *
+     * @param testDB 사용할 테스트 데이터베이스
+     * @param statement 테이블과 샘플 데이터가 준비된 상태에서 실행할 서스펜딩 트랜잭션 블록
+     */
     @Suppress("UnusedReceiverParameter")
     suspend fun AbstractExposedTest.withSuspendedMovieAndActors(
         testDB: TestDB,
