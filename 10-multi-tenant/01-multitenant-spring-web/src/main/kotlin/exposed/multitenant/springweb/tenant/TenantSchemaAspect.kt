@@ -10,6 +10,16 @@ import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 
+/**
+ * 멀티테넌시 지원을 위한 Spring AOP 애스펙트.
+ *
+ * `@Transactional`이 적용된 클래스나 메서드가 실행되기 전에 현재 테넌트에 해당하는
+ * 데이터베이스 스키마를 설정합니다. [TenantContext]에서 현재 테넌트 정보를 읽어
+ * Exposed의 [SchemaUtils.setSchema]를 통해 스키마를 전환합니다.
+ *
+ * @see TenantContext
+ * @see SchemaUtils
+ */
 @Aspect
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)

@@ -8,6 +8,7 @@ import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldContainIgnoringCase
 import org.amshove.kluent.shouldHaveSize
 import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.Test
@@ -87,20 +88,24 @@ class Ex02_ConnectionException {
         val wrappingDataSource = WrappingDataSource(TestDB.H2, connectionDecorator)
         val db = Database.connect(datasource = wrappingDataSource)
         try {
-            transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
-                maxAttempts = 5
-                this.exec("BROKEN_SQL_THAT_CAUSES_EXCEPTION()")
-            }
-            fail("위의 Tx에서 예외를 발생 시켜야 합니다.")
-        } catch (e: SQLException) {
-            e.toString() shouldContainIgnoringCase "BROKEN_SQL_THAT_CAUSES_EXCEPTION"
-            wrappingDataSource.connections shouldHaveSize 5
+            try {
+                transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
+                    maxAttempts = 5
+                    this.exec("BROKEN_SQL_THAT_CAUSES_EXCEPTION()")
+                }
+                fail("위의 Tx에서 예외를 발생 시켜야 합니다.")
+            } catch (e: SQLException) {
+                e.toString() shouldContainIgnoringCase "BROKEN_SQL_THAT_CAUSES_EXCEPTION"
+                wrappingDataSource.connections shouldHaveSize 5
 
-            wrappingDataSource.connections.forEach { connection ->
-                connection.commitCalled.shouldBeFalse()
-                connection.rollbackCalled.shouldBeTrue()
-                connection.closeCalled.shouldBeTrue()
+                wrappingDataSource.connections.forEach { connection ->
+                    connection.commitCalled.shouldBeFalse()
+                    connection.rollbackCalled.shouldBeTrue()
+                    connection.closeCalled.shouldBeTrue()
+                }
             }
+        } finally {
+            TransactionManager.closeAndUnregister(db)
         }
     }
 
@@ -119,18 +124,22 @@ class Ex02_ConnectionException {
         val db = Database.connect(wrappingDataSource)
 
         try {
-            transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
-                maxAttempts = 5
-                this.exec("SELECT 1;")
-            }
-            fail("위의 Tx에서 예외를 발생 시켜야 합니다.")
-        } catch (_: CommitException) {
-            wrappingDataSource.connections shouldHaveSize 5
+            try {
+                transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
+                    maxAttempts = 5
+                    this.exec("SELECT 1;")
+                }
+                fail("위의 Tx에서 예외를 발생 시켜야 합니다.")
+            } catch (_: CommitException) {
+                wrappingDataSource.connections shouldHaveSize 5
 
-            wrappingDataSource.connections.forEach { connection ->
-                connection.commitCalled.shouldBeTrue()
-                connection.closeCalled.shouldBeTrue()
+                wrappingDataSource.connections.forEach { connection ->
+                    connection.commitCalled.shouldBeTrue()
+                    connection.closeCalled.shouldBeTrue()
+                }
             }
+        } finally {
+            TransactionManager.closeAndUnregister(db)
         }
     }
 
@@ -149,17 +158,21 @@ class Ex02_ConnectionException {
         val db = Database.connect(wrappingDataSource)
 
         try {
-            transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
-                maxAttempts = 5
-                this.exec("SELECT 1;")
+            try {
+                transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
+                    maxAttempts = 5
+                    this.exec("SELECT 1;")
+                }
+                fail("위의 Tx에서 예외를 발생 시켜야 합니다.")
+            } catch (_: CommitException) {
+                wrappingDataSource.connections shouldHaveSize 5
+                wrappingDataSource.connections.forEach { connection ->
+                    connection.commitCalled.shouldBeTrue()
+                    connection.closeCalled.shouldBeTrue()
+                }
             }
-            fail("위의 Tx에서 예외를 발생 시켜야 합니다.")
-        } catch (_: CommitException) {
-            wrappingDataSource.connections shouldHaveSize 5
-            wrappingDataSource.connections.forEach { connection ->
-                connection.commitCalled.shouldBeTrue()
-                connection.closeCalled.shouldBeTrue()
-            }
+        } finally {
+            TransactionManager.closeAndUnregister(db)
         }
     }
 

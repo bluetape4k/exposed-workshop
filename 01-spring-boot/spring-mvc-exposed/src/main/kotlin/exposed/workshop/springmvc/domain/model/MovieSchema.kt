@@ -16,9 +16,19 @@ import org.jetbrains.exposed.v1.jdbc.SizedIterable
 import java.time.LocalDate
 import java.time.LocalDateTime
 
+/**
+ * 영화 도메인의 Exposed DSL 테이블 스키마 및 DAO 엔티티 정의.
+ *
+ * 다음 세 가지 테이블과 해당 DAO 엔티티를 포함합니다:
+ * - [MovieTable]: 영화 정보 테이블
+ * - [ActorTable]: 배우 정보 테이블
+ * - [ActorInMovieTable]: 영화-배우 다대다 관계 테이블
+ */
 object MovieSchema {
 
     /**
+     * 영화 정보를 저장하는 테이블.
+     *
      * ```sql
      * -- Postgres
      * CREATE TABLE IF NOT EXISTS movies (
@@ -36,6 +46,8 @@ object MovieSchema {
     }
 
     /**
+     * 배우 정보를 저장하는 테이블.
+     *
      * ```sql
      * -- Postgres
      * CREATE TABLE IF NOT EXISTS actors (
