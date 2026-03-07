@@ -20,9 +20,9 @@ import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.update
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import kotlin.test.assertFailsWith
 
 class TinkColumnTypeTest: AbstractExposedTest() {
 
@@ -185,25 +185,25 @@ class TinkColumnTypeTest: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `컬럼 길이는 0보다 커야 한다`(testDB: TestDB) {
-        assertThrows<IllegalArgumentException> {
+        assertFailsWith<IllegalArgumentException> {
             object: IntIdTable("invalid_aead_varchar_$testDB") {
                 val invalid = tinkAeadVarChar("invalid", 0)
             }
         }
 
-        assertThrows<IllegalArgumentException> {
+        assertFailsWith<IllegalArgumentException> {
             object: IntIdTable("invalid_aead_binary_$testDB") {
                 val invalid = tinkAeadBinary("invalid", 0)
             }
         }
 
-        assertThrows<IllegalArgumentException> {
+        assertFailsWith<IllegalArgumentException> {
             object: IntIdTable("invalid_daead_varchar_$testDB") {
                 val invalid = tinkDaeadVarChar("invalid", 0)
             }
         }
 
-        assertThrows<IllegalArgumentException> {
+        assertFailsWith<IllegalArgumentException> {
             object: IntIdTable("invalid_daead_binary_$testDB") {
                 val invalid = tinkDaeadBinary("invalid", 0)
             }
