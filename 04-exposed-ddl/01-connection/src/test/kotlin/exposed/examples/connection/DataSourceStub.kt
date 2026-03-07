@@ -5,12 +5,6 @@ import java.sql.Connection
 import java.util.logging.Logger
 import javax.sql.DataSource
 
-/**
- * 테스트용 [DataSource] 스텁 구현체.
- *
- * [java.util.logging.Logger] import는 [javax.sql.DataSource] 인터페이스의
- * [getParentLogger] 메서드 반환 타입으로 요구되어 포함됩니다.
- */
 internal open class DataSourceStub: DataSource {
 
     override fun getLogWriter(): PrintWriter {

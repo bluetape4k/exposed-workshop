@@ -199,11 +199,7 @@ class FastjsonColumnTest: AbstractExposedTest() {
             val tester = object: Table("tester") {
                 val jCol = fastjson<Fake>("j_col")
             }
-            try {
-                SchemaUtils.create(tester)
-            } finally {
-                SchemaUtils.drop(tester)
-            }
+            SchemaUtils.create(tester)
         }
     }
 
