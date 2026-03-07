@@ -12,7 +12,7 @@ import java.util.concurrent.Executors
 /**
  * Tomcat 요청 처리기를 Virtual Thread 기반 executor로 교체하는 설정입니다.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true", matchIfMissing = true)
 class TomcatVirtualThreadConfig {
 

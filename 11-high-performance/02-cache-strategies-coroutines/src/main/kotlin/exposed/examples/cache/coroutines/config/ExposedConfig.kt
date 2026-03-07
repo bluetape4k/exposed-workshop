@@ -10,12 +10,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 import java.sql.Connection
 import javax.sql.DataSource
 
-@Configuration
+/**
+ * 코루틴 기반 캐시 예제에서 Exposed [Database]와 트랜잭션 옵션을 등록합니다.
+ */
+@Configuration(proxyBeanMethods = false)
 @EnableTransactionManagement
 class ExposedConfig {
 
     companion object: KLoggingChannel()
 
+    /**
+     * Exposed 전역 동작에 사용할 [DatabaseConfig]를 구성합니다.
+     */
     @Bean
     fun databaseConfig(): DatabaseConfig {
         return DatabaseConfig {
@@ -25,6 +31,9 @@ class ExposedConfig {
         }
     }
 
+    /**
+     * 애플리케이션 [DataSource]를 Exposed [Database]에 연결합니다.
+     */
     @Bean
     fun database(dataSource: DataSource, databaseConfig: DatabaseConfig): Database {
         log.info { "Database connection: $dataSource" }

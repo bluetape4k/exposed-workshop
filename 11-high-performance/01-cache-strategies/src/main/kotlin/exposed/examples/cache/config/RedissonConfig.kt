@@ -12,7 +12,7 @@ import java.time.Duration
 /**
  * Redisson 클라이언트와 연결 설정을 제공합니다.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class RedissonConfig {
 
     companion object: KLoggingChannel()

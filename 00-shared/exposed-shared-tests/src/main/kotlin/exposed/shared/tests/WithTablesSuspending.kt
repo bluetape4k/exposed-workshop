@@ -10,6 +10,9 @@ import org.jetbrains.exposed.v1.jdbc.transactions.inTopLevelTransaction
 import org.jetbrains.exposed.v1.jdbc.transactions.transactionManager
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * 코루틴 환경에서 지정한 [tables] 를 생성한 뒤 [statement] 를 실행하고 종료 시 정리합니다.
+ */
 suspend fun withTablesSuspending(
     testDB: TestDB,
     vararg tables: Table,
@@ -48,6 +51,9 @@ suspend fun withTablesSuspending(
     }
 }
 
+/**
+ * [withTablesSuspending] 의 이전 이름입니다.
+ */
 @Deprecated(
     message = "Use withTablesSuspending() instead.",
     replaceWith = ReplaceWith(

@@ -57,8 +57,11 @@ class RoutingMarkerController(
  * 라우팅 결과 조회 응답 모델입니다.
  */
 data class RoutingMarkerResponse(
+    /** 요청 처리에 사용된 tenant 식별자입니다. */
     val tenant: String,
+    /** 라우팅 대상이 read-only 경로였는지 여부입니다. */
     val readOnly: Boolean,
+    /** 선택된 데이터소스에 저장된 현재 마커 값입니다. */
     val marker: String?,
 )
 
@@ -66,6 +69,6 @@ data class RoutingMarkerResponse(
  * 마커 갱신 요청 모델입니다.
  */
 data class UpdateMarkerRequest(
+    /** read-write 라우팅 대상에 저장할 새 마커 값입니다. */
     val marker: String,
 )
-

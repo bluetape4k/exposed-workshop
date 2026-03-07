@@ -20,11 +20,11 @@ import org.springframework.core.env.Environment
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.sql.DataSource
 
-@Configuration
-@EnableTransactionManagement
 /**
  * 테넌트별 DataSource/Exposed 설정을 구성합니다.
  */
+@Configuration(proxyBeanMethods = false)
+@EnableTransactionManagement
 class ExposedMutitenantConfig {
 
     companion object: KLogging()

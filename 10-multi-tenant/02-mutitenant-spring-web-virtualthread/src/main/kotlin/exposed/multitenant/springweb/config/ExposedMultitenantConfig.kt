@@ -20,11 +20,11 @@ import org.springframework.core.env.Environment
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.sql.DataSource
 
-@Configuration
-@EnableTransactionManagement
 /**
  * Virtual Threads 환경에서 테넌트별 DataSource를 설정합니다.
  */
+@Configuration(proxyBeanMethods = false)
+@EnableTransactionManagement
 class ExposedMultitenantConfig {
 
     companion object: KLogging()

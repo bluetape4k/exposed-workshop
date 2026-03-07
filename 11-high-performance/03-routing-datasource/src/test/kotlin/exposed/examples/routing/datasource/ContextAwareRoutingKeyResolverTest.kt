@@ -32,5 +32,14 @@ class ContextAwareRoutingKeyResolverTest {
 
         assertEquals("acme:ro", key)
     }
-}
 
+    @Test
+    fun `tenant가 공백이면 default tenant로 fallback 한다`() {
+        val resolver = ContextAwareRoutingKeyResolver(
+            defaultTenant = "default",
+            tenantSupplier = { "   " },
+        )
+
+        assertEquals("default:rw", resolver.currentLookupKey())
+    }
+}

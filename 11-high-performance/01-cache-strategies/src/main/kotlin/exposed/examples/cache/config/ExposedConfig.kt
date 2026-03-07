@@ -13,7 +13,7 @@ import javax.sql.DataSource
 /**
  * Exposed 기본 설정(트ラン잭션 속성, 캐시 제한 등)과 Database 등록을 담당합니다.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableTransactionManagement
 class ExposedConfig {
 

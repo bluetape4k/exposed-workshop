@@ -20,10 +20,17 @@ object TenantContext {
 
     /**
      * 지정한 [tenantId]를 컨텍스트에 바인딩한 뒤 [block]을 실행합니다.
+     *
+     * [tenantId] 가 `null` 이거나 공백이면 현재 요청 구간에서는 tenant 컨텍스트를 비운 상태로 실행하고,
+     * 종료 후에는 이전 컨텍스트를 복원합니다.
      */
-    fun <T> withTenant(tenantId: String, block: () -> T): T {
+    fun <T> withTenant(tenantId: String?, block: () -> T): T {
         val previous = currentTenant.get()
-        currentTenant.set(tenantId)
+        if (tenantId.isNullOrBlank()) {
+            currentTenant.remove()
+        } else {
+            currentTenant.set(tenantId)
+        }
         return try {
             block()
         } finally {
@@ -35,4 +42,3 @@ object TenantContext {
         }
     }
 }
-

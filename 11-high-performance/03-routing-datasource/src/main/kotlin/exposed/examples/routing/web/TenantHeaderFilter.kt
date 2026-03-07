@@ -18,19 +18,15 @@ class TenantHeaderFilter: OncePerRequestFilter() {
         response: HttpServletResponse,
         filterChain: FilterChain,
     ) {
-        val tenantId = request.getHeader(TENANT_HEADER)
-        if (tenantId.isNullOrBlank()) {
-            filterChain.doFilter(request, response)
-            return
-        }
-
-        TenantContext.withTenant(tenantId) {
+        TenantContext.withTenant(request.getHeader(TENANT_HEADER)) {
             filterChain.doFilter(request, response)
         }
     }
 
     companion object {
+        /**
+         * 현재 요청의 tenant 식별자를 전달하는 HTTP 헤더 이름입니다.
+         */
         const val TENANT_HEADER = "X-Tenant-Id"
     }
 }
-

@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapMerge
 import org.amshove.kluent.shouldBeTrue
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
@@ -46,4 +48,20 @@ class CachedCountrySuspendedRepositoryTest(
         DataPopulator.COUNTRY_CODES.all { code -> countryCache.get(code) == null }.shouldBeTrue()
     }
 
+    @Test
+    fun `국가 정보를 수정하면 캐시가 무효화되고 다음 조회에 최신 값이 반영된다`() = runSuspendIO {
+        val countryCache =
+            suspendedCacheManager.getOrCreate<String, CountryRecord>(CachedCountrySuspendedRepository.CACHE_NAME)
+        val code = DataPopulator.COUNTRY_CODES.first()
+
+        val original = countrySuspendedRepository.findByCode(code)
+        assertEquals(original, countryCache.get(code))
+
+        val updated = original!!.copy(name = "${original.name} (updated)")
+        countrySuspendedRepository.update(updated)
+
+        assertNull(countryCache.get(code))
+        assertEquals(updated, countrySuspendedRepository.findByCode(code))
+        assertEquals(updated, countryCache.get(code))
+    }
 }

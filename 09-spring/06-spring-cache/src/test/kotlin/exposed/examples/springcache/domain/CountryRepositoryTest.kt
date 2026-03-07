@@ -4,14 +4,12 @@ import exposed.examples.springcache.AbstractSpringCacheApplicationTest
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeLessThan
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.Cache
 import org.springframework.cache.CacheManager
-import kotlin.system.measureTimeMillis
 
 class CountryRepositoryTest(
     @param:Autowired private val countryRepository: CountryRepository,
@@ -21,84 +19,58 @@ class CountryRepositoryTest(
     companion object: KLogging()
 
     /**
-     * Redis Cache를 사용하여 Country를 조회하는 테스트
-     *
-     * ```shell
-     * # 테스트 실행 결과
-     * databaseLoadingTime=749 msec
-     * cacheLoadingTime=169 msec
-     * ```
+     * 첫 조회로 캐시를 채우고, 이후 조회는 같은 결과를 반환해야 한다.
      */
     @Test
     fun `get country at first`() {
+        val countryCache: Cache = cacheManager.getCache(CountryRepository.COUNTRY_CACHE_NAME)!!
         countryRepository.evictCacheAll()
+        DataPopulator.COUNTRY_CODES.all { countryCache.get("country:$it") == null }.shouldBeTrue()
 
         log.debug { "처음 조회 시에는 DB에서 읽어온다 ..." }
-        val databaseLoadingTime = measureTimeMillis {
-            val countries = DataPopulator.COUNTRY_CODES.map { code ->
-                countryRepository.findByCode(code)
-            }
-            countries.all { it != null }.shouldBeTrue()
+        val countriesFromDb = DataPopulator.COUNTRY_CODES.mapNotNull { code ->
+            countryRepository.findByCode(code)
         }
+        countriesFromDb.size shouldBeEqualTo DataPopulator.COUNTRY_CODES.size
+        DataPopulator.COUNTRY_CODES.all { countryCache.get("country:$it") != null }.shouldBeTrue()
 
         log.debug { "두번째 조회 시에는 캐시에서 읽어온다..." }
-        val cacheLoadingTime = measureTimeMillis {
-            val countries = DataPopulator.COUNTRY_CODES.map { code ->
-                countryRepository.findByCode(code)
-            }
-            countries.all { it != null }.shouldBeTrue()
+        val countriesFromCache = DataPopulator.COUNTRY_CODES.mapNotNull { code ->
+            countryRepository.findByCode(code)
         }
-
-        log.debug { "databaseLoadingTime=$databaseLoadingTime msec" }
-        log.debug { "cacheLoadingTime=$cacheLoadingTime msec" }
-
-        cacheLoadingTime shouldBeLessThan databaseLoadingTime
+        countriesFromCache shouldBeEqualTo countriesFromDb
     }
 
     /**
-     * Country를 업데이트 할 때 캐시를 evict하는 테스트
-     *
-     * ```shell
-     * databaseLoadingTime=767 msec
-     * reloadLoadingTime=384 msec
-     * cacheLoadingTime=120 msec
-     * ```
+     * Country를 업데이트 하면 기존 캐시가 비워지고, 다음 조회에서 최신 값으로 다시 채워져야 한다.
      */
     @Test
     fun `Country Update 할 때 cache evict를 수행한다`() {
+        val countryCache: Cache = cacheManager.getCache(CountryRepository.COUNTRY_CACHE_NAME)!!
         countryRepository.evictCacheAll()
-
-        val countries: List<CountryRecord>
+        DataPopulator.COUNTRY_CODES.all { countryCache.get("country:$it") == null }.shouldBeTrue()
 
         log.debug { "처음 Country를 조회합니다. (DB로부터 읽어온다)" }
-        val databaseLoadingTime = measureTimeMillis {
-            countries = DataPopulator.COUNTRY_CODES.mapNotNull { code -> countryRepository.findByCode(code) }
-        }
+        val countries = DataPopulator.COUNTRY_CODES.mapNotNull { code -> countryRepository.findByCode(code) }
+        countries.size shouldBeEqualTo DataPopulator.COUNTRY_CODES.size
+        DataPopulator.COUNTRY_CODES.all { countryCache.get("country:$it") != null }.shouldBeTrue()
 
         log.debug { "모든 Country 를 Update 합니다." }
         countries.forEach { country ->
             val updatedCountry = country.copy(description = "Updated description")
             countryRepository.update(updatedCountry)
         }
+        DataPopulator.COUNTRY_CODES.all { countryCache.get("country:$it") == null }.shouldBeTrue()
 
         log.debug { "Update 된 Country 를 조회합니다. (DB로부터 읽어온다)" }
-        val updatedCountries: List<CountryRecord>
-        val reloadLoadingTime = measureTimeMillis {
-            updatedCountries = DataPopulator.COUNTRY_CODES.mapNotNull { code -> countryRepository.findByCode(code) }
-        }
-
+        val updatedCountries = DataPopulator.COUNTRY_CODES.mapNotNull { code -> countryRepository.findByCode(code) }
         updatedCountries.size shouldBeEqualTo countries.size
-
-        log.debug { "databaseLoadingTime=$databaseLoadingTime msec" }
-        log.debug { "reloadLoadingTime=$reloadLoadingTime msec" }
+        updatedCountries.all { it.description == "Updated description" }.shouldBeTrue()
 
         log.debug { "모든 Country 를 조회합니다 (캐시로부터 읽어온다)" }
-        val cachedCountries: List<CountryRecord>
-        val cacheLoadingTime = measureTimeMillis {
-            cachedCountries = DataPopulator.COUNTRY_CODES.mapNotNull { code -> countryRepository.findByCode(code) }
-        }
+        val cachedCountries = DataPopulator.COUNTRY_CODES.mapNotNull { code -> countryRepository.findByCode(code) }
         cachedCountries.size shouldBeEqualTo countries.size
-        log.debug { "cacheLoadingTime=$cacheLoadingTime msec" }
+        cachedCountries shouldBeEqualTo updatedCountries
     }
 
     @Test

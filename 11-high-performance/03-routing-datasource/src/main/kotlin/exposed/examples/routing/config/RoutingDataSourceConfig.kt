@@ -18,7 +18,7 @@ import javax.sql.DataSource
 /**
  * `routing.datasource` 설정을 읽어 동적 라우팅 DataSource를 구성합니다.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(RoutingDataSourceProperties::class)
 class RoutingDataSourceConfig {
 

@@ -8,6 +8,11 @@ import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import org.jetbrains.exposed.v1.jdbc.transactions.inTopLevelTransaction
 import org.jetbrains.exposed.v1.jdbc.transactions.transactionManager
 
+/**
+ * 지정한 [tables] 를 생성한 뒤 [statement] 를 실행하고, 종료 시 테이블을 정리합니다.
+ *
+ * 테스트마다 독립적인 스키마 상태를 보장해야 할 때 사용합니다.
+ */
 fun withTables(
     testDB: TestDB,
     vararg tables: Table,

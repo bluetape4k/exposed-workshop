@@ -19,10 +19,13 @@ import kotlin.time.toJavaDuration
 /**
  * Webflux 에서 사용하는 Netty 관련 설정을 제공합니다.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class NettyConfig {
     companion object: KLoggingChannel()
 
+    /**
+     * 테스트와 애플리케이션 실행에 사용할 Netty 서버 팩토리를 구성합니다.
+     */
     @Bean
     fun nettyReactiveWebServerFactory(): NettyReactiveWebServerFactory {
         return NettyReactiveWebServerFactory().apply {
@@ -42,6 +45,9 @@ class NettyConfig {
         }
     }
 
+    /**
+     * Reactor 전역 리소스를 분리해 예제 간 간섭을 줄입니다.
+     */
     @Bean
     fun reactorResourceFactory(): ReactorResourceFactory {
         return ReactorResourceFactory().apply {

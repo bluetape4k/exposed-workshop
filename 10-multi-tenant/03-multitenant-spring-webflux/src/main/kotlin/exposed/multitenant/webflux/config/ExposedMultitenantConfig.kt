@@ -19,14 +19,9 @@ import org.springframework.core.env.Environment
 import javax.sql.DataSource
 
 /**
- * Exposed 관련 설정입니다. 여기서는 예제용으로 프로파일 기준으로 DB를 설정합니다.
- *
- * 일반적으로는 Exposed의 Spring Boot 용 AutoConfiguration을 사용하면 됩니다.
- */
-@Configuration
-/**
  * WebFlux 환경에서 테넌트 DB 설정과 Schema 초기화를 구성합니다.
  */
+@Configuration(proxyBeanMethods = false)
 class ExposedMultitenantConfig {
 
     companion object: KLoggingChannel()
@@ -96,9 +91,12 @@ class ExposedMultitenantConfig {
     @Bean
     fun database(dataSource: DataSource, databaseConfig: DatabaseConfig): Database {
         log.info { "Database connection: $dataSource" }
-        return Database.connect(dataSource)
+        return Database.connect(dataSource, databaseConfig = databaseConfig)
     }
 
+    /**
+     * Exposed 전역 동작에 사용할 [DatabaseConfig]를 제공합니다.
+     */
     @Bean
     fun exposedDatabaseConfig(): DatabaseConfig {
         return DatabaseConfig {
