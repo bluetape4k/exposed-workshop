@@ -24,8 +24,9 @@ hs_err_pid*
 .kotlin
 
 # AI/Claude Code tool directories
-.omc/
 .claude/
+.omc/
+.omx/
 .cursorrules
 .aider*
 
