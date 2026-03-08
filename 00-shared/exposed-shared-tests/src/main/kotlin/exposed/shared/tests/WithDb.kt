@@ -17,12 +17,30 @@ internal val testDbSemaphores = ConcurrentHashMap<TestDB, Semaphore>()
 
 var currentTestDB by nullableTransactionScope<TestDB>()
 
+/**
+ * 트랜잭션 커밋 시 현재 테스트 DB 정보를 트랜잭션 스코프에 유지하는 인터셉터.
+ */
 object CurrentTestDBInterceptor: StatementInterceptor {
+    /**
+     * 커밋 후에도 [TestDB] 타입의 사용자 데이터만 유지합니다.
+     *
+     * @param userData 현재 트랜잭션에 저장된 사용자 데이터 맵
+     * @return [TestDB] 값만 필터링한 맵
+     */
     override fun keepUserDataInTransactionStoreOnCommit(userData: Map<Key<*>, Any?>): Map<Key<*>, Any?> {
         return userData.filterValues { it is TestDB }
     }
 }
 
+/**
+ * 지정된 [testDB]에 대해 트랜잭션 블록을 실행합니다.
+ *
+ * 세마포어를 통해 동일 DB에 대한 동시 접근을 방지하며, 최초 실행 시 DB 연결을 초기화합니다.
+ *
+ * @param testDB 사용할 테스트 데이터베이스
+ * @param configure 데이터베이스 설정 빌더 람다 (선택사항)
+ * @param statement 트랜잭션 내에서 실행할 블록
+ */
 fun withDb(
     testDB: TestDB,
     configure: (DatabaseConfig.Builder.() -> Unit)? = null,

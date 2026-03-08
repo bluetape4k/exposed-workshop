@@ -1,6 +1,7 @@
 package exposed.examples.cache.coroutines.config
 
 import exposed.examples.cache.coroutines.CacheStrategyApplication.Companion.redis
+import io.bluetape4k.concurrent.virtualthread.VirtualThreadExecutor
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.redisson.Redisson
 import org.redisson.api.RedissonClient
@@ -30,7 +31,11 @@ class RedissonConfig {
                 .setIdleConnectionTimeout(1000)
                 .setTimeout(1000)
                 .setRetryAttempts(3)
-                .setRetryDelay { attempt -> Duration.ofMillis(attempt * 100L) }
+                .setRetryDelay { attempt -> Duration.ofMillis((attempt + 1) * 100L) }
+
+            executor = VirtualThreadExecutor
+            nettyExecutor = VirtualThreadExecutor
+            nettyThreads = 64
         }
 
         return Redisson.create(config)

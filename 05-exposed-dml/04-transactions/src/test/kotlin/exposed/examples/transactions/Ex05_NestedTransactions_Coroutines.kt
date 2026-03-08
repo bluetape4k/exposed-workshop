@@ -32,8 +32,10 @@ import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTrans
 import org.jetbrains.exposed.v1.jdbc.transactions.inTopLevelTransaction
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.jetbrains.exposed.v1.jdbc.transactions.transactionManager
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.sql.SQLException
@@ -96,9 +98,15 @@ suspend fun <T> runWithSavepointOrNewTransaction(
 
 
 @Suppress("DEPRECATION")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Ex05_NestedTransactions_Coroutines: AbstractExposedTest() {
 
     companion object: KLogging()
+
+    @AfterAll
+    fun cleanupDatabase() {
+        TransactionManager.closeAndUnregister(db)
+    }
 
     private val db by lazy {
         Database.connect(

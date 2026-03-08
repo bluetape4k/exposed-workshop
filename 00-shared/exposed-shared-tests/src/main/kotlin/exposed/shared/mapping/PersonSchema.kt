@@ -16,6 +16,11 @@ import org.jetbrains.exposed.v1.javatime.date
 import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
 import java.time.LocalDate
 
+/**
+ * 사람(Person)과 주소(Address) 엔티티와 테이블을 포함하는 스키마 정의 객체.
+ *
+ * DAO 패턴과 DSL 패턴 모두를 지원하며, 사람과 주소 간의 다대일(Many-to-One) 관계를 나타냅니다.
+ */
 object PersonSchema {
 
     val allPersonTables = arrayOf(AddressTable, PersonTable)
@@ -95,6 +100,7 @@ object PersonSchema {
         override val primaryKey = PrimaryKey(id)
     }
 
+    /** 주소 엔티티. [AddressTable]과 매핑됩니다. */
     class Address(id: EntityID<Long>): LongEntity(id), java.io.Serializable {
         companion object: LongEntityClass<Address>(AddressTable)
 
@@ -113,6 +119,7 @@ object PersonSchema {
             .toString()
     }
 
+    /** 사람 엔티티. [PersonTable]과 매핑됩니다. */
     class Person(id: EntityID<Long>): LongEntity(id), java.io.Serializable {
         companion object: LongEntityClass<Person>(PersonTable)
 
@@ -135,6 +142,17 @@ object PersonSchema {
             .toString()
     }
 
+    /**
+     * 사람 조회 결과를 담는 데이터 클래스.
+     *
+     * @property id 사람 ID
+     * @property firstName 이름
+     * @property lastName 성
+     * @property birthDate 생년월일
+     * @property employeed 재직 여부
+     * @property occupation 직업
+     * @property address 주소 ID
+     */
     data class PersonRecord(
         val id: Long? = null,
         val firstName: String? = null,
@@ -145,6 +163,17 @@ object PersonSchema {
         val address: Long? = null,
     ): java.io.Serializable
 
+    /**
+     * 주소 정보를 포함한 사람 조회 결과를 담는 데이터 클래스.
+     *
+     * @property id 사람 ID
+     * @property firstName 이름
+     * @property lastName 성
+     * @property birthDate 생년월일
+     * @property employeed 재직 여부
+     * @property occupation 직업
+     * @property address 주소 엔티티
+     */
     data class PersonWithAddress(
         var id: Long? = null,
         var firstName: String? = null,
@@ -155,6 +184,12 @@ object PersonSchema {
         var address: Address? = null,
     ): java.io.Serializable
 
+    /**
+     * 사람과 주소 테이블을 생성한 후 [block]을 실행합니다.
+     *
+     * @param testDB 사용할 테스트 데이터베이스
+     * @param block 테이블이 준비된 상태에서 실행할 트랜잭션 블록
+     */
     fun withPersons(
         testDB: TestDB,
         block: JdbcTransaction.(PersonTable, AddressTable) -> Unit,
@@ -164,6 +199,12 @@ object PersonSchema {
         }
     }
 
+    /**
+     * 사람과 주소 테이블을 생성하고 샘플 데이터를 삽입한 후 [statement]를 실행합니다.
+     *
+     * @param testDB 사용할 테스트 데이터베이스
+     * @param statement 테이블과 샘플 데이터가 준비된 상태에서 실행할 트랜잭션 블록
+     */
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withPersonsAndAddress(
         testDB: TestDB,

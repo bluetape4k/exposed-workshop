@@ -26,6 +26,7 @@ import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.withSuspendTransaction
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -71,6 +72,12 @@ class Ex02_H2_MultiDatabase {
         TransactionManager.currentOrNull()?.db?.let {
             currentDB = it
         }
+    }
+
+    @AfterEach
+    fun afterEach() {
+        TransactionManager.closeAndUnregister(db1)
+        TransactionManager.closeAndUnregister(db2)
     }
 
     @Test

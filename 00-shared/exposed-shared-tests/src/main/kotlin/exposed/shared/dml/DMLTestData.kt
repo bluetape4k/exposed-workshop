@@ -15,6 +15,11 @@ import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
 import org.jetbrains.exposed.v1.jdbc.insert
 import java.math.BigDecimal
 
+/**
+ * DML(Data Manipulation Language) 테스트에서 사용하는 샘플 테이블 및 데이터 정의 객체.
+ *
+ * Cities, Users, UserData, Sales 등 다양한 테이블과 테스트 데이터 삽입 헬퍼 함수를 제공합니다.
+ */
 object DMLTestData {
 
     /**
@@ -113,10 +118,21 @@ object DMLTestData {
     }
 
 
+    /**
+     * [ResultRow] 컬렉션에서 도시 이름 목록을 추출합니다.
+     *
+     * @return 도시 이름 문자열 리스트
+     */
     fun Iterable<ResultRow>.toCityNameList(): List<String> =
         map { it[Cities.name] }
 
 
+    /**
+     * 도시, 사용자, 사용자 데이터 테이블을 생성하고 샘플 데이터를 삽입한 후 [statement]를 실행합니다.
+     *
+     * @param testDB 사용할 테스트 데이터베이스
+     * @param statement 테이블과 샘플 데이터가 준비된 상태에서 실행할 트랜잭션 블록
+     */
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withCitiesAndUsers(
         testDB: TestDB,
@@ -206,6 +222,12 @@ object DMLTestData {
         }
     }
 
+    /**
+     * 판매 데이터 테이블을 생성하고 샘플 판매 데이터를 삽입한 후 [statement]를 실행합니다.
+     *
+     * @param dialect 사용할 테스트 데이터베이스 방언
+     * @param statement 테이블과 샘플 데이터가 준비된 상태에서 실행할 트랜잭션 블록
+     */
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withSales(
         dialect: TestDB,
@@ -236,6 +258,12 @@ object DMLTestData {
         }
     }
 
+    /**
+     * 금액 테이블을 생성하고 샘플 금액 데이터를 삽입한 후 [statement]를 실행합니다.
+     *
+     * @param dialect 사용할 테스트 데이터베이스 방언
+     * @param statement 테이블과 샘플 데이터가 준비된 상태에서 실행할 트랜잭션 블록
+     */
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withSomeAmounts(
         dialect: TestDB,
@@ -257,6 +285,12 @@ object DMLTestData {
         }
     }
 
+    /**
+     * 판매 데이터 및 금액 테이블을 함께 생성하고 샘플 데이터를 삽입한 후 [statement]를 실행합니다.
+     *
+     * @param dialect 사용할 테스트 데이터베이스 방언
+     * @param statement 두 테이블과 샘플 데이터가 준비된 상태에서 실행할 트랜잭션 블록
+     */
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withSalesAndSomeAmounts(
         dialect: TestDB,

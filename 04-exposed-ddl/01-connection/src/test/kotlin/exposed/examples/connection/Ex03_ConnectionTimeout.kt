@@ -8,6 +8,7 @@ import org.amshove.kluent.shouldBeInstanceOf
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.exceptions.ExposedSQLException
 import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.junit.jupiter.api.Test
 import java.sql.Connection
@@ -50,6 +51,8 @@ class Ex03_ConnectionTimeout: AbstractExposedTest() {
         } catch (e: ExposedSQLException) {
             e.cause shouldBeInstanceOf GetConnectException::class
             datasource.connectCount shouldBeEqualTo 3
+        } finally {
+            TransactionManager.closeAndUnregister(db)
         }
     }
 
@@ -68,28 +71,32 @@ class Ex03_ConnectionTimeout: AbstractExposedTest() {
         )
 
         try {
-            // transaction block should use default DatabaseConfig values when no property is set
-            transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
-                exec("SELECT 1;")
+            try {
+                // transaction block should use default DatabaseConfig values when no property is set
+                transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
+                    exec("SELECT 1;")
+                }
+                fail("Should have thrown ${GetConnectException::class.simpleName}")
+            } catch (e: ExposedSQLException) {
+                e.cause shouldBeInstanceOf GetConnectException::class
+                datasource.connectCount shouldBeEqualTo 3
             }
-            fail("Should have thrown ${GetConnectException::class.simpleName}")
-        } catch (e: ExposedSQLException) {
-            e.cause shouldBeInstanceOf GetConnectException::class
-            datasource.connectCount shouldBeEqualTo 3
-        }
 
-        datasource.connectCount = 0
+            datasource.connectCount = 0
 
-        try {
-            // property set in transaction block should override default DatabaseConfig
-            transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
-                maxAttempts = 5
-                exec("SELECT 1;")
+            try {
+                // property set in transaction block should override default DatabaseConfig
+                transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
+                    maxAttempts = 5
+                    exec("SELECT 1;")
+                }
+                fail("Should have thrown ${GetConnectException::class.simpleName}")
+            } catch (e: ExposedSQLException) {
+                e.cause shouldBeInstanceOf GetConnectException::class
+                datasource.connectCount shouldBeEqualTo 5
             }
-            fail("Should have thrown ${GetConnectException::class.simpleName}")
-        } catch (e: ExposedSQLException) {
-            e.cause shouldBeInstanceOf GetConnectException::class
-            datasource.connectCount shouldBeEqualTo 5
+        } finally {
+            TransactionManager.closeAndUnregister(db)
         }
     }
 }

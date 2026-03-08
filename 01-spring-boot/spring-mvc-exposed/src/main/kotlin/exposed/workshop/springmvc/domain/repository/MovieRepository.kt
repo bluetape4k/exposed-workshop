@@ -29,6 +29,12 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 import java.time.LocalDateTime
 
+/**
+ * 영화(Movie) 데이터에 대한 저장소.
+ *
+ * Exposed DSL 및 DAO를 사용하여 영화 조회, 검색, 생성, 삭제 및
+ * 배우 관계 조회 기능을 제공합니다.
+ */
 @Repository
 @Transactional(readOnly = true)
 class MovieRepository(
@@ -59,6 +65,12 @@ class MovieRepository(
         // return MovieEntity.findById(movieId)?.toMovieRecord()
     }
 
+    /**
+     * 파라미터 조건으로 영화를 검색합니다.
+     *
+     * @param params 검색 조건 맵 (필드명 → 값)
+     * @return 조건에 맞는 영화 레코드 목록
+     */
     fun searchMovies(params: Map<String, String?>): List<MovieRecord> {
         log.debug { "Search Movie by params. params=$params" }
 
@@ -79,6 +91,12 @@ class MovieRepository(
         return query.map { it.toMovieRecord() }
     }
 
+    /**
+     * 새 영화를 데이터베이스에 저장합니다.
+     *
+     * @param movieRecord 저장할 영화 정보
+     * @return 생성된 영화 레코드 (ID 포함)
+     */
     @Transactional
     fun create(movieRecord: MovieRecord): MovieRecord {
         log.debug { "Create Movie. movie=$movieRecord" }
@@ -91,6 +109,12 @@ class MovieRepository(
         return movieRecord.copy(id = movidId.value)
     }
 
+    /**
+     * ID로 영화를 삭제합니다.
+     *
+     * @param movieId 삭제할 영화 ID
+     * @return 삭제된 행 수
+     */
     @Transactional
     fun deleteById(movieId: Long): Int {
         log.debug { "Delete Movie by id. id=$movieId" }
@@ -110,6 +134,8 @@ class MovieRepository(
             .getOrNull()
 
     /**
+     * 모든 영화와 각 영화에 출연한 배우 목록을 조회합니다.
+     *
      * ```sql
      * SELECT MOVIES.ID,
      *        MOVIES."name",
@@ -122,6 +148,9 @@ class MovieRepository(
      *   FROM MOVIES
      *          INNER JOIN ACTORS_IN_MOVIES ON MOVIES.ID = ACTORS_IN_MOVIES.MOVIE_ID
      *          INNER JOIN ACTORS ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID
+     * ```
+     *
+     * @return 배우 목록이 포함된 영화 레코드 목록
      */
     fun getAllMoviesWithActors(): List<MovieWithActorRecord> {
         log.debug { "Get all movies with actors." }
@@ -182,6 +211,11 @@ class MovieRepository(
 //            }
     }
 
+    /**
+     * 각 영화별 출연 배우 수를 집계하여 반환합니다.
+     *
+     * @return 영화명과 배우 수를 담은 레코드 목록
+     */
     fun getMovieActorsCount(): List<MovieActorCountRecord> {
         log.debug { "Get Movie actors count." }
 

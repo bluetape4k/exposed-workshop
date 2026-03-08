@@ -9,6 +9,11 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.util.concurrent.Executors
 
+/**
+ * Tomcat이 Virtual Thread를 사용하도록 설정하는 구성 클래스.
+ *
+ * `app.virtualthread.enabled=true`(기본값)일 때 활성화됩니다.
+ */
 @Configuration
 @ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true", matchIfMissing = true)
 class TomcatVirtualThreadConfig {

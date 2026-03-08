@@ -17,6 +17,11 @@ import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
 import java.io.Serializable
 import java.time.LocalDate
 
+/**
+ * 주문(Order), 주문 상세(OrderDetail), 상품(Item), 주문 라인(OrderLine), 사용자(User) 엔티티와 테이블을 포함하는 스키마 정의 객체.
+ *
+ * DAO 패턴을 사용하여 주문 처리 관련 엔티티 간의 관계를 나타냅니다.
+ */
 object OrderSchema {
 
     val allOrderTables = arrayOf(OrderTable, OrderDetailTable, ItemTable, OrderLineTable, UserTable)
@@ -48,6 +53,7 @@ object OrderSchema {
         val parentId = reference("parent_id", UserTable).nullable()
     }
 
+    /** 주문 엔티티. [OrderTable]과 매핑됩니다. */
     class Order(id: EntityID<Long>): LongEntity(id), Serializable {
         companion object: LongEntityClass<Order>(OrderTable)
 
@@ -61,6 +67,7 @@ object OrderSchema {
             .toString()
     }
 
+    /** 주문 상세 엔티티. [OrderDetailTable]과 매핑됩니다. */
     class OrderDetail(id: EntityID<Long>): LongEntity(id), Serializable {
         companion object: LongEntityClass<OrderDetail>(OrderDetailTable)
 
@@ -81,6 +88,7 @@ object OrderSchema {
             .toString()
     }
 
+    /** 상품 엔티티. [ItemTable]과 매핑됩니다. */
     class Item(id: EntityID<Long>): LongEntity(id), Serializable {
         companion object: LongEntityClass<Item>(ItemTable)
 
@@ -93,6 +101,7 @@ object OrderSchema {
             .toString()
     }
 
+    /** 주문 라인 엔티티. [OrderLineTable]과 매핑됩니다. */
     class OrderLine(id: EntityID<Long>): LongEntity(id), Serializable {
         companion object: LongEntityClass<OrderLine>(OrderLineTable)
 
@@ -111,6 +120,7 @@ object OrderSchema {
             .toString()
     }
 
+    /** 사용자 엔티티. [UserTable]과 매핑됩니다. */
     class User(id: EntityID<Long>): LongEntity(id), Serializable {
         companion object: LongEntityClass<User>(UserTable)
 
@@ -125,6 +135,14 @@ object OrderSchema {
             .toString()
     }
 
+    /**
+     * 주문 조회 결과를 담는 데이터 클래스.
+     *
+     * @property orderId 주문 ID
+     * @property itemId 상품 ID
+     * @property quantity 수량
+     * @property description 설명
+     */
     data class OrderRecord(
         val orderId: Long? = null,
         val itemId: Long? = null,
@@ -137,6 +155,12 @@ object OrderSchema {
                 ?: 0
     }
 
+    /**
+     * 주문 관련 테이블을 생성하고 샘플 데이터를 삽입한 후 [statement]를 실행합니다.
+     *
+     * @param testDB 사용할 테스트 데이터베이스
+     * @param statement 테이블과 샘플 데이터가 준비된 상태에서 실행할 트랜잭션 블록
+     */
     @Suppress("UnusedReceiverParameter")
     fun AbstractExposedTest.withOrdersTables(
         testDB: TestDB,
