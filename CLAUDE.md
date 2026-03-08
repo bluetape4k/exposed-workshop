@@ -20,6 +20,15 @@ Kotlin Exposed 프레임워크의 사용법을 단계별로 학습하는 Gradle 
 
 # 정적 분석 (detekt)
 ./gradlew detekt
+
+# 저장소 상태 요약
+./bin/repo-status
+
+# diff 요약
+./bin/repo-diff
+
+# 테스트/Gradle 출력 요약
+./bin/repo-test-summary -- ./gradlew :05-exposed-dml:01-dml:test
 ```
 
 모듈 경로는 `:<section>:<submodule>:test` 형식을 사용합니다. (예: `:09-spring:04-exposed-repository:test`)
@@ -29,6 +38,13 @@ Kotlin Exposed 프레임워크의 사용법을 단계별로 학습하는 Gradle 
 ```bash
 ./gradlew :exposed-shared-tests:test
 ```
+
+## Token-Efficient Workflow
+
+- 세션 컨텍스트 절약을 위해 `git status` 대신 `./bin/repo-status`를 우선 사용합니다.
+- 전체 patch가 필요하기 전에는 `git diff` 대신 `./bin/repo-diff`로 파일별 변경량만 먼저 확인합니다.
+- Gradle 테스트/빌드 로그는 `./bin/repo-test-summary -- ./gradlew ...` 형태로 요약해서 확인합니다.
+- 기본 흐름은 "요약 먼저, 원본 출력은 필요한 파일이나 태스크에 한해 2차로 확인"입니다.
 
 ## Module Structure
 

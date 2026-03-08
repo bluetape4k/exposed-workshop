@@ -303,6 +303,23 @@ Multi-Tenant 또는 Read Replica 구조를 위한 유연한 DataSource 라우팅
 
 루트 `settings.gradle.kts` 에서 Gradle project path 를 모듈의 마지막 디렉터리 이름으로 생성하므로, 경로가 헷갈리면 `./gradlew projects` 로 확인하세요.
 
+### 토큰 절약형 요약 명령
+
+AI 에이전트나 긴 터미널 세션에서 원시 `git`/Gradle 출력을 바로 열기 전에, 아래 요약 명령을 먼저 사용하는 것을 권장합니다.
+
+```bash
+# 저장소 상태 요약
+./bin/repo-status
+
+# 파일별 diff 변경량 요약
+./bin/repo-diff
+
+# Gradle 테스트/빌드 로그 요약
+./bin/repo-test-summary -- ./gradlew :05-exposed-dml:01-dml:test
+```
+
+기본 흐름은 "요약 먼저, 필요한 파일이나 태스크만 원본 출력 확인"입니다.
+
 ### 테스트 대상 DB 선택
 
 기본값은 **H2, PostgreSQL, MySQL V8** 3가지를 대상으로 테스트합니다.

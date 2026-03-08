@@ -22,8 +22,18 @@ Use the Gradle wrapper from the repository root.
 - `./gradlew test`: run test tasks across modules.
 - `./gradlew :05-exposed-dml:01-dml:test`: run tests for a single module.
 - `./gradlew detekt`: run static analysis configured for subprojects.
+- `./bin/repo-status`: compact repository status summary for Codex sessions.
+- `./bin/repo-diff`: compact diff summary with per-file churn instead of full patch output.
+- `./bin/repo-test-summary -- ./gradlew <task>`: compact Gradle test/task summary with failure highlights.
 
 Prefer targeted module tasks during development to reduce feedback time.
+
+## Token-Efficient Codex Workflow
+
+- In Codex sessions, prefer `./bin/repo-status` over raw `git status`.
+- Prefer `./bin/repo-diff` before requesting full `git diff`; open a full patch only for the specific file under review.
+- Prefer `./bin/repo-test-summary -- ./gradlew ...` over pasting full Gradle output into context.
+- Follow a two-step inspection flow: summary first, targeted raw output second only when the summary indicates it is necessary.
 
 ## Coding Style & Naming Conventions
 
