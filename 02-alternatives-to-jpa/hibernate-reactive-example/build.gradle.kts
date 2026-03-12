@@ -6,7 +6,7 @@ plugins {
     kotlin("kapt")
 
     id(Plugins.spring_boot)
-    id(Plugins.graalvm_native)
+//    id(Plugins.graalvm_native)
 }
 
 
@@ -20,6 +20,7 @@ allOpen {
 }
 
 kapt {
+    includeCompileClasspath = true
     correctErrorTypes = true
     showProcessorStats = true
 

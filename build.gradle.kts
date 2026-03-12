@@ -84,16 +84,6 @@ subprojects {
             )
             freeCompilerArgs.addAll(experimentalAnnotations.map { "-opt-in=$it" })
         }
-
-        @Suppress("OPT_IN_USAGE")
-        kotlinDaemonJvmArgs = listOf(
-            "-Xmx2G",
-            "-XX:MaxMetaspaceSize=512m",
-            "-XX:+UseZGC",
-            "-XX:+UseStringDeduplication",
-            "-XX:+EnableDynamicAgentLoading",
-            "--enable-preview",
-        )
     }
 
     atomicfu {
