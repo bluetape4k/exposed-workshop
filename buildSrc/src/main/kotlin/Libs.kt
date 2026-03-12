@@ -65,6 +65,7 @@ object Versions {
     // Java 21, Kotlin 2.0 이상에서 사용하세요
     const val bluetape4k = "1.4.0"    // Bluetape4k Github Package 로 배포됩니다.
 
+    // NOTE: Kotlin 2.3.10 은 컴파일 시 Hang 이 걸리는 문제가 발생한다. (vertx-sqlclient-example)
     const val kotlin = "2.2.21"                 // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
     const val kotlinx_coroutines = "1.10.2"      // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
     const val kotlinx_serialization = "1.10.0"   // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-serialization-json-jvm

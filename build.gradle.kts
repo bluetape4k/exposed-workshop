@@ -125,6 +125,7 @@ subprojects {
                 "-Xms2G",
                 "-Xmx4G",
                 "-XX:+UseZGC",
+                "-XX:+ZGenerational",
                 "-XX:+UnlockExperimentalVMOptions",
                 "-XX:+EnableDynamicAgentLoading",
                 "--enable-preview",
