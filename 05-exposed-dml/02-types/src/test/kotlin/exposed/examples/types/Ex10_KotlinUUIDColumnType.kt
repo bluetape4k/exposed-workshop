@@ -37,7 +37,7 @@ class Ex10_KotlinUUIDColumnType: AbstractExposedTest() {
             val id = uuid("id")
         }
         withTables(testDB, tester) {
-            val uuid = Uuid.generateV7()
+            val uuid = Uuid.random()
             tester.insert {
                 it[id] = uuid
             }
@@ -54,7 +54,7 @@ class Ex10_KotlinUUIDColumnType: AbstractExposedTest() {
         }
 
         withTables(testDB, tester) {
-            val uuid = Uuid.generateV7()
+            val uuid = Uuid.random()
             val id = tester.insertAndGetId { it[this.uuid] = uuid }
             id.shouldNotBeNull()
 
@@ -87,7 +87,7 @@ class Ex10_KotlinUUIDColumnType: AbstractExposedTest() {
                 // Even if we generate on DDL type 'BINARY(16)' we could support native UUID for IO operations.
                 exec("CREATE TABLE test_java_uuid_mariadb (id UUID NOT NULL)")
 
-                val uuid = Uuid.generateV7()
+                val uuid = Uuid.random()
                 tester.insert {
                     it[id] = uuid
                 }
