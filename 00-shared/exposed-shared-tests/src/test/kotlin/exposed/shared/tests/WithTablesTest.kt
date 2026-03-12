@@ -10,6 +10,12 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * [WithTables] 및 [WithTablesSuspending] 헬퍼의 동작을 검증하는 테스트 클래스.
+ *
+ * 테스트 전 지정한 테이블을 자동 생성하고, 테스트 완료 후 자동으로 삭제(drop)하는
+ * 패턴이 JDBC 방식과 Coroutine(suspend) 방식 모두에서 올바르게 동작하는지 확인한다.
+ */
 class WithTablesTest {
 
     companion object: KLogging()
@@ -18,6 +24,7 @@ class WithTablesTest {
         val name = varchar("name", 255)
     }
 
+    /** JDBC 방식의 [withTables] 헬퍼 동작을 검증하는 중첩 테스트. */
     @Nested
     inner class Jdbc: AbstractExposedTest() {
 
@@ -44,6 +51,7 @@ class WithTablesTest {
         }
     }
 
+    /** Coroutine(suspend) 방식의 [withTablesSuspending] 헬퍼 동작을 검증하는 중첩 테스트. */
     @Nested
     inner class Coroutines: AbstractExposedTest() {
 

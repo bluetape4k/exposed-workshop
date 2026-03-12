@@ -17,6 +17,11 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.r2dbc.core.DatabaseClient
 
+/**
+ * Spring Data R2DBC [CustomerRepository]의 동작을 검증하는 테스트입니다.
+ * 각 테스트 전 `customer` 테이블을 재생성하여 독립적인 데이터 환경을 보장하며,
+ * 커스텀 쿼리 메서드 및 `@Query` 어노테이션 기반 조회를 검증합니다.
+ */
 class CustomerRepositoryTest(
     @param:Autowired private val customerRepository: CustomerRepository,
     @param:Autowired private val database: DatabaseClient,

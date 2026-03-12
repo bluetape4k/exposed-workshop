@@ -33,6 +33,11 @@ import org.junit.jupiter.api.TestInstance
 import java.sql.Connection
 import java.util.concurrent.Executors
 
+/**
+ * [H2 전용 테스트] 두 개의 H2 인메모리 DB(db1, db2)를 동시에 연결하는 다중 DB 시나리오를 검증하는 테스트 클래스.
+ * 중첩 트랜잭션, 코루틴 기반 멀티 DB 전환, [TransactionManager.defaultDatabase] 우선순위,
+ * 스레드 및 코루틴 컨텍스트에서 기본 DB 변경 동작을 다룹니다.
+ */
 @Suppress("DEPRECATION")
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class Ex02_H2_MultiDatabase {

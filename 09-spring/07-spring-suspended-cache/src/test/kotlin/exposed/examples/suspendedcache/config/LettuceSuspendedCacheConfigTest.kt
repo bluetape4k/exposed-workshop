@@ -11,6 +11,7 @@ import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
+/** `LettuceSuspendedCacheManager`가 정상 생성되고 suspend 방식으로 캐시 저장/조회가 동작함을 검증합니다. */
 class LettuceSuspendedCacheConfigTest(
     @param:Autowired private val lettuceSuspendedCacheManager: LettuceSuspendedCacheManager,
 ): AbstractSpringSuspendedCacheApplicationTest() {

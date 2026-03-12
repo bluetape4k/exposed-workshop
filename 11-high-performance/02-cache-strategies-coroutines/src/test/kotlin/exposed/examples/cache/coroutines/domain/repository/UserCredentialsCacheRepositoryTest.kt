@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import java.time.Instant
 import java.util.concurrent.CopyOnWriteArrayList
 
+/** 코루틴 기반 Read-Through 캐시 전략을 적용한 `UserCredentialsCacheRepository`의 조회 및 캐시 무효화를 코루틴 환경에서 검증합니다. */
 @Suppress("DEPRECATION")
 class UserCredentialsCacheRepositoryTest(
     @param:Autowired private val repository: UserCredentialsCacheRepository,

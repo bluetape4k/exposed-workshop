@@ -21,7 +21,7 @@
 ## 실행 방법
 
 ```bash
-./gradlew :02-convert-jpa-advanced:test
+./gradlew :07-jpa:02-convert-jpa-advanced:test
 ```
 
 ## 실습 체크리스트

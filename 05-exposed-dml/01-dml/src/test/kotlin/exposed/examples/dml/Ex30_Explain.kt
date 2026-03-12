@@ -36,6 +36,12 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Exposed DSL을 사용한 EXPLAIN 쿼리 실행 계획 분석 예제.
+ *
+ * SELECT, INSERT, UPDATE, DELETE, UNION 등 다양한 DML에 대해 실행 계획을 조회하고,
+ * DB 방언별 지원 여부(H2, MySQL, PostgreSQL 등)를 함께 검증합니다.
+ */
 class Ex30_Explain: AbstractExposedTest() {
 
     companion object: KLogging()

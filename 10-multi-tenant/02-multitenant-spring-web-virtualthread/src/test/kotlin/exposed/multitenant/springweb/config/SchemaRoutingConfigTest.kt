@@ -14,6 +14,9 @@ import org.junit.jupiter.api.condition.EnabledOnJre
 import org.junit.jupiter.api.condition.JRE
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * 가상 스레드(Java 21 `ScopedValue`) 기반 멀티테넌시에서 테넌트별 스키마 라우팅 및 데이터 격리를 검증합니다.
+ */
 @Transactional
 class SchemaRoutingConfigTest: AbstractMultitenantTest() {
 

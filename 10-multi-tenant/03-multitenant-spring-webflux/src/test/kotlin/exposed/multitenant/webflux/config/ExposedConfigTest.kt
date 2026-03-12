@@ -20,6 +20,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
 import org.springframework.beans.factory.annotation.Autowired
 
+/** Spring WebFlux 멀티테넌트 환경에서 테넌트별 `newSuspendedTransactionWithTenant`를 통한 스키마 격리를 검증합니다. */
 class ExposedConfigTest: AbstractMultitenantTest() {
 
     companion object: KLoggingChannel()

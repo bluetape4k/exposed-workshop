@@ -13,6 +13,11 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * [SchemaUtils.createDatabase] / [SchemaUtils.dropDatabase] / [SchemaUtils.listDatabases]를 사용하여
+ * 데이터베이스 생성·삭제·목록 조회를 검증하는 테스트 클래스.
+ * H2 및 PostgreSQL 환경에서만 실행되며, MySQL은 계정 권한 문제로 제외됩니다.
+ */
 class Ex01_CreateDatabase: AbstractExposedTest() {
 
     companion object: KLogging() {

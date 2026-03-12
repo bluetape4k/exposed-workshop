@@ -16,6 +16,11 @@ import java.sql.DriverManager
 import java.sql.SQLException
 import java.sql.SQLTransientException
 
+/**
+ * 트랜잭션 내에서 커밋/롤백/닫기 시 예외가 발생하는 시나리오를 검증하는 테스트 클래스.
+ * [ConnectionSpy]를 통해 실제 연결을 래핑하여 예외 발생 시 재시도(maxAttempts) 동작,
+ * 커밋·롤백·close 호출 여부를 확인합니다. H2 전용 테스트입니다.
+ */
 class Ex02_ConnectionException {
 
     companion object: KLoggingChannel()

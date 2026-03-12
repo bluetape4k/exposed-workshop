@@ -15,6 +15,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import kotlin.test.assertFailsWith
 
+/**
+ * Spring WebFlux + Coroutines 환경에서 [MovieExposedRepository]의 CRUD, 검색, 조인 쿼리를 `newSuspendedTransaction` 내에서 테스트합니다.
+ */
 @Suppress("DEPRECATION")
 class MovieRepositoryTest(
     @param:Autowired private val movieRepository: MovieExposedRepository,

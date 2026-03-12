@@ -17,6 +17,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.random.Random
 
+/**
+ * 1:N 관계에서 N+1 쿼리 문제를 Exposed의 eager loading으로 해결하는 방법을 보여줍니다.
+ * Restaurant-Menu 도메인으로 지연 로딩과 즉시 로딩 전략을 비교 검증합니다.
+ */
 class Ex04_OneToMany_N_plus_1_Restaurant: AbstractExposedTest() {
 
 

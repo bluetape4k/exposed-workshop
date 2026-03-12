@@ -16,6 +16,10 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Covering Index를 활용한 쿼리 최적화 패턴을 Exposed DSL로 구현하는 예제입니다.
+ * SELECT 절에 인덱스 컬럼만 포함시켜 테이블 접근 없이 인덱스만으로 결과를 반환하는 방법을 검증합니다.
+ */
 class Ex06_Convering_Index: AbstractExposedTest() {
 
     companion object: KLogging()

@@ -66,6 +66,11 @@ import java.util.*
 import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 
+/**
+ * Exposed DAO에서 복합 기본키(Composite ID) 테이블과 엔티티 사용 예제.
+ *
+ * `CompositeIdTable`과 복합 ID 엔티티의 생성, 조회, 연관 관계(참조) 처리 방식을 학습합니다.
+ */
 @Suppress("DEPRECATION")
 class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
 

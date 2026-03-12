@@ -90,9 +90,32 @@ tenant는 `X-Tenant-Id` 헤더로 전달합니다. (미전달 시 `default`)
 3. 미등록 키 정책 명시: `IllegalStateException` 또는 `default` fallback 중 하나로 고정합니다.
 4. Registry 동시성 보장: 등록/교체/조회는 lock-free 또는 적절한 동기화로 일관성을 확보합니다.
 
-## 테스트 전략 (구현 시 필수)
+## 테스트 코드
 
-현재 모듈에는 테스트 코드가 없으므로, 실제 구현 시 아래 시나리오를 최소 단위로 보강합니다.
+| 파일                                                                                            | 설명                                      |
+|-----------------------------------------------------------------------------------------------|------------------------------------------|
+| [`ContextAwareRoutingKeyResolverTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/ContextAwareRoutingKeyResolverTest.kt) | 테넌트·readOnly 조합별 라우팅 키 반환 검증 |
+| [`DynamicRoutingDataSourceTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/DynamicRoutingDataSourceTest.kt)             | 컨텍스트별 DataSource 라우팅 통합 검증    |
+| [`InMemoryDataSourceRegistryTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/InMemoryDataSourceRegistryTest.kt)         | 동시 등록·조회 스레드 안전성 검증         |
+| [`RoutingMarkerControllerTest.kt`](src/test/kotlin/exposed/examples/routing/web/RoutingMarkerControllerTest.kt)                      | 테넌트별 REST API 라우팅 결과 검증        |
+
+## 복잡한 시나리오
+
+### 멀티테넌트 + 읽기/쓰기 분리 라우팅
+
+`ContextAwareRoutingKeyResolver`는 `TenantContext`와 `TransactionSynchronizationManager.isCurrentTransactionReadOnly()`를 조합해 `<tenant>:<rw|ro>` 형태의 라우팅 키를 결정합니다. `DynamicRoutingDataSource`는 이 키로 `DataSourceRegistry`에서 실제 DataSource를 선택합니다.
+
+- 관련 파일: [`ContextAwareRoutingKeyResolver.kt`](src/main/kotlin/exposed/examples/routing/datasource/ContextAwareRoutingKeyResolver.kt), [`DynamicRoutingDataSource.kt`](src/main/kotlin/exposed/examples/routing/datasource/DynamicRoutingDataSource.kt)
+- 검증 테스트: [`ContextAwareRoutingKeyResolverTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/ContextAwareRoutingKeyResolverTest.kt), [`DynamicRoutingDataSourceTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/DynamicRoutingDataSourceTest.kt)
+
+### Registry 동시성 안전성
+
+`InMemoryDataSourceRegistry`는 `ConcurrentHashMap` 기반으로 구현돼 다수의 스레드가 동시에 DataSource를 등록/조회해도 레이스 컨디션 없이 동작합니다.
+
+- 관련 파일: [`InMemoryDataSourceRegistry.kt`](src/main/kotlin/exposed/examples/routing/datasource/InMemoryDataSourceRegistry.kt)
+- 검증 테스트: [`InMemoryDataSourceRegistryTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/InMemoryDataSourceRegistryTest.kt)
+
+## 테스트 전략
 
 | 구분      | 검증 항목                      | 기대 결과                            |
 |---------|----------------------------|----------------------------------|

@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import java.time.Duration
 
+/** Write-Behind 캐시 전략을 사용해 대량의 UserEvent를 비동기로 DB에 저장하는 동작을 검증합니다. */
 class UserEventCacheRepositoryTest(
     @param:Autowired private val repository: UserEventCacheRepository,
 ): AbstractCacheStrategyTest() {

@@ -95,6 +95,12 @@ suspend fun <T> runWithSavepointOrNewTransaction(
 }
 
 
+/**
+ * 코루틴 컨텍스트에서 중첩 트랜잭션과 Savepoint 사용 예제.
+ *
+ * `newSuspendedTransaction`, `runWithSavepoint` 등을 활용해 코루틴 환경에서
+ * 중첩 트랜잭션의 커밋/롤백 동작을 학습합니다.
+ */
 @Suppress("DEPRECATION")
 class Ex05_NestedTransactions_Coroutines: AbstractExposedTest() {
 

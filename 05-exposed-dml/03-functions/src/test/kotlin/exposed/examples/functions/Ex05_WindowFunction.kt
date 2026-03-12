@@ -42,6 +42,12 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.math.BigDecimal
 import java.math.RoundingMode
 
+/**
+ * Exposed DSL에서 Window Function(윈도우 함수) 사용 예제.
+ *
+ * `rowNumber`, `rank`, `denseRank`, `lead`, `lag`, `sum`, `avg` 등
+ * OVER 절을 활용한 윈도우 함수를 DSL로 표현하는 방법을 학습합니다.
+ */
 class Ex05_WindowFunction: Ex00_FunctionBase() {
 
     companion object: KLogging()

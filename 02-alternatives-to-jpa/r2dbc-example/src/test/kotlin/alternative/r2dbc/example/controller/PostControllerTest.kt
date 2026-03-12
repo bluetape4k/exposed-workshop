@@ -18,6 +18,10 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 
+/**
+ * R2DBC 기반 [PostController]의 REST API 동작을 WebTestClient로 검증하는 통합 테스트입니다.
+ * 게시글 조회, 저장, 댓글 수 조회 등 HTTP 엔드포인트의 비동기 응답을 확인합니다.
+ */
 class PostControllerTest(
     @param:Autowired private val client: WebTestClient,
 ): AbstractR2dbcTest() {

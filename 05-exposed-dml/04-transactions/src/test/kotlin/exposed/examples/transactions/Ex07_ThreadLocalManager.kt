@@ -29,6 +29,12 @@ import kotlin.concurrent.thread
 import kotlin.test.assertFails
 import kotlin.test.fail
 
+/**
+ * Exposed DSL에서 ThreadLocal 기반 트랜잭션 매니저 사용 예제.
+ *
+ * `JdbcTransactionManager`를 활용한 멀티스레드 환경에서의 트랜잭션 격리와
+ * 코루틴/스레드 전환 시 트랜잭션 컨텍스트 관리 방식을 학습합니다.
+ */
 @Suppress("DEPRECATION")
 class Ex07_ThreadLocalManager: AbstractExposedTest() {
 

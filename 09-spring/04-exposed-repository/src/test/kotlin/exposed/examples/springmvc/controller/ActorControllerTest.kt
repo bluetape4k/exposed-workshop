@@ -19,6 +19,9 @@ import org.springframework.test.web.reactive.server.expectBody
 import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 
+/**
+ * Spring MVC 환경에서 Actor REST API의 조회, 생성, 삭제 기능을 테스트합니다.
+ */
 class ActorControllerTest(
     @param:Autowired private val client: WebTestClient,
 ): AbstractExposedRepositoryTest() {

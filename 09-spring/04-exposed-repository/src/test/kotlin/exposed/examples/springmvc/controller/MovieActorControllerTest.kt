@@ -18,6 +18,9 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 
+/**
+ * Spring MVC 환경에서 영화-배우 관계 REST API(조회, 집계, 제작-배우 조회)를 테스트합니다.
+ */
 class MovieActorControllerTest(
     @param:Autowired private val client: WebTestClient,
 ): AbstractExposedRepositoryTest() {

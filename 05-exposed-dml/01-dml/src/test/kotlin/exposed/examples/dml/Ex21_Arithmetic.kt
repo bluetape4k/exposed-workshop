@@ -18,6 +18,11 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.math.BigDecimal
 
+/**
+ * Exposed DSL에서 산술 연산자(+, -, *, /) 사용 예제.
+ *
+ * 컬럼 간 사칙연산, 소수점 스케일 조정(DivideOp.withScale) 등 수식 표현 방법을 학습합니다.
+ */
 class Ex21_Arithmetic: AbstractExposedTest() {
 
     companion object: KLogging()

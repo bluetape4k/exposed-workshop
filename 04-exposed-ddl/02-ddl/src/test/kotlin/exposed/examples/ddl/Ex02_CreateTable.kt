@@ -21,6 +21,11 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertFails
 
+/**
+ * [SchemaUtils.create]로 다양한 테이블 정의를 검증하는 테스트 클래스.
+ * 중복 컬럼 예외, `entityId()`를 통한 PK 지정, 단일/복합 PK, 복합 Foreign Key(2컬럼)
+ * 생성 시나리오를 다룹니다.
+ */
 class Ex02_CreateTable: AbstractExposedTest() {
 
     companion object: KLogging()

@@ -23,6 +23,11 @@ import org.springframework.test.annotation.Commit
 import org.springframework.transaction.annotation.Transactional
 import kotlin.test.fail
 
+/**
+ * Spring `@Transactional` + Exposed Entity API 를 이용한 엔티티 CRUD 라이프사이클을 테스트합니다.
+ * `@Commit` 어노테이션으로 트랜잭션 커밋 순서와 엔티티 상태 변화를 검증합니다.
+ */
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class EntityUpdateTest: AbstractSpringTransactionTest() {
 

@@ -31,6 +31,7 @@ import java.time.LocalDate
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.random.Random
 
+/** Read-Through / Write-Through 캐시 전략을 적용한 User REST API의 CRUD 동작을 검증합니다. */
 class UserControllerTest(
     @param:Autowired private val client: WebTestClient,
     @param:Autowired private val repository: UserCacheRepository,

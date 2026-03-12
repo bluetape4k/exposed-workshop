@@ -11,6 +11,10 @@ import org.junit.jupiter.api.TestMethodOrder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 
+/**
+ * Spring [TransactionOperations] 을 사용한 트랜잭션 경계 설정 방법을 테스트합니다.
+ * Spring 트랜잭션, Exposed 트랜잭션, 혼합 방식의 동작 차이를 비교합니다.
+ */
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class TransactionTemplateTest(
     @param:Autowired private val bookService: BookService,

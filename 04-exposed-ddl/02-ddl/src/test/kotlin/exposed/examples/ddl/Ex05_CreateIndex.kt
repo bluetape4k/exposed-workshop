@@ -24,6 +24,11 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * 다양한 인덱스 유형 정의를 검증하는 테스트 클래스.
+ * 표준 인덱스, Hash 인덱스, Partial 인덱스(조건 기반, PostgreSQL 전용),
+ * Functional 인덱스(함수식 기반, PostgreSQL·MySQL 8)를 다룹니다.
+ */
 class Ex05_CreateIndex: AbstractExposedTest() {
 
     companion object: KLogging()

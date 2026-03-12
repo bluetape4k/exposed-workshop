@@ -12,6 +12,10 @@ import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
+/**
+ * Spring Data R2DBC [CommentRepository]의 동작을 검증하는 테스트입니다.
+ * Post ID 기반 댓글 조회, 집계, 신규 삽입 시나리오를 코루틴으로 테스트합니다.
+ */
 class CommentRespositoryTest(
     @param:Autowired private val commentRepository: CommentRepository,
 ): AbstractR2dbcTest() {

@@ -17,6 +17,10 @@ import org.jetbrains.exposed.v1.jdbc.select
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * RIGHT JOIN을 Exposed DSL로 표현하는 방법을 보여줍니다.
+ * H2/MySQL에서 RIGHT JOIN 대신 LEFT JOIN을 역순으로 사용하는 패턴도 포함합니다.
+ */
 class Ex04_Right_Join: AbstractExposedTest() {
 
     companion object: KLogging()

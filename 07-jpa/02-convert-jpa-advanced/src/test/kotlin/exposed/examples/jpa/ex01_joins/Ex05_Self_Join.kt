@@ -17,6 +17,10 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * 동일 테이블을 두 번 참조하는 SELF JOIN을 Exposed DSL로 구현하는 예제입니다.
+ * 계층형(트리) 데이터나 같은 테이블 내 관계를 조회하는 패턴을 검증합니다.
+ */
 class Ex05_Self_Join: AbstractExposedTest() {
 
     companion object: KLogging()

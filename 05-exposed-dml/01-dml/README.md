@@ -33,7 +33,7 @@ Exposed 1.1.1 DSL로 DML 핵심 문법(조회/삽입/수정/삭제/집계/조인
 ## 실행 방법
 
 ```bash
-./gradlew :01-dml:test
+./gradlew :05-exposed-dml:01-dml:test
 ```
 
 ## 실습 체크리스트
@@ -54,6 +54,43 @@ Exposed 1.1.1 DSL로 DML 핵심 문법(조회/삽입/수정/삭제/집계/조인
 - 대량 조회는 `fetchBatchedResults`와 페이징으로 메모리 사용량을 제한
 - 조인/집계 쿼리는 실행계획(`EXPLAIN`)으로 인덱스 사용 여부 확인
 - 동적 조건 조합 시 `adjustWhere`로 쿼리 의도를 명확히 유지
+
+## 복잡한 시나리오
+
+### CTE (Common Table Expression)
+
+재귀 CTE를 Raw SQL로 실행하는 방법을 학습합니다. WITH RECURSIVE 구문을 통해 계층형 데이터(트리 구조)를 조회합니다.
+
+- 예제: [`Ex50_RecursiveCTE.kt`](src/test/kotlin/exposed/examples/dml/Ex50_RecursiveCTE.kt)
+- 지원 DB: PostgreSQL, MySQL V8, MariaDB (H2 미지원)
+
+### Window Function
+
+집계 없이 행별로 순위/누적합 등을 계산하는 Window Function은 `03-functions` 모듈에서 다룹니다.
+
+- 예제: [`../03-functions/src/test/kotlin/exposed/examples/functions/Ex05_WindowFunction.kt`](../03-functions/src/test/kotlin/exposed/examples/functions/Ex05_WindowFunction.kt)
+
+### Upsert 패턴
+
+충돌 시 업데이트 또는 무시(DO NOTHING) 전략을 선택할 수 있습니다.
+
+- 단건 upsert: `Table.upsert { ... }`
+- 배치 upsert: `Table.batchUpsert(...)`
+- 예제: [`Ex04_Upsert.kt`](src/test/kotlin/exposed/examples/dml/Ex04_Upsert.kt)
+
+### MERGE 문
+
+소스 테이블/쿼리 기준으로 대상 테이블에 INSERT/UPDATE/DELETE를 한 번에 처리합니다.
+
+- 예제: [`Ex14_MergeBase.kt`](src/test/kotlin/exposed/examples/dml/Ex14_MergeBase.kt), [`Ex14_MergeSelect.kt`](src/test/kotlin/exposed/examples/dml/Ex14_MergeSelect.kt), [`Ex14_MergeTable.kt`](src/test/kotlin/exposed/examples/dml/Ex14_MergeTable.kt)
+- 지원 DB: PostgreSQL, Oracle, SQL Server (MySQL 미지원)
+
+### Lateral JOIN
+
+서브쿼리가 외부 쿼리의 컬럼을 참조할 수 있는 LATERAL JOIN 패턴입니다.
+
+- 예제: [`Ex40_LateralJoin.kt`](src/test/kotlin/exposed/examples/dml/Ex40_LateralJoin.kt)
+- 지원 DB: PostgreSQL, MySQL V8
 
 ## 다음 모듈
 

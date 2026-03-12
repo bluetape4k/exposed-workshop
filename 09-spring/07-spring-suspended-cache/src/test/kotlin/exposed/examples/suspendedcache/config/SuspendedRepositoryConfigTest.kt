@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 
+/** 기본 및 캐시 적용 `CountrySuspendedRepository` 구현체가 Spring 컨텍스트에서 정상 주입되고 동작함을 검증합니다. */
 class SuspendedRepositoryConfigTest(
     @param:Autowired @param:Qualifier("defaultCountrySuspendedRepository") private val defaultCountrySuspendedRepository: CountrySuspendedRepository,
     @param:Autowired @param:Qualifier("cachedCountrySuspendedRepository") private val cachedCountrySuspendedRepository: CountrySuspendedRepository,

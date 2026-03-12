@@ -19,6 +19,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.condition.EnabledOnJre
 import org.junit.jupiter.api.condition.JRE
 
+/**
+ * Spring WebFlux 환경에서 코루틴과 가상 스레드(Java 21)를 이용한 Exposed DSL 쿼리의 동시성 동작을 테스트합니다.
+ */
 @Suppress("DEPRECATION")
 class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
 

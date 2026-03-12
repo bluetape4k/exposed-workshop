@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 
+/** Lettuce 캐시가 적용된 `CachedCountrySuspendedRepository`의 조회, 캐시 evict 동작을 코루틴 환경에서 테스트합니다. */
 class CachedCountrySuspendedRepositoryTest(
     @param:Autowired private val suspendedCacheManager: LettuceSuspendedCacheManager,
 ): AbstractCountrySuspendedRepositoryTest() {

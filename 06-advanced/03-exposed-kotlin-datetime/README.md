@@ -26,11 +26,39 @@
 | `Ex02_Defaults.kt`        | 기본값 처리   |
 | `Ex03_DateTimeLiteral.kt` | 리터럴 조회   |
 
+## java.time과의 차이점 비교
+
+| 항목 | `java.time` | `kotlinx.datetime` |
+|------|-------------|-------------------|
+| 패키지 | `org.jetbrains.exposed.v1.javatime` | `org.jetbrains.exposed.v1.datetime` |
+| 타입 | `java.time.LocalDate` 등 | `kotlinx.datetime.LocalDate` 등 |
+| KMP 지원 | JVM 전용 | 멀티플랫폼(KMP) 지원 |
+| Instant | `java.time.Instant` | `kotlin.time.Instant` (`@ExperimentalTime`) |
+| 컬럼 함수 | `date()`, `datetime()`, `timestamp()` | 동일 이름, 다른 패키지 |
+
+`kotlinx.datetime`은 KMP 환경을 고려할 때 선택합니다. JVM 전용 프로젝트라면 `java.time`이 더 성숙합니다.
+
 ## 실행 방법
 
 ```bash
-./gradlew :03-exposed-kotlin-datetime:test
+./gradlew :06-advanced:03-exposed-kotlin-datetime:test
 ```
+
+## 복잡한 시나리오
+
+### 기본값 처리
+
+`clientDefault`, `defaultExpression(CurrentDateTime)` 등 kotlinx.datetime 기반 기본값을 검증합니다.
+기본값 변경 후 불필요한 `ALTER TABLE`이 생성되지 않는지 확인합니다.
+
+- 관련 파일: [`Ex02_Defaults.kt`](src/test/kotlin/exposed/examples/kotlin/datetime/Ex02_Defaults.kt)
+- 테스트: `testDateDefaultDoesNotTriggerAlterStatement`, `Default CurrentDateTime`
+
+### 리터럴 기반 조건 조회
+
+`dateLiteral`, `dateTimeLiteral`, `timestampLiteral`을 사용해 WHERE 조건을 작성합니다.
+
+- 관련 파일: [`Ex03_DateTimeLiteral.kt`](src/test/kotlin/exposed/examples/kotlin/datetime/Ex03_DateTimeLiteral.kt)
 
 ## 실습 체크리스트
 

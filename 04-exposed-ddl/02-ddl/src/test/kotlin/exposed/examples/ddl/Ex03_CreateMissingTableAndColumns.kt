@@ -18,6 +18,11 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.*
 
+/**
+ * [SchemaUtils.createMissingTablesAndColumns]를 사용하여 누락된 테이블·컬럼을 보완하는 시나리오를 검증하는 테스트 클래스.
+ * 테이블 버전 업그레이드(uniqueIndex 추가), UUID 기반 PK 테이블 생성, autoIncrement 컬럼 제거 등
+ * 스키마 마이그레이션 패턴을 다룹니다.
+ */
 class Ex03_CreateMissingTableAndColumns: AbstractExposedTest() {
 
     companion object: KLogging()

@@ -31,6 +31,11 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Exposed DSL을 사용한 DELETE 문 예제.
+ *
+ * 조건 기반 삭제, 조인 삭제, 전체 삭제 등 다양한 DELETE 패턴과 DB 방언별 지원 여부를 학습합니다.
+ */
 class Ex05_Delete: AbstractExposedTest() {
 
     companion object: KLogging()

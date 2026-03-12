@@ -10,6 +10,7 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.junit.jupiter.api.Test
 
+/** Spring Cache 모듈의 Exposed 스키마 자동 생성 및 초기 데이터 적재를 검증합니다. */
 class ExposedConfigTest: AbstractSpringCacheApplicationTest() {
 
     companion object: KLogging()

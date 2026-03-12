@@ -48,6 +48,12 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.*
 import kotlin.properties.Delegates
 
+/**
+ * Exposed DSL을 사용한 UPSERT(INSERT OR UPDATE) 문 예제.
+ *
+ * 단일 upsert, batchUpsert, 충돌 처리 전략(DO NOTHING / DO UPDATE) 등 다양한 Upsert 패턴을 학습합니다.
+ * DB 방언별 지원 여부(H2, PostgreSQL, MySQL 등)를 함께 검증합니다.
+ */
 class Ex04_Upsert: AbstractExposedTest() {
 
     companion object: KLogging()

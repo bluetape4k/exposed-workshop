@@ -28,8 +28,25 @@
 ## 실행 방법
 
 ```bash
-./gradlew :01-exposed-crypt:test
+./gradlew :06-advanced:01-exposed-crypt:test
 ```
+
+## 복잡한 시나리오
+
+### 암호화 길이 오버플로우
+
+암호화 알고리즘은 원본 데이터보다 긴 암호문을 생성하므로, 컬럼 최대 길이를 충분히 크게 잡아야 합니다.
+`Encryptor.maxColLength(inputLength)` 를 사용하면 알고리즘별 필요 길이를 계산할 수 있습니다.
+
+- 관련 파일: [`Ex01_EncryptedColumn.kt`](src/test/kotlin/exposed/examples/crypt/Ex01_EncryptedColumn.kt)
+- 테스트: `encryptedColumnLength` — AES_256_PBE_GCM/CBC/Blowfish 알고리즘별 길이 검증
+
+### 로그 마스킹
+
+SQL 로그에 암호문이 그대로 노출될 수 있습니다. 실제 INSERT/SELECT SQL 로그에서 평문이 보이지 않는지 검증합니다.
+
+- 관련 파일: [`Ex01_EncryptedColumn.kt`](src/test/kotlin/exposed/examples/crypt/Ex01_EncryptedColumn.kt)
+- 테스트: `encryptedColumnNotLogValue`
 
 ## 실습 체크리스트
 

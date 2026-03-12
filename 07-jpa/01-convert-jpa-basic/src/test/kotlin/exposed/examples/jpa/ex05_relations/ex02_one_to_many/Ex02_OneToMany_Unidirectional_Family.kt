@@ -18,6 +18,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDate
 
+/**
+ * JPA @OneToMany 단방향 관계를 Exposed DAO로 구현하는 예제입니다.
+ * Parent-Child(Family) 구조에서 컬렉션 접근 패턴을 검증합니다.
+ */
 class Ex02_OneToMany_Unidirectional_Family: AbstractExposedTest() {
 
     companion object: KLogging()

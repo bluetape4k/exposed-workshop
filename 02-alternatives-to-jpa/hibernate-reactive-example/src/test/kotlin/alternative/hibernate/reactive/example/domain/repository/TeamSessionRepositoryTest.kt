@@ -22,6 +22,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.beans.factory.annotation.Autowired
 
+/**
+ * Hibernate Reactive [TeamSessionRepository]의 CRUD 동작을 검증하는 통합 테스트입니다.
+ * `Mutiny.SessionFactory`를 통해 suspend 방식으로 Team 엔티티의 조회, 생성, 삭제를 테스트합니다.
+ */
 class TeamSessionRepositoryTest(
     @param:Autowired private val sf: SessionFactory,
     @param:Autowired private val teamRepository: TeamSessionRepository,
@@ -55,6 +59,9 @@ class TeamSessionRepositoryTest(
         }
     }
 
+    /**
+     * 팀 이름으로 조회 후, 동일 ID로 재조회하여 결과가 일치하는지 검증합니다.
+     */
     @ParameterizedTest(name = "team name - {0}")
     @ValueSource(strings = ["Team A", "Team B"])
     fun `find all by name`(teamName: String) = runSuspendIO {
@@ -85,6 +92,9 @@ class TeamSessionRepositoryTest(
         }
     }
 
+    /**
+     * 새 팀을 저장한 뒤 ID로 삭제하고, 삭제 후 조회 결과가 null인지 검증합니다.
+     */
     @Test
     fun `delete team by id`() = runSuspendIO {
         sf.withTransactionSuspending { session ->

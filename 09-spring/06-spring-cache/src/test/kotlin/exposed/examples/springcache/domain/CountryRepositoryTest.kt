@@ -13,6 +13,7 @@ import org.springframework.cache.Cache
 import org.springframework.cache.CacheManager
 import kotlin.system.measureTimeMillis
 
+/** Redis 캐시를 활용한 `CountryRepository`의 조회 성능 향상, 캐시 evict, 존재하지 않는 코드 처리를 테스트합니다. */
 class CountryRepositoryTest(
     @param:Autowired private val countryRepository: CountryRepository,
     @param:Autowired private val cacheManager: CacheManager,

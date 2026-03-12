@@ -55,6 +55,12 @@ import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Exposed DSL에서 Array 컬럼 타입 사용 예제.
+ *
+ * PostgreSQL과 H2에서만 지원되는 배열 컬럼의 정의, 삽입, 조회, 슬라이싱,
+ * anyFrom/allFrom 조건 사용법을 학습합니다.
+ */
 @Suppress("DEPRECATION")
 class Ex05_ArrayColumnType: AbstractExposedTest() {
     companion object: KLogging()

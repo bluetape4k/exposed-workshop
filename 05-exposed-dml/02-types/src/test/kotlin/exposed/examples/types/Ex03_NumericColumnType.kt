@@ -31,6 +31,12 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.math.BigDecimal
 
+/**
+ * Exposed DSL에서 정수/실수/소수 컬럼 타입 사용 예제.
+ *
+ * byte, short, int, long, float, double, decimal 등 숫자 계열 컬럼 타입의
+ * 정의, 삽입, 조회 방법과 DB 방언별 처리 차이를 학습합니다.
+ */
 class Ex03_NumericColumnType: AbstractExposedTest() {
 
     companion object: KLogging()

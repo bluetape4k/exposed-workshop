@@ -10,6 +10,9 @@ import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTrans
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
+/**
+ * `newSuspendedTransaction` 내에서 suspend 서비스 함수가 올바르게 트랜잭션 처리됨을 검증합니다.
+ */
 @Suppress("DEPRECATION")
 class MovieSuspendedServiceTest(
     @param:Autowired private val movieService: MovieTransactionalService,

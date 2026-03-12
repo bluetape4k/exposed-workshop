@@ -19,6 +19,12 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 
+/**
+ * Spring MVC 환경에서 배우(Actor) REST API 엔드포인트를 검증하는 통합 테스트 클래스.
+ *
+ * [WebTestClient]를 이용해 `/actors` 경로의 GET/POST/DELETE 요청을 실제로 호출하며,
+ * 조회·생성·삭제·잘못된 파라미터 처리 시나리오를 검증한다.
+ */
 class ActorControllerTest(
     @param:Autowired private val client: WebTestClient,
 ): AbstractSpringMvcTest() {
@@ -90,6 +96,7 @@ class ActorControllerTest(
         newActor shouldBeEqualTo actor.copy(id = newActor.id)
     }
 
+    /** 배우를 생성한 후 삭제 요청이 성공하고 삭제 건수 1이 반환되는지 검증한다. */
     @Test
     fun `delete actor`() = runSuspendIO {
         val actor = newActor()
@@ -109,6 +116,7 @@ class ActorControllerTest(
         deletedCount shouldBeEqualTo 1
     }
 
+    /** 유효하지 않은 birthday 파라미터가 전달되어도 오류 없이 전체 목록을 반환하는지 검증한다. */
     @Test
     fun `search actors ignores invalid birthday parameter`() = runSuspendIO {
         val actors = client

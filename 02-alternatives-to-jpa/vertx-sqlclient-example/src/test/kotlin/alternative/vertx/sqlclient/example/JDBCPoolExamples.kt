@@ -18,6 +18,10 @@ import org.amshove.kluent.shouldHaveSize
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
+/**
+ * Vert.x JDBC Pool을 이용한 H2 인메모리 데이터베이스 접근 예제 테스트입니다.
+ * 단순 조회, 파라미터 바인딩, 명시적 트랜잭션을 suspend 방식으로 검증합니다.
+ */
 class JDBCPoolExamples: AbstractSqlClientTest() {
 
     companion object: KLoggingChannel()

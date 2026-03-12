@@ -14,6 +14,11 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Exposed DSL에서 Double 컬럼 타입 사용 예제.
+ *
+ * double 컬럼의 정의, 삽입, 정밀도 처리 및 DB 방언별 부동소수점 동작 차이를 학습합니다.
+ */
 class Ex04_DoubleColumnType: AbstractExposedTest() {
 
     companion object: KLogging()

@@ -23,6 +23,10 @@ import org.springframework.transaction.TransactionDefinition
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.sql.DataSource
 
+/**
+ * [SingleConnectionDataSource] 환경에서 트랜잭션 격리 수준 설정과 중첩 트랜잭션 동작을 테스트합니다.
+ * 중첩된 트랜잭션은 같은 커넥션을 공유하므로 부모 트랜잭션의 격리 수준을 상속합니다.
+ */
 class SpringTransactionSingleConnectionTest {
 
     private object T1: Table() {

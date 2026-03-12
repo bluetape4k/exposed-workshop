@@ -42,11 +42,11 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.concurrent.ExecutionException
 import kotlin.test.assertFailsWith
 
-@EnabledOnJre(JRE.JAVA_21)
 /**
  * Exposed Virtual Thread 트랜잭션 API를 검증하는 예제 테스트입니다.
  */
-class Ex01_VritualThreads: AbstractExposedTest() {
+@EnabledOnJre(JRE.JAVA_21)
+class Ex01_VirtualThreads: AbstractExposedTest() {
 
     companion object: KLoggingChannel()
 

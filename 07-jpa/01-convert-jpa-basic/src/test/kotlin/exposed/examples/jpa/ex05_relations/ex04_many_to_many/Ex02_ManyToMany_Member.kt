@@ -26,6 +26,10 @@ import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTrans
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * JPA @ManyToMany 관계에서 중간 테이블(SizedIterable)을 통한 다대다 매핑을 검증합니다.
+ * Member-Group 도메인으로 양방향 컬렉션 접근 및 cascading 동작을 테스트합니다.
+ */
 @Suppress("DEPRECATION")
 class Ex02_ManyToMany_Member: AbstractExposedTest() {
 

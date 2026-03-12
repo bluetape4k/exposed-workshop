@@ -9,6 +9,9 @@ import org.amshove.kluent.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
+/**
+ * Spring MVC + Exposed Repository 모듈의 Spring 애플리케이션 컨텍스트 로딩을 검증합니다.
+ */
 class ConfigurationTest: AbstractExposedRepositoryTest() {
 
     companion object: KLogging()

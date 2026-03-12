@@ -19,6 +19,12 @@ import org.junit.jupiter.params.provider.MethodSource
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
+/**
+ * Exposed DSL에서 Kotlin UUID 컬럼 타입 사용 예제.
+ *
+ * Kotlin 표준 라이브러리의 [kotlin.uuid.Uuid]를 Exposed 컬럼에 매핑하는 방법과
+ * DB별 UUID 저장/조회 동작을 학습합니다.
+ */
 @OptIn(ExperimentalUuidApi::class)
 class Ex10_KotlinUUIDColumnType: AbstractExposedTest() {
 

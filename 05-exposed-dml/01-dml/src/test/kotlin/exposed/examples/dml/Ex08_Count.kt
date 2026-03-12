@@ -20,6 +20,11 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Exposed DSL에서 COUNT, COUNT DISTINCT 집계 함수 사용 예제.
+ *
+ * 전체 카운트, 조건부 카운트, 스키마별 카운트 등 다양한 집계 시나리오를 학습합니다.
+ */
 class Ex08_Count: AbstractExposedTest() {
 
     companion object: KLogging()

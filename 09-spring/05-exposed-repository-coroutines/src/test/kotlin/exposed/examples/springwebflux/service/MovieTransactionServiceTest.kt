@@ -14,6 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.annotation.Commit
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * suspend 함수에 `@Transactional`이 적용되지 않음을 확인하는 비활성화 테스트입니다.
+ * 코루틴에서는 `newSuspendedTransaction`을 사용해야 합니다.
+ */
 @Disabled("suspend 함수에 대해 @Transactional 이 적용되지 않습니다. newSuspendedTransaction 을 사용하세요")
 class MovieTransactionServiceTest(
     @param:Autowired private val movieService: MovieTransactionalService,

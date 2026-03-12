@@ -14,6 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
 
 
+/**
+ * Spring MVC 환경에서 [ActorRepository]의 CRUD 기능을 검증하는 통합 테스트 클래스.
+ *
+ * Spring 트랜잭션(`@Transactional`)을 적용하여 읽기 전용 조회와 쓰기 연산을 분리 검증하며,
+ * 잘못된 파라미터 입력 시 예외 없이 동작하는 방어 로직도 확인한다.
+ */
 class ActorRepositoryTest(
     @param:Autowired private val actorRepo: ActorRepository,
 ): AbstractSpringMvcTest() {

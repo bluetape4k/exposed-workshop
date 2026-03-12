@@ -70,6 +70,67 @@
 - Dialect별 스키마 생성/삭제가 테스트 간 독립적으로 작동하는지 점검한다.
 - Testcontainers 환경에서 커넥션 재활용과 롤백이 일정하게 수행되는지 확인한다.
 
+## 핵심 사용 패턴
+
+### WithTables / WithTablesSuspending 패턴
+
+`withTables(testDB, vararg tables)` 헬퍼는 테스트 시작 전 지정한 테이블을 자동으로 생성하고,
+테스트 블록 완료 후 자동으로 삭제(drop)한다. 이를 통해 테스트 간 DB 상태 독립성을 보장한다.
+
+```kotlin
+// JDBC 방식
+withTables(testDB, ActorTable) {
+    ActorTable.insert { it[name] = "test" }
+    ActorTable.selectAll().count() // 검증
+}
+
+// Coroutine(suspend) 방식
+withTablesSuspending(testDB, ActorTable) {
+    ActorTable.insert { it[name] = "test" }
+    ActorTable.selectAll().count() // 검증
+}
+```
+
+관련 테스트: [`src/test/kotlin/exposed/shared/tests/WithTablesTest.kt`](src/test/kotlin/exposed/shared/tests/WithTablesTest.kt)
+
+### TestDB enum 활용법
+
+`TestDB` enum은 지원하는 DB Dialect 목록을 정의하며, `enableDialects()` 메서드로
+테스트 대상 DB를 필터링한다. `@MethodSource(ENABLE_DIALECTS_METHOD)`와 함께 사용하면
+활성화된 Dialect마다 파라미터화 테스트가 자동으로 실행된다.
+
+```kotlin
+class MyTest: AbstractExposedTest() {
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `my test`(testDB: TestDB) {
+        withTables(testDB, MyTable) {
+            // 각 Dialect에서 실행됨
+        }
+    }
+}
+```
+
+### TestContainers 설정
+
+`USE_TESTCONTAINERS=true`(기본값)이면 PostgreSQL, MySQL, MariaDB 등은 Testcontainers로
+자동 기동된다. 로컬 개발 시 빠른 피드백이 필요한 경우 H2 인메모리 DB만 사용한다.
+
+```bash
+# H2 전용 실행 (빠른 피드백)
+./gradlew :exposed-shared-tests:test -PuseFastDB=true
+
+# 특정 DB 지정
+./gradlew :exposed-shared-tests:test -PuseDB=H2,POSTGRESQL
+```
+
+### ActorRepository 공통 연산 검증
+
+`withMovieAndActors(testDB)` 헬퍼로 영화·배우 샘플 데이터를 사전 구성한 뒤
+Repository의 CRUD, 카운트, 존재 여부, 조건부 삭제 등을 검증한다.
+
+관련 테스트: [`src/test/kotlin/exposed/shared/repository/ActorRepositoryTest.kt`](src/test/kotlin/exposed/shared/repository/ActorRepositoryTest.kt)
+
 ## 참고
 
 - `AbstractExposedTest`, `WithTables` 등의 헬퍼 상속 구조를 참고해 실제 예제에서 재사용 가능하다.
