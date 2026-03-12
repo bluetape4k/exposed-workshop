@@ -50,10 +50,6 @@ dependencies {
     testImplementation(Libs.kotlinx_coroutines_core)
     testImplementation(Libs.kotlinx_coroutines_test)
 
-    // Kotlin Serialization Json
-    testImplementation(platform(Libs.kotlinx_serialization_bom))
-    testImplementation(Libs.kotlinx_serialization_json)
-
     // Java Money
     testImplementation(Libs.bluetape4k_money)
     testImplementation(Libs.javax_money_api)

@@ -136,7 +136,7 @@ object Versions {
 
     const val exposed = "1.1.1"       // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-core
     const val r2dbc = "1.0.0.RELEASE"        // https://mvnrepository.com/artifact/io.r2dbc/r2dbc-spi
-    const val agroal = "2.8"          // https://mvnrepository.com/artifact/io.agroal/agroal-api
+    const val agroal = "3.0"          // https://mvnrepository.com/artifact/io.agroal/agroal-api
 
     const val slf4j = "2.0.17"      // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     const val logback = "1.5.32"     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
