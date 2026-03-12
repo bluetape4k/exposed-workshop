@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.patch
 import org.springframework.transaction.support.TransactionSynchronizationManager
 
+/** 테넌트별 라우팅 마커 조회 및 갱신 REST API의 동적 데이터소스 라우팅 동작을 검증합니다. */
 @SpringBootTest
 @AutoConfigureMockMvc
 class RoutingMarkerControllerTest(

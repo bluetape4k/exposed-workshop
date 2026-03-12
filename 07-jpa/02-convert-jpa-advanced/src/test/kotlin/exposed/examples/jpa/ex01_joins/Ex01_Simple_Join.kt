@@ -18,6 +18,10 @@ import org.jetbrains.exposed.v1.jdbc.select
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * JPA JPQL/Criteria의 기본 JOIN을 Exposed DSL로 표현하는 방법을 보여줍니다.
+ * INNER JOIN과 다중 테이블 조인 쿼리를 검증합니다.
+ */
 class Ex01_Simple_Join: AbstractExposedTest() {
 
     companion object: KLogging()

@@ -29,6 +29,10 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * JPA @ManyToOne 관계를 Exposed DSL 및 DAO로 구현하는 예제입니다.
+ * 외래키 참조와 조인 조회 패턴을 검증합니다.
+ */
 class Ex01_ManyToOne: AbstractExposedTest() {
 
     companion object: KLogging()

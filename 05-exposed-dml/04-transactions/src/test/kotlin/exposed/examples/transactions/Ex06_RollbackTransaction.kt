@@ -20,6 +20,11 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.sql.SQLException
 
+/**
+ * Exposed DSL에서 트랜잭션 롤백 동작 예제.
+ *
+ * 명시적 롤백, 예외 발생 시 자동 롤백, 최상위 트랜잭션에서의 롤백 동작을 학습합니다.
+ */
 class Ex06_RollbackTransaction: AbstractExposedTest() {
 
     companion object: KLogging()

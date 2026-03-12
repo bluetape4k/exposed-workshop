@@ -22,6 +22,11 @@ import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.Test
 
+/**
+ * [H2 전용 테스트] HikariCP 연결 풀을 사용하는 H2 인메모리 DB 시나리오를 검증하는 테스트 클래스.
+ * 풀 최대 크기(maximumPoolSize)를 초과하는 수의 코루틴 트랜잭션을 동시에 실행해도
+ * 커넥션이 재활용되어 정상 처리됨을 확인합니다.
+ */
 @Suppress("DEPRECATION")
 class Ex01_H2_ConnectionPool {
 

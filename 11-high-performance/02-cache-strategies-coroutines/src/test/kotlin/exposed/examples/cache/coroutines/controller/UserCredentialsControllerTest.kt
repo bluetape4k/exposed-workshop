@@ -29,6 +29,7 @@ import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 import java.time.Instant
 
+/** 코루틴 기반 Read-Through 캐시 전략을 적용한 UserCredentials REST API의 조회 및 캐시 무효화를 검증합니다. */
 @Suppress("DEPRECATION")
 class UserCredentialsControllerTest(
     @param:Autowired private val client: WebTestClient,

@@ -17,6 +17,9 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 
+/**
+ * Spring WebFlux + Coroutines 환경에서 Movie REST API의 조회, 생성, 삭제 기능을 테스트합니다.
+ */
 class MovieControllerTest(
     @param:Autowired private val client: WebTestClient,
 ): AbstractCoroutineExposedRepositoryTest() {

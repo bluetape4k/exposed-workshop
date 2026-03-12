@@ -26,6 +26,11 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertContentEquals
 
+/**
+ * Exposed DSL을 사용한 ORDER BY 정렬 예제.
+ *
+ * 단순 정렬, 복합 정렬, 서브쿼리 정렬, NULLS FIRST/LAST 등 다양한 정렬 패턴을 학습합니다.
+ */
 class Ex10_OrderBy: AbstractExposedTest() {
 
     companion object: KLogging()

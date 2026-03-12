@@ -23,6 +23,11 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
+/**
+ * Vert.x [SqlTemplate]을 이용한 PostgreSQL 쿼리 바인딩 예제 테스트입니다.
+ * 명명된 파라미터(`#{param}`), RowMapper, JsonMapper, Jackson databind 등
+ * 다양한 바인딩 전략을 suspend 트랜잭션 환경에서 검증합니다.
+ */
 class SqlClientTemplatePostgresExamples: AbstractSqlClientTest() {
 
     companion object: KLoggingChannel()

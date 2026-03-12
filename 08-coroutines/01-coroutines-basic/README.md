@@ -29,7 +29,7 @@ Exposed를 Kotlin Coroutines와 함께 사용하는 기본 모듈입니다.
 ## 실행 방법
 
 ```bash
-./gradlew :01-coroutines-basic:test
+./gradlew :08-coroutines:01-coroutines-basic:test
 ```
 
 ## 실습 체크리스트

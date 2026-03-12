@@ -32,9 +32,11 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.postgresql.util.PGobject
 
 /**
- * 사용자 정의 Enum 수형을 사용하는 방법인데,
- * JPA의  `@Enumerated(EnumType.STRING)` 과 같은 방식으로 사용하시던 분들은
- * Exposed의 column transformation 기능을 사용하는 것을 추천합니다.
+ * 사용자 정의 Enum 수형을 DB 컬럼에 매핑하는 다양한 방법을 검증하는 테스트 클래스.
+ * `enumerationByName`(이름 문자열 저장), `customEnumeration`(DB 네이티브 ENUM 타입),
+ * PostgreSQL `PGEnum`, Enum 컬럼 참조(Foreign Key) 시나리오를 다룹니다.
+ *
+ * JPA의 `@Enumerated(EnumType.STRING)` 방식에 익숙하다면 Exposed의 column transformation 기능을 추천합니다.
  */
 class Ex07_CustomEnumeration: AbstractExposedTest() {
 

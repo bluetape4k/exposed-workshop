@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.CacheManager
 
+/** Lettuce Redis 캐시 매니저가 정상적으로 생성되고 캐시 저장/조회가 동작함을 검증합니다. */
 class LettuceRedisCacheConfigTest(
     @param:Autowired private val cacheManager: CacheManager,
 ): AbstractSpringCacheApplicationTest() {

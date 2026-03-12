@@ -23,6 +23,10 @@ import org.jetbrains.exposed.v1.jdbc.update
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Exposed SQL DSL을 코루틴(suspend) 환경에서 사용하는 예제 테스트입니다.
+ * 동기 버전([ExposedSQLExample])과 동일한 시나리오를 `newSuspendedTransaction` 기반으로 검증합니다.
+ */
 class ExposedSQLSuspendedExample: AbstractExposedTest() {
 
     companion object: KLoggingChannel()

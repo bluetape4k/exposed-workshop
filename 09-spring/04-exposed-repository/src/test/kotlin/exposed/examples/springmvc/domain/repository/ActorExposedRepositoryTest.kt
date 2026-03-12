@@ -13,6 +13,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * Spring MVC + `@Transactional` 환경에서 [ActorExposedRepository]의 CRUD 및 검색 기능을 테스트합니다.
+ */
 @Transactional
 class ActorExposedRepositoryTest(
     @param:Autowired private val actorRepo: ActorExposedRepository,

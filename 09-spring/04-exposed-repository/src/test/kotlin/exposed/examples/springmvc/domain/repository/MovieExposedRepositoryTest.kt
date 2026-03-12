@@ -14,6 +14,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * Spring MVC + `@Transactional` 환경에서 [MovieExposedRepository]의 CRUD, 검색, 조인 쿼리를 테스트합니다.
+ */
 @Transactional
 class MovieExposedRepositoryTest(
     @param:Autowired private val movieRepo: MovieExposedRepository,

@@ -34,6 +34,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * JPA JPQL의 서브쿼리를 Exposed DSL로 표현하는 방법을 보여줍니다.
+ * WHERE 절 및 FROM 절 서브쿼리, EXISTS/IN 패턴을 검증합니다.
+ */
 class Ex01_SubQuery: AbstractExposedTest() {
 
     companion object: KLogging()

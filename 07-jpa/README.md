@@ -28,8 +28,12 @@
 ## 실행 방법
 
 ```bash
-./gradlew :01-convert-jpa-basic:test
-./gradlew :02-convert-jpa-advanced:test
+# 서브모듈 단독 실행
+./gradlew :07-jpa:01-convert-jpa-basic:test
+./gradlew :07-jpa:02-convert-jpa-advanced:test
+
+# 전체 챕터 실행
+./gradlew :07-jpa:test
 ```
 
 ## 테스트 포인트
@@ -41,6 +45,34 @@
 
 - 지연 로딩 의존 코드 제거 여부를 점검한다.
 - 쿼리 수/응답 시간 회귀를 계측으로 검토한다.
+
+## 복잡한 시나리오 가이드
+
+### 관계 매핑 패턴 (`01-convert-jpa-basic/ex05_relations/`)
+
+| JPA 어노테이션 | Exposed 구현 파일 |
+|---|---|
+| `@OneToOne` (단방향) | [`ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt) |
+| `@OneToOne` (양방향) | [`ex01_one_to_one/Ex02_OneToOne_Bidirectional.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex02_OneToOne_Bidirectional.kt) |
+| `@OneToOne @MapsId` | [`ex01_one_to_one/Ex03_OneToOne_Unidirectional_MapsId.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex03_OneToOne_Unidirectional_MapsId.kt) |
+| `@OneToMany` (배치 삽입) | [`ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt) |
+| `@OneToMany` N+1 해결 | [`ex02_one_to_many/Ex03_OneToMany_N_plus_1_Order.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/Ex03_OneToMany_N_plus_1_Order.kt) |
+| `@ManyToMany` | [`ex04_many_to_many/Ex01_ManyToMany_Bank.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex04_many_to_many/Ex01_ManyToMany_Bank.kt) |
+
+### JPA Inheritance 전략 vs Exposed (`02-convert-jpa-advanced/ex03_inheritance/`)
+
+| JPA 전략 | Exposed 구현 파일 |
+|---|---|
+| `@Inheritance(SINGLE_TABLE)` | [`Ex01_SingleTable_Inheritance.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance.kt) |
+| `@Inheritance(JOINED)` | [`Ex02_Joined_Table_Inheritance.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance.kt) |
+| `@Inheritance(TABLE_PER_CLASS)` | [`Ex03_TablePerClass_Inheritance.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance.kt) |
+
+### 서브쿼리 및 고급 쿼리 (`02-convert-jpa-advanced/`)
+
+- **서브쿼리**: [`ex02_subquery/Ex01_SubQuery.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex02_subquery/Ex01_SubQuery.kt)
+- **셀프 조인 / 트리 구조**: [`ex04_tree/Ex01_TreeNode.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt)
+- **Auditable 엔티티** (생성/수정 타임스탬프): [`ex05_auditable/Ex01_AuditableEntity.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex05_auditable/Ex01_AuditableEntity.kt)
+- **낙관적 잠금(Optimistic Lock)**: [`ex07_version/Ex01_Version.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex07_version/Ex01_Version.kt)
 
 ## 다음 챕터
 

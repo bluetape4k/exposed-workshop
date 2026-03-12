@@ -23,6 +23,11 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.sql.SQLException
 import kotlin.test.assertFails
 
+/**
+ * 컬럼에 주석(COMMENT)과 가시성(INVISIBLE) 등 확장 정의를 적용하는 시나리오를 검증하는 테스트 클래스.
+ * H2 및 MySQL 8에서만 지원되는 `withDefinition` API를 통해 컬럼 주석 추가,
+ * INVISIBLE 컬럼의 묵시적 SELECT 제외 동작을 확인합니다.
+ */
 class Ex04_ColumnDefinition: AbstractExposedTest() {
 
     companion object: KLogging()

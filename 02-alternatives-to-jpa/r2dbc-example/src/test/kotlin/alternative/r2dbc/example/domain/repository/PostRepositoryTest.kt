@@ -11,6 +11,10 @@ import org.amshove.kluent.shouldNotBeEmpty
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
+/**
+ * Spring Data R2DBC [PostRepository]의 CRUD 동작을 코루틴 환경에서 검증하는 테스트입니다.
+ * 조회, 저장, 삭제 등 기본 리포지토리 메서드의 비동기 동작을 확인합니다.
+ */
 class PostRepositoryTest(
     @param:Autowired private val postRepository: PostRepository,
 ): AbstractR2dbcTest() {

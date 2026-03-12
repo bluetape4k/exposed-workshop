@@ -114,6 +114,9 @@ class ExposedDaoExample: AbstractExposedTest() {
         }
     }
 
+    /**
+     * 새 User 엔티티를 생성한 뒤 age 필드를 변경하고, `flushCache()` 후 DB에 반영된 값을 검증합니다.
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `DAO Entity Update 하기`(testDB: TestDB) {
@@ -134,6 +137,9 @@ class ExposedDaoExample: AbstractExposedTest() {
         }
     }
 
+    /**
+     * 새 User 엔티티를 생성한 뒤 `delete()`로 삭제하고, 삭제 후 전체 수가 1 감소했는지 검증합니다.
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `DAO Entity 삭제하기`(testDB: TestDB) {

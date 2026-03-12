@@ -9,6 +9,7 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
+/** 동시 등록과 조회를 포함한 `InMemoryDataSourceRegistry`의 스레드 안전성과 기본 동작을 검증합니다. */
 class InMemoryDataSourceRegistryTest {
 
     @Test

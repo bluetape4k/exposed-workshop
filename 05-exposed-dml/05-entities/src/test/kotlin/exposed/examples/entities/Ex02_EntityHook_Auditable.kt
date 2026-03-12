@@ -27,6 +27,12 @@ import java.time.Instant
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
+/**
+ * Exposed DAO Entity Hook을 활용한 감사(Auditable) 패턴 예제.
+ *
+ * `EntityHook`을 통해 엔티티 생성/수정 시 `createdAt`, `updatedAt` 타임스탬프를
+ * 자동으로 설정하는 방법을 학습합니다.
+ */
 class Ex02_EntityHook_Auditable: AbstractExposedTest() {
 
     interface AuditableEntity {

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.transaction.support.TransactionSynchronizationManager
 
+/** 테넌트 컨텍스트와 트랜잭션 읽기 전용 여부에 따라 올바른 라우팅 키를 반환하는 `ContextAwareRoutingKeyResolver`를 검증합니다. */
 class ContextAwareRoutingKeyResolverTest {
 
     private val resolver = ContextAwareRoutingKeyResolver(defaultTenant = "default")

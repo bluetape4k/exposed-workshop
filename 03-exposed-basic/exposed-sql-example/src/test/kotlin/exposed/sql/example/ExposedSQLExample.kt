@@ -22,6 +22,10 @@ import org.jetbrains.exposed.v1.jdbc.update
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Exposed SQL DSL을 이용한 기본 쿼리 예제 테스트입니다.
+ * UPDATE, DELETE, JOIN, GROUP BY 등 다양한 DSL 쿼리를 동기 트랜잭션에서 검증합니다.
+ */
 class ExposedSQLExample: AbstractExposedTest() {
 
     companion object: KLoggingChannel()

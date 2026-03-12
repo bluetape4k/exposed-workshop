@@ -22,6 +22,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 
+/** 멀티테넌트 Spring MVC 환경에서 테넌트 헤더에 따라 Actor REST API가 올바른 스키마 데이터를 반환함을 검증합니다. */
 class ActorControllerTest(
     @param:Autowired private val client: WebTestClient,
 ): AbstractMultitenantTest() {

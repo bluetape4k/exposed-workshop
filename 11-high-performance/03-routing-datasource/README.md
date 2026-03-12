@@ -70,7 +70,53 @@ curl -X PATCH -H 'X-Tenant-Id: acme' -H 'Content-Type: application/json' \
 - `src/main/kotlin/exposed/examples/routing/web/`
 - `src/test/kotlin/exposed/examples/routing/`
 
-## 다음 단계
+## 테스트 코드
 
-- [`../README.md`](../README.md): 고성능 예제 전체 목록
-- [`../../10-multi-tenant/README.md`](../../10-multi-tenant/README.md): 멀티테넌트 예제 흐름
+| 파일                                                                                            | 설명                                      |
+|-----------------------------------------------------------------------------------------------|------------------------------------------|
+| [`ContextAwareRoutingKeyResolverTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/ContextAwareRoutingKeyResolverTest.kt) | 테넌트·readOnly 조합별 라우팅 키 반환 검증 |
+| [`DynamicRoutingDataSourceTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/DynamicRoutingDataSourceTest.kt)             | 컨텍스트별 DataSource 라우팅 통합 검증    |
+| [`InMemoryDataSourceRegistryTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/InMemoryDataSourceRegistryTest.kt)         | 동시 등록·조회 스레드 안전성 검증         |
+| [`RoutingMarkerControllerTest.kt`](src/test/kotlin/exposed/examples/routing/web/RoutingMarkerControllerTest.kt)                      | 테넌트별 REST API 라우팅 결과 검증        |
+
+## 복잡한 시나리오
+
+### 멀티테넌트 + 읽기/쓰기 분리 라우팅
+
+`ContextAwareRoutingKeyResolver`는 `TenantContext`와 `TransactionSynchronizationManager.isCurrentTransactionReadOnly()`를 조합해 `<tenant>:<rw|ro>` 형태의 라우팅 키를 결정합니다. `DynamicRoutingDataSource`는 이 키로 `DataSourceRegistry`에서 실제 DataSource를 선택합니다.
+
+- 관련 파일: [`ContextAwareRoutingKeyResolver.kt`](src/main/kotlin/exposed/examples/routing/datasource/ContextAwareRoutingKeyResolver.kt), [`DynamicRoutingDataSource.kt`](src/main/kotlin/exposed/examples/routing/datasource/DynamicRoutingDataSource.kt)
+- 검증 테스트: [`ContextAwareRoutingKeyResolverTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/ContextAwareRoutingKeyResolverTest.kt), [`DynamicRoutingDataSourceTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/DynamicRoutingDataSourceTest.kt)
+
+### Registry 동시성 안전성
+
+`InMemoryDataSourceRegistry`는 `ConcurrentHashMap` 기반으로 구현돼 다수의 스레드가 동시에 DataSource를 등록/조회해도 레이스 컨디션 없이 동작합니다.
+
+- 관련 파일: [`InMemoryDataSourceRegistry.kt`](src/main/kotlin/exposed/examples/routing/datasource/InMemoryDataSourceRegistry.kt)
+- 검증 테스트: [`InMemoryDataSourceRegistryTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/InMemoryDataSourceRegistryTest.kt)
+
+## 테스트 전략
+
+| 구분      | 검증 항목                      | 기대 결과                            |
+|---------|----------------------------|----------------------------------|
+| 라우팅 정합성 | `tenant=a, readOnly=true`  | `a:ro` DataSource 선택             |
+| 라우팅 정합성 | `tenant=a, readOnly=false` | `a:rw` DataSource 선택             |
+| 예외 처리   | 미등록 키 조회                   | 정의된 정책대로 예외 또는 fallback          |
+| 동시성     | 등록/조회 병행                   | 레이스 없이 항상 유효한 DataSource 반환      |
+| 장애 대응   | 특정 replica 실패              | primary 또는 대체 replica로 우회(정책 기반) |
+
+## 운영 체크포인트 (성능·안정성)
+
+- 장애 감지와 복구 시나리오를 분리합니다: "감지"와 "라우팅 우회"를 독립 컴포넌트로 둡니다.
+- Registry 갱신 이벤트를 로깅/메트릭으로 남겨 변경 추적성을 확보합니다.
+- 라우팅 로그에는 최소한 `tenant`, `readOnly`, `routingKey`, `selectedDataSource`를 포함합니다.
+
+## 코드 리뷰 관점
+
+- 성능: `determineCurrentLookupKey()` 경로에서 불필요한 객체 생성/문자열 연산을 줄입니다.
+- 안정성: 컨텍스트 누락, 미등록 키, DataSource close 상태를 명시적으로 처리합니다.
+- 테스트: 단순 정상 경로보다 "잘못된 키/장애/경합" 케이스를 우선 검증합니다.
+
+## 다음 모듈
+
+- 마지막 모듈입니다. 전체 고성능 예제 요약은 [`../README.md`](../README.md)에서 확인할 수 있습니다.

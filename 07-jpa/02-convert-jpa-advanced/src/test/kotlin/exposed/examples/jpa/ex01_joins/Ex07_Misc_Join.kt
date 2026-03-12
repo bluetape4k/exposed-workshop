@@ -19,6 +19,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertFailsWith
 
+/**
+ * Exposed DSL의 다양한 기타 JOIN 패턴을 검증하는 예제입니다.
+ * CROSS JOIN, 조건부 JOIN, 복잡한 ON 절 등을 테스트합니다.
+ */
 class Ex07_Misc_Join: AbstractExposedTest() {
 
     companion object: KLogging()

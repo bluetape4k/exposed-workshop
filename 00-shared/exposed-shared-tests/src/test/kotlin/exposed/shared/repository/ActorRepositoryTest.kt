@@ -23,6 +23,12 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * [ActorRepository]의 CRUD 및 조회 기능을 다양한 DB Dialect에서 검증하는 테스트 클래스.
+ *
+ * [withMovieAndActors] 헬퍼를 사용해 테스트용 영화·배우 데이터를 사전에 구성하며,
+ * 저장·삭제·카운트·존재 여부 확인 등 Repository 공통 연산의 정확성을 확인한다.
+ */
 class ActorRepositoryTest: AbstractExposedTest() {
 
     companion object: KLoggingChannel() {
@@ -211,7 +217,10 @@ class ActorRepositoryTest: AbstractExposedTest() {
     }
 
     /**
-     * `deleteAllIgnore` 는 MySQL/MariaDB 에서만 지원됨
+     * `deleteAllIgnore`를 사용한 조건부 일괄 삭제를 검증하는 테스트.
+     *
+     * `DELETE IGNORE` 구문은 MySQL/MariaDB 에서만 지원되므로 해당 Dialect에서만 실행된다.
+     * 조건 일치 레코드 삭제 후 나머지 전체 삭제까지 순차적으로 수행하여 결과를 검증한다.
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)

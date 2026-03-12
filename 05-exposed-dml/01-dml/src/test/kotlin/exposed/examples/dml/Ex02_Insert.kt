@@ -67,6 +67,12 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.*
 
+/**
+ * Exposed DSL을 사용한 INSERT 문 예제.
+ *
+ * 단건/배치 삽입, insertAndGetId, insertIgnore, batchInsert, 코루틴 컨텍스트 삽입 등
+ * 다양한 INSERT 패턴을 학습합니다.
+ */
 class Ex02_Insert: AbstractExposedTest() {
 
     companion object: KLogging()

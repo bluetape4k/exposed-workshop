@@ -19,6 +19,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.returnResult
 import java.time.Duration
 
+/** 코루틴 기반 Write-Behind 캐시 전략을 이용한 UserEvent 비동기 저장 REST API를 검증합니다. */
 @Suppress("DEPRECATION")
 class UserEventControllerTest(
     @param:Autowired private val client: WebTestClient,

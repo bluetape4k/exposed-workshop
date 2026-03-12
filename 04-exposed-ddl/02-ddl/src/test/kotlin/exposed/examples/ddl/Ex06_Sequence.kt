@@ -18,6 +18,11 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Exposed [Sequence] API를 사용하여 시퀀스를 생성·사용하는 시나리오를 검증하는 테스트 클래스.
+ * 시퀀스 DDL 생성, `nextIntVal()`로 INSERT 시 컬럼 값 지정, `autoIncrement`에 커스텀 시퀀스
+ * 연결하는 패턴을 다룹니다. 시퀀스를 지원하는 DB(PostgreSQL 등)에서만 실행됩니다.
+ */
 class Ex06_Sequence: AbstractExposedTest() {
 
     companion object: KLogging()

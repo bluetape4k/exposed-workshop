@@ -11,6 +11,10 @@ import org.jetbrains.exposed.v1.jdbc.select
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * JPA @EmbeddedId/@IdClass에 해당하는 복합 기본키를 Exposed CompositeIdTable로 구현하는 예제입니다.
+ * 복합 키 테이블 생성, 조회, 유니크 제약 검증을 테스트합니다.
+ */
 class Ex01_CompositeId: AbstractExposedTest() {
 
     companion object: KLogging()

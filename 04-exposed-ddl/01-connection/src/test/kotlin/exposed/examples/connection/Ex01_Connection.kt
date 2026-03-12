@@ -18,6 +18,11 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.sql.Types
 
+/**
+ * Exposed 데이터베이스 연결의 기본 동작을 검증하는 테스트 클래스.
+ * 컬럼 메타데이터 조회와 테이블 제약조건(Foreign Key, Unique Index) 정보를
+ * [connection.metadata] API를 통해 가져오는 시나리오를 다룹니다.
+ */
 class Ex01_Connection: AbstractExposedTest() {
 
     companion object: KLoggingChannel()

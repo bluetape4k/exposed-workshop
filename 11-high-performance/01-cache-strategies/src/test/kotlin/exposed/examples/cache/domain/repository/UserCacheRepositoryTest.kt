@@ -23,6 +23,7 @@ import org.testcontainers.utility.Base58
 import java.time.LocalDate
 import kotlin.system.measureTimeMillis
 
+/** Read-Through / Write-Through 캐시 전략을 적용한 `UserCacheRepository`의 캐시 저장, 조회, 갱신을 검증합니다. */
 class UserCacheRepositoryTest(
     @param:Autowired private val repository: UserCacheRepository,
 ): AbstractCacheStrategyTest() {

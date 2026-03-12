@@ -21,6 +21,11 @@ import io.vertx.sqlclient.Pool
 import io.vertx.sqlclient.PoolOptions
 import org.junit.jupiter.api.extension.ExtendWith
 
+/**
+ * Vert.x SQL Client 테스트의 공통 기반 클래스입니다.
+ * H2(JDBC Pool), MySQL, PostgreSQL 커넥션 풀 생성 헬퍼를 제공하며,
+ * `@ExtendWith(VertxExtension)` 으로 [io.vertx.junit5.VertxTestContext] 주입을 지원합니다.
+ */
 @ExtendWith(VertxExtension::class)  // VertxTestContext 를 사용하기 위해서 추가합니다.
 abstract class AbstractSqlClientTest {
 

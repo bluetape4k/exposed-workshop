@@ -20,6 +20,13 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.io.Serializable
 import java.sql.ResultSet
 
+/**
+ * Exposed DSL에서 재귀 CTE(Common Table Expression)를 Raw SQL로 실행하는 예제.
+ *
+ * Raw SQL 실행 함수를 통해 WITH RECURSIVE 구문을 직접 사용하며,
+ * 계층형 데이터(트리 구조) 조회 패턴을 학습합니다.
+ * PostgreSQL, MySQL 등 CTE를 지원하는 DB에서만 동작합니다.
+ */
 class Ex50_RecursiveCTE: AbstractExposedTest() {
 
     companion object: KLogging()

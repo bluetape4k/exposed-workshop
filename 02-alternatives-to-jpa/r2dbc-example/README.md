@@ -10,15 +10,46 @@ Spring Data R2DBC + Kotlin Coroutines를 이용해 비동기 데이터베이스 
 
 ## 핵심 구성
 
-- `MovieR2dbcRepository`: R2DBC `DatabaseClient` 기반 쿼리
-- `MovieController`: suspend 함수 기반 REST API
+- `PostRepository`: Spring Data R2DBC `CrudRepository` 기반 Post CRUD
+- `CommentRepository`: Post ID 기반 댓글 조회 및 집계
+- `CustomerRepository`: `DatabaseClient` 직접 활용 및 커스텀 `@Query` 예제
+- `PostController`: suspend 함수 기반 REST API (`/posts`, `/posts/{id}`, `/posts/{id}/comments/count`)
 - `R2dbcConfiguration`: H2/PostgreSQL URL, `ConnectionFactory` 설정
+
+## 예제 구성
+
+| 파일 | 설명 |
+|------|------|
+| `config/R2dbcConfigTest.kt` | R2DBC `ConnectionFactory` 빈 로딩 검증 |
+| `domain/repository/PostRepositoryTest.kt` | Post CRUD 코루틴 테스트 |
+| `domain/repository/CommentRespositoryTest.kt` | 댓글 조회·집계·삽입 테스트 |
+| `domain/repository/CustomerRepositoryTest.kt` | `DatabaseClient` + 커스텀 쿼리 테스트 |
+| `controller/PostControllerTest.kt` | WebTestClient 기반 REST API 통합 테스트 |
 
 ## 실행 방법
 
 ```bash
-./gradlew :r2dbc-example:bootRun
+# 테스트 실행
+./gradlew :02-alternatives-to-jpa:r2dbc-example:test
+
+# 앱 실행 (H2 기본)
+./gradlew :02-alternatives-to-jpa:r2dbc-example:bootRun
 ```
+
+## Exposed vs R2DBC 비교
+
+| 항목 | Exposed | Spring Data R2DBC |
+|------|---------|-------------------|
+| 쿼리 스타일 | 타입 안전 DSL / DAO Entity | Repository 인터페이스 / `DatabaseClient` |
+| 트랜잭션 | `transaction { }` / `newSuspendedTransaction { }` | `@Transactional` / `TransactionalOperator` |
+| 연결 모델 | JDBC (블로킹, Virtual Thread 활용) | R2DBC (완전 비동기 Non-blocking) |
+| 학습 곡선 | Kotlin DSL 친화적 | Spring 생태계 친화적 |
+| N+1 방지 | `.with()` eager loading | 수동 join 쿼리 필요 |
+
+## 복잡한 시나리오
+
+- **커스텀 쿼리**: [`CustomerRepositoryTest`](src/test/kotlin/alternative/r2dbc/example/domain/repository/CustomerRepositoryTest.kt) - `DatabaseClient`로 테이블 직접 생성 후 `findByFirstname` / `@Query` 어노테이션 검증
+- **REST API 통합**: [`PostControllerTest`](src/test/kotlin/alternative/r2dbc/example/controller/PostControllerTest.kt) - `WebTestClient`로 HTTP 200/404 응답 및 댓글 수 집계 검증
 
 ## 실습 체크리스트
 

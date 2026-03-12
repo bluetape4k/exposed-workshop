@@ -72,7 +72,10 @@ import java.util.*
 import kotlin.test.assertTrue
 
 /**
- * 다양한 DDL 예제
+ * Exposed DDL API의 종합 예제를 검증하는 테스트 클래스.
+ * 테이블 존재 확인, 키워드 식별자 처리, 다양한 컬럼 타입(바이너리·UUID·불리언·텍스트),
+ * 복합 PK/FK, 체크 제약조건, 스키마 간 FK, 복합 FK의 unique index/PK 참조,
+ * inner join 다중 FK 시나리오 등 38개 테스트를 포함합니다.
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Ex10_DDL_Examples: AbstractExposedTest() {

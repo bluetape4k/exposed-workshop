@@ -17,6 +17,12 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 
+/**
+ * Spring MVC 환경에서 영화(Movie) REST API 엔드포인트를 검증하는 통합 테스트 클래스.
+ *
+ * [WebTestClient]를 이용해 `/movies` 경로의 GET 요청을 실제로 호출하며,
+ * ID 조회·제작자명 검색·잘못된 날짜 파라미터 무시 시나리오를 검증한다.
+ */
 class MovieControllerTest(
     @param:Autowired private val client: WebTestClient,
 ): AbstractSpringMvcTest() {

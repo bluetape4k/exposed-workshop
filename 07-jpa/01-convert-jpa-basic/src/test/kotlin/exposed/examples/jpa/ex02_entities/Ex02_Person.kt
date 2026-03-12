@@ -35,6 +35,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDate
 
+/**
+ * JPA @ManyToOne 관계를 Exposed DSL로 표현하는 방법을 보여줍니다.
+ * Person과 Address의 다양한 조건 조회(count, distinct, like, range 등)를 검증합니다.
+ */
 class Ex02_Person: AbstractExposedTest() {
 
     companion object: KLogging()

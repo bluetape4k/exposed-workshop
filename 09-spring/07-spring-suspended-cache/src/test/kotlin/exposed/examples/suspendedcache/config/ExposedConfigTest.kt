@@ -11,6 +11,7 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.junit.jupiter.api.Test
 
+/** Spring Suspended Cache 모듈의 Exposed 스키마 자동 생성 및 초기 데이터 적재를 코루틴 환경에서 검증합니다. */
 @Suppress("DEPRECATION")
 class ExposedConfigTest: AbstractSpringSuspendedCacheApplicationTest() {
 

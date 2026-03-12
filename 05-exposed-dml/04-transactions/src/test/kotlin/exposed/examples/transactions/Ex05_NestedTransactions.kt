@@ -30,6 +30,12 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.sql.SQLException
 import kotlin.test.fail
 
+/**
+ * Exposed DSL에서 중첩 트랜잭션(Nested Transaction) 사용 예제.
+ *
+ * `useNestedTransactions = true` 설정 하에 중첩 트랜잭션의 커밋/롤백 동작과
+ * 예외 발생 시 부분 롤백 처리 방식을 학습합니다.
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class Ex05_NestedTransactions: AbstractExposedTest() {
 

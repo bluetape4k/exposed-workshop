@@ -23,12 +23,12 @@ Java 21 Virtual Threads 기반으로 Exposed 트랜잭션을 실행하는 모듈
 
 | 파일                       | 설명                     |
 |--------------------------|------------------------|
-| `Ex01_VritualThreads.kt` | Virtual Thread 트랜잭션 예제 |
+| `Ex01_VirtualThreads.kt` | Virtual Thread 트랜잭션 예제 |
 
 ## 실행 방법
 
 ```bash
-./gradlew :02-virtualthreads-basic:test
+./gradlew :08-coroutines:02-virtualthreads-basic:test
 ```
 
 ## 실습 체크리스트
@@ -53,7 +53,7 @@ flowchart LR
 ```
 
 예제 코드: [
-`src/test/kotlin/exposed/examples/virtualthreads/Ex01_VritualThreads.kt`](src/test/kotlin/exposed/examples/virtualthreads/Ex01_VritualThreads.kt)
+`src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt`](src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt)
 
 ## 다음 챕터
 

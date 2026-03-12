@@ -80,6 +80,12 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.math.BigDecimal
 
+/**
+ * Exposed DSL에서 문자열, 비트 연산, 조건 함수 등 기본 SQL 함수 사용 예제.
+ *
+ * `concat`, `substring`, `lowerCase`, `coalesce`, `case`, `bitwiseAnd` 등
+ * 다양한 내장 함수를 DSL로 표현하는 방법을 학습합니다.
+ */
 class Ex01_Functions: Ex00_FunctionBase() {
 
     companion object: KLogging()

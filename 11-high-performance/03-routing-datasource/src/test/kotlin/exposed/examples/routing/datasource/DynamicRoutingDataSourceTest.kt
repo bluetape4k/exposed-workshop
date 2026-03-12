@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.jdbc.datasource.SimpleDriverDataSource
 import org.springframework.transaction.support.TransactionSynchronizationManager
 
+/** 테넌트 컨텍스트와 읽기/쓰기 여부에 따라 적절한 데이터소스로 동적 라우팅하는 `DynamicRoutingDataSource`를 검증합니다. */
 class DynamicRoutingDataSourceTest {
 
     private val registry = InMemoryDataSourceRegistry().apply {

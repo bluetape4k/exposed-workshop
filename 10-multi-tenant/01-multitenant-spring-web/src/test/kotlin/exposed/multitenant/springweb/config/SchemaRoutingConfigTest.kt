@@ -13,6 +13,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.test.annotation.Commit
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * 스키마 기반 멀티테넌시 설정에서 `TenantContext`에 따라 올바른 스키마로 라우팅되어 테넌트별 데이터가 격리됨을 검증합니다.
+ */
 @Transactional(readOnly = true)
 @Commit
 class SchemaRoutingConfigTest: AbstractMultitenantTest() {

@@ -42,6 +42,11 @@ import org.jetbrains.exposed.v1.jdbc.select
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Exposed DSL을 사용한 GROUP BY, HAVING, 집계 함수 예제.
+ *
+ * groupBy, having, avg, max, groupConcat 등 집계 쿼리 패턴과 DB 방언별 동작 차이를 학습합니다.
+ */
 class Ex09_GroupBy: AbstractExposedTest() {
 
     companion object: KLogging()

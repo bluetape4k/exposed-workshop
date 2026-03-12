@@ -15,6 +15,10 @@ import org.springframework.test.annotation.Commit
 import org.springframework.transaction.TransactionSystemException
 import kotlin.test.assertFailsWith
 
+/**
+ * Spring `@Transactional` 환경에서 Exposed Entity API를 이용한 주문(Order) CRUD 라이프사이클을 테스트합니다.
+ * 커밋 후 엔티티 상태 변화, 롤백, 예외 처리 시나리오를 검증합니다.
+ */
 class SpringTransactionEntityTest(
     @param:Autowired private val orderService: OrderService,
 ): AbstractSpringTransactionTest() {

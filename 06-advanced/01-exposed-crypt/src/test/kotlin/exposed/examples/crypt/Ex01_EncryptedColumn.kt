@@ -27,6 +27,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertFailsWith
 
+/**
+ * DSL 방식으로 암호화 컬럼([encryptedVarchar], [encryptedBinary])을 정의하고
+ * 데이터 투명 암복호화, 암호화 길이 계산, 로그 마스킹을 검증하는 예제.
+ */
 class Ex01_EncryptedColumn: AbstractExposedTest() {
 
     companion object: KLogging()

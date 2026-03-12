@@ -22,6 +22,10 @@ import org.jetbrains.exposed.v1.dao.with
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Exposed DAO 패턴을 코루틴(suspend) 환경에서 사용하는 예제 테스트입니다.
+ * `newSuspendedTransaction` 기반의 비동기 트랜잭션 내에서 Entity CRUD 및 eager loading을 검증합니다.
+ */
 class ExposedDaoSuspendedExample: AbstractExposedTest() {
 
     companion object: KLoggingChannel()
@@ -111,6 +115,9 @@ class ExposedDaoSuspendedExample: AbstractExposedTest() {
         }
     }
 
+    /**
+     * 새 User 엔티티를 생성한 뒤 age 필드를 변경하고, `flushCache()` 후 DB에 반영된 값을 코루틴 트랜잭션에서 검증합니다.
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `DAO Entity Update 하기`(testDB: TestDB) = runSuspendIO {
@@ -131,6 +138,9 @@ class ExposedDaoSuspendedExample: AbstractExposedTest() {
         }
     }
 
+    /**
+     * 새 User 엔티티를 생성한 뒤 `delete()`로 삭제하고, 삭제 후 전체 수가 1 감소했는지 코루틴 트랜잭션에서 검증합니다.
+     */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `DAO Entity 삭제하기`(testDB: TestDB) = runSuspendIO {

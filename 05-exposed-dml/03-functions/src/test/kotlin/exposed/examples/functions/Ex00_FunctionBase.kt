@@ -14,6 +14,11 @@ import java.math.RoundingMode
 
 typealias SqlFunction<T> = org.jetbrains.exposed.v1.core.Function<T>
 
+/**
+ * SQL 함수 예제의 공통 베이스 클래스.
+ *
+ * 함수 테스트에서 공통으로 사용하는 테이블 정의, 헬퍼 함수, 검증 유틸리티를 제공합니다.
+ */
 abstract class Ex00_FunctionBase: AbstractExposedTest() {
 
     companion object: KLogging()

@@ -29,6 +29,7 @@ import java.time.LocalDate
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.system.measureTimeMillis
 
+/** 코루틴 기반 Read-Through / Write-Through 캐시 전략을 적용한 `UserCacheRepository`의 캐시 저장, 조회, 갱신을 검증합니다. */
 @Suppress("DEPRECATION")
 class UserCacheRepositoryTest(
     @param:Autowired private val repository: UserCacheRepository,

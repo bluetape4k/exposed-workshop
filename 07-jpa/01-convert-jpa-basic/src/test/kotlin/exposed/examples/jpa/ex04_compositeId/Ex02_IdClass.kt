@@ -28,6 +28,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertIs
 
+/** JPA @IdClass 복합 키를 Exposed CompositeIdTable로 전환하는 예제입니다. */
 class Ex02_IdClass: AbstractExposedTest() {
 
     companion object: KLogging()

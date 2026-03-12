@@ -24,6 +24,11 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/**
+ * Exposed DSL을 사용한 UPDATE 문 예제.
+ *
+ * 단순 업데이트, 조인 기반 업데이트, 서브쿼리 업데이트 등 다양한 UPDATE 패턴을 학습합니다.
+ */
 class Ex03_Update: AbstractExposedTest() {
 
     companion object: KLogging()

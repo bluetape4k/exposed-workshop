@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import java.time.Instant
 
+/** Read-Through 캐시 전략을 적용한 `UserCredentialsCacheRepository`의 조회 및 캐시 무효화를 검증합니다. */
 class UserCredentialsCacheRepositoryTest(
     @param:Autowired private val repository: UserCredentialsCacheRepository,
 ): AbstractCacheStrategyTest() {

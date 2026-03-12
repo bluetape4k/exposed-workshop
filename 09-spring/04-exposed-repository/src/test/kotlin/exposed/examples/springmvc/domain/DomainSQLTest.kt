@@ -17,6 +17,9 @@ import org.junit.jupiter.api.condition.EnabledOnJre
 import org.junit.jupiter.api.condition.JRE
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * Spring MVC 환경에서 플랫폼 스레드와 가상 스레드(Java 21)를 이용한 Exposed DSL 쿼리의 동시성 동작을 테스트합니다.
+ */
 class DomainSQLTest: AbstractExposedRepositoryTest() {
 
     companion object: KLogging() {
