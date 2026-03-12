@@ -15,33 +15,33 @@ object Containers: KLogging() {
 
     val MariaDB: MariaDBServer by lazy {
         MariaDBServer()
-            .withCommand(
-                "--character-set-server=utf8mb4",
-                "--collation-server=utf8mb4_bin"
-            )
             .apply {
+                withCommand(
+                    "--character-set-server=utf8mb4",
+                    "--collation-server=utf8mb4_bin"
+                )
                 start()
                 ShutdownQueue.register(this)
             }
     }
     val MySql5: MySQL5Server by lazy {
         MySQL5Server()
-            .withCommand(
-                "--character-set-server=utf8mb4",
-                "--collation-server=utf8mb4_bin"
-            )
             .apply {
+                withCommand(
+                    "--character-set-server=utf8mb4",
+                    "--collation-server=utf8mb4_bin"
+                )
                 start()
                 ShutdownQueue.register(this)
             }
     }
     val MySql8: MySQL8Server by lazy {
         MySQL8Server()
-            .withCommand(
-                "--character-set-server=utf8mb4",
-                "--collation-server=utf8mb4_bin"
-            )
             .apply {
+                withCommand(
+                    "--character-set-server=utf8mb4",
+                    "--collation-server=utf8mb4_bin"
+                )
                 start()
                 ShutdownQueue.register(this)
             }
