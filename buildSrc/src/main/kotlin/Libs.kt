@@ -1326,6 +1326,7 @@ object Libs {
 
     val testcontainers_bom = testcontainersCore("testcontainers-bom")
     val testcontainers = testcontainersCore("testcontainers")
+    val testcontainers_jdbc = testcontainersModule("jdbc")
     val testcontainers_junit_jupiter = testcontainersModule("junit-jupiter")
     val testcontainers_cassandra = testcontainersModule("cassandra")
     val testcontainers_chromadb = testcontainersModule("chromadb")
