@@ -54,6 +54,7 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+/** Exposed DSL SELECT 쿼리의 기본 사용법과 다양한 조건 표현을 보여주는 예제입니다. */
 class Ex01_Select: AbstractExposedTest() {
 
     companion object: KLogging()

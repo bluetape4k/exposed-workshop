@@ -61,6 +61,29 @@
 `src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt`](src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt), [
 `src/test/kotlin/exposed/examples/jpa/ex04_tree/TreeNodeSchema.kt`](src/test/kotlin/exposed/examples/jpa/ex04_tree/TreeNodeSchema.kt)
 
+## 복잡한 시나리오
+
+### 상속 전략 3가지
+
+| JPA 전략 | Exposed 구현 파일 |
+|---|---|
+| `@Inheritance(SINGLE_TABLE)` | [`ex03_inheritance/Ex01_SingleTable_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance.kt) |
+| `@Inheritance(JOINED)` | [`ex03_inheritance/Ex02_Joined_Table_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance.kt) |
+| `@Inheritance(TABLE_PER_CLASS)` | [`ex03_inheritance/Ex03_TablePerClass_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance.kt) |
+
+### 서브쿼리 패턴
+
+- 상관 서브쿼리 / EXISTS 서브쿼리: [`ex02_subquery/Ex01_SubQuery.kt`](src/test/kotlin/exposed/examples/jpa/ex02_subquery/Ex01_SubQuery.kt)
+
+### CTE (Common Table Expression)
+
+- Exposed CTE API 전환: [`ex04_tree/Ex01_TreeNode.kt`](src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt)
+
+### 감사(Audit) 및 낙관적 잠금
+
+- `@CreatedDate/@LastModifiedDate`: [`ex05_auditable/Ex01_AuditableEntity.kt`](src/test/kotlin/exposed/examples/jpa/ex05_auditable/Ex01_AuditableEntity.kt)
+- `@Version` 낙관적 잠금: [`ex07_version/Ex01_Version.kt`](src/test/kotlin/exposed/examples/jpa/ex07_version/Ex01_Version.kt)
+
 ## 다음 챕터
 
 - [`../../08-coroutines/README.md`](../../08-coroutines/README.md)
