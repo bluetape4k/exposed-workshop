@@ -1,5 +1,3 @@
-// Kotlin 2.3 부터 사용 가능
-
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
@@ -37,7 +35,7 @@ class Ex10_KotlinUUIDColumnType: AbstractExposedTest() {
             val id = uuid("id")
         }
         withTables(testDB, tester) {
-            val uuid = Uuid.random()
+            val uuid = Uuid.generateV7()
             tester.insert {
                 it[id] = uuid
             }
@@ -54,7 +52,7 @@ class Ex10_KotlinUUIDColumnType: AbstractExposedTest() {
         }
 
         withTables(testDB, tester) {
-            val uuid = Uuid.random()
+            val uuid = Uuid.generateV7()
             val id = tester.insertAndGetId { it[this.uuid] = uuid }
             id.shouldNotBeNull()
 
@@ -87,7 +85,7 @@ class Ex10_KotlinUUIDColumnType: AbstractExposedTest() {
                 // Even if we generate on DDL type 'BINARY(16)' we could support native UUID for IO operations.
                 exec("CREATE TABLE test_java_uuid_mariadb (id UUID NOT NULL)")
 
-                val uuid = Uuid.random()
+                val uuid = Uuid.generateV7()
                 tester.insert {
                     it[id] = uuid
                 }

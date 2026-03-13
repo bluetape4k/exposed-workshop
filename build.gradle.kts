@@ -62,12 +62,12 @@ subprojects {
     kotlin {
         jvmToolchain(21)
         compilerOptions {
-            languageVersion.set(KotlinVersion.KOTLIN_2_2)
-            apiVersion.set(KotlinVersion.KOTLIN_2_2)
+            languageVersion.set(KotlinVersion.KOTLIN_2_3)
+            apiVersion.set(KotlinVersion.KOTLIN_2_3)
             freeCompilerArgs = listOf(
                 "-Xjsr305=strict",
                 "-jvm-default=enable",
-                "-Xinline-classes",
+                // "-Xinline-classes",          // Kotlin 2.3 부터는 필요 없음 
                 "-Xstring-concat=indy",         // since Kotlin 1.4.20 for JVM 9+
                 "-Xcontext-parameters",         // since Kotlin 1.6
                 "-Xannotation-default-target=param-property"
