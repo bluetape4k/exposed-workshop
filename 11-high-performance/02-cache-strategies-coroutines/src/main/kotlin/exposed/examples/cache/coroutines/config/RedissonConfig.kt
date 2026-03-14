@@ -34,7 +34,6 @@ class RedissonConfig {
                 .setRetryDelay { attempt -> Duration.ofMillis((attempt + 1) * 100L) }
 
             executor = VirtualThreadExecutor
-            nettyExecutor = VirtualThreadExecutor
             nettyThreads = 64
         }
 
