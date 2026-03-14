@@ -20,12 +20,14 @@
 | `01-cache-strategies`            | Spring MVC + Virtual Thread 기반 캐시 전략 |
 | `02-cache-strategies-coroutines` | WebFlux + Coroutines 기반 캐시 전략        |
 | `03-routing-datasource`          | DataSource 라우팅 설계 가이드                |
+| `04-benchmark`                   | `kotlinx-benchmark` 기반 성능 측정          |
 
 ## 권장 학습 순서
 
 1. `01-cache-strategies`
 2. `02-cache-strategies-coroutines`
 3. `03-routing-datasource`
+4. `04-benchmark`
 
 ## 실행 방법
 
@@ -34,6 +36,8 @@
 ./gradlew :01-cache-strategies:test
 ./gradlew :02-cache-strategies-coroutines:test
 ./gradlew :03-routing-datasource:test
+./gradlew :04-benchmark:smokeBenchmark
+./gradlew :04-benchmark:benchmarkMarkdown -PbenchmarkProfile=smoke
 ```
 
 ## 테스트 포인트
@@ -47,6 +51,7 @@
 - 캐시 무효화 정책과 데이터 신선도(SLA)를 정렬한다.
 - 이벤트 폭주 시 백프레셔/배치 크기 튜닝을 수행한다.
 - 라우팅 키 결정 로직의 오탐/누락을 방지한다.
+- 벤치마크는 smoke 프로파일로 빠르게 추세를 보고, main 프로파일로 정밀 측정한다.
 
 ## 복잡한 시나리오
 

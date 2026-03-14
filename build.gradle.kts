@@ -22,6 +22,7 @@ plugins {
     id(Plugins.spring_boot) version Plugins.Versions.spring_boot apply false
 
     id(Plugins.testLogger) version Plugins.Versions.testLogger
+    id(Plugins.kotlinx_benchmark) version Plugins.Versions.kotlinx_benchmark apply false
     id(Plugins.graalvm_native) version Plugins.Versions.graalvm_native apply false
 }
 
@@ -124,8 +125,7 @@ subprojects {
                 "-Xshare:off",
                 "-Xms2G",
                 "-Xmx4G",
-                "-XX:+UseZGC",
-                "-XX:+ZGenerational",
+                "-XX:+UseG1GC",
                 "-XX:+UnlockExperimentalVMOptions",
                 "-XX:+EnableDynamicAgentLoading",
                 "--enable-preview",
