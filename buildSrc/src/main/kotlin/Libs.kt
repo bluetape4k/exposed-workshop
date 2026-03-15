@@ -159,11 +159,10 @@ object Versions {
     const val ehcache = "3.11.1"        // https://mvnrepository.com/artifact/org.ehcache/ehcache
     const val cache2k = "2.6.1.Final"   // https://mvnrepository.com/artifact/org.cache2k/cache2k-core
 
-    const val pods4k = "0.7.0"              // https://mvnrepository.com/artifact/com.danrusu.pods4k/bom
     const val eclipse_collections = "13.0.0"  // https://mvnrepository.com/artifact/org.eclipse.collections/eclipse-collections
     const val jctools = "4.0.5"             // https://mvnrepository.com/artifact/org.jctools/jctools-core
 
-    const val ow2_asm = "9.9"               // https://mvnrepository.com/artifact/org.ow2.asm/asm
+    const val ow2_asm = "9.9.1"               // https://mvnrepository.com/artifact/org.ow2.asm/asm
 
     const val junit_jupiter = "6.0.3"      // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     const val junit_platform = "6.0.3"     // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher
@@ -179,7 +178,7 @@ object Versions {
     const val rest_assured = "5.5.6"        // https://mvnrepository.com/artifact/io.rest-assured/rest-assured
 
     const val datafaker = "2.5.4"          // https://mvnrepository.com/artifact/net.datafaker/datafaker
-    const val snakeyaml = "2.5"            // https://mvnrepository.com/artifact/org.yaml/snakeyaml
+    const val snakeyaml = "2.6"            // https://mvnrepository.com/artifact/org.yaml/snakeyaml
     const val random_beans = "3.9.0"
 
     const val logback_slack_appender = "1.6.1"  // https://mvnrepository.com/artifact/com.github.maricn/logback-slack-appender
@@ -1265,7 +1264,7 @@ object Libs {
     // CSV parsers
     const val univocity_parsers = "com.univocity:univocity-parsers:2.9.1" // https://mvnrepository.com/artifact/com.univocity/univocity-parsers
 
-    const val objenesis = "org.objenesis:objenesis:3.4" // https://mvnrepository.com/artifact/org.objenesis/objenesis
+    const val objenesis = "org.objenesis:objenesis:3.5" // https://mvnrepository.com/artifact/org.objenesis/objenesis
 
     const val ow2_asm = "org.ow2.asm:asm:${Versions.ow2_asm}"
     const val ow2_asm_commons = "org.ow2.asm:asm-commons:${Versions.ow2_asm}"
