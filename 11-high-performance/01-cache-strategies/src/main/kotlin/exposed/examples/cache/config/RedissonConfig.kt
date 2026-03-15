@@ -24,19 +24,21 @@ class RedissonConfig {
         val config = Config().apply {
             useSingleServer()
                 .setAddress(redis.url)
-                .setConnectionPoolSize(128)
+                .setConnectionPoolSize(256)
                 .setConnectionMinimumIdleSize(32) // 최소 연결을 충분히 확보하여 Latency 방지
                 .setIdleConnectionTimeout(10000)  // 연결 유지를 넉넉히 (10초)
-                .setTimeout(2000)
+                .setTimeout(5000)
                 .setRetryAttempts(3)
                 .setRetryDelay { attempt -> Duration.ofMillis((attempt + 1) * 100L) }
 
                 .setDnsMonitoringInterval(5000)  // DNS 변경 감지 (Cloud 환경 필수)
 
             executor = VirtualThreadExecutor
+            threads = 512
             nettyThreads = 128
             codec = RedissonCodecs.LZ4ForyComposite
             setTcpNoDelay(true)
+            setTcpUserTimeout(5000)
         }
 
         return Redisson.create(config)
