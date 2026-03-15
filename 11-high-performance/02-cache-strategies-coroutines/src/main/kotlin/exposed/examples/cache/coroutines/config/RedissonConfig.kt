@@ -1,6 +1,7 @@
 package exposed.examples.cache.coroutines.config
 
 import exposed.examples.cache.coroutines.CacheStrategyApplication.Companion.redis
+import io.bluetape4k.concurrent.virtualthread.VirtualThreadExecutor
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.redis.redisson.codec.RedissonCodecs
 import org.redisson.Redisson
@@ -35,6 +36,7 @@ class RedissonConfig {
 
                 .setDnsMonitoringInterval(5000)  // DNS 변경 감지 (Cloud 환경 필수)
 
+            executor = VirtualThreadExecutor
             nettyThreads = 128
             codec = RedissonCodecs.LZ4ForyComposite
             setTcpNoDelay(true)
