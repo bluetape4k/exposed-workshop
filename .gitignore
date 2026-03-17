@@ -1,4 +1,11 @@
+# Compiled class file
 *.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -6,62 +13,49 @@
 # Package Files #
 *.jar
 *.war
+*.nar
 *.ear
-!gradle/wrapper/gradle-wrapper.jar
-
-!jarWithManifest.jar
-
-!opentelemetry-javaagent.jar
-
-src_managed
+*.zip
+*.tar.gz
+*.rar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+replay_pid*
 
-.project
-.settings
-.checkstyle
-.kotlin
+# Kotlin Gradle plugin data, see https://kotlinlang.org/docs/whatsnew20.html#new-directory-for-kotlin-data-in-gradle-projects
+.kotlin/
 
-# AI/Claude Code tool directories
-.claude/
-.omc/
-.omx/
-.cursorrules
-.aider*
-
+# Gradle
 .gradle/
 build/
-out/
-target/
+!gradle/wrapper/gradle-wrapper.jar
 
-.gradletasknamecache
-.DS_Store
+# AI - 임시 상태/로그 제외, 계획/설정은 추적
+.claude/settings.local.json
 
-logs/
-transaction-logs/
+.omc/sessions/
+.omc/state/
+.omc/logs/
 
-# User-specific stuff:
-.idea/*
-.idea
+.omx/logs/
+.omx/metrics.json
+.omx/state/
+.omx/context/
+.omx/tmux-hook.json
 
+# IntelliJ IDEA
+.idea/
 *.iml
+*.iws
+*.ipr
+out/
 
-# mpeltonen/sbt-idea plugin
-.idea_modules/
+# Local environment
+local.properties
 
-# JIRA plugin
-atlassian-ide-plugin.xml
-
-# Log file
-*.log
-
-# SonarRunner for SonarQube
-.sonar
-
-# kafka stream store
-**/streams-state/
-
-# JavaMoney's default ResourceCache (filesystem)
-**/money/.resourceCache/
+# OS
+.DS_Store
+Thumbs.db
 /.profileconfig.json
+.worktrees/
