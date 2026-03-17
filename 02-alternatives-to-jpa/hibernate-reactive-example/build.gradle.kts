@@ -48,10 +48,10 @@ dependencies {
     implementation(Libs.bluetape4k_testcontainers)
 
     implementation(Libs.bluetape4k_crypto)
-    implementation(Libs.bluetape4k_jackson)
-    implementation(Libs.bluetape4k_vertx_core)
+    implementation(Libs.bluetape4k_jackson2)
+    implementation(Libs.bluetape4k_vertx)
     testImplementation(Libs.bluetape4k_junit5)
-    testImplementation(Libs.bluetape4k_spring_tests)
+    testImplementation(Libs.bluetape4k_spring_boot3)
 
     api(Libs.jakarta_annotation_api)
     api(Libs.jakarta_persistence_api)

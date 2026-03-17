@@ -34,7 +34,7 @@ dependencies {
 
     // bluetape4k
     implementation(Libs.bluetape4k_exposed)
-    implementation(Libs.bluetape4k_jackson)
+    implementation(Libs.bluetape4k_jackson2)
     implementation(Libs.bluetape4k_io)
     implementation(Libs.bluetape4k_testcontainers)
 
@@ -63,7 +63,7 @@ dependencies {
     implementation(Libs.springBootStarter("validation"))
     implementation(Libs.springBootStarter("web"))
 
-    testImplementation(Libs.bluetape4k_spring_tests)
+    testImplementation(Libs.bluetape4k_spring_boot3)
     testImplementation(Libs.springBootStarter("webflux"))
     testImplementation(Libs.springBootStarter("test")) {
         exclude(group = "junit", module = "junit")

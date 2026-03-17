@@ -24,8 +24,7 @@ dependencies {
     implementation(Libs.bluetape4k_exposed)
     implementation(Libs.bluetape4k_io)
     implementation(Libs.bluetape4k_jdbc)
-    implementation(Libs.bluetape4k_spring_core)
-    testImplementation(Libs.bluetape4k_spring_tests)
+    implementation(Libs.bluetape4k_spring_boot3)
 
     // Spring Boot
     implementation(Libs.springBootStarter("jdbc"))

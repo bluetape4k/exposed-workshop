@@ -14,7 +14,7 @@ configurations {
 
 dependencies {
     implementation(Libs.bluetape4k_io)
-    implementation(Libs.bluetape4k_jackson)
+    implementation(Libs.bluetape4k_jackson2)
     testImplementation(Libs.bluetape4k_junit5)
 
     // PostgreSql Server
@@ -41,7 +41,6 @@ dependencies {
 
     implementation(Libs.springBootStarter("webflux"))
 
-    testImplementation(Libs.bluetape4k_spring_tests)
     testImplementation(Libs.springBootStarter("test")) {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

@@ -9,8 +9,7 @@ dependencies {
     testImplementation(Libs.bluetape4k_junit5)
 
     // Vertx
-    testImplementation(Libs.bluetape4k_vertx_core)
-    testImplementation(Libs.bluetape4k_vertx_sqlclient)
+    testImplementation(Libs.bluetape4k_vertx)
     testImplementation(Libs.vertx_junit5)
 
     // Vertx Kotlin
@@ -34,7 +33,7 @@ dependencies {
     testImplementation(Libs.mybatis_dynamic_sql)
 
     // Vetx SqlClient Templates 에서 Jackson Databind 를 이용한 매핑을 사용한다
-    testImplementation(Libs.bluetape4k_jackson)
+    testImplementation(Libs.bluetape4k_jackson2)
     testImplementation(Libs.jackson_module_kotlin)
     testImplementation(Libs.jackson_module_blackbird)
 

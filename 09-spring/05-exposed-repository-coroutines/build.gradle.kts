@@ -38,7 +38,7 @@ dependencies {
     implementation(Libs.bluetape4k_io)
     implementation(Libs.bluetape4k_jdbc)
     implementation(Libs.bluetape4k_testcontainers)
-    testImplementation(Libs.bluetape4k_spring_tests)
+    testImplementation(Libs.bluetape4k_spring_boot3)
 
     // Database Drivers
     implementation(Libs.hikaricp)
@@ -65,7 +65,6 @@ dependencies {
     implementation(Libs.springBootStarter("validation"))
     implementation(Libs.springBootStarter("webflux"))
 
-    testImplementation(Libs.bluetape4k_spring_tests)
     testImplementation(Libs.springBootStarter("test")) {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
