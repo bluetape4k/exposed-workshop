@@ -1,0 +1,222 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1773397025775,
+  "projectRoot": "/Users/debop/work/bluetape4k/exposed-workshop",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Kotlin",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "build.gradle.kts"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "gradle",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "bin"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "00-shared": {
+      "path": "00-shared",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025769,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "01-spring-boot": {
+      "path": "01-spring-boot",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025769,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "02-alternatives-to-jpa": {
+      "path": "02-alternatives-to-jpa",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025770,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "03-exposed-basic": {
+      "path": "03-exposed-basic",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025770,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "04-exposed-ddl": {
+      "path": "04-exposed-ddl",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025771,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "05-exposed-dml": {
+      "path": "05-exposed-dml",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025771,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "06-advanced": {
+      "path": "06-advanced",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025771,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "07-jpa": {
+      "path": "07-jpa",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025772,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "08-coroutines": {
+      "path": "08-coroutines",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025772,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "09-spring": {
+      "path": "09-spring",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025772,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "10-multi-tenant": {
+      "path": "10-multi-tenant",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025772,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "11-high-performance": {
+      "path": "11-high-performance",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025773,
+      "keyFiles": [
+        "README.md"
+      ]
+    },
+    "bin": {
+      "path": "bin",
+      "purpose": "Executable scripts",
+      "fileCount": 3,
+      "lastAccessed": 1773397025773,
+      "keyFiles": [
+        "repo-diff",
+        "repo-status",
+        "repo-test-summary"
+      ]
+    },
+    "build": {
+      "path": "build",
+      "purpose": "Build output",
+      "fileCount": 0,
+      "lastAccessed": 1773397025774,
+      "keyFiles": []
+    },
+    "buildSrc": {
+      "path": "buildSrc",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1773397025774,
+      "keyFiles": [
+        "build.gradle.kts",
+        "gradle.properties"
+      ]
+    },
+    "doc": {
+      "path": "doc",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1773397025774,
+      "keyFiles": [
+        "exposed-mindmap-felo-ai.jpg"
+      ]
+    },
+    "gradle": {
+      "path": "gradle",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1773397025774,
+      "keyFiles": []
+    },
+    "buildSrc/build": {
+      "path": "buildSrc/build",
+      "purpose": "Build output",
+      "fileCount": 0,
+      "lastAccessed": 1773397025775,
+      "keyFiles": []
+    },
+    "buildSrc/src": {
+      "path": "buildSrc/src",
+      "purpose": "Source code",
+      "fileCount": 0,
+      "lastAccessed": 1773397025775,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "CLAUDE.md",
+      "accessCount": 2,
+      "lastAccessed": 1773398859026,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
