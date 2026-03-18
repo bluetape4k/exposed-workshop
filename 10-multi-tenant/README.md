@@ -1,6 +1,6 @@
 # 10 Multi-Tenant (실전)
 
-실전 멀티테넌트 아키텍처를 Exposed + Spring으로 구현하며 Schema 기반 테넌트 분리, 동적 라우팅, 컨텍스트 전파 흐름을 학습하는 챕터입니다.
+실전 멀티테넌트 아키텍처를 Exposed + Spring으로 구현하며 Schema 기반 테넌트 분리, 동적 라우팅, 컨텍스트 전파 흐름을 학습하는 챕터입니다. Spring MVC, Virtual Thread, WebFlux 세 가지 환경에서 동일한 멀티테넌시 요구사항을 각각 어떻게 구현하는지 비교합니다.
 
 ## 챕터 목표
 
@@ -13,32 +13,157 @@
 - `09-spring` 내용
 - 트랜잭션 및 DataSource 라우팅 기본 개념
 
+---
+
+## 멀티테넌시 전략 개요
+
+이 챕터는 **Shared Database / Separate Schema** 전략을 기본으로 사용합니다. 하나의 DB 인스턴스에 테넌트별 스키마(`korean`, `english`)를 분리해 데이터를 격리합니다.
+
+```
+Single DB Instance
+├── Schema: korean
+│   ├── actor
+│   ├── movie
+│   └── actor_in_movie
+└── Schema: english
+    ├── actor
+    ├── movie
+    └── actor_in_movie
+```
+
+`TenantAwareDataSource`(`AbstractRoutingDataSource` 상속)를 제공해 **Database per Tenant** 방식으로도 전환할 수 있습니다.
+
+---
+
 ## 포함 모듈
 
-| 모듈                                       | 설명                            |
-|------------------------------------------|-------------------------------|
-| `01-multitenant-spring-web`              | Spring Web(MVC) 기반 멀티테넌트      |
-| `02-multitenant-spring-web-virtualthread` | Virtual Thread 기반 멀티테넌트       |
-| `03-multitenant-spring-webflux`          | WebFlux + Coroutines 기반 멀티테넌트 |
+| 모듈                                        | 설명                              | 컨텍스트 전파           |
+|-------------------------------------------|---------------------------------|-------------------|
+| `01-multitenant-spring-web`               | Spring MVC 기반 멀티테넌트             | `ThreadLocal`     |
+| `02-multitenant-spring-web-virtualthread` | Java 21 Virtual Thread 기반 멀티테넌트 | `ScopedValue`     |
+| `03-multitenant-spring-webflux`           | WebFlux + Coroutines 기반 멀티테넌트   | Reactor `Context` |
+
+---
+
+## 모듈 간 구현 비교
+
+```mermaid
+classDiagram
+    class TenantFilter_MVC {
+        jakarta.servlet.Filter
+        ThreadLocal 바인딩
+    }
+    class TenantFilter_VT {
+        jakarta.servlet.Filter
+        ScopedValue 바인딩
+    }
+    class TenantFilter_WebFlux {
+        WebFilter (Reactor)
+        contextWrite()
+    }
+
+    class TenantContext_MVC {
+        ThreadLocal~Tenant~
+        withTenant() + finally clear()
+    }
+    class TenantContext_VT {
+        ScopedValue~Tenant~
+        ScopedValue.where().run()
+    }
+    class TenantId_WebFlux {
+        CoroutineContext.Element
+        ReactorContext 브릿지
+    }
+
+    class SchemaAspect_MVC {
+        TenantSchemaAspect
+        AOP @Before @Transactional
+        setSchema()
+    }
+    class SchemaAspect_VT {
+        TransactionSchemaAspect
+        AOP @Before @Transactional
+        createSchema() + setSchema()
+    }
+    class SuspendedTx_WebFlux {
+        newSuspendedTransactionWithTenant()
+        Dispatchers.IO + TenantId
+        setSchema()
+    }
+
+    TenantFilter_MVC --> TenantContext_MVC
+    TenantFilter_VT --> TenantContext_VT
+    TenantFilter_WebFlux --> TenantId_WebFlux
+
+    TenantContext_MVC --> SchemaAspect_MVC
+    TenantContext_VT --> SchemaAspect_VT
+    TenantId_WebFlux --> SuspendedTx_WebFlux
+```
+
+### 환경별 핵심 차이 요약
+
+| 항목      |  01 Spring MVC   |     02 Virtual Threads     |             03 WebFlux              |
+|---------|:----------------:|:--------------------------:|:-----------------------------------:|
+| 서버      |      Tomcat      |        Tomcat + VT         |                Netty                |
+| 스레드 모델  |     OS 스레드 풀     | Virtual Thread per request |               이벤트 루프                |
+| 컨텍스트    |  `ThreadLocal`   |       `ScopedValue`        |          Reactor `Context`          |
+| 스키마 전환  |  AOP `@Before`   |       AOP `@Before`        |    `newSuspendedTransaction` 내부     |
+| 트랜잭션 선언 | `@Transactional` |      `@Transactional`      | `newSuspendedTransactionWithTenant` |
+| 블로킹 허용  |        허용        |             허용             |          금지 (이벤트 루프 차단 불가)          |
+
+---
+
+## 공통 요청 흐름
+
+모든 모듈은 다음 흐름을 따릅니다. 컨텍스트 전파 방식만 환경에 따라 달라집니다.
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Filter
+    participant Context
+    participant Controller
+    participant Repository
+    participant DB
+
+    Client->>Filter: GET /actors (X-TENANT-ID: {tenant})
+    Filter->>Context: 테넌트 바인딩 (ThreadLocal / ScopedValue / ReactorContext)
+    Filter->>Controller: 요청 전달
+    Controller->>DB: 스키마 전환 (setSchema({tenant}))
+    Controller->>Repository: 데이터 조회
+    Repository->>DB: SELECT * FROM {tenant}.actor
+    DB-->>Client: 테넌트 격리 응답
+    Note over Filter,Context: 요청 완료 후 컨텍스트 정리
+```
+
+---
 
 ## 권장 학습 순서
 
-1. `01-multitenant-spring-web`
-2. `02-multitenant-spring-web-virtualthread`
-3. `03-multitenant-spring-webflux`
+1. [`01-multitenant-spring-web`](01-multitenant-spring-web/README.md) — ThreadLocal + AOP 기초 구조 파악
+2. [
+   `02-multitenant-spring-web-virtualthread`](02-multitenant-spring-web-virtualthread/README.md) — ScopedValue로 전환, Virtual Thread 설정 비교
+3. [`03-multitenant-spring-webflux`](03-multitenant-spring-webflux/README.md) — Reactor Context + 코루틴 브릿지 패턴 이해
+
+---
 
 ## 실행 방법
 
 ```bash
 # 개별 모듈 테스트
-./gradlew :01-multitenant-spring-web:test
-./gradlew :02-multitenant-spring-web-virtualthread:test
-./gradlew :03-multitenant-spring-webflux:test
+./gradlew :10-multi-tenant:01-multitenant-spring-web:test
+./gradlew :10-multi-tenant:02-multitenant-spring-web-virtualthread:test
+./gradlew :10-multi-tenant:03-multitenant-spring-webflux:test
+
+# 전체 챕터 빌드
+./gradlew :10-multi-tenant:build
 ```
+
+---
 
 ## 테스트 포인트
 
-- `X-Tenant-Id` 누락/오입력 시 실패 동작을 검증한다.
+- `X-TENANT-ID` 누락/오입력 시 실패 동작을 검증한다.
 - 테넌트 A 요청에서 테넌트 B 데이터가 노출되지 않는지 확인한다.
 - 동시 요청 환경에서 컨텍스트 누수 여부를 검증한다.
 
@@ -48,28 +173,32 @@
 - ThreadLocal/Reactor Context 사용 시 컨텍스트 전파 누락을 방지한다.
 - 운영 로그에 tenant 정보가 누락되지 않도록 추적성을 확보한다.
 
+---
+
 ## 복잡한 시나리오
 
 ### 스키마 기반 테넌트 격리 + ThreadLocal 컨텍스트 전파 (Spring MVC)
 
-`TenantFilter`가 `X-Tenant-Id` 헤더에서 테넌트를 추출해 `TenantContext`(ThreadLocal)에 저장하면, Exposed 트랜잭션 시작 전 `SchemaUtils.setSchema()`로 해당 스키마로 전환합니다. 동시 요청에서 테넌트 간 데이터 누수가 없는지 `AbstractMultitenantTest` 기반 통합 테스트로 검증합니다.
+`TenantFilter`가 `X-TENANT-ID` 헤더에서 테넌트를 추출해 `TenantContext`(ThreadLocal)에 저장하면, `TenantSchemaAspect`가
+`@Transactional` 진입 전 `SchemaUtils.setSchema()`로 해당 스키마로 전환합니다.
 
 - 관련 모듈: [`01-multitenant-spring-web`](01-multitenant-spring-web/)
-- 검증 테스트: [`01-multitenant-spring-web/src/test/kotlin/.../AbstractMultitenantTest.kt`](01-multitenant-spring-web/src/test/kotlin/exposed/examples/multitenant/springweb/AbstractMultitenantTest.kt)
 
 ### Virtual Thread 환경의 테넌트 컨텍스트 전파
 
-Virtual Thread는 ThreadLocal이 아닌 `ScopedValue`로 컨텍스트를 전파합니다. `02-multitenant-spring-web-virtualthread`는 Virtual Thread 친화적인 테넌트 전파 방식을 보여주며, 기존 ThreadLocal 방식과의 차이를 비교할 수 있습니다.
+Virtual Thread는 `ThreadLocal` 대신 `ScopedValue`로 컨텍스트를 전파합니다. `02-multitenant-spring-web-virtualthread`는
+`TomcatVirtualThreadConfig`로 executor를 교체하고 `ScopedValue.where().run { }` 블록으로 테넌트를 바인딩합니다.
 
 - 관련 모듈: [`02-multitenant-spring-web-virtualthread`](02-multitenant-spring-web-virtualthread/)
-- 검증 테스트: [`02-multitenant-spring-web-virtualthread/src/test/kotlin/.../AbstractMultitenantTest.kt`](02-multitenant-spring-web-virtualthread/src/test/kotlin/exposed/examples/multitenant/springweb/AbstractMultitenantTest.kt)
 
 ### WebFlux + Coroutines 환경의 Reactor Context 전파
 
-WebFlux에서는 Reactor `Context`를 통해 코루틴 컨텍스트에 테넌트 정보를 전파합니다. `newSuspendedTransactionWithTenant`가 테넌트별 스키마 전환을 코루틴 안에서 안전하게 처리합니다.
+WebFlux에서는 Reactor `Context`를 통해 코루틴 컨텍스트에 테넌트 정보를 전파합니다. `TenantId`가 `CoroutineContext.Element`를 구현해
+`newSuspendedTransactionWithTenant` 내부에서 스키마를 전환합니다.
 
 - 관련 모듈: [`03-multitenant-spring-webflux`](03-multitenant-spring-webflux/)
-- 검증 테스트: [`03-multitenant-spring-webflux/src/test/kotlin/.../AbstractMultitenantTest.kt`](03-multitenant-spring-webflux/src/test/kotlin/exposed/examples/multitenant/webflux/AbstractMultitenantTest.kt)
+
+---
 
 ## 다음 챕터
 

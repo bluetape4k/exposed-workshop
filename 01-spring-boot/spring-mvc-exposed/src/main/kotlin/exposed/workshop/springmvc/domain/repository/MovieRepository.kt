@@ -36,7 +36,6 @@ import java.time.LocalDateTime
  * 배우 관계 조회 기능을 제공합니다.
  */
 @Repository
-@Transactional(readOnly = true)
 class MovieRepository(
     private val db: Database,
 ) {
@@ -97,7 +96,6 @@ class MovieRepository(
      * @param movieRecord 저장할 영화 정보
      * @return 생성된 영화 레코드 (ID 포함)
      */
-    @Transactional
     fun create(movieRecord: MovieRecord): MovieRecord {
         log.debug { "Create Movie. movie=$movieRecord" }
 
@@ -115,7 +113,6 @@ class MovieRepository(
      * @param movieId 삭제할 영화 ID
      * @return 삭제된 행 수
      */
-    @Transactional
     fun deleteById(movieId: Long): Int {
         log.debug { "Delete Movie by id. id=$movieId" }
         return MovieTable.deleteWhere { MovieTable.id eq movieId }

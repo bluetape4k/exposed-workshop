@@ -21,7 +21,6 @@ import java.time.LocalDate
  * Exposed DSL을 사용하여 배우 조회, 검색, 생성, 삭제 기능을 제공합니다.
  */
 @Repository
-@Transactional(readOnly = true)
 class ActorRepository {
 
     companion object: KLogging()
@@ -73,7 +72,6 @@ class ActorRepository {
      * @param actor 저장할 배우 정보
      * @return 생성된 배우 레코드 (ID 포함)
      */
-    @Transactional
     fun create(actor: ActorRecord): ActorRecord {
         log.debug { "Create Actor. actor: $actor" }
 
@@ -93,7 +91,6 @@ class ActorRepository {
      * @param actorId 삭제할 배우 ID
      * @return 삭제된 행 수
      */
-    @Transactional
     fun deleteById(actorId: Long): Int {
         log.debug { "Delete Actor by id. id: $actorId" }
         return ActorTable.deleteWhere { ActorTable.id eq actorId }

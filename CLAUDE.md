@@ -32,7 +32,7 @@ Kotlin Exposed 워크샵 — Kotlin 2.3 / Java 21 / Spring Boot 3.x / Gradle 멀
 | `08-coroutines`                  | Coroutines, Virtual Threads       |
 | `09-spring`                      | Spring 트랜잭션, 캐시, Repository       |
 | `10-multi-tenant`                | Schema-based 멀티테넌시                |
-| `11-high-performance`            | 캐시 전략, RoutingDataSource          |
+| `11-high-performance`            | 캐시 전략, RoutingDataSource, 벤치마크    |
 
 ## 아키텍처 핵심
 

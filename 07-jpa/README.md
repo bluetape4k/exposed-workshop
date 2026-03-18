@@ -13,6 +13,35 @@
 - JPA/Hibernate 기본 사용 경험
 - `05-exposed-dml` 내용 (DSL/DAO 트랜잭션 흐름)
 
+## JPA vs Exposed 핵심 차이
+
+| 항목       | JPA / Hibernate                                     | Exposed                                     |
+|----------|-----------------------------------------------------|---------------------------------------------|
+| 매핑 방식    | 어노테이션(`@Entity`, `@Column`)                         | Kotlin DSL (`object Table`, `class Entity`) |
+| 쿼리 언어    | JPQL / Criteria API                                 | DSL (`selectAll().where { ... }`)           |
+| 지연 로딩    | `FetchType.LAZY` 기본 지원                              | 명시적 `load()` / `with()` 호출 필요               |
+| 트랜잭션     | `@Transactional` (Spring AOP)                       | `transaction { }` 람다 블록                     |
+| 영속성 컨텍스트 | EntityManager 중심                                    | 트랜잭션 범위 내 Entity 캐시                         |
+| 낙관적 잠금   | `@Version` 어노테이션                                    | 버전 컬럼 수동 관리                                 |
+| 감사 필드    | `@CreatedDate`, `@LastModifiedDate`                 | `EntityHook` 또는 Property Delegate           |
+| 상속 매핑    | `@Inheritance(SINGLE_TABLE/JOINED/TABLE_PER_CLASS)` | 테이블 구조로 직접 표현                               |
+| N+1 방지   | `JOIN FETCH`, `@BatchSize`                          | `load()`, `with()`, JOIN 쿼리                 |
+| 스키마 생성   | `hibernate.hbm2ddl.auto`                            | `SchemaUtils.create()`                      |
+
+## 전환 전략 개요
+
+```mermaid
+flowchart LR
+    A[JPA 코드베이스] --> B{전환 범위 분석}
+    B --> C[기본 CRUD\n01-convert-jpa-basic]
+    B --> D[복잡 관계/상속\n02-convert-jpa-advanced]
+    C --> E[동등성 테스트\n작성]
+    D --> E
+    E --> F[점진적 전환\n모듈 단위]
+    F --> G[회귀 검증\nCI 통합]
+    G --> H[JPA 의존성 제거]
+```
+
 ## 포함 모듈
 
 | 모듈                        | 설명                             |
@@ -50,14 +79,14 @@
 
 ### 관계 매핑 패턴 (`01-convert-jpa-basic/ex05_relations/`)
 
-| JPA 어노테이션 | Exposed 구현 파일 |
-|---|---|
-| `@OneToOne` (단방향) | [`ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt) |
-| `@OneToOne` (양방향) | [`ex01_one_to_one/Ex02_OneToOne_Bidirectional.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex02_OneToOne_Bidirectional.kt) |
-| `@OneToOne @MapsId` | [`ex01_one_to_one/Ex03_OneToOne_Unidirectional_MapsId.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex03_OneToOne_Unidirectional_MapsId.kt) |
-| `@OneToMany` (배치 삽입) | [`ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt) |
-| `@OneToMany` N+1 해결 | [`ex02_one_to_many/Ex03_OneToMany_N_plus_1_Order.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/Ex03_OneToMany_N_plus_1_Order.kt) |
-| `@ManyToMany` | [`ex04_many_to_many/Ex01_ManyToMany_Bank.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex04_many_to_many/Ex01_ManyToMany_Bank.kt) |
+| JPA 어노테이션            | Exposed 구현 파일                                                                                                                                                                                              |
+|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `@OneToOne` (단방향)    | [`ex05_relations/ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt)               |
+| `@OneToOne` (양방향)    | [`ex05_relations/ex01_one_to_one/Ex02_OneToOne_Bidirectional.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex02_OneToOne_Bidirectional.kt)                 |
+| `@OneToOne @MapsId`  | [`ex05_relations/ex01_one_to_one/Ex03_OneToOne_Unidirectional_MapsId.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex03_OneToOne_Unidirectional_MapsId.kt) |
+| `@OneToMany` (배치 삽입) | [`ex05_relations/ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt) |
+| `@OneToMany` N+1 해결  | [`ex05_relations/ex02_one_to_many/Ex03_OneToMany_N_plus_1_Order.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/Ex03_OneToMany_N_plus_1_Order.kt)           |
+| `@ManyToMany`        | [`ex05_relations/ex04_many_to_many/Ex01_ManyToMany_Bank.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex04_many_to_many/Ex01_ManyToMany_Bank.kt)                           |
 
 ### JPA Inheritance 전략 vs Exposed (`02-convert-jpa-advanced/ex03_inheritance/`)
 

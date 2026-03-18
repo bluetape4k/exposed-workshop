@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional
  * Spring 트랜잭션(`@Transactional`)을 적용하여 읽기 전용 조회와 쓰기 연산을 분리 검증하며,
  * 잘못된 파라미터 입력 시 예외 없이 동작하는 방어 로직도 확인한다.
  */
+@Transactional(readOnly = true)
 class ActorRepositoryTest(
     @param:Autowired private val actorRepo: ActorRepository,
 ): AbstractSpringMvcTest() {
@@ -33,7 +34,6 @@ class ActorRepositoryTest(
     }
 
     @Test
-    @Transactional(readOnly = true)
     fun `find actor by id`() {
         val actorId = 1L
 
@@ -43,7 +43,6 @@ class ActorRepositoryTest(
     }
 
     @Test
-    @Transactional(readOnly = true)
     fun `search actors by lastName`() {
         val params = mapOf("lastName" to "Depp")
         val actors = actorRepo.searchActors(params)
@@ -55,7 +54,6 @@ class ActorRepositoryTest(
     }
 
     @Test
-    @Transactional(readOnly = true)
     fun `search actors ignores invalid birthday parameter`() {
         val params = mapOf("birthday" to "not-a-date")
         val actors = actorRepo.searchActors(params)

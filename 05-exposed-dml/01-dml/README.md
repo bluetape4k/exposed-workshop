@@ -10,14 +10,106 @@ Exposed 1.1.1 DSL로 DML 핵심 문법(조회/삽입/수정/삭제/집계/조인
 
 ## 선수 지식
 
-- [`../04-exposed-ddl/README.md`](../04-exposed-ddl/README.md)
+- [`../04-exposed-ddl/README.md`](../../04-exposed-ddl/README.md)
 - Exposed DSL 기본 문법
 
 ## 핵심 개념
 
-- 조회: `where`, `andWhere`, `exists`, `orderBy`, `groupBy`, `having`
-- 변경: `insertAndGetId`, `batchInsert`, `update`, `deleteWhere`, `upsert`
-- 고급 쿼리: `union`, `intersect`, `except`, `mergeFrom`, `fetchBatchedResults`
+### SELECT
+
+```kotlin
+// 기본 조회
+Cities.selectAll()
+    .where { Cities.name eq "Seoul" }
+    .orderBy(Cities.name)
+    .limit(10)
+
+// 다중 조건 조합
+Users.selectAll()
+    .where { (Users.age greaterEq 20) and (Users.city.isNotNull()) }
+    .andWhere { Users.name like "K%" }
+
+// 서브쿼리
+Orders.selectAll()
+    .where { Orders.userId inSubQuery Users.select(Users.id).where { Users.active eq true } }
+```
+
+### INSERT / BATCH INSERT
+
+```kotlin
+// 단건 삽입
+Cities.insert {
+    it[name] = "Busan"
+    it[country] = "KR"
+}
+
+// 배치 삽입 (성능 최적화)
+Cities.batchInsert(cityList) { city ->
+    this[Cities.name] = city.name
+    this[Cities.country] = city.country
+}
+
+// 삽입 후 ID 반환
+val newId = Cities.insertAndGetId {
+    it[name] = "Incheon"
+}
+```
+
+### UPDATE
+
+```kotlin
+Cities.update({ Cities.id eq targetId }) {
+    it[name] = "Updated Name"
+}
+```
+
+### UPSERT (INSERT OR UPDATE)
+
+```kotlin
+// 충돌 시 업데이트
+WordTable.upsert {
+    it[word] = "hello"
+    it[count] = 1
+}
+
+// 충돌 시 특정 컬럼만 업데이트
+WordTable.upsert(onUpdate = listOf(WordTable.count to (WordTable.count + intLiteral(1)))) {
+    it[word] = "hello"
+    it[count] = 1
+}
+
+// 배치 upsert
+WordTable.batchUpsert(words) { w ->
+    this[WordTable.word] = w
+    this[WordTable.count] = 1
+}
+```
+
+### DELETE
+
+```kotlin
+Cities.deleteWhere { Cities.id eq targetId }
+```
+
+## DML 흐름 다이어그램
+
+```mermaid
+flowchart LR
+    A[Kotlin 코드] --> B{DML 종류}
+    B -->|SELECT| C["selectAll() / select()"]
+    B -->|INSERT| D["insert() / batchInsert()"]
+    B -->|UPDATE| E["update()"]
+    B -->|DELETE| F["deleteWhere()"]
+    B -->|UPSERT| G["upsert() / batchUpsert()"]
+    C --> H[Query 빌더]
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+    H --> I[SQL 생성]
+    I --> J[(Database)]
+    J --> K[ResultRow / Int]
+```
 
 ## 예제 지도
 
@@ -30,10 +122,28 @@ Exposed 1.1.1 DSL로 DML 핵심 문법(조회/삽입/수정/삭제/집계/조인
 | 변경 고급  | `Ex12_InsertInto_Select.kt`, `Ex13_Replace.kt`, `Ex14_MergeBase.kt`, `Ex14_MergeTable.kt`, `Ex14_MergeSelect.kt`, `Ex15_Returning.kt`                                                                                              |
 | 성능/확장  | `Ex16_FetchBatchedResults.kt`, `Ex17_Union.kt`, `Ex20_AdjustQuery.kt`, `Ex21_Arithmetic.kt`, `Ex22_ColumnWithTransform.kt`, `Ex23_Conditions.kt`, `Ex30_Explain.kt`, `Ex40_LateralJoin.kt`, `Ex50_RecursiveCTE.kt`, `Ex99_Dual.kt` |
 
+## DB별 기능 지원 현황
+
+| 기능             | H2 | PostgreSQL | MySQL V8 | MariaDB |
+|----------------|----|------------|----------|---------|
+| `DISTINCT ON`  | O  | O          | X        | X       |
+| `RETURNING`    | O  | O          | X        | X       |
+| `MERGE`        | O  | O          | X        | X       |
+| `REPLACE`      | X  | X          | O        | O       |
+| `LATERAL JOIN` | X  | O          | O        | X       |
+| `CTE (WITH)`   | X  | O          | O        | O       |
+| `UPSERT`       | O  | O          | O        | O       |
+
 ## 실행 방법
 
 ```bash
 ./gradlew :05-exposed-dml:01-dml:test
+```
+
+환경 변수로 빠른 테스트 실행(H2만):
+
+```bash
+USE_FAST_DB=true ./gradlew :05-exposed-dml:01-dml:test
 ```
 
 ## 실습 체크리스트
@@ -59,7 +169,7 @@ Exposed 1.1.1 DSL로 DML 핵심 문법(조회/삽입/수정/삭제/집계/조인
 
 ### CTE (Common Table Expression)
 
-재귀 CTE를 Raw SQL로 실행하는 방법을 학습합니다. WITH RECURSIVE 구문을 통해 계층형 데이터(트리 구조)를 조회합니다.
+재귀 CTE를 Raw SQL로 실행하는 방법을 학습합니다. `WITH RECURSIVE` 구문을 통해 계층형 데이터(트리 구조)를 조회합니다.
 
 - 예제: [`Ex50_RecursiveCTE.kt`](src/test/kotlin/exposed/examples/dml/Ex50_RecursiveCTE.kt)
 - 지원 DB: PostgreSQL, MySQL V8, MariaDB (H2 미지원)
