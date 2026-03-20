@@ -15,7 +15,7 @@ import io.bluetape4k.exposed.core.BatchInsertOnConflictDoNothing
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.idgenerators.uuid.TimebasedUuid
+import io.bluetape4k.idgenerators.uuid.Uuid
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
@@ -343,7 +343,7 @@ class Ex02_Insert: AbstractExposedTest() {
         withTables(testDB, cities) {
             val batchSize = 100
             val names = generateSequence {
-                TimebasedUuid.Reordered.nextIdAsString()
+                Uuid.V7.nextIdAsString()
             }.take(batchSize)
 
             val inserted = cities.batchInsert(names) { name ->

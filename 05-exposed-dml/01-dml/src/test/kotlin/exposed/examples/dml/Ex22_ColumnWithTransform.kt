@@ -6,7 +6,7 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.idgenerators.uuid.TimebasedUuid
+import io.bluetape4k.idgenerators.uuid.Uuid
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo
@@ -382,7 +382,7 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
             val reference: Column<EntityID<CustomId>> = reference("reference", tester)
         }
 
-        val uuid = TimebasedUuid.Epoch.nextId()
+        val uuid = Uuid.V7.nextId()
         withTables(testDB, tester, referenceTester) {
             // CustomId 를 지정 (UUID 값만 저장됨)
             /**

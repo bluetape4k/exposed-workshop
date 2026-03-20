@@ -3,7 +3,7 @@ package exposed.examples.entities
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.idgenerators.uuid.TimebasedUuid
+import io.bluetape4k.idgenerators.uuid.Uuid
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IdTable
@@ -28,7 +28,7 @@ object EntityTestData {
      */
     object YTable: IdTable<String>("YTable") {
         override val id: Column<EntityID<String>> = varchar("uuid", 24).entityId()
-            .clientDefault { EntityID(TimebasedUuid.Reordered.nextIdAsString(), YTable) }
+            .clientDefault { EntityID(Uuid.V7.nextIdAsString(), YTable) }
 
         val x: Column<Boolean> = bool("x").default(true)
 

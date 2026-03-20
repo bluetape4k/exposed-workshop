@@ -9,8 +9,8 @@ import io.bluetape4k.concurrent.virtualthread.awaitAll
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.exposed.dao.idValue
-import io.bluetape4k.exposed.jdbc.transactions.newVirtualThreadJdbcTransaction
-import io.bluetape4k.exposed.jdbc.transactions.virtualThreadJdbcTransactionAsync
+import io.bluetape4k.exposed.jdbc.newVirtualThreadJdbcTransaction
+import io.bluetape4k.exposed.jdbc.virtualThreadJdbcTransactionAsync
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import org.amshove.kluent.shouldBeEqualTo

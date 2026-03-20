@@ -6,7 +6,7 @@ import exposed.shared.dml.DMLTestData.withCitiesAndUsers
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.idgenerators.uuid.TimebasedUuid.Epoch
+import io.bluetape4k.idgenerators.uuid.Uuid
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
@@ -429,7 +429,7 @@ class Ex13_Replace: AbstractExposedTest() {
         withTables(testDB, cities) {
             val amountOfNames = 25
             val names = List(amountOfNames) { index ->
-                index + 1 to Epoch.nextIdAsString()
+                index + 1 to Uuid.V7.nextIdAsString()
             }.asSequence()
 
             cities.batchReplace(names) { (index, name) ->
@@ -442,7 +442,7 @@ class Ex13_Replace: AbstractExposedTest() {
             namesFromDB1 shouldBeEqualTo names.unzip().second
 
             val namesToReplace = List(amountOfNames) { index ->
-                index + 1 to Epoch.nextIdAsString()
+                index + 1 to Uuid.V7.nextIdAsString()
             }.asSequence()
 
             cities.batchReplace(namesToReplace) { (index, name) ->

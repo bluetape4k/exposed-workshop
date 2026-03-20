@@ -4,7 +4,7 @@ import exposed.shared.dml.DMLTestData.Users.Flags
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
-import io.bluetape4k.idgenerators.uuid.TimebasedUuid
+import io.bluetape4k.idgenerators.uuid.Uuid
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
@@ -339,7 +339,8 @@ object DMLTestData {
     object Orgs: IntIdTable() {
         val uid = varchar("uid", 36)
             .uniqueIndex()
-            .clientDefault { TimebasedUuid.Reordered.nextIdAsString() }
+            .clientDefault { Uuid.V7.nextIdAsString() }
+        
         val name = varchar("name", 255)
     }
 

@@ -35,11 +35,12 @@ import java.time.LocalDate
  * WebFlux 환경의 영화 도메인 Exposed 저장소입니다.
  */
 @Repository
-class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
+class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
 
     companion object: KLogging()
 
     override val table = MovieTable
+    override fun extractId(entity: MovieRecord): Long = entity.id
     override fun ResultRow.toEntity() = toMovieRecord()
 
     /**

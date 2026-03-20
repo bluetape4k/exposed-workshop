@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1773839085017,
+  "lastScanned": 1774017059299,
   "projectRoot": "/Users/debop/work/bluetape4k/exposed-workshop",
   "techStack": {
     "languages": [
@@ -47,7 +47,7 @@
       "path": "00-shared",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1773839085007,
+      "lastAccessed": 1774017059293,
       "keyFiles": [
         "README.md"
       ]
@@ -56,7 +56,7 @@
       "path": "01-spring-boot",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1773839085007,
+      "lastAccessed": 1774017059294,
       "keyFiles": [
         "README.md"
       ]
@@ -65,7 +65,7 @@
       "path": "02-alternatives-to-jpa",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1773839085009,
+      "lastAccessed": 1774017059294,
       "keyFiles": [
         "README.md"
       ]
@@ -74,7 +74,7 @@
       "path": "03-exposed-basic",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1773839085009,
+      "lastAccessed": 1774017059294,
       "keyFiles": [
         "README.md"
       ]
@@ -83,7 +83,7 @@
       "path": "04-exposed-ddl",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1773839085010,
+      "lastAccessed": 1774017059294,
       "keyFiles": [
         "README.md"
       ]
@@ -92,7 +92,7 @@
       "path": "05-exposed-dml",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1773839085010,
+      "lastAccessed": 1774017059295,
       "keyFiles": [
         "README.md"
       ]
@@ -101,7 +101,7 @@
       "path": "06-advanced",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1773839085011,
+      "lastAccessed": 1774017059295,
       "keyFiles": [
         "README.md"
       ]
@@ -110,7 +110,7 @@
       "path": "07-jpa",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1773839085011,
+      "lastAccessed": 1774017059295,
       "keyFiles": [
         "README.md"
       ]
@@ -119,7 +119,7 @@
       "path": "08-coroutines",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1773839085011,
+      "lastAccessed": 1774017059295,
       "keyFiles": [
         "README.md"
       ]
@@ -128,7 +128,7 @@
       "path": "09-spring",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1773839085013,
+      "lastAccessed": 1774017059295,
       "keyFiles": [
         "README.md"
       ]
@@ -137,7 +137,7 @@
       "path": "10-multi-tenant",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1773839085013,
+      "lastAccessed": 1774017059296,
       "keyFiles": [
         "README.md"
       ]
@@ -146,7 +146,7 @@
       "path": "11-high-performance",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1773839085013,
+      "lastAccessed": 1774017059296,
       "keyFiles": [
         "README.md"
       ]
@@ -155,7 +155,7 @@
       "path": "bin",
       "purpose": "Executable scripts",
       "fileCount": 3,
-      "lastAccessed": 1773839085013,
+      "lastAccessed": 1774017059296,
       "keyFiles": [
         "repo-diff",
         "repo-status",
@@ -166,14 +166,14 @@
       "path": "build",
       "purpose": "Build output",
       "fileCount": 0,
-      "lastAccessed": 1773839085013,
+      "lastAccessed": 1774017059297,
       "keyFiles": []
     },
     "buildSrc": {
       "path": "buildSrc",
       "purpose": null,
       "fileCount": 2,
-      "lastAccessed": 1773839085014,
+      "lastAccessed": 1774017059297,
       "keyFiles": [
         "build.gradle.kts",
         "gradle.properties"
@@ -182,335 +182,36 @@
     "doc": {
       "path": "doc",
       "purpose": null,
-      "fileCount": 1,
-      "lastAccessed": 1773839085014,
+      "fileCount": 3,
+      "lastAccessed": 1774017059297,
       "keyFiles": [
-        "exposed-mindmap-felo-ai.jpg"
+        "exposed-migration-guide-0.61-to-1.1.md",
+        "exposed-mindmap-felo-ai.jpg",
+        "notion-exposed-1.1-update.md"
       ]
     },
     "gradle": {
       "path": "gradle",
       "purpose": null,
       "fileCount": 0,
-      "lastAccessed": 1773839085014,
+      "lastAccessed": 1774017059297,
       "keyFiles": []
     },
     "buildSrc/build": {
       "path": "buildSrc/build",
       "purpose": "Build output",
       "fileCount": 0,
-      "lastAccessed": 1773839085016,
+      "lastAccessed": 1774017059298,
       "keyFiles": []
     },
     "buildSrc/src": {
       "path": "buildSrc/src",
       "purpose": "Source code",
       "fileCount": 0,
-      "lastAccessed": 1773839085016,
+      "lastAccessed": 1774017059298,
       "keyFiles": []
     }
   },
-  "hotPaths": [
-    {
-      "path": "11-high-performance/04-benchmark/README.md",
-      "accessCount": 5,
-      "lastAccessed": 1773841233929,
-      "type": "file"
-    },
-    {
-      "path": "README.md",
-      "accessCount": 3,
-      "lastAccessed": 1773839286928,
-      "type": "file"
-    },
-    {
-      "path": "11-high-performance/README.md",
-      "accessCount": 3,
-      "lastAccessed": 1773839956570,
-      "type": "file"
-    },
-    {
-      "path": "CLAUDE.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839304936,
-      "type": "file"
-    },
-    {
-      "path": "09-spring/01-springboot-autoconfigure/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839693517,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/01-multitenant-spring-web/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839693972,
-      "type": "file"
-    },
-    {
-      "path": "01-spring-boot/spring-mvc-exposed/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839711441,
-      "type": "file"
-    },
-    {
-      "path": "11-high-performance/01-cache-strategies/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839722876,
-      "type": "file"
-    },
-    {
-      "path": "09-spring/02-transactiontemplate/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839726187,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/02-multitenant-spring-web-virtualthread/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839749143,
-      "type": "file"
-    },
-    {
-      "path": "09-spring/03-spring-transaction/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839764907,
-      "type": "file"
-    },
-    {
-      "path": "11-high-performance/02-cache-strategies-coroutines/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839780359,
-      "type": "file"
-    },
-    {
-      "path": "01-spring-boot/spring-webflux-exposed/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839782797,
-      "type": "file"
-    },
-    {
-      "path": "09-spring/04-exposed-repository/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839809804,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/03-multitenant-spring-webflux/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839817773,
-      "type": "file"
-    },
-    {
-      "path": "01-spring-boot/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839818115,
-      "type": "file"
-    },
-    {
-      "path": "09-spring/05-exposed-repository-coroutines/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839856124,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839868454,
-      "type": "file"
-    },
-    {
-      "path": "11-high-performance/03-routing-datasource/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839874063,
-      "type": "file"
-    },
-    {
-      "path": "09-spring/06-spring-cache/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839898596,
-      "type": "file"
-    },
-    {
-      "path": "09-spring/07-spring-suspended-cache/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839948252,
-      "type": "file"
-    },
-    {
-      "path": "09-spring/README.md",
-      "accessCount": 2,
-      "lastAccessed": 1773839999811,
-      "type": "file"
-    },
-    {
-      "path": "gradle.properties",
-      "accessCount": 1,
-      "lastAccessed": 1773839208310,
-      "type": "file"
-    },
-    {
-      "path": "CHANGELOG.md",
-      "accessCount": 1,
-      "lastAccessed": 1773839326483,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/01-multitenant-spring-web/src/main/kotlin/exposed/multitenant/springweb/tenant/TenantFilter.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839618377,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/01-multitenant-spring-web/src/main/kotlin/exposed/multitenant/springweb/tenant/TenantContext.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839619229,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/01-multitenant-spring-web/src/main/kotlin/exposed/multitenant/springweb/tenant/TenantAwareDataSource.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839619654,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/01-multitenant-spring-web/src/main/kotlin/exposed/multitenant/springweb/tenant/TenantSchemaAspect.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839620619,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/01-multitenant-spring-web/src/main/kotlin/exposed/multitenant/springweb/tenant/SchemaSupport.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839621827,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/01-multitenant-spring-web/src/main/kotlin/exposed/multitenant/springweb/tenant/Tenants.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839621897,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/01-multitenant-spring-web/src/main/kotlin/exposed/multitenant/springweb/tenant/TenantInitializer.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839622177,
-      "type": "file"
-    },
-    {
-      "path": "01-spring-boot/spring-mvc-exposed/src/main/kotlin/exposed/workshop/springmvc/controller/MovieController.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839622739,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/01-multitenant-spring-web/src/main/kotlin/exposed/multitenant/springweb/tenant/DataInitializer.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839622893,
-      "type": "file"
-    },
-    {
-      "path": "01-spring-boot/spring-mvc-exposed/src/main/kotlin/exposed/workshop/springmvc/controller/ActorController.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839622983,
-      "type": "file"
-    },
-    {
-      "path": "01-spring-boot/spring-mvc-exposed/src/main/kotlin/exposed/workshop/springmvc/controller/MovieActorsController.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839623478,
-      "type": "file"
-    },
-    {
-      "path": "01-spring-boot/spring-mvc-exposed/src/main/kotlin/exposed/workshop/springmvc/domain/repository/MovieRepository.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839624373,
-      "type": "file"
-    },
-    {
-      "path": "01-spring-boot/spring-mvc-exposed/src/main/kotlin/exposed/workshop/springmvc/domain/repository/ActorRepository.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839624654,
-      "type": "file"
-    },
-    {
-      "path": "01-spring-boot/spring-mvc-exposed/src/main/kotlin/exposed/workshop/springmvc/domain/model/MovieSchema.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839625342,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/01-multitenant-spring-web/src/main/kotlin/exposed/multitenant/springweb/config/ExposedMutitenantConfig.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839627691,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/01-multitenant-spring-web/src/main/kotlin/exposed/multitenant/springweb/controller/ActorController.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839628536,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/02-multitenant-spring-web-virtualthread/src/main/kotlin/exposed/multitenant/springweb/config/TomcatVirtualThreadConfig.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839629345,
-      "type": "file"
-    },
-    {
-      "path": "09-spring/02-transactiontemplate/src/main/kotlin/exposed/examples/transaction/domain/BookSchema.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839629491,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/02-multitenant-spring-web-virtualthread/src/main/kotlin/exposed/multitenant/springweb/tenant/TransactionSchemaAspect.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839630215,
-      "type": "file"
-    },
-    {
-      "path": "01-spring-boot/spring-webflux-exposed/src/main/kotlin/exposed/workshop/springwebflux/controller/ActorController.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839630329,
-      "type": "file"
-    },
-    {
-      "path": "09-spring/02-transactiontemplate/src/main/kotlin/exposed/examples/transaction/domain/BookService.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839630342,
-      "type": "file"
-    },
-    {
-      "path": "01-spring-boot/spring-webflux-exposed/src/main/kotlin/exposed/workshop/springwebflux/controller/MovieController.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839630608,
-      "type": "file"
-    },
-    {
-      "path": "09-spring/02-transactiontemplate/src/main/kotlin/exposed/examples/transaction/config/TransactionTemplateConfig.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839630721,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/02-multitenant-spring-web-virtualthread/src/main/kotlin/exposed/multitenant/springweb/tenant/TenantContext.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839630979,
-      "type": "file"
-    },
-    {
-      "path": "01-spring-boot/spring-webflux-exposed/src/main/kotlin/exposed/workshop/springwebflux/controller/MovieActorsController.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839631448,
-      "type": "file"
-    },
-    {
-      "path": "10-multi-tenant/03-multitenant-spring-webflux/src/main/kotlin/exposed/multitenant/webflux/tenant/TenantFilter.kt",
-      "accessCount": 1,
-      "lastAccessed": 1773839631506,
-      "type": "file"
-    }
-  ],
+  "hotPaths": [],
   "userDirectives": []
 }

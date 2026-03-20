@@ -6,7 +6,7 @@ import exposed.examples.cache.domain.model.toUserRecord
 import io.bluetape4k.exposed.redisson.repository.AbstractJdbcRedissonRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
-import io.bluetape4k.redis.redisson.cache.RedisCacheConfig
+import io.bluetape4k.redis.redisson.cache.RedissonCacheConfig
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.statements.BatchInsertStatement
 import org.jetbrains.exposed.v1.core.statements.UpdateStatement
@@ -22,15 +22,16 @@ import java.time.Instant
  * - 저장 시: 캐시와 DB를 함께 갱신합니다.
  */
 @Repository
-class UserCacheRepository(redissonClient: RedissonClient): AbstractJdbcRedissonRepository<Long, UserTable, UserRecord>(
+class UserCacheRepository(redissonClient: RedissonClient): AbstractJdbcRedissonRepository<Long, UserRecord>(
     redissonClient = redissonClient,
     cacheName = "exposed:users",
-    config = RedisCacheConfig.READ_WRITE_THROUGH_WITH_NEAR_CACHE.copy(deleteFromDBOnInvalidate = true)
+    config = RedissonCacheConfig.READ_WRITE_THROUGH_WITH_NEAR_CACHE.copy(deleteFromDBOnInvalidate = true)
 ) {
     companion object: KLoggingChannel()
 
-    override val entityTable: UserTable = UserTable
+    override val table: UserTable = UserTable
     override fun ResultRow.toEntity(): UserRecord = toUserRecord()
+    override fun extractId(entity: UserRecord): Long = entity.id
 
     override fun doUpdateEntity(
         statement: UpdateStatement,

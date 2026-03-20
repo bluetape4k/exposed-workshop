@@ -63,7 +63,7 @@ dependencies {
     implementation(Libs.springBootStarter("validation"))
     implementation(Libs.springBootStarter("web"))
 
-    testImplementation(Libs.bluetape4k_spring_boot3)
+    testImplementation(Libs.bluetape4k_spring_boot3_core)
     testImplementation(Libs.springBootStarter("webflux"))
     testImplementation(Libs.springBootStarter("test")) {
         exclude(group = "junit", module = "junit")

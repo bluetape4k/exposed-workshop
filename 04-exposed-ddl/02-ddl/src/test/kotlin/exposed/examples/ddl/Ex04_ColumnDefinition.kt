@@ -4,9 +4,10 @@ import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
-import io.bluetape4k.exposed.core.selectImplicitAll
+import io.bluetape4k.exposed.jdbc.selectImplicitAll
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
+import org.amshove.kluent.internal.assertFails
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldBeTrue
@@ -21,7 +22,6 @@ import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.sql.SQLException
-import kotlin.test.assertFails
 
 /**
  * 컬럼에 주석(COMMENT)과 가시성(INVISIBLE) 등 확장 정의를 적용하는 시나리오를 검증하는 테스트 클래스.

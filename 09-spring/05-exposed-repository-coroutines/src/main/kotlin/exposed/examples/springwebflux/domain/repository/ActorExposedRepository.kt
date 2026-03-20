@@ -18,11 +18,12 @@ import java.time.LocalDate
 /**
  * WebFlux 환경에서 배우 도메인을 조회/저장하는 Exposed 리포지토리입니다.
  */
-class ActorExposedRepository: JdbcRepository<Long, ActorTable, ActorRecord> {
+class ActorExposedRepository: JdbcRepository<Long, ActorRecord> {
 
     companion object: KLoggingChannel()
 
     override val table = ActorTable
+    override fun extractId(entity: ActorRecord): Long = entity.id
     override fun ResultRow.toEntity() = toActorRecord()
 
     /**

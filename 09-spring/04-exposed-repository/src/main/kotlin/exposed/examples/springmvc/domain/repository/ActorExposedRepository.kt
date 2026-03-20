@@ -20,11 +20,12 @@ import java.time.LocalDate
 /**
  * 배우 정보를 Exposed DSL 기반으로 조회/저장하는 리포지토리입니다.
  */
-class ActorExposedRepository: JdbcRepository<Long, ActorTable, ActorRecord> {
+class ActorExposedRepository: JdbcRepository<Long, ActorRecord> {
 
     companion object: KLogging()
 
     override val table = ActorTable
+    override fun extractId(entity: ActorRecord): Long = entity.id
     override fun ResultRow.toEntity(): ActorRecord = toActorRecord()
 
     /**

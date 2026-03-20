@@ -20,11 +20,12 @@ import java.time.LocalDate
  * WebFlux 환경의 배우 도메인 Exposed 저장소입니다.
  */
 @Repository
-class ActorExposedRepository: JdbcRepository<Long, ActorTable, ActorRecord> {
+class ActorExposedRepository: JdbcRepository<Long, ActorRecord> {
 
     companion object: KLogging()
 
     override val table = ActorTable
+    override fun extractId(entity: ActorRecord): Long = entity.id
     override fun ResultRow.toEntity() = toActorRecord()
 
     /**

@@ -33,7 +33,7 @@ import java.time.LocalDate
 /**
  * 코루틴 기반 WebFlux 환경에서 영화 도메인 조회/저장을 담당하는 리포지토리입니다.
  */
-class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
+class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
 
     companion object: KLoggingChannel() {
         private val MovieActorJoin by lazy {
@@ -56,6 +56,7 @@ class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
     }
 
     override val table = MovieTable
+    override fun extractId(entity: MovieRecord): Long = entity.id
     override fun ResultRow.toEntity() = toMovieRecord()
 
     /**

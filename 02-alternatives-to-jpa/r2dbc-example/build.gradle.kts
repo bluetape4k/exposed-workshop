@@ -33,7 +33,7 @@ dependencies {
     testImplementation(Libs.reactor_test)
 
     // R2DBC
-    implementation(Libs.bluetape4k_spring_r2dbc)
+    implementation(Libs.bluetape4k_spring_boot3_r2dbc)
     implementation(Libs.springBootStarter("data-r2dbc"))
     runtimeOnly(Libs.r2dbc_postgresql)
     runtimeOnly(Libs.r2dbc_h2)

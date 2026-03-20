@@ -32,11 +32,12 @@ import java.time.LocalDate
  * 영화 도메인에 대한 Exposed 기반 저장소입니다.
  */
 @Repository
-class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
+class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
 
     companion object: KLogging()
 
     override val table = MovieTable
+    override fun extractId(entity: MovieRecord): Long = entity.id
     override fun ResultRow.toEntity() = toMovieRecord()
 
     /**

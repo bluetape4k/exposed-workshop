@@ -4,7 +4,7 @@ import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
-import io.bluetape4k.exposed.core.getIndices
+import io.bluetape4k.exposed.jdbc.getIndices
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
 import org.amshove.kluent.shouldBeTrue

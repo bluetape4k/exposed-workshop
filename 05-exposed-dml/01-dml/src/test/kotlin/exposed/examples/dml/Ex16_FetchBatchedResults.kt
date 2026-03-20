@@ -8,8 +8,7 @@ import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
-import io.bluetape4k.idgenerators.uuid.TimebasedUuid
-import io.bluetape4k.idgenerators.uuid.TimebasedUuid.Epoch
+import io.bluetape4k.idgenerators.uuid.Uuid
 import io.bluetape4k.logging.KLogging
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
@@ -93,7 +92,7 @@ class Ex16_FetchBatchedResults: AbstractExposedTest() {
 
         withTables(testDB, cities) {
             // 100개의 도시 이름을 저장합니다.
-            val names = List(100) { TimebasedUuid.Reordered.nextIdAsString() }
+            val names = List(100) { Uuid.V7.nextIdAsString() }
             cities.batchInsert(names) { name ->
                 this[cities.name] = name
             }
@@ -145,7 +144,7 @@ class Ex16_FetchBatchedResults: AbstractExposedTest() {
     fun `when sortOrder is given, fetchBatchedResults should return batches in the given order`(testDB: TestDB) {
         val cities = DMLTestData.Cities
         withTables(testDB, cities) {
-            val names = List(100) { TimebasedUuid.Epoch.nextIdAsString() }
+            val names = List(100) { Uuid.V7.nextIdAsString() }
             cities.batchInsert(names) { name ->
                 this[cities.name] = name
             }
@@ -187,7 +186,7 @@ class Ex16_FetchBatchedResults: AbstractExposedTest() {
     ) {
         val cities = DMLTestData.Cities
         withTables(testDB, cities) {
-            val names = List(25) { Epoch.nextIdAsString() }
+            val names = List(25) { Uuid.V7.nextIdAsString() }
             cities.batchInsert(names) { name ->
                 this[cities.name] = name
             }

@@ -18,11 +18,12 @@ import java.time.LocalDate
  *
  * [ActorTable]을 통해 배우 정보를 조회하고 저장하는 기능을 제공합니다.
  */
-class ActorRepository: JdbcRepository<Long, ActorTable, ActorRecord> {
+class ActorRepository: JdbcRepository<Long, ActorRecord> {
 
     companion object: KLogging()
 
     override val table = ActorTable
+    override fun extractId(entity: ActorRecord): Long = entity.id
     override fun ResultRow.toEntity(): ActorRecord = toActorRecord()
 
     /**

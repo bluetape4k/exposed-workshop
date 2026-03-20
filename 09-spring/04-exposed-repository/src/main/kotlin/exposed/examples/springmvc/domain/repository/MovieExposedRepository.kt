@@ -32,11 +32,12 @@ import java.time.LocalDate
 /**
  * 영화 도메인 조회/저장을 Exposed DSL/DAO 조합으로 처리하는 리포지토리입니다.
  */
-class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
+class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
 
     companion object: KLogging()
 
     override val table = MovieTable
+    override fun extractId(entity: MovieRecord): Long = entity.id
     override fun ResultRow.toEntity(): MovieRecord = toMovieRecord()
 
     /**

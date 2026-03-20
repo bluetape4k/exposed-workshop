@@ -9,7 +9,7 @@ import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62Entity
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62EntityClass
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import io.bluetape4k.idgenerators.uuid.TimebasedUuid
+import io.bluetape4k.idgenerators.uuid.Uuid
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.javatime.CurrentTimestamp
@@ -83,7 +83,7 @@ fun ResultRow.toUserCredentialsRecord() = UserCredentialsRecord(
  * 테스트용 임의 사용자 인증 레코드를 생성합니다.
  */
 fun newUserCredentialsRecord() = UserCredentialsRecord(
-    id = TimebasedUuid.Reordered.nextIdAsString(),
+    id = Uuid.V7.nextIdAsString(),
     username = faker.credentials().username() + "." + Base58.randomString(4),
     email = faker.internet().emailAddress(),
     lastLoginAt = Instant.now(),

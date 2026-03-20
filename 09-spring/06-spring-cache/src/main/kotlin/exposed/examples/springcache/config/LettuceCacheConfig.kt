@@ -1,7 +1,7 @@
 package exposed.examples.springcache.config
 
 import io.bluetape4k.logging.KLogging
-import io.bluetape4k.redis.spring.serializer.RedisBinarySerializers
+import io.bluetape4k.spring.redis.serializer.RedisBinarySerializers
 import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
