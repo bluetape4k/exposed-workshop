@@ -20,9 +20,8 @@ import org.junit.jupiter.params.provider.MethodSource
  * Covering Index를 활용한 쿼리 최적화 패턴을 Exposed DSL로 구현하는 예제입니다.
  * SELECT 절에 인덱스 컬럼만 포함시켜 테이블 접근 없이 인덱스만으로 결과를 반환하는 방법을 검증합니다.
  */
-class Ex06_Convering_Index: AbstractExposedTest() {
-
-    companion object: KLogging()
+class Ex06_Covering_Index : AbstractExposedTest() {
+    companion object : KLogging()
 
     /**
      * Covering Index 를 사용하는 Subquery 와 Inner Join 하기
@@ -70,17 +69,19 @@ class Ex06_Convering_Index: AbstractExposedTest() {
         // 서울 사는 사람들을 id 를 조회
         withPersonsAndAddress(testDB) { persons, addrs ->
             // convering index 에 해당하는 subquery
-            val indexQuery: QueryAlias = persons
-                .innerJoin(addrs)
-                .select(persons.id)
-                .where { addrs.city eq "Seoul" }
-                .alias("p2")
+            val indexQuery: QueryAlias =
+                persons
+                    .innerJoin(addrs)
+                    .select(persons.id)
+                    .where { addrs.city eq "Seoul" }
+                    .alias("p2")
 
             // subquery 를 inner join 하여 해당 id의 사람들을 조회
-            val rows = persons
-                .innerJoin(indexQuery) { persons.id eq indexQuery[persons.id] }
-                .select(persons.columns)
-                .toList()
+            val rows =
+                persons
+                    .innerJoin(indexQuery) { persons.id eq indexQuery[persons.id] }
+                    .select(persons.columns)
+                    .toList()
 
             rows.forEach {
                 log.debug { it }
@@ -138,18 +139,20 @@ class Ex06_Convering_Index: AbstractExposedTest() {
         withPersonsAndAddress(testDB) { persons, addrs ->
             // Subquery 용 alias
             // convering index 에 해당하는 subquery
-            val indexQuery: QueryAlias = persons
-                .innerJoin(addrs)
-                .select(persons.id)
-                .where { addrs.city eq "Seoul" }
-                .alias("p2")
+            val indexQuery: QueryAlias =
+                persons
+                    .innerJoin(addrs)
+                    .select(persons.id)
+                    .where { addrs.city eq "Seoul" }
+                    .alias("p2")
 
             // subquery 를 inner join 하여 해당 id의 사람들을 조회
-            val rows = persons
-                .innerJoin(indexQuery) { persons.id eq indexQuery[persons.id] }
-                .select(persons.columns)
-                .where { persons.id less 100L }
-                .toList()
+            val rows =
+                persons
+                    .innerJoin(indexQuery) { persons.id eq indexQuery[persons.id] }
+                    .select(persons.columns)
+                    .where { persons.id less 100L }
+                    .toList()
 
             rows.forEach {
                 log.debug { it }

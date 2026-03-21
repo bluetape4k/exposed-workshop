@@ -22,17 +22,14 @@ class CommentRepository(
     private val client: DatabaseClient,
     private val operations: R2dbcEntityOperations,
 ) {
-
-    companion object: KLoggingChannel()
+    companion object : KLoggingChannel()
 
     suspend fun count(): Long = operations.countAllSuspending<Comment>()
 
     fun findAll(): Flow<Comment> = operations.selectAllSuspending<Comment>()
 
     @Transactional
-    suspend fun save(comment: Comment): Comment {
-        return operations.insertSuspending(comment)
-    }
+    suspend fun save(comment: Comment): Comment = operations.insertSuspending(comment)
 
     suspend fun countByPostId(postId: Long): Long {
         val query = Query.query(Criteria.where(Comment::postId.name).isEqual(postId))
@@ -49,6 +46,6 @@ class CommentRepository(
         save(Comment(postId = 1, content = "Content 1 of post 1"))
         save(Comment(postId = 1, content = "Content 2 of post 1"))
         save(Comment(postId = 2, content = "Content 1 of post 2"))
-        save(Comment(postId = 2, content = "Content 2 of post 1"))
+        save(Comment(postId = 2, content = "Content 2 of post 2"))
     }
 }

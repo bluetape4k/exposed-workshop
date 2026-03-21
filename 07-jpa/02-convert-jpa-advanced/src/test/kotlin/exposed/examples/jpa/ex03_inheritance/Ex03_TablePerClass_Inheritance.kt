@@ -23,15 +23,16 @@ import java.util.*
 /**
  * JPA의 Table Per Class Inheritance 를 Exposed 로 구현한 예
  */
-class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
-
-    companion object: KLogging()
+class Ex03_TablePerClass_Inheritance : AbstractExposedTest() {
+    companion object : KLogging()
 
     /**
      * JPA의 Table Per Class Inheritance 의 경우 다중의 테이블에서 고유한 값을 사용해야 해서,
      * UUID 같은 수형으로 전역적으로 Unique 하게 관리해야 한다.
      */
-    abstract class AbstractBillingTable(name: String = ""): TimebasedUUIDTable(name) {
+    abstract class AbstractBillingTable(
+        name: String = "",
+    ) : TimebasedUUIDTable(name) {
         val owner = varchar("owner", 64).index()
         val swift = varchar("swift", 16)
     }
@@ -55,7 +56,7 @@ class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
      * CREATE INDEX CREDIT_CARD_OWNER ON CREDIT_CARD (OWNER);
      * ```
      */
-    object CreditCardTable: AbstractBillingTable("credit_card") {
+    object CreditCardTable : AbstractBillingTable("credit_card") {
         val cardNumber = varchar("card_number", 24).uniqueIndex()
         val companyName = varchar("company_name", 128)
         val expYear = integer("exp_year")
@@ -83,7 +84,7 @@ class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
      * CREATE INDEX BANK_ACCOUNT_OWNER ON BANK_ACCOUNT (OWNER);
      *```
      */
-    object BankAccountTable: AbstractBillingTable("bank_account") {
+    object BankAccountTable : AbstractBillingTable("bank_account") {
         val accountNumber = varchar("account_number", 24).uniqueIndex()
         val bankName = varchar("bank_name", 128)
 
@@ -92,23 +93,30 @@ class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
         }
     }
 
-    abstract class AbstractBillingEntity(id: EntityID<UUID>): TimebasedUUIDEntity(id) {
+    abstract class AbstractBillingEntity(
+        id: EntityID<UUID>,
+    ) : TimebasedUUIDEntity(id) {
         abstract var owner: String
         abstract var swift: String
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("owner", owner)
-            .add("swift", swift)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("owner", owner)
+                .add("swift", swift)
+                .toString()
     }
 
     /**
      * CreditCard Entity
      */
-    class CreditCard(id: EntityID<UUID>): AbstractBillingEntity(id) {
-        companion object: TimebasedUUIDEntityClass<CreditCard>(CreditCardTable)
+    class CreditCard(
+        id: EntityID<UUID>,
+    ) : AbstractBillingEntity(id) {
+        companion object : TimebasedUUIDEntityClass<CreditCard>(CreditCardTable)
 
         // AbstractBillingEntity 상속받은 컬럼입니다.
         override var owner by CreditCardTable.owner
@@ -122,22 +130,27 @@ class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
         var endDate by CreditCardTable.endDate
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("owner", owner)
-            .add("swift", swift)
-            .add("card number", cardNumber)
-            .add("company name", companyName)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("owner", owner)
+                .add("swift", swift)
+                .add("card number", cardNumber)
+                .add("company name", companyName)
+                .toString()
     }
 
     /**
      * BankAccount Entity
      */
-    class BankAccount(id: EntityID<UUID>): AbstractBillingEntity(id) {
-        companion object: TimebasedUUIDEntityClass<BankAccount>(BankAccountTable)
+    class BankAccount(
+        id: EntityID<UUID>,
+    ) : AbstractBillingEntity(id) {
+        companion object : TimebasedUUIDEntityClass<BankAccount>(BankAccountTable)
 
-        // AbstractBillingTable 속송으로 상속받은 컬럼입니다.
+        // AbstractBillingTable 속성으로 상속받은 컬럼입니다.
         override var owner by BankAccountTable.owner
         override var swift by BankAccountTable.swift
 
@@ -145,36 +158,41 @@ class Ex03_TablePerClass_Inheritance: AbstractExposedTest() {
         var bankName by BankAccountTable.bankName
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("owner", owner)
-            .add("swift", swift)
-            .add("account number", accountNumber)
-            .add("bank name", bankName)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("owner", owner)
+                .add("swift", swift)
+                .add("account number", accountNumber)
+                .add("bank name", bankName)
+                .toString()
     }
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `table per class inheritance`(testDB: TestDB) {
         withTables(testDB, BankAccountTable, CreditCardTable) {
-            val account = BankAccount.new {
-                owner = "debop"
-                swift = "KODBKRSE"
-                accountNumber = "123-456-7890"
-                bankName = "Kookmin Bank"
-            }
+            val account =
+                BankAccount.new {
+                    owner = "debop"
+                    swift = "KODBKRSE"
+                    accountNumber = "123-456-7890"
+                    bankName = "Kookmin Bank"
+                }
 
-            val card = CreditCard.new {
-                owner = "debop"
-                swift = "KODBKRSE"
-                cardNumber = "1234-5678-9012-3456"
-                companyName = "VISA"
-                expMonth = 12
-                expYear = 2029
-                startDate = LocalDate.now()
-                endDate = LocalDate.now().plusYears(5)
-            }
+            val card =
+                CreditCard.new {
+                    owner = "debop"
+                    swift = "KODBKRSE"
+                    cardNumber = "1234-5678-9012-3456"
+                    companyName = "VISA"
+                    expMonth = 12
+                    expYear = 2029
+                    startDate = LocalDate.now()
+                    endDate = LocalDate.now().plusYears(5)
+                }
 
             entityCache.clear()
 

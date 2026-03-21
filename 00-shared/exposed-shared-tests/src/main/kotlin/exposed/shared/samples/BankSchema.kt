@@ -21,7 +21,6 @@ import org.jetbrains.exposed.v1.jdbc.insert
  * 은행 계좌 - 계좌 소유자에 대한 Many-to-Many 관계를 나타내는 스키마
  */
 object BankSchema {
-
     val allTables = arrayOf(BankAccountTable, AccountOwnerTable, OwnerAccountMapTable)
 
     /**
@@ -38,7 +37,7 @@ object BankSchema {
      *   ADD CONSTRAINT bank_account_number_unique UNIQUE ("number");
      * ```
      */
-    object BankAccountTable: IntIdTable("bank_account") {
+    object BankAccountTable : IntIdTable("bank_account") {
         val number = varchar("number", 255).uniqueIndex()
     }
 
@@ -56,7 +55,7 @@ object BankSchema {
      *   ADD CONSTRAINT account_owner_ssn_unique UNIQUE (ssn);
      * ```
      */
-    object AccountOwnerTable: IntIdTable("account_owner") {
+    object AccountOwnerTable : IntIdTable("account_owner") {
         val ssn = varchar("ssn", 255).uniqueIndex()
     }
 
@@ -79,7 +78,7 @@ object BankSchema {
      *      ADD CONSTRAINT owner_account_map_owner_id_account_id_unique UNIQUE (owner_id, account_id);
      * ```
      */
-    object OwnerAccountMapTable: Table("owner_account_map") {
+    object OwnerAccountMapTable : Table("owner_account_map") {
         val ownerId = reference("owner_id", AccountOwnerTable)
         val accountId = reference("account_id", BankAccountTable)
 
@@ -91,8 +90,10 @@ object BankSchema {
     /**
      * 은행 계좌
      */
-    class BankAccount(id: EntityID<Int>): IntEntity(id) {
-        companion object: IntEntityClass<BankAccount>(BankAccountTable)
+    class BankAccount(
+        id: EntityID<Int>,
+    ) : IntEntity(id) {
+        companion object : IntEntityClass<BankAccount>(BankAccountTable)
 
         var number: String by BankAccountTable.number
 
@@ -100,17 +101,22 @@ object BankSchema {
         val owners: SizedIterable<AccountOwner> by AccountOwner via OwnerAccountMapTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("number", number)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("number", number)
+                .toString()
     }
 
     /**
      * 계좌 소유자
      */
-    class AccountOwner(id: EntityID<Int>): IntEntity(id) {
-        companion object: IntEntityClass<AccountOwner>(AccountOwnerTable)
+    class AccountOwner(
+        id: EntityID<Int>,
+    ) : IntEntity(id) {
+        companion object : IntEntityClass<AccountOwner>(AccountOwnerTable)
 
         var ssn: String by AccountOwnerTable.ssn
 
@@ -118,10 +124,13 @@ object BankSchema {
         val accounts: SizedIterable<BankAccount> by BankAccount via OwnerAccountMapTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("ssn", ssn)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("ssn", ssn)
+                .toString()
     }
 
     /**
@@ -177,7 +186,8 @@ object BankSchema {
      * @throws IllegalArgumentException 해당 ID의 계좌가 없을 경우
      */
     @Suppress("UnusedReceiverParameter")
-    fun JdbcTransaction.getAccount(accountId: Int): BankAccount = BankAccount.findById(accountId)!!
+    fun JdbcTransaction.getAccount(accountId: Int): BankAccount =
+        BankAccount.findById(accountId) ?: error("Account not found: $accountId")
 
     /**
      * 주어진 [ownerId]로 계좌 소유자를 조회합니다.
@@ -187,5 +197,6 @@ object BankSchema {
      * @throws IllegalArgumentException 해당 ID의 소유자가 없을 경우
      */
     @Suppress("UnusedReceiverParameter")
-    fun JdbcTransaction.getOwner(ownerId: Int): AccountOwner = AccountOwner.findById(ownerId)!!
+    fun JdbcTransaction.getOwner(ownerId: Int): AccountOwner =
+        AccountOwner.findById(ownerId) ?: error("Account not found: $ownerId")
 }

@@ -20,16 +20,15 @@ var currentTestDB by nullableTransactionScope<TestDB>()
 /**
  * 트랜잭션 커밋 시 현재 테스트 DB 정보를 트랜잭션 스코프에 유지하는 인터셉터.
  */
-object CurrentTestDBInterceptor: StatementInterceptor {
+object CurrentTestDBInterceptor : StatementInterceptor {
     /**
      * 커밋 후에도 [TestDB] 타입의 사용자 데이터만 유지합니다.
      *
      * @param userData 현재 트랜잭션에 저장된 사용자 데이터 맵
      * @return [TestDB] 값만 필터링한 맵
      */
-    override fun keepUserDataInTransactionStoreOnCommit(userData: Map<Key<*>, Any?>): Map<Key<*>, Any?> {
-        return userData.filterValues { it is TestDB }
-    }
+    override fun keepUserDataInTransactionStoreOnCommit(userData: Map<Key<*>, Any?>): Map<Key<*>, Any?> =
+        userData.filterValues { it is TestDB }
 }
 
 /**
@@ -54,6 +53,7 @@ fun withDb(
         val newConfiguration = configure != null && !unregistered
 
         if (unregistered) {
+            testDB.beforeConnection()
             Runtimex.addShutdownHook {
                 testDB.afterTestFinished()
                 registeredOnShutdown.remove(testDB)
@@ -70,10 +70,10 @@ fun withDb(
             val database = testDB.db!!
             transaction(
                 transactionIsolation = database.transactionManager.defaultIsolationLevel,
-                db = database,
+                db = database
             ) {
                 maxAttempts = 1
-                registerInterceptor(CurrentTestDBInterceptor)  // interceptor 를 통해 다양한 작업을 할 수 있다
+                registerInterceptor(CurrentTestDBInterceptor) // interceptor 를 통해 다양한 작업을 할 수 있다
                 currentTestDB = testDB
                 statement(testDB)
             }

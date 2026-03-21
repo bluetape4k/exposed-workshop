@@ -31,9 +31,8 @@ import kotlin.test.assertFailsWith
  * DSL 방식으로 암호화 컬럼([encryptedVarchar], [encryptedBinary])을 정의하고
  * 데이터 투명 암복호화, 암호화 길이 계산, 로그 마스킹을 검증하는 예제.
  */
-class Ex01_EncryptedColumn: AbstractExposedTest() {
-
-    companion object: KLogging()
+class Ex01_EncryptedColumn : AbstractExposedTest() {
+    companion object : KLogging()
 
     /**
      * Exposed 에서 제공하는 Encryptor 로 암호화할 때, 컬럼의 최대 길이를 계산할 수 있다.
@@ -43,23 +42,29 @@ class Ex01_EncryptedColumn: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `output length of encryption`(testDB: TestDB) {
-        fun assertSize(encryptor: Encryptor, str: String) {
+        fun assertSize(
+            encryptor: Encryptor,
+            str: String,
+        ) {
             encryptor.encrypt(str).toUtf8Bytes().size shouldBeEqualTo encryptor.maxColLength(str.toUtf8Bytes().size)
         }
 
-        val encryptors = arrayOf(
-            "AES_256_PBE_GCM" to Algorithms.AES_256_PBE_GCM("passwd", "12345678"),
-            "AES_256_PBE_CBC" to Algorithms.AES_256_PBE_CBC("passwd", "12345678"),
-            "BLOW_FISH" to Algorithms.BLOW_FISH("sadsad"),
-            "TRIPLE_DES" to Algorithms.TRIPLE_DES("1".repeat(24))
-        )
-        val testString = arrayOf(
-            "1",
-            "2".repeat(10),
-            "3".repeat(31),
-            "4".repeat(1001),
-            "5".repeat(5391)
-        )
+        // WARNING: 워크샵 예제용 하드코딩입니다. 프로덕션에서는 환경변수나 Vault에서 키를 로드하세요.
+        val encryptors =
+            arrayOf(
+                "AES_256_PBE_GCM" to Algorithms.AES_256_PBE_GCM("passwd", "12345678"),
+                "AES_256_PBE_CBC" to Algorithms.AES_256_PBE_CBC("passwd", "12345678"),
+                "BLOW_FISH" to Algorithms.BLOW_FISH("sadsad"),
+                "TRIPLE_DES" to Algorithms.TRIPLE_DES("1".repeat(24))
+            )
+        val testString =
+            arrayOf(
+                "1",
+                "2".repeat(10),
+                "3".repeat(31),
+                "4".repeat(1001),
+                "5".repeat(5391)
+            )
 
         encryptors.forEach { (algorithm, encryptor) ->
             testString.forEach { testStr ->
@@ -88,13 +93,14 @@ class Ex01_EncryptedColumn: AbstractExposedTest() {
          * ```
          */
         val nameEncryptor = Algorithms.AES_256_PBE_CBC("passwd", "5c0744940b5c369b")
-        val stringTable = object: IntIdTable("StringTable") {
-            val name: Column<String> = encryptedVarchar("name", 80, nameEncryptor)
-            val city: Column<String> =
-                encryptedVarchar("city", 80, Algorithms.AES_256_PBE_GCM("passwd", "5c0744940b5c369b"))
-            val address: Column<String> = encryptedVarchar("address", 100, Algorithms.BLOW_FISH("key"))
-            val age: Column<String> = encryptedVarchar("age", 100, Algorithms.TRIPLE_DES("1".repeat(24)))
-        }
+        val stringTable =
+            object : IntIdTable("StringTable") {
+                val name: Column<String> = encryptedVarchar("name", 80, nameEncryptor)
+                val city: Column<String> =
+                    encryptedVarchar("city", 80, Algorithms.AES_256_PBE_GCM("passwd", "5c0744940b5c369b"))
+                val address: Column<String> = encryptedVarchar("address", 100, Algorithms.BLOW_FISH("key"))
+                val age: Column<String> = encryptedVarchar("age", 100, Algorithms.TRIPLE_DES("1".repeat(24)))
+            }
 
         withTables(testDB, stringTable) {
             val logCaptor = LogCaptor.forName(exposedLogger.name)
@@ -113,12 +119,13 @@ class Ex01_EncryptedColumn: AbstractExposedTest() {
              */
             val insertedStrings = listOf("testName", "testCity", "testAddress", "testAge")
             val (insertedName, insertedCity, insertedAddress, insertedAge) = insertedStrings
-            val id1 = stringTable.insertAndGetId {
-                it[name] = insertedName
-                it[city] = insertedCity
-                it[address] = insertedAddress
-                it[age] = insertedAge
-            }
+            val id1 =
+                stringTable.insertAndGetId {
+                    it[name] = insertedName
+                    it[city] = insertedCity
+                    it[address] = insertedAddress
+                    it[age] = insertedAge
+                }
 
             val insertLog = logCaptor.debugLogs.single()
             insertLog.shouldStartWith("INSERT ")
@@ -143,7 +150,8 @@ class Ex01_EncryptedColumn: AbstractExposedTest() {
              * HINT: jasypt 를 활용해 암호화 시 항상 같은 결과를 내도록 해서 검색이 가능하도록 할 수 있다.
              */
             assertFailsWith<AssertionError> {
-                stringTable.selectAll()
+                stringTable
+                    .selectAll()
                     .where { stringTable.name eq nameEncryptor.encrypt(insertedName) }
                     .shouldNotBeEmpty()
             }
@@ -156,7 +164,6 @@ class Ex01_EncryptedColumn: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `update encrypted column type`(testDB: TestDB) {
-
         /**
          * ```sql
          * -- Postgres
@@ -168,11 +175,14 @@ class Ex01_EncryptedColumn: AbstractExposedTest() {
          * )
          * ```
          */
-        val stringTable = object: IntIdTable("StringTable") {
-            val name: Column<String> = encryptedVarchar("name", 100, Algorithms.AES_256_PBE_GCM("passwd", "12345678"))
-            val city: Column<ByteArray> = encryptedBinary("city", 100, Algorithms.AES_256_PBE_CBC("passwd", "12345678"))
-            val address: Column<String> = encryptedVarchar("address", 100, Algorithms.BLOW_FISH("key"))
-        }
+        val stringTable =
+            object : IntIdTable("StringTable") {
+                val name: Column<String> =
+                    encryptedVarchar("name", 100, Algorithms.AES_256_PBE_GCM("passwd", "12345678"))
+                val city: Column<ByteArray> =
+                    encryptedBinary("city", 100, Algorithms.AES_256_PBE_CBC("passwd", "12345678"))
+                val address: Column<String> = encryptedVarchar("address", 100, Algorithms.BLOW_FISH("key"))
+            }
 
         withTables(testDB, stringTable) {
             val logCaptor = LogCaptor.forName(exposedLogger.name)
@@ -190,11 +200,12 @@ class Ex01_EncryptedColumn: AbstractExposedTest() {
              */
             val insertedStrings = listOf("TestName", "TestCity", "TestAddress")
             val (insertedName, insertedCity, insertedAddress) = insertedStrings
-            val id = stringTable.insertAndGetId {
-                it[name] = insertedName
-                it[city] = insertedCity.toUtf8Bytes()
-                it[address] = insertedAddress
-            }
+            val id =
+                stringTable.insertAndGetId {
+                    it[name] = insertedName
+                    it[city] = insertedCity.toUtf8Bytes()
+                    it[address] = insertedAddress
+                }
 
             val insertLog = logCaptor.debugLogs.single()
             insertLog.shouldStartWith("INSERT ")
@@ -230,9 +241,11 @@ class Ex01_EncryptedColumn: AbstractExposedTest() {
 
             stringTable.selectAll().count() shouldBeEqualTo 1L
 
-            val row = stringTable.selectAll()
-                .where { stringTable.id eq id }
-                .first()
+            val row =
+                stringTable
+                    .selectAll()
+                    .where { stringTable.id eq id }
+                    .first()
 
             row[stringTable.name] shouldBeEqualTo updatedName
             row[stringTable.city].toUtf8String() shouldBeEqualTo updatedCity

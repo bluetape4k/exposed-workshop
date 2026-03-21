@@ -23,17 +23,16 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * Postgres와 H2 에서만 지원됩니다. MySQL과 MariaDB에서는 지원되지 않습니다.
  */
-class Ex07_DistinctOn: AbstractExposedTest() {
-
-    companion object: KLogging()
+class Ex07_DistinctOn : AbstractExposedTest() {
+    companion object : KLogging()
 
     /**
-     * `withDistinctOn` (`DISTINCT ON`) 은 Postgres와 H2 에서민 지원됩니다.
+     * `withDistinctOn` (`DISTINCT ON`) 은 Postgres와 H2 에서만 지원됩니다.
      */
     private val distinctOnSupportedDb = TestDB.ALL_POSTGRES + TestDB.ALL_H2
 
     /**
-     * `withDistinctOn` (`DISTINCT ON`) 은 Postgres와 H2 에서민 지원됩니다.
+     * `withDistinctOn` (`DISTINCT ON`) 은 Postgres와 H2 에서만 지원됩니다.
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -50,17 +49,24 @@ class Ex07_DistinctOn: AbstractExposedTest() {
          * )
          * ```
          */
-        val tester = object: IntIdTable("tester") {
-            val v1 = integer("v1")
-            val v2 = integer("v2")
-        }
+        val tester =
+            object : IntIdTable("tester") {
+                val v1 = integer("v1")
+                val v2 = integer("v2")
+            }
 
         withTables(testDB, tester) {
             tester.batchInsert(
                 listOf(
-                    listOf(1, 1), listOf(1, 2), listOf(1, 2),
-                    listOf(2, 1), listOf(2, 2), listOf(2, 2),
-                    listOf(4, 4), listOf(4, 4), listOf(4, 4),
+                    listOf(1, 1),
+                    listOf(1, 2),
+                    listOf(1, 2),
+                    listOf(2, 1),
+                    listOf(2, 2),
+                    listOf(2, 2),
+                    listOf(4, 4),
+                    listOf(4, 4),
+                    listOf(4, 4)
                 )
             ) {
                 this[tester.v1] = it[0]
@@ -80,10 +86,12 @@ class Ex07_DistinctOn: AbstractExposedTest() {
              *           tester.v2 ASC
              *  ```
              */
-            val distinctValue1 = tester.selectAll()
-                .withDistinctOn(tester.v1)
-                .orderBy(tester.v1 to SortOrder.ASC, tester.v2 to SortOrder.ASC)
-                .map { it[tester.v1] to it[tester.v2] }
+            val distinctValue1 =
+                tester
+                    .selectAll()
+                    .withDistinctOn(tester.v1)
+                    .orderBy(tester.v1 to SortOrder.ASC, tester.v2 to SortOrder.ASC)
+                    .map { it[tester.v1] to it[tester.v2] }
 
             distinctValue1 shouldBeEqualTo listOf(1 to 1, 2 to 1, 4 to 4)
 
@@ -101,10 +109,12 @@ class Ex07_DistinctOn: AbstractExposedTest() {
              *           tester.v1 ASC
              *  ```
              */
-            val distinctValue2 = tester.selectAll()
-                .withDistinctOn(tester.v2)
-                .orderBy(tester.v2 to SortOrder.ASC, tester.v1 to SortOrder.ASC)
-                .map { it[tester.v1] to it[tester.v2] }
+            val distinctValue2 =
+                tester
+                    .selectAll()
+                    .withDistinctOn(tester.v2)
+                    .orderBy(tester.v2 to SortOrder.ASC, tester.v1 to SortOrder.ASC)
+                    .map { it[tester.v1] to it[tester.v2] }
 
             distinctValue2 shouldBeEqualTo listOf(1 to 1, 1 to 2, 4 to 4)
 
@@ -122,10 +132,12 @@ class Ex07_DistinctOn: AbstractExposedTest() {
              *            tester.v2 ASC
              *  ```
              */
-            val distinctBoth = tester.selectAll()
-                .withDistinctOn(tester.v1, tester.v2)
-                .orderBy(tester.v1 to SortOrder.ASC, tester.v2 to SortOrder.ASC)
-                .map { it[tester.v1] to it[tester.v2] }
+            val distinctBoth =
+                tester
+                    .selectAll()
+                    .withDistinctOn(tester.v1, tester.v2)
+                    .orderBy(tester.v1 to SortOrder.ASC, tester.v2 to SortOrder.ASC)
+                    .map { it[tester.v1] to it[tester.v2] }
 
             distinctBoth shouldBeEqualTo listOf(1 to 1, 1 to 2, 2 to 1, 2 to 2, 4 to 4)
 
@@ -143,15 +155,16 @@ class Ex07_DistinctOn: AbstractExposedTest() {
              *           tester.v2 ASC
              * ```
              */
-            val distinctSequential = tester.selectAll()
-                .withDistinctOn(tester.v1 to SortOrder.ASC)
-                .withDistinctOn(tester.v2 to SortOrder.ASC)
-                .map { it[tester.v1] to it[tester.v2] }
+            val distinctSequential =
+                tester
+                    .selectAll()
+                    .withDistinctOn(tester.v1 to SortOrder.ASC)
+                    .withDistinctOn(tester.v2 to SortOrder.ASC)
+                    .map { it[tester.v1] to it[tester.v2] }
 
             distinctSequential shouldBeEqualTo distinctBoth
         }
     }
-
 
     /**
      * `withDistinct` 와 `withDistinctOn` 을 동시에 사용하면 예외가 발생합니다.
@@ -170,9 +183,10 @@ class Ex07_DistinctOn: AbstractExposedTest() {
          * )
          * ```
          */
-        val tester = object: IntIdTable("tester") {
-            val v1 = integer("v1")
-        }
+        val tester =
+            object : IntIdTable("tester") {
+                val v1 = integer("v1")
+            }
 
         withTables(testDB, tester) {
             val query1 = tester.selectAll().withDistinct()
@@ -186,7 +200,6 @@ class Ex07_DistinctOn: AbstractExposedTest() {
             }
         }
     }
-
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -202,9 +215,10 @@ class Ex07_DistinctOn: AbstractExposedTest() {
          * )
          * ```
          */
-        val tester = object: IntIdTable("tester") {
-            val v1 = integer("v1")
-        }
+        val tester =
+            object : IntIdTable("tester") {
+                val v1 = integer("v1")
+            }
 
         withTables(testDB, tester) {
             tester.insert {
@@ -212,8 +226,10 @@ class Ex07_DistinctOn: AbstractExposedTest() {
             }
 
             // `withDistinctOn` 에 컬럼을 지정하지 않아도 예외가 발생하지 않습니다.
-            val query = tester.selectAll()
-                .withDistinctOn(columns = emptyArray<Column<*>>())
+            val query =
+                tester
+                    .selectAll()
+                    .withDistinctOn(columns = emptyArray<Column<*>>())
 
             query.distinctOn.shouldBeNull()
 
@@ -249,20 +265,23 @@ class Ex07_DistinctOn: AbstractExposedTest() {
     fun `distinctOn with count`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB in distinctOnSupportedDb }
 
-        val tester = object: IntIdTable("tester") {
-            val name = varchar("name", 50)
-        }
+        val tester =
+            object : IntIdTable("tester") {
+                val name = varchar("name", 50)
+            }
         withTables(testDB, tester) {
             val names = listOf("a", "a", "b", "c", "b")
             tester.batchInsert(names) {
                 this[tester.name] = it
             }
 
-            val count = tester.select(tester.name)
-                .withDistinctOn(tester.name)
-                .count()
+            val count =
+                tester
+                    .select(tester.name)
+                    .withDistinctOn(tester.name)
+                    .count()
 
-            count shouldBeEqualTo names.distinct().size.toLong()  // 3L
+            count shouldBeEqualTo names.distinct().size.toLong() // 3L
         }
     }
 }

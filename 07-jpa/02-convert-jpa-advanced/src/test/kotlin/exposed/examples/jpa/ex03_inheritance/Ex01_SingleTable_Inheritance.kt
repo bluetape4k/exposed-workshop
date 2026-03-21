@@ -25,8 +25,7 @@ import java.time.LocalDate
 /**
  * 한 테이블에서 여러가지 종류의 엔티티를 표현하는 방식
  */
-class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
-
+class Ex01_SingleTable_Inheritance : AbstractExposedTest() {
     /**
      * 한 테이블에 2가지 종류의 컬럼 정보를 저장하는 테이블
      *
@@ -55,8 +54,7 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
      * CREATE INDEX billing_owner ON billing ("owner");
      * ```
      */
-    object BillingTable: IntIdTable("billing") {
-
+    object BillingTable : IntIdTable("billing") {
         val owner: Column<String> = varchar("owner", 64).index()
         val swift: Column<String> = varchar("swift", 16)
 
@@ -84,56 +82,65 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
     enum class BillingType {
         UNKNOWN,
         CREDIT_CARD,
-        BANK_ACCOUNT
+        BANK_ACCOUNT,
     }
 
     /**
      * Billing 정보의 공통 속성을 가진 추상 클래스
      */
-    abstract class Billing(id: EntityID<Int>): IntEntity(id) {
+    abstract class Billing(
+        id: EntityID<Int>,
+    ) : IntEntity(id) {
         var owner by BillingTable.owner
         var swift by BillingTable.swift
         protected var dtype: BillingType by BillingTable.dtype
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("owner", owner)
-            .add("swift", swift)
-            .add("dtype", dtype)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("owner", owner)
+                .add("swift", swift)
+                .add("dtype", dtype)
+                .toString()
     }
 
     /**
      * Billing 정보 중 CreditCard 정보를 가진 엔티티
      */
-    class CreditCard(id: EntityID<Int>): Billing(id) {
-        companion object: IntEntityClass<CreditCard>(BillingTable) {
-            override fun new(id: Int?, init: CreditCard.() -> Unit): CreditCard {
-                return super.new(id, init).apply {
+    class CreditCard(
+        id: EntityID<Int>,
+    ) : Billing(id) {
+        companion object : IntEntityClass<CreditCard>(BillingTable) {
+            override fun new(
+                id: Int?,
+                init: CreditCard.() -> Unit,
+            ): CreditCard =
+                super.new(id, init).apply {
                     dtype = BillingType.CREDIT_CARD
                 }
-            }
 
             /**
              * CreditCard 엔티티에 해당하는 정보 중 해당 id 값을 가지는 엔티티를 조회합니다.
              */
             override fun findById(id: EntityID<Int>): CreditCard? {
-                val query = BillingTable
-                    .select(
-                        BillingTable.id,
-                        BillingTable.owner,
-                        BillingTable.swift,
-                        BillingTable.dtype,
-                        BillingTable.cardNumber,
-                        BillingTable.companyName,
-                        BillingTable.expMonth,
-                        BillingTable.expYear,
-                        BillingTable.startDate,
-                        BillingTable.endDate,
-                    )
-                    .where { BillingTable.id eq id }
-                    .andWhere { BillingTable.dtype eq BillingType.CREDIT_CARD }
+                val query =
+                    BillingTable
+                        .select(
+                            BillingTable.id,
+                            BillingTable.owner,
+                            BillingTable.swift,
+                            BillingTable.dtype,
+                            BillingTable.cardNumber,
+                            BillingTable.companyName,
+                            BillingTable.expMonth,
+                            BillingTable.expYear,
+                            BillingTable.startDate,
+                            BillingTable.endDate
+                        ).where { BillingTable.id eq id }
+                        .andWhere { BillingTable.dtype eq BillingType.CREDIT_CARD }
 
                 return wrapRows(query).singleOrNull()
             }
@@ -149,50 +156,56 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
         var endDate by BillingTable.endDate
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("owner", owner)
-            .add("swift", swift)
-            .add("dtype", dtype)
-            .add("cardNumber", cardNumber)
-            .add("companyName", companyName)
-            .add("expMonth", expMonth)
-            .add("expYear", expYear)
-            .add("startDate", startDate)
-            .add("endDate", endDate)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("owner", owner)
+                .add("swift", swift)
+                .add("dtype", dtype)
+                .add("cardNumber", cardNumber)
+                .add("companyName", companyName)
+                .add("expMonth", expMonth)
+                .add("expYear", expYear)
+                .add("startDate", startDate)
+                .add("endDate", endDate)
+                .toString()
     }
 
     /**
      * Billing 정보 중 BankAccount 정보를 가진 엔티티
      */
-    class BankAccount(id: EntityID<Int>): Billing(id) {
-        companion object: IntEntityClass<BankAccount>(BillingTable) {
-            override fun new(id: Int?, init: BankAccount.() -> Unit): BankAccount {
-                return super.new(id, init).apply {
+    class BankAccount(
+        id: EntityID<Int>,
+    ) : Billing(id) {
+        companion object : IntEntityClass<BankAccount>(BillingTable) {
+            override fun new(
+                id: Int?,
+                init: BankAccount.() -> Unit,
+            ): BankAccount =
+                super.new(id, init).apply {
                     dtype = BillingType.BANK_ACCOUNT
                 }
-            }
 
             /**
              * BankAccount 엔티티에 해당하는 정보 중 해당 id 값을 가지는 엔티티를 조회합니다.
              */
             override fun findById(id: EntityID<Int>): BankAccount? {
-                val query = BillingTable
-                    .select(
-                        BillingTable.id,
-                        BillingTable.owner,
-                        BillingTable.swift,
-                        BillingTable.dtype,
-                        BillingTable.accountNumber,
-                        BillingTable.bankName
-                    )
-                    .where { BillingTable.id eq id }
-                    .andWhere { BillingTable.dtype eq BillingType.BANK_ACCOUNT }
+                val query =
+                    BillingTable
+                        .select(
+                            BillingTable.id,
+                            BillingTable.owner,
+                            BillingTable.swift,
+                            BillingTable.dtype,
+                            BillingTable.accountNumber,
+                            BillingTable.bankName
+                        ).where { BillingTable.id eq id }
+                        .andWhere { BillingTable.dtype eq BillingType.BANK_ACCOUNT }
 
                 return wrapRows(query).singleOrNull()
             }
-
 
             fun countBankAccount(): Long = super.count(BillingTable.dtype eq BillingType.BANK_ACCOUNT)
         }
@@ -201,19 +214,22 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
         var bankName by BillingTable.bankName
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("owner", owner)
-            .add("swift", swift)
-            .add("dtype", dtype)
-            .add("accountNumber", accountNumber)
-            .add("bankName", bankName)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("owner", owner)
+                .add("swift", swift)
+                .add("dtype", dtype)
+                .add("accountNumber", accountNumber)
+                .add("bankName", bankName)
+                .toString()
     }
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `single table with tow type entities`(testDB: TestDB) {
+    fun `single table with two type entities`(testDB: TestDB) {
         withTables(testDB, BillingTable) {
             /**
              * ```sql
@@ -222,12 +238,13 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
              * VALUES ('debop', 'NACFKRSE', '123-456-7890', 'Kookmin Bank', 'BANK_ACCOUNT', NULL, NULL, NULL, NULL)
              * ```
              */
-            val account = BankAccount.new {
-                owner = "debop"
-                swift = "NACFKRSE"
-                accountNumber = "123-456-7890"
-                bankName = "Kookmin Bank"
-            }
+            val account =
+                BankAccount.new {
+                    owner = "debop"
+                    swift = "NACFKRSE"
+                    accountNumber = "123-456-7890"
+                    bankName = "Kookmin Bank"
+                }
 
             /**
              * ```sql
@@ -236,14 +253,15 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
              * VALUES ('debop', 'NACFKRSE', NULL, NULL, 'CREDIT_CARD', '1234-5678-9012-3456', 'VISA', 12, 2023)
              * ```
              */
-            val card = CreditCard.new {
-                owner = "debop"
-                swift = "AXBCRGHCX"
-                cardNumber = "1234-5678-9012-3456"
-                companyName = "VISA"
-                expMonth = 12
-                expYear = 2032
-            }
+            val card =
+                CreditCard.new {
+                    owner = "debop"
+                    swift = "AXBCRGHCX"
+                    cardNumber = "1234-5678-9012-3456"
+                    companyName = "VISA"
+                    expMonth = 12
+                    expYear = 2032
+                }
 
             entityCache.clear()
 
@@ -261,7 +279,7 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
              *    AND (billing.dtype = 'BANK_ACCOUNT')
              * ```
              */
-            val account2 = BankAccount.findById(account.id)!!   // 재정의 되었습니다.
+            val account2 = BankAccount.findById(account.id)!! // 재정의 되었습니다.
             account2 shouldBeEqualTo account
 
             /**
@@ -281,7 +299,7 @@ class Ex01_SingleTable_Inheritance: AbstractExposedTest() {
              *    AND billing.dtype = 'CREDIT_CARD'
              * ```
              */
-            val card2 = CreditCard.findById(card.id)!!     // 재정의 되었습니다.
+            val card2 = CreditCard.findById(card.id)!! // 재정의 되었습니다.
 
             card2 shouldBeEqualTo card
 

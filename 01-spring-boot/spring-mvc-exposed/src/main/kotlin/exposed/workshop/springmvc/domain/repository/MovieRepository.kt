@@ -39,7 +39,7 @@ import java.time.LocalDateTime
 class MovieRepository(
     private val db: Database,
 ) {
-    companion object: KLogging()
+    companion object : KLogging()
 
     /**
      * ```sql
@@ -77,13 +77,22 @@ class MovieRepository(
 
         params.forEach { (key, value) ->
             when (key) {
-                MovieTable::id.name           -> value?.let { parseLongParam(key, it) }
-                    ?.let { query.andWhere { MovieTable.id eq it } }
-
-                MovieTable::name.name         -> value?.let { query.andWhere { MovieTable.name eq it } }
-                MovieTable::producerName.name -> value?.let { query.andWhere { MovieTable.producerName eq it } }
-                MovieTable::releaseDate.name  -> value?.let { parseLocalDateTimeParam(key, it) }
-                    ?.let { query.andWhere { MovieTable.releaseDate eq it } }
+                MovieTable::id.name -> {
+                    value
+                        ?.let { parseLongParam(key, it) }
+                        ?.let { query.andWhere { MovieTable.id eq it } }
+                }
+                MovieTable::name.name -> {
+                    value?.let { query.andWhere { MovieTable.name eq it } }
+                }
+                MovieTable::producerName.name -> {
+                    value?.let { query.andWhere { MovieTable.producerName eq it } }
+                }
+                MovieTable::releaseDate.name -> {
+                    value
+                        ?.let { parseLocalDateTimeParam(key, it) }
+                        ?.let { query.andWhere { MovieTable.releaseDate eq it } }
+                }
             }
         }
 
@@ -99,12 +108,13 @@ class MovieRepository(
     fun create(movieRecord: MovieRecord): MovieRecord {
         log.debug { "Create Movie. movie=$movieRecord" }
 
-        val movidId = MovieTable.insertAndGetId {
-            it[name] = movieRecord.name
-            it[producerName] = movieRecord.producerName
-            it[releaseDate] = LocalDate.parse(movieRecord.releaseDate).atTime(0, 0)
-        }
-        return movieRecord.copy(id = movidId.value)
+        val movieId =
+            MovieTable.insertAndGetId {
+                it[name] = movieRecord.name
+                it[producerName] = movieRecord.producerName
+                it[releaseDate] = LocalDate.parse(movieRecord.releaseDate).atTime(0, 0)
+            }
+        return movieRecord.copy(id = movieId.value)
     }
 
     /**
@@ -118,17 +128,22 @@ class MovieRepository(
         return MovieTable.deleteWhere { MovieTable.id eq movieId }
     }
 
-    private fun parseLongParam(key: String, value: String): Long? =
+    private fun parseLongParam(
+        key: String,
+        value: String,
+    ): Long? =
         value.toLongOrNull().also {
             if (it == null) log.warn("Invalid numeric `$key` parameter: '$value', ignoring filter.")
         }
 
-    private fun parseLocalDateTimeParam(key: String, value: String): LocalDateTime? =
+    private fun parseLocalDateTimeParam(
+        key: String,
+        value: String,
+    ): LocalDateTime? =
         runCatching { LocalDateTime.parse(value) }
             .onFailure {
                 log.warn("Invalid `$key` parameter: '$value', ignoring filter.")
-            }
-            .getOrNull()
+            }.getOrNull()
 
     /**
      * 모든 영화와 각 영화에 출연한 배우 목록을 조회합니다.
@@ -164,8 +179,7 @@ class MovieRepository(
                 ActorTable.firstName,
                 ActorTable.lastName,
                 ActorTable.birthday
-            )
-            .groupBy { it[MovieTable.id] }
+            ).groupBy { it[MovieTable.id] }
             .map { (_, rows) ->
                 val movie = rows.first().toMovieRecord()
                 val actor = rows.map { it.toActorRecord() }
@@ -192,7 +206,8 @@ class MovieRepository(
         log.debug { "Get Movie with actors. movieId=$movieId" }
 
         // DAO 방식
-        return MovieEntity.findById(movieId)
+        return MovieEntity
+            .findById(movieId)
             ?.load(MovieEntity::actors)
             ?.toMovieWithActorRecord()
 
@@ -223,8 +238,7 @@ class MovieRepository(
                 MovieTable.id,
                 MovieTable.name,
                 ActorTable.id.count()
-            )
-            .groupBy(MovieTable.id)
+            ).groupBy(MovieTable.id)
             .map {
                 MovieActorCountRecord(
                     movieName = it[MovieTable.name],
@@ -246,20 +260,20 @@ class MovieRepository(
     fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
         log.debug { "Find movies with acting producers." }
 
-        val query = MovieTable
-            .innerJoin(ActorInMovieTable)
-            .innerJoin(
-                ActorTable,
-                onColumn = { ActorTable.id },
-                otherColumn = { ActorInMovieTable.actorId }
-            ) {
-                MovieTable.producerName eq ActorTable.firstName
-            }
-            .select(
-                MovieTable.name,
-                ActorTable.firstName,
-                ActorTable.lastName
-            )
+        val query =
+            MovieTable
+                .innerJoin(ActorInMovieTable)
+                .innerJoin(
+                    ActorTable,
+                    onColumn = { ActorTable.id },
+                    otherColumn = { ActorInMovieTable.actorId }
+                ) {
+                    MovieTable.producerName eq ActorTable.firstName
+                }.select(
+                    MovieTable.name,
+                    ActorTable.firstName,
+                    ActorTable.lastName
+                )
 
         return query.map { it.toMovieWithProducingActorRecord() }
     }

@@ -11,11 +11,6 @@ dependencies {
     testImplementation(Libs.exposed_jdbc)
     testImplementation(Libs.bluetape4k_exposed)
 
-    testRuntimeOnly(Libs.h2_v2)
-    testRuntimeOnly(Libs.mysql_connector_j)
-    testRuntimeOnly(Libs.postgresql_driver)
-    testRuntimeOnly(Libs.pgjdbc_ng)
-
     testImplementation(Libs.bluetape4k_junit5)
 
     testImplementation(Libs.bluetape4k_testcontainers)

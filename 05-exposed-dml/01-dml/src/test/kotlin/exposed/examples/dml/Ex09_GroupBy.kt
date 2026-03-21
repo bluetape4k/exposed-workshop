@@ -47,9 +47,8 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * groupBy, having, avg, max, groupConcat 등 집계 쿼리 패턴과 DB 방언별 동작 차이를 학습합니다.
  */
-class Ex09_GroupBy: AbstractExposedTest() {
-
-    companion object: KLogging()
+class Ex09_GroupBy : AbstractExposedTest() {
+    companion object : KLogging()
 
     /**
      * [groupBy] 를 이용한 조회
@@ -69,14 +68,15 @@ class Ex09_GroupBy: AbstractExposedTest() {
         withCitiesAndUsers(testDB) { cities, users, _ ->
             val cAlias = users.id.count().alias("c")
 
-            val rows: List<ResultRow> = cities.innerJoin(users)
-                .select(
-                    cities.name,
-                    users.id.count(),
-                    cAlias
-                )
-                .groupBy(cities.name)
-                .toList()
+            val rows: List<ResultRow> =
+                cities
+                    .innerJoin(users)
+                    .select(
+                        cities.name,
+                        users.id.count(),
+                        cAlias
+                    ).groupBy(cities.name)
+                    .toList()
 
             rows.forEach {
                 val cityName = it[cities.name]
@@ -91,7 +91,7 @@ class Ex09_GroupBy: AbstractExposedTest() {
                     "Munich" -> userCount shouldBeEqualTo 2L
                     "Prague" -> userCount shouldBeEqualTo 0L
                     "St. Petersburg" -> userCount shouldBeEqualTo 1L
-                    else     -> error("Unknown city $cityName")
+                    else -> error("Unknown city $cityName")
                 }
                 userCountAlias shouldBeEqualTo userCount
             }
@@ -114,11 +114,13 @@ class Ex09_GroupBy: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `groupBy example 02`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, users, _ ->
-            val rows = cities.innerJoin(users)
-                .select(cities.name, users.id.count())
-                .groupBy(cities.name)
-                .having { users.id.count() eq 1 }
-                .toList()
+            val rows =
+                cities
+                    .innerJoin(users)
+                    .select(cities.name, users.id.count())
+                    .groupBy(cities.name)
+                    .having { users.id.count() eq 1 }
+                    .toList()
 
             rows shouldHaveSize 1
             rows[0][cities.name] shouldBeEqualTo "St. Petersburg"
@@ -146,12 +148,14 @@ class Ex09_GroupBy: AbstractExposedTest() {
         withCitiesAndUsers(testDB) { cities, users, _ ->
             val maxExpr: Max<Int, Int> = cities.id.max()
 
-            val rows: List<ResultRow> = cities.innerJoin(users)
-                .select(cities.name, users.id.count(), maxExpr)
-                .groupBy(cities.name)
-                .having { users.id.count().eq<Number, Long, Int>(maxExpr) }
-                .orderBy(cities.name)
-                .toList()
+            val rows: List<ResultRow> =
+                cities
+                    .innerJoin(users)
+                    .select(cities.name, users.id.count(), maxExpr)
+                    .groupBy(cities.name)
+                    .having { users.id.count().eq<Number, Long, Int>(maxExpr) }
+                    .orderBy(cities.name)
+                    .toList()
 
             rows.forEach { row ->
                 log.debug { "city name=${row[cities.name]}, maxExpr=${row[maxExpr]}" }
@@ -191,12 +195,14 @@ class Ex09_GroupBy: AbstractExposedTest() {
     fun `groupBy example 04`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { cities, users, _ ->
 
-            val rows = cities.innerJoin(users)
-                .select(cities.name, users.id.count(), cities.id.max())
-                .groupBy(cities.name)
-                .having { users.id.count() lessEq 42L }
-                .orderBy(cities.name)
-                .toList()
+            val rows =
+                cities
+                    .innerJoin(users)
+                    .select(cities.name, users.id.count(), cities.id.max())
+                    .groupBy(cities.name)
+                    .having { users.id.count() lessEq 42L }
+                    .orderBy(cities.name)
+                    .toList()
 
             rows shouldHaveSize 2
 
@@ -227,17 +233,19 @@ class Ex09_GroupBy: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `groupBy example 06`(testDB: TestDB) {
-        withCitiesAndUsers(testDB) { cities, users, _ ->
+        withCitiesAndUsers(testDB) { cities, _, _ ->
             val maxNullableId = cities.id.max()
 
-            cities.select(maxNullableId)
+            cities
+                .select(maxNullableId)
                 .map { it[maxNullableId] }
                 .let { result ->
                     result shouldHaveSize 1
                     result.single().shouldNotBeNull() shouldBeEqualTo 3
                 }
 
-            cities.select(maxNullableId)
+            cities
+                .select(maxNullableId)
                 .where { cities.id.isNull() }
                 .map { it[maxNullableId] }
                 .let { result ->
@@ -263,23 +271,27 @@ class Ex09_GroupBy: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `groupBy example 07`(testDB: TestDB) {
-        withCitiesAndUsers(testDB) { cities, users, _ ->
+        withCitiesAndUsers(testDB) { cities, _, _ ->
             val avgIdExpr = cities.id.avg()
 
-            val avgId = cities.select(cities.id)
-                .map { it[cities.id] }
-                .average()
-                .toBigDecimal()
-                .setScale(2)
+            val avgId =
+                cities
+                    .select(cities.id)
+                    .map { it[cities.id] }
+                    .average()
+                    .toBigDecimal()
+                    .setScale(2)
 
-            cities.select(avgIdExpr)
+            cities
+                .select(avgIdExpr)
                 .map { it[avgIdExpr] }
                 .let { result ->
                     result shouldHaveSize 1
                     result.single()?.toBigDecimal() shouldBeEqualTo avgId
                 }
 
-            cities.select(avgIdExpr)
+            cities
+                .select(avgIdExpr)
                 .where { cities.id.isNull() }
                 .map { it[avgIdExpr] }
                 .let { result ->
@@ -295,30 +307,37 @@ class Ex09_GroupBy: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `group concat`(testDB: TestDB) {
-
         withCitiesAndUsers(testDB) { cities, users, _ ->
-            fun <T: String?> GroupConcat<T>.checkExcept(
+            fun <T : String?> GroupConcat<T>.checkExcept(
                 vararg dialects: VendorDialect.DialectNameProvider,
                 assert: (Map<String, String?>) -> Unit,
             ) {
                 val groupConcat = this
                 try {
-                    val result = cities.leftJoin(users)
-                        .select(cities.name, groupConcat)
-                        .groupBy(cities.id, cities.name)
-                        .associate { it[cities.name] to it[groupConcat] }
+                    val result =
+                        cities
+                            .leftJoin(users)
+                            .select(cities.name, groupConcat)
+                            .groupBy(cities.id, cities.name)
+                            .associate { it[cities.name] to it[groupConcat] }
                     assert(result)
                 } catch (e: UnsupportedByDialectException) {
                     log.warn(e) { "Unsupported by dialect: ${e.dialect}" }
 
                     val dialectNames = dialects.map { it.dialectName }
                     val dialect = e.dialect
-                    val check = when {
-                        dialect.name in dialectNames -> true
-                        dialect is H2Dialect && dialect.delegatedDialectNameProvider != null ->
-                            dialect.delegatedDialectNameProvider!!.dialectName in dialectNames
-                        else                         -> false
-                    }
+                    val check =
+                        when {
+                            dialect.name in dialectNames -> {
+                                true
+                            }
+                            dialect is H2Dialect && dialect.delegatedDialectNameProvider != null -> {
+                                dialect.delegatedDialectNameProvider!!.dialectName in dialectNames
+                            }
+                            else -> {
+                                false
+                            }
+                        }
                     check.shouldBeTrue()
                 }
             }
@@ -342,11 +361,15 @@ class Ex09_GroupBy: AbstractExposedTest() {
 
                 when (currentDialectTest) {
                     // return order is arbitrary if no ORDER BY is specified
-                    is MariaDBDialect, is SQLiteDialect ->
+                    is MariaDBDialect, is SQLiteDialect -> {
                         listOf("Sergey, Eugene", "Eugene, Sergey") shouldContain it["Munich"]
-
-                    is MysqlDialect, is SQLServerDialect -> it["Munich"] shouldBeEqualTo "Eugene, Sergey"
-                    else                                -> it["Munich"] shouldBeEqualTo "Sergey, Eugene"
+                    }
+                    is MysqlDialect, is SQLServerDialect -> {
+                        it["Munich"] shouldBeEqualTo "Eugene, Sergey"
+                    }
+                    else -> {
+                        it["Munich"] shouldBeEqualTo "Sergey, Eugene"
+                    }
                 }
 
                 it["Prague"].shouldBeNull()
@@ -360,26 +383,29 @@ class Ex09_GroupBy: AbstractExposedTest() {
              *  GROUP BY cities.city_id, cities."name";
              * ```
              */
-            users.name.groupConcat(separator = " | ", distinct = true)
+            users.name
+                .groupConcat(separator = " | ", distinct = true)
                 .checkExcept(OracleDialect, SQLiteDialect, SQLServerDialect) {
-
                     it.size shouldBeEqualTo 3
                     it["St. Petersburg"] shouldBeEqualTo "Andrey"
 
                     when (currentDialectTest) {
-                        is MariaDBDialect ->
+                        is MariaDBDialect -> {
                             listOf("Sergey | Eugene", "Eugene | Sergey") shouldContain it["Munich"]
-
-                        is MysqlDialect, is PostgreSQLDialect -> it["Munich"] shouldBeEqualTo "Eugene | Sergey"
-                        is H2Dialect      -> {
+                        }
+                        is MysqlDialect, is PostgreSQLDialect -> {
+                            it["Munich"] shouldBeEqualTo "Eugene | Sergey"
+                        }
+                        is H2Dialect -> {
                             if (currentDialect.h2Mode == H2Dialect.H2CompatibilityMode.SQLServer) {
                                 it["Munich"] shouldBeEqualTo "Sergey | Eugene"
                             } else {
                                 it["Munich"] shouldBeEqualTo "Eugene | Sergey"
                             }
                         }
-
-                        else              -> it["Munich"] shouldBeEqualTo "Sergey | Eugene"
+                        else -> {
+                            it["Munich"] shouldBeEqualTo "Sergey | Eugene"
+                        }
                     }
                     it["Prague"].shouldBeNull()
                 }

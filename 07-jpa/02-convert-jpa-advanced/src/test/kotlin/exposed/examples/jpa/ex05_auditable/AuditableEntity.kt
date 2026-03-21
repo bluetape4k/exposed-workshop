@@ -28,27 +28,29 @@ object UserContext {
     const val DEFAULT_USERNAME = "system"
     val CURRENT_USER: ScopedValue<String?> = ScopedValue.newInstance()
 
-    fun <T> withUser(username: String, block: () -> T): T {
-        return ScopedValue.where(CURRENT_USER, username).call(block)
-    }
+    fun <T> withUser(
+        username: String,
+        block: () -> T,
+    ): T = ScopedValue.where(CURRENT_USER, username).call(block)
 
-    fun getCurrentUser(): String =
-        runCatching { CURRENT_USER.get() }.getOrNull() ?: DEFAULT_USERNAME
+    fun getCurrentUser(): String = runCatching { CURRENT_USER.get() }.getOrNull() ?: DEFAULT_USERNAME
 }
 
-abstract class AuditableIdTable<ID: Any>(name: String = ""): IdTable<ID>(name) {
-
+abstract class AuditableIdTable<ID : Any>(
+    name: String = "",
+) : IdTable<ID>(name) {
     val createdBy = varchar("created_by", 50).clientDefault { UserContext.getCurrentUser() }.nullable()
     val createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp).nullable()
 
     val updatedBy = varchar("updated_by", 50).nullable()
-    val updatedAt = timestamp("updatedAt_at").nullable()
-
+    val updatedAt = timestamp("updated_at").nullable()
 }
 
-abstract class AuditableEntity<ID: Any>(id: EntityID<ID>): Entity<ID>(id), Auditable {
-
-    companion object: KLogging()
+abstract class AuditableEntity<ID : Any>(
+    id: EntityID<ID>,
+) : Entity<ID>(id),
+    Auditable {
+    companion object : KLogging()
 
     override var createdBy: String? = null
     override var createdAt: Instant? = null
@@ -75,24 +77,39 @@ abstract class AuditableEntity<ID: Any>(id: EntityID<ID>): Entity<ID>(id), Audit
     }
 
     override fun equals(other: Any?): Boolean = idEquals(other)
+
     override fun hashCode(): Int = idHashCode()
 }
 
-abstract class AuditableIntIdTable(name: String = ""): AuditableIdTable<Int>(name) {
+abstract class AuditableIntIdTable(
+    name: String = "",
+) : AuditableIdTable<Int>(name) {
     final override val id = integer("id").autoIncrement().entityId()
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 }
 
-abstract class AuditableLongIdTable(name: String = ""): AuditableIdTable<Long>(name) {
+abstract class AuditableLongIdTable(
+    name: String = "",
+) : AuditableIdTable<Long>(name) {
     final override val id = long("id").autoIncrement().entityId()
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 }
 
-abstract class AuditableUUIDTable(name: String = ""): AuditableIdTable<UUID>(name) {
+abstract class AuditableUUIDTable(
+    name: String = "",
+) : AuditableIdTable<UUID>(name) {
     final override val id = javaUUID("id").clientDefault { UUID.randomUUID() }.entityId()
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 }
 
-abstract class AuditableIntEntity(id: EntityID<Int>): AuditableEntity<Int>(id)
-abstract class AuditableLongEntity(id: EntityID<Long>): AuditableEntity<Long>(id)
-abstract class AuditableUUIDEntity(id: EntityID<UUID>): AuditableEntity<UUID>(id)
+abstract class AuditableIntEntity(
+    id: EntityID<Int>,
+) : AuditableEntity<Int>(id)
+
+abstract class AuditableLongEntity(
+    id: EntityID<Long>,
+) : AuditableEntity<Long>(id)
+
+abstract class AuditableUUIDEntity(
+    id: EntityID<UUID>,
+) : AuditableEntity<UUID>(id)

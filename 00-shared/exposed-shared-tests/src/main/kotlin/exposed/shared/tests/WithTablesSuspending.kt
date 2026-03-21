@@ -37,7 +37,7 @@ suspend fun withTablesSuspending(
                     commit()
                 } catch (ex: Throwable) {
                     logger.error(ex) { "Fail to drop tables, ${tables.joinToString { it.tableName }}" }
-                    val database = testDB.db!!
+                    val database = testDB.db ?: return@withDbSuspending
                     inTopLevelTransaction(
                         db = database,
                         transactionIsolation = database.transactionManager.defaultIsolationLevel
@@ -56,17 +56,17 @@ suspend fun withTablesSuspending(
  */
 @Deprecated(
     message = "Use withTablesSuspending() instead.",
-    replaceWith = ReplaceWith(
-        "withTablesSuspending(testDB, *tables, context = context, configure = configure, dropTables = dropTables, statement = statement)",
-        "io.bluetape4k.exposed.tests.withTablesSuspending"
-    )
+    replaceWith =
+        ReplaceWith(
+            "withTablesSuspending(testDB, *tables, context = context, configure = configure, dropTables = dropTables, statement = statement)",
+            "exposed.shared.tests.withTablesSuspending"
+        )
 )
 suspend fun withSuspendedTables(
     testDB: TestDB,
     vararg tables: Table,
     context: CoroutineContext? = Dispatchers.IO,
     configure: (DatabaseConfig.Builder.() -> Unit)? = fun DatabaseConfig.Builder.() {
-
     },
     dropTables: Boolean = true,
     statement: suspend JdbcTransaction.(TestDB) -> Unit,
@@ -77,6 +77,6 @@ suspend fun withSuspendedTables(
         context = context,
         configure = configure,
         dropTables = dropTables,
-        statement = statement,
+        statement = statement
     )
 }

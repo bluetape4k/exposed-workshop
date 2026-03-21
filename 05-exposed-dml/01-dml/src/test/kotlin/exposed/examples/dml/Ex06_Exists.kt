@@ -30,9 +30,8 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * `EXISTS` 키워드를 사용하는 예제입니다.
  */
-class Ex06_Exists: AbstractExposedTest() {
-
-    companion object: KLogging()
+class Ex06_Exists : AbstractExposedTest() {
+    companion object : KLogging()
 
     /**
      * [exists]를 조건절에 사용하는 예
@@ -66,15 +65,17 @@ class Ex06_Exists: AbstractExposedTest() {
         withCitiesAndUsers(testDB) { _, users, userData ->
             // userData.comment 에 "%here%" 문자열이 포함된 데이터가 있고,
             // 그 데이터의 userId 와 users.id 가 같은 경우의 users 데이터를 조회합니다.
-            val rows = users.selectAll()
-                .where {
-                    exists(
-                        userData
-                            .select(userData.userId)
-                            .where { userData.userId eq users.id }
-                            .andWhere { userData.comment like "%here%" }
-                    )
-                }.toList()
+            val rows =
+                users
+                    .selectAll()
+                    .where {
+                        exists(
+                            userData
+                                .select(userData.userId)
+                                .where { userData.userId eq users.id }
+                                .andWhere { userData.comment like "%here%" }
+                        )
+                    }.toList()
 
             rows shouldHaveSize 1
             rows.single()[users.name] shouldBeEqualTo "Something"
@@ -128,37 +129,42 @@ class Ex06_Exists: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `exists in a slice`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { _, users, userData ->
-            var exists: Expression<Boolean> = exists(
-                userData
-                    .selectAll()
-                    .where { userData.userId eq users.id }
-                    .andWhere { userData.comment like "%here%" }
-            )
+            var exists: Expression<Boolean> =
+                exists(
+                    userData
+                        .selectAll()
+                        .where { userData.userId eq users.id }
+                        .andWhere { userData.comment like "%here%" }
+                )
             if (currentDialectTest is OracleDialect || currentDialect is SQLServerDialect) {
                 exists = case().When(exists, booleanLiteral(true)).Else(booleanLiteral(false))
             }
 
             users.select(exists).first()[exists].shouldBeFalse()
-            users.select(exists)
+            users
+                .select(exists)
                 .where { users.id eq "smth" }
-                .single()[exists].shouldBeTrue()
+                .single()[exists]
+                .shouldBeTrue()
 
-            var notExists: Expression<Boolean> = notExists(
-                userData
-                    .selectAll()
-                    .where { userData.userId eq users.id }
-                    .andWhere { userData.comment like "%here%" }
-            )
+            var notExists: Expression<Boolean> =
+                notExists(
+                    userData
+                        .selectAll()
+                        .where { userData.userId eq users.id }
+                        .andWhere { userData.comment like "%here%" }
+                )
             if (currentDialectTest is OracleDialect || currentDialect is SQLServerDialect) {
-                notExists = case().When(exists, booleanLiteral(true)).Else(booleanLiteral(false))
+                notExists = case().When(notExists, booleanLiteral(true)).Else(booleanLiteral(false))
             }
 
             users.select(notExists).first()[notExists].shouldBeTrue()
 
-            users.select(notExists)
+            users
+                .select(notExists)
                 .where { users.id eq "smth" }
-                .single()[notExists].shouldBeFalse()
-
+                .single()[notExists]
+                .shouldBeFalse()
         }
     }
 
@@ -181,19 +187,20 @@ class Ex06_Exists: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `exists examples 02`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { _, users, userData ->
-            val rows = users
-                .selectAll()
-                .where {
-                    exists(
-                        userData.select(userData.userId)
-                            .where { userData.userId eq users.id }
-                            .andWhere {
-                                (userData.comment like "%here%") or (userData.comment like "%Sergey")
-                            }
-                    )
-                }
-                .orderBy(users.id)
-                .toList()
+            val rows =
+                users
+                    .selectAll()
+                    .where {
+                        exists(
+                            userData
+                                .select(userData.userId)
+                                .where { userData.userId eq users.id }
+                                .andWhere {
+                                    (userData.comment like "%here%") or (userData.comment like "%Sergey")
+                                }
+                        )
+                    }.orderBy(users.id)
+                    .toList()
 
             rows shouldHaveSize 2
             rows[0][users.name] shouldBeEqualTo "Sergey"
@@ -225,26 +232,25 @@ class Ex06_Exists: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `exists examples 03`(testDB: TestDB) {
         withCitiesAndUsers(testDB) { _, users, userData ->
-            val rows = users
-                .selectAll()
-                .where {
-                    exists(
-                        userData
-                            .select(userData.userId)
-                            .where { userData.userId eq users.id }
-                            .andWhere { userData.comment like "%here%" }
-                    )
-                }
-                .orWhere {
-                    exists(
-                        userData
-                            .select(userData.userId)
-                            .where { userData.userId eq users.id }
-                            .andWhere { userData.comment like "%Sergey" }
-                    )
-                }
-                .orderBy(users.id)
-                .toList()
+            val rows =
+                users
+                    .selectAll()
+                    .where {
+                        exists(
+                            userData
+                                .select(userData.userId)
+                                .where { userData.userId eq users.id }
+                                .andWhere { userData.comment like "%here%" }
+                        )
+                    }.orWhere {
+                        exists(
+                            userData
+                                .select(userData.userId)
+                                .where { userData.userId eq users.id }
+                                .andWhere { userData.comment like "%Sergey" }
+                        )
+                    }.orderBy(users.id)
+                    .toList()
 
             rows shouldHaveSize 2
             rows[0][users.name] shouldBeEqualTo "Sergey"

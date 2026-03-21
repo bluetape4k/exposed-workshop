@@ -32,8 +32,7 @@ import org.junit.jupiter.params.provider.MethodSource
  *
  * **`REPLACE INTO` 문은 MySQL, MariaDB 에서만 지원한다.**
  */
-class Ex13_Replace: AbstractExposedTest() {
-
+class Ex13_Replace : AbstractExposedTest() {
     private val replaceSupported = TestDB.ALL_MYSQL_LIKE + TestDB.ALL_MARIADB_LIKE
 
     /**
@@ -47,7 +46,7 @@ class Ex13_Replace: AbstractExposedTest() {
      * )
      * ```
      */
-    private object NewAuth: Table("new_auth") {
+    private object NewAuth : Table("new_auth") {
         val username = varchar("username", 16)
         val session = binary("session", 64)
         val timestamp = long("timestamp").default(0)
@@ -85,12 +84,13 @@ class Ex13_Replace: AbstractExposedTest() {
 
             val timeNow = System.currentTimeMillis()
             val specialId = "special server id"
-            val allRowsWithNewDefaults: Query = NewAuth.select(
-                NewAuth.username,
-                NewAuth.session,
-                longLiteral(timeNow),
-                stringLiteral(specialId)
-            )
+            val allRowsWithNewDefaults: Query =
+                NewAuth.select(
+                    NewAuth.username,
+                    NewAuth.session,
+                    longLiteral(timeNow),
+                    stringLiteral(specialId)
+                )
 
             /**
              *
@@ -139,9 +139,10 @@ class Ex13_Replace: AbstractExposedTest() {
             }
 
             val newSession = "session2"
-            val name1Row = NewAuth
-                .select(NewAuth.username, stringLiteral(newSession))
-                .where { NewAuth.username eq name1 }
+            val name1Row =
+                NewAuth
+                    .select(NewAuth.username, stringLiteral(newSession))
+                    .where { NewAuth.username eq name1 }
 
             /**
              * 특정 컬럼만 변경하는 REPLACE 문
@@ -154,21 +155,24 @@ class Ex13_Replace: AbstractExposedTest() {
              *   WHERE new_auth.username = 'username1'
              * ```
              */
-            val affectedRowCount = NewAuth.replace(
-                name1Row,
-                columns = listOf(NewAuth.username, NewAuth.session)
-            )
+            val affectedRowCount =
+                NewAuth.replace(
+                    name1Row,
+                    columns = listOf(NewAuth.username, NewAuth.session)
+                )
 
             // MySQL 은 데이터가 추가될 때마다 1을 반환하고, 충돌이 발생할 때마다 1을 증가시킨다. (1 + 1 = 2)
             // 다른 DB는 오로지 추가된 데이터만 카운트한다. (1)
             val expectedRowCount = if (testDB in TestDB.ALL_MYSQL_LIKE) 2 else 1
             affectedRowCount shouldBeEqualTo expectedRowCount
 
-            NewAuth.selectAll()
+            NewAuth
+                .selectAll()
                 .where { NewAuth.username eq name1 }
                 .single()[NewAuth.session] shouldBeEqualTo newSession.toByteArray()
 
-            NewAuth.selectAll()
+            NewAuth
+                .selectAll()
                 .where { NewAuth.username eq name2 }
                 .single()[NewAuth.session] shouldBeEqualTo oldSession
         }
@@ -225,7 +229,7 @@ class Ex13_Replace: AbstractExposedTest() {
     }
 
     /**
-     * 복함 기본 키를 가진 테이블에 대한 REPLACE 문
+     * 복합 기본 키를 가진 테이블에 대한 REPLACE 문
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -243,13 +247,14 @@ class Ex13_Replace: AbstractExposedTest() {
          * )
          * ```
          */
-        val tester = object: Table("test_table") {
-            val key1 = varchar("key_1", 16)
-            val key2 = varchar("key_2", 16)
-            val replaced = long("replaced").default(0)
+        val tester =
+            object : Table("test_table") {
+                val key1 = varchar("key_1", 16)
+                val key2 = varchar("key_2", 16)
+                val replaced = long("replaced").default(0)
 
-            override val primaryKey = PrimaryKey(key1, key2)
-        }
+                override val primaryKey = PrimaryKey(key1, key2)
+            }
 
         withTables(testDB, tester) {
             /**
@@ -257,7 +262,7 @@ class Ex13_Replace: AbstractExposedTest() {
              * REPLACE INTO test_table (key_1, key_2) VALUES ('A', 'B')
              * ```
              */
-            val (id1, id2) = "A" to "B"
+                val (id1, id2) = "A" to "B"
             tester.replace {
                 it[key1] = id1
                 it[key2] = id2
@@ -273,14 +278,16 @@ class Ex13_Replace: AbstractExposedTest() {
              * ```
              */
             val timeNow = System.currentTimeMillis()
-            tester.replace { // key1 만 일치하므로, INSERT 된다.
+            tester.replace {
+                // key1 만 일치하므로, INSERT 된다.
                 it[key1] = id1
                 it[key2] = "$id2 2"
                 it[replaced] = timeNow
             }
 
             tester.selectAll().count() shouldBeEqualTo 2L
-            tester.selectAll()
+            tester
+                .selectAll()
                 .where { tester.key2 eq id2 }
                 .single()[tester.replaced] shouldBeEqualTo 0L
 
@@ -298,7 +305,8 @@ class Ex13_Replace: AbstractExposedTest() {
             }
 
             tester.selectAll().count() shouldBeEqualTo 2L
-            tester.selectAll()
+            tester
+                .selectAll()
                 .where { tester.key2 eq id2 }
                 .single()[tester.replaced] shouldBeEqualTo timeNow
         }
@@ -341,11 +349,12 @@ class Ex13_Replace: AbstractExposedTest() {
     fun `empty replace`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB in replaceSupported }
 
-        val tester = object: Table("tester") {
-            val id = integer("id").autoIncrement()
+        val tester =
+            object : Table("tester") {
+                val id = integer("id").autoIncrement()
 
-            override val primaryKey = PrimaryKey(id)
-        }
+                override val primaryKey = PrimaryKey(id)
+            }
 
         withTables(testDB, tester) {
             tester.replace { }
@@ -368,33 +377,36 @@ class Ex13_Replace: AbstractExposedTest() {
         Assumptions.assumeTrue { testDB in replaceSupported }
 
         withCitiesAndUsers(testDB) { cities, users, userData ->
-            val (munichId, pragueId, saintPetersburgId) = cities
-                .select(cities.id)
-                .where { cities.name inList listOf("Munich", "Prague", "St. Petersburg") }
-                .orderBy(cities.name)
-                .map { it[cities.id] }
+            val (munichId, pragueId, saintPetersburgId) =
+                cities
+                    .select(cities.id)
+                    .where { cities.name inList listOf("Munich", "Prague", "St. Petersburg") }
+                    .orderBy(cities.name)
+                    .map { it[cities.id] }
 
             // replace is implemented as delete-then-insert on conflict, which breaks foreign key constraints,
             // so this test will only work if those related rows are deleted.
             userData.deleteAll()
             users.deleteAll()
 
-            val cityUpdates = mapOf(
-                munichId to "München",
-                pragueId to "Prague",
-                saintPetersburgId to "Saint Petersburg"
-            )
+            val cityUpdates =
+                mapOf(
+                    munichId to "München",
+                    pragueId to "Prague",
+                    saintPetersburgId to "Saint Petersburg"
+                )
 
             cities.batchReplace(cityUpdates.entries) {
                 this[cities.id] = it.key
                 this[cities.name] = it.value
             }
 
-            val cityNames = cities
-                .select(cities.name)
-                .where { cities.id inList cityUpdates.keys }  // REPLACE 가 적용된 데이터를 조회
-                .orderBy(cities.name)
-                .toCityNameList()
+            val cityNames =
+                cities
+                    .select(cities.name)
+                    .where { cities.id inList cityUpdates.keys } // REPLACE 가 적용된 데이터를 조회
+                    .orderBy(cities.name)
+                    .toCityNameList()
 
             cityNames shouldContainSame cityUpdates.values
         }
@@ -428,9 +440,10 @@ class Ex13_Replace: AbstractExposedTest() {
         val cities = DMLTestData.Cities
         withTables(testDB, cities) {
             val amountOfNames = 25
-            val names = List(amountOfNames) { index ->
-                index + 1 to Uuid.V7.nextIdAsString()
-            }.asSequence()
+            val names =
+                List(amountOfNames) { index ->
+                    index + 1 to Uuid.V7.nextIdAsString()
+                }.asSequence()
 
             cities.batchReplace(names) { (index, name) ->
                 this[cities.id] = index
@@ -441,9 +454,10 @@ class Ex13_Replace: AbstractExposedTest() {
             namesFromDB1.size shouldBeEqualTo amountOfNames
             namesFromDB1 shouldBeEqualTo names.unzip().second
 
-            val namesToReplace = List(amountOfNames) { index ->
-                index + 1 to Uuid.V7.nextIdAsString()
-            }.asSequence()
+            val namesToReplace =
+                List(amountOfNames) { index ->
+                    index + 1 to Uuid.V7.nextIdAsString()
+                }.asSequence()
 
             cities.batchReplace(namesToReplace) { (index, name) ->
                 this[cities.id] = index

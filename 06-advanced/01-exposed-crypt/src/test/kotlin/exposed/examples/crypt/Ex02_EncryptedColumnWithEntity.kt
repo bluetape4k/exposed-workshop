@@ -27,9 +27,9 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * 암호화 컬럼을 DAO(Entity)로 다루는 예제.
  */
-class Ex02_EncryptedColumnWithEntity: AbstractExposedTest() {
-
-    companion object: KLogging() {
+class Ex02_EncryptedColumnWithEntity : AbstractExposedTest() {
+    companion object : KLogging() {
+        // WARNING: 워크샵 예제용 하드코딩입니다. 프로덕션에서는 환경변수나 Vault에서 키를 로드하세요.
         private val encryptor = Algorithms.AES_256_PBE_GCM("passwd", "12345678")
     }
 
@@ -43,23 +43,28 @@ class Ex02_EncryptedColumnWithEntity: AbstractExposedTest() {
      * )
      * ```
      */
-    object TestTable: IntIdTable() {
+    object TestTable : IntIdTable() {
         val varchar = encryptedVarchar("varchar", 100, encryptor)
         val binary = encryptedBinary("binary", 100, encryptor)
     }
 
-    class ETest(id: EntityID<Int>): IntEntity(id) {
-        companion object: IntEntityClass<ETest>(TestTable)
+    class ETest(
+        id: EntityID<Int>,
+    ) : IntEntity(id) {
+        companion object : IntEntityClass<ETest>(TestTable)
 
         var varchar: String by TestTable.varchar
         var binary: ByteArray by TestTable.binary
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("varchar", varchar)
-            .add("binary", binary.contentToString())
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("varchar", varchar)
+                .add("binary", binary.contentToString())
+                .toString()
     }
 
     /**
@@ -78,10 +83,11 @@ class Ex02_EncryptedColumnWithEntity: AbstractExposedTest() {
             val varcharValue = "varchar"
             val binaryValue = "binary".toByteArray()
 
-            val entity = ETest.new {
-                varchar = varcharValue
-                binary = binaryValue
-            }
+            val entity =
+                ETest.new {
+                    varchar = varcharValue
+                    binary = binaryValue
+                }
 
             entityCache.clear()
 

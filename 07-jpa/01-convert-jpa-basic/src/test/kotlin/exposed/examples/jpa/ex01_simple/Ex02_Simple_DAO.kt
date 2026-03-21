@@ -22,9 +22,8 @@ import kotlin.test.assertFailsWith
 /**
  * 단순 DAO 엔티티의 생성/동등성/제약조건을 검증하는 테스트입니다.
  */
-class Ex02_Simple_DAO: AbstractExposedTest() {
-
-    companion object: KLogging()
+class Ex02_Simple_DAO : AbstractExposedTest() {
+    companion object : KLogging()
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -33,14 +32,16 @@ class Ex02_Simple_DAO: AbstractExposedTest() {
             val name1 = faker.name().name()
             val name2 = faker.name().name()
 
-            val entity1 = SimpleEntity.new {
-                name1.requireNotBlank("name1")
-                name = name1
-            }
-            val entity2 = SimpleEntity.new {
-                name2.requireNotBlank("name2")
-                name = name2
-            }
+            val entity1 =
+                SimpleEntity.new {
+                    name1.requireNotBlank("name1")
+                    name = name1
+                }
+            val entity2 =
+                SimpleEntity.new {
+                    name2.requireNotBlank("name2")
+                    name = name2
+                }
 
             entityCache.clear()
 
@@ -66,7 +67,7 @@ class Ex02_Simple_DAO: AbstractExposedTest() {
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `violance unique index`(testDB: TestDB) {
+    fun `violate unique index`(testDB: TestDB) {
         withTables(testDB, SimpleTable) {
             val name = faker.name().name()
 

@@ -59,7 +59,7 @@ suspend fun withDbSuspending(
             newSuspendedTransaction(
                 context = context,
                 db = database,
-                transactionIsolation = database.transactionManager.defaultIsolationLevel,
+                transactionIsolation = database.transactionManager.defaultIsolationLevel
             ) {
                 maxAttempts = 1
                 registerInterceptor(CurrentTestDBInterceptor)
@@ -87,10 +87,11 @@ suspend fun withDbSuspending(
  */
 @Deprecated(
     message = "Use withDbSuspending() instead.",
-    replaceWith = ReplaceWith(
-        "withDbSuspending(testDB, context, configure, statement)",
-        "io.bluetape4k.exposed.tests.withDbSuspending"
-    )
+    replaceWith =
+        ReplaceWith(
+            "withDbSuspending(testDB, context, configure, statement)",
+            "exposed.shared.tests.withDbSuspending"
+        )
 )
 suspend fun withSuspendedDb(
     testDB: TestDB,

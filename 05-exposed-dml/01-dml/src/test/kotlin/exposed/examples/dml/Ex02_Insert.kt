@@ -73,9 +73,8 @@ import java.util.*
  * 단건/배치 삽입, insertAndGetId, insertIgnore, batchInsert, 코루틴 컨텍스트 삽입 등
  * 다양한 INSERT 패턴을 학습합니다.
  */
-class Ex02_Insert: AbstractExposedTest() {
-
-    companion object: KLogging()
+class Ex02_Insert : AbstractExposedTest() {
+    companion object : KLogging()
 
     /**
      * [insertAndGetId] 는 [IntIdTable] 처럼 entityID를 가지는 테이블에 대해서 사용할 수 있습니다.
@@ -91,9 +90,10 @@ class Ex02_Insert: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert and get id 01`(testDB: TestDB) {
-        val idTable = object: IntIdTable("tmp") {
-            val name = varchar("foo", 10).uniqueIndex()
-        }
+        val idTable =
+            object : IntIdTable("tmp") {
+                val name = varchar("foo", 10).uniqueIndex()
+            }
 
         withTables(testDB, idTable) {
             val id1 = idTable.insertAndGetId { it[name] = "name-1" }
@@ -104,13 +104,15 @@ class Ex02_Insert: AbstractExposedTest() {
             idTable.selectAll().count() shouldBeEqualTo 2L
             id2.value shouldBeEqualTo 2
 
-            val id3 = idTable.insert {
-                it[name] = "name-3"
-            } get idTable.id
+            val id3 =
+                idTable.insert {
+                    it[name] = "name-3"
+                } get idTable.id
 
-            val id4 = idTable.insert {
-                it[name] = "name-4"
-            }[idTable.id]
+            val id4 =
+                idTable.insert {
+                    it[name] = "name-4"
+                }[idTable.id]
 
             log.debug { "id1=$id1, id2=$id2, id3=$id3, id4=$id4" }
 
@@ -119,7 +121,6 @@ class Ex02_Insert: AbstractExposedTest() {
             }
         }
     }
-
 
     /**
      * [insertIgnoreAndGetId] 는 `INSERT` 시 예외가 발생하면, 아무 일도 하지 않고,
@@ -139,9 +140,10 @@ class Ex02_Insert: AbstractExposedTest() {
     fun `insert ignore and get id 01`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB in TestDB.ALL_POSTGRES_LIKE + TestDB.MYSQL_V8 }
 
-        val idTable = object: IntIdTable("tmp") {
-            val name = varchar("foo", 10).uniqueIndex()
-        }
+        val idTable =
+            object : IntIdTable("tmp") {
+                val name = varchar("foo", 10).uniqueIndex()
+            }
 
         withTables(testDB, idTable) {
             // INSERT INTO tmp (foo) VALUES ('1') ON CONFLICT DO NOTHING
@@ -160,10 +162,11 @@ class Ex02_Insert: AbstractExposedTest() {
             idNull.shouldBeNull()
 
             // INSERT INTO tmp (id, foo) VALUES (100, '2') ON CONFLICT DO NOTHING
-            val shouldNotReturnProvidedIdOnConflict = idTable.insertIgnoreAndGetId {
-                it[idTable.id] = EntityID(100, idTable)
-                it[idTable.name] = "2"
-            }
+            val shouldNotReturnProvidedIdOnConflict =
+                idTable.insertIgnoreAndGetId {
+                    it[idTable.id] = EntityID(100, idTable)
+                    it[idTable.name] = "2"
+                }
             idTable.selectAll().count() shouldBeEqualTo 2L
             shouldNotReturnProvidedIdOnConflict.shouldBeNull()
         }
@@ -183,23 +186,26 @@ class Ex02_Insert: AbstractExposedTest() {
          * CREATE TABLE IF NOT EXISTS testtablewithid (code INT NOT NULL)
          * ```
          */
-        val testTableWithId = object: IdTable<Int>("testTableWithId") {
-            val code = integer("code")
-            override val id: Column<EntityID<Int>> = code.entityId()
-        }
+        val testTableWithId =
+            object : IdTable<Int>("testTableWithId") {
+                val code = integer("code")
+                override val id: Column<EntityID<Int>> = code.entityId()
+            }
 
         withTables(testDB, testTableWithId) {
             // INSERT INTO testtablewithid (code) VALUES (1)
-            val id1 = testTableWithId.insertAndGetId {
-                it[code] = 1
-            }
+            val id1 =
+                testTableWithId.insertAndGetId {
+                    it[code] = 1
+                }
             id1.shouldNotBeNull()
             id1.value shouldBeEqualTo 1
 
             // INSERT INTO testtablewithid (code) VALUES (2)
-            val id2 = testTableWithId.insert {
-                it[code] = 2
-            } get testTableWithId.id
+            val id2 =
+                testTableWithId.insert {
+                    it[code] = 2
+                } get testTableWithId.id
 
             id2.shouldNotBeNull()
             id2.value shouldBeEqualTo 2
@@ -225,10 +231,11 @@ class Ex02_Insert: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `id and column have different names and get value by original column`(testDB: TestDB) {
-        val exampleTable = object: IdTable<String>("test_id_and_column_table") {
-            val exampleColumn = varchar("example_column", 200)
-            override val id: Column<EntityID<String>> = exampleColumn.entityId()
-        }
+        val exampleTable =
+            object : IdTable<String>("test_id_and_column_table") {
+                val exampleColumn = varchar("example_column", 200)
+                override val id: Column<EntityID<String>> = exampleColumn.entityId()
+            }
 
         withTables(testDB, exampleTable) {
             val value = Base58.randomString(6)
@@ -262,24 +269,27 @@ class Ex02_Insert: AbstractExposedTest() {
     fun `insertIgnore with predefined id`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB in TestDB.ALL_POSTGRES_LIKE + TestDB.H2_MYSQL + TestDB.MYSQL_V8 }
 
-        val idTable = object: IntIdTable("tmp") {
-            val name = varchar("foo", 10).uniqueIndex()
-        }
+        val idTable =
+            object : IntIdTable("tmp") {
+                val name = varchar("foo", 10).uniqueIndex()
+            }
 
         withTables(testDB, idTable) {
             // ID가 중복되지 않아서, INSERT가 수행됩니다.
-            val insertedStatement: InsertStatement<Long> = idTable.insertIgnore {
-                it[idTable.id] = EntityID(1, idTable)
-                it[idTable.name] = "1"
-            }
+            val insertedStatement: InsertStatement<Long> =
+                idTable.insertIgnore {
+                    it[idTable.id] = EntityID(1, idTable)
+                    it[idTable.name] = "1"
+                }
             insertedStatement[idTable.id].value shouldBeEqualTo 1
             insertedStatement.insertedCount shouldBeEqualTo 1
 
             // ID가 중복되었다는 예외가 발생, 에외는 무시되고, INSERT는 취소됩니다.
-            val notInsertedStatement: InsertStatement<Long> = idTable.insertIgnore {
-                it[idTable.id] = EntityID(1, idTable)
-                it[idTable.name] = "2"
-            }
+            val notInsertedStatement: InsertStatement<Long> =
+                idTable.insertIgnore {
+                    it[idTable.id] = EntityID(1, idTable)
+                    it[idTable.name] = "2"
+                }
             notInsertedStatement[idTable.id].value shouldBeEqualTo 1
             notInsertedStatement.insertedCount shouldBeEqualTo 0
         }
@@ -302,14 +312,16 @@ class Ex02_Insert: AbstractExposedTest() {
              * INSERT INTO cities ("name") VALUES ('Helsinki');
              * ```
              */
-            val allCitiesIDs: List<ResultRow> = cities.batchInsert(cityNames) { name ->
-                this[cities.name] = name
-            }
+            val allCitiesIDs: List<ResultRow> =
+                cities.batchInsert(cityNames) { name ->
+                    this[cities.name] = name
+                }
             allCitiesIDs shouldHaveSize cityNames.size
 
-            val userNamesWithCityIds = allCitiesIDs.mapIndexed { index, rows ->
-                "UserFrom${cityNames[index]}" to rows[cities.id] as Number
-            }
+            val userNamesWithCityIds =
+                allCitiesIDs.mapIndexed { index, rows ->
+                    "UserFrom${cityNames[index]}" to rows[cities.id] as Number
+                }
 
             /**
              * ```sql
@@ -319,14 +331,16 @@ class Ex02_Insert: AbstractExposedTest() {
              * INSERT INTO users (id, "name", city_id) VALUES ('niR8mW', 'UserFromHelsinki', 6)
              * ```
              */
-            val generatedIds: List<ResultRow> = users.batchInsert(userNamesWithCityIds) { (userName, cityId) ->
-                this[users.id] = Base58.randomString(6)
-                this[users.name] = userName
-                this[users.cityId] = cityId.toInt()
-            }
+            val generatedIds: List<ResultRow> =
+                users.batchInsert(userNamesWithCityIds) { (userName, cityId) ->
+                    this[users.id] = Base58.randomString(6)
+                    this[users.name] = userName
+                    this[users.cityId] = cityId.toInt()
+                }
             generatedIds shouldHaveSize userNamesWithCityIds.size
 
-            users.selectAll()
+            users
+                .selectAll()
                 .where { users.name inList userNamesWithCityIds.map { it.first } }
                 .count() shouldBeEqualTo userNamesWithCityIds.size.toLong()
         }
@@ -342,13 +356,15 @@ class Ex02_Insert: AbstractExposedTest() {
 
         withTables(testDB, cities) {
             val batchSize = 100
-            val names = generateSequence {
-                Uuid.V7.nextIdAsString()
-            }.take(batchSize)
+            val names =
+                generateSequence {
+                    Uuid.V7.nextIdAsString()
+                }.take(batchSize)
 
-            val inserted = cities.batchInsert(names) { name ->
-                this[cities.name] = name
-            }
+            val inserted =
+                cities.batchInsert(names) { name ->
+                    this[cities.name] = name
+                }
             inserted shouldHaveSize batchSize
 
             cities.selectAll().count() shouldBeEqualTo batchSize.toLong()
@@ -371,12 +387,12 @@ class Ex02_Insert: AbstractExposedTest() {
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `insert and get generted key 01`(testDB: TestDB) {
-
+    fun `insert and get generated key 01`(testDB: TestDB) {
         withTables(testDB, Cities) {
-            val id: Int = Cities.insert {
-                it[name] = "FooCity"
-            } get Cities.id  // [Cities.id]로 표현할 수 있다.
+            val id: Int =
+                Cities.insert {
+                    it[name] = "FooCity"
+                } get Cities.id // [Cities.id]로 표현할 수 있다.
 
             Cities.selectAll().last()[Cities.id] shouldBeEqualTo id
         }
@@ -391,7 +407,7 @@ class Ex02_Insert: AbstractExposedTest() {
      * )
      * ```
      */
-    object TestLongIdTable: Table("test_longid") {
+    object TestLongIdTable : Table("test_longid") {
         val id = long("id").autoIncrement()
         val name = text("name")
 
@@ -410,9 +426,10 @@ class Ex02_Insert: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert and get generated key 02`(testDB: TestDB) {
         withTables(testDB, TestLongIdTable) {
-            val id: Long = TestLongIdTable.insert {
-                it[name] = "Foo"
-            } get TestLongIdTable.id
+            val id: Long =
+                TestLongIdTable.insert {
+                    it[name] = "Foo"
+                } get TestLongIdTable.id
 
             TestLongIdTable.selectAll().last()[TestLongIdTable.id] shouldBeEqualTo id
         }
@@ -427,7 +444,7 @@ class Ex02_Insert: AbstractExposedTest() {
      * )
      * ```
      */
-    object IntIdTestTable: IntIdTable("test_intid") {
+    object IntIdTestTable : IntIdTable("test_intid") {
         val name = text("name")
     }
 
@@ -443,9 +460,10 @@ class Ex02_Insert: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert and get generated key 03`(testDB: TestDB) {
         withTables(testDB, IntIdTestTable) {
-            val id: EntityID<Int> = IntIdTestTable.insertAndGetId {
-                it[name] = "Foo"
-            }
+            val id: EntityID<Int> =
+                IntIdTestTable.insertAndGetId {
+                    it[name] = "Foo"
+                }
 
             val loadedId = IntIdTestTable.selectAll().last()[IntIdTestTable.id]
             loadedId shouldBeEqualTo id
@@ -453,7 +471,6 @@ class Ex02_Insert: AbstractExposedTest() {
             loadedId.table shouldBeEqualTo id.table
         }
     }
-
 
     /**
      * 사용자가 제공하는 [EntityID] 값을 사용하여 데이터를 삽입합니다.
@@ -469,27 +486,28 @@ class Ex02_Insert: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert with predefined id`(testDB: TestDB) {
-
-        val stringTable = object: IdTable<String>("stringTable") {
-            override val id: Column<EntityID<String>> = varchar("id", 15).entityId()
-            val name = text("name")
-        }
+        val stringTable =
+            object : IdTable<String>("stringTable") {
+                override val id: Column<EntityID<String>> = varchar("id", 15).entityId()
+                val name = text("name")
+            }
         withTables(testDB, stringTable) {
-
             // INSERT INTO stringtable (id, "name") VALUES ('id1', 'Foo')
             val entityID = EntityID("id1", stringTable)
-            val id1 = stringTable.insertAndGetId {
-                it[stringTable.id] = entityID
-                it[stringTable.name] = "Foo"
-            }
+            val id1 =
+                stringTable.insertAndGetId {
+                    it[stringTable.id] = entityID
+                    it[stringTable.name] = "Foo"
+                }
             id1 shouldBeEqualTo entityID
 
             // INSERT INTO stringtable (id, "name") VALUES ('testId', 'Bar')
             val entityID2 = EntityID("testId", stringTable)
-            val id2 = stringTable.insertAndGetId {
-                it[stringTable.id] = entityID2
-                it[stringTable.name] = "Bar"
-            }
+            val id2 =
+                stringTable.insertAndGetId {
+                    it[stringTable.id] = entityID2
+                    it[stringTable.name] = "Bar"
+                }
             id2 shouldBeEqualTo entityID2
 
             val row1 = stringTable.selectAll().where { stringTable.id eq entityID }.singleOrNull()
@@ -521,10 +539,11 @@ class Ex02_Insert: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert with foreign id`(testDB: TestDB) {
-        val idTable = object: IntIdTable("idTable") {}
-        val standardTable = object: Table("standardTable") {
-            val externalId: Column<EntityID<Int>> = reference("externalId", idTable.id)
-        }
+        val idTable = object : IntIdTable("idTable") {}
+        val standardTable =
+            object : Table("standardTable") {
+                val externalId: Column<EntityID<Int>> = reference("externalId", idTable.id)
+            }
         withTables(testDB, idTable, standardTable) {
             val id1: EntityID<Int> = idTable.insertAndGetId {}
             standardTable.insert {
@@ -543,10 +562,11 @@ class Ex02_Insert: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert with expression`(testDB: TestDB) {
-        val tbl = object: IntIdTable("testInsert") {
-            val nullableInt = integer("nullableInt").nullable()
-            val string = varchar("stringCol", 255)
-        }
+        val tbl =
+            object : IntIdTable("testInsert") {
+                val nullableInt = integer("nullableInt").nullable()
+                val string = varchar("stringCol", 255)
+            }
 
         fun expression(value: String) = stringLiteral(value).trim().substring(2, 4)
 
@@ -562,7 +582,7 @@ class Ex02_Insert: AbstractExposedTest() {
              * ```
              */
             tbl.insert {
-                it[string] = expression(" _exp1_ ")  // SUBSTRING(TRIM(' _exp1_ '), 2, 4)
+                it[string] = expression(" _exp1_ ") // SUBSTRING(TRIM(' _exp1_ '), 2, 4)
             }
             verify("exp1")
 
@@ -572,7 +592,7 @@ class Ex02_Insert: AbstractExposedTest() {
              * ```
              */
             tbl.insert {
-                it[string] = expression(" _exp2_ ")  // SUBSTRING(TRIM(' _exp2_ '), 2, 4)
+                it[string] = expression(" _exp2_ ") // SUBSTRING(TRIM(' _exp2_ '), 2, 4)
                 it[nullableInt] = 5
             }
             verify("exp2")
@@ -583,7 +603,7 @@ class Ex02_Insert: AbstractExposedTest() {
              * ```
              */
             tbl.insert {
-                it[string] = expression(" _exp3_ ")  // SUBSTRING(TRIM(' _exp3_ '), 2, 4)
+                it[string] = expression(" _exp3_ ") // SUBSTRING(TRIM(' _exp3_ '), 2, 4)
                 it[nullableInt] = null
             }
             verify("exp3")
@@ -610,12 +630,14 @@ class Ex02_Insert: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert with column expression`(testDB: TestDB) {
-        val tbl1 = object: IntIdTable("testInsert1") {
-            val string1 = varchar("stringCol", 20)
-        }
-        val tbl2 = object: IntIdTable("testInsert2") {
-            val string2 = varchar("stringCol", 20).nullable()
-        }
+        val tbl1 =
+            object : IntIdTable("testInsert1") {
+                val string1 = varchar("stringCol", 20)
+            }
+        val tbl2 =
+            object : IntIdTable("testInsert2") {
+                val string2 = varchar("stringCol", 20).nullable()
+            }
 
         fun verify(value: String) {
             val row = tbl2.selectAll().where { tbl2.string2 eq value }.single()
@@ -628,9 +650,10 @@ class Ex02_Insert: AbstractExposedTest() {
              * INSERT INTO testinsert1 ("stringCol") VALUES ('_exp1_')
              * ```
              */
-            val id = tbl1.insertAndGetId {
-                it[string1] = "_exp1_"
-            }
+            val id =
+                tbl1.insertAndGetId {
+                    it[string1] = "_exp1_"
+                }
 
             /**
              * 쿼리 결과물을 [wrapAsExpression]을 통해 Expression으로 변환하여 사용합니다.
@@ -649,7 +672,6 @@ class Ex02_Insert: AbstractExposedTest() {
         }
     }
 
-
     /**
      * ```sql
      * -- Postgres
@@ -660,23 +682,28 @@ class Ex02_Insert: AbstractExposedTest() {
      * )
      * ```
      */
-    private object OrderedDataTable: IntIdTable() {
+    private object OrderedDataTable : IntIdTable() {
         val name = text("name")
         val order = integer("order").default(0)
     }
 
-    class OrderedData(id: EntityID<Int>): IntEntity(id) {
-        companion object: IntEntityClass<OrderedData>(OrderedDataTable)
+    class OrderedData(
+        id: EntityID<Int>,
+    ) : IntEntity(id) {
+        companion object : IntEntityClass<OrderedData>(OrderedDataTable)
 
         var name by OrderedDataTable.name
         var order by OrderedDataTable.order
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("name", name)
-            .add("order", order)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("name", name)
+                .add("order", order)
+                .toString()
     }
 
     /**
@@ -691,23 +718,26 @@ class Ex02_Insert: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert with column named with keyword`(testDB: TestDB) {
         withTables(testDB, OrderedDataTable) {
-            val foo = OrderedData.new {
-                name = "foo"
-                order = 20
-            }
-            val bar = OrderedData.new {
-                name = "bar"
-                order = 10
-            }
+            val foo =
+                OrderedData.new {
+                    name = "foo"
+                    order = 20
+                }
+            val bar =
+                OrderedData.new {
+                    name = "bar"
+                    order = 10
+                }
 
-            val orders: List<OrderedData> = OrderedData.all()
-                .orderBy(OrderedDataTable.order to SortOrder.ASC)
-                .toList()
+            val orders: List<OrderedData> =
+                OrderedData
+                    .all()
+                    .orderBy(OrderedDataTable.order to SortOrder.ASC)
+                    .toList()
 
             orders shouldBeEqualTo listOf(bar, foo)
         }
     }
-
 
     /**
      * Subquery 결과 값을 이용하여 INSERT, UPDATE 하기
@@ -732,12 +762,14 @@ class Ex02_Insert: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `subquery in an insert or update statement`(testDB: TestDB) {
-        val tbl1 = object: Table("tab1") {
-            val id = varchar("id", 10)
-        }
-        val tbl2 = object: Table("tab2") {
-            val id = varchar("id", 10)
-        }
+        val tbl1 =
+            object : Table("tab1") {
+                val id = varchar("id", 10)
+            }
+        val tbl2 =
+            object : Table("tab2") {
+                val id = varchar("id", 10)
+            }
 
         withTables(testDB, tbl1, tbl2) {
             // Initial data
@@ -776,28 +808,30 @@ class Ex02_Insert: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `generated key 04`(testDB: TestDB) {
-        val charIdTable = object: IdTable<String>("charIdTable") {
-            override val id = varchar("id", 50)
-                .clientDefault { Base58.randomString(24) }
-                .entityId()
+        val charIdTable =
+            object : IdTable<String>("charIdTable") {
+                override val id =
+                    varchar("id", 50)
+                        .clientDefault { Base58.randomString(24) }
+                        .entityId()
 
-            val foo = integer("foo")
+                val foo = integer("foo")
 
-            override val primaryKey = PrimaryKey(id)
-        }
+                override val primaryKey = PrimaryKey(id)
+            }
 
         withTables(testDB, charIdTable) {
-            val id = charIdTable.insertAndGetId {
-                it[foo] = 42
-            }
+            val id =
+                charIdTable.insertAndGetId {
+                    it[foo] = 42
+                }
 
             id.value.shouldNotBeNull()
             log.debug { "id=${id.value}" }
         }
     }
 
-    private fun rollbackSupportDbs() =
-        TestDB.ALL_H2 + TestDB.ALL_MYSQL_MARIADB + TestDB.ALL_POSTGRES - TestDB.MYSQL_V5
+    private fun rollbackSupportDbs() = TestDB.ALL_H2 + TestDB.ALL_MYSQL_MARIADB + TestDB.ALL_POSTGRES - TestDB.MYSQL_V5
 
     /**
      * 일반적인 트랜잭션에서 Constraint 예외가 발생하면, 해당 트랜잭션은 Rollback 되어야 합니다.
@@ -817,15 +851,16 @@ class Ex02_Insert: AbstractExposedTest() {
     fun `rollback on constraint exception with normal transactions`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB in rollbackSupportDbs() }
 
-        val testTable = object: IntIdTable("TestRollback") {
-            val foo = integer("foo").check { it greater 0 }
-        }
+        val testTable =
+            object : IntIdTable("TestRollback") {
+                val foo = integer("foo").check { it greater 0 }
+            }
         try {
             try {
                 withDb(testDB) {
                     SchemaUtils.create(testTable)
                     testTable.insert { it[foo] = 1 }
-                    testTable.insert { it[foo] = 0 }    // foo > 0 조건을 만족하지 않음 (예외 발생)
+                    testTable.insert { it[foo] = 0 } // foo > 0 조건을 만족하지 않음 (예외 발생)
                 }
                 fail("예외가 발생해서 Rollback 이 수행되어야 합니다.")
             } catch (e: Throwable) {
@@ -857,35 +892,37 @@ class Ex02_Insert: AbstractExposedTest() {
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `rollback on constraint exception with suspend transactions`(testDB: TestDB) = runSuspendIO {
-        Assumptions.assumeTrue { testDB in rollbackSupportDbs() }
+    fun `rollback on constraint exception with suspend transactions`(testDB: TestDB) =
+        runSuspendIO {
+            Assumptions.assumeTrue { testDB in rollbackSupportDbs() }
 
-        val testTable = object: IntIdTable("TestRollback") {
-            val foo = integer("foo").check { it greater 0 }
-        }
-        try {
-            try {
-                withContext(Dispatchers.IO) {
-                    withDbSuspending(testDB) {
-                        SchemaUtils.create(testTable)
-                        testTable.insert { it[foo] = 1 }
-                        testTable.insert { it[foo] = 0 } // foo > 0 조건을 만족하지 않음 (예외 발생)
-                    }
-                    fail("예외가 발생해서 Rollback 이 수행되어야 합니다.")
+            val testTable =
+                object : IntIdTable("TestRollback") {
+                    val foo = integer("foo").check { it greater 0 }
                 }
-            } catch (e: Throwable) {
-                // log.warn(e) { "Fail to insert" }
-            }
+            try {
+                try {
+                    withContext(Dispatchers.IO) {
+                        withDbSuspending(testDB) {
+                            SchemaUtils.create(testTable)
+                            testTable.insert { it[foo] = 1 }
+                            testTable.insert { it[foo] = 0 } // foo > 0 조건을 만족하지 않음 (예외 발생)
+                        }
+                        fail("예외가 발생해서 Rollback 이 수행되어야 합니다.")
+                    }
+                } catch (e: Throwable) {
+                    // log.warn(e) { "Fail to insert" }
+                }
 
-            withDbSuspending(testDB) {
-                testTable.selectAll().empty().shouldBeTrue()
-            }
-        } finally {
-            withDbSuspending(testDB) {
-                SchemaUtils.drop(testTable)
+                withDbSuspending(testDB) {
+                    testTable.selectAll().empty().shouldBeTrue()
+                }
+            } finally {
+                withDbSuspending(testDB) {
+                    SchemaUtils.drop(testTable)
+                }
             }
         }
-    }
 
     /**
      * Batch Insert with ON CONFLICT DO NOTHING - [batchInsert] 시, 예외가 발생하면 해당 예외를 무시하고, 다음 작업을 수행합니다.
@@ -905,25 +942,28 @@ class Ex02_Insert: AbstractExposedTest() {
     fun `batch insert number of inserted rows`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB in TestDB.ALL_MYSQL_MARIADB + TestDB.ALL_POSTGRES_LIKE }
 
-        val tester = object: Table("tester") {
-            val id = varchar("id", 10).uniqueIndex()
-        }
+        val tester =
+            object : Table("tester") {
+                val id = varchar("id", 10).uniqueIndex()
+            }
         withTables(testDB, tester) {
             tester.insert { it[id] = "foo" }
 
-            val executable = BatchInsertBlockingExecutable(
-                statement = BatchInsertOnConflictDoNothing(tester)
-            )
+            val executable =
+                BatchInsertBlockingExecutable(
+                    statement = BatchInsertOnConflictDoNothing(tester)
+                )
 
-            val numInserted = executable.run {
-                statement.addBatch()
-                statement[tester.id] = "foo"        // 중복되므로 insert 되지 않음
+            val numInserted =
+                executable.run {
+                    statement.addBatch()
+                    statement[tester.id] = "foo" // 중복되므로 insert 되지 않음
 
-                statement.addBatch()
-                statement[tester.id] = "bar"        // 중복되지 않으므로 추가됨
+                    statement.addBatch()
+                    statement[tester.id] = "bar" // 중복되지 않으므로 추가됨
 
-                execute(this@withTables)
-            }
+                    execute(this@withTables)
+                }
             // MySQL은 connection string 에 `returnGeneratedValues=true` 가 설정된 경우, insert 된 행 수가 다르게 나올 수 있다.
             // numInserted shouldBeEqualTo 1
 
@@ -953,16 +993,18 @@ class Ex02_Insert: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert into nullable generated column`(testDB: TestDB) {
         withDb(testDB) {
-            val generatedTable = object: IntIdTable("generatedTable") {
-                val amount = integer("amount").nullable()
-                val computedAmount = integer("computed_amount").nullable().databaseGenerated().apply {
-                    if (testDB in TestDB.ALL_H2) {
-                        withDefinition("GENERATED ALWAYS AS (AMOUNT + 1 )")
-                    } else {
-                        withDefinition("GENERATED ALWAYS AS (AMOUNT + 1 ) STORED")
-                    }
+            val generatedTable =
+                object : IntIdTable("generatedTable") {
+                    val amount = integer("amount").nullable()
+                    val computedAmount =
+                        integer("computed_amount").nullable().databaseGenerated().apply {
+                            if (testDB in TestDB.ALL_H2) {
+                                withDefinition("GENERATED ALWAYS AS (AMOUNT + 1 )")
+                            } else {
+                                withDefinition("GENERATED ALWAYS AS (AMOUNT + 1 ) STORED")
+                            }
+                        }
                 }
-            }
             try {
                 val computedName = generatedTable.computedAmount.name.inProperCase()
                 val computedType = generatedTable.computedAmount.columnType.sqlType()
@@ -978,9 +1020,13 @@ class Ex02_Insert: AbstractExposedTest() {
                 when (testDB) {
                     // MariaDB does not support GENERATED ALWAYS AS with any null constraint definition
                     in TestDB.ALL_MARIADB -> {
-                        exec("${createStatement.trimIndent()} $computedName $computedType GENERATED ALWAYS AS ($computation) STORED)")
+                        exec(
+                            "${createStatement.trimIndent()} $computedName $computedType GENERATED ALWAYS AS ($computation) STORED)"
+                        )
                     }
-                    else -> SchemaUtils.create(generatedTable)
+                    else -> {
+                        SchemaUtils.create(generatedTable)
+                    }
                 }
 
                 assertFailAndRollback("Generated columns are auto-drived and read-only") {
@@ -1010,7 +1056,6 @@ class Ex02_Insert: AbstractExposedTest() {
         }
     }
 
-
     /**
      * INSERT 시 값이 제공되지 않으면, 기본값이나 NULL로 설정됩니다.
      *
@@ -1030,12 +1075,12 @@ class Ex02_Insert: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `insert returns values from default expression`(testDB: TestDB) {
-
         Assumptions.assumeTrue(testDB in TestDB.ALL_POSTGRES)
 
-        val tester = object: Table("tester") {
-            val defaultDate = timestamp("default_date").defaultExpression(CurrentTimestamp)
-        }
+        val tester =
+            object : Table("tester") {
+                val defaultDate = timestamp("default_date").defaultExpression(CurrentTimestamp)
+            }
 
         withTables(testDB, tester) {
             val entry = tester.insert { }
@@ -1064,12 +1109,13 @@ class Ex02_Insert: AbstractExposedTest() {
         // Postgres 만 지원됩니다.
         Assumptions.assumeTrue(testDB in TestDB.ALL_POSTGRES)
 
-        val randomPGUUID = object: CustomFunction<UUID>("gen_random_uuid", UUIDColumnType()) {}
+        val randomPGUUID = object : CustomFunction<UUID>("gen_random_uuid", UUIDColumnType()) {}
 
-        val tester = object: IdTable<UUID>("test_uuid_table") {
-            override val id: Column<EntityID<UUID>> = javaUUID("id").defaultExpression(randomPGUUID).entityId()
-            override val primaryKey = PrimaryKey(id)
-        }
+        val tester =
+            object : IdTable<UUID>("test_uuid_table") {
+                override val id: Column<EntityID<UUID>> = javaUUID("id").defaultExpression(randomPGUUID).entityId()
+                override val primaryKey = PrimaryKey(id)
+            }
 
         withTables(testDB, tester) {
             val entry: EntityID<UUID> = tester.insertAndGetId { }

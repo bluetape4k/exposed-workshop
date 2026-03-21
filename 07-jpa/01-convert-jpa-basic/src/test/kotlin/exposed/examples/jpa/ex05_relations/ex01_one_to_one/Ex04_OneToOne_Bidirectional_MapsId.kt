@@ -28,9 +28,8 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * JPA @MapsId 형태의 bidirectional one-to-one 관계를 Exposed로 구현한 예제
  */
-class Ex04_OneToOne_Bidirectional_MapsId: AbstractExposedTest() {
-
-    companion object: KLogging()
+class Ex04_OneToOne_Bidirectional_MapsId : AbstractExposedTest() {
+    companion object : KLogging()
 
     /**
      * ```sql
@@ -41,7 +40,7 @@ class Ex04_OneToOne_Bidirectional_MapsId: AbstractExposedTest() {
      * )
      * ```
      */
-    object Authors: IntIdTable("authors") {
+    object Authors : IntIdTable("authors") {
         val name: Column<String> = varchar("name", 255)
     }
 
@@ -57,14 +56,15 @@ class Ex04_OneToOne_Bidirectional_MapsId: AbstractExposedTest() {
      * );
      * ```
      */
-    object Pictures: IdTable<Int>("pictures") {
+    object Pictures : IdTable<Int>("pictures") {
         // @MapsId 와 같다. (Authors.id 를 Id로 사용한다)
-        override val id: Column<EntityID<Int>> = reference(
-            "author_id",
-            Authors,
-            onDelete = ReferenceOption.CASCADE,
-            onUpdate = ReferenceOption.CASCADE
-        )
+        override val id: Column<EntityID<Int>> =
+            reference(
+                "author_id",
+                Authors,
+                onDelete = ReferenceOption.CASCADE,
+                onUpdate = ReferenceOption.CASCADE
+            )
         val path: Column<String> = varchar("path", 255)
 
         override val primaryKey = PrimaryKey(Pictures.id)
@@ -82,37 +82,45 @@ class Ex04_OneToOne_Bidirectional_MapsId: AbstractExposedTest() {
      * );
      * ```
      */
-    object Biographys: IdTable<Int>("biographys") {
+    object Biographies : IdTable<Int>("biographies") {
         // @MapsId 와 같다. (Authors.id 를 Id로 사용한다)
-        override val id: Column<EntityID<Int>> = reference(
-            "author_id",
-            Authors,
-            onDelete = ReferenceOption.CASCADE,
-            onUpdate = ReferenceOption.CASCADE
-        )
-        val infomation: Column<String?> = varchar("information", 255).nullable()
+        override val id: Column<EntityID<Int>> =
+            reference(
+                "author_id",
+                Authors,
+                onDelete = ReferenceOption.CASCADE,
+                onUpdate = ReferenceOption.CASCADE
+            )
+        val information: Column<String?> = varchar("information", 255).nullable()
 
-        override val primaryKey = PrimaryKey(Biographys.id)
+        override val primaryKey = PrimaryKey(Biographies.id)
     }
 
-    private val allTables = arrayOf(Authors, Pictures, Biographys)
+    private val allTables = arrayOf(Authors, Pictures, Biographies)
 
-    class Author(id: EntityID<Int>): IntEntity(id) {
-        companion object: IntEntityClass<Author>(Authors)
+    class Author(
+        id: EntityID<Int>,
+    ) : IntEntity(id) {
+        companion object : IntEntityClass<Author>(Authors)
 
         var name by Authors.name
         val picture by Picture backReferencedOn Pictures
-        val biography by Biography backReferencedOn Biographys
+        val biography by Biography backReferencedOn Biographies
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("name", name)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("name", name)
+                .toString()
     }
 
-    class Picture(id: EntityID<Int>): IntEntity(id) {
-        companion object: IntEntityClass<Picture>(Pictures)
+    class Picture(
+        id: EntityID<Int>,
+    ) : IntEntity(id) {
+        companion object : IntEntityClass<Picture>(Pictures)
 
         var path by Pictures.path
         val author by Author referencedOn Pictures.id
@@ -120,42 +128,53 @@ class Ex04_OneToOne_Bidirectional_MapsId: AbstractExposedTest() {
         // NOTE: one-to-one 관계에서 id 값을 참조하는 경우 `id` 로 비교하면 안되고, `idValue` 로 비교해야 한다.
         // NOTE: id 속성 중 table 이 one-to-one 의 owner 테이블을 가르킨다.
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("path", path)
-            .add("author id", author.idValue)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("path", path)
+                .add("author id", author.idValue)
+                .toString()
     }
 
-    class Biography(id: EntityID<Int>): IntEntity(id) {
-        companion object: IntEntityClass<Biography>(Biographys)
+    class Biography(
+        id: EntityID<Int>,
+    ) : IntEntity(id) {
+        companion object : IntEntityClass<Biography>(Biographies)
 
-        var infomation by Biographys.infomation
-        val author by Author referencedOn Biographys.id
+        var information by Biographies.information
+        val author by Author referencedOn Biographies.id
 
         // NOTE: one-to-one 관계에서 id 값을 참조하는 경우 `id` 로 비교하면 안되고, `idValue` 로 비교해야 한다.
         // NOTE: id 속성 중 table 이 one-to-one 의 owner 테이블을 가르킨다.
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add("infomation", infomation)
-            .add("author id", author.idValue)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add("information", information)
+                .add("author id", author.idValue)
+                .toString()
     }
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `one-to-one share main entity identifier`(testDB: TestDB) {
         withTables(testDB, *allTables) {
-            val author = Author.new {
-                name = faker.name().name()
-            }
-            val picture = Picture.new(author.id.value) {
-                path = faker.internet().url()
-            }
-            val biography = Biography.new(author.id.value) {
-                infomation = faker.name().fullName()
-            }
+            val author =
+                Author.new {
+                    name = faker.name().name()
+                }
+            val picture =
+                Picture.new(author.id.value) {
+                    path = faker.internet().url()
+                }
+            val biography =
+                Biography.new(author.id.value) {
+                    information = faker.name().fullName()
+                }
 
             entityCache.clear()
 
@@ -190,17 +209,20 @@ class Ex04_OneToOne_Bidirectional_MapsId: AbstractExposedTest() {
              * ```
              */
             val author3 = Author.findById(author.id)!!.load(Author::picture, Author::biography)
-            log.debug { "author with picture and biography. author3: $author3, picture:${author3.picture}, biography:${author3.biography}" }
+            log.debug {
+                "author with picture and biography. author3: $author3, picture:${author3.picture}, biography:${author3.biography}"
+            }
 
             entityCache.clear()
 
             // Load by join
-            val authors = Authors
-                .innerJoin(Pictures)
-                .innerJoin(Biographys)
-                .selectAll()
-                .where { Authors.id eq author.id }
-                .map { Author.wrapRow(it) }
+            val authors =
+                Authors
+                    .innerJoin(Pictures)
+                    .innerJoin(Biographies)
+                    .selectAll()
+                    .where { Authors.id eq author.id }
+                    .map { Author.wrapRow(it) }
 
             authors.forEach {
                 log.debug { it }
@@ -221,7 +243,7 @@ class Ex04_OneToOne_Bidirectional_MapsId: AbstractExposedTest() {
             Author.all().count() shouldBeEqualTo 0L
 
             /**
-             * Pictures, Biographys 는 author 가 삭제되면 같이 삭제된다.
+             * Pictures, Biographies 는 author 가 삭제되면 같이 삭제된다.
              *
              * `Picture.count()` 는 자신만의 entity id 가 없으므로 실행할 수 없다. (SELECT COUNT(AUTHOR_ID) FROM PICTURES)
              *

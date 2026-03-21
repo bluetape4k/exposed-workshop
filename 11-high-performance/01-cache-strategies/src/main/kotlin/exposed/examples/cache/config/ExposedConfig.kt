@@ -11,25 +11,26 @@ import java.sql.Connection
 import javax.sql.DataSource
 
 /**
- * Exposed 기본 설정(트ラン잭션 속성, 캐시 제한 등)과 Database 등록을 담당합니다.
+ * Exposed 기본 설정(트랜잭션 속성, 캐시 제한 등)과 Database 등록을 담당합니다.
  */
 @Configuration(proxyBeanMethods = false)
 @EnableTransactionManagement
 class ExposedConfig {
-
-    companion object: KLoggingChannel()
+    companion object : KLoggingChannel()
 
     @Bean
-    fun databaseConfig(): DatabaseConfig {
-        return DatabaseConfig {
+    fun databaseConfig(): DatabaseConfig =
+        DatabaseConfig {
             maxEntitiesToStoreInCachePerEntity = 1000
             useNestedTransactions = true
             defaultIsolationLevel = Connection.TRANSACTION_READ_COMMITTED
         }
-    }
 
     @Bean
-    fun database(dataSource: DataSource, databaseConfig: DatabaseConfig): Database {
+    fun database(
+        dataSource: DataSource,
+        databaseConfig: DatabaseConfig,
+    ): Database {
         log.info { "Database connection: $dataSource" }
 
         return Database.connect(dataSource, databaseConfig = databaseConfig)

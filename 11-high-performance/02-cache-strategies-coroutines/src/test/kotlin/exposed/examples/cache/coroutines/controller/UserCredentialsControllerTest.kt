@@ -1,6 +1,5 @@
 package exposed.examples.cache.coroutines.controller
 
-
 import exposed.examples.cache.coroutines.AbstractCacheStrategyTest
 import exposed.examples.cache.coroutines.domain.model.UserCredentialsRecord
 import exposed.examples.cache.coroutines.domain.model.UserCredentialsTable
@@ -13,8 +12,8 @@ import io.bluetape4k.spring.tests.httpGet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.runBlocking
-import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeEmpty
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainSame
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeNull
@@ -34,11 +33,8 @@ import java.time.Instant
 class UserCredentialsControllerTest(
     @param:Autowired private val client: WebTestClient,
     @param:Autowired private val repository: UserCredentialsCacheRepository,
-): AbstractCacheStrategyTest() {
-
-    companion object: KLoggingChannel() {
-        private const val REPEAT_SIZE = 5
-    }
+) : AbstractCacheStrategyTest() {
+    companion object : KLoggingChannel()
 
     private val idsInDB = mutableListOf<String>()
 
@@ -58,86 +54,109 @@ class UserCredentialsControllerTest(
         }
     }
 
-    private fun insertUserCredentials(): String {
-        return UserCredentialsTable.insertAndGetId {
-            it[UserCredentialsTable.username] = faker.credentials().username()
-            it[UserCredentialsTable.email] = faker.internet().emailAddress()
-            it[UserCredentialsTable.lastLoginAt] = Instant.now()
-        }.value
-    }
+    private fun insertUserCredentials(): String =
+        UserCredentialsTable
+            .insertAndGetId {
+                it[UserCredentialsTable.username] = faker.credentials().username()
+                it[UserCredentialsTable.email] = faker.internet().emailAddress()
+                it[UserCredentialsTable.lastLoginAt] = Instant.now()
+            }.value
 
     @Test
-    fun `findAll user credentials`() = runSuspendIO {
-        val ucs = client
-            .httpGet("/user-credentials")
-            .expectStatus().is2xxSuccessful
-            .expectBodyList<UserCredentialsRecord>()
-            .returnResult().responseBody
-            .shouldNotBeNull()
+    fun `findAll user credentials`() =
+        runSuspendIO {
+            val ucs =
+                client
+                    .httpGet("/user-credentials")
+                    .expectStatus()
+                    .is2xxSuccessful
+                    .expectBodyList<UserCredentialsRecord>()
+                    .returnResult()
+                    .responseBody
+                    .shouldNotBeNull()
 
-        ucs shouldHaveSize idsInDB.size
-    }
-
-    @Test
-    fun `find by id with read-through`() = runSuspendIO {
-        idsInDB.forEach { id ->
-            val uc = client
-                .httpGet("/user-credentials/$id")
-                .expectStatus().is2xxSuccessful
-                .returnResult<UserCredentialsRecord>().responseBody
-                .awaitSingle()
-
-            uc.id shouldBeEqualTo id
+            ucs shouldHaveSize idsInDB.size
         }
-    }
 
     @Test
-    fun `존재하지 않는 인증 ID로 조회하면 빈 응답을 반환한다`() = runSuspendIO {
-        client
-            .httpGet("/user-credentials/not-exists-id")
-            .expectStatus().is2xxSuccessful
-            .expectBody().isEmpty
-    }
+    fun `find by id with read-through`() =
+        runSuspendIO {
+            idsInDB.forEach { id ->
+                val uc =
+                    client
+                        .httpGet("/user-credentials/$id")
+                        .expectStatus()
+                        .is2xxSuccessful
+                        .returnResult<UserCredentialsRecord>()
+                        .responseBody
+                        .awaitSingle()
+
+                uc.id shouldBeEqualTo id
+            }
+        }
 
     @Test
-    fun `복수의 ID로 UserCredentials를 Read-Through 방식으로 조회`() = runSuspendIO {
-        val ids = idsInDB.shuffled().take(5)
-        log.debug { "User credentials IDs to search: $ids" }
-
-        val ucs = client
-            .httpGet("/user-credentials/all?ids=${ids.joinToString(",")}")
-            .expectStatus().is2xxSuccessful
-            .expectBodyList<UserCredentialsRecord>()
-            .returnResult().responseBody
-            .shouldNotBeNull()
-
-        ucs shouldHaveSize ids.size
-        ucs.map { it.id } shouldContainSame ids
-    }
+    fun `존재하지 않는 인증 ID로 조회하면 빈 응답을 반환한다`() =
+        runSuspendIO {
+            client
+                .httpGet("/user-credentials/not-exists-id")
+                .expectStatus()
+                .is2xxSuccessful
+                .expectBody()
+                .isEmpty
+        }
 
     @Test
-    fun `존재하지 않는 인증 ID 목록으로 조회하면 빈 리스트를 반환한다`() = runSuspendIO {
-        val ucs = client
-            .httpGet("/user-credentials/all?ids=missing-1,missing-2")
-            .expectStatus().is2xxSuccessful
-            .expectBodyList<UserCredentialsRecord>()
-            .returnResult().responseBody
-            .shouldNotBeNull()
+    fun `복수의 ID로 UserCredentials를 Read-Through 방식으로 조회`() =
+        runSuspendIO {
+            val ids = idsInDB.shuffled().take(5)
+            log.debug { "User credentials IDs to search: $ids" }
 
-        ucs.shouldBeEmpty()
-    }
+            val ucs =
+                client
+                    .httpGet("/user-credentials/all?ids=${ids.joinToString(",")}")
+                    .expectStatus()
+                    .is2xxSuccessful
+                    .expectBodyList<UserCredentialsRecord>()
+                    .returnResult()
+                    .responseBody
+                    .shouldNotBeNull()
+
+            ucs shouldHaveSize ids.size
+            ucs.map { it.id } shouldContainSame ids
+        }
 
     @Test
-    fun `invalidate specified cached user credentials`() = runSuspendIO {
-        repository.getAll(idsInDB)
+    fun `존재하지 않는 인증 ID 목록으로 조회하면 빈 리스트를 반환한다`() =
+        runSuspendIO {
+            val ucs =
+                client
+                    .httpGet("/user-credentials/all?ids=missing-1,missing-2")
+                    .expectStatus()
+                    .is2xxSuccessful
+                    .expectBodyList<UserCredentialsRecord>()
+                    .returnResult()
+                    .responseBody
+                    .shouldNotBeNull()
 
-        val invalidatedIds = idsInDB.shuffled().take(3)
-        val invalidateCount = client
-            .httpDelete("/user-credentials/invalidate?ids=${invalidatedIds.joinToString(",")}")
-            .expectStatus().is2xxSuccessful
-            .returnResult<Long>().responseBody
-            .awaitSingle()
+            ucs.shouldBeEmpty()
+        }
 
-        invalidateCount shouldBeEqualTo invalidatedIds.size.toLong()
-    }
+    @Test
+    fun `invalidate specified cached user credentials`() =
+        runSuspendIO {
+            repository.getAll(idsInDB)
+
+            val invalidatedIds = idsInDB.shuffled().take(3)
+            val invalidateCount =
+                client
+                    .httpDelete("/user-credentials/invalidate?ids=${invalidatedIds.joinToString(",")}")
+                    .expectStatus()
+                    .is2xxSuccessful
+                    .returnResult<Long>()
+                    .responseBody
+                    .awaitSingle()
+
+            invalidateCount shouldBeEqualTo invalidatedIds.size.toLong()
+        }
 }

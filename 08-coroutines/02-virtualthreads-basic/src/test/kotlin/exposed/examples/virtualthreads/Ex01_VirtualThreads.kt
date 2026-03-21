@@ -46,17 +46,16 @@ import kotlin.test.assertFailsWith
  * Exposed Virtual Thread 트랜잭션 API를 검증하는 예제 테스트입니다.
  */
 @EnabledOnJre(JRE.JAVA_21)
-class Ex01_VirtualThreads: AbstractExposedTest() {
-
-    companion object: KLoggingChannel()
+class Ex01_VirtualThreads : AbstractExposedTest() {
+    companion object : KLoggingChannel()
 
     /**
      * ```sql
      * -- Postgres
-     * CREATE TABLE IF NOT EXISTS virtualthreads_tester (id SERIAL PRIMARY KEY)
+     * CREATE TABLE IF NOT EXISTS virtualthreads_table (id SERIAL PRIMARY KEY)
      * ```
      */
-    object VTester: IntIdTable("virtualthreads_table") {
+    object VTester : IntIdTable("virtualthreads_table") {
         val name = varchar("name", 50).nullable()
     }
 
@@ -66,18 +65,19 @@ class Ex01_VirtualThreads: AbstractExposedTest() {
      * ALTER TABLE virtualthreads_tester_unique ADD CONSTRAINT virtualthreads_tester_unique_id_unique UNIQUE (id);
      * ```
      */
-    object VTesterUnique: Table("virtualthreads_table_unique") {
+    object VTesterUnique : Table("virtualthreads_table_unique") {
         val id = integer("id").uniqueIndex()
         override val primaryKey = PrimaryKey(id)
     }
 
+    /**
+     * 현재 트랜잭션에서 지정한 식별자의 `VTester` 레코드를 조회합니다.
+     */
     @Suppress("UnusedReceiverParameter")
-            /**
-             * 현재 트랜잭션에서 지정한 식별자의 `VTester` 레코드를 조회합니다.
-             */
     fun JdbcTransaction.getTesterById(id: Int): ResultRow? =
         newVirtualThreadJdbcTransaction {
-            VTester.selectAll()
+            VTester
+                .selectAll()
                 .where { VTester.id eq id }
                 .singleOrNull()
         }
@@ -100,7 +100,6 @@ class Ex01_VirtualThreads: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `virtual threads 를 이용하여 순차 작업 수행하기`(testDB: TestDB) {
         withTables(testDB, VTester) {
-
             // 내부적으로 새로운 트랜잭션을 생성하여 비동기 작업을 수행한다
             newVirtualThreadJdbcTransaction {
                 val id = VTester.insertAndGetId { }
@@ -136,13 +135,14 @@ class Ex01_VirtualThreads: AbstractExposedTest() {
                 commit()
 
                 // 중첩 트랜잭션에서 virtual threads 를 이용하여 동시에 여러 작업을 수행한다.
-                val futures: List<VirtualFuture<List<ResultRow>>> = List(recordCount) { index ->
-                    virtualThreadJdbcTransactionAsync {
-                        log.debug { "Task[$index] selecting ..." }
-                        VTester.selectAll().toList()
+                val futures: List<VirtualFuture<List<ResultRow>>> =
+                    List(recordCount) { index ->
+                        virtualThreadJdbcTransactionAsync {
+                            log.debug { "Task[$index] selecting ..." }
+                            VTester.selectAll().toList()
+                        }
                     }
-                }
-                // recordCount 개의 행을 가지는 `ResultRow` 를 recordCount 수만큼 가지는 List 
+                // recordCount 개의 행을 가지는 `ResultRow` 를 recordCount 수만큼 가지는 List
                 val rows: List<ResultRow> = futures.awaitAll().flatten()
                 rows.shouldNotBeEmpty()
             }
@@ -161,15 +161,16 @@ class Ex01_VirtualThreads: AbstractExposedTest() {
         withTables(testDB, VTester) {
             val recordCount = 10
 
-            val results: List<Int> = List(recordCount) { index ->
-                virtualThreadJdbcTransactionAsync {
-                    maxAttempts = 5
-                    log.debug { "Task[$index] inserting ..." }
-                    // insert 를 수행하는 트랜잭션을 생성한다
-                    VTester.insert { }
-                    index + 1
-                }
-            }.awaitAll()
+            val results: List<Int> =
+                List(recordCount) { index ->
+                    virtualThreadJdbcTransactionAsync {
+                        maxAttempts = 5
+                        log.debug { "Task[$index] inserting ..." }
+                        // insert 를 수행하는 트랜잭션을 생성한다
+                        VTester.insert { }
+                        index + 1
+                    }
+                }.awaitAll()
 
             results shouldBeEqualTo intRangeOf(1, recordCount)
 
@@ -179,31 +180,33 @@ class Ex01_VirtualThreads: AbstractExposedTest() {
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `virtual threads 용 트랜잭션과 일반 transaction 홉용하기`(testDB: TestDB) {
+    fun `virtual threads 용 트랜잭션과 일반 transaction 혼용하기`(testDB: TestDB) {
         withTables(testDB, VTester) {
             // val database = this.db // Transaction 에서 db 를 가져온다
             var virtualThreadOk = true
             var platformThreadOk = true
 
-            val row = newVirtualThreadJdbcTransaction {
-                try {
-                    VTester.selectAll().toList()
-                } catch (e: Throwable) {
-                    virtualThreadOk = false
-                    null
+            val row =
+                newVirtualThreadJdbcTransaction {
+                    try {
+                        VTester.selectAll().toList()
+                    } catch (e: Throwable) {
+                        virtualThreadOk = false
+                        null
+                    }
                 }
-            }
 
             row.shouldNotBeNull()
 
-            val row2 = transaction {
-                try {
-                    VTester.selectAll().toList()
-                } catch (e: Throwable) {
-                    platformThreadOk = false
-                    null
+            val row2 =
+                transaction {
+                    try {
+                        VTester.selectAll().toList()
+                    } catch (e: Throwable) {
+                        platformThreadOk = false
+                        null
+                    }
                 }
-            }
             row2.shouldNotBeNull()
 
             virtualThreadOk.shouldBeTrue()
@@ -214,11 +217,15 @@ class Ex01_VirtualThreads: AbstractExposedTest() {
     /**
      * Virtual Thread 테스트용 DAO 엔티티입니다.
      */
-    class TesterEntity(id: EntityID<Int>): IntEntity(id) {
-        companion object: IntEntityClass<TesterEntity>(VTester)
+    class TesterEntity(
+        id: EntityID<Int>,
+    ) : IntEntity(id) {
+        companion object : IntEntityClass<TesterEntity>(VTester)
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
+
         override fun toString(): String = "TesterEntity(id=$idValue)"
     }
 

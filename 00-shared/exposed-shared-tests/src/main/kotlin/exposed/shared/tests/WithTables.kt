@@ -30,7 +30,7 @@ fun withTables(
 
         try {
             statement(testDB)
-            commit()               // Need commit to persist data before drop tables
+            commit() // Need commit to persist data before drop tables
         } finally {
             if (dropTables) {
                 try {
@@ -38,7 +38,7 @@ fun withTables(
                     commit()
                 } catch (ex: Exception) {
                     logger.error(ex) { "Drop Tables 에서 예외가 발생했습니다. 삭제할 테이블: ${tables.joinToString { it.tableName }}" }
-                    val database = testDB.db!!
+                    val database = testDB.db ?: return@withDb
                     inTopLevelTransaction(
                         transactionIsolation = database.transactionManager.defaultIsolationLevel,
                         db = database

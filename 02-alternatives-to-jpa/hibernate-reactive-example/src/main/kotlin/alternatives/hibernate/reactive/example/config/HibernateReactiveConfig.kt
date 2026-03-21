@@ -12,8 +12,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class HibernateReactiveConfig {
-
-    companion object: KLoggingChannel()
+    companion object : KLoggingChannel()
 
     @Bean
     fun entityManagerFactory(): EntityManagerFactory {
@@ -27,13 +26,15 @@ class HibernateReactiveConfig {
         // 엔티티가 포함된 패키지를 명시적으로 지정하거나 스캔 범위를 조정합니다.
         props["hibernate.archive.autodetection"] = "class"
 
-        log.info { "Create EntityManagerFactory. props=$props" }
+        val maskedProps =
+            props.mapValues { (key, value) ->
+                if (key.contains("password", ignoreCase = true)) "****" else value
+            }
+        log.info { "Create EntityManagerFactory. props=$maskedProps" }
 
         return Persistence.createEntityManagerFactory("default", props)
     }
 
     @Bean
-    fun sessionFactory(emf: EntityManagerFactory): SessionFactory {
-        return emf.asMutinySessionFactory()
-    }
+    fun sessionFactory(emf: EntityManagerFactory): SessionFactory = emf.asMutinySessionFactory()
 }

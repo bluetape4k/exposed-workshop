@@ -78,9 +78,8 @@ import kotlin.test.assertTrue
  * inner join 다중 FK 시나리오 등 38개 테스트를 포함합니다.
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class Ex10_DDL_Examples: AbstractExposedTest() {
-
-    companion object: KLogging()
+class Ex10_DDL_Examples : AbstractExposedTest() {
+    companion object : KLogging()
 
     @AfterAll
     fun afterAll() {
@@ -99,12 +98,13 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * )
          * ```
          */
-        val testTable = object: Table("testTable") {
-            val id = integer("id")
-            val name = varchar("name", length = 42)
+        val testTable =
+            object : Table("testTable") {
+                val id = integer("id")
+                val name = varchar("name", length = 42)
 
-            override val primaryKey = PrimaryKey(id)
-        }
+                override val primaryKey = PrimaryKey(id)
+            }
 
         withTables(testDB) {
             testTable.exists().shouldBeFalse()
@@ -118,9 +118,10 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     @Test
     fun `keyword identifiers with opt out`() {
         val keywords = listOf("Integer", "name")
-        val tester = object: Table(keywords[0]) {
-            val name = varchar(keywords[1], length = 32)
-        }
+        val tester =
+            object : Table(keywords[0]) {
+                val name = varchar(keywords[1], length = 32)
+            }
 
         transaction(keywordFlagDB) {
             log.debug { "DB Config preserveKeywordCasing=false" }
@@ -134,7 +135,8 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             val (tableName, columnName) = keywords.map { "\"${it.uppercase()}\"" }
 
             val expectedCreate =
-                "CREATE TABLE ${addIfNotExistsIfSupported()}$tableName (" + "$columnName ${tester.name.columnType.sqlType()} NOT NULL)"
+                "CREATE TABLE ${addIfNotExistsIfSupported()}$tableName (" +
+                    "$columnName ${tester.name.columnType.sqlType()} NOT NULL)"
             tester.ddl.single() shouldBeEqualTo expectedCreate
 
             // check that insert and select statement identifiers also match in DB without throwing SQLException
@@ -159,10 +161,12 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             driver = "org.h2.Driver",
             user = "root",
             password = "",
-            databaseConfig = DatabaseConfig {
-                @OptIn(ExperimentalKeywordApi::class)
-                preserveKeywordCasing = false
-            })
+            databaseConfig =
+                DatabaseConfig {
+                    @OptIn(ExperimentalKeywordApi::class)
+                    preserveKeywordCasing = false
+                }
+        )
     }
 
     /**
@@ -183,11 +187,12 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * ```
          */
         val keywords = listOf("data", "public", "key", "constraint")
-        val keywordTable = object: Table(keywords[0]) {
-            val public = bool(keywords[1])
-            val data = integer(keywords[2])
-            val constraint = varchar(keywords[3], length = 32)
-        }
+        val keywordTable =
+            object : Table(keywords[0]) {
+                val public = bool(keywords[1])
+                val data = integer(keywords[2])
+                val constraint = varchar(keywords[3], length = 32)
+            }
 
         withDb(testDB) {
             db.config.preserveKeywordCasing.shouldBeTrue()
@@ -195,18 +200,19 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             SchemaUtils.create(keywordTable)
             keywordTable.exists().shouldBeTrue()
 
-            val (tableName, publicName, dataName, constraintName) = keywords.map {
-                when (currentDialectTest) {
-                    is MysqlDialect -> "`$it`"
-                    else -> "\"$it\""
+            val (tableName, publicName, dataName, constraintName) =
+                keywords.map {
+                    when (currentDialectTest) {
+                        is MysqlDialect -> "`$it`"
+                        else -> "\"$it\""
+                    }
                 }
-            }
 
             val expectedCreate =
                 "CREATE TABLE ${addIfNotExistsIfSupported()}$tableName (" +
-                        "$publicName ${keywordTable.public.columnType.sqlType()} NOT NULL, " +
-                        "$dataName ${keywordTable.data.columnType.sqlType()} NOT NULL, " +
-                        "$constraintName ${keywordTable.constraint.columnType.sqlType()} NOT NULL)"
+                    "$publicName ${keywordTable.public.columnType.sqlType()} NOT NULL, " +
+                    "$dataName ${keywordTable.data.columnType.sqlType()} NOT NULL, " +
+                    "$constraintName ${keywordTable.constraint.columnType.sqlType()} NOT NULL)"
 
             keywordTable.ddl.single() shouldBeEqualTo expectedCreate
 
@@ -241,12 +247,13 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
      * );
      * ```
      */
-    val unnamedTable = object: Table() {
-        val id = integer("id")
-        val name = varchar("name", 42)
+    val unnamedTable =
+        object : Table() {
+            val id = integer("id")
+            val name = varchar("name", 42)
 
-        override val primaryKey = PrimaryKey(id)
-    }
+            override val primaryKey = PrimaryKey(id)
+        }
 
     /**
      * 이름을 지정하지 않은 테이블에 대해 테이블 명을 정의하는 방법
@@ -258,13 +265,15 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             val q = db.identifierManager.quoteString
 
             // MySQL 테이블 명에는 back-quote(`) 를 사용하지 않네요.
-            val shouldBeQuoted = currentDialectTest.needsQuotesWhenSymbolsInNames &&
+            val shouldBeQuoted =
+                currentDialectTest.needsQuotesWhenSymbolsInNames &&
                     db.identifierManager.needQuotes("unnamedTable$1")
-            val tableName = if (shouldBeQuoted) {
-                "$q${"unnamedTable$1".inProperCase()}$q"
-            } else {
-                "unnamedTable$1".inProperCase()
-            }
+            val tableName =
+                if (shouldBeQuoted) {
+                    "$q${"unnamedTable$1".inProperCase()}$q"
+                } else {
+                    "unnamedTable$1".inProperCase()
+                }
             log.debug { "Table Name: $tableName" }
 
             val integerType = currentDialectTest.dataTypeProvider.integerType()
@@ -272,8 +281,8 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
 
             val expectedDDL =
                 "CREATE TABLE " + addIfNotExistsIfSupported() + "$tableName " +
-                        "(${"id".inProperCase()} $integerType PRIMARY KEY," +
-                        " $q${"name".inProperCase()}$q $varCharType NOT NULL)"
+                    "(${"id".inProperCase()} $integerType PRIMARY KEY," +
+                    " $q${"name".inProperCase()}$q $varCharType NOT NULL)"
 
             val unnamedTableDDL = unnamedTable.ddl.single()
             log.debug { "Expected DDL: $expectedDDL" }
@@ -283,15 +292,15 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
         }
     }
 
-
     @Test
     fun `namedEmptyTable without quotes SQL`() {
-        val testTable = object: Table("test_named_table") {}
+        val testTable = object : Table("test_named_table") {}
         withDb(TestDB.H2) {
             testTable.ddl.single() shouldBeEqualTo "CREATE TABLE IF NOT EXISTS ${"test_named_table".inProperCase()}"
         }
     }
 
+    @Test
     fun `table with different column types SQL 01`() {
         /**
          * ```sql
@@ -303,13 +312,14 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * )
          * ```
          */
-        val testTable = object: Table("different_column_types") {
-            val id = integer("id").autoIncrement()
-            val name = varchar("name", 42)
-            val age = integer("age").nullable()
+        val testTable =
+            object : Table("different_column_types") {
+                val id = integer("id").autoIncrement()
+                val name = varchar("name", 42)
+                val age = integer("age").nullable()
 
-            override val primaryKey = PrimaryKey(name)
-        }
+                override val primaryKey = PrimaryKey(name)
+            }
 
         withTables(TestDB.H2, testTable) {
             val varCharType = currentDialectTest.dataTypeProvider.varcharType(42)
@@ -317,11 +327,11 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             log.debug { "DDL: ${testTable.ddl.single()}" }
 
             testTable.ddl.single() shouldBeEqualTo
-                    "CREATE TABLE " + addIfNotExistsIfSupported() +
-                    "${"different_column_types".inProperCase()} " +
-                    "(${"id".inProperCase()} ${currentDialectTest.dataTypeProvider.integerAutoincType()} NOT NULL, " +
-                    "" + "\"${"name".inProperCase()}\" $varCharType PRIMARY KEY, " +
-                    "${"age".inProperCase()} ${currentDialectTest.dataTypeProvider.integerType()} NULL)"
+                "CREATE TABLE " + addIfNotExistsIfSupported() +
+                "${"different_column_types".inProperCase()} " +
+                "(${"id".inProperCase()} ${currentDialectTest.dataTypeProvider.integerAutoincType()} NOT NULL, " +
+                "" + "\"${"name".inProperCase()}\" $varCharType PRIMARY KEY, " +
+                "${"age".inProperCase()} ${currentDialectTest.dataTypeProvider.integerType()} NULL)"
         }
     }
 
@@ -341,13 +351,14 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * )
          * ```
          */
-        val testTable = object: Table("with_different_column_types") {
-            val id = integer("id")
-            val name = varchar("name", 42)
-            val age = integer("age").nullable()
+        val testTable =
+            object : Table("with_different_column_types") {
+                val id = integer("id")
+                val name = varchar("name", 42)
+                val age = integer("age").nullable()
 
-            override val primaryKey = PrimaryKey(id, name)
-        }
+                override val primaryKey = PrimaryKey(id, name)
+            }
 
         withTables(testDB, testTable) {
             val q = db.identifierManager.quoteString
@@ -363,8 +374,8 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             log.debug { "DDL: ${testTable.ddl.single()}" }
 
             testTable.ddl.single() shouldBeEqualTo
-                    "$tableDescription " +
-                    "($idDescription, $nameDescription, $ageDescription, $primaryKeyConstraint)"
+                "$tableDescription " +
+                "($idDescription, $nameDescription, $ageDescription, $primaryKeyConstraint)"
         }
     }
 
@@ -386,10 +397,11 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * )
          * ```
          */
-        val uIntTester = object: Table("u_int_tester") {
-            val id = uinteger("id").autoIncrement()
-            override val primaryKey = PrimaryKey(id)
-        }
+        val uIntTester =
+            object : Table("u_int_tester") {
+                val id = uinteger("id").autoIncrement()
+                override val primaryKey = PrimaryKey(id)
+            }
 
         /**
          * ```sql
@@ -399,10 +411,11 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * )
          * ```
          */
-        val uLongTester = object: Table("u_long_tester") {
-            val id = ulong("id").autoIncrement()
-            override val primaryKey = PrimaryKey(id)
-        }
+        val uLongTester =
+            object : Table("u_long_tester") {
+                val id = ulong("id").autoIncrement()
+                override val primaryKey = PrimaryKey(id)
+            }
 
         withTables(testDB, uIntTester, uLongTester) {
             uIntTester.insert { }
@@ -429,12 +442,13 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * );
          * ```
          */
-        val foo = object: IdTable<Long>("FooTable") {
-            val bar = integer("bar")
-            override val id: Column<EntityID<Long>> = long("id").entityId().autoIncrement()
+        val foo =
+            object : IdTable<Long>("FooTable") {
+                val bar = integer("bar")
+                override val id: Column<EntityID<Long>> = long("id").entityId().autoIncrement()
 
-            override val primaryKey = PrimaryKey(bar, id)
-        }
+                override val primaryKey = PrimaryKey(bar, id)
+            }
 
         withTables(testDB, foo) {
             foo.insert {
@@ -464,11 +478,12 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * );
          * ```
          */
-        val testTable = object: Table("text_pk_table") {
-            val column1 = text("column_1")
+        val testTable =
+            object : Table("text_pk_table") {
+                val column1 = text("column_1")
 
-            override val primaryKey = PrimaryKey(column1)
-        }
+                override val primaryKey = PrimaryKey(column1)
+            }
 
         withDb(TestDB.H2) {
             val h2Dialect = currentDialectTest as H2Dialect
@@ -503,12 +518,13 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * );
          * CREATE INDEX t1_name ON t1 ("name");
          */
-        val t = object: Table("t1") {
-            val id = integer("id")
-            val name = varchar("name", 255).index()
+        val t =
+            object : Table("t1") {
+                val id = integer("id")
+                val name = varchar("name", 255).index()
 
-            override val primaryKey = PrimaryKey(id)
-        }
+                override val primaryKey = PrimaryKey(id)
+            }
 
         withTables(testDB, t) {
             val alter = SchemaUtils.createIndex(t.indices.first()).single()
@@ -517,7 +533,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             log.debug { "Alter: $alter" }
 
             alter shouldBeEqualTo "CREATE INDEX ${"t1_name".inProperCase()} " +
-                    "ON ${"t1".inProperCase()} ($q${"name".inProperCase()}$q)"
+                "ON ${"t1".inProperCase()} ($q${"name".inProperCase()}$q)"
         }
     }
 
@@ -539,18 +555,19 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * CREATE INDEX t2_name ON t2 ("name");
          * CREATE INDEX t2_lvalue_rvalue ON t2 (lvalue, rvalue);
          */
-        val t = object: Table("t2") {
-            val id = integer("id")
-            val lvalue = integer("lvalue")
-            val rvalue = integer("rvalue")
-            val name = varchar("name", 255).index()
+        val t =
+            object : Table("t2") {
+                val id = integer("id")
+                val lvalue = integer("lvalue")
+                val rvalue = integer("rvalue")
+                val name = varchar("name", 255).index()
 
-            override val primaryKey = PrimaryKey(id)
+                override val primaryKey = PrimaryKey(id)
 
-            init {
-                index(false, lvalue, rvalue)
+                init {
+                    index(false, lvalue, rvalue)
+                }
             }
-        }
 
         withTables(testDB, t) {
             val q = db.identifierManager.quoteString
@@ -558,12 +575,12 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             val a1 = SchemaUtils.createIndex(t.indices[0]).single()
             log.debug { "Alter 1: $a1" }
             a1 shouldBeEqualTo "CREATE INDEX ${"t2_name".inProperCase()} " +
-                    "ON ${"t2".inProperCase()} ($q${"name".inProperCase()}$q)"
+                "ON ${"t2".inProperCase()} ($q${"name".inProperCase()}$q)"
 
             val a2 = SchemaUtils.createIndex(t.indices[1]).single()
             log.debug { "Alter 2: $a2" }
             a2 shouldBeEqualTo "CREATE INDEX ${"t2_lvalue_rvalue".inProperCase()} " +
-                    "ON ${"t2".inProperCase()} " + "(${"lvalue".inProperCase()}, ${"rvalue".inProperCase()})"
+                "ON ${"t2".inProperCase()} " + "(${"lvalue".inProperCase()}, ${"rvalue".inProperCase()})"
         }
     }
 
@@ -579,27 +596,32 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * CREATE INDEX TEST_INDEX_TABLE_COLUMN_1 ON TEST_INDEX_TABLE (COLUMN_1);
          * ```
          */
-        val testTable = object: Table("test_index_table") {
-            val column1 = text("column_1")
+        val testTable =
+            object : Table("test_index_table") {
+                val column1 = text("column_1")
 
-            init {
-                index(false, column1)
+                init {
+                    index(false, column1)
+                }
             }
-        }
 
         withDb(TestDB.H2) {
             val h2Dialect = currentDialectTest as H2Dialect
             val isOracleMode = h2Dialect.h2Mode == H2Dialect.H2CompatibilityMode.Oracle
             val tableProperName = testTable.tableName.inProperCase()
-            val columnProperName = testTable.columns.first().name.inProperCase()
-            val indexProperName = "${tableProperName}_${columnProperName}"
+            val columnProperName =
+                testTable.columns
+                    .first()
+                    .name
+                    .inProperCase()
+            val indexProperName = "${tableProperName}_$columnProperName"
 
             val indexStatement = SchemaUtils.createIndex(testTable.indices.single()).single()
 
             log.debug { "DDL: ${testTable.ddl.single()}" }
 
             testTable.ddl.single() shouldBeEqualTo "CREATE TABLE " + addIfNotExistsIfSupported() +
-                    tableProperName + " (" + testTable.columns.single().descriptionDdl(false) + ")"
+                tableProperName + " (" + testTable.columns.single().descriptionDdl(false) + ")"
 
             if (h2Dialect.isSecondVersion && !isOracleMode) {
                 log.debug { "Index: $indexStatement" }
@@ -627,12 +649,13 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * ALTER TABLE t1 ADD CONSTRAINT t1_name_unique UNIQUE ("name");
          * ```
          */
-        val t = object: Table("t1") {
-            val id = integer("id")
-            val name = varchar("name", 255).uniqueIndex()
+        val t =
+            object : Table("t1") {
+                val id = integer("id")
+                val name = varchar("name", 255).uniqueIndex()
 
-            override val primaryKey = PrimaryKey(id)
-        }
+                override val primaryKey = PrimaryKey(id)
+            }
 
         withTables(testDB, t) {
             val q = db.identifierManager.quoteString
@@ -641,8 +664,8 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             log.debug { "Alter: $alter" }
 
             alter shouldBeEqualTo "ALTER TABLE ${"t1".inProperCase()} " +
-                    "ADD CONSTRAINT ${"t1_name_unique".inProperCase()} " +
-                    "UNIQUE ($q${"name".inProperCase()}$q)"
+                "ADD CONSTRAINT ${"t1_name_unique".inProperCase()} " +
+                "UNIQUE ($q${"name".inProperCase()}$q)"
         }
     }
 
@@ -663,12 +686,13 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * ALTER TABLE t1 ADD CONSTRAINT U_T1_NAME UNIQUE ("name");
          * ```
          */
-        val t = object: Table("t1") {
-            val id = integer("id")
-            val name = varchar("name", 255).uniqueIndex("U_T1_NAME")
+        val t =
+            object : Table("t1") {
+                val id = integer("id")
+                val name = varchar("name", 255).uniqueIndex("U_T1_NAME")
 
-            override val primaryKey = PrimaryKey(id)
-        }
+                override val primaryKey = PrimaryKey(id)
+            }
 
         withTables(testDB, t) {
             val q = db.identifierManager.quoteString
@@ -677,8 +701,8 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             log.debug { "Alter: $alter" }
 
             alter shouldBeEqualTo "ALTER TABLE ${"t1".inProperCase()} " +
-                    "ADD CONSTRAINT ${"U_T1_NAME"} " +
-                    "UNIQUE ($q${"name".inProperCase()}$q)"
+                "ADD CONSTRAINT ${"U_T1_NAME"} " +
+                "UNIQUE ($q${"name".inProperCase()}$q)"
         }
     }
 
@@ -701,15 +725,16 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * ALTER TABLE t1
          *      ADD CONSTRAINT t1_type_name_unique UNIQUE ("type", "name");
          */
-        val t = object: Table("t1") {
-            val type = varchar("type", 255)
-            val name = varchar("name", 255)
+        val t =
+            object : Table("t1") {
+                val type = varchar("type", 255)
+                val name = varchar("name", 255)
 
-            init {
-                index(false, name, type)
-                uniqueIndex(type, name)
+                init {
+                    index(false, name, type)
+                    uniqueIndex(type, name)
+                }
             }
-        }
 
         withTables(testDB, t) {
             val q = db.identifierManager.quoteString
@@ -720,11 +745,11 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             log.debug { "Unique Alter: $uniqueAlter" }
 
             indexAlter shouldBeEqualTo "CREATE INDEX ${"t1_name_type".inProperCase()} ON ${"t1".inProperCase()} " +
-                    "($q${"name".inProperCase()}$q, $q${"type".inProperCase()}$q)"
+                "($q${"name".inProperCase()}$q, $q${"type".inProperCase()}$q)"
 
             uniqueAlter shouldBeEqualTo "ALTER TABLE ${"t1".inProperCase()} " +
-                    "ADD CONSTRAINT ${"t1_type_name_unique".inProperCase()} " +
-                    "UNIQUE ($q${"type".inProperCase()}$q, $q${"name".inProperCase()}$q)"
+                "ADD CONSTRAINT ${"t1_type_name_unique".inProperCase()} " +
+                "UNIQUE ($q${"type".inProperCase()}$q, $q${"name".inProperCase()}$q)"
         }
     }
 
@@ -748,15 +773,16 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          *      ADD CONSTRAINT U_T1_TYPE_NAME UNIQUE ("type", "name")
          * ```
          */
-        val t = object: Table("t1") {
-            val type = varchar("type", 255)
-            val name = varchar("name", 255)
+        val t =
+            object : Table("t1") {
+                val type = varchar("type", 255)
+                val name = varchar("name", 255)
 
-            init {
-                index("I_T1_NAME_TYPE", false, name, type)
-                uniqueIndex("U_T1_TYPE_NAME", type, name)
+                init {
+                    index("I_T1_NAME_TYPE", false, name, type)
+                    uniqueIndex("U_T1_TYPE_NAME", type, name)
+                }
             }
-        }
 
         withTables(testDB, t) {
             val q = db.identifierManager.quoteString
@@ -767,11 +793,11 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             log.debug { "Unique Alter: $uniqueAlter" }
 
             indexAlter shouldBeEqualTo "CREATE INDEX ${"I_T1_NAME_TYPE"} ON ${"t1".inProperCase()} " +
-                    "($q${"name".inProperCase()}$q, $q${"type".inProperCase()}$q)"
+                "($q${"name".inProperCase()}$q, $q${"type".inProperCase()}$q)"
 
             uniqueAlter shouldBeEqualTo "ALTER TABLE ${"t1".inProperCase()} " +
-                    "ADD CONSTRAINT ${"U_T1_TYPE_NAME"} " +
-                    "UNIQUE ($q${"type".inProperCase()}$q, $q${"name".inProperCase()}$q)"
+                "ADD CONSTRAINT ${"U_T1_TYPE_NAME"} " +
+                "UNIQUE ($q${"type".inProperCase()}$q, $q${"name".inProperCase()}$q)"
         }
     }
 
@@ -791,9 +817,10 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * );
          * ```
          */
-        val tableWithBinary = object: Table("TableWithBinary") {
-            val binaryColumn = binary("binaryColumn")
-        }
+        val tableWithBinary =
+            object : Table("TableWithBinary") {
+                val binaryColumn = binary("binaryColumn")
+            }
 
         fun SizedIterable<ResultRow>.readAsString() = map { String(it[tableWithBinary.binaryColumn]) }
 
@@ -835,10 +862,11 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * );
          * ```
          */
-        val t = object: Table("t") {
-            val binary = binary("binary", 10).nullable()
-            val byteCol = binary("byteCol", 1).clientDefault { byteArrayOf(0) }
-        }
+        val t =
+            object : Table("t") {
+                val binary = binary("binary", 10).nullable()
+                val byteCol = binary("byteCol", 1).clientDefault { byteArrayOf(0) }
+            }
 
         fun SizedIterable<ResultRow>.readAsString() = map { row -> row[t.binary]?.toUtf8String() }
 
@@ -865,10 +893,20 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
 
             t.selectAll().readAsString() shouldBeEqualTo listOf("Hello!", "World!", null)
 
-            val world = t.selectAll().where { t.binary eq worldBytes }.readAsString().single()
+            val world =
+                t
+                    .selectAll()
+                    .where { t.binary eq worldBytes }
+                    .readAsString()
+                    .single()
             world shouldBeEqualTo "World!"
 
-            val worldByBitCol = t.selectAll().where { t.byteCol eq byteArrayOf(1) }.readAsString().single()
+            val worldByBitCol =
+                t
+                    .selectAll()
+                    .where { t.byteCol eq byteArrayOf(1) }
+                    .readAsString()
+                    .single()
             worldByBitCol shouldBeEqualTo "World!"
         }
     }
@@ -879,7 +917,8 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     @Test
     fun `escape string column type`() {
         withDb(TestDB.H2) {
-            VarCharColumnType(collate = "utf8_general_ci").sqlType() shouldBeEqualTo "VARCHAR(255) COLLATE utf8_general_ci"
+            VarCharColumnType(collate = "utf8_general_ci").sqlType() shouldBeEqualTo
+                "VARCHAR(255) COLLATE utf8_general_ci"
             VarCharColumnType(collate = "injected'code").sqlType() shouldBeEqualTo "VARCHAR(255) COLLATE injected''code"
             VarCharColumnType().nonNullValueToString("value") shouldBeEqualTo "'value'"
             VarCharColumnType().nonNullValueToString("injected'value") shouldBeEqualTo "'injected''value'"
@@ -891,10 +930,13 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
         }
     }
 
-    private abstract class EntityTable(name: String = ""): IdTable<String>(name) {
-        final override val id: Column<EntityID<String>> = varchar("id", 64)
-            .clientDefault { Base58.randomString(32) }
-            .entityId()
+    private abstract class EntityTable(
+        name: String = "",
+    ) : IdTable<String>(name) {
+        final override val id: Column<EntityID<String>> =
+            varchar("id", 64)
+                .clientDefault { Base58.randomString(32) }
+                .entityId()
 
         override val primaryKey = PrimaryKey(id)
     }
@@ -902,28 +944,33 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `complex test 01`(testDB: TestDB) {
-        val user = object: EntityTable() {
-            val name = varchar("name", 255)
-            val email = varchar("email", 255)
-        }
-        val repository = object: EntityTable() {
-            val name = varchar("name", 255)
-        }
+        val user =
+            object : EntityTable() {
+                val name = varchar("name", 255)
+                val email = varchar("email", 255)
+            }
+        val repository =
+            object : EntityTable() {
+                val name = varchar("name", 255)
+            }
 
-        val userToRepo = object: EntityTable() {
-            val user = reference("user_id", user)
-            val repo = reference("repo_id", repository)
-        }
+        val userToRepo =
+            object : EntityTable() {
+                val user = reference("user_id", user)
+                val repo = reference("repo_id", repository)
+            }
 
         withTables(testDB, user, repository, userToRepo) {
-            val userID = user.insert {
-                it[user.name] = "foo"
-                it[user.email] = "bar"
-            } get user.id
+            val userID =
+                user.insert {
+                    it[user.name] = "foo"
+                    it[user.email] = "bar"
+                } get user.id
 
-            val repoID = repository.insert {
-                it[repository.name] = "foo"
-            } get repository.id
+            val repoID =
+                repository.insert {
+                    it[repository.name] = "foo"
+                } get repository.id
 
             userToRepo.insert {
                 it[userToRepo.user] = userID
@@ -954,7 +1001,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
      *
      * ```
      */
-    object Table1: IntIdTable() {
+    object Table1 : IntIdTable() {
         val table2 = reference("teamId", Table2, onDelete = ReferenceOption.NO_ACTION)
     }
 
@@ -971,7 +1018,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
      *      REFERENCES table1(id) ON UPDATE RESTRICT;
      * ```
      */
-    object Table2: IntIdTable() {
+    object Table2 : IntIdTable() {
         val table1 = optReference("teamId", Table1, onDelete = ReferenceOption.NO_ACTION)
     }
 
@@ -980,9 +1027,10 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     fun `cross reference`(testDB: TestDB) {
         withTables(testDB, Table1, Table2) {
             val table2id = Table2.insertAndGetId {}
-            val table1id = Table1.insertAndGetId {
-                it[Table1.table2] = table2id
-            }
+            val table1id =
+                Table1.insertAndGetId {
+                    it[Table1.table2] = table2id
+                }
             Table2.insertAndGetId {
                 it[Table2.table1] = table1id
             }
@@ -1005,7 +1053,11 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
              *      DROP CONSTRAINT fk_table2_teamid__id
              * ```
              */
-            exec(Table2.table1.foreignKey!!.dropStatement().single())
+            exec(
+                Table2.table1.foreignKey!!
+                    .dropStatement()
+                    .single()
+            )
         }
     }
 
@@ -1030,9 +1082,10 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `uuid column type`(testDB: TestDB) {
-        val node = object: IntIdTable("node") {
-            val uuid = javaUUID("uuid")
-        }
+        val node =
+            object : IntIdTable("node") {
+                val uuid = javaUUID("uuid")
+            }
 
         withTables(testDB, node) {
             val key = UUID.randomUUID()
@@ -1050,9 +1103,10 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `boolean column type`(testDB: TestDB) {
-        val boolTable = object: Table("boolTable") {
-            val bool = bool("bool")
-        }
+        val boolTable =
+            object : Table("boolTable") {
+                val bool = bool("bool")
+            }
 
         withTables(testDB, boolTable) {
             boolTable.insert {
@@ -1073,7 +1127,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
         /**
          * Postgres:
          * ```sql
-         * CREATE TABLE IF NOT EXISTS differnt_text_column_types (
+         * CREATE TABLE IF NOT EXISTS different_text_column_types (
          *      id SERIAL PRIMARY KEY,
          *      txt TEXT NOT NULL,
          *      "txtMed" TEXT NOT NULL,
@@ -1081,29 +1135,33 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * );
          * ```
          */
-        val testTable = object: Table("different_text_column_types") {
-            val id = integer("id").autoIncrement()
-            val txt = text("txt")
-            val txtMed = mediumText("txt_med")
-            val txtLong = largeText("txt_large")
+        val testTable =
+            object : Table("different_text_column_types") {
+                val id = integer("id").autoIncrement()
+                val txt = text("txt")
+                val txtMed = mediumText("txt_med")
+                val txtLong = largeText("txt_large")
 
-            override val primaryKey = PrimaryKey(id)
-        }
+                override val primaryKey = PrimaryKey(id)
+            }
 
         withTables(testDB, testTable) {
             testTable.ddl.single() shouldBeEqualTo
-                    "CREATE TABLE " + addIfNotExistsIfSupported() + "${"different_text_column_types".inProperCase()} " +
-                    "(${testTable.id.nameInDatabaseCase()} ${currentDialectTest.dataTypeProvider.integerAutoincType()} PRIMARY KEY, " +
-                    "${testTable.txt.nameInDatabaseCase()} ${currentDialectTest.dataTypeProvider.textType()} NOT NULL, " +
-                    "${testTable.txtMed.nameInDatabaseCase()} ${currentDialectTest.dataTypeProvider.mediumTextType()} NOT NULL, " +
-                    "${testTable.txtLong.nameInDatabaseCase()} ${currentDialectTest.dataTypeProvider.largeTextType()} NOT NULL)"
+                "CREATE TABLE " + addIfNotExistsIfSupported() + "${"different_text_column_types".inProperCase()} " +
+                "(${testTable.id.nameInDatabaseCase()} ${currentDialectTest.dataTypeProvider.integerAutoincType()} PRIMARY KEY, " +
+                "${testTable.txt.nameInDatabaseCase()} ${currentDialectTest.dataTypeProvider.textType()} NOT NULL, " +
+                "${testTable.txtMed.nameInDatabaseCase()} ${currentDialectTest.dataTypeProvider.mediumTextType()} NOT NULL, " +
+                "${testTable.txtLong.nameInDatabaseCase()} ${currentDialectTest.dataTypeProvider.largeTextType()} NOT NULL)"
 
             assertTrue {
                 testDB != TestDB.MYSQL_V5 || (
-                        currentDialectTest.dataTypeProvider.textType() != currentDialectTest.dataTypeProvider.mediumTextType() &&
-                                currentDialectTest.dataTypeProvider.mediumTextType() != currentDialectTest.dataTypeProvider.largeTextType() &&
-                                currentDialectTest.dataTypeProvider.largeTextType() != currentDialectTest.dataTypeProvider.textType()
-                        )
+                    currentDialectTest.dataTypeProvider.textType() !=
+                        currentDialectTest.dataTypeProvider.mediumTextType() &&
+                        currentDialectTest.dataTypeProvider.mediumTextType() !=
+                        currentDialectTest.dataTypeProvider.largeTextType() &&
+                        currentDialectTest.dataTypeProvider.largeTextType() !=
+                        currentDialectTest.dataTypeProvider.textType()
+                )
             }
 
             testTable.insert {
@@ -1112,20 +1170,20 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
                 it[txtLong] = "1TxtLong"
             }
 
-            val concat = concat(
-                separator = " ",
-                listOf(
-                    LowerCase(testTable.txt),
-                    UpperCase(testTable.txtMed),
-                    LowerCase(testTable.txtLong)
+            val concat =
+                concat(
+                    separator = " ",
+                    listOf(
+                        LowerCase(testTable.txt),
+                        UpperCase(testTable.txtMed),
+                        LowerCase(testTable.txtLong)
+                    )
                 )
-            )
 
             // just to be sure new type didn't break the functions
             testTable.select(concat).forEach {
                 it[concat] shouldBeEqualTo "1txt 1TXTMED 1txtlong"
             }
-
         }
     }
 
@@ -1159,13 +1217,14 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `check contraints 01`(testDB: TestDB) {
+    fun `check constraints 01`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB != TestDB.MYSQL_V5 }
 
-        val checkTable = object: Table("checkTable") {
-            val positive = integer("positive").check { it greaterEq 0 }
-            val negative = integer("negative").check { it less 0 }
-        }
+        val checkTable =
+            object : Table("checkTable") {
+                val positive = integer("positive").check { it greaterEq 0 }
+                val negative = integer("negative").check { it less 0 }
+            }
 
         withTables(testDB, checkTable) {
             checkTable.insert {
@@ -1206,16 +1265,17 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     fun `check constraint 02`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB != TestDB.MYSQL_V5 }
 
-        val checkTable = object: Table("multiCheckTable") {
-            val positive = integer("positive")
-            val negative = integer("negative")
+        val checkTable =
+            object : Table("multiCheckTable") {
+                val positive = integer("positive")
+                val negative = integer("negative")
 
-            init {
-                check("multi") {
-                    (positive greaterEq 0) and (negative less 0)
+                init {
+                    check("multi") {
+                        (positive greaterEq 0) and (negative less 0)
+                    }
                 }
             }
-        }
 
         withTables(testDB, checkTable) {
             checkTable.insert {
@@ -1252,9 +1312,10 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `create and drop check constraint`(testDB: TestDB) {
-        val tester = object: Table("tester") {
-            val amount = integer("amount")
-        }
+        val tester =
+            object : Table("tester") {
+                val amount = integer("amount")
+            }
 
         withTables(testDB, tester) {
             val constraintName = "check_amount_positive"
@@ -1293,7 +1354,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
 
     @Test
     fun `eq operator without DB connection`() {
-        object: Table("test") {
+        object : Table("test") {
             val testColumn = integer("test_column").nullable()
 
             init {
@@ -1306,7 +1367,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
 
     @Test
     fun `neq operator without DB connection`() {
-        object: Table("test") {
+        object : Table("test") {
             val testColumn = integer("test_column").nullable()
 
             init {
@@ -1325,7 +1386,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
      * )
      * ```
      */
-    object KeyWordTable: IntIdTable("keywords") {
+    object KeyWordTable : IntIdTable("keywords") {
         val bool = bool("bool")
     }
 
@@ -1344,11 +1405,13 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `drop table flushes cache`(testDB: TestDB) {
-        class Keyword(id: EntityID<Int>): IntEntity(id) {
+        class Keyword(
+            id: EntityID<Int>,
+        ) : IntEntity(id) {
             var bool by KeyWordTable.bool
         }
 
-        val keywordEntityClass = object: IntEntityClass<Keyword>(KeyWordTable, Keyword::class.java) {}
+        val keywordEntityClass = object : IntEntityClass<Keyword>(KeyWordTable, Keyword::class.java) {}
 
         withTables(testDB, KeyWordTable) {
             keywordEntityClass.new { bool = true }
@@ -1379,16 +1442,18 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `inner join with multiple foreignkey`(testDB: TestDB) {
-        val users = object: IntIdTable("users") {}
-        val subscriptions = object: IntIdTable("subscriptions") {
-            val userId = reference("userId", users)
-            val adminId = reference("adminId", users).nullable()
-        }
+        val users = object : IntIdTable("users") {}
+        val subscriptions =
+            object : IntIdTable("subscriptions") {
+                val userId = reference("userId", users)
+                val adminId = reference("adminId", users).nullable()
+            }
 
         withTables(testDB, subscriptions) {
-            val query = subscriptions
-                .join(users, JoinType.INNER, additionalConstraint = { subscriptions.userId eq users.id })
-                .selectAll()
+            val query =
+                subscriptions
+                    .join(users, JoinType.INNER, additionalConstraint = { subscriptions.userId eq users.id })
+                    .selectAll()
 
             query.count() shouldBeEqualTo 0L
         }
@@ -1423,7 +1488,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
      * CREATE TABLE IF NOT EXISTS one.test (id SERIAL PRIMARY KEY)
      * ```
      */
-    object TableFromSchemeOne: IntIdTable("one.test")
+    object TableFromSchemeOne : IntIdTable("one.test")
 
     /**
      * ```sql
@@ -1436,7 +1501,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
      * )
      * ```
      */
-    object TableFromSchemeTwo: IntIdTable("two.test") {
+    object TableFromSchemeTwo : IntIdTable("two.test") {
         val reference = reference("testOne", TableFromSchemeOne)
     }
 
@@ -1468,26 +1533,28 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `composite FK referencing unique index`(testDB: TestDB) {
-        val tableA = object: Table("TableA") {
-            val idA = integer("id_a")
-            val idB = integer("id_b")
+        val tableA =
+            object : Table("TableA") {
+                val idA = integer("id_a")
+                val idB = integer("id_b")
 
-            init {
-                uniqueIndex(idA, idB)
+                init {
+                    uniqueIndex(idA, idB)
+                }
             }
-        }
 
-        val tableB = object: Table("TableB") {
-            val idA = integer("id_a")
-            val idB = integer("id_b")
-            val idC = integer("id_c")
+        val tableB =
+            object : Table("TableB") {
+                val idA = integer("id_a")
+                val idB = integer("id_b")
+                val idC = integer("id_c")
 
-            override val primaryKey = PrimaryKey(idA, idB, idC)
+                override val primaryKey = PrimaryKey(idA, idB, idC)
 
-            init {
-                foreignKey(idA to tableA.idA, idB to tableA.idB)
+                init {
+                    foreignKey(idA to tableA.idA, idB to tableA.idB)
+                }
             }
-        }
 
         withTables(testDB, tableA, tableB) {
             tableA.insert {
@@ -1537,24 +1604,26 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `composite FK referencing primary key`(testDB: TestDB) {
-        val tableA = object: Table("TableA") {
-            val idA = integer("id_a")
-            val idB = integer("id_b")
+        val tableA =
+            object : Table("TableA") {
+                val idA = integer("id_a")
+                val idB = integer("id_b")
 
-            override val primaryKey = PrimaryKey(idA, idB)
-        }
-
-        val tableB = object: Table("TableB") {
-            val idA = integer("id_a")
-            val idB = integer("id_b")
-            val idC = integer("id_c")
-
-            override val primaryKey = PrimaryKey(idA, idB, idC)
-
-            init {
-                foreignKey(idA, idB, target = tableA.primaryKey)
+                override val primaryKey = PrimaryKey(idA, idB)
             }
-        }
+
+        val tableB =
+            object : Table("TableB") {
+                val idA = integer("id_a")
+                val idB = integer("id_b")
+                val idC = integer("id_c")
+
+                override val primaryKey = PrimaryKey(idA, idB, idC)
+
+                init {
+                    foreignKey(idA, idB, target = tableA.primaryKey)
+                }
+            }
 
         withTables(testDB, tableA, tableB) {
             tableA.insert {
@@ -1619,28 +1688,31 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `multiple FK`(testDB: TestDB) {
-        val tableA = object: Table("TableA") {
-            val idA = integer("id_a")
-            val idB = integer("id_b")
+        val tableA =
+            object : Table("TableA") {
+                val idA = integer("id_a")
+                val idB = integer("id_b")
 
-            override val primaryKey = PrimaryKey(idA, idB)
-        }
-
-        val tableC = object: Table("TableC") {
-            val idC = integer("id_c").uniqueIndex()
-        }
-
-        val tableB = object: Table("TableB") {
-            val idA = integer("id_a")
-            val idB = integer("id_b")
-            val idC = integer("id_c") references tableC.idC
-
-            override val primaryKey = PrimaryKey(idA, idB, idC)
-
-            init {
-                foreignKey(idA, idB, target = tableA.primaryKey)
+                override val primaryKey = PrimaryKey(idA, idB)
             }
-        }
+
+        val tableC =
+            object : Table("TableC") {
+                val idC = integer("id_c").uniqueIndex()
+            }
+
+        val tableB =
+            object : Table("TableB") {
+                val idA = integer("id_a")
+                val idB = integer("id_b")
+                val idC = integer("id_c") references tableC.idC
+
+                override val primaryKey = PrimaryKey(idA, idB, idC)
+
+                init {
+                    foreignKey(idA, idB, target = tableA.primaryKey)
+                }
+            }
 
         withTables(testDB, tableA, tableB, tableC) {
             tableA.insert {
@@ -1698,12 +1770,13 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * );
          * ```
          */
-        val tableA = object: Table("test.table_a") {
-            val idA = integer("id_a")
-            val idB = integer("id_b")
+        val tableA =
+            object : Table("test.table_a") {
+                val idA = integer("id_a")
+                val idB = integer("id_b")
 
-            override val primaryKey = PrimaryKey(idA, idB)
-        }
+                override val primaryKey = PrimaryKey(idA, idB)
+            }
 
         /**
          * ```sql
@@ -1715,12 +1788,13 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
          * );
          * ```
          */
-        val tableB = object: Table("test.table_b") {
-            val idA = integer("id_a")
-            val idB = integer("id_b")
+        val tableB =
+            object : Table("test.table_b") {
+                val idA = integer("id_a")
+                val idB = integer("id_b")
 
-            override val primaryKey = PrimaryKey(arrayOf(idA, idB))
-        }
+                override val primaryKey = PrimaryKey(arrayOf(idA, idB))
+            }
 
         withSchemas(testDB, one) {
             SchemaUtils.create(tableA, tableB)
@@ -1739,5 +1813,4 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
             tableB.selectAll().count() shouldBeEqualTo 1L
         }
     }
-
 }

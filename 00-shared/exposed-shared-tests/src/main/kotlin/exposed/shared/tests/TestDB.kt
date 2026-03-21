@@ -65,10 +65,13 @@ enum class TestDB(
         },
         driver = JdbcDrivers.DRIVER_CLASS_H2,
         beforeConnection = {
-            org.h2.engine.Mode::class.declaredMemberProperties
+            org.h2.engine.Mode::class
+                .declaredMemberProperties
                 .firstOrNull { it.name == "convertInsertNullToZero" }
                 ?.let { field ->
-                    val mode = org.h2.engine.Mode.getInstance("MySQL")
+                    val mode =
+                        org.h2.engine.Mode
+                            .getInstance("MySQL")
                     @Suppress("UNCHECKED_CAST")
                     (field as kotlin.reflect.KMutableProperty1<org.h2.engine.Mode, Boolean>).set(mode, false)
                 }
@@ -78,7 +81,7 @@ enum class TestDB(
         connection = {
             "jdbc:h2:mem:mariadb;MODE=MariaDB;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;"
         },
-        driver = JdbcDrivers.DRIVER_CLASS_H2,
+        driver = JdbcDrivers.DRIVER_CLASS_H2
     ),
     H2_PSQL(
         connection = {
@@ -87,12 +90,12 @@ enum class TestDB(
         driver = JdbcDrivers.DRIVER_CLASS_H2
     ),
 
-
     MARIADB(
         connection = {
-            val options = "?useSSL=false" +
+            val options =
+                "?useSSL=false" +
                     "&characterEncoding=UTF-8" +
-                    "&useLegacyDatetimeCode=false&serverTimezone=UTC" +  // TimeZone 을 UTC 로 설정
+                    "&useLegacyDatetimeCode=false&serverTimezone=UTC" + // TimeZone 을 UTC 로 설정
                     "&zeroDateTimeBehavior=convertToNull" +
                     "&rewriteBatchedStatements=true"
 
@@ -102,15 +105,16 @@ enum class TestDB(
                 "jdbc:mariadb://localhost:3306/exposed$options"
             }
         },
-        driver = JdbcDrivers.DRIVER_CLASS_MARIADB,
+        driver = JdbcDrivers.DRIVER_CLASS_MARIADB
     ),
 
     MYSQL_V5(
         connection = {
-            val options = "?useSSL=false" +
+            val options =
+                "?useSSL=false" +
                     "&characterEncoding=UTF-8" +
                     "&useLegacyDatetimeCode=false" +
-                    "&serverTimezone=UTC" +  // TimeZone 을 UTC 로 설정
+                    "&serverTimezone=UTC" + // TimeZone 을 UTC 로 설정
                     "&zeroDateTimeBehavior=convertToNull" +
                     "&rewriteBatchedStatements=true"
             if (USE_TESTCONTAINERS) {
@@ -119,18 +123,19 @@ enum class TestDB(
                 "jdbc:mysql://localhost:3306/exposed$options"
             }
         },
-        driver = JdbcDrivers.DRIVER_CLASS_MYSQL,
+        driver = JdbcDrivers.DRIVER_CLASS_MYSQL
     ),
 
     MYSQL_V8(
         connection = {
-            val options = "?useSSL=false" +
+            val options =
+                "?useSSL=false" +
                     "&characterEncoding=UTF-8" +
                     "&zeroDateTimeBehavior=convertToNull" +
                     "&useLegacyDatetimeCode=false" +
-                    "&serverTimezone=UTC" +  // TimeZone 을 UTC 로 설정
+                    "&serverTimezone=UTC" + // TimeZone 을 UTC 로 설정
                     "&allowPublicKeyRetrieval=true" +
-                    "&rewriteBatchedStatements=true"   // Batch 처리를 위한 설정
+                    "&rewriteBatchedStatements=true" // Batch 처리를 위한 설정
 
             if (USE_TESTCONTAINERS) {
                 Containers.MySql8.jdbcUrl + options
@@ -140,7 +145,7 @@ enum class TestDB(
         },
         driver = JdbcDrivers.DRIVER_CLASS_MYSQL,
         user = if (USE_TESTCONTAINERS) "test" else "exposed",
-        pass = if (USE_TESTCONTAINERS) "test" else "@exposed2025",
+        pass = if (USE_TESTCONTAINERS) "test" else System.getenv("EXPOSED_MYSQL_PASS") ?: "test"
     ),
 
     POSTGRESQL(
@@ -185,15 +190,18 @@ enum class TestDB(
         dbConfig = {
             defaultIsolationLevel = java.sql.Connection.TRANSACTION_READ_COMMITTED
         }
-    );
+    ),
+    ;
 
+    @Volatile
     var db: Database? = null
 
     fun connect(configure: DatabaseConfig.Builder.() -> Unit = {}): Database {
-        val config = DatabaseConfig {
-            dbConfig()
-            configure()
-        }
+        val config =
+            DatabaseConfig {
+                dbConfig()
+                configure()
+            }
 
         return Database.connect(
             url = connection(),
@@ -201,7 +209,7 @@ enum class TestDB(
             user = user,
             password = pass,
             driver = driver,
-            setupConnection = { afterConnection(it) },
+            setupConnection = { afterConnection(it) }
         )
 
         // NOTE: 테스트 시에는 HikariDataSource 를 사용하지 않습니다.
@@ -214,18 +222,19 @@ enum class TestDB(
     }
 
     private fun getDataSource(): DataSource {
-        val config = HikariConfig().apply {
-            jdbcUrl = connection()
-            driverClassName = driver
-            username = user
-            password = pass
-            maximumPoolSize = 80
-            minimumIdle = 10
-        }
+        val config =
+            HikariConfig().apply {
+                jdbcUrl = connection()
+                driverClassName = driver
+                username = user
+                password = pass
+                maximumPoolSize = 80
+                minimumIdle = 10
+            }
         return HikariDataSource(config)
     }
 
-    companion object: KLogging() {
+    companion object : KLogging() {
         val ALL_H2_V1 = setOf(H2_V1)
         val ALL_H2 = setOf(H2, H2_MYSQL, H2_PSQL, H2_MARIADB)
         val ALL_MARIADB = setOf(MARIADB)
@@ -255,14 +264,18 @@ enum class TestDB(
         fun enabledDialects(): Set<TestDB> {
             val useDB = System.getProperty("exposed.test.useDB")
             if (!useDB.isNullOrBlank()) {
-                return useDB.split(",")
+                return useDB
+                    .split(",")
                     .map { it.trim() }
                     .mapNotNull { name -> entries.find { it.name.equals(name, true) } }
                     .toSet()
                     .ifEmpty { setOf(H2) }
             }
-            return if (useFastDB) setOf(H2)
-            else setOf(H2, POSTGRESQL, MYSQL_V8)
+            return if (useFastDB) {
+                setOf(H2)
+            } else {
+                setOf(H2, POSTGRESQL, MYSQL_V8)
+            }
         }
     }
 }

@@ -26,12 +26,12 @@ import org.jetbrains.exposed.v1.jdbc.deleteWhere
 import org.jetbrains.exposed.v1.jdbc.select
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Repository
 class MovieRepository {
-
-    companion object: KLoggingChannel() {
+    companion object : KLoggingChannel() {
         private val MovieActorJoin by lazy {
             MovieTable
                 .innerJoin(ActorInMovieTable)
@@ -51,21 +51,19 @@ class MovieRepository {
         }
     }
 
-    suspend fun count(): Long =
-        MovieTable.selectAll().count()
+    suspend fun count(): Long = MovieTable.selectAll().count()
 
     suspend fun findById(movieId: Long): MovieEntity? {
         log.debug { "Find Movie by id. id: $movieId" }
 
-        return MovieTable.selectAll()
+        return MovieTable
+            .selectAll()
             .where { MovieTable.id eq movieId }
             .firstOrNull()
             ?.let { MovieEntity.wrapRow(it) }
     }
 
-    suspend fun findAll(): List<MovieEntity> {
-        return MovieEntity.wrapRows(MovieTable.selectAll()).toList()
-    }
+    suspend fun findAll(): List<MovieEntity> = MovieEntity.wrapRows(MovieTable.selectAll()).toList()
 
     suspend fun searchMovie(params: Map<String, String?>): List<MovieEntity> {
         log.debug { "Search Movie by params. params: $params" }
@@ -74,11 +72,24 @@ class MovieRepository {
 
         params.forEach { (key, value) ->
             when (key) {
-                MovieTable::id.name -> value?.let { parseLongParam(key, it) }?.let { query.andWhere { MovieTable.id eq it } }
-                MovieTable::name.name -> value?.let { query.andWhere { MovieTable.name eq it } }
-                MovieTable::producerName.name -> value?.let { query.andWhere { MovieTable.producerName eq it } }
-                MovieTable::releaseDate.name -> value?.let { parseLocalDateTimeParam(key, it) }?.let {
-                    query.andWhere { MovieTable.releaseDate eq it }
+                MovieTable::id.name -> {
+                    value?.let { parseLongParam(key, it) }?.let {
+                        query.andWhere {
+                            MovieTable.id eq
+                                it
+                        }
+                    }
+                }
+                MovieTable::name.name -> {
+                    value?.let { query.andWhere { MovieTable.name eq it } }
+                }
+                MovieTable::producerName.name -> {
+                    value?.let { query.andWhere { MovieTable.producerName eq it } }
+                }
+                MovieTable::releaseDate.name -> {
+                    value?.let { parseLocalDateTimeParam(key, it) }?.let {
+                        query.andWhere { MovieTable.releaseDate eq it }
+                    }
                 }
             }
         }
@@ -93,7 +104,9 @@ class MovieRepository {
             name = movie.name
             producerName = movie.producerName
             if (movie.releaseDate.isNotBlank()) {
-                releaseDate = LocalDateTime.parse(movie.releaseDate)
+                releaseDate =
+                    runCatching { LocalDateTime.parse(movie.releaseDate) }
+                        .getOrElse { LocalDate.parse(movie.releaseDate).atTime(0, 0) }
             }
         }
     }
@@ -103,17 +116,22 @@ class MovieRepository {
         return MovieTable.deleteWhere { MovieTable.id eq movieId }
     }
 
-    private fun parseLongParam(key: String, value: String): Long? =
+    private fun parseLongParam(
+        key: String,
+        value: String,
+    ): Long? =
         value.toLongOrNull().also {
             if (it == null) log.warn("Invalid numeric `$key` parameter: '$value', ignoring filter.")
         }
 
-    private fun parseLocalDateTimeParam(key: String, value: String): LocalDateTime? =
+    private fun parseLocalDateTimeParam(
+        key: String,
+        value: String,
+    ): LocalDateTime? =
         runCatching { LocalDateTime.parse(value) }
             .onFailure {
                 log.warn("Invalid `$key` parameter: '$value', ignoring filter.")
-            }
-            .getOrNull()
+            }.getOrNull()
 
     /**
      * ```sql
@@ -143,8 +161,7 @@ class MovieRepository {
                 ActorTable.firstName,
                 ActorTable.lastName,
                 ActorTable.birthday
-            )
-            .groupBy { it[MovieTable.id] }
+            ).groupBy { it[MovieTable.id] }
             .map { (_, rows) ->
                 val movie = rows.first().toMovieRecord()
                 val actor = rows.map { it.toActorRecord() }
@@ -175,7 +192,7 @@ class MovieRepository {
         log.debug { "Get Movie with actors. movieId=$movieId" }
         return MovieEntity
             .findById(movieId)
-            ?.load(MovieEntity::actors)     // eager loading
+            ?.load(MovieEntity::actors) // eager loading
             ?.toMovieWithActorRecord()
     }
 
@@ -217,12 +234,13 @@ class MovieRepository {
     suspend fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
         log.debug { "Find movies with acting producers." }
 
-        val query: Query = moviesWithActingProducersJoin
-            .select(
-                MovieTable.name,
-                ActorTable.firstName,
-                ActorTable.lastName
-            )
+        val query: Query =
+            moviesWithActingProducersJoin
+                .select(
+                    MovieTable.name,
+                    ActorTable.firstName,
+                    ActorTable.lastName
+                )
 
         return query.map { it.toMovieWithProducingActorRecord() }
     }

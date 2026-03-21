@@ -11,9 +11,6 @@ import io.bluetape4k.hibernate.reactive.mutiny.withSessionSuspending
 import io.bluetape4k.hibernate.reactive.mutiny.withStatelessSessionSuspending
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.smallrye.mutiny.coroutines.awaitSuspending
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import org.hibernate.reactive.mutiny.Mutiny.SessionFactory
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -25,19 +22,19 @@ class MemberController(
     private val sf: SessionFactory,
     private val memberRepository: MemberSessionRepository,
     private val teamRepository: TeamSessionRepository,
-): CoroutineScope by CoroutineScope(Dispatchers.IO + SupervisorJob()) {
-
-    companion object: KLoggingChannel()
+) {
+    companion object : KLoggingChannel()
 
     @RequestMapping
-    suspend fun findAll(): List<MemberRecord> {
-        return sf.withSessionSuspending { session ->
+    suspend fun findAll(): List<MemberRecord> =
+        sf.withSessionSuspending { session ->
             memberRepository.findAll(session).map { it.toRecord() }
         }
-    }
 
     @RequestMapping("/{id}")
-    suspend fun findById(@PathVariable id: Long): MemberRecord? {
+    suspend fun findById(
+        @PathVariable id: Long,
+    ): MemberRecord? {
 //        return sf.withSessionSuspending { session ->
 //            memberRepository.findById(session, id)?.toDto()
 //        }
@@ -48,13 +45,14 @@ class MemberController(
     }
 
     @RequestMapping("/{id}/team")
-    suspend fun findByIdWithTeam(@PathVariable id: Long): MemberAndTeamRecord? {
-        return sf.withSessionSuspending { session ->
+    suspend fun findByIdWithTeam(
+        @PathVariable id: Long,
+    ): MemberAndTeamRecord? =
+        sf.withSessionSuspending { session ->
             memberRepository.findById(session, id)?.let { member ->
                 // Lazy Loading 시에는 이렇게 fetch 를 해줘야 합니다. member.team 은 Eager loading 이므로 fetch 를 할 필요가 없습니다.
                 // session.fetch(member.team).awaitSuspending()
                 member.toMemberAndTeamRecord()
             }
         }
-    }
 }

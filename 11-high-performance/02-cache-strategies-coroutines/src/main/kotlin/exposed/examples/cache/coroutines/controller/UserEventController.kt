@@ -9,26 +9,30 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@Suppress("DEPRECATION")
-@RestController
-@RequestMapping("/user-events")
 /**
  * suspend 기반 Write Behind 이벤트 API입니다.
  */
+@Suppress("DEPRECATION")
+@RestController
+@RequestMapping("/user-events")
 class UserEventController(
     private val repository: UserEventCacheRepository,
 ) {
-    companion object: KLoggingChannel()
+    companion object : KLoggingChannel()
 
     @PostMapping
-    suspend fun insert(@RequestBody userEvent: UserEventRecord): Boolean {
+    suspend fun insert(
+        @RequestBody userEvent: UserEventRecord,
+    ): Boolean {
         log.debug { "Inserting user event: $userEvent" }
         return repository.put(userEvent)
     }
 
     @PostMapping("/bulk")
-    suspend fun insertBulk(@RequestBody userEvents: List<UserEventRecord>): Boolean {
-        log.debug { "Inserting user events: $userEvents" }
+    suspend fun insertBulk(
+        @RequestBody userEvents: List<UserEventRecord>,
+    ): Boolean {
+        log.debug { "Inserting user events. size=${userEvents.size}" }
         repository.putAll(userEvents)
         return true
     }

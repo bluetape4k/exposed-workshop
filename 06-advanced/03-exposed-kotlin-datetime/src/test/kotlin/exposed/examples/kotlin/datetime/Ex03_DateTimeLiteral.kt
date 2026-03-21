@@ -3,6 +3,7 @@ package exposed.examples.kotlin.datetime
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
+import io.bluetape4k.logging.KLogging
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import org.amshove.kluent.shouldBeEmpty
@@ -29,12 +30,13 @@ import kotlin.time.Instant
  * DATE, DATETIME, TIMESTAMP 컬럼에서 [dateLiteral], [dateTimeLiteral], [timestampLiteral]을 사용하는 예제 테스트.
  */
 @OptIn(ExperimentalTime::class)
-class Ex03_DateTimeLiteral: AbstractExposedTest() {
+class Ex03_DateTimeLiteral : AbstractExposedTest() {
+    companion object : KLogging()
 
     private val defaultDate = LocalDate(2000, 1, 1)
     private val futureDate = LocalDate(3000, 1, 1)
 
-    object TableWithDate: IntIdTable() {
+    object TableWithDate : IntIdTable() {
         val date = date("date")
     }
 
@@ -57,7 +59,7 @@ class Ex03_DateTimeLiteral: AbstractExposedTest() {
      * )
      * ```
      */
-    object TableWithDatetime: IntIdTable() {
+    object TableWithDatetime : IntIdTable() {
         val datetime = datetime("datetime")
     }
 
@@ -73,7 +75,7 @@ class Ex03_DateTimeLiteral: AbstractExposedTest() {
      * )
      * ```
      */
-    object TableWithTimestamp: IntIdTable() {
+    object TableWithTimestamp : IntIdTable() {
         val timestamp = timestamp("timestamp")
     }
 
@@ -101,11 +103,12 @@ class Ex03_DateTimeLiteral: AbstractExposedTest() {
                 it[date] = defaultDate
             }
 
-            val query = TableWithDate
-                .select(TableWithDate.date)
-                .where {
-                    TableWithDate.date eq dateLiteral(defaultDate)
-                }
+            val query =
+                TableWithDate
+                    .select(TableWithDate.date)
+                    .where {
+                        TableWithDate.date eq dateLiteral(defaultDate)
+                    }
             query.single()[TableWithDate.date] shouldBeEqualTo defaultDate
         }
     }
@@ -133,10 +136,12 @@ class Ex03_DateTimeLiteral: AbstractExposedTest() {
             TableWithDate.insert {
                 it[date] = defaultDate
             }
-            val query = TableWithDate.selectAll()
-                .where {
-                    TableWithDate.date less dateLiteral(futureDate)
-                }
+            val query =
+                TableWithDate
+                    .selectAll()
+                    .where {
+                        TableWithDate.date less dateLiteral(futureDate)
+                    }
             query.firstOrNull().shouldNotBeNull()
         }
     }
@@ -165,11 +170,12 @@ class Ex03_DateTimeLiteral: AbstractExposedTest() {
                 it[datetime] = defaultDatetime
             }
 
-            val query = TableWithDatetime
-                .select(TableWithDatetime.datetime)
-                .where {
-                    TableWithDatetime.datetime eq dateTimeLiteral(defaultDatetime)
-                }
+            val query =
+                TableWithDatetime
+                    .select(TableWithDatetime.datetime)
+                    .where {
+                        TableWithDatetime.datetime eq dateTimeLiteral(defaultDatetime)
+                    }
             query.single()[TableWithDatetime.datetime] shouldBeEqualTo defaultDatetime
         }
     }
@@ -197,11 +203,12 @@ class Ex03_DateTimeLiteral: AbstractExposedTest() {
             TableWithDatetime.insert {
                 it[datetime] = defaultDatetime
             }
-            val query = TableWithDatetime
-                .selectAll()
-                .where {
-                    TableWithDatetime.datetime less dateTimeLiteral(futureDatetime)
-                }
+            val query =
+                TableWithDatetime
+                    .selectAll()
+                    .where {
+                        TableWithDatetime.datetime less dateTimeLiteral(futureDatetime)
+                    }
             query.firstOrNull().shouldNotBeNull()
         }
     }
@@ -230,11 +237,12 @@ class Ex03_DateTimeLiteral: AbstractExposedTest() {
                 it[timestamp] = defaultTimestamp
             }
 
-            val query = TableWithTimestamp
-                .select(TableWithTimestamp.timestamp)
-                .where {
-                    TableWithTimestamp.timestamp eq timestampLiteral(defaultTimestamp)
-                }
+            val query =
+                TableWithTimestamp
+                    .select(TableWithTimestamp.timestamp)
+                    .where {
+                        TableWithTimestamp.timestamp eq timestampLiteral(defaultTimestamp)
+                    }
             query.single()[TableWithTimestamp.timestamp] shouldBeEqualTo defaultTimestamp
         }
     }
@@ -263,11 +271,12 @@ class Ex03_DateTimeLiteral: AbstractExposedTest() {
                 it[timestamp] = defaultTimestamp
             }
 
-            val query = TableWithTimestamp
-                .select(TableWithTimestamp.timestamp)
-                .where {
-                    TableWithTimestamp.timestamp less timestampLiteral(futureTimestamp)
-                }
+            val query =
+                TableWithTimestamp
+                    .select(TableWithTimestamp.timestamp)
+                    .where {
+                        TableWithTimestamp.timestamp less timestampLiteral(futureTimestamp)
+                    }
             query.single()[TableWithTimestamp.timestamp] shouldBeEqualTo defaultTimestamp
         }
     }
@@ -283,17 +292,20 @@ class Ex03_DateTimeLiteral: AbstractExposedTest() {
             TableWithDatetime.insert { it[datetime] = defaultDatetime }
             TableWithTimestamp.insert { it[timestamp] = defaultTimestamp }
 
-            TableWithDate.selectAll()
+            TableWithDate
+                .selectAll()
                 .where { TableWithDate.date eq dateLiteral(futureDate) }
                 .toList()
                 .shouldBeEmpty()
 
-            TableWithDatetime.selectAll()
+            TableWithDatetime
+                .selectAll()
                 .where { TableWithDatetime.datetime eq dateTimeLiteral(futureDatetime) }
                 .toList()
                 .shouldBeEmpty()
 
-            TableWithTimestamp.selectAll()
+            TableWithTimestamp
+                .selectAll()
                 .where { TableWithTimestamp.timestamp eq timestampLiteral(futureTimestamp) }
                 .toList()
                 .shouldBeEmpty()

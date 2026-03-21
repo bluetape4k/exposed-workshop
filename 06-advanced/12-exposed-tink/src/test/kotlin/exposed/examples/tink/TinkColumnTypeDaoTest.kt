@@ -24,14 +24,13 @@ import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class TinkColumnTypeDaoTest: AbstractExposedTest() {
-
-    companion object: KLogging()
+class TinkColumnTypeDaoTest : AbstractExposedTest() {
+    companion object : KLogging()
 
     /**
      * DAO 암호화 예제 테이블입니다.
      */
-    object T1: IntIdTable() {
+    object T1 : IntIdTable() {
         val secret = tinkDaeadVarChar("secret", 255, TinkDaeads.AES256_SIV).index()
         val data = tinkDaeadBinary("data", 512, TinkDaeads.AES256_SIV)
     }
@@ -39,18 +38,23 @@ class TinkColumnTypeDaoTest: AbstractExposedTest() {
     /**
      * DAO 암호화 예제 엔티티입니다.
      */
-    class E1(id: EntityID<Int>): IntEntity(id) {
-        companion object: IntEntityClass<E1>(T1)
+    class E1(
+        id: EntityID<Int>,
+    ) : IntEntity(id) {
+        companion object : IntEntityClass<E1>(T1)
 
         var secret by T1.secret
         var data by T1.data
 
         override fun equals(other: Any?): Boolean = idEquals(other)
+
         override fun hashCode(): Int = idHashCode()
-        override fun toString(): String = entityToStringBuilder()
-            .add(E1::secret.name, secret)
-            .add(E1::data.name, data)
-            .toString()
+
+        override fun toString(): String =
+            entityToStringBuilder()
+                .add(E1::secret.name, secret)
+                .add(E1::data.name, data)
+                .toString()
     }
 
     @ParameterizedTest
@@ -60,10 +64,11 @@ class TinkColumnTypeDaoTest: AbstractExposedTest() {
             val insertedSecret = faker.name().firstName()
             val insertedData = faker.address().fullAddress().toUtf8Bytes()
 
-            val entity = E1.new {
-                secret = insertedSecret
-                data = insertedData
-            }
+            val entity =
+                E1.new {
+                    secret = insertedSecret
+                    data = insertedData
+                }
 
             entityCache.clear()
 
@@ -89,15 +94,16 @@ class TinkColumnTypeDaoTest: AbstractExposedTest() {
             val insertedSecret = faker.name().firstName()
             val insertedData = faker.address().fullAddress().toUtf8Bytes()
 
-            val entity = E1.new {
-                secret = insertedSecret
-                data = insertedData
-            }
+            val entity =
+                E1.new {
+                    secret = insertedSecret
+                    data = insertedData
+                }
             entity.id.value.shouldNotBeNull()
             entityCache.clear()
 
             /**
-             * Jasypt 암호화는 항상 같은 결과를 반환하므로, WHERE 절로 검색이 가능합니다.
+             * Tink DAEAD(결정적 AEAD) 암호화는 항상 같은 결과를 반환하므로, WHERE 절로 검색이 가능합니다.
              * ```sql
              * -- Postgres
              * SELECT t1.id, t1."varchar", t1."binary" FROM t1 WHERE t1."varchar" = xHJZumy4xB5idgnKqmp2pQ==
