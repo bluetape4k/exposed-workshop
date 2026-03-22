@@ -1,0 +1,26 @@
+{
+  "agents": [
+    {
+      "agent_id": "ae17a163d8bc2ae02",
+      "agent_type": "oh-my-claudecode:document-specialist",
+      "started_at": "2026-03-22T12:01:58.414Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-03-22T12:05:05.141Z",
+      "duration_ms": 186727
+    },
+    {
+      "agent_id": "aae670590d01de58e",
+      "agent_type": "Explore",
+      "started_at": "2026-03-22T12:09:53.080Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-03-22T12:11:11.435Z",
+      "duration_ms": 78355
+    }
+  ],
+  "total_spawned": 2,
+  "total_completed": 2,
+  "total_failed": 0,
+  "last_updated": "2026-03-22T12:11:11.537Z"
+}

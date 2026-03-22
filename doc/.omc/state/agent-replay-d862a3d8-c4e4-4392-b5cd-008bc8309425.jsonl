@@ -1,0 +1,49 @@
+{
+    "t": 0,
+    "agent": "ae17a16",
+    "agent_type": "document-specialist",
+    "event": "agent_start",
+    "parent_mode": "none"
+}
+{
+    "t": 0,
+    "agent": "ae17a16",
+    "agent_type": "document-specialist",
+    "event": "agent_stop",
+    "success": true,
+    "duration_ms": 186727
+}
+{
+    "t": 0,
+    "agent": "system",
+    "event": "skill_invoked",
+    "skill_name": "superpowers:brainstorming"
+}
+{
+    "t": 0,
+    "agent": "aae6705",
+    "agent_type": "Explore",
+    "event": "agent_start",
+    "parent_mode": "none"
+}
+{
+    "t": 0,
+    "agent": "a36b05c",
+    "agent_type": "unknown",
+    "event": "agent_stop",
+    "success": true
+}
+{
+    "t": 0,
+    "agent": "aae6705",
+    "agent_type": "Explore",
+    "event": "agent_stop",
+    "success": true,
+    "duration_ms": 78355
+}
+{
+    "t": 0,
+    "agent": "system",
+    "event": "skill_invoked",
+    "skill_name": "superpowers:writing-plans"
+}

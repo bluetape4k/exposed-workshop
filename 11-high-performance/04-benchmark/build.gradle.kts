@@ -13,10 +13,32 @@ dependencies {
     implementation(Libs.kotlinx_benchmark_runtime)
     implementation(Libs.kotlinx_benchmark_runtime_jvm)
     implementation(Libs.jmh_core)
+
+    // Exposed
+    implementation(platform(Libs.exposed_bom))
+    implementation(Libs.exposed_core)
+    implementation(Libs.exposed_jdbc)
+    implementation(Libs.exposed_dao)
+    implementation(Libs.exposed_java_time)
+
+    // JPA / Hibernate
+    implementation(Libs.jakarta_persistence_api)
+    implementation(Libs.hibernate_core)
+
+    // Database
+    implementation(Libs.h2_v2)
+    implementation(Libs.hikaricp)
+    implementation(Libs.postgresql_driver)
+
+    // Testcontainers
+    implementation(Libs.bluetape4k_testcontainers)
+    implementation(Libs.testcontainers_postgresql)
 }
 
 allOpen {
     annotation("org.openjdk.jmh.annotations.State")
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.MappedSuperclass")
 }
 
 benchmark {
