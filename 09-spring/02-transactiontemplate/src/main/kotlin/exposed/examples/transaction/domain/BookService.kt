@@ -57,13 +57,18 @@ class BookService(
     }
 
     /**
-     * 트랜잭션이 없는 `TransactionOperations` 에서 저자를 생성합니다.
+     * 트랜잭션이 없는 `TransactionOperations` 에서 Exposed `transaction {}` 으로 저자를 생성합니다.
+     *
+     * Spring 트랜잭션 없이 Exposed 트랜잭션을 직접 사용하는 방식입니다.
      */
     fun execWithoutSpringTransaction() {
         log.info { "Execute without spring transaction" }
-        // withoutTransactionOperations 는 Transaction 적용이 안되어 있다.
+        // withoutTransactionOperations 는 Spring Transaction 적용이 안되어 있다.
+        // Exposed DSL insert 는 트랜잭션 컨텍스트가 필요하므로 transaction {} 으로 감싼다.
         withoutTransactionOperations.execute {
-            createNewAuthor()
+            transaction {
+                createNewAuthor()
+            }
         }
     }
 
