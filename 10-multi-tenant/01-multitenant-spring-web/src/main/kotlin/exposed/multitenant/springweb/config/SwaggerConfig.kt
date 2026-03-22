@@ -16,18 +16,16 @@ import org.springframework.context.annotation.Configuration
  */
 @Configuration(proxyBeanMethods = false)
 class SwaggerConfig {
-
     @Autowired
     private val buildProps: BuildProperties = uninitialized()
 
     @Bean
-    fun apiInfo(): OpenAPI {
-        return OpenAPI().info(info)
-    }
+    fun apiInfo(): OpenAPI = OpenAPI().info(info)
 
     private val info by unsafeLazy {
-        Info().title(buildProps.name)
-            .description("Exposed Multitenant in Spring Web + Virtual Threads")
+        Info()
+            .title(buildProps.name)
+            .description("Exposed Multitenant in Spring Web")
             .version(buildProps.version)
             .contact(contact)
             .license(license)

@@ -1,28 +1,26 @@
 package exposed.examples.transaction.domain
 
+import exposed.examples.transaction.domain.BookSchema.AuthorTable
 import exposed.examples.transaction.domain.BookSchema.Book
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
-import io.bluetape4k.support.quoted
 import net.datafaker.Faker
+import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.transaction.support.TransactionOperations
 
-@Component
 /**
  * 다양한 트랜잭션 경계(Spring/Exposed/미적용)에서 저자/도서 데이터를 생성하는 서비스입니다.
  */
+@Component
 class BookService(
     @Qualifier("exposedTransactionTemplate") private val exposedTransactionTemplate: TransactionOperations,
     @Qualifier("withoutTransactionOperations") private val withoutTransactionOperations: TransactionOperations,
-    private val jdbcTemplate: JdbcTemplate,
 ) {
-
-    companion object: KLogging() {
+    companion object : KLogging() {
         val faker = Faker()
     }
 
@@ -89,11 +87,9 @@ class BookService(
      * ```
      */
     private fun createNewAuthor() {
-        // name 에 single quote 가 들어간 경우가 있습니다.
-        val name = faker.name().fullName().quoted()
-        val description = faker.lorem().sentence().quoted()
-
-        val query = """INSERT INTO AUTHORS("name", description) values ($name, $description)"""
-        jdbcTemplate.execute(query)
+        AuthorTable.insert {
+            it[AuthorTable.name] = faker.name().fullName()
+            it[AuthorTable.description] = faker.lorem().sentence()
+        }
     }
 }

@@ -30,9 +30,6 @@ dependencies {
     implementation(Libs.bluetape4k_grpc)
     implementation(Libs.bluetape4k_redis)
     implementation(Libs.bluetape4k_testcontainers)
-    testImplementation(Libs.bluetape4k_junit5)
-
-
     // Exposed
     implementation(Libs.bluetape4k_exposed)
     implementation(Libs.exposed_core)

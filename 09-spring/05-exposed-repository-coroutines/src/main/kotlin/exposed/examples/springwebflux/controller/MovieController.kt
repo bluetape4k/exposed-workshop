@@ -3,9 +3,6 @@ package exposed.examples.springwebflux.controller
 import exposed.examples.springwebflux.domain.model.MovieRecord
 import exposed.examples.springwebflux.domain.repository.MovieExposedRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -21,12 +18,13 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/movies")
 class MovieController(
     private val movieRepository: MovieExposedRepository,
-): CoroutineScope by CoroutineScope(Dispatchers.IO + SupervisorJob()) {
-
-    companion object: KLoggingChannel()
+) {
+    companion object : KLoggingChannel()
 
     @GetMapping("/{id}")
-    suspend fun getMovieById(@PathVariable("id") movieId: Long): MovieRecord? =
+    suspend fun getMovieById(
+        @PathVariable("id") movieId: Long,
+    ): MovieRecord? =
         newSuspendedTransaction(readOnly = true) {
             movieRepository.findByIdOrNull(movieId)
         }
@@ -35,21 +33,29 @@ class MovieController(
     suspend fun searchMovies(request: ServerHttpRequest): List<MovieRecord> {
         val params = request.queryParams.map { it.key to it.value.first() }.toMap()
         return when {
-            params.isEmpty() -> emptyList()
-            else -> newSuspendedTransaction(readOnly = true) {
-                movieRepository.searchMovie(params)
+            params.isEmpty() -> {
+                emptyList()
+            }
+            else -> {
+                newSuspendedTransaction(readOnly = true) {
+                    movieRepository.searchMovie(params)
+                }
             }
         }
     }
 
     @PostMapping
-    suspend fun createMovie(@RequestBody movie: MovieRecord): MovieRecord =
+    suspend fun createMovie(
+        @RequestBody movie: MovieRecord,
+    ): MovieRecord =
         newSuspendedTransaction {
             movieRepository.create(movie)
         }
 
     @DeleteMapping("/{id}")
-    suspend fun deleteMovie(@PathVariable("id") movieId: Long): Int =
+    suspend fun deleteMovie(
+        @PathVariable("id") movieId: Long,
+    ): Int =
         newSuspendedTransaction {
             movieRepository.deleteById(movieId)
         }

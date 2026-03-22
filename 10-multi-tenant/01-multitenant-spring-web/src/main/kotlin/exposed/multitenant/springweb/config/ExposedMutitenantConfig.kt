@@ -25,20 +25,17 @@ import javax.sql.DataSource
  */
 @Configuration(proxyBeanMethods = false)
 @EnableTransactionManagement
-class ExposedMutitenantConfig {
-
-    companion object: KLogging()
+class ExposedMultitenantConfig {
+    companion object : KLogging()
 
     @Autowired
     private val environment: Environment = uninitialized()
 
-    private fun getActiveProfile(default: String = "h2"): String {
-        return environment.activeProfiles.firstOrNull() ?: default
-    }
+    private fun getActiveProfile(default: String = "h2"): String = environment.activeProfiles.firstOrNull() ?: default
 
     private fun getHikariConfig(): HikariConfig {
         when (val profile = getActiveProfile()) {
-            "h2" ->
+            "h2" -> {
                 return HikariConfig().apply {
                     jdbcUrl = "jdbc:h2:mem:multitenant;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
                     driverClassName = "org.h2.Driver"
@@ -47,7 +44,8 @@ class ExposedMutitenantConfig {
                     maximumPoolSize = 5
                     isAutoCommit = false
                 }
-            "postgres" ->
+            }
+            "postgres" -> {
                 return with(PostgreSQLServer.Launcher.postgres) {
                     HikariConfig().also {
                         it.driverClassName = getDriverClassName()
@@ -56,7 +54,10 @@ class ExposedMutitenantConfig {
                         it.password = getPassword()
                     }
                 }
-            else -> throw NotSupportedException("Unsupported profile: $profile")
+            }
+            else -> {
+                throw NotSupportedException("Unsupported profile: $profile")
+            }
         }
     }
 
@@ -69,10 +70,11 @@ class ExposedMutitenantConfig {
     fun tenantAwareDataSource(): TenantAwareDataSource {
         val tenantDataSource = TenantAwareDataSource()
 
-        val targetDataSources = Tenant.entries.associateWith {
-            // 여기에서 Database 경로를 변경해주어야 합니다.
-            HikariDataSource(getHikariConfig())
-        }
+        val targetDataSources =
+            Tenant.entries.associateWith {
+                // 여기에서 Database 경로를 변경해주어야 합니다.
+                HikariDataSource(getHikariConfig())
+            }
 
         tenantDataSource.setTargetDataSources(targetDataSources as Map<Any, Any>)
         tenantDataSource.setDefaultTargetDataSource(targetDataSources[Tenants.DEFAULT_TENANT] as Any)
@@ -80,7 +82,6 @@ class ExposedMutitenantConfig {
 
         return tenantDataSource
     }
-
 
     /**
      * 하나의 Shared Database 를 사용하여, Separate Schema 방식으로 멀티 테넌시를 지원합니다.
@@ -97,17 +98,19 @@ class ExposedMutitenantConfig {
      * * [TenantAwareDataSource] 를 사용하면, Database per Tenant 방식으로 멀티 테넌시를 지원할 수 있습니다.
      */
     @Bean
-    fun database(dataSource: DataSource, databaseConfig: DatabaseConfig): Database {
+    fun database(
+        dataSource: DataSource,
+        databaseConfig: DatabaseConfig,
+    ): Database {
         log.info { "Database connection: $dataSource" }
 
         return Database.connect(dataSource, databaseConfig = databaseConfig)
     }
 
     @Bean
-    fun exposedDatabaseConfig(): DatabaseConfig {
-        return DatabaseConfig {
+    fun exposedDatabaseConfig(): DatabaseConfig =
+        DatabaseConfig {
             maxEntitiesToStoreInCachePerEntity = 100
             useNestedTransactions = true
         }
-    }
 }
