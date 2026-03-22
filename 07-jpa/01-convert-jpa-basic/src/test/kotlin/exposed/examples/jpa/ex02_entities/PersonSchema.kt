@@ -51,7 +51,7 @@ object PersonSchema {
      *      first_name VARCHAR(50) NOT NULL,
      *      last_name VARCHAR(50) NOT NULL,
      *      birth_date DATE NOT NULL,
-     *      employeed BOOLEAN DEFAULT TRUE NOT NULL,
+     *      employed BOOLEAN DEFAULT TRUE NOT NULL,
      *      occupation VARCHAR(255) NULL,
      *      address_id BIGINT NOT NULL,
      *
@@ -63,7 +63,7 @@ object PersonSchema {
         val firstName: Column<String> = varchar("first_name", 50)
         val lastName: Column<String> = varchar("last_name", 50)
         val birthDate: Column<LocalDate> = date("birth_date")
-        val employeed: Column<Boolean> = bool("employeed").default(true)
+        val employed: Column<Boolean> = bool("employed").default(true)
         val occupation: Column<String?> = varchar("occupation", 255).nullable()
         val addressId: Column<EntityID<Long>> = reference("address_id", AddressTable)  // many to one
     }
@@ -78,7 +78,7 @@ object PersonSchema {
         val firstName = varchar("first_name", 50)
         val lastName = varchar("last_name", 50)
         val birthDate = date("birth_date")
-        val employeed = bool("employeed").default(true)
+        val employed = bool("employed").default(true)
         val occupation = varchar("occupation", 255).nullable()
         val addressId = long("address_id")  // many to one
 
@@ -115,7 +115,7 @@ object PersonSchema {
         var firstName: String by PersonTable.firstName
         var lastName: String by PersonTable.lastName
         var birthDate: LocalDate by PersonTable.birthDate
-        var employeed: Boolean by PersonTable.employeed
+        var employed: Boolean by PersonTable.employed
         var occupation: String? by PersonTable.occupation
         var address: Address by Address referencedOn PersonTable.addressId
 
@@ -125,7 +125,7 @@ object PersonSchema {
             .add("firstName", firstName)
             .add("lastName", lastName)
             .add("birthDate", birthDate)
-            .add("employeed", employeed)
+            .add("employed", employed)
             .add("occupation", occupation)
             .add("address", address)
             .toString()
@@ -139,7 +139,7 @@ object PersonSchema {
         val firstName: String? = null,
         val lastName: String? = null,
         val birthDate: LocalDate? = null,
-        val employeed: Boolean? = null,
+        val employed: Boolean? = null,
         val occupation: String? = null,
         val address: Long? = null,
     ): java.io.Serializable
@@ -152,7 +152,7 @@ object PersonSchema {
         var firstName: String? = null,
         var lastName: String? = null,
         var birthDate: LocalDate? = null,
-        var employeed: Boolean? = null,
+        var employed: Boolean? = null,
         var occupation: String? = null,
         var address: Address? = null,
     ): java.io.Serializable
@@ -204,7 +204,7 @@ object PersonSchema {
                 firstName = "Fred"
                 lastName = "Flintstone"
                 birthDate = LocalDate.of(1935, 2, 1)
-                employeed = true
+                employed = true
                 occupation = "Brontosaurus Operator"
                 address = addr1
             }
@@ -212,7 +212,7 @@ object PersonSchema {
                 firstName = "Wilma"
                 lastName = "Flintstone"
                 birthDate = LocalDate.of(1940, 2, 1)
-                employeed = false
+                employed = false
                 occupation = "Accountant"
                 address = addr1
             }
@@ -220,7 +220,7 @@ object PersonSchema {
                 firstName = "Pebbles"
                 lastName = "Flintstone"
                 birthDate = LocalDate.of(1960, 5, 6)
-                employeed = false
+                employed = false
                 address = addr1
             }
             flushCache()
@@ -228,7 +228,7 @@ object PersonSchema {
                 firstName = "Barney"
                 lastName = "Rubble"
                 birthDate = LocalDate.of(1937, 2, 1)
-                employeed = true
+                employed = true
                 occupation = "Brontosaurus Operator"
                 address = addr2
             }
@@ -236,7 +236,7 @@ object PersonSchema {
                 firstName = "Betty"
                 lastName = "Rubble"
                 birthDate = LocalDate.of(1943, 2, 1)
-                employeed = false
+                employed = false
                 occupation = "Engineer"
                 address = addr2
             }
@@ -244,7 +244,7 @@ object PersonSchema {
                 firstName = "Bamm Bamm"
                 lastName = "Rubble"
                 birthDate = LocalDate.of(1963, 7, 8)
-                employeed = false
+                employed = false
                 address = addr2
             }
             flushCache()

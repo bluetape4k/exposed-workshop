@@ -215,7 +215,7 @@ class Ex02_Person: AbstractExposedTest() {
      * DELETE
      *   FROM persons
      *  WHERE ((persons.id >= 7) OR (persons.occupation IS NOT NULL))
-     *    AND (persons.employeed = TRUE)
+     *    AND (persons.employed = TRUE)
      * ```
      */
     @ParameterizedTest
@@ -229,7 +229,7 @@ class Ex02_Person: AbstractExposedTest() {
             // DELETE FROM PERSONS WHERE (PERSONS.ID > $id1) OR (PERSONS.OCCUPATION IS NOT NULL) AND (PERSONS.ID < $id3)
             persons
                 .deleteWhere {
-                    (persons.id greaterEq id1 or persons.occupation.isNotNull()) and (persons.employeed eq true)
+                    (persons.id greaterEq id1 or persons.occupation.isNotNull()) and (persons.employed eq true)
                 } shouldBeEqualTo 5
         }
     }
@@ -239,7 +239,7 @@ class Ex02_Person: AbstractExposedTest() {
      * DELETE
      *   FROM persons
      *  WHERE (persons.id >= 7)
-     *     OR ((persons.occupation IS NOT NULL) AND (persons.employeed = TRUE))
+     *     OR ((persons.occupation IS NOT NULL) AND (persons.employed = TRUE))
      * ```
      */
     @ParameterizedTest
@@ -252,7 +252,7 @@ class Ex02_Person: AbstractExposedTest() {
 
             persons
                 .deleteWhere {
-                    (persons.id greaterEq id1) or ((persons.occupation.isNotNull()) and (persons.employeed eq true))
+                    (persons.id greaterEq id1) or ((persons.occupation.isNotNull()) and (persons.employed eq true))
                 } shouldBeEqualTo 5
         }
     }
@@ -291,7 +291,7 @@ class Ex02_Person: AbstractExposedTest() {
      *        persons.first_name,
      *        persons.last_name,
      *        persons.birth_date,
-     *        persons.employeed,
+     *        persons.employed,
      *        persons.occupation,
      *        persons.address_id
      *   FROM persons
@@ -306,7 +306,7 @@ class Ex02_Person: AbstractExposedTest() {
                 firstName = "John"
                 lastName = "Doe"
                 birthDate = java.time.LocalDate.now()
-                employeed = true
+                employed = true
                 occupation = "Software Engineer"
                 address = Address[1L]
             }
@@ -320,14 +320,14 @@ class Ex02_Person: AbstractExposedTest() {
 
     /**
      * ```sql
-     * INSERT INTO persons (first_name, last_name, birth_date, employeed, occupation, address_id)
+     * INSERT INTO persons (first_name, last_name, birth_date, employed, occupation, address_id)
      * VALUES ('John', 'Doe', '2025-02-06', TRUE, 'Software Engineer', 1);
      *
      * SELECT persons.id,
      *        persons.first_name,
      *        persons.last_name,
      *        persons.birth_date,
-     *        persons.employeed,
+     *        persons.employed,
      *        persons.occupation,
      *        persons.address_id
      *   FROM persons
@@ -342,7 +342,7 @@ class Ex02_Person: AbstractExposedTest() {
                 it[firstName] = "John"
                 it[lastName] = "Doe"
                 it[birthDate] = java.time.LocalDate.now()
-                it[employeed] = true
+                it[employed] = true
                 it[occupation] = "Software Engineer"
                 it[addressId] = 1L
             }
@@ -354,10 +354,10 @@ class Ex02_Person: AbstractExposedTest() {
 
     /**
      * ```sql
-     * INSERT INTO persons (first_name, last_name, birth_date, employeed, occupation, address_id)
+     * INSERT INTO persons (first_name, last_name, birth_date, employed, occupation, address_id)
      * VALUES ('Joe', 'Jones', '2025-02-06', TRUE, 'Developer', 1);
      *
-     * INSERT INTO persons (first_name, last_name, birth_date, employeed, occupation, address_id)
+     * INSERT INTO persons (first_name, last_name, birth_date, employed, occupation, address_id)
      * VALUES ('Sarah', 'Smith', '2025-02-06', TRUE, 'Architect', 2);
      * ```
      */
@@ -373,7 +373,7 @@ class Ex02_Person: AbstractExposedTest() {
                 this[persons.firstName] = record.firstName!!
                 this[persons.lastName] = record.lastName!!
                 this[persons.birthDate] = record.birthDate!!
-                this[persons.employeed] = record.employeed!!
+                this[persons.employed] = record.employed!!
                 this[persons.occupation] = record.occupation
                 this[persons.addressId] = record.address!!
             }
@@ -386,11 +386,11 @@ class Ex02_Person: AbstractExposedTest() {
     /**
      * ```sql
      * -- PostgreSQL
-     * INSERT INTO persons (first_name, last_name, birth_date, employeed, occupation, address_id)
+     * INSERT INTO persons (first_name, last_name, birth_date, employed, occupation, address_id)
      * SELECT persons.first_name,
      *        persons.last_name,
      *        persons.birth_date,
-     *        persons.employeed,
+     *        persons.employed,
      *        persons.occupation,
      *        persons.address_id
      *   FROM persons
@@ -411,7 +411,7 @@ class Ex02_Person: AbstractExposedTest() {
                             persons.firstName,
                             persons.lastName,
                             persons.birthDate,
-                            persons.employeed,
+                            persons.employed,
                             persons.occupation,
                             persons.addressId
                         )
@@ -429,12 +429,12 @@ class Ex02_Person: AbstractExposedTest() {
 
     /**
      * ```sql
-     * INSERT INTO persons (id, first_name, last_name, birth_date, employeed, occupation, address_id)
+     * INSERT INTO persons (id, first_name, last_name, birth_date, employed, occupation, address_id)
      * SELECT (persons.id + 100),
      *        persons.first_name,
      *        persons.last_name,
      *        persons.birth_date,
-     *        persons.employeed,
+     *        persons.employed,
      *        persons.occupation,
      *        persons.address_id
      *   FROM persons
@@ -458,7 +458,7 @@ class Ex02_Person: AbstractExposedTest() {
                         personsDml.firstName,
                         personsDml.lastName,
                         personsDml.birthDate,
-                        personsDml.employeed,
+                        personsDml.employed,
                         personsDml.occupation,
                         personsDml.addressId
                     )

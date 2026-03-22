@@ -34,7 +34,7 @@ class Ex06_Covering_Index : AbstractExposedTest() {
      *        persons.first_name,
      *        persons.last_name,
      *        persons.birth_date,
-     *        persons.employeed,
+     *        persons.employed,
      *        persons.occupation,
      *        persons.address_id
      *   FROM persons
@@ -49,7 +49,7 @@ class Ex06_Covering_Index : AbstractExposedTest() {
      *        persons.first_name,
      *        persons.last_name,
      *        persons.birth_date,
-     *        persons.employeed,
+     *        persons.employed,
      *        persons.occupation,
      *        persons.address_id,
      *   FROM persons
@@ -102,7 +102,7 @@ class Ex06_Covering_Index : AbstractExposedTest() {
      *        persons.first_name,
      *        persons.last_name,
      *        persons.birth_date,
-     *        persons.employeed,
+     *        persons.employed,
      *        persons.occupation,
      *        persons.address_id
      *   FROM persons
@@ -118,7 +118,7 @@ class Ex06_Covering_Index : AbstractExposedTest() {
      *        persons.first_name,
      *        persons.last_name,
      *        persons.birth_date,
-     *        persons.employeed,
+     *        persons.employed,
      *        persons.occupation,
      *        persons.address_id,
      *   FROM persons

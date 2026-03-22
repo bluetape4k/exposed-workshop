@@ -51,7 +51,7 @@ class Ex01_SubQuery: AbstractExposedTest() {
      *        persons.first_name,
      *        persons.last_name,
      *        persons.birth_date,
-     *        persons.employeed,
+     *        persons.employed,
      *        persons.occupation,
      *        persons.address_id
      *   FROM persons
@@ -86,7 +86,7 @@ class Ex01_SubQuery: AbstractExposedTest() {
      *        persons.first_name,
      *        persons.last_name,
      *        persons.birth_date,
-     *        persons.employeed,
+     *        persons.employed,
      *        persons.occupation,
      *        persons.address_id
      *   FROM persons
@@ -124,7 +124,7 @@ class Ex01_SubQuery: AbstractExposedTest() {
      *        persons.first_name,
      *        persons.last_name,
      *        persons.birth_date,
-     *        persons.employeed,
+     *        persons.employed,
      *        persons.occupation,
      *        persons.address_id
      *   FROM persons
@@ -168,7 +168,7 @@ class Ex01_SubQuery: AbstractExposedTest() {
      *        persons.first_name,
      *        persons.last_name,
      *        persons.birth_date,
-     *        persons.employeed,
+     *        persons.employed,
      *        persons.occupation,
      *        persons.address_id
      *   FROM persons
