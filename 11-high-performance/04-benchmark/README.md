@@ -11,6 +11,96 @@
 
 ---
 
+## 도메인 ERD
+
+```mermaid
+erDiagram
+    persons {
+        BIGSERIAL id PK
+        VARCHAR first_name
+        VARCHAR last_name
+        VARCHAR email UK
+        VARCHAR phone
+        INT age
+        VARCHAR address
+        VARCHAR zipcode
+        TEXT bio
+        BLOB picture
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    departments {
+        BIGSERIAL id PK
+        VARCHAR name UK
+        VARCHAR code UK
+        TEXT description
+        DECIMAL budget
+        INT head_count
+        BOOLEAN is_active
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    employees {
+        BIGSERIAL id PK
+        VARCHAR first_name
+        VARCHAR last_name
+        VARCHAR email UK
+        VARCHAR phone
+        VARCHAR position
+        DECIMAL salary
+        TIMESTAMP hire_date
+        BOOLEAN is_active
+        TEXT bio
+        BLOB picture
+        BIGINT department_id FK
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    departments ||--o{ employees : "has"
+```
+
+---
+
+## Exposed vs JPA 벤치마크 구조
+
+```mermaid
+flowchart TD
+    JMH[JMH Benchmark Runner]
+
+    subgraph SingleEntity["SingleEntityCrudBenchmark (Person)"]
+        SE_EXP[Exposed DSL\nPersonTable]
+        SE_JPA[JPA\nPersonJpa]
+    end
+
+    subgraph OneToMany["OneToManyCrudBenchmark (Department + Employee)"]
+        OTM_EXP[Exposed DSL/DAO\nDepartmentTable + EmployeeTable]
+        OTM_JPA[JPA\nDepartmentJpa + EmployeeJpa]
+    end
+
+    subgraph Concurrent["ConcurrentCrudBenchmark"]
+        CC_EXP[Exposed DSL\n멀티스레드]
+        CC_JPA[JPA\n멀티스레드]
+    end
+
+    DB[(H2 InMemory)]
+
+    JMH --> SingleEntity
+    JMH --> OneToMany
+    JMH --> Concurrent
+
+    SE_EXP --> DB
+    SE_JPA --> DB
+    OTM_EXP --> DB
+    OTM_JPA --> DB
+    CC_EXP --> DB
+    CC_JPA --> DB
+```
+
+---
+
 ## 측정 대상
 
 | 벤치마크 클래스                      | 측정 항목                                | 단위               |

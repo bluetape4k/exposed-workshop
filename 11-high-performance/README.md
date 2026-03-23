@@ -26,11 +26,34 @@
 
 ---
 
+## 모듈 관계
+
+```mermaid
+flowchart TD
+    M1[01-cache-strategies\nSpring MVC + Virtual Threads\n캐시 전략]
+    M2[02-cache-strategies-coroutines\nWebFlux + Coroutines\n비동기 캐시]
+    M3[03-routing-datasource\nDynamicRoutingDataSource\n멀티테넌트 DB 라우팅]
+    M4[04-benchmark\nJMH\n성능 측정]
+
+    Redis[(Redis\nRedisson)]
+    DB[(Database\nExposed)]
+
+    M1 -- Near Cache + Redis --> Redis
+    M1 -- Exposed JDBC --> DB
+    M2 -- Near Cache + Redis --> Redis
+    M2 -- Exposed JDBC --> DB
+    M3 -- 테넌트별 DataSource --> DB
+    M4 -- 캐시 벤치마크 --> M1
+    M4 -- 라우팅 벤치마크 --> M3
+```
+
+---
+
 ## 전체 아키텍처
 
 ```mermaid
 flowchart LR
-    subgraph 캐시 계층
+    subgraph "캐시 계층"
         direction TB
         NC[Near Cache\nL1 로컬 메모리]
         Redis[(Redis L2\n분산 캐시)]
@@ -41,14 +64,14 @@ flowchart LR
         Redis -- fill --> NC
     end
 
-    subgraph 전략
+    subgraph "전략"
         RT[Read-Through\nUserCacheRepository]
         WT[Write-Through\nUserCacheRepository]
         WB[Write-Behind\nUserEventCacheRepository]
         RO[Read-Only\nUserCredentialsCacheRepository]
     end
 
-    subgraph 라우팅
+    subgraph "라우팅"
         TH[TenantHeaderFilter\nX-Tenant-Id]
         TC[TenantContext\nThreadLocal]
         KR[ContextAwareRoutingKeyResolver\ntenant:rw/ro]

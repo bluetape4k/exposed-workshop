@@ -106,11 +106,168 @@ classDiagram
         +String street
     }
 
-    BlogTable "1" --> "0..*" PostTable : One-to-Many\n(blogId FK)
-    BlogTable "0..*" --> "0..*" TagTable : Many-to-Many\n(via BlogTagTable)
+    BlogTable "1" --> "0..*" PostTable : One-to-Many blogId FK
+    BlogTable "0..*" --> "0..*" TagTable : Many-to-Many via BlogTagTable
     BlogTagTable --> BlogTable
     BlogTagTable --> TagTable
-    PersonTable "1" --> "0..*" AddressTable : One-to-Many\n(personId FK)
+    PersonTable "1" --> "0..*" AddressTable : One-to-Many personId FK
+```
+
+## 도메인 ERD
+
+### SimpleSchema ERD
+
+```mermaid
+erDiagram
+    simple_entity {
+        BIGSERIAL id PK
+        VARCHAR_255 name "UNIQUE NOT NULL"
+        TEXT description "NULL"
+    }
+```
+
+### PersonSchema ERD
+
+```mermaid
+erDiagram
+    addresses {
+        BIGSERIAL id PK
+        VARCHAR_255 street "NOT NULL"
+        VARCHAR_255 city "NOT NULL"
+        VARCHAR_2 state "NOT NULL"
+        VARCHAR_10 zip "NULL"
+    }
+    persons {
+        BIGSERIAL id PK
+        VARCHAR_50 first_name "NOT NULL"
+        VARCHAR_50 last_name "NOT NULL"
+        DATE birth_date "NOT NULL"
+        BOOLEAN employed "DEFAULT TRUE"
+        VARCHAR_255 occupation "NULL"
+        BIGINT address_id FK
+    }
+    persons }o--|| addresses : "N:1 (address_id)"
+```
+
+### BlogSchema ERD
+
+```mermaid
+erDiagram
+    posts {
+        BIGSERIAL id PK
+        VARCHAR_255 title "NOT NULL"
+    }
+    post_details {
+        BIGINT id PK "FK to posts"
+        DATE created_on "NOT NULL"
+        VARCHAR_255 created_by "NOT NULL"
+    }
+    post_comments {
+        BIGSERIAL id PK
+        BIGINT post_id FK
+        VARCHAR_255 review "NOT NULL"
+    }
+    tags {
+        BIGSERIAL id PK
+        VARCHAR_255 name "NOT NULL"
+    }
+    post_tags {
+        BIGSERIAL id PK
+        BIGINT post_id FK
+        BIGINT tag_id FK
+    }
+
+    posts ||--|| post_details : "1:1 (공유 PK)"
+    posts ||--o{ post_comments : "1:N (post_id)"
+    posts ||--o{ post_tags : "N:N via post_tags"
+    tags ||--o{ post_tags : "N:N via post_tags"
+```
+
+### BookSchema ERD (복합 PK)
+
+```mermaid
+erDiagram
+    publishers {
+        INT pub_id PK "autoIncrement"
+        UUID isbn_code PK "autoGenerate"
+        VARCHAR_32 publisher_name "NOT NULL"
+    }
+    authors {
+        SERIAL id PK
+        INT publisher_id FK
+        UUID publisher_isbn FK
+        VARCHAR_32 pen_name "NOT NULL"
+    }
+    books {
+        INT book_id PK "autoIncrement"
+        VARCHAR_32 title "NOT NULL"
+        INT author_id FK "NULL"
+    }
+    reviews {
+        VARCHAR_8 code PK
+        BIGINT rank PK
+        INT book_id FK "NOT NULL"
+    }
+    offices {
+        VARCHAR_8 zip_code PK
+        VARCHAR_64 name PK
+        INT area_code PK
+        BIGINT staff "NULL"
+        INT publisher_id FK "NULL"
+        UUID publisher_isbn FK "NULL"
+    }
+
+    publishers ||--o{ authors : "1:N (pub_id, isbn_code)"
+    authors ||--o{ books : "1:N (author_id)"
+    books ||--o{ reviews : "1:N (book_id)"
+    publishers ||--o{ offices : "1:N (publisher_id, publisher_isbn)"
+```
+
+### Entity 클래스 다이어그램 — JPA Entity vs Exposed DAO
+
+```mermaid
+classDiagram
+    direction LR
+    class JPA_SimpleEntity {
+        <<JPA Entity>>
+        @Entity @Table(name="simple_entity")
+        @Id @GeneratedValue Long id
+        @Column String name
+        @Column String description
+    }
+    class Exposed_SimpleTable {
+        <<Exposed Table (DSL)>>
+        object SimpleTable : LongIdTable
+        val name = varchar(255).uniqueIndex()
+        val description = text().nullable()
+    }
+    class Exposed_SimpleEntity {
+        <<Exposed Entity (DAO)>>
+        class SimpleEntity : LongEntity
+        var name by SimpleTable.name
+        var description by SimpleTable.description
+        companion object : LongEntityClass
+    }
+
+    JPA_SimpleEntity ..> Exposed_SimpleTable : DSL 전환
+    JPA_SimpleEntity ..> Exposed_SimpleEntity : DAO 전환
+
+    class JPA_PersonEntity {
+        <<JPA Entity>>
+        @Entity @ManyToOne Address address
+        String firstName / lastName
+        LocalDate birthDate
+        Boolean employed
+    }
+    class Exposed_PersonDAO {
+        <<Exposed DAO>>
+        class Person : LongEntity
+        var address by Address referencedOn addressId
+        var firstName / lastName / birthDate
+        var employed / occupation
+    }
+
+    JPA_PersonEntity ..> Exposed_PersonDAO : 전환
 ```
 
 ## JPA 어노테이션 → Exposed 매핑 대비표

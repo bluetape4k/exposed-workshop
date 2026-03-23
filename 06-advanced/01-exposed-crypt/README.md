@@ -160,6 +160,63 @@ insertLog.shouldStartWith("INSERT ")
 insertLog.shouldContainNone(listOf("testName"))  // 평문 미노출 확인
 ```
 
+## 컬럼 타입 계층
+
+```mermaid
+classDiagram
+    class ColumnType {
+        +valueFromDB(value: Any): Any
+        +notNullValueToDB(value: Any): Any
+    }
+    class VarCharColumnType {
+        +colLength: Int
+    }
+    class BinaryColumnType {
+        +length: Int
+    }
+    class EncryptedVarCharColumnType {
+        +encryptor: Encryptor
+        +valueFromDB(value): String
+        +notNullValueToDB(value): String
+    }
+    class EncryptedBinaryColumnType {
+        +encryptor: Encryptor
+        +valueFromDB(value): ByteArray
+        +notNullValueToDB(value): ByteArray
+    }
+    class Encryptor {
+        <<interface>>
+        +encrypt(value: String): String
+        +decrypt(value: String): String
+        +maxColLength(inputLength: Int): Int
+    }
+    class AES_256_PBE_GCM {
+        +password: String
+        +salt: String
+    }
+    class AES_256_PBE_CBC {
+        +password: String
+        +salt: String
+    }
+    class BLOW_FISH {
+        +key: String
+    }
+    class TRIPLE_DES {
+        +key: String
+    }
+
+    ColumnType <|-- VarCharColumnType
+    ColumnType <|-- BinaryColumnType
+    VarCharColumnType <|-- EncryptedVarCharColumnType
+    BinaryColumnType <|-- EncryptedBinaryColumnType
+    EncryptedVarCharColumnType --> Encryptor : uses
+    EncryptedBinaryColumnType --> Encryptor : uses
+    Encryptor <|.. AES_256_PBE_GCM
+    Encryptor <|.. AES_256_PBE_CBC
+    Encryptor <|.. BLOW_FISH
+    Encryptor <|.. TRIPLE_DES
+```
+
 ## 예제 구성
 
 | 파일                                  | 설명                                    |

@@ -18,6 +18,33 @@ WebFlux + Coroutines 기반의 논블로킹 멀티테넌트 예제입니다. Rea
 
 ---
 
+## 도메인 모델
+
+```mermaid
+erDiagram
+    MovieTable {
+        BIGSERIAL id PK
+        VARCHAR(255) name
+        VARCHAR(255) producerName
+        DATE releaseDate
+    }
+    ActorTable {
+        BIGSERIAL id PK
+        VARCHAR(255) firstName
+        VARCHAR(255) lastName
+        DATE birthday
+    }
+    ActorInMovieTable {
+        BIGINT movieId FK
+        BIGINT actorId FK
+    }
+
+    MovieTable ||--o{ ActorInMovieTable : "has"
+    ActorTable ||--o{ ActorInMovieTable : "appears in"
+```
+
+---
+
 ## 01/02 모듈과의 핵심 차이
 
 | 항목      | 01 (Spring MVC)          | 02 (Virtual Threads)     | 03 (WebFlux)                           |
@@ -108,6 +135,17 @@ HTTP 요청
               └── Reactor Context (비동기 체인 전파)
                     └── coroutineContext[ReactorContext]?.context?.get("TenantId")
                           └── newSuspendedTransactionWithTenant { SchemaUtils.setSchema(...) }
+```
+
+### Reactor Context를 통한 테넌트 전파 흐름
+
+```mermaid
+flowchart LR
+    Request[WebFlux Request] --> |Mono/Flux| WebFilter[WebFilter\nTenant 추출]
+    WebFilter --> |contextWrite| ReactorCtx[Reactor Context\nTenantId 저장]
+    ReactorCtx --> |coroutineContext| CoroutineScope[CoroutineScope\n+ ReactorContext]
+    CoroutineScope --> |newSuspendedTransactionWithTenant| ExposedDB[Exposed\nnewSuspendedTransaction]
+    ExposedDB --> |useSchema| TenantDB[(Tenant Schema)]
 ```
 
 ---

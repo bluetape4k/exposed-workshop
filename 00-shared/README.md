@@ -3,6 +3,45 @@
 모든 워크샵 모듈이 공통으로 의존하는 테스트 인프라 모듈입니다.
 데이터베이스 연결, 테이블/스키마 생성·삭제, Faker 기반 테스트 데이터 생성 등을 제공합니다.
 
+## 모듈 의존성 구조
+
+```mermaid
+flowchart LR
+    subgraph shared["00-shared"]
+        EST["exposed-shared-tests\n공통 테스트 유틸리티"]
+    end
+
+    subgraph external["외부 라이브러리"]
+        EXP["Exposed\n(core/dao/jdbc)"]
+        BT4K["bluetape4k-exposed\n확장 유틸"]
+        TC["Testcontainers\n(PostgreSQL/MySQL/MariaDB)"]
+        H2["H2\n인메모리 DB"]
+        HK["HikariCP\n커넥션 풀"]
+    end
+
+    subgraph consumers["워크샵 모듈 (소비자)"]
+        M01["01-spring-boot"]
+        M03["03-exposed-basic"]
+        M04["04-exposed-ddl"]
+        M05["05-exposed-dml"]
+        M06["06-advanced"]
+        MREST["...기타 모듈"]
+    end
+
+    EST --> EXP
+    EST --> BT4K
+    EST --> TC
+    EST --> H2
+    EST --> HK
+
+    M01 --> EST
+    M03 --> EST
+    M04 --> EST
+    M05 --> EST
+    M06 --> EST
+    MREST --> EST
+```
+
 ## 포함 모듈
 
 | 모듈 | 설명 |

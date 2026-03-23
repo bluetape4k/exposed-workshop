@@ -44,6 +44,76 @@ flowchart LR
     VARCHAR -->|valueFromDB| ENC --> BYTES
 ```
 
+## 커스텀 ColumnType 계층
+
+```mermaid
+classDiagram
+    class ColumnType~T~ {
+        <<Exposed Core>>
+        +valueFromDB(value: Any): T
+        +notNullValueToDB(value: T): Any
+        +sqlType(): String
+    }
+    class BinaryColumnType {
+        +length: Int
+        +sqlType(): String
+    }
+    class BlobColumnType {
+        +sqlType(): String
+    }
+    class VarCharColumnType {
+        +colLength: Int
+    }
+    class BinarySerializedBinaryColumnType~T~ {
+        +serializer: BinarySerializer~T~
+        +length: Int
+        +valueFromDB(): T
+        +notNullValueToDB(): ByteArray
+    }
+    class CompressedBinaryColumnType {
+        +compressor: Compressor
+        +length: Int
+        +valueFromDB(): ByteArray
+        +notNullValueToDB(): ByteArray
+    }
+    class EncryptedBinaryColumnType {
+        +encryptor: Encryptor
+        +valueFromDB(): ByteArray
+        +notNullValueToDB(): ByteArray
+    }
+    class EncryptedVarCharColumnType {
+        +encryptor: Encryptor
+        +valueFromDB(): String
+        +notNullValueToDB(): String
+    }
+
+    class BinarySerializer~T~ {
+        <<interface>>
+        +serialize(value: T): ByteArray
+        +deserialize(bytes: ByteArray): T
+    }
+    class Compressor {
+        <<interface>>
+        LZ4 / Snappy / Zstd
+    }
+    class Encryptor {
+        <<interface>>
+        AES-GCM / AES-CBC / Blowfish / 3DES
+    }
+
+    ColumnType <|-- BinaryColumnType
+    ColumnType <|-- BlobColumnType
+    ColumnType <|-- VarCharColumnType
+    BinaryColumnType <|-- BinarySerializedBinaryColumnType
+    BinaryColumnType <|-- CompressedBinaryColumnType
+    BinaryColumnType <|-- EncryptedBinaryColumnType
+    VarCharColumnType <|-- EncryptedVarCharColumnType
+    BinarySerializedBinaryColumnType --> BinarySerializer : uses
+    CompressedBinaryColumnType --> Compressor : uses
+    EncryptedBinaryColumnType --> Encryptor : uses
+    EncryptedVarCharColumnType --> Encryptor : uses
+```
+
 ## 커스텀 컬럼 타입 목록
 
 | 확장 함수                         | 저장 컬럼 타입         | 변환 방식 | 직렬화 엔진                           | 설명                        |

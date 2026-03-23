@@ -62,6 +62,35 @@ classDiagram
     SnowflakeIdTable --> SnowflakeIdEntity: maps to
 ```
 
+## 커스텀 ID 전략 비교 플로우
+
+```mermaid
+flowchart LR
+    subgraph Standard["표준 ID (DB 시퀀스)"]
+        INT["IntIdTable\nINT AUTO_INCREMENT"]
+        LONG["LongIdTable\nBIGINT AUTO_INCREMENT"]
+        UUID4["UUIDTable\nBINARY(16) - UUID v4"]
+    end
+
+    subgraph Custom["커스텀 ID (애플리케이션 생성)"]
+        KSUID["KsuidTable\nVARCHAR(27)\n시간+랜덤, 정렬 가능"]
+        KSUIDM["KsuidMillisTable\nVARCHAR(27)\n밀리초 정밀도"]
+        SNOW["SnowflakeIdTable\nBIGINT\n기계ID+시퀀스+타임스탬프"]
+        UUIDV7["TimebasedUUIDTable\nVARCHAR(36)\nUUID v7 시간기반"]
+        B62["TimebasedUUIDBase62Table\nVARCHAR(22)\nBase62 URL친화적"]
+    end
+
+    subgraph Props["특성"]
+        SORT["정렬 가능\n(시간순)"]
+        DIST["분산 생성\n(DB 불필요)"]
+        IDX["인덱스\n효율적"]
+    end
+
+    KSUID & KSUIDM & SNOW & UUIDV7 & B62 --> SORT
+    KSUID & KSUIDM & SNOW & UUIDV7 & B62 & UUID4 --> DIST
+    INT & LONG & KSUID & SNOW --> IDX
+```
+
 ## 핵심 개념
 
 ### KSUID 기반 Entity

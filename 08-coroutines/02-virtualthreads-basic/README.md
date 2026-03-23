@@ -55,7 +55,7 @@ sequenceDiagram
     participant DB as Database
 
     C->>VT: newVirtualThreadJdbcTransaction { }
-    Note over VT: JVM이 Virtual Thread 생성\n플랫폼 스레드에 마운트
+    Note over VT: JVM이 Virtual Thread 생성, 플랫폼 스레드에 마운트
     VT->>DB: BEGIN
     VT->>DB: INSERT / SELECT ...
     alt 정상 완료
@@ -85,6 +85,63 @@ sequenceDiagram
 | 취소(cancellation) 세밀한 제어      | Kotlin Coroutines |
 | Java 17 이하 환경                | Kotlin Coroutines |
 | Java 21+ 환경, 코드 변경 최소화       | Virtual Threads   |
+
+## Virtual Thread 처리 모델 flowchart
+
+```mermaid
+flowchart TD
+    A["일반 코드 (블로킹 스타일)"] --> B["newVirtualThreadJdbcTransaction { }"]
+    B --> C["JVM: Virtual Thread 생성"]
+    C --> D["플랫폼 스레드에 마운트\n(OS Thread-N)"]
+    D --> E["Exposed Transaction 시작\nBEGIN"]
+    E --> F["DB 작업 수행\n(INSERT / SELECT / UPDATE)"]
+    F --> G{결과}
+    G -->|정상| H["COMMIT\n결과 반환"]
+    G -->|예외| I["ROLLBACK\n예외 전파"]
+    H --> J["Virtual Thread 종료\n(플랫폼 스레드 반환)"]
+    I --> J
+
+    B2["virtualThreadJdbcTransactionAsync { }"] --> K["VirtualFuture&lt;T&gt; 즉시 반환"]
+    K --> L["병렬 Virtual Thread들 실행"]
+    L --> M["futures.awaitAll() 대기"]
+    M --> N["모든 결과 수집"]
+```
+
+## Virtual Thread vs Platform Thread 비교 다이어그램
+
+```mermaid
+flowchart LR
+    subgraph PlatformThread["플랫폼 스레드 (전통적 방식)"]
+        direction TD
+        P1["요청 1 → OS Thread-1 점유\n(I/O 대기 중에도 스레드 블로킹)"]
+        P2["요청 2 → OS Thread-2 점유"]
+        P3["요청 N → OS Thread-N 점유"]
+        P1 & P2 & P3 --> PLimit["스레드 수 한계\n→ 동시성 제한"]
+    end
+
+    subgraph VirtualThread["Virtual Thread (Java 21+)"]
+        direction TD
+        V1["Virtual Thread 1"] & V2["Virtual Thread 2"] & V3["Virtual Thread N"]
+        V1 & V2 & V3 --> |"I/O 대기 시 언마운트"| Carrier["소수의 Carrier(OS) Thread"]
+        Carrier --> |"작업 재개 시 마운트"| V1
+        Carrier --> VScale["수백만 개 동시 실행 가능"]
+    end
+
+    PlatformThread -. "Java 21 이상에서 대체" .-> VirtualThread
+```
+
+## 테이블 ERD (virtualthreads_table)
+
+```mermaid
+erDiagram
+    virtualthreads_table {
+        SERIAL id PK
+        VARCHAR_50 name "NULL"
+    }
+    virtualthreads_table_unique {
+        INT id PK "UNIQUE INDEX"
+    }
+```
 
 ## 예제 구성
 

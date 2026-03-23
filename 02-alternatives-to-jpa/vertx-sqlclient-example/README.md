@@ -42,6 +42,21 @@ Pool --> H2
 Tmpl --> PG
 ```
 
+## ERD
+
+```mermaid
+erDiagram
+    customer {
+        INT id PK
+        VARCHAR name
+        INT age
+    }
+    test {
+        INT id PK
+        VARCHAR value
+    }
+```
+
 ## 도메인 모델
 
 ```kotlin

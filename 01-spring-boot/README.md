@@ -64,14 +64,26 @@ classDiagram
 
 ### 데이터베이스 스키마
 
-```
-movies (id PK, name, producer_name, release_date)
-    |
-    | 1:N via actors_in_movies
-    |
-actors_in_movies (movie_id FK, actor_id FK)  ← 복합 PK
-    |
-actors (id PK, first_name, last_name, birthday)
+```mermaid
+erDiagram
+    MOVIES {
+        bigint id PK
+        varchar name
+        varchar producer_name
+        date release_date
+    }
+    ACTORS {
+        bigint id PK
+        varchar first_name
+        varchar last_name
+        date birthday
+    }
+    ACTORS_IN_MOVIES {
+        bigint movie_id FK
+        bigint actor_id FK
+    }
+    MOVIES ||--o{ ACTORS_IN_MOVIES : "출연"
+    ACTORS ||--o{ ACTORS_IN_MOVIES : "출연"
 ```
 
 ### REST API 구조

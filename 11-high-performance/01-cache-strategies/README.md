@@ -20,13 +20,51 @@ Spring MVC + Virtual Threads 환경에서 Redisson + Exposed로 캐시 전략을
 
 ---
 
+## 도메인 ERD
+
+```mermaid
+erDiagram
+    users {
+        BIGSERIAL id PK
+        VARCHAR username UK
+        VARCHAR first_name
+        VARCHAR last_name
+        VARCHAR address
+        VARCHAR zipcode
+        DATE birth_date
+        BLOB avatar
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    user_credentials {
+        VARCHAR id PK "TimebasedUUID Base62"
+        VARCHAR username UK
+        VARCHAR email
+        TIMESTAMP last_login_at
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    user_action {
+        BIGSERIAL id PK
+        VARCHAR username
+        VARCHAR event_source
+        VARCHAR event_type
+        VARCHAR event_details
+        TIMESTAMP event_time
+    }
+```
+
+---
+
 ## 캐시 전략 아키텍처
 
 ```mermaid
 flowchart LR
     Client([Client])
 
-    subgraph Read-Through
+    subgraph "Read-Through"
         RT_Cache{Near Cache\nL1}
         RT_Redis[(Redis L2)]
         RT_DB[(Database)]
@@ -38,7 +76,7 @@ flowchart LR
         RT_Redis -- fill --> RT_Cache
     end
 
-    subgraph Write-Through
+    subgraph "Write-Through"
         WT_Cache{Near Cache\nL1}
         WT_Redis[(Redis L2)]
         WT_DB[(Database)]
@@ -47,7 +85,7 @@ flowchart LR
         WT_Redis -- sync --> WT_DB
     end
 
-    subgraph Write-Behind
+    subgraph "Write-Behind"
         WB_Cache{Near Cache\nL1}
         WB_Redis[(Redis L2)]
         WB_DB[(Database)]

@@ -46,6 +46,79 @@ flowchart LR
     end
 ```
 
+## Tink 암호화 계층 구조
+
+```mermaid
+classDiagram
+    class ColumnType~T~ {
+        <<Exposed Core>>
+        +valueFromDB(value): T
+        +notNullValueToDB(value): Any
+    }
+    class VarCharColumnType {
+        +colLength: Int
+    }
+    class BinaryColumnType {
+        +length: Int
+    }
+    class BlobColumnType
+    class TinkAeadVarCharColumnType {
+        +aead: Aead
+        +valueFromDB(): String
+        +notNullValueToDB(): String
+    }
+    class TinkAeadBinaryColumnType {
+        +aead: Aead
+        +valueFromDB(): ByteArray
+        +notNullValueToDB(): ByteArray
+    }
+    class TinkAeadBlobColumnType {
+        +aead: Aead
+    }
+    class TinkDaeadVarCharColumnType {
+        +daead: DeterministicAead
+        +valueFromDB(): String
+        +notNullValueToDB(): String
+    }
+    class TinkDaeadBinaryColumnType {
+        +daead: DeterministicAead
+        +valueFromDB(): ByteArray
+        +notNullValueToDB(): ByteArray
+    }
+    class TinkDaeadBlobColumnType {
+        +daead: DeterministicAead
+    }
+
+    class Aead {
+        <<Google Tink>>
+        +encrypt(plaintext, aad): ByteArray
+        +decrypt(ciphertext, aad): ByteArray
+        AES256_GCM / AES128_GCM / CHACHA20_POLY1305
+    }
+    class DeterministicAead {
+        <<Google Tink>>
+        +encryptDeterministically(pt, aad): ByteArray
+        +decryptDeterministically(ct, aad): ByteArray
+        AES256_SIV
+    }
+
+    ColumnType <|-- VarCharColumnType
+    ColumnType <|-- BinaryColumnType
+    ColumnType <|-- BlobColumnType
+    VarCharColumnType <|-- TinkAeadVarCharColumnType
+    BinaryColumnType <|-- TinkAeadBinaryColumnType
+    BlobColumnType <|-- TinkAeadBlobColumnType
+    VarCharColumnType <|-- TinkDaeadVarCharColumnType
+    BinaryColumnType <|-- TinkDaeadBinaryColumnType
+    BlobColumnType <|-- TinkDaeadBlobColumnType
+    TinkAeadVarCharColumnType --> Aead : uses
+    TinkAeadBinaryColumnType --> Aead : uses
+    TinkAeadBlobColumnType --> Aead : uses
+    TinkDaeadVarCharColumnType --> DeterministicAead : uses
+    TinkDaeadBinaryColumnType --> DeterministicAead : uses
+    TinkDaeadBlobColumnType --> DeterministicAead : uses
+```
+
 ## 제공 컬럼 확장 함수
 
 ### AEAD 컬럼
