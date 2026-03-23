@@ -16,6 +16,18 @@
 - [`../05-exposed-repository-coroutines/README.md`](../05-exposed-repository-coroutines/README.md)
 - [`../06-spring-cache/README.md`](../06-spring-cache/README.md)
 
+## 도메인 모델
+
+```mermaid
+erDiagram
+    COUNTRIES {
+        INT id PK
+        CHAR(2) code UK
+        VARCHAR name
+        TEXT description
+    }
+```
+
 ## 아키텍처
 
 ```mermaid
@@ -197,6 +209,41 @@ class SuspendedRepositoryConfig {
             cacheManager = cacheManager,
         )
 }
+```
+
+## Coroutine + Cache 통합 시퀀스
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Cached as CachedCountrySuspendedRepository
+    participant Cache as LettuceSuspendedCache (Redis)
+    participant Default as DefaultCountrySuspendedRepository
+    participant DB
+
+    Client->>Cached: suspend findByCode("KR")
+    Cached->>Cache: suspend get("KR")
+    alt 캐시 히트
+        Cache-->>Cached: CountryRecord
+        Cached-->>Client: CountryRecord (DB 트랜잭션 없음)
+    else 캐시 미스
+        Cache-->>Cached: null
+        Cached->>Default: suspend findByCode("KR")
+        Default->>DB: newSuspendedTransaction { SELECT WHERE code='KR' }
+        DB-->>Default: CountryRecord
+        Default-->>Cached: CountryRecord
+        Cached->>Cache: suspend put("KR", CountryRecord, ttl=60s)
+        Cached-->>Client: CountryRecord
+    end
+
+    Client->>Cached: suspend update(countryRecord)
+    Cached->>Cache: suspend evict("KR")
+    Cache-->>Cached: 삭제 완료
+    Cached->>Default: suspend update(countryRecord)
+    Default->>DB: newSuspendedTransaction { UPDATE ... }
+    DB-->>Default: 갱신 행 수
+    Default-->>Cached: 갱신 행 수
+    Cached-->>Client: 갱신 행 수
 ```
 
 ## Spring Cache vs LettuceSuspendedCache 비교

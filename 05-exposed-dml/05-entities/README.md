@@ -128,11 +128,77 @@ classDiagram
         +EntityID~Long~ movieId
     }
 
-    Projects "1" --> "1" ProjectConfigs: one-to-one\n(shared PK)
-    Actors "1" --> "0..*" Movies: one-to-many\n(directorId FK)
-    Actors "0..*" --> "0..*" Movies: many-to-many\n(via StarringTable)
+    Projects "1" --> "1" ProjectConfigs: one-to-one shared PK
+    Actors "1" --> "0..*" Movies: one-to-many directorId FK
+    Actors "0..*" --> "0..*" Movies: many-to-many via StarringTable
     StarringTable --> Actors
     StarringTable --> Movies
+```
+
+## XEntity-YEntity 관계 ERD
+
+```mermaid
+erDiagram
+    YTABLE {
+        varchar uuid PK
+        boolean x
+    }
+    XTABLE {
+        int id PK
+        boolean b1
+        boolean b2
+        varchar y1 FK
+    }
+
+    YTABLE ||--o| XTABLE : "optReference (nullable)"
+```
+
+## Entity 클래스 계층 다이어그램
+
+```mermaid
+classDiagram
+    class Entity~T~ {
+        +EntityID~T~ id
+    }
+    class IntEntity {
+        +EntityID~Int~ id
+    }
+    class LongEntity {
+        +EntityID~Long~ id
+    }
+    class UUIDEntity {
+        +EntityID~UUID~ id
+    }
+    class CompositeEntity {
+        +EntityID~CompositeID~ id
+    }
+    class AEntity {
+        +Boolean b1
+    }
+    class BEntity {
+        +Boolean b2
+        +YEntity? y
+    }
+    class XEntity {
+        +Boolean b1
+        +Boolean b2
+    }
+    class YEntity {
+        +Boolean x
+        +BEntity? b
+    }
+
+    Entity <|-- IntEntity
+    Entity <|-- LongEntity
+    Entity <|-- UUIDEntity
+    Entity <|-- CompositeEntity
+    IntEntity <|-- AEntity
+    AEntity <|-- BEntity
+    IntEntity <|-- XEntity
+    Entity <|-- YEntity
+
+    BEntity --> YEntity : "optionalReferencedOn"
+    YEntity --> BEntity : "backReferencedOn"
 ```
 
 ## PK 전략 비교

@@ -12,6 +12,38 @@ Jackson 3 기반 JSON 컬럼 연동 모듈입니다. Jackson 2에서 3으로 이
 
 - [`../08-exposed-jackson/README.md`](../08-exposed-jackson/README.md)
 
+## Jackson3 처리 흐름
+
+```mermaid
+flowchart LR
+    subgraph KotlinObj["Kotlin 객체"]
+        DH["DataHolder\n(user, logins, active, team)"]
+        UG["UserGroup\n(users: List~User~)"]
+    end
+
+    subgraph Jackson3["Jackson 3 ObjectMapper"]
+        SER["ObjectMapper.writeValueAsString()\n(Jackson 3 API)"]
+        DESER["ObjectMapper.readValue()\n(Jackson 3 API)"]
+    end
+
+    subgraph DBCol["DB 컬럼"]
+        JCOL["JSON column\n(텍스트 저장)"]
+        JBCOL["JSONB column\n(PostgreSQL)"]
+    end
+
+    DH -->|INSERT/UPDATE| SER --> JCOL
+    DH -->|INSERT/UPDATE| SER --> JBCOL
+    JCOL -->|SELECT| DESER --> DH
+    JBCOL -->|SELECT| DESER --> DH
+    UG -->|INSERT/UPDATE| SER --> JCOL
+
+    subgraph Migration["Jackson 2 → 3 변경점"]
+        PKG["패키지: com.fasterxml → tools.jackson"]
+        MOD["모듈 시스템 변경"]
+        COMPAT["하위 호환성 주의"]
+    end
+```
+
 ## 핵심 개념
 
 - Jackson 3 ObjectMapper 구성

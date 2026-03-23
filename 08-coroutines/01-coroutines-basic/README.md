@@ -86,6 +86,52 @@ sequenceDiagram
     T2-->>C: 결과 반환
 ```
 
+## newSuspendedTransaction 처리 시퀀스 다이어그램
+
+```mermaid
+sequenceDiagram
+    participant App
+    participant CoroutineContext as CoroutineContext (Dispatchers.IO)
+    participant ExposedDB as Exposed Transaction
+    participant DB as Database
+
+    App->>CoroutineContext: newSuspendedTransaction { }
+    CoroutineContext->>ExposedDB: transaction block 시작
+    ExposedDB->>DB: BEGIN
+    ExposedDB->>DB: SQL Query (INSERT / SELECT ...)
+    DB-->>ExposedDB: Result
+    alt 정상 완료
+        ExposedDB->>DB: COMMIT
+        ExposedDB-->>CoroutineContext: mapped result
+        CoroutineContext-->>App: suspend 반환
+    else 예외 발생
+        ExposedDB->>DB: ROLLBACK
+        ExposedDB-->>CoroutineContext: 예외 전파
+        CoroutineContext-->>App: 예외 전파
+    end
+
+    App->>CoroutineContext: suspendedTransactionAsync { }
+    CoroutineContext-->>App: Deferred&lt;T&gt; (즉시 반환)
+    Note over App,CoroutineContext: 병렬 실행 후 awaitAll() 대기
+    CoroutineContext->>ExposedDB: transaction block (병렬)
+    ExposedDB->>DB: BEGIN → SQL → COMMIT
+    DB-->>ExposedDB: Result
+    ExposedDB-->>CoroutineContext: 결과
+    CoroutineContext-->>App: awaitAll() 결과 반환
+```
+
+## 테이블 ERD (coroutines_tester)
+
+```mermaid
+erDiagram
+    coroutines_tester {
+        SERIAL id PK
+    }
+    coroutines_tester_unique {
+        INT id PK "UNIQUE INDEX"
+    }
+```
+
 ## 예제 구성
 
 소스 위치: `src/test/kotlin/exposed/examples/coroutines`

@@ -162,6 +162,29 @@ fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
 ## 도메인 모델
 
 ```mermaid
+erDiagram
+    MOVIES {
+        BIGSERIAL id PK
+        VARCHAR name
+        VARCHAR producerName
+        DATE releaseDate
+    }
+    ACTORS {
+        BIGSERIAL id PK
+        VARCHAR firstName
+        VARCHAR lastName
+        DATE birthday
+    }
+    ACTORS_IN_MOVIES {
+        BIGINT movieId FK
+        BIGINT actorId FK
+    }
+
+    MOVIES ||--o{ ACTORS_IN_MOVIES : "movieId"
+    ACTORS ||--o{ ACTORS_IN_MOVIES : "actorId"
+```
+
+```mermaid
 classDiagram
     class MovieTable {
         <<LongIdTable: movies>>

@@ -154,6 +154,37 @@ data class CountryRecord(
 ): Serializable   // Redis 직렬화를 위해 Serializable 구현
 ```
 
+## 캐시 히트/미스 시퀀스
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant CountryRepository as CountryRepository (@Cacheable)
+    participant CacheManager as RedisCacheManager
+    participant DB
+
+    Client->>CountryRepository: findByCode("KR")
+    CountryRepository->>CacheManager: get("country:KR")
+    alt 캐시 히트
+        CacheManager-->>CountryRepository: CountryRecord
+        CountryRepository-->>Client: CountryRecord (DB 조회 없음)
+    else 캐시 미스
+        CacheManager-->>CountryRepository: null
+        CountryRepository->>DB: transaction { SELECT WHERE code='KR' }
+        DB-->>CountryRepository: CountryRecord
+        CountryRepository->>CacheManager: put("country:KR", CountryRecord)
+        CountryRepository-->>Client: CountryRecord
+    end
+
+    Client->>CountryRepository: update(countryRecord)
+    Note over CountryRepository: @Transactional 시작
+    CountryRepository->>DB: CountryTable.update(...)
+    DB-->>CountryRepository: 갱신 행 수
+    Note over CountryRepository: 트랜잭션 커밋 후 @CacheEvict 실행
+    CountryRepository->>CacheManager: evict("country:KR")
+    CountryRepository-->>Client: 갱신 행 수
+```
+
 ## 캐시 키 설계 원칙
 
 | 상황    | 키 패턴             | 예시                                  |

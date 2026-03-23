@@ -61,6 +61,46 @@ flowchart LR
     SNOW --> BIGINT
 ```
 
+## 모듈 분류
+
+```mermaid
+flowchart TD
+    subgraph Crypto["암호화"]
+        M01["01-exposed-crypt\nAES/Blowfish/3DES\n비결정적 암호화"]
+        M10["10-exposed-jasypt\nJasypt 결정적 암호화\nWHERE 검색 가능"]
+        M12["12-exposed-tink\nGoogle Tink AEAD/DAEAD\n무결성 검증 + 검색"]
+    end
+
+    subgraph DateTime["날짜/시간"]
+        M02["02-exposed-javatime\njava.time 타입 매핑\nLocalDate/Instant 등"]
+        M03["03-exposed-kotlin-datetime\nkotlinx.datetime 타입 매핑\nKMP 지원"]
+    end
+
+    subgraph JSON["JSON 직렬화"]
+        M04["04-exposed-json\nkotlinx.serialization\nJSON/JSONB 경로 쿼리"]
+        M08["08-exposed-jackson\nJackson 2 ObjectMapper\nJSON/JSONB 컬럼"]
+        M09["09-exposed-fastjson2\nFastjson2\n고성능 JSON 파싱"]
+        M11["11-exposed-jackson3\nJackson 3 ObjectMapper\n마이그레이션 호환성"]
+    end
+
+    subgraph Money["통화/금액"]
+        M05["05-exposed-money\nJavaMoney MonetaryAmount\n복합 컬럼 매핑"]
+    end
+
+    subgraph Custom["커스텀 확장"]
+        M06["06-custom-columns\nColumnType 상속\n직렬화/압축/암호화"]
+        M07["07-custom-entities\nKSUID/Snowflake/UUID\n커스텀 ID 전략"]
+    end
+
+    M01 -->|"검색 필요 시"| M10
+    M10 -->|"고급 암호화"| M12
+    M02 -->|"KMP 환경"| M03
+    M04 -->|"Jackson 생태계"| M08
+    M08 -->|"Jackson 3 이행"| M11
+    M04 -->|"고성능 필요"| M09
+    M06 -->|"커스텀 ID"| M07
+```
+
 ## 권장 학습 순서
 
 1. `06-custom-columns` — ColumnType 확장의 기본 구조 이해

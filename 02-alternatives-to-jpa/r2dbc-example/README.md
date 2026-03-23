@@ -38,6 +38,28 @@ sequenceDiagram
     PC -->> Client: 200 OK count
 ```
 
+## ERD
+
+```mermaid
+erDiagram
+    posts {
+        BIGINT id PK
+        VARCHAR title
+        TEXT content
+    }
+    comments {
+        BIGINT id PK
+        BIGINT post_id FK
+        TEXT content
+    }
+    customer {
+        BIGINT id PK
+        VARCHAR firstname
+        VARCHAR lastname
+    }
+    posts ||--o{ comments : "post_id"
+```
+
 ## 도메인 모델
 
 ```mermaid

@@ -333,6 +333,28 @@ Spring Profile로 데이터베이스를 전환합니다:
 
 ## 도메인 모델
 
+```mermaid
+erDiagram
+    MOVIES {
+        bigint id PK
+        varchar name
+        varchar producer_name
+        timestamp release_date
+    }
+    ACTORS {
+        bigint id PK
+        varchar first_name
+        varchar last_name
+        date birthday
+    }
+    ACTORS_IN_MOVIES {
+        bigint movie_id FK
+        bigint actor_id FK
+    }
+    MOVIES ||--o{ ACTORS_IN_MOVIES : "출연"
+    ACTORS ||--o{ ACTORS_IN_MOVIES : "출연"
+```
+
 | 클래스                             | 설명                                                           |
 |---------------------------------|--------------------------------------------------------------|
 | `MovieRecord`                   | 영화 정보 DTO (`id`, `name`, `producerName`, `releaseDate`)      |

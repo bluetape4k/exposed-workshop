@@ -47,6 +47,30 @@ flowchart LR
     EX & CO & EXI --> PG_JSON & PG_JSONB
 ```
 
+## 테이블 ERD
+
+```mermaid
+erDiagram
+    JsonTable {
+        SERIAL id PK
+        JSON j_column
+    }
+    JsonBTable {
+        SERIAL id PK
+        JSONB j_b_column
+    }
+    JsonArrayTable {
+        SERIAL id PK
+        JSON groups
+        JSON numbers
+    }
+    JsonBArrayTable {
+        SERIAL id PK
+        JSONB groups
+        JSONB numbers
+    }
+```
+
 ## 도메인 모델
 
 ```kotlin
@@ -69,6 +93,28 @@ data class User(
 data class UserGroup(
     val users: List<User>,
 )
+```
+
+## 도메인 클래스 다이어그램
+
+```mermaid
+classDiagram
+    class DataHolder {
+        +user: User
+        +logins: Int
+        +active: Boolean
+        +team: String?
+    }
+    class User {
+        +name: String
+        +team: String?
+    }
+    class UserGroup {
+        +users: List~User~
+    }
+
+    DataHolder --> User : contains
+    UserGroup --> User : contains 0..*
 ```
 
 ## 핵심 개념

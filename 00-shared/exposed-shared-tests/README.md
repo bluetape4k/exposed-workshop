@@ -70,6 +70,76 @@
 - Dialect별 스키마 생성/삭제가 테스트 간 독립적으로 작동하는지 점검한다.
 - Testcontainers 환경에서 커넥션 재활용과 롤백이 일정하게 수행되는지 확인한다.
 
+## 테스트 인프라 클래스 구조
+
+```mermaid
+classDiagram
+    class AbstractExposedTest {
+        <<abstract>>
+        +faker: Faker
+        +enableDialects(): Set~TestDB~
+        +ENABLE_DIALECTS_METHOD: String
+        +addIfNotExistsIfSupported(): String
+        #prepareSchemaForTest(schemaName: String): Schema
+    }
+
+    class TestDB {
+        <<enum>>
+        H2_V1
+        H2
+        H2_MYSQL
+        H2_MARIADB
+        H2_PSQL
+        MARIADB
+        MYSQL_V5
+        MYSQL_V8
+        POSTGRESQL
+        POSTGRESQLNG
+        COCKROACH
+        +db: Database?
+        +connect(configure): Database
+        +enabledDialects(): Set~TestDB~
+    }
+
+    class withDb {
+        <<function>>
+        +withDb(testDB, configure, statement)
+    }
+
+    class withTables {
+        <<function>>
+        +withTables(testDB, tables, configure, dropTables, statement)
+    }
+
+    class withTablesSuspending {
+        <<function>>
+        +suspend withTablesSuspending(testDB, tables, context, configure, dropTables, statement)
+    }
+
+    class withSchemas {
+        <<function>>
+        +withSchemas(dialect, schemas, configure, statement)
+    }
+
+    class withSchemasSuspending {
+        <<function>>
+        +suspend withSchemasSuspending(dialect, schemas, context, configure, statement)
+    }
+
+    class withDBSuspending {
+        <<function>>
+        +suspend withDbSuspending(testDB, context, configure, statement)
+    }
+
+    AbstractExposedTest --> TestDB : enableDialects() 사용
+    withTables --> withDb : 내부 호출
+    withTablesSuspending --> withDBSuspending : 내부 호출
+    withSchemas --> withDb : 내부 호출
+    withSchemasSuspending --> withDBSuspending : 내부 호출
+    withDb --> TestDB : DB 연결
+    withDBSuspending --> TestDB : DB 연결 (suspend)
+```
+
 ## 핵심 사용 패턴
 
 ### WithTables / WithTablesSuspending 패턴

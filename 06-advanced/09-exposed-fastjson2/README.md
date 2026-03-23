@@ -12,6 +12,40 @@ Fastjson2 기반 JSON 컬럼 처리를 다루는 모듈입니다. Jackson 대안
 
 - [`../04-exposed-json/README.md`](../04-exposed-json/README.md)
 
+## Fastjson2 처리 흐름
+
+```mermaid
+flowchart LR
+    subgraph KotlinObj["Kotlin 객체"]
+        DH["DataHolder\n(user, logins, active, team)"]
+        UG["UserGroup\n(users: List~User~)"]
+    end
+
+    subgraph Fastjson2["Fastjson2 엔진"]
+        SER["JSON.toJSONString()"]
+        DESER["JSON.parseObject()"]
+    end
+
+    subgraph DBCol["DB 컬럼"]
+        JCOL["JSON column\n(텍스트 저장)"]
+        JBCOL["JSONB column\n(PostgreSQL)"]
+    end
+
+    DH -->|INSERT/UPDATE| SER --> JCOL
+    DH -->|INSERT/UPDATE| SER --> JBCOL
+    JCOL -->|SELECT| DESER --> DH
+    JBCOL -->|SELECT| DESER --> DH
+    UG -->|INSERT/UPDATE| SER --> JCOL
+
+    subgraph Comparison["Jackson 대비 특징"]
+        PERF["고성능 파싱"]
+        SEC["보안 옵션\n(자동 타입 제한)"]
+        COMPAT["Jackson API\n부분 호환"]
+    end
+
+    Fastjson2 --> PERF & SEC & COMPAT
+```
+
 ## 핵심 개념
 
 - Fastjson2 직렬화/역직렬화

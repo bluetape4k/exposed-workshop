@@ -12,6 +12,63 @@
 
 - [`../02-exposed-javatime/README.md`](../02-exposed-javatime/README.md)
 
+## Kotlin DateTime 타입 매핑
+
+```mermaid
+classDiagram
+    class KotlinDateTimeTable {
+        +date(name): Column~LocalDate~
+        +datetime(name): Column~LocalDateTime~
+        +timestamp(name): Column~Instant~
+        +timestampWithTimeZone(name): Column~LocalDateTime~
+        +time(name): Column~LocalTime~
+    }
+
+    class KotlinLocalDate {
+        <<kotlinx.datetime>>
+        LocalDate
+    }
+    class KotlinLocalDateTime {
+        <<kotlinx.datetime>>
+        LocalDateTime
+    }
+    class KotlinInstant {
+        <<kotlin.time>>
+        Instant
+    }
+    class KotlinLocalTime {
+        <<kotlinx.datetime>>
+        LocalTime
+    }
+
+    class JavaTimeEquivalent {
+        <<java.time (JVM only)>>
+        LocalDate
+        LocalDateTime
+        Instant
+        LocalTime
+    }
+
+    class DBColumn {
+        <<Database>>
+        DATE
+        DATETIME / TIMESTAMP
+        TIMESTAMP / TIMESTAMPTZ
+        TIME
+    }
+
+    KotlinDateTimeTable --> KotlinLocalDate : date()
+    KotlinDateTimeTable --> KotlinLocalDateTime : datetime()
+    KotlinDateTimeTable --> KotlinInstant : timestamp()
+    KotlinDateTimeTable --> KotlinLocalTime : time()
+    KotlinLocalDate --> DBColumn : DATE
+    KotlinLocalDateTime --> DBColumn : DATETIME
+    KotlinInstant --> DBColumn : TIMESTAMP
+    KotlinLocalTime --> DBColumn : TIME
+    KotlinLocalDate .. JavaTimeEquivalent : KMP 대응
+    KotlinLocalDateTime .. JavaTimeEquivalent : KMP 대응
+```
+
 ## 핵심 개념
 
 - `kotlinx.datetime.LocalDate/Instant`

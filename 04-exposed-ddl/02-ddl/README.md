@@ -48,6 +48,59 @@ flowchart LR
     DR --> DB
 ```
 
+## 테이블 클래스 계층
+
+```mermaid
+classDiagram
+    class Table {
+        +String tableName
+        +PrimaryKey? primaryKey
+        +columns List~Column~
+    }
+    class IdTable~T~ {
+        +Column~EntityID~T~~ id
+    }
+    class IntIdTable {
+        +Column~EntityID~Int~~ id
+    }
+    class LongIdTable {
+        +Column~EntityID~Long~~ id
+    }
+    class UUIDTable {
+        +Column~EntityID~UUID~~ id
+    }
+    class CompositeIdTable {
+        +List~Column~ compositeColumns
+    }
+
+    Table <|-- IdTable
+    IdTable <|-- IntIdTable
+    IdTable <|-- LongIdTable
+    IdTable <|-- UUIDTable
+    IdTable <|-- CompositeIdTable
+```
+
+## 복합 PK / FK 관계 ERD
+
+```mermaid
+erDiagram
+    PARENT {
+        int id_a PK
+        int id_b PK
+    }
+    CHILD1 {
+        int id_a FK
+        int id_b FK
+    }
+    CHILD2 {
+        int id_a FK
+        int id_b FK
+    }
+
+    PARENT ||--o{ CHILD1 : "FK (CASCADE)"
+    PARENT ||--o{ CHILD2 : "FK (pair mapping)"
+```
+
 ## 컬럼 타입 표
 
 | Exposed 함수               | SQL 타입 (PostgreSQL)       | SQL 타입 (MySQL V8) | 설명                        |

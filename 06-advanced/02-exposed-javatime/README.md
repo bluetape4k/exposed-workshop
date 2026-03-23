@@ -12,6 +12,61 @@
 
 - [`../05-exposed-dml/02-types/README.md`](../05-exposed-dml/02-types/README.md)
 
+## Java Time 타입 매핑
+
+```mermaid
+classDiagram
+    class JavaTimeTable {
+        +date(name): Column~LocalDate~
+        +datetime(name): Column~LocalDateTime~
+        +timestamp(name): Column~Instant~
+        +timestampWithTimeZone(name): Column~OffsetDateTime~
+        +time(name): Column~LocalTime~
+        +duration(name): Column~Duration~
+    }
+
+    class LocalDate {
+        <<java.time>>
+    }
+    class LocalDateTime {
+        <<java.time>>
+    }
+    class Instant {
+        <<java.time>>
+    }
+    class OffsetDateTime {
+        <<java.time>>
+    }
+    class LocalTime {
+        <<java.time>>
+    }
+    class Duration {
+        <<java.time>>
+    }
+
+    class DBColumn {
+        <<Database>>
+        DATE
+        DATETIME / TIMESTAMP
+        TIMESTAMP / TIMESTAMPTZ
+        TIME
+        BIGINT / INTERVAL
+    }
+
+    JavaTimeTable --> LocalDate : date()
+    JavaTimeTable --> LocalDateTime : datetime()
+    JavaTimeTable --> Instant : timestamp()
+    JavaTimeTable --> OffsetDateTime : timestampWithTimeZone()
+    JavaTimeTable --> LocalTime : time()
+    JavaTimeTable --> Duration : duration()
+    LocalDate --> DBColumn : DATE
+    LocalDateTime --> DBColumn : DATETIME
+    Instant --> DBColumn : TIMESTAMP
+    OffsetDateTime --> DBColumn : TIMESTAMPTZ
+    LocalTime --> DBColumn : TIME
+    Duration --> DBColumn : BIGINT
+```
+
 ## 핵심 개념
 
 - `date`, `datetime`, `timestamp`, `timestampWithTimeZone`

@@ -111,6 +111,53 @@ flowchart LR
     J --> K[ResultRow / Int]
 ```
 
+## CRUD 시퀀스 다이어그램
+
+```mermaid
+sequenceDiagram
+    participant App as 애플리케이션
+    participant TX as transaction { }
+    participant DSL as Exposed DSL
+    participant DB as Database
+
+    App ->> TX: transaction { }
+    TX ->> DSL: Cities.insert { it[name] = "Seoul" }
+    DSL ->> DB: INSERT INTO cities ...
+    DB -->> DSL: generated id
+    TX ->> DSL: Cities.selectAll().where { ... }
+    DSL ->> DB: SELECT * FROM cities WHERE ...
+    DB -->> DSL: ResultRow list
+    TX ->> DSL: Cities.update({ id eq 1 }) { it[name] = "Busan" }
+    DSL ->> DB: UPDATE cities SET name = 'Busan' WHERE id = 1
+    TX ->> DSL: Cities.deleteWhere { id eq 1 }
+    DSL ->> DB: DELETE FROM cities WHERE id = 1
+    TX -->> App: COMMIT
+```
+
+## City-User 도메인 ERD
+
+```mermaid
+erDiagram
+    CITIES {
+        int city_id PK
+        varchar name
+    }
+    USERS {
+        varchar id PK
+        varchar name
+        int city_id FK
+        int flags
+    }
+    USERDATA {
+        varchar user_id FK
+        varchar comment
+        int value
+    }
+
+    CITIES ||--o{ USERS : "optReference (nullable)"
+    USERS ||--o{ USERDATA : "reference"
+```
+
 ## 예제 지도
 
 소스 위치: `src/test/kotlin/exposed/examples/dml`

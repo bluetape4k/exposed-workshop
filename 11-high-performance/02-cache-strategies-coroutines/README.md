@@ -28,7 +28,7 @@
 flowchart LR
     Client([WebFlux Client])
 
-    subgraph Read-Through suspend
+    subgraph "Read-Through suspend"
         RT_Cache{Near Cache\nL1}
         RT_Redis[(Redis L2)]
         RT_DB[(Database)]
@@ -40,26 +40,26 @@ flowchart LR
         RT_Cache -- hit --> Client
     end
 
-subgraph Write-Through suspend
-WT_Cache{Near Cache\nL1}
-WT_Redis[(Redis L2)]
-WT_DB[(Database)]
-Client -- suspend save --> WT_Cache
-WT_Cache -- sync --> WT_Redis
-WT_Redis -- sync --> WT_DB
-WT_DB --> >WT_Cache: 완료
-end
+    subgraph "Write-Through suspend"
+        WT_Cache{Near Cache\nL1}
+        WT_Redis[(Redis L2)]
+        WT_DB[(Database)]
+        Client -- suspend save --> WT_Cache
+        WT_Cache -- sync --> WT_Redis
+        WT_Redis -- sync --> WT_DB
+        WT_DB -->|완료| WT_Cache
+    end
 
-subgraph Write-Behind suspend
-WB_Cache{Near Cache\nL1}
-WB_Redis[(Redis L2)]
-WB_Queue[[Coroutine\nAsync Queue]]
-WB_DB[(Database)]
-Client -- suspend save --> WB_Cache
-WB_Cache -- immediate --> WB_Redis
-WB_Redis -- enqueue --> WB_Queue
-WB_Queue -- batch flush --> WB_DB
-end
+    subgraph "Write-Behind suspend"
+        WB_Cache{Near Cache\nL1}
+        WB_Redis[(Redis L2)]
+        WB_Queue[[Coroutine\nAsync Queue]]
+        WB_DB[(Database)]
+        Client -- suspend save --> WB_Cache
+        WB_Cache -- immediate --> WB_Redis
+        WB_Redis -- enqueue --> WB_Queue
+        WB_Queue -- batch flush --> WB_DB
+    end
 ```
 
 ---

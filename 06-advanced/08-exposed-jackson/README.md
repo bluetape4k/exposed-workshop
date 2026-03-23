@@ -12,6 +12,56 @@ Jackson 기반으로 JSON 컬럼을 직렬화/역직렬화하는 모듈입니다
 
 - [`../04-exposed-json/README.md`](../04-exposed-json/README.md)
 
+## 테이블 구조
+
+```mermaid
+erDiagram
+    jackson_table {
+        SERIAL id PK
+        JSON jackson_column
+    }
+    jackson_b_table {
+        SERIAL id PK
+        JSONB jackson_b_column
+    }
+    jackson_arrays {
+        SERIAL id PK
+        JSON groups
+        JSON numbers
+    }
+    jackson_b_arrays {
+        SERIAL id PK
+        JSONB groups
+        JSONB numbers
+    }
+```
+
+## Jackson 직렬화 흐름
+
+```mermaid
+flowchart LR
+    subgraph KotlinObj["Kotlin 객체"]
+        DH["DataHolder\n(user, logins, active, team)"]
+        UG["UserGroup\n(users: List~User~)"]
+    end
+
+    subgraph Jackson["Jackson ObjectMapper"]
+        SER["ObjectMapper.writeValueAsString()"]
+        DESER["ObjectMapper.readValue()"]
+    end
+
+    subgraph DBCol["DB 컬럼"]
+        JCOL["JSON column\n(텍스트 저장)"]
+        JBCOL["JSONB column\n(바이너리, PostgreSQL)"]
+    end
+
+    DH -->|INSERT/UPDATE| SER --> JCOL
+    DH -->|INSERT/UPDATE| SER --> JBCOL
+    JCOL -->|SELECT| DESER --> DH
+    JBCOL -->|SELECT| DESER --> DH
+    UG -->|INSERT/UPDATE| SER --> JCOL
+```
+
 ## 핵심 개념
 
 - ObjectMapper 설정

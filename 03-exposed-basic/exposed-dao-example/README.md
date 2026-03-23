@@ -20,6 +20,23 @@ Exposed DAO 패턴은 `IntIdTable`과 `IntEntity`/
 
 - [`../exposed-sql-example/README.md`](../exposed-sql-example/README.md)
 
+## ERD
+
+```mermaid
+erDiagram
+    cities {
+        SERIAL id PK
+        VARCHAR name
+    }
+    users {
+        SERIAL id PK
+        VARCHAR name
+        INT age
+        INT city_id FK
+    }
+    cities ||--o{ users : "city_id"
+```
+
 ## 도메인 모델
 
 ```mermaid

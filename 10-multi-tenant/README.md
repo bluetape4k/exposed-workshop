@@ -33,6 +33,17 @@ Single DB Instance
 
 `TenantAwareDataSource`(`AbstractRoutingDataSource` 상속)를 제공해 **Database per Tenant** 방식으로도 전환할 수 있습니다.
 
+### 테넌트별 스키마 분리 아키텍처
+
+```mermaid
+flowchart TD
+    Request[HTTP Request] --> TenantResolver[Tenant Resolver]
+    TenantResolver --> |tenant_id 추출| TenantContext[TenantContext\nThreadLocal / ScopedValue / ReactorContext]
+    TenantContext --> RoutingDS[RoutingDataSource]
+    RoutingDS --> |tenant_a| SchemaA[(Schema: korean\nMovies, Actors)]
+    RoutingDS --> |tenant_b| SchemaB[(Schema: english\nMovies, Actors)]
+```
+
 ---
 
 ## 포함 모듈

@@ -112,10 +112,162 @@ classDiagram
         +String bankName
     }
 
-    Billing <|-- CreditCard : Single Table\nJoined Table\nTable Per Class
-    Billing <|-- BankAccount : Single Table\nJoined Table\nTable Per Class
+    Billing <|-- CreditCard : 3가지 상속 전략 적용
+    Billing <|-- BankAccount : 3가지 상속 전략 적용
 
-    note for Billing "Single Table: BillingTable 1개\nJoined Table: billing + credit_card/bank_account\nTable Per Class: 각 독립 테이블"
+    note for Billing "SingleTable BillingTable 1개 / Joined billing + credit_card / TablePerClass 각 독립 테이블"
+```
+
+## 도메인 ERD
+
+### Single Table Inheritance ERD
+
+```mermaid
+erDiagram
+    billing {
+        SERIAL id PK
+        VARCHAR_64 owner "NOT NULL"
+        VARCHAR_16 swift "NOT NULL"
+        VARCHAR_32 dtype "DEFAULT UNKNOWN"
+        VARCHAR_24 card_number "NULL (CreditCard 전용)"
+        INT exp_month "NULL (CreditCard 전용)"
+        INT exp_year "NULL (CreditCard 전용)"
+        DATE start_date "NULL (CreditCard 전용)"
+        DATE end_date "NULL (CreditCard 전용)"
+        VARCHAR_255 account_number "NULL (BankAccount 전용)"
+        VARCHAR_255 bank_name "NULL (BankAccount 전용)"
+    }
+```
+
+### Joined Table Inheritance ERD
+
+```mermaid
+erDiagram
+    joined_person {
+        SERIAL id PK
+        VARCHAR_128 person_name "NOT NULL"
+        VARCHAR_128 ssn "NOT NULL"
+    }
+    joined_employee {
+        INT id PK "joined_person FK"
+        VARCHAR_128 emp_no "NOT NULL"
+        VARCHAR_128 emp_title "NOT NULL"
+        INT manager_id FK "NULL (자기 참조)"
+    }
+
+    joined_person ||--o| joined_employee : "1:1 Joined (id=FK)"
+    joined_employee }o--o| joined_employee : "자기 참조 (manager_id)"
+```
+
+### Table Per Class Inheritance ERD
+
+```mermaid
+erDiagram
+    credit_card {
+        SERIAL id PK
+        VARCHAR_64 owner "NOT NULL"
+        VARCHAR_24 card_number "NOT NULL"
+        INT exp_month "NOT NULL"
+        INT exp_year "NOT NULL"
+    }
+    bank_account {
+        SERIAL id PK
+        VARCHAR_64 owner "NOT NULL"
+        VARCHAR_255 account_number "NOT NULL"
+        VARCHAR_255 bank_name "NOT NULL"
+    }
+```
+
+### TreeNode ERD (자기 참조 트리 구조)
+
+```mermaid
+erDiagram
+    tree_nodes {
+        BIGINT id PK "autoIncrement"
+        VARCHAR_255 title "NOT NULL"
+        TEXT description "NULL"
+        INT depth "DEFAULT 0"
+        BIGINT parent_id FK "NULL (자기 참조)"
+    }
+
+    tree_nodes }o--o| tree_nodes : "자기 참조 (parent_id)"
+```
+
+### 트리 구조 계층 예시
+
+```mermaid
+flowchart TD
+    Root["root (depth=1)"]
+    Child1["child1 (depth=2)"]
+    Child2["child2 (depth=2)"]
+    GrandChild1["grandChild1 (depth=3)"]
+    GrandChild2["grandChild2 (depth=3)"]
+
+    Root --> Child1
+    Root --> Child2
+    Child1 --> GrandChild1
+    Child1 --> GrandChild2
+```
+
+## 상속 전략 비교 classDiagram
+
+```mermaid
+classDiagram
+    direction TD
+    class Billing {
+        <<abstract 공통>>
+        +Int id
+        +String owner
+        +String swift
+    }
+    class CreditCard_SingleTable {
+        <<Single Table billing>>
+        +String dtype
+        +String cardNumber
+        +Int expMonth
+        +Int expYear
+    }
+    class BankAccount_SingleTable {
+        <<Single Table billing>>
+        +String dtype
+        +String accountNumber
+        +String bankName
+    }
+    class Person_Joined {
+        <<Joined joined_person>>
+        +Int id
+        +String name
+        +String ssn
+    }
+    class Employee_Joined {
+        <<Joined joined_employee>>
+        +Int id
+        +String empNo
+        +String empTitle
+        +Employee manager
+    }
+    class CreditCard_TablePerClass {
+        <<Table Per Class credit_card>>
+        +Int id
+        +String owner
+        +String cardNumber
+        +Int expMonth
+        +Int expYear
+    }
+    class BankAccount_TablePerClass {
+        <<Table Per Class: bank_account>>
+        +Int id PK
+        +String owner
+        +String accountNumber
+        +String bankName
+    }
+
+    Billing <|-- CreditCard_SingleTable
+    Billing <|-- BankAccount_SingleTable
+    Person_Joined <|-- Employee_Joined
+    Employee_Joined --> Employee_Joined : manager 자기참조
+    Billing <|-- CreditCard_TablePerClass
+    Billing <|-- BankAccount_TablePerClass
 ```
 
 ## 고급 기능 JPA ↔ Exposed 변환 대비표

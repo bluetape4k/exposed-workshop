@@ -32,6 +32,22 @@ sequenceDiagram
     C -->> C: toTeamRecord() 매핑
 ```
 
+## ERD
+
+```mermaid
+erDiagram
+    teams {
+        BIGINT id PK
+        VARCHAR name
+    }
+    members {
+        BIGINT id PK
+        VARCHAR name
+        BIGINT team_id FK
+    }
+    teams ||--o{ members : "team_id"
+```
+
 ## 도메인 모델
 
 ```mermaid
