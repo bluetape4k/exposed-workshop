@@ -12,8 +12,10 @@ class TenantAwareDataSource: AbstractRoutingDataSource() {
     companion object: KLoggingChannel()
 
     override fun determineCurrentLookupKey(): Any? {
-        // 현 Request 에 해당하는 DataSource 를 결정하는 로직
-        // X-TENANT-ID 헤더를 읽어서 TenantContext 에 저장된 Tenant ID 를 기준으로 DataSource 를 결정
+        // WARNING: runBlocking은 Netty 이벤트 루프 스레드를 차단할 수 있습니다.
+        // 또한 runBlocking은 새 코루틴 스코프를 생성하므로 상위 코루틴 컨텍스트의 TenantId에
+        // 접근할 수 없어 항상 DEFAULT_TENANT를 반환할 가능성이 있습니다.
+        // 해결: WebFlux에서는 TenantAwareDataSource 대신 newSuspendedTransactionWithCurrentReactorTenant 패턴 사용 권장.
         return runBlocking { currentTenant() }
     }
 }

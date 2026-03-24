@@ -1,3 +1,9 @@
+/**
+ * CTE (Common Table Expression) 예제
+ *
+ * TODO: Exposed가 CTE를 정식 지원하면 아래 주석을 해제하세요.
+ * 현재 Exposed 버전에서는 CTE가 지원되지 않아 주석 처리되어 있습니다.
+ */
 //package exposed.examples.jpa.ex06_cte
 //
 //import exposed.examples.jpa.ex04_tree.TreeNodeSchema.TreeNodeTable

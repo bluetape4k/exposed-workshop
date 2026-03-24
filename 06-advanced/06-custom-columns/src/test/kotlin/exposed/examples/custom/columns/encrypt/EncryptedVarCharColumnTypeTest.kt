@@ -85,7 +85,7 @@ class EncryptedVarCharColumnTypeTest: AbstractExposedTest() {
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `필드 값을을 암호화하여 VarChar 컬럼에 저장합니다`(testDB: TestDB) {
+    fun `필드 값을 암호화하여 VarChar 컬럼에 저장합니다`(testDB: TestDB) {
         withTables(testDB, T1) {
             val text = Fakers.randomString(255, 512)
 
@@ -147,7 +147,7 @@ class EncryptedVarCharColumnTypeTest: AbstractExposedTest() {
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `엔티티 속성 값을을 암호화하여 VarChar 컬럼에 저장합니다`(testDB: TestDB) {
+    fun `엔티티 속성 값을 암호화하여 VarChar 컬럼에 저장합니다`(testDB: TestDB) {
         withTables(testDB, T1) {
             val text = Fakers.randomString(255, 512)
 

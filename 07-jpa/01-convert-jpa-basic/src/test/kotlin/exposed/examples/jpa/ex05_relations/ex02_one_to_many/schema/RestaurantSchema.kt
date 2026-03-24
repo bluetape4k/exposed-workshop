@@ -46,6 +46,9 @@ object RestaurantSchema {
         val name = varchar("name", 255)
         val price = decimal("price", 10, 2)
 
+        // NOTE: RESTRICT 설정으로 Restaurant 삭제 시 Menu가 존재하면 FK constraint 위반 예외 발생.
+        // JPA의 cascade = REMOVE와 달리 Exposed는 명시적으로 CASCADE를 설정해야 합니다.
+        // CASCADE 삭제를 원하면: reference(..., onDelete = ReferenceOption.CASCADE)
         // reference to Restaurant
         val restaurantId = reference("restaurant_id", RestaurantTable).index()
     }

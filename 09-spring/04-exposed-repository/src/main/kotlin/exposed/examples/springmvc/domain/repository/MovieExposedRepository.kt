@@ -51,14 +51,17 @@ class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
 
         params.forEach { (key, value) ->
             when (key) {
-                MovieTable::id.name          -> value?.run { query.andWhere { MovieTable.id eq value.toLong() } }
-
+                MovieTable::id.name          -> value?.run {
+                    val id = toLongOrNull() ?: return@forEach
+                    query.andWhere { MovieTable.id eq id }
+                }
                 MovieTable::name.name        -> value?.run { query.andWhere { MovieTable.name eq value } }
                 MovieTable::producerName.name -> value?.run {
                     query.andWhere { MovieTable.producerName eq value }
                 }
                 MovieTable::releaseDate.name -> value?.run {
-                    query.andWhere { MovieTable.releaseDate eq LocalDate.parse(value) }
+                    val date = runCatching { LocalDate.parse(value) }.getOrNull() ?: return@forEach
+                    query.andWhere { MovieTable.releaseDate eq date }
                 }
             }
         }
@@ -75,7 +78,7 @@ class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
         val id = MovieTable.insertAndGetId {
             it[name] = movieRecord.name
             it[producerName] = movieRecord.producerName
-            it[releaseDate] = LocalDate.parse(movieRecord.releaseDate)
+            it[releaseDate] = runCatching { LocalDate.parse(movieRecord.releaseDate) }.getOrElse { LocalDate.now() }
         }
 
         return movieRecord.copy(id = id.value)

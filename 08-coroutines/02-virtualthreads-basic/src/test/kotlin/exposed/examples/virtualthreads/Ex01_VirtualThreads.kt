@@ -35,7 +35,7 @@ import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.statements.api.ExposedConnection
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
-import org.junit.jupiter.api.condition.EnabledOnJre
+import org.junit.jupiter.api.condition.EnabledForJreRange
 import org.junit.jupiter.api.condition.JRE
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -45,7 +45,7 @@ import kotlin.test.assertFailsWith
 /**
  * Exposed Virtual Thread 트랜잭션 API를 검증하는 예제 테스트입니다.
  */
-@EnabledOnJre(JRE.JAVA_21)
+@EnabledForJreRange(min = JRE.JAVA_21)
 class Ex01_VirtualThreads : AbstractExposedTest() {
     companion object : KLoggingChannel()
 

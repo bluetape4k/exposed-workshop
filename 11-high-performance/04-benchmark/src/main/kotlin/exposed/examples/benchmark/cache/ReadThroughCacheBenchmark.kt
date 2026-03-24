@@ -81,4 +81,16 @@ open class ReadThroughCacheBenchmark {
 data class UserPayload(
     val id: Long,
     val bytes: ByteArray,
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is UserPayload) return false
+        return id == other.id && bytes.contentEquals(other.bytes)
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + bytes.contentHashCode()
+        return result
+    }
+}

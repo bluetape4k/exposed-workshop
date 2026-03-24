@@ -29,6 +29,8 @@ dependencies {
     testImplementation(Libs.testcontainers_mysql)
     testImplementation(Libs.testcontainers_postgresql)
 
+    // TODO: Virtual Threads 모듈은 코루틴을 사용하지 않습니다.
+    // "코루틴 없이 Virtual Threads만으로 비동기 처리"를 명확히 하려면 아래 의존성을 제거할 수 있습니다.
     // Coroutines
     testImplementation(Libs.bluetape4k_coroutines)
     testImplementation(Libs.kotlinx_coroutines_core)

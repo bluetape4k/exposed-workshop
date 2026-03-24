@@ -43,6 +43,12 @@ import kotlin.coroutines.CoroutineContext
 
 /**
  * 중첩된 작업에 대해 savepoint를 사용하여 롤백할 수 있도록 합니다.
+ *
+ * WARNING: 이 구현은 교육 목적입니다.
+ * Exposed의 TransactionManager는 ThreadLocal 기반이므로, withContext(Dispatchers.IO)로
+ * 스레드가 전환되면 현재 트랜잭션을 찾지 못할 수 있습니다.
+ * 프로덕션에서는 newSuspendedTransaction을 사용하거나 트랜잭션 객체를 명시적으로 전달하세요.
+ * 또한 rollback된 savepoint에 releaseSavepoint()를 호출하면 PostgreSQL 등에서 SQLException이 발생할 수 있습니다.
  */
 suspend fun <T> runWithSavepoint(
     name: String = "savepoint_${Base58.randomString(8)}",
@@ -356,6 +362,9 @@ class Ex05_NestedTransactions_Coroutines: AbstractExposedTest() {
             cities.insert { it[name] = "City A" }
             cityCounts() shouldBeEqualTo 1
 
+            // WARNING: runBlocking 내에서 newSuspendedTransaction 호출은 데드락 위험이 있습니다.
+            // 제한된 커넥션 풀에서 내부 트랜잭션이 새 커넥션을 요청하면 풀이 고갈될 수 있습니다.
+            // 프로덕션에서는 코루틴 컨텍스트를 일관되게 사용하세요.
             runBlocking {
                 newSuspendedTransaction(db = db) {
                     try {

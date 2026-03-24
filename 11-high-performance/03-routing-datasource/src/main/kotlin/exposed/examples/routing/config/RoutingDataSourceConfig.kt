@@ -36,6 +36,9 @@ class RoutingDataSourceConfig {
             registry.register("$tenantId:rw", rw)
             registry.register("$tenantId:ro", ro)
         }
+        // TODO: @PreDestroy에서 HikariDataSource들을 close() 호출 필요.
+        // InMemoryDataSourceRegistry가 Closeable을 구현하거나, 별도 @PreDestroy 메서드에서
+        // registry에 등록된 모든 DataSource를 순회하여 close()를 호출해야 커넥션 풀 누수를 방지할 수 있습니다.
         return registry
     }
 

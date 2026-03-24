@@ -33,11 +33,12 @@ class CachedCountrySuspendedRepository(
     }
 
     /**
-     * 업데이트 전에 해당 코드 캐시를 무효화한 뒤 원본 저장소를 갱신합니다.
+     * 원본 저장소를 갱신한 뒤 해당 코드 캐시를 무효화합니다.
      */
     override suspend fun update(countryRecord: CountryRecord): Int {
-        cache.evict(countryRecord.code)
-        return delegate.update(countryRecord)
+        return delegate.update(countryRecord).also {
+            cache.evict(countryRecord.code)
+        }
     }
 
     /**

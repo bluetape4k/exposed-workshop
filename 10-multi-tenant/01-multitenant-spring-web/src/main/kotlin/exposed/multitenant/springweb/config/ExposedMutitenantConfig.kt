@@ -1,3 +1,4 @@
+// TODO: 파일명 오타 수정 필요: ExposedMutitenantConfig → ExposedMultitenantConfig
 package exposed.multitenant.springweb.config
 
 import com.zaxxer.hikari.HikariConfig

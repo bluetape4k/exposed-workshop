@@ -42,6 +42,9 @@ class StringToEmailTransformer: ColumnTransformer<String, Email> {
 @JvmInline
 value class Ssn(val value: String): Serializable, Comparable<Ssn> {
     companion object {
+        // NOTE: 이 regex는 13자리 연속 숫자를 기대하지만, faker.idNumber().ssnValid()는
+        // "XXX-XX-XXXX" 형식을 생성합니다. 실제 주민등록번호(YYMMDD-NNNNNNN) 형식을 의도한다면
+        // regex를 "^(\\d{6})-(\\d{7})$"로 수정하고 SSN_LENGTH와 컬럼 크기를 15로 조정하세요.
         val ssnRegex = "^(\\d{6})(\\d{7})$".toRegex()
         val EMPTY = Ssn("")
         const val SSN_LENGTH = 14

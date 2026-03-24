@@ -5,6 +5,7 @@ import exposed.examples.springmvc.domain.repository.ActorExposedRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import jakarta.servlet.http.HttpServletRequest
+import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -22,8 +23,10 @@ class ActorController(private val actorRepository: ActorExposedRepository) {
     companion object: KLogging()
 
     @GetMapping("/{id}")
-    fun getActorById(@PathVariable("id") actorId: Long): ActorRecord? {
-        return actorRepository.findByIdOrNull(actorId)
+    fun getActorById(@PathVariable("id") actorId: Long): ResponseEntity<ActorRecord> {
+        val actor = actorRepository.findByIdOrNull(actorId)
+        return if (actor != null) ResponseEntity.ok(actor)
+        else ResponseEntity.notFound().build()
     }
 
     @GetMapping

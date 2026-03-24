@@ -52,6 +52,8 @@ import kotlin.test.assertFailsWith
 /**
  * Exposed 코루틴 트랜잭션 API(`newSuspendedTransaction`, `suspendedTransactionAsync`)를 검증하는 예제 테스트입니다.
  */
+// TODO: deprecated API 파악 후 해당 호출부에만 @Suppress 적용 필요
+// 현재 어떤 API가 deprecated인지 추적 중
 @Suppress("DEPRECATION")
 class Ex01_Coroutines : AbstractExposedTest() {
     companion object : KLoggingChannel() {

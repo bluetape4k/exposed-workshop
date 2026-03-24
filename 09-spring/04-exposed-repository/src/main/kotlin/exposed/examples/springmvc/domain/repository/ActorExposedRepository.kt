@@ -37,10 +37,16 @@ class ActorExposedRepository: JdbcRepository<Long, ActorRecord> {
 
         params.forEach { (key, value) ->
             when (key) {
-                ActorTable::id.name       -> value?.run { query.andWhere { ActorTable.id eq value.toLong() } }
+                ActorTable::id.name       -> value?.run {
+                    val id = toLongOrNull() ?: return@forEach
+                    query.andWhere { ActorTable.id eq id }
+                }
                 ActorTable::firstName.name -> value?.run { query.andWhere { ActorTable.firstName eq value } }
                 ActorTable::lastName.name -> value?.run { query.andWhere { ActorTable.lastName eq value } }
-                ActorTable::birthday.name -> value?.run { query.andWhere { ActorTable.birthday eq LocalDate.parse(value) } }
+                ActorTable::birthday.name -> value?.run {
+                    val date = runCatching { LocalDate.parse(value) }.getOrNull() ?: return@forEach
+                    query.andWhere { ActorTable.birthday eq date }
+                }
             }
         }
 

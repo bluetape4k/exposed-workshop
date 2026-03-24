@@ -34,19 +34,25 @@ object TenantContext {
     fun clear() = currentTenant.remove()
 
     /**
+     * 현재 스레드에 테넌트가 설정되어 있으면 반환하고, 없으면 null 을 반환합니다.
+     */
+    fun getCurrentTenantOrNull(): Tenants.Tenant? = currentTenant.get()
+
+    /**
      * 지정한 [tenant]로 컨텍스트를 설정한 뒤 [block]을 실행합니다.
      *
-     * [block] 실행 후에는 반드시 컨텍스트를 정리합니다.
+     * [block] 실행 후에는 이전 테넌트를 복원합니다. 이전 테넌트가 없으면 컨텍스트를 정리합니다.
      */
     inline fun withTenant(
         tenant: Tenants.Tenant = getCurrentTenant(),
         block: () -> Unit,
     ) {
+        val previous = getCurrentTenantOrNull()
         setCurrentTenant(tenant)
         try {
             block()
         } finally {
-            clear()
+            if (previous != null) setCurrentTenant(previous) else clear()
         }
     }
 }

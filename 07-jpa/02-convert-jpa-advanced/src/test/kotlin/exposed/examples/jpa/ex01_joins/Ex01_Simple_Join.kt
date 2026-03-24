@@ -155,6 +155,8 @@ class Ex01_Simple_Join: AbstractExposedTest() {
         withOrdersTables(testDB) { orders, details, _, _, _ ->
             val rows = orders
                 .innerJoin(details) {
+                    // 교육 목적: compound join 조건의 사용법을 보여주기 위한 예제입니다.
+                    // 실제로는 서로 다른 두 조건을 사용해야 합니다. 예: and (details.quantity greater 0)
                     (orders.id eq details.orderId) and (orders.id eq details.orderId)  // 중복된 조건
                 }
                 .select(

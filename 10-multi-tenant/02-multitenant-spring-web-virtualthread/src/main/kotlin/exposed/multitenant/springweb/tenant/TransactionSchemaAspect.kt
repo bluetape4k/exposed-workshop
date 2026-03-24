@@ -27,7 +27,6 @@ class TransactionSchemaAspect {
         transaction {
             val schema = TenantContext.getCurrentTenantSchema()
             log.debug { "Use schema=$schema" }
-            SchemaUtils.createSchema(schema)
             SchemaUtils.setSchema(schema)
             commit()
         }

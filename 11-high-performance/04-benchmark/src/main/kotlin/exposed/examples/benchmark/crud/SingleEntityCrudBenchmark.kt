@@ -154,6 +154,9 @@ open class SingleEntityCrudBenchmark {
     @Benchmark
     fun read(): Any? {
         val seq = idSeq.incrementAndGet()
+        // WARNING: 이 벤치마크는 측정 대상 연산 전에 create를 포함하여 측정 편향이 있습니다.
+        // 순수 read 성능만 측정하려면 @Setup(Level.Invocation)에서 데이터를 사전 준비해야 합니다.
+        // 교육 목적으로 JMH 사용법을 보여주는 예제입니다.
         val id = when (framework) {
             "EXPOSED" -> exposedCreate(seq)
             "JPA"     -> jpaCreate(seq)
@@ -186,6 +189,9 @@ open class SingleEntityCrudBenchmark {
     @Benchmark
     fun update(): Int {
         val seq = idSeq.incrementAndGet()
+        // WARNING: 이 벤치마크는 측정 대상 연산 전에 create를 포함하여 측정 편향이 있습니다.
+        // 순수 update 성능만 측정하려면 @Setup(Level.Invocation)에서 데이터를 사전 준비해야 합니다.
+        // 교육 목적으로 JMH 사용법을 보여주는 예제입니다.
         val id = when (framework) {
             "EXPOSED" -> exposedCreate(seq)
             "JPA"     -> jpaCreate(seq)
@@ -239,6 +245,9 @@ open class SingleEntityCrudBenchmark {
     @Benchmark
     fun delete(): Int {
         val seq = idSeq.incrementAndGet()
+        // WARNING: 이 벤치마크는 측정 대상 연산 전에 create를 포함하여 측정 편향이 있습니다.
+        // 순수 delete 성능만 측정하려면 @Setup(Level.Invocation)에서 데이터를 사전 준비해야 합니다.
+        // 교육 목적으로 JMH 사용법을 보여주는 예제입니다.
         val id = when (framework) {
             "EXPOSED" -> exposedCreate(seq)
             "JPA"     -> jpaCreate(seq)

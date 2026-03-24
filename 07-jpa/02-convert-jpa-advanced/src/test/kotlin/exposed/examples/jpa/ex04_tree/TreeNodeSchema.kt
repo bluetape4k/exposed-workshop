@@ -35,6 +35,7 @@ object TreeNodeSchema: KLogging() {
         val description = text("description").nullable()
         val depth = integer("depth").default(0)
 
+        // 프로덕션 권장: optReference(..., onDelete = ReferenceOption.CASCADE)
         val parentId = optReference("parent_id", TreeNodeTable)
     }
 
@@ -58,7 +59,9 @@ object TreeNodeSchema: KLogging() {
             get() = TreeNode.find { TreeNodeTable.parentId eq id }
 
         /**
-         * DFS 방식으로 자신뿐 아니라 모든 자손까지 삭제한다.
+         * 자식 노드를 재귀적으로 삭제합니다.
+         * WARNING: 이 구현은 O(N) DML 쿼리를 발생시킵니다 (트리 크기에 비례).
+         * 프로덕션에서는 parentId 컬럼에 onDelete = ReferenceOption.CASCADE 설정을 권장합니다.
          */
         fun deleteDescendants() {
             children.forEach { it.deleteDescendants() }

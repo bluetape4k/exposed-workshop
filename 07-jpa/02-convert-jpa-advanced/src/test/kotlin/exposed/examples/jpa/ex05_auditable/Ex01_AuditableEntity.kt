@@ -11,7 +11,7 @@ import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.dao.EntityClass
 import org.jetbrains.exposed.v1.dao.entityCache
-import org.junit.jupiter.api.condition.EnabledOnJre
+import org.junit.jupiter.api.condition.EnabledForJreRange
 import org.junit.jupiter.api.condition.JRE
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -20,7 +20,7 @@ import org.junit.jupiter.params.provider.MethodSource
  * JPA @CreatedDate/@LastModifiedDate에 대응하는 Exposed Auditable 엔티티 패턴을 검증합니다.
  * Virtual Thread 기반으로 생성/수정 타임스탬프 자동 관리 동작을 테스트합니다. (Java 21 전용)
  */
-@EnabledOnJre(JRE.JAVA_21)
+@EnabledForJreRange(min = JRE.JAVA_21)
 class Ex01_AuditableEntity: AbstractExposedTest() {
 
     object TaskTable: AuditableIntIdTable("tasks") {

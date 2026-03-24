@@ -2,8 +2,9 @@ package exposed.examples.suspendedcache.lettuce
 
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.lettuce.core.ExperimentalLettuceCoroutinesApi
+import io.lettuce.core.ScanArgs
+import io.lettuce.core.ScanCursor
 import io.lettuce.core.api.coroutines.RedisCoroutinesCommands
-import kotlinx.coroutines.flow.chunked
 
 @OptIn(ExperimentalLettuceCoroutinesApi::class)
 class LettuceSuspendedCache<K: Any, V: Any>(
@@ -31,10 +32,16 @@ class LettuceSuspendedCache<K: Any, V: Any>(
     }
 
     suspend fun clear() {
-        commands.keys("$name:*")
-            .chunked(100)
-            .collect { keys ->
-                commands.del(*keys.toTypedArray())
+        // WARNING: KEYS 명령은 O(N) 전체 스캔으로 프로덕션에서 Redis를 차단할 수 있습니다.
+        // SCAN을 사용하여 점진적으로 삭제합니다.
+        var cursor: ScanCursor = ScanCursor.INITIAL
+        do {
+            val scanResult = commands.scan(cursor, ScanArgs().match("$name:*").limit(100))
+                ?: break
+            cursor = scanResult
+            if (scanResult.keys.isNotEmpty()) {
+                commands.del(*scanResult.keys.toTypedArray())
             }
+        } while (!cursor.isFinished)
     }
 }

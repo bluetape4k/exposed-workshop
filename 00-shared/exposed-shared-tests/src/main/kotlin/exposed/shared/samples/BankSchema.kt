@@ -198,5 +198,5 @@ object BankSchema {
      */
     @Suppress("UnusedReceiverParameter")
     fun JdbcTransaction.getOwner(ownerId: Int): AccountOwner =
-        AccountOwner.findById(ownerId) ?: error("Account not found: $ownerId")
+        AccountOwner.findById(ownerId) ?: error("Owner not found: $ownerId")
 }

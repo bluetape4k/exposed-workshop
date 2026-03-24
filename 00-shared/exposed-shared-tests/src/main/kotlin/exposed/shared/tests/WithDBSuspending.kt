@@ -49,13 +49,13 @@ suspend fun withDbSuspending(
             testDB.db = testDB.connect(configure ?: {})
         }
 
-        val registeredDb = testDB.db!!
+        val registeredDb = testDB.db
         try {
             // NOTE: 코루틴과 @ParameterizedTest 를 동시에 사용할 때, TestDB가 꼬일 때가 있다. 그래서 매번 connect 를 수행하도록 수정
             if (newConfiguration) {
                 testDB.db = testDB.connect(configure)
             }
-            val database = testDB.db!!
+            val database = requireNotNull(testDB.db) { "DB 연결 초기화 실패: ${testDB.name}" }
             newSuspendedTransaction(
                 context = context,
                 db = database,

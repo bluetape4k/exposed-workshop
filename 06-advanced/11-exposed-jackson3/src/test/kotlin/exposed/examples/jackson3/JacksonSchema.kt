@@ -5,6 +5,8 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.core.jackson3.jackson
 import io.bluetape4k.exposed.core.jackson3.jacksonb
+import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.IntEntity
@@ -14,10 +16,10 @@ import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.junit.jupiter.api.Assumptions
 
-@Suppress("UnusedReceiverParameter")
 /**
  * Jackson 3 JSON/JSONB 컬럼 테스트에서 공통으로 사용하는 스키마/엔티티/픽스처를 제공합니다.
  */
+@Suppress("UnusedReceiverParameter")
 object JacksonSchema {
 
     /**
@@ -59,6 +61,9 @@ object JacksonSchema {
         companion object: IntEntityClass<JacksonEntity>(JacksonTable)
 
         var jacksonColumn by JacksonTable.jacksonColumn
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
     }
 
     /**
@@ -68,6 +73,9 @@ object JacksonSchema {
         companion object: IntEntityClass<JacksonBEntity>(JacksonBTable)
 
         var jacksonBColumn by JacksonBTable.jacksonBColumn
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
     }
 
     /**

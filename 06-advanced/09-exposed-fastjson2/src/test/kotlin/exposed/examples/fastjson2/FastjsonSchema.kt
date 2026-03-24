@@ -5,6 +5,8 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.core.fastjson2.fastjson
 import io.bluetape4k.exposed.core.fastjson2.fastjsonb
+import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.IntEntity
@@ -14,10 +16,10 @@ import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.junit.jupiter.api.Assumptions
 
-@Suppress("UnusedReceiverParameter")
 /**
  * Fastjson2 JSON/JSONB 컬럼 테스트에서 공통으로 사용하는 스키마/엔티티/픽스처를 제공합니다.
  */
+@Suppress("UnusedReceiverParameter")
 object FastjsonSchema {
 
     /**
@@ -59,6 +61,9 @@ object FastjsonSchema {
         companion object: IntEntityClass<FastjsonEntity>(FastjsonTable)
 
         var fastjsonColumn by FastjsonTable.fastjsonColumn
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
     }
 
     /**
@@ -68,6 +73,9 @@ object FastjsonSchema {
         companion object: IntEntityClass<FastjsonBEntity>(FastjsonBTable)
 
         var fastjsonBColumn by FastjsonBTable.fastjsonBColumn
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
     }
 
     /**

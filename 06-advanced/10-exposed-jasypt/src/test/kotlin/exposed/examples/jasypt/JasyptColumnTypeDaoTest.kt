@@ -21,6 +21,8 @@ import org.jetbrains.exposed.v1.dao.IntEntity
 import org.jetbrains.exposed.v1.dao.IntEntityClass
 import org.jetbrains.exposed.v1.dao.entityCache
 import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -110,11 +112,6 @@ class JasyptColumnTypeDaoTest: AbstractExposedTest() {
                 it[T1.varchar] shouldBeEqualTo insertedVarchar
                 it[T1.binary] shouldBeEqualTo insertedBinary
             }
-            // FIXME: Exposed 1.1.0, 1.1.1 에서 DAO 방식은 복호화를 이중으로 호출하는 버그가 있습니다.
-//            E1.find { T1.varchar eq insertedVarchar }.single().let {
-//                it.varchar shouldBeEqualTo insertedVarchar
-//                it.binary shouldBeEqualTo insertedBinary
-//            }
 
             /**
              * ```sql
@@ -127,11 +124,48 @@ class JasyptColumnTypeDaoTest: AbstractExposedTest() {
                 it[T1.varchar] shouldBeEqualTo insertedVarchar
                 it[T1.binary] shouldBeEqualTo insertedBinary
             }
-            // FIXME: Exposed 1.1.0, 1.1.1 에서 DAO 방식은 복호화를 이중으로 호출하는 버그가 있습니다.
-//            E1.find { T1.binary eq insertedBinary }.single().let {
-//                it.varchar shouldBeEqualTo insertedVarchar
-//                it.binary shouldBeEqualTo insertedBinary
-//            }
+        }
+    }
+
+    @Test
+    @Disabled("Exposed 1.1.x double-decryption bug - re-enable after version upgrade")
+    fun `암호화된 컬럼으로 DAO 검색하기 - varchar`() {
+        withTables(TestDB.H2_V2, T1) {
+            val insertedVarchar = faker.name().firstName()
+            val insertedBinary = faker.address().fullAddress().toUtf8Bytes()
+
+            val entity = E1.new {
+                varchar = insertedVarchar
+                binary = insertedBinary
+            }
+            entity.id.value
+            entityCache.clear()
+
+            E1.find { T1.varchar eq insertedVarchar }.single().let {
+                it.varchar shouldBeEqualTo insertedVarchar
+                it.binary shouldBeEqualTo insertedBinary
+            }
+        }
+    }
+
+    @Test
+    @Disabled("Exposed 1.1.x double-decryption bug - re-enable after version upgrade")
+    fun `암호화된 컬럼으로 DAO 검색하기 - binary`() {
+        withTables(TestDB.H2_V2, T1) {
+            val insertedVarchar = faker.name().firstName()
+            val insertedBinary = faker.address().fullAddress().toUtf8Bytes()
+
+            val entity = E1.new {
+                varchar = insertedVarchar
+                binary = insertedBinary
+            }
+            entity.id.value
+            entityCache.clear()
+
+            E1.find { T1.binary eq insertedBinary }.single().let {
+                it.varchar shouldBeEqualTo insertedVarchar
+                it.binary shouldBeEqualTo insertedBinary
+            }
         }
     }
 }

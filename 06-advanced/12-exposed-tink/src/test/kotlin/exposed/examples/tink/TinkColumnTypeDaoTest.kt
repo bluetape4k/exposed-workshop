@@ -21,6 +21,8 @@ import org.jetbrains.exposed.v1.dao.IntEntity
 import org.jetbrains.exposed.v1.dao.IntEntityClass
 import org.jetbrains.exposed.v1.dao.entityCache
 import org.jetbrains.exposed.v1.jdbc.selectAll
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -129,11 +131,27 @@ class TinkColumnTypeDaoTest : AbstractExposedTest() {
                 it[T1.secret] shouldBeEqualTo insertedSecret
                 it[T1.data] shouldBeEqualTo insertedData
             }
-            // FIXME: Exposed 1.1.0, 1.1.1 에서 DAO 방식은 복호화를 이중으로 호출하는 버그가 있습니다.
-//            E1.find { T1.data eq insertedData }.single().let {
-//                it.secret shouldBeEqualTo insertedSecret
-//                it.data shouldBeEqualTo insertedData
-//            }
+        }
+    }
+
+    @Test
+    @Disabled("Exposed 1.1.x double-decryption bug - re-enable after version upgrade")
+    fun `암호화된 data 컬럼으로 DAO 검색하기`() {
+        withTables(TestDB.H2_V2, T1) {
+            val insertedSecret = faker.name().firstName()
+            val insertedData = faker.address().fullAddress().toUtf8Bytes()
+
+            val entity = E1.new {
+                secret = insertedSecret
+                data = insertedData
+            }
+            entity.id.value
+            entityCache.clear()
+
+            E1.find { T1.data eq insertedData }.single().let {
+                it.secret shouldBeEqualTo insertedSecret
+                it.data shouldBeEqualTo insertedData
+            }
         }
     }
 }

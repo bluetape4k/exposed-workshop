@@ -206,12 +206,8 @@ object Libs {
             osName
         } else {
             val architecture = DefaultNativePlatform.getCurrentArchitecture()
-            println("architecture=$architecture")
-
             val archName = if (architecture.name.startsWith("aarch64")) "aarch_64" else "x86_64"
-            "$osName-$archName".apply {
-                println("classifier=$this")
-            }
+            "$osName-$archName"
         }
     }
 

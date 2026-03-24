@@ -17,6 +17,8 @@ fun PlatformTransactionManager.execute(
     timeout: Int? = null,
     block: (TransactionStatus) -> Unit,
 ) {
+    // NOTE: 컴파일 타임 안전성을 위해 이 확장함수의 수신 타입을 SpringTransactionManager로 제한하는 것을 권장합니다.
+    // fun SpringTransactionManager.execute(...) 로 변경하면 잘못된 TransactionManager 전달을 컴파일 시점에 방지할 수 있습니다.
     if (this !is org.jetbrains.exposed.v1.spring.transaction.SpringTransactionManager) {
         error("Wrong transaction manager. ${this.javaClass.name}, use Exposed's SpringTransactionManager")
     }

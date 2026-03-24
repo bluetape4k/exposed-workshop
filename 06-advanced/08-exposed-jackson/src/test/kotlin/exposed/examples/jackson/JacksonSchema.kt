@@ -5,6 +5,8 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.core.jackson.jackson
 import io.bluetape4k.exposed.core.jackson.jacksonb
+import io.bluetape4k.exposed.dao.idEquals
+import io.bluetape4k.exposed.dao.idHashCode
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.IntEntity
@@ -14,10 +16,10 @@ import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.junit.jupiter.api.Assumptions
 
-@Suppress("UnusedReceiverParameter")
 /**
  * Jackson/JacksonB 컬럼 예제에서 공통으로 사용하는 스키마와 보조 모델을 제공한다.
  */
+@Suppress("UnusedReceiverParameter")
 object JacksonSchema {
 
     /**
@@ -59,6 +61,9 @@ object JacksonSchema {
         companion object: IntEntityClass<JacksonEntity>(JacksonTable)
 
         var jacksonColumn by JacksonTable.jacksonColumn
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
     }
 
     /**
@@ -68,6 +73,9 @@ object JacksonSchema {
         companion object: IntEntityClass<JacksonBEntity>(JacksonBTable)
 
         var jacksonBColumn by JacksonBTable.jacksonBColumn
+
+        override fun equals(other: Any?): Boolean = idEquals(other)
+        override fun hashCode(): Int = idHashCode()
     }
 
     /**

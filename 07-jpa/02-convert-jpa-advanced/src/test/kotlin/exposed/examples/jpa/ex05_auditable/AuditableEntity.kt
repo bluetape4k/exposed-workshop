@@ -61,6 +61,9 @@ abstract class AuditableEntity<ID : Any>(
     override fun flush(batch: EntityBatchUpdate?): Boolean {
         // 엔티티에 변경된 필드가 있는 경우
         // isNewEntity() 가 internal 이라 사용할 수 없음
+        // NOTE: createdAt이 null인지로 create/update를 판단합니다.
+        // DB default(CurrentTimestamp)가 적용된 후 re-read하면 createdAt이 non-null이 되므로
+        // 이후 flush에서 오동작할 수 있습니다. 교육 목적의 간소화된 구현입니다.
         if (writeValues.isNotEmpty() && createdAt != null) {
             log.debug { "entity is updated, setting updatedAt and updatedBy" }
             // 업데이트 시간을 현재로 설정

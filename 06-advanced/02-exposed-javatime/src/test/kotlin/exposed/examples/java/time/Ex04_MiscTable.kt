@@ -38,6 +38,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.temporal.ChronoUnit
 import kotlin.test.assertNull
 
 /**
@@ -106,7 +107,7 @@ class Ex04_MiscTable: AbstractExposedTest() {
     fun `insert 01`(testDB: TestDB) {
         val tbl = Misc
         val date = today
-        val time = LocalTime.now()
+        val time = LocalTime.now().truncatedTo(ChronoUnit.MILLIS)
         val dateTime = LocalDateTime.now()
         val timestamp = Instant.now()
         val duration = Duration.ofMinutes(1)
@@ -145,7 +146,7 @@ class Ex04_MiscTable: AbstractExposedTest() {
     fun `insert 02`(testDB: TestDB) {
         val tbl = Misc
         val date = today
-        val time = LocalTime.now()
+        val time = LocalTime.now().truncatedTo(ChronoUnit.MILLIS)
         val dateTime = LocalDateTime.now()
         val timestamp = Instant.now()
         val duration = Duration.ofMinutes(1)
@@ -195,7 +196,7 @@ class Ex04_MiscTable: AbstractExposedTest() {
     fun `insert 03`(testDB: TestDB) {
         val tbl = Misc
         val date = today
-        val time = LocalTime.now()
+        val time = LocalTime.now().truncatedTo(ChronoUnit.MILLIS)
         val dateTime = LocalDateTime.now()
         val timestamp = Instant.now()
         val duration = Duration.ofMinutes(1)
@@ -248,7 +249,7 @@ class Ex04_MiscTable: AbstractExposedTest() {
         val stringThatNeedsEscaping = "A'braham Barakhyahu"
         val tbl = Misc
         val date = today
-        val time = LocalTime.now()
+        val time = LocalTime.now().truncatedTo(ChronoUnit.MILLIS)
         val dateTime = LocalDateTime.now()
         val timestamp = Instant.now()
         val duration = Duration.ofMinutes(1)
@@ -285,7 +286,7 @@ class Ex04_MiscTable: AbstractExposedTest() {
     fun `insert and get`(testDB: TestDB) {
         val tbl = Misc
         val date = today
-        val time = LocalTime.now()
+        val time = LocalTime.now().truncatedTo(ChronoUnit.MILLIS)
         val dateTime = LocalDateTime.now()
         val timestamp = Instant.now()
         val duration = Duration.ofMinutes(1)
@@ -340,7 +341,7 @@ class Ex04_MiscTable: AbstractExposedTest() {
         val tbl = Misc
         withTables(testDB, tbl) {
             val date = today
-            val time = LocalTime.now()
+            val time = LocalTime.now().truncatedTo(ChronoUnit.MILLIS)
             val dateTime = LocalDateTime.now()
             val timestamp = Instant.now()
             val duration = Duration.ofMinutes(1)
@@ -782,7 +783,7 @@ class Ex04_MiscTable: AbstractExposedTest() {
         val tbl = Misc
         withTables(testDB, tbl) {
             val date = today
-            val time = LocalTime.now()
+            val time = LocalTime.now().truncatedTo(ChronoUnit.MILLIS)
             val dateTime = LocalDateTime.now()
             val timestamp = Instant.now()
             val duration = Duration.ofMinutes(1)
@@ -1162,7 +1163,7 @@ class Ex04_MiscTable: AbstractExposedTest() {
         val tbl = Misc
         withTables(testDB, tbl) {
             val date = today
-            val time = LocalTime.now()
+            val time = LocalTime.now().truncatedTo(ChronoUnit.MILLIS)
             val dateTime = LocalDateTime.now()
             val eOne = E.ONE
             val sTest = "test"
@@ -1260,7 +1261,7 @@ class Ex04_MiscTable: AbstractExposedTest() {
         Assumptions.assumeTrue { testDB !in TestDB.ALL_MYSQL_MARIADB }
         val tbl = Misc
         val date = today
-        val time = LocalTime.now()
+        val time = LocalTime.now().truncatedTo(ChronoUnit.MILLIS)
         val dateTime = LocalDateTime.now()
         val timestamp = Instant.now()
         val duration = Duration.ofMinutes(1)

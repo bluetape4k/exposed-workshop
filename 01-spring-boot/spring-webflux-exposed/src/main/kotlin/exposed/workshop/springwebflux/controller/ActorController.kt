@@ -38,6 +38,10 @@ class ActorController(
     suspend fun getActorById(
         @PathVariable("id") actorId: Long,
     ): ActorRecord? =
+        // NOTE: Exposed는 JDBC blocking I/O를 사용합니다.
+        // WebFlux 환경에서 newSuspendedTransaction은 내부적으로 Dispatchers.IO로 전환되어야
+        // Netty 이벤트 루프 차단을 방지할 수 있습니다.
+        // 예: newSuspendedTransaction(context = Dispatchers.IO) { ... }
         newSuspendedTransaction(readOnly = true) {
             log.debug { "current transaction=$this" }
             actorRepository.findById(actorId)?.toActorRecord()

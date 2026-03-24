@@ -30,7 +30,7 @@ object Tenants {
      * 존재하지 않으면 예외를 발생시킵니다.
      */
     fun getById(tenantId: String): Tenant =
-        Tenant.fromId(tenantId) ?: error("No tenant found for id: $tenantId")
+        Tenant.fromId(tenantId) ?: throw IllegalArgumentException("No tenant found for id: $tenantId")
 
     private val tenantSchemas = mapOf(
         Tenant.KOREAN to getSchemaDefinition(Tenant.KOREAN),
