@@ -35,7 +35,8 @@ abstract class AbstractMutinySessionRepository<T : Any, ID : Serializable>(
         session: Session,
         entity: T,
     ): T {
-        session.persist(entity).chain { session.flush() }.awaitSuspending()
+        session.persist(entity).awaitSuspending()
+        session.flush().awaitSuspending()
         return entity
     }
 

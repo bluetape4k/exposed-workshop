@@ -130,7 +130,7 @@ class JasyptColumnTypeDaoTest: AbstractExposedTest() {
     @Test
     @Disabled("Exposed 1.1.x double-decryption bug - re-enable after version upgrade")
     fun `암호화된 컬럼으로 DAO 검색하기 - varchar`() {
-        withTables(TestDB.H2_V2, T1) {
+        withTables(TestDB.H2, T1) {
             val insertedVarchar = faker.name().firstName()
             val insertedBinary = faker.address().fullAddress().toUtf8Bytes()
 
@@ -151,7 +151,7 @@ class JasyptColumnTypeDaoTest: AbstractExposedTest() {
     @Test
     @Disabled("Exposed 1.1.x double-decryption bug - re-enable after version upgrade")
     fun `암호화된 컬럼으로 DAO 검색하기 - binary`() {
-        withTables(TestDB.H2_V2, T1) {
+        withTables(TestDB.H2, T1) {
             val insertedVarchar = faker.name().firstName()
             val insertedBinary = faker.address().fullAddress().toUtf8Bytes()
 

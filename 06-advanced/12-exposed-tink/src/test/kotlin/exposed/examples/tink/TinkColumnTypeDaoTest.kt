@@ -137,7 +137,7 @@ class TinkColumnTypeDaoTest : AbstractExposedTest() {
     @Test
     @Disabled("Exposed 1.1.x double-decryption bug - re-enable after version upgrade")
     fun `암호화된 data 컬럼으로 DAO 검색하기`() {
-        withTables(TestDB.H2_V2, T1) {
+        withTables(TestDB.H2, T1) {
             val insertedSecret = faker.name().firstName()
             val insertedData = faker.address().fullAddress().toUtf8Bytes()
 
