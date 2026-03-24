@@ -19,7 +19,7 @@ import kotlin.time.toJavaDuration
 /**
  * Webflux 에서 사용하는 Netty 관련 설정을 제공합니다.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class NettyConfig {
     companion object: KLoggingChannel()
 

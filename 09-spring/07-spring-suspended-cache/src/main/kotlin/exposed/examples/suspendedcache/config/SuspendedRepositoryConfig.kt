@@ -8,7 +8,7 @@ import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class SuspendedRepositoryConfig(
     private val suspendedCacheManager: LettuceSuspendedCacheManager,
 ) {

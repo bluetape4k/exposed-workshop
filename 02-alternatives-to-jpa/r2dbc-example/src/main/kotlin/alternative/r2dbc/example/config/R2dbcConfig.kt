@@ -18,7 +18,7 @@ import org.springframework.r2dbc.connection.init.CompositeDatabasePopulator
 import org.springframework.r2dbc.connection.init.ConnectionFactoryInitializer
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableTransactionManagement
 // @ComponentScan(basePackageClasses =  [CustomerRepository::class])
 @EnableR2dbcRepositories(basePackageClasses = [CustomerRepository::class])

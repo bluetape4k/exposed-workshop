@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration
 /**
  * Swagger 설정을 위한 Configuration
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class SwaggerConfig {
 
     @Autowired

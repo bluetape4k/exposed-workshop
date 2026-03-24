@@ -15,7 +15,7 @@ import java.time.Duration
 /**
  * Spring Cache를 Lettuce를 이용하여 Redis에 저장하기 위한 설정
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableCaching
 class LettuceCacheConfig {
 

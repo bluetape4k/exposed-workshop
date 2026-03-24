@@ -14,7 +14,7 @@ import java.util.concurrent.Executors
  *
  * `app.virtualthread.enabled=true`(기본값)일 때 활성화됩니다.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true", matchIfMissing = true)
 class TomcatVirtualThreadConfig {
 

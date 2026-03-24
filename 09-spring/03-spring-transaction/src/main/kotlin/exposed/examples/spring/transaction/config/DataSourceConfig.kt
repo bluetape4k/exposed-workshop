@@ -12,15 +12,14 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.transaction.TransactionManager
 import org.springframework.transaction.annotation.EnableTransactionManagement
-import org.springframework.transaction.annotation.TransactionManagementConfigurer
 import javax.sql.DataSource
 
-@Configuration
-@EnableTransactionManagement
 /**
  * 테스트용 데이터소스와 Exposed `SpringTransactionManager` 를 구성하는 설정입니다.
  */
-class DataSourceConfig: TransactionManagementConfigurer {
+@Configuration(proxyBeanMethods = false)
+@EnableTransactionManagement
+class DataSourceConfig {
 
     companion object: KLogging()
 
@@ -43,9 +42,9 @@ class DataSourceConfig: TransactionManagementConfigurer {
      * `@Transactional` 에서 사용할 Exposed `SpringTransactionManager` 를 등록합니다.
      */
     @Bean
-    override fun annotationDrivenTransactionManager(): TransactionManager {
+    fun annotationDrivenTransactionManager(dataSource: DataSource): TransactionManager {
         log.info { "Create Exposed's SpringTransactionManager" }
-        return SpringTransactionManager(dataSource(), DatabaseConfig { useNestedTransactions = true })
+        return SpringTransactionManager(dataSource, DatabaseConfig { useNestedTransactions = true })
     }
 
     /**

@@ -20,7 +20,7 @@ import javax.sql.DataSource
  * H2, MySQL, PostgreSQL 프로파일에 따라 적절한 DataSource를 생성하고,
  * Exposed의 [Database] 인스턴스를 Spring 빈으로 등록합니다.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableTransactionManagement
 class ExposedDatabaseConfig {
 

@@ -5,7 +5,7 @@ import io.bluetape4k.testcontainers.storage.RedisServer
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-@SpringBootApplication
+@SpringBootApplication(proxyBeanMethods = false)
 class SpringCacheApplication {
 
     companion object: KLogging() {

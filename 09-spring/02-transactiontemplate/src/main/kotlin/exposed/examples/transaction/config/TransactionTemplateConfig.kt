@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.transaction.support.TransactionOperations
 import org.springframework.transaction.support.TransactionTemplate
 
-@Configuration
 /**
  * Exposed 기반 트랜잭션 템플릿과 트랜잭션 미적용 템플릿을 구성하는 설정입니다.
  */
+@Configuration(proxyBeanMethods = false)
 class TransactionTemplateConfig {
 
     companion object: KLogging()

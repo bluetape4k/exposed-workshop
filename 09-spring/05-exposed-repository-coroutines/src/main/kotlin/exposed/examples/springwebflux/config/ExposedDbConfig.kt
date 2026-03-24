@@ -18,7 +18,7 @@ import javax.sql.DataSource
  *
  * 일반적으로는 Exposed의 Spring Boot 용 AutoConfiguration을 사용하면 됩니다.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class ExposedDbConfig {
 
     companion object: KLoggingChannel()

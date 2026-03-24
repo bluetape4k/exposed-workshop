@@ -18,7 +18,7 @@ import java.util.concurrent.Executors
  *
  * @see [org.springframework.scheduling.annotation.Async]
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableAsync
 @ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true")
 class AsyncVirtualThreadConfig {
