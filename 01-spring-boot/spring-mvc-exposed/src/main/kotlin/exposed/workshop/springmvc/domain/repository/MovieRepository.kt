@@ -25,7 +25,6 @@ import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.select
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.springframework.stereotype.Repository
-import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -39,7 +38,7 @@ import java.time.LocalDateTime
 class MovieRepository(
     private val db: Database,
 ) {
-    companion object : KLogging()
+    companion object: KLogging()
 
     /**
      * ```sql
@@ -77,12 +76,12 @@ class MovieRepository(
 
         params.forEach { (key, value) ->
             when (key) {
-                MovieTable::id.name -> {
+                MovieTable::id.name          -> {
                     value
                         ?.let { parseLongParam(key, it) }
                         ?.let { query.andWhere { MovieTable.id eq it } }
                 }
-                MovieTable::name.name -> {
+                MovieTable::name.name        -> {
                     value?.let { query.andWhere { MovieTable.name eq it } }
                 }
                 MovieTable::producerName.name -> {

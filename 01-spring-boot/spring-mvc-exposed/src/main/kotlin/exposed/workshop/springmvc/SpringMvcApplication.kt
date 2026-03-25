@@ -10,7 +10,7 @@ import org.springframework.boot.runApplication
  *
  * Servlet 기반 Spring MVC 웹 서버를 Exposed ORM과 함께 사용하는 방법을 보여줍니다.
  */
-@SpringBootApplication
+@SpringBootApplication(proxyBeanMethods = false)
 class SpringMvcApplication {
     companion object: KLogging()
 }

@@ -12,7 +12,6 @@ import org.jetbrains.exposed.v1.jdbc.deleteWhere
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.springframework.stereotype.Repository
-import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 /**

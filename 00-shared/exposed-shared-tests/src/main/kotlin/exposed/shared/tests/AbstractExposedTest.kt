@@ -2,9 +2,7 @@ package exposed.shared.tests
 
 import io.bluetape4k.junit5.faker.Fakers
 import io.bluetape4k.logging.KLogging
-import org.jetbrains.exposed.v1.core.Key
 import org.jetbrains.exposed.v1.core.Schema
-import org.jetbrains.exposed.v1.core.statements.StatementInterceptor
 import java.util.*
 
 /**
