@@ -34,6 +34,25 @@ class UserEventCacheRepositoryTest(
 
 
     @Test
+    fun `write behind 로 단일 이벤트를 추가한다`() {
+        transaction {
+            val event = newUserEventRecord()
+            repository.put(event)
+
+            await
+                .atMost(Duration.ofSeconds(10))
+                .withPollInterval(Duration.ofMillis(50))
+                .until {
+                    transaction {
+                        UserEventTable.selectAll().count() >= 1L
+                    }
+                }
+
+            UserEventTable.selectAll().count() shouldBeEqualTo 1L
+        }
+    }
+
+    @Test
     fun `write behind 로 대량의 데이테를 추가한다`() {
         transaction {
             val totalCount = 10_000

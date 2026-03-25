@@ -97,4 +97,22 @@ class UserCredentialsCacheRepositoryTest(
             repository.get("missing-user-credentials-id").shouldBeNull()
         }
     }
+
+    @Test
+    fun `캐시 무효화 후 재조회 시 DB에서 다시 읽어온다`() {
+        transaction {
+            val ucId = userCredentialsIdsInDB.random()
+
+            // 캐시에 로드
+            repository.get(ucId).shouldNotBeNull()
+
+            // 캐시 무효화
+            repository.invalidate(ucId)
+
+            // 재조회 시 DB에서 다시 읽어온다
+            val reloaded = repository.get(ucId)
+            reloaded.shouldNotBeNull()
+            reloaded.id shouldBeEqualTo ucId
+        }
+    }
 }
