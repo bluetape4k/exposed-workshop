@@ -17,6 +17,7 @@ import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeLessOrEqualTo
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldHaveSize
+import org.amshove.kluent.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.inList
 import org.jetbrains.exposed.v1.jdbc.deleteAll
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
@@ -157,6 +158,39 @@ class UserCacheRepositoryTest(
 
             val userFromDB = repository.findByIdFromDb(userId)
             userFromDB shouldBeEqualTo updatedUser.copy(updatedAt = userFromDB!!.updatedAt)
+        }
+    }
+
+    @Test
+    fun `캐시 무효화 시 deleteFromDBOnInvalidate 설정으로 DB에서도 삭제된다`() = runSuspendIO {
+        newSuspendedTransaction {
+            val userId = idsInDB.random()
+
+            // 캐시에 로드
+            repository.get(userId).shouldNotBeNull()
+
+            // 캐시 무효화 - deleteFromDBOnInvalidate=true이므로 DB에서도 삭제
+            repository.invalidate(userId)
+
+            // DB에서도 삭제되었으므로 null 반환
+            repository.get(userId).shouldBeNull()
+        }
+    }
+
+    @Test
+    fun `복수 ID를 한 번에 무효화하면 DB에서도 모두 삭제된다`() = runSuspendIO {
+        val idsToInvalidate = idsInDB.take(3)
+        newSuspendedTransaction {
+            // 캐시에 로드
+            idsToInvalidate.forEach { repository.get(it).shouldNotBeNull() }
+
+            // 복수 ID 무효화 - deleteFromDBOnInvalidate=true이므로 DB에서도 삭제
+            repository.invalidate(*idsToInvalidate.toTypedArray())
+
+            // DB에서도 삭제되었으므로 모두 null 반환
+            idsToInvalidate.forEach { id ->
+                repository.get(id).shouldBeNull()
+            }
         }
     }
 }

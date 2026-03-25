@@ -154,4 +154,38 @@ class UserCacheRepositoryTest(
             userFromDB shouldBeEqualTo updatedUser.copy(updatedAt = userFromDB!!.updatedAt)
         }
     }
+
+    @Test
+    fun `캐시 무효화 시 deleteFromDBOnInvalidate 설정으로 DB에서도 삭제된다`() {
+        transaction {
+            val userId = idsInDB.random()
+
+            // 캐시에 로드
+            val cachedUser = repository.get(userId)
+            cachedUser.shouldNotBeNull()
+
+            // 캐시 무효화 - deleteFromDBOnInvalidate=true이므로 DB에서도 삭제
+            repository.invalidate(userId)
+
+            // DB에서도 삭제되었으므로 null 반환
+            repository.get(userId).shouldBeNull()
+        }
+    }
+
+    @Test
+    fun `복수 ID를 한 번에 무효화하면 DB에서도 모두 삭제된다`() {
+        val idsToInvalidate = idsInDB.take(3)
+        transaction {
+            // 캐시에 로드
+            idsToInvalidate.forEach { repository.get(it).shouldNotBeNull() }
+
+            // 복수 ID 무효화 - deleteFromDBOnInvalidate=true이므로 DB에서도 삭제
+            repository.invalidate(*idsToInvalidate.toTypedArray())
+
+            // DB에서도 삭제되었으므로 모두 null 반환
+            idsToInvalidate.forEach { id ->
+                repository.get(id).shouldBeNull()
+            }
+        }
+    }
 }

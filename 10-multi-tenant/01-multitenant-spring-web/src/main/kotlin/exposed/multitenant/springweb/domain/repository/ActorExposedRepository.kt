@@ -28,6 +28,9 @@ class ActorExposedRepository: JdbcRepository<Long, ActorRecord> {
     override fun extractId(entity: ActorRecord): Long = entity.id
     override fun ResultRow.toEntity() = toActorRecord()
 
+    @Transactional(readOnly = true)
+    override fun findByIdOrNull(id: Long): ActorRecord? = super.findByIdOrNull(id)
+
     /**
      * 주어진 조건에 맞는 [ActorEntity]를 조회합니다.
      */

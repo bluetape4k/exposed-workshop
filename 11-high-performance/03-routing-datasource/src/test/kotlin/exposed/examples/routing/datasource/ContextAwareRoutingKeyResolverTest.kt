@@ -43,4 +43,23 @@ class ContextAwareRoutingKeyResolverTest {
 
         assertEquals("default:rw", resolver.currentLookupKey())
     }
+
+    @Test
+    fun `supplier가 null을 반환하면 default tenant로 fallback 한다`() {
+        val resolver = ContextAwareRoutingKeyResolver(
+            defaultTenant = "default",
+            tenantSupplier = { null },
+        )
+
+        assertEquals("default:rw", resolver.currentLookupKey())
+    }
+
+    @Test
+    fun `read-only 트랜잭션이면 rw 대신 ro 키를 반환한다`() {
+        TransactionSynchronizationManager.setCurrentTransactionReadOnly(true)
+
+        val key = resolver.currentLookupKey()
+
+        assertEquals("default:ro", key)
+    }
 }

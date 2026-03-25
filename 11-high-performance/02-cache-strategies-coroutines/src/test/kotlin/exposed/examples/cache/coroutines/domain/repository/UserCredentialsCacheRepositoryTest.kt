@@ -95,4 +95,22 @@ class UserCredentialsCacheRepositoryTest(
         val uc = repository.get("missing-user-credentials-id")
         uc.shouldBeNull()
     }
+
+    @Test
+    fun `캐시 무효화 후 재조회 시 DB에서 다시 읽어온다`() = runSuspendIO {
+        newSuspendedTransaction(readOnly = true) {
+            val ucId = idsInDB.random()
+
+            // 캐시에 로드
+            repository.get(ucId).shouldNotBeNull()
+
+            // 캐시 무효화
+            repository.invalidate(ucId)
+
+            // 재조회 시 DB에서 다시 읽어온다
+            val reloaded = repository.get(ucId)
+            reloaded.shouldNotBeNull()
+            reloaded.id shouldBeEqualTo ucId
+        }
+    }
 }

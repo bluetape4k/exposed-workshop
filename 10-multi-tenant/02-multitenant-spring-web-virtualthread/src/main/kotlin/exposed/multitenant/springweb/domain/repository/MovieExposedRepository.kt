@@ -40,6 +40,9 @@ class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
     override fun extractId(entity: MovieRecord): Long = entity.id
     override fun ResultRow.toEntity() = toMovieRecord()
 
+    @Transactional(readOnly = true)
+    override fun findByIdOrNull(id: Long): MovieRecord? = super.findByIdOrNull(id)
+
     /**
      * 검색 파라미터(식별자/이름/제작자/개봉일)로 영화 목록을 조회합니다.
      */
@@ -70,6 +73,7 @@ class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
     /**
      * 영화 정보를 저장하고 생성된 식별자를 포함한 레코드를 반환합니다.
      */
+    @Transactional
     fun create(movieRecord: MovieRecord): MovieRecord {
         log.debug { "Create new movie. movie: $movieRecord" }
 
@@ -96,6 +100,7 @@ class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
      *          INNER JOIN ACTORS_IN_MOVIES ON MOVIES.ID = ACTORS_IN_MOVIES.MOVIE_ID
      *          INNER JOIN ACTORS ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID
      */
+    @Transactional(readOnly = true)
     fun getAllMoviesWithActors(): List<MovieWithActorRecord> {
         log.debug { "Get all movies with actors." }
 
@@ -141,6 +146,7 @@ class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
      *  WHERE ACTORS_IN_MOVIES.MOVIE_ID = 1;
      * ```
      */
+    @Transactional(readOnly = true)
     fun getMovieWithActors(movieId: Long): MovieWithActorRecord? {
         log.debug { "Get Movie with actors. movieId=$movieId" }
 
@@ -162,6 +168,7 @@ class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
      *  GROUP BY MOVIES.ID
      * ```
      */
+    @Transactional(readOnly = true)
     fun getMovieActorsCount(): List<MovieActorCountRecord> {
         log.debug { "Get Movie actors count." }
 
@@ -190,6 +197,7 @@ class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
      *          ON ACTORS.ID = ACTORS_IN_MOVIES.ACTOR_ID AND (MOVIES.PRODUCER_NAME = ACTORS.FIRST_NAME)
      * ```
      */
+    @Transactional(readOnly = true)
     fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
         log.debug { "Find movies with acting producers." }
 
