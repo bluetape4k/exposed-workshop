@@ -41,6 +41,7 @@ class ExposedDatabaseConfig {
             driverClassName = "org.h2.Driver"
             username = "sa"
             password = ""
+            maximumPoolSize = maxOf(50, Runtime.getRuntime().availableProcessors() * 4)
         }
         return HikariDataSource(config)
     }

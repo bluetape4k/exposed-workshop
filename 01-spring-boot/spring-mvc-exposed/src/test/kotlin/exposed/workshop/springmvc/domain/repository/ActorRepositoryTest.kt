@@ -54,6 +54,17 @@ class ActorRepositoryTest(
     }
 
     @Test
+    fun `search actors by firstName`() {
+        val params = mapOf("firstName" to "Angelina")
+        val actors = actorRepo.searchActors(params)
+
+        actors.shouldNotBeEmpty()
+        actors.forEach {
+            log.debug { "actor: $it" }
+        }
+    }
+
+    @Test
     fun `search actors ignores invalid birthday parameter`() {
         val params = mapOf("birthday" to "not-a-date")
         val actors = actorRepo.searchActors(params)

@@ -106,4 +106,16 @@ class MovieControllerTest(
 
         movies.shouldNotBeEmpty()
     }
+
+    @Test
+    fun `get all movies`() = runSuspendIO {
+        val movies = client
+            .httpGet("/movies")
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<MovieRecord>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
+
+        movies.shouldNotBeEmpty()
+    }
 }

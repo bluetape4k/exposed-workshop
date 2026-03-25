@@ -5,7 +5,10 @@ import exposed.workshop.springmvc.domain.model.MovieRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
+import io.bluetape4k.spring.tests.httpDelete
 import io.bluetape4k.spring.tests.httpGet
+import io.bluetape4k.spring.tests.httpPost
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.reactive.awaitSingle
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldHaveSize
@@ -67,5 +70,82 @@ class MovieControllerTest(
             .shouldNotBeNull()
 
         movies.shouldNotBeEmpty()
+    }
+
+    @Test
+    fun `get all movies`() = runSuspendIO {
+        val movies = client
+            .httpGet("/movies")
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<MovieRecord>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
+
+        movies.shouldNotBeEmpty()
+    }
+
+    @Test
+    fun `search movies by name`() = runSuspendIO {
+        val movies = client
+            .httpGet("/movies?name=Gladiator")
+            .expectStatus().is2xxSuccessful
+            .expectBodyList<MovieRecord>()
+            .returnResult().responseBody
+            .shouldNotBeNull()
+
+        movies shouldHaveSize 1
+        movies.first().name shouldBeEqualTo "Gladiator"
+    }
+
+    @Test
+    fun `get movie by non-existent id returns empty response`() = runSuspendIO {
+        val result = client
+            .httpGet("/movies/99999")
+            .expectStatus().is2xxSuccessful
+            .returnResult<MovieRecord>().responseBody
+            .awaitFirstOrNull()
+
+        result shouldBeEqualTo null
+    }
+
+    @Test
+    fun `create movie`() = runSuspendIO {
+        val newMovie = MovieRecord(
+            name = faker.book().title(),
+            producerName = faker.name().fullName(),
+            releaseDate = faker.timeAndDate().birthday(20, 80).toString()
+        )
+
+        val saved = client
+            .httpPost("/movies", newMovie)
+            .expectStatus().is2xxSuccessful
+            .returnResult<MovieRecord>().responseBody
+            .awaitSingle()
+
+        log.debug { "saved=$saved" }
+        saved shouldBeEqualTo newMovie.copy(id = saved.id)
+    }
+
+    @Test
+    fun `delete movie`() = runSuspendIO {
+        val newMovie = MovieRecord(
+            name = faker.book().title(),
+            producerName = faker.name().fullName(),
+            releaseDate = faker.timeAndDate().birthday(20, 80).toString()
+        )
+
+        val saved = client
+            .httpPost("/movies", newMovie)
+            .expectStatus().is2xxSuccessful
+            .returnResult<MovieRecord>().responseBody
+            .awaitSingle()
+
+        val deletedCount = client
+            .httpDelete("/movies/${saved.id}")
+            .expectStatus().is2xxSuccessful
+            .returnResult<Int>().responseBody
+            .awaitSingle()
+
+        deletedCount shouldBeEqualTo 1
     }
 }

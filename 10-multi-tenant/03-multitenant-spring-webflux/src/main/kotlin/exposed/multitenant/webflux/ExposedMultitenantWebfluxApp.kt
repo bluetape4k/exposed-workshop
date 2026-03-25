@@ -8,7 +8,7 @@ import org.springframework.boot.WebApplicationType
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-@SpringBootApplication
+@SpringBootApplication(proxyBeanMethods = false)
 /**
  * WebFlux + Coroutines 기반 멀티테넌트 예제 애플리케이션입니다.
  */

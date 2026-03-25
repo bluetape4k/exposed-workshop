@@ -204,7 +204,11 @@ class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
             ) {
                 MovieTable.producerName eq ActorTable.firstName
             }
-            .select(MovieTable.name, ActorTable.firstName, ActorTable.lastName)
+            .select(
+                MovieTable.name,
+                ActorTable.firstName,
+                ActorTable.lastName
+            )
 
         return query.map { it.toMovieWithProducingActorRecord() }
     }

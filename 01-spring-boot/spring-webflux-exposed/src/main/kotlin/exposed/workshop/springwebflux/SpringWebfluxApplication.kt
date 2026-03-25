@@ -10,7 +10,7 @@ import org.springframework.boot.runApplication
  *
  * Reactive 기반 Spring WebFlux 서버를 Exposed ORM과 함께 사용하는 방법을 보여줍니다.
  */
-@SpringBootApplication
+@SpringBootApplication(proxyBeanMethods = false)
 class SpringWebfluxApplication {
     companion object: KLoggingChannel()
 }

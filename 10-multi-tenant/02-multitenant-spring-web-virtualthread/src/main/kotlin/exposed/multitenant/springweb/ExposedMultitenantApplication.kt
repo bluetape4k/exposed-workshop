@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.EnableAspectJAutoProxy
 
-@SpringBootApplication
+@SpringBootApplication(proxyBeanMethods = false)
 @EnableAspectJAutoProxy
 /**
  * Virtual Thread 기반 Spring MVC 멀티테넌트 예제 애플리케이션입니다.
