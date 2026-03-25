@@ -13,7 +13,9 @@ Kotlin Exposed 워크샵 — Kotlin 2.3 / Java 21 / Spring Boot 3.x / Gradle 멀
 ./bin/repo-test-summary -- ./gradlew :MODULE:test           # 테스트 로그 요약
 ```
 
-모듈 경로: `:<section>:<submodule>:test` (예: `:09-spring:04-exposed-repository:test`)
+모듈 경로: `:<submodule-dir-name>:test` (예: `:04-exposed-repository:test`, `:01-multitenant-spring-web:test`)
+
+> `settings.gradle.kts`가 마지막 디렉터리 이름을 project path로 사용하므로 상위 섹션 경로 없이 바로 모듈명만 사용합니다.
 
 **Token 절약 흐름**: `repo-status` → `repo-diff` → 필요한 파일만 상세 확인 → `repo-test-summary`
 

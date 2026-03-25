@@ -11,6 +11,15 @@
 - `.omc/` 디렉터리 추가 (OMC 상태 관리용)
 - `.claude/worktrees` gitignore 규칙 추가
 
+### Test
+
+- **`10-multi-tenant/01-multitenant-spring-web`**: `ActorExposedRepository` / `MovieExposedRepository`에 `@Transactional` 추가, `ActorRepositoryTest` / `MovieRepositoryTest` 신규 추가 (테넌트별 스키마 격리 검증, 28개)
+- **`10-multi-tenant/02-multitenant-spring-web-virtualthread`**: 동일한 리포지토리 테스트 추가 (가상 스레드 환경, 28개)
+- **`10-multi-tenant/03-multitenant-spring-webflux`**: WebFlux 환경 도메인 리포지토리 테스트 추가 (12개)
+- **`11-high-performance/01-cache-strategies`**: 캐시 무효화(단일/복수) 및 단일 이벤트 write-behind 테스트 추가 (31 → 35개)
+- **`11-high-performance/02-cache-strategies-coroutines`**: 코루틴 스타일 동일 테스트 추가 (31 → 35개)
+- **`11-high-performance/03-routing-datasource`**: `InMemoryDataSourceRegistry` 중복키/없는키 조회, `ContextAwareRoutingKeyResolver` null supplier·read-only 키 테스트 추가 (21 → 25개)
+
 ---
 
 ## [1.1.1] - 2026-03-14
