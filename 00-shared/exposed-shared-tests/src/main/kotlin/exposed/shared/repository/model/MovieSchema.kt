@@ -25,7 +25,6 @@ import org.jetbrains.exposed.v1.javatime.date
 import org.jetbrains.exposed.v1.jdbc.JdbcTransaction
 import org.jetbrains.exposed.v1.jdbc.SizedIterable
 import org.jetbrains.exposed.v1.jdbc.batchInsert
-import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.select
 import java.time.LocalDate
 
@@ -217,20 +216,22 @@ object MovieSchema: KLogging() {
         }
 
         movies.forEach { movie ->
-            val movieId =
-                MovieTable.select(MovieTable.id).where { MovieTable.name eq movie.name }.first()[MovieTable.id]
+            val movieId = MovieTable
+                .select(MovieTable.id)
+                .where { MovieTable.name eq movie.name }
+                .first()[MovieTable.id]
 
-            movie.actors.forEach { actor ->
-                val actorId =
-                    ActorTable
-                        .select(ActorTable.id)
-                        .where { (ActorTable.firstName eq actor.firstName) and (ActorTable.lastName eq actor.lastName) }
-                        .first()[ActorTable.id]
+            val actorIds = movie.actors.map { actor ->
+                ActorTable
+                    .select(ActorTable.id)
+                    .where { (ActorTable.firstName eq actor.firstName) and (ActorTable.lastName eq actor.lastName) }
+                    .first()[ActorTable.id]
+            }
 
-                ActorInMovieTable.insert {
-                    it[ActorInMovieTable.actorId] = actorId.value
-                    it[ActorInMovieTable.movieId] = movieId.value
-                }
+            val movieActorIds = actorIds.map { movieId to it }
+            ActorInMovieTable.batchInsert(movieActorIds) {
+                this[ActorInMovieTable.movieId] = it.first.value
+                this[ActorInMovieTable.actorId] = it.second.value
             }
         }
 

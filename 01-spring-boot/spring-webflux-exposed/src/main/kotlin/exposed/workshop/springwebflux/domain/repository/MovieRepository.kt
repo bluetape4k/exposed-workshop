@@ -74,10 +74,7 @@ class MovieRepository {
             when (key) {
                 MovieTable::id.name -> {
                     value?.let { parseLongParam(key, it) }?.let {
-                        query.andWhere {
-                            MovieTable.id eq
-                                it
-                        }
+                        query.andWhere { MovieTable.id eq it }
                     }
                 }
                 MovieTable::name.name -> {

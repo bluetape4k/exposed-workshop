@@ -9,14 +9,10 @@ import java.io.Serializable
 data class Comment(
     @Column("content")
     val content: String? = null,
-
     @Column("post_id")
     val postId: Long? = null,
-
     @Id
     val id: Long? = null,
 ): Serializable {
-
     val hasId: Boolean get() = id != null
-
 }

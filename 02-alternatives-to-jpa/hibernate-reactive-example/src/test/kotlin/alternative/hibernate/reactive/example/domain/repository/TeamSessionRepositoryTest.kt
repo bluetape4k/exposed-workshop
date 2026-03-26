@@ -64,9 +64,25 @@ class TeamSessionRepositoryTest(
      */
     @ParameterizedTest(name = "team name - {0}")
     @ValueSource(strings = ["Team A", "Team B"])
-    fun `find all by name`(teamName: String) = runSuspendIO {
+    fun `find all by team name`(teamName: String) = runSuspendIO {
         sf.withSessionSuspending { session ->
             val teams = teamRepository.findAllByName(session, teamName)
+
+            teams.forEach {
+                log.debug { "Team: $it" }
+            }
+            teams shouldHaveSize 1
+
+            val team = teamRepository.findById(session, teams.first().id)
+            team shouldBeEqualTo teams.first()
+        }
+    }
+
+    @ParameterizedTest(name = "member name - {0}")
+    @ValueSource(strings = ["Member 3", "Member 4"])
+    fun `find all by member name`(memberName: String) = runSuspendIO {
+        sf.withSessionSuspending { session ->
+            val teams = teamRepository.findAllByMemberName(session, memberName)
 
             teams.forEach {
                 log.debug { "Team: $it" }
@@ -91,6 +107,7 @@ class TeamSessionRepositoryTest(
             savedTeam.id.shouldNotBeNull()
         }
     }
+
 
     /**
      * 새 팀을 저장한 뒤 ID로 삭제하고, 삭제 후 조회 결과가 null인지 검증합니다.

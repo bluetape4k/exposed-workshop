@@ -46,10 +46,7 @@ abstract class AuditableIdTable<ID : Any>(
     val updatedAt = timestamp("updated_at").nullable()
 }
 
-abstract class AuditableEntity<ID : Any>(
-    id: EntityID<ID>,
-) : Entity<ID>(id),
-    Auditable {
+abstract class AuditableEntity<ID: Any>(id: EntityID<ID>): Entity<ID>(id), Auditable {
     companion object : KLogging()
 
     override var createdBy: String? = null

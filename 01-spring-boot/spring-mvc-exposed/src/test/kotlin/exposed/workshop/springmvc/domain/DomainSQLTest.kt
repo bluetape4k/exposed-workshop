@@ -48,7 +48,7 @@ class DomainSQLTest: AbstractSpringMvcTest() {
         }
     }
 
-    @EnabledOnJre(JRE.JAVA_21)
+    @EnabledOnJre(JRE.JAVA_21, JRE.JAVA_25)
     @Nested
     open inner class VirtualThread {
 
