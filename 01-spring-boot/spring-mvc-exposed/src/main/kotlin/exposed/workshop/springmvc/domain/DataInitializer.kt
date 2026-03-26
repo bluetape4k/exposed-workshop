@@ -7,8 +7,8 @@ import exposed.workshop.springmvc.domain.model.MovieSchema.MovieTable
 import exposed.workshop.springmvc.domain.model.MovieWithActorRecord
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
-import org.jetbrains.exposed.v1.core.and
 import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.jdbc.andWhere
 import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.select
 import org.jetbrains.exposed.v1.jdbc.selectAll
@@ -126,7 +126,8 @@ class DataInitializer: ApplicationListener<ApplicationReadyEvent> {
             val actorIds = movie.actors.map { actor ->
                 ActorTable
                     .select(ActorTable.id)
-                    .where { (ActorTable.firstName eq actor.firstName) and (ActorTable.lastName eq actor.lastName) }
+                    .where { ActorTable.firstName eq actor.firstName }
+                    .andWhere { ActorTable.lastName eq actor.lastName }
                     .first()[ActorTable.id]
             }
 
