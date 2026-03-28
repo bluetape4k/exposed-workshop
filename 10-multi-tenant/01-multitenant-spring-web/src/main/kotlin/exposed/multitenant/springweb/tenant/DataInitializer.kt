@@ -11,6 +11,8 @@ import io.bluetape4k.logging.debug
 import io.bluetape4k.logging.info
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
+import org.jetbrains.exposed.v1.migration.jdbc.MigrationUtils
 import org.jetbrains.exposed.v1.jdbc.andWhere
 import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.select
@@ -43,8 +45,10 @@ class DataInitializer {
         SchemaUtils.createSchema(currentSchema)
         SchemaUtils.setSchema(currentSchema)
 
-        @Suppress("DEPRECATION")
-        SchemaUtils.createMissingTablesAndColumns(ActorTable, MovieTable, ActorInMovieTable)
+        transaction {
+            MigrationUtils.statementsRequiredForDatabaseMigration(ActorTable, MovieTable, ActorInMovieTable)
+                .forEach { exec(it) }
+        }
     }
 
     private fun populateData(tenant: Tenants.Tenant) {

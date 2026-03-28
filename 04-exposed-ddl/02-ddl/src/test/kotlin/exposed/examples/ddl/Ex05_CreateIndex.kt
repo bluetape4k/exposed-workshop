@@ -19,6 +19,7 @@ import org.jetbrains.exposed.v1.core.lowerCase
 import org.jetbrains.exposed.v1.core.stringLiteral
 import org.jetbrains.exposed.v1.core.times
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.migration.jdbc.MigrationUtils
 import org.jetbrains.exposed.v1.jdbc.exists
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest
@@ -46,7 +47,6 @@ class Ex05_CreateIndex: AbstractExposedTest() {
      * CREATE INDEX tester_by_name ON tester ("name");
      * ```
      */
-    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `표준 인덱스 정의`(testDB: TestDB) {
@@ -61,7 +61,7 @@ class Ex05_CreateIndex: AbstractExposedTest() {
         }
 
         withDb(testDB) {
-            SchemaUtils.createMissingTablesAndColumns(tester)
+            SchemaUtils.create(tester)
 
             val ddl = tester.ddl.single()
             log.info { "tester ddl: $ddl" }
@@ -94,7 +94,6 @@ class Ex05_CreateIndex: AbstractExposedTest() {
      * CREATE INDEX tester_by_name ON tester (`name`) USING HASH;
      * ```
      */
-    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `Hash Index 생성하기`(testDB: TestDB) {
@@ -109,7 +108,7 @@ class Ex05_CreateIndex: AbstractExposedTest() {
         }
 
         withDb(testDB) {
-            SchemaUtils.createMissingTablesAndColumns(tester)
+            SchemaUtils.create(tester)
 
             val ddl = tester.ddl.single()
             log.info { "tester ddl: $ddl" }
@@ -142,7 +141,6 @@ class Ex05_CreateIndex: AbstractExposedTest() {
      *      ADD CONSTRAINT tester_another_value_unique UNIQUE (another_value);
      * ```
      */
-    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `특정 조건일 때만 인덱싱되는 partial index 생성`(testDB: TestDB) {
@@ -166,7 +164,7 @@ class Ex05_CreateIndex: AbstractExposedTest() {
         }
 
         withDb(testDB) {
-            SchemaUtils.createMissingTablesAndColumns(tester)
+            SchemaUtils.create(tester)
 
             log.info { "tester ddl: ${tester.ddl.single()}" }
             tester.exists().shouldBeTrue()

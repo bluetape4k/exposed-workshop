@@ -563,7 +563,6 @@ class FastjsonColumnTest: AbstractExposedTest() {
      * );
      * ```
      */
-    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `jackson 컬럼의 default 값 사용하기`(testDB: TestDB) {
@@ -576,10 +575,10 @@ class FastjsonColumnTest: AbstractExposedTest() {
         withDb(testDB) {
             if (testDB == TestDB.MYSQL_V5) {
                 expectException<UnsupportedByDialectException> {
-                    SchemaUtils.createMissingTablesAndColumns(defaultTester)
+                    SchemaUtils.create(defaultTester)
                 }
             } else {
-                SchemaUtils.createMissingTablesAndColumns(defaultTester)
+                SchemaUtils.create(defaultTester)
                 defaultTester.exists().shouldBeTrue()
 
                 // ensure defaults match returned metadata defaults

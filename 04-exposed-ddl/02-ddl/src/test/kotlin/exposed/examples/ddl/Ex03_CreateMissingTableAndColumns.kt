@@ -12,6 +12,7 @@ import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IdTable
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.migration.jdbc.MigrationUtils
 import org.jetbrains.exposed.v1.jdbc.exists
 import org.jetbrains.exposed.v1.jdbc.insert
 import org.junit.jupiter.params.ParameterizedTest
@@ -41,7 +42,6 @@ class Ex03_CreateMissingTableAndColumns: AbstractExposedTest() {
      * ALTER TABLE tester ADD CONSTRAINT tester_time_unique UNIQUE ("time");
      * ```
      */
-    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `누락된 테이블과 컬럼을 생성 - 01`(testDB: TestDB) {
@@ -65,7 +65,8 @@ class Ex03_CreateMissingTableAndColumns: AbstractExposedTest() {
             SchemaUtils.create(testerV1)
 
             // V2 테이블의 uniqueIndex 를 추가합니다.
-            SchemaUtils.createMissingTablesAndColumns(testerV2)
+            MigrationUtils.statementsRequiredForDatabaseMigration(testerV2).forEach { exec(it) }
+            commit()
 
             testerV2.exists().shouldBeTrue()
             SchemaUtils.drop(testerV2)
@@ -89,7 +90,6 @@ class Ex03_CreateMissingTableAndColumns: AbstractExposedTest() {
      * CREATE INDEX users2_camelcased ON users2 ("camelCased");
      * ```
      */
-    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `누락된 테이블과 컬럼을 생성 - 02`(testDB: TestDB) {
@@ -108,12 +108,12 @@ class Ex03_CreateMissingTableAndColumns: AbstractExposedTest() {
         withDb(testDB) {
             tester.exists().shouldBeFalse()
 
-            SchemaUtils.createMissingTablesAndColumns(tester)
+            SchemaUtils.create(tester)
             tester.exists().shouldBeTrue()
 
             try {
                 // 아무런 작업도 하지 않습니다.
-                SchemaUtils.createMissingTablesAndColumns(tester)
+                MigrationUtils.statementsRequiredForDatabaseMigration(tester).forEach { exec(it) }
             } finally {
                 SchemaUtils.drop(tester)
             }
@@ -140,7 +140,6 @@ class Ex03_CreateMissingTableAndColumns: AbstractExposedTest() {
      *      ALTER COLUMN idcol DROP DEFAULT;
      * ```
      */
-    @Suppress("DEPRECATION")
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `같은 테이블에 대한 매핑 중 autoIncrement를 없앨 수 있다`(testDB: TestDB) {
@@ -162,12 +161,13 @@ class Ex03_CreateMissingTableAndColumns: AbstractExposedTest() {
             try {
                 t1.exists().shouldBeFalse()
 
-                SchemaUtils.createMissingTablesAndColumns(t1)
+                SchemaUtils.create(t1)
                 t1.exists().shouldBeTrue()
                 t1.insert { it[text] = "ABC" }
 
                 // t2 로 테이블 (`tester`) 를 변경하면, `id` 컬럼이 autoIncrement 가 아니게 됩니다.
-                SchemaUtils.createMissingTablesAndColumns(t2)
+                MigrationUtils.statementsRequiredForDatabaseMigration(t2).forEach { exec(it) }
+                commit()
 
                 assertFailAndRollback("Can't insert without primaryKey value") {
                     t2.insert { it[text] = "ABC" }

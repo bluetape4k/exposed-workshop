@@ -16,13 +16,13 @@ import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.select
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.migration.jdbc.MigrationUtils
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 
 /**
  * Application 시작 시 DB 스키마 생성 및 샘플 데이터를 삽입하는 클래스
  */
-@Suppress("DEPRECATION")
 @Component
 class DataInitializer {
 
@@ -43,8 +43,10 @@ class DataInitializer {
             SchemaUtils.createSchema(currentSchema)
             SchemaUtils.setSchema(currentSchema)
 
-            @Suppress("DEPRECATION")
-            SchemaUtils.createMissingTablesAndColumns(ActorTable, MovieTable, ActorInMovieTable)
+            MigrationUtils.statementsRequiredForDatabaseMigration(ActorTable, MovieTable, ActorInMovieTable)
+                .forEach {
+                    exec(it)
+                }
         }
     }
 
@@ -63,39 +65,39 @@ class DataInitializer {
 
             val johnnyDepp = when (tenant) {
                 Tenant.ENGLISH -> ActorRecord(0L, "Johnny", "Depp", "1973-06-09")
-                else -> ActorRecord(0L, "조니", "뎁", "1979-10-28")
+                else           -> ActorRecord(0L, "조니", "뎁", "1979-10-28")
             }
             val bradPitt = when (tenant) {
                 Tenant.ENGLISH -> ActorRecord(0L, "Brad", "Pitt", "1970-12-18")
-                else -> ActorRecord(0L, "브래드", "피트", "1982-05-16")
+                else           -> ActorRecord(0L, "브래드", "피트", "1982-05-16")
             }
             val angelinaJolie = when (tenant) {
                 Tenant.ENGLISH -> ActorRecord(0L, "Angelina", "Jolie", "1983-11-10")
-                else -> ActorRecord(0L, "안제리나", "졸리", "1983-11-10")
+                else           -> ActorRecord(0L, "안제리나", "졸리", "1983-11-10")
             }
             val jenniferAniston = when (tenant) {
                 Tenant.ENGLISH -> ActorRecord(0L, "Jennifer", "Aniston", "1975-07-23")
-                else -> ActorRecord(0L, "제니퍼", "애니스톤", "1975-07-23")
+                else           -> ActorRecord(0L, "제니퍼", "애니스톤", "1975-07-23")
             }
             val angelinaGrace = when (tenant) {
                 Tenant.ENGLISH -> ActorRecord(0L, "Angelina", "Grace", "1988-09-02")
-                else -> ActorRecord(0L, "안젤리나", "그레이스", "1988-09-02")
+                else           -> ActorRecord(0L, "안젤리나", "그레이스", "1988-09-02")
             }
             val craigDaniel = when (tenant) {
                 Tenant.ENGLISH -> ActorRecord(0L, "Craig", "Daniel", "1970-11-12")
-                else -> ActorRecord(0L, "다니엘", "크레이그", "1970-11-12")
+                else           -> ActorRecord(0L, "다니엘", "크레이그", "1970-11-12")
             }
             val ellenPaige = when (tenant) {
                 Tenant.ENGLISH -> ActorRecord(0L, "Ellen", "Paige", "1981-12-20")
-                else -> ActorRecord(0L, "엘렌", "페이지", "1981-12-20")
+                else           -> ActorRecord(0L, "엘렌", "페이지", "1981-12-20")
             }
             val russellCrowe = when (tenant) {
                 Tenant.ENGLISH -> ActorRecord(0L, "Russell", "Crowe", "1970-01-20")
-                else -> ActorRecord(0L, "러셀", "크로우", "1970-01-20")
+                else           -> ActorRecord(0L, "러셀", "크로우", "1970-01-20")
             }
             val edwardNorton = when (tenant) {
                 Tenant.ENGLISH -> ActorRecord(0L, "Edward", "Norton", "1975-04-03")
-                else -> ActorRecord(0L, "에드워드", "노튼", "1975-04-03")
+                else           -> ActorRecord(0L, "에드워드", "노튼", "1975-04-03")
             }
 
             val actors = listOf(

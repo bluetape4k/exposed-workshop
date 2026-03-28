@@ -60,7 +60,6 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * `jsonb` 컬럼 사용 예제
  */
-@Suppress("DEPRECATION")
 class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
     companion object: KLogging()
@@ -623,10 +622,10 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
         withDb(testDB) {
             if (testDB in binaryJsonNotSupportedDB) {
                 expectException<UnsupportedByDialectException> {
-                    SchemaUtils.createMissingTablesAndColumns(defaultTester)
+                    SchemaUtils.create(defaultTester)
                 }
             } else {
-                SchemaUtils.createMissingTablesAndColumns(defaultTester)
+                SchemaUtils.create(defaultTester)
                 defaultTester.exists().shouldBeTrue()
 
                 // ensure defaults match returned metadata defaults
