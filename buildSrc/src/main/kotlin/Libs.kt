@@ -63,7 +63,7 @@ object Plugins {
 object Versions {
 
     // Java 21, Kotlin 2.0 이상에서 사용하세요
-    const val bluetape4k = "1.5.0-Beta2"    // Bluetape4k Github Package 로 배포됩니다.
+    const val bluetape4k = "1.5.0-Beta3"    // Bluetape4k Github Package 로 배포됩니다.
 
     // NOTE: Kotlin 2.3.10 은 컴파일 시 Hang 이 걸리는 문제가 발생한다. (vertx-sqlclient-example)
     const val kotlin = "2.3.20"                 // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
@@ -221,8 +221,8 @@ object Libs {
 
     val bluetape4k_core = bluetape4k("core")
     val bluetape4k_coroutines = bluetape4k("coroutines")
-    val bluetape4k_logging = bluetape4k("logging")
     val bluetape4k_junit5 = bluetape4k("junit5")
+    val bluetape4k_logging = bluetape4k("logging")
     val bluetape4k_testcontainers = bluetape4k("testcontainers")
 
     // Virtual Thread
@@ -241,8 +241,10 @@ object Libs {
     val bluetape4k_io = bluetape4k("io")
     val bluetape4k_jackson2 = bluetape4k("jackson2")
     val bluetape4k_jackson3 = bluetape4k("jackson3")
+    val bluetape4k_json = bluetape4k("json")
     val bluetape4k_netty = bluetape4k("netty")
     val bluetape4k_okio = bluetape4k("okio")
+    val bluetape4k_protobuf = bluetape4k("protobuf")
     val bluetape4k_retrofit2 = bluetape4k("retrofit2")
     val bluetape4k_tink = bluetape4k("tink")
     val bluetape4k_vertx = bluetape4k("vertx")
@@ -251,22 +253,29 @@ object Libs {
     val bluetape4k_cassandra = bluetape4k("cassandra")
 
     val bluetape4k_exposed = bluetape4k("exposed")
+    val bluetape4k_exposed_bigquery = bluetape4k("exposed-bigquery")
     val bluetape4k_exposed_core = bluetape4k("exposed-core")
     val bluetape4k_exposed_dao = bluetape4k("exposed-dao")
-    val bluetape4k_exposed_jdbc = bluetape4k("exposed-jdbc")
+    val bluetape4k_exposed_duckdb = bluetape4k("exposed-duckdb")
     val bluetape4k_exposed_fastjson2 = bluetape4k("exposed-fastjson2")
     val bluetape4k_exposed_jackson2 = bluetape4k("exposed-jackson2")
     val bluetape4k_exposed_jackson3 = bluetape4k("exposed-jackson3")
     val bluetape4k_exposed_jasypt = bluetape4k("exposed-jasypt")
+    val bluetape4k_exposed_jdbc = bluetape4k("exposed-jdbc")
+    val bluetape4k_exposed_jdbc_lettuce = bluetape4k("exposed-jdbc-lettuce")
     val bluetape4k_exposed_jdbc_redisson = bluetape4k("exposed-jdbc-redisson")
     val bluetape4k_exposed_jdbc_tests = bluetape4k("exposed-jdbc-tests")
     val bluetape4k_exposed_measured = bluetape4k("exposed-measured")
+    val bluetape4k_exposed_mysql8 = bluetape4k("exposed-mysql8")
+    val bluetape4k_exposed_postgresql = bluetape4k("exposed-postgresql")
     val bluetape4k_exposed_r2dbc = bluetape4k("exposed-r2dbc")
+    val bluetape4k_exposed_r2dbc_lettuce = bluetape4k("exposed-r2dbc-lettuce")
     val bluetape4k_exposed_r2dbc_redisson = bluetape4k("exposed-r2dbc-redisson")
     val bluetape4k_exposed_r2dbc_tests = bluetape4k("exposed-r2dbc-tests")
     val bluetape4k_exposed_tink = bluetape4k("exposed-tink")
 
     val bluetape4k_hibernate = bluetape4k("hibernate")
+    val bluetape4k_hibernate_cache_lettuce = bluetape4k("hibernate-cache-lettuce")
     val bluetape4k_hibernate_reactive = bluetape4k("hibernate-reactive")
 
     val bluetape4k_jdbc = bluetape4k("jdbc")
@@ -289,15 +298,21 @@ object Libs {
     val bluetape4k_resilience4j = bluetape4k("resilience4j")
 
     // Spring Boot 3
-    val bluetape4k_spring_boot3_core = bluetape4k("spring-boot3-core")
     val bluetape4k_spring_boot3_cassandra = bluetape4k("spring-boot3-cassandra")
+    val bluetape4k_spring_boot3_core = bluetape4k("spring-boot3-core")
+    val bluetape4k_spring_boot3_exposed_jdbc = bluetape4k("spring-boot3-exposed-jdbc")
+    val bluetape4k_spring_boot3_exposed_r2dbc = bluetape4k("spring-boot3-exposed-r2dbc")
+    val bluetape4k_spring_boot3_hibernate_lettuce = bluetape4k("spring-boot3-hibernate-lettuce")
     val bluetape4k_spring_boot3_mongodb = bluetape4k("spring-boot3-mongodb")
     val bluetape4k_spring_boot3_r2dbc = bluetape4k("spring-boot3-r2dbc")
     val bluetape4k_spring_boot3_redis = bluetape4k("spring-boot3-redis")
 
     // Spring Boot 4
-    val bluetape4k_spring_boot4_core = bluetape4k("spring-boot4-core")
     val bluetape4k_spring_boot4_cassandra = bluetape4k("spring-boot4-cassandra")
+    val bluetape4k_spring_boot4_core = bluetape4k("spring-boot4-core")
+    val bluetape4k_spring_boot4_exposed_jdbc = bluetape4k("spring-boot4-exposed-jdbc")
+    val bluetape4k_spring_boot4_exposed_r2dbc = bluetape4k("spring-boot4-exposed-r2dbc")
+    val bluetape4k_spring_boot4_hibernate_lettuce = bluetape4k("spring-boot4-hibernate-lettuce")
     val bluetape4k_spring_boot4_mongodb = bluetape4k("spring-boot4-mongodb")
     val bluetape4k_spring_boot4_r2dbc = bluetape4k("spring-boot4-r2dbc")
     val bluetape4k_spring_boot4_redis = bluetape4k("spring-boot4-redis")
@@ -317,6 +332,10 @@ object Libs {
     val bluetape4k_measured = bluetape4k("measured")
     val bluetape4k_money = bluetape4k("money")
     val bluetape4k_mutiny = bluetape4k("mutiny")
+
+    // Timefold
+    val bluetape4k_timefold_solver_persistence_exposed = bluetape4k("timefold-solver-persistence-exposed")
+
 
     // kotlin
     fun kotlin(module: String, version: String = Versions.kotlin) = "org.jetbrains.kotlin:kotlin-$module:$version"
