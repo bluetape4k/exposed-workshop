@@ -61,6 +61,7 @@ import org.jetbrains.exposed.v1.datetime.timestampWithTimeZone
 import org.jetbrains.exposed.v1.datetime.year
 import org.jetbrains.exposed.v1.exceptions.UnsupportedByDialectException
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.migration.jdbc.MigrationUtils
 import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.select
@@ -891,7 +892,9 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
             val date: Column<LocalDate> = date("date").index().defaultExpression(CurrentDate)
         }
         withTables(testDB, testTable) {
-            SchemaUtils.statementsRequiredToActualizeScheme(testTable).shouldBeEmpty()
+            // [deprecated] SchemaUtils.statementsRequiredToActualizeScheme → MigrationUtils.statementsRequiredForDatabaseMigration 로 교체
+            // SchemaUtils.statementsRequiredToActualizeScheme(testTable).shouldBeEmpty()
+            MigrationUtils.statementsRequiredForDatabaseMigration(testTable).shouldBeEmpty()
         }
     }
 }

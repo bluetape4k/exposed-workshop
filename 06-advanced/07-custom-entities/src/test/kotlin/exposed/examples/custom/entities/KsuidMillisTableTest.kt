@@ -1,7 +1,9 @@
 package exposed.examples.custom.entities
 
 import exposed.shared.tests.TestDB
-import exposed.shared.tests.withSuspendedTables
+// NOTE: withSuspendedTables는 deprecated됨. withTablesSuspending()으로 대체 (exposed.shared.tests)
+// import exposed.shared.tests.withSuspendedTables
+import exposed.shared.tests.withTablesSuspending
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.core.dao.id.KsuidMillisTable
 import io.bluetape4k.exposed.dao.entityToStringBuilder
@@ -112,7 +114,7 @@ class KsuidMillisTableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `코루틴 환경에서 레코드를 배치로 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
-        withSuspendedTables(testDB, T1) {
+        withTablesSuspending(testDB, T1) {
             val records = List(recordCount) {
                 Record(
                     name = faker.name().fullName(),
@@ -151,7 +153,7 @@ class KsuidMillisTableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `코루틴 환경에서 엔티티를 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
-        withSuspendedTables(testDB, T1) {
+        withTablesSuspending(testDB, T1) {
             val tasks = List(recordCount) {
                 suspendedTransactionAsync(Dispatchers.IO) {
                     E1.new {
@@ -179,7 +181,7 @@ class KsuidMillisTableTest: AbstractCustomIdTableTest() {
     fun `insertIgnore as flow`(testDB: TestDB, entityCount: Int) = runSuspendIO {
         Assumptions.assumeTrue { testDB in TestDB.ALL_MYSQL_MARIADB + TestDB.POSTGRESQL }
 
-        withSuspendedTables(testDB, T1) {
+        withTablesSuspending(testDB, T1) {
             val entities: Sequence<Pair<String, Int>> = generateSequence {
                 val name = faker.name().fullName()
                 val age = faker.number().numberBetween(8, 80)

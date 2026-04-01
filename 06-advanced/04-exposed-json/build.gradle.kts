@@ -14,6 +14,7 @@ dependencies {
     testImplementation(Libs.exposed_core)
     testImplementation(Libs.exposed_dao)
     testImplementation(Libs.exposed_jdbc)
+    testImplementation(Libs.exposed_migration_jdbc)
 
     // Exposed Json 지원 라이브러리 (kotlinx.serialization 을 사용합니다)
     testImplementation(Libs.exposed_json)

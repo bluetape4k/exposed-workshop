@@ -633,7 +633,9 @@ class Ex02_Defaults: AbstractExposedTest() {
         }
 
         withTables(testDB, tester) {
-            SchemaUtils.statementsRequiredToActualizeScheme(tester).shouldBeEmpty()
+            // [deprecated] SchemaUtils.statementsRequiredToActualizeScheme → MigrationUtils.statementsRequiredForDatabaseMigration 로 교체
+            // SchemaUtils.statementsRequiredToActualizeScheme(tester).shouldBeEmpty()
+            MigrationUtils.statementsRequiredForDatabaseMigration(tester).shouldBeEmpty()
         }
     }
 

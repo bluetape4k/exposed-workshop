@@ -51,6 +51,7 @@ import org.jetbrains.exposed.v1.dao.load
 import org.jetbrains.exposed.v1.dao.with
 import org.jetbrains.exposed.v1.jdbc.Query
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.migration.jdbc.MigrationUtils
 import org.jetbrains.exposed.v1.jdbc.deleteWhere
 import org.jetbrains.exposed.v1.jdbc.exists
 import org.jetbrains.exposed.v1.jdbc.insert
@@ -91,7 +92,9 @@ class Ex10_CompositeIdTableEntity: AbstractExposedTest() {
                 allTables.forEach { it.exists().shouldBeTrue() }
 
                 if (testDB !in TestDB.ALL_H2) {
-                    SchemaUtils.statementsRequiredToActualizeScheme(tables = allTables).shouldBeEmpty()
+                    // [deprecated] SchemaUtils.statementsRequiredToActualizeScheme → MigrationUtils.statementsRequiredForDatabaseMigration 로 교체
+                    // SchemaUtils.statementsRequiredToActualizeScheme(tables = allTables).shouldBeEmpty()
+                    MigrationUtils.statementsRequiredForDatabaseMigration(tables = allTables).shouldBeEmpty()
                 }
             } finally {
                 SchemaUtils.drop(tables = allTables)

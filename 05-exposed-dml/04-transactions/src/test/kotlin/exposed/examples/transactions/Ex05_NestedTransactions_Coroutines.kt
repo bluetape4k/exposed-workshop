@@ -5,7 +5,9 @@ package exposed.examples.transactions
 import exposed.shared.dml.DMLTestData
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
-import exposed.shared.tests.withSuspendedTables
+// NOTE: withSuspendedTables는 deprecated됨. withTablesSuspending()으로 대체 (exposed.shared.tests)
+// import exposed.shared.tests.withSuspendedTables
+import exposed.shared.tests.withTablesSuspending
 import io.bluetape4k.codec.Base58
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
@@ -142,7 +144,7 @@ class Ex05_NestedTransactions_Coroutines: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `코루틴에서 중첩 트랜잭션 사용하기`(testDB: TestDB) = runSuspendIO {
-        withSuspendedTables(testDB, cities, configure = { useNestedTransactions = true }) {
+        withTablesSuspending(testDB, cities, configure = { useNestedTransactions = true }) {
             // 외부 트랜잭션
             cities.selectAll().shouldBeEmpty()
             cities.insert { it[name] = "city1" }
@@ -173,7 +175,7 @@ class Ex05_NestedTransactions_Coroutines: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `코루틴에서 중첩 트랜잭션 실패 후 외부 트랜잭션으로 복귀한다`(testDB: TestDB) = runSuspendIO {
-        withSuspendedTables(testDB, cities) {
+        withTablesSuspending(testDB, cities) {
             TransactionManager.currentOrNull().shouldNotBeNull()
 
             try {
