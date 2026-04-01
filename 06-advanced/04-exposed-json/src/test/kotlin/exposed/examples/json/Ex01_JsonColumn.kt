@@ -40,6 +40,7 @@ import org.jetbrains.exposed.v1.dao.flushCache
 import org.jetbrains.exposed.v1.exceptions.UnsupportedByDialectException
 import org.jetbrains.exposed.v1.jdbc.Query
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
+import org.jetbrains.exposed.v1.migration.jdbc.MigrationUtils
 import org.jetbrains.exposed.v1.jdbc.exists
 import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
@@ -753,7 +754,9 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
                 defaultTester.exists().shouldBeTrue()
 
                 // ensure defaults match returned metadata defaults
-                val alters = SchemaUtils.statementsRequiredToActualizeScheme(defaultTester)
+                // [deprecated] SchemaUtils.statementsRequiredToActualizeScheme → MigrationUtils.statementsRequiredForDatabaseMigration 로 교체
+                // val alters = SchemaUtils.statementsRequiredToActualizeScheme(defaultTester)
+                val alters = MigrationUtils.statementsRequiredForDatabaseMigration(defaultTester)
                 alters.shouldBeEmpty()
 
                 defaultTester.insert { }

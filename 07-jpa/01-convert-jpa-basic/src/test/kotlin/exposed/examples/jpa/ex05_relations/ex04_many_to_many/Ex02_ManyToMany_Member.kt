@@ -8,7 +8,9 @@ import exposed.examples.jpa.ex05_relations.ex04_many_to_many.MemberSchema.UserSt
 import exposed.examples.jpa.ex05_relations.ex04_many_to_many.MemberSchema.UserTable
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
-import exposed.shared.tests.withSuspendedTables
+// NOTE: withSuspendedTables는 deprecated됨. withTablesSuspending()으로 대체 (exposed.shared.tests)
+// import exposed.shared.tests.withSuspendedTables
+import exposed.shared.tests.withTablesSuspending
 import exposed.shared.tests.withTables
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.KLogging
@@ -72,7 +74,7 @@ class Ex02_ManyToMany_Member: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `coroutine support`(testDB: TestDB) = runSuspendIO {
-        withSuspendedTables(testDB, *MemberSchema.memberTables) {
+        withTablesSuspending(testDB, *MemberSchema.memberTables) {
             val prevCount = User.all().count()
 
             // rollback()을 호출하면 transaction은 롤백된다.

@@ -1,7 +1,9 @@
 package exposed.examples.custom.entities
 
 import exposed.shared.tests.TestDB
-import exposed.shared.tests.withSuspendedTables
+// NOTE: withSuspendedTables는 deprecated됨. withTablesSuspending()으로 대체 (exposed.shared.tests)
+// import exposed.shared.tests.withSuspendedTables
+import exposed.shared.tests.withTablesSuspending
 import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.core.dao.id.TimebasedUUIDBase62Table
 import io.bluetape4k.exposed.dao.entityToStringBuilder
@@ -34,7 +36,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.random.Random
 
-@Suppress("DEPRECATION")
 /**
  * Time-based UUID Base62 식별자를 사용하는 테이블/엔티티 동작을 검증한다.
  */
@@ -113,7 +114,7 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `코루틴 환경에서 레코드를 배치로 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
-        withSuspendedTables(testDB, T1) {
+        withTablesSuspending(testDB, T1) {
             val records = List(recordCount) {
                 Record(
                     name = faker.name().fullName(),
@@ -151,7 +152,7 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     @ParameterizedTest(name = "{0} - {1}개 레코드")
     @MethodSource(GET_TESTDB_AND_ENTITY_COUNT)
     fun `코루틴 환경에서 엔티티를 생성한다`(testDB: TestDB, recordCount: Int) = runSuspendIO {
-        withSuspendedTables(testDB, T1) {
+        withTablesSuspending(testDB, T1) {
             val tasks: List<Deferred<E1>> = List(recordCount) {
                 suspendedTransactionAsync(Dispatchers.IO) {
                     E1.new {
@@ -177,7 +178,7 @@ class TimebasedUUIDBase62TableTest: AbstractCustomIdTableTest() {
     fun `insertIgnore as flow`(testDB: TestDB, entityCount: Int) = runSuspendIO {
         Assumptions.assumeTrue { testDB in TestDB.ALL_MYSQL_MARIADB + TestDB.POSTGRESQL }
 
-        withSuspendedTables(testDB, T1) {
+        withTablesSuspending(testDB, T1) {
             val entities: Sequence<Pair<String, Int>> = generateSequence {
                 val name = faker.name().fullName()
                 val age = faker.number().numberBetween(8, 80)

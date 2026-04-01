@@ -11,6 +11,7 @@ dependencies {
     testImplementation(Libs.exposed_core)
     testImplementation(Libs.exposed_dao)
     testImplementation(Libs.exposed_jdbc)
+    testImplementation(Libs.exposed_migration_jdbc)
 
     testImplementation(Libs.bluetape4k_exposed)
     testImplementation(Libs.bluetape4k_exposed_jackson3)

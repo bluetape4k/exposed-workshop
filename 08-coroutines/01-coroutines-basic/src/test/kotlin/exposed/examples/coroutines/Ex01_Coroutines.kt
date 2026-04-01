@@ -2,7 +2,9 @@ package exposed.examples.coroutines
 
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
-import exposed.shared.tests.withSuspendedTables
+// NOTE: withSuspendedTables는 deprecated됨. withTablesSuspending()으로 대체 (exposed.shared.tests)
+// import exposed.shared.tests.withSuspendedTables
+import exposed.shared.tests.withTablesSuspending
 import io.bluetape4k.collections.intRangeOf
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -101,7 +103,7 @@ class Ex01_Coroutines : AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `존재하지 않는 식별자로 조회하면 null을 반환한다`(testDB: TestDB) =
         runSuspendIO {
-            withSuspendedTables(testDB, Tester) {
+            withTablesSuspending(testDB, Tester) {
                 newSuspendedTransaction {
                     Tester.insert { }
                 }
@@ -132,7 +134,7 @@ class Ex01_Coroutines : AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `suspended transaction으로 시퀀셜 작업 수행하기`(testDB: TestDB) =
         runSuspendIO {
-            withSuspendedTables(testDB, Tester) {
+            withTablesSuspending(testDB, Tester) {
                 // 새로운 트랜잭션을 만들고, 코루틴 환경에서 내부 코드를 실행한다
                 newSuspendedTransaction(context = singleThreadDispatcher) {
                     val id = Tester.insertAndGetId { }
@@ -157,7 +159,7 @@ class Ex01_Coroutines : AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `suspendedTransactionAsync으로 동시 작업 수행하기`(testDB: TestDB) =
         runSuspendIO {
-            withSuspendedTables(testDB, TesterUnique) {
+            withTablesSuspending(testDB, TesterUnique) {
                 val originId = 1
                 val updatedId = 99
 
@@ -224,7 +226,7 @@ class Ex01_Coroutines : AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `suspendedTransactionAsync 를 이용하여 여러 작업을 동시에 수행`(testDB: TestDB) =
         runSuspendIO {
-            withSuspendedTables(testDB, TesterUnique) {
+            withTablesSuspending(testDB, TesterUnique) {
                 val originId = 1
                 val updatedId = 99
 
@@ -283,7 +285,7 @@ class Ex01_Coroutines : AbstractExposedTest() {
                     Tester.insert { }
                 }
 
-            withSuspendedTables(testDB, Tester, context = Dispatchers.IO) {
+            withTablesSuspending(testDB, Tester, context = Dispatchers.IO) {
                 newSuspendedTransaction(db = db) {
                     connection.transactionIsolation = Connection.TRANSACTION_READ_COMMITTED
                     getTesterById(1).shouldBeNull()
@@ -305,7 +307,7 @@ class Ex01_Coroutines : AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `중첩된 suspend transaction async 실행`(testDB: TestDB) =
         runSuspendIO {
-            withSuspendedTables(testDB, Tester, context = Dispatchers.IO) {
+            withTablesSuspending(testDB, Tester, context = Dispatchers.IO) {
                 val recordCount = 10
 
                 newSuspendedTransaction {
@@ -371,7 +373,7 @@ class Ex01_Coroutines : AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `다수의 비동기 작업을 수행 후 대기`(testDB: TestDB) =
         runSuspendIO {
-            withSuspendedTables(testDB, Tester) {
+            withTablesSuspending(testDB, Tester) {
                 val recordCount = 10
 
                 // 복수의 INSERT 작업을 동시에 수행합니다.
@@ -394,7 +396,7 @@ class Ex01_Coroutines : AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `suspended 와 일반 transaction 혼용하기`(testDB: TestDB) =
         runSuspendIO {
-            withSuspendedTables(testDB, Tester) {
+            withTablesSuspending(testDB, Tester) {
                 val db = this.db
                 var suspendedOk = true
                 var normalOk = true
@@ -439,7 +441,7 @@ class Ex01_Coroutines : AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `coroutines with exception within`(testDB: TestDB) =
         runSuspendIO {
-            withSuspendedTables(testDB, Tester) {
+            withTablesSuspending(testDB, Tester) {
                 val database = this.db
                 val outerConn = this.connection
                 val id = TesterEntity.new { }.id

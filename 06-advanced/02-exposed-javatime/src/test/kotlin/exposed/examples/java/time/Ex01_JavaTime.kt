@@ -57,6 +57,7 @@ import org.jetbrains.exposed.v1.javatime.timestampWithTimeZone
 import org.jetbrains.exposed.v1.javatime.year
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import org.jetbrains.exposed.v1.jdbc.insert
+import org.jetbrains.exposed.v1.migration.jdbc.MigrationUtils
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
 import org.jetbrains.exposed.v1.jdbc.select
 import org.jetbrains.exposed.v1.jdbc.selectAll
@@ -945,7 +946,9 @@ class Ex01_JavaTime : AbstractExposedTest() {
                 val date: Column<LocalDate> = date("date").index().defaultExpression(CurrentDate)
             }
         withTables(testDB, tester) {
-            SchemaUtils.statementsRequiredToActualizeScheme(tester).shouldBeEmpty()
+            // [deprecated] SchemaUtils.statementsRequiredToActualizeScheme → MigrationUtils.statementsRequiredForDatabaseMigration 로 교체
+            // SchemaUtils.statementsRequiredToActualizeScheme(tester).shouldBeEmpty()
+            MigrationUtils.statementsRequiredForDatabaseMigration(tester).shouldBeEmpty()
         }
     }
 }
