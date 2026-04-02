@@ -16,10 +16,10 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
-@Repository
 /**
  * 배우 정보를 Exposed DSL 기반으로 조회/저장하는 리포지토리입니다.
  */
+@Repository
 class ActorExposedRepository: JdbcRepository<Long, ActorRecord> {
 
     companion object: KLogging()

@@ -94,15 +94,15 @@ class TinkColumnTypeTest: AbstractExposedTest() {
              * ```
              */
             searchableTable.selectAll()
-                .where { searchableTable.email eq row[searchableTable.email] }
+                .where { searchableTable.email eq insertedEmail }
                 .count() shouldBeEqualTo 1L
 
             searchableTable.selectAll()
-                .where { searchableTable.fingerprint eq row[searchableTable.fingerprint] }
+                .where { searchableTable.fingerprint eq insertedFingerprint.toUtf8Bytes() }
                 .count() shouldBeEqualTo 1L
 
             searchableTable.selectAll()
-                .where { searchableTable.blob eq row[searchableTable.blob] }
+                .where { searchableTable.blob eq insertedBlob.toUtf8Bytes() }
                 .count() shouldBeEqualTo 1L
         }
     }

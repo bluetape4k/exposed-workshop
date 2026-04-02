@@ -30,8 +30,8 @@ import org.junit.jupiter.params.provider.MethodSource
 /**
  * TREE 구조를 가지는 엔티티에 대해 Self Reference Table을 이용하여 구현한다.
  */
-class Ex01_TreeNode : AbstractExposedTest() {
-    companion object : KLogging()
+class Ex01_TreeNode: AbstractExposedTest() {
+    companion object: KLogging()
 
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -113,16 +113,14 @@ class Ex01_TreeNode : AbstractExposedTest() {
 
             val parent = TreeNodeTable.alias("parent")
             val child = TreeNodeTable.alias("child")
-
             val join = parent.innerJoin(child) { parent[TreeNodeTable.id] eq child[TreeNodeTable.parentId] }
 
-            val titles =
-                join
-                    .select(parent[TreeNodeTable.title], child[TreeNodeTable.title])
-                    .where { parent[TreeNodeTable.title] eq "child1" }
-                    .map { row ->
-                        row[parent[TreeNodeTable.title]] to row[child[TreeNodeTable.title]]
-                    }
+            val titles = join
+                .select(parent[TreeNodeTable.title], child[TreeNodeTable.title])
+                .where { parent[TreeNodeTable.title] eq "child1" }
+                .map { row ->
+                    row[parent[TreeNodeTable.title]] to row[child[TreeNodeTable.title]]
+                }
 
             titles shouldHaveSize 2
             titles.forEach {
@@ -158,15 +156,13 @@ class Ex01_TreeNode : AbstractExposedTest() {
 
             val sub = TreeNodeTable.alias("sub")
 
-            val subQuery =
-                sub
-                    .select(sub[TreeNodeTable.parentId])
-                    .where { sub[TreeNodeTable.title] like "grand%" }
+            val subQuery = sub
+                .select(sub[TreeNodeTable.parentId])
+                .where { sub[TreeNodeTable.title] like "grand%" }
 
-            val query =
-                TreeNodeTable
-                    .selectAll()
-                    .where { TreeNodeTable.id inSubQuery subQuery }
+            val query = TreeNodeTable
+                .selectAll()
+                .where { TreeNodeTable.id inSubQuery subQuery }
 
             val nodes = TreeNode.wrapRows(query).toList()
             nodes shouldHaveSize 1

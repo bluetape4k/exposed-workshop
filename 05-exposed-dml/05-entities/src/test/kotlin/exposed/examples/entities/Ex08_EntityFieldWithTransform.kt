@@ -175,7 +175,7 @@ class Ex08_EntityFieldWithTransform: AbstractExposedTest() {
      * )
      * ```
      */
-    object TableWithTransformss: IntIdTable() {
+    object TableWithTransforms: IntIdTable() {
         // `transform` 함수를 사용하여 DB 컬럼과 엔티티 필드의 수형을 맞춘다.
         val value: Column<BigDecimal> = varchar("value", 50)
             .transform(
@@ -184,11 +184,11 @@ class Ex08_EntityFieldWithTransform: AbstractExposedTest() {
             )
     }
 
-    class TableWithTransform(id: EntityID<Int>): IntEntity(id) {
-        companion object: IntEntityClass<TableWithTransform>(TableWithTransformss)
+    class TableWithTransformEntity(id: EntityID<Int>): IntEntity(id) {
+        companion object: IntEntityClass<TableWithTransformEntity>(TableWithTransforms)
 
         // `transform` 함수를 사용하여 DB 컬럼 (string) -> DSL 속성 (BigDecimal) -> 엔티티 필드 (Int) 의 수형을 변환한다
-        var value: Int by TableWithTransformss.value
+        var value: Int by TableWithTransforms.value
             .transform(
                 wrap = { it.toInt() },
                 unwrap = { it.toBigDecimal() },
@@ -207,19 +207,19 @@ class Ex08_EntityFieldWithTransform: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `Dao transfrom with DSL transform`(testDB: TestDB) {
-        withTables(testDB, TableWithTransformss) {
+        withTables(testDB, TableWithTransforms) {
 
             // INSERT INTO tablewithtransformss ("value") VALUES (10)
-            TableWithTransform.new {
+            TableWithTransformEntity.new {
                 value = 10
             }
 
             // Correct DAO value (DAO 에서는 Int 이다)
-            TableWithTransform.all().first().value shouldBeEqualTo 10
+            TableWithTransformEntity.all().first().value shouldBeEqualTo 10
 
             // Correct DSL value (DSL 에서는 BigDecimal 이다)
-            TableWithTransformss.selectAll()
-                .first()[TableWithTransformss.value] shouldBeEqualTo 10.toBigDecimal()
+            TableWithTransforms.selectAll()
+                .first()[TableWithTransforms.value] shouldBeEqualTo 10.toBigDecimal()
         }
     }
 

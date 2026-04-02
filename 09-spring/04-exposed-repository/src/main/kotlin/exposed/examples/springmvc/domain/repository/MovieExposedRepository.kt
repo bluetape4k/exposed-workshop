@@ -28,10 +28,10 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
-@Repository
 /**
  * 영화 도메인 조회/저장을 Exposed DSL/DAO 조합으로 처리하는 리포지토리입니다.
  */
+@Repository
 class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
 
     companion object: KLogging()

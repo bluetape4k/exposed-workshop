@@ -37,8 +37,8 @@ class CountryRepository(private val cacheManager: CacheManager) {
         // @Transactional 을 사용하지 않고, transaction {} 블록을 사용하여 DB에 접근합니다.
         // 캐시에 이미 값이 있다면, Transaction을 사용하지 않고 캐시에서 값을 반환하도록 합니다.
         return transaction {
-            val row =
-                CountryTable.selectAll().where { CountryTable.code eq code }.singleOrNull() ?: return@transaction null
+            val row = CountryTable.selectAll().where { CountryTable.code eq code }.singleOrNull()
+                ?: return@transaction null
 
             CountryRecord(
                 code = row[CountryTable.code],

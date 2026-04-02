@@ -58,11 +58,7 @@ class BinarySerializedBinaryColumnTypeTest: AbstractExposedTest() {
     private object T1: IntIdTable() {
         val name = varchar("name", 50)
 
-        val lz4Fory = binarySerializedBinary<Embeddable>(
-            "lz4_fory",
-            4096,
-            BinarySerializers.LZ4Fory
-        ).nullable()
+        val lz4Fory = binarySerializedBinary<Embeddable>("lz4_fory", 4096, BinarySerializers.LZ4Fory).nullable()
 
         val lz4Kryo = binarySerializedBinary<Embeddable>(
             "lz4_kryo",

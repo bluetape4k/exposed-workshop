@@ -19,7 +19,6 @@ import org.jetbrains.exposed.v1.core.lowerCase
 import org.jetbrains.exposed.v1.core.stringLiteral
 import org.jetbrains.exposed.v1.core.times
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
-import org.jetbrains.exposed.v1.migration.jdbc.MigrationUtils
 import org.jetbrains.exposed.v1.jdbc.exists
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.params.ParameterizedTest

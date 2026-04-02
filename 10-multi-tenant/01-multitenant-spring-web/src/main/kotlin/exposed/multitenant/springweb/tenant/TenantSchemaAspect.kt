@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
+import org.springframework.jdbc.datasource.DataSourceUtils
 import org.springframework.stereotype.Component
 import javax.sql.DataSource
 
@@ -13,7 +14,7 @@ import javax.sql.DataSource
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
 class TenantSchemaAspect(private val dataSource: DataSource) {
-    companion object : KLogging()
+    companion object: KLogging()
 
     /**
      * `@Transactional` 이 적용된 클래스나 메소드에 대해 Multitenncy 를 지원하기 위한 Schema 설정을 수행합니다.
@@ -24,7 +25,7 @@ class TenantSchemaAspect(private val dataSource: DataSource) {
      */
     @Before(
         "@within(org.springframework.transaction.annotation.Transactional) || " +
-            "@annotation(org.springframework.transaction.annotation.Transactional)"
+                "@annotation(org.springframework.transaction.annotation.Transactional)"
     )
     fun setSchemaForTransaction() {
         val tenant = TenantContext.getCurrentTenant()
@@ -32,11 +33,11 @@ class TenantSchemaAspect(private val dataSource: DataSource) {
         log.debug { "Use schema=$schemaName" }
         // Spring이 관리하는 트랜잭션 커넥션에 스키마를 직접 설정합니다.
         // DataSourceUtils.getConnection()은 현재 트랜잭션에 바인딩된 커넥션을 반환합니다.
-        val conn = org.springframework.jdbc.datasource.DataSourceUtils.getConnection(dataSource)
+        val conn = DataSourceUtils.getConnection(dataSource)
         try {
             conn.schema = schemaName
         } finally {
-            org.springframework.jdbc.datasource.DataSourceUtils.releaseConnection(conn, dataSource)
+            DataSourceUtils.releaseConnection(conn, dataSource)
         }
     }
 }
