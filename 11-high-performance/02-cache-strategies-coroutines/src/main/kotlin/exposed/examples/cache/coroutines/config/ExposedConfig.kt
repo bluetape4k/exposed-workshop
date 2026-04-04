@@ -25,7 +25,7 @@ class ExposedConfig {
     @Bean
     fun databaseConfig(): DatabaseConfig {
         return DatabaseConfig {
-            maxEntitiesToStoreInCachePerEntity = 1000
+            maxEntitiesToStoreInCachePerEntity = 100_000
             useNestedTransactions = true
             defaultIsolationLevel = Connection.TRANSACTION_READ_COMMITTED
         }
@@ -37,7 +37,6 @@ class ExposedConfig {
     @Bean
     fun database(dataSource: DataSource, databaseConfig: DatabaseConfig): Database {
         log.info { "Database connection: $dataSource" }
-
         return Database.connect(dataSource, databaseConfig = databaseConfig)
     }
 }

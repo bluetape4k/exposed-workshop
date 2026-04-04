@@ -36,7 +36,7 @@ class RedissonConfig {
             try {
                 client = RedisServer.Launcher.RedissonLib.getRedisson(
                     address = server.url,
-                    threads = 64,
+                    threads = 128,
                     nettyThreads = 256
                 )
                 client.getAtomicLong("__test__")

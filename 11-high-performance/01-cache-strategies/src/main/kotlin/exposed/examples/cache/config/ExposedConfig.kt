@@ -1,6 +1,6 @@
 package exposed.examples.cache.config
 
-import io.bluetape4k.logging.coroutines.KLoggingChannel
+import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.jdbc.Database
@@ -16,12 +16,12 @@ import javax.sql.DataSource
 @Configuration(proxyBeanMethods = false)
 @EnableTransactionManagement
 class ExposedConfig {
-    companion object : KLoggingChannel()
+    companion object: KLogging()
 
     @Bean
     fun databaseConfig(): DatabaseConfig =
         DatabaseConfig {
-            maxEntitiesToStoreInCachePerEntity = 1000
+            maxEntitiesToStoreInCachePerEntity = 100_000
             useNestedTransactions = true
             defaultIsolationLevel = Connection.TRANSACTION_READ_COMMITTED
         }
@@ -32,7 +32,6 @@ class ExposedConfig {
         databaseConfig: DatabaseConfig,
     ): Database {
         log.info { "Database connection: $dataSource" }
-
         return Database.connect(dataSource, databaseConfig = databaseConfig)
     }
 }

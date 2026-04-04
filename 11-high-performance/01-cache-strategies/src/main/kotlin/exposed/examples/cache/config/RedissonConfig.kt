@@ -1,6 +1,6 @@
 package exposed.examples.cache.config
 
-import io.bluetape4k.logging.coroutines.KLoggingChannel
+import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.warn
 import io.bluetape4k.testcontainers.storage.RedisServer
 import org.redisson.api.RedissonClient
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration
  */
 @Configuration(proxyBeanMethods = false)
 class RedissonConfig {
-    companion object: KLoggingChannel() {
+    companion object: KLogging() {
         @JvmStatic
         val redis by lazy { RedisServer.Launcher.redis }
     }
@@ -36,7 +36,7 @@ class RedissonConfig {
             try {
                 client = RedisServer.Launcher.RedissonLib.getRedisson(
                     address = server.url,
-                    threads = 64,
+                    threads = 128,
                     nettyThreads = 256
                 )
                 client.getAtomicLong("__test__")

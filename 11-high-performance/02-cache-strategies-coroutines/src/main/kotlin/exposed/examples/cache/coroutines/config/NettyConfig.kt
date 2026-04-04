@@ -38,6 +38,7 @@ class NettyConfig {
             return httpServer
                 .option(ChannelOption.SO_KEEPALIVE, true)
                 .option(ChannelOption.SO_BACKLOG, 8_000)
+                .option(ChannelOption.SO_LINGER, 0)
                 .doOnConnection { conn ->
                     conn.addHandlerLast(ReadTimeoutHandler(10))
                     conn.addHandlerLast(WriteTimeoutHandler(10))
@@ -53,13 +54,12 @@ class NettyConfig {
         return ReactorResourceFactory().apply {
             isUseGlobalResources = false
             connectionProvider = ConnectionProvider.builder("http")
-                .maxConnections(8_000)
-                .maxIdleTime(30.seconds.toJavaDuration())
+                .maxConnections(12_000)
+                .maxIdleTime(60.seconds.toJavaDuration())
                 .build()
 
             loopResources = LoopResources.create(
                 "event-loop",
-                4,
                 maxOf(Runtimex.availableProcessors * 8, 64),
                 true
             )
