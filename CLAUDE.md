@@ -1,83 +1,111 @@
 # CLAUDE.md
 
-Kotlin Exposed 워크샵 — Kotlin 2.3 / Java 21 / Spring Boot 3.x / Gradle 멀티모듈.
+Kotlin Exposed workshop — Kotlin 2.3 / Java 21 / Spring Boot 3.x / Gradle multi-module project.
 
-## 빌드 & 테스트
+## Build & Test
 
 ```bash
-./gradlew clean build                                        # 전체 빌드
-./gradlew :05-exposed-dml:01-dml:test                        # 특정 모듈 테스트
-./gradlew detekt                                             # 정적 분석
-./bin/repo-status                                           # git status 요약
-./bin/repo-diff                                             # diff 파일별 요약
-./bin/repo-test-summary -- ./gradlew :MODULE:test           # 테스트 로그 요약
+./gradlew clean build
+./gradlew :05-exposed-dml:01-dml:test
+./gradlew detekt
+./bin/repo-status
+./bin/repo-diff
+./bin/repo-test-summary -- ./gradlew :MODULE:test
 ```
 
-모듈 경로: `:<submodule-dir-name>:test` (예: `:04-exposed-repository:test`, `:01-multitenant-spring-web:test`)
+Module paths use the last directory name as the Gradle project path.
+Examples:
+- `:04-exposed-repository:test`
+- `:01-multitenant-spring-web:test`
 
-> `settings.gradle.kts`가 마지막 디렉터리 이름을 project path로 사용하므로 상위 섹션 경로 없이 바로 모듈명만 사용합니다.
+`settings.gradle.kts` maps each leaf module directory to the project path, so use the leaf module name directly rather than the full section path.
 
-**Token 절약 흐름**: `repo-status` → `repo-diff` → 필요한 파일만 상세 확인 → `repo-test-summary`
+Recommended low-token workflow:
+`repo-status` → `repo-diff` → inspect only relevant files → `repo-test-summary`
 
-## 모듈 구조
+## Module Structure
 
-| 모듈                               | 내용                                |
-|----------------------------------|-----------------------------------|
-| `00-shared/exposed-shared-tests` | 공통 테스트 유틸 (모든 모듈 의존)              |
-| `01-spring-boot`                 | Spring MVC + WebFlux              |
-| `02-alternatives-to-jpa`         | R2DBC, Vert.x, Hibernate Reactive |
-| `03-exposed-basic`               | DSL / DAO 패턴 기초                   |
-| `04-exposed-ddl`                 | 연결 설정, 스키마 정의                     |
-| `05-exposed-dml`                 | SELECT/INSERT/UPDATE/DELETE, 트랜잭션 |
-| `06-advanced`                    | JSON, 암호화, 커스텀 타입, 금융             |
-| `07-jpa`                         | JPA → Exposed 마이그레이션              |
-| `08-coroutines`                  | Coroutines, Virtual Threads       |
-| `09-spring`                      | Spring 트랜잭션, 캐시, Repository       |
-| `10-multi-tenant`                | Schema-based 멀티테넌시                |
-| `11-high-performance`            | 캐시 전략, RoutingDataSource, 벤치마크    |
+| Module | Description |
+|---|---|
+| `00-shared/exposed-shared-tests` | Shared test utilities used by all modules |
+| `01-spring-boot` | Spring MVC + WebFlux examples |
+| `02-alternatives-to-jpa` | R2DBC, Vert.x, Hibernate Reactive |
+| `03-exposed-basic` | Basic DSL / DAO patterns |
+| `04-exposed-ddl` | Connection setup and schema definition |
+| `05-exposed-dml` | SELECT / INSERT / UPDATE / DELETE, transactions |
+| `06-advanced` | JSON, encryption, custom types, money |
+| `07-jpa` | JPA to Exposed migration |
+| `08-coroutines` | Coroutines, virtual threads |
+| `09-spring` | Spring transactions, cache, repository |
+| `10-multi-tenant` | Schema-based multi-tenancy |
+| `11-high-performance` | Cache strategies, routing datasource, benchmarks |
 
-## 아키텍처 핵심
+## Architecture Highlights
 
-**의존성**: BOM(`bluetape4k_bom`, `exposed_bom`, `kotlinx_coroutines_bom`, `spring_boot_dependencies`), 버전 →
-`buildSrc/src/main/kotlin/Libs.kt`, 테스트 병렬 실행 금지(`maxParallelUsages = 1`)
+### Dependency Management
+- BOMs: `bluetape4k_bom`, `exposed_bom`, `kotlinx_coroutines_bom`, `spring_boot_dependencies`
+- Version catalog source: `buildSrc/src/main/kotlin/Libs.kt`
+- Parallel test execution is disabled with `maxParallelUsages = 1`
 
-**Exposed 패턴**:
+### Exposed Patterns
+- DSL: `object Table` with `transaction { }`
+- DAO: `Entity` / `EntityClass`
+- Coroutines: `newSuspendedTransaction { }`, `suspendedTransactionAsync { }`
+- Imports: `org.jetbrains.exposed.v1.*`
 
-- DSL: `object Table` + `transaction { }` 블록
-- DAO: `Entity` / `EntityClass` 상속
-- 코루틴: `newSuspendedTransaction { }`, `suspendedTransactionAsync { }`
-- import: `org.jetbrains.exposed.v1.*`
+### Test Infrastructure
+`00-shared/exposed-shared-tests` provides the common DB testing setup.
 
-**테스트 인프라** (`00-shared/exposed-shared-tests`):
+- `TestDB` enum: H2, PostgreSQL, MySQL V8, MariaDB
+- Default DB matrix is enabled; `USE_FAST_DB=true` reduces it to H2 only
+- `AbstractExposedTest` + `enableDialects()` choose target databases
+- `WithTables` / `WithTablesSuspending` manage table lifecycle
+- For Exposed-related DB tests, prefer `withTables` from `bluetape4k-exposed-jdbc-tests` or `bluetape4k-exposed-r2dbc-tests`
+- For benchmarks, use real database connections with `HikariCP` or `r2dbc-pool` instead of test helpers
 
-- `TestDB` enum: H2, PostgreSQL, MySQL V8, MariaDB (기본 활성, `USE_FAST_DB=true` → H2만)
-- `AbstractExposedTest` + `enableDialects()` 로 대상 DB 지정
-- `WithTables` / `WithTablesSuspending`: 테이블 생명주기 관리
+## Coding Rules
 
-## 코딩 규칙
+- Kotlin only; do not introduce Java
+- Prefer extension functions when they improve clarity
+- Use 4 spaces for indentation
+- Package names: lowercase dot-separated
+- Types: `PascalCase`
+- Functions / variables: `camelCase`
+- Constants: `UPPER_SNAKE_CASE`
+- Public APIs should use Korean KDoc
+- Logging should use a `KLogging` companion object
 
-- Kotlin only (Java 금지), extension 함수 적극 활용
-- 들여쓰기 4 spaces, 패키지 소문자 dot-separated
-- 타입 PascalCase / 함수·변수 camelCase / 상수 UPPER_SNAKE_CASE
-- 공개 API → 한국어 KDoc, 로깅 → `KLogging` companion object
+## Commit Style
 
-## 커밋
+Use Korean commit messages with Conventional Commit prefixes:
+- `feat:`
+- `fix:`
+- `refactor:`
+- `build:`
+- `docs:`
+- `chore:`
+- `test:`
+- `perf:`
 
-한국어 메시지 + Conventional Commit: `feat:` `fix:` `refactor:` `build:` `docs:` `chore:` `test:` `perf:`
+## Key Libraries
 
-## 주요 라이브러리
+| Library | Purpose |
+|---|---|
+| `exposed-core/jdbc/dao/java-time` | Exposed core |
+| `bluetape4k-exposed` | Exposed extension utilities |
+| `bluetape4k-junit5`, `bluetape4k-testcontainers` | Test support |
+| `kluent` | Kotlin assertions |
+| `mockk` | Kotlin mocking |
+| `datafaker`, `random-beans` | Test data generation |
+| `kotlinx-atomicfu` | Atomic operations / compiler plugin |
 
-| 라이브러리                                            | 용도                 |
-|--------------------------------------------------|--------------------|
-| `exposed-core/jdbc/dao/java-time`                | Exposed 핵심         |
-| `bluetape4k-exposed`                             | Exposed 확장 유틸      |
-| `bluetape4k-junit5`, `bluetape4k-testcontainers` | 테스트 지원             |
-| `kluent`                                         | Kotlin assertion   |
-| `mockk`                                          | Kotlin mock        |
-| `datafaker`, `random-beans`                      | 테스트 데이터            |
-| `kotlinx-atomicfu`                               | 원자적 연산 (컴파일러 플러그인) |
+## Compiler Options
 
-## 컴파일러 옵션
+Global opt-ins:
+- `ExperimentalCoroutinesApi`
+- `FlowPreview`
+- `DelicateCoroutinesApi`
 
-전역 opt-in: `ExperimentalCoroutinesApi`, `FlowPreview`, `DelicateCoroutinesApi`
-`-Xcontext-parameters` (Context 파라미터), `--enable-preview` (Java preview)
+Additional compiler options:
+- `-Xcontext-parameters`
+- `--enable-preview`
