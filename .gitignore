@@ -35,6 +35,7 @@ build/
 .air/
 
 .claude/settings.local.json
+.claude/*.lock
 .cluade/worktrees/
 
 .omc/sessions/
