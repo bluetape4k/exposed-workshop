@@ -22,13 +22,14 @@ class UserEventController(
     @PostMapping
     fun insert(@RequestBody userEvent: UserEventRecord): Boolean {
         log.debug { "Inserting user event: $userEvent" }
-        return repository.put(userEvent)
+        repository.put(userEvent.id, userEvent)
+        return true
     }
 
     @PostMapping("/bulk")
     fun insertBulk(@RequestBody userEvents: List<UserEventRecord>): Boolean {
         log.debug { "Inserting bulk user events. size=${userEvents.size}" }
-        repository.putAll(userEvents)
+        repository.putAll(userEvents.associateBy { it.id })
         return true
     }
 }

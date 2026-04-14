@@ -18,14 +18,15 @@ import org.springframework.web.bind.annotation.RestController
 class UserEventController(
     private val repository: UserEventCacheRepository,
 ) {
-    companion object : KLoggingChannel()
+    companion object: KLoggingChannel()
 
     @PostMapping
     suspend fun insert(
         @RequestBody userEvent: UserEventRecord,
     ): Boolean {
         log.debug { "Inserting user event: $userEvent" }
-        return repository.put(userEvent)
+        repository.put(userEvent.id, userEvent)
+        return true
     }
 
     @PostMapping("/bulk")
@@ -33,7 +34,7 @@ class UserEventController(
         @RequestBody userEvents: List<UserEventRecord>,
     ): Boolean {
         log.debug { "Inserting user events. size=${userEvents.size}" }
-        repository.putAll(userEvents)
+        repository.putAll(userEvents.associateBy { it.id })
         return true
     }
 }

@@ -21,8 +21,7 @@ class UserEventCacheRepository(
     redissonClient: RedissonClient,
 ): AbstractJdbcRedissonRepository<Long, UserEventRecord>(
     redissonClient = redissonClient,
-    cacheName = "exposed:user-events",
-    config = RedissonCacheConfig.WRITE_BEHIND_WITH_NEAR_CACHE,
+    config = RedissonCacheConfig.WRITE_BEHIND_WITH_NEAR_CACHE.copy(name = "exposed:user-events"),
 ) {
 
     companion object: KLoggingChannel()
@@ -31,33 +30,28 @@ class UserEventCacheRepository(
     override fun ResultRow.toEntity(): UserEventRecord = toUserEventRecord()
     override fun extractId(entity: UserEventRecord): Long = entity.id
 
-    override fun doInsertEntity(
-        statement: BatchInsertStatement,
-        entity: UserEventRecord,
-    ) {
+    override fun BatchInsertStatement.insertEntity(entity: UserEventRecord) {
         log.debug { "Insert entity: $entity" }
 
         if (entity.id != 0L) {
-            statement[UserEventTable.id] = entity.id
+            this[UserEventTable.id] = entity.id
         }
 
-        statement[UserEventTable.username] = entity.username
-        statement[UserEventTable.eventSource] = entity.eventSource
-        statement[UserEventTable.eventType] = entity.eventType
-        statement[UserEventTable.eventDetails] = entity.eventDetails
-        statement[UserEventTable.eventTime] = entity.eventTime
+        this[UserEventTable.username] = entity.username
+        this[UserEventTable.eventSource] = entity.eventSource
+        this[UserEventTable.eventType] = entity.eventType
+        this[UserEventTable.eventDetails] = entity.eventDetails
+        this[UserEventTable.eventTime] = entity.eventTime
     }
 
-    override fun doUpdateEntity(
-        statement: UpdateStatement,
-        entity: UserEventRecord,
-    ) {
+    override fun UpdateStatement.updateEntity(entity: UserEventRecord) {
         log.debug { "Update entity: $entity" }
 
-        statement[UserEventTable.username] = entity.username
-        statement[UserEventTable.eventSource] = entity.eventSource
-        statement[UserEventTable.eventType] = entity.eventType
-        statement[UserEventTable.eventDetails] = entity.eventDetails
-        statement[UserEventTable.eventTime] = entity.eventTime
+        this[UserEventTable.username] = entity.username
+        this[UserEventTable.eventSource] = entity.eventSource
+        this[UserEventTable.eventType] = entity.eventType
+        this[UserEventTable.eventDetails] = entity.eventDetails
+        this[UserEventTable.eventTime] = entity.eventTime
+
     }
 }

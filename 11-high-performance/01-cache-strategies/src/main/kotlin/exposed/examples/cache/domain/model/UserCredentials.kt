@@ -2,7 +2,6 @@ package exposed.examples.cache.domain.model
 
 import exposed.examples.cache.utils.faker
 import io.bluetape4k.codec.Base58
-import io.bluetape4k.exposed.core.HasIdentifier
 import io.bluetape4k.exposed.core.dao.id.TimebasedUUIDBase62Table
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62Entity
@@ -14,6 +13,7 @@ import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.javatime.CurrentTimestamp
 import org.jetbrains.exposed.v1.javatime.timestamp
+import java.io.Serializable
 import java.time.Instant
 
 /**
@@ -57,13 +57,13 @@ class UserCredentialsEntity(id: EntityID<String>): TimebasedUUIDBase62Entity(id)
  * 사용자 인증 정보의 캐시/DB 전달용 레코드입니다.
  */
 data class UserCredentialsRecord(
-    override val id: String,
+    val id: String,
     val username: String,
     val email: String,
     val lastLoginAt: Instant? = null,
     val createdAt: Instant? = null,
     val updatedAt: Instant? = null,
-): HasIdentifier<String> {
+): Serializable {
     fun withId(id: String) = copy(id = id)
 }
 

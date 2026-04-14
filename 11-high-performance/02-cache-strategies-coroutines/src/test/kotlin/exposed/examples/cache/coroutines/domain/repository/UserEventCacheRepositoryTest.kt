@@ -32,7 +32,7 @@ class UserEventCacheRepositoryTest(
     @BeforeEach
     fun setup() {
         runBlocking {
-            repository.invalidateAll()
+            repository.clear()
 
             newSuspendedTransaction {
                 UserEventTable.deleteAll()
@@ -44,7 +44,7 @@ class UserEventCacheRepositoryTest(
     fun `write behind 로 단일 이벤트를 추가한다`() = runSuspendIO {
         newSuspendedTransaction {
             val event = newUserEventRecord()
-            repository.put(event)
+            repository.put(event.id, event)
 
             await
                 .atMost(Duration.ofSeconds(10))
@@ -72,7 +72,7 @@ class UserEventCacheRepositoryTest(
                 .chunked(100)
                 .collect { chunk ->
                     log.debug { "put all ${chunk.size} items" }
-                    repository.putAll(chunk)
+                    repository.putAll(chunk.associateBy { it.id })
                 }
 
             // Write-Behind 이므로, DB에 반영되기까지 시간이 걸린다.

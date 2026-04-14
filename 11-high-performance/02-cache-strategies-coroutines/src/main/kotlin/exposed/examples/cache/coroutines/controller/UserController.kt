@@ -39,7 +39,7 @@ class UserController(private val repository: UserCacheRepository) {
     @GetMapping("/all")
     suspend fun getAll(@RequestParam(name = "ids") ids: List<Long>): List<UserRecord> {
         log.debug { "Getting all users with ids: $ids" }
-        return repository.getAll(ids)
+        return repository.getAll(ids).map { it.value }
     }
 
     @DeleteMapping("/invalidate")
@@ -48,12 +48,13 @@ class UserController(private val repository: UserCacheRepository) {
             return 0
         }
         log.debug { "Invalidating cache for ids: $ids" }
-        return repository.invalidate(*ids.toTypedArray())
+        repository.invalidateAll(ids)
+        return ids.size.toLong()
     }
 
     @DeleteMapping("/invalidate/all")
     suspend fun invalidateAll() {
-        repository.invalidateAll()
+        repository.clear()
     }
 
     @DeleteMapping("/invalidate/pattern")
@@ -64,7 +65,7 @@ class UserController(private val repository: UserCacheRepository) {
     @PostMapping
     suspend fun put(@RequestBody userRecord: UserRecord): UserRecord {
         log.debug { "Updating user with id: ${userRecord.id}" }
-        repository.put(userRecord)
+        repository.put(userRecord.id, userRecord)
         return userRecord
     }
 }

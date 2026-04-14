@@ -31,7 +31,7 @@ class UserCredentialsCacheRepositoryTest(
 
     @BeforeEach
     fun setup() {
-        repository.invalidateAll()
+        repository.clear()
         userCredentialsIdsInDB.clear()
 
         transaction {
@@ -85,7 +85,7 @@ class UserCredentialsCacheRepositoryTest(
     @Test
     fun `Read Through 로 모든 ID 가져오기`() {
         transaction {
-            val userCredentialsFromCache = repository.getAll(userCredentialsIdsInDB)
+            val userCredentialsFromCache = repository.getAll(userCredentialsIdsInDB).map { it.value }
             userCredentialsFromCache shouldHaveSize userCredentialsIdsInDB.size
             userCredentialsFromCache.map { it.id } shouldContainSame userCredentialsIdsInDB
         }

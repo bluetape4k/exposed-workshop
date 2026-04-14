@@ -41,7 +41,7 @@ class UserCredentialsController(private val repository: UserCredentialsCacheRepo
     fun getAll(@RequestParam(name = "ids") ids: List<String>): List<UserCredentialsRecord> {
         log.debug { "Getting all user credentials with ids: $ids" }
         return transaction {
-            repository.getAll(ids)
+            repository.getAll(ids).map { it.value }
         }
     }
 
@@ -51,12 +51,13 @@ class UserCredentialsController(private val repository: UserCredentialsCacheRepo
             return 0
         }
         log.debug { "Invalidating cache for ids: $ids" }
-        return repository.invalidate(*ids.toTypedArray())
+        repository.invalidateAll(ids)
+        return ids.size.toLong()
     }
 
     @DeleteMapping("/invalidate/all")
     fun invalidateAll() {
-        repository.invalidateAll()
+        repository.clear()
     }
 
     @DeleteMapping("/invalidate/pattern")

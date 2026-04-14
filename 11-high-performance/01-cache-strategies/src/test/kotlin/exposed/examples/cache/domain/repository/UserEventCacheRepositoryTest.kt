@@ -25,7 +25,7 @@ class UserEventCacheRepositoryTest(
 
     @BeforeEach
     fun setup() {
-        repository.invalidateAll()
+        repository.clear()
 
         transaction {
             UserEventTable.deleteAll()
@@ -37,7 +37,7 @@ class UserEventCacheRepositoryTest(
     fun `write behind 로 단일 이벤트를 추가한다`() {
         transaction {
             val event = newUserEventRecord()
-            repository.put(event)
+            repository.put(event.id, event)
 
             await
                 .atMost(Duration.ofSeconds(10))
@@ -59,7 +59,7 @@ class UserEventCacheRepositoryTest(
             generateSequence { newUserEventRecord() }
                 .take(totalCount)
                 .chunked(100) { chunk ->
-                    repository.putAll(chunk)
+                    repository.putAll(chunk.associateBy { it.id })
                 }
                 .toList()
 

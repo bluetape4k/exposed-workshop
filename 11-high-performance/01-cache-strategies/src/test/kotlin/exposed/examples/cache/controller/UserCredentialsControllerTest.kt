@@ -38,7 +38,7 @@ class UserCredentialsControllerTest(
 
     @BeforeEach
     fun beforeEach() {
-        repository.invalidateAll()
+        repository.clear()
         idsInDB.clear()
 
         transaction {

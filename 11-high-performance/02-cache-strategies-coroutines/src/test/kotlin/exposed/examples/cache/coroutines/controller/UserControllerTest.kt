@@ -47,7 +47,7 @@ class UserControllerTest(
     @BeforeEach
     fun beforeEach() {
         runBlocking(Dispatchers.IO) {
-            repository.invalidateAll()
+            repository.clear()
             idsInDB.clear()
 
             newSuspendedTransaction {

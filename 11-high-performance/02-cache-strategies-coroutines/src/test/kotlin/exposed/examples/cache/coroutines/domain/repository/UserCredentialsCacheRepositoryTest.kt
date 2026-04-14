@@ -36,7 +36,7 @@ class UserCredentialsCacheRepositoryTest(
     @BeforeEach
     fun setup() {
         runBlocking {
-            repository.invalidateAll()
+            repository.clear()
             idsInDB.clear()
 
             newSuspendedTransaction {
@@ -85,7 +85,7 @@ class UserCredentialsCacheRepositoryTest(
     @Test
     fun `Read Through 로 모든 ID 가져오기`() = runSuspendIO {
         newSuspendedTransaction(readOnly = true) {
-            val userCredentialsFromCache = repository.getAll(idsInDB)
+            val userCredentialsFromCache = repository.getAll(idsInDB).map { it.value }
             userCredentialsFromCache shouldHaveSize idsInDB.size
         }
     }

@@ -1,7 +1,6 @@
 package exposed.examples.cache.domain.model
 
 import exposed.examples.cache.utils.faker
-import io.bluetape4k.exposed.core.HasIdentifier
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
@@ -12,6 +11,7 @@ import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
 import org.jetbrains.exposed.v1.dao.LongEntity
 import org.jetbrains.exposed.v1.dao.LongEntityClass
 import org.jetbrains.exposed.v1.javatime.timestamp
+import java.io.Serializable
 import java.time.Instant
 
 /**
@@ -76,13 +76,13 @@ class UserEventEntity(id: EntityID<Long>): LongEntity(id) {
  * 사용자 이벤트의 캐시/DB 전달용 레코드입니다.
  */
 data class UserEventRecord(
-    override val id: Long = Snowflakers.Global.nextId(),
+    val id: Long = Snowflakers.Global.nextId(),
     val username: String,
     val eventSource: String,
     val eventType: UserEventType,
     val eventDetails: String?,
     val eventTime: Instant,
-): HasIdentifier<Long> {
+): Serializable {
     fun withId(id: Long) = copy(id = id)
 }
 

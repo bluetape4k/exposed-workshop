@@ -42,7 +42,7 @@ class UserControllerTest(
 
     @BeforeEach
     fun beforeEach() {
-        repository.invalidateAll()
+        repository.clear()
         userIdsInDB.clear()
 
         transaction {

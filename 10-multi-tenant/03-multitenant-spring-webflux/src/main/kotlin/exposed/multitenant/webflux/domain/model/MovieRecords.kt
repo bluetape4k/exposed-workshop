@@ -1,17 +1,16 @@
 package exposed.multitenant.webflux.domain.model
 
-import io.bluetape4k.exposed.core.HasIdentifier
 import java.io.Serializable
 
 /**
  * 영화 정보를 나타내는 Record
  */
 data class MovieRecord(
-    override val id: Long = 0L,
+    val id: Long = 0L,
     val name: String,
     val producerName: String,
     val releaseDate: String,
-): HasIdentifier<Long> {
+): Serializable {
     fun withId(id: Long) = copy(id = id)
 }
 
@@ -19,11 +18,11 @@ data class MovieRecord(
  * 영화 배우 정보를 담는 Record
  */
 data class ActorRecord(
-    override val id: Long = 0L,
+    val id: Long = 0L,
     val firstName: String,
     val lastName: String,
     val birthday: String? = null,
-): HasIdentifier<Long> {
+): Serializable {
     fun withId(id: Long) = copy(id = id)
 }
 
@@ -49,12 +48,12 @@ data class MovieActorCountRecord(
  * 영화 정보와 해당 영화에 출연한 배우 정보를 나타내는 Record
  */
 data class MovieWithActorRecord(
-    override val id: Long = 0L,
+    val id: Long = 0L,
     val name: String,
     val producerName: String,
     val releaseDate: String,
     val actors: List<ActorRecord> = emptyList(),
-): HasIdentifier<Long>
+): Serializable
 
 
 /**

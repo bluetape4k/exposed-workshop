@@ -34,7 +34,7 @@ class UserCacheRepositoryTest(
 
     @BeforeEach
     fun beforeEach() {
-        repository.invalidateAll()
+        repository.clear()
         idsInDB.clear()
 
         transaction {
@@ -86,7 +86,7 @@ class UserCacheRepositoryTest(
         val userIdToSearch = idsInDB.shuffled().take(5)
         transaction {
             // DB에 있는 User를 검색
-            val users = repository.getAll(userIdToSearch)
+            val users = repository.getAll(userIdToSearch).map { it.value }
             log.debug { "Loaded users from DB: ${users.size}" }
             users.forEach {
                 log.debug { "Found user: $it" }
@@ -94,7 +94,7 @@ class UserCacheRepositoryTest(
             users shouldHaveSize userIdToSearch.size
 
             // 캐시에서 검색
-            val users2 = repository.getAll(userIdToSearch)
+            val users2 = repository.getAll(userIdToSearch).map { it.value }
             log.debug { "Loaded users from cache: ${users2.size}" }
             users2 shouldHaveSize userIdToSearch.size
         }
@@ -146,7 +146,7 @@ class UserCacheRepositoryTest(
                 it.avatar = faker.image().base64JPG().toByteArray()
             }
             //  Writr through 로 DB에 저장
-            repository.put(updatedUser)
+            repository.put(updatedUser.id, updatedUser)
 
             // Write through로 DB에 저장되었는지, Cache가 아닌 DB에서 직접 읽어온다.
             val userFromDB = repository.findByIdFromDb(userId)
@@ -180,7 +180,7 @@ class UserCacheRepositoryTest(
             idsToInvalidate.forEach { repository.get(it).shouldNotBeNull() }
 
             // 복수 ID 무효화 - deleteFromDBOnInvalidate=true이므로 DB에서도 삭제
-            repository.invalidate(*idsToInvalidate.toTypedArray())
+            repository.invalidateAll(idsToInvalidate)
 
             // DB에서도 삭제되었으므로 모두 null 반환
             idsToInvalidate.forEach { id ->

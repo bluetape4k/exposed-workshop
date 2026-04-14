@@ -44,7 +44,7 @@ class UserCacheRepositoryTest(
     @BeforeEach
     fun beforeEach() {
         runBlocking(Dispatchers.IO) {
-            repository.invalidateAll()
+            repository.clear()
             idsInDB.clear()
 
             newSuspendedTransaction {
@@ -102,14 +102,14 @@ class UserCacheRepositoryTest(
         val userIdToSearch = idsInDB.shuffled().take(5)
         newSuspendedTransaction(readOnly = true) {
             // DB에 있는 User를 검색
-            val users = repository.getAll(userIdToSearch)
+            val users = repository.getAll(userIdToSearch).map { it.value }
             users shouldHaveSize userIdToSearch.size
             users.forEach {
                 log.debug { "Found user: $it" }
             }
 
             // 캐시에서 검색
-            val users2 = repository.getAll(userIdToSearch)
+            val users2 = repository.getAll(userIdToSearch).map { it.value }
             users2 shouldHaveSize userIdToSearch.size
         }
     }
@@ -154,7 +154,7 @@ class UserCacheRepositoryTest(
             ).also {
                 it.avatar = faker.image().base64JPG().toByteArray()
             }
-            repository.put(updatedUser)
+            repository.put(updatedUser.id, updatedUser)
 
             val userFromDB = repository.findByIdFromDb(userId)
             userFromDB shouldBeEqualTo updatedUser.copy(updatedAt = userFromDB!!.updatedAt)
@@ -185,7 +185,7 @@ class UserCacheRepositoryTest(
             idsToInvalidate.forEach { repository.get(it).shouldNotBeNull() }
 
             // 복수 ID 무효화 - deleteFromDBOnInvalidate=true이므로 DB에서도 삭제
-            repository.invalidate(*idsToInvalidate.toTypedArray())
+            repository.invalidateAll(idsToInvalidate)
 
             // DB에서도 삭제되었으므로 모두 null 반환
             idsToInvalidate.forEach { id ->

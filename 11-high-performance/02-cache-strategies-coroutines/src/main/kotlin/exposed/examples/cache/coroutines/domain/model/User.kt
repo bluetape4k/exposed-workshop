@@ -2,7 +2,6 @@ package exposed.examples.cache.coroutines.domain.model
 
 import exposed.examples.cache.coroutines.utils.faker
 import io.bluetape4k.codec.Base58
-import io.bluetape4k.exposed.core.HasIdentifier
 import io.bluetape4k.exposed.core.statements.api.toExposedBlob
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
@@ -16,6 +15,7 @@ import org.jetbrains.exposed.v1.dao.LongEntityClass
 import org.jetbrains.exposed.v1.javatime.CurrentTimestamp
 import org.jetbrains.exposed.v1.javatime.date
 import org.jetbrains.exposed.v1.javatime.timestamp
+import java.io.Serializable
 import java.time.Instant
 import java.time.LocalDate
 
@@ -77,7 +77,7 @@ class UserEntity(id: EntityID<Long>): LongEntity(id) {
  * 사용자 도메인의 캐시/DB 전달용 레코드입니다.
  */
 data class UserRecord(
-    override val id: Long = 0L,
+    val id: Long = 0L,
     val username: String,
     val firstName: String,
     val lastName: String,
@@ -86,7 +86,7 @@ data class UserRecord(
     val birthDate: LocalDate? = null,
     val createdAt: Instant? = null,
     val updatedAt: Instant? = null,
-): HasIdentifier<Long> {
+): Serializable {
     var avatar: ByteArray? = null
     fun withId(id: Long) = copy(id = id)
 }

@@ -23,8 +23,10 @@ import java.time.Instant
 class UserCacheRepository(redissonClient: RedissonClient):
     AbstractSuspendedJdbcRedissonRepository<Long, UserRecord>(
         redissonClient = redissonClient,
-        cacheName = "exposed:coroutines:users",
-        config = RedissonCacheConfig.READ_WRITE_THROUGH_WITH_NEAR_CACHE.copy(deleteFromDBOnInvalidate = true)
+        config = RedissonCacheConfig.READ_WRITE_THROUGH_WITH_NEAR_CACHE.copy(
+            deleteFromDBOnInvalidate = true,
+            name = "exposed:coroutines:users"
+        )
     ) {
     companion object: KLoggingChannel()
 
@@ -33,36 +35,30 @@ class UserCacheRepository(redissonClient: RedissonClient):
     override fun ResultRow.toEntity() = toUserRecord()
     override fun extractId(entity: UserRecord): Long = entity.id
 
-    override fun doInsertEntity(
-        statement: BatchInsertStatement,
-        entity: UserRecord,
-    ) {
-        log.debug { "Insert entity: $entity" }
-        if (entity.id != 0L) {
-            statement[UserTable.id] = entity.id
-        }
-        statement[UserTable.username] = entity.username
-        statement[UserTable.firstName] = entity.firstName
-        statement[UserTable.lastName] = entity.lastName
-        statement[UserTable.address] = entity.address
-        statement[UserTable.zipcode] = entity.zipcode
-        statement[UserTable.birthDate] = entity.birthDate
-        statement[UserTable.avatar] = entity.avatar?.let { ExposedBlob(it) }
-        statement[UserTable.createdAt] = Instant.now()
+    override fun UpdateStatement.updateEntity(entity: UserRecord) {
+        log.debug { "Update entity: $entity" }
+        this[UserTable.username] = entity.username
+        this[UserTable.firstName] = entity.firstName
+        this[UserTable.lastName] = entity.lastName
+        this[UserTable.address] = entity.address
+        this[UserTable.zipcode] = entity.zipcode
+        this[UserTable.birthDate] = entity.birthDate
+        this[UserTable.avatar] = entity.avatar?.let { ExposedBlob(it) }
+        this[UserTable.updatedAt] = Instant.now()
     }
 
-    override fun doUpdateEntity(
-        statement: UpdateStatement,
-        entity: UserRecord,
-    ) {
-        log.debug { "Update entity: $entity" }
-        statement[UserTable.username] = entity.username
-        statement[UserTable.firstName] = entity.firstName
-        statement[UserTable.lastName] = entity.lastName
-        statement[UserTable.address] = entity.address
-        statement[UserTable.zipcode] = entity.zipcode
-        statement[UserTable.birthDate] = entity.birthDate
-        statement[UserTable.avatar] = entity.avatar?.let { ExposedBlob(it) }
-        statement[UserTable.updatedAt] = Instant.now()
+    override fun BatchInsertStatement.insertEntity(entity: UserRecord) {
+        log.debug { "Insert entity: $entity" }
+        if (entity.id != 0L) {
+            this[UserTable.id] = entity.id
+        }
+        this[UserTable.username] = entity.username
+        this[UserTable.firstName] = entity.firstName
+        this[UserTable.lastName] = entity.lastName
+        this[UserTable.address] = entity.address
+        this[UserTable.zipcode] = entity.zipcode
+        this[UserTable.birthDate] = entity.birthDate
+        this[UserTable.avatar] = entity.avatar?.let { ExposedBlob(it) }
+        this[UserTable.createdAt] = Instant.now()
     }
 }
