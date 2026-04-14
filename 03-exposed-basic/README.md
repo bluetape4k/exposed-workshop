@@ -66,6 +66,11 @@ classDiagram
     UserTable --> CityTable : cityId FK
     User --> City : optionalReferencedOn
     City --> User : optionalReferrersOn
+
+    style CityTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style UserTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style City fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style User fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ## DSL 방식 스키마 정의

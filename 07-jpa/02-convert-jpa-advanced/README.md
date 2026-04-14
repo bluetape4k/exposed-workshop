@@ -116,6 +116,10 @@ classDiagram
     Billing <|-- BankAccount : 3가지 상속 전략 적용
 
     note for Billing "SingleTable BillingTable 1개 / Joined billing + credit_card / TablePerClass 각 독립 테이블"
+
+    style Billing fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style CreditCard fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style BankAccount fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
 ```
 
 ## 도메인 ERD
@@ -207,6 +211,14 @@ flowchart TD
     Root --> Child2
     Child1 --> GrandChild1
     Child1 --> GrandChild2
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+
+    class Root blue
+    class Child1,Child2 green
+    class GrandChild1,GrandChild2 purple
 ```
 
 ## 상속 전략 비교 classDiagram
@@ -268,6 +280,14 @@ classDiagram
     Employee_Joined --> Employee_Joined : manager 자기참조
     Billing <|-- CreditCard_TablePerClass
     Billing <|-- BankAccount_TablePerClass
+
+    style Billing fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style CreditCard_SingleTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style BankAccount_SingleTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style Person_Joined fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Employee_Joined fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style CreditCard_TablePerClass fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style BankAccount_TablePerClass fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ## 고급 기능 JPA ↔ Exposed 변환 대비표

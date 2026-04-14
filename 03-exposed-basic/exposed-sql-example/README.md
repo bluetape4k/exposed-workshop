@@ -73,6 +73,9 @@ classDiagram
         +Column~Int?~ cityId  [FK → CityTable.id]
     }
     CityTable "1" --> "0..*" UserTable: cityId
+
+    style CityTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style UserTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
 ```
 
 ### 테이블 정의

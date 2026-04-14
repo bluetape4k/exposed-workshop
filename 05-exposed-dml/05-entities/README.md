@@ -133,6 +133,12 @@ classDiagram
     Actors "0..*" --> "0..*" Movies: many-to-many via StarringTable
     StarringTable --> Actors
     StarringTable --> Movies
+
+    style Projects fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style ProjectConfigs fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style Actors fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Movies fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style StarringTable fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ## XEntity-YEntity 관계 ERD
@@ -199,6 +205,16 @@ classDiagram
 
     BEntity --> YEntity : "optionalReferencedOn"
     YEntity --> BEntity : "backReferencedOn"
+
+    style Entity fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style IntEntity fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style LongEntity fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style UUIDEntity fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style CompositeEntity fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style AEntity fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style BEntity fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style XEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style YEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ## PK 전략 비교

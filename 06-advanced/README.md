@@ -59,6 +59,14 @@ flowchart LR
     JSON --> JSONTYPE
     KSUID --> VARCHAR
     SNOW --> BIGINT
+
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class CRYPT,TINK,JSON,COMP,SER purple
+    class KSUID,SNOW,UUID green
+    class VARCHAR,BINARY,JSONTYPE,BIGINT orange
 ```
 
 ## 모듈 분류
@@ -99,6 +107,18 @@ flowchart TD
     M08 -->|"Jackson 3 이행"| M11
     M04 -->|"고성능 필요"| M09
     M06 -->|"커스텀 ID"| M07
+
+    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+
+    class M01,M10,M12 red
+    class M02,M03 blue
+    class M04,M08,M09,M11 purple
+    class M05 orange
+    class M06,M07 green
 ```
 
 ## 권장 학습 순서

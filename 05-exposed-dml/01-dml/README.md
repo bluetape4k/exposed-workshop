@@ -109,6 +109,18 @@ flowchart LR
     H --> I[SQL 생성]
     I --> J[(Database)]
     J --> K[ResultRow / Int]
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
+
+    class A blue
+    class B purple
+    class C,D,E,F,G green
+    class H,I teal
+    class J,K orange
 ```
 
 ## CRUD 시퀀스 다이어그램

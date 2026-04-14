@@ -67,6 +67,14 @@ classDiagram
     KotlinLocalTime --> DBColumn : TIME
     KotlinLocalDate .. JavaTimeEquivalent : KMP 대응
     KotlinLocalDateTime .. JavaTimeEquivalent : KMP 대응
+
+    style KotlinDateTimeTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style KotlinLocalDate fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style KotlinLocalDateTime fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style KotlinInstant fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style KotlinLocalTime fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style JavaTimeEquivalent fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style DBColumn fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ## 핵심 개념

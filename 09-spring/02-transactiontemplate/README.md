@@ -48,6 +48,12 @@ classDiagram
     TransactionTemplateConfig --> TransactionOperations : creates (no-tx)
     BookService --> TransactionTemplate : exposedTransactionTemplate
     BookService --> TransactionOperations : withoutTransactionOperations
+
+    style TransactionTemplateConfig fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style BookService fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style SpringTransactionManager fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style TransactionTemplate fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style TransactionOperations fill:#FFFDE7,stroke:#FFF176,color:#F57F17
 ```
 
 ## 핵심 개념

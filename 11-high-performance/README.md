@@ -45,6 +45,16 @@ flowchart TD
     M3 -- 테넌트별 DataSource --> DB
     M4 -- 캐시 벤치마크 --> M1
     M4 -- 라우팅 벤치마크 --> M3
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class M1,M2 blue
+    class M3 green
+    class M4 purple
+    class Redis,DB orange
 ```
 
 ---
@@ -79,6 +89,19 @@ flowchart LR
         DDS[DynamicRoutingDataSource]
         TH --> TC --> KR --> REG --> DDS
     end
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
+    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
+
+    class NC pink
+    class Redis,DB orange
+    class RT,WT,WB,RO green
+    class TH,TC blue
+    class KR,REG,DDS purple
 ```
 
 ---

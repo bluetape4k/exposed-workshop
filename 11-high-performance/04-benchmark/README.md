@@ -97,6 +97,16 @@ flowchart TD
     OTM_JPA --> DB
     CC_EXP --> DB
     CC_JPA --> DB
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class JMH purple
+    class SE_EXP,OTM_EXP,CC_EXP green
+    class SE_JPA,OTM_JPA,CC_JPA blue
+    class DB orange
 ```
 
 ---
@@ -146,6 +156,11 @@ classDiagram
 
     ReadThroughCacheBenchmark --> UserPayload
     RoutingKeyResolverBenchmark --> ContextAwareRoutingKeyResolver
+
+    style ReadThroughCacheBenchmark fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style RoutingKeyResolverBenchmark fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style UserPayload fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style ContextAwareRoutingKeyResolver fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
 ```
 
 ---
@@ -217,6 +232,18 @@ end
 
 Measure --> ReadThroughCacheBenchmark
 Measure --> RoutingKeyResolverBenchmark
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
+
+    class Start purple
+    class Fork,Warmup,Measure blue
+    class Report,MD yellow
+    class RT1,RT2,RT3 green
+    class RK1,RK2,RK3,RK4 orange
 ```
 
 ---

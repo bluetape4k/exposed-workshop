@@ -27,6 +27,26 @@ flowchart TD
     F --> BIT["비트 함수\nbitwiseAnd / bitwiseOr / bitwiseXor"]
 
     WIN --> OVER["over()\n.partitionBy(col)\n.orderBy(col, SortOrder)"]
+
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
+    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
+    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
+    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
+
+    class F purple
+    class STR blue
+    class MATH green
+    class AGG orange
+    class STAT pink
+    class TRIG teal
+    class WIN yellow
+    class COND red
+    class BIT teal
+    class OVER yellow
 ```
 
 ## 핵심 개념
@@ -99,6 +119,17 @@ flowchart LR
     D --> F["ORDER BY 절"]
     E --> G["SQL: OVER(PARTITION BY ... ORDER BY ...)"]
     F --> G
+
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class A purple
+    class B blue
+    class C,D green
+    class E,F green
+    class G orange
 ```
 
 ## 예제 지도

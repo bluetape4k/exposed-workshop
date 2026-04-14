@@ -54,6 +54,20 @@ classDiagram
     ColumnType <|-- BlobColumnType
     ColumnType <|-- UUIDColumnType
     ColumnType <|-- ArrayColumnType
+
+    style ColumnType fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style BooleanColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style IntegerColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style LongColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style DoubleColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style DecimalColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style CharacterColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style VarCharColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style TextColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style BasicBinaryColumnType fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style BlobColumnType fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style UUIDColumnType fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style ArrayColumnType fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
 ```
 
 ## 핵심 개념

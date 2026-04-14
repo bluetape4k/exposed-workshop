@@ -114,6 +114,17 @@ classDiagram
     TenantInitializer --> TenantContext : withTenant()
     ExposedMutitenantConfig --> TenantAwareDataSource : 빈 생성
     ActorController --> TenantContext : 간접 참조(AOP)
+
+    style TenantFilter fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style TenantContext fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Tenants fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Tenant fill:#FFFDE7,stroke:#FFF176,color:#F57F17
+    style TenantAwareDataSource fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style TenantSchemaAspect fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style TenantInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style DataInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style ExposedMutitenantConfig fill:#E0F2F1,stroke:#80CBC4,color:#00695C
+    style ActorController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
 ```
 
 ### TenantResolver 클래스 계층
@@ -154,6 +165,12 @@ classDiagram
     TenantFilter --> TenantContext : withTenant()
     TenantContext --> Tenants : 테넌트 조회
     Tenants --> Tenant : 열거형 멤버
+
+    style Filter fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style TenantFilter fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style TenantContext fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Tenants fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Tenant fill:#FFFDE7,stroke:#FFF176,color:#F57F17
 ```
 
 ### 멀티테넌시 전략: Shared Database / Separate Schema

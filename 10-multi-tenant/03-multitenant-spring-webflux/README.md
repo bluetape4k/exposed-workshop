@@ -121,6 +121,17 @@ classDiagram
     ActorController --> TenantId : newSuspendedTransactionWithCurrentReactorTenant()
     TenantInitializer --> DataInitializer : initialize(tenant)
     ExposedMultitenantConfig --> TenantAwareDataSource : 빈 생성
+
+    style TenantFilter fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style TenantId fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Tenants fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Tenant fill:#FFFDE7,stroke:#FFF176,color:#F57F17
+    style TenantAwareDataSource fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style ActorController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style TenantInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style DataInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style ExposedMultitenantConfig fill:#E0F2F1,stroke:#80CBC4,color:#00695C
+    style NettyConfig fill:#E0F2F1,stroke:#80CBC4,color:#00695C
 ```
 
 ### 컨텍스트 전파 체계
@@ -146,6 +157,18 @@ flowchart LR
     ReactorCtx --> |coroutineContext| CoroutineScope[CoroutineScope\n+ ReactorContext]
     CoroutineScope --> |newSuspendedTransactionWithTenant| ExposedDB[Exposed\nnewSuspendedTransaction]
     ExposedDB --> |useSchema| TenantDB[(Tenant Schema)]
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class Request blue
+    class WebFilter green
+    class ReactorCtx purple
+    class CoroutineScope purple
+    class ExposedDB green
+    class TenantDB orange
 ```
 
 ---

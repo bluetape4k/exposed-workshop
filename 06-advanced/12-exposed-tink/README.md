@@ -44,6 +44,15 @@ flowchart LR
         E3 -->|" 복호화 "| P2
         E3 -->|" WHERE 조건 "| Q["DB 인덱스 검색 가능"]
     end
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+
+    class P1,P2 blue
+    class E1,E2,E3 orange
+    class Q purple
 ```
 
 ## Tink 암호화 계층 구조
@@ -117,6 +126,19 @@ classDiagram
     TinkDaeadVarCharColumnType --> DeterministicAead : uses
     TinkDaeadBinaryColumnType --> DeterministicAead : uses
     TinkDaeadBlobColumnType --> DeterministicAead : uses
+
+    style ColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style VarCharColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style BinaryColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style BlobColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style TinkAeadVarCharColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style TinkAeadBinaryColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style TinkAeadBlobColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style TinkDaeadVarCharColumnType fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style TinkDaeadBinaryColumnType fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style TinkDaeadBlobColumnType fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style Aead fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style DeterministicAead fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
 ```
 
 ## 제공 컬럼 확장 함수

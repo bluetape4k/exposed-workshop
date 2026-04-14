@@ -65,6 +65,9 @@ classDiagram
         +Team? team
     }
     Team "1" --> "0..*" Member: members
+
+    style Team fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style Member fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
 ```
 
 ### JPA 엔티티 선언

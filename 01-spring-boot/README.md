@@ -54,6 +54,10 @@ classDiagram
 
     SpringMvcModule --> SharedDomain : 동일 스키마 사용
     SpringWebFluxModule --> SharedDomain : 동일 스키마 사용
+
+    style SpringMvcModule fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style SpringWebFluxModule fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style SharedDomain fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ---

@@ -119,6 +119,17 @@ classDiagram
     TransactionSchemaAspect --> SchemaUtils : createSchema() + setSchema()
     TenantInitializer --> DataInitializer : initialize()
     ActorController --> TransactionSchemaAspect : @Transactional(AOP)
+
+    style TomcatVirtualThreadConfig fill:#E0F2F1,stroke:#80CBC4,color:#00695C
+    style TenantFilter fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style TenantContext fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Tenants fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Tenant fill:#FFFDE7,stroke:#FFF176,color:#F57F17
+    style TenantAwareDataSource fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style TransactionSchemaAspect fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style TenantInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style DataInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style ActorController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
 ```
 
 ### ScopedValue 기반 컨텍스트 전파
@@ -145,6 +156,14 @@ flowchart LR
         VT3[VThread-3] --> DB4[(Schema: english)]
         VT4[VThread-n...] --> DB4
     end
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class PT1,PT2 blue
+    class VT1,VT2,VT3,VT4 green
+    class DB1,DB2,DB3,DB4 orange
 ```
 
 ---

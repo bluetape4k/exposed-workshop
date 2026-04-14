@@ -60,6 +60,18 @@ flowchart LR
         WB_Redis -- enqueue --> WB_Queue
         WB_Queue -- batch flush --> WB_DB
     end
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
+    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
+
+    class Client blue
+    class RT_Cache,WT_Cache,WB_Cache pink
+    class RT_Redis,WT_Redis,WB_Redis orange
+    class RT_DB,WT_DB,WB_DB orange
+    class WB_Queue yellow
 ```
 
 ---
@@ -116,6 +128,12 @@ AbstractSuspendedJdbcRedissonRepository <|-- UserCacheRepository
 AbstractSuspendedJdbcRedissonRepository <|-- UserCredentialsCacheRepository
 AbstractSuspendedJdbcRedissonRepository <|-- UserEventCacheRepository
 AbstractSuspendedJdbcRedissonRepository --> RedisCacheConfig
+
+    style AbstractSuspendedJdbcRedissonRepository fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style UserCacheRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style UserCredentialsCacheRepository fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style UserEventCacheRepository fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style RedisCacheConfig fill:#FFFDE7,stroke:#FFF176,color:#F57F17
 ```
 
 ---

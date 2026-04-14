@@ -36,6 +36,14 @@ flowchart LR
 
     PW -->|INSERT/UPDATE| ENC --> DB_W
     DB_R -->|SELECT| DEC --> PR
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class PW,PR blue
+    class ENC,DEC green
+    class DB_W,DB_R orange
 ```
 
 ## 지원 알고리즘
@@ -215,6 +223,17 @@ classDiagram
     Encryptor <|.. AES_256_PBE_CBC
     Encryptor <|.. BLOW_FISH
     Encryptor <|.. TRIPLE_DES
+
+    style ColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style VarCharColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style BinaryColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style EncryptedVarCharColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style EncryptedBinaryColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Encryptor fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style AES_256_PBE_GCM fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style AES_256_PBE_CBC fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style BLOW_FISH fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style TRIPLE_DES fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ## 예제 구성

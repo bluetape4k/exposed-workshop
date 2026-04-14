@@ -60,6 +60,13 @@ classDiagram
     IdTable <|-- TimebasedUUIDTable
     KsuidTable --> KsuidEntity: maps to
     SnowflakeIdTable --> SnowflakeIdEntity: maps to
+
+    style IdTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style KsuidTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style SnowflakeIdTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style TimebasedUUIDTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style KsuidEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style SnowflakeIdEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ## 커스텀 ID 전략 비교 플로우
@@ -89,6 +96,14 @@ flowchart LR
     KSUID & KSUIDM & SNOW & UUIDV7 & B62 --> SORT
     KSUID & KSUIDM & SNOW & UUIDV7 & B62 & UUID4 --> DIST
     INT & LONG & KSUID & SNOW --> IDX
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
+
+    class INT,LONG,UUID4 blue
+    class KSUID,KSUIDM,SNOW,UUIDV7,B62 green
+    class SORT,DIST,IDX teal
 ```
 
 ## 핵심 개념

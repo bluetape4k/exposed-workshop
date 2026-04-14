@@ -61,6 +61,14 @@ flowchart LR
     R2 -->|R2DBC Non-blocking| PG & H2
     VX -->|Event Loop| PG & H2
     EX -->|JDBC / Virtual Thread| PG & H2
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class Controller blue
+    class HR,R2,VX,EX purple
+    class PG,H2 orange
 ```
 
 ## 권장 학습 순서

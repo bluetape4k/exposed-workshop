@@ -105,6 +105,23 @@ flowchart TD
     H --> J["외부 트랜잭션 COMMIT\ncity1만 저장"]
     I --> J
     E --> K["외부 트랜잭션과 동일 범위"]
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
+    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
+
+    class A blue
+    class B green
+    class C purple
+    class D,F teal
+    class E orange
+    class G purple
+    class H red
+    class I green
+    class J,K blue
 ```
 
 ## 코루틴 트랜잭션 흐름

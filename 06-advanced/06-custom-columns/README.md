@@ -42,6 +42,14 @@ flowchart LR
     BINARY -->|valueFromDB| SER & COMP --> OBJ
     BYTES -->|notNullValueToDB| ENC --> VARCHAR
     VARCHAR -->|valueFromDB| ENC --> BYTES
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class OBJ,BYTES blue
+    class SER,COMP,ENC green
+    class BINARY,VARCHAR orange
 ```
 
 ## 커스텀 ColumnType 계층
@@ -112,6 +120,18 @@ classDiagram
     CompressedBinaryColumnType --> Compressor : uses
     EncryptedBinaryColumnType --> Encryptor : uses
     EncryptedVarCharColumnType --> Encryptor : uses
+
+    style ColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style BinaryColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style BlobColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style VarCharColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style BinarySerializedBinaryColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style CompressedBinaryColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style EncryptedBinaryColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style EncryptedVarCharColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style BinarySerializer fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style Compressor fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style Encryptor fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
 ```
 
 ## 커스텀 컬럼 타입 목록

@@ -45,6 +45,14 @@ flowchart LR
     JC --> PG_JSON & MY_JSON
     JB --> PG_JSONB
     EX & CO & EXI --> PG_JSON & PG_JSONB
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class DH,JT blue
+    class JC,JB,EX,CO,EXI green
+    class PG_JSON,PG_JSONB,MY_JSON orange
 ```
 
 ## 테이블 ERD
@@ -115,6 +123,10 @@ classDiagram
 
     DataHolder --> User : contains
     UserGroup --> User : contains 0..*
+
+    style DataHolder fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style User fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style UserGroup fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
 ```
 
 ## 핵심 개념

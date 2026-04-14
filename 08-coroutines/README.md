@@ -50,6 +50,16 @@ flowchart LR
 
     Coroutines -. "신규 비동기 코드베이스" .-> Use1[["권장: WebFlux / 취소 제어"]]
     VirtualThreads -. "기존 동기 코드베이스" .-> Use2[["권장: Spring MVC / 코드 변경 최소화"]]
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+
+    class A1,B1,C1,D1,E1 blue
+    class A2,B2,C2,D2,E2 green
+    class Use1 purple
+    class Use2 orange
 ```
 
 ### 스레드 모델 구조 비교
@@ -75,6 +85,16 @@ flowchart TD
         VT3["Virtual Thread-N"] --> |"마운트"| OS2["OS Thread-B"]
         VT1 & VT2 & VT3 --> DBPool2["DB Connection Pool"]
     end
+
+    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class PT1,PT2,PT3 red
+    class DB1,DB2,DB3 red
+    class CT1,CR1,CR2,CR3,DBPool1 blue
+    class VT1,VT2,VT3,OS1,OS2,DBPool2 green
 ```
 
 ## 포함 모듈
@@ -115,6 +135,18 @@ flowchart LR
     E -->|예외| G["ROLLBACK"]
     C --> H["Deferred&lt;T&gt;"]
     H --> I["await()"]
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
+
+    class A blue
+    class B,C blue
+    class D orange
+    class F green
+    class G red
+    class H,I blue
 ```
 
 ### Virtual Thread Transaction Flow
@@ -130,6 +162,18 @@ flowchart LR
     E -->|예외| G["ROLLBACK"]
     C --> H["VirtualFuture&lt;T&gt;"]
     H --> I["awaitAll()"]
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
+
+    class A blue
+    class B,C blue
+    class D orange
+    class F green
+    class G red
+    class H,I blue
 ```
 
 ## 테스트 포인트

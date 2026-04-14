@@ -73,6 +73,12 @@ classDiagram
     CachedCountrySuspendedRepository --> CountrySuspendedRepository : delegate
     CachedCountrySuspendedRepository --> LettuceSuspendedCacheManager : uses
     LettuceSuspendedCacheManager --> LettuceSuspendedCache : creates
+
+    style CountrySuspendedRepository fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style DefaultCountrySuspendedRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style CachedCountrySuspendedRepository fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style LettuceSuspendedCacheManager fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
+    style LettuceSuspendedCache fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
 ```
 
 ## 핵심 개념
@@ -180,6 +186,20 @@ flowchart TD
     L --> M[newSuspendedTransaction]
     M --> N[CountryTable.update]
     N --> O[갱신 행 수 반환]
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
+    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
+    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
+
+    class A,J blue
+    class B yellow
+    class C,I,O green
+    class D,E,L,M teal
+    class F,G,N orange
+    class H,K pink
 ```
 
 ## LettuceSuspendedCacheManager 설정

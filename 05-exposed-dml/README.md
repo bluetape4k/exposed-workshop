@@ -48,6 +48,16 @@ flowchart TD
     TX --> DAO
     DSL --> DB[(Database)]
     DAO --> DB
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class S,I,U,D blue
+    class E,R green
+    class T,ST purple
+    class DB orange
 ```
 
 ## 권장 학습 순서

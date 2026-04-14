@@ -81,6 +81,12 @@ classDiagram
     MovieTransactionalService --> MovieExposedRepository : delegates
     MovieController --> MovieExposedRepository : calls
     MovieController --> MovieTransactionalService : calls
+
+    style JdbcRepository fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style MovieExposedRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style ActorExposedRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style MovieTransactionalService fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style MovieController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
 ```
 
 ## 핵심 개념

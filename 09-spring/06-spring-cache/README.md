@@ -52,6 +52,12 @@ classDiagram
     CountryRepository --> RedisCacheManager : uses
     CountryRepository --> CountryTable : queries
     CountryRepository --> CountryRecord : returns
+
+    style LettuceCacheConfig fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style RedisCacheManager fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
+    style CountryRepository fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style CountryRecord fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style CountryTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
 ```
 
 ## 핵심 개념
@@ -136,6 +142,20 @@ flowchart TD
     J --> K[CountryTable.update]
     K --> L[트랜잭션 커밋]
     L --> M[@CacheEvict 실행\ncache:code:country:KR 삭제]
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
+    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
+    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
+
+    class A,I blue
+    class B,D yellow
+    class C,H green
+    class E,F orange
+    class G,M pink
+    class J,K,L teal
 ```
 
 ## 도메인 모델

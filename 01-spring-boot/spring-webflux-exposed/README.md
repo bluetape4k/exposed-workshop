@@ -128,6 +128,17 @@ classDiagram
     ActorTable --> ActorEntity
     ActorInMovieTable --> MovieTable
     ActorInMovieTable --> ActorTable
+
+    style ActorController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style MovieController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style MovieActorsController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style ActorRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style MovieRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style MovieTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style ActorTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style ActorInMovieTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style MovieEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style ActorEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ---

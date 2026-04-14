@@ -46,6 +46,14 @@ flowchart LR
     IDX --> CR & CM
     CR & CM --> DB
     DR --> DB
+
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class T1,COL,CONS,IDX purple
+    class CR,CM,DR green
+    class PG,MY,H2 orange
 ```
 
 ## 테이블 클래스 계층
@@ -78,6 +86,13 @@ classDiagram
     IdTable <|-- LongIdTable
     IdTable <|-- UUIDTable
     IdTable <|-- CompositeIdTable
+
+    style Table fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style IdTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style IntIdTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style LongIdTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style UUIDTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style CompositeIdTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
 ```
 
 ## 복합 PK / FK 관계 ERD

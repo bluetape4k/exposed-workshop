@@ -50,6 +50,12 @@ classDiagram
     OrderService --> CustomerEntity : creates
     OrderService --> OrderEntity : creates
     OrderEntity --> CustomerEntity : many-to-one
+
+    style DataSourceConfig fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style SpringTransactionManager fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style OrderService fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style CustomerEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style OrderEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ## 핵심 개념

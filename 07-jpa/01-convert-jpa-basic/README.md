@@ -111,6 +111,13 @@ classDiagram
     BlogTagTable --> BlogTable
     BlogTagTable --> TagTable
     PersonTable "1" --> "0..*" AddressTable : One-to-Many personId FK
+
+    style BlogTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style PostTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style TagTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style BlogTagTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style PersonTable fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    style AddressTable fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ## 도메인 ERD
@@ -268,6 +275,12 @@ classDiagram
     }
 
     JPA_PersonEntity ..> Exposed_PersonDAO : 전환
+
+    style JPA_SimpleEntity fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
+    style Exposed_SimpleTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style Exposed_SimpleEntity fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style JPA_PersonEntity fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
+    style Exposed_PersonDAO fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
 ```
 
 ## JPA 어노테이션 → Exposed 매핑 대비표

@@ -42,6 +42,17 @@ flowchart TD
     TenantContext --> RoutingDS[RoutingDataSource]
     RoutingDS --> |tenant_a| SchemaA[(Schema: korean\nMovies, Actors)]
     RoutingDS --> |tenant_b| SchemaB[(Schema: english\nMovies, Actors)]
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class Request blue
+    class TenantResolver green
+    class TenantContext purple
+    class RoutingDS purple
+    class SchemaA,SchemaB orange
 ```
 
 ---
@@ -109,6 +120,16 @@ classDiagram
     TenantContext_MVC --> SchemaAspect_MVC
     TenantContext_VT --> SchemaAspect_VT
     TenantId_WebFlux --> SuspendedTx_WebFlux
+
+    style TenantFilter_MVC fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style TenantFilter_VT fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style TenantFilter_WebFlux fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style TenantContext_MVC fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style TenantContext_VT fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style TenantId_WebFlux fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style SchemaAspect_MVC fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style SchemaAspect_VT fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style SuspendedTx_WebFlux fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
 ```
 
 ### 환경별 핵심 차이 요약

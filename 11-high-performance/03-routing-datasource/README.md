@@ -49,6 +49,22 @@ flowchart LR
     Registry -->|키 존재| DS
     Registry -->|ro 미등록| Fallback
     Fallback -->|rw fallback| RW_DS
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
+
+    class Req blue
+    class Filter green
+    class TC green
+    class Resolver purple
+    class TSM purple
+    class KeyFmt yellow
+    class Registry orange
+    class DS,RW_DS orange
+    class Fallback yellow
 ```
 
 ---
@@ -122,6 +138,15 @@ classDiagram
     RoutingDataSourceConfig --> InMemoryDataSourceRegistry
     RoutingDataSourceConfig --> ContextAwareRoutingKeyResolver
     RoutingDataSourceConfig --> DynamicRoutingDataSource
+
+    style RoutingKeyResolver fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style ContextAwareRoutingKeyResolver fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style DataSourceRegistry fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style InMemoryDataSourceRegistry fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style DynamicRoutingDataSource fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style TenantContext fill:#FFFDE7,stroke:#FFF176,color:#F57F17
+    style TenantHeaderFilter fill:#FFFDE7,stroke:#FFF176,color:#F57F17
+    style RoutingDataSourceConfig fill:#E0F2F1,stroke:#80CBC4,color:#00695C
 ```
 
 ---

@@ -40,6 +40,14 @@ flowchart LR
     M05 --> EST
     M06 --> EST
     MREST --> EST
+
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+
+    class EST green
+    class EXP,BT4K,TC,H2,HK purple
+    class M01,M03,M04,M05,M06,MREST blue
 ```
 
 ## 포함 모듈

@@ -80,6 +80,10 @@ classDiagram
         +String lastname
     }
     Post "1" --> "0..*" Comment: postId
+
+    style Post fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style Comment fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Customer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ### R2DBC 엔티티 선언

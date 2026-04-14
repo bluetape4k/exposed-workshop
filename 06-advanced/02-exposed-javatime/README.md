@@ -65,6 +65,15 @@ classDiagram
     OffsetDateTime --> DBColumn : TIMESTAMPTZ
     LocalTime --> DBColumn : TIME
     Duration --> DBColumn : BIGINT
+
+    style JavaTimeTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style LocalDate fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style LocalDateTime fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Instant fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style OffsetDateTime fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style LocalTime fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style Duration fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    style DBColumn fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
 ## 핵심 개념

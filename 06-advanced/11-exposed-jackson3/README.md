@@ -42,6 +42,16 @@ flowchart LR
         MOD["모듈 시스템 변경"]
         COMPAT["하위 호환성 주의"]
     end
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
+
+    class DH,UG blue
+    class SER,DESER green
+    class JCOL,JBCOL orange
+    class PKG,MOD,COMPAT yellow
 ```
 
 ## 핵심 개념

@@ -105,6 +105,20 @@ flowchart TD
     K --> L["병렬 Virtual Thread들 실행"]
     L --> M["futures.awaitAll() 대기"]
     M --> N["모든 결과 수집"]
+
+    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
+    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+
+    class A blue
+    class B,C,D green
+    class E,F orange
+    class H green
+    class I red
+    class J purple
+    class B2,K,L,M,N blue
 ```
 
 ## Virtual Thread vs Platform Thread 비교 다이어그램
@@ -128,6 +142,13 @@ flowchart LR
     end
 
     PlatformThread -. "Java 21 이상에서 대체" .-> VirtualThread
+
+    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
+    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
+    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
+
+    class P1,P2,P3,PLimit red
+    class V1,V2,V3,Carrier,VScale green
 ```
 
 ## 테이블 ERD (virtualthreads_table)
