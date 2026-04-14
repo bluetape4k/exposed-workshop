@@ -18,7 +18,7 @@ Vert.x SQL Client writes SQL directly without an ORM and executes it on the even
 ## Architecture Flow
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     subgraph Test["Test Code"]
         JE["JDBCPoolExamples\n(H2 JDBC Pool)"]
@@ -55,7 +55,7 @@ Tmpl --> PG
 ## ERD
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 erDiagram
     customer {
         INT id PK

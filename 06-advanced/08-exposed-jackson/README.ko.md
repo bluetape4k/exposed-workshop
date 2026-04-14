@@ -17,7 +17,7 @@ Jackson 기반으로 JSON 컬럼을 직렬화/역직렬화하는 모듈입니다
 ## 테이블 구조
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 erDiagram
     jackson_table {
         SERIAL id PK
@@ -42,7 +42,7 @@ erDiagram
 ## Jackson 직렬화 흐름
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     subgraph KotlinObj["Kotlin 객체"]
         DH["DataHolder\n(user, logins, active, team)"]

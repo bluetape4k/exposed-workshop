@@ -22,7 +22,7 @@ The Exposed DAO pattern provides ORM-style data access via an `IntIdTable` and `
 ## ERD
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 erDiagram
     cities {
         SERIAL id PK
@@ -40,7 +40,7 @@ erDiagram
 ## Domain Model
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 classDiagram
     class CityTable {
         +Column~Int~ id  [PK]

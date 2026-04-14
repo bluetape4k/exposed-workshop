@@ -19,7 +19,7 @@ Vert.x SQL Client는 ORM 없이 SQL을 직접 작성하고 이벤트 루프에�
 ## 아키텍처 흐름
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     subgraph Test["테스트 코드"]
         JE["JDBCPoolExamples\n(H2 JDBC Pool)"]
@@ -56,7 +56,7 @@ Tmpl --> PG
 ## ERD
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 erDiagram
     customer {
         INT id PK

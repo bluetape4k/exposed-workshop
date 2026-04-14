@@ -15,7 +15,7 @@ Uses Caffeine near-cache + in-memory storage instead of real Redis/DB I/O to rel
 ## Domain ERD
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 erDiagram
     persons {
         BIGSERIAL id PK
@@ -69,7 +69,7 @@ erDiagram
 ## Exposed vs JPA Benchmark Structure
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart TD
     JMH[JMH Benchmark Runner]
 
@@ -126,7 +126,7 @@ flowchart TD
 ## Class Structure
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 classDiagram
     class ReadThroughCacheBenchmark {
         +payloadBytes: Int [256, 4096]
@@ -209,7 +209,7 @@ Measured methods:
 ## Benchmark Flow
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     Start([JMH Start])
     Fork[Fork JVM x1]

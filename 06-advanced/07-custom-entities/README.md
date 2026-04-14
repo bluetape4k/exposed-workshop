@@ -35,7 +35,7 @@ Extends Exposed's `IdTable` to implement custom ID strategies such as KSUID, Sno
 ## Architecture Flow
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 classDiagram
     class IdTable~T~ {
         +Column~EntityID~T~~ id
@@ -74,7 +74,7 @@ classDiagram
 ## Custom ID Strategy Comparison Flow
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     subgraph Standard["Standard ID (DB Sequence)"]
         INT["IntIdTable\nINT AUTO_INCREMENT"]

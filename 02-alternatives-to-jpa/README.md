@@ -40,7 +40,7 @@ Hands-on exploration of database access technologies beyond JPA, so you can unde
 ## Architecture Flow
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     subgraph App["Application Layer"]
         Controller["Controller\n(REST)"]

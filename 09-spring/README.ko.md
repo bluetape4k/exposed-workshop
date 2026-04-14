@@ -31,7 +31,7 @@ Spring Boot 환경에서 Exposed를 안정적으로 운영하기 위한 통합 �
 ## 전체 아키텍처 흐름
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart TD
     subgraph AutoConfig["01 AutoConfiguration"]
         AC[ExposedAutoConfiguration] --> STM[SpringTransactionManager]

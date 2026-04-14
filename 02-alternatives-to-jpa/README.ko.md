@@ -40,7 +40,7 @@ JPA 외의 데이터베이스 접근 기술을 직접 실습하여 각각의 설
 ## 아키텍처 흐름
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     subgraph App["애플리케이션 레이어"]
         Controller["Controller\n(REST)"]

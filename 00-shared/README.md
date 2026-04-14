@@ -8,7 +8,7 @@ Provides database connections, table/schema creation and deletion, and Faker-bas
 ## Module Dependency Structure
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     subgraph shared["00-shared"]
         EST["exposed-shared-tests\nShared Test Utilities"]

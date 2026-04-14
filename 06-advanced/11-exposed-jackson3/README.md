@@ -17,7 +17,7 @@ A module for integrating JSON columns using Jackson 3. Covers the serialization 
 ## Jackson 3 Processing Flow
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     subgraph KotlinObj["Kotlin Object"]
         DH["DataHolder\n(user, logins, active, team)"]

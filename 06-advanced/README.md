@@ -34,7 +34,7 @@ This chapter covers extension scenarios frequently encountered in production bey
 ## Architecture Overview
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     subgraph Column["Custom Column Extensions"]
         CRYPT["encryptedVarchar\nencryptedBinary"]
@@ -75,7 +75,7 @@ flowchart LR
 ## Module Classification
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart TD
     subgraph Crypto["Encryption"]
         M01["01-exposed-crypt\nAES/Blowfish/3DES\nNon-deterministic encryption"]

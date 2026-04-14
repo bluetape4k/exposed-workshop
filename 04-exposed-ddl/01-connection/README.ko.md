@@ -24,7 +24,7 @@ Exposed 데이터베이스 연결 설정과 연결 안정성 검증을 다루는
 ## 아키텍처 흐름
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     subgraph Connect["Database.connect()"]
         URL["URL + Driver"]

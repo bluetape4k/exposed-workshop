@@ -17,7 +17,7 @@ Fastjson2 기반 JSON 컬럼 처리를 다루는 모듈입니다. Jackson 대안
 ## Fastjson2 처리 흐름
 
 ```mermaid
-%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     subgraph KotlinObj["Kotlin 객체"]
         DH["DataHolder\n(user, logins, active, team)"]
