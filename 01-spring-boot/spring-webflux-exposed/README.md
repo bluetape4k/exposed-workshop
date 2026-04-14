@@ -196,15 +196,25 @@ classDiagram
 ## Request Processing Flow
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'", "actorBkg": "#E3F2FD", "actorBorder": "#90CAF9", "actorTextColor": "#1565C0", "actorLineColor": "#90CAF9", "activationBkgColor": "#E8F5E9", "activationBorderColor": "#A5D6A7", "labelBoxBkgColor": "#FFF3E0", "labelBoxBorderColor": "#FFCC80", "labelTextColor": "#E65100", "loopTextColor": "#6A1B9A", "noteBkgColor": "#F3E5F5", "noteBorderColor": "#CE93D8", "noteTextColor": "#6A1B9A", "signalColor": "#1565C0", "signalTextColor": "#1565C0"}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    participant Client
-    participant Netty
-    participant ActorController
-    participant newSuspendedTransaction
-    participant ActorRepository
-    participant ActorTable
-    participant DB
+    box rgb(227, 242, 253) Client
+        participant Client
+    end
+    box rgb(243, 229, 245) Async Layer
+        participant Netty
+        participant newSuspendedTransaction
+    end
+    box rgb(224, 242, 241) Spring Layer
+        participant ActorController
+    end
+    box rgb(232, 245, 233) Repository
+        participant ActorRepository
+        participant ActorTable
+    end
+    box rgb(255, 243, 224) Database
+        participant DB
+    end
 
     Client->>Netty: POST /actors (ActorRecord JSON)
     Netty->>ActorController: suspend fun createActor(actor)

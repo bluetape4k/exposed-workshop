@@ -124,13 +124,21 @@ class BookService(
 ## 트랜잭션 흐름
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'", "actorBkg": "#E3F2FD", "actorBorder": "#90CAF9", "actorTextColor": "#1565C0", "actorLineColor": "#90CAF9", "activationBkgColor": "#E8F5E9", "activationBorderColor": "#A5D6A7", "labelBoxBkgColor": "#FFF3E0", "labelBoxBorderColor": "#FFCC80", "labelTextColor": "#E65100", "loopTextColor": "#6A1B9A", "noteBkgColor": "#F3E5F5", "noteBorderColor": "#CE93D8", "noteTextColor": "#6A1B9A", "signalColor": "#1565C0", "signalTextColor": "#1565C0"}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    participant Client
-    participant BookService
-    participant TxTemplate as TransactionTemplate
-    participant STM as SpringTransactionManager
-    participant DB
+    box rgb(227, 242, 253) Client
+        participant Client
+    end
+    box rgb(232, 245, 233) Service
+        participant BookService
+    end
+    box rgb(224, 242, 241) Spring Layer
+        participant TxTemplate as TransactionTemplate
+        participant STM as SpringTransactionManager
+    end
+    box rgb(255, 243, 224) Database
+        participant DB
+    end
 
     Client->>BookService: executeSpringTransaction()
     BookService->>TxTemplate: execute { createNewAuthor() }

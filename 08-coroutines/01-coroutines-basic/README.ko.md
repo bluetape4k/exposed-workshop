@@ -61,12 +61,18 @@ newSuspendedTransaction(singleThreadDispatcher) { ... }
 ## 코루틴 트랜잭션 시퀀스 다이어그램
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'", "actorBkg": "#E3F2FD", "actorBorder": "#90CAF9", "actorTextColor": "#1565C0", "actorLineColor": "#90CAF9", "activationBkgColor": "#E8F5E9", "activationBorderColor": "#A5D6A7", "labelBoxBkgColor": "#FFF3E0", "labelBoxBorderColor": "#FFCC80", "labelTextColor": "#E65100", "loopTextColor": "#6A1B9A", "noteBkgColor": "#F3E5F5", "noteBorderColor": "#CE93D8", "noteTextColor": "#6A1B9A", "signalColor": "#1565C0", "signalTextColor": "#1565C0"}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    participant C as Coroutine (runSuspendIO)
-    participant T1 as newSuspendedTransaction
-    participant T2 as suspendedTransactionAsync
-    participant DB as Database
+    box rgb(243, 229, 245) Async
+        participant C as Coroutine (runSuspendIO)
+    end
+    box rgb(224, 242, 241) Transaction
+        participant T1 as newSuspendedTransaction
+        participant T2 as suspendedTransactionAsync
+    end
+    box rgb(255, 243, 224) Database
+        participant DB as Database
+    end
 
     C->>T1: newSuspendedTransaction(Dispatchers.IO)
     T1->>DB: BEGIN
@@ -92,12 +98,20 @@ sequenceDiagram
 ## newSuspendedTransaction 처리 시퀀스 다이어그램
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'", "actorBkg": "#E3F2FD", "actorBorder": "#90CAF9", "actorTextColor": "#1565C0", "actorLineColor": "#90CAF9", "activationBkgColor": "#E8F5E9", "activationBorderColor": "#A5D6A7", "labelBoxBkgColor": "#FFF3E0", "labelBoxBorderColor": "#FFCC80", "labelTextColor": "#E65100", "loopTextColor": "#6A1B9A", "noteBkgColor": "#F3E5F5", "noteBorderColor": "#CE93D8", "noteTextColor": "#6A1B9A", "signalColor": "#1565C0", "signalTextColor": "#1565C0"}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    participant App
-    participant CoroutineContext as CoroutineContext (Dispatchers.IO)
-    participant ExposedDB as Exposed Transaction
-    participant DB as Database
+    box rgb(227, 242, 253) Application
+        participant App
+    end
+    box rgb(243, 229, 245) Async
+        participant CoroutineContext as CoroutineContext (Dispatchers.IO)
+    end
+    box rgb(224, 242, 241) Transaction
+        participant ExposedDB as Exposed Transaction
+    end
+    box rgb(255, 243, 224) Database
+        participant DB as Database
+    end
 
     App->>CoroutineContext: newSuspendedTransaction { }
     CoroutineContext->>ExposedDB: transaction block 시작

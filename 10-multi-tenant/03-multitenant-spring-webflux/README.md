@@ -179,16 +179,26 @@ flowchart LR
 ## Request Flow
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'", "actorBkg": "#E3F2FD", "actorBorder": "#90CAF9", "actorTextColor": "#1565C0", "actorLineColor": "#90CAF9", "activationBkgColor": "#E8F5E9", "activationBorderColor": "#A5D6A7", "labelBoxBkgColor": "#FFF3E0", "labelBoxBorderColor": "#FFCC80", "labelTextColor": "#E65100", "loopTextColor": "#6A1B9A", "noteBkgColor": "#F3E5F5", "noteBorderColor": "#CE93D8", "noteTextColor": "#6A1B9A", "signalColor": "#1565C0", "signalTextColor": "#1565C0"}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    participant Client
-    participant Netty
-    participant TenantFilter
-    participant ReactorContext
-    participant ActorController
-    participant TenantId
-    participant ActorExposedRepository
-    participant Database
+    box rgb(227, 242, 253) Client
+        participant Client
+    end
+    box rgb(255, 243, 224) Server
+        participant Netty
+    end
+    box rgb(224, 242, 241) Filter / Context
+        participant TenantFilter
+        participant ReactorContext
+        participant TenantId
+    end
+    box rgb(232, 245, 233) Application
+        participant ActorController
+        participant ActorExposedRepository
+    end
+    box rgb(255, 243, 224) Database
+        participant Database
+    end
 
     Client->>Netty: GET /actors (X-TENANT-ID: english)
     Netty->>TenantFilter: filter(exchange, chain)

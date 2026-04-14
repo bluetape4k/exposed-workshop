@@ -129,12 +129,18 @@ flowchart LR
 ## CRUD 시퀀스 다이어그램
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'", "actorBkg": "#E3F2FD", "actorBorder": "#90CAF9", "actorTextColor": "#1565C0", "actorLineColor": "#90CAF9", "activationBkgColor": "#E8F5E9", "activationBorderColor": "#A5D6A7", "labelBoxBkgColor": "#FFF3E0", "labelBoxBorderColor": "#FFCC80", "labelTextColor": "#E65100", "loopTextColor": "#6A1B9A", "noteBkgColor": "#F3E5F5", "noteBorderColor": "#CE93D8", "noteTextColor": "#6A1B9A", "signalColor": "#1565C0", "signalTextColor": "#1565C0"}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    participant App as 애플리케이션
-    participant TX as transaction { }
-    participant DSL as Exposed DSL
-    participant DB as Database
+    box rgb(227, 242, 253) Application
+        participant App as 애플리케이션
+        participant TX as transaction { }
+    end
+    box rgb(232, 245, 233) Exposed DSL
+        participant DSL as Exposed DSL
+    end
+    box rgb(255, 243, 224) Database
+        participant DB as Database
+    end
 
     App ->> TX: transaction { }
     TX ->> DSL: Cities.insert { it[name] = "Seoul" }

@@ -181,14 +181,22 @@ AbstractJdbcRedissonRepository --> RedisCacheConfig
 ## Request Processing Flow — Write-Behind Async Event Loading
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'", "actorBkg": "#E3F2FD", "actorBorder": "#90CAF9", "actorTextColor": "#1565C0", "actorLineColor": "#90CAF9", "activationBkgColor": "#E8F5E9", "activationBorderColor": "#A5D6A7", "labelBoxBkgColor": "#FFF3E0", "labelBoxBorderColor": "#FFCC80", "labelTextColor": "#E65100", "loopTextColor": "#6A1B9A", "noteBkgColor": "#F3E5F5", "noteBorderColor": "#CE93D8", "noteTextColor": "#6A1B9A", "signalColor": "#1565C0", "signalTextColor": "#1565C0"}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    participant C as Client
-    participant R as UserEventCacheRepository
-    participant NC as Near Cache (L1)
-    participant RD as Redis (L2)
-    participant Q as Async Write Queue
-    participant DB as Database
+    box rgb(227, 242, 253) Client
+        participant C as Client
+    end
+    box rgb(232, 245, 233) Repository
+        participant R as UserEventCacheRepository
+    end
+    box rgb(252, 228, 236) Cache
+        participant NC as Near Cache (L1)
+        participant RD as Redis (L2)
+        participant Q as Async Write Queue
+    end
+    box rgb(255, 243, 224) Database
+        participant DB as Database
+    end
     C ->> R: saveAll(events)
     R ->> NC: put events (immediately)
     R ->> RD: put events (immediately)
@@ -209,13 +217,21 @@ sequenceDiagram
 ## Request Processing Flow — Read-Through + Write-Through (User)
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'", "actorBkg": "#E3F2FD", "actorBorder": "#90CAF9", "actorTextColor": "#1565C0", "actorLineColor": "#90CAF9", "activationBkgColor": "#E8F5E9", "activationBorderColor": "#A5D6A7", "labelBoxBkgColor": "#FFF3E0", "labelBoxBorderColor": "#FFCC80", "labelTextColor": "#E65100", "loopTextColor": "#6A1B9A", "noteBkgColor": "#F3E5F5", "noteBorderColor": "#CE93D8", "noteTextColor": "#6A1B9A", "signalColor": "#1565C0", "signalTextColor": "#1565C0"}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    participant C as Client
-    participant R as UserCacheRepository
-    participant NC as Near Cache (L1)
-    participant RD as Redis (L2)
-    participant DB as Database
+    box rgb(227, 242, 253) Client
+        participant C as Client
+    end
+    box rgb(232, 245, 233) Repository
+        participant R as UserCacheRepository
+    end
+    box rgb(252, 228, 236) Cache
+        participant NC as Near Cache (L1)
+        participant RD as Redis (L2)
+    end
+    box rgb(255, 243, 224) Database
+        participant DB as Database
+    end
     C ->> R: findById(id)
     R ->> NC: get(id)
     NC -->> R: miss

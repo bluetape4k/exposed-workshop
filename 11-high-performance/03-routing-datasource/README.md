@@ -155,16 +155,26 @@ classDiagram
 ## Request Processing Flow — Multi-Tenant Read/Write Separation Routing
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'", "actorBkg": "#E3F2FD", "actorBorder": "#90CAF9", "actorTextColor": "#1565C0", "actorLineColor": "#90CAF9", "activationBkgColor": "#E8F5E9", "activationBorderColor": "#A5D6A7", "labelBoxBkgColor": "#FFF3E0", "labelBoxBorderColor": "#FFCC80", "labelTextColor": "#E65100", "loopTextColor": "#6A1B9A", "noteBkgColor": "#F3E5F5", "noteBorderColor": "#CE93D8", "noteTextColor": "#6A1B9A", "signalColor": "#1565C0", "signalTextColor": "#1565C0"}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    participant C as HTTP Client
-    participant F as TenantHeaderFilter
-    participant TC as TenantContext
-    participant Ctrl as RoutingMarkerController
-    participant DS as DynamicRoutingDataSource
-    participant KR as ContextAwareRoutingKeyResolver
-    participant Reg as InMemoryDataSourceRegistry
-    participant DB as DataSource (selected)
+    box rgb(227, 242, 253) Client
+        participant C as HTTP Client
+    end
+    box rgb(224, 242, 241) Filter / Context
+        participant F as TenantHeaderFilter
+        participant TC as TenantContext
+    end
+    box rgb(232, 245, 233) Application
+        participant Ctrl as RoutingMarkerController
+    end
+    box rgb(243, 229, 245) DataSource Routing
+        participant DS as DynamicRoutingDataSource
+        participant KR as ContextAwareRoutingKeyResolver
+        participant Reg as InMemoryDataSourceRegistry
+    end
+    box rgb(255, 243, 224) Database
+        participant DB as DataSource (selected)
+    end
     C ->> F: GET /routing/marker\nX-Tenant-Id: acme
     F ->> TC: withTenant("acme") { ... }
     F ->> Ctrl: doFilter → enter controller

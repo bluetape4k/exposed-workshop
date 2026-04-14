@@ -145,15 +145,23 @@ AbstractSuspendedJdbcRedissonRepository --> RedisCacheConfig
 ## 요청 처리 흐름 — Write-Behind 비동기 이벤트 적재 (코루틴)
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'", "actorBkg": "#E3F2FD", "actorBorder": "#90CAF9", "actorTextColor": "#1565C0", "actorLineColor": "#90CAF9", "activationBkgColor": "#E8F5E9", "activationBorderColor": "#A5D6A7", "labelBoxBkgColor": "#FFF3E0", "labelBoxBorderColor": "#FFCC80", "labelTextColor": "#E65100", "loopTextColor": "#6A1B9A", "noteBkgColor": "#F3E5F5", "noteBorderColor": "#CE93D8", "noteTextColor": "#6A1B9A", "signalColor": "#1565C0", "signalTextColor": "#1565C0"}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    participant C as WebFlux Client
-    participant Ctrl as UserEventController
-    participant R as UserEventCacheRepository
-    participant NC as Near Cache (L1)
-    participant RD as Redis (L2)
-    participant Q as Coroutine Async Queue
-    participant DB as Database
+    box rgb(227, 242, 253) Client
+        participant C as WebFlux Client
+    end
+    box rgb(232, 245, 233) Application
+        participant Ctrl as UserEventController
+        participant R as UserEventCacheRepository
+    end
+    box rgb(252, 228, 236) Cache
+        participant NC as Near Cache (L1)
+        participant RD as Redis (L2)
+        participant Q as Coroutine Async Queue
+    end
+    box rgb(255, 243, 224) Database
+        participant DB as Database
+    end
     C ->> Ctrl: POST /user-events/bulk (suspend)
     Ctrl ->> R: saveAll(events) [suspend]
     R ->> NC: put events (즉시)
@@ -178,14 +186,22 @@ sequenceDiagram
 ## 요청 처리 흐름 — Read-Through + Write-Through (코루틴 User)
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'", "actorBkg": "#E3F2FD", "actorBorder": "#90CAF9", "actorTextColor": "#1565C0", "actorLineColor": "#90CAF9", "activationBkgColor": "#E8F5E9", "activationBorderColor": "#A5D6A7", "labelBoxBkgColor": "#FFF3E0", "labelBoxBorderColor": "#FFCC80", "labelTextColor": "#E65100", "loopTextColor": "#6A1B9A", "noteBkgColor": "#F3E5F5", "noteBorderColor": "#CE93D8", "noteTextColor": "#6A1B9A", "signalColor": "#1565C0", "signalTextColor": "#1565C0"}}}%%
+%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    participant C as WebFlux Client
-    participant Ctrl as UserController
-    participant R as UserCacheRepository
-    participant NC as Near Cache (L1)
-    participant RD as Redis (L2)
-    participant DB as Database
+    box rgb(227, 242, 253) Client
+        participant C as WebFlux Client
+    end
+    box rgb(232, 245, 233) Application
+        participant Ctrl as UserController
+        participant R as UserCacheRepository
+    end
+    box rgb(252, 228, 236) Cache
+        participant NC as Near Cache (L1)
+        participant RD as Redis (L2)
+    end
+    box rgb(255, 243, 224) Database
+        participant DB as Database
+    end
     C ->> Ctrl: GET /users/{id}
     Ctrl ->> R: findById(id) [suspend]
     R ->> NC: get(id)
