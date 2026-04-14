@@ -129,18 +129,12 @@ flowchart LR
 ## CRUD Sequence Diagram
 
 ```mermaid
-%%{init: {"theme": "default", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
+%%{init: {"theme": "default", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'", "actorBkg": "#E3F2FD", "actorBorder": "#90CAF9", "actorTextColor": "#1565C0", "activationBkgColor": "#BBDEFB", "activationBorderColor": "#90CAF9", "noteBkgColor": "#F3E5F5", "noteBorderColor": "#CE93D8", "noteTextColor": "#4A148C"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Application
-        participant App as Application
-        participant TX as transaction { }
-    end
-    box rgb(232, 245, 233) Exposed DSL
-        participant DSL as Exposed DSL
-    end
-    box rgb(255, 243, 224) Database
-        participant DB as Database
-    end
+    participant App as Application
+    participant TX as transaction { }
+    participant DSL as Exposed DSL
+    participant DB as Database
 
     App ->> TX: transaction { }
     TX ->> DSL: Cities.insert { it[name] = "Seoul" }
