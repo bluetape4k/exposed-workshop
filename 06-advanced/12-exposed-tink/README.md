@@ -33,7 +33,7 @@ Declaring a column with extension functions provided by `bluetape4k-exposed-tink
 ## Encryption Flow
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph AEAD_Flow["AEAD Flow (Non-deterministic)"]
         P1["Plaintext"] -->|" different nonce each time "| E1["CiphertextA"]
@@ -61,7 +61,7 @@ flowchart LR
 ## Tink Encryption Class Hierarchy
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class ColumnType~T~ {
         <<Exposed Core>>

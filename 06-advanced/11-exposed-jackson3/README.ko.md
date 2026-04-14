@@ -17,7 +17,7 @@ Jackson 3 기반 JSON 컬럼 연동 모듈입니다. Jackson 2에서 3으로 이
 ## Jackson3 처리 흐름
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph KotlinObj["Kotlin 객체"]
         DH["DataHolder\n(user, logins, active, team)"]

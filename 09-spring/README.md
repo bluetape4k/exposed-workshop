@@ -31,7 +31,7 @@ This chapter covers integration patterns for running Exposed reliably in a Sprin
 ## Overall Architecture Flow
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     subgraph AutoConfig["01 AutoConfiguration"]
         AC[ExposedAutoConfiguration] --> STM[SpringTransactionManager]

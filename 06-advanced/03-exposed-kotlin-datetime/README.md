@@ -17,7 +17,7 @@ A module for integrating `kotlinx.datetime` types with Exposed. Provides standar
 ## Kotlin DateTime Type Mapping
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
+%%{init: {'theme': 'base', 'backgroundColor': '#FAFAFA', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class KotlinDateTimeTable {
         +date(name): Column~LocalDate~
