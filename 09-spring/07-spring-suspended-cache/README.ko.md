@@ -21,6 +21,7 @@
 ## 도메인 모델
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     COUNTRIES {
         INT id PK
@@ -33,6 +34,7 @@ erDiagram
 ## 아키텍처
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class CountrySuspendedRepository {
         <<interface>>
@@ -173,6 +175,7 @@ class DefaultCountrySuspendedRepository: CountrySuspendedRepository {
 ## 캐시 흐름
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     A[suspend findByCode 호출] --> B{LettuceSuspendedCache\ncache.get 히트?}
     B -- 예 --> C[CountryRecord 즉시 반환\nDB 쿼리 없음]
@@ -236,6 +239,7 @@ class SuspendedRepositoryConfig {
 ## Coroutine + Cache 통합 시퀀스
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"', 'actorBkg': '#E3F2FD', 'actorBorder': '#90CAF9', 'actorTextColor': '#1565C0', 'actorLineColor': '#90CAF9', 'activationBkgColor': '#E8F5E9', 'activationBorderColor': '#A5D6A7', 'labelBoxBkgColor': '#FFF3E0', 'labelBoxBorderColor': '#FFCC80', 'labelTextColor': '#E65100', 'loopTextColor': '#6A1B9A', 'noteBkgColor': '#F3E5F5', 'noteBorderColor': '#CE93D8', 'noteTextColor': '#6A1B9A', 'signalColor': '#1565C0', 'signalTextColor': '#1565C0'}}}%%
 sequenceDiagram
     participant Client
     participant Cached as CachedCountrySuspendedRepository

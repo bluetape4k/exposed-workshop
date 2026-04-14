@@ -22,6 +22,7 @@ Schema definition in Exposed is done through `object` declarations. You extend `
 ## Architecture Flow
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph TableDef["Table Definition (Kotlin object)"]
         T1["Table / IntIdTable / UUIDTable"]
@@ -59,6 +60,7 @@ flowchart LR
 ## Table Class Hierarchy
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class Table {
         +String tableName
@@ -98,6 +100,7 @@ classDiagram
 ## Composite PK / FK Relationship ERD
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     PARENT {
         int id_a PK

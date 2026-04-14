@@ -38,6 +38,7 @@ Single DB Instance
 ### 테넌트별 스키마 분리 아키텍처
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     Request[HTTP Request] --> TenantResolver[Tenant Resolver]
     TenantResolver --> |tenant_id 추출| TenantContext[TenantContext\nThreadLocal / ScopedValue / ReactorContext]
@@ -72,6 +73,7 @@ flowchart TD
 ## 모듈 간 구현 비교
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class TenantFilter_MVC {
         jakarta.servlet.Filter
@@ -152,6 +154,7 @@ classDiagram
 모든 모듈은 다음 흐름을 따릅니다. 컨텍스트 전파 방식만 환경에 따라 달라집니다.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"', 'actorBkg': '#E3F2FD', 'actorBorder': '#90CAF9', 'actorTextColor': '#1565C0', 'actorLineColor': '#90CAF9', 'activationBkgColor': '#E8F5E9', 'activationBorderColor': '#A5D6A7', 'labelBoxBkgColor': '#FFF3E0', 'labelBoxBorderColor': '#FFCC80', 'labelTextColor': '#E65100', 'loopTextColor': '#6A1B9A', 'noteBkgColor': '#F3E5F5', 'noteBorderColor': '#CE93D8', 'noteTextColor': '#6A1B9A', 'signalColor': '#1565C0', 'signalTextColor': '#1565C0'}}}%%
 sequenceDiagram
     participant Client
     participant Filter

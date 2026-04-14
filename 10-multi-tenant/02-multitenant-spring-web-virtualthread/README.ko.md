@@ -22,6 +22,7 @@
 ## 도메인 모델
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     MovieTable {
         BIGSERIAL id PK
@@ -60,6 +61,7 @@ erDiagram
 ## 아키텍처
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class TomcatVirtualThreadConfig {
         +protocolHandlerVirtualThreadExecutorCustomizer()
@@ -147,6 +149,7 @@ ScopedValue  → 불변 바인딩, 스코프 벗어나면 자동 소멸
 ### Platform Thread vs Virtual Thread 비교
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph PT["Platform Thread (01 모듈)"]
         PT1[Thread-1] --> DB1[(Schema: korean)]
@@ -173,6 +176,7 @@ flowchart LR
 ## 요청 흐름
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"', 'actorBkg': '#E3F2FD', 'actorBorder': '#90CAF9', 'actorTextColor': '#1565C0', 'actorLineColor': '#90CAF9', 'activationBkgColor': '#E8F5E9', 'activationBorderColor': '#A5D6A7', 'labelBoxBkgColor': '#FFF3E0', 'labelBoxBorderColor': '#FFCC80', 'labelTextColor': '#E65100', 'loopTextColor': '#6A1B9A', 'noteBkgColor': '#F3E5F5', 'noteBorderColor': '#CE93D8', 'noteTextColor': '#6A1B9A', 'signalColor': '#1565C0', 'signalTextColor': '#1565C0'}}}%%
 sequenceDiagram
     participant Client
     participant Tomcat

@@ -17,6 +17,7 @@
 ## Kotlin DateTime 타입 매핑
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class KotlinDateTimeTable {
         +date(name): Column~LocalDate~

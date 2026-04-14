@@ -23,6 +23,7 @@ A module covering Exposed database connection setup and connection reliability v
 ## Architecture Flow
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph Connect["Database.connect()"]
         URL["URL + Driver"]

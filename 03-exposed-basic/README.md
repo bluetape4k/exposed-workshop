@@ -39,6 +39,7 @@ Exposed provides two data access patterns. The **DSL (SQL DSL)** pattern express
 ## Domain Model (classDiagram)
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class CityTable {
         +Column~Int~ id

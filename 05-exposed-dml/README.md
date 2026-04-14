@@ -28,6 +28,7 @@ A chapter covering the full read/write flow in Exposed 1.1.1, from SELECT/INSERT
 ## Architecture Overview
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     subgraph DSL["DSL Layer (org.jetbrains.exposed.v1.jdbc)"]
         S[selectAll / select]

@@ -106,6 +106,7 @@ EntityHook.subscribe { change ->
 ## Entity Relationship Mapping Diagram
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class Projects {
         +EntityID~Long~ id
@@ -146,6 +147,7 @@ classDiagram
 ## XEntity-YEntity Relationship ERD
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     YTABLE {
         varchar uuid PK
@@ -164,6 +166,7 @@ erDiagram
 ## Entity Class Hierarchy Diagram
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class Entity~T~ {
         +EntityID~T~ id

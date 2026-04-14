@@ -23,6 +23,7 @@
 ## 암호화 흐름
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph Write["쓰기 경로"]
         PW["평문\n(plaintext)"]
@@ -173,6 +174,7 @@ insertLog.shouldContainNone(listOf("testName"))  // 평문 미노출 확인
 ## 컬럼 타입 계층
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class ColumnType {
         +valueFromDB(value: Any): Any

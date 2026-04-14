@@ -19,6 +19,7 @@ A module covering deterministic encryption columns using Jasypt. Learn to balanc
 ## Jasypt Encryption Processing Flow
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph Write["Write Path (Deterministic Encryption)"]
         PT1["Plaintext"]

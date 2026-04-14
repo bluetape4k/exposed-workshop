@@ -36,6 +36,7 @@ Exposed의 `IdTable`을 확장하여 KSUID, Snowflake, Timebased UUID 등 커스
 ## 아키텍처 흐름
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class IdTable~T~ {
         +Column~EntityID~T~~ id
@@ -74,6 +75,7 @@ classDiagram
 ## 커스텀 ID 전략 비교 플로우
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph Standard["표준 ID (DB 시퀀스)"]
         INT["IntIdTable\nINT AUTO_INCREMENT"]

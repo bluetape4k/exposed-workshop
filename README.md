@@ -23,6 +23,7 @@ Kotlin Exposed is a Kotlin-specific SQL framework developed by JetBrains. It lev
 ### Exposed API Structure
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph API["Exposed API"]
         DSL["SQL DSL\nTable.selectAll()\nTable.insert {}"]
@@ -87,6 +88,7 @@ The recommended learning order for this workshop:
 ### Learning Path
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     START(["Start"])
 
@@ -148,6 +150,7 @@ Full explanations for all examples are available at [Kotlin Exposed Book](https:
 ## Module Structure
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TB
     subgraph Shared["00 Shared Infrastructure"]
         EST["exposed-shared-tests\nTest Utilities"]

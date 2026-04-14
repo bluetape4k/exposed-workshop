@@ -17,6 +17,7 @@ A module for serializing and deserializing JSON columns using Jackson. Provides 
 ## Table Structure
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     jackson_table {
         SERIAL id PK
@@ -41,6 +42,7 @@ erDiagram
 ## Jackson Serialization Flow
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph KotlinObj["Kotlin Object"]
         DH["DataHolder\n(user, logins, active, team)"]

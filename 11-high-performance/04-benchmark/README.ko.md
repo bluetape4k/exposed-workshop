@@ -16,6 +16,7 @@
 ## 도메인 ERD
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     persons {
         BIGSERIAL id PK
@@ -69,6 +70,7 @@ erDiagram
 ## Exposed vs JPA 벤치마크 구조
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     JMH[JMH Benchmark Runner]
 
@@ -125,6 +127,7 @@ flowchart TD
 ## 클래스 구조
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class ReadThroughCacheBenchmark {
         +payloadBytes: Int [256, 4096]
@@ -207,6 +210,7 @@ classDiagram
 ## 벤치마크 흐름
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     Start([JMH Start])
     Fork[Fork JVM x1]

@@ -33,6 +33,7 @@
 ## 전환 전략 개요
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     A[JPA 코드베이스] --> B{전환 범위 분석}
     B --> C[기본 CRUD\n01-convert-jpa-basic]
@@ -59,6 +60,7 @@ flowchart LR
 ## JPA vs Exposed 개념 비교 다이어그램
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     direction LR
     class JPA_Entity {
@@ -98,6 +100,7 @@ classDiagram
 ## 전환 접근법 비교
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     A[기존 JPA 코드베이스] --> B{엔티티 유형 분석}
     B --> C[단순 CRUD\n어노테이션 매핑]

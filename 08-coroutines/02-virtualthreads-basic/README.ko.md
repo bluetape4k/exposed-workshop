@@ -50,6 +50,7 @@ val ids = futures.awaitAll()
 ## Virtual Thread 트랜잭션 흐름
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"', 'actorBkg': '#E3F2FD', 'actorBorder': '#90CAF9', 'actorTextColor': '#1565C0', 'actorLineColor': '#90CAF9', 'activationBkgColor': '#E8F5E9', 'activationBorderColor': '#A5D6A7', 'labelBoxBkgColor': '#FFF3E0', 'labelBoxBorderColor': '#FFCC80', 'labelTextColor': '#E65100', 'loopTextColor': '#6A1B9A', 'noteBkgColor': '#F3E5F5', 'noteBorderColor': '#CE93D8', 'noteTextColor': '#6A1B9A', 'signalColor': '#1565C0', 'signalTextColor': '#1565C0'}}}%%
 sequenceDiagram
     participant C as Caller (일반 코드)
     participant VT as newVirtualThreadJdbcTransaction
@@ -91,6 +92,7 @@ sequenceDiagram
 ## Virtual Thread 처리 모델 flowchart
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     A["일반 코드 (블로킹 스타일)"] --> B["newVirtualThreadJdbcTransaction { }"]
     B --> C["JVM: Virtual Thread 생성"]
@@ -126,6 +128,7 @@ flowchart TD
 ## Virtual Thread vs Platform Thread 비교 다이어그램
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph PlatformThread["플랫폼 스레드 (전통적 방식)"]
         direction TD
@@ -156,6 +159,7 @@ flowchart LR
 ## 테이블 ERD (virtualthreads_table)
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     virtualthreads_table {
         SERIAL id PK

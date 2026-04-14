@@ -95,6 +95,7 @@ CreditCardTable.selectAll()
 ## Inheritance Strategy classDiagram
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class Billing {
         <<abstract>>
@@ -129,6 +130,7 @@ classDiagram
 ### Single Table Inheritance ERD
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     billing {
         SERIAL id PK
@@ -148,6 +150,7 @@ erDiagram
 ### Joined Table Inheritance ERD
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     joined_person {
         SERIAL id PK
@@ -168,6 +171,7 @@ erDiagram
 ### Table Per Class Inheritance ERD
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     credit_card {
         SERIAL id PK
@@ -187,6 +191,7 @@ erDiagram
 ### TreeNode ERD (Self-reference Tree Structure)
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     tree_nodes {
         BIGINT id PK "autoIncrement"
@@ -202,6 +207,7 @@ erDiagram
 ### Tree Structure Hierarchy Example
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     Root["root (depth=1)"]
     Child1["child1 (depth=2)"]
@@ -226,6 +232,7 @@ flowchart TD
 ## Inheritance Strategy Comparison classDiagram
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     direction TD
     class Billing {

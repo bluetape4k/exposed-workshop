@@ -33,6 +33,7 @@ A chapter that lays out step-by-step strategies for migrating an existing JPA-ce
 ## Migration Strategy Overview
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     A[JPA Codebase] --> B{Analyze migration scope}
     B --> C[Basic CRUD\n01-convert-jpa-basic]
@@ -59,6 +60,7 @@ flowchart LR
 ## JPA vs Exposed Concept Comparison Diagram
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     direction LR
     class JPA_Entity {
@@ -98,6 +100,7 @@ classDiagram
 ## Migration Approach Comparison
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     A[Existing JPA Codebase] --> B{Analyze entity types}
     B --> C[Simple CRUD\nannotation mapping]

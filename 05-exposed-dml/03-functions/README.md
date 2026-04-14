@@ -18,6 +18,7 @@ A module for writing analytical queries by combining SQL functions in the Expose
 ## SQL Function Classification Diagram
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     F["Exposed SQL Functions"] --> STR["String Functions\ntrim / lowerCase / upperCase\nsubstring / concat / like / ilike"]
     F --> MATH["Math Functions\nround / abs / floor / ceiling\nsqrt / power"]
@@ -113,6 +114,7 @@ Sales.select(Sales.region, Sales.amount, rowNum, rankVal)
 ## Window Function Structure
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     A["Window Function\n(rowNumber / rank / lead / lag)"] --> B["over()"]
     B --> C["partitionBy(column)"]

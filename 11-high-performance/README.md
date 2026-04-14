@@ -31,6 +31,7 @@ Covers cache and routing strategies for improving throughput and responsiveness 
 ## Module Relationships
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     M1[01-cache-strategies\nSpring MVC + Virtual Threads\n캐시 전략]
     M2[02-cache-strategies-coroutines\nWebFlux + Coroutines\n비동기 캐시]
@@ -64,6 +65,7 @@ flowchart TD
 ## Overall Architecture
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph "Cache Layers"
         direction TB

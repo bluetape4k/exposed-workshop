@@ -17,6 +17,7 @@ A module for validating Exposed column types per DB Dialect. Covers not only bas
 ## Exposed Column Type Hierarchy
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class ColumnType {
         +nullable Boolean

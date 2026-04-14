@@ -33,6 +33,7 @@ Covers patterns for running Exposed in Kotlin Coroutines and Java Virtual Thread
 ### Coroutines vs Virtual Thread Processing Flow
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     subgraph Coroutines["Kotlin Coroutines"]
         direction TD
@@ -67,6 +68,7 @@ flowchart LR
 ### Thread Model Structure Comparison
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart TD
     subgraph Platform["플랫폼 스레드 (기존)"]
         PT1["Thread-1 (OS Thread)"] --> DB1["DB Connection 1"]
@@ -127,6 +129,7 @@ flowchart TD
 ### Coroutines Transaction Flow
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     A["Caller (Coroutine)"] --> B["newSuspendedTransaction\n(Dispatchers.IO)"]
     A --> C["suspendedTransactionAsync\n(Dispatchers.IO)"]
@@ -154,6 +157,7 @@ flowchart LR
 ### Virtual Thread Transaction Flow
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 flowchart LR
     A["Caller (Blocking Code)"] --> B["newVirtualThreadJdbcTransaction"]
     A --> C["virtualThreadJdbcTransactionAsync"]

@@ -25,6 +25,7 @@ Exposed DAO 패턴은 `IntIdTable`과 `IntEntity`/
 ## ERD
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     cities {
         SERIAL id PK
@@ -42,6 +43,7 @@ erDiagram
 ## 도메인 모델
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class CityTable {
         +Column~Int~ id  [PK]

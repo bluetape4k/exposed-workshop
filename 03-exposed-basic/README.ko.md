@@ -40,6 +40,7 @@ Exposed는 두 가지 데이터 접근 패턴을 제공합니다. **DSL(SQL DSL)
 ## 도메인 모델 (classDiagram)
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class CityTable {
         +Column~Int~ id

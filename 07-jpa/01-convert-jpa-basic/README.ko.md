@@ -79,6 +79,7 @@ transaction {
 ## 관계 매핑 변환 다이어그램
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     class BlogTable {
         +EntityID~Long~ id
@@ -127,6 +128,7 @@ classDiagram
 ### SimpleSchema ERD
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     simple_entity {
         BIGSERIAL id PK
@@ -138,6 +140,7 @@ erDiagram
 ### PersonSchema ERD
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     addresses {
         BIGSERIAL id PK
@@ -161,6 +164,7 @@ erDiagram
 ### BlogSchema ERD
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     posts {
         BIGSERIAL id PK
@@ -195,6 +199,7 @@ erDiagram
 ### BookSchema ERD (복합 PK)
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 erDiagram
     publishers {
         INT pub_id PK "autoIncrement"
@@ -235,6 +240,7 @@ erDiagram
 ### Entity 클래스 다이어그램 — JPA Entity vs Exposed DAO
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#FAFAFA', 'fontFamily': '"Comic Mono", "goorm sans code", "JetBrains Mono", "goorm sans"'}}}%%
 classDiagram
     direction LR
     class JPA_SimpleEntity {
