@@ -96,7 +96,7 @@ Cities.deleteWhere { Cities.id eq targetId }
 ## DML Flow Diagram
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
+%%{init: {"theme": "neutral", "backgroundColor": "#FFFFFF", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 flowchart LR
     A[Kotlin Code] --> B{DML Type}
     B -->|SELECT| C["selectAll() / select()"]
@@ -129,7 +129,7 @@ flowchart LR
 ## CRUD Sequence Diagram
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
+%%{init: {"theme": "neutral", "backgroundColor": "#FFFFFF", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
     box rgb(227, 242, 253) Application
         participant App as Application
@@ -159,7 +159,7 @@ sequenceDiagram
 ## City-User Domain ERD
 
 ```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
+%%{init: {"theme": "neutral", "backgroundColor": "#FFFFFF", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 erDiagram
     CITIES {
         int city_id PK
