@@ -1,38 +1,39 @@
 # Spring WebFlux with Exposed
 
-Spring WebFlux + Kotlin Coroutines 환경에서 Exposed DSL/DAO를 논블로킹 방식으로 사용하는 REST API 모듈입니다. 영화(Movie)와 배우(Actor) 도메인을 통해
-`newSuspendedTransaction` 기반 suspend 트랜잭션 처리 방법을 학습합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A REST API module using Exposed DSL/DAO in a non-blocking fashion with Spring WebFlux + Kotlin Coroutines. Learn `newSuspendedTransaction`-based suspend transaction handling through the Movie and Actor domain.
 
-- `newSuspendedTransaction`을 사용하여 WebFlux suspend 핸들러 안에서 Exposed 트랜잭션을 관리하는 방법을 익힌다.
-- Netty 이벤트 루프와 Exposed JDBC 트랜잭션을 `Dispatchers.IO`로 분리하는 패턴을 이해한다.
-- DAO 방식(`ActorEntity.new`, `MovieEntity.findById`)과 DSL 방식(`selectAll`, `andWhere`)을 suspend 컨텍스트에서 비교한다.
-- Netty ConnectionProvider, LoopResources 튜닝을 통해 Reactive 서버 성능을 조정하는 방법을 확인한다.
+## Learning Goals
 
-## 선수 지식
+- Learn how to manage Exposed transactions inside WebFlux suspend handlers using `newSuspendedTransaction`.
+- Understand the pattern of separating Netty event loops and Exposed JDBC transactions via `Dispatchers.IO`.
+- Compare DAO approach (`ActorEntity.new`, `MovieEntity.findById`) and DSL approach (`selectAll`, `andWhere`) in suspend context.
+- Explore Reactive server performance tuning through Netty ConnectionProvider and LoopResources.
 
-- [`00-shared/exposed-shared-tests`](../../00-shared/exposed-shared-tests/README.md): 공통 테스트 베이스 클래스와 DB 설정 참고
-- Kotlin Coroutines(`suspend`, `CoroutineScope`, `Dispatchers.IO`) 기본 개념
-- Spring WebFlux 기본 개념 (Reactor, `ServerHttpRequest`)
+## Prerequisites
 
----
-
-## Spring MVC vs Spring WebFlux 비교
-
-| 항목               | spring-mvc-exposed              | spring-webflux-exposed                  |
-|------------------|---------------------------------|-----------------------------------------|
-| 서버               | Tomcat                          | Netty                                   |
-| 동시성 모델           | Virtual Threads (블로킹 허용)        | Kotlin Coroutines + `Dispatchers.IO`    |
-| 트랜잭션 관리          | `@Transactional` (Spring AOP)   | `newSuspendedTransaction { }` (직접 호출)   |
-| 핸들러 함수 형태        | 일반 함수                           | `suspend fun`                           |
-| 요청 객체            | `HttpServletRequest`            | `ServerHttpRequest`                     |
-| Repository 반환 타입 | 동기 (`ActorRecord`, `List<...>`) | suspend 함수 (`ActorEntity`, `List<...>`) |
-| 설정 클래스           | `TomcatVirtualThreadConfig`     | `NettyConfig`                           |
+- [`00-shared/exposed-shared-tests`](../../00-shared/exposed-shared-tests/README.md): Shared test base classes and DB configuration reference
+- Kotlin Coroutines basics (`suspend`, `CoroutineScope`, `Dispatchers.IO`)
+- Spring WebFlux basics (Reactor, `ServerHttpRequest`)
 
 ---
 
-## 아키텍처
+## Spring MVC vs Spring WebFlux Comparison
+
+| Aspect              | spring-mvc-exposed              | spring-webflux-exposed                  |
+|---------------------|---------------------------------|-----------------------------------------|
+| Server              | Tomcat                          | Netty                                   |
+| Concurrency Model   | Virtual Threads (blocking OK)   | Kotlin Coroutines + `Dispatchers.IO`    |
+| Transaction Mgmt    | `@Transactional` (Spring AOP)   | `newSuspendedTransaction { }` (direct)  |
+| Handler Function    | Regular function                | `suspend fun`                           |
+| Request Object      | `HttpServletRequest`            | `ServerHttpRequest`                     |
+| Repository Return   | Sync (`ActorRecord`, `List<...>`) | Suspend (`ActorEntity`, `List<...>`)  |
+| Config Class        | `TomcatVirtualThreadConfig`     | `NettyConfig`                           |
+
+---
+
+## Architecture
 
 ```mermaid
 classDiagram
@@ -143,55 +144,55 @@ classDiagram
 
 ---
 
-## API 목록
+## API List
 
 ### Actor API (`/actors`)
 
-| HTTP 메서드 | 경로             | 설명                           | 트랜잭션           |
-|----------|----------------|------------------------------|----------------|
-| `GET`    | `/actors/{id}` | ID로 배우 단건 조회                 | readOnly=true  |
-| `GET`    | `/actors`      | 쿼리 파라미터 기반 배우 검색 (없으면 전체 반환) | readOnly=true  |
-| `POST`   | `/actors`      | 새 배우 생성                      | readOnly=false |
-| `DELETE` | `/actors/{id}` | ID로 배우 삭제                    | readOnly=false |
+| HTTP Method | Path            | Description                                    | Transaction    |
+|-------------|-----------------|------------------------------------------------|----------------|
+| `GET`       | `/actors/{id}`  | Get single actor by ID                         | readOnly=true  |
+| `GET`       | `/actors`       | Search actors by query params (all if empty)   | readOnly=true  |
+| `POST`      | `/actors`       | Create new actor                               | readOnly=false |
+| `DELETE`    | `/actors/{id}`  | Delete actor by ID                             | readOnly=false |
 
-**검색 파라미터** (`GET /actors`):
+**Search Parameters** (`GET /actors`):
 
-| 파라미터        | 설명                  | 예시           |
-|-------------|---------------------|--------------|
-| `firstName` | 이름 일치 검색            | `Tom`        |
-| `lastName`  | 성 일치 검색             | `Hanks`      |
-| `birthday`  | 생년월일 (`yyyy-MM-dd`) | `1956-07-09` |
-| `id`        | 배우 ID 일치 검색         | `1`          |
+| Parameter   | Description                  | Example      |
+|-------------|------------------------------|--------------|
+| `firstName` | Match by first name          | `Tom`        |
+| `lastName`  | Match by last name           | `Hanks`      |
+| `birthday`  | Date of birth (`yyyy-MM-dd`) | `1956-07-09` |
+| `id`        | Match by actor ID            | `1`          |
 
 ### Movie API (`/movies`)
 
-| HTTP 메서드 | 경로             | 설명                           | 트랜잭션           |
-|----------|----------------|------------------------------|----------------|
-| `GET`    | `/movies/{id}` | ID로 영화 단건 조회                 | readOnly=true  |
-| `GET`    | `/movies`      | 쿼리 파라미터 기반 영화 검색 (없으면 전체 반환) | readOnly=true  |
-| `POST`   | `/movies`      | 새 영화 생성                      | readOnly=false |
-| `DELETE` | `/movies/{id}` | ID로 영화 삭제                    | readOnly=false |
+| HTTP Method | Path            | Description                                    | Transaction    |
+|-------------|-----------------|------------------------------------------------|----------------|
+| `GET`       | `/movies/{id}`  | Get single movie by ID                         | readOnly=true  |
+| `GET`       | `/movies`       | Search movies by query params (all if empty)   | readOnly=true  |
+| `POST`      | `/movies`       | Create new movie                               | readOnly=false |
+| `DELETE`    | `/movies/{id}`  | Delete movie by ID                             | readOnly=false |
 
-**검색 파라미터** (`GET /movies`):
+**Search Parameters** (`GET /movies`):
 
-| 파라미터           | 설명                           | 예시                    |
-|----------------|------------------------------|-----------------------|
-| `name`         | 영화 제목 일치 검색                  | `Forrest Gump`        |
-| `producerName` | 제작자 이름 일치 검색                 | `Robert Zemeckis`     |
-| `releaseDate`  | 개봉일시 (`yyyy-MM-ddTHH:mm:ss`) | `1994-07-06T00:00:00` |
-| `id`           | 영화 ID 일치 검색                  | `1`                   |
+| Parameter      | Description                             | Example               |
+|----------------|-----------------------------------------|-----------------------|
+| `name`         | Match by movie title                    | `Forrest Gump`        |
+| `producerName` | Match by producer name                  | `Robert Zemeckis`     |
+| `releaseDate`  | Release datetime (`yyyy-MM-ddTHH:mm:ss`) | `1994-07-06T00:00:00` |
+| `id`           | Match by movie ID                       | `1`                   |
 
 ### Movie-Actor Relation API (`/movie-actors`)
 
-| HTTP 메서드 | 경로                               | 설명                    |
-|----------|----------------------------------|-----------------------|
-| `GET`    | `/movie-actors/{movieId}`        | 특정 영화와 출연 배우 목록 조회    |
-| `GET`    | `/movie-actors/count`            | 각 영화별 출연 배우 수 집계      |
-| `GET`    | `/movie-actors/acting-producers` | 제작자가 직접 배우로 출연한 영화 목록 |
+| HTTP Method | Path                              | Description                               |
+|-------------|-----------------------------------|-------------------------------------------|
+| `GET`       | `/movie-actors/{movieId}`         | Get movie with its cast list              |
+| `GET`       | `/movie-actors/count`             | Count actors per movie                    |
+| `GET`       | `/movie-actors/acting-producers`  | Movies where the producer also acts       |
 
 ---
 
-## 요청 처리 흐름
+## Request Processing Flow
 
 ```mermaid
 sequenceDiagram
@@ -205,7 +206,7 @@ sequenceDiagram
 
     Client->>Netty: POST /actors (ActorRecord JSON)
     Netty->>ActorController: suspend fun createActor(actor)
-    Note over ActorController: Dispatchers.IO로 전환
+    Note over ActorController: Switch to Dispatchers.IO
     ActorController->>newSuspendedTransaction: newSuspendedTransaction { }
     newSuspendedTransaction->>ActorRepository: create(actor)
     ActorRepository->>ActorTable: ActorEntity.new { firstName, lastName, birthday }
@@ -213,7 +214,7 @@ sequenceDiagram
     DB-->>ActorTable: generated id
     ActorTable-->>ActorRepository: ActorEntity
     ActorRepository-->>newSuspendedTransaction: ActorEntity
-    newSuspendedTransaction-->>ActorController: ActorEntity (커밋 완료)
+    newSuspendedTransaction-->>ActorController: ActorEntity (committed)
     ActorController-->>Netty: ActorRecord
     Netty-->>Client: 200 ActorRecord JSON
 
@@ -233,11 +234,11 @@ sequenceDiagram
 
 ---
 
-## 핵심 구현
+## Key Implementation
 
-### suspend 트랜잭션 패턴
+### Suspend Transaction Pattern
 
-컨트롤러에서 `newSuspendedTransaction`으로 트랜잭션 경계를 직접 제어합니다:
+Controllers directly control transaction boundaries with `newSuspendedTransaction`:
 
 ```kotlin
 @GetMapping("/{id}")
@@ -254,7 +255,7 @@ suspend fun createActor(@RequestBody actor: ActorRecord): ActorRecord =
     }
 ```
 
-### DAO 방식 배우 생성
+### DAO-based Actor Creation
 
 ```kotlin
 suspend fun create(actor: ActorRecord): ActorEntity {
@@ -268,7 +269,7 @@ suspend fun create(actor: ActorRecord): ActorEntity {
 }
 ```
 
-### 영화-배우 관계 — Eager Loading
+### Movie-Actor Relation -- Eager Loading
 
 ```kotlin
 suspend fun getMovieWithActors(movieId: Long): MovieWithActorRecord? {
@@ -279,7 +280,7 @@ suspend fun getMovieWithActors(movieId: Long): MovieWithActorRecord? {
 }
 ```
 
-### 복잡한 JOIN 쿼리 — Lazy 초기화 패턴
+### Complex JOIN Query -- Lazy Initialization Pattern
 
 ```kotlin
 private val MovieActorJoin by lazy {
@@ -301,7 +302,7 @@ suspend fun getMovieActorsCount(): List<MovieActorCountRecord> {
 }
 ```
 
-### Netty 서버 튜닝
+### Netty Server Tuning
 
 ```kotlin
 @Configuration
@@ -325,24 +326,24 @@ class NettyConfig {
 }
 ```
 
-### 데이터베이스 프로파일 설정
+### Database Profile Configuration
 
-Spring Profile로 데이터베이스를 전환합니다:
+Switch databases using Spring Profiles:
 
-| 프로파일       | 데이터베이스                            |
-|------------|-----------------------------------|
-| `h2`       | H2 인메모리 (기본값)                     |
-| `mysql`    | MySQL 8 (TestContainers 자동 실행)    |
-| `postgres` | PostgreSQL (TestContainers 자동 실행) |
+| Profile    | Database                              |
+|------------|---------------------------------------|
+| `h2`       | H2 in-memory (default)               |
+| `mysql`    | MySQL 8 (TestContainers auto-start)  |
+| `postgres` | PostgreSQL (TestContainers auto-start)|
 
 ```bash
-# PostgreSQL 프로파일로 실행
+# Run with PostgreSQL profile
 ./gradlew :01-spring-boot:spring-webflux-exposed:bootRun --args='--spring.profiles.active=postgres'
 ```
 
 ---
 
-## 도메인 모델
+## Domain Model
 
 ```mermaid
 erDiagram
@@ -362,50 +363,50 @@ erDiagram
         bigint movie_id FK
         bigint actor_id FK
     }
-    MOVIES ||--o{ ACTORS_IN_MOVIES : "출연"
-    ACTORS ||--o{ ACTORS_IN_MOVIES : "출연"
+    MOVIES ||--o{ ACTORS_IN_MOVIES : "cast"
+    ACTORS ||--o{ ACTORS_IN_MOVIES : "cast"
 ```
 
-| 클래스                             | 설명                                                           |
-|---------------------------------|--------------------------------------------------------------|
-| `MovieRecord`                   | 영화 정보 DTO (`id`, `name`, `producerName`, `releaseDate`)      |
-| `ActorRecord`                   | 배우 정보 DTO (`id`, `firstName`, `lastName`, `birthday`)        |
-| `MovieWithActorRecord`          | 영화 + 출연 배우 목록 복합 DTO                                         |
-| `MovieActorCountRecord`         | 영화명 + 출연 배우 수 집계 DTO                                         |
-| `MovieWithProducingActorRecord` | 제작자 겸 배우 정보 DTO                                              |
-| `MovieTable`                    | Exposed `LongIdTable` — movies 테이블 (name, producerName 인덱스)  |
-| `ActorTable`                    | Exposed `LongIdTable` — actors 테이블 (firstName, lastName 인덱스) |
-| `ActorInMovieTable`             | 영화-배우 N:M 관계 테이블 (복합 PK)                                     |
-| `MovieEntity`                   | `LongEntity` DAO (actors 관계 포함)                              |
-| `ActorEntity`                   | `LongEntity` DAO (movies 관계 포함)                              |
+| Class                            | Description                                                            |
+|----------------------------------|------------------------------------------------------------------------|
+| `MovieRecord`                    | Movie info DTO (`id`, `name`, `producerName`, `releaseDate`)           |
+| `ActorRecord`                    | Actor info DTO (`id`, `firstName`, `lastName`, `birthday`)             |
+| `MovieWithActorRecord`           | Composite DTO with movie + cast list                                   |
+| `MovieActorCountRecord`          | Aggregation DTO with movie name + actor count                          |
+| `MovieWithProducingActorRecord`  | DTO for producer who also acts                                         |
+| `MovieTable`                     | Exposed `LongIdTable` -- movies table (name, producerName indexed)     |
+| `ActorTable`                     | Exposed `LongIdTable` -- actors table (firstName, lastName indexed)    |
+| `ActorInMovieTable`              | Movie-actor N:M relation table (composite PK)                         |
+| `MovieEntity`                    | `LongEntity` DAO (includes actors relation)                            |
+| `ActorEntity`                    | `LongEntity` DAO (includes movies relation)                            |
 
 ---
 
-## 실행 방법
+## How to Run
 
 ```bash
-# 애플리케이션 기동 (기본: H2 프로파일)
+# Start application (default: H2 profile)
 ./gradlew :01-spring-boot:spring-webflux-exposed:bootRun
 
-# 테스트 실행
+# Run tests
 ./gradlew :01-spring-boot:spring-webflux-exposed:test
 
-# Swagger UI 접속
+# Access Swagger UI
 open http://localhost:8080/swagger-ui.html
 ```
 
 ---
 
-## 실습 체크리스트
+## Practice Checklist
 
-- `GET /actors`, `GET /movies` 응답을 Swagger UI 또는 curl로 확인한다.
-- `POST /actors` → `GET /actors/{id}` → `DELETE /actors/{id}` 전체 CRUD 흐름을 검증한다.
-- `GET /movie-actors/{movieId}`에서 DAO eager loading이 생성하는 SQL 2개를 로그로 확인한다.
-- `GET /movie-actors/acting-producers`에서 조건부 JOIN SQL을 로그로 확인한다.
-- `spring.profiles.active=postgres`로 전환하여 PostgreSQL에서 동일 API가 동작하는지 확인한다.
+- Verify `GET /actors` and `GET /movies` responses via Swagger UI or curl.
+- Validate the full CRUD flow: `POST /actors` -> `GET /actors/{id}` -> `DELETE /actors/{id}`.
+- Check the 2 SQL queries generated by DAO eager loading in logs via `GET /movie-actors/{movieId}`.
+- Check the conditional JOIN SQL in logs via `GET /movie-actors/acting-producers`.
+- Switch to `spring.profiles.active=postgres` and verify the same APIs work on PostgreSQL.
 
 ---
 
-## 다음 챕터
+## Next Chapter
 
-- [02-alternatives-to-jpa](../../02-alternatives-to-jpa/README.md): R2DBC, Vert.x, Hibernate Reactive 등 JPA 대안 스택 학습
+- [02-alternatives-to-jpa](../../02-alternatives-to-jpa/README.md): Learn alternative stacks to JPA including R2DBC, Vert.x, and Hibernate Reactive

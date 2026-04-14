@@ -1,21 +1,21 @@
 # 02 Alternatives: Hibernate Reactive Example
 
-Hibernate Reactive + Mutiny + PostgreSQL 환경에서 선언적/Reactive 트랜잭션을 실습하는 모듈입니다. JPA에서 Reactive로 전환할 때의 API 대응과 차이를 직접 비교할 수 있습니다.
+English | [한국어](./README.ko.md)
 
-## 개요
+A module for practising declarative/Reactive transactions in a Hibernate Reactive + Mutiny + PostgreSQL environment. You can directly compare API mappings and differences when migrating from JPA to Reactive.
 
-Hibernate Reactive는 기존 JPA 어노테이션(`@Entity`,
-`@OneToMany` 등)을 그대로 사용하면서 Netty 기반 Non-blocking I/O로 DB와 통신합니다. SmallRye Mutiny의 `Uni`/`Multi` 타입을 Kotlin 코루틴
-`suspend` 함수로 감싸서 사용합니다.
+## Overview
 
-## 학습 목표
+Hibernate Reactive retains the existing JPA annotations (`@Entity`, `@OneToMany`, etc.) while communicating with the database via Netty-based Non-blocking I/O. SmallRye Mutiny `Uni`/`Multi` types are wrapped with Kotlin coroutine `suspend` functions.
 
-- Hibernate Reactive의 `Mutiny.Session` 기반 비동기 CRUD를 이해한다.
-- `Uni<T>` / `Multi<T>` 결과를 `awaitSuspending()`으로 코루틴에서 소비하는 방법을 익힌다.
-- JPA `@Entity` 어노테이션과 Exposed `Table`/`Entity` 패턴을 비교한다.
-- PostgreSQL에서 Reactive 흐름을 유지하며 이벤트를 처리한다.
+## Learning Goals
 
-## 아키텍처 흐름
+- Understand async CRUD based on Hibernate Reactive's `Mutiny.Session`.
+- Learn how to consume `Uni<T>` / `Multi<T>` results in coroutines via `awaitSuspending()`.
+- Compare JPA `@Entity` annotations with Exposed `Table`/`Entity` patterns.
+- Handle events in PostgreSQL while maintaining the Reactive flow.
+
+## Architecture Flow
 
 ```mermaid
 sequenceDiagram
@@ -25,11 +25,11 @@ sequenceDiagram
     participant DB as PostgreSQL
     C ->> SF: withSession { session -> }
     SF ->> R: findAllByName(session, name)
-    R ->> DB: Criteria 쿼리 (Non-blocking)
+    R ->> DB: Criteria query (Non-blocking)
     DB -->> R: Uni<List<Team>>
     R -->> R: awaitSuspending()
     R -->> C: List<Team>
-    C -->> C: toTeamRecord() 매핑
+    C -->> C: toTeamRecord() mapping
 ```
 
 ## ERD
@@ -48,7 +48,7 @@ erDiagram
     teams ||--o{ members : "team_id"
 ```
 
-## 도메인 모델
+## Domain Model
 
 ```mermaid
 classDiagram
@@ -70,7 +70,7 @@ classDiagram
     style Member fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
 ```
 
-### JPA 엔티티 선언
+### JPA Entity Declaration
 
 ```kotlin
 @Entity
@@ -91,13 +91,13 @@ class Team: AbstractValueObject() {
 }
 ```
 
-### Repository — Mutiny.Session 기반 CRUD
+### Repository — Mutiny.Session-based CRUD
 
 ```kotlin
 @Repository
 class TeamSessionRepository(sf: SessionFactory): AbstractMutinySessionRepository<Team, Long>(sf) {
 
-    // 이름 기반 검색 (Criteria API + awaitSuspending)
+    // Name-based search (Criteria API + awaitSuspending)
     suspend fun findAllByName(session: Session, name: String): List<Team> {
         val cb = sf.criteriaBuilder
         val criteria = cb.createQuery(Team::class.java)
@@ -106,9 +106,9 @@ class TeamSessionRepository(sf: SessionFactory): AbstractMutinySessionRepository
         return session.createQuery(criteria).resultList.awaitSuspending()
     }
 
-    // 멤버 이름으로 팀 조회 후 members 즉시 로딩
+    // Find teams by member name, then eagerly load members
     suspend fun findAllByMemberName(session: Session, name: String): List<Team> {
-        // ... Criteria + session.fetch() 패턴
+        // ... Criteria + session.fetch() pattern
         return session.createQuery(criteria).resultList.awaitSuspending().apply {
             asFlow().flatMapMerge { team ->
                 session.fetch(team.members).awaitSuspending().asFlow()
@@ -118,65 +118,65 @@ class TeamSessionRepository(sf: SessionFactory): AbstractMutinySessionRepository
 }
 ```
 
-## 핵심 구성 파일
+## Key Files
 
-| 파일                                             | 설명                                      |
-|------------------------------------------------|-----------------------------------------|
-| `domain/model/Team.kt`                         | `@Entity` 팀 JPA 엔티티                     |
-| `domain/model/Member.kt`                       | `@Entity` 멤버 JPA 엔티티                    |
-| `domain/repository/TeamSessionRepository.kt`   | `Mutiny.Session` 기반 Team CRUD           |
-| `domain/repository/MemberSessionRepository.kt` | Member 조회/저장                            |
-| `config/HibernateReactiveConfig.kt`            | `Mutiny.SessionFactory` + PostgreSQL 설정 |
-| `controller/TeamController.kt`                 | Team REST API (`/teams`, `/teams/{id}`) |
-| `controller/MemberController.kt`               | Member REST API                         |
+| File                                             | Description                                     |
+|------------------------------------------------|-------------------------------------------------|
+| `domain/model/Team.kt`                         | `@Entity` Team JPA entity                       |
+| `domain/model/Member.kt`                       | `@Entity` Member JPA entity                     |
+| `domain/repository/TeamSessionRepository.kt`   | `Mutiny.Session`-based Team CRUD                |
+| `domain/repository/MemberSessionRepository.kt` | Member query/save                               |
+| `config/HibernateReactiveConfig.kt`            | `Mutiny.SessionFactory` + PostgreSQL config     |
+| `controller/TeamController.kt`                 | Team REST API (`/teams`, `/teams/{id}`)         |
+| `controller/MemberController.kt`               | Member REST API                                 |
 
-## 테스트 파일 구성
+## Test Files
 
-| 파일                                               | 설명                       |
-|--------------------------------------------------|--------------------------|
-| `config/HibernateReactiveConfigTest.kt`          | `SessionFactory` 빈 로딩 검증 |
-| `domain/repository/TeamSessionRepositoryTest.kt` | Team CRUD suspend 테스트    |
-| `domain/repository/MemerRepositoryTest.kt`       | Member 조회/저장 테스트         |
-| `controller/TeamControllerTest.kt`               | Team REST API 통합 테스트     |
-| `controller/MemberControllerTest.kt`             | Member REST API 통합 테스트   |
+| File                                               | Description                               |
+|--------------------------------------------------|-------------------------------------------|
+| `config/HibernateReactiveConfigTest.kt`          | Verifies `SessionFactory` bean loading    |
+| `domain/repository/TeamSessionRepositoryTest.kt` | Team CRUD suspend tests                   |
+| `domain/repository/MemerRepositoryTest.kt`       | Member query/save tests                   |
+| `controller/TeamControllerTest.kt`               | Team REST API integration tests           |
+| `controller/MemberControllerTest.kt`             | Member REST API integration tests         |
 
-## Hibernate Reactive vs Exposed 비교
+## Hibernate Reactive vs Exposed Comparison
 
-| 항목      | Hibernate Reactive                              | Exposed                                           |
-|---------|-------------------------------------------------|---------------------------------------------------|
-| 스키마 정의  | `@Entity`, `@Table` JPA 어노테이션                   | `object MyTable : IntIdTable("my_table")`         |
-| CRUD    | `session.persist(entity).awaitSuspending()`     | `MyTable.insert { it[col] = value }`              |
-| 조회      | Criteria API + `awaitSuspending()`              | `MyTable.selectAll().where { col eq value }`      |
-| 관계 로딩   | `session.fetch(team.members).awaitSuspending()` | `.with(Team::members)` eager loading              |
-| 트랜잭션    | `sf.withSession { s -> s.withTransaction { } }` | `transaction { }` / `newSuspendedTransaction { }` |
-| 결과 타입   | `Uni<T>` → `awaitSuspending()`                  | 동기 결과 / `Deferred<T>`                             |
-| JPA 호환성 | 완전 호환 (마이그레이션 용이)                               | 독자적 DSL (재작성 필요)                                  |
+| Item           | Hibernate Reactive                              | Exposed                                           |
+|---------------|-------------------------------------------------|---------------------------------------------------|
+| Schema definition | `@Entity`, `@Table` JPA annotations         | `object MyTable : IntIdTable("my_table")`         |
+| CRUD          | `session.persist(entity).awaitSuspending()`     | `MyTable.insert { it[col] = value }`              |
+| Query         | Criteria API + `awaitSuspending()`              | `MyTable.selectAll().where { col eq value }`      |
+| Relation loading | `session.fetch(team.members).awaitSuspending()` | `.with(Team::members)` eager loading           |
+| Transactions  | `sf.withSession { s -> s.withTransaction { } }` | `transaction { }` / `newSuspendedTransaction { }` |
+| Result types  | `Uni<T>` → `awaitSuspending()`                  | Synchronous result / `Deferred<T>`                |
+| JPA compatibility | Fully compatible (easy migration)           | Proprietary DSL (requires rewrite)                |
 
-## 테스트 실행 방법
+## Running Tests
 
 ```bash
-# 테스트 실행
+# Run tests
 ./gradlew :02-alternatives-to-jpa:hibernate-reactive-example:test
 
-# 앱 서버 실행 (PostgreSQL 필요)
+# Run app server (requires PostgreSQL)
 ./gradlew :02-alternatives-to-jpa:hibernate-reactive-example:bootRun
 
-# 특정 테스트 클래스만 실행
+# Run a specific test class
 ./gradlew :02-alternatives-to-jpa:hibernate-reactive-example:test \
     --tests "alternative.hibernate.reactive.example.domain.repository.TeamSessionRepositoryTest"
 ```
 
-## 복잡한 시나리오
+## Advanced Scenarios
 
-- **이름 기반 조회 + 재검증**: `TeamSessionRepositoryTest` — `findAllByName` 후 `findById`로 동일 엔티티 재조회 일치 검증
-- **삭제 후 null 확인**: `delete team by id` 테스트 — 저장 → 삭제 → 조회(null) 시나리오
-- **멤버 이름으로 팀 조회**: `findAllByMemberName` — JOIN 후 `session.fetch()`로 members 즉시 로딩
+- **Name-based query + re-verification**: `TeamSessionRepositoryTest` — verifies that the same entity retrieved via `findAllByName` matches a subsequent `findById` lookup
+- **Null check after delete**: `delete team by id` test — save → delete → query(null) scenario
+- **Find team by member name**: `findAllByMemberName` — JOIN followed by `session.fetch()` for eager member loading
 
-## 알려진 제약 사항
+## Known Limitations
 
-- PostgreSQL 전용 Reactive 드라이버를 사용하므로, H2/MySQL에서는 실행되지 않습니다.
-- Reactive 흐름 내에서 블로킹 호출(`Thread.sleep`, JDBC 직접 호출)은 이벤트 루프를 차단하므로 금지됩니다.
+- Uses a PostgreSQL-specific Reactive driver, so it does not run on H2/MySQL.
+- Blocking calls inside the Reactive flow (`Thread.sleep`, direct JDBC calls) block the event loop and are prohibited.
 
-## 다음 모듈
+## Next Module
 
 - [r2dbc-example](../r2dbc-example/README.md)

@@ -1,24 +1,25 @@
 # Exposed + Spring WebFlux + Coroutines + Multi-Tenant (03)
 
-WebFlux + Coroutines 기반의 논블로킹 멀티테넌트 예제입니다. Reactor `Context`를 통해 테넌트 정보를 전파하고, 코루틴 트랜잭션(
-`newSuspendedTransactionWithTenant`)과 연계해 스키마를 분리합니다. 이벤트 루프를 차단하지 않으면서 테넌트 격리를 보장하는 방식을 다룹니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A non-blocking multi-tenant example based on WebFlux + Coroutines. Propagates tenant information via Reactor `Context`, and integrates with coroutine transactions (`newSuspendedTransactionWithTenant`) to separate schemas. Covers an approach that guarantees tenant isolation without blocking the event loop.
 
-- Reactor `Context`와 Kotlin 코루틴 컨텍스트 브릿지(`ReactorContext`)를 이해한다.
-- `TenantId`를 `CoroutineContext.Element`로 구현해 코루틴 체인에 전파하는 방법을 익힌다.
-- `newSuspendedTransactionWithTenant`로 테넌트별 스키마 전환을 코루틴 안에서 처리한다.
-- 논블로킹 경로에서 격리와 성능을 함께 검증한다.
+## Learning Goals
 
-## 선수 지식
+- Understand the Reactor `Context` and Kotlin coroutine context bridge (`ReactorContext`).
+- Learn how to implement `TenantId` as a `CoroutineContext.Element` and propagate it through a coroutine chain.
+- Handle per-tenant schema switching inside coroutines using `newSuspendedTransactionWithTenant`.
+- Verify isolation and performance together on the non-blocking path.
+
+## Prerequisites
 
 - [`../08-coroutines/README.md`](../08-coroutines/README.md)
 - [`../01-multitenant-spring-web/README.md`](../01-multitenant-spring-web/README.md)
-- Reactor Context / Kotlin Coroutines 기초
+- Reactor Context / Kotlin Coroutines basics
 
 ---
 
-## 도메인 모델
+## Domain Model
 
 ```mermaid
 erDiagram
@@ -45,19 +46,19 @@ erDiagram
 
 ---
 
-## 01/02 모듈과의 핵심 차이
+## Key Differences from Modules 01/02
 
-| 항목      | 01 (Spring MVC)          | 02 (Virtual Threads)     | 03 (WebFlux)                           |
+| Item          | 01 (Spring MVC)          | 02 (Virtual Threads)     | 03 (WebFlux)                           |
 |---------|--------------------------|--------------------------|----------------------------------------|
-| 서버      | Tomcat (서블릿)             | Tomcat (Virtual Thread)  | Netty (논블로킹)                           |
-| 컨텍스트 저장 | `ThreadLocal`            | `ScopedValue`            | Reactor `Context` + `CoroutineContext` |
-| 스키마 전환  | AOP `@Before`            | AOP `@Before`            | `newSuspendedTransactionWithTenant`    |
-| 트랜잭션    | `@Transactional`         | `@Transactional`         | `newSuspendedTransaction`              |
-| 필터 타입   | `jakarta.servlet.Filter` | `jakarta.servlet.Filter` | `WebFilter` (Reactor)                  |
+| Server  | Tomcat (servlet)         | Tomcat (Virtual Thread)  | Netty (non-blocking)                   |
+| Context Storage | `ThreadLocal`        | `ScopedValue`            | Reactor `Context` + `CoroutineContext` |
+| Schema Switch | AOP `@Before`          | AOP `@Before`            | `newSuspendedTransactionWithTenant`    |
+| Transaction | `@Transactional`       | `@Transactional`         | `newSuspendedTransaction`              |
+| Filter Type | `jakarta.servlet.Filter` | `jakarta.servlet.Filter` | `WebFilter` (Reactor)                  |
 
 ---
 
-## 아키텍처
+## Architecture
 
 ```mermaid
 classDiagram
@@ -114,13 +115,13 @@ classDiagram
 
     TenantFilter --> Tenants : getById()
     TenantFilter --> TenantId : contextWrite()
-    TenantId --> CoroutineContext_Element : 구현
+    TenantId --> CoroutineContext_Element : implements
     TenantId --> Tenant : value
-    Tenants --> Tenant : 열거형 멤버
+    Tenants --> Tenant : enum member
     TenantAwareDataSource --> TenantId : currentTenant()
     ActorController --> TenantId : newSuspendedTransactionWithCurrentReactorTenant()
     TenantInitializer --> DataInitializer : initialize(tenant)
-    ExposedMultitenantConfig --> TenantAwareDataSource : 빈 생성
+    ExposedMultitenantConfig --> TenantAwareDataSource : creates bean
 
     style TenantFilter fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
     style TenantId fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
@@ -134,26 +135,25 @@ classDiagram
     style NettyConfig fill:#E0F2F1,stroke:#80CBC4,color:#00695C
 ```
 
-### 컨텍스트 전파 체계
+### Context Propagation System
 
-WebFlux에서는 스레드가 요청에 고정되지 않아 `ThreadLocal`/`ScopedValue`를 사용할 수 없습니다. 대신 Reactor `Context` → `ReactorContext` →
-`CoroutineContext` 경로로 테넌트를 전파합니다.
+In WebFlux, threads are not pinned to requests, so `ThreadLocal`/`ScopedValue` cannot be used. Instead, tenant information is propagated via the Reactor `Context` → `ReactorContext` → `CoroutineContext` path.
 
 ```
-HTTP 요청
+HTTP Request
   └── TenantFilter (WebFilter)
         └── chain.filter(exchange).contextWrite { it.put("TenantId", TenantId(tenant)) }
-              └── Reactor Context (비동기 체인 전파)
+              └── Reactor Context (propagated through async chain)
                     └── coroutineContext[ReactorContext]?.context?.get("TenantId")
                           └── newSuspendedTransactionWithTenant { SchemaUtils.setSchema(...) }
 ```
 
-### Reactor Context를 통한 테넌트 전파 흐름
+### Tenant Propagation Flow via Reactor Context
 
 ```mermaid
 flowchart LR
-    Request[WebFlux Request] --> |Mono/Flux| WebFilter[WebFilter\nTenant 추출]
-    WebFilter --> |contextWrite| ReactorCtx[Reactor Context\nTenantId 저장]
+    Request[WebFlux Request] --> |Mono/Flux| WebFilter[WebFilter\nTenant extracted]
+    WebFilter --> |contextWrite| ReactorCtx[Reactor Context\nTenantId stored]
     ReactorCtx --> |coroutineContext| CoroutineScope[CoroutineScope\n+ ReactorContext]
     CoroutineScope --> |newSuspendedTransactionWithTenant| ExposedDB[Exposed\nnewSuspendedTransaction]
     ExposedDB --> |useSchema| TenantDB[(Tenant Schema)]
@@ -173,7 +173,7 @@ flowchart LR
 
 ---
 
-## 요청 흐름
+## Request Flow
 
 ```mermaid
 sequenceDiagram
@@ -190,9 +190,9 @@ sequenceDiagram
     Netty->>TenantFilter: filter(exchange, chain)
 
     TenantFilter->>ReactorContext: contextWrite { put("TenantId", TenantId(ENGLISH)) }
-    Note over ReactorContext: Reactor Context에 TenantId 저장 (체인 전파)
+    Note over ReactorContext: TenantId stored in Reactor Context (chain propagation)
 
-    TenantFilter->>ActorController: chain.filter(exchange) 진행
+    TenantFilter->>ActorController: chain.filter(exchange) proceeds
 
     ActorController->>TenantId: newSuspendedTransactionWithCurrentReactorTenant { }
     TenantId->>ReactorContext: coroutineContext[ReactorContext].context.get("TenantId")
@@ -208,12 +208,11 @@ sequenceDiagram
 
 ---
 
-## 핵심 구현
+## Key Implementation
 
 ### TenantFilter (WebFilter)
 
-서블릿 `Filter` 대신 Reactor `WebFilter`를 구현합니다. `mono { }` 블록 안에서 헤더를 읽고, `contextWrite`로 Reactor Context에
-`TenantId`를 주입합니다. `awaitSingleOrNull()`로 코루틴과 Reactor를 브릿지합니다.
+Implements Reactor `WebFilter` instead of servlet `Filter`. Reads the header inside a `mono { }` block and injects `TenantId` into the Reactor Context via `contextWrite`. Bridges coroutines and Reactor using `awaitSingleOrNull()`.
 
 ```kotlin
 override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> = mono {
@@ -229,8 +228,7 @@ override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Vo
 
 ### TenantId
 
-`CoroutineContext.Element`를 구현해 코루틴 컨텍스트에서 직접 조회할 수 있는 테넌트 식별자입니다. Reactor Context에서 읽어오는
-`currentReactorTenant()`와 코루틴 컨텍스트에서 읽어오는 `currentTenant()` 두 가지 접근 방식을 제공합니다.
+A tenant identifier implementing `CoroutineContext.Element` that can be directly queried from the coroutine context. Provides two access approaches: `currentReactorTenant()` reads from Reactor Context, and `currentTenant()` reads from coroutine context.
 
 ```kotlin
 data class TenantId(val value: Tenants.Tenant): CoroutineContext.Element {
@@ -241,20 +239,19 @@ data class TenantId(val value: Tenants.Tenant): CoroutineContext.Element {
     override val key: CoroutineContext.Key<*> = Key
 }
 
-// Reactor Context에서 테넌트 읽기
+// Read tenant from Reactor Context
 suspend fun currentReactorTenant(): Tenants.Tenant =
     coroutineContext[ReactorContext]?.context?.getOrDefault(TenantId.TENANT_ID_KEY, TenantId.DEFAULT)?.value
         ?: Tenants.DEFAULT_TENANT
 
-// CoroutineContext에서 테넌트 읽기
+// Read tenant from CoroutineContext
 suspend fun currentTenant(): Tenants.Tenant =
     coroutineContext[TenantId]?.value ?: Tenants.DEFAULT_TENANT
 ```
 
 ### newSuspendedTransactionWithTenant
 
-`newSuspendedTransaction`을 감싸 테넌트 스키마 전환을 자동으로 처리하는 확장 함수입니다.
-`Dispatchers.IO + TenantId(currentTenant)`를 코루틴 컨텍스트에 합성해 트랜잭션 내부에서 테넌트 정보를 유지합니다.
+An extension function that wraps `newSuspendedTransaction` to automatically handle per-tenant schema switching. Combines `Dispatchers.IO + TenantId(currentTenant)` into the coroutine context to maintain tenant information inside the transaction.
 
 ```kotlin
 suspend fun <T> newSuspendedTransactionWithTenant(
@@ -274,8 +271,7 @@ suspend fun <T> newSuspendedTransactionWithTenant(
 
 ### ActorController
 
-`@Transactional` AOP 대신
-`newSuspendedTransactionWithCurrentReactorTenant` 블록으로 트랜잭션을 직접 제어합니다. suspend 함수로 선언해 이벤트 루프를 차단하지 않습니다.
+Controls transactions directly with a `newSuspendedTransactionWithCurrentReactorTenant` block instead of `@Transactional` AOP. Declared as a `suspend` function to avoid blocking the event loop.
 
 ```kotlin
 @GetMapping
@@ -286,73 +282,72 @@ suspend fun getAllActors(): List<ActorRecord> = newSuspendedTransactionWithCurre
 
 ### TenantAwareDataSource
 
-`determineCurrentLookupKey()`에서 `runBlocking { currentTenant() }`로 코루틴 컨텍스트의 테넌트를 조회합니다.
-`Database per Tenant` 방식으로 전환할 때 사용하는 선택적 빈입니다.
+Queries the coroutine context tenant via `runBlocking { currentTenant() }` from `determineCurrentLookupKey()`. An optional bean used when switching to **Database per Tenant** mode.
 
 ---
 
-## 주요 구성 요소 요약
+## Key Components Summary
 
-| 파일                                   | 역할                                                      |
-|--------------------------------------|---------------------------------------------------------|
-| `tenant/TenantFilter.kt`             | WebFilter로 헤더 읽기 + Reactor Context에 TenantId 주입         |
-| `tenant/TenantId.kt`                 | `CoroutineContext.Element` 구현, Reactor↔Coroutine 브릿지 함수 |
-| `tenant/Tenants.kt`                  | 테넌트 열거형 + 스키마 매핑                                        |
-| `tenant/SchemaSupport.kt`            | `Schema` 객체 생성 헬퍼                                       |
-| `tenant/TenantAwareDataSource.kt`    | 코루틴 컨텍스트 기반 DataSource 라우팅                              |
-| `tenant/TenantInitializer.kt`        | 앱 기동 시 스키마/데이터 초기화                                      |
-| `tenant/DataInitializer.kt`          | 스키마 생성 + 샘플 데이터 삽입                                      |
-| `config/ExposedMultitenantConfig.kt` | DataSource/Database 빈 설정                                |
-| `config/NettyConfig.kt`              | Netty 서버 튜닝                                             |
-| `controller/ActorController.kt`      | WebFlux 배우 조회 REST API (suspend)                        |
+| File                                   | Role                                                          |
+|--------------------------------------|-----------------------------------------------------------------|
+| `tenant/TenantFilter.kt`             | Read header via WebFilter + inject TenantId into Reactor Context |
+| `tenant/TenantId.kt`                 | `CoroutineContext.Element` implementation, Reactor↔Coroutine bridge functions |
+| `tenant/Tenants.kt`                  | Tenant enum + schema mapping                                   |
+| `tenant/SchemaSupport.kt`            | Helper for creating `Schema` objects                           |
+| `tenant/TenantAwareDataSource.kt`    | Coroutine context-based DataSource routing                     |
+| `tenant/TenantInitializer.kt`        | Schema/data initialization on app startup                      |
+| `tenant/DataInitializer.kt`          | Schema creation + sample data insertion                        |
+| `config/ExposedMultitenantConfig.kt` | DataSource/Database bean configuration                         |
+| `config/NettyConfig.kt`              | Netty server tuning                                            |
+| `controller/ActorController.kt`      | WebFlux actor query REST API (suspend)                         |
 
 ---
 
-## 테스트 방법
+## How to Test
 
 ```bash
-# 모듈 테스트 실행
+# Run module tests
 ./gradlew :10-multi-tenant:03-multitenant-spring-webflux:test
 
-# 애플리케이션 기동
+# Start application
 ./gradlew :10-multi-tenant:03-multitenant-spring-webflux:bootRun
 ```
 
-### API 실습
+### API Practice
 
 ```bash
-# 한국어 테넌트 배우 목록
+# Korean tenant actor list
 curl -H 'X-TENANT-ID: korean' http://localhost:8080/actors
 
-# 영어 테넌트 배우 목록
+# English tenant actor list
 curl -H 'X-TENANT-ID: english' http://localhost:8080/actors
 
-# 특정 배우 조회
+# Query specific actor
 curl -H 'X-TENANT-ID: english' http://localhost:8080/actors/1
 ```
 
 ---
 
-## 실습 체크리스트
+## Practice Checklist
 
-- 동일 엔드포인트를 tenant별로 반복 호출해 데이터 격리 확인
-- `X-TENANT-ID` 헤더 누락 시 기본 테넌트(`korean`)로 동작하는지 확인
-- 컨텍스트 전파 누락 시 재현 테스트를 만들어 회귀 방지
-- Netty/DB 풀 튜닝에 따른 처리량 변화 측정
+- Verify data isolation by calling the same endpoint repeatedly per tenant
+- Confirm default tenant (`korean`) is used when `X-TENANT-ID` header is missing
+- Create reproduction tests for context propagation gaps to prevent regressions
+- Measure throughput changes based on Netty/DB pool tuning
 
-## 운영 체크포인트
+## Operations Checkpoints
 
-- 이벤트 루프 스레드에서 블로킹 코드(`Thread.sleep`, JDBC 직접 호출) 절대 금지
-- `contextWrite`가 누락되면 `TenantId.DEFAULT`로 폴백되므로 필터 등록 순서 확인
-- 운영 관측 지표(tenant별 QPS, 오류율, latency)를 분리 수집
-- 컨텍스트 전달 누락 시 교차 오염이 발생하므로 필터/어댑터 테스트 강화
+- Never allow blocking code (`Thread.sleep`, direct JDBC calls) on event loop threads
+- If `contextWrite` is missing, fallback to `TenantId.DEFAULT` — confirm filter registration order
+- Collect operational metrics (per-tenant QPS, error rate, latency) separately
+- Strengthen filter/adapter tests as missing context propagation causes cross-tenant contamination
 
 ---
 
-## 다음 챕터
+## Next Chapter
 
-- [`../11-high-performance/README.md`](../../11-high-performance/README.md): 고성능 캐시/라우팅 전략으로 확장
+- [`../11-high-performance/README.md`](../../11-high-performance/README.md): Extend to high-performance cache/routing strategies
 
-## 참고
+## Reference
 
 - [Multi-tenant App with Spring Webflux and Coroutines](https://debop.notion.site/Multi-tenant-App-with-Spring-Webflux-and-Coroutines-1dc2744526b0802e926de76e268bd2a8)

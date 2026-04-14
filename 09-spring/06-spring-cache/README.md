@@ -1,21 +1,23 @@
 # 09 Spring: Spring Cache (06)
 
-Spring Cache 추상화와 Exposed를 통합하는 모듈입니다.
-`@Cacheable`, `@CacheEvict` 어노테이션으로 Redis 기반 캐시를 선언적으로 적용하고, 캐시 히트/미스/무효화 흐름과 DB 정합성 관리 전략을 학습합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A module that integrates Spring Cache abstraction with Exposed.
+It applies Redis-based caching declaratively using `@Cacheable` and `@CacheEvict` annotations, and learns cache hit/miss/invalidation flows and DB consistency management strategies.
 
-- `@EnableCaching` + `RedisCacheManager` 구성으로 Spring Cache를 Redis에 연결한다.
-- `@Cacheable(key = "'country:' + #code")` 로 캐시 키를 명시적으로 설계한다.
-- `@CacheEvict` 로 변경 시 캐시를 즉시 무효화해 stale 데이터를 방지한다.
-- `transaction { }` 블록과 `@Cacheable` 을 조합할 때 캐시 히트 시 트랜잭션을 열지 않는 이점을 이해한다.
+## Learning Goals
 
-## 선수 지식
+- Connect Spring Cache to Redis with `@EnableCaching` + `RedisCacheManager` configuration.
+- Design cache keys explicitly with `@Cacheable(key = "'country:' + #code")`.
+- Prevent stale data by immediately invalidating cache on changes with `@CacheEvict`.
+- Understand the benefit of not opening a transaction on cache hits when combining `transaction { }` blocks with `@Cacheable`.
+
+## Prerequisites
 
 - [`../04-exposed-repository/README.md`](../04-exposed-repository/README.md)
-- Spring Cache 추상화 기본 개념
+- Spring Cache abstraction basics
 
-## 아키텍처
+## Architecture
 
 ```mermaid
 classDiagram
@@ -60,9 +62,9 @@ classDiagram
     style CountryTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
 ```
 
-## 핵심 개념
+## Key Concepts
 
-### Cache 설정 (LZ4+Fory 직렬화, TTL 10분)
+### Cache Configuration (LZ4+Fory Serialization, TTL 10min)
 
 ```kotlin
 @Configuration
@@ -74,33 +76,33 @@ class LettuceCacheConfig {
         RedisCacheConfiguration.defaultCacheConfig()
             .serializeValuesWith(
                 RedisSerializationContext.SerializationPair
-                    .fromSerializer(RedisBinarySerializers.LZ4Fory)  // 압축 직렬화
+                    .fromSerializer(RedisBinarySerializers.LZ4Fory)  // Compressed serialization
             )
-            .entryTtl(Duration.ofMinutes(10))  // 기본 TTL
+            .entryTtl(Duration.ofMinutes(10))  // Default TTL
 
     @Bean
     fun cacheManager(
         connectionFactory: RedisConnectionFactory,
         cacheConfiguration: RedisCacheConfiguration,
     ): CacheManager = RedisCacheManager.builder(connectionFactory)
-        .transactionAware()      // 트랜잭션 커밋 후 캐시 반영
+        .transactionAware()      // Reflect cache after transaction commit
         .cacheDefaults(cacheConfiguration)
         .build()
 }
 ```
 
-### Repository 캐시 선언
+### Repository Cache Declaration
 
 ```kotlin
 @Component
-@CacheConfig(cacheNames = [COUNTRY_CACHE_NAME])   // 캐시 이름 공통 설정
+@CacheConfig(cacheNames = [COUNTRY_CACHE_NAME])   // Common cache name configuration
 class CountryRepository(private val cacheManager: CacheManager) {
 
     companion object {
         const val COUNTRY_CACHE_NAME = "cache:code:country"
     }
 
-    // 캐시 미스 시만 transaction {} 열어 DB 조회
+    // Only opens transaction {} for DB query on cache miss
     @Cacheable(key = "'country:' + #code")
     fun findByCode(code: String): CountryRecord? {
         return transaction {
@@ -111,7 +113,7 @@ class CountryRepository(private val cacheManager: CacheManager) {
         }
     }
 
-    // DB 갱신 후 해당 캐시 엔트리 즉시 무효화
+    // Immediately invalidate cache entry after DB update
     @Transactional
     @CacheEvict(key = "'country:' + #countryRecord.code")
     fun update(countryRecord: CountryRecord): Int =
@@ -120,28 +122,28 @@ class CountryRepository(private val cacheManager: CacheManager) {
             it[description] = countryRecord.description
         }
 
-    // 전체 캐시 비우기
+    // Clear all cache entries
     @CacheEvict(cacheNames = [COUNTRY_CACHE_NAME], allEntries = true)
-    fun evictCacheAll() { /* Spring AOP가 처리 */ }
+    fun evictCacheAll() { /* Handled by Spring AOP */ }
 }
 ```
 
-## 캐시 흐름
+## Cache Flow
 
 ```mermaid
 flowchart TD
-    A[클라이언트 findByCode 호출] --> B{Redis 캐시 히트?}
-    B -- 예 --> C[캐시에서 CountryRecord 반환]
-    B -- 아니오 --> D[transaction 블록 시작]
+    A[Client calls findByCode] --> B{Redis cache hit?}
+    B -- Yes --> C[Return CountryRecord from cache]
+    B -- No --> D[Start transaction block]
     D --> E[CountryTable.selectAll WHERE code = ?]
-    E --> F[DB에서 CountryRecord 조회]
-    F --> G[Redis에 캐시 저장\ncache:code:country:KR]
-    G --> H[CountryRecord 반환]
+    E --> F[Query CountryRecord from DB]
+    F --> G[Store in Redis cache\ncache:code:country:KR]
+    G --> H[Return CountryRecord]
 
-    I[클라이언트 update 호출] --> J[@Transactional 시작]
+    I[Client calls update] --> J[@Transactional start]
     J --> K[CountryTable.update]
-    K --> L[트랜잭션 커밋]
-    L --> M[@CacheEvict 실행\ncache:code:country:KR 삭제]
+    K --> L[Transaction commit]
+    L --> M[@CacheEvict executed\ncache:code:country:KR deleted]
 
     classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
     classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
@@ -158,11 +160,11 @@ flowchart TD
     class J,K,L teal
 ```
 
-## 도메인 모델
+## Domain Model
 
 ```kotlin
 object CountryTable: IntIdTable("countries") {
-    val code = char("code", 2).uniqueIndex()   // ISO 2자리 국가 코드
+    val code = char("code", 2).uniqueIndex()   // ISO 2-letter country code
     val name = varchar("name", 50)
     val description = text("description").nullable()
 }
@@ -171,10 +173,10 @@ data class CountryRecord(
     val code: String,
     val name: String,
     val description: String? = null,
-): Serializable   // Redis 직렬화를 위해 Serializable 구현
+): Serializable   // Implements Serializable for Redis serialization
 ```
 
-## 캐시 히트/미스 시퀀스
+## Cache Hit/Miss Sequence
 
 ```mermaid
 sequenceDiagram
@@ -185,10 +187,10 @@ sequenceDiagram
 
     Client->>CountryRepository: findByCode("KR")
     CountryRepository->>CacheManager: get("country:KR")
-    alt 캐시 히트
+    alt Cache hit
         CacheManager-->>CountryRepository: CountryRecord
-        CountryRepository-->>Client: CountryRecord (DB 조회 없음)
-    else 캐시 미스
+        CountryRepository-->>Client: CountryRecord (no DB query)
+    else Cache miss
         CacheManager-->>CountryRepository: null
         CountryRepository->>DB: transaction { SELECT WHERE code='KR' }
         DB-->>CountryRepository: CountryRecord
@@ -197,45 +199,45 @@ sequenceDiagram
     end
 
     Client->>CountryRepository: update(countryRecord)
-    Note over CountryRepository: @Transactional 시작
+    Note over CountryRepository: @Transactional start
     CountryRepository->>DB: CountryTable.update(...)
-    DB-->>CountryRepository: 갱신 행 수
-    Note over CountryRepository: 트랜잭션 커밋 후 @CacheEvict 실행
+    DB-->>CountryRepository: Updated row count
+    Note over CountryRepository: @CacheEvict executed after transaction commit
     CountryRepository->>CacheManager: evict("country:KR")
-    CountryRepository-->>Client: 갱신 행 수
+    CountryRepository-->>Client: Updated row count
 ```
 
-## 캐시 키 설계 원칙
+## Cache Key Design Principles
 
-| 상황    | 키 패턴             | 예시                                  |
-|-------|------------------|-------------------------------------|
-| 단건 조회 | `'캐시명:' + #파라미터` | `'country:' + #code` → `country:KR` |
-| 전체 조회 | `'캐시명:all'`      | `'country:all'`                     |
-| 복합 키  | `#a + ':' + #b`  | `#userId + ':' + #orderId`          |
+| Scenario     | Key Pattern              | Example                              |
+|-------------|--------------------------|--------------------------------------|
+| Single lookup | `'cacheName:' + #param` | `'country:' + #code` → `country:KR` |
+| Full lookup   | `'cacheName:all'`       | `'country:all'`                      |
+| Composite key | `#a + ':' + #b`         | `#userId + ':' + #orderId`           |
 
-## 실행 방법
+## How to Run
 
 ```bash
-# Redis Testcontainer를 자동으로 기동합니다
+# Redis Testcontainer starts automatically
 ./gradlew :09-spring:06-spring-cache:test
 
-# 테스트 로그 요약
+# Test log summary
 ./bin/repo-test-summary -- ./gradlew :09-spring:06-spring-cache:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- `findByCode("KR")` 두 번 연속 호출 시 두 번째 호출에서 DB 쿼리 로그가 없는지 확인
-- `update()` 후 `findByCode()` 재호출 시 갱신된 데이터가 반환되는지 검증
-- `evictCacheAll()` 후 모든 키가 Redis에서 삭제되는지 확인
-- `RedisCacheManager.transactionAware()` 설정 시 롤백된 트랜잭션의 캐시가 반영되지 않음을 검증
+- Verify no DB query logs on the second consecutive `findByCode("KR")` call
+- Validate that updated data is returned when calling `findByCode()` after `update()`
+- Confirm all keys are deleted from Redis after `evictCacheAll()`
+- Verify that rolled-back transaction cache is not reflected when `RedisCacheManager.transactionAware()` is configured
 
-## 성능·안정성 체크포인트
+## Performance & Stability Checkpoints
 
-- TTL을 데이터 신선도 요구(SLA)에 맞게 조정 — 기본 10분이 모든 도메인에 적합하지 않음
-- Redis 장애 시 `@Cacheable`이 예외를 던지지 않도록 `CacheErrorHandler` 구현 고려
-- `transactionAware()` 미적용 시 롤백 후에도 캐시에 데이터가 남을 수 있음
+- Adjust TTL to match data freshness requirements (SLA) -- the default 10 minutes may not suit all domains
+- Consider implementing `CacheErrorHandler` so `@Cacheable` does not throw exceptions on Redis failures
+- Without `transactionAware()`, data may remain in cache even after rollback
 
-## 다음 모듈
+## Next Module
 
 - [`../07-spring-suspended-cache/README.md`](../07-spring-suspended-cache/README.md)

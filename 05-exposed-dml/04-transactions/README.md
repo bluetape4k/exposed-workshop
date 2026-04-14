@@ -1,110 +1,112 @@
-# 05 Exposed DML: 트랜잭션 (04-transactions)
+# 05 Exposed DML: Transactions (04-transactions)
 
-Exposed 트랜잭션 모델의 핵심을 다루는 모듈입니다. 격리 수준, 중첩 트랜잭션, 롤백, 코루틴 트랜잭션을 실습합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A module covering the core of the Exposed transaction model. Covers isolation levels, nested transactions, rollback, and coroutine transactions.
 
-- 트랜잭션 경계와 격리 수준을 상황에 맞게 적용한다.
-- 중첩 트랜잭션/세이브포인트 동작을 이해한다.
-- 코루틴 환경에서 트랜잭션 컨텍스트를 안전하게 사용한다.
+## Learning Objectives
 
-## 선수 지식
+- Apply transaction boundaries and isolation levels appropriately for each situation.
+- Understand nested transaction/savepoint behavior.
+- Use transaction context safely in a coroutine environment.
+
+## Prerequisites
 
 - [`../01-dml/README.md`](../01-dml/README.md)
 - [`../03-functions/README.md`](../03-functions/README.md)
-- Kotlin Coroutines 기본
+- Basic Kotlin Coroutines knowledge
 
-## 핵심 개념
+## Key Concepts
 
-### 동기 트랜잭션
+### Synchronous Transactions
 
 ```kotlin
-// 기본 트랜잭션
+// Basic transaction
 transaction {
     Cities.insert { it[name] = "Seoul" }
-    // 예외 발생 시 자동 롤백
+    // Automatic rollback on exception
 }
 
-// 격리 수준 지정
+// Specify isolation level
 inTopLevelTransaction(transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
     maxAttempts = 3
     // ...
 }
 ```
 
-### 트랜잭션 옵션 설정
+### Transaction Options
 
 ```kotlin
 transaction {
-    maxAttempts = 3               // 재시도 횟수
-    minRetryDelay = 100           // 재시도 최소 대기(ms)
-    maxRetryDelay = 1000          // 재시도 최대 대기(ms)
-    queryTimeout = 30             // 쿼리 타임아웃(초)
+    maxAttempts = 3               // Retry count
+    minRetryDelay = 100           // Minimum retry delay (ms)
+    maxRetryDelay = 1000          // Maximum retry delay (ms)
+    queryTimeout = 30             // Query timeout (seconds)
 }
 ```
 
-### 코루틴 트랜잭션
+### Coroutine Transactions
 
 ```kotlin
-// suspend 함수 내 트랜잭션
+// Transaction in a suspend function
 newSuspendedTransaction(Dispatchers.IO) {
     Cities.insert { it[name] = "Busan" }
 }
 
-// 비동기 병렬 트랜잭션
+// Async parallel transaction
 val deferred: Deferred<Int> = suspendedTransactionAsync(Dispatchers.IO) {
     Cities.selectAll().count().toInt()
 }
 val count = deferred.await()
 ```
 
-### 중첩 트랜잭션 (Savepoint)
+### Nested Transactions (Savepoint)
 
 ```kotlin
 val db = Database.connect(
     url = "jdbc:h2:mem:...",
     databaseConfig = DatabaseConfig {
-        useNestedTransactions = true  // 중첩 트랜잭션 활성화
+        useNestedTransactions = true  // Enable nested transactions
     }
 )
 
 transaction(db) {
     Cities.insert { it[name] = "city1" }
 
-    // 중첩 트랜잭션 (내부 SAVEPOINT 생성)
+    // Nested transaction (creates internal SAVEPOINT)
     transaction {
         Cities.insert { it[name] = "city2" }
-        rollback()  // city2만 롤백, city1은 유지
+        rollback()  // Rolls back only city2, city1 is retained
     }
 }
 ```
 
-## 트랜잭션 격리 수준
+## Transaction Isolation Levels
 
-| 격리 수준              | 상수값 | Dirty Read | Non-Repeatable Read | Phantom Read | 주 사용 사례          |
-|--------------------|-----|------------|---------------------|--------------|------------------|
-| `READ_UNCOMMITTED` | 1   | 가능         | 가능                  | 가능           | 거의 미사용           |
-| `READ_COMMITTED`   | 2   | 방지         | 가능                  | 가능           | PostgreSQL 기본값   |
-| `REPEATABLE_READ`  | 4   | 방지         | 방지                  | 가능           | MySQL/MariaDB 기본 |
-| `SERIALIZABLE`     | 8   | 방지         | 방지                  | 방지           | 최고 수준 무결성 필요 시   |
+| Isolation Level    | Value | Dirty Read | Non-Repeatable Read | Phantom Read | Primary Use Case          |
+|--------------------|-------|------------|---------------------|--------------|---------------------------|
+| `READ_UNCOMMITTED` | 1     | Possible   | Possible            | Possible     | Rarely used               |
+| `READ_COMMITTED`   | 2     | Prevented  | Possible            | Possible     | PostgreSQL default        |
+| `REPEATABLE_READ`  | 4     | Prevented  | Prevented           | Possible     | MySQL/MariaDB default     |
+| `SERIALIZABLE`     | 8     | Prevented  | Prevented           | Prevented    | When highest integrity is needed |
 
-> DB 엔진마다 실제 구현 차이가 있습니다. MySQL InnoDB는 `REPEATABLE_READ`에서도 갭 락으로 Phantom Read를 부분 방지합니다.
+> Actual behavior differs per DB engine. MySQL InnoDB partially prevents Phantom Reads even in `REPEATABLE_READ` using gap locks.
 
-## 중첩 트랜잭션 흐름
+## Nested Transaction Flow
 
 ```mermaid
 flowchart TD
-    A["transaction (외부)"] --> B["INSERT city1"]
+    A["transaction (outer)"] --> B["INSERT city1"]
     B --> C{"useNestedTransactions?"}
-    C -->|true| D["transaction (중첩 1)\nSAVEPOINT sp1"]
-    C -->|false| E["동일 트랜잭션 재사용"]
+    C -->|true| D["transaction (nested 1)\nSAVEPOINT sp1"]
+    C -->|false| E["Reuse same transaction"]
     D --> F["INSERT city2"]
-    F --> G{예외/rollback?}
-    G -->|rollback| H["ROLLBACK TO sp1\ncity2 취소, city1 유지"]
-    G -->|정상| I["RELEASE sp1\ncity2 커밋 예약"]
-    H --> J["외부 트랜잭션 COMMIT\ncity1만 저장"]
+    F --> G{Exception/rollback?}
+    G -->|rollback| H["ROLLBACK TO sp1\ncity2 cancelled, city1 retained"]
+    G -->|normal| I["RELEASE sp1\ncity2 commit scheduled"]
+    H --> J["Outer transaction COMMIT\ncity1 only saved"]
     I --> J
-    E --> K["외부 트랜잭션과 동일 범위"]
+    E --> K["Same scope as outer transaction"]
 
     classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
     classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
@@ -124,7 +126,7 @@ flowchart TD
     class J,K blue
 ```
 
-## 코루틴 트랜잭션 흐름
+## Coroutine Transaction Flow
 
 ```mermaid
 sequenceDiagram
@@ -133,85 +135,85 @@ sequenceDiagram
     participant DB as Database
     C ->> T: newSuspendedTransaction(Dispatchers.IO)
     T ->> DB: BEGIN
-    T ->> DB: SQL 실행 (INSERT/SELECT...)
-    alt 정상 완료
+    T ->> DB: Execute SQL (INSERT/SELECT...)
+    alt Normal completion
         T ->> DB: COMMIT
-        T -->> C: 결과 반환
-    else 예외 발생
+        T -->> C: Return result
+    else Exception
         T ->> DB: ROLLBACK
-        T -->> C: 예외 전파
+        T -->> C: Propagate exception
     end
 
     C ->> T: suspendedTransactionAsync { ... }
-    T -->> C: Deferred<T> 즉시 반환
-    C ->> C: await() 로 결과 수신
+    T -->> C: Return Deferred<T> immediately
+    C ->> C: Receive result via await()
 ```
 
-## 예제 지도
+## Example Map
 
-소스 위치: `src/test/kotlin/exposed/examples/transactions`
+Source location: `src/test/kotlin/exposed/examples/transactions`
 
-| 파일                                      | 설명             |
-|-----------------------------------------|----------------|
-| `TransactionTables.kt`                  | 공통 스키마/테스트 데이터 |
-| `Ex01_TransactionIsolation.kt`          | 격리 수준          |
-| `Ex02_TransactionExec.kt`               | 기본 트랜잭션 실행     |
-| `Ex03_Parameterization.kt`              | 트랜잭션 옵션 설정     |
-| `Ex04_QueryTimeout.kt`                  | 쿼리 타임아웃        |
-| `Ex05_NestedTransactions.kt`            | 중첩 트랜잭션 (동기)   |
-| `Ex05_NestedTransactions_Coroutines.kt` | 중첩 트랜잭션 (코루틴)  |
-| `Ex06_RollbackTransaction.kt`           | 명시적/암시적 롤백     |
-| `Ex07_ThreadLocalManager.kt`            | 트랜잭션 컨텍스트 관리   |
+| File                                      | Description                          |
+|-------------------------------------------|--------------------------------------|
+| `TransactionTables.kt`                    | Common schema/test data              |
+| `Ex01_TransactionIsolation.kt`            | Isolation levels                     |
+| `Ex02_TransactionExec.kt`                 | Basic transaction execution          |
+| `Ex03_Parameterization.kt`                | Transaction option configuration     |
+| `Ex04_QueryTimeout.kt`                    | Query timeout                        |
+| `Ex05_NestedTransactions.kt`              | Nested transactions (synchronous)    |
+| `Ex05_NestedTransactions_Coroutines.kt`   | Nested transactions (coroutines)     |
+| `Ex06_RollbackTransaction.kt`             | Explicit/implicit rollback           |
+| `Ex07_ThreadLocalManager.kt`              | Transaction context management       |
 
-## 실행 방법
+## Running Tests
 
 ```bash
 ./gradlew :05-exposed-dml:04-transactions:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- 동일 시나리오를 `transaction`과 `newSuspendedTransaction`으로 각각 실행한다.
-- 중첩 트랜잭션에서 내부 실패 시 외부 트랜잭션 영향 범위를 확인한다.
-- `timeout`/`maxAttempts` 설정 변경에 따른 실패/재시도 동작을 검증한다.
+- Run the same scenario with both `transaction` and `newSuspendedTransaction`.
+- Verify the impact range on the outer transaction when an inner nested transaction fails.
+- Validate failure/retry behavior by changing `timeout`/`maxAttempts` settings.
 
-## DB별 주의사항
+## Per-DB Notes
 
-- 격리 수준의 실제 동작은 DB 엔진별 구현 차이가 있음
-- 잠금/데드락 상황은 테스트 환경과 운영 환경이 다를 수 있으므로 부하 테스트 필요
+- Actual isolation level behavior differs per DB engine
+- Lock/deadlock situations may differ between test and production environments; load testing is required
 
-## 성능·안정성 체크포인트
+## Performance and Stability Checkpoints
 
-- 트랜잭션 범위를 최소화하여 락 보유 시간을 줄인다.
-- 장시간 트랜잭션에서 외부 I/O 호출을 피한다.
-- 코루틴 취소 시 트랜잭션 정리가 누락되지 않도록 확인한다.
+- Minimize transaction scope to reduce lock hold time.
+- Avoid external I/O calls inside long-running transactions.
+- Ensure transaction cleanup is not missed on coroutine cancellation.
 
-## 복잡한 시나리오
+## Complex Scenarios
 
-### 중첩 트랜잭션과 Savepoint (동기)
+### Nested Transactions and Savepoints (Synchronous)
 
-`useNestedTransactions = true` 설정 하에 중첩 트랜잭션의 커밋/롤백 동작과 예외 발생 시 부분 롤백 처리 방식을 학습합니다.
+Learn commit/rollback behavior of nested transactions under `useNestedTransactions = true` and how partial rollback is handled on exception.
 
-- 소스: [`Ex05_NestedTransactions.kt`](src/test/kotlin/exposed/examples/transactions/Ex05_NestedTransactions.kt)
+- Source: [`Ex05_NestedTransactions.kt`](src/test/kotlin/exposed/examples/transactions/Ex05_NestedTransactions.kt)
 
-### 코루틴 환경에서 중첩 트랜잭션과 Savepoint
+### Nested Transactions and Savepoints in Coroutines
 
-`newSuspendedTransaction`과 `runWithSavepoint`를 조합해 코루틴 컨텍스트에서 중첩 트랜잭션의 커밋/롤백 동작을 학습합니다.
+Learn commit/rollback behavior of nested transactions in a coroutine context by combining `newSuspendedTransaction` and `runWithSavepoint`.
 
-- 소스: [`Ex05_NestedTransactions_Coroutines.kt`](src/test/kotlin/exposed/examples/transactions/Ex05_NestedTransactions_Coroutines.kt)
+- Source: [`Ex05_NestedTransactions_Coroutines.kt`](src/test/kotlin/exposed/examples/transactions/Ex05_NestedTransactions_Coroutines.kt)
 
-### 명시적/암시적 롤백
+### Explicit/Implicit Rollback
 
-예외 발생 시 자동 롤백, `rollback()` 명시 호출, 최상위 트랜잭션에서의 롤백 범위를 비교합니다.
+Compare automatic rollback on exception, explicit `rollback()` call, and rollback scope at the top-level transaction.
 
-- 소스: [`Ex06_RollbackTransaction.kt`](src/test/kotlin/exposed/examples/transactions/Ex06_RollbackTransaction.kt)
+- Source: [`Ex06_RollbackTransaction.kt`](src/test/kotlin/exposed/examples/transactions/Ex06_RollbackTransaction.kt)
 
-### ThreadLocal 기반 트랜잭션 컨텍스트 관리
+### ThreadLocal-Based Transaction Context Management
 
-`JdbcTransactionManager`를 활용한 멀티스레드/코루틴 전환 시 트랜잭션 컨텍스트 격리 방식을 보여줍니다.
+Shows how transaction context isolation works during multi-thread/coroutine transitions using `JdbcTransactionManager`.
 
-- 소스: [`Ex07_ThreadLocalManager.kt`](src/test/kotlin/exposed/examples/transactions/Ex07_ThreadLocalManager.kt)
+- Source: [`Ex07_ThreadLocalManager.kt`](src/test/kotlin/exposed/examples/transactions/Ex07_ThreadLocalManager.kt)
 
-## 다음 모듈
+## Next Module
 
 - [`../05-entities/README.md`](../05-entities/README.md)

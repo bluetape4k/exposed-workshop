@@ -1,30 +1,32 @@
-# 08 Coroutines: 기본 (01-coroutines-basic)
+# 08 Coroutines: Basic (01-coroutines-basic)
 
-Exposed를 Kotlin Coroutines와 함께 사용하는 기본 모듈입니다.
-`newSuspendedTransaction`, `suspendedTransactionAsync`, `withSuspendTransaction`을 중심으로 비동기 DB 접근을 실습합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+The basic module for using Exposed with Kotlin Coroutines.
+Hands-on practice for asynchronous DB access centered on `newSuspendedTransaction`, `suspendedTransactionAsync`, and `withSuspendTransaction`.
 
-- 코루틴 트랜잭션 API를 익힌다.
-- 비동기 병렬 쿼리 패턴을 구현한다.
-- 취소/예외 시 트랜잭션 정리 동작을 이해한다.
+## Learning Goals
 
-## 선수 지식
+- Learn the coroutine transaction API.
+- Implement asynchronous parallel query patterns.
+- Understand transaction cleanup behavior on cancellation/exceptions.
 
-- Kotlin Coroutines 기본
+## Prerequisites
+
+- Kotlin Coroutines basics
 - [`../../05-exposed-dml/04-transactions/README.md`](../../05-exposed-dml/04-transactions/README.md)
 
-## 핵심 개념
+## Key Concepts
 
-### newSuspendedTransaction — 기본 사용
+### newSuspendedTransaction — Basic Usage
 
 ```kotlin
-// suspend 함수 내에서 트랜잭션 시작
+// Start a transaction inside a suspend function
 newSuspendedTransaction(Dispatchers.IO) {
-    Tester.insert { }  // DB 작업
+    Tester.insert { }  // DB operation
 }
 
-// 기존 트랜잭션에서 중첩 실행 (withSuspendTransaction)
+// Nested execution within an existing transaction (withSuspendTransaction)
 suspend fun JdbcTransaction.getTesterById(id: Int): ResultRow? =
     withSuspendTransaction {
         Tester.selectAll()
@@ -33,10 +35,10 @@ suspend fun JdbcTransaction.getTesterById(id: Int): ResultRow? =
     }
 ```
 
-### suspendedTransactionAsync — 병렬 실행
+### suspendedTransactionAsync — Parallel Execution
 
 ```kotlin
-// 여러 트랜잭션을 병렬로 실행
+// Run multiple transactions in parallel
 val jobs: List<Deferred<EntityID<Int>>> = (1..10).map {
     suspendedTransactionAsync(Dispatchers.IO) {
         Tester.insertAndGetId { }
@@ -45,18 +47,18 @@ val jobs: List<Deferred<EntityID<Int>>> = (1..10).map {
 val ids = jobs.awaitAll()
 ```
 
-### Dispatcher 선택 기준
+### Dispatcher Selection Criteria
 
 ```kotlin
-// I/O 바운드 DB 작업은 Dispatchers.IO 사용
+// Use Dispatchers.IO for I/O-bound DB work
 newSuspendedTransaction(Dispatchers.IO) { ... }
 
-// 단일 스레드 Dispatcher — 순서 보장이 필요한 경우
+// Single-thread Dispatcher — when ordering must be guaranteed
 val singleThreadDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 newSuspendedTransaction(singleThreadDispatcher) { ... }
 ```
 
-## 코루틴 트랜잭션 시퀀스 다이어그램
+## Coroutine Transaction Sequence Diagram
 
 ```mermaid
 sequenceDiagram
@@ -68,25 +70,25 @@ sequenceDiagram
     C->>T1: newSuspendedTransaction(Dispatchers.IO)
     T1->>DB: BEGIN
     T1->>DB: INSERT INTO coroutines_tester ...
-    alt 정상 완료
+    alt Success
         T1->>DB: COMMIT
-        T1-->>C: EntityID 반환
-    else 예외 발생
+        T1-->>C: EntityID returned
+    else Exception
         T1->>DB: ROLLBACK
-        T1-->>C: 예외 전파
+        T1-->>C: Exception propagated
     end
 
     C->>T2: suspendedTransactionAsync { ... }
-    T2-->>C: Deferred<T> (즉시 반환)
-    Note over C,T2: 코루틴 재개 시 실제 실행
-    C->>C: awaitAll() 병렬 대기
+    T2-->>C: Deferred<T> (returned immediately)
+    Note over C,T2: Actual execution when coroutine resumes
+    C->>C: awaitAll() parallel wait
     T2->>DB: BEGIN
-    T2->>DB: SQL 실행
+    T2->>DB: SQL execution
     T2->>DB: COMMIT
-    T2-->>C: 결과 반환
+    T2-->>C: Result returned
 ```
 
-## newSuspendedTransaction 처리 시퀀스 다이어그램
+## newSuspendedTransaction Processing Sequence Diagram
 
 ```mermaid
 sequenceDiagram
@@ -96,31 +98,31 @@ sequenceDiagram
     participant DB as Database
 
     App->>CoroutineContext: newSuspendedTransaction { }
-    CoroutineContext->>ExposedDB: transaction block 시작
+    CoroutineContext->>ExposedDB: Start transaction block
     ExposedDB->>DB: BEGIN
     ExposedDB->>DB: SQL Query (INSERT / SELECT ...)
     DB-->>ExposedDB: Result
-    alt 정상 완료
+    alt Success
         ExposedDB->>DB: COMMIT
         ExposedDB-->>CoroutineContext: mapped result
-        CoroutineContext-->>App: suspend 반환
-    else 예외 발생
+        CoroutineContext-->>App: suspend return
+    else Exception
         ExposedDB->>DB: ROLLBACK
-        ExposedDB-->>CoroutineContext: 예외 전파
-        CoroutineContext-->>App: 예외 전파
+        ExposedDB-->>CoroutineContext: Exception propagated
+        CoroutineContext-->>App: Exception propagated
     end
 
     App->>CoroutineContext: suspendedTransactionAsync { }
-    CoroutineContext-->>App: Deferred&lt;T&gt; (즉시 반환)
-    Note over App,CoroutineContext: 병렬 실행 후 awaitAll() 대기
-    CoroutineContext->>ExposedDB: transaction block (병렬)
+    CoroutineContext-->>App: Deferred&lt;T&gt; (returned immediately)
+    Note over App,CoroutineContext: awaitAll() waits after parallel execution
+    CoroutineContext->>ExposedDB: transaction block (parallel)
     ExposedDB->>DB: BEGIN → SQL → COMMIT
     DB-->>ExposedDB: Result
-    ExposedDB-->>CoroutineContext: 결과
-    CoroutineContext-->>App: awaitAll() 결과 반환
+    ExposedDB-->>CoroutineContext: Result
+    CoroutineContext-->>App: awaitAll() result returned
 ```
 
-## 테이블 ERD (coroutines_tester)
+## Table ERD (coroutines_tester)
 
 ```mermaid
 erDiagram
@@ -132,50 +134,50 @@ erDiagram
     }
 ```
 
-## 예제 구성
+## Example Structure
 
-소스 위치: `src/test/kotlin/exposed/examples/coroutines`
+Source location: `src/test/kotlin/exposed/examples/coroutines`
 
-| 파일                   | 주요 테스트 시나리오                                               |
-|----------------------|-----------------------------------------------------------|
-| `Ex01_Coroutines.kt` | 존재하지 않는 ID 조회, 단건 삽입/조회, 병렬 삽입, 중복 키 예외, 트랜잭션 격리, 취소 시 롤백 |
+| File                   | Key Test Scenarios                                                                                        |
+|----------------------|----------------------------------------------------------------------------------------------------------|
+| `Ex01_Coroutines.kt` | Query non-existent ID, single insert/query, parallel insert, duplicate key exception, transaction isolation, rollback on cancel |
 
-### 주요 테스트 시나리오
+### Key Test Scenarios
 
-| 시나리오            | 사용 API                                   |
+| Scenario            | API Used                                   |
 |-----------------|------------------------------------------|
-| 기본 suspend 트랜잭션 | `newSuspendedTransaction`                |
-| 기존 트랜잭션 내 중첩 실행 | `withSuspendTransaction`                 |
-| 비동기 병렬 삽입 (10건) | `suspendedTransactionAsync` + `awaitAll` |
-| 중복 키 삽입 → 예외 검증 | `assertFailsWith<ExposedSQLException>`   |
-| 트랜잭션 격리 수준 지정   | `newSuspendedTransaction(isolation=...)` |
+| Basic suspend transaction | `newSuspendedTransaction`                |
+| Nested execution within existing transaction | `withSuspendTransaction`                 |
+| Async parallel insert (10 records) | `suspendedTransactionAsync` + `awaitAll` |
+| Duplicate key insert → exception verification | `assertFailsWith<ExposedSQLException>`   |
+| Specify transaction isolation level | `newSuspendedTransaction(isolation=...)` |
 
-## 실행 방법
+## How to Run
 
 ```bash
 ./gradlew :08-coroutines:01-coroutines-basic:test
 ```
 
-테스트 환경 변수:
+Test environment variables:
 
 ```bash
-# H2만 사용하는 빠른 테스트
+# Fast test using H2 only
 USE_FAST_DB=true ./gradlew :08-coroutines:01-coroutines-basic:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- 순차/병렬 트랜잭션 결과와 소요 시간을 비교
-- 취소(cancellation) 상황에서 롤백 동작 확인
-- `Dispatchers.IO` vs `singleThreadDispatcher` 동작 차이 비교
+- Compare results and elapsed time between sequential and parallel transactions
+- Verify rollback behavior during cancellation
+- Compare behavior differences between `Dispatchers.IO` vs `singleThreadDispatcher`
 
-## 성능·안정성 체크포인트
+## Performance & Stability Checkpoints
 
-- 이벤트 루프/기본 디스패처(`Dispatchers.Default`)에서 DB 블로킹 호출 금지
-- `Dispatchers.IO`는 I/O 바운드 작업 전용으로 사용
-- 트랜잭션 범위를 최소화해 경합 감소
-- 코루틴 취소 시 `finally` 블록에서 자원 정리 보장
+- Never call DB blocking operations from event loop / default dispatcher (`Dispatchers.Default`)
+- Use `Dispatchers.IO` exclusively for I/O-bound work
+- Minimize transaction scope to reduce contention
+- Guarantee resource cleanup in `finally` blocks on coroutine cancellation
 
-## 다음 모듈
+## Next Module
 
 - [`../02-virtualthreads-basic/README.md`](../02-virtualthreads-basic/README.md)

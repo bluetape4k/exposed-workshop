@@ -1,28 +1,29 @@
 # 06 Advanced: exposed-json (04)
 
-JSON/JSONB 컬럼에 Kotlin 객체를 저장/조회하는 모듈입니다. 문서형 필드가 필요한 도메인에서 Exposed JSON 쿼리 패턴을 학습합니다.
+English | [한국어](./README.ko.md)
 
-## 개요
+A module for storing and querying Kotlin objects in JSON/JSONB columns. Learn Exposed JSON query patterns for domains requiring document-type fields.
 
-`json<T>()` / `jsonb<T>()` 함수로 Kotlin 직렬화 가능한 객체를 JSON 컬럼에 저장합니다. `kotlinx.serialization`을 기본 직렬화 엔진으로 사용하며, `extract`,
-`contains`, `exists` 등의 JSON 경로 함수를 DSL로 표현합니다.
+## Overview
 
-## 학습 목표
+Store Kotlin serializable objects in JSON columns using `json<T>()` / `jsonb<T>()` functions. Uses `kotlinx.serialization` as the default serialization engine, and expresses JSON path functions like `extract`, `contains`, and `exists` through DSL.
 
-- `json<T>()`, `jsonb<T>()` 컬럼 정의와 Kotlin 직렬화 객체 매핑을 익힌다.
-- `extract`로 JSON 필드 내부 값을 SELECT 조건/반환값으로 활용한다.
-- `contains`, `exists`로 JSON 문서 구조를 조건으로 사용한다.
-- JSON vs JSONB 선택 기준을 이해한다.
+## Learning Objectives
 
-## 선수 지식
+- Learn `json<T>()` and `jsonb<T>()` column definitions and Kotlin serialization object mapping.
+- Use `extract` to leverage JSON field internal values as SELECT conditions/return values.
+- Use `contains` and `exists` to apply JSON document structure as conditions.
+- Understand JSON vs JSONB selection criteria.
+
+## Prerequisites
 
 - [`../../05-exposed-dml/README.md`](../../05-exposed-dml/README.md)
 
-## 아키텍처 흐름
+## Architecture Flow
 
 ```mermaid
 flowchart LR
-    subgraph Kotlin["Kotlin 코드"]
+    subgraph Kotlin["Kotlin Code"]
         DH["DataHolder\n(Serializable data class)"]
         JT["JsonTable / JsonBTable"]
     end
@@ -35,9 +36,9 @@ flowchart LR
         EXI["exists(path)"]
     end
 
-    subgraph DB["데이터베이스"]
-        PG_JSON["PostgreSQL JSON\n(텍스트 저장)"]
-        PG_JSONB["PostgreSQL JSONB\n(바이너리, 인덱싱)"]
+    subgraph DB["Database"]
+        PG_JSON["PostgreSQL JSON\n(text storage)"]
+        PG_JSONB["PostgreSQL JSONB\n(binary, indexing)"]
         MY_JSON["MySQL JSON"]
     end
 
@@ -55,7 +56,7 @@ flowchart LR
     class PG_JSON,PG_JSONB,MY_JSON orange
 ```
 
-## 테이블 ERD
+## Table ERD
 
 ```mermaid
 erDiagram
@@ -79,10 +80,10 @@ erDiagram
     }
 ```
 
-## 도메인 모델
+## Domain Model
 
 ```kotlin
-// kotlinx.serialization 어노테이션 필요
+// kotlinx.serialization annotation required
 @Serializable
 data class DataHolder(
     val user: User,
@@ -103,7 +104,7 @@ data class UserGroup(
 )
 ```
 
-## 도메인 클래스 다이어그램
+## Domain Class Diagram
 
 ```mermaid
 classDiagram
@@ -129,29 +130,29 @@ classDiagram
     style UserGroup fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
 ```
 
-## 핵심 개념
+## Key Concepts
 
-### JSON/JSONB 컬럼 선언
+### JSON/JSONB Column Declaration
 
 ```kotlin
-// JSON 컬럼
+// JSON column
 object JsonTable : IntIdTable("j_table") {
     val jsonColumn = json<DataHolder>("j_column", Json.Default)
 }
 
-// JSONB 컬럼 (PostgreSQL — 바이너리 저장, GIN 인덱스 가능)
+// JSONB column (PostgreSQL — binary storage, GIN index capable)
 object JsonBTable : IntIdTable("j_b_table") {
     val jsonBColumn = jsonb<DataHolder>("j_b_column", Json.Default)
 }
 
-// 배열 타입 JSON 컬럼
+// Array type JSON column
 object JsonArrayTable : IntIdTable("j_arrays") {
     val groups = json<UserGroup>("groups", Json.Default)
     val numbers = json<IntArray>("numbers", Json.Default)
 }
 ```
 
-생성되는 DDL (PostgreSQL):
+Generated DDL (PostgreSQL):
 
 ```sql
 CREATE TABLE IF NOT EXISTS j_table (
@@ -161,7 +162,7 @@ CREATE TABLE IF NOT EXISTS j_table (
 
 CREATE TABLE IF NOT EXISTS j_b_table (
     id         SERIAL PRIMARY KEY,
-    j_b_column JSONB NOT NULL   -- JSONB: 바이너리 저장, GIN 인덱스 지원
+    j_b_column JSONB NOT NULL   -- JSONB: binary storage, GIN index support
 );
 ```
 
@@ -169,7 +170,7 @@ CREATE TABLE IF NOT EXISTS j_b_table (
 
 ```kotlin
 withTables(testDB, JsonTable) {
-    // INSERT — 객체 그대로 전달
+    // INSERT — pass object as-is
     val id = JsonTable.insertAndGetId {
         it[jsonColumn] = DataHolder(
             user = User("Alice", "dev"),
@@ -179,46 +180,46 @@ withTables(testDB, JsonTable) {
         )
     }
 
-    // SELECT — 자동 역직렬화
+    // SELECT — automatic deserialization
     val row = JsonTable.selectAll().where { JsonTable.id eq id }.single()
-    val data = row[JsonTable.jsonColumn]   // DataHolder 객체로 반환
+    val data = row[JsonTable.jsonColumn]   // Returned as DataHolder object
     println(data.user.name)               // "Alice"
 }
 ```
 
-### JSON 경로 추출 (extract)
+### JSON Path Extraction (extract)
 
 ```kotlin
-// JSON 필드 내부 값을 직접 SELECT
+// Directly SELECT internal JSON field values
 JsonBTable.select(JsonBTable.jsonBColumn.extract<String>("$.user.name"))
     .where { JsonBTable.id eq id }
     .single()
-// 반환: "Alice"
+// Returns: "Alice"
 
-// 중첩 필드 조건
+// Nested field conditions
 JsonBTable.selectAll()
     .where { JsonBTable.jsonBColumn.extract<Int>("$.logins") greaterEq 3 }
 ```
 
-### JSON 포함 여부 (contains) — JSONB 전용
+### JSON Containment (contains) — JSONB Only
 
 ```kotlin
-// JSONB @> 연산자: 문서가 특정 하위 문서를 포함하는지
+// JSONB @> operator: check if document contains a specific sub-document
 val searchJson = """{"user": {"name": "Alice"}}"""
 JsonBTable.selectAll()
     .where { JsonBTable.jsonBColumn contains searchJson }
     .count()  // 1L
 ```
 
-### JSON 경로 존재 여부 (exists) — JSONB 전용
+### JSON Path Existence (exists) — JSONB Only
 
 ```kotlin
-// jsonb_path_exists: 경로가 존재하는지 확인
+// jsonb_path_exists: check if a path exists
 JsonBTable.selectAll()
     .where { JsonBTable.jsonBColumn.exists("$.team") }
 ```
 
-### DAO 방식
+### DAO Approach
 
 ```kotlin
 class JsonEntity(id: EntityID<Int>) : IntEntity(id) {
@@ -226,78 +227,78 @@ class JsonEntity(id: EntityID<Int>) : IntEntity(id) {
     var jsonColumn: DataHolder by JsonTable.jsonColumn
 }
 
-// 사용
+// Usage
 val entity = JsonEntity.new {
     jsonColumn = DataHolder(User("Bob", null), logins = 1, active = true, team = null)
 }
 println(entity.jsonColumn.user.name)  // "Bob"
 ```
 
-## DB별 JSON/JSONB 지원
+## JSON/JSONB Support by Database
 
-| DB         | JSON                | JSONB                        |
-|------------|---------------------|------------------------------|
-| PostgreSQL | 텍스트 저장, 삽입 순서 유지    | 바이너리 저장, GIN 인덱싱 가능, 중복 키 제거 |
-| MySQL V8   | 바이너리 저장 (`JSON` 타입) | 별도 타입 없음 (JSON과 동일)          |
-| MariaDB    | JSON 타입             | 미지원                          |
-| H2         | JSON 타입             | 미지원                          |
+| DB         | JSON                                        | JSONB                                              |
+|------------|---------------------------------------------|----------------------------------------------------|
+| PostgreSQL | Text storage, preserves insertion order      | Binary storage, GIN indexing capable, removes duplicate keys |
+| MySQL V8   | Binary storage (`JSON` type)                | No separate type (same as JSON)                    |
+| MariaDB    | JSON type                                   | Not supported                                      |
+| H2         | JSON type                                   | Not supported                                      |
 
-검색 성능이 중요하면 PostgreSQL JSONB + GIN 인덱스를 우선 고려합니다.
+If search performance is important, prioritize PostgreSQL JSONB + GIN index.
 
 ```sql
--- PostgreSQL GIN 인덱스 생성
+-- PostgreSQL GIN index creation
 CREATE INDEX idx_jsonb_gin ON j_b_table USING gin(j_b_column);
 ```
 
-## 예제 구성
+## Example Files
 
-| 파일                    | 설명                                                |
-|-----------------------|---------------------------------------------------|
-| `JsonTestData.kt`     | 테이블/Entity 정의, `DataHolder`/`User`/`UserGroup` 모델 |
-| `Ex01_JsonColumn.kt`  | JSON 컬럼 CRUD, `extract` 경로 추출                     |
-| `Ex02_JsonBColumn.kt` | JSONB 컬럼 CRUD, `contains`, `exists` 조건 쿼리         |
+| File                  | Description                                                 |
+|-----------------------|-------------------------------------------------------------|
+| `JsonTestData.kt`     | Table/Entity definitions, `DataHolder`/`User`/`UserGroup` models |
+| `Ex01_JsonColumn.kt`  | JSON column CRUD, `extract` path extraction                 |
+| `Ex02_JsonBColumn.kt` | JSONB column CRUD, `contains`, `exists` conditional queries |
 
-## 테스트 실행 방법
+## How to Run Tests
 
 ```bash
-# 전체 테스트
+# Full test
 ./gradlew :06-advanced:04-exposed-json:test
 
-# H2만 대상으로 빠른 테스트 (JSONB 기능 제한)
+# Quick test targeting H2 only (JSONB features limited)
 ./gradlew :06-advanced:04-exposed-json:test -PuseFastDB=true
 
-# 특정 테스트 클래스만 실행
+# Run specific test class only
 ./gradlew :06-advanced:04-exposed-json:test \
     --tests "exposed.examples.json.Ex02_JsonBColumn"
 ```
 
-## 복잡한 시나리오
+## Advanced Scenarios
 
-### JSON 경로 추출
+### JSON Path Extraction
 
-`extract` 함수로 JSON 필드 내부 값을 직접 SELECT 조건이나 반환값으로 활용합니다.
+Use the `extract` function to directly leverage internal JSON field values as SELECT conditions or return values.
 
-관련 테스트: `Ex01_JsonColumn` / `Ex02_JsonBColumn` — `jsonExtract` 중첩 필드 경로(`$.field`) 추출 검증
+Related tests: `Ex01_JsonColumn` / `Ex02_JsonBColumn` — `jsonExtract` nested field path (`$.field`) extraction verification
 
-### JSON 존재 여부 체크
+### JSON Existence Check
 
-`exists` 함수로 JSON 문서 내 특정 경로나 값의 존재 여부를 조건으로 사용합니다.
+Use the `exists` function to apply the presence of a specific path or value within a JSON document as a condition.
 
-관련 테스트: `Ex02_JsonBColumn` — `jsonbExists` (PostgreSQL `jsonb_path_exists` 기반)
+Related tests: `Ex02_JsonBColumn` — `jsonbExists` (based on PostgreSQL `jsonb_path_exists`)
 
-### JSON 포함 여부 체크
+### JSON Containment Check
 
-`contains` 함수로 JSON 문서가 특정 하위 문서를 포함하는지 확인합니다.
+Use the `contains` function to check if a JSON document contains a specific sub-document.
 
-관련 테스트: `Ex02_JsonBColumn` — `jsonbContains` (JSONB `@>` 연산자 기반)
+Related tests: `Ex02_JsonBColumn` — `jsonbContains` (based on JSONB `@>` operator)
 
-## 실습 체크리스트
+## Practice Checklist
 
-- JSON/JSONB 컬럼에서 동일 쿼리 성능을 비교한다.
-- 중첩 필드 조건 조회를 추가해본다.
-- 검색 중심이면 JSONB + GIN 인덱스 전략을 우선한다.
-- 스키마 유연성 때문에 발생하는 데이터 품질 리스크를 검증한다.
+- Compare query performance on JSON vs JSONB columns for the same query.
+- Try adding nested field conditional queries.
+- Prioritize JSONB + GIN index strategy for search-heavy use cases.
+- Validate data quality risks arising from schema flexibility.
 
-## 다음 모듈
+## Next Module
 
 - [`../05-exposed-money/README.md`](../05-exposed-money/README.md)

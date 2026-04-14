@@ -1,22 +1,24 @@
 # 06 Advanced: exposed-jackson3 (11)
 
-Jackson 3 기반 JSON 컬럼 연동 모듈입니다. Jackson 2에서 3으로 이행할 때 필요한 직렬화 호환성 검증 포인트를 다룹니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A module for integrating JSON columns using Jackson 3. Covers the serialization compatibility verification points needed when migrating from Jackson 2 to Jackson 3.
 
-- Jackson 3 기반 매핑 패턴을 익힌다.
-- Jackson 2 대비 변경점의 영향을 파악한다.
-- JSON 저장 포맷 호환성을 테스트로 검증한다.
+## Learning Objectives
 
-## 선수 지식
+- Learn Jackson 3-based mapping patterns.
+- Understand the impact of breaking changes compared to Jackson 2.
+- Verify JSON storage format compatibility through tests.
+
+## Prerequisites
 
 - [`../08-exposed-jackson/README.md`](../08-exposed-jackson/README.md)
 
-## Jackson3 처리 흐름
+## Jackson 3 Processing Flow
 
 ```mermaid
 flowchart LR
-    subgraph KotlinObj["Kotlin 객체"]
+    subgraph KotlinObj["Kotlin Object"]
         DH["DataHolder\n(user, logins, active, team)"]
         UG["UserGroup\n(users: List~User~)"]
     end
@@ -26,8 +28,8 @@ flowchart LR
         DESER["ObjectMapper.readValue()\n(Jackson 3 API)"]
     end
 
-    subgraph DBCol["DB 컬럼"]
-        JCOL["JSON column\n(텍스트 저장)"]
+    subgraph DBCol["DB Column"]
+        JCOL["JSON column\n(text storage)"]
         JBCOL["JSONB column\n(PostgreSQL)"]
     end
 
@@ -37,10 +39,10 @@ flowchart LR
     JBCOL -->|SELECT| DESER --> DH
     UG -->|INSERT/UPDATE| SER --> JCOL
 
-    subgraph Migration["Jackson 2 → 3 변경점"]
-        PKG["패키지: com.fasterxml → tools.jackson"]
-        MOD["모듈 시스템 변경"]
-        COMPAT["하위 호환성 주의"]
+    subgraph Migration["Jackson 2 → 3 Changes"]
+        PKG["Package: com.fasterxml → tools.jackson"]
+        MOD["Module system changes"]
+        COMPAT["Backward compatibility concerns"]
     end
 
     classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
@@ -54,28 +56,28 @@ flowchart LR
     class PKG,MOD,COMPAT yellow
 ```
 
-## 핵심 개념
+## Key Concepts
 
-- Jackson 3 ObjectMapper 구성
-- JSON 컬럼 직렬화 계약
-- 마이그레이션 회귀 테스트
+- Jackson 3 ObjectMapper configuration
+- JSON column serialization contract
+- Migration regression testing
 
-## 실행 방법
+## Running Tests
 
 ```bash
 ./gradlew :11-exposed-jackson3:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- Jackson 2/3 직렬화 결과 호환 여부를 비교한다.
-- 마이그레이션 시 실패 케이스를 테스트로 고정한다.
+- Compare Jackson 2 and Jackson 3 serialization output for compatibility.
+- Pin failing migration cases as regression tests.
 
-## 성능·안정성 체크포인트
+## Performance and Stability Checkpoints
 
-- 라이브러리 메이저 업그레이드 시 데이터 계약 테스트 필수
-- 직렬화 설정을 중앙화해 모듈 간 일관성 유지
+- Data contract testing is mandatory on major library upgrades.
+- Centralize serialization configuration to maintain consistency across modules.
 
-## 다음 챕터
+## Next Chapter
 
 - [`../../07-jpa/README.md`](../../07-jpa/README.md)

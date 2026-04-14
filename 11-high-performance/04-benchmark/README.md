@@ -1,17 +1,18 @@
-# 벤치마크 (04-benchmark)
+# Benchmark (04-benchmark)
 
-11장의 캐시/라우팅 예제를 대상으로
-`kotlinx-benchmark` 기반 마이크로벤치마크를 수행하는 모듈입니다. 빠른 smoke 프로파일과 정밀 main 프로파일을 제공하며, 실행 결과를 Markdown 표로 저장할 수 있습니다.
+English | [한국어](./README.ko.md)
 
----
-
-## 개요
-
-실제 Redis/DB I/O 대신 Caffeine near-cache + 인메모리 저장소를 사용해 캐시 계층 자체의 오버헤드를 안정적으로 비교합니다. JMH 기반이므로 JVM 워밍업 후 측정 결과를 신뢰할 수 있습니다.
+A module that runs `kotlinx-benchmark`-based microbenchmarks against the cache/routing examples from Chapter 11. Provides a fast smoke profile and a precise main profile, with results saveable as a Markdown table.
 
 ---
 
-## 도메인 ERD
+## Overview
+
+Uses Caffeine near-cache + in-memory storage instead of real Redis/DB I/O to reliably compare the overhead of the cache layer itself. Because it is JMH-based, measurement results after JVM warm-up are trustworthy.
+
+---
+
+## Domain ERD
 
 ```mermaid
 erDiagram
@@ -64,7 +65,7 @@ erDiagram
 
 ---
 
-## Exposed vs JPA 벤치마크 구조
+## Exposed vs JPA Benchmark Structure
 
 ```mermaid
 flowchart TD
@@ -81,8 +82,8 @@ flowchart TD
     end
 
     subgraph Concurrent["ConcurrentCrudBenchmark"]
-        CC_EXP[Exposed DSL\n멀티스레드]
-        CC_JPA[JPA\n멀티스레드]
+        CC_EXP[Exposed DSL\nMulti-thread]
+        CC_JPA[JPA\nMulti-thread]
     end
 
     DB[(H2 InMemory)]
@@ -111,16 +112,16 @@ flowchart TD
 
 ---
 
-## 측정 대상
+## Benchmarks
 
-| 벤치마크 클래스                      | 측정 항목                                | 단위               |
-|-------------------------------|--------------------------------------|------------------|
-| `ReadThroughCacheBenchmark`   | DB 직접 조회 / cache hit / cache miss 비용 | µs (AverageTime) |
-| `RoutingKeyResolverBenchmark` | `currentLookupKey()` 문자열 생성 비용       | ns (AverageTime) |
+| Benchmark Class               | Measured Items                              | Unit             |
+|-------------------------------|---------------------------------------------|------------------|
+| `ReadThroughCacheBenchmark`   | DB direct read / cache hit / cache miss cost | µs (AverageTime) |
+| `RoutingKeyResolverBenchmark` | `currentLookupKey()` string construction cost | ns (AverageTime) |
 
 ---
 
-## 클래스 구조
+## Class Structure
 
 ```mermaid
 classDiagram
@@ -165,35 +166,35 @@ classDiagram
 
 ---
 
-## 벤치마크 파라미터
+## Benchmark Parameters
 
 ### ReadThroughCacheBenchmark
 
-| 파라미터           | 값         | 설명                 |
-|----------------|-----------|--------------------|
-| `payloadBytes` | 256, 4096 | UserPayload 바이트 크기 |
-| DB 크기          | 2,048 항목  | 인메모리 Map           |
-| Caffeine 최대 크기 | 4,096     | near-cache 한도      |
-| miss 키 수       | 256       | 순환 miss 시나리오       |
+| Parameter      | Value     | Description               |
+|----------------|-----------|---------------------------|
+| `payloadBytes` | 256, 4096 | UserPayload byte size      |
+| DB size        | 2,048 entries | In-memory Map          |
+| Caffeine max size | 4,096  | Near-cache limit           |
+| Miss key count | 256       | Cyclic miss scenario       |
 
-측정 메서드:
+Measured methods:
 
-- `dbOnlyRead` — Caffeine 없이 Map에서 직접 조회
-- `readThroughCacheHit` — hotKey(1L)가 항상 캐시에 존재하는 경로
-- `readThroughCacheMiss` — 매 반복 캐시 무효화 후 DB 폴백 경로
+- `dbOnlyRead` — Direct lookup from Map without Caffeine
+- `readThroughCacheHit` — Path where hotKey(1L) is always present in cache
+- `readThroughCacheMiss` — DB fallback path after cache invalidation each iteration
 
 ### RoutingKeyResolverBenchmark
 
-| 파라미터       | 값                  | 설명                                      |
-|------------|--------------------|-----------------------------------------|
-| `tenant`   | `"tenant-a"`, `""` | 실제 tenant / 빈 값(defaultTenant fallback) |
-| `readOnly` | `true`, `false`    | `:ro` / `:rw` 분기                        |
+| Parameter  | Value              | Description                               |
+|------------|--------------------|-------------------------------------------|
+| `tenant`   | `"tenant-a"`, `""` | Real tenant / empty (defaultTenant fallback) |
+| `readOnly` | `true`, `false`    | `:ro` / `:rw` branch                      |
 
 ---
 
-## JMH 공통 설정
+## JMH Common Configuration
 
-| 항목               | 값                   |
+| Item             | Value               |
 |------------------|---------------------|
 | `@Fork`          | 1                   |
 | `@Warmup`        | 5 iterations, 500ms |
@@ -202,7 +203,7 @@ classDiagram
 
 ---
 
-## 벤치마크 흐름
+## Benchmark Flow
 
 ```mermaid
 flowchart LR
@@ -217,9 +218,9 @@ Start --> Fork --> Warmup --> Measure --> Report --> MD
 
 subgraph ReadThroughCacheBenchmark
 direction TB
-RT1[dbOnlyRead\nMap 직접 조회]
+RT1[dbOnlyRead\nDirect Map lookup]
 RT2[readThroughCacheHit\nCaffeine hit]
-RT3[readThroughCacheMiss\ncache.invalidate + DB폴백]
+RT3[readThroughCacheMiss\ncache.invalidate + DB fallback]
 end
 
 subgraph RoutingKeyResolverBenchmark
@@ -248,67 +249,65 @@ Measure --> RoutingKeyResolverBenchmark
 
 ---
 
-## 실행 방법
+## How to Run
 
 ```bash
-# 빠른 smoke 실행 (CI/빠른 추세 확인)
+# Fast smoke run (CI / quick trend check)
 ./gradlew :11-high-performance:04-benchmark:smokeBenchmark
 
-# 기본 프로파일 실행 (정밀 측정)
+# Default profile run (precise measurement)
 ./gradlew :11-high-performance:04-benchmark:benchmark
 
-# Markdown 리포트 생성 (main 프로파일)
+# Generate Markdown report (main profile)
 ./gradlew :11-high-performance:04-benchmark:benchmarkMarkdown
 
-# smoke 결과를 Markdown으로 저장
+# Save smoke results as Markdown
 ./gradlew :11-high-performance:04-benchmark:benchmarkMarkdown -PbenchmarkProfile=smoke
 ```
 
 ---
 
-## 결과 파일 위치
+## Result File Locations
 
-| 형식       | 경로                                                       |
+| Format   | Path                                                     |
 |----------|----------------------------------------------------------|
 | JSON     | `build/reports/benchmarks/<profile>/.../jvm.json`        |
 | Markdown | `build/reports/benchmarks/<profile>/benchmark-report.md` |
 
 ---
 
-## 최신 벤치마크 결과
+## Latest Benchmark Results
 
-> 아래 결과는 **smoke 프로파일** (`2026-03-18` 기준)로 측정한 참고값입니다.
-> 정밀 측정은 `./gradlew :04-benchmark:benchmark` 후 `build/reports/benchmarks/main/` 의 `benchmark-report.md` 를 확인하세요.
+> The results below are reference values measured with the **smoke profile** (as of `2026-03-18`).
+> For precise measurements, run `./gradlew :04-benchmark:benchmark` and check `benchmark-report.md` in `build/reports/benchmarks/main/`.
 
 ### ReadThroughCacheBenchmark
 
-| 메서드                    | payloadBytes | Score (µs/op) | Error (±) | 해석                                      |
-|------------------------|--------------|---------------|-----------|-----------------------------------------|
-| `dbOnlyRead`           | 256          | 0.001         | 0.000     | HashMap 직접 조회 — 베이스라인                   |
-| `dbOnlyRead`           | 4096         | 0.001         | 0.000     | 대용량 payload도 Map 조회 비용은 동일              |
-| `readThroughCacheHit`  | 256          | 0.003         | 0.000     | Caffeine hit — Map 대비 약 3× (래퍼 비용)      |
-| `readThroughCacheHit`  | 4096         | 0.003         | 0.000     | payload 크기 무관 — 참조만 반환                  |
-| `readThroughCacheMiss` | 256          | 0.119         | 0.282     | cache invalidate + DB 폴백 — hit 대비 약 40× |
-| `readThroughCacheMiss` | 4096         | 0.085         | 0.155     | miss 비용이 payload 크기보다 캐시 무효화 비용에 종속     |
+| Method                 | payloadBytes | Score (µs/op) | Error (±) | Interpretation                                         |
+|------------------------|--------------|---------------|-----------|--------------------------------------------------------|
+| `dbOnlyRead`           | 256          | 0.001         | 0.000     | HashMap direct lookup — baseline                       |
+| `dbOnlyRead`           | 4096         | 0.001         | 0.000     | Large payload has same Map lookup cost                 |
+| `readThroughCacheHit`  | 256          | 0.003         | 0.000     | Caffeine hit — ~3× vs Map (wrapper overhead)           |
+| `readThroughCacheHit`  | 4096         | 0.003         | 0.000     | Payload size irrelevant — reference only returned      |
+| `readThroughCacheMiss` | 256          | 0.119         | 0.282     | cache invalidate + DB fallback — ~40× vs hit           |
+| `readThroughCacheMiss` | 4096         | 0.085         | 0.155     | Miss cost depends on cache invalidation, not payload   |
 
 ### RoutingKeyResolverBenchmark
 
-| tenant     | readOnly | Score (µs/op) | Error (±) | 해석                          |
-|------------|----------|---------------|-----------|-----------------------------|
-| `tenant-a` | `true`   | 0.004         | 0.001     | 실제 테넌트 + read-only 키        |
-| `tenant-a` | `false`  | 0.004         | 0.002     | 실제 테넌트 + read-write 키       |
-| `` (빈 값)   | `true`   | 0.004         | 0.004     | defaultTenant 폴백 분기 (오차 증가) |
-| `` (빈 값)   | `false`  | 0.004         | 0.002     | defaultTenant 폴백 분기         |
+| tenant     | readOnly | Score (µs/op) | Error (±) | Interpretation                         |
+|------------|----------|---------------|-----------|----------------------------------------|
+| `tenant-a` | `true`   | 0.004         | 0.001     | Real tenant + read-only key            |
+| `tenant-a` | `false`  | 0.004         | 0.002     | Real tenant + read-write key           |
+| `` (empty) | `true`   | 0.004         | 0.004     | defaultTenant fallback branch (higher error) |
+| `` (empty) | `false`  | 0.004         | 0.002     | defaultTenant fallback branch          |
 
-> **요약**: 라우팅 키 계산 비용(~4 ns)은 실질적으로 무시 가능합니다. 캐시 miss 비용은 hit 대비 최대 40×로, **miss 빈도를 낮추는 것이 핵심 최적화 포인트**입니다.
+> **Summary**: Routing key computation cost (~4 ns) is practically negligible. Cache miss cost is up to 40× higher than a hit, making **reducing miss frequency the key optimization target**.
 
 ---
 
-## 해석 포인트
+## Interpretation Notes
 
-- `RoutingKeyResolverBenchmark`: 테넌트 유무와 read-only 여부가 라우팅 키 계산에 미치는 오버헤드를 비교합니다. 빈 tenant일 때
-  `defaultTenant` 폴백 분기가 추가되므로 미세한 차이가 발생할 수 있습니다.
-- `ReadThroughCacheBenchmark`: 동일 payload 크기에서 `dbOnlyRead` < `readThroughCacheHit` <
-  `readThroughCacheMiss` 순서가 일반적입니다. 256B와 4096B 비교로 직렬화 비용 영향도 확인합니다.
-- 마이크로벤치마크 결과는 절대값보다 상대 비교와 추세 확인에 활용합니다.
-- smoke 프로파일로 빠르게 추세를 보고, main 프로파일로 정밀 측정합니다.
+- `RoutingKeyResolverBenchmark`: Compares the overhead of tenant presence and read-only flag on routing key computation. An empty tenant adds a `defaultTenant` fallback branch, which may cause minor differences.
+- `ReadThroughCacheBenchmark`: The order `dbOnlyRead` < `readThroughCacheHit` < `readThroughCacheMiss` is typical for the same payload size. The 256B vs 4096B comparison also reveals the impact of serialization cost.
+- Use microbenchmark results for relative comparisons and trend analysis rather than absolute values.
+- Use the smoke profile for quick trend checks, and the main profile for precise measurement.

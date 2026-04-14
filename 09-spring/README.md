@@ -1,32 +1,34 @@
 # 09 Spring Integration
 
-Spring Boot 환경에서 Exposed를 안정적으로 운영하기 위한 통합 패턴을 다루는 챕터입니다. 자동 설정 기반 연결부터 선언적 트랜잭션, Repository 패턴(동기/코루틴), Spring Cache 통합까지 단계적으로 학습할 수 있는 예제를 제공합니다.
+English | [한국어](./README.ko.md)
 
-## 챕터 목표
+This chapter covers integration patterns for running Exposed reliably in a Spring Boot environment. It provides step-by-step examples from auto-configuration-based connections to declarative transactions, Repository patterns (synchronous/coroutines), and Spring Cache integration.
 
-- Spring 트랜잭션과 Exposed 트랜잭션 경계를 정렬해 일관된 데이터 흐름을 설계한다.
-- 동기(`Spring MVC`)와 비동기(`Spring WebFlux + 코루틴`) Repository 레이어 표준 패턴을 정립한다.
-- 캐시 통합 시 일관성과 성능의 균형을 맞추는 전략을 확인한다.
+## Chapter Goals
 
-## 선수 지식
+- Align Spring transaction and Exposed transaction boundaries to design consistent data flows.
+- Establish standard patterns for synchronous (`Spring MVC`) and asynchronous (`Spring WebFlux + Coroutines`) Repository layers.
+- Explore strategies for balancing consistency and performance when integrating caches.
 
-- Spring Boot 기본 (`DataSource`, `@Transactional`, `@Cacheable`)
-- `05-exposed-dml` 챕터 내용 (DSL/DAO 기초)
-- `08-coroutines` 챕터 내용 (코루틴 모듈 학습 시)
+## Prerequisites
 
-## 포함 모듈
+- Spring Boot basics (`DataSource`, `@Transactional`, `@Cacheable`)
+- `05-exposed-dml` chapter content (DSL/DAO fundamentals)
+- `08-coroutines` chapter content (for coroutine module study)
 
-| 모듈                                                                               | 설명                                 | 핵심 기술                                             |
-|----------------------------------------------------------------------------------|------------------------------------|---------------------------------------------------|
-| [`01-springboot-autoconfigure`](01-springboot-autoconfigure/README.md)           | Spring Boot 자동 설정 기반 Exposed 통합    | `ExposedAutoConfiguration`, `DatabaseInitializer` |
-| [`02-transactiontemplate`](02-transactiontemplate/README.md)                     | `TransactionTemplate` 프로그래밍 트랜잭션   | `TransactionTemplate`, `TransactionOperations`    |
-| [`03-spring-transaction`](03-spring-transaction/README.md)                       | `@Transactional` 선언적 트랜잭션          | `SpringTransactionManager`, `@Transactional`      |
-| [`04-exposed-repository`](04-exposed-repository/README.md)                       | 동기 Repository 패턴 (Spring MVC)      | `JdbcRepository`, DSL/DAO 혼용                      |
-| [`05-exposed-repository-coroutines`](05-exposed-repository-coroutines/README.md) | 코루틴 Repository 패턴 (Spring WebFlux) | `newSuspendedTransaction`, suspend fun            |
-| [`06-spring-cache`](06-spring-cache/README.md)                                   | Spring Cache + Redis 동기 캐시         | `@Cacheable`, `@CacheEvict`, `RedisCacheManager`  |
-| [`07-spring-suspended-cache`](07-spring-suspended-cache/README.md)               | 코루틴 기반 Redis 캐시                    | `LettuceSuspendedCache`, 데코레이터 패턴                 |
+## Included Modules
 
-## 전체 아키텍처 흐름
+| Module                                                                           | Description                              | Key Technologies                                  |
+|----------------------------------------------------------------------------------|-----------------------------------------|---------------------------------------------------|
+| [`01-springboot-autoconfigure`](01-springboot-autoconfigure/README.md)           | Exposed integration via Spring Boot auto-configuration | `ExposedAutoConfiguration`, `DatabaseInitializer` |
+| [`02-transactiontemplate`](02-transactiontemplate/README.md)                     | Programmatic transactions with `TransactionTemplate` | `TransactionTemplate`, `TransactionOperations`    |
+| [`03-spring-transaction`](03-spring-transaction/README.md)                       | Declarative transactions with `@Transactional` | `SpringTransactionManager`, `@Transactional`      |
+| [`04-exposed-repository`](04-exposed-repository/README.md)                       | Synchronous Repository pattern (Spring MVC) | `JdbcRepository`, DSL/DAO hybrid                  |
+| [`05-exposed-repository-coroutines`](05-exposed-repository-coroutines/README.md) | Coroutine Repository pattern (Spring WebFlux) | `newSuspendedTransaction`, suspend fun            |
+| [`06-spring-cache`](06-spring-cache/README.md)                                   | Spring Cache + Redis synchronous cache   | `@Cacheable`, `@CacheEvict`, `RedisCacheManager`  |
+| [`07-spring-suspended-cache`](07-spring-suspended-cache/README.md)               | Coroutine-based Redis cache              | `LettuceSuspendedCache`, Decorator pattern        |
+
+## Overall Architecture Flow
 
 ```mermaid
 flowchart TD
@@ -34,15 +36,15 @@ flowchart TD
         AC[ExposedAutoConfiguration] --> STM[SpringTransactionManager]
         AC --> DI[DatabaseInitializer]
     end
-    subgraph TxControl["02-03 트랜잭션 제어"]
+    subgraph TxControl["02-03 Transaction Control"]
         TT[TransactionTemplate] --> STM
         AT["@Transactional"] --> STM
     end
-    subgraph Repo["04-05 Repository 패턴"]
+    subgraph Repo["04-05 Repository Pattern"]
         MVC[MovieExposedRepository\nActorExposedRepository\nSpring MVC] --> AT
         WF[MovieExposedRepository\nActorExposedRepository\nWebFlux Coroutine] --> NST[newSuspendedTransaction]
     end
-    subgraph Cache["06-07 캐시 통합"]
+    subgraph Cache["06-07 Cache Integration"]
         SC[CountryRepository\n@Cacheable/@CacheEvict] --> Redis[(Redis)]
         CC[CachedCountrySuspendedRepository\nLettuceSuspendedCache] --> Redis
         SC --> AT
@@ -67,9 +69,9 @@ flowchart TD
     class Redis,DB orange
 ```
 
-## 핵심 패턴 요약
+## Key Pattern Summary
 
-### SpringTransactionManager 등록
+### SpringTransactionManager Registration
 
 ```kotlin
 @Configuration
@@ -84,7 +86,7 @@ class DataSourceConfig: TransactionManagementConfigurer {
 }
 ```
 
-### Repository 패턴 (동기)
+### Repository Pattern (Synchronous)
 
 ```kotlin
 @Repository
@@ -97,18 +99,18 @@ class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
 }
 ```
 
-### Repository 패턴 (코루틴)
+### Repository Pattern (Coroutines)
 
 ```kotlin
 @Repository
 class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
 
-    suspend fun create(movie: MovieRecord): MovieRecord = /* newSuspendedTransaction 내부 */
+    suspend fun create(movie: MovieRecord): MovieRecord = /* inside newSuspendedTransaction */
         MovieTable.insertAndGetId { ... }.let { movie.copy(id = it.value) }
 }
 ```
 
-### 캐시 계층 데코레이터 (코루틴)
+### Cache Layer Decorator (Coroutines)
 
 ```kotlin
 class CachedCountrySuspendedRepository(
@@ -126,7 +128,7 @@ class CachedCountrySuspendedRepository(
 }
 ```
 
-## 권장 학습 순서
+## Recommended Learning Order
 
 ```
 01-springboot-autoconfigure
@@ -140,10 +142,10 @@ class CachedCountrySuspendedRepository(
 06-spring-cache ──────────────────→ 07-spring-suspended-cache
 ```
 
-## 실행 방법
+## How to Run
 
 ```bash
-# 전체 챕터 테스트
+# Full chapter tests
 ./gradlew :09-spring:01-springboot-autoconfigure:test \
           :09-spring:02-transactiontemplate:test \
           :09-spring:03-spring-transaction:test \
@@ -152,54 +154,54 @@ class CachedCountrySuspendedRepository(
           :09-spring:06-spring-cache:test \
           :09-spring:07-spring-suspended-cache:test
 
-# 개별 모듈 테스트
+# Individual module test
 ./gradlew :09-spring:04-exposed-repository:test
 
-# 테스트 로그 요약
+# Test log summary
 ./bin/repo-test-summary -- ./gradlew :09-spring:04-exposed-repository:test
 ```
 
-## 테스트 포인트
+## Test Points
 
-- 트랜잭션 전파/롤백 규칙이 의도대로 작동하는지 검증한다.
-- 캐시 적중/미스/무효화 시나리오를 각각 검증한다.
-- 코루틴 경로와 동기 경로의 결과 일관성을 비교한다.
-- `@Transactional`이 suspend 함수에 적용되지 않음을 확인하고 대안이 올바르게 동작하는지 점검한다.
+- Verify that transaction propagation/rollback rules work as intended.
+- Validate cache hit/miss/invalidation scenarios individually.
+- Compare result consistency between coroutine and synchronous paths.
+- Confirm that `@Transactional` does not apply to suspend functions and verify that alternatives work correctly.
 
-## 주요 트레이드오프
+## Key Trade-offs
 
-| 선택                        | 장점               | 단점             |
-|---------------------------|------------------|----------------|
-| `@Transactional`          | 선언적, 간결          | suspend 함수 미지원 |
-| `TransactionTemplate`     | 세밀한 경계 제어        | 코드 복잡도 증가      |
-| `newSuspendedTransaction` | 코루틴 네이티브         | 명시적 감싸기 필요     |
-| Spring Cache `@Cacheable` | 선언적, 간결          | suspend 함수 미지원 |
-| `LettuceSuspendedCache`   | suspend 지원, 논블로킹 | 수동 캐시 로직 작성    |
+| Choice                      | Pros                         | Cons                           |
+|---------------------------|------------------------------|--------------------------------|
+| `@Transactional`          | Declarative, concise         | Does not support suspend functions |
+| `TransactionTemplate`     | Fine-grained boundary control | Increased code complexity      |
+| `newSuspendedTransaction` | Coroutine-native             | Requires explicit wrapping     |
+| Spring Cache `@Cacheable` | Declarative, concise         | Does not support suspend functions |
+| `LettuceSuspendedCache`   | Supports suspend, non-blocking | Manual cache logic required    |
 
-## 성능·안정성 체크포인트
+## Performance & Stability Checkpoints
 
-- `DataSourceTransactionManagerAutoConfiguration`을 반드시 제외해 트랜잭션 매니저 충돌 방지
-- Exposed JDBC는 블로킹 드라이버이므로 WebFlux 이벤트 루프에서 직접 호출 금지 — `newSuspendedTransaction` 필수
-- 캐시 무효화 누락으로 stale 데이터가 노출되지 않도록 갱신/삭제 시 반드시 `@CacheEvict` 또는 `cache.evict()` 적용
-- 커넥션 풀(`HikariCP`) 크기를 동시 트랜잭션 수에 맞게 조정
+- Always exclude `DataSourceTransactionManagerAutoConfiguration` to prevent transaction manager conflicts
+- Exposed JDBC uses blocking drivers, so never call directly from the WebFlux event loop -- `newSuspendedTransaction` is required
+- Apply `@CacheEvict` or `cache.evict()` on updates/deletes to prevent stale data from cache invalidation misses
+- Adjust connection pool (`HikariCP`) size to match the number of concurrent transactions
 
-## 복잡한 시나리오
+## Complex Scenarios
 
-### Spring 트랜잭션과 Exposed 트랜잭션 경계 정렬
+### Aligning Spring Transaction and Exposed Transaction Boundaries
 
-`@Transactional`로 감싼 Spring 트랜잭션 내에서 Exposed DSL 쿼리를 실행할 때,
-`SpringTransactionManager`가 두 트랜잭션 경계를 같은 커넥션으로 통합합니다.
-`useNestedTransactions = true` 설정으로 SAVEPOINT 기반 중첩 트랜잭션도 지원합니다.
+When executing Exposed DSL queries within a Spring transaction wrapped with `@Transactional`,
+`SpringTransactionManager` unifies both transaction boundaries on the same connection.
+The `useNestedTransactions = true` setting also supports SAVEPOINT-based nested transactions.
 
-- 관련 모듈: [`03-spring-transaction`](03-spring-transaction/)
+- Related module: [`03-spring-transaction`](03-spring-transaction/)
 
-### 코루틴 기반 Suspended Cache 데코레이터
+### Coroutine-Based Suspended Cache Decorator
 
-`CachedCountrySuspendedRepository`는 `DefaultCountrySuspendedRepository`를 감싸는 데코레이터로, Redis `LettuceSuspendedCache`와
-`newSuspendedTransaction` DB 접근을 조합해 캐시 히트 시 DB 트랜잭션을 열지 않는 최적화된 구조를 제공합니다.
+`CachedCountrySuspendedRepository` is a decorator wrapping `DefaultCountrySuspendedRepository`, combining Redis `LettuceSuspendedCache` with
+`newSuspendedTransaction` DB access to provide an optimized structure that avoids opening DB transactions on cache hits.
 
-- 관련 모듈: [`07-spring-suspended-cache`](07-spring-suspended-cache/)
+- Related module: [`07-spring-suspended-cache`](07-spring-suspended-cache/)
 
-## 다음 챕터
+## Next Chapter
 
-- [`../10-multi-tenant/README.md`](../10-multi-tenant/README.md): 테넌트 분리 아키텍처를 실전 형태로 확장합니다.
+- [`../10-multi-tenant/README.md`](../10-multi-tenant/README.md): Extends to tenant isolation architecture in a production-ready form.

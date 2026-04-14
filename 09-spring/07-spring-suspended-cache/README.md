@@ -1,22 +1,22 @@
 # 09 Spring: Suspended Cache (07)
 
-코루틴 suspend 함수에서 Redis 캐시를 논블로킹으로 적용하는 모듈입니다. Spring Cache 어노테이션(
-`@Cacheable`)이 suspend 함수에 직접 적용되지 않는 제약을 해결하기 위해 Lettuce 코루틴 API(`RedisCoroutinesCommands`)로 직접 캐시를 제어하는
-`LettuceSuspendedCache` / `LettuceSuspendedCacheManager`를 구현하고, 데코레이터 패턴으로 Repository에 캐시 계층을 추가하는 방법을 학습합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A module for applying Redis caching in a non-blocking manner from coroutine `suspend` functions. To work around the limitation that Spring Cache annotations (`@Cacheable`) cannot be applied directly to `suspend` functions, this module implements `LettuceSuspendedCache` / `LettuceSuspendedCacheManager` that control the cache directly through the Lettuce coroutine API (`RedisCoroutinesCommands`), and demonstrates how to add a cache layer to a Repository using the decorator pattern.
 
-- `@Cacheable`이 suspend 함수에 적용되지 않는 이유를 이해하고 Lettuce 코루틴 API로 대안을 구현한다.
-- `LettuceSuspendedCache<K, V>` 로 TTL 기반 캐시 get/put/evict/clear를 suspend 함수로 처리한다.
-- 데코레이터 패턴(`CachedCountrySuspendedRepository`)으로 캐시 로직과 DB 접근 로직을 분리한다.
-- `newSuspendedTransaction`과 Lettuce 코루틴 캐시를 조합해 캐시 히트 시 DB 트랜잭션을 열지 않는 구조를 만든다.
+## Learning Goals
 
-## 선수 지식
+- Understand why `@Cacheable` cannot be applied to `suspend` functions and implement an alternative using the Lettuce coroutine API.
+- Handle TTL-based cache get/put/evict/clear as `suspend` functions using `LettuceSuspendedCache<K, V>`.
+- Separate cache logic from DB access logic using the decorator pattern (`CachedCountrySuspendedRepository`).
+- Combine `newSuspendedTransaction` with Lettuce coroutine cache so that no DB transaction is opened on a cache hit.
+
+## Prerequisites
 
 - [`../05-exposed-repository-coroutines/README.md`](../05-exposed-repository-coroutines/README.md)
 - [`../06-spring-cache/README.md`](../06-spring-cache/README.md)
 
-## 도메인 모델
+## Domain Model
 
 ```mermaid
 erDiagram
@@ -28,7 +28,7 @@ erDiagram
     }
 ```
 
-## 아키텍처
+## Architecture
 
 ```mermaid
 classDiagram
@@ -81,14 +81,14 @@ classDiagram
     style LettuceSuspendedCache fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
 ```
 
-## 핵심 개념
+## Key Concepts
 
-### LettuceSuspendedCache (논블로킹 캐시 구현체)
+### LettuceSuspendedCache (Non-blocking Cache Implementation)
 
 ```kotlin
 class LettuceSuspendedCache<K: Any, V: Any>(
     val name: String,
-    val commands: RedisCoroutinesCommands<String, V>,  // Lettuce 코루틴 커맨드
+    val commands: RedisCoroutinesCommands<String, V>,  // Lettuce coroutine commands
     private val ttlSeconds: Long? = null,
 ) {
     private fun keyStr(key: K): String = "$name:$key"
@@ -97,7 +97,7 @@ class LettuceSuspendedCache<K: Any, V: Any>(
 
     suspend fun put(key: K, value: V) {
         if (ttlSeconds != null) {
-            commands.setex(keyStr(key), ttlSeconds, value)   // TTL 적용
+            commands.setex(keyStr(key), ttlSeconds, value)   // Apply TTL
         } else {
             commands.set(keyStr(key), value)
         }
@@ -113,11 +113,11 @@ class LettuceSuspendedCache<K: Any, V: Any>(
 }
 ```
 
-### 데코레이터: CachedCountrySuspendedRepository
+### Decorator: CachedCountrySuspendedRepository
 
 ```kotlin
 class CachedCountrySuspendedRepository(
-    private val delegate: CountrySuspendedRepository,       // DB 접근 구현체
+    private val delegate: CountrySuspendedRepository,       // DB access implementation
     private val cacheManager: LettuceSuspendedCacheManager,
 ): CountrySuspendedRepository {
 
@@ -129,11 +129,11 @@ class CachedCountrySuspendedRepository(
         cacheManager.getOrCreate(name = CACHE_NAME, ttlSeconds = 60)
     }
 
-    // Cache-Aside 패턴: 캐시 미스 시 delegate 조회 후 캐시 저장
+    // Cache-Aside pattern: query delegate on cache miss, then store in cache
     override suspend fun findByCode(code: String): CountryRecord? =
         cache.get(code) ?: delegate.findByCode(code)?.apply { cache.put(code, this) }
 
-    // Write-Invalidate 패턴: 갱신 전 캐시 무효화
+    // Write-Invalidate pattern: evict cache before updating
     override suspend fun update(countryRecord: CountryRecord): Int {
         cache.evict(countryRecord.code)
         return delegate.update(countryRecord)
@@ -143,7 +143,7 @@ class CachedCountrySuspendedRepository(
 }
 ```
 
-### DefaultCountrySuspendedRepository (DB 직접 접근)
+### DefaultCountrySuspendedRepository (Direct DB Access)
 
 ```kotlin
 class DefaultCountrySuspendedRepository: CountrySuspendedRepository {
@@ -164,28 +164,28 @@ class DefaultCountrySuspendedRepository: CountrySuspendedRepository {
             }
         }
 
-    override suspend fun evictCacheAll() { /* 캐시 없음, no-op */ }
+    override suspend fun evictCacheAll() { /* No cache, no-op */ }
 }
 ```
 
-## 캐시 흐름
+## Cache Flow
 
 ```mermaid
 flowchart TD
-    A[suspend findByCode 호출] --> B{LettuceSuspendedCache\ncache.get 히트?}
-    B -- 예 --> C[CountryRecord 즉시 반환\nDB 쿼리 없음]
-    B -- 아니오 --> D[delegate.findByCode 호출]
-    D --> E[newSuspendedTransaction 시작]
+    A[suspend findByCode called] --> B{LettuceSuspendedCache\ncache.get hit?}
+    B -- Yes --> C[Return CountryRecord immediately\nNo DB query]
+    B -- No --> D[Call delegate.findByCode]
+    D --> E[Start newSuspendedTransaction]
     E --> F[CountryTable.selectAll WHERE code = ?]
-    F --> G[DB 결과 CountryRecord]
-    G --> H[cache.put 으로 Redis에 저장\nTTL 60초]
-    H --> I[CountryRecord 반환]
+    F --> G[DB result CountryRecord]
+    G --> H[Save to Redis via cache.put\nTTL 60s]
+    H --> I[Return CountryRecord]
 
-    J[suspend update 호출] --> K[cache.evict 캐시 즉시 삭제]
-    K --> L[delegate.update 호출]
+    J[suspend update called] --> K[Immediately evict cache via cache.evict]
+    K --> L[Call delegate.update]
     L --> M[newSuspendedTransaction]
     M --> N[CountryTable.update]
-    N --> O[갱신 행 수 반환]
+    N --> O[Return number of updated rows]
 
     classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
     classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
@@ -202,7 +202,7 @@ flowchart TD
     class H,K pink
 ```
 
-## LettuceSuspendedCacheManager 설정
+## LettuceSuspendedCacheManager Configuration
 
 ```kotlin
 @Configuration
@@ -214,7 +214,7 @@ class LettuceSuspendedCacheConfig(
         LettuceSuspendedCacheManager(
             redisClient = redisClient,
             ttlSeconds = 60L,
-            codec = LettuceBinaryCodecs.lz4Fory(),  // LZ4 압축 + Fory 직렬화
+            codec = LettuceBinaryCodecs.lz4Fory(),  // LZ4 compression + Fory serialization
         )
 }
 
@@ -231,7 +231,7 @@ class SuspendedRepositoryConfig {
 }
 ```
 
-## Coroutine + Cache 통합 시퀀스
+## Coroutine + Cache Integration Sequence
 
 ```mermaid
 sequenceDiagram
@@ -243,10 +243,10 @@ sequenceDiagram
 
     Client->>Cached: suspend findByCode("KR")
     Cached->>Cache: suspend get("KR")
-    alt 캐시 히트
+    alt Cache Hit
         Cache-->>Cached: CountryRecord
-        Cached-->>Client: CountryRecord (DB 트랜잭션 없음)
-    else 캐시 미스
+        Cached-->>Client: CountryRecord (no DB transaction)
+    else Cache Miss
         Cache-->>Cached: null
         Cached->>Default: suspend findByCode("KR")
         Default->>DB: newSuspendedTransaction { SELECT WHERE code='KR' }
@@ -258,48 +258,48 @@ sequenceDiagram
 
     Client->>Cached: suspend update(countryRecord)
     Cached->>Cache: suspend evict("KR")
-    Cache-->>Cached: 삭제 완료
+    Cache-->>Cached: Deletion complete
     Cached->>Default: suspend update(countryRecord)
     Default->>DB: newSuspendedTransaction { UPDATE ... }
-    DB-->>Default: 갱신 행 수
-    Default-->>Cached: 갱신 행 수
-    Cached-->>Client: 갱신 행 수
+    DB-->>Default: Number of updated rows
+    Default-->>Cached: Number of updated rows
+    Cached-->>Client: Number of updated rows
 ```
 
-## Spring Cache vs LettuceSuspendedCache 비교
+## Spring Cache vs LettuceSuspendedCache Comparison
 
-| 항목            | Spring Cache (`@Cacheable`)        | LettuceSuspendedCache |
+| Item            | Spring Cache (`@Cacheable`)        | LettuceSuspendedCache |
 |---------------|------------------------------------|-----------------------|
-| suspend 함수 지원 | 미지원 (AOP 프록시 제약)                   | 지원 (코루틴 네이티브)         |
-| 캐시 제어 방식      | 선언적 어노테이션                          | 명시적 코드                |
-| TTL 설정        | `RedisCacheConfiguration.entryTtl` | 생성자 파라미터              |
-| 직렬화           | `RedisSerializationContext`        | Lettuce `RedisCodec`  |
-| 트랜잭션 연동       | `transactionAware()`               | 수동 조합                 |
+| `suspend` function support | Not supported (AOP proxy limitation) | Supported (coroutine-native) |
+| Cache control method | Declarative annotations             | Explicit code         |
+| TTL configuration | `RedisCacheConfiguration.entryTtl` | Constructor parameter |
+| Serialization  | `RedisSerializationContext`        | Lettuce `RedisCodec`  |
+| Transaction integration | `transactionAware()`          | Manual combination    |
 
-## 실행 방법
+## How to Run
 
 ```bash
-# Redis Testcontainer를 자동으로 기동합니다
+# Redis Testcontainer starts automatically
 ./gradlew :09-spring:07-spring-suspended-cache:test
 
-# 테스트 로그 요약
+# Test log summary
 ./bin/repo-test-summary -- ./gradlew :09-spring:07-spring-suspended-cache:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- `findByCode("KR")` 두 번 연속 호출 시 두 번째에서 `newSuspendedTransaction`이 실행되지 않음을 로그로 확인
-- `update()` 후 `findByCode()` 재호출 시 `cache.get`이 null을 반환해 DB 재조회가 일어나는지 검증
-- `evictCacheAll()` 후 `CACHE_NAME:*` 패턴 키가 Redis에서 모두 삭제되는지 확인
-- TTL 60초 만료 후 자동으로 캐시 미스가 발생해 DB 재조회가 이루어지는지 테스트
-- 코루틴 취소(cancellation) 발생 시 `cache.put`이 중단되어도 DB 상태에 영향 없음을 검증
+- Confirm via logs that `newSuspendedTransaction` does not run on the second consecutive call to `findByCode("KR")`
+- Verify that `cache.get` returns null after `update()`, triggering a DB re-query on `findByCode()`
+- After `evictCacheAll()`, confirm all `CACHE_NAME:*` pattern keys are deleted from Redis
+- Test that a cache miss automatically occurs after the 60-second TTL expires, triggering a DB re-query
+- Verify that even if `cache.put` is interrupted by coroutine cancellation, DB state is unaffected
 
-## 성능·안정성 체크포인트
+## Performance & Stability Checkpoints
 
-- `LettuceSuspendedCache.clear()`는 `keys` 커맨드를 사용하므로 프로덕션 대용량 환경에서는 `SCAN` 기반으로 교체 고려
-- Lettuce 코루틴 커맨드는 이벤트 루프에서 실행되므로 블로킹 코드 혼용 금지
-- `cache.evict` 와 `delegate.update` 사이에 장애 발생 시 캐시만 삭제된 불일치 상태 처리 전략 수립 필요
+- `LettuceSuspendedCache.clear()` uses the `keys` command — consider replacing with a `SCAN`-based approach for large production environments
+- Lettuce coroutine commands run on the event loop, so never mix in blocking code
+- Plan a strategy for handling the inconsistent state (cache-only deletion) if a failure occurs between `cache.evict` and `delegate.update`
 
-## 다음 챕터
+## Next Chapter
 
 - [`../../10-multi-tenant/README.md`](../../10-multi-tenant/README.md)

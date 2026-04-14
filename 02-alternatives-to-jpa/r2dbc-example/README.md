@@ -1,21 +1,21 @@
 # 02 Alternatives: R2DBC Example
 
-Spring Data R2DBC + Kotlin Coroutines를 이용해 비동기 데이터베이스 액세스를 구현하는 모듈입니다. `CrudRepository` 인터페이스와
-`DatabaseClient` 직접 활용 두 가지 방식을 모두 다룹니다.
+English | [한국어](./README.ko.md)
 
-## 개요
+A module implementing asynchronous database access using Spring Data R2DBC + Kotlin Coroutines. Covers both the `CrudRepository` interface and direct use of `DatabaseClient`.
 
-Spring Data R2DBC는 완전 Non-blocking R2DBC 드라이버 위에서 Spring Data 방식의 Repository 추상화를 제공합니다. Kotlin 코루틴의
-`suspend` 함수와 자연스럽게 통합되어, `Mono`/`Flux`를 직접 다루지 않고도 Reactive 데이터 접근이 가능합니다.
+## Overview
 
-## 학습 목표
+Spring Data R2DBC provides a Spring Data-style Repository abstraction on top of a fully Non-blocking R2DBC driver. It integrates naturally with Kotlin coroutine `suspend` functions, enabling Reactive data access without handling `Mono`/`Flux` directly.
 
-- R2DBC `CrudRepository` 기반 suspend CRUD를 이해한다.
-- `DatabaseClient`로 커스텀 쿼리와 동적 테이블 생성을 구현한다.
-- `@Query` 어노테이션으로 네임드 파라미터 쿼리를 정의한다.
-- Exposed와의 Latency/연결 모델 차이를 비교한다.
+## Learning Goals
 
-## 아키텍처 흐름
+- Understand suspend CRUD based on the R2DBC `CrudRepository`.
+- Implement custom queries and dynamic table creation with `DatabaseClient`.
+- Define named-parameter queries using the `@Query` annotation.
+- Compare latency and connection model differences with Exposed.
+
+## Architecture Flow
 
 ```mermaid
 sequenceDiagram
@@ -32,7 +32,7 @@ sequenceDiagram
     PC -->> Client: 200 OK / 404 Not Found
     Client ->> PC: GET /posts/{id}/comments/count
     PC ->> CR: countByPostId(id) [suspend]
-    CR ->> DB: COUNT 집계
+    CR ->> DB: COUNT aggregation
     DB -->> CR: Long
     CR -->> PC: Long
     PC -->> Client: 200 OK count
@@ -60,7 +60,7 @@ erDiagram
     posts ||--o{ comments : "post_id"
 ```
 
-## 도메인 모델
+## Domain Model
 
 ```mermaid
 classDiagram
@@ -86,10 +86,10 @@ classDiagram
     style Customer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
-### R2DBC 엔티티 선언
+### R2DBC Entity Declaration
 
 ```kotlin
-// Post 엔티티 — Spring Data R2DBC 어노테이션 사용
+// Post entity — uses Spring Data R2DBC annotations
 @Table("posts")
 data class Post(
     @Column("title") val title: String? = null,
@@ -97,7 +97,7 @@ data class Post(
     @Id val id: Long? = null,
 )
 
-// Comment 엔티티
+// Comment entity
 @Table("comments")
 data class Comment(
     @Column("post_id") val postId: Long,
@@ -106,13 +106,13 @@ data class Comment(
 )
 ```
 
-### Repository 선언
+### Repository Declaration
 
 ```kotlin
-// CrudRepository 기반 — 기본 CRUD 자동 제공
+// CrudRepository-based — basic CRUD provided automatically
 interface PostRepository: CoroutineCrudRepository<Post, Long>
 
-// 커스텀 @Query 사용
+// Custom @Query usage
 interface CommentRepository: CoroutineCrudRepository<Comment, Long> {
     suspend fun countByPostId(postId: Long): Long
 
@@ -120,7 +120,7 @@ interface CommentRepository: CoroutineCrudRepository<Comment, Long> {
     fun findByPostId(postId: Long): Flow<Comment>
 }
 
-// DatabaseClient 직접 활용
+// Direct DatabaseClient usage
 @Repository
 class CustomerRepository(private val client: DatabaseClient) {
     suspend fun findByFirstname(firstname: String): List<Customer> =
@@ -132,63 +132,63 @@ class CustomerRepository(private val client: DatabaseClient) {
 }
 ```
 
-## 핵심 구성 파일
+## Key Files
 
-| 파일                                        | 설명                                     |
-|-------------------------------------------|----------------------------------------|
-| `domain/model/Post.kt`                    | Post R2DBC 엔티티                         |
-| `domain/model/Comment.kt`                 | Comment R2DBC 엔티티                      |
-| `domain/model/Customer.kt`                | Customer R2DBC 엔티티                     |
-| `domain/repository/PostRepository.kt`     | `CoroutineCrudRepository` 기반 Post CRUD |
-| `domain/repository/CommentRepository.kt`  | 집계·Flow 조회 Repository                  |
-| `domain/repository/CustomerRepository.kt` | `DatabaseClient` 직접 활용                 |
-| `controller/PostController.kt`            | REST API (`/posts`, `/posts/{id}`)     |
-| `config/R2dbcConfig.kt`                   | `ConnectionFactory` 설정                 |
-| `utils/DatabaseInitializer.kt`            | 스키마 초기화 (R2DBC DDL)                    |
+| File                                        | Description                                      |
+|-------------------------------------------|--------------------------------------------------|
+| `domain/model/Post.kt`                    | Post R2DBC entity                                |
+| `domain/model/Comment.kt`                 | Comment R2DBC entity                             |
+| `domain/model/Customer.kt`                | Customer R2DBC entity                            |
+| `domain/repository/PostRepository.kt`     | Post CRUD based on `CoroutineCrudRepository`     |
+| `domain/repository/CommentRepository.kt`  | Aggregation and Flow query repository            |
+| `domain/repository/CustomerRepository.kt` | Direct `DatabaseClient` usage                    |
+| `controller/PostController.kt`            | REST API (`/posts`, `/posts/{id}`)               |
+| `config/R2dbcConfig.kt`                   | `ConnectionFactory` configuration                |
+| `utils/DatabaseInitializer.kt`            | Schema initialisation (R2DBC DDL)                |
 
-## 테스트 파일 구성
+## Test Files
 
-| 파일                                            | 설명                                 |
-|-----------------------------------------------|------------------------------------|
-| `config/R2dbcConfigTest.kt`                   | `ConnectionFactory` 빈 로딩 검증        |
-| `domain/repository/PostRepositoryTest.kt`     | Post CRUD 코루틴 테스트                  |
-| `domain/repository/CommentRespositoryTest.kt` | 댓글 조회·집계·삽입 테스트                    |
-| `domain/repository/CustomerRepositoryTest.kt` | `DatabaseClient` + 커스텀 쿼리 테스트      |
-| `controller/PostControllerTest.kt`            | `WebTestClient` 기반 REST API 통합 테스트 |
+| File                                            | Description                                      |
+|-----------------------------------------------|--------------------------------------------------|
+| `config/R2dbcConfigTest.kt`                   | Verifies `ConnectionFactory` bean loading        |
+| `domain/repository/PostRepositoryTest.kt`     | Post CRUD coroutine tests                        |
+| `domain/repository/CommentRespositoryTest.kt` | Comment query, aggregation, and insert tests     |
+| `domain/repository/CustomerRepositoryTest.kt` | `DatabaseClient` + custom query tests            |
+| `controller/PostControllerTest.kt`            | REST API integration tests with `WebTestClient`  |
 
-## Exposed vs Spring Data R2DBC 비교
+## Exposed vs Spring Data R2DBC Comparison
 
-| 항목     | Exposed                                           | Spring Data R2DBC                          |
-|--------|---------------------------------------------------|--------------------------------------------|
-| 쿼리 스타일 | 타입 안전 DSL / DAO Entity                            | Repository 인터페이스 / `DatabaseClient`        |
-| 트랜잭션   | `transaction { }` / `newSuspendedTransaction { }` | `@Transactional` / `TransactionalOperator` |
-| 연결 모델  | JDBC (블로킹, Virtual Thread 활용)                     | R2DBC (완전 비동기 Non-blocking)                |
-| 스키마 정의 | `object Table : IntIdTable()`                     | `@Table`, `@Id` 어노테이션 + 별도 DDL 스크립트        |
-| 타입 안전성 | 컴파일 타임 컬럼 타입 체크                                   | 문자열 기반 `@Query`, 런타임 오류 가능                 |
-| N+1 방지 | `.with()` eager loading                           | 수동 join 쿼리 필요                              |
-| 학습 곡선  | Kotlin DSL 친화적                                    | Spring 생태계 친화적                             |
-| 페이징    | `.limit(n).offset(m)`                             | `Pageable` / `PageRequest`                 |
+| Item             | Exposed                                           | Spring Data R2DBC                          |
+|-----------------|---------------------------------------------------|--------------------------------------------|
+| Query style     | Type-safe DSL / DAO Entity                        | Repository interface / `DatabaseClient`    |
+| Transactions    | `transaction { }` / `newSuspendedTransaction { }` | `@Transactional` / `TransactionalOperator` |
+| Connection model| JDBC (blocking, leverages Virtual Threads)        | R2DBC (fully async Non-blocking)           |
+| Schema definition | `object Table : IntIdTable()`                   | `@Table`, `@Id` annotations + separate DDL script |
+| Type safety     | Compile-time column type check                    | String-based `@Query`, runtime errors possible |
+| N+1 prevention  | `.with()` eager loading                           | Manual join query required                 |
+| Learning curve  | Kotlin DSL friendly                               | Spring ecosystem friendly                  |
+| Pagination      | `.limit(n).offset(m)`                             | `Pageable` / `PageRequest`                 |
 
-## 테스트 실행 방법
+## Running Tests
 
 ```bash
-# 전체 모듈 테스트
+# Full module tests
 ./gradlew :02-alternatives-to-jpa:r2dbc-example:test
 
-# 앱 서버 실행 (H2 기본)
+# Run app server (H2 by default)
 ./gradlew :02-alternatives-to-jpa:r2dbc-example:bootRun
 
-# 특정 테스트 클래스만 실행
+# Run a specific test class
 ./gradlew :02-alternatives-to-jpa:r2dbc-example:test \
     --tests "alternative.r2dbc.example.domain.repository.PostRepositoryTest"
 ```
 
-## 복잡한 시나리오
+## Advanced Scenarios
 
-- **커스텀 쿼리**: `CustomerRepositoryTest` — `DatabaseClient`로 테이블 직접 생성 후 `findByFirstname` / `@Query` 어노테이션 검증
-- **REST API 통합**: `PostControllerTest` — `WebTestClient`로 HTTP 200/404 응답 및 댓글 수 집계 검증
-- **트랜잭션 속성 변경**: `readOnly = true`, `timeout` 값을 조정하여 DB 반응 확인
+- **Custom query**: `CustomerRepositoryTest` — creates a table directly via `DatabaseClient`, then verifies `findByFirstname` and `@Query` annotations
+- **REST API integration**: `PostControllerTest` — verifies HTTP 200/404 responses and comment count aggregation with `WebTestClient`
+- **Transaction attribute changes**: Adjust `readOnly = true` and `timeout` values to observe DB behaviour
 
-## 다음 모듈
+## Next Module
 
 - [vertx-sqlclient-example](../vertx-sqlclient-example/README.md)

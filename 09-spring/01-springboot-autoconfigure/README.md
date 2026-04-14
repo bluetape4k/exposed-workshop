@@ -1,22 +1,24 @@
 # 09 Spring: AutoConfiguration (01)
 
-Spring Boot 자동 설정으로 Exposed를 최소 구성으로 통합하는 모듈입니다.
-`spring-boot-autoconfigure` 가 제공하는 `SpringTransactionManager`, `DatabaseInitializer` 빈을 활용해
-`application.yml` 한 파일로 DataSource와 트랜잭션을 연결하는 패턴을 학습합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A module that integrates Exposed with minimal configuration using Spring Boot auto-configuration.
+It uses the `SpringTransactionManager` and `DatabaseInitializer` beans provided by `spring-boot-autoconfigure`
+to learn the pattern of connecting DataSource and transactions with a single `application.yml` file.
 
-- Spring Boot 자동 구성이 Exposed용 `SpringTransactionManager`와 `DatabaseInitializer`를 어떻게 등록하는지 이해한다.
-- `application.yml` 프로퍼티(`spring.exposed.*`)로 DDL 자동 생성과 SQL 로깅을 제어하는 방법을 익힌다.
-- `DatabaseConfig` 빈을 재정의해 엔티티 캐시 크기 등 Exposed 동작을 커스터마이즈한다.
-- `@SpringBootApplication(exclude = [...])` 로 충돌하는 Auto-Configuration을 제외하는 방법을 확인한다.
+## Learning Goals
 
-## 선수 지식
+- Understand how Spring Boot auto-configuration registers `SpringTransactionManager` and `DatabaseInitializer` for Exposed.
+- Learn to control DDL auto-generation and SQL logging via `application.yml` properties (`spring.exposed.*`).
+- Customize Exposed behavior such as entity cache size by overriding the `DatabaseConfig` bean.
+- Verify how to exclude conflicting Auto-Configurations using `@SpringBootApplication(exclude = [...])`.
 
-- Spring Boot 자동 구성 원리
+## Prerequisites
+
+- Spring Boot auto-configuration principles
 - [`../04-exposed-ddl/01-connection/README.md`](../../04-exposed-ddl/01-connection/README.md)
 
-## 아키텍처
+## Architecture
 
 ```mermaid
 classDiagram
@@ -53,9 +55,9 @@ classDiagram
     style DatabaseConfig fill:#FFFDE7,stroke:#FFF176,color:#F57F17
 ```
 
-## 핵심 개념
+## Key Concepts
 
-### application.yml 설정
+### application.yml Configuration
 
 ```yaml
 spring:
@@ -63,11 +65,11 @@ spring:
     url: jdbc:h2:mem:test
     driver-class-name: org.h2.Driver
   exposed:
-    generate-ddl: false   # true 시 DatabaseInitializer가 SchemaUtils.create() 실행
-    show-sql: true        # Exposed SQL 로그 출력
+    generate-ddl: false   # When true, DatabaseInitializer runs SchemaUtils.create()
+    show-sql: true        # Exposed SQL log output
 ```
 
-### DatabaseConfig 재정의
+### Overriding DatabaseConfig
 
 ```kotlin
 @TestConfiguration
@@ -81,7 +83,7 @@ class CustomDatabaseConfigConfiguration {
 }
 ```
 
-### Auto-Configuration 제외
+### Excluding Auto-Configuration
 
 ```kotlin
 @SpringBootApplication(
@@ -90,10 +92,10 @@ class CustomDatabaseConfigConfiguration {
 class Application
 ```
 
-`DataSourceTransactionManagerAutoConfiguration`이 등록한 `DataSourceTransactionManager`는 Exposed의
-`SpringTransactionManager`와 충돌하므로 반드시 제외해야 합니다.
+The `DataSourceTransactionManager` registered by `DataSourceTransactionManagerAutoConfiguration` conflicts with Exposed's
+`SpringTransactionManager`, so it must be excluded.
 
-## 자동 등록 빈 흐름
+## Auto-Registered Bean Flow
 
 ```mermaid
 sequenceDiagram
@@ -102,15 +104,15 @@ sequenceDiagram
     participant STM as SpringTransactionManager
     participant DI as DatabaseInitializer
 
-    Boot->>AC: auto-configure 실행
-    AC->>STM: SpringTransactionManager 빈 등록
-    Note over AC: spring.exposed.generate-ddl=true 일 때만
-    AC->>DI: DatabaseInitializer 빈 등록
+    Boot->>AC: Execute auto-configure
+    AC->>STM: Register SpringTransactionManager bean
+    Note over AC: Only when spring.exposed.generate-ddl=true
+    AC->>DI: Register DatabaseInitializer bean
     DI->>DI: SchemaUtils.create(tables...)
-    Boot->>STM: @Transactional 요청 위임
+    Boot->>STM: Delegate @Transactional requests
 ```
 
-## 테이블 정의 예시
+## Table Definition Example
 
 ```kotlin
 object TestTable: IntIdTable("test_table") {
@@ -126,29 +128,29 @@ class TestEntity(id: EntityID<Int>): IntEntity(id) {
 }
 ```
 
-`spring.exposed.generate-ddl=true`로 설정하면 `DatabaseInitializer`가 스캔한 `Table` 객체를 대상으로 `SchemaUtils.create()`를 자동 실행합니다.
+When `spring.exposed.generate-ddl=true` is set, `DatabaseInitializer` automatically runs `SchemaUtils.create()` on the scanned `Table` objects.
 
-## 실행 방법
+## How to Run
 
 ```bash
-# 전체 모듈 테스트
+# Full module test
 ./gradlew :09-spring:01-springboot-autoconfigure:test
 
-# 테스트 로그 요약
+# Test log summary
 ./bin/repo-test-summary -- ./gradlew :09-spring:01-springboot-autoconfigure:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- `spring.exposed.generate-ddl=true/false` 전환 시 `DatabaseInitializer` 빈 유무 차이 확인
-- `DatabaseConfig` 빈을 재정의했을 때 `maxEntitiesToStoreInCachePerEntity` 값이 반영되는지 검증
-- `DataSourceTransactionManagerAutoConfiguration` 제외 없이 기동 시 트랜잭션 충돌 오류 재현
+- Verify the difference in `DatabaseInitializer` bean presence when toggling `spring.exposed.generate-ddl=true/false`
+- Validate that `maxEntitiesToStoreInCachePerEntity` value is reflected when overriding the `DatabaseConfig` bean
+- Reproduce the transaction conflict error when starting without excluding `DataSourceTransactionManagerAutoConfiguration`
 
-## 성능·안정성 체크포인트
+## Performance & Stability Checkpoints
 
-- 자동 구성 기본값(`show-sql=true`)은 운영 환경에서 반드시 `false`로 변경
-- `generate-ddl=true`는 개발/테스트 전용, 운영에서는 마이그레이션 도구(Flyway/Liquibase) 사용
+- The auto-configuration default (`show-sql=true`) must be changed to `false` in production environments
+- `generate-ddl=true` is for development/testing only; use migration tools (Flyway/Liquibase) in production
 
-## 다음 모듈
+## Next Module
 
 - [`../02-transactiontemplate/README.md`](../02-transactiontemplate/README.md)

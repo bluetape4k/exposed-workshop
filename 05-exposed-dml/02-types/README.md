@@ -1,18 +1,20 @@
 # 05 Exposed DML: Column Types (02-types)
 
-Exposed 컬럼 타입을 DB Dialect별로 검증하는 모듈입니다. 기본 타입뿐 아니라 배열, 다차원 배열, BLOB, UUID, unsigned 타입까지 실습합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A module for validating Exposed column types per DB Dialect. Covers not only basic types but also arrays, multi-dimensional arrays, BLOB, UUID, and unsigned types.
 
-- Exposed 컬럼 타입 정의와 바인딩 방식을 익힌다.
-- DB마다 다른 타입 지원 범위를 테스트로 확인한다.
-- 커스텀/특수 타입 사용 시 제약 조건과 이식성 포인트를 이해한다.
+## Learning Objectives
 
-## 선수 지식
+- Learn Exposed column type definitions and binding approaches.
+- Verify the range of type support per DB through tests.
+- Understand constraints and portability considerations when using custom/special types.
+
+## Prerequisites
 
 - [`../01-dml/README.md`](../01-dml/README.md)
 
-## Exposed 컬럼 타입 계층
+## Exposed Column Type Hierarchy
 
 ```mermaid
 classDiagram
@@ -70,9 +72,9 @@ classDiagram
     style ArrayColumnType fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
 ```
 
-## 핵심 개념
+## Key Concepts
 
-### 기본 타입 정의
+### Basic Type Definition
 
 ```kotlin
 object TypesTable: Table("types_demo") {
@@ -84,15 +86,15 @@ object TypesTable: Table("types_demo") {
 }
 ```
 
-### 파라미터 바인딩
+### Parameter Binding
 
 ```kotlin
-// 안전한 파라미터 바인딩 — SQL 인젝션 방지
+// Safe parameter binding — prevents SQL injection
 TypesTable.selectAll()
     .where { TypesTable.label eq stringParam("hello") }
 ```
 
-### 배열 타입 (PostgreSQL/H2)
+### Array Types (PostgreSQL/H2)
 
 ```kotlin
 object ArrayTable: Table("array_demo") {
@@ -100,12 +102,12 @@ object ArrayTable: Table("array_demo") {
     val scores = array<Int>("scores")
 }
 
-// 배열 조건 — anyFrom / allFrom
+// Array conditions — anyFrom / allFrom
 ArrayTable.selectAll()
     .where { stringParam("kotlin") eq anyFrom(ArrayTable.tags) }
 ```
 
-### UUID 컬럼
+### UUID Columns
 
 ```kotlin
 // Java UUID
@@ -118,77 +120,77 @@ object KotlinUUIDTable: Table("kotlin_uuid_demo") {
 }
 ```
 
-## 타입별 DB 지원 현황
+## Type Support by DB
 
-| 타입                    | H2 | PostgreSQL | MySQL V8 | MariaDB | 비고                 |
-|-----------------------|----|------------|----------|---------|--------------------|
-| `bool`                | O  | O          | O        | O       |                    |
-| `char`                | O  | O          | O        | O       |                    |
-| `integer`             | O  | O          | O        | O       |                    |
-| `double`              | O  | O          | O        | O       |                    |
-| `array<T>`            | O  | O          | X        | X       | 1차원 배열             |
-| `multiArray<T>`       | X  | O          | X        | X       | 다차원 배열             |
-| `ubyte/ushort`        | O  | O          | O        | O       | unsigned 정수        |
-| `blob`                | O  | O          | O        | O       | MySQL은 기본값 미지원     |
-| `java UUID`           | O  | O          | O        | O       | 바이너리 vs 문자열 저장 차이  |
-| `kotlin UUID`         | O  | O          | O        | O       | `kotlin.uuid.Uuid` |
-| `useObjectIdentifier` | X  | O          | X        | X       | PostgreSQL OID 전용  |
+| Type                  | H2 | PostgreSQL | MySQL V8 | MariaDB | Notes                        |
+|-----------------------|----|------------|----------|---------|------------------------------|
+| `bool`                | O  | O          | O        | O       |                              |
+| `char`                | O  | O          | O        | O       |                              |
+| `integer`             | O  | O          | O        | O       |                              |
+| `double`              | O  | O          | O        | O       |                              |
+| `array<T>`            | O  | O          | X        | X       | 1-dimensional array          |
+| `multiArray<T>`       | X  | O          | X        | X       | Multi-dimensional array      |
+| `ubyte/ushort`        | O  | O          | O        | O       | Unsigned integers            |
+| `blob`                | O  | O          | O        | O       | MySQL: default value not supported |
+| `java UUID`           | O  | O          | O        | O       | Binary vs string storage difference |
+| `kotlin UUID`         | O  | O          | O        | O       | `kotlin.uuid.Uuid`           |
+| `useObjectIdentifier` | X  | O          | X        | X       | PostgreSQL OID only          |
 
-## 예제 지도
+## Example Map
 
-소스 위치: `src/test/kotlin/exposed/examples/types`
+Source location: `src/test/kotlin/exposed/examples/types`
 
-| 범주    | 파일                                                                                                                   |
-|-------|----------------------------------------------------------------------------------------------------------------------|
-| 기본 타입 | `Ex01_BooleanColumnType.kt`, `Ex02_CharColumnType.kt`, `Ex03_NumericColumnType.kt`, `Ex04_DoubleColumnType.kt`       |
-| 배열 타입 | `Ex05_ArrayColumnType.kt`, `Ex06_MultiArrayColumnType.kt`                                                            |
-| 확장 타입 | `Ex07_UnsignedColumnType.kt`, `Ex08_BlobColumnType.kt`, `Ex09_JavaUUIDColumnType.kt`, `Ex10_KotlinUUIDColumnType.kt` |
+| Category      | Files                                                                                                                  |
+|---------------|----------------------------------------------------------------------------------------------------------------------|
+| Basic types   | `Ex01_BooleanColumnType.kt`, `Ex02_CharColumnType.kt`, `Ex03_NumericColumnType.kt`, `Ex04_DoubleColumnType.kt`       |
+| Array types   | `Ex05_ArrayColumnType.kt`, `Ex06_MultiArrayColumnType.kt`                                                            |
+| Extended types | `Ex07_UnsignedColumnType.kt`, `Ex08_BlobColumnType.kt`, `Ex09_JavaUUIDColumnType.kt`, `Ex10_KotlinUUIDColumnType.kt` |
 
-## 실행 방법
+## Running Tests
 
 ```bash
 ./gradlew :05-exposed-dml:02-types:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- 배열/다차원 배열 지원 여부를 DB별로 표로 정리한다.
-- UUID(Java/Kotlin) 타입 간 변환 경계에서 직렬화 이슈가 없는지 확인한다.
-- unsigned 타입 범위 초과 입력 시 실패 동작을 검증한다.
+- Summarize array/multi-dimensional array support in a per-DB table.
+- Verify there are no serialization issues at the boundary between Java/Kotlin UUID type conversions.
+- Validate failure behavior when an unsigned type range is exceeded.
 
-## DB별 주의사항
+## Per-DB Notes
 
-- 배열 타입: PostgreSQL/H2 중심
-- 다차원 배열: PostgreSQL 전용
-- `blob` 기본값: MySQL 미지원
-- `useObjectIdentifier`: PostgreSQL 전용
+- Array types: Primarily PostgreSQL/H2
+- Multi-dimensional arrays: PostgreSQL only
+- `blob` default value: Not supported in MySQL
+- `useObjectIdentifier`: PostgreSQL only
 
-## 성능·안정성 체크포인트
+## Performance and Stability Checkpoints
 
-- 대형 BLOB 조회 시 전체 적재보다 스트림 접근을 우선 고려
-- 배열 컬럼은 인덱싱/검색 전략을 별도로 설계
-- 타입 변환 실패를 테스트로 고정해 런타임 오류를 사전 차단
+- For large BLOB queries, prefer streaming access over full loading
+- Design indexing/search strategies for array columns separately
+- Fix type conversion failures in tests to prevent runtime errors
 
-## 복잡한 시나리오
+## Complex Scenarios
 
-### 배열 컬럼 슬라이싱과 조건 조회
+### Array Column Slicing and Conditional Queries
 
-PostgreSQL/H2에서 배열 컬럼을 인덱스로 슬라이싱하거나 `anyFrom` / `allFrom`으로 조건을 표현하는 방법을 보여줍니다.
+Shows how to slice array columns by index or express conditions with `anyFrom` / `allFrom` in PostgreSQL/H2.
 
-- 소스: [`Ex05_ArrayColumnType.kt`](src/test/kotlin/exposed/examples/types/Ex05_ArrayColumnType.kt)
+- Source: [`Ex05_ArrayColumnType.kt`](src/test/kotlin/exposed/examples/types/Ex05_ArrayColumnType.kt)
 
-### 다차원 배열 (PostgreSQL 전용)
+### Multi-Dimensional Arrays (PostgreSQL only)
 
-2차원 이상의 배열 컬럼 정의, 삽입, 조회를 PostgreSQL 방언으로 실습합니다.
+Practices defining, inserting, and querying 2D or higher array columns using the PostgreSQL dialect.
 
-- 소스: [`Ex06_MultiArrayColumnType.kt`](src/test/kotlin/exposed/examples/types/Ex06_MultiArrayColumnType.kt)
+- Source: [`Ex06_MultiArrayColumnType.kt`](src/test/kotlin/exposed/examples/types/Ex06_MultiArrayColumnType.kt)
 
-### Kotlin UUID 컬럼 타입
+### Kotlin UUID Column Type
 
-`kotlin.uuid.Uuid`를 Exposed 컬럼에 매핑하는 방법과 DB별 UUID 저장/조회 동작(바이너리 vs 문자열)을 비교합니다.
+Covers mapping `kotlin.uuid.Uuid` to an Exposed column and comparing per-DB UUID storage/retrieval behavior (binary vs string).
 
-- 소스: [`Ex10_KotlinUUIDColumnType.kt`](src/test/kotlin/exposed/examples/types/Ex10_KotlinUUIDColumnType.kt)
+- Source: [`Ex10_KotlinUUIDColumnType.kt`](src/test/kotlin/exposed/examples/types/Ex10_KotlinUUIDColumnType.kt)
 
-## 다음 모듈
+## Next Module
 
 - [`../03-functions/README.md`](../03-functions/README.md)

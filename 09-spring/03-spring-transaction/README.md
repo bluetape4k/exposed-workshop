@@ -1,20 +1,21 @@
 # 09 Spring: Declarative Transaction (03)
 
-`@Transactional` 중심 선언적 트랜잭션 통합 모듈입니다. Exposed의 `SpringTransactionManager`를 `annotationDrivenTransactionManager()`로 등록해
-`@Transactional` 어노테이션과 Exposed DAO가 같은 커넥션을 공유하는 구조를 학습합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A declarative transaction integration module centered on `@Transactional`. It registers Exposed's `SpringTransactionManager` via `annotationDrivenTransactionManager()` to learn the structure where `@Transactional` annotations and Exposed DAO share the same connection.
 
-- `TransactionManagementConfigurer`를 구현해 Exposed `SpringTransactionManager`를 기본 트랜잭션 매니저로 등록한다.
-- `@Transactional` 속성(propagation, isolation, readOnly, timeout)이 Exposed 쿼리에 어떻게 적용되는지 이해한다.
-- `PlatformTransactionManager.execute()` 확장 함수로 프로그래밍 방식 트랜잭션을 일관되게 제어한다.
-- 중첩 트랜잭션(`useNestedTransactions = true`) 동작을 검증한다.
+## Learning Goals
 
-## 선수 지식
+- Implement `TransactionManagementConfigurer` to register Exposed `SpringTransactionManager` as the default transaction manager.
+- Understand how `@Transactional` attributes (propagation, isolation, readOnly, timeout) apply to Exposed queries.
+- Control programmatic transactions consistently using the `PlatformTransactionManager.execute()` extension function.
+- Verify nested transaction behavior (`useNestedTransactions = true`).
+
+## Prerequisites
 
 - [`../02-transactiontemplate/README.md`](../02-transactiontemplate/README.md)
 
-## 아키텍처
+## Architecture
 
 ```mermaid
 classDiagram
@@ -58,9 +59,9 @@ classDiagram
     style OrderEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
-## 핵심 개념
+## Key Concepts
 
-### SpringTransactionManager 등록
+### SpringTransactionManager Registration
 
 ```kotlin
 @Configuration
@@ -75,20 +76,20 @@ class DataSourceConfig: TransactionManagementConfigurer {
         }
     )
 
-    // @Transactional 이 사용할 기본 트랜잭션 매니저로 Exposed SpringTransactionManager 지정
+    // Register Exposed SpringTransactionManager as the default transaction manager for @Transactional
     @Bean
     override fun annotationDrivenTransactionManager(): TransactionManager =
         SpringTransactionManager(dataSource(), DatabaseConfig {
-            useNestedTransactions = true  // SAVEPOINT 기반 중첩 트랜잭션 허용
+            useNestedTransactions = true  // Allow SAVEPOINT-based nested transactions
         })
 }
 ```
 
-### 선언적 트랜잭션 서비스
+### Declarative Transaction Service
 
 ```kotlin
 @Service
-@Transactional          // 클래스 전체에 REQUIRED 전파 적용
+@Transactional          // Apply REQUIRED propagation to the entire class
 class OrderService {
 
     @Transactional(readOnly = true)
@@ -109,10 +110,10 @@ class OrderService {
 }
 ```
 
-### PlatformTransactionManager 확장 함수
+### PlatformTransactionManager Extension Function
 
 ```kotlin
-// propagation, isolation, readOnly, timeout을 파라미터로 제어
+// Control propagation, isolation, readOnly, timeout via parameters
 fun PlatformTransactionManager.execute(
     propagationBehavior: Int = TransactionDefinition.PROPAGATION_REQUIRED,
     isolationLevel: Int = TransactionDefinition.ISOLATION_DEFAULT,
@@ -120,7 +121,7 @@ fun PlatformTransactionManager.execute(
     timeout: Int? = null,
     block: (TransactionStatus) -> Unit,
 ) {
-    // Exposed SpringTransactionManager 전용
+    // For Exposed SpringTransactionManager
     val txTemplate = TransactionTemplate(this).also {
         it.propagationBehavior = propagationBehavior
         it.isolationLevel = isolationLevel
@@ -131,7 +132,7 @@ fun PlatformTransactionManager.execute(
 }
 ```
 
-## 도메인 모델
+## Domain Model
 
 ```kotlin
 object OrderSchema {
@@ -152,7 +153,7 @@ object OrderSchema {
 }
 ```
 
-## 트랜잭션 전파 흐름
+## Transaction Propagation Flow
 
 ```mermaid
 sequenceDiagram
@@ -166,37 +167,37 @@ sequenceDiagram
     STM->>DB: BEGIN
     OrderService->>DB: INSERT INTO customers(...)
     OrderService->>DB: INSERT INTO orders(...)
-    alt 정상 완료
+    alt Successful completion
         STM->>DB: COMMIT
-    else RuntimeException 발생
+    else RuntimeException thrown
         STM->>DB: ROLLBACK
-        Note over DB: customers, orders 모두 롤백
+        Note over DB: Both customers and orders rolled back
     end
     OrderService-->>Test: OrderEntity
 ```
 
-## 실행 방법
+## How to Run
 
 ```bash
 ./gradlew :09-spring:03-spring-transaction:test
 
-# 테스트 로그 요약
+# Test log summary
 ./bin/repo-test-summary -- ./gradlew :09-spring:03-spring-transaction:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- `@Transactional(propagation = REQUIRES_NEW)` 로 내부 메서드를 별도 트랜잭션으로 분리했을 때 롤백 범위 확인
-- `useNestedTransactions = true` 상태에서 SAVEPOINT 롤백이 외부 트랜잭션에 영향을 주지 않음을 검증
-- `readOnly = true` 트랜잭션에서 INSERT 시도 시 예외 발생 여부 확인
-- checked 예외와 unchecked 예외의 롤백 규칙 차이 비교
+- Verify rollback scope when separating an inner method into a separate transaction with `@Transactional(propagation = REQUIRES_NEW)`
+- Validate that SAVEPOINT rollback does not affect the outer transaction with `useNestedTransactions = true`
+- Check whether an exception is thrown when attempting INSERT in a `readOnly = true` transaction
+- Compare rollback rule differences between checked and unchecked exceptions
 
-## 성능·안정성 체크포인트
+## Performance & Stability Checkpoints
 
-- 읽기 전용 쿼리 경로에 `@Transactional(readOnly = true)` 명시로 커넥션 최적화
-- 장시간 트랜잭션 내부에 외부 HTTP 호출을 포함하지 않도록 설계
-- `DataSourceTransactionManagerAutoConfiguration`을 `@SpringBootApplication(exclude = [...])` 로 반드시 제외
+- Optimize connections by specifying `@Transactional(readOnly = true)` for read-only query paths
+- Design to avoid including external HTTP calls within long-running transactions
+- Always exclude `DataSourceTransactionManagerAutoConfiguration` via `@SpringBootApplication(exclude = [...])`
 
-## 다음 모듈
+## Next Module
 
 - [`../04-exposed-repository/README.md`](../04-exposed-repository/README.md)

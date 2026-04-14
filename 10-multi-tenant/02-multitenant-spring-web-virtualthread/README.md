@@ -1,23 +1,24 @@
 # Exposed + Spring Web + Virtual Threads + Multi-Tenant (02)
 
-`01` 모듈의 멀티테넌시 구조를 Java 21 Virtual Threads 환경으로 확장한 예제입니다. 블로킹 I/O 스타일을 유지하면서 동시 처리량을 높이는 구성에 초점을 맞춥니다. `ThreadLocal` 대신
-`ScopedValue`를 사용해 Virtual Thread 친화적인 컨텍스트 전파를 구현합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+An example that extends the multi-tenancy structure from module `01` to a Java 21 Virtual Threads environment. Focuses on a configuration that increases concurrent throughput while retaining blocking I/O style. Uses `ScopedValue` instead of `ThreadLocal` for Virtual Thread-friendly context propagation.
 
-- Virtual Thread 기반 요청 처리 모델을 이해한다.
-- `ThreadLocal` vs `ScopedValue` 컨텍스트 전파 방식의 차이를 비교한다.
-- `TransactionSchemaAspect`로 스키마 생성과 전환을 동시에 처리하는 방식을 익힌다.
-- 동시성 증가 상황에서 격리/안정성을 검증한다.
+## Learning Goals
 
-## 선수 지식
+- Understand the Virtual Thread-based request processing model.
+- Compare context propagation differences between `ThreadLocal` and `ScopedValue`.
+- Learn how `TransactionSchemaAspect` handles schema creation and switching simultaneously.
+- Verify isolation/stability under increased concurrency.
+
+## Prerequisites
 
 - [`../01-multitenant-spring-web/README.md`](../01-multitenant-spring-web/README.md)
-- Java 21 Virtual Threads 기초
+- Java 21 Virtual Threads basics
 
 ---
 
-## 도메인 모델
+## Domain Model
 
 ```mermaid
 erDiagram
@@ -44,18 +45,18 @@ erDiagram
 
 ---
 
-## 01 모듈과의 핵심 차이
+## Key Differences from Module 01
 
-| 항목         | 01 (Spring MVC)                   | 02 (Virtual Threads)                                 |
+| Item         | 01 (Spring MVC)                   | 02 (Virtual Threads)                                 |
 |------------|-----------------------------------|------------------------------------------------------|
-| 스레드 모델     | OS 스레드 풀 (Tomcat 기본)              | Virtual Thread per request                           |
-| 컨텍스트 저장    | `ThreadLocal`                     | `ScopedValue`                                        |
-| 스키마 Aspect | `TenantSchemaAspect` (setSchema만) | `TransactionSchemaAspect` (createSchema + setSchema) |
-| Tomcat 설정  | 기본                                | `TomcatVirtualThreadConfig`                          |
+| Thread Model | OS thread pool (Tomcat default)  | Virtual Thread per request                           |
+| Context Storage | `ThreadLocal`                 | `ScopedValue`                                        |
+| Schema Aspect | `TenantSchemaAspect` (setSchema only) | `TransactionSchemaAspect` (createSchema + setSchema) |
+| Tomcat Config | Default                        | `TomcatVirtualThreadConfig`                          |
 
 ---
 
-## 아키텍처
+## Architecture
 
 ```mermaid
 classDiagram
@@ -111,8 +112,8 @@ classDiagram
 
     TomcatVirtualThreadConfig --> Executors : newVirtualThreadPerTaskExecutor()
     TenantFilter --> TenantContext : withTenant()
-    TenantContext --> Tenants : 테넌트 조회
-    Tenants --> Tenant : 열거형 멤버
+    TenantContext --> Tenants : lookup tenant
+    Tenants --> Tenant : enum member
     TenantContext --> ScopedValue : where().run()
     TenantAwareDataSource --> TenantContext : getCurrentTenant()
     TransactionSchemaAspect --> TenantContext : getCurrentTenantSchema()
@@ -132,25 +133,24 @@ classDiagram
     style ActorController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
 ```
 
-### ScopedValue 기반 컨텍스트 전파
+### ScopedValue-Based Context Propagation
 
-Virtual Thread는 수백만 개가 동시에 생성될 수 있어 `ThreadLocal`의 메모리 오버헤드가 문제가 됩니다. Java 21의
-`ScopedValue`는 불변 바인딩으로 동작해 Virtual Thread 환경에 적합합니다.
+Virtual Threads can be created in the millions concurrently, making `ThreadLocal`'s memory overhead problematic. Java 21's `ScopedValue` operates as an immutable binding, making it well-suited for Virtual Thread environments.
 
 ```
-ThreadLocal  → 변경 가능, 반드시 수동 clear() 필요
-ScopedValue  → 불변 바인딩, 스코프 벗어나면 자동 소멸
+ThreadLocal  → Mutable, requires manual clear()
+ScopedValue  → Immutable binding, automatically destroyed when scope exits
 ```
 
-### Platform Thread vs Virtual Thread 비교
+### Platform Thread vs Virtual Thread Comparison
 
 ```mermaid
 flowchart LR
-    subgraph PT["Platform Thread (01 모듈)"]
+    subgraph PT["Platform Thread (Module 01)"]
         PT1[Thread-1] --> DB1[(Schema: korean)]
         PT2[Thread-2] --> DB2[(Schema: english)]
     end
-    subgraph VT["Virtual Thread (02 모듈)"]
+    subgraph VT["Virtual Thread (Module 02)"]
         VT1[VThread-1] --> DB3[(Schema: korean)]
         VT2[VThread-2] --> DB3
         VT3[VThread-3] --> DB4[(Schema: english)]
@@ -168,7 +168,7 @@ flowchart LR
 
 ---
 
-## 요청 흐름
+## Request Flow
 
 ```mermaid
 sequenceDiagram
@@ -182,14 +182,14 @@ sequenceDiagram
     participant Database
 
     Client->>Tomcat: GET /actors (X-TENANT-ID: english)
-    Note over Tomcat: VirtualThread 할당 (newVirtualThreadPerTaskExecutor)
+    Note over Tomcat: VirtualThread assigned (newVirtualThreadPerTaskExecutor)
 
     Tomcat->>TenantFilter: doFilter()
     TenantFilter->>TenantContext: withTenant(ENGLISH) { ... }
     Note over TenantContext: ScopedValue.where(CURRENT_TENANT, ENGLISH).run { }
 
     TenantFilter->>ActorController: chain.doFilter()
-    ActorController->>TransactionSchemaAspect: @Transactional 진입 (AOP Before)
+    ActorController->>TransactionSchemaAspect: @Transactional entry (AOP Before)
     TransactionSchemaAspect->>TenantContext: getCurrentTenantSchema()
     TransactionSchemaAspect->>Database: SchemaUtils.createSchema("english")
     TransactionSchemaAspect->>Database: SchemaUtils.setSchema("english")
@@ -200,17 +200,16 @@ sequenceDiagram
     ActorExposedRepository-->>ActorController: List~ActorRecord~
     ActorController-->>Client: 200 OK [{ "firstName": "Johnny", ... }]
 
-    Note over TenantContext: ScopedValue 스코프 자동 종료 (명시적 clear 불필요)
+    Note over TenantContext: ScopedValue scope ends automatically (no explicit clear needed)
 ```
 
 ---
 
-## 핵심 구현
+## Key Implementation
 
 ### TomcatVirtualThreadConfig
 
-`spring.threads.virtual.enabled=true`(기본값) 조건에서 Tomcat의 `ProtocolHandler` executor를
-`Executors.newVirtualThreadPerTaskExecutor()`로 교체합니다. 기존 코드 변경 없이 Virtual Thread를 활성화하는 최소 설정입니다.
+Replaces Tomcat's `ProtocolHandler` executor with `Executors.newVirtualThreadPerTaskExecutor()` when `spring.threads.virtual.enabled=true` (the default). Minimal configuration to activate Virtual Threads without changing existing code.
 
 ```kotlin
 @Bean
@@ -221,9 +220,9 @@ fun protocolHandlerVirtualThreadExecutorCustomizer(): TomcatProtocolHandlerCusto
 }
 ```
 
-### TenantContext (ScopedValue 버전)
+### TenantContext (ScopedValue Version)
 
-`01` 모듈의 `ThreadLocal` 방식을 `ScopedValue`로 교체한 버전입니다. `ScopedValue.where().run { }` 블록 안에서만 값이 유효하며, 블록 종료 시 자동으로 소멸됩니다.
+A version of the `ThreadLocal` approach from module `01` replaced with `ScopedValue`. Values are only valid inside the `ScopedValue.where().run { }` block and automatically disappear when the block ends.
 
 ```kotlin
 object TenantContext {
@@ -239,15 +238,14 @@ object TenantContext {
 
 ### TransactionSchemaAspect
 
-`01` 모듈의 `TenantSchemaAspect`와 동일한 역할을 하지만,
-`SchemaUtils.createSchema()`를 추가로 호출해 스키마가 없을 경우 자동 생성합니다. Virtual Thread 환경에서 동시 요청이 몰릴 때 스키마 초기화 경합을 방지합니다.
+Performs the same role as `TenantSchemaAspect` from module `01`, but additionally calls `SchemaUtils.createSchema()` to automatically create schemas if they don't exist. Prevents schema initialization races when concurrent requests flood in under Virtual Thread environments.
 
 ```kotlin
 @Before("@within(...Transactional) || @annotation(...Transactional)")
 fun setSchemaForTransaction() {
     transaction {
         val schema = TenantContext.getCurrentTenantSchema()
-        SchemaUtils.createSchema(schema)  // 01 모듈 대비 추가
+        SchemaUtils.createSchema(schema)  // Additional compared to module 01
         SchemaUtils.setSchema(schema)
         commit()
     }
@@ -256,70 +254,69 @@ fun setSchemaForTransaction() {
 
 ### TenantFilter
 
-`01` 모듈과 동일한 서블릿 필터 인터페이스를 사용하지만, 내부적으로 `TenantContext.withTenant()`가 `ScopedValue` 기반으로 동작합니다.
+Uses the same servlet filter interface as module `01`, but internally `TenantContext.withTenant()` operates on a `ScopedValue` basis.
 
 ---
 
-## 주요 구성 요소 요약
+## Key Components Summary
 
-| 파일                                    | 역할                                  |
-|---------------------------------------|-------------------------------------|
-| `config/TomcatVirtualThreadConfig.kt` | Tomcat executor를 Virtual Thread로 교체 |
-| `tenant/TenantFilter.kt`              | 헤더에서 테넌트 추출, ScopedValue 바인딩        |
-| `tenant/TenantContext.kt`             | ScopedValue 기반 테넌트 저장소              |
-| `tenant/Tenants.kt`                   | 테넌트 열거형 + 스키마 매핑                    |
-| `tenant/SchemaSupport.kt`             | `Schema` 객체 생성 헬퍼                   |
-| `tenant/TransactionSchemaAspect.kt`   | AOP로 트랜잭션 전 스키마 생성/전환               |
-| `tenant/TenantAwareDataSource.kt`     | 테넌트 기반 DataSource 라우팅               |
-| `tenant/TenantInitializer.kt`         | 앱 기동 시 스키마/데이터 초기화                  |
-| `tenant/DataInitializer.kt`           | 스키마 생성 + 샘플 데이터 삽입                  |
-| `config/ExposedMultitenantConfig.kt`  | DataSource/Database 빈 설정            |
-| `controller/ActorController.kt`       | 배우 조회 REST API                      |
+| File                                    | Role                                          |
+|---------------------------------------|-----------------------------------------------|
+| `config/TomcatVirtualThreadConfig.kt` | Replace Tomcat executor with Virtual Thread   |
+| `tenant/TenantFilter.kt`              | Extract tenant from header, bind ScopedValue  |
+| `tenant/TenantContext.kt`             | ScopedValue-based tenant store                |
+| `tenant/Tenants.kt`                   | Tenant enum + schema mapping                  |
+| `tenant/SchemaSupport.kt`             | Helper for creating `Schema` objects          |
+| `tenant/TransactionSchemaAspect.kt`   | Schema creation/switching before transaction via AOP |
+| `tenant/TenantAwareDataSource.kt`     | Tenant-based DataSource routing               |
+| `tenant/TenantInitializer.kt`         | Schema/data initialization on app startup     |
+| `tenant/DataInitializer.kt`           | Schema creation + sample data insertion       |
+| `config/ExposedMultitenantConfig.kt`  | DataSource/Database bean configuration        |
+| `controller/ActorController.kt`       | Actor query REST API                          |
 
 ---
 
-## 테스트 방법
+## How to Test
 
 ```bash
-# 모듈 테스트 실행
+# Run module tests
 ./gradlew :10-multi-tenant:02-multitenant-spring-web-virtualthread:test
 
-# 애플리케이션 기동
+# Start application
 ./gradlew :10-multi-tenant:02-multitenant-spring-web-virtualthread:bootRun
 ```
 
-### API 실습
+### API Practice
 
 ```bash
-# 한국어 테넌트 배우 목록
+# Korean tenant actor list
 curl -H 'X-TENANT-ID: korean' http://localhost:8080/actors
 
-# 영어 테넌트 배우 목록
+# English tenant actor list
 curl -H 'X-TENANT-ID: english' http://localhost:8080/actors
 
-# 특정 배우 조회
+# Query specific actor
 curl -H 'X-TENANT-ID: english' http://localhost:8080/actors/1
 ```
 
 ---
 
-## 실습 체크리스트
+## Practice Checklist
 
-- `X-TENANT-ID: korean`과 `X-TENANT-ID: english` 응답 데이터가 다른지 확인
-- 동시 요청 수를 늘려도 테넌트 데이터가 교차되지 않는지 검증
-- `ScopedValue` 스코프 밖에서 `getCurrentTenant()` 호출 시 기본값 반환 확인
-- 스레드 풀/커넥션 풀 설정값 변경 시 지연시간 변화 측정
+- Verify response data differs between `X-TENANT-ID: korean` and `X-TENANT-ID: english`
+- Verify that tenant data does not cross over even as concurrent request count increases
+- Confirm default value returned when `getCurrentTenant()` is called outside `ScopedValue` scope
+- Measure latency changes when thread pool/connection pool settings are modified
 
-## 운영 체크포인트
+## Operations Checkpoints
 
-- Virtual Thread 증가만으로 DB 병목이 해결되지 않으므로 HikariCP `maximumPoolSize` 함께 튜닝
-- `ScopedValue`는 불변이므로 바인딩 후 테넌트 변경이 불가 — 설계 단계에서 흐름 확정 필요
-- 장시간 블로킹 작업을 요청 경로에 두지 않도록 점검
-- tenant 누수 탐지를 위한 통합 테스트를 CI에 고정
+- Increasing Virtual Threads alone does not resolve DB bottlenecks — tune HikariCP `maximumPoolSize` together
+- `ScopedValue` is immutable so tenant cannot be changed after binding — finalize flow design upfront
+- Ensure no long-running blocking tasks are placed in the request path
+- Fix integration tests for tenant leak detection in CI
 
 ---
 
-## 다음 모듈
+## Next Module
 
-- [
-  `../03-multitenant-spring-webflux/README.md`](../03-multitenant-spring-webflux/README.md): WebFlux + Coroutines 기반 논블로킹 멀티테넌트
+- [`../03-multitenant-spring-webflux/README.md`](../03-multitenant-spring-webflux/README.md): Non-blocking multi-tenant with WebFlux + Coroutines

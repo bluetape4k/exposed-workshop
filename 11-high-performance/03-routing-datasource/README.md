@@ -1,31 +1,30 @@
-# RoutingDataSource 예제 (03-routing-datasource)
+# RoutingDataSource Example (03-routing-datasource)
 
-멀티테넌트와 read/write 분리를 함께 다루는 동적 `DataSource` 라우팅 예제입니다.
-`tenant + transaction readOnly` 정보를 조합해 `<tenant>:<rw|ro>` 키를 만들고,
-`DataSourceRegistry`에 등록된 `DataSource`로 위임합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A dynamic `DataSource` routing example that handles multi-tenancy and read/write separation together.
+Combines `tenant + transaction readOnly` information to form a `<tenant>:<rw|ro>` key and delegates to the `DataSource` registered in `DataSourceRegistry`.
 
-- 정적 `targetDataSources` 맵 대신 Registry 기반 라우팅 구조를 구성한다.
-- `TenantContext`와 `@Transactional(readOnly = true)`를 하나의 라우팅 규칙으로 통합한다.
-- 미등록 키, 기본 tenant fallback, 동시 등록 같은 운영성 이슈를 테스트로 검증한다.
+## Learning Goals
 
-## 선수 지식
+- Build a Registry-based routing structure instead of a static `targetDataSources` map.
+- Combine `TenantContext` and `@Transactional(readOnly = true)` into a single routing rule.
+- Verify operational concerns such as unregistered keys, default tenant fallback, and concurrent registration through tests.
+
+## Prerequisites
 
 - [`../10-multi-tenant/README.md`](../10-multi-tenant/README.md)
 
 ---
 
-## 개요
+## Overview
 
-Spring의 `AbstractRoutingDataSource` 대신 직접 구현한 `DynamicRoutingDataSource`를 사용합니다.
-`RoutingKeyResolver`가 현재 스레드의 tenant 컨텍스트와 트랜잭션 read-only 여부를 조합해 라우팅 키를 계산하고,
-`DataSourceRegistry`에서 해당 키에 등록된 `DataSource`를 선택합니다. HTTP 요청의 `X-Tenant-Id` 헤더는 `TenantHeaderFilter`가
-`TenantContext`(ThreadLocal)에 바인딩합니다.
+Uses a custom `DynamicRoutingDataSource` instead of Spring's `AbstractRoutingDataSource`.
+`RoutingKeyResolver` computes the routing key by combining the current thread's tenant context with the transaction read-only flag, and selects the corresponding `DataSource` from `DataSourceRegistry`. The `TenantHeaderFilter` binds the `X-Tenant-Id` HTTP header into `TenantContext` (ThreadLocal).
 
 ---
 
-## 라우팅 키 결정 흐름
+## Routing Key Resolution Flow
 
 ```mermaid
 flowchart LR
@@ -34,20 +33,20 @@ flowchart LR
     TC[TenantContext\nThreadLocal]
     Resolver[ContextAwareRoutingKeyResolver]
     TSM[TransactionSynchronizationManager\n.isCurrentTransactionReadOnly]
-    KeyFmt{키 포맷\ntenant:rw or ro}
+    KeyFmt{Key format\ntenant:rw or ro}
     Registry[DataSourceRegistry\nConcurrentHashMap]
     DS[(DataSource)]
-    Fallback{ro 없음?}
-    RW_DS[(rw DataSource\n재사용)]
+    Fallback{No ro?}
+    RW_DS[(rw DataSource\nreused)]
     Req --> Filter
-    Filter -->|X - Tenant - Id 헤더| TC
+    Filter -->|X - Tenant - Id header| TC
     TC --> Resolver
     TSM --> Resolver
     Resolver --> KeyFmt
     KeyFmt -->|tenant:ro| Registry
     KeyFmt -->|tenant:rw| Registry
-    Registry -->|키 존재| DS
-    Registry -->|ro 미등록| Fallback
+    Registry -->|key exists| DS
+    Registry -->|ro not registered| Fallback
     Fallback -->|rw fallback| RW_DS
 
     classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
@@ -69,7 +68,7 @@ flowchart LR
 
 ---
 
-## 클래스 구조
+## Class Structure
 
 ```mermaid
 classDiagram
@@ -151,7 +150,7 @@ classDiagram
 
 ---
 
-## 요청 처리 흐름 — 멀티테넌트 read/write 분리 라우팅
+## Request Processing Flow — Multi-Tenant Read/Write Separation Routing
 
 ```mermaid
 sequenceDiagram
@@ -162,10 +161,10 @@ sequenceDiagram
     participant DS as DynamicRoutingDataSource
     participant KR as ContextAwareRoutingKeyResolver
     participant Reg as InMemoryDataSourceRegistry
-    participant DB as DataSource (선택됨)
+    participant DB as DataSource (selected)
     C ->> F: GET /routing/marker\nX-Tenant-Id: acme
     F ->> TC: withTenant("acme") { ... }
-    F ->> Ctrl: doFilter → 컨트롤러 진입
+    F ->> Ctrl: doFilter → enter controller
     Ctrl ->> DS: getConnection()
     DS ->> KR: currentLookupKey()
     KR ->> TC: currentTenant() → "acme"
@@ -176,7 +175,7 @@ sequenceDiagram
     DS ->> DB: connection
     DB -->> Ctrl: MarkerRecord
     Ctrl -->> C: 200 OK
-    Note over C, DB: readOnly=true 경로 (GET /routing/marker/readonly)
+    Note over C, DB: readOnly=true path (GET /routing/marker/readonly)
     C ->> F: GET /routing/marker/readonly\nX-Tenant-Id: acme
     F ->> TC: withTenant("acme") { ... }
     Ctrl ->> DS: getConnection()
@@ -192,14 +191,14 @@ sequenceDiagram
 
 ---
 
-## 주요 설정
+## Key Configuration
 
 ### application.yml
 
 ```yaml
 routing:
     datasource:
-        default-tenant: default          # 헤더 없을 때 사용할 tenant
+        default-tenant: default          # tenant to use when no header is present
         tenants:
             default:
                 rw:
@@ -213,49 +212,49 @@ routing:
                     url: jdbc:h2:mem:routing_acme_ro;DB_CLOSE_DELAY=-1
 ```
 
-`ro` 항목을 생략하면 `RoutingDataSourceConfig`가 `rw` DataSource를 `<tenant>:ro` 키에도 등록합니다.
+If the `ro` entry is omitted, `RoutingDataSourceConfig` registers the `rw` DataSource under the `<tenant>:ro` key as well.
 
-### RoutingDataSourceConfig Bean 구성
+### RoutingDataSourceConfig Bean Configuration
 
-| Bean                             | 타입                               | 역할                |
-|----------------------------------|----------------------------------|-------------------|
-| `dataSourceRegistry`             | `InMemoryDataSourceRegistry`     | 키별 DataSource 등록소 |
-| `routingKeyResolver`             | `ContextAwareRoutingKeyResolver` | 라우팅 키 계산기         |
-| `routingDataSource` (`@Primary`) | `DynamicRoutingDataSource`       | 실제 연결 위임자         |
-| `exposedDatabase`                | `Database`                       | Exposed DB 연결     |
+| Bean                             | Type                             | Role                          |
+|----------------------------------|----------------------------------|-------------------------------|
+| `dataSourceRegistry`             | `InMemoryDataSourceRegistry`     | Per-key DataSource registry   |
+| `routingKeyResolver`             | `ContextAwareRoutingKeyResolver` | Routing key calculator        |
+| `routingDataSource` (`@Primary`) | `DynamicRoutingDataSource`       | Actual connection delegator   |
+| `exposedDatabase`                | `Database`                       | Exposed DB connection         |
 
-### HikariCP 기본값 (DataSourceNodeProperties → HikariDataSource)
+### HikariCP Defaults (DataSourceNodeProperties → HikariDataSource)
 
-| 항목                | 값 |
-|-------------------|---|
-| `maximumPoolSize` | 4 |
-| `minimumIdle`     | 1 |
-
----
-
-## 라우팅 규칙
-
-| 조건                          | 라우팅 키                   |
-|-----------------------------|-------------------------|
-| tenant=acme, readOnly=false | `acme:rw`               |
-| tenant=acme, readOnly=true  | `acme:ro`               |
-| 헤더 없음 또는 공백, readOnly=false | `default:rw`            |
-| 헤더 없음 또는 공백, readOnly=true  | `default:ro`            |
-| ro 설정 없음                    | rw DataSource 재사용       |
-| 미등록 키                       | `IllegalStateException` |
+| Item              | Value |
+|-------------------|-------|
+| `maximumPoolSize` | 4     |
+| `minimumIdle`     | 1     |
 
 ---
 
-## API 엔드포인트
+## Routing Rules
+
+| Condition                             | Routing Key             |
+|---------------------------------------|-------------------------|
+| tenant=acme, readOnly=false           | `acme:rw`               |
+| tenant=acme, readOnly=true            | `acme:ro`               |
+| No header or blank, readOnly=false    | `default:rw`            |
+| No header or blank, readOnly=true     | `default:ro`            |
+| No ro configuration                   | Reuse rw DataSource     |
+| Unregistered key                      | `IllegalStateException` |
+
+---
+
+## API Endpoints
 
 ```bash
-# read-write 라우팅 결과 조회
+# Query read-write routing result
 curl -H 'X-Tenant-Id: acme' http://localhost:8080/routing/marker
 
-# read-only 라우팅 결과 조회
+# Query read-only routing result
 curl -H 'X-Tenant-Id: acme' http://localhost:8080/routing/marker/readonly
 
-# 현재 tenant의 read-write 마커 갱신
+# Update read-write marker for current tenant
 curl -X PATCH \
   -H 'X-Tenant-Id: acme' \
   -H 'Content-Type: application/json' \
@@ -265,72 +264,70 @@ curl -X PATCH \
 
 ---
 
-## 테스트 방법
+## How to Test
 
 ```bash
-# 단위/통합 테스트 실행
+# Unit/integration tests
 ./gradlew :11-high-performance:03-routing-datasource:test
 
-# 애플리케이션 실행
+# Run application
 ./gradlew :11-high-performance:03-routing-datasource:bootRun
 ```
 
 ---
 
-## 테스트 범위
+## Test Coverage
 
-| 파일                                                                                                                                   | 설명                           |
-|--------------------------------------------------------------------------------------------------------------------------------------|------------------------------|
-| [`ContextAwareRoutingKeyResolverTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/ContextAwareRoutingKeyResolverTest.kt) | 테넌트·readOnly 조합별 라우팅 키 반환 검증 |
-| [`DynamicRoutingDataSourceTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/DynamicRoutingDataSourceTest.kt)             | 컨텍스트별 DataSource 라우팅 통합 검증   |
-| [`InMemoryDataSourceRegistryTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/InMemoryDataSourceRegistryTest.kt)         | 동시 등록·조회 스레드 안전성 검증          |
-| [`RoutingMarkerControllerTest.kt`](src/test/kotlin/exposed/examples/routing/web/RoutingMarkerControllerTest.kt)                      | 테넌트별 REST API 라우팅 결과 검증      |
-
----
-
-## 복잡한 시나리오
-
-### 멀티테넌트 + 읽기/쓰기 분리 라우팅
-
-`ContextAwareRoutingKeyResolver`는 `TenantContext`와
-`TransactionSynchronizationManager.isCurrentTransactionReadOnly()`를 조합해 `<tenant>:<rw|ro>` 형태의 라우팅 키를 결정합니다.
-`DynamicRoutingDataSource`는 이 키로 `DataSourceRegistry`에서 실제 DataSource를 선택합니다.
-
-- 관련 파일: [`ContextAwareRoutingKeyResolver.kt`](src/main/kotlin/exposed/examples/routing/datasource/ContextAwareRoutingKeyResolver.kt), [`DynamicRoutingDataSource.kt`](src/main/kotlin/exposed/examples/routing/datasource/DynamicRoutingDataSource.kt)
-- 검증 테스트: [`ContextAwareRoutingKeyResolverTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/ContextAwareRoutingKeyResolverTest.kt), [`DynamicRoutingDataSourceTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/DynamicRoutingDataSourceTest.kt)
-
-### Registry 동시성 안전성
-
-`InMemoryDataSourceRegistry`는 `ConcurrentHashMap` 기반으로 구현돼 다수의 스레드가 동시에 DataSource를 등록/조회해도 레이스 컨디션 없이 동작합니다.
-
-- 관련 파일: [`InMemoryDataSourceRegistry.kt`](src/main/kotlin/exposed/examples/routing/datasource/InMemoryDataSourceRegistry.kt)
-- 검증 테스트: [`InMemoryDataSourceRegistryTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/InMemoryDataSourceRegistryTest.kt)
+| File                                                                                                                                   | Description                                         |
+|--------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|
+| [`ContextAwareRoutingKeyResolverTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/ContextAwareRoutingKeyResolverTest.kt) | Verify routing key returned for tenant/readOnly combinations |
+| [`DynamicRoutingDataSourceTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/DynamicRoutingDataSourceTest.kt)             | Integration test for context-based DataSource routing |
+| [`InMemoryDataSourceRegistryTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/InMemoryDataSourceRegistryTest.kt)         | Thread-safety test for concurrent registration and lookup |
+| [`RoutingMarkerControllerTest.kt`](src/test/kotlin/exposed/examples/routing/web/RoutingMarkerControllerTest.kt)                      | Verify REST API routing results per tenant          |
 
 ---
 
-## 테스트 전략
+## Complex Scenarios
 
-| 구분       | 검증 항목                         | 기대 결과                       |
-|----------|-------------------------------|-----------------------------|
-| 라우팅 정합성  | `tenant=acme, readOnly=true`  | `acme:ro` DataSource 선택     |
-| 라우팅 정합성  | `tenant=acme, readOnly=false` | `acme:rw` DataSource 선택     |
-| Fallback | `ro` 미설정 tenant               | `rw` DataSource 재사용         |
-| 예외 처리    | 미등록 키 조회                      | `IllegalStateException`     |
-| 동시성      | 등록/조회 병행                      | 레이스 없이 항상 유효한 DataSource 반환 |
-| 헤더 처리    | 공백 헤더                         | `defaultTenant` 적용          |
+### Multi-Tenant + Read/Write Separation Routing
 
----
+`ContextAwareRoutingKeyResolver` combines `TenantContext` and `TransactionSynchronizationManager.isCurrentTransactionReadOnly()` to determine a `<tenant>:<rw|ro>` routing key. `DynamicRoutingDataSource` uses this key to select the actual DataSource from `DataSourceRegistry`.
 
-## 운영 체크포인트
+- Related files: [`ContextAwareRoutingKeyResolver.kt`](src/main/kotlin/exposed/examples/routing/datasource/ContextAwareRoutingKeyResolver.kt), [`DynamicRoutingDataSource.kt`](src/main/kotlin/exposed/examples/routing/datasource/DynamicRoutingDataSource.kt)
+- Verification tests: [`ContextAwareRoutingKeyResolverTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/ContextAwareRoutingKeyResolverTest.kt), [`DynamicRoutingDataSourceTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/DynamicRoutingDataSourceTest.kt)
 
-- `determineCurrentLookupKey()` 경로에서 불필요한 객체 생성/문자열 연산을 줄입니다.
-- 컨텍스트 누락, 미등록 키, DataSource close 상태를 명시적으로 처리합니다.
-- 라우팅 로그에는 최소한 `tenant`, `readOnly`, `routingKey`, `selectedDataSource`를 포함합니다.
-- 장애 감지와 라우팅 우회를 독립 컴포넌트로 분리합니다.
-- Registry 갱신 이벤트를 로깅/메트릭으로 남겨 변경 추적성을 확보합니다.
+### Registry Concurrency Safety
+
+`InMemoryDataSourceRegistry` is implemented on top of `ConcurrentHashMap`, so multiple threads can concurrently register and look up DataSources without race conditions.
+
+- Related file: [`InMemoryDataSourceRegistry.kt`](src/main/kotlin/exposed/examples/routing/datasource/InMemoryDataSourceRegistry.kt)
+- Verification test: [`InMemoryDataSourceRegistryTest.kt`](src/test/kotlin/exposed/examples/routing/datasource/InMemoryDataSourceRegistryTest.kt)
 
 ---
 
-## 다음 모듈
+## Test Strategy
 
-- 마지막 모듈입니다. 전체 고성능 예제 요약은 [`../README.md`](../README.md)에서 확인할 수 있습니다.
+| Category       | Verification Item                 | Expected Result                          |
+|----------------|-----------------------------------|------------------------------------------|
+| Routing correctness | `tenant=acme, readOnly=true`  | `acme:ro` DataSource selected            |
+| Routing correctness | `tenant=acme, readOnly=false` | `acme:rw` DataSource selected            |
+| Fallback       | tenant with no `ro` configured    | Reuse `rw` DataSource                    |
+| Error handling | Lookup of unregistered key        | `IllegalStateException`                  |
+| Concurrency    | Concurrent registration/lookup    | Always returns valid DataSource, no race |
+| Header handling | Blank header                     | Apply `defaultTenant`                    |
+
+---
+
+## Operations Checkpoints
+
+- Minimize unnecessary object creation and string operations in the `determineCurrentLookupKey()` path.
+- Handle missing context, unregistered keys, and closed DataSource states explicitly.
+- Include at minimum `tenant`, `readOnly`, `routingKey`, and `selectedDataSource` in routing logs.
+- Separate failure detection and routing bypass into independent components.
+- Log/metric Registry update events to maintain change traceability.
+
+---
+
+## Next Module
+
+- This is the last module. See [`../README.md`](../README.md) for the full high-performance chapter summary.

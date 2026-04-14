@@ -1,37 +1,38 @@
 # 06 Advanced: Custom Entities (07)
 
-기본 `Int`/`Long`/`UUID` 이외의 ID 전략을 사용하는 Entity 패턴을 다루는 모듈입니다. 도메인별 ID 생성 규칙을 Exposed 모델에 반영하는 방법을 학습합니다.
+English | [한국어](./README.ko.md)
 
-## 개요
+A module covering Entity patterns that use ID strategies beyond the default `Int`/`Long`/`UUID`. Learn how to incorporate domain-specific ID generation rules into your Exposed models.
 
-Exposed의 `IdTable`을 확장하여 KSUID, Snowflake, Timebased UUID 등 커스텀 ID 전략을 구현합니다. `bluetape4k-exposed` 라이브러리가 제공하는
-`KsuidTable`, `SnowflakeIdTable`, `TimebasedUUIDTable` 등을 사용하여 도메인 요구에 맞는 ID를 자동 생성합니다.
+## Overview
 
-## 학습 목표
+Extends Exposed's `IdTable` to implement custom ID strategies such as KSUID, Snowflake, and Timebased UUID. Uses `KsuidTable`, `SnowflakeIdTable`, `TimebasedUUIDTable`, and similar classes provided by the `bluetape4k-exposed` library to auto-generate IDs that meet domain requirements.
 
-- `IdTable<T>`를 상속하는 커스텀 ID 테이블 구조를 이해한다.
-- KSUID, Snowflake, Timebased UUID 각 전략의 특성을 비교한다.
-- 동기/코루틴 환경에서 커스텀 ID Entity를 생성·조회한다.
-- 배치 INSERT와 코루틴 병렬 처리에서 ID 충돌 없음을 검증한다.
+## Learning Objectives
 
-## 선수 지식
+- Understand the structure of custom ID tables that inherit from `IdTable<T>`.
+- Compare the characteristics of KSUID, Snowflake, and Timebased UUID strategies.
+- Create and query custom ID Entities in both synchronous and coroutine environments.
+- Verify that no ID collisions occur during batch INSERT and parallel coroutine processing.
+
+## Prerequisites
 
 - [`../../05-exposed-dml/README.md`](../../05-exposed-dml/README.md)
 
-## 커스텀 ID 전략 비교
+## Custom ID Strategy Comparison
 
-| ID 전략                      | 저장 타입         | 정렬 가능    | 분산 생성       | 길이       | 설명                                |
-|----------------------------|---------------|----------|-------------|----------|-----------------------------------|
-| `KsuidTable`               | `VARCHAR(27)` | 가능 (시간순) | 가능          | 27자      | K-Sortable Unique ID, 시간+랜덤 조합    |
-| `KsuidMillisTable`         | `VARCHAR(27)` | 가능 (시간순) | 가능          | 27자      | 밀리초 정밀도 KSUID                     |
-| `SnowflakeIdTable`         | `BIGINT`      | 가능 (시간순) | 가능          | 64비트 정수  | Twitter Snowflake, 기계ID+시퀀스+타임스탬프 |
-| `TimebasedUUIDTable`       | `VARCHAR(36)` | 가능 (시간순) | 가능          | 36자 UUID | 시간 기반 UUID v7                     |
-| `TimebasedUUIDBase62Table` | `VARCHAR(22)` | 가능 (시간순) | 가능          | 22자      | Base62 인코딩 시간 기반 UUID (URL 친화적)   |
-| `IntIdTable`               | `INT`         | 가능       | 불가 (DB 시퀀스) | 32비트 정수  | 기본 자동 증가 정수 ID                    |
-| `LongIdTable`              | `BIGINT`      | 가능       | 불가 (DB 시퀀스) | 64비트 정수  | 기본 자동 증가 Long ID                  |
-| `UUIDTable`                | `BINARY(16)`  | 불가       | 가능          | 16바이트    | 표준 UUID v4 (랜덤)                   |
+| ID Strategy                | Storage Type  | Sortable        | Distributed     | Length     | Description                                          |
+|----------------------------|---------------|-----------------|-----------------|------------|------------------------------------------------------|
+| `KsuidTable`               | `VARCHAR(27)` | Yes (time-order) | Yes             | 27 chars   | K-Sortable Unique ID, time + random combination      |
+| `KsuidMillisTable`         | `VARCHAR(27)` | Yes (time-order) | Yes             | 27 chars   | Millisecond-precision KSUID                          |
+| `SnowflakeIdTable`         | `BIGINT`      | Yes (time-order) | Yes             | 64-bit int | Twitter Snowflake, machine ID + sequence + timestamp |
+| `TimebasedUUIDTable`       | `VARCHAR(36)` | Yes (time-order) | Yes             | 36-char UUID | Time-based UUID v7                                 |
+| `TimebasedUUIDBase62Table` | `VARCHAR(22)` | Yes (time-order) | Yes             | 22 chars   | Base62-encoded time-based UUID (URL-friendly)        |
+| `IntIdTable`               | `INT`         | Yes             | No (DB sequence) | 32-bit int | Standard auto-increment integer ID                   |
+| `LongIdTable`              | `BIGINT`      | Yes             | No (DB sequence) | 64-bit int | Standard auto-increment Long ID                      |
+| `UUIDTable`                | `BINARY(16)`  | No              | Yes             | 16 bytes   | Standard UUID v4 (random)                            |
 
-## 아키텍처 흐름
+## Architecture Flow
 
 ```mermaid
 classDiagram
@@ -69,28 +70,28 @@ classDiagram
     style SnowflakeIdEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
-## 커스텀 ID 전략 비교 플로우
+## Custom ID Strategy Comparison Flow
 
 ```mermaid
 flowchart LR
-    subgraph Standard["표준 ID (DB 시퀀스)"]
+    subgraph Standard["Standard ID (DB Sequence)"]
         INT["IntIdTable\nINT AUTO_INCREMENT"]
         LONG["LongIdTable\nBIGINT AUTO_INCREMENT"]
         UUID4["UUIDTable\nBINARY(16) - UUID v4"]
     end
 
-    subgraph Custom["커스텀 ID (애플리케이션 생성)"]
-        KSUID["KsuidTable\nVARCHAR(27)\n시간+랜덤, 정렬 가능"]
-        KSUIDM["KsuidMillisTable\nVARCHAR(27)\n밀리초 정밀도"]
-        SNOW["SnowflakeIdTable\nBIGINT\n기계ID+시퀀스+타임스탬프"]
-        UUIDV7["TimebasedUUIDTable\nVARCHAR(36)\nUUID v7 시간기반"]
-        B62["TimebasedUUIDBase62Table\nVARCHAR(22)\nBase62 URL친화적"]
+    subgraph Custom["Custom ID (Application-generated)"]
+        KSUID["KsuidTable\nVARCHAR(27)\ntime+random, sortable"]
+        KSUIDM["KsuidMillisTable\nVARCHAR(27)\nmillisecond precision"]
+        SNOW["SnowflakeIdTable\nBIGINT\nmachineID+sequence+timestamp"]
+        UUIDV7["TimebasedUUIDTable\nVARCHAR(36)\nUUID v7 time-based"]
+        B62["TimebasedUUIDBase62Table\nVARCHAR(22)\nBase62 URL-friendly"]
     end
 
-    subgraph Props["특성"]
-        SORT["정렬 가능\n(시간순)"]
-        DIST["분산 생성\n(DB 불필요)"]
-        IDX["인덱스\n효율적"]
+    subgraph Props["Properties"]
+        SORT["Sortable\n(time-order)"]
+        DIST["Distributed\n(no DB needed)"]
+        IDX["Index\nefficient"]
     end
 
     KSUID & KSUIDM & SNOW & UUIDV7 & B62 --> SORT
@@ -106,18 +107,18 @@ flowchart LR
     class SORT,DIST,IDX teal
 ```
 
-## 핵심 개념
+## Key Concepts
 
-### KSUID 기반 Entity
+### KSUID-based Entity
 
 ```kotlin
-// 테이블 정의 — VARCHAR(27) PK 자동 생성
+// Table definition — VARCHAR(27) PK auto-generated
 object T1: KsuidTable("t_ksuid") {
     val name = varchar("name", 255)
     val age = integer("age")
 }
 
-// Entity 정의
+// Entity definition
 class E1(id: KsuidEntityID): KsuidEntity(id) {
     companion object: KsuidEntityClass<E1>(T1)
 
@@ -126,39 +127,39 @@ class E1(id: KsuidEntityID): KsuidEntity(id) {
 }
 ```
 
-생성되는 DDL (PostgreSQL):
+Generated DDL (PostgreSQL):
 
 ```sql
 CREATE TABLE IF NOT EXISTS t_ksuid (
-    id   VARCHAR(27) PRIMARY KEY,   -- "2h9cJNfVHDsYm7X5Qp..." 형태
+    id   VARCHAR(27) PRIMARY KEY,   -- "2h9cJNfVHDsYm7X5Qp..." format
     name VARCHAR(255) NOT NULL,
     age  INT NOT NULL
 )
 ```
 
-사용:
+Usage:
 
 ```kotlin
 withTables(testDB, T1) {
-    // INSERT — KSUID 자동 생성
+    // INSERT — KSUID auto-generated
     T1.insert {
         it[T1.name] = "Alice"
         it[T1.age] = 30
     }
 
-    // DAO 방식
+    // DAO style
     val entity = E1.new {
         name = "Bob"
         age = 25
     }
-    println(entity.id.value)  // "2h9cJNfVHDsYm7X5Qp..." (27자 KSUID)
+    println(entity.id.value)  // "2h9cJNfVHDsYm7X5Qp..." (27-char KSUID)
 }
 ```
 
-### Snowflake ID 기반 Entity
+### Snowflake ID-based Entity
 
 ```kotlin
-// 테이블 정의 — BIGINT PK, 분산 환경에서 고유성 보장
+// Table definition — BIGINT PK, guarantees uniqueness in distributed environments
 object T1: SnowflakeIdTable("t_snowflake") {
     val name = varchar("name", 255)
     val age = integer("age")
@@ -172,21 +173,21 @@ class E1(id: SnowflakeIdEntityID): SnowflakeIdEntity(id) {
 }
 ```
 
-생성되는 DDL (PostgreSQL):
+Generated DDL (PostgreSQL):
 
 ```sql
 CREATE TABLE IF NOT EXISTS t_snowflake
 (
-    id   BIGINT PRIMARY KEY, -- 1234567890123456789 형태 (64비트)
+    id   BIGINT PRIMARY KEY, -- 1234567890123456789 format (64-bit)
     name VARCHAR(255) NOT NULL,
     age  INT          NOT NULL
 )
 ```
 
-### 코루틴 병렬 배치 INSERT
+### Parallel Batch INSERT with Coroutines
 
 ```kotlin
-// 코루틴 환경에서 배치 병렬 INSERT — ID 충돌 없음 검증
+// Parallel batch INSERT in coroutine environment — verifies no ID collisions
 runSuspendIO {
     withSuspendedTables(testDB, T1) {
         val records = List(1000) { Record(faker.name().fullName(), Random.nextInt(10, 80)) }
@@ -205,10 +206,10 @@ runSuspendIO {
 }
 ```
 
-### insertIgnore + Flow 패턴
+### insertIgnore + Flow Pattern
 
 ```kotlin
-// Flow 기반 스트리밍 INSERT (MySQL/PostgreSQL)
+// Flow-based streaming INSERT (MySQL/PostgreSQL)
 entities.asFlow()
     .buffer(16)
     .take(entityCount)
@@ -224,38 +225,38 @@ entities.asFlow()
     .collect()
 ```
 
-## 예제 구성
+## Example Files
 
-| 파일                                | 설명                                     |
-|-----------------------------------|----------------------------------------|
-| `AbstractCustomIdTableTest.kt`    | 공통 테스트 픽스처 (faker, recordCount 파라미터)   |
-| `KsuidTableTest.kt`               | KSUID 기반 DSL/DAO CRUD, 배치/코루틴/Flow 테스트 |
-| `KsuidMillisTableTest.kt`         | 밀리초 정밀도 KSUID 테스트                      |
-| `SnowflakeIdTableTest.kt`         | Snowflake ID 기반 DSL/DAO, 배치/코루틴 테스트    |
-| `TimebasedUUIDTableTest.kt`       | 시간 기반 UUID v7 테스트                      |
-| `TimebasedUUIDBase62TableTest.kt` | Base62 인코딩 시간 기반 UUID 테스트              |
+| File                                | Description                                              |
+|-------------------------------------|----------------------------------------------------------|
+| `AbstractCustomIdTableTest.kt`      | Common test fixtures (faker, recordCount parameters)     |
+| `KsuidTableTest.kt`                 | KSUID-based DSL/DAO CRUD, batch/coroutine/Flow tests     |
+| `KsuidMillisTableTest.kt`           | Millisecond-precision KSUID tests                        |
+| `SnowflakeIdTableTest.kt`           | Snowflake ID-based DSL/DAO, batch/coroutine tests        |
+| `TimebasedUUIDTableTest.kt`         | Time-based UUID v7 tests                                 |
+| `TimebasedUUIDBase62TableTest.kt`   | Base62-encoded time-based UUID tests                     |
 
-## 테스트 실행 방법
+## Running Tests
 
 ```bash
-# 전체 테스트
+# Run all tests
 ./gradlew :06-advanced:07-custom-entities:test
 
-# H2만 대상으로 빠른 테스트
+# Fast test targeting H2 only
 ./gradlew :06-advanced:07-custom-entities:test -PuseFastDB=true
 
-# 특정 테스트 클래스만 실행
+# Run a specific test class
 ./gradlew :06-advanced:07-custom-entities:test \
     --tests "exposed.examples.custom.entities.SnowflakeIdTableTest"
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- 동시 생성 상황에서 ID 충돌 가능성을 검증한다.
-- 정렬 가능한 ID 전략(KSUID, Snowflake)과 비정렬 UUID를 비교한다.
-- ID 길이 증가에 따른 인덱스 비용을 검토한다.
-- 생성기 시계 의존성(시간 역행 등) 리스크를 확인한다.
+- Verify that no ID collisions occur under concurrent generation.
+- Compare sortable ID strategies (KSUID, Snowflake) against non-sortable UUID.
+- Review index cost as ID length increases.
+- Investigate risks from generator clock dependency (e.g., clock rollback).
 
-## 다음 모듈
+## Next Module
 
 - [`../08-exposed-jackson/README.md`](../08-exposed-jackson/README.md)

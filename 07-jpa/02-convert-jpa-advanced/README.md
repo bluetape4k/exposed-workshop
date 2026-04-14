@@ -1,47 +1,49 @@
-# 07 JPA Migration: 고급 전환 (02-convert-jpa-advanced)
+# 07 JPA Migration: Advanced Migration (02-convert-jpa-advanced)
 
-복잡한 연관관계, 상속/감사, 잠금 전략 등 고급 JPA 기능을 Exposed로 전환하는 모듈입니다. 전환 과정에서 가장 자주 발생하는 성능/정합성 리스크를 다룹니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A module for migrating advanced JPA features to Exposed, including complex relationships, inheritance/auditing, and locking strategies. Covers the most common performance and consistency risks encountered during migration.
 
-- 고급 매핑/쿼리의 Exposed 치환 전략을 익힌다.
-- 낙관적 잠금/감사 필드 전환 시 주의점을 이해한다.
-- 회귀 테스트와 성능 계측 기준을 수립한다.
+## Learning Objectives
 
-## 선수 지식
+- Learn Exposed replacement strategies for advanced mappings and queries.
+- Understand the key considerations when migrating optimistic locking and audit fields.
+- Establish regression testing and performance measurement baselines.
+
+## Prerequisites
 
 - [`../01-convert-jpa-basic/README.md`](../01-convert-jpa-basic/README.md)
 
-## 상속 매핑 전략 비교표
+## Inheritance Mapping Strategy Comparison
 
-| 전략              | JPA 설정                          | 테이블 수 | Exposed 구현 방식                              | 장점                     | 단점                      |
-|-----------------|---------------------------------|-------|--------------------------------------------|------------------------|-------------------------|
-| Single Table    | `@Inheritance(SINGLE_TABLE)`    | 1     | 단일 `IntIdTable` + `dtype` 컬럼 + nullable 컬럼 | 조인 없이 빠른 조회            | 많은 nullable 컬럼, 테이블 비대화 |
-| Joined Table    | `@Inheritance(JOINED)`          | 1+n   | 부모 `IntIdTable` + 자식 `IdTable` (FK=PK)     | 정규화된 스키마, 컬럼 비대화 없음    | 조인 필요, 삽입 시 여러 테이블 기록   |
-| Table Per Class | `@Inheritance(TABLE_PER_CLASS)` | n     | 독립 `IntIdTable` 각각 정의                      | 각 테이블 독립성, 조인 없는 단일 조회 | 공통 쿼리 어려움, 스키마 중복       |
+| Strategy        | JPA Configuration               | Tables | Exposed Implementation                                   | Advantages                              | Disadvantages                           |
+|-----------------|---------------------------------|--------|----------------------------------------------------------|-----------------------------------------|-----------------------------------------|
+| Single Table    | `@Inheritance(SINGLE_TABLE)`    | 1      | Single `IntIdTable` + `dtype` column + nullable columns  | Fast queries without joins              | Many nullable columns, table bloat      |
+| Joined Table    | `@Inheritance(JOINED)`          | 1+n    | Parent `IntIdTable` + child `IdTable` (FK=PK)            | Normalized schema, no column bloat      | Requires joins, multiple table writes   |
+| Table Per Class | `@Inheritance(TABLE_PER_CLASS)` | n      | Independent `IntIdTable` per subtype                     | Table independence, single-table queries | Difficult cross-type queries, schema duplication |
 
-## 상속 전략별 Exposed 구현 패턴
+## Exposed Implementation Patterns by Inheritance Strategy
 
 ### Single Table Inheritance
 
 ```kotlin
-// 한 테이블에 dtype 컬럼으로 서브타입 구분
+// Single table with dtype column to distinguish subtypes
 object BillingTable : IntIdTable("billing") {
     val owner    = varchar("owner", 64).index()
     val swift    = varchar("swift", 16)
     val dtype    = enumerationByName<BillingType>("dtype", 32).default(BillingType.UNKNOWN)
 
-    // CreditCard 전용 컬럼 (nullable)
+    // CreditCard-only columns (nullable)
     val cardNumber  = varchar("card_number", 24).nullable()
     val expMonth    = integer("exp_month").nullable()
     val expYear     = integer("exp_year").nullable()
 
-    // BankAccount 전용 컬럼 (nullable)
+    // BankAccount-only columns (nullable)
     val accountNumber = varchar("account_number", 255).nullable()
     val bankName      = varchar("bank_name", 255).nullable()
 }
 
-// 서브타입 조회
+// Query for subtype
 BillingTable.selectAll()
     .where { BillingTable.dtype eq BillingType.CREDIT_CARD }
 ```
@@ -49,14 +51,14 @@ BillingTable.selectAll()
 ### Joined Table Inheritance
 
 ```kotlin
-// 부모 테이블
+// Parent table
 object PersonTable : IntIdTable("joined_person") {
     val name = varchar("person_name", 128)
     val ssn  = varchar("ssn", 128)
     init { uniqueIndex(name, ssn) }
 }
 
-// 자식 테이블 — PK = FK to PersonTable
+// Child table — PK = FK to PersonTable
 object EmployeeTable : IdTable<Int>("joined_employee") {
     override val id: Column<EntityID<Int>> = reference("id", PersonTable, onDelete = CASCADE)
     val empNo   = varchar("emp_no", 128)
@@ -64,7 +66,7 @@ object EmployeeTable : IdTable<Int>("joined_employee") {
     val managerId = reference("manager_id", EmployeeTable).nullable()  // self-reference
 }
 
-// 조회 시 JOIN 필요
+// JOIN required when querying
 (PersonTable innerJoin EmployeeTable)
     .selectAll()
     .where { PersonTable.name eq "John" }
@@ -73,7 +75,7 @@ object EmployeeTable : IdTable<Int>("joined_employee") {
 ### Table Per Class Inheritance
 
 ```kotlin
-// 각 서브타입마다 독립 테이블 (공통 컬럼 반복)
+// Independent table per subtype (common columns repeated)
 object CreditCardTable : IntIdTable("credit_card") {
     val owner      = varchar("owner", 64)
     val cardNumber = varchar("card_number", 24)
@@ -85,12 +87,12 @@ object BankAccountTable : IntIdTable("bank_account") {
     val accountNumber = varchar("account_number", 255)
 }
 
-// UNION으로 전체 조회
+// UNION to query all
 CreditCardTable.selectAll()
     .union(BankAccountTable.selectAll())
 ```
 
-## 상속 전략 classDiagram
+## Inheritance Strategy classDiagram
 
 ```mermaid
 classDiagram
@@ -112,17 +114,17 @@ classDiagram
         +String bankName
     }
 
-    Billing <|-- CreditCard : 3가지 상속 전략 적용
-    Billing <|-- BankAccount : 3가지 상속 전략 적용
+    Billing <|-- CreditCard : 3 inheritance strategies applied
+    Billing <|-- BankAccount : 3 inheritance strategies applied
 
-    note for Billing "SingleTable BillingTable 1개 / Joined billing + credit_card / TablePerClass 각 독립 테이블"
+    note for Billing "SingleTable: 1 BillingTable / Joined: billing + credit_card / TablePerClass: independent tables"
 
     style Billing fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
     style CreditCard fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
     style BankAccount fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
 ```
 
-## 도메인 ERD
+## Domain ERDs
 
 ### Single Table Inheritance ERD
 
@@ -133,13 +135,13 @@ erDiagram
         VARCHAR_64 owner "NOT NULL"
         VARCHAR_16 swift "NOT NULL"
         VARCHAR_32 dtype "DEFAULT UNKNOWN"
-        VARCHAR_24 card_number "NULL (CreditCard 전용)"
-        INT exp_month "NULL (CreditCard 전용)"
-        INT exp_year "NULL (CreditCard 전용)"
-        DATE start_date "NULL (CreditCard 전용)"
-        DATE end_date "NULL (CreditCard 전용)"
-        VARCHAR_255 account_number "NULL (BankAccount 전용)"
-        VARCHAR_255 bank_name "NULL (BankAccount 전용)"
+        VARCHAR_24 card_number "NULL (CreditCard only)"
+        INT exp_month "NULL (CreditCard only)"
+        INT exp_year "NULL (CreditCard only)"
+        DATE start_date "NULL (CreditCard only)"
+        DATE end_date "NULL (CreditCard only)"
+        VARCHAR_255 account_number "NULL (BankAccount only)"
+        VARCHAR_255 bank_name "NULL (BankAccount only)"
     }
 ```
 
@@ -156,11 +158,11 @@ erDiagram
         INT id PK "joined_person FK"
         VARCHAR_128 emp_no "NOT NULL"
         VARCHAR_128 emp_title "NOT NULL"
-        INT manager_id FK "NULL (자기 참조)"
+        INT manager_id FK "NULL (self-reference)"
     }
 
     joined_person ||--o| joined_employee : "1:1 Joined (id=FK)"
-    joined_employee }o--o| joined_employee : "자기 참조 (manager_id)"
+    joined_employee }o--o| joined_employee : "self-reference (manager_id)"
 ```
 
 ### Table Per Class Inheritance ERD
@@ -182,7 +184,7 @@ erDiagram
     }
 ```
 
-### TreeNode ERD (자기 참조 트리 구조)
+### TreeNode ERD (Self-reference Tree Structure)
 
 ```mermaid
 erDiagram
@@ -191,13 +193,13 @@ erDiagram
         VARCHAR_255 title "NOT NULL"
         TEXT description "NULL"
         INT depth "DEFAULT 0"
-        BIGINT parent_id FK "NULL (자기 참조)"
+        BIGINT parent_id FK "NULL (self-reference)"
     }
 
-    tree_nodes }o--o| tree_nodes : "자기 참조 (parent_id)"
+    tree_nodes }o--o| tree_nodes : "self-reference (parent_id)"
 ```
 
-### 트리 구조 계층 예시
+### Tree Structure Hierarchy Example
 
 ```mermaid
 flowchart TD
@@ -221,13 +223,13 @@ flowchart TD
     class GrandChild1,GrandChild2 purple
 ```
 
-## 상속 전략 비교 classDiagram
+## Inheritance Strategy Comparison classDiagram
 
 ```mermaid
 classDiagram
     direction TD
     class Billing {
-        <<abstract 공통>>
+        <<abstract common>>
         +Int id
         +String owner
         +String swift
@@ -277,7 +279,7 @@ classDiagram
     Billing <|-- CreditCard_SingleTable
     Billing <|-- BankAccount_SingleTable
     Person_Joined <|-- Employee_Joined
-    Employee_Joined --> Employee_Joined : manager 자기참조
+    Employee_Joined --> Employee_Joined : manager self-reference
     Billing <|-- CreditCard_TablePerClass
     Billing <|-- BankAccount_TablePerClass
 
@@ -290,100 +292,100 @@ classDiagram
     style BankAccount_TablePerClass fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
-## 고급 기능 JPA ↔ Exposed 변환 대비표
+## Advanced Feature JPA ↔ Exposed Conversion Reference
 
-| 기능             | JPA 구현                                       | Exposed 구현                                          |
-|----------------|----------------------------------------------|-----------------------------------------------------|
-| Auditable 생성일  | `@CreatedDate` + `@EntityListeners`          | `EntityHook.subscribe` 또는 `by Delegates.observable` |
-| Auditable 수정일  | `@LastModifiedDate` + `@EntityListeners`     | `EntityHook` `EntityChangeType.Updated` 구독          |
-| 낙관적 잠금         | `@Version val version: Int`                  | 버전 컬럼 수동 관리 + `update where version = N`            |
-| 서브쿼리           | JPQL `SELECT x FROM X x WHERE x.id IN (...)` | `inSubQuery` / `exists`                             |
-| 셀프 조인 (트리)     | `@ManyToOne self` + CTE                      | `alias()` + 재귀 CTE (`WITH RECURSIVE`)               |
-| Full JOIN      | `JOIN FETCH` (INNER/LEFT 만 지원)               | `fullJoin` / `crossJoin`                            |
-| Covering Index | `@Index(columnList="...")` 힌트                | `addIndex(customIndexName, col1, col2)`             |
+| Feature              | JPA Implementation                                     | Exposed Implementation                                        |
+|----------------------|--------------------------------------------------------|---------------------------------------------------------------|
+| Auditable created-at | `@CreatedDate` + `@EntityListeners`                    | `EntityHook.subscribe` or `by Delegates.observable`           |
+| Auditable updated-at | `@LastModifiedDate` + `@EntityListeners`               | Subscribe to `EntityHook` `EntityChangeType.Updated`          |
+| Optimistic locking   | `@Version val version: Int`                            | Manual version column + `update where version = N`            |
+| Subquery             | JPQL `SELECT x FROM X x WHERE x.id IN (...)`           | `inSubQuery` / `exists`                                       |
+| Self-join (tree)     | `@ManyToOne self` + CTE                                | `alias()` + recursive CTE (`WITH RECURSIVE`)                  |
+| Full JOIN            | `JOIN FETCH` (INNER/LEFT only)                         | `fullJoin` / `crossJoin`                                      |
+| Covering index       | `@Index(columnList="...")` hint                        | `addIndex(customIndexName, col1, col2)`                       |
 
-## 예제 지도
+## Example Map
 
-소스 위치: `src/test/kotlin/exposed/examples/jpa`
+Source location: `src/test/kotlin/exposed/examples/jpa`
 
-| 디렉터리               | 파일                                                                                                         | 설명                              |
+| Directory          | Files                                                                                                      | Description                     |
 |--------------------|------------------------------------------------------------------------------------------------------------|---------------------------------|
 | `ex01_joins`       | `Ex01_Simple_Join.kt` ~ `Ex07_Misc_Join.kt`                                                                | INNER/FULL/LEFT/RIGHT/SELF JOIN |
-| `ex02_subquery`    | `Ex01_SubQuery.kt`                                                                                         | 상관 서브쿼리, EXISTS                 |
-| `ex03_inheritance` | `Ex01_SingleTable_Inheritance.kt`, `Ex02_Joined_Table_Inheritance.kt`, `Ex03_TablePerClass_Inheritance.kt` | 상속 전략 3가지                       |
+| `ex02_subquery`    | `Ex01_SubQuery.kt`                                                                                         | Correlated subqueries, EXISTS   |
+| `ex03_inheritance` | `Ex01_SingleTable_Inheritance.kt`, `Ex02_Joined_Table_Inheritance.kt`, `Ex03_TablePerClass_Inheritance.kt` | 3 inheritance strategies        |
 | `ex04_tree`        | `Ex01_TreeNode.kt`, `TreeNodeSchema.kt`                                                                    | Self-Reference + CTE            |
-| `ex05_auditable`   | `Ex01_AuditableEntity.kt`, `AuditableEntity.kt`                                                            | 생성/수정 타임스탬프 자동 관리               |
+| `ex05_auditable`   | `Ex01_AuditableEntity.kt`, `AuditableEntity.kt`                                                            | Auto-managed created/updated timestamps |
 | `ex06_cte`         | `Ex01_CTE.kt`                                                                                              | CTE (Common Table Expression)   |
-| `ex07_version`     | `Ex01_Version.kt`                                                                                          | 낙관적 잠금 (@Version)               |
+| `ex07_version`     | `Ex01_Version.kt`                                                                                          | Optimistic locking (@Version)   |
 
-## JPA 엔티티 매핑 다이어그램
+## JPA Entity Mapping Diagrams
 
 ### Single Table Inheritance
 
 ![Single Table Inheritance](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance_ERD.png)
 
-예제 코드: [
+Example code: [
 `ex03_inheritance/Ex01_SingleTable_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance.kt)
 
 ### Joined Table Inheritance
 
 ![Joined Table Inheritance](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance_ERD.png)
 
-예제 코드: [
+Example code: [
 `ex03_inheritance/Ex02_Joined_Table_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance.kt)
 
 ### Table Per Class Inheritance
 
 ![Table Per Class Inheritance](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance_ERD.png)
 
-예제 코드: [
+Example code: [
 `ex03_inheritance/Ex03_TablePerClass_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance.kt)
 
 ### Tree (Self-Reference)
 
 ![Tree Node Schema](src/test/kotlin/exposed/examples/jpa/ex04_tree/TreeNodeSchema.png)
 
-예제 코드: [`ex04_tree/Ex01_TreeNode.kt`](src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt)
+Example code: [`ex04_tree/Ex01_TreeNode.kt`](src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt)
 
-## 실행 방법
+## Running Tests
 
 ```bash
 ./gradlew :07-jpa:02-convert-jpa-advanced:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- 복합 조회/정렬/페이징 쿼리의 동등성 확인
-- 잠금 충돌 시 예외와 재시도 정책을 검증
+- Verify equivalence of complex query/sort/pagination results.
+- Validate exception and retry policy on lock conflicts.
 
-## 성능·안정성 체크포인트
+## Performance and Stability Checkpoints
 
-- 지연 로딩 전제 코드를 제거해 런타임 오류 방지
-- 인덱스/쿼리 플랜 회귀를 CI 지표로 추적
+- Remove lazy-loading-dependent code to prevent runtime errors.
+- Track index/query plan regressions as CI metrics.
 
-## 복잡한 시나리오
+## Complex Scenarios
 
-### 상속 전략 3가지
+### 3 Inheritance Strategies
 
-| JPA 전략 | Exposed 구현 파일 |
+| JPA Strategy | Exposed Implementation File |
 |---|---|
 | `@Inheritance(SINGLE_TABLE)` | [`ex03_inheritance/Ex01_SingleTable_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance.kt) |
 | `@Inheritance(JOINED)` | [`ex03_inheritance/Ex02_Joined_Table_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance.kt) |
 | `@Inheritance(TABLE_PER_CLASS)` | [`ex03_inheritance/Ex03_TablePerClass_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance.kt) |
 
-### 서브쿼리 패턴
+### Subquery Patterns
 
-- 상관 서브쿼리 / EXISTS 서브쿼리: [`ex02_subquery/Ex01_SubQuery.kt`](src/test/kotlin/exposed/examples/jpa/ex02_subquery/Ex01_SubQuery.kt)
+- Correlated subquery / EXISTS subquery: [`ex02_subquery/Ex01_SubQuery.kt`](src/test/kotlin/exposed/examples/jpa/ex02_subquery/Ex01_SubQuery.kt)
 
 ### CTE (Common Table Expression)
 
-- Exposed CTE API 전환: [`ex04_tree/Ex01_TreeNode.kt`](src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt)
+- Exposed CTE API migration: [`ex04_tree/Ex01_TreeNode.kt`](src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt)
 
-### 감사(Audit) 및 낙관적 잠금
+### Auditing and Optimistic Locking
 
 - `@CreatedDate/@LastModifiedDate`: [`ex05_auditable/Ex01_AuditableEntity.kt`](src/test/kotlin/exposed/examples/jpa/ex05_auditable/Ex01_AuditableEntity.kt)
-- `@Version` 낙관적 잠금: [`ex07_version/Ex01_Version.kt`](src/test/kotlin/exposed/examples/jpa/ex07_version/Ex01_Version.kt)
+- `@Version` optimistic locking: [`ex07_version/Ex01_Version.kt`](src/test/kotlin/exposed/examples/jpa/ex07_version/Ex01_Version.kt)
 
-## 다음 챕터
+## Next Chapter
 
 - [`../../08-coroutines/README.md`](../../08-coroutines/README.md)

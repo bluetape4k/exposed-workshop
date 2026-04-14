@@ -1,30 +1,32 @@
-# 05 Exposed DML: SQL 함수 (03-functions)
+# 05 Exposed DML: SQL Functions (03-functions)
 
-Exposed DSL에서 SQL 함수를 조합해 분석 쿼리를 작성하는 모듈입니다. 문자열/수학/통계/윈도우 함수 중심으로 실무 패턴을 학습합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A module for writing analytical queries by combining SQL functions in the Exposed DSL. Focuses on string, math, statistical, and window functions with practical patterns.
 
-- Exposed 함수 API를 이용해 표현식 기반 쿼리를 작성한다.
-- 집계/윈도우 함수로 분석형 조회를 구현한다.
-- DB별 함수 지원 차이를 테스트로 관리한다.
+## Learning Objectives
 
-## 선수 지식
+- Write expression-based queries using the Exposed function API.
+- Implement analytical queries with aggregation and window functions.
+- Manage per-DB function support differences with tests.
+
+## Prerequisites
 
 - [`../01-dml/README.md`](../01-dml/README.md)
 - [`../02-types/README.md`](../02-types/README.md)
 
-## SQL 함수 분류 다이어그램
+## SQL Function Classification Diagram
 
 ```mermaid
 flowchart TD
-    F["Exposed SQL 함수"] --> STR["문자열 함수\ntrim / lowerCase / upperCase\nsubstring / concat / like / ilike"]
-    F --> MATH["수학 함수\nround / abs / floor / ceiling\nsqrt / power"]
-    F --> AGG["집계 함수\ncount / sum / avg / min / max\ngroupBy + having"]
-    F --> STAT["통계 함수\nstdDevPop / stdDevSamp\nvarPop / varSamp"]
-    F --> TRIG["삼각 함수\nsin / cos / tan\natan / atan2"]
-    F --> WIN["윈도우 함수\nrowNumber / rank / denseRank\nlead / lag / firstValue / lastValue"]
-    F --> COND["조건 함수\ncase / coalesce / nullIf"]
-    F --> BIT["비트 함수\nbitwiseAnd / bitwiseOr / bitwiseXor"]
+    F["Exposed SQL Functions"] --> STR["String Functions\ntrim / lowerCase / upperCase\nsubstring / concat / like / ilike"]
+    F --> MATH["Math Functions\nround / abs / floor / ceiling\nsqrt / power"]
+    F --> AGG["Aggregate Functions\ncount / sum / avg / min / max\ngroupBy + having"]
+    F --> STAT["Statistical Functions\nstdDevPop / stdDevSamp\nvarPop / varSamp"]
+    F --> TRIG["Trigonometric Functions\nsin / cos / tan\natan / atan2"]
+    F --> WIN["Window Functions\nrowNumber / rank / denseRank\nlead / lag / firstValue / lastValue"]
+    F --> COND["Conditional Functions\ncase / coalesce / nullIf"]
+    F --> BIT["Bitwise Functions\nbitwiseAnd / bitwiseOr / bitwiseXor"]
 
     WIN --> OVER["over()\n.partitionBy(col)\n.orderBy(col, SortOrder)"]
 
@@ -49,9 +51,9 @@ flowchart TD
     class OVER yellow
 ```
 
-## 핵심 개념
+## Key Concepts
 
-### 문자열 함수
+### String Functions
 
 ```kotlin
 // trim, lowerCase, upperCase, substring, concat
@@ -61,11 +63,11 @@ Users.select(
     concat(Users.firstName, stringLiteral(" "), Users.lastName)
 )
 
-// coalesce — null 대체값
+// coalesce — null fallback value
 Users.select(coalesce(Users.nickname, Users.name))
 ```
 
-### 수학 함수
+### Math Functions
 
 ```kotlin
 // round, abs, floor, ceiling
@@ -75,7 +77,7 @@ Products.select(
 )
 ```
 
-### 집계 함수
+### Aggregate Functions
 
 ```kotlin
 // count, sum, avg, min, max + groupBy + having
@@ -85,7 +87,7 @@ Orders
     .having { Orders.amount.sum() greater 1000.toBigDecimal() }
 ```
 
-### 윈도우 함수
+### Window Functions
 
 ```kotlin
 // rowNumber, rank, denseRank, lead, lag
@@ -95,28 +97,28 @@ val rankVal = rank().over().orderBy(Sales.amount, SortOrder.DESC)
 Sales.select(Sales.region, Sales.amount, rowNum, rankVal)
 ```
 
-## 함수 분류표
+## Function Reference Table
 
-| 분류  | 함수                                                                         | 비고                       |
-|-----|----------------------------------------------------------------------------|--------------------------|
-| 문자열 | `trim`, `lowerCase`, `upperCase`, `substring`, `concat`, `like`, `ilike`   | `ilike`: PostgreSQL 전용   |
-| 수학  | `round`, `abs`, `floor`, `ceiling`, `sqrt`, `power`                        |                          |
-| 집계  | `count`, `sum`, `avg`, `min`, `max`                                        | `groupBy` / `having`과 조합 |
-| 통계  | `stdDevPop`, `stdDevSamp`, `varPop`, `varSamp`                             | DB별 지원 차이                |
-| 삼각  | `sin`, `cos`, `tan`, `atan`, `atan2`                                       | DB별 지원 차이                |
-| 윈도우 | `rowNumber`, `rank`, `denseRank`, `lead`, `lag`, `firstValue`, `lastValue` | `OVER()` 절과 조합           |
-| 조건  | `case`, `coalesce`, `nullIf`                                               |                          |
-| 비트  | `bitwiseAnd`, `bitwiseOr`, `bitwiseXor`                                    |                          |
+| Category    | Functions                                                                    | Notes                        |
+|-------------|------------------------------------------------------------------------------|------------------------------|
+| String      | `trim`, `lowerCase`, `upperCase`, `substring`, `concat`, `like`, `ilike`    | `ilike`: PostgreSQL only     |
+| Math        | `round`, `abs`, `floor`, `ceiling`, `sqrt`, `power`                         |                              |
+| Aggregate   | `count`, `sum`, `avg`, `min`, `max`                                         | Combined with `groupBy` / `having` |
+| Statistical | `stdDevPop`, `stdDevSamp`, `varPop`, `varSamp`                              | Per-DB support differences   |
+| Trig        | `sin`, `cos`, `tan`, `atan`, `atan2`                                        | Per-DB support differences   |
+| Window      | `rowNumber`, `rank`, `denseRank`, `lead`, `lag`, `firstValue`, `lastValue`  | Combined with `OVER()` clause |
+| Conditional | `case`, `coalesce`, `nullIf`                                                |                              |
+| Bitwise     | `bitwiseAnd`, `bitwiseOr`, `bitwiseXor`                                     |                              |
 
-## 윈도우 함수 구조
+## Window Function Structure
 
 ```mermaid
 flowchart LR
-    A["윈도우 함수\n(rowNumber / rank / lead / lag)"] --> B["over()"]
-    B --> C["partitionBy(컬럼)"]
-    B --> D["orderBy(컬럼, SortOrder)"]
-    C --> E["PARTITION BY 절"]
-    D --> F["ORDER BY 절"]
+    A["Window Function\n(rowNumber / rank / lead / lag)"] --> B["over()"]
+    B --> C["partitionBy(column)"]
+    B --> D["orderBy(column, SortOrder)"]
+    C --> E["PARTITION BY clause"]
+    D --> F["ORDER BY clause"]
     E --> G["SQL: OVER(PARTITION BY ... ORDER BY ...)"]
     F --> G
 
@@ -132,61 +134,61 @@ flowchart LR
     class G orange
 ```
 
-## 예제 지도
+## Example Map
 
-소스 위치: `src/test/kotlin/exposed/examples/functions`
+Source location: `src/test/kotlin/exposed/examples/functions`
 
-| 파일                                | 설명            |
-|-----------------------------------|---------------|
-| `Ex00_FunctionBase.kt`            | 공통 테이블/데이터 구성 |
-| `Ex01_Functions.kt`               | 문자열/기본 함수     |
-| `Ex02_MathFunction.kt`            | 수학 함수         |
-| `Ex03_StatisticsFunction.kt`      | 집계/통계 함수      |
-| `Ex04_TrigonometricalFunction.kt` | 삼각 함수         |
-| `Ex05_WindowFunction.kt`          | 윈도우 함수        |
+| File                                | Description                        |
+|-------------------------------------|------------------------------------|
+| `Ex00_FunctionBase.kt`              | Common table/data setup            |
+| `Ex01_Functions.kt`                 | String and basic functions         |
+| `Ex02_MathFunction.kt`              | Math functions                     |
+| `Ex03_StatisticsFunction.kt`        | Aggregate and statistical functions |
+| `Ex04_TrigonometricalFunction.kt`   | Trigonometric functions            |
+| `Ex05_WindowFunction.kt`            | Window functions                   |
 
-## 실행 방법
+## Running Tests
 
 ```bash
 ./gradlew :05-exposed-dml:03-functions:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- 같은 집계를 `groupBy + having` 조합으로 직접 변형한다.
-- 윈도우 함수 결과(순위, 이전/다음 값)를 정렬 기준별로 비교한다.
-- 함수 체인(예: 문자열 정규화 → 집계) 시 결과 타입을 확인한다.
+- Rewrite the same aggregation using `groupBy + having` combinations.
+- Compare window function results (rank, lead/lag values) across different sort orders.
+- Verify the result type when chaining functions (e.g., string normalization → aggregation).
 
-## DB별 주의사항
+## Per-DB Notes
 
-- 함수명/시그니처는 DB마다 미세 차이가 있으므로 Dialect별 테스트가 필요
-- `ilike` 등 대소문자 무시 검색은 DB 지원 여부 확인
+- Function names/signatures may have subtle differences per DB; Dialect-specific tests are necessary
+- Check DB support for case-insensitive search functions like `ilike`
 
-## 성능·안정성 체크포인트
+## Performance and Stability Checkpoints
 
-- 집계/윈도우 함수는 정렬/파티션 컬럼 인덱스 유무가 성능에 크게 영향
-- 계산식이 복잡해질수록 쿼리 가독성을 위해 표현식을 분리
+- Index presence on sort/partition columns has a significant performance impact on aggregate/window functions
+- Separate expressions into smaller pieces as query complexity grows to maintain readability
 
-## 복잡한 시나리오
+## Complex Scenarios
 
-### 윈도우 함수 OVER 절 조합
+### Window Function OVER Clause Combinations
 
-`rowNumber`, `rank`, `denseRank`, `lead`, `lag`, `sum`, `avg` 등을 `PARTITION BY` / `ORDER BY`와 함께 조합해 순위·누적 합계 쿼리를 작성합니다.
+Combine `rowNumber`, `rank`, `denseRank`, `lead`, `lag`, `sum`, `avg`, etc. with `PARTITION BY` / `ORDER BY` to write rank and cumulative sum queries.
 
-- 소스: [`Ex05_WindowFunction.kt`](src/test/kotlin/exposed/examples/functions/Ex05_WindowFunction.kt)
+- Source: [`Ex05_WindowFunction.kt`](src/test/kotlin/exposed/examples/functions/Ex05_WindowFunction.kt)
 
-### 문자열·비트 연산·조건 함수 체인
+### String, Bitwise, and Conditional Function Chains
 
-`concat`, `substring`, `lowerCase`, `coalesce`, `case`, `bitwiseAnd` 등을 DSL로 연결해 표현식 기반 쿼리를 구성하는 패턴을 보여줍니다.
+Shows patterns for building expression-based queries by chaining `concat`, `substring`, `lowerCase`, `coalesce`, `case`, `bitwiseAnd`, etc. in DSL.
 
-- 소스: [`Ex01_Functions.kt`](src/test/kotlin/exposed/examples/functions/Ex01_Functions.kt)
+- Source: [`Ex01_Functions.kt`](src/test/kotlin/exposed/examples/functions/Ex01_Functions.kt)
 
-### 집계·통계 함수와 groupBy/having 조합
+### Aggregate and Statistical Functions with groupBy/having
 
-`count`, `sum`, `avg`, `min`, `max`를 `groupBy` + `having`과 결합해 분석형 조회를 작성합니다.
+Write analytical queries by combining `count`, `sum`, `avg`, `min`, `max` with `groupBy` + `having`.
 
-- 소스: [`Ex03_StatisticsFunction.kt`](src/test/kotlin/exposed/examples/functions/Ex03_StatisticsFunction.kt)
+- Source: [`Ex03_StatisticsFunction.kt`](src/test/kotlin/exposed/examples/functions/Ex03_StatisticsFunction.kt)
 
-## 다음 모듈
+## Next Module
 
 - [`../04-transactions/README.md`](../04-transactions/README.md)

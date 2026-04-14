@@ -1,23 +1,25 @@
-# 10 Multi-Tenant (실전)
+# 10 Multi-Tenant (Production)
 
-실전 멀티테넌트 아키텍처를 Exposed + Spring으로 구현하며 Schema 기반 테넌트 분리, 동적 라우팅, 컨텍스트 전파 흐름을 학습하는 챕터입니다. Spring MVC, Virtual Thread, WebFlux 세 가지 환경에서 동일한 멀티테넌시 요구사항을 각각 어떻게 구현하는지 비교합니다.
+English | [한국어](./README.ko.md)
 
-## 챕터 목표
+A chapter for implementing production-grade multi-tenant architecture with Exposed + Spring, covering schema-based tenant isolation, dynamic routing, and context propagation flows. Compares how the same multi-tenancy requirements are implemented across three environments: Spring MVC, Virtual Thread, and WebFlux.
 
-- 테넌트 식별/전파/격리 전체 흐름을 이해한다.
-- Spring MVC, Virtual Thread, WebFlux 환경별 구현 차이를 비교한다.
-- 운영 시 누수/격리 실패를 막는 검증 포인트를 확보한다.
+## Chapter Goals
 
-## 선수 지식
+- Understand the full flow of tenant identification, propagation, and isolation.
+- Compare implementation differences across Spring MVC, Virtual Thread, and WebFlux environments.
+- Establish validation points to prevent leakage and isolation failures in production.
 
-- `09-spring` 내용
-- 트랜잭션 및 DataSource 라우팅 기본 개념
+## Prerequisites
+
+- Contents of `09-spring`
+- Basic concepts of transactions and DataSource routing
 
 ---
 
-## 멀티테넌시 전략 개요
+## Multi-Tenancy Strategy Overview
 
-이 챕터는 **Shared Database / Separate Schema** 전략을 기본으로 사용합니다. 하나의 DB 인스턴스에 테넌트별 스키마(`korean`, `english`)를 분리해 데이터를 격리합니다.
+This chapter uses the **Shared Database / Separate Schema** strategy as its foundation. Data is isolated by separating per-tenant schemas (`korean`, `english`) within a single DB instance.
 
 ```
 Single DB Instance
@@ -31,14 +33,14 @@ Single DB Instance
     └── actor_in_movie
 ```
 
-`TenantAwareDataSource`(`AbstractRoutingDataSource` 상속)를 제공해 **Database per Tenant** 방식으로도 전환할 수 있습니다.
+A `TenantAwareDataSource` (extending `AbstractRoutingDataSource`) is provided so you can also switch to a **Database per Tenant** approach.
 
-### 테넌트별 스키마 분리 아키텍처
+### Per-Tenant Schema Isolation Architecture
 
 ```mermaid
 flowchart TD
     Request[HTTP Request] --> TenantResolver[Tenant Resolver]
-    TenantResolver --> |tenant_id 추출| TenantContext[TenantContext\nThreadLocal / ScopedValue / ReactorContext]
+    TenantResolver --> |tenant_id extracted| TenantContext[TenantContext\nThreadLocal / ScopedValue / ReactorContext]
     TenantContext --> RoutingDS[RoutingDataSource]
     RoutingDS --> |tenant_a| SchemaA[(Schema: korean\nMovies, Actors)]
     RoutingDS --> |tenant_b| SchemaB[(Schema: english\nMovies, Actors)]
@@ -57,17 +59,17 @@ flowchart TD
 
 ---
 
-## 포함 모듈
+## Included Modules
 
-| 모듈                                        | 설명                              | 컨텍스트 전파           |
-|-------------------------------------------|---------------------------------|-------------------|
-| `01-multitenant-spring-web`               | Spring MVC 기반 멀티테넌트             | `ThreadLocal`     |
-| `02-multitenant-spring-web-virtualthread` | Java 21 Virtual Thread 기반 멀티테넌트 | `ScopedValue`     |
-| `03-multitenant-spring-webflux`           | WebFlux + Coroutines 기반 멀티테넌트   | Reactor `Context` |
+| Module                                    | Description                                        | Context Propagation   |
+|-------------------------------------------|----------------------------------------------------|----------------------|
+| `01-multitenant-spring-web`               | Multi-tenant with Spring MVC                       | `ThreadLocal`         |
+| `02-multitenant-spring-web-virtualthread` | Multi-tenant with Java 21 Virtual Threads          | `ScopedValue`         |
+| `03-multitenant-spring-webflux`           | Multi-tenant with WebFlux + Coroutines             | Reactor `Context`     |
 
 ---
 
-## 모듈 간 구현 비교
+## Module Implementation Comparison
 
 ```mermaid
 classDiagram
@@ -132,22 +134,22 @@ classDiagram
     style SuspendedTx_WebFlux fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
 ```
 
-### 환경별 핵심 차이 요약
+### Key Differences by Environment
 
-| 항목      |  01 Spring MVC   |     02 Virtual Threads     |             03 WebFlux              |
-|---------|:----------------:|:--------------------------:|:-----------------------------------:|
-| 서버      |      Tomcat      |        Tomcat + VT         |                Netty                |
-| 스레드 모델  |     OS 스레드 풀     | Virtual Thread per request |               이벤트 루프                |
-| 컨텍스트    |  `ThreadLocal`   |       `ScopedValue`        |          Reactor `Context`          |
-| 스키마 전환  |  AOP `@Before`   |       AOP `@Before`        |    `newSuspendedTransaction` 내부     |
-| 트랜잭션 선언 | `@Transactional` |      `@Transactional`      | `newSuspendedTransactionWithTenant` |
-| 블로킹 허용  |        허용        |             허용             |          금지 (이벤트 루프 차단 불가)          |
+| Item             |  01 Spring MVC   |     02 Virtual Threads     |             03 WebFlux              |
+|----------------|:----------------:|:--------------------------:|:-----------------------------------:|
+| Server          |      Tomcat      |        Tomcat + VT         |                Netty                |
+| Thread Model    |  OS thread pool  | Virtual Thread per request |             Event loop              |
+| Context         |  `ThreadLocal`   |       `ScopedValue`        |          Reactor `Context`          |
+| Schema Switch   |  AOP `@Before`   |       AOP `@Before`        |    Inside `newSuspendedTransaction` |
+| Transaction Decl| `@Transactional` |      `@Transactional`      | `newSuspendedTransactionWithTenant` |
+| Blocking Allowed|       Yes        |            Yes             |     No (event loop must not block)  |
 
 ---
 
-## 공통 요청 흐름
+## Common Request Flow
 
-모든 모듈은 다음 흐름을 따릅니다. 컨텍스트 전파 방식만 환경에 따라 달라집니다.
+All modules follow the flow below. Only the context propagation mechanism differs by environment.
 
 ```mermaid
 sequenceDiagram
@@ -159,79 +161,75 @@ sequenceDiagram
     participant DB
 
     Client->>Filter: GET /actors (X-TENANT-ID: {tenant})
-    Filter->>Context: 테넌트 바인딩 (ThreadLocal / ScopedValue / ReactorContext)
-    Filter->>Controller: 요청 전달
-    Controller->>DB: 스키마 전환 (setSchema({tenant}))
-    Controller->>Repository: 데이터 조회
+    Filter->>Context: Bind tenant (ThreadLocal / ScopedValue / ReactorContext)
+    Filter->>Controller: Forward request
+    Controller->>DB: Switch schema (setSchema({tenant}))
+    Controller->>Repository: Fetch data
     Repository->>DB: SELECT * FROM {tenant}.actor
-    DB-->>Client: 테넌트 격리 응답
-    Note over Filter,Context: 요청 완료 후 컨텍스트 정리
+    DB-->>Client: Tenant-isolated response
+    Note over Filter,Context: Clean up context after request completes
 ```
 
 ---
 
-## 권장 학습 순서
+## Recommended Learning Order
 
-1. [`01-multitenant-spring-web`](01-multitenant-spring-web/README.md) — ThreadLocal + AOP 기초 구조 파악
-2. [
-   `02-multitenant-spring-web-virtualthread`](02-multitenant-spring-web-virtualthread/README.md) — ScopedValue로 전환, Virtual Thread 설정 비교
-3. [`03-multitenant-spring-webflux`](03-multitenant-spring-webflux/README.md) — Reactor Context + 코루틴 브릿지 패턴 이해
+1. [`01-multitenant-spring-web`](01-multitenant-spring-web/README.md) — Understand basic structure with ThreadLocal + AOP
+2. [`02-multitenant-spring-web-virtualthread`](02-multitenant-spring-web-virtualthread/README.md) — Switch to ScopedValue, compare Virtual Thread configuration
+3. [`03-multitenant-spring-webflux`](03-multitenant-spring-webflux/README.md) — Understand Reactor Context + coroutine bridge pattern
 
 ---
 
-## 실행 방법
+## How to Run
 
 ```bash
-# 개별 모듈 테스트
+# Individual module tests
 ./gradlew :10-multi-tenant:01-multitenant-spring-web:test
 ./gradlew :10-multi-tenant:02-multitenant-spring-web-virtualthread:test
 ./gradlew :10-multi-tenant:03-multitenant-spring-webflux:test
 
-# 전체 챕터 빌드
+# Full chapter build
 ./gradlew :10-multi-tenant:build
 ```
 
 ---
 
-## 테스트 포인트
+## Test Points
 
-- `X-TENANT-ID` 누락/오입력 시 실패 동작을 검증한다.
-- 테넌트 A 요청에서 테넌트 B 데이터가 노출되지 않는지 확인한다.
-- 동시 요청 환경에서 컨텍스트 누수 여부를 검증한다.
+- Verify failure behavior when `X-TENANT-ID` is missing or invalid.
+- Confirm that tenant B data is not exposed in tenant A requests.
+- Verify no context leakage under concurrent request load.
 
-## 성능·안정성 체크포인트
+## Performance & Stability Checkpoints
 
-- 스키마 전환 비용과 커넥션 재사용 정책을 점검한다.
-- ThreadLocal/Reactor Context 사용 시 컨텍스트 전파 누락을 방지한다.
-- 운영 로그에 tenant 정보가 누락되지 않도록 추적성을 확보한다.
-
----
-
-## 복잡한 시나리오
-
-### 스키마 기반 테넌트 격리 + ThreadLocal 컨텍스트 전파 (Spring MVC)
-
-`TenantFilter`가 `X-TENANT-ID` 헤더에서 테넌트를 추출해 `TenantContext`(ThreadLocal)에 저장하면, `TenantSchemaAspect`가
-`@Transactional` 진입 전 `SchemaUtils.setSchema()`로 해당 스키마로 전환합니다.
-
-- 관련 모듈: [`01-multitenant-spring-web`](01-multitenant-spring-web/)
-
-### Virtual Thread 환경의 테넌트 컨텍스트 전파
-
-Virtual Thread는 `ThreadLocal` 대신 `ScopedValue`로 컨텍스트를 전파합니다. `02-multitenant-spring-web-virtualthread`는
-`TomcatVirtualThreadConfig`로 executor를 교체하고 `ScopedValue.where().run { }` 블록으로 테넌트를 바인딩합니다.
-
-- 관련 모듈: [`02-multitenant-spring-web-virtualthread`](02-multitenant-spring-web-virtualthread/)
-
-### WebFlux + Coroutines 환경의 Reactor Context 전파
-
-WebFlux에서는 Reactor `Context`를 통해 코루틴 컨텍스트에 테넌트 정보를 전파합니다. `TenantId`가 `CoroutineContext.Element`를 구현해
-`newSuspendedTransactionWithTenant` 내부에서 스키마를 전환합니다.
-
-- 관련 모듈: [`03-multitenant-spring-webflux`](03-multitenant-spring-webflux/)
+- Review schema switch cost and connection reuse policy.
+- Prevent context propagation gaps when using ThreadLocal/Reactor Context.
+- Ensure tenant information is not omitted from production logs for traceability.
 
 ---
 
-## 다음 챕터
+## Complex Scenarios
 
-- [11-high-performance](../11-high-performance/README.md): 고성능 캐시/라우팅 전략으로 확장합니다.
+### Schema-Based Tenant Isolation + ThreadLocal Context Propagation (Spring MVC)
+
+`TenantFilter` extracts the tenant from the `X-TENANT-ID` header and stores it in `TenantContext` (ThreadLocal). Then `TenantSchemaAspect` switches to the corresponding schema via `SchemaUtils.setSchema()` before `@Transactional` entry.
+
+- Related module: [`01-multitenant-spring-web`](01-multitenant-spring-web/)
+
+### Tenant Context Propagation in Virtual Thread Environments
+
+Virtual Threads use `ScopedValue` instead of `ThreadLocal` for context propagation. `02-multitenant-spring-web-virtualthread` replaces the executor with `TomcatVirtualThreadConfig` and binds the tenant using a `ScopedValue.where().run { }` block.
+
+- Related module: [`02-multitenant-spring-web-virtualthread`](02-multitenant-spring-web-virtualthread/)
+
+### Reactor Context Propagation in WebFlux + Coroutines
+
+In WebFlux, tenant information is propagated to the coroutine context via Reactor `Context`. `TenantId` implements `CoroutineContext.Element` to switch the schema inside `newSuspendedTransactionWithTenant`.
+
+- Related module: [`03-multitenant-spring-webflux`](03-multitenant-spring-webflux/)
+
+---
+
+## Next Chapter
+
+- [11-high-performance](../11-high-performance/README.md): Extend to high-performance cache/routing strategies.

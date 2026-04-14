@@ -1,41 +1,42 @@
 # 03 Exposed Basic
 
-Exposed를 처음 만나보는 학습 적응 장치로, DSL과 DAO를 나란히 비교하며 공통 조회/저장 흐름을 테스트 기반으로 익히는 챕터입니다.
+English | [한국어](./README.ko.md)
 
-## 개요
+An introductory chapter for first-time Exposed learners. DSL and DAO are compared side-by-side, and the common query/save flow is learned through test-driven practice.
 
-Exposed는 두 가지 데이터 접근 패턴을 제공합니다. **DSL(SQL DSL)** 패턴은 SQL을 Kotlin 타입 안전 함수 체인으로 표현하며, **DAO** 패턴은 `Entity`/
-`EntityClass`를 통해 ORM 스타일로 동작합니다. 두 패턴을 동일한 도메인(`City`/`User`)으로 나란히 실습하여 차이를 직접 확인합니다.
+## Overview
 
-## 학습 목표
+Exposed provides two data access patterns. The **DSL (SQL DSL)** pattern expresses SQL as a Kotlin type-safe function chain, while the **DAO** pattern operates in an ORM style via `Entity`/`EntityClass`. Both patterns are practised side-by-side with the same domain (`City`/`User`) so you can observe the differences directly.
 
-- DSL과 DAO의 역할 차이를 명확히 이해한 후, 공통 CRUD 시나리오를 재현한다.
-- 테스트 코드로 조건/정렬/페이징 결과를 검증해 안정적인 쿼리 작성 경험을 확보한다.
-- 이후 `04-exposed-ddl`, `05-exposed-dml`에서 재사용할 구조(스키마/유틸 클래스)를 정리한다.
+## Learning Goals
 
-## 포함 모듈
+- Clearly understand the role differences between DSL and DAO, then reproduce common CRUD scenarios.
+- Gain stable query-writing experience by verifying conditional/sorting/paging results through test code.
+- Organise the structures (schema/utility classes) to be reused in `04-exposed-ddl` and `05-exposed-dml`.
 
-| 모듈                    | 설명                                                      |
-|-----------------------|---------------------------------------------------------|
-| `exposed-sql-example` | DSL 중심으로 SELECT/INSERT/UPDATE/DELETE 기본 흐름을 확인하는 테스트 예제 |
-| `exposed-dao-example` | DAO(Entity) 모델링, 관계 매핑, 코루틴 트랜잭션 사례를 담은 예제              |
+## Included Modules
 
-## DSL vs DAO 패턴 비교
+| Module                  | Description                                                           |
+|-----------------------|-----------------------------------------------------------------------|
+| `exposed-sql-example` | Test-based example confirming the basic SELECT/INSERT/UPDATE/DELETE flow with a DSL focus |
+| `exposed-dao-example` | Example covering DAO (Entity) modelling, relationship mapping, and coroutine transaction cases |
 
-| 항목     | DSL (SQL DSL)                                        | DAO (Entity/EntityClass)                           |
-|--------|------------------------------------------------------|----------------------------------------------------|
-| 스키마 정의 | `object CityTable : Table("cities")`                 | `object CityTable : IntIdTable("cities")`          |
-| 레코드 삽입 | `CityTable.insert { it[name] = "Seoul" }`            | `City.new { name = "Seoul" }`                      |
-| 레코드 조회 | `CityTable.selectAll().where { id eq 1 }`            | `City.findById(1)` / `City.all()`                  |
-| 레코드 수정 | `CityTable.update({ id eq 1 }) { it[name] = "..." }` | `city.name = "..."` (트랜잭션 내 자동 반영)                 |
-| 레코드 삭제 | `CityTable.deleteWhere { id eq 1 }`                  | `city.delete()`                                    |
-| 관계 조회  | `CityTable.innerJoin(UserTable).selectAll()`         | `city.users` (Lazy) / `.with(City::users)` (Eager) |
-| 결과 타입  | `ResultRow` (Map-like)                               | `Entity` 인스턴스 (객체 모델)                              |
-| 집계/조인  | DSL 체이닝으로 자유롭게 표현 가능                                 | 복잡한 집계는 DSL 혼용 권장                                  |
-| 코루틴 지원 | `newSuspendedTransaction { }`                        | `newSuspendedTransaction { }` 내 Entity 접근          |
-| N+1 위험 | 없음 (명시적 JOIN)                                        | Lazy Loading 시 주의 필요                               |
+## DSL vs DAO Pattern Comparison
 
-## 도메인 모델 (classDiagram)
+| Item              | DSL (SQL DSL)                                        | DAO (Entity/EntityClass)                           |
+|-----------------|------------------------------------------------------|----------------------------------------------------|
+| Schema definition | `object CityTable : Table("cities")`               | `object CityTable : IntIdTable("cities")`          |
+| Record insert   | `CityTable.insert { it[name] = "Seoul" }`            | `City.new { name = "Seoul" }`                      |
+| Record query    | `CityTable.selectAll().where { id eq 1 }`            | `City.findById(1)` / `City.all()`                  |
+| Record update   | `CityTable.update({ id eq 1 }) { it[name] = "..." }` | `city.name = "..."` (auto-applied within transaction) |
+| Record delete   | `CityTable.deleteWhere { id eq 1 }`                  | `city.delete()`                                    |
+| Relation query  | `CityTable.innerJoin(UserTable).selectAll()`         | `city.users` (Lazy) / `.with(City::users)` (Eager) |
+| Result type     | `ResultRow` (Map-like)                               | `Entity` instance (object model)                   |
+| Aggregation/join| Freely expressible with DSL chaining                 | Complex aggregations: recommended to mix with DSL  |
+| Coroutine support | `newSuspendedTransaction { }`                      | Entity access within `newSuspendedTransaction { }` |
+| N+1 risk        | None (explicit JOIN)                                 | Caution needed with Lazy Loading                   |
+
+## Domain Model (classDiagram)
 
 ```mermaid
 classDiagram
@@ -73,10 +74,10 @@ classDiagram
     style User fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
-## DSL 방식 스키마 정의
+## DSL-Style Schema Definition
 
 ```kotlin
-// DSL — 일반 Table 사용, PrimaryKey 명시
+// DSL — uses plain Table, PrimaryKey declared explicitly
 object CityTable : Table("cities") {
     val id = integer("id").autoIncrement()
     val name = varchar("name", length = 50)
@@ -91,10 +92,10 @@ object UserTable : Table("users") {
 }
 ```
 
-## DAO 방식 스키마 정의
+## DAO-Style Schema Definition
 
 ```kotlin
-// DAO — IntIdTable 상속, Entity 클래스와 쌍을 이룸
+// DAO — inherits IntIdTable, paired with an Entity class
 object CityTable : IntIdTable("cities") {
     val name = varchar("name", 50)
 }
@@ -119,37 +120,37 @@ class User(id: EntityID<Int>) : IntEntity(id) {
 }
 ```
 
-## 권장 학습 순서
+## Recommended Study Order
 
-1. `exposed-sql-example` — DSL의 기본 SELECT/INSERT/UPDATE/DELETE
-2. `exposed-dao-example` — Entity CRUD, 관계 매핑, Eager Loading
+1. `exposed-sql-example` — Basic SELECT/INSERT/UPDATE/DELETE with DSL
+2. `exposed-dao-example` — Entity CRUD, relationship mapping, Eager Loading
 
-## 선수 지식
+## Prerequisites
 
-- Kotlin 기본 문법과 함수형 관용구
-- 관계형 데이터베이스 기본 개념 (테이블, PK/FK)
+- Kotlin basic syntax and functional idioms
+- Relational database fundamentals (tables, PK/FK)
 
-## 테스트 실행 방법
+## Running Tests
 
 ```bash
-# DSL 예제 테스트
+# DSL example tests
 ./gradlew :03-exposed-basic:exposed-sql-example:test
 
-# DAO 예제 테스트
+# DAO example tests
 ./gradlew :03-exposed-basic:exposed-dao-example:test
 
-# H2만 대상으로 빠른 테스트
+# Fast tests targeting H2 only
 ./gradlew :03-exposed-basic:exposed-sql-example:test -PuseFastDB=true
 ./gradlew :03-exposed-basic:exposed-dao-example:test -PuseFastDB=true
 ```
 
-## 테스트 포인트
+## Test Points
 
-- DSL/DAO 각각에서 동일 비즈니스 시나리오를 재현할 수 있는지 검증
-- 조회 조건, 정렬, 페이징 결과가 기대값과 일치하는지 확인
-- N+1 가능성이 있는 조회 패턴을 조기에 식별
-- 트랜잭션 경계 밖에서 Entity 지연 접근이 발생하지 않도록 테스트로 고정
+- Verify that the same business scenario can be reproduced in both DSL and DAO
+- Confirm that query conditions, sorting, and paging results match expected values
+- Identify query patterns with N+1 potential early
+- Pin tests to prevent lazy entity access from occurring outside the transaction boundary
 
-## 다음 챕터
+## Next Chapter
 
-- [04-exposed-ddl](../04-exposed-ddl/README.md): DB 연결과 스키마 정의 실습으로 확장합니다.
+- [04-exposed-ddl](../04-exposed-ddl/README.md): Extends into DB connection and schema definition practice.

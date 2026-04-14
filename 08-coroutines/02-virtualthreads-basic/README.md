@@ -1,30 +1,32 @@
-# 08 Coroutines: Virtual Threads 기본 (02-virtualthreads-basic)
+# 08 Coroutines: Virtual Threads Basic (02-virtualthreads-basic)
 
-Java 21 Virtual Threads 기반으로 Exposed 트랜잭션을 실행하는 모듈입니다. 블로킹 코드 스타일을 유지하면서 높은 동시성을 확보하는 패턴을 다룹니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A module for running Exposed transactions on Java 21 Virtual Threads. Covers patterns for achieving high concurrency while retaining a blocking code style.
 
-- `newVirtualThreadJdbcTransaction` 사용법을 익힌다.
-- Virtual Thread 비동기 실행 패턴을 이해한다.
-- 플랫폼 스레드 방식 및 코루틴 방식과의 차이를 비교한다.
+## Learning Goals
 
-## 선수 지식
+- Learn how to use `newVirtualThreadJdbcTransaction`.
+- Understand the Virtual Thread async execution pattern.
+- Compare differences with platform thread and coroutine approaches.
+
+## Prerequisites
 
 - Java 21+
 - [`../01-coroutines-basic/README.md`](../01-coroutines-basic/README.md)
 
-## 핵심 개념
+## Key Concepts
 
-### newVirtualThreadJdbcTransaction — 기본 사용
+### newVirtualThreadJdbcTransaction — Basic Usage
 
 ```kotlin
-// Virtual Thread 위에서 트랜잭션 실행 (블로킹 스타일 유지)
+// Run a transaction on a Virtual Thread (retains blocking style)
 newVirtualThreadJdbcTransaction {
     VTester.insert { }
     commit()
 }
 
-// 기존 트랜잭션에서 Virtual Thread 트랜잭션 중첩
+// Nest a Virtual Thread transaction within an existing transaction
 fun JdbcTransaction.getTesterById(id: Int): ResultRow? =
     newVirtualThreadJdbcTransaction {
         VTester.selectAll()
@@ -33,10 +35,10 @@ fun JdbcTransaction.getTesterById(id: Int): ResultRow? =
     }
 ```
 
-### virtualThreadJdbcTransactionAsync — 병렬 실행
+### virtualThreadJdbcTransactionAsync — Parallel Execution
 
 ```kotlin
-// 여러 트랜잭션을 Virtual Thread로 병렬 실행
+// Run multiple transactions in parallel using Virtual Threads
 val futures: List<VirtualFuture<EntityID<Int>>> = (1..10).map {
     virtualThreadJdbcTransactionAsync {
         VTester.insertAndGetId { }
@@ -45,48 +47,48 @@ val futures: List<VirtualFuture<EntityID<Int>>> = (1..10).map {
 val ids = futures.awaitAll()
 ```
 
-## Virtual Thread 트랜잭션 흐름
+## Virtual Thread Transaction Flow
 
 ```mermaid
 sequenceDiagram
-    participant C as Caller (일반 코드)
+    participant C as Caller (Regular Code)
     participant VT as newVirtualThreadJdbcTransaction
     participant VTA as virtualThreadJdbcTransactionAsync
     participant DB as Database
 
     C->>VT: newVirtualThreadJdbcTransaction { }
-    Note over VT: JVM이 Virtual Thread 생성, 플랫폼 스레드에 마운트
+    Note over VT: JVM creates Virtual Thread, mounts on platform thread
     VT->>DB: BEGIN
     VT->>DB: INSERT / SELECT ...
-    alt 정상 완료
+    alt Success
         VT->>DB: COMMIT
-        VT-->>C: 결과 반환
-    else 예외 발생
+        VT-->>C: Result returned
+    else Exception
         VT->>DB: ROLLBACK
-        VT-->>C: 예외 전파
+        VT-->>C: Exception propagated
     end
 
     C->>VTA: virtualThreadJdbcTransactionAsync { }
-    VTA-->>C: VirtualFuture<T> (즉시 반환)
-    Note over C,VTA: 병렬로 여러 Virtual Thread 실행
+    VTA-->>C: VirtualFuture<T> (returned immediately)
+    Note over C,VTA: Multiple Virtual Threads run in parallel
     C->>C: futures.awaitAll()
     VTA->>DB: BEGIN → SQL → COMMIT
-    VTA-->>C: 결과 반환
+    VTA-->>C: Result returned
 ```
 
-## 코루틴 vs Virtual Threads 실무 선택 가이드
+## Coroutines vs Virtual Threads Practical Selection Guide
 
-| 상황                           | 권장 방식             |
-|------------------------------|-------------------|
-| 신규 비동기 코드베이스                 | Kotlin Coroutines |
-| 기존 동기 블로킹 코드에 동시성 추가         | Virtual Threads   |
-| Spring WebFlux / Reactive 연동 | Kotlin Coroutines |
-| Spring MVC (서블릿 기반) + 높은 동시성 | Virtual Threads   |
-| 취소(cancellation) 세밀한 제어      | Kotlin Coroutines |
-| Java 17 이하 환경                | Kotlin Coroutines |
-| Java 21+ 환경, 코드 변경 최소화       | Virtual Threads   |
+| Situation                                       | Recommended Approach  |
+|------------------------------------------------|-----------------------|
+| New async codebase                              | Kotlin Coroutines     |
+| Adding concurrency to existing synchronous code | Virtual Threads       |
+| Spring WebFlux / Reactive integration           | Kotlin Coroutines     |
+| Spring MVC (servlet-based) + high concurrency   | Virtual Threads       |
+| Fine-grained cancellation control               | Kotlin Coroutines     |
+| Java 17 or lower environment                    | Kotlin Coroutines     |
+| Java 21+ environment, minimize code changes     | Virtual Threads       |
 
-## Virtual Thread 처리 모델 flowchart
+## Virtual Thread Processing Model Flowchart
 
 ```mermaid
 flowchart TD
@@ -95,16 +97,16 @@ flowchart TD
     C --> D["플랫폼 스레드에 마운트\n(OS Thread-N)"]
     D --> E["Exposed Transaction 시작\nBEGIN"]
     E --> F["DB 작업 수행\n(INSERT / SELECT / UPDATE)"]
-    F --> G{결과}
-    G -->|정상| H["COMMIT\n결과 반환"]
-    G -->|예외| I["ROLLBACK\n예외 전파"]
-    H --> J["Virtual Thread 종료\n(플랫폼 스레드 반환)"]
+    F --> G{Result}
+    G -->|Success| H["COMMIT\nResult returned"]
+    G -->|Exception| I["ROLLBACK\nException propagated"]
+    H --> J["Virtual Thread terminated\n(platform thread released)"]
     I --> J
 
-    B2["virtualThreadJdbcTransactionAsync { }"] --> K["VirtualFuture&lt;T&gt; 즉시 반환"]
-    K --> L["병렬 Virtual Thread들 실행"]
-    L --> M["futures.awaitAll() 대기"]
-    M --> N["모든 결과 수집"]
+    B2["virtualThreadJdbcTransactionAsync { }"] --> K["VirtualFuture&lt;T&gt; returned immediately"]
+    K --> L["Parallel Virtual Threads execute"]
+    L --> M["futures.awaitAll() wait"]
+    M --> N["All results collected"]
 
     classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
     classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
@@ -121,7 +123,7 @@ flowchart TD
     class B2,K,L,M,N blue
 ```
 
-## Virtual Thread vs Platform Thread 비교 다이어그램
+## Virtual Thread vs Platform Thread Comparison Diagram
 
 ```mermaid
 flowchart LR
@@ -151,7 +153,7 @@ flowchart LR
     class V1,V2,V3,Carrier,VScale green
 ```
 
-## 테이블 ERD (virtualthreads_table)
+## Table ERD (virtualthreads_table)
 
 ```mermaid
 erDiagram
@@ -164,54 +166,54 @@ erDiagram
     }
 ```
 
-## 예제 구성
+## Example Structure
 
-소스 위치: `src/test/kotlin/exposed/examples/virtualthreads`
+Source location: `src/test/kotlin/exposed/examples/virtualthreads`
 
-| 파일                       | 주요 테스트 시나리오                                                            |
-|--------------------------|------------------------------------------------------------------------|
-| `Ex01_VirtualThreads.kt` | 존재하지 않는 ID 조회, 단건 삽입/조회, 병렬 삽입, 중복 키 예외, 일반 `transaction` 혼용, 중첩 예외 처리 |
+| File                       | Key Test Scenarios                                                                                                        |
+|--------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| `Ex01_VirtualThreads.kt` | Query non-existent ID, single insert/query, parallel insert, duplicate key exception, mixing regular `transaction`, nested exception handling |
 
-### 주요 테스트 시나리오
+### Key Test Scenarios
 
-| 시나리오                               | 사용 API                                                 |
+| Scenario                                      | API Used                                                 |
 |------------------------------------|--------------------------------------------------------|
-| 기본 Virtual Thread 트랜잭션             | `newVirtualThreadJdbcTransaction`                      |
-| 기존 트랜잭션 내 중첩 실행                    | `newVirtualThreadJdbcTransaction` (내부 중첩)              |
-| 비동기 병렬 삽입 (10건)                    | `virtualThreadJdbcTransactionAsync` + `awaitAll`       |
-| 중복 키 삽입 → 예외 검증                    | `assertFailsWith<ExecutionException>`                  |
-| 일반 `transaction { }` 혼용 비교         | `transaction { }` vs `newVirtualThreadJdbcTransaction` |
-| Java 21 전용 실행 조건 (`@EnabledOnJre`) | `@EnabledOnJre(JRE.JAVA_21)` 어노테이션                     |
+| Basic Virtual Thread transaction             | `newVirtualThreadJdbcTransaction`                      |
+| Nested execution within existing transaction | `newVirtualThreadJdbcTransaction` (inner nesting)       |
+| Async parallel insert (10 records)           | `virtualThreadJdbcTransactionAsync` + `awaitAll`       |
+| Duplicate key insert → exception verification | `assertFailsWith<ExecutionException>`                  |
+| Comparison with regular `transaction { }`   | `transaction { }` vs `newVirtualThreadJdbcTransaction` |
+| Java 21-only execution condition             | `@EnabledOnJre(JRE.JAVA_21)` annotation                |
 
-## 실행 방법
+## How to Run
 
 ```bash
 ./gradlew :08-coroutines:02-virtualthreads-basic:test
 ```
 
-> Java 21 이상 환경에서만 실행됩니다. `@EnabledOnJre(JRE.JAVA_21)` 어노테이션으로 보호되어 있습니다.
+> Runs only on Java 21+. Protected by the `@EnabledOnJre(JRE.JAVA_21)` annotation.
 
 ```bash
-# Java 버전 확인
+# Check Java version
 java -version
 
-# 특정 Java 버전으로 실행
+# Run with a specific Java version
 mise use java@21
 ./gradlew :08-coroutines:02-virtualthreads-basic:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- 동시 작업 수를 늘려 처리량/지연시간 변화를 측정
-- 예외 발생 시 롤백/정리 동작 검증
-- 코루틴 버전과 Virtual Thread 버전의 같은 시나리오를 비교
+- Measure throughput/latency changes as the number of concurrent tasks increases
+- Verify rollback/cleanup behavior on exceptions
+- Compare the same scenarios between the coroutine version and Virtual Thread version
 
-## 성능·안정성 체크포인트
+## Performance & Stability Checkpoints
 
-- Virtual Thread 증가와 DB 커넥션 수를 함께 조정
-- 장시간 I/O 또는 외부 호출로 인한 병목을 분리
-- `pinning` 현상 주의: `synchronized` 블록 내 블로킹 호출은 Virtual Thread를 플랫폼 스레드에 고정시킴
+- Adjust Virtual Thread count together with DB connection count
+- Isolate bottlenecks caused by long I/O or external calls
+- Watch for `pinning`: blocking calls inside `synchronized` blocks pin a Virtual Thread to its platform thread
 
-## 다음 챕터
+## Next Chapter
 
 - [`../../09-spring/README.md`](../../09-spring/README.md)

@@ -1,39 +1,41 @@
 # 06 Advanced
 
-실무에서 Exposed를 확장 적용할 때 필요한 커스텀 컬럼, 날짜/시간, JSON, 암복호화, 직렬화 연동 주제를 정리하는 챕터입니다.
+English | [한국어](./README.ko.md)
 
-## 개요
+A chapter covering custom columns, date/time, JSON, encryption/decryption, and serialization integration topics needed when applying Exposed in production environments.
 
-기본 CRUD를 넘어 실무에서 자주 마주치는 확장 시나리오를 다룹니다. 암복호화 컬럼으로 민감정보를 투명하게 보호하고, JSON 컬럼으로 유연한 스키마를 구성하며, 커스텀 컬럼 타입으로 도메인 요구에 맞는 직렬화/압축/암호화 로직을 캡슐화합니다.
+## Overview
 
-## 학습 목표
+This chapter covers extension scenarios frequently encountered in production beyond basic CRUD. It demonstrates transparently protecting sensitive data with encryption columns, composing flexible schemas with JSON columns, and encapsulating serialization/compression/encryption logic in custom column types tailored to domain requirements.
 
-- 커스텀 컬럼과 확장 포인트를 이해하고, JSON/시간 타입 처리에서 DB 간 차이를 제어한다.
-- 직렬화/암복호화, 외부 라이브러리 연동 시 안정적인 데이터 흐름을 설계한다.
-- 테스트를 통해 커스텀 타입/엔티티 확장 모듈을 검증한다.
+## Learning Objectives
 
-## 포함 모듈
+- Understand custom columns and extension points, and control cross-DB differences in JSON/time type handling.
+- Design stable data flows when integrating serialization/encryption with external libraries.
+- Validate custom type/entity extension modules through tests.
 
-| 모듈                           | 설명                                           |
-|------------------------------|----------------------------------------------|
-| `01-exposed-crypt`           | `encryptedVarchar`/`encryptedBinary` 암복호화 컬럼 |
-| `02-exposed-javatime`        | Java Time 타입 매핑 (`LocalDate`, `Instant` 등)   |
-| `03-exposed-kotlin-datetime` | Kotlin `kotlinx-datetime` 타입 매핑              |
-| `04-exposed-json`            | JSON/JSONB 컬럼 매핑 및 경로 쿼리                     |
-| `05-exposed-money`           | `BigDecimal` 기반 금액 타입 모델링                    |
-| `06-custom-columns`          | 압축/직렬화/암호화 커스텀 컬럼 타입                         |
-| `07-custom-entities`         | KSUID/Snowflake/UUID 기반 커스텀 ID Entity        |
-| `08-exposed-jackson`         | Jackson ObjectMapper 연동 JSON 컬럼              |
-| `09-exposed-fastjson2`       | Fastjson2 연동 JSON 컬럼                         |
-| `10-exposed-jasypt`          | Jasypt 기반 결정적 암호화 (WHERE 검색 가능)              |
-| `11-exposed-jackson3`        | Jackson3 연동 JSON 컬럼                          |
-| `12-exposed-tink`            | Google Tink AEAD/DAEAD 암복호화 컬럼               |
+## Included Modules
 
-## 아키텍처 개요
+| Module                       | Description                                              |
+|------------------------------|----------------------------------------------------------|
+| `01-exposed-crypt`           | `encryptedVarchar`/`encryptedBinary` encryption columns  |
+| `02-exposed-javatime`        | Java Time type mapping (`LocalDate`, `Instant`, etc.)    |
+| `03-exposed-kotlin-datetime` | Kotlin `kotlinx-datetime` type mapping                   |
+| `04-exposed-json`            | JSON/JSONB column mapping and path queries               |
+| `05-exposed-money`           | `BigDecimal`-based monetary type modeling                |
+| `06-custom-columns`          | Compression/serialization/encryption custom column types  |
+| `07-custom-entities`         | KSUID/Snowflake/UUID-based custom ID Entity              |
+| `08-exposed-jackson`         | Jackson ObjectMapper JSON column integration             |
+| `09-exposed-fastjson2`       | Fastjson2 JSON column integration                        |
+| `10-exposed-jasypt`          | Jasypt-based deterministic encryption (WHERE searchable) |
+| `11-exposed-jackson3`        | Jackson3 JSON column integration                         |
+| `12-exposed-tink`            | Google Tink AEAD/DAEAD encryption columns                |
+
+## Architecture Overview
 
 ```mermaid
 flowchart LR
-    subgraph Column["커스텀 컬럼 확장"]
+    subgraph Column["Custom Column Extensions"]
         CRYPT["encryptedVarchar\nencryptedBinary"]
         TINK["tinkAeadVarChar\ntinkDaeadVarChar"]
         JSON["json / jsonb"]
@@ -41,15 +43,15 @@ flowchart LR
         SER["binarySerializedBinary"]
     end
 
-    subgraph Entity["커스텀 Entity ID"]
+    subgraph Entity["Custom Entity ID"]
         KSUID["KsuidTable\nKsuidEntity"]
         SNOW["SnowflakeIdTable\nSnowflakeIdEntity"]
         UUID["TimebasedUUIDTable"]
     end
 
-    subgraph Storage["DB 저장"]
-        VARCHAR["VARCHAR (암호화/직렬화)"]
-        BINARY["BINARY/BYTEA (압축/직렬화)"]
+    subgraph Storage["DB Storage"]
+        VARCHAR["VARCHAR (encrypted/serialized)"]
+        BINARY["BINARY/BYTEA (compressed/serialized)"]
         JSONTYPE["JSON/JSONB"]
         BIGINT["BIGINT (Snowflake)"]
     end
@@ -69,44 +71,44 @@ flowchart LR
     class VARCHAR,BINARY,JSONTYPE,BIGINT orange
 ```
 
-## 모듈 분류
+## Module Classification
 
 ```mermaid
 flowchart TD
-    subgraph Crypto["암호화"]
-        M01["01-exposed-crypt\nAES/Blowfish/3DES\n비결정적 암호화"]
-        M10["10-exposed-jasypt\nJasypt 결정적 암호화\nWHERE 검색 가능"]
-        M12["12-exposed-tink\nGoogle Tink AEAD/DAEAD\n무결성 검증 + 검색"]
+    subgraph Crypto["Encryption"]
+        M01["01-exposed-crypt\nAES/Blowfish/3DES\nNon-deterministic encryption"]
+        M10["10-exposed-jasypt\nJasypt deterministic encryption\nWHERE searchable"]
+        M12["12-exposed-tink\nGoogle Tink AEAD/DAEAD\nIntegrity verification + search"]
     end
 
-    subgraph DateTime["날짜/시간"]
-        M02["02-exposed-javatime\njava.time 타입 매핑\nLocalDate/Instant 등"]
-        M03["03-exposed-kotlin-datetime\nkotlinx.datetime 타입 매핑\nKMP 지원"]
+    subgraph DateTime["Date/Time"]
+        M02["02-exposed-javatime\njava.time type mapping\nLocalDate/Instant etc."]
+        M03["03-exposed-kotlin-datetime\nkotlinx.datetime type mapping\nKMP support"]
     end
 
-    subgraph JSON["JSON 직렬화"]
-        M04["04-exposed-json\nkotlinx.serialization\nJSON/JSONB 경로 쿼리"]
-        M08["08-exposed-jackson\nJackson 2 ObjectMapper\nJSON/JSONB 컬럼"]
-        M09["09-exposed-fastjson2\nFastjson2\n고성능 JSON 파싱"]
-        M11["11-exposed-jackson3\nJackson 3 ObjectMapper\n마이그레이션 호환성"]
+    subgraph JSON["JSON Serialization"]
+        M04["04-exposed-json\nkotlinx.serialization\nJSON/JSONB path queries"]
+        M08["08-exposed-jackson\nJackson 2 ObjectMapper\nJSON/JSONB columns"]
+        M09["09-exposed-fastjson2\nFastjson2\nHigh-performance JSON parsing"]
+        M11["11-exposed-jackson3\nJackson 3 ObjectMapper\nMigration compatibility"]
     end
 
-    subgraph Money["통화/금액"]
-        M05["05-exposed-money\nJavaMoney MonetaryAmount\n복합 컬럼 매핑"]
+    subgraph Money["Currency/Amount"]
+        M05["05-exposed-money\nJavaMoney MonetaryAmount\nComposite column mapping"]
     end
 
-    subgraph Custom["커스텀 확장"]
-        M06["06-custom-columns\nColumnType 상속\n직렬화/압축/암호화"]
-        M07["07-custom-entities\nKSUID/Snowflake/UUID\n커스텀 ID 전략"]
+    subgraph Custom["Custom Extensions"]
+        M06["06-custom-columns\nColumnType inheritance\nSerialization/compression/encryption"]
+        M07["07-custom-entities\nKSUID/Snowflake/UUID\nCustom ID strategies"]
     end
 
-    M01 -->|"검색 필요 시"| M10
-    M10 -->|"고급 암호화"| M12
-    M02 -->|"KMP 환경"| M03
-    M04 -->|"Jackson 생태계"| M08
-    M08 -->|"Jackson 3 이행"| M11
-    M04 -->|"고성능 필요"| M09
-    M06 -->|"커스텀 ID"| M07
+    M01 -->|"When search needed"| M10
+    M10 -->|"Advanced encryption"| M12
+    M02 -->|"KMP environment"| M03
+    M04 -->|"Jackson ecosystem"| M08
+    M08 -->|"Jackson 3 migration"| M11
+    M04 -->|"High performance needed"| M09
+    M06 -->|"Custom ID"| M07
 
     classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
     classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
@@ -121,41 +123,41 @@ flowchart TD
     class M06,M07 green
 ```
 
-## 권장 학습 순서
+## Recommended Learning Order
 
-1. `06-custom-columns` — ColumnType 확장의 기본 구조 이해
-2. `04-exposed-json` — JSON/JSONB 컬럼과 경로 쿼리
-3. `01-exposed-crypt` — 투명 암복호화 컬럼
-4. `12-exposed-tink` — AEAD/DAEAD 고급 암호화
-5. `07-custom-entities` — 커스텀 ID 전략
-6. 나머지 모듈 (날짜/시간, 직렬화 라이브러리 연동)
+1. `06-custom-columns` — Understand the basic structure of ColumnType extensions
+2. `04-exposed-json` — JSON/JSONB columns and path queries
+3. `01-exposed-crypt` — Transparent encryption/decryption columns
+4. `12-exposed-tink` — Advanced AEAD/DAEAD encryption
+5. `07-custom-entities` — Custom ID strategies
+6. Remaining modules (date/time, serialization library integration)
 
-## 선수 지식
+## Prerequisites
 
-- `05-exposed-dml` 내용
-- JSON/시간 처리에 대한 기본 이해
+- Content from `05-exposed-dml`
+- Basic understanding of JSON/time handling
 
-## 테스트 실행 방법
+## How to Run Tests
 
 ```bash
-# 개별 모듈 테스트
+# Individual module tests
 ./gradlew :06-advanced:01-exposed-crypt:test
 ./gradlew :06-advanced:04-exposed-json:test
 ./gradlew :06-advanced:06-custom-columns:test
 ./gradlew :06-advanced:07-custom-entities:test
 ./gradlew :06-advanced:12-exposed-tink:test
 
-# H2만 대상으로 빠른 테스트
+# Quick test targeting H2 only
 ./gradlew :06-advanced:01-exposed-crypt:test -PuseFastDB=true
 ```
 
-## 테스트 포인트
+## Test Points
 
-- 직렬화/역직렬화 왕복 시 데이터 손실이 없는지를 확인한다.
-- 커스텀 컬럼 null/기본값 처리 로직을 검증한다.
-- JSON 직렬화 비용과 컬럼 크기 증가 영향까지 측정한다.
-- 암복호화 컬럼 사용 시 인덱스 전략과 검색 제약을 검토한다.
+- Verify no data loss during serialization/deserialization round-trips.
+- Validate custom column null/default value handling logic.
+- Measure JSON serialization cost and column size increase impact.
+- Review index strategies and search constraints when using encryption columns.
 
-## 다음 챕터
+## Next Chapter
 
-- [07-jpa](../07-jpa/README.md): 기존 JPA 프로젝트를 Exposed로 전환하는 실전 패턴을 다룹니다.
+- [07-jpa](../07-jpa/README.md): Covers practical patterns for migrating existing JPA projects to Exposed.

@@ -1,26 +1,28 @@
-# 캐시 전략 (01-cache-strategies)
+# Cache Strategies (01-cache-strategies)
 
-Spring MVC + Virtual Threads 환경에서 Redisson + Exposed로 캐시 전략을 실습하는 모듈입니다. Read Through, Write Through, Write Behind 전략의 일관성/성능 트레이드오프를 비교합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A module for hands-on practice with cache strategies using Redisson + Exposed in a Spring MVC + Virtual Threads environment. Compares consistency/performance trade-offs for Read Through, Write Through, and Write Behind strategies.
 
-- 캐시 전략별 동작과 트레이드오프를 구분한다.
-- Redis + DB 동기화 시점에 따른 일관성 모델을 이해한다.
-- 운영에서 필요한 무효화/복구 시나리오를 검증한다.
+## Learning Goals
 
-## 선수 지식
+- Distinguish behavior and trade-offs by cache strategy.
+- Understand consistency models based on Redis + DB synchronization timing.
+- Verify invalidation/recovery scenarios needed in production.
+
+## Prerequisites
 
 - [`../09-spring/README.md`](../09-spring/README.md)
 
 ---
 
-## 개요
+## Overview
 
-`AbstractJdbcRedissonRepository`를 상속하면 세 가지 캐시 전략을 설정값 하나로 선택할 수 있습니다. Redisson의 Near Cache가 L1(로컬 메모리), Redis가 L2(분산 캐시), Exposed가 DB 접근 계층 역할을 맡습니다. Tomcat은 Virtual Thread 기반 Executor로 교체되어 블로킹 I/O 비용을 낮춥니다.
+By extending `AbstractJdbcRedissonRepository`, you can select among three cache strategies with a single configuration value. Redisson's Near Cache acts as L1 (local memory), Redis as L2 (distributed cache), and Exposed as the DB access layer. Tomcat is replaced with a Virtual Thread-based Executor to reduce blocking I/O cost.
 
 ---
 
-## 도메인 ERD
+## Domain ERD
 
 ```mermaid
 erDiagram
@@ -58,7 +60,7 @@ erDiagram
 
 ---
 
-## 캐시 전략 아키텍처
+## Cache Strategy Architecture
 
 ```mermaid
 flowchart LR
@@ -111,7 +113,7 @@ flowchart LR
 
 ---
 
-## 클래스 구조
+## Class Structure
 
 ```mermaid
 classDiagram
@@ -173,7 +175,7 @@ AbstractJdbcRedissonRepository --> RedisCacheConfig
 
 ---
 
-## 요청 처리 흐름 — Write-Behind 비동기 이벤트 적재
+## Request Processing Flow — Write-Behind Async Event Loading
 
 ```mermaid
 sequenceDiagram
@@ -184,23 +186,23 @@ sequenceDiagram
     participant Q as Async Write Queue
     participant DB as Database
     C ->> R: saveAll(events)
-    R ->> NC: put events (즉시)
-    R ->> RD: put events (즉시)
-    RD -->> C: 저장 완료 응답
-    Note over RD, Q: 비동기 배치 플러시
+    R ->> NC: put events (immediately)
+    R ->> RD: put events (immediately)
+    RD -->> C: Save complete response
+    Note over RD, Q: Async batch flush
     RD ->> Q: enqueue dirty entries
     Q ->> DB: batchInsert (Exposed)
     DB -->> Q: commit
-    Q -->> RD: flush 완료
+    Q -->> RD: flush complete
     C ->> R: findById(id)
     R ->> NC: get(id)
-    NC -->> R: hit → 반환
+    NC -->> R: hit → return
     R -->> C: UserEventRecord
 ```
 
 ---
 
-## 요청 처리 흐름 — Read-Through + Write-Through (User)
+## Request Processing Flow — Read-Through + Write-Through (User)
 
 ```mermaid
 sequenceDiagram
@@ -218,21 +220,21 @@ sequenceDiagram
     DB -->> R: UserRecord
     R ->> RD: put(id, record)
     R ->> NC: put(id, record)
-    R -->> C: UserRecord (첫 번째 조회)
+    R -->> C: UserRecord (first query)
     C ->> R: findById(id)
     R ->> NC: get(id)
     NC -->> R: hit
-    R -->> C: UserRecord (캐시 적중)
+    R -->> C: UserRecord (cache hit)
     C ->> R: save(updated)
-    R ->> DB: UPDATE (Exposed, 동기)
+    R ->> DB: UPDATE (Exposed, synchronous)
     R ->> RD: put(id, updated)
     R ->> NC: put(id, updated)
-    R -->> C: 저장 완료
+    R -->> C: Save complete
 ```
 
 ---
 
-## 주요 설정
+## Key Configuration
 
 ### application.yml
 
@@ -243,7 +245,7 @@ server:
         enabled: true
     tomcat:
         threads:
-            max: 8000          # Virtual Thread 기반이므로 높은 값 허용
+            max: 8000          # High value allowed since Virtual Thread-based
             min-spare: 20
     shutdown: graceful
 
@@ -261,42 +263,42 @@ spring:
         show-sql: false
 ```
 
-### RedissonConfig 주요 설정
+### RedissonConfig Key Settings
 
-| 항목                          | 값                     | 설명                |
-|-----------------------------|-----------------------|-------------------|
-| `connectionPoolSize`        | 256                   | 최대 Redis 연결 풀 크기  |
-| `connectionMinimumIdleSize` | 32                    | 항상 유지할 최소 연결 수    |
-| `timeout`                   | 5000ms                | 명령 응답 대기 시간       |
-| `retryAttempts`             | 3                     | 실패 시 재시도 횟수       |
-| `codec`                     | LZ4ForyComposite      | LZ4 압축 + Fury 직렬화 |
-| `executor`                  | VirtualThreadExecutor | Redisson 내부 스레드 풀 |
-
----
-
-## 주요 구성 요소
-
-| 파일/영역                                                 | 설명                                |
-|-------------------------------------------------------|-----------------------------------|
-| `domain/repository/UserCacheRepository.kt`            | Read-Through + Write-Through      |
-| `domain/repository/UserCredentialsCacheRepository.kt` | Read-Only Cache                   |
-| `domain/repository/UserEventCacheRepository.kt`       | Write-Behind                      |
-| `config/RedissonConfig.kt`                            | Redis/Redisson 연결 설정              |
-| `config/TomcatVirtualThreadConfig.kt`                 | Tomcat Virtual Thread Executor 교체 |
+| Item                        | Value                 | Description                |
+|-----------------------------|-----------------------|---------------------------|
+| `connectionPoolSize`        | 256                   | Max Redis connection pool size |
+| `connectionMinimumIdleSize` | 32                    | Min connections always maintained |
+| `timeout`                   | 5000ms                | Command response wait time |
+| `retryAttempts`             | 3                     | Retry count on failure     |
+| `codec`                     | LZ4ForyComposite      | LZ4 compression + Fury serialization |
+| `executor`                  | VirtualThreadExecutor | Redisson internal thread pool |
 
 ---
 
-## 테스트 방법
+## Key Components
+
+| File/Area                                                 | Description                           |
+|-------------------------------------------------------|---------------------------------------|
+| `domain/repository/UserCacheRepository.kt`            | Read-Through + Write-Through          |
+| `domain/repository/UserCredentialsCacheRepository.kt` | Read-Only Cache                       |
+| `domain/repository/UserEventCacheRepository.kt`       | Write-Behind                          |
+| `config/RedissonConfig.kt`                            | Redis/Redisson connection config      |
+| `config/TomcatVirtualThreadConfig.kt`                 | Replace Tomcat Virtual Thread Executor|
+
+---
+
+## How to Test
 
 ```bash
-# 단위/통합 테스트 실행 (Testcontainers가 Redis를 자동 시작)
+# Unit/integration tests (Testcontainers auto-starts Redis)
 ./gradlew :11-high-performance:01-cache-strategies:test
 
-# 애플리케이션 실행
+# Run application
 ./gradlew :11-high-performance:01-cache-strategies:bootRun
 ```
 
-### API 엔드포인트
+### API Endpoints
 
 ```bash
 # User (Read-Through / Write-Through)
@@ -305,7 +307,7 @@ POST /users
 
 # UserCredentials (Read-Only Cache)
 GET  /user-credentials/{username}
-DELETE /user-credentials  # 캐시 무효화
+DELETE /user-credentials  # Cache invalidation
 
 # UserEvent (Write-Behind)
 GET  /user-events/{id}
@@ -314,52 +316,49 @@ POST /user-events/bulk
 
 ---
 
-## 실습 체크리스트
+## Practice Checklist
 
-- 캐시 히트/미스 시 응답 시간 차이를 측정
-- Write-Through 저장 후 DB 즉시 반영 여부 검증
-- Write-Behind 대량 적재 후 Awaitility로 최종 DB 반영 수 검증
-- Redis 장애 시 DB 폴백 경로 동작 확인
-
----
-
-## 운영 체크포인트
-
-- 캐시 무효화 정책(TTL/수동 무효화)과 데이터 신선도 SLA를 정렬
-- Write-Behind는 유실 허용 데이터에만 적용
-- Redis 장애 시 DB 폴백 경로를 필수 검증
-- `connectionMinimumIdleSize`를 충분히 확보해 콜드 스타트 레이턴시 방지
+- Measure response time difference between cache hit and miss
+- Verify DB is immediately updated after Write-Through save
+- Verify final DB count with Awaitility after Write-Behind bulk load
+- Confirm DB fallback path works on Redis failure
 
 ---
 
-## 복잡한 시나리오
+## Operations Checkpoints
 
-### Read-Through + Write-Through 흐름 (User)
-
-`UserCacheRepository`는 캐시 미스 시 DB를 조회해 캐시에 적재(Read-Through)하고, 엔티티 갱신 시 DB와 캐시에 동시 반영(Write-Through)합니다.
-
-- 관련 파일: [`domain/repository/UserCacheRepository.kt`](src/main/kotlin/exposed/examples/cache/domain/repository/UserCacheRepository.kt)
-- 검증 테스트: [
-  `UserCacheRepositoryTest.kt`](src/test/kotlin/exposed/examples/cache/domain/repository/UserCacheRepositoryTest.kt)
-
-### Write-Behind 대량 이벤트 비동기 반영 (UserEvent)
-
-`UserEventCacheRepository`는 이벤트를 Redis에 선반영한 뒤 비동기로 DB에 일괄 저장합니다. 대량 적재 후 Awaitility로 최종 DB 반영 수를 검증합니다.
-
-- 관련 파일: [`domain/repository/UserEventCacheRepository.kt`](src/main/kotlin/exposed/examples/cache/domain/repository/UserEventCacheRepository.kt)
-- 검증 테스트: [
-  `UserEventCacheRepositoryTest.kt`](src/test/kotlin/exposed/examples/cache/domain/repository/UserEventCacheRepositoryTest.kt)
-
-### 캐시 무효화 (UserCredentials)
-
-`UserCredentialsCacheRepository`는 Read-Only 캐시 전략을 적용하며, 특정 ID 목록의 캐시를 명시적으로 무효화하는 API를 제공합니다.
-
-- 관련 파일: [`domain/repository/UserCredentialsCacheRepository.kt`](src/main/kotlin/exposed/examples/cache/domain/repository/UserCredentialsCacheRepository.kt)
-- 검증 테스트: [
-  `UserCredentialsCacheRepositoryTest.kt`](src/test/kotlin/exposed/examples/cache/domain/repository/UserCredentialsCacheRepositoryTest.kt)
+- Align cache invalidation policy (TTL/manual) with data freshness SLA
+- Apply Write-Behind only to loss-tolerant data
+- Always verify DB fallback path on Redis failure
+- Secure sufficient `connectionMinimumIdleSize` to prevent cold start latency
 
 ---
 
-## 다음 모듈
+## Complex Scenarios
+
+### Read-Through + Write-Through Flow (User)
+
+`UserCacheRepository` queries the DB on cache miss and loads it into the cache (Read-Through), and simultaneously reflects entity updates in both the DB and cache (Write-Through).
+
+- Related file: [`domain/repository/UserCacheRepository.kt`](src/main/kotlin/exposed/examples/cache/domain/repository/UserCacheRepository.kt)
+- Verification test: [`UserCacheRepositoryTest.kt`](src/test/kotlin/exposed/examples/cache/domain/repository/UserCacheRepositoryTest.kt)
+
+### Write-Behind Bulk Event Async Propagation (UserEvent)
+
+`UserEventCacheRepository` pre-stores events in Redis and then batch-saves to DB asynchronously. Verifies the final DB count with Awaitility after bulk loading.
+
+- Related file: [`domain/repository/UserEventCacheRepository.kt`](src/main/kotlin/exposed/examples/cache/domain/repository/UserEventCacheRepository.kt)
+- Verification test: [`UserEventCacheRepositoryTest.kt`](src/test/kotlin/exposed/examples/cache/domain/repository/UserEventCacheRepositoryTest.kt)
+
+### Cache Invalidation (UserCredentials)
+
+`UserCredentialsCacheRepository` applies a Read-Only cache strategy and provides an API for explicitly invalidating cache for a specific list of IDs.
+
+- Related file: [`domain/repository/UserCredentialsCacheRepository.kt`](src/main/kotlin/exposed/examples/cache/domain/repository/UserCredentialsCacheRepository.kt)
+- Verification test: [`UserCredentialsCacheRepositoryTest.kt`](src/test/kotlin/exposed/examples/cache/domain/repository/UserCredentialsCacheRepositoryTest.kt)
+
+---
+
+## Next Module
 
 - [`../02-cache-strategies-coroutines/README.md`](../02-cache-strategies-coroutines/README.md)

@@ -1,24 +1,26 @@
-# Exposed Workshop (Kotlin Exposed 학습 자료)
+# Exposed Workshop (Kotlin Exposed Tutorial)
 
-이 저장소는 Kotlin Exposed 프레임워크의 사용법을 단계별로 학습할 수 있는 예제와 워크샵 모음입니다. 초보자부터 고급 사용자까지 Exposed의 다양한 기능을 실습하며 익힐 수 있도록 구성되어 있습니다.
+English | [한국어](./README.ko.md)
 
-## Kotlin Exposed 란?
+A hands-on workshop collection for learning the Kotlin Exposed SQL framework step by step. Designed for beginners through advanced users to practice and master the various features of Exposed.
 
-Kotlin Exposed는 JetBrains에서 개발한 Kotlin 언어 전용 SQL 프레임워크입니다. Kotlin의 강력한 타입 시스템을 활용하여 컴파일 타임에 SQL 쿼리의 안전성을 보장하며, DSL(Domain Specific Language)과 DAO(Data Access Object) 두 가지 스타일을 모두 지원합니다.
+## What is Kotlin Exposed?
 
-### Exposed의 주요 특징
+Kotlin Exposed is a Kotlin-specific SQL framework developed by JetBrains. It leverages Kotlin's powerful type system to guarantee SQL query safety at compile time and supports both DSL (Domain Specific Language) and DAO (Data Access Object) styles.
 
-| 특징            | 설명                                                   |
-|---------------|------------------------------------------------------|
-| **타입 안전성**    | 컴파일 타임에 SQL 오류 감지                                    |
-| **DSL & DAO** | SQL 스타일과 ORM 스타일 모두 지원                               |
-| **코루틴 지원**    | 비동기 프로그래밍 완벽 지원                                      |
-| **경량화**       | JPA 대비 적은 메모리 사용량                                    |
-| **다양한 DB 지원** | H2, MySQL, PostgreSQL, MariaDB, Oracle, SQL Server 등 |
+### Key Features
+
+| Feature              | Description                                          |
+|----------------------|------------------------------------------------------|
+| **Type Safety**      | Catches SQL errors at compile time                   |
+| **DSL & DAO**        | Supports both SQL-style and ORM-style access         |
+| **Coroutines**       | Full async programming support                       |
+| **Lightweight**      | Lower memory footprint compared to JPA               |
+| **Multi-DB Support** | H2, MySQL, PostgreSQL, MariaDB, Oracle, SQL Server   |
 
 ![Kotlin Exposed Mindmap](doc/exposed-mindmap-felo-ai.jpg)
 
-### Exposed API 구조
+### Exposed API Structure
 
 ```mermaid
 flowchart LR
@@ -27,12 +29,12 @@ flowchart LR
         DAO["DAO / Entity\nEntity.findById()\nEntity.new {}"]
     end
 
-    subgraph TX["트랜잭션"]
+    subgraph TX["Transactions"]
         JDBC["transaction { }"]
         SUSPEND["newSuspendedTransaction { }"]
     end
 
-    subgraph DB["데이터베이스"]
+    subgraph DB["Databases"]
         H2["H2"]
         PG["PostgreSQL"]
         MY["MySQL"]
@@ -55,63 +57,63 @@ flowchart LR
     class H2,PG,MY,MA db
 ```
 
-## 기술 스택
+## Tech Stack
 
-| 기술                 | 버전     |
-|--------------------|--------|
-| Kotlin             | 2.3.20 |
-| Java               | 21     |
-| Exposed            | 1.1.1  |
-| Spring Boot        | 3.5.11 |
-| Kotlinx Coroutines | 1.10.2 |
-| Bluetape4k         | 1.6.0  |
-| Gradle Wrapper     | 9.4.1  |
+| Technology           | Version |
+|----------------------|---------|
+| Kotlin               | 2.3.20  |
+| Java                 | 21      |
+| Exposed              | 1.1.1   |
+| Spring Boot          | 3.5.11  |
+| Kotlinx Coroutines   | 1.10.2  |
+| Bluetape4k           | 1.6.0   |
+| Gradle Wrapper       | 9.4.1   |
 
-## 학습 가이드
+## Learning Guide
 
-이 워크샵은 다음과 같은 순서로 학습하는 것을 권장합니다:
+The recommended learning order for this workshop:
 
-1. **기본**: Spring Boot + Exposed 기본 통합
-2. **대안 기술**: JPA 대안 기술들 비교
-3. **Exposed 기본**: DSL과 DAO 패턴 익히기
-4. **DDL/DML**: 스키마 정의와 데이터 조작
-5. **고급 기능**: 암호화, JSON, 커스텀 타입 등
-6. **JPA 마이그레이션**: JPA 코드를 Exposed로 변환
-7. **비동기 처리**: Coroutines, Virtual Threads
-8. **Spring 통합**: 트랜잭션, 캐시, 리포지토리 패턴
-9. **멀티테넌시**: 다중 테넌트 아키텍처
-10. **고성능**: 캐시 전략, 라우팅 데이터소스
+1. **Basics**: Spring Boot + Exposed integration
+2. **Alternatives**: Comparing JPA alternatives
+3. **Exposed Basics**: DSL and DAO patterns
+4. **DDL/DML**: Schema definition and data manipulation
+5. **Advanced**: Encryption, JSON, custom types
+6. **JPA Migration**: Converting JPA code to Exposed
+7. **Async**: Coroutines, Virtual Threads
+8. **Spring Integration**: Transactions, cache, repository patterns
+9. **Multi-Tenancy**: Multi-tenant architecture
+10. **High Performance**: Cache strategies, routing datasource
 
-### 학습 경로
+### Learning Path
 
 ```mermaid
 flowchart TD
-    START(["시작"])
+    START(["Start"])
 
-    subgraph Basics["기초"]
+    subgraph Basics["Basics"]
         S01["01 Spring Boot\n+ Exposed"]
-        S02["02 JPA 대안\n기술 비교"]
-        S03["03 Exposed 기본\nDSL & DAO"]
+        S02["02 JPA Alternatives\nComparison"]
+        S03["03 Exposed Basics\nDSL & DAO"]
     end
 
-    subgraph Core["핵심"]
-        S04["04 DDL\n스키마 정의"]
-        S05["05 DML\n데이터 조작"]
-        S06["06 고급 기능\n암호화·JSON·커스텀"]
+    subgraph Core["Core"]
+        S04["04 DDL\nSchema Definition"]
+        S05["05 DML\nData Manipulation"]
+        S06["06 Advanced\nEncryption / JSON / Custom"]
     end
 
-    subgraph Migration["마이그레이션"]
-        S07["07 JPA → Exposed\n전환 패턴"]
+    subgraph Migration["Migration"]
+        S07["07 JPA → Exposed\nConversion Patterns"]
     end
 
-    subgraph Async["비동기 & 통합"]
+    subgraph Async["Async & Integration"]
         S08["08 Coroutines\n& Virtual Threads"]
-        S09["09 Spring 통합\n트랜잭션·캐시·레포"]
+        S09["09 Spring Integration\nTx / Cache / Repo"]
     end
 
-    subgraph Production["운영 수준"]
-        S10["10 멀티테넌시\n스키마 분리"]
-        S11["11 고성능\n캐시·라우팅·벤치마크"]
+    subgraph Production["Production-Ready"]
+        S10["10 Multi-Tenancy\nSchema Isolation"]
+        S11["11 High Performance\nCache / Routing / Bench"]
     end
 
     START --> S01 --> S02 --> S03
@@ -137,18 +139,18 @@ flowchart TD
     class S10,S11 production
 ```
 
-## 상세 문서
+## Detailed Documentation
 
-모든 예제의 상세 설명은 [Kotlin Exposed Book](https://debop.notion.site/Kotlin-Exposed-Book-1ad2744526b080428173e9c907abdae2)에서 확인할 수 있습니다.
+Full explanations for all examples are available at [Kotlin Exposed Book](https://debop.notion.site/Kotlin-Exposed-Book-1ad2744526b080428173e9c907abdae2).
 
 ---
 
-## 모듈 구조
+## Module Structure
 
 ```mermaid
 flowchart TB
-    subgraph Shared["00 공유 인프라"]
-        EST["exposed-shared-tests\n테스트 유틸리티"]
+    subgraph Shared["00 Shared Infrastructure"]
+        EST["exposed-shared-tests\nTest Utilities"]
     end
 
     subgraph SpringBoot["01 Spring Boot"]
@@ -156,13 +158,13 @@ flowchart TB
         WF["Spring WebFlux\n+ Coroutines"]
     end
 
-    subgraph Alt["02 JPA 대안"]
+    subgraph Alt["02 JPA Alternatives"]
         HIB["Hibernate\nReactive"]
         R2["R2DBC"]
         VX["Vert.x\nSQL Client"]
     end
 
-    subgraph Basic["03 Exposed 기본"]
+    subgraph Basic["03 Exposed Basics"]
         DSLEX["SQL DSL"]
         DAOEX["DAO Entity"]
     end
@@ -173,47 +175,47 @@ flowchart TB
     end
 
     subgraph DML["05 DML"]
-        CRUD["DML 기본"]
-        TYPE["컬럼 타입"]
-        FUNC["SQL 함수"]
-        TXN["트랜잭션"]
+        CRUD["DML Basics"]
+        TYPE["Column Types"]
+        FUNC["SQL Functions"]
+        TXN["Transactions"]
         ENT["Entity API"]
     end
 
-    subgraph Adv["06 고급"]
-        CRYPT["암호화"]
+    subgraph Adv["06 Advanced"]
+        CRYPT["Encryption"]
         JSON["JSON"]
-        CUSTOM["커스텀 컬럼·엔티티"]
-        DT["날짜/시간"]
+        CUSTOM["Custom Columns\n& Entities"]
+        DT["Date / Time"]
     end
 
-    subgraph JPA["07 JPA 마이그레이션"]
-        JPAB["JPA 기본"]
-        JPAA["JPA 고급"]
+    subgraph JPA["07 JPA Migration"]
+        JPAB["JPA Basic"]
+        JPAA["JPA Advanced"]
     end
 
-    subgraph Async["08 비동기"]
+    subgraph Async["08 Async"]
         CORO["Coroutines"]
         VT["Virtual Threads"]
     end
 
-    subgraph Spring["09 Spring 통합"]
+    subgraph Spring["09 Spring Integration"]
         AUTO["AutoConfig"]
-        TXMGR["트랜잭션 관리"]
+        TXMGR["Tx Management"]
         REPO["Repository"]
-        CACHE["캐시"]
+        CACHE["Cache"]
     end
 
-    subgraph MT["10 멀티테넌시"]
+    subgraph MT["10 Multi-Tenancy"]
         MTW["Web"]
         MTVT["Web + VT"]
         MTWF["WebFlux"]
     end
 
-    subgraph Perf["11 고성능"]
-        CS["캐시 전략"]
-        RDS["라우팅 DS"]
-        BENCH["벤치마크"]
+    subgraph Perf["11 High Performance"]
+        CS["Cache Strategies"]
+        RDS["Routing DS"]
+        BENCH["Benchmark"]
     end
 
     EST -.-> SpringBoot & Basic & DDL & DML & Adv & JPA & Async & Spring & MT & Perf
@@ -248,325 +250,306 @@ flowchart TB
     class CS,RDS,BENCH perf
 ```
 
-## 모듈 목록
+## Module List
 
-### 공유 라이브러리
+### Shared Library
 
 #### [Exposed Shared Tests](00-shared/exposed-shared-tests/README.md)
 
-`exposed-workshop` 프로젝트 전반에서 사용되는 공통 테스트 유틸리티와 리소스를 제공합니다. 다양한 데이터베이스 환경에서 일관된 테스트를 수행할 수 있도록 지원합니다.
+Provides common test utilities and resources used across the entire `exposed-workshop` project. Supports consistent testing across different database environments.
 
 ---
 
-### Spring Boot 통합
+### Spring Boot Integration
 
 #### [Spring MVC with Exposed](01-spring-boot/spring-mvc-exposed/README.md)
 
-Spring MVC + Virtual Threads + Exposed를 이용하여 동기식 REST API를 구축하는 방법을 학습합니다. 영화와 배우 데이터를 다루며 다대다 관계 매핑을 실습합니다.
+Learn how to build synchronous REST APIs using Spring MVC + Virtual Threads + Exposed. Practice many-to-many relationship mapping with movie and actor data.
 
 #### [Spring WebFlux with Exposed](01-spring-boot/spring-webflux-exposed/README.md)
 
-Spring WebFlux + Kotlin Coroutines + Exposed를 이용하여 비동기 REST API를 구축하는 방법을 학습합니다. 반응형 프로그래밍 모델과 Exposed의 통합 방법을 익힙니다.
+Learn how to build asynchronous REST APIs using Spring WebFlux + Kotlin Coroutines + Exposed. Master the integration between reactive programming and Exposed.
 
 ---
 
-### JPA 대안 기술
+### JPA Alternatives
 
 #### [Hibernate Reactive Example](02-alternatives-to-jpa/hibernate-reactive-example/README.md)
 
-Hibernate Reactive를 이용한 반응형 Spring Boot 애플리케이션 구축 예제입니다.
+Example of building a reactive Spring Boot application using Hibernate Reactive.
 
 #### [R2DBC Example](02-alternatives-to-jpa/r2dbc-example/README.md)
 
-Spring Data R2DBC를 이용한 반응형 데이터베이스 접근 예제입니다.
+Example of reactive database access using Spring Data R2DBC.
 
 #### [Vert.x SQL Client Example](02-alternatives-to-jpa/vertx-sqlclient-example/README.md)
 
-Vert.x SQL Client를 이용한 이벤트 기반 비동기 데이터베이스 작업 예제입니다.
+Example of event-driven asynchronous database operations using Vert.x SQL Client.
 
 ---
 
-### Exposed 기본
+### Exposed Basics
 
 #### [Exposed DAO Example](03-exposed-basic/exposed-dao-example/README.md)
 
-Exposed의 DAO(Data Access Object) 패턴을 학습합니다. Entity와 EntityClass를 사용하여 객체지향적으로 데이터베이스 작업을 수행하는 방법을 익힙니다.
+Learn the Exposed DAO (Data Access Object) pattern. Master object-oriented database operations using Entity and EntityClass.
 
 #### [Exposed SQL DSL Example](03-exposed-basic/exposed-sql-example/README.md)
 
-Exposed의 SQL DSL(Domain Specific Language)을 학습합니다. 타입 안전한 SQL 쿼리 작성 방법과 DSL의 장점을 익힙니다.
+Learn the Exposed SQL DSL (Domain Specific Language). Master type-safe SQL query construction and DSL benefits.
 
 ---
 
-### Exposed DDL (스키마 정의)
+### Exposed DDL (Schema Definition)
 
 #### [Connection Management](04-exposed-ddl/01-connection/README.md)
 
-데이터베이스 연결 설정, 예외 처리, 타임아웃, 커넥션 풀링 등 연결 관리의 핵심 개념을 학습합니다.
+Learn core concepts of connection management including database connection setup, exception handling, timeouts, and connection pooling.
 
 #### [Schema Definition Language (DDL)](04-exposed-ddl/02-ddl/README.md)
 
-Exposed의 DDL 기능을 학습합니다. 테이블, 컬럼, 인덱스, 시퀀스 정의 방법을 익힙니다.
+Learn Exposed DDL features. Master table, column, index, and sequence definitions.
 
 ---
 
-### Exposed DML (데이터 조작)
+### Exposed DML (Data Manipulation)
 
-#### [DML 기본 연산](05-exposed-dml/01-dml/README.md)
+#### [DML Basic Operations](05-exposed-dml/01-dml/README.md)
 
-SELECT, INSERT, UPDATE, DELETE의 기본 패턴을 학습합니다. 조건식, 서브쿼리, 페이징, Batch Insert/Update, CTE(Common Table Expression) 등 실무에서 자주 사용하는 패턴을 익힙니다.
+Learn basic SELECT, INSERT, UPDATE, DELETE patterns. Practice conditions, subqueries, paging, Batch Insert/Update, CTE (Common Table Expression), and other common production patterns.
 
-#### [컬럼 타입](05-exposed-dml/02-types/README.md)
+#### [Column Types](05-exposed-dml/02-types/README.md)
 
-Exposed에서 제공하는 다양한 컬럼 타입을 학습합니다. 기본 타입부터 배열, BLOB, UUID, unsigned 수형까지 폭넓게 다룹니다.
+Learn the various column types provided by Exposed. Covers basic types through arrays, BLOB, UUID, and unsigned integers.
 
-#### [SQL 함수](05-exposed-dml/03-functions/README.md)
+#### [SQL Functions](05-exposed-dml/03-functions/README.md)
 
-Exposed 쿼리에서 다양한 SQL 함수를 사용하는 방법을 학습합니다. 집계 함수, 윈도우 함수, 수학/삼각 함수 등을 다룹니다.
+Learn how to use various SQL functions in Exposed queries. Covers aggregate functions, window functions, math/trigonometric functions, and more.
 
-#### [트랜잭션 관리](05-exposed-dml/04-transactions/README.md)
+#### [Transaction Management](05-exposed-dml/04-transactions/README.md)
 
-Exposed의 트랜잭션 관리 기능을 학습합니다. 격리 수준, 중첩 트랜잭션, 롤백, 코루틴 통합 등을 다룹니다.
+Learn Exposed transaction management features. Covers isolation levels, nested transactions, rollback, and coroutine integration.
 
 #### [Entity API](05-exposed-dml/05-entities/README.md)
 
-Exposed의 강력한 Entity API를 학습합니다. 다양한 기본키 전략, 관계 매핑, 라이프사이클 훅, 캐싱 등을 다룹니다.
+Learn the powerful Exposed Entity API. Covers various primary key strategies, relationship mapping, lifecycle hooks, and caching.
 
 ---
 
-### 고급 기능
+### Advanced Features
 
-#### [Exposed Crypt (투명한 컬럼 암호화)](06-advanced/01-exposed-crypt/README.md)
+#### [Exposed Crypt (Transparent Column Encryption)](06-advanced/01-exposed-crypt/README.md)
 
-`exposed-crypt` 확장을 사용하여 데이터베이스 컬럼을 투명하게 암호화/복호화하는 방법을 학습합니다.
+Learn how to transparently encrypt/decrypt database columns using the `exposed-crypt` extension.
 
-#### [Exposed JavaTime (java.time 통합)](06-advanced/02-exposed-javatime/README.md)
+#### [Exposed JavaTime (java.time Integration)](06-advanced/02-exposed-javatime/README.md)
 
-Java 8의 `java.time` API와 Exposed의 통합 방법을 학습합니다.
+Learn how to integrate Java 8's `java.time` API with Exposed.
 
 #### [Exposed Kotlinx-Datetime](06-advanced/03-exposed-kotlin-datetime/README.md)
 
-`kotlinx.datetime` 라이브러리와 Exposed의 통합 방법을 학습합니다. 멀티플랫폼 프로젝트에 적합합니다.
+Learn how to integrate the `kotlinx.datetime` library with Exposed. Ideal for multiplatform projects.
 
-#### [Exposed Json (JSON/JSONB 지원)](06-advanced/04-exposed-json/README.md)
+#### [Exposed Json (JSON/JSONB Support)](06-advanced/04-exposed-json/README.md)
 
-`exposed-json` 모듈을 사용하여 JSON/JSONB 컬럼을 다루는 방법을 학습합니다.
+Learn how to work with JSON/JSONB columns using the `exposed-json` module.
 
-#### [Exposed Money (금융 데이터 처리)](06-advanced/05-exposed-money/README.md)
+#### [Exposed Money (Financial Data Processing)](06-advanced/05-exposed-money/README.md)
 
-`exposed-money` 모듈을 사용하여 통화 값을 안전하게 처리하는 방법을 학습합니다.
+Learn how to safely handle monetary values using the `exposed-money` module.
 
-#### [커스텀 컬럼 타입](06-advanced/06-custom-columns/README.md)
+#### [Custom Column Types](06-advanced/06-custom-columns/README.md)
 
-사용자 정의 컬럼 타입을 구현하는 방법을 학습합니다. 암호화, 압축(GZIP/LZ4/Snappy/ZSTD), 직렬화(Kryo/Fury) 등의 투명한 변환을 구현합니다.
+Learn how to implement custom column types. Build transparent transformations for encryption, compression (GZIP/LZ4/Snappy/ZSTD), and serialization (Kryo/Fury).
 
-#### [커스텀 Entity (ID 생성 전략)](06-advanced/07-custom-entities/README.md)
+#### [Custom Entities (ID Generation Strategies)](06-advanced/07-custom-entities/README.md)
 
-Snowflake, KSUID, Time-based UUID, Base62 encoded UUID 등 다양한 ID 생성 전략을 가진 커스텀 Entity를 구현합니다.
+Implement custom entities with various ID generation strategies including Snowflake, KSUID, Time-based UUID, and Base62 encoded UUID.
 
-#### [Exposed Jackson (Jackson 기반 JSON)](06-advanced/08-exposed-jackson/README.md)
+#### [Exposed Jackson (Jackson-based JSON)](06-advanced/08-exposed-jackson/README.md)
 
-Jackson 라이브러리를 사용하여 JSON/JSONB 컬럼을 처리하는 방법을 학습합니다.
+Learn how to process JSON/JSONB columns using the Jackson library.
 
 #### [Exposed Fastjson2](06-advanced/09-exposed-fastjson2/README.md)
 
-Alibaba Fastjson2 라이브러리를 사용하여 JSON 컬럼을 처리하는 방법을 학습합니다.
+Learn how to process JSON columns using the Alibaba Fastjson2 library.
 
-#### [Exposed Jasypt (결정적 암호화)](06-advanced/10-exposed-jasypt/README.md)
+#### [Exposed Jasypt (Deterministic Encryption)](06-advanced/10-exposed-jasypt/README.md)
 
-Jasypt를 사용하여 검색 가능한(결정적) 암호화를 구현하는 방법을 학습합니다.
+Learn how to implement searchable (deterministic) encryption using Jasypt.
 
 #### [Exposed Jackson 3](06-advanced/11-exposed-jackson3/README.md)
 
-Jackson 3.x 버전을 사용하여 JSON/JSONB 컬럼을 처리하는 방법을 학습합니다.
+Learn how to process JSON/JSONB columns using Jackson 3.x.
 
-#### [Exposed Tink (Google Tink 기반 컬럼 암호화)](06-advanced/12-exposed-tink/README.md)
+#### [Exposed Tink (Google Tink Column Encryption)](06-advanced/12-exposed-tink/README.md)
 
-Google Tink 라이브러리를 사용하여 AEAD(비결정적) 및 DAEAD(결정적) 방식으로 컬럼 데이터를 암호화하는 방법을 학습합니다. DAEAD 방식은 암호화된 상태로 WHERE 절 검색이 가능합니다.
-
----
-
-### JPA 마이그레이션
-
-#### [JPA 기본 기능 변환](07-jpa/01-convert-jpa-basic/README.md)
-
-JPA의 기본 기능을 Exposed로 구현하는 방법을 학습합니다. Entity, 연관관계(One-to-One, One-to-Many, Many-to-Many), 기본키, 복합키 등을 다룹니다.
-
-#### [JPA 고급 기능 변환](07-jpa/02-convert-jpa-advanced/README.md)
-
-JPA의 고급 기능을 Exposed로 구현하는 방법을 학습합니다. 상속 매핑(Single Table, Table Per Class, Joined Table), Self-Reference, Auditable, 낙관적 잠금 등을 다룹니다.
+Learn how to encrypt column data using AEAD (non-deterministic) and DAEAD (deterministic) modes with the Google Tink library. DAEAD mode allows WHERE clause searches on encrypted data.
 
 ---
 
-### 코루틴 & 가상 스레드
+### JPA Migration
 
-#### [Coroutines 기본](08-coroutines/01-coroutines-basic/README.md)
+#### [JPA Basic Feature Conversion](07-jpa/01-convert-jpa-basic/README.md)
 
-Exposed를 Kotlin Coroutines 환경에서 사용하는 방법을 학습합니다.
-`newSuspendedTransaction`, `suspendedTransactionAsync` 등을 다룹니다.
+Learn how to implement JPA basic features with Exposed. Covers Entity, relationships (One-to-One, One-to-Many, Many-to-Many), primary keys, and composite keys.
 
-#### [Virtual Threads 기본](08-coroutines/02-virtualthreads-basic/README.md)
+#### [JPA Advanced Feature Conversion](07-jpa/02-convert-jpa-advanced/README.md)
 
-Exposed를 Java 21 Virtual Threads 환경에서 사용하는 방법을 학습합니다. 블로킹 코드 스타일을 유지하면서 고성능 비동기 처리를 구현합니다.
+Learn how to implement JPA advanced features with Exposed. Covers inheritance mapping (Single Table, Table Per Class, Joined Table), Self-Reference, Auditable, and optimistic locking.
 
 ---
 
-### Spring 통합
+### Coroutines & Virtual Threads
+
+#### [Coroutines Basics](08-coroutines/01-coroutines-basic/README.md)
+
+Learn how to use Exposed in a Kotlin Coroutines environment. Covers `newSuspendedTransaction`, `suspendedTransactionAsync`, and more.
+
+#### [Virtual Threads Basics](08-coroutines/02-virtualthreads-basic/README.md)
+
+Learn how to use Exposed with Java 21 Virtual Threads. Achieve high-performance async processing while maintaining a blocking code style.
+
+---
+
+### Spring Integration
 
 #### [Spring Boot AutoConfiguration](09-spring/01-springboot-autoconfigure/README.md)
 
-Spring Boot의 자동 설정을 활용하여 Exposed를 설정하는 방법을 학습합니다.
+Learn how to configure Exposed using Spring Boot auto-configuration.
 
-#### [TransactionTemplate 활용](09-spring/02-transactiontemplate/README.md)
+#### [TransactionTemplate Usage](09-spring/02-transactiontemplate/README.md)
 
-Spring의 `TransactionTemplate`으로 프로그래밍 방식 트랜잭션을 관리하는 방법을 학습합니다.
+Learn how to manage programmatic transactions with Spring's `TransactionTemplate`.
 
-#### [Spring Transaction 통합](09-spring/03-spring-transaction/README.md)
+#### [Spring Transaction Integration](09-spring/03-spring-transaction/README.md)
 
-`@Transactional` 어노테이션으로 선언적 트랜잭션을 관리하는 방법을 학습합니다.
+Learn how to manage declarative transactions with the `@Transactional` annotation.
 
-#### [ExposedRepository (동기)](09-spring/04-exposed-repository/README.md)
+#### [ExposedRepository (Synchronous)](09-spring/04-exposed-repository/README.md)
 
-Spring Data Repository 패턴을 적용한 Exposed 리포지토리 구현 방법을 학습합니다.
+Learn how to implement Exposed repositories using the Spring Data Repository pattern.
 
-#### [ExposedRepository (코루틴)](09-spring/05-exposed-repository-coroutines/README.md)
+#### [ExposedRepository (Coroutines)](09-spring/05-exposed-repository-coroutines/README.md)
 
-코루틴 환경에서 Repository 패턴을 사용하여 비동기 데이터 접근을 구현합니다.
+Implement asynchronous data access using the Repository pattern in a coroutine environment.
 
 #### [Spring Boot Cache](09-spring/06-spring-cache/README.md)
 
-Spring Boot Cache를 Exposed와 함께 사용하는 방법을 학습합니다.
+Learn how to use Spring Boot Cache with Exposed.
 
 #### [Suspended Cache](09-spring/07-spring-suspended-cache/README.md)
 
-Lettuce를 활용한 Suspended Cache를 코루틴 환경에서 Exposed와 함께 사용하는 방법을 학습합니다.
+Learn how to use Lettuce-based Suspended Cache with Exposed in a coroutine environment.
 
 ---
 
-### 멀티테넌시
+### Multi-Tenancy
 
 #### [Spring Web + Multitenant](10-multi-tenant/01-multitenant-spring-web/README.md)
 
-Spring Web Application에서 Schema-based Multi-tenancy를 구현하는 방법을 학습합니다.
+Learn how to implement schema-based multi-tenancy in a Spring Web application.
 
 #### [Spring Web + VirtualThreads + Multitenant](10-multi-tenant/02-mutitenant-spring-web-virtualthread/README.md)
 
-Virtual Threads 환경에서 멀티테넌시를 구현하는 방법을 학습합니다.
+Learn how to implement multi-tenancy in a Virtual Threads environment.
 
 #### [Spring WebFlux + Multitenant](10-multi-tenant/03-multitenant-spring-webflux/README.md)
 
-WebFlux와 Coroutines를 이용하여 반응형 멀티테넌시를 구현하는 방법을 학습합니다.
+Learn how to implement reactive multi-tenancy using WebFlux and Coroutines.
 
 ---
 
-### 고성능
+### High Performance
 
-#### [캐시 전략 (동기)](11-high-performance/01-cache-strategies/README.md)
+#### [Cache Strategies (Synchronous)](11-high-performance/01-cache-strategies/README.md)
 
-Redisson + Exposed로 다양한 캐시 전략(Read Through, Write Through, Write Behind)을 구현합니다.
+Implement various cache strategies (Read Through, Write Through, Write Behind) with Redisson + Exposed.
 
-#### [캐시 전략 (코루틴)](11-high-performance/02-cache-strategies-coroutines/README.md)
+#### [Cache Strategies (Coroutines)](11-high-performance/02-cache-strategies-coroutines/README.md)
 
-코루틴 환경에서 비동기로 작동하는 캐시 전략을 구현합니다.
+Implement asynchronous cache strategies in a coroutine environment.
 
-#### [RoutingDataSource 구성](11-high-performance/03-routing-datasource/README.md)
+#### [RoutingDataSource Configuration](11-high-performance/03-routing-datasource/README.md)
 
-Multi-Tenant 또는 Read Replica 구조를 위한 유연한 DataSource 라우팅 구성 방법을 학습합니다.
+Learn flexible DataSource routing configuration for multi-tenant or read replica architectures.
 
-#### [벤치마크](11-high-performance/04-benchmark/README.md)
+#### [Benchmark](11-high-performance/04-benchmark/README.md)
 
-`kotlinx-benchmark` 기반 마이크로벤치마크로 캐시/라우팅 예제의 성능을 측정합니다. smoke 프로파일과 main 프로파일을 제공하며 Markdown 리포트를 생성할 수 있습니다.
+Measure performance of cache/routing examples using `kotlinx-benchmark` micro-benchmarks. Provides smoke and main profiles with Markdown report generation.
 
 ---
 
-## 시작하기
+## Getting Started
 
-### 사전 요구사항
+### Prerequisites
 
-- JDK 21 이상 (Virtual Threads 및 Preview 기능 사용)
-- Gradle Wrapper 9.4.0 포함 (`./gradlew` 사용 권장)
-- Docker (Testcontainers 사용 시)
+- JDK 21 or higher (for Virtual Threads and Preview features)
+- Gradle Wrapper 9.4.1 included (use `./gradlew`)
+- Docker (for Testcontainers)
 
-### 빠른 시작
+### Quick Start
 
 ```bash
-# 빠른 로컬 검증 (H2만 사용)
+# Quick local verification (H2 only)
 ./gradlew test -PuseFastDB=true
 
-# 전체 프로젝트 빌드 및 테스트
+# Full project build and test
 ./gradlew clean build
 
-# 특정 모듈 테스트 실행
+# Run tests for a specific module
 ./gradlew :03-routing-datasource:test
 ./gradlew :01-dml:test
 ./gradlew :spring-mvc-exposed:test
 ```
 
-루트 `settings.gradle.kts` 에서 Gradle project path 를 모듈의 마지막 디렉터리 이름으로 생성하므로, 경로가 헷갈리면 `./gradlew projects` 로 확인하세요.
+The root `settings.gradle.kts` generates the Gradle project path from the leaf directory name. If paths are confusing, check with `./gradlew projects`.
 
-### 토큰 절약형 요약 명령
+### Target DB Selection
 
-AI 에이전트나 긴 터미널 세션에서 원시 `git`/Gradle 출력을 바로 열기 전에, 아래 요약 명령을 먼저 사용하는 것을 권장합니다.
-
-```bash
-# 저장소 상태 요약
-./bin/repo-status
-
-# 파일별 diff 변경량 요약
-./bin/repo-diff
-
-# Gradle 테스트/빌드 로그 요약
-./bin/repo-test-summary -- ./gradlew :05-exposed-dml:01-dml:test
-```
-
-기본 흐름은 "요약 먼저, 필요한 파일이나 태스크만 원본 출력 확인"입니다.
-
-### 테스트 대상 DB 선택
-
-기본값은 **H2, PostgreSQL, MySQL V8** 3가지를 대상으로 테스트합니다. 여러 Spring Boot 모듈은 테스트 중 `processTestAot`를 함께 수행하므로, 로컬에서는 먼저
-`-PuseFastDB=true` 검증을 권장합니다. Gradle 프로퍼티로 테스트 범위를 조절할 수 있습니다.
+By default, tests run against **H2, PostgreSQL, MySQL V8**. Use Gradle properties to control the test scope.
 
 ```bash
-# H2 만 테스트 (빠른 로컬 개발용)
+# Test with H2 only (fast local development)
 ./gradlew test -PuseFastDB=true
 
-# 특정 DB만 지정해서 테스트
+# Test with specific databases
 ./gradlew test -PuseDB=H2,POSTGRESQL
 ./gradlew test -PuseDB=H2,POSTGRESQL,MYSQL_V8,MARIADB
 
-# 기본값으로 테스트 (H2 + PostgreSQL + MySQL V8)
+# Test with defaults (H2 + PostgreSQL + MySQL V8)
 ./gradlew test
 ```
 
-`-PuseDB`에 사용 가능한 값 (`TestDB` enum 이름):
+Available `-PuseDB` values (`TestDB` enum names):
 
-| 값               | 설명                               |
-|-----------------|----------------------------------|
-| `H2`            | H2 (인메모리, 기본 모드)                 |
-| `H2_V1`         | H2 1.x 호환 모드                     |
-| `H2_MYSQL`      | H2 (MySQL 호환 모드)                 |
-| `H2_MARIADB`    | H2 (MariaDB 호환 모드)               |
-| `H2_PSQL`       | H2 (PostgreSQL 호환 모드)            |
-| `MARIADB`       | MariaDB (Testcontainers)         |
-| `MYSQL_V5`      | MySQL 5.x (Testcontainers)       |
-| `MYSQL_V8`      | MySQL 8.x (Testcontainers)       |
-| `POSTGRESQL`    | PostgreSQL (Testcontainers)      |
-| `POSTGRESQLNG`  | PostgreSQL NG 드라이버               |
-| ~~`COCKROACH`~~ | ~~CockroachDB (Testcontainers)~~ |
+| Value             | Description                      |
+|-------------------|----------------------------------|
+| `H2`              | H2 (in-memory, default mode)     |
+| `H2_V1`           | H2 1.x compatibility mode        |
+| `H2_MYSQL`        | H2 (MySQL compatibility mode)    |
+| `H2_MARIADB`      | H2 (MariaDB compatibility mode)  |
+| `H2_PSQL`         | H2 (PostgreSQL compatibility mode)|
+| `MARIADB`         | MariaDB (Testcontainers)         |
+| `MYSQL_V5`        | MySQL 5.x (Testcontainers)       |
+| `MYSQL_V8`        | MySQL 8.x (Testcontainers)       |
+| `POSTGRESQL`      | PostgreSQL (Testcontainers)      |
+| `POSTGRESQLNG`    | PostgreSQL NG driver             |
+| ~~`COCKROACH`~~   | ~~CockroachDB (Testcontainers)~~ |
 
 > [!NOTE]
-> 우선순위: `-PuseDB` > `-PuseFastDB` > 기본값 (H2, POSTGRESQL, MYSQL_V8)
+> Priority: `-PuseDB` > `-PuseFastDB` > default (H2, POSTGRESQL, MYSQL_V8)
 
-### 개발 환경
+### Development Environment
 
-- 저장소에 포함된 Gradle Wrapper(`./gradlew`) 사용을 권장합니다.
-- IntelliJ IDEA에서 열면 멀티 모듈이 자동 인식됩니다.
-- Docker가 있으면 Testcontainers 기반 PostgreSQL/MySQL/Redis 테스트를 그대로 실행할 수 있습니다.
+- Use the included Gradle Wrapper (`./gradlew`).
+- Opening in IntelliJ IDEA automatically recognizes all multi-modules.
+- With Docker, you can run Testcontainers-based PostgreSQL/MySQL/Redis tests directly.
 
-## 기여하기
+## Contributing
 
-이 프로젝트는 학습 목적으로 제작되었습니다. 오타 수정, 예제 추가, 번역 개선 등 모든 기여를 환영합니다.
+This project is designed for learning purposes. All contributions including typo fixes, example additions, and translation improvements are welcome.
 
-## 라이선스
+## License
 
 Apache License 2.0

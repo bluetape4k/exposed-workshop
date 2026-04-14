@@ -1,23 +1,24 @@
 # Exposed + Spring Web + Multi-Tenant (01)
 
-Spring MVC 환경에서 Exposed 기반 Schema 멀티테넌시를 구현하는 실전 예제입니다. 요청 헤더(
-`X-Tenant-Id`)를 기준으로 테넌트 컨텍스트를 전파하고, 스키마를 분리해 데이터 격리를 보장합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A production example implementing Exposed-based schema multi-tenancy in a Spring MVC environment. Propagates tenant context based on the request header (`X-Tenant-Id`) and guarantees data isolation via schema separation.
 
-- 멀티테넌트 요청 흐름(식별 → 컨텍스트 → 스키마 선택)을 이해한다.
-- `ThreadLocal` 기반 컨텍스트 관리 패턴을 익힌다.
-- AOP를 이용한 투명한 스키마 전환 방식을 학습한다.
-- 테넌트 격리 실패를 테스트로 방지한다.
+## Learning Goals
 
-## 선수 지식
+- Understand the multi-tenant request flow (identification → context → schema selection).
+- Learn `ThreadLocal`-based context management patterns.
+- Study transparent schema switching using AOP.
+- Prevent tenant isolation failures through tests.
+
+## Prerequisites
 
 - [`../09-spring/README.md`](../09-spring/README.md)
-- Spring MVC 필터/AOP 기초
+- Spring MVC filter/AOP basics
 
 ---
 
-## 도메인 모델
+## Domain Model
 
 ```mermaid
 erDiagram
@@ -44,7 +45,7 @@ erDiagram
 
 ---
 
-## 아키텍처
+## Architecture
 
 ```mermaid
 classDiagram
@@ -106,14 +107,14 @@ classDiagram
     }
 
     TenantFilter --> TenantContext : withTenant()
-    TenantContext --> Tenants : 테넌트 조회
-    Tenants --> Tenant : 열거형 멤버
+    TenantContext --> Tenants : lookup tenant
+    Tenants --> Tenant : enum member
     TenantAwareDataSource --> TenantContext : getCurrentTenant()
     TenantSchemaAspect --> TenantContext : getCurrentTenantSchema()
     TenantInitializer --> DataInitializer : initialize()
     TenantInitializer --> TenantContext : withTenant()
-    ExposedMutitenantConfig --> TenantAwareDataSource : 빈 생성
-    ActorController --> TenantContext : 간접 참조(AOP)
+    ExposedMutitenantConfig --> TenantAwareDataSource : creates bean
+    ActorController --> TenantContext : indirect reference (AOP)
 
     style TenantFilter fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
     style TenantContext fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
@@ -127,7 +128,7 @@ classDiagram
     style ActorController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
 ```
 
-### TenantResolver 클래스 계층
+### TenantResolver Class Hierarchy
 
 ```mermaid
 classDiagram
@@ -163,8 +164,8 @@ classDiagram
 
     Filter <|.. TenantFilter
     TenantFilter --> TenantContext : withTenant()
-    TenantContext --> Tenants : 테넌트 조회
-    Tenants --> Tenant : 열거형 멤버
+    TenantContext --> Tenants : lookup tenant
+    Tenants --> Tenant : enum member
 
     style Filter fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
     style TenantFilter fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
@@ -173,20 +174,20 @@ classDiagram
     style Tenant fill:#FFFDE7,stroke:#FFF176,color:#F57F17
 ```
 
-### 멀티테넌시 전략: Shared Database / Separate Schema
+### Multi-Tenancy Strategy: Shared Database / Separate Schema
 
-이 모듈은 **하나의 DB 인스턴스**에 테넌트별 **별도 스키마**를 사용하는 방식을 구현합니다.
+This module implements the approach of using a **separate schema per tenant** within a **single DB instance**.
 
-| 전략                          | DataSource                | 특징                 |
-|-----------------------------|---------------------------|--------------------|
-| Shared DB / Separate Schema | `dataSource()` (Primary)  | 스키마 전환으로 격리, 운영 단순 |
-| Database per Tenant         | `tenantAwareDataSource()` | 완전 격리, 운영 복잡       |
+| Strategy                    | DataSource                | Characteristics                      |
+|-----------------------------|---------------------------|------------------------------------|
+| Shared DB / Separate Schema | `dataSource()` (Primary)  | Isolated by schema switch, operationally simple |
+| Database per Tenant         | `tenantAwareDataSource()` | Fully isolated, operationally complex |
 
-현재 예제는 `dataSource()` + `TenantSchemaAspect`를 조합한 **Shared DB / Separate Schema** 방식을 기본으로 사용합니다.
+This example uses the **Shared DB / Separate Schema** approach combining `dataSource()` + `TenantSchemaAspect`.
 
 ---
 
-## 요청 흐름
+## Request Flow
 
 ```mermaid
 sequenceDiagram
@@ -203,7 +204,7 @@ sequenceDiagram
     TenantContext->>TenantContext: ThreadLocal.set(KOREAN)
 
     TenantFilter->>ActorController: chain.doFilter()
-    ActorController->>TenantSchemaAspect: @Transactional 진입 (AOP Before)
+    ActorController->>TenantSchemaAspect: @Transactional entry (AOP Before)
     TenantSchemaAspect->>TenantContext: getCurrentTenantSchema()
     TenantSchemaAspect->>Database: SchemaUtils.setSchema("korean")
 
@@ -213,17 +214,16 @@ sequenceDiagram
     ActorExposedRepository-->>ActorController: List~ActorRecord~
     ActorController-->>Client: 200 OK [{ "firstName": "조니", ... }]
 
-    Note over TenantFilter,TenantContext: 요청 완료 후 finally 블록에서 ThreadLocal.clear()
+    Note over TenantFilter,TenantContext: ThreadLocal.clear() in finally block after request completes
 ```
 
 ---
 
-## 핵심 구현
+## Key Implementation
 
 ### TenantFilter
 
-`jakarta.servlet.Filter`를 구현한 서블릿 필터입니다. `X-TENANT-ID` 헤더에서 테넌트를 읽어 `TenantContext.withTenant()` 블록 안에서 요청을 처리합니다.
-`withTenant`는 `finally`에서 반드시 `ThreadLocal`을 정리해 누수를 방지합니다.
+A servlet filter implementing `jakarta.servlet.Filter`. Reads the tenant from the `X-TENANT-ID` header and processes the request inside a `TenantContext.withTenant()` block. `withTenant` guarantees `ThreadLocal` cleanup in `finally` to prevent leaks.
 
 ```kotlin
 override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
@@ -236,7 +236,7 @@ override fun doFilter(request: ServletRequest, response: ServletResponse, chain:
 
 ### TenantContext
 
-`ThreadLocal<Tenants.Tenant>`로 요청 스레드에 테넌트를 바인딩합니다. `withTenant` 인라인 함수가 설정과 정리를 보장합니다.
+Binds the tenant to the request thread via `ThreadLocal<Tenants.Tenant>`. The `withTenant` inline function guarantees setup and cleanup.
 
 ```kotlin
 inline fun withTenant(tenant: Tenants.Tenant = getCurrentTenant(), block: () -> Unit) {
@@ -251,11 +251,11 @@ inline fun withTenant(tenant: Tenants.Tenant = getCurrentTenant(), block: () -> 
 
 ### Tenants
 
-지원 테넌트 목록(`KOREAN`, `ENGLISH`)과 각 테넌트의 스키마 매핑을 관리하는 싱글턴 객체입니다. `getById()`는 알 수 없는 테넌트 ID를 받으면 예외를 발생시켜 조기 실패를 보장합니다.
+A singleton object managing the list of supported tenants (`KOREAN`, `ENGLISH`) and each tenant's schema mapping. `getById()` throws an exception for unknown tenant IDs, guaranteeing fail-fast behavior.
 
 ### TenantSchemaAspect
 
-`@Transactional`이 선언된 클래스나 메서드 진입 전에 AOP `@Before` 어드바이스로 스키마를 전환합니다. 서비스 코드를 수정하지 않고 투명하게 스키마를 적용합니다.
+Switches the schema via an AOP `@Before` advice before entering a class or method annotated with `@Transactional`. Transparently applies the schema without modifying service code.
 
 ```kotlin
 @Before("@within(...Transactional) || @annotation(...Transactional)")
@@ -270,74 +270,71 @@ fun setSchemaForTransaction() {
 
 ### TenantAwareDataSource
 
-`AbstractRoutingDataSource`를 상속해 `determineCurrentLookupKey()`에서 `TenantContext.getCurrentTenant()`를 반환합니다.
-`Database per Tenant` 방식으로 전환할 때 이 빈을 Primary로 교체하면 됩니다.
+Extends `AbstractRoutingDataSource` and returns `TenantContext.getCurrentTenant()` from `determineCurrentLookupKey()`. To switch to **Database per Tenant** mode, replace this bean as Primary.
 
 ### TenantInitializer / DataInitializer
 
-`ApplicationReadyEvent` 수신 시 모든 테넌트 목록을 순회하며 스키마 생성(
-`SchemaUtils.createSchema`)과 샘플 데이터 삽입을 수행합니다. 테넌트별로 배우 이름이 한국어/영어로 분리돼 격리를 직접 확인할 수 있습니다.
+On receiving `ApplicationReadyEvent`, iterates over all tenants to create schemas (`SchemaUtils.createSchema`) and insert sample data. Actor names are separated as Korean/English per tenant for hands-on isolation verification.
 
 ---
 
-## 주요 구성 요소 요약
+## Key Components Summary
 
-| 파일                                  | 역할                              |
-|-------------------------------------|---------------------------------|
-| `tenant/TenantFilter.kt`            | 헤더에서 테넌트 추출, ThreadLocal 바인딩/해제 |
-| `tenant/TenantContext.kt`           | ThreadLocal 기반 테넌트 저장소          |
-| `tenant/Tenants.kt`                 | 테넌트 열거형 + 스키마 매핑                |
-| `tenant/SchemaSupport.kt`           | `Schema` 객체 생성 헬퍼               |
-| `tenant/TenantSchemaAspect.kt`      | AOP로 트랜잭션 전 스키마 전환              |
-| `tenant/TenantAwareDataSource.kt`   | 테넌트 기반 DataSource 라우팅           |
-| `tenant/TenantInitializer.kt`       | 앱 기동 시 스키마/데이터 초기화              |
-| `tenant/DataInitializer.kt`         | 스키마 생성 + 샘플 데이터 삽입              |
-| `config/ExposedMutitenantConfig.kt` | DataSource/Database 빈 설정        |
-| `controller/ActorController.kt`     | 배우 조회 REST API                  |
+| File                                  | Role                                           |
+|-------------------------------------|-------------------------------------------------|
+| `tenant/TenantFilter.kt`            | Extract tenant from header, bind/release ThreadLocal |
+| `tenant/TenantContext.kt`           | ThreadLocal-based tenant store                  |
+| `tenant/Tenants.kt`                 | Tenant enum + schema mapping                    |
+| `tenant/SchemaSupport.kt`           | Helper for creating `Schema` objects            |
+| `tenant/TenantSchemaAspect.kt`      | Schema switch before transaction via AOP        |
+| `tenant/TenantAwareDataSource.kt`   | Tenant-based DataSource routing                 |
+| `tenant/TenantInitializer.kt`       | Schema/data initialization on app startup       |
+| `tenant/DataInitializer.kt`         | Schema creation + sample data insertion         |
+| `config/ExposedMutitenantConfig.kt` | DataSource/Database bean configuration          |
+| `controller/ActorController.kt`     | Actor query REST API                            |
 
 ---
 
-## 테스트 방법
+## How to Test
 
 ```bash
-# 모듈 테스트 실행
+# Run module tests
 ./gradlew :10-multi-tenant:01-multitenant-spring-web:test
 
-# 애플리케이션 기동 (H2 프로파일 기본)
+# Start application (H2 profile by default)
 ./gradlew :10-multi-tenant:01-multitenant-spring-web:bootRun
 ```
 
-### API 실습
+### API Practice
 
 ```bash
-# 한국어 테넌트 배우 목록
+# Korean tenant actor list
 curl -H 'X-TENANT-ID: korean' http://localhost:8080/actors
 
-# 영어 테넌트 배우 목록
+# English tenant actor list
 curl -H 'X-TENANT-ID: english' http://localhost:8080/actors
 
-# 특정 배우 조회
+# Query specific actor
 curl -H 'X-TENANT-ID: korean' http://localhost:8080/actors/1
 ```
 
 ---
 
-## 실습 체크리스트
+## Practice Checklist
 
-- `X-TENANT-ID: korean` 과 `X-TENANT-ID: english` 호출 결과가 다른지 확인
-- 헤더 누락 시 기본 테넌트(`korean`)로 동작하는지 확인
-- 헤더에 존재하지 않는 테넌트 ID를 전달했을 때 에러 응답 확인
-- 요청 종료 후 `ThreadLocal`이 정리되는지 확인 (`TenantContext.clear()`)
+- Verify that results differ between `X-TENANT-ID: korean` and `X-TENANT-ID: english` calls
+- Confirm default tenant (`korean`) is used when header is missing
+- Verify error response when a non-existent tenant ID is sent in the header
+- Confirm `ThreadLocal` is cleaned up after request ends (`TenantContext.clear()`)
 
-## 운영 체크포인트
+## Operations Checkpoints
 
-- `ThreadLocal` 누수 방지를 위해 `withTenant` 블록 외부에서 직접 `setCurrentTenant` 호출 금지
-- 로그/트레이스에 tenant 식별자 포함 (`TenantSchemaAspect` 로그 활용)
-- 신규 테넌트 온보딩 시 `Tenants.Tenant` 열거형 확장 + 스키마 초기화 자동화 절차 확보
+- Never call `setCurrentTenant` directly outside a `withTenant` block to prevent `ThreadLocal` leaks
+- Include tenant identifier in logs/traces (leverage `TenantSchemaAspect` logs)
+- Have an automated procedure for extending `Tenants.Tenant` enum + schema initialization when onboarding new tenants
 
 ---
 
-## 다음 모듈
+## Next Module
 
-- [
-  `../02-multitenant-spring-web-virtualthread/README.md`](../02-multitenant-spring-web-virtualthread/README.md): Virtual Thread 환경으로 확장
+- [`../02-multitenant-spring-web-virtualthread/README.md`](../02-multitenant-spring-web-virtualthread/README.md): Extend to Virtual Thread environment

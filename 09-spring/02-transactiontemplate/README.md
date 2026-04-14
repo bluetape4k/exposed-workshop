@@ -1,20 +1,21 @@
 # 09 Spring: TransactionTemplate (02)
 
-`TransactionTemplate` 기반 프로그래밍 트랜잭션 제어 모듈입니다. Exposed의 `SpringTransactionManager`를 `TransactionTemplate`에 주입해 선언적
-`@Transactional` 없이 트랜잭션 경계를 코드 수준에서 제어하는 패턴을 학습합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A module for programmatic transaction control based on `TransactionTemplate`. It injects Exposed's `SpringTransactionManager` into `TransactionTemplate` to learn the pattern of controlling transaction boundaries at the code level without declarative `@Transactional`.
 
-- `SpringTransactionManager` 기반 `TransactionTemplate` 구성 방법을 익힌다.
-- `exposedTransactionTemplate.execute { }` 와 `transaction { }` 블록의 역할 차이를 이해한다.
-- `TransactionOperations.withoutTransaction()` 을 이용한 트랜잭션 없는 실행 경로를 파악한다.
-- `@Transactional` 경계 안에서 트랜잭션 미적용 `TransactionOperations`를 호출하면 어떻게 동작하는지 검증한다.
+## Learning Goals
 
-## 선수 지식
+- Learn how to configure `TransactionTemplate` based on `SpringTransactionManager`.
+- Understand the difference between `exposedTransactionTemplate.execute { }` and `transaction { }` blocks.
+- Explore the transaction-free execution path using `TransactionOperations.withoutTransaction()`.
+- Verify how `TransactionOperations` without transaction behaves when called within a `@Transactional` boundary.
+
+## Prerequisites
 
 - [`../01-springboot-autoconfigure/README.md`](../01-springboot-autoconfigure/README.md)
 
-## 아키텍처
+## Architecture
 
 ```mermaid
 classDiagram
@@ -56,21 +57,21 @@ classDiagram
     style TransactionOperations fill:#FFFDE7,stroke:#FFF176,color:#F57F17
 ```
 
-## 핵심 개념
+## Key Concepts
 
-### TransactionTemplate 빈 구성
+### TransactionTemplate Bean Configuration
 
 ```kotlin
 @Configuration
 class TransactionTemplateConfig {
 
-    // Exposed SpringTransactionManager를 감싼 Spring TransactionTemplate
+    // Spring TransactionTemplate wrapping Exposed SpringTransactionManager
     @Bean
     @Qualifier("exposedTransactionTemplate")
     fun exposedTransactionTemplate(tm: SpringTransactionManager): TransactionTemplate =
         TransactionTemplate(tm)
 
-    // 트랜잭션 없이 실행하는 TransactionOperations
+    // TransactionOperations that executes without a transaction
     @Bean
     @Qualifier("withoutTransactionOperations")
     fun withoutTransactionOperations(): TransactionOperations =
@@ -78,7 +79,7 @@ class TransactionTemplateConfig {
 }
 ```
 
-### 트랜잭션 경계 비교
+### Transaction Boundary Comparison
 
 ```kotlin
 @Component
@@ -87,38 +88,38 @@ class BookService(
     @Qualifier("withoutTransactionOperations") private val withoutTransactionOperations: TransactionOperations,
     private val jdbcTemplate: JdbcTemplate,
 ) {
-    // 1) Spring TransactionTemplate (Exposed SpringTransactionManager 기반)
+    // 1) Spring TransactionTemplate (based on Exposed SpringTransactionManager)
     fun executeSpringTransaction() {
         exposedTransactionTemplate.execute {
-            createNewAuthor()   // Spring 트랜잭션 안에서 실행
+            createNewAuthor()   // Executes within Spring transaction
         }
     }
 
-    // 2) Exposed 자체 transaction {} 블록
+    // 2) Exposed's own transaction {} block
     fun execWithExposedTransaction() {
         transaction {
             Book.new { title = faker.book().title() }
         }
     }
 
-    // 3) 트랜잭션 없는 실행 (auto-commit)
+    // 3) Execution without transaction (auto-commit)
     fun execWithoutSpringTransaction() {
         withoutTransactionOperations.execute {
-            createNewAuthor()   // 트랜잭션 보호 없음
+            createNewAuthor()   // No transaction protection
         }
     }
 
-    // 4) @Transactional 경계 안에서 no-tx 호출 → 외부 트랜잭션 전파
+    // 4) Calling no-tx within @Transactional boundary → inherits outer transaction
     @Transactional
     fun execTransactionalAnnotation() {
         withoutTransactionOperations.execute {
-            createNewAuthor()   // 부모 @Transactional 트랜잭션 참여
+            createNewAuthor()   // Participates in parent @Transactional transaction
         }
     }
 }
 ```
 
-## 트랜잭션 흐름
+## Transaction Flow
 
 ```mermaid
 sequenceDiagram
@@ -133,17 +134,17 @@ sequenceDiagram
     TxTemplate->>STM: begin transaction
     STM->>DB: BEGIN
     TxTemplate->>DB: INSERT INTO AUTHORS(...)
-    alt 정상
+    alt Success
         TxTemplate->>STM: commit
         STM->>DB: COMMIT
-    else 예외
+    else Exception
         TxTemplate->>STM: rollback
         STM->>DB: ROLLBACK
     end
-    TxTemplate-->>BookService: 완료
+    TxTemplate-->>BookService: Complete
 ```
 
-## 도메인 모델
+## Domain Model
 
 ```kotlin
 object BookSchema {
@@ -157,7 +158,7 @@ object BookSchema {
         val description: Column<String?> = text("description").nullable()
     }
 
-    // 다대다 관계 매핑 테이블
+    // Many-to-many relationship mapping table
     object BookAuthorTable: Table("book_author_map") {
         val bookId = reference("book_id", BookTable)
         val authorId = reference("author_id", AuthorTable)
@@ -165,27 +166,27 @@ object BookSchema {
 }
 ```
 
-## 실행 방법
+## How to Run
 
 ```bash
 ./gradlew :09-spring:02-transactiontemplate:test
 
-# 테스트 로그 요약
+# Test log summary
 ./bin/repo-test-summary -- ./gradlew :09-spring:02-transactiontemplate:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- `exposedTransactionTemplate.execute` 실행 중 예외 발생 시 롤백 여부 확인
-- `withoutTransactionOperations`로 실행하면 예외 발생 시 부분 커밋이 남는지 확인
-- `@Transactional` 내에서 `withoutTransactionOperations`를 호출할 때 외부 트랜잭션을 상속하는지 검증
-- `transaction {}` 블록과 `TransactionTemplate.execute {}` 의 동시 사용 시 중첩 트랜잭션 동작 확인
+- Verify rollback behavior when an exception occurs during `exposedTransactionTemplate.execute`
+- Check if partial commits remain when an exception occurs with `withoutTransactionOperations`
+- Verify that calling `withoutTransactionOperations` within `@Transactional` inherits the outer transaction
+- Confirm nested transaction behavior when using `transaction {}` block and `TransactionTemplate.execute {}` simultaneously
 
-## 성능·안정성 체크포인트
+## Performance & Stability Checkpoints
 
-- 트랜잭션 범위를 과도하게 세분화하면 커넥션 재획득 오버헤드가 증가함
-- 보상 트랜잭션(compensating transaction) 전략은 서비스 계층에서 별도 설계 필요
+- Excessive transaction granularity increases connection reacquisition overhead
+- Compensating transaction strategies require separate design at the service layer
 
-## 다음 모듈
+## Next Module
 
 - [`../03-spring-transaction/README.md`](../03-spring-transaction/README.md)

@@ -1,20 +1,22 @@
 # 09 Spring: Exposed Repository (04)
 
-동기식 Spring MVC 환경에서 Exposed DSL/DAO를 Repository 패턴으로 캡슐화하는 모듈입니다.
-`JdbcRepository` 인터페이스를 구현해 서비스 계층이 Exposed에 직접 의존하지 않는 구조를 학습합니다.
+English | [한국어](./README.ko.md)
 
-## 학습 목표
+A module that encapsulates Exposed DSL/DAO into a Repository pattern in a synchronous Spring MVC environment.
+It implements the `JdbcRepository` interface to learn a structure where the service layer does not directly depend on Exposed.
 
-- `JdbcRepository<ID, Table, Record>` 인터페이스와 구현체 패턴을 익힌다.
-- Exposed DSL(`selectAll`, `insertAndGetId`, `innerJoin`) 과 DAO(`findById`, `load`) 를 Repository 내부에서 혼용하는 방법을 이해한다.
-- 도메인 엔티티(`MovieEntity`, `ActorEntity`)와 전송 레코드(`MovieRecord`, `ActorRecord`)를 분리하는 매퍼 구조를 확인한다.
-- `@Transactional(readOnly = true)` 로 읽기 전용 경로를 최적화하는 방법을 적용한다.
+## Learning Goals
 
-## 선수 지식
+- Learn the `JdbcRepository<ID, Table, Record>` interface and implementation patterns.
+- Understand how to mix Exposed DSL (`selectAll`, `insertAndGetId`, `innerJoin`) and DAO (`findById`, `load`) within a Repository.
+- Examine the mapper structure that separates domain entities (`MovieEntity`, `ActorEntity`) from transfer records (`MovieRecord`, `ActorRecord`).
+- Apply read-only path optimization with `@Transactional(readOnly = true)`.
+
+## Prerequisites
 
 - [`../03-spring-transaction/README.md`](../03-spring-transaction/README.md)
 
-## 아키텍처
+## Architecture
 
 ```mermaid
 classDiagram
@@ -89,9 +91,9 @@ classDiagram
     style ActorTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
 ```
 
-## 핵심 개념
+## Key Concepts
 
-### Repository 구현
+### Repository Implementation
 
 ```kotlin
 @Repository
@@ -126,10 +128,10 @@ class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
 }
 ```
 
-### DSL + DAO 혼용 조회
+### DSL + DAO Hybrid Queries
 
 ```kotlin
-// DSL: INNER JOIN으로 영화-배우 한 번에 조회
+// DSL: Fetch movies with actors in one INNER JOIN query
 fun getAllMoviesWithActors(): List<MovieWithActorRecord> {
     val join = table.innerJoin(ActorInMovieTable).innerJoin(ActorTable)
     return join
@@ -142,17 +144,17 @@ fun getAllMoviesWithActors(): List<MovieWithActorRecord> {
         }
 }
 
-// DAO: eager loading으로 배우 목록 한 번에 로드
+// DAO: Load actor list at once via eager loading
 fun getMovieWithActors(movieId: Long): MovieWithActorRecord? =
     MovieEntity.findById(movieId)
         ?.load(MovieEntity::actors)
         ?.toMovieWithActorRecord()
 ```
 
-### 제작자-배우 조건 JOIN
+### Producer-Actor Conditional JOIN
 
 ```kotlin
-// 제작자 이름과 배우 first_name이 일치하는 영화 조회
+// Find movies where producer name matches actor first_name
 fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
     return table
         .innerJoin(ActorInMovieTable)
@@ -161,14 +163,14 @@ fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
             onColumn = { ActorTable.id },
             otherColumn = { ActorInMovieTable.actorId }
         ) {
-            MovieTable.producerName eq ActorTable.firstName  // JOIN 조건 추가
+            MovieTable.producerName eq ActorTable.firstName  // Additional JOIN condition
         }
         .select(MovieTable.name, ActorTable.firstName, ActorTable.lastName)
         .map { it.toMovieWithProducingActorRecord() }
 }
 ```
 
-## 도메인 모델
+## Domain Model
 
 ```mermaid
 erDiagram
@@ -239,39 +241,39 @@ classDiagram
     style ActorEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
-## REST API 엔드포인트
+## REST API Endpoints
 
-| 메서드    | 경로                    | 설명            |
-|--------|-----------------------|---------------|
-| `GET`  | `/movies`             | 파라미터 기반 영화 검색 |
-| `POST` | `/movies`             | 신규 영화 등록      |
-| `GET`  | `/movies/with-actors` | 영화 + 배우 전체 조회 |
-| `GET`  | `/movies/{id}/actors` | 특정 영화의 배우 조회  |
-| `GET`  | `/actors`             | 파라미터 기반 배우 검색 |
-| `POST` | `/actors`             | 신규 배우 등록      |
+| Method | Path                  | Description                    |
+|--------|-----------------------|-------------------------------|
+| `GET`  | `/movies`             | Parameter-based movie search  |
+| `POST` | `/movies`             | Create new movie              |
+| `GET`  | `/movies/with-actors` | Fetch all movies with actors  |
+| `GET`  | `/movies/{id}/actors` | Fetch actors for a specific movie |
+| `GET`  | `/actors`             | Parameter-based actor search  |
+| `POST` | `/actors`             | Create new actor              |
 
-## 실행 방법
+## How to Run
 
 ```bash
 ./gradlew :09-spring:04-exposed-repository:test
 
-# 테스트 로그 요약
+# Test log summary
 ./bin/repo-test-summary -- ./gradlew :09-spring:04-exposed-repository:test
 ```
 
-## 실습 체크리스트
+## Practice Checklist
 
-- `searchMovies(params)` 에서 여러 파라미터를 동시에 전달했을 때 AND 조건이 올바르게 생성되는지 확인
-- `getMovieWithActors` (DAO eager loading) 와 `getAllMoviesWithActors` (DSL JOIN) 결과가 동일한지 비교
-- `findMoviesWithActingProducers` 에서 JOIN 조건(`producerName eq firstName`)이 SQL에 올바르게 반영되는지 로그 확인
-- Repository를 Mock 처리했을 때 Controller 단위 테스트가 독립적으로 동작하는지 검증
+- Verify that AND conditions are correctly generated when passing multiple parameters to `searchMovies(params)`
+- Compare results from `getMovieWithActors` (DAO eager loading) and `getAllMoviesWithActors` (DSL JOIN) for equality
+- Check SQL logs to verify the JOIN condition (`producerName eq firstName`) in `findMoviesWithActingProducers` is correctly reflected
+- Validate that Controller unit tests work independently when Repository is mocked
 
-## 성능·안정성 체크포인트
+## Performance & Stability Checkpoints
 
-- 대용량 조회 시 `selectAll()` 대신 페이징(`limit/offset`) 추가 고려
-- N+1 문제 방지를 위해 `load()` 또는 DSL JOIN 방식 중 쿼리 수를 측정해 선택
-- 공통 조회 파라미터 패턴은 QueryBuilder로 추출해 Repository 간 중복 제거
+- Consider adding pagination (`limit/offset`) instead of `selectAll()` for large-volume queries
+- Measure query counts to choose between `load()` or DSL JOIN approaches to prevent N+1 problems
+- Extract common query parameter patterns into QueryBuilder to eliminate duplication across Repositories
 
-## 다음 모듈
+## Next Module
 
 - [`../05-exposed-repository-coroutines/README.md`](../05-exposed-repository-coroutines/README.md)

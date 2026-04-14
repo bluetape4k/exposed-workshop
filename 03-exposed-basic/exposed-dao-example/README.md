@@ -1,22 +1,21 @@
-# 03 Exposed Basic: DAO 예제
+# 03 Exposed Basic: DAO Example
 
-Exposed DAO(Entity) 패턴의 기본을 학습하는 모듈입니다. `Entity`/`EntityClass` 모델링, 관계 매핑(`referencedOn`,
-`referrersOn`), CRUD, 코루틴 연동을 다룹니다.
+English | [한국어](./README.ko.md)
 
-## 개요
+A module for learning the fundamentals of the Exposed DAO (Entity) pattern. Covers `Entity`/`EntityClass` modelling, relationship mapping (`referencedOn`, `referrersOn`), CRUD, and coroutine integration.
 
-Exposed DAO 패턴은 `IntIdTable`과 `IntEntity`/
-`IntEntityClass` 쌍으로 ORM 스타일의 데이터 접근을 제공합니다. 테이블 컬럼을 Kotlin 프로퍼티로 위임(delegate)하여 객체처럼 다루며, 관계는 `referencedOn`/
-`referrersOn`으로 선언합니다.
+## Overview
 
-## 학습 목표
+The Exposed DAO pattern provides ORM-style data access via an `IntIdTable` and `IntEntity`/`IntEntityClass` pair. Table columns are delegated to Kotlin properties so you can work with them like objects, and relationships are declared with `referencedOn`/`referrersOn`.
 
-- `IntEntity`/`IntEntityClass` 기반 Entity 모델링을 익힌다.
-- `referencedOn`(many-to-one), `referrersOn`(one-to-many) 관계 매핑을 이해한다.
-- `.with()` eager loading으로 N+1 문제를 방지한다.
-- `newSuspendedTransaction` 기반 코루틴 트랜잭션에서 DAO를 사용한다.
+## Learning Goals
 
-## 선수 지식
+- Learn Entity modelling based on `IntEntity`/`IntEntityClass`.
+- Understand `referencedOn` (many-to-one) and `referrersOn` (one-to-many) relationship mapping.
+- Prevent the N+1 problem with `.with()` eager loading.
+- Use DAO within coroutine transactions based on `newSuspendedTransaction`.
+
+## Prerequisites
 
 - [`../exposed-sql-example/README.md`](../exposed-sql-example/README.md)
 
@@ -37,7 +36,7 @@ erDiagram
     cities ||--o{ users : "city_id"
 ```
 
-## 도메인 모델
+## Domain Model
 
 ```mermaid
 classDiagram
@@ -75,9 +74,9 @@ classDiagram
     style User fill:#FFF3E0,stroke:#FFCC80,color:#E65100
 ```
 
-## 핵심 개념
+## Core Concepts
 
-### Entity / Table 선언
+### Entity / Table Declaration
 
 ```kotlin
 object CityTable: IntIdTable("cities") {
@@ -96,7 +95,7 @@ class City(id: EntityID<Int>): IntEntity(id) {
 
     var name: String by CityTable.name
 
-    // one-to-many: 이 City에 속한 User 목록 (Lazy by default)
+    // one-to-many: list of Users belonging to this City (Lazy by default)
     val users: SizedIterable<User> by User optionalReferrersOn UserTable.cityId
 }
 
@@ -127,7 +126,7 @@ transaction {
     // SELECT by id
     val found = User.findById(user.id)
 
-    // UPDATE — 트랜잭션 내에서 프로퍼티 변경 시 자동 반영
+    // UPDATE — property changes within a transaction are reflected automatically
     found?.name = "debop (updated)"
 
     // DELETE
@@ -135,27 +134,27 @@ transaction {
 }
 ```
 
-### Eager Loading으로 N+1 방지
+### Preventing N+1 with Eager Loading
 
 ```kotlin
-// 문제 상황 (Lazy Loading — N+1 발생)
+// Problem (Lazy Loading — N+1 occurs)
 City.all().forEach { city ->
-    city.users.forEach { user -> println(user.name) }  // N번 추가 쿼리
+    city.users.forEach { user -> println(user.name) }  // N additional queries
 }
 
-// 해결책 (Eager Loading — .with() 사용)
-// City 1회 + User 1회 = 총 2회 쿼리
+// Solution (Eager Loading — use .with())
+// City 1 query + User 1 query = 2 queries total
 City.find { CityTable.name eq "Seoul" }
-    .with(City::users)          // users를 미리 로딩
+    .with(City::users)          // pre-load users
     .forEach { city ->
         city.users.forEach { println(it.name) }
     }
 ```
 
-### 코루틴 트랜잭션 내 DAO 사용
+### Using DAO within a Coroutine Transaction
 
 ```kotlin
-// newSuspendedTransaction 내에서 Entity 접근
+// Entity access inside newSuspendedTransaction
 suspend fun withSuspendedCityUsers(testDB: TestDB, statement: suspend JdbcTransaction.() -> Unit) {
     withTablesSuspending(testDB, CityTable, UserTable) {
         populateSamples()
@@ -165,7 +164,7 @@ suspend fun withSuspendedCityUsers(testDB: TestDB, statement: suspend JdbcTransa
     }
 }
 
-// 사용 예시
+// Usage example
 withSuspendedCityUsers(testDB) {
     val users = User.find { UserTable.age greaterEq intLiteral(18) }
         .with(User::city)
@@ -173,50 +172,50 @@ withSuspendedCityUsers(testDB) {
 }
 ```
 
-## 예제 구성
+## Example Files
 
-| 파일                              | 설명                                 |
-|---------------------------------|------------------------------------|
-| `Schema.kt`                     | Entity/Table 정의, 샘플 데이터 삽입, 테스트 헬퍼 |
-| `ExposedDaoExample.kt`          | 동기 DAO CRUD, 관계 조회, Eager Loading  |
-| `ExposedDaoSuspendedExample.kt` | 코루틴 DAO 예제 (동일 시나리오 비동기 실행)        |
+| File                              | Description                                           |
+|---------------------------------|-------------------------------------------------------|
+| `Schema.kt`                     | Entity/Table definitions, sample data insertion, test helpers |
+| `ExposedDaoExample.kt`          | Synchronous DAO CRUD, relationship queries, Eager Loading |
+| `ExposedDaoSuspendedExample.kt` | Coroutine DAO example (same scenarios run asynchronously) |
 
-## 테스트 실행 방법
+## Running Tests
 
 ```bash
-# 전체 테스트
+# Full tests
 ./gradlew :03-exposed-basic:exposed-dao-example:test
 
-# H2만 대상으로 빠른 테스트
+# Fast tests targeting H2 only
 ./gradlew :03-exposed-basic:exposed-dao-example:test -PuseFastDB=true
 
-# 특정 테스트 클래스만 실행
+# Run a specific test class
 ./gradlew :03-exposed-basic:exposed-dao-example:test \
     --tests "exposed.dao.example.ExposedDaoExample"
 ```
 
-## 복잡한 시나리오
+## Advanced Scenarios
 
-### N+1 문제와 Eager Loading
+### N+1 Problem and Eager Loading
 
-DAO 패턴에서 연관 엔티티를 반복 접근하면 N+1 쿼리 문제가 발생합니다.
+Repeatedly accessing related entities in the DAO pattern causes N+1 query issues.
 
-관련 테스트:
+Related tests:
 
 - `ExposedDaoExample` — `DAO Entity를 조건절로 검색하기 01` : one-to-many eager loading
 - `ExposedDaoExample` — `DAO Entity를 조건절로 검색하기 02` : many-to-one eager loading
 
-### 코루틴 트랜잭션 내 DAO 사용
+### Using DAO within a Coroutine Transaction
 
-관련 테스트: `ExposedDaoSuspendedExample`
+Related test: `ExposedDaoSuspendedExample`
 
-## 실습 체크리스트
+## Practice Checklist
 
-- DAO와 DSL로 동일 유스케이스를 각각 구현해 비교한다.
-- 관계 조회 시 eager loading 유무에 따른 쿼리 수를 비교한다.
-- 트랜잭션 경계 밖에서 Entity 지연 접근을 피한다.
-- 관계 탐색이 깊어질수록 N+1 위험을 테스트로 고정한다.
+- Implement the same use case in both DAO and DSL and compare.
+- Compare the number of queries with and without eager loading during relationship queries.
+- Avoid lazy entity access outside the transaction boundary.
+- As relationship traversal deepens, pin N+1 risks with tests.
 
-## 다음 챕터
+## Next Chapter
 
 - [`../../04-exposed-ddl/README.md`](../../04-exposed-ddl/README.md)

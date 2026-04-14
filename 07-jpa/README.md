@@ -1,45 +1,47 @@
 # 07 JPA Migration
 
-기존 JPA 중심 코드베이스를 Exposed로 전환할 때 필요한 전략을 단계적으로 정리하는 챕터입니다.
+English | [한국어](./README.ko.md)
 
-## 챕터 목표
+A chapter that lays out step-by-step strategies for migrating an existing JPA-centric codebase to Exposed.
 
-- JPA와 Exposed의 개념/동작 차이를 비교하고, 전환 리스크를 줄이는 패턴을 이해한다.
-- 기본 CRUD부터 복잡한 관계/트랜잭션까지 점진적으로 전환할 수 있는 전략을 수립한다.
-- 테스트 중심의 회귀 방지 절차를 정립한다.
+## Chapter Goals
 
-## 선수 지식
+- Compare the conceptual and behavioral differences between JPA and Exposed, and understand patterns that reduce migration risk.
+- Build a strategy for incremental migration from basic CRUD to complex relationships and transactions.
+- Establish a test-driven regression-prevention process.
 
-- JPA/Hibernate 기본 사용 경험
-- `05-exposed-dml` 내용 (DSL/DAO 트랜잭션 흐름)
+## Prerequisites
 
-## JPA vs Exposed 핵심 차이
+- Hands-on experience with JPA/Hibernate basics
+- `05-exposed-dml` content (DSL/DAO transaction flow)
 
-| 항목       | JPA / Hibernate                                     | Exposed                                     |
-|----------|-----------------------------------------------------|---------------------------------------------|
-| 매핑 방식    | 어노테이션(`@Entity`, `@Column`)                         | Kotlin DSL (`object Table`, `class Entity`) |
-| 쿼리 언어    | JPQL / Criteria API                                 | DSL (`selectAll().where { ... }`)           |
-| 지연 로딩    | `FetchType.LAZY` 기본 지원                              | 명시적 `load()` / `with()` 호출 필요               |
-| 트랜잭션     | `@Transactional` (Spring AOP)                       | `transaction { }` 람다 블록                     |
-| 영속성 컨텍스트 | EntityManager 중심                                    | 트랜잭션 범위 내 Entity 캐시                         |
-| 낙관적 잠금   | `@Version` 어노테이션                                    | 버전 컬럼 수동 관리                                 |
-| 감사 필드    | `@CreatedDate`, `@LastModifiedDate`                 | `EntityHook` 또는 Property Delegate           |
-| 상속 매핑    | `@Inheritance(SINGLE_TABLE/JOINED/TABLE_PER_CLASS)` | 테이블 구조로 직접 표현                               |
-| N+1 방지   | `JOIN FETCH`, `@BatchSize`                          | `load()`, `with()`, JOIN 쿼리                 |
-| 스키마 생성   | `hibernate.hbm2ddl.auto`                            | `SchemaUtils.create()`                      |
+## JPA vs Exposed Key Differences
 
-## 전환 전략 개요
+| Item                | JPA / Hibernate                                     | Exposed                                     |
+|---------------------|-----------------------------------------------------|---------------------------------------------|
+| Mapping style       | Annotations (`@Entity`, `@Column`)                  | Kotlin DSL (`object Table`, `class Entity`) |
+| Query language      | JPQL / Criteria API                                 | DSL (`selectAll().where { ... }`)           |
+| Lazy loading        | Supported by default via `FetchType.LAZY`           | Requires explicit `load()` / `with()` calls |
+| Transactions        | `@Transactional` (Spring AOP)                       | `transaction { }` lambda block              |
+| Persistence context | EntityManager-centric                               | Entity cache within transaction scope       |
+| Optimistic locking  | `@Version` annotation                               | Manual version column management            |
+| Audit fields        | `@CreatedDate`, `@LastModifiedDate`                 | `EntityHook` or Property Delegate           |
+| Inheritance mapping | `@Inheritance(SINGLE_TABLE/JOINED/TABLE_PER_CLASS)` | Expressed directly as table structure       |
+| N+1 prevention      | `JOIN FETCH`, `@BatchSize`                          | `load()`, `with()`, JOIN queries            |
+| Schema creation     | `hibernate.hbm2ddl.auto`                            | `SchemaUtils.create()`                      |
+
+## Migration Strategy Overview
 
 ```mermaid
 flowchart LR
-    A[JPA 코드베이스] --> B{전환 범위 분석}
-    B --> C[기본 CRUD\n01-convert-jpa-basic]
-    B --> D[복잡 관계/상속\n02-convert-jpa-advanced]
-    C --> E[동등성 테스트\n작성]
+    A[JPA Codebase] --> B{Analyze migration scope}
+    B --> C[Basic CRUD\n01-convert-jpa-basic]
+    B --> D[Complex relationships/inheritance\n02-convert-jpa-advanced]
+    C --> E[Write equivalence\ntests]
     D --> E
-    E --> F[점진적 전환\n모듈 단위]
-    F --> G[회귀 검증\nCI 통합]
-    G --> H[JPA 의존성 제거]
+    E --> F[Incremental migration\nby module]
+    F --> G[Regression verification\nCI integration]
+    G --> H[Remove JPA dependency]
 
     classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
     classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
@@ -54,13 +56,13 @@ flowchart LR
     class G,H purple
 ```
 
-## JPA vs Exposed 개념 비교 다이어그램
+## JPA vs Exposed Concept Comparison Diagram
 
 ```mermaid
 classDiagram
     direction LR
     class JPA_Entity {
-        <<JPA 방식>>
+        <<JPA Style>>
         +annotation Entity
         +annotation Table
         +annotation Id GeneratedValue
@@ -69,7 +71,7 @@ classDiagram
         +Spring AOP Transactional
     }
     class Exposed_DSL {
-        <<Exposed DSL 방식>>
+        <<Exposed DSL Style>>
         +Table object extends LongIdTable
         +Column varchar text integer
         +transaction block
@@ -77,7 +79,7 @@ classDiagram
         +batchInsert list
     }
     class Exposed_DAO {
-        <<Exposed DAO 방식>>
+        <<Exposed DAO Style>>
         +Entity extends LongEntity
         +EntityClass companion object
         +delegate by Table column
@@ -85,33 +87,33 @@ classDiagram
         +Entity findById
     }
 
-    JPA_Entity ..> Exposed_DSL : 전환 SQL 제어
-    JPA_Entity ..> Exposed_DAO : 전환 객체 중심
+    JPA_Entity ..> Exposed_DSL : migrate SQL control
+    JPA_Entity ..> Exposed_DAO : migrate object-centric
 
     style JPA_Entity fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
     style Exposed_DSL fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
     style Exposed_DAO fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
 ```
 
-## 전환 접근법 비교
+## Migration Approach Comparison
 
 ```mermaid
 flowchart TD
-    A[기존 JPA 코드베이스] --> B{엔티티 유형 분석}
-    B --> C[단순 CRUD\n어노테이션 매핑]
-    B --> D[복잡 관계\nOneToMany / ManyToMany]
-    B --> E[상속 전략\nSINGLE_TABLE / JOINED / TABLE_PER_CLASS]
-    B --> F[고급 기능\n감사 필드 / 낙관적 잠금 / 트리]
+    A[Existing JPA Codebase] --> B{Analyze entity types}
+    B --> C[Simple CRUD\nannotation mapping]
+    B --> D[Complex relationships\nOneToMany / ManyToMany]
+    B --> E[Inheritance strategies\nSINGLE_TABLE / JOINED / TABLE_PER_CLASS]
+    B --> F[Advanced features\naudit fields / optimistic locking / tree]
 
-    C --> G[01-convert-jpa-basic\nDSL / DAO 기본 전환]
+    C --> G[01-convert-jpa-basic\nBasic DSL / DAO migration]
     D --> G
-    E --> H[02-convert-jpa-advanced\n고급 패턴 전환]
+    E --> H[02-convert-jpa-advanced\nAdvanced pattern migration]
     F --> H
 
-    G --> I[동등성 테스트 작성\n전환 전후 결과 비교]
+    G --> I[Write equivalence tests\nCompare results before and after migration]
     H --> I
-    I --> J[점진적 JPA 의존성 제거]
-    J --> K[CI 회귀 검증]
+    I --> J[Incrementally remove JPA dependency]
+    J --> K[CI regression verification]
 
     classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
     classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
@@ -127,67 +129,67 @@ flowchart TD
     class J,K green
 ```
 
-## 포함 모듈
+## Included Modules
 
-| 모듈                        | 설명                             |
-|---------------------------|--------------------------------|
-| `01-convert-jpa-basic`    | 기본 CRUD 전환 시나리오 및 Entity 매핑 비교 |
-| `02-convert-jpa-advanced` | 복잡 쿼리/관계/트랜잭션, 트리거/배치 전환 전략    |
+| Module                      | Description                                                    |
+|-----------------------------|----------------------------------------------------------------|
+| `01-convert-jpa-basic`      | Basic CRUD migration scenarios and Entity mapping comparison   |
+| `02-convert-jpa-advanced`   | Complex query/relationship/transaction and batch migration strategies |
 
-## 권장 학습 순서
+## Recommended Learning Order
 
 1. `01-convert-jpa-basic`
 2. `02-convert-jpa-advanced`
 
-## 실행 방법
+## Running Tests
 
 ```bash
-# 서브모듈 단독 실행
+# Run submodule individually
 ./gradlew :07-jpa:01-convert-jpa-basic:test
 ./gradlew :07-jpa:02-convert-jpa-advanced:test
 
-# 전체 챕터 실행
+# Run the entire chapter
 ./gradlew :07-jpa:test
 ```
 
-## 테스트 포인트
+## Test Points
 
-- 전환 전/후 동일 입력에 대해 결과가 동등한지 검증한다.
-- 트랜잭션/락 동작이 기존 정책과 일관된지 확인한다.
+- Verify that results are equivalent for the same input before and after migration.
+- Confirm that transaction/lock behavior is consistent with the original policy.
 
-## 성능·안정성 체크포인트
+## Performance and Stability Checkpoints
 
-- 지연 로딩 의존 코드 제거 여부를 점검한다.
-- 쿼리 수/응답 시간 회귀를 계측으로 검토한다.
+- Check whether lazy-loading-dependent code has been removed.
+- Review query count/response time regressions through measurements.
 
-## 복잡한 시나리오 가이드
+## Complex Scenario Guide
 
-### 관계 매핑 패턴 (`01-convert-jpa-basic/ex05_relations/`)
+### Relationship Mapping Patterns (`01-convert-jpa-basic/ex05_relations/`)
 
-| JPA 어노테이션            | Exposed 구현 파일                                                                                                                                                                                              |
-|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `@OneToOne` (단방향)    | [`ex05_relations/ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt)               |
-| `@OneToOne` (양방향)    | [`ex05_relations/ex01_one_to_one/Ex02_OneToOne_Bidirectional.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex02_OneToOne_Bidirectional.kt)                 |
-| `@OneToOne @MapsId`  | [`ex05_relations/ex01_one_to_one/Ex03_OneToOne_Unidirectional_MapsId.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex03_OneToOne_Unidirectional_MapsId.kt) |
-| `@OneToMany` (배치 삽입) | [`ex05_relations/ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt) |
-| `@OneToMany` N+1 해결  | [`ex05_relations/ex02_one_to_many/Ex03_OneToMany_N_plus_1_Order.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/Ex03_OneToMany_N_plus_1_Order.kt)           |
-| `@ManyToMany`        | [`ex05_relations/ex04_many_to_many/Ex01_ManyToMany_Bank.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex04_many_to_many/Ex01_ManyToMany_Bank.kt)                           |
+| JPA Annotation            | Exposed Implementation File                                                                                                                                                                                   |
+|---------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `@OneToOne` (unidirectional) | [`ex05_relations/ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt)            |
+| `@OneToOne` (bidirectional) | [`ex05_relations/ex01_one_to_one/Ex02_OneToOne_Bidirectional.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex02_OneToOne_Bidirectional.kt)              |
+| `@OneToOne @MapsId`       | [`ex05_relations/ex01_one_to_one/Ex03_OneToOne_Unidirectional_MapsId.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex03_OneToOne_Unidirectional_MapsId.kt) |
+| `@OneToMany` (batch insert) | [`ex05_relations/ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt) |
+| `@OneToMany` N+1 solution | [`ex05_relations/ex02_one_to_many/Ex03_OneToMany_N_plus_1_Order.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/Ex03_OneToMany_N_plus_1_Order.kt)          |
+| `@ManyToMany`             | [`ex05_relations/ex04_many_to_many/Ex01_ManyToMany_Bank.kt`](01-convert-jpa-basic/src/test/kotlin/exposed/examples/jpa/ex05_relations/ex04_many_to_many/Ex01_ManyToMany_Bank.kt)                          |
 
-### JPA Inheritance 전략 vs Exposed (`02-convert-jpa-advanced/ex03_inheritance/`)
+### JPA Inheritance Strategies vs Exposed (`02-convert-jpa-advanced/ex03_inheritance/`)
 
-| JPA 전략 | Exposed 구현 파일 |
+| JPA Strategy | Exposed Implementation File |
 |---|---|
 | `@Inheritance(SINGLE_TABLE)` | [`Ex01_SingleTable_Inheritance.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance.kt) |
 | `@Inheritance(JOINED)` | [`Ex02_Joined_Table_Inheritance.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance.kt) |
 | `@Inheritance(TABLE_PER_CLASS)` | [`Ex03_TablePerClass_Inheritance.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance.kt) |
 
-### 서브쿼리 및 고급 쿼리 (`02-convert-jpa-advanced/`)
+### Subqueries and Advanced Queries (`02-convert-jpa-advanced/`)
 
-- **서브쿼리**: [`ex02_subquery/Ex01_SubQuery.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex02_subquery/Ex01_SubQuery.kt)
-- **셀프 조인 / 트리 구조**: [`ex04_tree/Ex01_TreeNode.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt)
-- **Auditable 엔티티** (생성/수정 타임스탬프): [`ex05_auditable/Ex01_AuditableEntity.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex05_auditable/Ex01_AuditableEntity.kt)
-- **낙관적 잠금(Optimistic Lock)**: [`ex07_version/Ex01_Version.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex07_version/Ex01_Version.kt)
+- **Subqueries**: [`ex02_subquery/Ex01_SubQuery.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex02_subquery/Ex01_SubQuery.kt)
+- **Self-join / Tree structure**: [`ex04_tree/Ex01_TreeNode.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt)
+- **Auditable entities** (created/updated timestamps): [`ex05_auditable/Ex01_AuditableEntity.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex05_auditable/Ex01_AuditableEntity.kt)
+- **Optimistic Locking**: [`ex07_version/Ex01_Version.kt`](02-convert-jpa-advanced/src/test/kotlin/exposed/examples/jpa/ex07_version/Ex01_Version.kt)
 
-## 다음 챕터
+## Next Chapter
 
-- [08-coroutines](../08-coroutines/README.md): 코루틴/Virtual Thread 기반 Exposed 운영 패턴으로 확장합니다.
+- [08-coroutines](../08-coroutines/README.md): Expand into coroutine/Virtual Thread-based Exposed operation patterns.

@@ -1,43 +1,43 @@
 # 04 Exposed DDL
 
-Exposed에서 데이터베이스 연결과 스키마 정의(DDL)를 다루는 챕터로, 커넥션 구성부터 테이블/제약조건 작성까지 실습합니다.
+English | [한국어](./README.ko.md)
 
-## 개요
+A chapter covering database connection and schema definition (DDL) in Exposed, from connection setup to table and constraint authoring.
 
-이 챕터는 Exposed 애플리케이션의 기반이 되는 두 가지 주제를 다룹니다. **연결 관리**(`01-connection`)에서는
-`Database.connect`와 HikariCP 풀 설정, 예외/타임아웃/다중 DB 처리를 실습합니다. **스키마 정의**(`02-ddl`)에서는 `Table` 선언, 인덱스, 시퀀스, 커스텀 enum,
-`SchemaUtils`를 활용한 DDL 실행을 다룹니다.
+## Overview
 
-## 학습 목표
+This chapter covers two foundational topics for Exposed applications. **Connection management** (`01-connection`) covers `Database.connect`, HikariCP pool configuration, and exception/timeout/multi-DB handling. **Schema definition** (`02-ddl`) covers `Table` declarations, indexes, sequences, custom enums, and DDL execution via `SchemaUtils`.
 
-- Exposed `Database.connect` 연결 설정과 DataSource 통합 방식을 정리한다.
-- 테이블, 인덱스, 제약조건을 선언적으로 작성하는 패턴을 익힌다.
-- DDL을 실행할 때 DB Dialect별 특성 및 이식성 검증 흐름을 수립한다.
+## Learning Objectives
 
-## 포함 모듈
+- Understand `Database.connect` configuration and DataSource integration patterns.
+- Learn to write tables, indexes, and constraints declaratively.
+- Establish a verification flow for DB Dialect differences and portability when executing DDL.
 
-| 모듈              | 설명                                                         |
-|-----------------|------------------------------------------------------------|
-| `01-connection` | 각 DB Dialect용 DataSource 설정과 Exposed `Database.connect` 구성 |
-| `02-ddl`        | 테이블/인덱스/제약조건 선언과 `SchemaUtils`를 활용한 DDL 실행                 |
+## Included Modules
 
-## 아키텍처 흐름
+| Module          | Description                                                          |
+|-----------------|----------------------------------------------------------------------|
+| `01-connection` | DataSource configuration for each DB Dialect and `Database.connect` |
+| `02-ddl`        | Table/index/constraint declarations and DDL execution via `SchemaUtils` |
+
+## Architecture Flow
 
 ```mermaid
 flowchart LR
-    subgraph App["애플리케이션"]
+    subgraph App["Application"]
         DB["Database.connect(url, driver)"]
         TP["TransactionManager"]
         TX["transaction { ... }"]
     end
 
-    subgraph DDL["스키마 관리"]
+    subgraph DDL["Schema Management"]
         SC["SchemaUtils.create(tables)"]
         SM["SchemaUtils.createMissingTablesAndColumns(tables)"]
         SD["SchemaUtils.drop(tables)"]
     end
 
-    subgraph Pool["커넥션 풀 (HikariCP)"]
+    subgraph Pool["Connection Pool (HikariCP)"]
         DS["DataSource"]
     end
 
@@ -56,37 +56,37 @@ flowchart LR
     class DS orange
 ```
 
-## 선수 지식
+## Prerequisites
 
-- `03-exposed-basic`에서 DSL/DAO 흐름을 이해한 상태
-- JDBC DataSource 및 트랜잭션 기본 개념
+- Familiarity with DSL/DAO flow from `03-exposed-basic`
+- Basic knowledge of JDBC DataSource and transactions
 
-## 권장 학습 순서
+## Recommended Study Order
 
-1. `01-connection` — 연결 초기화, 예외 처리, 커넥션 풀
-2. `02-ddl` — 테이블/인덱스/시퀀스/enum 선언
+1. `01-connection` — connection initialization, exception handling, connection pool
+2. `02-ddl` — table/index/sequence/enum declarations
 
-## 테스트 실행 방법
+## Running Tests
 
 ```bash
-# 연결 관리 모듈 테스트
+# Connection management module tests
 ./gradlew :04-exposed-ddl:01-connection:test
 
-# DDL 모듈 테스트
+# DDL module tests
 ./gradlew :04-exposed-ddl:02-ddl:test
 
-# H2만 대상으로 빠른 테스트
+# Fast tests targeting H2 only
 ./gradlew :04-exposed-ddl:01-connection:test -PuseFastDB=true
 ./gradlew :04-exposed-ddl:02-ddl:test -PuseFastDB=true
 ```
 
-## 테스트 포인트
+## Test Points
 
-- 각 Dialect에서 스키마 생성·삭제가 테스트 간 독립적으로 동작하는지 확인한다.
-- 제약조건 위반이나 인덱스 중복 시 예외가 의도대로 발생하는지 검증한다.
-- 누락된 인덱스로 인한 풀스캔 가능성을 찾아낸다.
-- DB별 DDL 차이로 인한 이식성 이슈를 테스트 코드로 문서화한다.
+- Verify that schema creation and deletion per Dialect are independent across tests.
+- Validate that constraint violations or duplicate index errors are raised as expected.
+- Identify full-scan risks caused by missing indexes.
+- Document portability issues from DDL differences per DB using test code.
 
-## 다음 챕터
+## Next Chapter
 
-- [05-exposed-dml](../05-exposed-dml/README.md): DML/트랜잭션/Entity API 중심 학습으로 넘어갑니다.
+- [05-exposed-dml](../05-exposed-dml/README.md): Moves on to DML/transactions/Entity API.
