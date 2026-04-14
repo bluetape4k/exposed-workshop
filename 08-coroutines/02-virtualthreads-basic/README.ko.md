@@ -52,16 +52,10 @@ val ids = futures.awaitAll()
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Application
-        participant C as Caller (일반 코드)
-    end
-    box rgb(243, 229, 245) Virtual Threads
-        participant VT as newVirtualThreadJdbcTransaction
-        participant VTA as virtualThreadJdbcTransactionAsync
-    end
-    box rgb(255, 243, 224) Database
-        participant DB as Database
-    end
+    participant C as Caller (일반 코드)
+    participant VT as newVirtualThreadJdbcTransaction
+    participant VTA as virtualThreadJdbcTransactionAsync
+    participant DB as Database
 
     C->>VT: newVirtualThreadJdbcTransaction { }
     Note over VT: JVM이 Virtual Thread 생성, 플랫폼 스레드에 마운트

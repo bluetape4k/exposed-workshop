@@ -157,24 +157,14 @@ classDiagram
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Client
-        participant C as HTTP Client
-    end
-    box rgb(224, 242, 241) Filter / Context
-        participant F as TenantHeaderFilter
-        participant TC as TenantContext
-    end
-    box rgb(232, 245, 233) Application
-        participant Ctrl as RoutingMarkerController
-    end
-    box rgb(243, 229, 245) DataSource Routing
-        participant DS as DynamicRoutingDataSource
-        participant KR as ContextAwareRoutingKeyResolver
-        participant Reg as InMemoryDataSourceRegistry
-    end
-    box rgb(255, 243, 224) Database
-        participant DB as DataSource (selected)
-    end
+    participant C as HTTP Client
+    participant F as TenantHeaderFilter
+    participant TC as TenantContext
+    participant Ctrl as RoutingMarkerController
+    participant DS as DynamicRoutingDataSource
+    participant KR as ContextAwareRoutingKeyResolver
+    participant Reg as InMemoryDataSourceRegistry
+    participant DB as DataSource (selected)
     C ->> F: GET /routing/marker\nX-Tenant-Id: acme
     F ->> TC: withTenant("acme") { ... }
     F ->> Ctrl: doFilter → enter controller

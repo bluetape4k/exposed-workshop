@@ -22,19 +22,11 @@ Spring Data R2DBC는 완전 Non-blocking R2DBC 드라이버 위에서 Spring Dat
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Client
-        participant Client as WebClient
-    end
-    box rgb(224, 242, 241) Spring Layer
-        participant PC as PostController
-    end
-    box rgb(232, 245, 233) Repository
-        participant PR as PostRepository
-        participant CR as CommentRepository
-    end
-    box rgb(255, 243, 224) Database
-        participant DB as H2/PostgreSQL
-    end
+    participant Client as WebClient
+    participant PC as PostController
+    participant PR as PostRepository
+    participant CR as CommentRepository
+    participant DB as H2/PostgreSQL
     Client ->> PC: GET /posts/{id}
     PC ->> PR: findById(id) [suspend]
     PR ->> DB: R2DBC Non-blocking SELECT

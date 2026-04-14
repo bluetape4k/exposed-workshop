@@ -101,14 +101,10 @@ class Application
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Client
-        participant Boot as Spring Boot
-    end
-    box rgb(224, 242, 241) Spring Layer
-        participant AC as ExposedAutoConfiguration
-        participant STM as SpringTransactionManager
-        participant DI as DatabaseInitializer
-    end
+    participant Boot as Spring Boot
+    participant AC as ExposedAutoConfiguration
+    participant STM as SpringTransactionManager
+    participant DI as DatabaseInitializer
 
     Boot->>AC: auto-configure 실행
     AC->>STM: SpringTransactionManager 빈 등록

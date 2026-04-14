@@ -125,19 +125,11 @@ class BookService(
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Client
-        participant Client
-    end
-    box rgb(232, 245, 233) Service
-        participant BookService
-    end
-    box rgb(224, 242, 241) Spring Layer
-        participant TxTemplate as TransactionTemplate
-        participant STM as SpringTransactionManager
-    end
-    box rgb(255, 243, 224) Database
-        participant DB
-    end
+    participant Client
+    participant BookService
+    participant TxTemplate as TransactionTemplate
+    participant STM as SpringTransactionManager
+    participant DB
 
     Client->>BookService: executeSpringTransaction()
     BookService->>TxTemplate: execute { createNewAuthor() }

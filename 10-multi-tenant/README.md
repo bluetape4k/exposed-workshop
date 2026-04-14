@@ -156,20 +156,12 @@ All modules follow the flow below. Only the context propagation mechanism differ
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Client
-        participant Client
-    end
-    box rgb(224, 242, 241) Filter / Context
-        participant Filter
-        participant Context
-    end
-    box rgb(232, 245, 233) Application
-        participant Controller
-        participant Repository
-    end
-    box rgb(255, 243, 224) Database
-        participant DB
-    end
+    participant Client
+    participant Filter
+    participant Context
+    participant Controller
+    participant Repository
+    participant DB
 
     Client->>Filter: GET /actors (X-TENANT-ID: {tenant})
     Filter->>Context: Bind tenant (ThreadLocal / ScopedValue / ReactorContext)

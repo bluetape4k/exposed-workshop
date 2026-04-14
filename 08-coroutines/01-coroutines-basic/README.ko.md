@@ -63,16 +63,10 @@ newSuspendedTransaction(singleThreadDispatcher) { ... }
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(243, 229, 245) Async
-        participant C as Coroutine (runSuspendIO)
-    end
-    box rgb(224, 242, 241) Transaction
-        participant T1 as newSuspendedTransaction
-        participant T2 as suspendedTransactionAsync
-    end
-    box rgb(255, 243, 224) Database
-        participant DB as Database
-    end
+    participant C as Coroutine (runSuspendIO)
+    participant T1 as newSuspendedTransaction
+    participant T2 as suspendedTransactionAsync
+    participant DB as Database
 
     C->>T1: newSuspendedTransaction(Dispatchers.IO)
     T1->>DB: BEGIN
@@ -100,18 +94,10 @@ sequenceDiagram
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Application
-        participant App
-    end
-    box rgb(243, 229, 245) Async
-        participant CoroutineContext as CoroutineContext (Dispatchers.IO)
-    end
-    box rgb(224, 242, 241) Transaction
-        participant ExposedDB as Exposed Transaction
-    end
-    box rgb(255, 243, 224) Database
-        participant DB as Database
-    end
+    participant App
+    participant CoroutineContext as CoroutineContext (Dispatchers.IO)
+    participant ExposedDB as Exposed Transaction
+    participant DB as Database
 
     App->>CoroutineContext: newSuspendedTransaction { }
     CoroutineContext->>ExposedDB: transaction block 시작

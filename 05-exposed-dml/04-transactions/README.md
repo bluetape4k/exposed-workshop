@@ -132,15 +132,9 @@ flowchart TD
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(243, 229, 245) Async
-        participant C as Caller (Coroutine)
-    end
-    box rgb(224, 242, 241) Transaction
-        participant T as newSuspendedTransaction
-    end
-    box rgb(255, 243, 224) Database
-        participant DB as Database
-    end
+    participant C as Caller (Coroutine)
+    participant T as newSuspendedTransaction
+    participant DB as Database
 
     C ->> T: newSuspendedTransaction(Dispatchers.IO)
     T ->> DB: BEGIN

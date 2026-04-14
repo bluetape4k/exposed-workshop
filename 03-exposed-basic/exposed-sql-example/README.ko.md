@@ -41,16 +41,10 @@ erDiagram
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Application
-        participant App as 애플리케이션
-    end
-    box rgb(232, 245, 233) Exposed Layer
-        participant TX as transaction { }
-        participant DSL as Exposed DSL
-    end
-    box rgb(255, 243, 224) Database
-        participant DB as Database
-    end
+    participant App as 애플리케이션
+    participant TX as transaction { }
+    participant DSL as Exposed DSL
+    participant DB as Database
 
     App ->> TX: transaction { }
     TX ->> DSL: CityTable.insert { it[name] = "Seoul" }

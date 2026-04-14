@@ -176,24 +176,14 @@ flowchart LR
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Client
-        participant Client
-    end
-    box rgb(255, 243, 224) Server
-        participant Tomcat
-    end
-    box rgb(224, 242, 241) Filter / Interceptor
-        participant TenantFilter
-        participant TenantContext
-        participant TransactionSchemaAspect
-    end
-    box rgb(232, 245, 233) Application
-        participant ActorController
-        participant ActorExposedRepository
-    end
-    box rgb(255, 243, 224) Database
-        participant Database
-    end
+    participant Client
+    participant Tomcat
+    participant TenantFilter
+    participant TenantContext
+    participant TransactionSchemaAspect
+    participant ActorController
+    participant ActorExposedRepository
+    participant Database
 
     Client->>Tomcat: GET /actors (X-TENANT-ID: english)
     Note over Tomcat: VirtualThread assigned (newVirtualThreadPerTaskExecutor)

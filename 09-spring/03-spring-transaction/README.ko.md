@@ -160,18 +160,10 @@ object OrderSchema {
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Test
-        participant Test
-    end
-    box rgb(232, 245, 233) Service
-        participant OrderService
-    end
-    box rgb(224, 242, 241) Spring Layer
-        participant STM as SpringTransactionManager
-    end
-    box rgb(255, 243, 224) Database
-        participant DB
-    end
+    participant Test
+    participant OrderService
+    participant STM as SpringTransactionManager
+    participant DB
 
     Test->>OrderService: doBoth(customerName, productName)
     Note over OrderService: @Transactional(REQUIRED) → BEGIN

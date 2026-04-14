@@ -183,20 +183,12 @@ AbstractJdbcRedissonRepository --> RedisCacheConfig
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Client
-        participant C as Client
-    end
-    box rgb(232, 245, 233) Repository
-        participant R as UserEventCacheRepository
-    end
-    box rgb(252, 228, 236) Cache
-        participant NC as Near Cache (L1)
-        participant RD as Redis (L2)
-        participant Q as Async Write Queue
-    end
-    box rgb(255, 243, 224) Database
-        participant DB as Database
-    end
+    participant C as Client
+    participant R as UserEventCacheRepository
+    participant NC as Near Cache (L1)
+    participant RD as Redis (L2)
+    participant Q as Async Write Queue
+    participant DB as Database
     C ->> R: saveAll(events)
     R ->> NC: put events (즉시)
     R ->> RD: put events (즉시)
@@ -219,19 +211,11 @@ sequenceDiagram
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Client
-        participant C as Client
-    end
-    box rgb(232, 245, 233) Repository
-        participant R as UserCacheRepository
-    end
-    box rgb(252, 228, 236) Cache
-        participant NC as Near Cache (L1)
-        participant RD as Redis (L2)
-    end
-    box rgb(255, 243, 224) Database
-        participant DB as Database
-    end
+    participant C as Client
+    participant R as UserCacheRepository
+    participant NC as Near Cache (L1)
+    participant RD as Redis (L2)
+    participant DB as Database
     C ->> R: findById(id)
     R ->> NC: get(id)
     NC -->> R: miss

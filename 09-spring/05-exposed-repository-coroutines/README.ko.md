@@ -156,19 +156,11 @@ class MovieTransactionalService(
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Client
-        participant Client
-    end
-    box rgb(224, 242, 241) Spring Layer
-        participant Controller
-    end
-    box rgb(243, 229, 245) Async / Coroutine
-        participant Repository
-        participant STM as newSuspendedTransaction
-    end
-    box rgb(255, 243, 224) Database
-        participant DB
-    end
+    participant Client
+    participant Controller
+    participant Repository
+    participant STM as newSuspendedTransaction
+    participant DB
 
     Note over Client,DB: 코루틴 경로 (WebFlux)
     Client->>Controller: HTTP GET (suspend)

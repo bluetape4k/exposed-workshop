@@ -20,16 +20,10 @@ Hibernate Reactive retains the existing JPA annotations (`@Entity`, `@OneToMany`
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Client
-        participant C as TeamController
-    end
-    box rgb(243, 229, 245) Reactive Layer
-        participant SF as Mutiny.SessionFactory
-        participant R as TeamSessionRepository
-    end
-    box rgb(255, 243, 224) Database
-        participant DB as PostgreSQL
-    end
+    participant C as TeamController
+    participant SF as Mutiny.SessionFactory
+    participant R as TeamSessionRepository
+    participant DB as PostgreSQL
     C ->> SF: withSession { session -> }
     SF ->> R: findAllByName(session, name)
     R ->> DB: Criteria query (Non-blocking)

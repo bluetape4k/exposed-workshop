@@ -239,19 +239,11 @@ class SuspendedRepositoryConfig {
 ```mermaid
 %%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
 sequenceDiagram
-    box rgb(227, 242, 253) Client
-        participant Client
-    end
-    box rgb(243, 229, 245) Async / Coroutine
-        participant Cached as CachedCountrySuspendedRepository
-        participant Default as DefaultCountrySuspendedRepository
-    end
-    box rgb(252, 228, 236) Cache
-        participant Cache as LettuceSuspendedCache (Redis)
-    end
-    box rgb(255, 243, 224) Database
-        participant DB
-    end
+    participant Client
+    participant Cached as CachedCountrySuspendedRepository
+    participant Default as DefaultCountrySuspendedRepository
+    participant Cache as LettuceSuspendedCache (Redis)
+    participant DB
 
     Client->>Cached: suspend findByCode("KR")
     Cached->>Cache: suspend get("KR")
