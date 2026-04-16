@@ -75,9 +75,168 @@ classDiagram
 
 ## 핵심 개념
 
-- `MonetaryAmount` <-> 복합 컬럼 매핑
-- 통화 코드 기반 필터링
-- 기본값/클라이언트 기본값
+### Composite Money 컬럼 선언
+
+```kotlin
+object AccountTable : IntIdTable("accounts") {
+    // compositeMoney는 두 개 컬럼 생성: amount와 currency_code
+    val balance: Column<MonetaryAmount?> = compositeMoney("composite_money", nullable = true)
+    val amount: Column<BigDecimal?> get() = balance.amount
+    val currency: Column<CurrencyUnit?> get() = balance.currency
+}
+```
+
+생성되는 DDL (PostgreSQL):
+
+```sql
+CREATE TABLE accounts (
+    id                  SERIAL PRIMARY KEY,
+    composite_money     DECIMAL(8,5),      -- 금액 컬럼
+    composite_money_C   VARCHAR(3)         -- 통화 코드 컬럼
+);
+```
+
+### CRUD 작업
+
+```kotlin
+withTables(testDB, AccountTable) {
+    // INSERT with MonetaryAmount
+    val accountId = AccountTable.insertAndGetId {
+        it[balance] = Money.of(BigDecimal("1000.50"), "USD")
+    }
+
+    // SELECT는 MonetaryAmount 객체 반환
+    val account = AccountTable.selectAll().where { 
+        AccountTable.id eq accountId 
+    }.single()
+    val money = account[AccountTable.balance]      // MonetaryAmount
+    println(money.number.numberValue(BigDecimal::class.java))  // 1000.50
+    println(money.currency.currencyCode)           // "USD"
+
+    // UPDATE with 새 금액/통화
+    AccountTable.update({ AccountTable.id eq accountId }) {
+        it[balance] = Money.of(BigDecimal("2000.00"), "EUR")
+    }
+}
+```
+
+### DAO 패턴
+
+```kotlin
+object AccountTable : IntIdTable("accounts") {
+    val balance = compositeMoney("composite_money", nullable = true)
+}
+
+class AccountEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<AccountEntity>(AccountTable)
+    var balance: MonetaryAmount? by AccountTable.balance
+}
+
+// 사용
+val account = AccountEntity.new {
+    balance = Money.of(BigDecimal("500.00"), "KRW")
+}
+println("잔액: ${account.balance}")
+```
+
+### 통화 코드 필터링
+
+```kotlin
+// currency 컴포넌트를 이용해 통화로 계정 조회
+AccountTable.selectAll()
+    .where { AccountTable.currency eq "USD" }
+    .forEach { row ->
+        val money = row[AccountTable.balance]
+        println("USD 금액: ${money?.number}")
+    }
+
+// 통화별 계정 수 집계
+AccountTable.selectAll()
+    .where { AccountTable.currency eq "EUR" }
+    .count()
+```
+
+## Advanced Scenarios
+
+### 정밀도 및 스케일 설정
+
+`compositeMoney` 컬럼은 금액을 `DECIMAL(precision, scale)`로 저장합니다. 적절하게 설정하세요:
+
+```kotlin
+// 예: 총 8자리, 소수점 5자리 (최대 999.99999 지원)
+val balance = compositeMoney("balance")
+
+// 더 큰 금액을 위해 정밀도 조정
+// DECIMAL(15, 2)는 최대 9999999999999.99 지원
+```
+
+**관련 테스트**: `Ex02_Money.kt` → `insertMoneyWithOverflow`
+
+### Null 처리 전략
+
+```kotlin
+val optionalBalance = compositeMoney("balance", nullable = true)
+val requiredBalance = compositeMoney("balance", nullable = false)
+
+// nullable인 경우: amount와 currency 모두 null 가능
+// not nullable인 경우: 둘 다 반드시 존재해야 함
+```
+
+**관련 테스트**: `Ex01_MoneyDefaults.kt` → `nullableCompositeMoney`
+
+### 기본값 설정
+
+```kotlin
+object AccountTable : IntIdTable("accounts") {
+    val balance = compositeMoney("balance", nullable = true)
+        .clientDefault { Money.of(BigDecimal.ZERO, "USD") }
+}
+
+// INSERT 시 balance를 지정하지 않으면 기본값 적용 (USD 0.00)
+val id = AccountTable.insertAndGetId {
+    // balance 미지정 → USD 0.00 기본값 사용
+}
+```
+
+**관련 테스트**: `Ex01_MoneyDefaults.kt` → `moneyWithDefaults`
+
+## 주의사항
+
+1. **스케일 정밀도 간과**
+    - ❌ `DECIMAL(8, 5)`는 999.99999 이하만 지원
+    - ✅ 실무에서는 `DECIMAL(15, 2)` 이상 사용
+
+2. **통화를 무시하고 금액만 조회**
+    - ❌ `where { AccountTable.amount greaterThan BigDecimal("100") }`
+    - ✅ 항상 통화 컨텍스트 확인: `where { AccountTable.currency eq "USD" and (AccountTable.amount greaterThan ...) }`
+
+3. **금융 금액에 Float/Double 사용**
+    - ❌ `var balance: Double` (정밀도 손실)
+    - ✅ 항상 `BigDecimal` 사용
+
+4. **통화 누락**
+    - ❌ 금액만 설정하고 통화는 미지정 → NULL 통화 결과
+    - ✅ 항상 `Money.of(금액, 통화코드)`로 둘 다 설정
+
+## 성능 팁
+
+- **인덱싱**: 통화 코드 기반 쿼리를 위해 인덱스 생성
+  ```sql
+  CREATE INDEX idx_accounts_currency ON accounts(composite_money_C);
+  ```
+- **배치 작업**: 여러 계정 삽입 시 `batchInsert` 사용
+  ```kotlin
+  AccountTable.batchInsert(accounts) { account ->
+      this[balance] = Money.of(account.amount, account.currencyCode)
+  }
+  ```
+- **집계**: DBMS는 같은 통화의 금액들을 합산 가능
+  ```kotlin
+  AccountTable.selectAll()
+      .where { AccountTable.currency eq "USD" }
+      .map { it[AccountTable.balance]?.number?.numberValue(BigDecimal::class.java) ?: BigDecimal.ZERO }
+      .reduce { acc, value -> acc + value }
+  ```
 
 ## 예제 구성
 

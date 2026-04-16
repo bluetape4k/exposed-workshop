@@ -177,13 +177,13 @@ suspend fun withSuspendedCityUsers(testDB: TestDB, statement: suspend JdbcTransa
 
 ```bash
 # Full tests
-./gradlew :03-exposed-basic:exposed-sql-example:test
+./gradlew :exposed-sql-example:test
 
 # Fast tests targeting H2 only
-./gradlew :03-exposed-basic:exposed-sql-example:test -PuseFastDB=true
+./gradlew :exposed-sql-example:test -PuseFastDB=true
 
 # Run a specific test class
-./gradlew :03-exposed-basic:exposed-sql-example:test \
+./gradlew :exposed-sql-example:test \
     --tests "exposed.sql.example.ExposedSQLExample"
 ```
 

@@ -244,11 +244,12 @@ Binds the tenant to the request thread via `ThreadLocal<Tenants.Tenant>`. The `w
 
 ```kotlin
 inline fun withTenant(tenant: Tenants.Tenant = getCurrentTenant(), block: () -> Unit) {
+    val previous = getCurrentTenantOrNull()
     setCurrentTenant(tenant)
     try {
         block()
     } finally {
-        clear()
+        if (previous != null) setCurrentTenant(previous) else clear()
     }
 }
 ```
@@ -261,13 +262,20 @@ A singleton object managing the list of supported tenants (`KOREAN`, `ENGLISH`) 
 
 Switches the schema via an AOP `@Before` advice before entering a class or method annotated with `@Transactional`. Transparently applies the schema without modifying service code.
 
+The implementation directly sets the schema on the Spring-managed transaction connection using
+`DataSourceUtils`, rather than using `SchemaUtils.setSchema()` inside an Exposed
+`transaction {}` block. This ensures the schema is applied on the same connection that the business logic will use.
+
 ```kotlin
 @Before("@within(...Transactional) || @annotation(...Transactional)")
 fun setSchemaForTransaction() {
-    transaction {
-        val schema = TenantContext.getCurrentTenantSchema()
-        SchemaUtils.setSchema(schema)
-        commit()
+    val tenant = TenantContext.getCurrentTenant()
+    val schemaName = tenant.id
+    val conn = DataSourceUtils.getConnection(dataSource)
+    try {
+        conn.schema = schemaName
+    } finally {
+        DataSourceUtils.releaseConnection(conn, dataSource)
     }
 }
 ```

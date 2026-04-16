@@ -261,12 +261,14 @@ An extension function that wraps `newSuspendedTransaction` to automatically hand
 suspend fun <T> newSuspendedTransactionWithTenant(
     tenant: Tenant? = null,
     db: Database? = null,
+    transactionIsolation: Int? = null,
+    readOnly: Boolean? = null,
     statement: suspend JdbcTransaction.() -> T,
 ): T {
     val currentTenant = tenant ?: currentTenant()
     val context = Dispatchers.IO + TenantId(currentTenant)
 
-    return newSuspendedTransaction(context, db) {
+    return newSuspendedTransaction(context, db, transactionIsolation, readOnly) {
         SchemaUtils.setSchema(getSchemaDefinition(currentTenant))
         statement()
     }

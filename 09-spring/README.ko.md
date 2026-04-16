@@ -91,7 +91,7 @@ class DataSourceConfig: TransactionManagementConfigurer {
 
 ```kotlin
 @Repository
-class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
+class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
     override val table = MovieTable
     override fun ResultRow.toEntity() = toMovieRecord()
 
@@ -104,7 +104,7 @@ class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
 
 ```kotlin
 @Repository
-class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
+class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
 
     suspend fun create(movie: MovieRecord): MovieRecord = /* newSuspendedTransaction 내부 */
         MovieTable.insertAndGetId { ... }.let { movie.copy(id = it.value) }

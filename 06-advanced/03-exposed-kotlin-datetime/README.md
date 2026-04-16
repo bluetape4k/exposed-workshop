@@ -82,9 +82,44 @@ classDiagram
 
 ## Key Concepts
 
-- `kotlinx.datetime.LocalDate/Instant`
-- Multiplatform time handling
-- DB storage type mapping
+### Kotlin DateTime Column Declaration
+
+```kotlin
+object KotlinDateTimeTable : IntIdTable("kotlin_datetime_table") {
+    val birthDate = date("birth_date")              // kotlinx.datetime.LocalDate
+    val lastActivity = datetime("last_activity")    // kotlinx.datetime.LocalDateTime
+    val recordedAt = timestamp("recorded_at")       // kotlin.time.Instant
+    val eventTime = time("event_time")              // kotlinx.datetime.LocalTime
+}
+```
+
+### CRUD with Kotlin DateTime
+
+```kotlin
+withTables(testDB, KotlinDateTimeTable) {
+    // INSERT
+    val id = KotlinDateTimeTable.insertAndGetId {
+        it[birthDate] = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        it[lastActivity] = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+        it[recordedAt] = Clock.System.now()
+    }
+
+    // SELECT returns Kotlin datetime objects
+    val row = KotlinDateTimeTable.selectAll().where { 
+        KotlinDateTimeTable.id eq id 
+    }.single()
+    
+    println(row[KotlinDateTimeTable.birthDate])     // kotlinx.datetime.LocalDate
+}
+```
+
+### Time-based Query
+
+```kotlin
+val recentDate = Clock.System.todayIn(TimeZone.currentSystemDefault()).minus(1, DateTimeUnit.MONTH)
+KotlinDateTimeTable.selectAll()
+    .where { KotlinDateTimeTable.birthDate greaterEq recentDate }
+```
 
 ## Example Files
 

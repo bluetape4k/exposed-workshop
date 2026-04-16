@@ -82,9 +82,44 @@ classDiagram
 
 ## 핵심 개념
 
-- `kotlinx.datetime.LocalDate/Instant`
-- 멀티플랫폼 시간 처리
-- DB 저장 타입 매핑
+### Kotlin DateTime 컬럼 선언
+
+```kotlin
+object KotlinDateTimeTable : IntIdTable("kotlin_datetime_table") {
+    val birthDate = date("birth_date")              // kotlinx.datetime.LocalDate
+    val lastActivity = datetime("last_activity")    // kotlinx.datetime.LocalDateTime
+    val recordedAt = timestamp("recorded_at")       // kotlin.time.Instant
+    val eventTime = time("event_time")              // kotlinx.datetime.LocalTime
+}
+```
+
+### Kotlin DateTime으로 CRUD
+
+```kotlin
+withTables(testDB, KotlinDateTimeTable) {
+    // INSERT
+    val id = KotlinDateTimeTable.insertAndGetId {
+        it[birthDate] = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        it[lastActivity] = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+        it[recordedAt] = Clock.System.now()
+    }
+
+    // SELECT는 Kotlin datetime 객체 반환
+    val row = KotlinDateTimeTable.selectAll().where { 
+        KotlinDateTimeTable.id eq id 
+    }.single()
+    
+    println(row[KotlinDateTimeTable.birthDate])     // kotlinx.datetime.LocalDate
+}
+```
+
+### 시간 기반 조회
+
+```kotlin
+val recentDate = Clock.System.todayIn(TimeZone.currentSystemDefault()).minus(1, DateTimeUnit.MONTH)
+KotlinDateTimeTable.selectAll()
+    .where { KotlinDateTimeTable.birthDate greaterEq recentDate }
+```
 
 ## 예제 구성
 

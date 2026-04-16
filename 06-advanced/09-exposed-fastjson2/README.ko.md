@@ -61,9 +61,95 @@ flowchart LR
 
 ## 핵심 개념
 
-- Fastjson2 직렬화/역직렬화
-- JSON 컬럼 매핑
-- 라이브러리별 호환성
+### Fastjson2 설정과 JSON 컬럼
+
+```kotlin
+@Data
+data class DataHolder(
+    val user: String,
+    val logins: Int,
+    val active: Boolean,
+    val team: String?,
+)
+
+object Fastjson2Table : IntIdTable("fastjson2_table") {
+    val name = varchar("name", 50)
+    // JSON 컬럼에 Fastjson2 직렬화 적용
+    val data = json<DataHolder>("data", JsonFormat.DefaultJsonFormat).nullable()
+}
+```
+
+생성된 DDL (PostgreSQL):
+
+```sql
+CREATE TABLE IF NOT EXISTS fastjson2_table (
+    id    SERIAL PRIMARY KEY,
+    name  VARCHAR(50) NOT NULL,
+    data  JSON        NULL
+)
+```
+
+### Fastjson2를 사용한 CRUD
+
+```kotlin
+withTables(testDB, Fastjson2Table) {
+    // INSERT — 자동 Fastjson2 직렬화
+    val id = Fastjson2Table.insertAndGetId {
+        it[name] = "example"
+        it[data] = DataHolder("Alice", 5, true, "Team A")
+    }
+
+    // SELECT는 역직렬화된 객체 반환
+    val row = Fastjson2Table.selectAll().where { Fastjson2Table.id eq id }.single()
+    val dataObject = row[Fastjson2Table.data]  // DataHolder 인스턴스
+    println("User: ${dataObject?.user}, Logins: ${dataObject?.logins}")
+
+    // UPDATE — 새 객체로 갱신
+    Fastjson2Table.update({ Fastjson2Table.id eq id }) {
+        it[data] = DataHolder("Bob", 10, false, "Team B")
+    }
+}
+```
+
+### DAO 패턴과 Fastjson2
+
+```kotlin
+class DataEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<DataEntity>(Fastjson2Table)
+    var name by Fastjson2Table.name
+    var data by Fastjson2Table.data
+}
+
+val entity = DataEntity.new {
+    name = "test"
+    data = DataHolder("Charlie", 3, true, null)
+}
+println("Entity data: ${entity.data}")
+```
+
+### Jackson과 Fastjson2 결과 비교
+
+```kotlin
+// 동일 객체에 대한 직렬화 비교
+val obj = DataHolder("test", 1, true, "team")
+
+// Jackson 출력 (ObjectMapper 사용)
+val jacksonOutput = jacksonObjectMapper.writeValueAsString(obj)
+
+// Fastjson2 출력
+val fastjsonOutput = JSON.toJSONString(obj)
+
+println("Jackson: $jacksonOutput")
+println("Fastjson2: $fastjsonOutput")
+// 주의: 필드 순서, null 처리 방식에서 차이가 있을 수 있음
+```
+
+## 고급 시나리오
+
+- **보안 설정**: 자동 타입 제한 및 JSON 파싱 옵션 점검
+- **성능 비교**: 큰 객체에 대해 Fastjson2 vs Jackson 벤치마크
+- **데이터 호환성**: Jackson으로 마이그레이션할 때 직렬화 포맷 호환성 보장
+- **커스텀 타입 처리**: 도메인별 특수 타입을 위한 직렬화기 등록
 
 ## 실행 방법
 

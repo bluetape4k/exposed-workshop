@@ -7,7 +7,7 @@ It implements the `JdbcRepository` interface to learn a structure where the serv
 
 ## Learning Goals
 
-- Learn the `JdbcRepository<ID, Table, Record>` interface and implementation patterns.
+- Learn the `JdbcRepository<ID, Record>` interface and implementation patterns.
 - Understand how to mix Exposed DSL (`selectAll`, `insertAndGetId`, `innerJoin`) and DAO (`findById`, `load`) within a Repository.
 - Examine the mapper structure that separates domain entities (`MovieEntity`, `ActorEntity`) from transfer records (`MovieRecord`, `ActorRecord`).
 - Apply read-only path optimization with `@Transactional(readOnly = true)`.
@@ -98,9 +98,10 @@ classDiagram
 
 ```kotlin
 @Repository
-class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
+class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
 
     override val table = MovieTable
+    override fun extractId(entity: MovieRecord): Long = entity.id
     override fun ResultRow.toEntity(): MovieRecord = toMovieRecord()
 
     @Transactional(readOnly = true)
@@ -111,7 +112,8 @@ class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
                 MovieTable::name.name        -> value?.run { query.andWhere { MovieTable.name eq value } }
                 MovieTable::producerName.name -> value?.run { query.andWhere { MovieTable.producerName eq value } }
                 MovieTable::releaseDate.name -> value?.run {
-                    query.andWhere { MovieTable.releaseDate eq LocalDate.parse(value) }
+                    val date = runCatching { LocalDate.parse(value) }.getOrNull() ?: return@forEach
+                    query.andWhere { MovieTable.releaseDate eq date }
                 }
             }
         }
@@ -122,7 +124,7 @@ class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
         val id = MovieTable.insertAndGetId {
             it[name] = movieRecord.name
             it[producerName] = movieRecord.producerName
-            it[releaseDate] = LocalDate.parse(movieRecord.releaseDate)
+            it[releaseDate] = runCatching { LocalDate.parse(movieRecord.releaseDate) }.getOrElse { LocalDate.now() }
         }
         return movieRecord.copy(id = id.value)
     }

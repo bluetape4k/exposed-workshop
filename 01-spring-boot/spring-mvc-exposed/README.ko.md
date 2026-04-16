@@ -266,7 +266,7 @@ fun getMovieActorsCount(): List<MovieActorCountRecord> {
 `app.virtualthread.enabled=true`(기본값)일 때 Tomcat executor를 Virtual Thread 기반으로 전환합니다:
 
 ```kotlin
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true", matchIfMissing = true)
 class TomcatVirtualThreadConfig {
     @Bean

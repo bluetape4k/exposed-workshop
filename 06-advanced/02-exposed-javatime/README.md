@@ -81,11 +81,89 @@ classDiagram
 
 ## Key Concepts
 
-- `date`, `datetime`, `timestamp`, `timestampWithTimeZone`
-- `defaultExpression(CurrentTimestamp)`
-- Literal-based conditional queries
+### Java Time Column Declaration
 
-## Example Files
+```kotlin
+object JavaTimeTable : IntIdTable("java_time_table") {
+    val birthDate = date("birth_date")                           // LocalDate
+    val lastLogin = datetime("last_login")                       // LocalDateTime
+    val createdAt = timestamp("created_at")                      // Instant
+    val modifiedAt = timestampWithTimeZone("modified_at")       // OffsetDateTime
+    val eventTime = time("event_time")                           // LocalTime
+    val duration = duration("duration")                          // Duration
+    
+    // With defaults
+    val recordedAt = datetime("recorded_at").defaultExpression(CurrentDateTime())
+    val signedUpAt = timestamp("signed_up_at").clientDefault { Instant.now() }
+}
+```
+
+### CRUD Operations
+
+```kotlin
+withTables(testDB, JavaTimeTable) {
+    // INSERT with LocalDate and LocalDateTime
+    val id = JavaTimeTable.insertAndGetId {
+        it[birthDate] = LocalDate.of(1990, 5, 15)
+        it[lastLogin] = LocalDateTime.now()
+        it[createdAt] = Instant.now()
+        it[modifiedAt] = OffsetDateTime.now()
+    }
+
+    // SELECT returns java.time objects
+    val row = JavaTimeTable.selectAll().where { 
+        JavaTimeTable.id eq id 
+    }.single()
+    
+    val birth = row[JavaTimeTable.birthDate]      // LocalDate
+    val login = row[JavaTimeTable.lastLogin]      // LocalDateTime
+    val created = row[JavaTimeTable.createdAt]    // Instant
+    
+    // UPDATE time fields
+    JavaTimeTable.update({ JavaTimeTable.id eq id }) {
+        it[lastLogin] = LocalDateTime.now()
+        it[modifiedAt] = OffsetDateTime.now(ZoneId.of("Asia/Seoul"))
+    }
+}
+```
+
+### Time-based Queries
+
+```kotlin
+val recentDate = LocalDate.now().minusMonths(1)
+
+// Query by LocalDate
+JavaTimeTable.selectAll()
+    .where { JavaTimeTable.birthDate greaterEq recentDate }
+    .count()
+
+// Query by Instant with millisecond precision
+val oneHourAgo = Instant.now().minusSeconds(3600)
+JavaTimeTable.selectAll()
+    .where { JavaTimeTable.createdAt greaterEq oneHourAgo }
+
+// Time literal comparisons
+JavaTimeTable.selectAll()
+    .where { JavaTimeTable.eventTime.cast<LocalTime>(LocalTimeColumnType()) less LocalTime.of(12, 0) }
+```
+
+### DAO Pattern
+
+```kotlin
+class EventEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<EventEntity>(JavaTimeTable)
+    var eventTime by JavaTimeTable.eventTime
+    var createdAt by JavaTimeTable.createdAt
+}
+
+val event = EventEntity.new {
+    eventTime = LocalTime.now()
+    createdAt = Instant.now()
+}
+println("Event at ${event.eventTime} on ${event.createdAt}")
+```
+
+## Advanced Scenarios
 
 | File                      | Description          |
 |---------------------------|----------------------|

@@ -189,13 +189,13 @@ withSuspendedCityUsers(testDB) {
 
 ```bash
 # 전체 테스트
-./gradlew :03-exposed-basic:exposed-dao-example:test
+./gradlew :exposed-dao-example:test
 
 # H2만 대상으로 빠른 테스트
-./gradlew :03-exposed-basic:exposed-dao-example:test -PuseFastDB=true
+./gradlew :exposed-dao-example:test -PuseFastDB=true
 
 # 특정 테스트 클래스만 실행
-./gradlew :03-exposed-basic:exposed-dao-example:test \
+./gradlew :exposed-dao-example:test \
     --tests "exposed.dao.example.ExposedDaoExample"
 ```
 

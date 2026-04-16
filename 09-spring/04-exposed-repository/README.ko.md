@@ -7,7 +7,7 @@
 
 ## 학습 목표
 
-- `JdbcRepository<ID, Table, Record>` 인터페이스와 구현체 패턴을 익힌다.
+- `JdbcRepository<ID, Record>` 인터페이스와 구현체 패턴을 익힌다.
 - Exposed DSL(`selectAll`, `insertAndGetId`, `innerJoin`) 과 DAO(`findById`, `load`) 를 Repository 내부에서 혼용하는 방법을 이해한다.
 - 도메인 엔티티(`MovieEntity`, `ActorEntity`)와 전송 레코드(`MovieRecord`, `ActorRecord`)를 분리하는 매퍼 구조를 확인한다.
 - `@Transactional(readOnly = true)` 로 읽기 전용 경로를 최적화하는 방법을 적용한다.
@@ -98,9 +98,10 @@ classDiagram
 
 ```kotlin
 @Repository
-class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
+class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
 
     override val table = MovieTable
+    override fun extractId(entity: MovieRecord): Long = entity.id
     override fun ResultRow.toEntity(): MovieRecord = toMovieRecord()
 
     @Transactional(readOnly = true)
@@ -111,7 +112,8 @@ class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
                 MovieTable::name.name        -> value?.run { query.andWhere { MovieTable.name eq value } }
                 MovieTable::producerName.name -> value?.run { query.andWhere { MovieTable.producerName eq value } }
                 MovieTable::releaseDate.name -> value?.run {
-                    query.andWhere { MovieTable.releaseDate eq LocalDate.parse(value) }
+                    val date = runCatching { LocalDate.parse(value) }.getOrNull() ?: return@forEach
+                    query.andWhere { MovieTable.releaseDate eq date }
                 }
             }
         }
@@ -122,7 +124,7 @@ class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
         val id = MovieTable.insertAndGetId {
             it[name] = movieRecord.name
             it[producerName] = movieRecord.producerName
-            it[releaseDate] = LocalDate.parse(movieRecord.releaseDate)
+            it[releaseDate] = runCatching { LocalDate.parse(movieRecord.releaseDate) }.getOrElse { LocalDate.now() }
         }
         return movieRecord.copy(id = id.value)
     }

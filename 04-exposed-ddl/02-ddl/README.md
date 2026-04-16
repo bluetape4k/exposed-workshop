@@ -6,7 +6,9 @@ A module for defining tables, columns, indexes, sequences, and custom enums usin
 
 ## Overview
 
-Schema definition in Exposed is done through `object` declarations. You extend `Table`, `IntIdTable`, `UUIDTable`, etc. to declare columns and constraints, then execute DDL via `SchemaUtils.create()` / `createMissingTablesAndColumns()`. DB Dialect differences (PostgreSQL, MySQL, H2) are validated with parameterized tests.
+Schema definition in Exposed is done through `object` declarations. You extend `Table`, `IntIdTable`,
+`UUIDTable`, etc. to declare columns and constraints, then execute DDL via `SchemaUtils.create()`. For migration, use
+`MigrationUtils.statementsRequiredForDatabaseMigration()` to generate and apply the required DDL statements. DB Dialect differences (PostgreSQL, MySQL, H2) are validated with parameterized tests.
 
 ## Learning Objectives
 
@@ -31,10 +33,10 @@ flowchart LR
         IDX["Indexes\n(index, uniqueIndex, functional)"]
     end
 
-    subgraph SchemaUtils["SchemaUtils"]
-        CR["create(tables)"]
-        CM["createMissingTablesAndColumns(tables)"]
-        DR["drop(tables)"]
+    subgraph SchemaUtils["SchemaUtils / MigrationUtils"]
+        CR["SchemaUtils.create(tables)"]
+        CM["MigrationUtils.statementsRequiredForDatabaseMigration(tables)"]
+        DR["SchemaUtils.drop(tables)"]
     end
 
     subgraph DB["Database"]
@@ -277,15 +279,16 @@ object EnumTable : Table("enum_table") {
 }
 ```
 
-### Using SchemaUtils
+### Using SchemaUtils / MigrationUtils
 
 ```kotlin
 transaction {
     // Create tables
     SchemaUtils.create(CityTable, UserTable)
 
-    // Add only missing tables/columns (migration)
-    SchemaUtils.createMissingTablesAndColumns(CityTable, UserTable)
+    // Generate migration statements for missing tables/columns, then apply each
+    MigrationUtils.statementsRequiredForDatabaseMigration(CityTable, UserTable)
+        .forEach { statement -> exec(statement) }
 
     // Drop tables
     SchemaUtils.drop(CityTable, UserTable)
@@ -330,7 +333,10 @@ After defining a 2-column composite PK, creates composite FKs using both `foreig
 
 ### Schema Migration (`Ex03_CreateMissingTableAndColumns.kt`)
 
-Uses `createMissingTablesAndColumns` to add a missing `uniqueIndex` to an existing table, or remove the `autoIncrement` attribute. Verifies behavior when two Exposed Table objects point to the same physical table.
+Uses
+`MigrationUtils.statementsRequiredForDatabaseMigration` to generate the DDL statements needed for migration, then applies them via
+`exec()`. This can add a missing `uniqueIndex` to an existing table, or remove the
+`autoIncrement` attribute. Verifies behavior when two Exposed Table objects point to the same physical table.
 
 ### Custom Column Type — Enum (`Ex07_CustomEnumeration.kt`)
 
@@ -353,7 +359,7 @@ Includes 38 scenarios: check constraints, cross-schema FK, unique index referenc
 - Compare query execution plans before and after adding indexes.
 - Compare enum/sequence support differences per DB.
 - Assess locking impact of DDL operations before production deployment.
-- Review unexpected changes when using `createMissingTablesAndColumns`.
+- Review unexpected changes when using `MigrationUtils.statementsRequiredForDatabaseMigration`.
 
 ## Next Chapter
 

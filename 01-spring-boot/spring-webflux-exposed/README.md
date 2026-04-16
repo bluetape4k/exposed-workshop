@@ -307,8 +307,27 @@ suspend fun getMovieActorsCount(): List<MovieActorCountRecord> {
 ### Netty Server Tuning
 
 ```kotlin
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class NettyConfig {
+    @Bean
+    fun nettyReactiveWebServerFactory(): NettyReactiveWebServerFactory {
+        return NettyReactiveWebServerFactory().apply {
+            addServerCustomizers(EventLoopNettyCustomer())
+        }
+    }
+
+    class EventLoopNettyCustomer : NettyServerCustomizer {
+        override fun apply(httpServer: HttpServer): HttpServer {
+            return httpServer
+                .option(ChannelOption.SO_KEEPALIVE, true)
+                .option(ChannelOption.SO_BACKLOG, 8_000)
+                .doOnConnection { conn ->
+                    conn.addHandlerLast(ReadTimeoutHandler(10))
+                    conn.addHandlerLast(WriteTimeoutHandler(10))
+                }
+        }
+    }
+
     @Bean
     fun reactorResourceFactory(): ReactorResourceFactory {
         return ReactorResourceFactory().apply {

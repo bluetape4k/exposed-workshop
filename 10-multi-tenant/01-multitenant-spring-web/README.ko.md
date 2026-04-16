@@ -246,11 +246,12 @@ override fun doFilter(request: ServletRequest, response: ServletResponse, chain:
 
 ```kotlin
 inline fun withTenant(tenant: Tenants.Tenant = getCurrentTenant(), block: () -> Unit) {
+    val previous = getCurrentTenantOrNull()
     setCurrentTenant(tenant)
     try {
         block()
     } finally {
-        clear()
+        if (previous != null) setCurrentTenant(previous) else clear()
     }
 }
 ```
@@ -263,13 +264,20 @@ inline fun withTenant(tenant: Tenants.Tenant = getCurrentTenant(), block: () -> 
 
 `@Transactional`이 선언된 클래스나 메서드 진입 전에 AOP `@Before` 어드바이스로 스키마를 전환합니다. 서비스 코드를 수정하지 않고 투명하게 스키마를 적용합니다.
 
+Exposed의
+`transaction { SchemaUtils.setSchema(...) }` 방식은 Spring이 관리하는 트랜잭션과 별개의 커넥션을 열어 스키마를 설정하므로, 실제 비즈니스 로직이 실행되는 커넥션에는 적용되지 않습니다. 대신
+`DataSourceUtils`를 통해 Spring 트랜잭션 커넥션에 직접 스키마를 설정합니다.
+
 ```kotlin
 @Before("@within(...Transactional) || @annotation(...Transactional)")
 fun setSchemaForTransaction() {
-    transaction {
-        val schema = TenantContext.getCurrentTenantSchema()
-        SchemaUtils.setSchema(schema)
-        commit()
+    val tenant = TenantContext.getCurrentTenant()
+    val schemaName = tenant.id
+    val conn = DataSourceUtils.getConnection(dataSource)
+    try {
+        conn.schema = schemaName
+    } finally {
+        DataSourceUtils.releaseConnection(conn, dataSource)
     }
 }
 ```

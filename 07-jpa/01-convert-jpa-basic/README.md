@@ -38,8 +38,8 @@ An introductory module for migrating basic JPA CRUD and relationship code to Exp
 ```kotlin
 // Table definition
 object SimpleTable : LongIdTable("simple_entity") {
-    val name        = varchar("name", 128)
-    val description = text("description")
+    val name        = varchar("name", 255).uniqueIndex()
+    val description = text("description").nullable()
 }
 
 // Insert

@@ -65,9 +65,88 @@ flowchart LR
 
 ## 핵심 개념
 
-- 결정적 암호화
-- 검색 가능 암호화 컬럼
-- 키/솔트 관리 전략
+### 결정적 암호화 컬럼 선언
+
+```kotlin
+// 결정적 암호화용 Jasypt encryptor
+val emailEncryptor = Algorithms.DeterministicAES("mySecretPassword", "fixedSalt12345678")
+
+object JasyptTable : IntIdTable("jasypt_table") {
+    val name = varchar("name", 100)
+    // 결정적 암호화 — 동일 평문은 항상 동일 암호문 생성
+    val email = encryptedVarchar("email", 200, emailEncryptor)
+}
+```
+
+생성된 DDL (PostgreSQL):
+
+```sql
+CREATE TABLE IF NOT EXISTS jasypt_table (
+    id     SERIAL PRIMARY KEY,
+    name   VARCHAR(100) NOT NULL,
+    email  VARCHAR(200) NOT NULL
+)
+```
+
+### 결정적 암호화로 CRUD
+
+```kotlin
+withTables(testDB, JasyptTable) {
+    // INSERT — 자동 암호화
+    val id = JasyptTable.insertAndGetId {
+        it[name] = "Alice"
+        it[email] = "alice@example.com"  // 암호화되어 저장됨
+    }
+
+    // SELECT — 자동 복호화
+    val row = JasyptTable.selectAll().where { JasyptTable.id eq id }.single()
+    println("Email: ${row[JasyptTable.email]}")  // alice@example.com (복호화됨)
+
+    // UPDATE — 새 암호화 값으로 갱신
+    JasyptTable.update({ JasyptTable.id eq id }) {
+        it[email] = "alice.new@example.com"
+    }
+}
+```
+
+### 암호화된 컬럼에 WHERE 검색
+
+```kotlin
+// 핵심 이점: WHERE 조건이 암호화된 필드에서 동작
+// WHERE 값도 내부적으로 암호화되어 비교됨
+JasyptTable.selectAll()
+    .where { JasyptTable.email eq "alice@example.com" }  // 평문을 내부적으로 암호화
+    .forEach { row -> println(row[JasyptTable.name]) }
+
+// 주의: 동일 평문은 항상 동일 암호문 생성
+// WHERE 절에서 결정적 비교를 가능하게 함
+```
+
+### DAO 패턴과 결정적 암호화
+
+```kotlin
+class AccountEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<AccountEntity>(JasyptTable)
+    var name by JasyptTable.name
+    var email by JasyptTable.email
+}
+
+val account = AccountEntity.new {
+    name = "Bob"
+    email = "bob@example.com"
+}
+
+// 암호화된 필드로 조회
+val found = AccountEntity.find { JasyptTable.email eq "bob@example.com" }.firstOrNull()
+println("Found: ${found?.name}")  // Found: Bob
+```
+
+## 고급 시나리오
+
+- **키 회전**: 새 키/솔트로 데이터 재암호화 전략
+- **패턴 노출 위험**: 결정적 암호화는 동일 평문 반복을 드러냄
+- **솔트 관리**: 암호화 솔트의 안전한 저장 및 회전
+- **Null 처리**: 암호화 컬럼의 NULL 값 처리 방식
 
 ## 실행 방법
 

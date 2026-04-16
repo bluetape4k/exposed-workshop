@@ -135,14 +135,14 @@ class User(id: EntityID<Int>) : IntEntity(id) {
 
 ```bash
 # DSL example tests
-./gradlew :03-exposed-basic:exposed-sql-example:test
+./gradlew :exposed-sql-example:test
 
 # DAO example tests
-./gradlew :03-exposed-basic:exposed-dao-example:test
+./gradlew :exposed-dao-example:test
 
 # Fast tests targeting H2 only
-./gradlew :03-exposed-basic:exposed-sql-example:test -PuseFastDB=true
-./gradlew :03-exposed-basic:exposed-dao-example:test -PuseFastDB=true
+./gradlew :exposed-sql-example:test -PuseFastDB=true
+./gradlew :exposed-dao-example:test -PuseFastDB=true
 ```
 
 ## Test Points

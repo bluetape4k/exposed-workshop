@@ -65,9 +65,88 @@ flowchart LR
 
 ## Key Concepts
 
-- Deterministic encryption
-- Searchable encrypted columns
-- Key/salt management strategy
+### Deterministic Encrypted Column Declaration
+
+```kotlin
+// Jasypt encryptor for deterministic encryption
+val emailEncryptor = Algorithms.DeterministicAES("mySecretPassword", "fixedSalt12345678")
+
+object JasyptTable : IntIdTable("jasypt_table") {
+    val name = varchar("name", 100)
+    // Deterministic encryption — same plaintext always produces same ciphertext
+    val email = encryptedVarchar("email", 200, emailEncryptor)
+}
+```
+
+Generated DDL (PostgreSQL):
+
+```sql
+CREATE TABLE IF NOT EXISTS jasypt_table (
+    id     SERIAL PRIMARY KEY,
+    name   VARCHAR(100) NOT NULL,
+    email  VARCHAR(200) NOT NULL
+)
+```
+
+### CRUD with Deterministic Encryption
+
+```kotlin
+withTables(testDB, JasyptTable) {
+    // INSERT — automatic encryption
+    val id = JasyptTable.insertAndGetId {
+        it[name] = "Alice"
+        it[email] = "alice@example.com"  // Stored as encrypted value
+    }
+
+    // SELECT — automatic decryption
+    val row = JasyptTable.selectAll().where { JasyptTable.id eq id }.single()
+    println("Email: ${row[JasyptTable.email]}")  // alice@example.com (decrypted)
+
+    // UPDATE with new encrypted value
+    JasyptTable.update({ JasyptTable.id eq id }) {
+        it[email] = "alice.new@example.com"
+    }
+}
+```
+
+### WHERE Clause Search on Encrypted Column
+
+```kotlin
+// Key advantage: Search works on encrypted field without decryption
+// The WHERE value is also encrypted for comparison
+JasyptTable.selectAll()
+    .where { JasyptTable.email eq "alice@example.com" }  // Encrypts plaintext internally
+    .forEach { row -> println(row[JasyptTable.name]) }
+
+// NOTE: Identical plaintext always produces identical ciphertext
+// allowing deterministic comparison in WHERE clauses
+```
+
+### DAO Pattern with Deterministic Encryption
+
+```kotlin
+class AccountEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<AccountEntity>(JasyptTable)
+    var name by JasyptTable.name
+    var email by JasyptTable.email
+}
+
+val account = AccountEntity.new {
+    name = "Bob"
+    email = "bob@example.com"
+}
+
+// Query by encrypted field
+val found = AccountEntity.find { JasyptTable.email eq "bob@example.com" }.firstOrNull()
+println("Found: ${found?.name}")  // Found: Bob
+```
+
+## Advanced Scenarios
+
+- **Key Rotation**: Plan strategy to re-encrypt data with new key/salt
+- **Pattern Exposure Risk**: Deterministic encryption reveals when same plaintext appears
+- **Salt Management**: Secure storage and rotation of encryption salt
+- **Null Handling**: How NULL values in encrypted columns are handled
 
 ## Running Tests
 

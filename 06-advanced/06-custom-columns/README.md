@@ -147,6 +147,52 @@ classDiagram
 | `compressedBinary()`          | `BINARY`/`BYTEA`   | Compression | LZ4, Snappy, Zstd             | ByteArray compressed storage          |
 | `compressedBlob()`            | `BLOB`             | Compression | LZ4, Snappy, Zstd             | ByteArray compressed BLOB storage     |
 | `encryptedBinary()`           | `BINARY`/`BYTEA`   | Encryption | AES-GCM, AES-CBC, Blowfish, 3DES | ByteArray encrypted storage        |
+
+## Key Concepts
+
+### Binary Serialized Column
+
+```kotlin
+@Serializable
+data class Config(val setting1: String, val setting2: Int)
+
+object CustomColumnTable: IntIdTable("custom_table") {
+    // Store Kotlin object as serialized binary
+    val config = binarySerializedBinary<Config>("config")
+}
+
+// Usage
+withTables(testDB, CustomColumnTable) {
+    val id = CustomColumnTable.insertAndGetId {
+        it[config] = Config("value1", 100)
+    }
+
+    val row = CustomColumnTable.selectAll().single()
+    val config = row[CustomColumnTable.config]    // Deserialized Config object
+}
+```
+
+### Compressed Binary Column
+
+```kotlin
+object CompressedTable: IntIdTable("compressed") {
+    val data = compressedBinary("data")  // LZ4/Zstd compression
+}
+
+val bytes = "Large data content".toByteArray()
+CompressedTable.insertAndGetId {
+    it[data] = bytes  // Auto-compressed on write
+}
+
+val row = CompressedTable.selectAll().single()
+val original = row[CompressedTable.data]  // Auto-decompressed on read
+```
+
+## Advanced Scenarios
+
+- **Serialization Compatibility**: Test version upgrades with serialized objects
+- **Compression Trade-offs**: Measure performance vs storage size
+- **Encryption Overhead**: Monitor query performance with encrypted columns
 | `encryptedVarChar()`          | `VARCHAR`          | Encryption | AES-GCM, AES-CBC, Blowfish, 3DES | String encrypted storage           |
 
 ## Key Concepts

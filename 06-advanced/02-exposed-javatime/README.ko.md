@@ -81,9 +81,88 @@ classDiagram
 
 ## 핵심 개념
 
-- `date`, `datetime`, `timestamp`, `timestampWithTimeZone`
-- `defaultExpression(CurrentTimestamp)`
-- 리터럴 기반 조건 조회
+### Java Time 컬럼 선언
+
+```kotlin
+object JavaTimeTable: IntIdTable("java_time_table") {
+    val birthDate = date("birth_date")                           // LocalDate
+    val lastLogin = datetime("last_login")                       // LocalDateTime
+    val createdAt = timestamp("created_at")                      // Instant
+    val modifiedAt = timestampWithTimeZone("modified_at")       // OffsetDateTime
+    val eventTime = time("event_time")                           // LocalTime
+    val duration = duration("duration")                          // Duration
+
+    // 기본값 포함
+    val recordedAt = datetime("recorded_at").defaultExpression(CurrentDateTime())
+    val signedUpAt = timestamp("signed_up_at").clientDefault { Instant.now() }
+}
+```
+
+### CRUD 작업
+
+```kotlin
+withTables(testDB, JavaTimeTable) {
+    // INSERT with LocalDate and LocalDateTime
+    val id = JavaTimeTable.insertAndGetId {
+        it[birthDate] = LocalDate.of(1990, 5, 15)
+        it[lastLogin] = LocalDateTime.now()
+        it[createdAt] = Instant.now()
+        it[modifiedAt] = OffsetDateTime.now()
+    }
+
+    // SELECT는 java.time 객체 반환
+    val row = JavaTimeTable.selectAll().where {
+        JavaTimeTable.id eq id
+    }.single()
+
+    val birth = row[JavaTimeTable.birthDate]      // LocalDate
+    val login = row[JavaTimeTable.lastLogin]      // LocalDateTime
+    val created = row[JavaTimeTable.createdAt]    // Instant
+
+    // UPDATE time 필드
+    JavaTimeTable.update({ JavaTimeTable.id eq id }) {
+        it[lastLogin] = LocalDateTime.now()
+        it[modifiedAt] = OffsetDateTime.now(ZoneId.of("Asia/Seoul"))
+    }
+}
+```
+
+### 시간 기반 조회
+
+```kotlin
+val recentDate = LocalDate.now().minusMonths(1)
+
+// LocalDate 기반 조회
+JavaTimeTable.selectAll()
+    .where { JavaTimeTable.birthDate greaterEq recentDate }
+    .count()
+
+// Instant 기반 조회 (밀리초 정밀도)
+val oneHourAgo = Instant.now().minusSeconds(3600)
+JavaTimeTable.selectAll()
+    .where { JavaTimeTable.createdAt greaterEq oneHourAgo }
+
+// 시간 리터럴 비교
+JavaTimeTable.selectAll()
+    .where { JavaTimeTable.eventTime.cast<LocalTime>(LocalTimeColumnType()) less LocalTime.of(12, 0) }
+```
+
+### DAO 패턴
+
+```kotlin
+class EventEntity(id: EntityID<Int>): IntEntity(id) {
+    companion object: IntEntityClass<EventEntity>(JavaTimeTable)
+
+    var eventTime by JavaTimeTable.eventTime
+    var createdAt by JavaTimeTable.createdAt
+}
+
+val event = EventEntity.new {
+    eventTime = LocalTime.now()
+    createdAt = Instant.now()
+}
+println("이벤트: ${event.eventTime} (${event.createdAt})")
+```
 
 ## 예제 구성
 

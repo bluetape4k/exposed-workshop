@@ -99,7 +99,7 @@ classDiagram
 
 ```kotlin
 @Repository
-class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
+class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
 
     override val table = MovieTable
     override fun ResultRow.toEntity() = toMovieRecord()
@@ -177,7 +177,7 @@ sequenceDiagram
 
 ```kotlin
 @Repository
-class MovieExposedRepository: JdbcRepository<Long, MovieTable, MovieRecord> {
+class MovieExposedRepository: JdbcRepository<Long, MovieRecord> {
 
     companion object: KLoggingChannel() {
         // 자주 사용하는 JOIN을 companion object에 lazy로 캐싱

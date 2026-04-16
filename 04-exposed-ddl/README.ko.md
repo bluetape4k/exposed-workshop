@@ -36,7 +36,7 @@ flowchart LR
 
     subgraph DDL["스키마 관리"]
         SC["SchemaUtils.create(tables)"]
-        SM["SchemaUtils.createMissingTablesAndColumns(tables)"]
+        SM["MigrationUtils.statementsRequiredForDatabaseMigration(tables)"]
         SD["SchemaUtils.drop(tables)"]
     end
 

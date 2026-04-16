@@ -114,42 +114,61 @@ data class Comment(
 ### Repository 선언
 
 ```kotlin
-// CrudRepository 기반 — 기본 CRUD 자동 제공
-interface PostRepository: CoroutineCrudRepository<Post, Long>
+// R2dbcEntityOperations 기반 — 직접 엔티티 연산
+@Repository
+@Transactional(readOnly = true)
+class PostRepository(
+    private val client: DatabaseClient,
+    private val operations: R2dbcEntityOperations,
+) {
+    suspend fun count(): Long = operations.countAllSuspending<Post>()
+    fun findAll(): Flow<Post> = operations.selectAllSuspending<Post>()
+    suspend fun findById(id: Long): Post = operations.findOneByIdSuspending(id)
 
-// 커스텀 @Query 사용
-interface CommentRepository: CoroutineCrudRepository<Comment, Long> {
-    suspend fun countByPostId(postId: Long): Long
-
-    @Query("SELECT * FROM comments WHERE post_id = :postId")
-    fun findByPostId(postId: Long): Flow<Comment>
+    @Transactional
+    suspend fun save(post: Post): Post = operations.insertSuspending(post)
 }
 
-// DatabaseClient 직접 활용
+// Criteria API 기반 커스텀 쿼리
 @Repository
-class CustomerRepository(private val client: DatabaseClient) {
-    suspend fun findByFirstname(firstname: String): List<Customer> =
-        client.sql("SELECT * FROM customer WHERE firstname = :name")
-            .bind("name", firstname)
-            .map { row, _ -> Customer(row["id"] as Long, row["firstname"] as String, row["lastname"] as String) }
-            .flow()
-            .toList()
+@Transactional(readOnly = true)
+class CommentRepository(
+    private val client: DatabaseClient,
+    private val operations: R2dbcEntityOperations,
+) {
+    suspend fun countByPostId(postId: Long): Long {
+        val query = Query.query(Criteria.where(Comment::postId.name).isEqual(postId))
+        return operations.countSuspending<Comment>(query)
+    }
+
+    fun findAllByPostId(postId: Long): Flow<Comment> {
+        val query = Query.query(Criteria.where(Comment::postId.name).isEqual(postId))
+        return operations.selectSuspending<Comment>(query)
+    }
+}
+
+// CoroutineCrudRepository 기반 — Spring Data 자동 구현
+interface CustomerRepository: CoroutineCrudRepository<Customer, Long> {
+    fun findByFirstname(firstname: String): Flow<Customer>
+
+    @Query("select id, firstname, lastname from customer c where c.lastname = :lastname")
+    fun findByLastname(lastname: String): Flow<Customer>
 }
 ```
 
 ## 핵심 구성 파일
 
-| 파일                                        | 설명                                     |
-|-------------------------------------------|----------------------------------------|
-| `domain/model/Post.kt`                    | Post R2DBC 엔티티                         |
-| `domain/model/Comment.kt`                 | Comment R2DBC 엔티티                      |
-| `domain/model/Customer.kt`                | Customer R2DBC 엔티티                     |
-| `domain/repository/PostRepository.kt`     | `CoroutineCrudRepository` 기반 Post CRUD |
-| `domain/repository/CommentRepository.kt`  | 집계·Flow 조회 Repository                  |
-| `domain/repository/CustomerRepository.kt` | `DatabaseClient` 직접 활용                 |
-| `controller/PostController.kt`            | REST API (`/posts`, `/posts/{id}`)     |
-| `config/R2dbcConfig.kt`                   | `ConnectionFactory` 설정                 |
-| `utils/DatabaseInitializer.kt`            | 스키마 초기화 (R2DBC DDL)                    |
+| 파일                                        | 설명                                    |
+|-------------------------------------------|---------------------------------------|
+| `domain/model/Post.kt`                    | Post R2DBC 엔티티                        |
+| `domain/model/Comment.kt`                 | Comment R2DBC 엔티티                     |
+| `domain/model/Customer.kt`                | Customer R2DBC 엔티티                    |
+| `domain/repository/PostRepository.kt`     | `R2dbcEntityOperations` 기반 Post CRUD  |
+| `domain/repository/CommentRepository.kt`  | Criteria API 기반 집계·Flow 조회 Repository |
+| `domain/repository/CustomerRepository.kt` | `CoroutineCrudRepository` 기반 자동 구현    |
+| `controller/PostController.kt`            | REST API (`/posts`, `/posts/{id}`)    |
+| `config/R2dbcConfig.kt`                   | `ConnectionFactory` 설정                |
+| `utils/DatabaseInitializer.kt`            | 스키마 초기화 (R2DBC DDL)                   |
 
 ## 테스트 파일 구성
 

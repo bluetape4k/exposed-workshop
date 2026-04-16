@@ -266,7 +266,7 @@ fun getMovieActorsCount(): List<MovieActorCountRecord> {
 When `app.virtualthread.enabled=true` (default), the Tomcat executor switches to Virtual Thread-based:
 
 ```kotlin
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty("app.virtualthread.enabled", havingValue = "true", matchIfMissing = true)
 class TomcatVirtualThreadConfig {
     @Bean
