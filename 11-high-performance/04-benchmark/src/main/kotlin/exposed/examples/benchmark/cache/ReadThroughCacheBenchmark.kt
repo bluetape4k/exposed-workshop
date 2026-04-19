@@ -2,6 +2,7 @@ package exposed.examples.benchmark.cache
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
+import io.bluetape4k.logging.KLogging
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.BenchmarkMode
 import org.openjdk.jmh.annotations.Fork
@@ -29,6 +30,8 @@ import java.util.concurrent.TimeUnit
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 open class ReadThroughCacheBenchmark {
+
+    companion object: KLogging()
 
     @Param("256", "4096")
     var payloadBytes: Int = 0
@@ -81,7 +84,11 @@ open class ReadThroughCacheBenchmark {
 data class UserPayload(
     val id: Long,
     val bytes: ByteArray,
-) {
+): java.io.Serializable {
+
+    companion object {
+        private const val serialVersionUID = 1L
+    }
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is UserPayload) return false

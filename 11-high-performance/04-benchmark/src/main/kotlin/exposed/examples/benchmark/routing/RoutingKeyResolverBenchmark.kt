@@ -1,6 +1,7 @@
 package exposed.examples.benchmark.routing
 
 import exposed.examples.routing.datasource.ContextAwareRoutingKeyResolver
+import io.bluetape4k.logging.KLogging
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.BenchmarkMode
 import org.openjdk.jmh.annotations.Fork
@@ -27,6 +28,8 @@ import java.util.concurrent.TimeUnit
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 open class RoutingKeyResolverBenchmark {
+
+    companion object: KLogging()
 
     @Param("tenant-a", "")
     var tenant: String = ""
