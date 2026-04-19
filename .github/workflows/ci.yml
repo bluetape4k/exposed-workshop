@@ -86,7 +86,7 @@ jobs:
           gradle-version: wrapper
           cache-read-only: true
       - name: Run tests with H2
-        run: ./gradlew test -PuseDB=H2 --parallel
+        run: ./gradlew test -PuseDB=H2 --continue
         env:
           GRADLE_OPTS: "-Dorg.gradle.daemon=false"
       - name: Upload test results
@@ -113,7 +113,7 @@ jobs:
           gradle-version: wrapper
           cache-read-only: true
       - name: Run tests with PostgreSQL
-        run: ./gradlew test -PuseDB=POSTGRESQL
+        run: ./gradlew test -PuseDB=POSTGRESQL --continue
         env:
           GRADLE_OPTS: "-Dorg.gradle.daemon=false"
       - name: Upload test results
@@ -140,7 +140,7 @@ jobs:
           gradle-version: wrapper
           cache-read-only: true
       - name: Run tests with MySQL 8
-        run: ./gradlew test -PuseDB=MYSQL_V8
+        run: ./gradlew test -PuseDB=MYSQL_V8 --continue
         env:
           GRADLE_OPTS: "-Dorg.gradle.daemon=false"
       - name: Upload test results

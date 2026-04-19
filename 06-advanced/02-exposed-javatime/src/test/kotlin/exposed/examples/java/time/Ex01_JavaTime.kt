@@ -202,19 +202,19 @@ class Ex01_JavaTime : AbstractExposedTest() {
 
             val maxTsExpr = testTable.ts.max()
             val maxTimestamp = testTable.select(maxTsExpr).single()[maxTsExpr]
-            maxTimestamp shouldBeEqualTo now
+            maxTimestamp shouldTemporalEqualTo now
 
             val minTsExpr = testTable.ts.min()
             val minTimestamp = testTable.select(minTsExpr).single()[minTsExpr]
-            minTimestamp shouldBeEqualTo now
+            minTimestamp shouldTemporalEqualTo now
 
             val maxTsnExpr = testTable.tsn.max()
             val maxTimestampNullable = testTable.select(maxTsnExpr).single()[maxTsnExpr]
-            maxTimestampNullable shouldBeEqualTo now
+            maxTimestampNullable shouldTemporalEqualTo now
 
             val minTsnExpr = testTable.tsn.min()
             val minTimestampNullable = testTable.select(minTsnExpr).single()[minTsnExpr]
-            minTimestampNullable shouldBeEqualTo now
+            minTimestampNullable shouldTemporalEqualTo now
         }
     }
 

@@ -892,6 +892,7 @@ class Ex02_Defaults: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testTimeDefaultDoesNotTriggerAlterStatement(testDB: TestDB) {
         val time = LocalDateTime.now(ZoneId.of("Asia/Seoul")).toLocalTime()
+            .truncatedTo(java.time.temporal.ChronoUnit.SECONDS)
 
         val tester = object: Table("tester") {
             val timeWithDefault = time("timeWithDefault").default(time)
