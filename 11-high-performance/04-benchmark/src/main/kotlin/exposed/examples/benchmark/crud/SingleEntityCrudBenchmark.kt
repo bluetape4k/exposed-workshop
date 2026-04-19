@@ -2,6 +2,7 @@ package exposed.examples.benchmark.crud
 
 import com.zaxxer.hikari.HikariDataSource
 import exposed.examples.benchmark.crud.model.PersonEntity
+import io.bluetape4k.logging.KLogging
 import exposed.examples.benchmark.crud.model.PersonJpa
 import exposed.examples.benchmark.crud.model.PersonTable
 import exposed.examples.benchmark.crud.setup.createDataSource
@@ -49,6 +50,8 @@ import java.util.concurrent.atomic.AtomicLong
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 open class SingleEntityCrudBenchmark {
 
+    companion object: KLogging()
+
     @Param("EXPOSED", "JPA")
     var framework: String = ""
 
@@ -84,10 +87,10 @@ open class SingleEntityCrudBenchmark {
     @TearDown(Level.Trial)
     fun tearDown() {
         when (framework) {
-            "EXPOSED" -> exposedDs.close()
+            "EXPOSED" -> runCatching { exposedDs.close() }
             "JPA"     -> {
-                emf.close()
-                jpaDs.close()
+                runCatching { emf.close() }
+                runCatching { jpaDs.close() }
             }
         }
     }

@@ -2,6 +2,7 @@ package exposed.examples.benchmark.crud
 
 import com.zaxxer.hikari.HikariDataSource
 import exposed.examples.benchmark.crud.model.PersonEntity
+import io.bluetape4k.logging.KLogging
 import exposed.examples.benchmark.crud.model.PersonJpa
 import exposed.examples.benchmark.crud.model.PersonTable
 import exposed.examples.benchmark.crud.setup.createDataSource
@@ -50,6 +51,8 @@ import java.util.concurrent.atomic.AtomicLong
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 open class ConcurrentCrudBenchmark {
 
+    companion object: KLogging()
+
     @Param("PLATFORM_EXPOSED", "VIRTUAL_EXPOSED", "PLATFORM_JPA", "VIRTUAL_JPA")
     var mode: String = ""
 
@@ -88,8 +91,8 @@ open class ConcurrentCrudBenchmark {
     fun tearDown() {
         executor.shutdown()
         executor.awaitTermination(30, TimeUnit.SECONDS)
-        emf?.close()
-        dataSource.close()
+        runCatching { emf?.close() }
+        runCatching { dataSource.close() }
     }
 
     // ── CONCURRENT CREATE (50건 동시 INSERT) ───────────
