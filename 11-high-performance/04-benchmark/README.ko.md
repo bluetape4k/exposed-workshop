@@ -117,10 +117,11 @@ flowchart TD
 
 ## 측정 대상
 
-| 벤치마크 클래스                      | 측정 항목                                | 단위               |
-|-------------------------------|--------------------------------------|------------------|
-| `ReadThroughCacheBenchmark`   | DB 직접 조회 / cache hit / cache miss 비용 | µs (AverageTime) |
-| `RoutingKeyResolverBenchmark` | `currentLookupKey()` 문자열 생성 비용       | ns (AverageTime) |
+| 벤치마크 클래스                              | 측정 항목                                | 단위               |
+|---------------------------------------|--------------------------------------|------------------|
+| `ReadThroughCacheBenchmark`           | DB 직접 조회 / cache hit / cache miss 비용 | µs (AverageTime) |
+| `RoutingKeyResolverBenchmark`         | `currentLookupKey()` 문자열 생성 비용       | ns (AverageTime) |
+| `CacheStrategyComparisonBenchmark`    | NoCache/ReadThrough/WriteThrough 전략 비교 (READ_HEAVY/WRITE_HEAVY 워크로드) | µs (AverageTime) |
 
 ---
 
@@ -159,13 +160,44 @@ classDiagram
         +currentLookupKey(): String
     }
 
+    class CacheStrategyComparisonBenchmark {
+        +strategyType: CacheStrategy [NO_CACHE, READ_THROUGH, WRITE_THROUGH]
+        +workloadPattern: WorkloadPattern [READ_HEAVY, WRITE_HEAVY]
+        +payloadBytes: Int [256, 4096]
+        -strategy: CacheStrategy
+        -pattern: WorkloadPattern
+        -operationCounter: AtomicLong
+        +setupTrial()
+        +tearDownTrial()
+        +executeOperation(): Unit
+    }
+
+    class CacheStrategy {
+        <<enum>>
+        NO_CACHE
+        READ_THROUGH
+        WRITE_THROUGH
+    }
+
+    class WorkloadPattern {
+        <<enum>>
+        READ_HEAVY (90:10)
+        WRITE_HEAVY (10:90)
+    }
+
     ReadThroughCacheBenchmark --> UserPayload
     RoutingKeyResolverBenchmark --> ContextAwareRoutingKeyResolver
+    CacheStrategyComparisonBenchmark --> CacheStrategy
+    CacheStrategyComparisonBenchmark --> WorkloadPattern
+    CacheStrategyComparisonBenchmark --> UserPayload
 
     style ReadThroughCacheBenchmark fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
     style RoutingKeyResolverBenchmark fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style CacheStrategyComparisonBenchmark fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
     style UserPayload fill:#FFF3E0,stroke:#FFCC80,color:#E65100
     style ContextAwareRoutingKeyResolver fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style CacheStrategy fill:#E0F2F1,stroke:#80CBC4,color:#00695C
+    style WorkloadPattern fill:#E0F2F1,stroke:#80CBC4,color:#00695C
 ```
 
 ---
@@ -193,6 +225,20 @@ classDiagram
 |------------|--------------------|-----------------------------------------|
 | `tenant`   | `"tenant-a"`, `""` | 실제 tenant / 빈 값(defaultTenant fallback) |
 | `readOnly` | `true`, `false`    | `:ro` / `:rw` 분기                        |
+
+### CacheStrategyComparisonBenchmark
+
+| 파라미터              | 값                                        | 설명                                            |
+|-------------------|------------------------------------------|-----------------------------------------------|
+| `strategyType`    | `NO_CACHE`, `READ_THROUGH`, `WRITE_THROUGH` | 테스트 대상 캐시 전략                                 |
+| `workloadPattern` | `READ_HEAVY` (90:10), `WRITE_HEAVY` (10:90) | 읽기/쓰기 작업 비율                                  |
+| `payloadBytes`    | 256, 4096                                | UserPayload 바이트 크기                            |
+| DB 크기             | 2,048 항목                                 | 인메모리 Map                                      |
+| Caffeine 최대 크기    | 4,096                                    | near-cache 한도 (READ_THROUGH/WRITE_THROUGH 용) |
+
+측정 메서드:
+
+- `executeOperation` — 선택된 전략에 대해 읽기/쓰기 혼합 워크로드를 실행합니다. 각 반복은 워크로드 비율에 따라 읽기 또는 쓰기를 수행합니다.
 
 ---
 
@@ -307,6 +353,19 @@ Measure --> RoutingKeyResolverBenchmark
 | `` (빈 값)   | `false`  | 0.004         | 0.002     | defaultTenant 폴백 분기         |
 
 > **요약**: 라우팅 키 계산 비용(~4 ns)은 실질적으로 무시 가능합니다. 캐시 miss 비용은 hit 대비 최대 40×로, **miss 빈도를 낮추는 것이 핵심 최적화 포인트**입니다.
+
+### CacheStrategyComparisonBenchmark
+
+| 전략             | 워크로드       | payloadBytes | Score (µs/op) | NoCache 대비    | 해석                                              |
+|----------------|------------|--------------|---------------|---------------|-------------------------------------------------|
+| `NO_CACHE`     | READ_HEAVY | 256          | 517.520       | 기준값           | 모든 읽기가 DB 직접 조회 — 읽기 부하에 최악                    |
+| `NO_CACHE`     | WRITE_HEAVY| 256          | 507.766       | 기준값           | 쓰기 위주 — 전략 무관하게 DB 오버헤드 유사                     |
+| `READ_THROUGH` | READ_HEAVY | 256          | 94.320        | **5.5× 빠름**   | 캐시가 90% 읽기를 흡수 — 대폭 개선                         |
+| `READ_THROUGH` | WRITE_HEAVY| 256          | 468.735       | 1.1× 빠름       | 캐시 읽기 비중 낮아 개선 미미                               |
+| `WRITE_THROUGH`| READ_HEAVY | 256          | 52.103        | **9.9× 빠름**   | 쓰기 시 캐시 워밍 + 읽기 히트 — 최고 성능                     |
+| `WRITE_THROUGH`| WRITE_HEAVY| 256          | 445.363       | 1.1× 빠름       | 캐시+DB 동시 쓰기 오버헤드 있으나 읽기에서 소폭 이점               |
+
+> **요약**: READ_HEAVY 워크로드에서 WriteThrough는 **9.9× 속도 향상**, ReadThrough는 **5.5× 속도 향상**을 달성합니다. WRITE_HEAVY 워크로드에서는 캐시 읽기 경로를 우회하므로 개선 효과가 미미합니다(~1.1×). **WriteThrough는 데이터가 자주 쓰여진 뒤 재읽기되는 패턴에 최적이고, ReadThrough는 읽기 위주 접근 패턴에 적합합니다.**
 
 ---
 
