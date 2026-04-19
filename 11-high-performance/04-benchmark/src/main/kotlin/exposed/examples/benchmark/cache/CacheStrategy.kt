@@ -3,6 +3,8 @@ package exposed.examples.benchmark.cache
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import io.bluetape4k.logging.KLogging
+import io.bluetape4k.support.requireNotBlank
+import io.bluetape4k.support.requirePositiveNumber
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.insert
@@ -17,6 +19,11 @@ data class CachePayload(
     val id: Long,
     val payload: String,
 ): java.io.Serializable {
+
+    init {
+        id.requirePositiveNumber("id")
+        payload.requireNotBlank("payload")
+    }
 
     companion object: KLogging() {
         private const val serialVersionUID = 1L

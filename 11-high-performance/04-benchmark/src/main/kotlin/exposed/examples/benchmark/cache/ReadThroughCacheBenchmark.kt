@@ -3,6 +3,7 @@ package exposed.examples.benchmark.cache
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import io.bluetape4k.logging.KLogging
+import io.bluetape4k.support.requirePositiveNumber
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.BenchmarkMode
 import org.openjdk.jmh.annotations.Fork
@@ -86,7 +87,11 @@ data class UserPayload(
     val bytes: ByteArray,
 ): java.io.Serializable {
 
-    companion object {
+    init {
+        id.requirePositiveNumber("id")
+    }
+
+    companion object: KLogging() {
         private const val serialVersionUID = 1L
     }
     override fun equals(other: Any?): Boolean {
