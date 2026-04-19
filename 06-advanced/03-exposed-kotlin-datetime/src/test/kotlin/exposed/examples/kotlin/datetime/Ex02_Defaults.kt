@@ -821,11 +821,11 @@ class Ex02_Defaults: AbstractExposedTest() {
         /**
          * ```sql
          * CREATE TABLE IF NOT EXISTS tester (
-         *      "timeWithDefault" TIME DEFAULT '00:30:49.341736'::time without time zone NOT NULL
+         *      "timeWithDefault" TIME DEFAULT '00:30:49'::time without time zone NOT NULL
          * );
          * ```
          */
-        val time = Clock.System.now().toLocalDateTime(TimeZone.of("Asia/Seoul")).time
+        val time = kotlinx.datetime.LocalTime(0, 30, 49)
         val tester = object: Table("tester") {
             val timeWithDefault = time("timeWithDefault").default(time)
         }

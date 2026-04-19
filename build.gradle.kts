@@ -131,7 +131,9 @@ subprojects {
                 "-XX:+UnlockExperimentalVMOptions",
                 "-XX:+EnableDynamicAgentLoading",
                 "--enable-preview",
-                "-Didea.io.use.nio2=true"
+                "-Didea.io.use.nio2=true",
+                "-Duser.language=en",
+                "-Duser.country=US"
             )
 
             // Gradle 프로퍼티를 JVM 시스템 프로퍼티로 전달하여 테스트 대상 DB를 제어합니다.
