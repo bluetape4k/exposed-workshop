@@ -38,11 +38,13 @@ build/
 .claude/*.lock
 .cluade/worktrees/
 
+.omc/
 .omc/sessions/
 .omc/state/
 .omc/logs/
 .omc/project-memory.json
 
+.omx/
 .omx/logs/
 .omx/metrics.json
 .omx/state/
