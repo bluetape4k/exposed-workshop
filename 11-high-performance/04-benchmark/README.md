@@ -116,10 +116,11 @@ flowchart TD
 
 ## Benchmarks
 
-| Benchmark Class               | Measured Items                              | Unit             |
-|-------------------------------|---------------------------------------------|------------------|
-| `ReadThroughCacheBenchmark`   | DB direct read / cache hit / cache miss cost | µs (AverageTime) |
-| `RoutingKeyResolverBenchmark` | `currentLookupKey()` string construction cost | ns (AverageTime) |
+| Benchmark Class                       | Measured Items                              | Unit             |
+|---------------------------------------|---------------------------------------------|------------------|
+| `ReadThroughCacheBenchmark`           | DB direct read / cache hit / cache miss cost | µs (AverageTime) |
+| `RoutingKeyResolverBenchmark`         | `currentLookupKey()` string construction cost | ns (AverageTime) |
+| `CacheStrategyComparisonBenchmark`    | NoCache/ReadThrough/WriteThrough strategy comparison across READ_HEAVY/WRITE_HEAVY workloads | µs (AverageTime) |
 
 ---
 
@@ -158,13 +159,44 @@ classDiagram
         +currentLookupKey(): String
     }
 
+    class CacheStrategyComparisonBenchmark {
+        +strategyType: CacheStrategy [NO_CACHE, READ_THROUGH, WRITE_THROUGH]
+        +workloadPattern: WorkloadPattern [READ_HEAVY, WRITE_HEAVY]
+        +payloadBytes: Int [256, 4096]
+        -strategy: CacheStrategy
+        -pattern: WorkloadPattern
+        -operationCounter: AtomicLong
+        +setupTrial()
+        +tearDownTrial()
+        +executeOperation(): Unit
+    }
+
+    class CacheStrategy {
+        <<enum>>
+        NO_CACHE
+        READ_THROUGH
+        WRITE_THROUGH
+    }
+
+    class WorkloadPattern {
+        <<enum>>
+        READ_HEAVY (90:10)
+        WRITE_HEAVY (10:90)
+    }
+
     ReadThroughCacheBenchmark --> UserPayload
     RoutingKeyResolverBenchmark --> ContextAwareRoutingKeyResolver
+    CacheStrategyComparisonBenchmark --> CacheStrategy
+    CacheStrategyComparisonBenchmark --> WorkloadPattern
+    CacheStrategyComparisonBenchmark --> UserPayload
 
     style ReadThroughCacheBenchmark fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
     style RoutingKeyResolverBenchmark fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
+    style CacheStrategyComparisonBenchmark fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
     style UserPayload fill:#FFF3E0,stroke:#FFCC80,color:#E65100
     style ContextAwareRoutingKeyResolver fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
+    style CacheStrategy fill:#E0F2F1,stroke:#80CBC4,color:#00695C
+    style WorkloadPattern fill:#E0F2F1,stroke:#80CBC4,color:#00695C
 ```
 
 ---
@@ -192,6 +224,20 @@ Measured methods:
 |------------|--------------------|-------------------------------------------|
 | `tenant`   | `"tenant-a"`, `""` | Real tenant / empty (defaultTenant fallback) |
 | `readOnly` | `true`, `false`    | `:ro` / `:rw` branch                      |
+
+### CacheStrategyComparisonBenchmark
+
+| Parameter         | Value                                    | Description                                           |
+|-------------------|------------------------------------------|-------------------------------------------------------|
+| `strategyType`    | `NO_CACHE`, `READ_THROUGH`, `WRITE_THROUGH` | Cache strategy under test                            |
+| `workloadPattern` | `READ_HEAVY` (90:10), `WRITE_HEAVY` (10:90) | Read/write operation ratio                           |
+| `payloadBytes`    | 256, 4096                                | UserPayload byte size                                 |
+| DB size           | 2,048 entries                            | In-memory Map                                         |
+| Caffeine max size | 4,096                                    | Near-cache limit (for READ_THROUGH/WRITE_THROUGH)    |
+
+Measured method:
+
+- `executeOperation` — Executes a mixed read/write workload against the selected strategy. Each iteration performs either a read or write based on the workload ratio.
 
 ---
 
@@ -306,6 +352,19 @@ Measure --> RoutingKeyResolverBenchmark
 | `` (empty) | `false`  | 0.004         | 0.002     | defaultTenant fallback branch          |
 
 > **Summary**: Routing key computation cost (~4 ns) is practically negligible. Cache miss cost is up to 40× higher than a hit, making **reducing miss frequency the key optimization target**.
+
+### CacheStrategyComparisonBenchmark
+
+| Strategy       | Workload     | payloadBytes | Score (µs/op) | vs NoCache   | Interpretation                                          |
+|----------------|--------------|--------------|---------------|--------------|---------------------------------------------------------|
+| `NO_CACHE`     | READ_HEAVY   | 256          | 517.520       | baseline     | Every read hits DB — worst case for read-heavy loads    |
+| `NO_CACHE`     | WRITE_HEAVY  | 256          | 507.766       | baseline     | Writes dominate — DB overhead similar regardless        |
+| `READ_THROUGH` | READ_HEAVY   | 256          | 94.320        | **5.5× faster** | Cache absorbs 90% reads — major speedup               |
+| `READ_THROUGH` | WRITE_HEAVY  | 256          | 468.735       | 1.1× faster  | Few reads to cache — minimal benefit                   |
+| `WRITE_THROUGH`| READ_HEAVY   | 256          | 52.103        | **9.9× faster** | Cache warmed by writes + read hits — best performance |
+| `WRITE_THROUGH`| WRITE_HEAVY  | 256          | 445.363       | 1.1× faster  | Write overhead to cache+DB, but reads still benefit    |
+
+> **Summary**: For READ_HEAVY workloads, WriteThrough achieves **9.9× speedup** and ReadThrough achieves **5.5× speedup** over NoCache. For WRITE_HEAVY workloads, caching provides marginal improvement (~1.1×) since most operations bypass the cache read path. **WriteThrough is optimal when data is frequently written then re-read; ReadThrough excels for read-dominant access patterns.**
 
 ---
 
