@@ -17,6 +17,7 @@ plugins {
     kotlin("kapt") version Versions.kotlin apply false
 
     id(Plugins.detekt) version Plugins.Versions.detekt
+    id(Plugins.kover) version Plugins.Versions.kover
 
     id(Plugins.dependency_management) version Plugins.Versions.dependency_management
     id(Plugins.spring_boot) version Plugins.Versions.spring_boot apply false
@@ -52,6 +53,7 @@ subprojects {
         plugin("org.jetbrains.kotlinx.atomicfu")
         plugin(Plugins.dependency_management)
         plugin(Plugins.testLogger)
+        plugin(Plugins.kover)
     }
 
     java {
@@ -330,5 +332,24 @@ subprojects {
         // Property baesd test
         testImplementation(Libs.datafaker)
         testImplementation(Libs.random_beans)
+    }
+}
+
+dependencies {
+    subprojects
+        .filter { it.name != "04-benchmark" && it.name != "exposed-shared-tests" }
+        .forEach { kover(it) }
+}
+
+kover {
+    reports {
+        total {
+            xml {
+                onCheck = false
+            }
+            html {
+                onCheck = false
+            }
+        }
     }
 }

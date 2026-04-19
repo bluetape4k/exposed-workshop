@@ -13,6 +13,7 @@ object Plugins {
         const val avro = "1.9.1"  // https://mvnrepository.com/artifact/com.github.davidmc24.gradle.plugin.avro/com.github.davidmc24.gradle.plugin.avro.gradle.plugin
 
         const val jacoco = "0.8.11"
+        const val kover = "0.9.8"  // https://github.com/Kotlin/kotlinx-kover
         const val jarTest = "1.0.1"
         const val testLogger = "4.0.0"
         const val shadow = "9.2.2"              // https://plugins.gradle.org/plugin/com.gradleup.shadow
@@ -58,6 +59,8 @@ object Plugins {
 
     // https://mvnrepository.com/artifact/org.graalvm.buildtools.native/org.graalvm.buildtools.native.gradle.plugin
     const val graalvm_native = "org.graalvm.buildtools.native"
+
+    const val kover = "org.jetbrains.kotlinx.kover"
 }
 
 object Versions {
