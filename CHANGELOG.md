@@ -10,6 +10,26 @@
 
 - `.omc/` 디렉터리 추가 (OMC 상태 관리용)
 - `.claude/worktrees` gitignore 규칙 추가
+- `Libs.bluetape4k_lingua`, `Libs.bluetape4k_mock_web_server`, `Libs.bluetape4k_mock_webflux_server` 모듈 참조 추가 (BOM 1.7.0 신규 모듈)
+- GitHub Actions CI 워크플로 개선: DB 매트릭스 (`H2/PostgreSQL/MySQL 8/MariaDB`) 병렬 실행, Kover 커버리지 집계, detekt/테스트 아티팩트 업로드
+
+### Changed
+
+- **Bluetape4k**: `1.6.2` → `1.7.0`
+- **Kotlin**: `2.3.20` → `2.3.21`
+- **MariaDB JDBC 드라이버**: `mariadb-java-client` `3.5.7` → `3.5.8`, `r2dbc-mariadb` `1.3.0` → `1.4.0`
+- CI 테스트 잡에서 Testcontainers 기반 DB는 `--max-workers=1` 적용 (Docker 리소스 경합 방지)
+
+### Removed
+
+- `Libs.bluetape4k_crypto`, `Libs.bluetape4k_exposed_jasypt` 참조 제거 (BOM 1.7.0에서 제외됨)
+- `06-advanced/10-exposed-jasypt` 예제 모듈 전체 삭제 (대체 모듈은 `12-exposed-tink`)
+- `06-advanced/06-custom-columns`의 encrypt 테스트 디렉터리 삭제 (`bluetape4k-crypto` 의존)
+- `00-shared/exposed-shared-tests`, `02-alternatives-to-jpa/hibernate-reactive-example`에서 crypto/jasypt 참조 정리
+
+### Fixed
+
+- MariaDB에서 JSON/JSONB 컬럼 default 메타데이터 round-trip 불일치로 실패하던 테스트 8개 스킵 처리 (`04-exposed-json`, `08-exposed-jackson`, `09-exposed-fastjson2`, `11-exposed-jackson3`)
 
 ### Test
 
