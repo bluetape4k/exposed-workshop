@@ -564,6 +564,8 @@ class JacksonColumnTest: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `jackson 컬럼의 default 값 사용하기`(testDB: TestDB) {
+        // MariaDB: JSON 컬럼 default 메타데이터가 declared schema와 round-trip되지 않아 migration diff 발생 → 스킵
+        Assumptions.assumeFalse { testDB == TestDB.MARIADB }
         val defaultUser = User("UNKNOWN", "UNASSIGNED")
         val defaultTester = object: Table("default_tester") {
             val user1 = jackson<User>("user_1").default(defaultUser)

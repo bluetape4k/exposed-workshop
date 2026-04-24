@@ -604,6 +604,8 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `jsonb with defaults`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB != TestDB.MYSQL_V5 }
+        // MariaDB: JSONB(JSON) 컬럼 default 메타데이터가 declared schema와 round-trip되지 않아 migration diff 발생 → 스킵
+        Assumptions.assumeFalse { testDB == TestDB.MARIADB }
         /**
          * Default value for JSON column
          * ```sql

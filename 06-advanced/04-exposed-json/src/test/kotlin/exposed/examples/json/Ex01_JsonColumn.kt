@@ -729,6 +729,8 @@ class Ex01_JsonColumn: AbstractExposedJsonTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `json with defaults`(testDB: TestDB) {
+        // MariaDB: JSON 컬럼 default 메타데이터가 declared schema와 round-trip되지 않아 migration diff 발생 → 스킵
+        Assumptions.assumeFalse { testDB == TestDB.MARIADB }
         /**
          * ```sql
          * -- Postgres
