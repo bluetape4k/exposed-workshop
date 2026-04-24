@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop, main ]
   pull_request:
-    branches: [ main ]
+    branches: [ develop, main ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -24,12 +24,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Install gitleaks
         run: |
           GITLEAKS_VERSION=$(curl -s https://api.github.com/repos/gitleaks/gitleaks/releases/latest | grep '"tag_name"' | sed 's/.*"v\([^"]*\)".*/\1/')
           curl -sSfL "https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
             | tar -xz gitleaks
           sudo mv gitleaks /usr/local/bin/
+
       - name: Run gitleaks
         run: gitleaks detect --source . --redact --no-git --config .gitleaks.toml
 
@@ -41,27 +43,32 @@ jobs:
       - uses: actions/checkout@v4
       - uses: gradle/actions/wrapper-validation@v4
 
-  # ── 2. 빌드 + Detekt ─────────────────────────────────────────────────────
+  # ── 2. 전체 빌드 (테스트 제외) + Detekt ──────────────────────────────────
   build:
     name: Build & Detekt
     runs-on: ubuntu-latest
     needs: validate-wrapper
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-java@v4
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DISTRIBUTION }}
+
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: wrapper
           cache-read-only: ${{ github.event_name == 'pull_request' }}
+
       - name: Build (compile only)
         run: ./gradlew build -x test --parallel
         env:
           GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
       - name: Detekt static analysis
         run: ./gradlew detekt --parallel
+
       - name: Upload detekt report
         if: always()
         uses: actions/upload-artifact@v4
@@ -70,119 +77,129 @@ jobs:
           path: '**/build/reports/detekt/*.xml'
           retention-days: 7
 
-  # ── 3. 테스트 — H2 (인메모리, Docker 불필요) ──────────────────────────────
-  test-h2:
-    name: "Test / H2"
+  # ── 3. 테스트 — DB 매트릭스 병렬 실행 ──────────────────────────────────────
+  # H2: 인메모리 (Docker 불필요)
+  # PostgreSQL / MySQL 8 / MariaDB: Testcontainers 기반
+  test:
+    name: Test / ${{ matrix.db-name }}
     runs-on: ubuntu-latest
     needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - db: H2
+            db-name: H2
+            slug: h2
+            needs-docker: false
+            collect-coverage: true
+          - db: POSTGRESQL
+            db-name: PostgreSQL
+            slug: postgresql
+            needs-docker: true
+            collect-coverage: false
+          - db: MYSQL_V8
+            db-name: MySQL 8
+            slug: mysql
+            needs-docker: true
+            collect-coverage: false
+          - db: MARIADB
+            db-name: MariaDB
+            slug: mariadb
+            needs-docker: true
+            collect-coverage: false
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-java@v4
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DISTRIBUTION }}
+
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: wrapper
           cache-read-only: true
-      - name: Run tests with H2
-        run: ./gradlew test -PuseDB=H2 --continue
+
+      - name: Run tests (${{ matrix.db-name }})
         env:
-          GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+          USE_DB: ${{ matrix.db }}
+          NEEDS_DOCKER: ${{ matrix.needs-docker }}
+          GRADLE_OPTS: ${{ matrix.needs-docker && '-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false' || '-Dorg.gradle.daemon=false' }}
+          TESTCONTAINERS_RYUK_DISABLED: "true"
+          DOCKER_HOST: "unix:///var/run/docker.sock"
+        run: |
+          if [ "$NEEDS_DOCKER" = "true" ]; then
+            ./gradlew test "-PuseDB=$USE_DB" --continue --no-configuration-cache
+          else
+            ./gradlew test "-PuseDB=$USE_DB" --continue
+          fi
+
+      - name: Generate Kover XML report
+        if: matrix.collect-coverage && always()
+        env:
+          USE_DB: ${{ matrix.db }}
+        run: ./gradlew koverXmlReport "-PuseDB=$USE_DB" --continue
+        continue-on-error: true
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-h2
+          name: test-results-${{ matrix.slug }}
           path: '**/build/test-results/test/*.xml'
           retention-days: 7
 
-  # ── 4. 테스트 — PostgreSQL (Testcontainers) ───────────────────────────────
-  test-postgresql:
-    name: "Test / PostgreSQL"
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-      - uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: wrapper
-          cache-read-only: true
-      - name: Run tests with PostgreSQL
-        run: ./gradlew test -PuseDB=POSTGRESQL --continue
-        env:
-          GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results-postgresql
-          path: '**/build/test-results/test/*.xml'
-          retention-days: 7
-
-  # ── 5. 테스트 — MySQL 8 (Testcontainers) ──────────────────────────────────
-  test-mysql:
-    name: "Test / MySQL 8"
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-      - uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: wrapper
-          cache-read-only: true
-      - name: Run tests with MySQL 8
-        run: ./gradlew test -PuseDB=MYSQL_V8 --continue
-        env:
-          GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results-mysql
-          path: '**/build/test-results/test/*.xml'
-          retention-days: 7
-
-  # ── 6. 테스트 커버리지 (Kover) ─────────────────────────────────────────────
-  coverage:
-    name: "Test Coverage (Kover)"
-    runs-on: ubuntu-latest
-    needs: test-h2
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-      - uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: wrapper
-          cache-read-only: true
-      - name: Generate coverage report
-        run: ./gradlew test -PuseDB=H2 koverXmlReport koverHtmlReport --continue
-        env:
-          GRADLE_OPTS: "-Dorg.gradle.daemon=false"
       - name: Upload coverage report
+        if: matrix.collect-coverage && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.slug }}
+          path: '**/build/reports/kover/'
+          retention-days: 7
+
+  # ── 7. 커버리지 집계 (Kover) ──────────────────────────────────────────────
+  coverage-report:
+    name: Coverage Report
+    runs-on: ubuntu-latest
+    needs: [ test ]
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: coverage-*
+          path: coverage-artifacts
+          merge-multiple: false
+        continue-on-error: true
+
+      - name: Aggregate Kover coverage summary
+        if: always()
+        run: python3 .github/scripts/aggregate-kover-coverage.py coverage-artifacts
+
+      - name: Upload aggregated coverage
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: kover-report
-          path: 'build/reports/kover/'
+          name: coverage-all
+          path: coverage-artifacts/
           retention-days: 14
 
-  # ── 7. 결과 집계 ──────────────────────────────────────────────────────────
+  # ── 8. 결과 집계 ──────────────────────────────────────────────────────────
   ci-status:
     name: CI Status
     runs-on: ubuntu-latest
-    needs: [ gitleaks, build, test-h2, test-postgresql, test-mysql ]
+    needs:
+      - gitleaks
+      - build
+      - test
+      - coverage-report
     if: always()
     steps:
       - name: Check all jobs
