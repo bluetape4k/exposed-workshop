@@ -130,7 +130,8 @@ jobs:
           DOCKER_HOST: "unix:///var/run/docker.sock"
         run: |
           if [ "$NEEDS_DOCKER" = "true" ]; then
-            ./gradlew test "-PuseDB=$USE_DB" --continue
+            # Testcontainers 기반 DB는 모듈 간 Docker 리소스 경합(포트/Redis/DB 컨테이너)을 피하기 위해 프로젝트 순차 실행
+            ./gradlew test "-PuseDB=$USE_DB" --continue --max-workers=1
           else
             ./gradlew test "-PuseDB=$USE_DB" --continue
           fi
