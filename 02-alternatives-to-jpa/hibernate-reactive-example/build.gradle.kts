@@ -47,7 +47,6 @@ configurations {
 dependencies {
     implementation(Libs.bluetape4k_testcontainers)
 
-    implementation(Libs.bluetape4k_crypto)
     implementation(Libs.bluetape4k_jackson2)
     implementation(Libs.bluetape4k_vertx)
     testImplementation(Libs.bluetape4k_junit5)

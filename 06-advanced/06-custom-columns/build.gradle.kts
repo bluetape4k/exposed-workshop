@@ -23,10 +23,6 @@ dependencies {
     testRuntimeOnly(Libs.kryo5)
     testRuntimeOnly(Libs.fory_kotlin)
 
-    // Encryption
-    testImplementation(Libs.bluetape4k_crypto)
-    testImplementation(Libs.jasypt)
-
     // Identifier 자동 생성
     testRuntimeOnly(Libs.bluetape4k_idgenerators)
     testRuntimeOnly(Libs.java_uuid_generator)
