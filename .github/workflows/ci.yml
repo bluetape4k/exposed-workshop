@@ -130,7 +130,7 @@ jobs:
           DOCKER_HOST: "unix:///var/run/docker.sock"
         run: |
           if [ "$NEEDS_DOCKER" = "true" ]; then
-            ./gradlew test "-PuseDB=$USE_DB" --continue --no-configuration-cache
+            ./gradlew test "-PuseDB=$USE_DB" --continue
           else
             ./gradlew test "-PuseDB=$USE_DB" --continue
           fi
