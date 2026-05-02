@@ -1,7 +1,7 @@
 plugins {
     kotlin("plugin.spring")
-    id(Plugins.spring_boot)
-    id(Plugins.graalvm_native)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.graalvm.native)
 }
 
 @Suppress("UnstableApiUsage")
@@ -10,39 +10,39 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(Libs.exposed_bom))
+    implementation(platform(libs.exposed.bom))
 
     testImplementation(project(":exposed-shared-tests"))
 
     // Exposed
-    implementation(Libs.exposed_core)
-    implementation(Libs.exposed_dao)
-    implementation(Libs.exposed_jdbc)
-    implementation(Libs.exposed_spring_boot_starter)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.spring.boot.starter)
 
     // Bluetape4k
-    implementation(Libs.bluetape4k_exposed)
-    implementation(Libs.bluetape4k_io)
-    implementation(Libs.bluetape4k_jdbc)
-    implementation(Libs.bluetape4k_spring_boot3_core)
+    implementation(libs.bluetape4k.exposed)
+    implementation(libs.bluetape4k.io)
+    implementation(libs.bluetape4k.jdbc)
+    implementation(libs.bluetape4k.spring.boot3.core)
 
     // Spring Boot
-    implementation(Libs.springBootStarter("jdbc"))
-    testImplementation(Libs.springBootStarter("test")) {
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
     }
 
-    runtimeOnly(Libs.h2_v2)
-    runtimeOnly(Libs.hikaricp)
+    runtimeOnly(libs.h2.v2)
+    runtimeOnly(libs.hikaricp)
 
-    implementation(Libs.datafaker)
+    implementation(libs.datafaker)
 
     // Coroutines
-    implementation(Libs.bluetape4k_coroutines)
-    implementation(Libs.kotlinx_coroutines_core)
-    implementation(Libs.kotlinx_coroutines_reactor)
-    testImplementation(Libs.kotlinx_coroutines_debug)
-    testImplementation(Libs.kotlinx_coroutines_test)
+    implementation(libs.bluetape4k.coroutines)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.reactor)
+    testImplementation(libs.kotlinx.coroutines.debug)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

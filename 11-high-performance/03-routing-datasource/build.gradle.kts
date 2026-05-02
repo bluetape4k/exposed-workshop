@@ -1,7 +1,7 @@
 plugins {
     kotlin("plugin.spring")
-    id(Plugins.spring_boot)
-    id(Plugins.graalvm_native)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.graalvm.native)
 }
 
 springBoot {
@@ -22,18 +22,18 @@ configurations {
 }
 
 dependencies {
-    implementation(Libs.springBootStarter("jdbc"))
-    implementation(Libs.springBootStarter("web"))
-    implementation(Libs.springBootStarter("actuator"))
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
-    implementation(platform(Libs.exposed_bom))
-    implementation(Libs.exposed_core)
-    implementation(Libs.exposed_jdbc)
+    implementation(platform(libs.exposed.bom))
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.jdbc)
 
-    runtimeOnly(Libs.h2_v2)
-    implementation(Libs.hikaricp)
+    runtimeOnly(libs.h2.v2)
+    implementation(libs.hikaricp)
 
-    testImplementation(Libs.springBootStarter("test")) {
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }

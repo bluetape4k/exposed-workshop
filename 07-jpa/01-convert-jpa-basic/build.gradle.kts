@@ -7,37 +7,37 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(Libs.exposed_bom))
+    implementation(platform(libs.exposed.bom))
 
     testImplementation(project(":exposed-shared-tests"))
 
-    implementation(Libs.exposed_core)
-    implementation(Libs.exposed_dao)
-    implementation(Libs.exposed_jdbc)
-    implementation(Libs.exposed_java_time)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.java.time)
 
     // Validator
-    implementation(Libs.jakarta_validation_api)
-    implementation(Libs.hibernate_validator)
+    implementation(libs.jakarta.validation.api)
+    implementation(libs.hibernate.validator)
 
-    testImplementation(Libs.bluetape4k_exposed)
+    testImplementation(libs.bluetape4k.exposed)
 
-    testImplementation(Libs.bluetape4k_junit5)
+    testImplementation(libs.bluetape4k.junit5)
 
-    testRuntimeOnly(Libs.h2_v2)
-    testRuntimeOnly(Libs.mariadb_java_client)
-    testRuntimeOnly(Libs.mysql_connector_j)
-    testRuntimeOnly(Libs.postgresql_driver)
-    testRuntimeOnly(Libs.pgjdbc_ng)
+    testRuntimeOnly(libs.h2.v2)
+    testRuntimeOnly(libs.mariadb.java.client)
+    testRuntimeOnly(libs.mysql.connector.j)
+    testRuntimeOnly(libs.postgresql.driver)
+    testRuntimeOnly(libs.pgjdbc.ng)
 
-    testImplementation(Libs.bluetape4k_testcontainers)
-    testImplementation(Libs.testcontainers)
-    testImplementation(Libs.testcontainers_mariadb)
-    testImplementation(Libs.testcontainers_mysql)
-    testImplementation(Libs.testcontainers_postgresql)
+    testImplementation(libs.bluetape4k.testcontainers)
+    testImplementation(libs.testcontainers)
+    testImplementation(libs.testcontainers.mariadb)
+    testImplementation(libs.testcontainers.mysql)
+    testImplementation(libs.testcontainers.postgresql)
 
     // Coroutines
-    testImplementation(Libs.bluetape4k_coroutines)
-    testImplementation(Libs.kotlinx_coroutines_core)
-    testImplementation(Libs.kotlinx_coroutines_test)
+    testImplementation(libs.bluetape4k.coroutines)
+    testImplementation(libs.kotlinx.coroutines.core)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
