@@ -3,58 +3,58 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(Libs.exposed_bom))
+    implementation(platform(libs.exposed.bom))
 
     // Bluetape4k Exposed
-    api(Libs.bluetape4k_exposed)
-    implementation(Libs.bluetape4k_exposed_jackson2)
-    implementation(Libs.bluetape4k_exposed_fastjson2)
+    api(libs.bluetape4k.exposed)
+    implementation(libs.bluetape4k.exposed.jackson2)
+    implementation(libs.bluetape4k.exposed.fastjson2)
 
     // Exposed
-    api(Libs.exposed_core)
-    api(Libs.exposed_dao)
-    api(Libs.exposed_jdbc)
-    implementation(Libs.exposed_java_time)
-    implementation(Libs.exposed_crypt)
-    implementation(Libs.exposed_json)
-    implementation(Libs.exposed_migration_jdbc)
-    implementation(Libs.exposed_money)
-    implementation(Libs.exposed_spring_boot_starter)
+    api(libs.exposed.core)
+    api(libs.exposed.dao)
+    api(libs.exposed.jdbc)
+    implementation(libs.exposed.java.time)
+    implementation(libs.exposed.crypt)
+    implementation(libs.exposed.json)
+    implementation(libs.exposed.migration.jdbc)
+    implementation(libs.exposed.money)
+    implementation(libs.exposed.spring.boot.starter)
 
-    implementation(Libs.bluetape4k_jdbc)
-    implementation(Libs.bluetape4k_junit5)
-    implementation(Libs.kluent)
+    implementation(libs.bluetape4k.jdbc)
+    implementation(libs.bluetape4k.junit5)
+    implementation(libs.kluent)
 
-    runtimeOnly(Libs.hikaricp)
+    runtimeOnly(libs.hikaricp)
 
-    compileOnly(Libs.h2_v2)
-    compileOnly(Libs.mariadb_java_client)
-    compileOnly(Libs.mysql_connector_j)
-    compileOnly(Libs.postgresql_driver)
-    compileOnly(Libs.pgjdbc_ng)
+    compileOnly(libs.h2.v2)
+    compileOnly(libs.mariadb.java.client)
+    compileOnly(libs.mysql.connector.j)
+    compileOnly(libs.postgresql.driver)
+    compileOnly(libs.pgjdbc.ng)
 
-    implementation(Libs.bluetape4k_testcontainers)
-    implementation(Libs.testcontainers)
-    implementation(Libs.testcontainers_mariadb)
-    implementation(Libs.testcontainers_mysql)
-    implementation(Libs.testcontainers_postgresql)
-    implementation(Libs.testcontainers_cockroachdb)
+    implementation(libs.bluetape4k.testcontainers)
+    implementation(libs.testcontainers)
+    implementation(libs.testcontainers.mariadb)
+    implementation(libs.testcontainers.mysql)
+    implementation(libs.testcontainers.postgresql)
+    implementation(libs.testcontainers.cockroachdb)
 
     // Identifier 자동 생성
-    implementation(Libs.bluetape4k_idgenerators)
-    implementation(Libs.java_uuid_generator)
+    implementation(libs.bluetape4k.idgenerators)
+    implementation(libs.java.uuid.generator)
 
     // Coroutines
-    testImplementation(Libs.bluetape4k_coroutines)
-    testImplementation(Libs.kotlinx_coroutines_core)
-    testImplementation(Libs.kotlinx_coroutines_test)
+    testImplementation(libs.bluetape4k.coroutines)
+    testImplementation(libs.kotlinx.coroutines.core)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     // Java Money
-    testImplementation(Libs.bluetape4k_money)
-    testImplementation(Libs.javax_money_api)
-    testImplementation(Libs.javamoney_moneta)
+    testImplementation(libs.bluetape4k.money)
+    testImplementation(libs.javax.money.api)
+    testImplementation(libs.javamoney.moneta)
 
     // Logcaptor
-    testImplementation(Libs.logcaptor)
+    testImplementation(libs.logcaptor)
 
 }

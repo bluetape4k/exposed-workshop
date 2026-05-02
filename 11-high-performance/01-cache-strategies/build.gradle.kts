@@ -1,7 +1,7 @@
 plugins {
     kotlin("plugin.spring")
-    id(Plugins.spring_boot)
-    id(Plugins.graalvm_native)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.graalvm.native)
 }
 
 
@@ -24,65 +24,65 @@ configurations {
 
 dependencies {
 
-    implementation(platform(Libs.exposed_bom))
+    implementation(platform(libs.exposed.bom))
     testImplementation(project(":exposed-shared-tests"))
 
     // Exposed
-    implementation(Libs.exposed_core)
-    implementation(Libs.exposed_jdbc)
-    implementation(Libs.exposed_dao)
-    implementation(Libs.exposed_java_time)
-    implementation(Libs.exposed_spring_boot_starter)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.java.time)
+    implementation(libs.exposed.spring.boot.starter)
 
     // bluetape4k
-    implementation(Libs.bluetape4k_exposed)
-    implementation(Libs.bluetape4k_exposed_jdbc_redisson)
-    implementation(Libs.bluetape4k_idgenerators)
-    implementation(Libs.bluetape4k_redis)
-    implementation(Libs.bluetape4k_testcontainers)
-    testImplementation(Libs.bluetape4k_junit5)
-    testImplementation(Libs.bluetape4k_spring_boot3_core)
+    implementation(libs.bluetape4k.exposed)
+    implementation(libs.bluetape4k.exposed.jdbc.redisson)
+    implementation(libs.bluetape4k.idgenerators)
+    implementation(libs.bluetape4k.redis)
+    implementation(libs.bluetape4k.testcontainers)
+    testImplementation(libs.bluetape4k.junit5)
+    testImplementation(libs.bluetape4k.spring.boot3.core)
 
     // Codecs
-    runtimeOnly(Libs.fory_kotlin)
-    runtimeOnly(Libs.kryo5)
+    runtimeOnly(libs.fory.kotlin)
+    runtimeOnly(libs.kryo)
 
     // Compressor
-    runtimeOnly(Libs.lz4_java)
-    runtimeOnly(Libs.snappy_java)
-    runtimeOnly(Libs.zstd_jni)
+    runtimeOnly(libs.lz4.java)
+    runtimeOnly(libs.snappy.java)
+    runtimeOnly(libs.zstd.jni)
 
     // Near Cache
-    implementation(Libs.caffeine)
+    implementation(libs.caffeine)
 
     // Database Drivers
-    implementation(Libs.hikaricp)
+    implementation(libs.hikaricp)
 
     // H2
-    runtimeOnly(Libs.h2_v2)
+    runtimeOnly(libs.h2.v2)
 
     // MySQL
-    implementation(Libs.testcontainers_mysql)
-    runtimeOnly(Libs.mysql_connector_j)
+    implementation(libs.testcontainers.mysql)
+    runtimeOnly(libs.mysql.connector.j)
 
     // PostgreSQL
-    implementation(Libs.testcontainers_postgresql)
-    runtimeOnly(Libs.postgresql_driver)
+    implementation(libs.testcontainers.postgresql)
+    runtimeOnly(libs.postgresql.driver)
 
     // Spring Boot
-    implementation(Libs.springBootStarter("web"))
-    testImplementation(Libs.springBootStarter("webflux"))
-    testImplementation(Libs.springBootStarter("test")) {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.springframework.boot:spring-boot-starter-webflux")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
     }
 
-    implementation(Libs.datafaker)
+    implementation(libs.datafaker)
 
-    implementation(Libs.bluetape4k_coroutines)
-    implementation(Libs.kotlinx_coroutines_reactor)
-    testImplementation(Libs.kotlinx_coroutines_test)
+    implementation(libs.bluetape4k.coroutines)
+    implementation(libs.kotlinx.coroutines.reactor)
+    testImplementation(libs.kotlinx.coroutines.test)
 
-    implementation(Libs.reactor_kotlin_extensions)
+    implementation(libs.reactor.kotlin.extensions)
 }

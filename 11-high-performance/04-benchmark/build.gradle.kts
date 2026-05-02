@@ -3,36 +3,36 @@ import java.time.Instant
 
 plugins {
     kotlin("plugin.allopen")
-    id(Plugins.kotlinx_benchmark)
+    alias(libs.plugins.kotlinx.benchmark)
 }
 
 dependencies {
     implementation(project(":03-routing-datasource"))
 
-    implementation(Libs.caffeine)
-    implementation(Libs.kotlinx_benchmark_runtime)
-    implementation(Libs.kotlinx_benchmark_runtime_jvm)
-    implementation(Libs.jmh_core)
+    implementation(libs.caffeine)
+    implementation(libs.kotlinx.benchmark.runtime)
+    implementation(libs.kotlinx.benchmark.runtime.jvm)
+    implementation(libs.jmh.core)
 
     // Exposed
-    implementation(platform(Libs.exposed_bom))
-    implementation(Libs.exposed_core)
-    implementation(Libs.exposed_jdbc)
-    implementation(Libs.exposed_dao)
-    implementation(Libs.exposed_java_time)
+    implementation(platform(libs.exposed.bom))
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.java.time)
 
     // JPA / Hibernate
-    implementation(Libs.jakarta_persistence_api)
-    implementation(Libs.hibernate_core)
+    implementation(libs.jakarta.persistence.api)
+    implementation(libs.hibernate.core)
 
     // Database
-    implementation(Libs.h2_v2)
-    implementation(Libs.hikaricp)
-    implementation(Libs.postgresql_driver)
+    implementation(libs.h2.v2)
+    implementation(libs.hikaricp)
+    implementation(libs.postgresql.driver)
 
     // Testcontainers
-    implementation(Libs.bluetape4k_testcontainers)
-    implementation(Libs.testcontainers_postgresql)
+    implementation(libs.bluetape4k.testcontainers)
+    implementation(libs.testcontainers.postgresql)
 }
 
 allOpen {

@@ -1,7 +1,7 @@
 plugins {
     kotlin("plugin.spring")
-    id(Plugins.spring_boot)
-    id(Plugins.graalvm_native)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.graalvm.native)
 }
 
 springBoot {
@@ -25,66 +25,66 @@ dependencies {
     testImplementation(project(":exposed-shared-tests"))
 
     // Exposed
-    implementation(Libs.bluetape4k_exposed)
-    implementation(Libs.exposed_core)
-    implementation(Libs.exposed_jdbc)
-    implementation(Libs.exposed_dao)
-    implementation(Libs.exposed_java_time)
-    implementation(Libs.exposed_migration_jdbc)
-    implementation(Libs.exposed_spring_boot_starter)
+    implementation(libs.bluetape4k.exposed)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.java.time)
+    implementation(libs.exposed.migration.jdbc)
+    implementation(libs.exposed.spring.boot.starter)
 
     // bluetape4k
-    implementation(Libs.bluetape4k_io)
-    implementation(Libs.bluetape4k_jackson2)
-    implementation(Libs.bluetape4k_jdbc)
-    testImplementation(Libs.bluetape4k_junit5)
-    testImplementation(Libs.bluetape4k_spring_boot3_core)
+    implementation(libs.bluetape4k.io)
+    implementation(libs.bluetape4k.jackson2)
+    implementation(libs.bluetape4k.jdbc)
+    testImplementation(libs.bluetape4k.junit5)
+    testImplementation(libs.bluetape4k.spring.boot3.core)
 
     // Database Drivers
-    implementation(Libs.hikaricp)
+    implementation(libs.hikaricp)
 
     // H2
-    runtimeOnly(Libs.h2_v2)
+    runtimeOnly(libs.h2.v2)
 
     // Docker
-    implementation(Libs.bluetape4k_testcontainers)
+    implementation(libs.bluetape4k.testcontainers)
 
     // MySQL
-    implementation(Libs.testcontainers_mysql)
-    runtimeOnly(Libs.mysql_connector_j)
+    implementation(libs.testcontainers.mysql)
+    runtimeOnly(libs.mysql.connector.j)
 
     // PostgreSQL
-    implementation(Libs.testcontainers_postgresql)
-    runtimeOnly(Libs.postgresql_driver)
+    implementation(libs.testcontainers.postgresql)
+    runtimeOnly(libs.postgresql.driver)
 
     // Spring Boot
-    implementation(Libs.springBoot("autoconfigure"))
-    annotationProcessor(Libs.springBoot("autoconfigure-processor"))
-    annotationProcessor(Libs.springBoot("configuration-processor"))
-    runtimeOnly(Libs.springBoot("devtools"))
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
+    annotationProcessor("org.springframework.boot:spring-boot-autoconfigure-processor")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    runtimeOnly("org.springframework.boot:spring-boot-devtools")
 
-    implementation(Libs.springBootStarter("actuator"))
-    implementation(Libs.springBootStarter("aop"))
-    implementation(Libs.springBootStarter("validation"))
-    implementation(Libs.springBootStarter("web"))
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-web")
 
-    testImplementation(Libs.springBootStarter("webflux"))
-    testImplementation(Libs.springBootStarter("test")) {
+    testImplementation("org.springframework.boot:spring-boot-starter-webflux")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
     }
 
-    implementation(Libs.bluetape4k_coroutines)
-    implementation(Libs.kotlinx_coroutines_reactor)
-    testImplementation(Libs.kotlinx_coroutines_test)
-    testImplementation(Libs.reactor_kotlin_extensions)
+    implementation(libs.bluetape4k.coroutines)
+    implementation(libs.kotlinx.coroutines.reactor)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.reactor.kotlin.extensions)
 
     // Monitoring
-    implementation(Libs.micrometer_core)
-    implementation(Libs.micrometer_registry_prometheus)
+    implementation(libs.micrometer.core)
+    implementation(libs.micrometer.registry.prometheus)
 
     // SpringDoc - OpenAPI 3.0
-    implementation(Libs.springdoc_openapi_starter_webmvc_ui)
+    implementation(libs.springdoc.openapi.starter.webmvc.ui)
 
 }

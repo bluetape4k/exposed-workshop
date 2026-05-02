@@ -5,8 +5,8 @@ plugins {
     kotlin("plugin.jpa")
     kotlin("kapt")
 
-    id(Plugins.spring_boot)
-//    id(Plugins.graalvm_native)
+    alias(libs.plugins.spring.boot)
+//    alias(libs.plugins.graalvm.native)
 }
 
 
@@ -45,58 +45,58 @@ configurations {
 }
 
 dependencies {
-    implementation(Libs.bluetape4k_testcontainers)
+    implementation(libs.bluetape4k.testcontainers)
 
-    implementation(Libs.bluetape4k_jackson2)
-    implementation(Libs.bluetape4k_vertx)
-    testImplementation(Libs.bluetape4k_junit5)
-    testImplementation(Libs.bluetape4k_spring_boot3_core)
+    implementation(libs.bluetape4k.jackson2)
+    implementation(libs.bluetape4k.vertx)
+    testImplementation(libs.bluetape4k.junit5)
+    testImplementation(libs.bluetape4k.spring.boot3.core)
 
-    api(Libs.jakarta_annotation_api)
-    api(Libs.jakarta_persistence_api)
-    api(Libs.jakarta_transaction_api)
+    api(libs.jakarta.annotation.api)
+    api(libs.jakarta.persistence.api)
+    api(libs.jakarta.transaction.api)
 
     // Hibernate Reactive
-    implementation(Libs.bluetape4k_hibernate_reactive)
-    implementation(Libs.hibernate_reactive_core)
+    implementation(libs.bluetape4k.hibernate.reactive)
+    implementation(libs.hibernate.reactive.core)
     implementation("com.ongres.scram:scram-client:3.2") // vert.x sql client 에서 사용하는데 제외되었다.
 
     // NOTE: hibernate-reactive 는 querydsl 을 사용하지 못한다. 대신 jpamodelgen 을 사용합니다.
-    kapt(Libs.hibernate_jpamodelgen)
-    kaptTest(Libs.hibernate_jpamodelgen)
+    kapt(libs.hibernate.jpamodelgen)
+    kaptTest(libs.hibernate.jpamodelgen)
 
     // Mutiny & Coroutines
-    implementation(Libs.bluetape4k_coroutines)
-    implementation(Libs.kotlinx_coroutines_core)
-    testImplementation(Libs.kotlinx_coroutines_reactor)
-    testImplementation(Libs.kotlinx_coroutines_test)
+    implementation(libs.bluetape4k.coroutines)
+    implementation(libs.kotlinx.coroutines.core)
+    testImplementation(libs.kotlinx.coroutines.reactor)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     // Vaidators
-    implementation(Libs.hibernate_validator)
-    implementation(Libs.jakarta_validation_api)
+    implementation(libs.hibernate.validator)
+    implementation(libs.jakarta.validation.api)
 
     // Spring Boot Webflux
-    implementation(Libs.springBoot("autoconfigure"))
-    implementation(Libs.springBootStarter("validation"))
-    implementation(Libs.springBootStarter("webflux"))
-    testImplementation(Libs.springBootStarter("test")) {
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
     }
 
     // Postgres
-    implementation(Libs.testcontainers_postgresql)
-    implementation(Libs.vertx_pg_client)
+    implementation(libs.testcontainers.postgresql)
+    implementation(libs.vertx.pg.client)
 
     // Testcontainers MySQL 에서 검증을 위해 사용하기 위해 불가피하게 필요합니다
     // reactive 방식에서는 항상 verx-pg-client 를 사용합니다
-    runtimeOnly(Libs.postgresql_driver)
+    runtimeOnly(libs.postgresql.driver)
 
     // Monitoring
-    implementation(Libs.micrometer_core)
-    implementation(Libs.micrometer_registry_prometheus)
+    implementation(libs.micrometer.core)
+    implementation(libs.micrometer.registry.prometheus)
 
     // SpringDoc - OpenAPI 3.0
-    implementation(Libs.springdoc_openapi_starter_webflux_ui)
+    implementation(libs.springdoc.openapi.starter.webflux.ui)
 }

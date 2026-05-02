@@ -1,7 +1,7 @@
 plugins {
     kotlin("plugin.spring")
-    id(Plugins.spring_boot)
-    id(Plugins.graalvm_native)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.graalvm.native)
 }
 
 springBoot {
@@ -13,35 +13,35 @@ configurations {
 }
 
 dependencies {
-    implementation(Libs.bluetape4k_io)
-    implementation(Libs.bluetape4k_jackson2)
-    testImplementation(Libs.bluetape4k_junit5)
+    implementation(libs.bluetape4k.io)
+    implementation(libs.bluetape4k.jackson2)
+    testImplementation(libs.bluetape4k.junit5)
 
     // PostgreSql Server
-    implementation(Libs.bluetape4k_testcontainers)
-    implementation(Libs.testcontainers_postgresql)
+    implementation(libs.bluetape4k.testcontainers)
+    implementation(libs.testcontainers.postgresql)
 
     // Coroutines
-    implementation(Libs.bluetape4k_coroutines)
-    implementation(Libs.kotlinx_coroutines_core)
-    implementation(Libs.kotlinx_coroutines_reactor)
-    testImplementation(Libs.kotlinx_coroutines_test)
+    implementation(libs.bluetape4k.coroutines)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.reactor)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     // Reactor
-    implementation(Libs.reactor_core)
-    implementation(Libs.reactor_kotlin_extensions)
-    testImplementation(Libs.reactor_test)
+    implementation(libs.reactor.core)
+    implementation(libs.reactor.kotlin.extensions)
+    testImplementation(libs.reactor.test)
 
     // R2DBC
-    implementation(Libs.bluetape4k_spring_boot3_r2dbc)
-    implementation(Libs.springBootStarter("data-r2dbc"))
-    runtimeOnly(Libs.r2dbc_postgresql)
-    runtimeOnly(Libs.r2dbc_h2)
-    runtimeOnly(Libs.r2dbc_pool)
+    implementation(libs.bluetape4k.spring.boot3.r2dbc)
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    runtimeOnly(libs.r2dbc.postgresql)
+    runtimeOnly(libs.r2dbc.h2)
+    runtimeOnly(libs.r2dbc.pool)
 
-    implementation(Libs.springBootStarter("webflux"))
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
 
-    testImplementation(Libs.springBootStarter("test")) {
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")

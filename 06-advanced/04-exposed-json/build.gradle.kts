@@ -7,40 +7,40 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(Libs.exposed_bom))
+    implementation(platform(libs.exposed.bom))
 
     testImplementation(project(":exposed-shared-tests"))
 
-    testImplementation(Libs.exposed_core)
-    testImplementation(Libs.exposed_dao)
-    testImplementation(Libs.exposed_jdbc)
-    testImplementation(Libs.exposed_migration_jdbc)
+    testImplementation(libs.exposed.core)
+    testImplementation(libs.exposed.dao)
+    testImplementation(libs.exposed.jdbc)
+    testImplementation(libs.exposed.migration.jdbc)
 
     // Exposed Json 지원 라이브러리 (kotlinx.serialization 을 사용합니다)
-    testImplementation(Libs.exposed_json)
+    testImplementation(libs.exposed.json)
 
     // Kotlin Serialization Json
-    testImplementation(platform(Libs.kotlinx_serialization_bom))
-    testImplementation(Libs.kotlinx_serialization_json)
+    testImplementation(platform(libs.kotlinx.serialization.bom))
+    testImplementation(libs.kotlinx.serialization.json)
 
-    testImplementation(Libs.bluetape4k_exposed)
-    testImplementation(Libs.bluetape4k_junit5)
+    testImplementation(libs.bluetape4k.exposed)
+    testImplementation(libs.bluetape4k.junit5)
 
-    testImplementation(Libs.bluetape4k_testcontainers)
-    testImplementation(Libs.testcontainers)
-    testImplementation(Libs.testcontainers_mariadb)
-    testImplementation(Libs.testcontainers_mysql)
-    testImplementation(Libs.testcontainers_postgresql)
+    testImplementation(libs.bluetape4k.testcontainers)
+    testImplementation(libs.testcontainers)
+    testImplementation(libs.testcontainers.mariadb)
+    testImplementation(libs.testcontainers.mysql)
+    testImplementation(libs.testcontainers.postgresql)
 
     // Jdbc Drivers
-    testRuntimeOnly(Libs.h2_v2)
-    testRuntimeOnly(Libs.mariadb_java_client)
-    testRuntimeOnly(Libs.mysql_connector_j)
-    testRuntimeOnly(Libs.postgresql_driver)
-    testRuntimeOnly(Libs.pgjdbc_ng)
+    testRuntimeOnly(libs.h2.v2)
+    testRuntimeOnly(libs.mariadb.java.client)
+    testRuntimeOnly(libs.mysql.connector.j)
+    testRuntimeOnly(libs.postgresql.driver)
+    testRuntimeOnly(libs.pgjdbc.ng)
 
     // Coroutines
-    testImplementation(Libs.bluetape4k_coroutines)
-    testImplementation(Libs.kotlinx_coroutines_core)
-    testImplementation(Libs.kotlinx_coroutines_test)
+    testImplementation(libs.bluetape4k.coroutines)
+    testImplementation(libs.kotlinx.coroutines.core)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

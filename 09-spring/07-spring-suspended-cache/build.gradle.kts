@@ -1,7 +1,7 @@
 plugins {
     kotlin("plugin.spring")
-    id(Plugins.spring_boot)
-    id(Plugins.graalvm_native)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.graalvm.native)
 }
 
 springBoot {
@@ -26,57 +26,57 @@ dependencies {
     testImplementation(project(":exposed-shared-tests"))
 
     // bluetape4k
-    implementation(Libs.bluetape4k_io)
-    implementation(Libs.bluetape4k_grpc)
-    implementation(Libs.bluetape4k_redis)
-    implementation(Libs.bluetape4k_testcontainers)
+    implementation(libs.bluetape4k.io)
+    implementation(libs.bluetape4k.grpc)
+    implementation(libs.bluetape4k.redis)
+    implementation(libs.bluetape4k.testcontainers)
     // Exposed
-    implementation(Libs.bluetape4k_exposed)
-    implementation(Libs.exposed_core)
-    implementation(Libs.exposed_jdbc)
-    implementation(Libs.exposed_dao)
-    implementation(Libs.exposed_java_time)
-    testImplementation(Libs.bluetape4k_junit5)
-    implementation(Libs.exposed_spring_boot_starter)
+    implementation(libs.bluetape4k.exposed)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.java.time)
+    testImplementation(libs.bluetape4k.junit5)
+    implementation(libs.exposed.spring.boot.starter)
 
     // Database Drivers
-    implementation(Libs.hikaricp)
+    implementation(libs.hikaricp)
 
     // H2
-    runtimeOnly(Libs.h2_v2)
+    runtimeOnly(libs.h2.v2)
 
     // Spring Boot
-    implementation(Libs.springBootStarter("cache"))
-    implementation(Libs.springBootStarter("data-redis"))
-    implementation(Libs.springBootStarter("webflux"))
-    testImplementation(Libs.springBootStarter("test")) {
+    implementation("org.springframework.boot:spring-boot-starter-cache")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
     }
 
     // Redis Cache
-    runtimeOnly(Libs.lettuce_core)
-    runtimeOnly(Libs.commons_pool2)
+    runtimeOnly(libs.lettuce.core)
+    runtimeOnly(libs.commons.pool2)
 
     // Codecs
-    runtimeOnly(Libs.fory_kotlin)
-    runtimeOnly(Libs.kryo5)
+    runtimeOnly(libs.fory.kotlin)
+    runtimeOnly(libs.kryo)
 
     // Compressor
-    runtimeOnly(Libs.lz4_java)
-    runtimeOnly(Libs.snappy_java)
-    runtimeOnly(Libs.zstd_jni)
+    runtimeOnly(libs.lz4.java)
+    runtimeOnly(libs.snappy.java)
+    runtimeOnly(libs.zstd.jni)
 
     // Coroutines
-    implementation(enforcedPlatform(Libs.kotlinx_coroutines_bom))
-    implementation(Libs.bluetape4k_coroutines)
-    implementation(Libs.kotlinx_coroutines_core)
-    implementation(Libs.kotlinx_coroutines_reactor)
-    testImplementation(Libs.kotlinx_coroutines_test)
+    implementation(enforcedPlatform(libs.kotlinx.coroutines.bom))
+    implementation(libs.bluetape4k.coroutines)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.reactor)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     // Reactor
-    implementation(Libs.reactor_netty)
-    implementation(Libs.reactor_kotlin_extensions)
-    testImplementation(Libs.reactor_test)
+    implementation(libs.reactor.netty)
+    implementation(libs.reactor.kotlin.extensions)
+    testImplementation(libs.reactor.test)
 }
