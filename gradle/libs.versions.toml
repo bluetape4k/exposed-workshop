@@ -212,16 +212,16 @@ reactor-test = { module = "io.projectreactor:reactor-test" }
 
 # Exposed
 exposed-bom = { module = "org.jetbrains.exposed:exposed-bom", version.ref = "exposed" }
-exposed-core = { module = "org.jetbrains.exposed:exposed-core" }
-exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt" }
-exposed-dao = { module = "org.jetbrains.exposed:exposed-dao" }
-exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time" }
-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc" }
-exposed-json = { module = "org.jetbrains.exposed:exposed-json" }
-exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime" }
-exposed-migration-jdbc = { module = "org.jetbrains.exposed:exposed-migration-jdbc" }
-exposed-money = { module = "org.jetbrains.exposed:exposed-money" }
-exposed-spring-boot-starter = { module = "org.jetbrains.exposed:exposed-spring-boot-starter" }
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt", version.ref = "exposed" }
+exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+exposed-json = { module = "org.jetbrains.exposed:exposed-json", version.ref = "exposed" }
+exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
+exposed-migration-jdbc = { module = "org.jetbrains.exposed:exposed-migration-jdbc", version.ref = "exposed" }
+exposed-money = { module = "org.jetbrains.exposed:exposed-money", version.ref = "exposed" }
+exposed-spring-boot-starter = { module = "org.jetbrains.exposed:exposed-spring-boot-starter", version.ref = "exposed" }
 
 # Micrometer
 micrometer-bom = { module = "io.micrometer:micrometer-bom", version.ref = "micrometer" }
