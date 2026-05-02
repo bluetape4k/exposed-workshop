@@ -7,7 +7,7 @@ import io.bluetape4k.junit5.awaitility.untilSuspending
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
-import kotlinx.coroutines.flow.chunked
+import io.bluetape4k.coroutines.flow.extensions.chunked
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBeEqualTo
