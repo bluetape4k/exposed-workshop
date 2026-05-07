@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ develop, main ]
+    branches: [ develop ]
     paths-ignore:
       - '**.md'
       - 'docs/**'
@@ -14,7 +14,7 @@ on:
       - '.omc/**'
       - '.claude/**'
   pull_request:
-    branches: [ develop, main ]
+    branches: [ develop ]
     paths-ignore:
       - '**.md'
       - 'docs/**'
