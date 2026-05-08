@@ -2,7 +2,7 @@ package exposed.examples.transaction.aot
 
 import exposed.examples.transaction.TransactionTemplateApplication
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.spring.transaction.SpringTransactionManager
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.getBean

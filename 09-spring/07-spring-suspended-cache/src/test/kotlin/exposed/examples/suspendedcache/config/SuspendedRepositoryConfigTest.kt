@@ -4,7 +4,7 @@ import exposed.examples.suspendedcache.AbstractSpringSuspendedCacheApplicationTe
 import exposed.examples.suspendedcache.domain.repository.CountrySuspendedRepository
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier

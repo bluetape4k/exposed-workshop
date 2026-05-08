@@ -2,11 +2,11 @@ package exposed.examples.connection
 
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.coroutines.KLoggingChannel
-import org.amshove.kluent.fail
-import org.amshove.kluent.shouldBeFalse
-import org.amshove.kluent.shouldBeTrue
-import org.amshove.kluent.shouldContainIgnoringCase
-import org.amshove.kluent.shouldHaveSize
+import io.bluetape4k.assertions.fail
+import io.bluetape4k.assertions.shouldBeFalse
+import io.bluetape4k.assertions.shouldBeTrue
+import io.bluetape4k.assertions.shouldContainIgnoringCase
+import io.bluetape4k.assertions.shouldHaveSize
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction

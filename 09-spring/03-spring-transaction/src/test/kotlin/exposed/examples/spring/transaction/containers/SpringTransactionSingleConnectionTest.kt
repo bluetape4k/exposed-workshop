@@ -2,7 +2,7 @@ package exposed.examples.spring.transaction.containers
 
 import exposed.examples.spring.transaction.utils.execute
 import io.bluetape4k.codec.Base58
-import org.amshove.kluent.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils

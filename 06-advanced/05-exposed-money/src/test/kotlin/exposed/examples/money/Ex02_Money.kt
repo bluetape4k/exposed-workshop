@@ -8,8 +8,8 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.money.currencyUnitOf
 import io.bluetape4k.money.inUSD
 import io.bluetape4k.money.moneyOf
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeNull
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeNull
 import org.javamoney.moneta.Money
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.eq

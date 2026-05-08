@@ -5,7 +5,7 @@ import exposed.examples.cache.domain.model.UserEventTable
 import exposed.examples.cache.domain.model.newUserEventRecord
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
-import org.amshove.kluent.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeEqualTo
 import org.awaitility.kotlin.await
 import org.awaitility.kotlin.withPollInterval
 import org.jetbrains.exposed.v1.jdbc.deleteAll

@@ -8,10 +8,10 @@ import io.bluetape4k.logging.debug
 import io.bluetape4k.support.toUtf8Bytes
 import io.bluetape4k.support.toUtf8String
 import nl.altindag.log.LogCaptor
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldContainNone
-import org.amshove.kluent.shouldNotBeEmpty
-import org.amshove.kluent.shouldStartWith
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldContainNone
+import io.bluetape4k.assertions.shouldNotBeEmpty
+import io.bluetape4k.assertions.shouldStartWith
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.core.eq
@@ -129,7 +129,7 @@ class Ex01_EncryptedColumn : AbstractExposedTest() {
 
             val insertLog = logCaptor.debugLogs.single()
             insertLog.shouldStartWith("INSERT ")
-            insertLog.shouldContainNone(insertedStrings)
+            insertLog.shouldContainNone(*insertedStrings.toTypedArray())
 
             logCaptor.clearLogs()
             logCaptor.resetLogLevel()
@@ -209,7 +209,7 @@ class Ex01_EncryptedColumn : AbstractExposedTest() {
 
             val insertLog = logCaptor.debugLogs.single()
             insertLog.shouldStartWith("INSERT ")
-            insertLog.shouldContainNone(insertedStrings)
+            insertLog.shouldContainNone(*insertedStrings.toTypedArray())
 
             logCaptor.clearLogs()
 
@@ -233,7 +233,7 @@ class Ex01_EncryptedColumn : AbstractExposedTest() {
 
             val updateLog = logCaptor.debugLogs.single()
             updateLog.shouldStartWith("UPDATE ")
-            updateLog.shouldContainNone(updatedStrings)
+            updateLog.shouldContainNone(*updatedStrings.toTypedArray())
 
             logCaptor.clearLogs()
             logCaptor.resetLogLevel()

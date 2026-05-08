@@ -23,7 +23,7 @@ dependencies {
 
     implementation(libs.bluetape4k.jdbc)
     implementation(libs.bluetape4k.junit5)
-    implementation(libs.kluent)
+    implementation(libs.bluetape4k.assertions)
 
     runtimeOnly(libs.hikaricp)
 

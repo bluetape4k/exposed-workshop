@@ -2,7 +2,7 @@ package exposed.examples.transaction.domain
 
 import exposed.examples.transaction.AbstractTransactionApplicationTest
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeEqualTo
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.RepeatedTest

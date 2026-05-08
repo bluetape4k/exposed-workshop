@@ -3,7 +3,7 @@ package exposed.multitenant.springweb.aot
 import exposed.multitenant.springweb.config.ExposedMultitenantConfig
 import exposed.multitenant.springweb.tenant.TenantAwareDataSource
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.junit.jupiter.api.Test

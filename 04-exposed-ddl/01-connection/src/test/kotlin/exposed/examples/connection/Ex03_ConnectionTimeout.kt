@@ -2,9 +2,9 @@ package exposed.examples.connection
 
 import exposed.shared.tests.AbstractExposedTest
 import io.bluetape4k.logging.coroutines.KLoggingChannel
-import org.amshove.kluent.fail
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeInstanceOf
+import io.bluetape4k.assertions.fail
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeInstanceOf
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.exceptions.ExposedSQLException
 import org.jetbrains.exposed.v1.jdbc.Database

@@ -10,7 +10,7 @@ import io.bluetape4k.logging.debug
 import io.bluetape4k.coroutines.flow.extensions.chunked
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
-import org.amshove.kluent.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeEqualTo
 import org.awaitility.kotlin.await
 import org.awaitility.kotlin.withPollInterval
 import org.jetbrains.exposed.v1.jdbc.deleteAll

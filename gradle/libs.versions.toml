@@ -3,6 +3,7 @@
 
 [versions]
 bluetape4k = "1.7.0"
+bluetape4k-assertions-version = "1.8.0-SNAPSHOT"
 
 kotlin = "2.3.21"
 kotlinx-coroutines = "1.10.2"
@@ -19,7 +20,6 @@ slf4j = "2.0.17"
 logback = "1.5.32"
 
 junit-jupiter = "6.0.3"
-kluent = "1.73"
 mockk = "1.14.9"
 springmockk = "4.0.2"
 awaitility = "4.3.0"
@@ -115,6 +115,7 @@ bluetape4k-bom = { module = "io.github.bluetape4k:bluetape4k-bom", version.ref =
 bluetape4k-core = { module = "io.github.bluetape4k:bluetape4k-core" }
 bluetape4k-coroutines = { module = "io.github.bluetape4k:bluetape4k-coroutines" }
 bluetape4k-logging = { module = "io.github.bluetape4k:bluetape4k-logging" }
+bluetape4k-assertions = { module = "io.github.bluetape4k:bluetape4k-assertions", version.ref = "bluetape4k-assertions-version" }
 bluetape4k-junit5 = { module = "io.github.bluetape4k:bluetape4k-junit5" }
 bluetape4k-testcontainers = { module = "io.github.bluetape4k:bluetape4k-testcontainers" }
 bluetape4k-idgenerators = { module = "io.github.bluetape4k:bluetape4k-idgenerators" }
@@ -369,7 +370,6 @@ junit-platform-engine = { module = "org.junit.platform:junit-platform-engine" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 junit-platform-runner = { module = "org.junit.platform:junit-platform-runner" }
 
-kluent = { module = "org.amshove.kluent:kluent", version.ref = "kluent" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 springmockk = { module = "com.ninja-squad:springmockk", version.ref = "springmockk" }
 awaitility-kotlin = { module = "org.awaitility:awaitility-kotlin", version.ref = "awaitility" }

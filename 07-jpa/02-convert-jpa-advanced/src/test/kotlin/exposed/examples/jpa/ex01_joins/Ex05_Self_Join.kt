@@ -5,8 +5,8 @@ import exposed.shared.mapping.OrderSchema.withOrdersTables
 import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldHaveSize
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldHaveSize
 import org.jetbrains.exposed.v1.core.Alias
 import org.jetbrains.exposed.v1.core.Join
 import org.jetbrains.exposed.v1.core.alias
