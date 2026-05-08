@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

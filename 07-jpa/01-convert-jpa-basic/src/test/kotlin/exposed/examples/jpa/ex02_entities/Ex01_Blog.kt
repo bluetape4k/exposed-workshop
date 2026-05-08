@@ -9,9 +9,9 @@ import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldBeTrue
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeNull
+import io.bluetape4k.assertions.shouldBeTrue
 import org.jetbrains.exposed.v1.dao.entityCache
 import org.jetbrains.exposed.v1.dao.flushCache
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils

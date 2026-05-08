@@ -3,7 +3,7 @@ package exposed.multitenant.webflux.aot
 import exposed.multitenant.webflux.config.ExposedMultitenantConfig
 import exposed.multitenant.webflux.tenant.TenantAwareDataSource
 import io.bluetape4k.logging.coroutines.KLoggingChannel
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.junit.jupiter.api.Test

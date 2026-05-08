@@ -10,9 +10,9 @@ import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.requireNotBlank
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeTrue
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeTrue
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.SortOrder
 import org.jetbrains.exposed.v1.core.dao.id.EntityID

@@ -5,7 +5,7 @@ import exposed.examples.routing.datasource.DataSourceRegistry
 import exposed.examples.routing.datasource.RoutingKeyResolver
 import exposed.examples.routing.domain.RoutingMarkerRepository
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.getBean

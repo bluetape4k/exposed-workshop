@@ -7,8 +7,8 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.exposed.jdbc.getIndices
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
-import org.amshove.kluent.shouldBeTrue
-import org.amshove.kluent.shouldHaveSize
+import io.bluetape4k.assertions.shouldBeTrue
+import io.bluetape4k.assertions.shouldHaveSize
 import org.jetbrains.exposed.v1.core.Coalesce
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.and

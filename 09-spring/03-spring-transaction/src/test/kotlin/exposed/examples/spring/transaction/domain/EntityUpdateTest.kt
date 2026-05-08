@@ -6,7 +6,7 @@ import io.bluetape4k.codec.Base58
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
-import org.amshove.kluent.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.IntEntity

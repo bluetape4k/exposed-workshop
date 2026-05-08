@@ -8,8 +8,8 @@ import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeLessOrEqualTo
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeLessOrEqualTo
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.SortOrder
 import org.jetbrains.exposed.v1.core.dao.id.EntityID

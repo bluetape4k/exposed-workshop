@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.toList
-import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldBeTrue
+import io.bluetape4k.assertions.shouldBeNull
+import io.bluetape4k.assertions.shouldBeTrue
 import org.junit.jupiter.api.Test
 
 abstract class AbstractCountrySuspendedRepositoryTest: AbstractSpringSuspendedCacheApplicationTest() {

@@ -4,9 +4,9 @@ import exposed.example.springboot.Application
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import io.bluetape4k.support.uninitialized
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeNull
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.spring.boot.DatabaseInitializer
 import org.jetbrains.exposed.v1.spring.transaction.SpringTransactionManager

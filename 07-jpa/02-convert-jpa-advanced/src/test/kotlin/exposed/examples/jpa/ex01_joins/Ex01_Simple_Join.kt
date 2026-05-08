@@ -6,9 +6,9 @@ import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldHaveSize
-import org.amshove.kluent.shouldNotBeEmpty
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldHaveSize
+import io.bluetape4k.assertions.shouldNotBeEmpty
 import org.jetbrains.exposed.v1.core.alias
 import org.jetbrains.exposed.v1.core.and
 import org.jetbrains.exposed.v1.core.eq

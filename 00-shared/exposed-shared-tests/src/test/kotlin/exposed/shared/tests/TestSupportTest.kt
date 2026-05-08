@@ -1,8 +1,8 @@
 package exposed.shared.tests
 
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.junit.jupiter.api.Test
 import org.testcontainers.utility.Base58

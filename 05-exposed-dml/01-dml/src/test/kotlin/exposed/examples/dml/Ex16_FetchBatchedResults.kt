@@ -10,9 +10,9 @@ import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
 import io.bluetape4k.idgenerators.uuid.Uuid
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldBeEmpty
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldHaveSize
+import io.bluetape4k.assertions.shouldBeEmpty
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldHaveSize
 import org.jetbrains.exposed.v1.core.ReferenceOption
 import org.jetbrains.exposed.v1.core.SortOrder
 import org.jetbrains.exposed.v1.core.alias

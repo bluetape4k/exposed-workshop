@@ -6,7 +6,7 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withDb
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.amshove.kluent.shouldBeInstanceOf
+import io.bluetape4k.assertions.shouldBeInstanceOf
 import org.jetbrains.exposed.v1.exceptions.ExposedSQLException
 import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.junit.jupiter.api.Assumptions

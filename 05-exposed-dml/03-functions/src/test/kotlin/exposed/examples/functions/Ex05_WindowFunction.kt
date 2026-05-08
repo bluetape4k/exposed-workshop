@@ -5,7 +5,7 @@ import exposed.shared.dml.DMLTestData.withSales
 import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.amshove.kluent.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.SortOrder
 import org.jetbrains.exposed.v1.core.WindowFrameBound
 import org.jetbrains.exposed.v1.core.WindowFunctionDefinition

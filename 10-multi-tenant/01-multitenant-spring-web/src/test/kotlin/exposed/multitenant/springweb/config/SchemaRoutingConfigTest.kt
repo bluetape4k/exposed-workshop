@@ -7,7 +7,7 @@ import exposed.multitenant.springweb.tenant.Tenants
 import exposed.shared.repository.model.toActorRecord
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.amshove.kluent.shouldHaveSize
+import io.bluetape4k.assertions.shouldHaveSize
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.junit.jupiter.api.Test
 import org.springframework.test.annotation.Commit

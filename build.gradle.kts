@@ -34,11 +34,11 @@ allprojects {
         mavenCentral()
         google()
 
-        // bluetape4k snapshot 버전 사용 시만 사용하세요.
-//        maven {
-//            name = "central-snapshots"
-//            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
-//        }
+        // bluetape4k-assertions 는 1.8.0-SNAPSHOT 에만 존재하므로 snapshot 저장소 사용
+        maven {
+            name = "central-snapshots"
+            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+        }
     }
 
     // bluetape4k snapshot 버전 사용 시만 사용하세요.
@@ -225,7 +225,7 @@ subprojects {
         testImplementation(rootLibs.junit.jupiter)
         testRuntimeOnly(rootLibs.junit.platform.engine)
 
-        testImplementation(rootLibs.kluent)
+        testImplementation(rootLibs.bluetape4k.assertions)
         testImplementation(rootLibs.mockk)
         testImplementation(rootLibs.awaitility.kotlin)
 

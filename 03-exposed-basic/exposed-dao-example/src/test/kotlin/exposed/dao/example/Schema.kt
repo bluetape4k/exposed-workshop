@@ -3,7 +3,7 @@ package exposed.dao.example
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import exposed.shared.tests.withTablesSuspending
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.IntEntity

@@ -6,9 +6,9 @@ import exposed.workshop.springwebflux.domain.model.toActorRecord
 import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldNotBeEmpty
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldNotBeEmpty
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

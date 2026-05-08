@@ -5,11 +5,11 @@ import exposed.multitenant.springweb.tenant.TenantContext
 import exposed.multitenant.springweb.tenant.Tenants.Tenant
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldHaveSize
-import org.amshove.kluent.shouldNotBeEmpty
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeNull
+import io.bluetape4k.assertions.shouldHaveSize
+import io.bluetape4k.assertions.shouldNotBeEmpty
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
 import org.springframework.beans.factory.annotation.Autowired

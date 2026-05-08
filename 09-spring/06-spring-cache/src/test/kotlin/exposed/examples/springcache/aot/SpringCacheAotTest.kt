@@ -4,7 +4,7 @@ import exposed.examples.springcache.SpringCacheApplication
 import exposed.examples.springcache.config.ExposedConfig
 import exposed.examples.springcache.config.LettuceCacheConfig
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.junit.jupiter.api.Test

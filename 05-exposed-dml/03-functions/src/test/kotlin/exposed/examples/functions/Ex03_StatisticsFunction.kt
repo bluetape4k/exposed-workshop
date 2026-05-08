@@ -3,7 +3,7 @@ package exposed.examples.functions
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.alias
 import org.jetbrains.exposed.v1.core.stdDevPop

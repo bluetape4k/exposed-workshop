@@ -3,7 +3,7 @@ package exposed.sql.example
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import exposed.shared.tests.withTablesSuspending
-import org.amshove.kluent.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.stringLiteral

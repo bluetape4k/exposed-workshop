@@ -7,11 +7,11 @@ import exposed.shared.tests.currentDialectTest
 import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeInRange
-import org.amshove.kluent.shouldBeTrue
-import org.amshove.kluent.shouldContainSame
-import org.amshove.kluent.shouldHaveSize
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeInRange
+import io.bluetape4k.assertions.shouldBeTrue
+import io.bluetape4k.assertions.shouldContainSame
+import io.bluetape4k.assertions.shouldHaveSize
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.less
@@ -113,7 +113,7 @@ class Ex07_UnsignedColumnType: AbstractExposedTest() {
             UByteTable.ddl.single().endsWith(ddlEnding, ignoreCase = true).shouldBeTrue()
 
             val number = 191.toUByte()
-            number.shouldBeInRange(Byte.MAX_VALUE.toUByte(), UByte.MAX_VALUE)
+            (number >= Byte.MAX_VALUE.toUByte() && number <= UByte.MAX_VALUE).shouldBeTrue()
 
             /**
              * ```sql
@@ -201,7 +201,7 @@ class Ex07_UnsignedColumnType: AbstractExposedTest() {
             UShortTable.ddl.single().endsWith(ddlEnding, ignoreCase = true).shouldBeTrue()
 
             val number = 49151.toUShort()
-            number.shouldBeInRange(Short.MAX_VALUE.toUShort(), UShort.MAX_VALUE)
+            (number >= Short.MAX_VALUE.toUShort() && number <= UShort.MAX_VALUE).shouldBeTrue()
 
             UShortTable.insert { it[unsignedShort] = number }
 

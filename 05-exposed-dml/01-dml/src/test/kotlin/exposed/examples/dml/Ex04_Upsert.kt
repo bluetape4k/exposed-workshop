@@ -7,10 +7,10 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.codec.Base58
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldHaveSize
-import org.amshove.kluent.shouldNotBeEqualTo
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldHaveSize
+import io.bluetape4k.assertions.shouldNotBeEqualTo
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.and

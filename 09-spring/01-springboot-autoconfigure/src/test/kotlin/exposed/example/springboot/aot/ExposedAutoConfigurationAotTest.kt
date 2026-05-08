@@ -1,9 +1,9 @@
 package exposed.example.springboot.aot
 
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldBeEmpty
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldBeEmpty
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.spring.boot.DatabaseInitializer
 import org.jetbrains.exposed.v1.spring.boot.autoconfigure.ExposedAutoConfiguration

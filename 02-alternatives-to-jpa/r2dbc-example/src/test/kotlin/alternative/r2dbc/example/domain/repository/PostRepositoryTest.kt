@@ -5,9 +5,9 @@ import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
 import kotlinx.coroutines.flow.toList
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldNotBeEmpty
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeNull
+import io.bluetape4k.assertions.shouldNotBeEmpty
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 

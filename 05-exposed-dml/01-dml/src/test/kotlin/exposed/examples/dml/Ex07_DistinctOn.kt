@@ -5,8 +5,8 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeNull
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeNull
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.SortOrder
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable

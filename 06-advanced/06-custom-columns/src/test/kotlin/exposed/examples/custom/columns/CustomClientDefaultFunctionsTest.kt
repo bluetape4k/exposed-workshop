@@ -11,8 +11,8 @@ import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldHaveSize
+import io.bluetape4k.assertions.shouldBeNull
+import io.bluetape4k.assertions.shouldHaveSize
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable

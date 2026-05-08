@@ -4,7 +4,7 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.expectException
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.CustomFunction
 import org.jetbrains.exposed.v1.core.DecimalColumnType
 import org.jetbrains.exposed.v1.core.Expression

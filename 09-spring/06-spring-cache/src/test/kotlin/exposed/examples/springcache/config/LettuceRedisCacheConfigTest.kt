@@ -2,7 +2,7 @@ package exposed.examples.springcache.config
 
 import exposed.examples.springcache.AbstractSpringCacheApplicationTest
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.CacheManager

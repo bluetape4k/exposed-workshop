@@ -9,7 +9,7 @@ import exposed.examples.suspendedcache.lettuce.LettuceSuspendedCacheManager
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.lettuce.core.RedisClient
 import io.lettuce.core.RedisURI
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.junit.jupiter.api.Test

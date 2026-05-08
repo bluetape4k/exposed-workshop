@@ -10,8 +10,8 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.requireNotBlank
 import io.bluetape4k.support.requirePositiveNumber
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldHaveSize
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldHaveSize
 import org.jetbrains.exposed.v1.core.dao.id.CompositeID
 import org.jetbrains.exposed.v1.core.dao.id.CompositeIdTable
 import org.jetbrains.exposed.v1.core.dao.id.EntityID

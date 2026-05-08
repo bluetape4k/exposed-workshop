@@ -7,9 +7,9 @@ import exposed.shared.tests.TestDB
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.asLong
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeTrue
-import org.amshove.kluent.shouldHaveSize
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeTrue
+import io.bluetape4k.assertions.shouldHaveSize
 import org.jetbrains.exposed.v1.core.CustomOperator
 import org.jetbrains.exposed.v1.core.Expression
 import org.jetbrains.exposed.v1.core.IntegerColumnType

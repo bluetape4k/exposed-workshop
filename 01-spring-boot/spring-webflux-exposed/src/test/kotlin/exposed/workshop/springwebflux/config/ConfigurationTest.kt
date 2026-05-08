@@ -4,7 +4,7 @@ import exposed.workshop.springwebflux.AbstractSpringWebfluxTest
 import exposed.workshop.springwebflux.domain.repository.ActorRepository
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.support.uninitialized
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 

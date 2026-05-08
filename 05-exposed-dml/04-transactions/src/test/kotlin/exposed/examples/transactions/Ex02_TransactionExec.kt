@@ -7,10 +7,10 @@ import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import io.bluetape4k.support.ifTrue
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldNotBeEmpty
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeNull
+import io.bluetape4k.assertions.shouldNotBeEmpty
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.autoIncColumnType
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
@@ -74,7 +74,7 @@ class Ex02_TransactionExec: AbstractExposedTest() {
              * SELECT * FROM exec_table;
              * ```
              */
-            val results: MutableList<Int> = exec(
+            val results: List<Int> = exec(
                 """SELECT * FROM ${ExecTable.tableName.inProperCase()} ORDER BY id""",
                 explicitStatementType = StatementType.SELECT
             ) { resultSet: ResultSet ->
@@ -86,7 +86,7 @@ class Ex02_TransactionExec: AbstractExposedTest() {
                     allAmounts.add(loadedAmount)
                 }
                 allAmounts
-            }!!.shouldNotBeEmpty()
+            }!!.also { it.shouldNotBeEmpty() }
 
             results shouldBeEqualTo amounts
         }

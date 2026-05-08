@@ -13,10 +13,10 @@ import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.idEquals
 import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldBeTrue
-import org.amshove.kluent.shouldContainSame
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldBeNull
+import io.bluetape4k.assertions.shouldBeTrue
+import io.bluetape4k.assertions.shouldContainSame
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable

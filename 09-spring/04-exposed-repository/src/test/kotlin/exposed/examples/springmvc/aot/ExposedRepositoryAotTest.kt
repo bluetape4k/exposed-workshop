@@ -2,7 +2,7 @@ package exposed.examples.springmvc.aot
 
 import exposed.examples.springmvc.config.ExposedDatabaseConfig
 import io.bluetape4k.logging.KLogging
-import org.amshove.kluent.shouldNotBeNull
+import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.junit.jupiter.api.Test

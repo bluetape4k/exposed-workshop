@@ -9,8 +9,8 @@ import io.bluetape4k.exposed.dao.idHashCode
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.money.moneyOf
 import kotlinx.atomicfu.atomic
-import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldBeNull
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeNull
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.dao.EntityClass

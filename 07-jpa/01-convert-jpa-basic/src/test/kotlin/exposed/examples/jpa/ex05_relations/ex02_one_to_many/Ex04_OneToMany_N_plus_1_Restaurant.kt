@@ -9,7 +9,7 @@ import exposed.shared.tests.TestDB
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
-import org.amshove.kluent.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeEqualTo
 import org.jetbrains.exposed.v1.dao.entityCache
 import org.jetbrains.exposed.v1.dao.with
 import org.jetbrains.exposed.v1.jdbc.JdbcTransaction

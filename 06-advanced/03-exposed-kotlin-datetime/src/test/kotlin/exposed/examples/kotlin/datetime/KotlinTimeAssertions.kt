@@ -7,7 +7,7 @@ import kotlinx.datetime.LocalTime
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toKotlinLocalDateTime
 import kotlinx.serialization.Serializable
-import org.amshove.kluent.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 import org.jetbrains.exposed.v1.core.vendors.H2Dialect
