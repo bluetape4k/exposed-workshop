@@ -1,6 +1,10 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.report.ReportMergeTask
+import org.graalvm.buildtools.gradle.dsl.GraalVMExtension
+import org.graalvm.buildtools.gradle.dsl.GraalVMReachabilityMetadataRepositoryExtension
+import org.graalvm.buildtools.gradle.tasks.CollectReachabilityMetadata
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.gradle.api.plugins.ExtensionAware
 
 plugins {
     base
@@ -19,7 +23,6 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.kover)
 
-    alias(libs.plugins.dependency.management)
     alias(libs.plugins.spring.boot) apply false
 
     alias(libs.plugins.test.logger)
@@ -53,7 +56,6 @@ subprojects {
         // Kotlin 1.9.20 부터는 pluginId 를 지정해줘야 합니다.
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.kotlinx.atomicfu")
-        plugin("io.spring.dependency-management")
         plugin("com.adarshr.test-logger")
         plugin("org.jetbrains.kotlinx.kover")
     }
@@ -184,28 +186,33 @@ subprojects {
         }
     }
 
-    dependencyManagement {
-        // HINT: Gradle 빌드 시, detachedConfiguration 이 많이 발생하는데, setApplyMavenExclusions(false) 를 추가하면 속도가 개선됩니다.
-        // https://discuss.gradle.org/t/what-is-detachedconfiguration-i-have-a-lots-of-them-for-each-subproject-and-resolving-them-takes-95-of-build-time/31595/6
-        setApplyMavenExclusions(false)
-
-        imports {
-            mavenBom(rootLibs.spring.boot.dependencies.get().toString())
-            mavenBom(rootLibs.bluetape4k.bom.get().toString())
-            mavenBom(rootLibs.kotlinx.coroutines.bom.get().toString())
-            mavenBom(rootLibs.kotlin.bom.get().toString())
-        }
-    }
-
     dependencies {
         val api by configurations
         val testApi by configurations
         val implementation by configurations
+        val annotationProcessor by configurations
         val testImplementation by configurations
 
         val compileOnly by configurations
         val testCompileOnly by configurations
         val testRuntimeOnly by configurations
+
+        api(platform(rootLibs.spring.boot.dependencies.get()))
+        api(platform(rootLibs.bluetape4k.dependencies.get()))
+        api(platform(rootLibs.kotlinx.coroutines.bom.get()))
+        api(platform(rootLibs.kotlin.bom.get()))
+
+        implementation(platform(rootLibs.spring.boot.dependencies.get()))
+        implementation(platform(rootLibs.bluetape4k.dependencies.get()))
+        implementation(platform(rootLibs.kotlinx.coroutines.bom.get()))
+        implementation(platform(rootLibs.kotlin.bom.get()))
+
+        annotationProcessor(platform(rootLibs.spring.boot.dependencies.get()))
+
+        testImplementation(platform(rootLibs.spring.boot.dependencies.get()))
+        testImplementation(platform(rootLibs.bluetape4k.dependencies.get()))
+        testImplementation(platform(rootLibs.kotlinx.coroutines.bom.get()))
+        testImplementation(platform(rootLibs.kotlin.bom.get()))
 
         implementation(rootLibs.kotlin.stdlib)
         implementation(rootLibs.kotlin.reflect)
@@ -232,6 +239,19 @@ subprojects {
         // Property based test
         testImplementation(rootLibs.datafaker)
         testImplementation(rootLibs.random.beans)
+    }
+
+    pluginManager.withPlugin("org.graalvm.buildtools.native") {
+        extensions.configure<GraalVMExtension>("graalvmNative") {
+            (this as ExtensionAware).extensions.configure<GraalVMReachabilityMetadataRepositoryExtension>(
+                "metadataRepository"
+            ) {
+                enabled.set(false)
+            }
+        }
+        tasks.withType<CollectReachabilityMetadata>().configureEach {
+            enabled = false
+        }
     }
 }
 

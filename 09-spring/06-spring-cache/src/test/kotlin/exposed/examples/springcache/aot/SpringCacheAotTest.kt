@@ -10,8 +10,8 @@ import org.jetbrains.exposed.v1.jdbc.Database
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.getBean
 import org.springframework.boot.autoconfigure.AutoConfigurations
-import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+import org.springframework.boot.data.redis.autoconfigure.DataRedisAutoConfiguration
+import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
 import org.springframework.boot.test.context.runner.ApplicationContextRunner
 import org.springframework.cache.CacheManager
 import org.springframework.data.redis.cache.RedisCacheConfiguration
@@ -48,11 +48,11 @@ class SpringCacheAotTest {
     /**
      * Redis 캐시 구성을 검증하는 컨텍스트 러너.
      *
-     * [RedisAutoConfiguration]이 [RedisConnectionFactory]를 자동 구성하고,
+     * [DataRedisAutoConfiguration]이 [RedisConnectionFactory]를 자동 구성하고,
      * [LettuceCacheConfig]가 [RedisCacheConfiguration]과 [CacheManager] 빈을 생성합니다.
      */
     private val cacheContextRunner = ApplicationContextRunner()
-        .withConfiguration(AutoConfigurations.of(RedisAutoConfiguration::class.java))
+        .withConfiguration(AutoConfigurations.of(DataRedisAutoConfiguration::class.java))
         .withUserConfiguration(LettuceCacheConfig::class.java)
         .withPropertyValues("spring.data.redis.url=${redisServer.url}")
 

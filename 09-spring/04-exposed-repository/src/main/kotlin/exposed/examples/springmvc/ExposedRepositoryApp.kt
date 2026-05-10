@@ -12,6 +12,6 @@ class ExposedRepositoryApp {
 
 fun main(vararg args: String) {
     runApplication<ExposedRepositoryApp>(*args) {
-        webApplicationType = WebApplicationType.SERVLET
+        setWebApplicationType(WebApplicationType.SERVLET)
     }
 }

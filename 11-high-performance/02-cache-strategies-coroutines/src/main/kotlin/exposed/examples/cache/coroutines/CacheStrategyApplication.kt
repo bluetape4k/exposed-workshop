@@ -18,6 +18,6 @@ class CacheStrategyApplication {
 
 fun main(args: Array<String>) {
     runApplication<CacheStrategyApplication>(*args) {
-        webApplicationType = WebApplicationType.REACTIVE
+        setWebApplicationType(WebApplicationType.REACTIVE)
     }
 }

@@ -40,8 +40,8 @@ dependencies {
     implementation(libs.bluetape4k.io)
     implementation(libs.bluetape4k.jdbc)
     implementation(libs.bluetape4k.redis)
-    implementation(libs.bluetape4k.spring.boot3.core)
-    implementation(libs.bluetape4k.spring.boot3.redis)
+    implementation(libs.bluetape4k.spring.boot.core)
+    implementation(libs.bluetape4k.spring.boot.redis)
     implementation(libs.bluetape4k.testcontainers)
     testImplementation(libs.bluetape4k.junit5)
 

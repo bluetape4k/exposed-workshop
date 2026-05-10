@@ -4,6 +4,7 @@ import alternatives.hibernate.reactive.example.HibernateReactiveApplication
 import io.bluetape4k.junit5.faker.Fakers
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient
 import org.springframework.test.context.ActiveProfiles
 
 @ActiveProfiles("postgres")
@@ -11,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles
     classes = [HibernateReactiveApplication::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
+@AutoConfigureWebTestClient
 abstract class AbstractHibernateReactiveTest {
 
     companion object: KLoggingChannel() {

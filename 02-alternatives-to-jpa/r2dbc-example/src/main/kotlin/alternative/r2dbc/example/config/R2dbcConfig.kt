@@ -29,7 +29,7 @@ class R2dbcConfig: AbstractR2dbcConfiguration() {
     @Bean("connectionUrl")
     @Profile("h2")
     fun connectionUrlH2(): String {
-        return "r2dbc:h2:mem:///test?MODE=PostgreSQL;options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
+        return "r2dbc:h2:mem:///test?MODE=PostgreSQL;options=DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
     }
 
     @Bean

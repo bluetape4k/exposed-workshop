@@ -24,6 +24,6 @@ class SpringWebfluxApplication {
  */
 fun main(vararg args: String) {
     runApplication<SpringWebfluxApplication>(*args) {
-        webApplicationType = WebApplicationType.REACTIVE
+        setWebApplicationType(WebApplicationType.REACTIVE)
     }
 }

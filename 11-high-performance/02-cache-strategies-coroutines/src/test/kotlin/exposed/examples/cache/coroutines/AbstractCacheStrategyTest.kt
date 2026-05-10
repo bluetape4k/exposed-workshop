@@ -4,15 +4,20 @@ import io.bluetape4k.junit5.faker.Fakers
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
+import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.redisson.api.RedissonClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient
 
 /** 코루틴 기반 캐시 전략 예제의 Spring Boot 통합 테스트를 위한 추상 베이스 클래스입니다. */
 @SpringBootTest(
     classes = [CacheStrategyApplication::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 )
+@AutoConfigureWebTestClient
 abstract class AbstractCacheStrategyTest {
 
     companion object: KLoggingChannel() {
@@ -30,6 +35,14 @@ abstract class AbstractCacheStrategyTest {
 
     @Autowired
     private lateinit var redissonClient: RedissonClient
+
+    @Autowired
+    private lateinit var database: Database
+
+    @BeforeEach
+    fun resetDefaultDatabase() {
+        TransactionManager.defaultDatabase = database
+    }
 
     /**
      * 테스트 클래스 최초 실행 전, Redis의 모든 데이터를 삭제합니다.

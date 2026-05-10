@@ -14,6 +14,6 @@ interface CustomerRepository: CoroutineCrudRepository<Customer, Long> {
 
     fun findByFirstname(firstname: String): Flow<Customer>
 
-    @Query("select id, firstname, lastname from customer c where c.lastname = :lastname")
+    @Query("""select "id", "firstname", "lastname" from "customer" c where c."lastname" = :lastname""")
     fun findByLastname(lastname: String): Flow<Customer>
 }

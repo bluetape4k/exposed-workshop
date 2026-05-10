@@ -37,7 +37,7 @@ dependencies {
     implementation(libs.bluetape4k.jackson2)
     implementation(libs.bluetape4k.jdbc)
     testImplementation(libs.bluetape4k.junit5)
-    testImplementation(libs.bluetape4k.spring.boot3.core)
+    testImplementation(libs.bluetape4k.spring.boot.core)
 
     // Database Drivers
     implementation(libs.hikaricp)
@@ -63,11 +63,12 @@ dependencies {
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-aspectj")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
+    testImplementation("org.springframework.boot:spring-boot-webtestclient")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

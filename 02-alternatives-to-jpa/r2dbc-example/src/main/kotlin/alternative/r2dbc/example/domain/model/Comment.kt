@@ -11,6 +11,7 @@ data class Comment(
     val content: String? = null,
     @Column("post_id")
     val postId: Long? = null,
+    @Column("id")
     @Id
     val id: Long? = null,
 ): Serializable {

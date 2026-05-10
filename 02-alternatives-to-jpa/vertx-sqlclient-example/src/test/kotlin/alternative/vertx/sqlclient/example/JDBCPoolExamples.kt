@@ -89,14 +89,14 @@ class JDBCPoolExamples: AbstractSqlClientTest() {
 
         vertx.testWithSuspendTransaction(testContext, pool) {
             val records = pool.withSuspendTransaction { conn ->
-                val query = pool.preparedQuery("SELECT COUNT(*) FROM test")
+                val query = pool.preparedQuery("""SELECT COUNT(*) AS "count" FROM test""")
                 val rows = query.execute().coAwait()
                 rows.map { it.toJson() }
             }
 
             records.forEach { log.debug { it } }
             records shouldHaveSize 1
-            records.single() shouldBeEqualTo json { obj("COUNT(*)" to 2) }
+            records.single() shouldBeEqualTo json { obj("count" to 2) }
         }
 
         pool.close().coAwait()
