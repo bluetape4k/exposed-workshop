@@ -19,6 +19,8 @@ class PersistenceUnitInfoImpl(
 
     override fun getPersistenceUnitName(): String = persistenceUnitName
     override fun getPersistenceProviderClassName(): String = "org.hibernate.jpa.HibernatePersistenceProvider"
+    override fun getScopeAnnotationName(): String = ""
+    override fun getQualifierAnnotationNames(): MutableList<String> = mutableListOf()
     override fun getTransactionType(): PersistenceUnitTransactionType = PersistenceUnitTransactionType.RESOURCE_LOCAL
     override fun getJtaDataSource(): DataSource? = null
     override fun getNonJtaDataSource(): DataSource = dataSource

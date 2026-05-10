@@ -11,7 +11,7 @@ import org.jetbrains.exposed.v1.spring.transaction.SpringTransactionManager
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.getBean
 import org.springframework.boot.autoconfigure.AutoConfigurations
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
 import org.springframework.boot.test.context.runner.ApplicationContextRunner
 
 /**

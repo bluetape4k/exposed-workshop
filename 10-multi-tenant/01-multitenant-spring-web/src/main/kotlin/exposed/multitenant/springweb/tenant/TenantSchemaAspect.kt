@@ -35,7 +35,10 @@ class TenantSchemaAspect(private val dataSource: DataSource) {
         // DataSourceUtils.getConnection()은 현재 트랜잭션에 바인딩된 커넥션을 반환합니다.
         val conn = DataSourceUtils.getConnection(dataSource)
         try {
-            conn.schema = schemaName
+            conn.createStatement().use { statement ->
+                statement.execute("CREATE SCHEMA IF NOT EXISTS $schemaName")
+                statement.execute("SET SCHEMA $schemaName")
+            }
         } finally {
             DataSourceUtils.releaseConnection(conn, dataSource)
         }
