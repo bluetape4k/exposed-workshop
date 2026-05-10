@@ -32,7 +32,7 @@ dependencies {
     implementation(libs.exposed.spring.boot.starter)
 
     // bluetape4k
-    implementation(libs.bluetape4k.exposed)
+    implementation(libs.bluetape4k.exposed.core)
     implementation(libs.bluetape4k.io)
     implementation(libs.bluetape4k.jackson2)
     implementation(libs.bluetape4k.jdbc)

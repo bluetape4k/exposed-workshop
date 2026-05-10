@@ -10,7 +10,7 @@ dependencies {
     testImplementation(libs.exposed.core)
     testImplementation(libs.exposed.dao)
     testImplementation(libs.exposed.jdbc)
-    testImplementation(libs.bluetape4k.exposed)
+    testImplementation(libs.bluetape4k.exposed.core)
 
     testImplementation(libs.bluetape4k.junit5)
 

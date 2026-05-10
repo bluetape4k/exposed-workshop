@@ -34,7 +34,7 @@ allprojects {
         mavenCentral()
         google()
 
-        // bluetape4k-assertions 는 1.8.0-SNAPSHOT 에만 존재하므로 snapshot 저장소 사용
+        // bluetape4k snapshot 버전 사용 시만 사용하세요.
         maven {
             name = "central-snapshots"
             url = uri("https://central.sonatype.com/repository/maven-snapshots/")
@@ -42,9 +42,9 @@ allprojects {
     }
 
     // bluetape4k snapshot 버전 사용 시만 사용하세요.
-//    configurations.all {
-//        resolutionStrategy.cacheChangingModulesFor(1, TimeUnit.DAYS)
-//    }
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
+    }
 }
 
 subprojects {
@@ -225,7 +225,6 @@ subprojects {
         testImplementation(rootLibs.junit.jupiter)
         testRuntimeOnly(rootLibs.junit.platform.engine)
 
-        testImplementation(rootLibs.bluetape4k.assertions)
         testImplementation(rootLibs.mockk)
         testImplementation(rootLibs.awaitility.kotlin)
 

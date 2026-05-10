@@ -20,7 +20,7 @@ dependencies {
     implementation(libs.exposed.spring.boot.starter)
 
     // Bluetape4k
-    implementation(libs.bluetape4k.exposed)
+    implementation(libs.bluetape4k.exposed.core)
     implementation(libs.bluetape4k.io)
     testImplementation(libs.bluetape4k.junit5)
 

@@ -12,7 +12,7 @@ dependencies {
     implementation(libs.exposed.dao)
     implementation(libs.exposed.migration.jdbc)
     implementation(libs.exposed.java.time)
-    implementation(libs.bluetape4k.exposed)
+    implementation(libs.bluetape4k.exposed.core)
 
     testImplementation(libs.bluetape4k.junit5)
 
