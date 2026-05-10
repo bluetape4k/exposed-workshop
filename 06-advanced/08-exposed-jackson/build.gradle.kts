@@ -13,7 +13,7 @@ dependencies {
     testImplementation(libs.exposed.jdbc)
     testImplementation(libs.exposed.migration.jdbc)
 
-    testImplementation(libs.bluetape4k.exposed)
+    testImplementation(libs.bluetape4k.exposed.core)
     testImplementation(libs.bluetape4k.exposed.jackson2)
 
     testImplementation(libs.bluetape4k.junit5)

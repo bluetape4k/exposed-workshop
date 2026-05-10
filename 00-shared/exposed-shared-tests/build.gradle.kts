@@ -6,7 +6,7 @@ dependencies {
     implementation(platform(libs.exposed.bom))
 
     // Bluetape4k Exposed
-    api(libs.bluetape4k.exposed)
+    api(libs.bluetape4k.exposed.core)
     implementation(libs.bluetape4k.exposed.jackson2)
     implementation(libs.bluetape4k.exposed.fastjson2)
 
@@ -23,7 +23,6 @@ dependencies {
 
     implementation(libs.bluetape4k.jdbc)
     implementation(libs.bluetape4k.junit5)
-    implementation(libs.bluetape4k.assertions)
 
     runtimeOnly(libs.hikaricp)
 

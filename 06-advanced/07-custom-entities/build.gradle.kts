@@ -14,7 +14,7 @@ dependencies {
     testImplementation(libs.exposed.core)
     testImplementation(libs.exposed.jdbc)
     testImplementation(libs.exposed.dao)
-    testImplementation(libs.bluetape4k.exposed)
+    testImplementation(libs.bluetape4k.exposed.core)
 
     // Id Generators
     // - Snowflake

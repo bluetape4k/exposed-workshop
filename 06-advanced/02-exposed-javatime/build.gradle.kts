@@ -11,7 +11,7 @@ dependencies {
 
     testImplementation(project(":exposed-shared-tests"))
 
-    implementation(libs.bluetape4k.exposed)
+    implementation(libs.bluetape4k.exposed.core)
     implementation(libs.exposed.core)
     implementation(libs.exposed.dao)
     implementation(libs.exposed.jdbc)
@@ -25,7 +25,7 @@ dependencies {
     implementation(platform(libs.kotlinx.serialization.bom))
     implementation(libs.kotlinx.serialization.json)
 
-    testImplementation(libs.bluetape4k.exposed)
+    testImplementation(libs.bluetape4k.exposed.core)
     testImplementation(libs.bluetape4k.junit5)
 
     testImplementation(libs.bluetape4k.testcontainers)

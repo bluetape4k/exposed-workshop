@@ -35,7 +35,7 @@ dependencies {
     implementation(libs.exposed.spring.boot.starter)
 
     // bluetape4k
-    implementation(libs.bluetape4k.exposed)
+    implementation(libs.bluetape4k.exposed.core)
     implementation(libs.bluetape4k.exposed.jdbc.redisson)
     implementation(libs.bluetape4k.idgenerators)
     implementation(libs.bluetape4k.redis)
