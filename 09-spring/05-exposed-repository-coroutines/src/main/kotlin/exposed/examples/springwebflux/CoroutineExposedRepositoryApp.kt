@@ -12,6 +12,6 @@ class CoroutineExposedRepositoryApp {
 
 fun main(vararg args: String) {
     runApplication<CoroutineExposedRepositoryApp>(*args) {
-        webApplicationType = WebApplicationType.REACTIVE
+        setWebApplicationType(WebApplicationType.REACTIVE)
     }
 }

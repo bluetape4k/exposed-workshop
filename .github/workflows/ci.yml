@@ -157,7 +157,7 @@ jobs:
           fi
 
       - name: Generate Kover XML report
-        if: matrix.collect-coverage && always()
+        if: matrix.collect-coverage && !cancelled()
         env:
           USE_DB: ${{ matrix.db }}
         run: ./gradlew koverXmlReport "-PuseDB=$USE_DB" --continue

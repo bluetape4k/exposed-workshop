@@ -1,6 +1,7 @@
 package exposed.examples.springcache.config
 
 import exposed.examples.springcache.AbstractSpringCacheApplicationTest
+import exposed.examples.springcache.domain.CountryRepository
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.assertions.shouldNotBeNull
 import org.junit.jupiter.api.Test
@@ -16,7 +17,7 @@ class LettuceRedisCacheConfigTest(
 
     @Test
     fun `countries cache를 생성해서 캐시 작업을 수행한다`() {
-        val countryCache = cacheManager.getCache("countries")
+        val countryCache = cacheManager.getCache(CountryRepository.COUNTRY_CACHE_NAME)
         countryCache.shouldNotBeNull()
 
         countryCache.put("KR", "South Korea")

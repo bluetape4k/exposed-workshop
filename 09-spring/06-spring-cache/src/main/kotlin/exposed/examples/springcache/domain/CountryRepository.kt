@@ -9,7 +9,6 @@ import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.jetbrains.exposed.v1.jdbc.update
 import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.CacheConfig
-import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -52,21 +51,22 @@ class CountryRepository(private val cacheManager: CacheManager) {
      * 국가 정보를 수정하고 해당 국가 캐시를 즉시 무효화합니다.
      */
     @Transactional
-    @CacheEvict(key = "'country:' + #countryRecord.code")
     fun update(countryRecord: CountryRecord): Int {
         log.debug { "----> Updating country with code[${countryRecord.code}] ..." }
 
         return CountryTable.update({ CountryTable.code eq countryRecord.code }) {
             it[name] = countryRecord.name
             it[description] = countryRecord.description
+        }.also {
+            cacheManager.getCache(COUNTRY_CACHE_NAME)?.evictIfPresent("country:${countryRecord.code}")
         }
     }
 
     /**
      * 국가 캐시 엔트리를 모두 제거합니다.
      */
-    @CacheEvict(cacheNames = [COUNTRY_CACHE_NAME], allEntries = true)
     fun evictCacheAll() {
         log.debug { "----> Evicting all country cache ..." }
+        cacheManager.getCache(COUNTRY_CACHE_NAME)?.invalidate()
     }
 }
