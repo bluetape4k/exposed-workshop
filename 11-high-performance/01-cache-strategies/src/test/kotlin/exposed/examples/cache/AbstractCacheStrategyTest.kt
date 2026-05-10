@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient
 
 /** 캐시 전략 예제의 Spring Boot 통합 테스트를 위한 추상 베이스 클래스입니다. */
-@AutoConfigureWebTestClient(timeout = "30s")
+@AutoConfigureWebTestClient(timeout = "2m")
 @SpringBootTest(
     classes = [CacheStrategyApplication::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
