@@ -30,7 +30,7 @@ class DomainSQLTest: AbstractSpringWebfluxTest() {
         @Transactional(readOnly = true)
         @RepeatedTest(REPEAT_SIZE)
         open fun `get all actors`() = runSuspendIO {
-            val actors = newSuspendedTransaction(readOnly = true) {
+            val actors = newSuspendedTransaction(db = database, readOnly = true) {
                 ActorTable.selectAll().toList()
             }.map { it.toActorRecord() }
             actors.shouldNotBeEmpty()
@@ -42,7 +42,7 @@ class DomainSQLTest: AbstractSpringWebfluxTest() {
                 .numThreads(Runtime.getRuntime().availableProcessors() * 2)
                 .roundsPerJob(Runtime.getRuntime().availableProcessors() * 2 * 4)
                 .add {
-                    val actors = newSuspendedTransaction(readOnly = true) {
+                    val actors = newSuspendedTransaction(db = database, readOnly = true) {
                         ActorTable.selectAll().map { it.toActorRecord() }
                     }
                     actors.shouldNotBeEmpty()
@@ -57,7 +57,7 @@ class DomainSQLTest: AbstractSpringWebfluxTest() {
         @RepeatedTest(REPEAT_SIZE)
         open fun `get all actors`() {
             virtualFuture {
-                transaction {
+                transaction(database) {
                     val actors = ActorTable.selectAll().map { it.toActorRecord() }
                     actors.shouldNotBeEmpty()
                 }
@@ -69,7 +69,7 @@ class DomainSQLTest: AbstractSpringWebfluxTest() {
             StructuredTaskScopeTester()
                 .roundsPerTask(Runtime.getRuntime().availableProcessors() * 2 * 4)
                 .add {
-                    transaction {
+                    transaction(database) {
                         val actors = ActorTable.selectAll().map { it.toActorRecord() }
                         actors.shouldNotBeEmpty()
                     }

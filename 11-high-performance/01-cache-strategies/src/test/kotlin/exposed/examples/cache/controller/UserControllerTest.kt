@@ -45,7 +45,7 @@ class UserControllerTest(
         repository.clear()
         userIdsInDB.clear()
 
-        transaction {
+        transaction(database) {
             UserTable.deleteAll()
             repeat(10) {
                 userIdsInDB.add(insertUser())

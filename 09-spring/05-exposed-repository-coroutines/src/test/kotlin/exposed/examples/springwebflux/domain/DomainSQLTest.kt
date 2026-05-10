@@ -34,7 +34,7 @@ class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
 
         @RepeatedTest(REPEAT_SIZE)
         open fun `get all actors`() = runSuspendIO {
-            newSuspendedTransaction(readOnly = true) {
+            newSuspendedTransaction(db = database, readOnly = true) {
                 val actors = ActorTable.selectAll().map { it.toActorRecord() }
                 actors.shouldNotBeEmpty()
             }
@@ -42,12 +42,12 @@ class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
 
         @Test
         fun `get all actors in multiple platform threads`() = runSuspendIO {
-            newSuspendedTransaction(readOnly = true) {
+            newSuspendedTransaction(db = database, readOnly = true) {
                 SuspendedJobTester()
                     .numThreads(Runtime.getRuntime().availableProcessors() * 2)
                     .roundsPerJob(Runtime.getRuntime().availableProcessors() * 2 * 4)
                     .add {
-                        suspendedTransactionAsync {
+                        suspendedTransactionAsync(db = database) {
                             val actors = ActorTable.selectAll().map { it.toActorRecord() }
                             actors.shouldNotBeEmpty()
                         }.await()
@@ -64,7 +64,7 @@ class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
         @RepeatedTest(REPEAT_SIZE)
         open fun `get all actors`() {
             virtualFuture {
-                transaction {
+                transaction(database) {
                     val actors = ActorTable.selectAll().map { it.toActorRecord() }
                     actors.shouldNotBeEmpty()
                 }
@@ -76,7 +76,7 @@ class DomainSQLTest: AbstractCoroutineExposedRepositoryTest() {
             StructuredTaskScopeTester()
                 .roundsPerTask(Runtime.getRuntime().availableProcessors() * 2 * 4)
                 .add {
-                    transaction {
+                    transaction(database) {
                         val actors = ActorTable.selectAll().map { it.toActorRecord() }
                         actors.shouldNotBeEmpty()
                     }

@@ -4,16 +4,16 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.debug
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
-import org.jetbrains.exposed.v1.jdbc.SchemaUtils
-import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
+import org.springframework.jdbc.datasource.DataSourceUtils
 import org.springframework.stereotype.Component
+import javax.sql.DataSource
 
 @Aspect
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
-class TransactionSchemaAspect {
+class TransactionSchemaAspect(private val dataSource: DataSource) {
     companion object : KLogging()
 
     /**
@@ -24,12 +24,24 @@ class TransactionSchemaAspect {
             "@annotation(org.springframework.transaction.annotation.Transactional)"
     )
     fun setSchemaForTransaction() {
-        transaction {
-            val schema = TenantContext.getCurrentTenantSchema()
-            log.debug { "Use schema=$schema" }
-            SchemaUtils.createSchema(schema)
-            SchemaUtils.setSchema(schema)
-            commit()
+        val tenant = TenantContext.getCurrentTenant()
+        val schemaName = tenant.id
+        log.debug { "Use schema=$schemaName" }
+
+        dataSource.connection.use { connection ->
+            connection.autoCommit = true
+            connection.createStatement().use { statement ->
+                statement.execute("CREATE SCHEMA IF NOT EXISTS $schemaName")
+            }
+        }
+
+        val connection = DataSourceUtils.getConnection(dataSource)
+        try {
+            connection.createStatement().use { statement ->
+                statement.execute("SET SCHEMA $schemaName")
+            }
+        } finally {
+            DataSourceUtils.releaseConnection(connection, dataSource)
         }
     }
 }

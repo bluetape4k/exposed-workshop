@@ -19,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import java.time.Instant
+import java.util.UUID
 
 /** Read-Through 캐시 전략을 적용한 `UserCredentialsCacheRepository`의 조회 및 캐시 무효화를 검증합니다. */
 class UserCredentialsCacheRepositoryTest(
@@ -34,7 +35,7 @@ class UserCredentialsCacheRepositoryTest(
         repository.clear()
         userCredentialsIdsInDB.clear()
 
-        transaction {
+        transaction(database) {
             UserCredentialsTable.deleteAll()
 
             repeat(10) {
@@ -45,15 +46,16 @@ class UserCredentialsCacheRepositoryTest(
 
     private fun insertUserCredentials(): String {
         return UserCredentialsTable.insertAndGetId {
-            it[UserCredentialsTable.username] = faker.credentials().username()
-            it[UserCredentialsTable.email] = faker.internet().emailAddress()
+            val username = UUID.randomUUID().toString()
+            it[UserCredentialsTable.username] = username
+            it[UserCredentialsTable.email] = "${username.take(24)}@t.dev"
             it[UserCredentialsTable.lastLoginAt] = Instant.now()
         }.value
     }
 
     @Test
     fun `Read Through 로 기존 DB정보를 캐시에서 읽어오기`() {
-        transaction {
+        transaction(database) {
             userCredentialsIdsInDB.forEach { ucId ->
                 log.debug { "Get user credentials. id: $ucId" }
                 val userCredentialsFromCache = repository.get(ucId)
@@ -70,7 +72,7 @@ class UserCredentialsCacheRepositoryTest(
 
     @Test
     fun `Read Through 로 검색해서 가져오기`() {
-        transaction {
+        transaction(database) {
             val userCredentialsFromCache = repository.findAll {
                 UserCredentialsTable.id inList userCredentialsIdsInDB
             }
@@ -84,7 +86,7 @@ class UserCredentialsCacheRepositoryTest(
 
     @Test
     fun `Read Through 로 모든 ID 가져오기`() {
-        transaction {
+        transaction(database) {
             val userCredentialsFromCache = repository.getAll(userCredentialsIdsInDB).map { it.value }
             userCredentialsFromCache shouldHaveSize userCredentialsIdsInDB.size
             userCredentialsFromCache.map { it.id } shouldContainSame userCredentialsIdsInDB
@@ -93,14 +95,14 @@ class UserCredentialsCacheRepositoryTest(
 
     @Test
     fun `존재하지 않는 인증 ID 조회 시 null을 반환한다`() {
-        transaction {
+        transaction(database) {
             repository.get("missing-user-credentials-id").shouldBeNull()
         }
     }
 
     @Test
     fun `캐시 무효화 후 재조회 시 DB에서 다시 읽어온다`() {
-        transaction {
+        transaction(database) {
             val ucId = userCredentialsIdsInDB.random()
 
             // 캐시에 로드

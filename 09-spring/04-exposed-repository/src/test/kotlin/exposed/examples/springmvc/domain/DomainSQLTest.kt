@@ -42,7 +42,7 @@ class DomainSQLTest: AbstractExposedRepositoryTest() {
                 .workers(Runtime.getRuntime().availableProcessors() * 2)
                 .rounds(4)
                 .add {
-                    transaction {
+                    transaction(database) {
                         val actors = ActorTable.selectAll().map { it.toActorRecord() }
                         actors.shouldNotBeEmpty()
                     }
@@ -58,7 +58,7 @@ class DomainSQLTest: AbstractExposedRepositoryTest() {
         @RepeatedTest(REPEAT_SIZE)
         open fun `get all actors`() {
             virtualFuture {
-                transaction {
+                transaction(database) {
                     val actors = ActorTable.selectAll().map { it.toActorRecord() }
                     actors.shouldNotBeEmpty()
                 }
@@ -70,7 +70,7 @@ class DomainSQLTest: AbstractExposedRepositoryTest() {
             StructuredTaskScopeTester()
                 .rounds(Runtime.getRuntime().availableProcessors() * 2 * 4)
                 .add {
-                    transaction {
+                    transaction(database) {
                         val actors = ActorTable.selectAll().map { it.toActorRecord() }
                         actors.shouldNotBeEmpty()
                     }

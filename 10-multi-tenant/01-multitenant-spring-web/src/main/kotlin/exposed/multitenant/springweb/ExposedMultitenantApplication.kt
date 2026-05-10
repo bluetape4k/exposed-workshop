@@ -22,6 +22,6 @@ class ExposedMultitenantApplication {
  */
 fun main(vararg args: String) {
     runApplication<ExposedMultitenantApplication>(*args) {
-        webApplicationType = WebApplicationType.SERVLET
+        setWebApplicationType(WebApplicationType.SERVLET)
     }
 }

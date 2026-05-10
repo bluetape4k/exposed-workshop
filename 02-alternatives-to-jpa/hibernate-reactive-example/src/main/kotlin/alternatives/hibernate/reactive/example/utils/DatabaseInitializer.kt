@@ -30,7 +30,7 @@ class DatabaseInitializer: ApplicationRunner {
     @Autowired
     private val memberRepository: MemberSessionRepository = uninitialized()
 
-    override fun run(args: ApplicationArguments?) {
+    override fun run(args: ApplicationArguments) {
         log.debug { "Initialize sample data..." }
 
         runBlocking(Dispatchers.IO) {

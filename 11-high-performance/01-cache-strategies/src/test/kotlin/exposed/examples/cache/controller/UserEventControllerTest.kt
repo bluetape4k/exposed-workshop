@@ -26,7 +26,7 @@ class UserEventControllerTest(
 
     companion object: KLoggingChannel()
 
-    private fun getCountOfUserEventsFromDB(): Long = transaction {
+    private fun getCountOfUserEventsFromDB(): Long = transaction(database) {
         UserEventTable.selectAll().count()
     }
 

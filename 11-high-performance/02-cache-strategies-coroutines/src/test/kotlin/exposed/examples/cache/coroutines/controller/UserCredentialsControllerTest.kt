@@ -27,6 +27,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBodyList
 import org.springframework.test.web.reactive.server.returnResult
 import java.time.Instant
+import java.util.UUID
 
 /** 코루틴 기반 Read-Through 캐시 전략을 적용한 UserCredentials REST API의 조회 및 캐시 무효화를 검증합니다. */
 @Suppress("DEPRECATION")
@@ -57,8 +58,9 @@ class UserCredentialsControllerTest(
     private fun insertUserCredentials(): String =
         UserCredentialsTable
             .insertAndGetId {
-                it[UserCredentialsTable.username] = faker.credentials().username()
-                it[UserCredentialsTable.email] = faker.internet().emailAddress()
+                val username = UUID.randomUUID().toString()
+                it[UserCredentialsTable.username] = username
+                it[UserCredentialsTable.email] = "${username.take(24)}@t.dev"
                 it[UserCredentialsTable.lastLoginAt] = Instant.now()
             }.value
 

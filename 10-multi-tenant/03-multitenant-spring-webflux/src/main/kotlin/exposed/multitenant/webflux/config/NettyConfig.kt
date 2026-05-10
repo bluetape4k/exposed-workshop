@@ -5,8 +5,8 @@ import io.bluetape4k.utils.Runtimex
 import io.netty.channel.ChannelOption
 import io.netty.handler.timeout.ReadTimeoutHandler
 import io.netty.handler.timeout.WriteTimeoutHandler
-import org.springframework.boot.web.embedded.netty.NettyReactiveWebServerFactory
-import org.springframework.boot.web.embedded.netty.NettyServerCustomizer
+import org.springframework.boot.reactor.netty.NettyReactiveWebServerFactory
+import org.springframework.boot.reactor.netty.NettyServerCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.client.ReactorResourceFactory

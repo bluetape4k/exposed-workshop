@@ -27,7 +27,7 @@ class UserEventCacheRepositoryTest(
     fun setup() {
         repository.clear()
 
-        transaction {
+        transaction(database) {
             UserEventTable.deleteAll()
         }
     }
@@ -35,7 +35,7 @@ class UserEventCacheRepositoryTest(
 
     @Test
     fun `write behind 로 단일 이벤트를 추가한다`() {
-        transaction {
+        transaction(database) {
             val event = newUserEventRecord()
             repository.put(event.id, event)
 
@@ -43,7 +43,7 @@ class UserEventCacheRepositoryTest(
                 .atMost(Duration.ofSeconds(10))
                 .withPollInterval(Duration.ofMillis(50))
                 .until {
-                    transaction {
+                    transaction(database) {
                         UserEventTable.selectAll().count() >= 1L
                     }
                 }
@@ -54,7 +54,7 @@ class UserEventCacheRepositoryTest(
 
     @Test
     fun `write behind 로 대량의 데이테를 추가한다`() {
-        transaction {
+        transaction(database) {
             val totalCount = 10_000
             generateSequence { newUserEventRecord() }
                 .take(totalCount)
@@ -67,7 +67,7 @@ class UserEventCacheRepositoryTest(
                 .atMost(Duration.ofSeconds(10))
                 .withPollInterval(Duration.ofMillis(50))
                 .until {
-                    transaction {
+                    transaction(database) {
                         // 캐시뿐 아니라 Write behind로 DB에 저장될 때까지 대기합니다.
                         val savedEventCount = UserEventTable.selectAll().count()
                         log.debug { "Saved event count:$savedEventCount" }

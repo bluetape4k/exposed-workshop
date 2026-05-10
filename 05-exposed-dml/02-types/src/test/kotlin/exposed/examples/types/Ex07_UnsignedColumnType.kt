@@ -8,6 +8,7 @@ import exposed.shared.tests.withDb
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeInRange
 import io.bluetape4k.assertions.shouldBeTrue
 import io.bluetape4k.assertions.shouldContainSame
 import io.bluetape4k.assertions.shouldHaveSize
@@ -112,7 +113,7 @@ class Ex07_UnsignedColumnType: AbstractExposedTest() {
             UByteTable.ddl.single().endsWith(ddlEnding, ignoreCase = true).shouldBeTrue()
 
             val number = 191.toUByte()
-            (number >= Byte.MAX_VALUE.toUByte() && number <= UByte.MAX_VALUE).shouldBeTrue()
+            number shouldBeInRange Byte.MAX_VALUE.toUByte()..UByte.MAX_VALUE
 
             /**
              * ```sql
@@ -200,7 +201,7 @@ class Ex07_UnsignedColumnType: AbstractExposedTest() {
             UShortTable.ddl.single().endsWith(ddlEnding, ignoreCase = true).shouldBeTrue()
 
             val number = 49151.toUShort()
-            (number >= Short.MAX_VALUE.toUShort() && number <= UShort.MAX_VALUE).shouldBeTrue()
+            number shouldBeInRange Short.MAX_VALUE.toUShort()..UShort.MAX_VALUE
 
             UShortTable.insert { it[unsignedShort] = number }
 

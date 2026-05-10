@@ -44,6 +44,28 @@ configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
 
+val hibernateVersion = libs.versions.hibernate.asProvider().get()
+val nettyVersion = libs.versions.netty.get()
+
+// Hibernate Reactive 4.x follows bluetape4k-projects and requires Hibernate ORM 7.x,
+// Jakarta Persistence 3.2, and Netty 4.2.
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.hibernate.orm") {
+            useVersion(hibernateVersion)
+            because("Hibernate Reactive 4.x and Hibernate processor must use Hibernate ORM 7.x consistently")
+        }
+        if (requested.group == "jakarta.persistence") {
+            useVersion("3.2.0")
+            because("Hibernate Reactive 4.x uses Hibernate ORM 7.x")
+        }
+        if (requested.group == "io.netty") {
+            useVersion(nettyVersion)
+            because("Vert.x 5.0.x requires Netty 4.2.x; Spring Boot dependency management otherwise downgrades to 4.1.x")
+        }
+    }
+}
+
 dependencies {
     implementation(libs.bluetape4k.testcontainers)
 

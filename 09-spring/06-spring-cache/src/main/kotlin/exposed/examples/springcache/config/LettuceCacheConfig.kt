@@ -39,7 +39,6 @@ class LettuceCacheConfig {
         cacheConfiguration: RedisCacheConfiguration,
     ): CacheManager {
         return RedisCacheManager.builder(connectionFactory)
-            .transactionAware()
             .cacheDefaults(cacheConfiguration)
             .build()
     }

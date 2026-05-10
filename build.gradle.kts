@@ -1,5 +1,8 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.report.ReportMergeTask
+import org.graalvm.buildtools.gradle.dsl.GraalVMExtension
+import org.graalvm.buildtools.gradle.dsl.GraalVMReachabilityMetadataRepositoryExtension
+import org.gradle.api.plugins.ExtensionAware
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
@@ -184,6 +187,8 @@ subprojects {
         }
     }
 
+    extra["kotlin-coroutines.version"] = rootLibs.versions.kotlinx.coroutines.get()
+
     dependencyManagement {
         // HINT: Gradle 빌드 시, detachedConfiguration 이 많이 발생하는데, setApplyMavenExclusions(false) 를 추가하면 속도가 개선됩니다.
         // https://discuss.gradle.org/t/what-is-detachedconfiguration-i-have-a-lots-of-them-for-each-subproject-and-resolving-them-takes-95-of-build-time/31595/6
@@ -192,8 +197,24 @@ subprojects {
         imports {
             mavenBom(rootLibs.spring.boot.dependencies.get().toString())
             mavenBom(rootLibs.bluetape4k.bom.get().toString())
+            mavenBom(rootLibs.netty.bom.get().toString())
             mavenBom(rootLibs.kotlinx.coroutines.bom.get().toString())
             mavenBom(rootLibs.kotlin.bom.get().toString())
+        }
+    }
+
+    plugins.withId("org.graalvm.buildtools.native") {
+        extensions.configure<GraalVMExtension>("graalvmNative") {
+            val metadataVersion = rootLibs.versions.graalvm.native.get()
+            val metadataRepositoryUrl =
+                "https://repo1.maven.org/maven2/org/graalvm/buildtools/graalvm-reachability-metadata/" +
+                    "$metadataVersion/graalvm-reachability-metadata-$metadataVersion-repository.zip"
+
+            (this as ExtensionAware).extensions.configure<GraalVMReachabilityMetadataRepositoryExtension>(
+                "metadataRepository"
+            ) {
+                uri(metadataRepositoryUrl)
+            }
         }
     }
 
@@ -211,6 +232,8 @@ subprojects {
         implementation(rootLibs.kotlin.reflect)
         testImplementation(rootLibs.kotlin.test)
         testImplementation(rootLibs.kotlin.test.junit5)
+        testRuntimeOnly(rootLibs.java.uuid.generator)
+        testImplementation(rootLibs.spring.boot.webtestclient)
 
         implementation(rootLibs.kotlinx.coroutines.core)
         implementation(rootLibs.kotlinx.atomicfu)
@@ -218,6 +241,8 @@ subprojects {
         // 개발 시에는 logback 이 검증하기에 더 좋고, Production에서 비동기 로깅은 log4j2 가 성능이 좋다고 합니다.
         implementation(rootLibs.slf4j.api)
         implementation(rootLibs.bluetape4k.logging)
+        implementation(rootLibs.jackson3.module.kotlin)
+        implementation(rootLibs.jackson3.module.blackbird)
         implementation(rootLibs.logback)
 
         // JUnit 5

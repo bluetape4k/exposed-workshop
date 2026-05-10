@@ -1,7 +1,5 @@
 package exposed.examples.cache.coroutines.domain.model
 
-import exposed.examples.cache.coroutines.utils.faker
-import io.bluetape4k.codec.Base58
 import io.bluetape4k.exposed.core.dao.id.TimebasedUUIDBase62Table
 import io.bluetape4k.exposed.dao.entityToStringBuilder
 import io.bluetape4k.exposed.dao.id.TimebasedUUIDBase62Entity
@@ -80,11 +78,14 @@ fun ResultRow.toUserCredentialsRecord() = UserCredentialsRecord(
 /**
  * 테스트용 임의 사용자 인증 레코드를 생성합니다.
  */
-fun newUserCredentialsRecord() = UserCredentialsRecord(
-    id = Uuid.V7.nextIdAsString(),
-    username = faker.credentials().username() + "." + Base58.randomString(4),
-    email = faker.internet().emailAddress(),
-    lastLoginAt = Instant.now(),
-    createdAt = null,
-    updatedAt = null,
-)
+fun newUserCredentialsRecord(): UserCredentialsRecord {
+    val username = Uuid.V7.nextIdAsString()
+    return UserCredentialsRecord(
+        id = Uuid.V7.nextIdAsString(),
+        username = username,
+        email = "${username.take(24)}@t.dev",
+        lastLoginAt = Instant.now(),
+        createdAt = null,
+        updatedAt = null,
+    )
+}

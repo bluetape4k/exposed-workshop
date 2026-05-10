@@ -24,6 +24,6 @@ class SpringMvcApplication {
  */
 fun main(vararg args: String) {
     runApplication<SpringMvcApplication>(*args) {
-        webApplicationType = WebApplicationType.SERVLET
+        setWebApplicationType(WebApplicationType.SERVLET)
     }
 }

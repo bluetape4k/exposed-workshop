@@ -37,7 +37,7 @@ class UserCacheRepositoryTest(
         repository.clear()
         idsInDB.clear()
 
-        transaction {
+        transaction(database) {
             UserTable.deleteAll()
             repeat(10) {
                 idsInDB.add(insertUser())
@@ -59,7 +59,7 @@ class UserCacheRepositoryTest(
 
     @Test
     fun `Read Through 로 기존 DB정보를 캐시에서 읽어오기`() {
-        transaction {
+        transaction(database) {
             val userId = idsInDB.random()
             log.debug { "User created. id=$userId" }
 
@@ -84,7 +84,7 @@ class UserCacheRepositoryTest(
     @Test
     fun `Read Through 로 복수의 User를 캐시에서 읽어오기`() {
         val userIdToSearch = idsInDB.shuffled().take(5)
-        transaction {
+        transaction(database) {
             // DB에 있는 User를 검색
             val users = repository.getAll(userIdToSearch).map { it.value }
             log.debug { "Loaded users from DB: ${users.size}" }
@@ -102,7 +102,7 @@ class UserCacheRepositoryTest(
 
     @Test
     fun `Read Through로 User를 검색한다`() {
-        val users = transaction {
+        val users = transaction(database) {
             repository.findAll()
         }
         users.forEach {
@@ -114,7 +114,7 @@ class UserCacheRepositoryTest(
     @Test
     fun `Read Through 로 검색한 User가 없을 때에는 빈 리스트 반환`() {
         val userIdToSearch = listOf(-1L, -3L, -5L, -7L, -9L)
-        val users = transaction {
+        val users = transaction(database) {
             repository.findAll {
                 UserTable.id inList userIdToSearch
             }
@@ -124,14 +124,14 @@ class UserCacheRepositoryTest(
 
     @Test
     fun `존재하지 않는 User ID 조회 시 null을 반환한다`() {
-        transaction {
+        transaction(database) {
             repository.get(-1L).shouldBeNull()
         }
     }
 
     @Test
     fun `Read Through 로 읽은 엔티티를 갱신하여 Write Through로 DB에 저장하기`() {
-        transaction {
+        transaction(database) {
             val userId = idsInDB.random()
 
             log.debug { "Find user. userId: $userId" }
@@ -157,7 +157,7 @@ class UserCacheRepositoryTest(
 
     @Test
     fun `캐시 무효화 시 deleteFromDBOnInvalidate 설정으로 DB에서도 삭제된다`() {
-        transaction {
+        transaction(database) {
             val userId = idsInDB.random()
 
             // 캐시에 로드
@@ -175,7 +175,7 @@ class UserCacheRepositoryTest(
     @Test
     fun `복수 ID를 한 번에 무효화하면 DB에서도 모두 삭제된다`() {
         val idsToInvalidate = idsInDB.take(3)
-        transaction {
+        transaction(database) {
             // 캐시에 로드
             idsToInvalidate.forEach { repository.get(it).shouldNotBeNull() }
 

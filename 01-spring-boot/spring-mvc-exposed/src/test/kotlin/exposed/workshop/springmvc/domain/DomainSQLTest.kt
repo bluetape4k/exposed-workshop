@@ -39,7 +39,7 @@ class DomainSQLTest: AbstractSpringMvcTest() {
                 .workers(Runtime.getRuntime().availableProcessors() * 2)
                 .rounds(4)
                 .add {
-                    transaction {
+                    transaction(database) {
                         val actors = ActorTable.selectAll().map { it.toActorRecord() }
                         actors.shouldNotBeEmpty()
                     }
@@ -58,7 +58,7 @@ class DomainSQLTest: AbstractSpringMvcTest() {
         @RepeatedTest(REPEAT_SIZE)
         open fun `get all actors`() {
             virtualFuture {
-                transaction {
+                transaction(database) {
                     val actors = ActorTable.selectAll().map { it.toActorRecord() }
                     actors.shouldNotBeEmpty()
                 }
@@ -73,7 +73,7 @@ class DomainSQLTest: AbstractSpringMvcTest() {
             StructuredTaskScopeTester()
                 .rounds(Runtime.getRuntime().availableProcessors() * 8)
                 .add {
-                    transaction {
+                    transaction(database) {
                         val actors = ActorTable.selectAll().map { it.toActorRecord() }
                         actors.shouldNotBeEmpty()
                     }
