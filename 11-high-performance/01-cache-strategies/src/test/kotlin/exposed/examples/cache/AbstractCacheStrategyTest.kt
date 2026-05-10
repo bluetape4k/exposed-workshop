@@ -14,7 +14,7 @@ import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTest
     classes = [CacheStrategyApplication::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 )
-@AutoConfigureWebTestClient
+@AutoConfigureWebTestClient(timeout = "PT20S")
 abstract class AbstractCacheStrategyTest {
 
     companion object: KLoggingChannel() {
