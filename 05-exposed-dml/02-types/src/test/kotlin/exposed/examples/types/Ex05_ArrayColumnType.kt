@@ -597,7 +597,7 @@ class Ex05_ArrayColumnType: AbstractExposedTest() {
             /**
              * ```sql
              * -- Postgres
-             * INSERT INTO array_test_table (byte_array) VALUES (ARRAY[ ,])
+             * INSERT INTO array_test_table (byte_array) VALUES (ARRAY[,])
              * ```
              */
             val testByteArrayList = listOf(byteArrayOf(0), byteArrayOf(1, 2, 3))
