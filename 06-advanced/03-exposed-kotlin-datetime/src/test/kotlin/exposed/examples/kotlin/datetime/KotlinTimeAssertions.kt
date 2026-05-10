@@ -77,7 +77,7 @@ internal infix fun Int.shouldFractionalPartEqualTo(nano2: Int) {
         // milliseconds
         is OracleDialect                                    -> nano1.nanoRoundToMilli() shouldBeEqualTo nano2.nanoRoundToMilli()
         is SQLiteDialect                                    -> nano1.nanoFloorToMilli() shouldBeEqualTo nano2.nanoFloorToMilli()
-        else                                                -> org.amshove.kluent.fail("Unknown dialect $db")
+        else                                                -> io.bluetape4k.assertions.fail("Unknown dialect $db")
     }
 }
 
