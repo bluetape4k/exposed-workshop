@@ -128,6 +128,7 @@ bluetape4k-jackson3 = { module = "io.github.bluetape4k:bluetape4k-jackson3" , ve
 
 # bluetape4k exposed
 bluetape4k-exposed-core = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-core" , version.ref = "bluetape4k" }
+bluetape4k-exposed-dao = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-dao" , version.ref = "bluetape4k" }
 bluetape4k-exposed-fastjson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-fastjson2" , version.ref = "bluetape4k" }
 bluetape4k-exposed-jackson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson2" , version.ref = "bluetape4k" }
 bluetape4k-exposed-jackson3 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson3" , version.ref = "bluetape4k" }

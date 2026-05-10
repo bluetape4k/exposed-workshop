@@ -15,6 +15,7 @@ dependencies {
     testRuntimeOnly(libs.bluetape4k.virtualthread.jdk21)
 
     testImplementation(libs.bluetape4k.exposed.core)
+    testImplementation(libs.bluetape4k.exposed.jdbc)
     testImplementation(libs.bluetape4k.junit5)
 
     testRuntimeOnly(libs.h2.v2)

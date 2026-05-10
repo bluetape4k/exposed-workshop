@@ -35,6 +35,7 @@ dependencies {
 
     // bluetape4k
     implementation(libs.bluetape4k.exposed.core)
+    implementation(libs.bluetape4k.exposed.jdbc)
     implementation(libs.bluetape4k.jackson2)
     implementation(libs.bluetape4k.jdbc)
     implementation(libs.bluetape4k.testcontainers)

@@ -26,6 +26,7 @@ dependencies {
 
     // Exposed
     implementation(libs.bluetape4k.exposed.core)
+    implementation(libs.bluetape4k.exposed.jdbc)
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.dao)

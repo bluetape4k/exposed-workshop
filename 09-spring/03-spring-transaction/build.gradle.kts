@@ -22,6 +22,7 @@ dependencies {
 
     // Bluetape4k
     implementation(libs.bluetape4k.exposed.core)
+    implementation(libs.bluetape4k.exposed.dao)
     implementation(libs.bluetape4k.io)
     implementation(libs.bluetape4k.jdbc)
     implementation(libs.bluetape4k.spring.boot3.core)

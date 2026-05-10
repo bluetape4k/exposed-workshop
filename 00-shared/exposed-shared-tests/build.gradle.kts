@@ -7,6 +7,7 @@ dependencies {
 
     // Bluetape4k Exposed
     api(libs.bluetape4k.exposed.core)
+    api(libs.bluetape4k.exposed.jdbc)
     implementation(libs.bluetape4k.exposed.jackson2)
     implementation(libs.bluetape4k.exposed.fastjson2)
 

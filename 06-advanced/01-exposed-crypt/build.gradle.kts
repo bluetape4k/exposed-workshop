@@ -16,6 +16,7 @@ dependencies {
     implementation(libs.exposed.crypt)
 
     testImplementation(libs.bluetape4k.exposed.core)
+    testImplementation(libs.bluetape4k.exposed.dao)
     testImplementation(libs.bluetape4k.junit5)
 
     testImplementation(libs.bluetape4k.testcontainers)

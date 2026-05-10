@@ -32,6 +32,7 @@ dependencies {
     implementation(libs.bluetape4k.testcontainers)
     // Exposed
     implementation(libs.bluetape4k.exposed.core)
+    implementation(libs.bluetape4k.exposed.dao)
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.dao)
