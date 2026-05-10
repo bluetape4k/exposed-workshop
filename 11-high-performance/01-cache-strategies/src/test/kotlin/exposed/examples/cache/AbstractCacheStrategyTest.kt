@@ -13,6 +13,7 @@ import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTest
 @SpringBootTest(
     classes = [CacheStrategyApplication::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+    properties = ["app.virtualthread.enabled=false"],
 )
 @AutoConfigureWebTestClient(timeout = "PT20S")
 abstract class AbstractCacheStrategyTest {
