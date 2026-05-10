@@ -12,6 +12,6 @@ class R2dbcApplication {
 
 fun main(vararg args: String) {
     runApplication<R2dbcApplication>(*args) {
-        webApplicationType = WebApplicationType.REACTIVE
+        setWebApplicationType(WebApplicationType.REACTIVE)
     }
 }

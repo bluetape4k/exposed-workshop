@@ -162,34 +162,38 @@ class UserCacheRepositoryTest(
     }
 
     @Test
-    fun `캐시 무효화 시 deleteFromDBOnInvalidate 설정으로 DB에서도 삭제된다`() = runSuspendIO {
+    fun `캐시 무효화 후 재조회 시 DB에서 다시 읽어온다`() = runSuspendIO {
         newSuspendedTransaction {
             val userId = idsInDB.random()
 
             // 캐시에 로드
             repository.get(userId).shouldNotBeNull()
 
-            // 캐시 무효화 - deleteFromDBOnInvalidate=true이므로 DB에서도 삭제
+            // 캐시 무효화 - DB는 유지되고 캐시만 삭제된다
             repository.invalidate(userId)
 
-            // DB에서도 삭제되었으므로 null 반환
-            repository.get(userId).shouldBeNull()
+            // 캐시 무효화 후에도 DB에서 다시 읽어온다
+            val reloadedUser = repository.get(userId)
+            reloadedUser.shouldNotBeNull()
+            reloadedUser.id shouldBeEqualTo userId
         }
     }
 
     @Test
-    fun `복수 ID를 한 번에 무효화하면 DB에서도 모두 삭제된다`() = runSuspendIO {
+    fun `복수 ID를 한 번에 무효화하면 캐시만 삭제된다`() = runSuspendIO {
         val idsToInvalidate = idsInDB.take(3)
         newSuspendedTransaction {
             // 캐시에 로드
             idsToInvalidate.forEach { repository.get(it).shouldNotBeNull() }
 
-            // 복수 ID 무효화 - deleteFromDBOnInvalidate=true이므로 DB에서도 삭제
+            // 복수 ID 무효화 - DB는 유지되고 캐시만 삭제된다
             repository.invalidateAll(idsToInvalidate)
 
-            // DB에서도 삭제되었으므로 모두 null 반환
+            // 캐시 무효화 후에도 DB에서 다시 읽어온다
             idsToInvalidate.forEach { id ->
-                repository.get(id).shouldBeNull()
+                val reloadedUser = repository.get(id)
+                reloadedUser.shouldNotBeNull()
+                reloadedUser.id shouldBeEqualTo id
             }
         }
     }

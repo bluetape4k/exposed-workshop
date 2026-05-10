@@ -1,6 +1,10 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.report.ReportMergeTask
+import org.graalvm.buildtools.gradle.dsl.GraalVMExtension
+import org.graalvm.buildtools.gradle.dsl.GraalVMReachabilityMetadataRepositoryExtension
+import org.graalvm.buildtools.gradle.tasks.CollectReachabilityMetadata
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.gradle.api.plugins.ExtensionAware
 
 plugins {
     base
@@ -194,6 +198,57 @@ subprojects {
             mavenBom(rootLibs.bluetape4k.bom.get().toString())
             mavenBom(rootLibs.kotlinx.coroutines.bom.get().toString())
             mavenBom(rootLibs.kotlin.bom.get().toString())
+            mavenBom(rootLibs.netty.bom.get().toString())
+            mavenBom(rootLibs.jackson.bom.get().toString())
+            mavenBom(rootLibs.jackson3.bom.get().toString())
+        }
+        dependencies {
+            // Kotlinx Coroutines (mavenBom 이 적용이 안되어서 추가로 명시했습니다)
+            val coroutinesVersion = rootLibs.versions.kotlinx.coroutines.get()
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-bom:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-debug:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-rx3:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-test-jvm:$coroutinesVersion")
+
+            // Netty 4.2 기반 라이브러리가 Spring Boot BOM의 Netty 4.1로 내려가지 않도록 고정합니다.
+            val nettyVersion = rootLibs.versions.netty.get()
+            dependency("io.netty:netty-all:$nettyVersion")
+            dependency("io.netty:netty-buffer:$nettyVersion")
+            dependency("io.netty:netty-common:$nettyVersion")
+            dependency("io.netty:netty-codec:$nettyVersion")
+            dependency("io.netty:netty-codec-dns:$nettyVersion")
+            dependency("io.netty:netty-codec-http:$nettyVersion")
+            dependency("io.netty:netty-codec-http2:$nettyVersion")
+            dependency("io.netty:netty-codec-socks:$nettyVersion")
+            dependency("io.netty:netty-handler:$nettyVersion")
+            dependency("io.netty:netty-handler-proxy:$nettyVersion")
+            dependency("io.netty:netty-resolver:$nettyVersion")
+            dependency("io.netty:netty-resolver-dns:$nettyVersion")
+            dependency("io.netty:netty-resolver-dns-classes-macos:$nettyVersion")
+            dependency("io.netty:netty-resolver-dns-native-macos:$nettyVersion")
+            dependency("io.netty:netty-transport:$nettyVersion")
+            dependency("io.netty:netty-transport-classes-epoll:$nettyVersion")
+            dependency("io.netty:netty-transport-classes-kqueue:$nettyVersion")
+            dependency("io.netty:netty-transport-native-epoll:$nettyVersion")
+            dependency("io.netty:netty-transport-native-kqueue:$nettyVersion")
+            dependency("io.netty:netty-transport-native-unix-common:$nettyVersion")
+
+            // Spring Boot BOM 보다 catalog 의 Jakarta/Hibernate 축이 우선되도록 고정합니다.
+            val hibernateValidatorVersion = rootLibs.versions.hibernate.validator.get()
+            dependency(rootLibs.jakarta.persistence.api.get().toString())
+            dependency(rootLibs.hibernate.core.get().toString())
+            dependency(rootLibs.hibernate.jcache.get().toString())
+            dependency(rootLibs.hibernate.jpamodelgen.get().toString())
+            dependency("org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion")
+            dependency("org.hibernate:hibernate-validator-annotation-processor:$hibernateValidatorVersion")
+            dependency(rootLibs.r2dbc.h2.get().toString())
         }
     }
 
@@ -218,6 +273,10 @@ subprojects {
         // 개발 시에는 logback 이 검증하기에 더 좋고, Production에서 비동기 로깅은 log4j2 가 성능이 좋다고 합니다.
         implementation(rootLibs.slf4j.api)
         implementation(rootLibs.bluetape4k.logging)
+        implementation(rootLibs.bluetape4k.exposed.dao)
+        implementation(rootLibs.bluetape4k.exposed.jdbc)
+        implementation(rootLibs.jackson3.module.kotlin)
+        implementation(rootLibs.jackson3.module.blackbird)
         implementation(rootLibs.logback)
 
         // JUnit 5
@@ -225,12 +284,27 @@ subprojects {
         testImplementation(rootLibs.junit.jupiter)
         testRuntimeOnly(rootLibs.junit.platform.engine)
 
+        testImplementation(rootLibs.spring.boot.starter.webflux.test)
+
         testImplementation(rootLibs.mockk)
         testImplementation(rootLibs.awaitility.kotlin)
 
         // Property based test
         testImplementation(rootLibs.datafaker)
         testImplementation(rootLibs.random.beans)
+    }
+
+    pluginManager.withPlugin("org.graalvm.buildtools.native") {
+        extensions.configure<GraalVMExtension>("graalvmNative") {
+            (this as ExtensionAware).extensions.configure<GraalVMReachabilityMetadataRepositoryExtension>(
+                "metadataRepository"
+            ) {
+                enabled.set(false)
+            }
+        }
+        tasks.withType<CollectReachabilityMetadata>().configureEach {
+            enabled = false
+        }
     }
 }
 

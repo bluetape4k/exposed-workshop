@@ -4,7 +4,7 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.info
 import org.apache.coyote.ProtocolHandler
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
-import org.springframework.boot.web.embedded.tomcat.TomcatProtocolHandlerCustomizer
+import org.springframework.boot.tomcat.TomcatProtocolHandlerCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.util.concurrent.Executors

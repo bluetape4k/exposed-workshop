@@ -37,4 +37,5 @@ dependencies {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+    testImplementation(libs.spring.boot.starter.webmvc.test)
 }

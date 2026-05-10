@@ -26,7 +26,6 @@ class UserCacheRepository(redissonClient: RedissonClient): AbstractJdbcRedissonR
     redissonClient = redissonClient,
     config = RedissonCacheConfig.READ_WRITE_THROUGH_WITH_NEAR_CACHE.copy(
         name = "exposed:users",
-        deleteFromDBOnInvalidate = true
     )
 ) {
     companion object: KLoggingChannel()

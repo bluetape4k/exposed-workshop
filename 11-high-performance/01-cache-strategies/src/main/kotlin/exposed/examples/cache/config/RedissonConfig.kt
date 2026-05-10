@@ -27,6 +27,9 @@ class RedissonConfig {
     @Bean(destroyMethod = "")
     fun redissonClient(): RedissonClient {
         val server = redis
+        if (server.isRunning.not()) {
+            server.start()
+        }
         var client: RedissonClient? = null
         var attempts = 0
         val maxAttempts = 10
@@ -39,7 +42,7 @@ class RedissonConfig {
                     threads = 128,
                     nettyThreads = 256
                 )
-                client.getAtomicLong("__test__")
+                client.getAtomicLong("__test__").get()
             } catch (e: Exception) {
                 client = null
                 attempts++

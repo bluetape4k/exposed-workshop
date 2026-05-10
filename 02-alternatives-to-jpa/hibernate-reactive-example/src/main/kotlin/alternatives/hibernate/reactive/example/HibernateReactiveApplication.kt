@@ -12,6 +12,6 @@ class HibernateReactiveApplication {
 
 fun main(args: Array<String>) {
     runApplication<HibernateReactiveApplication>(*args) {
-        webApplicationType = WebApplicationType.REACTIVE
+        setWebApplicationType(WebApplicationType.REACTIVE)
     }
 }

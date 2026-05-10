@@ -47,7 +47,7 @@ abstract class AbstractSqlClientTest {
         fun Vertx.getH2Pool(
             connectOptions: JDBCConnectOptions = h2ConnectionOptions,
             poolOptions: PoolOptions = defaultPoolOptions,
-        ): JDBCPool = JDBCPool.pool(this, connectOptions, poolOptions)
+        ): Pool = JDBCPool.pool(this, connectOptions, poolOptions)
 
         private val mysql by lazy { MySQL8Server.Launcher.mysql }
 
