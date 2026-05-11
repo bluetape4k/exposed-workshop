@@ -45,6 +45,13 @@ updates:
       - dependency-name: "org.springframework.boot:*"
         update-types:
           - "version-update:semver-major"
+      # Redis client major baselines follow bluetape4k-projects after validation.
+      - dependency-name: "io.lettuce:lettuce-core"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "org.redisson:*"
+        update-types:
+          - "version-update:semver-major"
   - package-ecosystem: "github-actions"
     directory: "/"
     target-branch: "develop"
