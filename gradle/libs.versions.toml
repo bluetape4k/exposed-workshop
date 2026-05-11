@@ -34,7 +34,7 @@ r2dbc-h2 = "1.1.0.RELEASE"
 r2dbc-pool = "1.0.2.RELEASE"
 r2dbc-postgresql = "1.1.1.RELEASE"
 
-lettuce = "6.8.2.RELEASE"
+lettuce = "7.5.1.RELEASE"
 redisson = "4.3.0"
 
 hibernate = "7.3.3.Final"
