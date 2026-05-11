@@ -9,11 +9,11 @@ import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTest
 import org.springframework.test.context.ActiveProfiles
 
 @ActiveProfiles("h2")  // "h2" | "postgres"
+@AutoConfigureWebTestClient
 @SpringBootTest(
     classes = [R2dbcApplication::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@AutoConfigureWebTestClient
 /**
  * R2DBC 기반 Spring Data 테스트의 공통 기반 클래스입니다.
  * H2 인메모리 데이터베이스를 기본으로 사용하며, `@ActiveProfiles("postgres")` 로 PostgreSQL 전환이 가능합니다.

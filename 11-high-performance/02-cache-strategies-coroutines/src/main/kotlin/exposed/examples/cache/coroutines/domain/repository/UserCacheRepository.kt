@@ -24,7 +24,6 @@ class UserCacheRepository(redissonClient: RedissonClient):
     AbstractSuspendedJdbcRedissonRepository<Long, UserRecord>(
         redissonClient = redissonClient,
         config = RedissonCacheConfig.READ_WRITE_THROUGH_WITH_NEAR_CACHE.copy(
-            deleteFromDBOnInvalidate = true,
             name = "exposed:coroutines:users"
         )
     ) {

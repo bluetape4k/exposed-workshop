@@ -15,7 +15,7 @@ dependencies {
     // 암호화 관련 라이브러리
     implementation(libs.exposed.crypt)
 
-    testImplementation(libs.bluetape4k.exposed)
+    testImplementation(libs.bluetape4k.exposed.core)
     testImplementation(libs.bluetape4k.junit5)
 
     testImplementation(libs.bluetape4k.testcontainers)

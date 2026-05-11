@@ -32,11 +32,11 @@ dependencies {
     implementation(libs.exposed.spring.boot.starter)
 
     // bluetape4k
-    implementation(libs.bluetape4k.exposed)
+    implementation(libs.bluetape4k.exposed.core)
     implementation(libs.bluetape4k.io)
     implementation(libs.bluetape4k.jackson2)
     implementation(libs.bluetape4k.jdbc)
-    testImplementation(libs.bluetape4k.spring.boot.core)
+    testImplementation(libs.bluetape4k.spring.boot4.core)
     implementation(libs.bluetape4k.testcontainers)
 
     // Database Drivers
@@ -64,13 +64,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
-    testImplementation(libs.bluetape4k.spring.boot.core)
+    testImplementation(libs.bluetape4k.spring.boot4.core)
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
     }
-    testImplementation("org.springframework.boot:spring-boot-webtestclient")
 
     // Coroutines
     implementation(libs.bluetape4k.coroutines)

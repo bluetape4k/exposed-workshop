@@ -7,6 +7,7 @@ import io.bluetape4k.logging.KLogging
 import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.core.DatabaseConfig
 import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.getBean
 import org.springframework.boot.autoconfigure.AutoConfigurations
@@ -48,7 +49,7 @@ class SpringCacheAotTest {
     /**
      * Redis 캐시 구성을 검증하는 컨텍스트 러너.
      *
-     * [DataRedisAutoConfiguration]이 [RedisConnectionFactory]를 자동 구성하고,
+ * [DataRedisAutoConfiguration]이 [RedisConnectionFactory]를 자동 구성하고,
      * [LettuceCacheConfig]가 [RedisCacheConfiguration]과 [CacheManager] 빈을 생성합니다.
      */
     private val cacheContextRunner = ApplicationContextRunner()
@@ -62,6 +63,7 @@ class SpringCacheAotTest {
     fun `DataSource 빈이 자동 구성되어야 한다`() {
         exposedContextRunner.run { context ->
             context.getBean<DataSource>().shouldNotBeNull()
+            TransactionManager.closeAndUnregister(context.getBean<Database>())
         }
     }
 
@@ -69,13 +71,16 @@ class SpringCacheAotTest {
     fun `DatabaseConfig 빈이 생성되어야 한다`() {
         exposedContextRunner.run { context ->
             context.getBean<DatabaseConfig>().shouldNotBeNull()
+            TransactionManager.closeAndUnregister(context.getBean<Database>())
         }
     }
 
     @Test
     fun `Exposed Database 빈이 생성되어야 한다`() {
         exposedContextRunner.run { context ->
-            context.getBean<Database>().shouldNotBeNull()
+            val database = context.getBean<Database>()
+            database.shouldNotBeNull()
+            TransactionManager.closeAndUnregister(database)
         }
     }
 

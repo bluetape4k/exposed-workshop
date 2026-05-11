@@ -3,21 +3,21 @@ package exposed.examples.cache.coroutines
 import io.bluetape4k.junit5.faker.Fakers
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.info
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.BeforeEach
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.redisson.api.RedissonClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient
 
 /** 코루틴 기반 캐시 전략 예제의 Spring Boot 통합 테스트를 위한 추상 베이스 클래스입니다. */
+@AutoConfigureWebTestClient(timeout = "2m")
 @SpringBootTest(
     classes = [CacheStrategyApplication::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 )
-@AutoConfigureWebTestClient
 abstract class AbstractCacheStrategyTest {
 
     companion object: KLoggingChannel() {
@@ -37,23 +37,24 @@ abstract class AbstractCacheStrategyTest {
     private lateinit var redissonClient: RedissonClient
 
     @Autowired
-    private lateinit var database: Database
+    protected lateinit var database: Database
 
     @BeforeEach
-    fun resetDefaultDatabase() {
+    fun bindDefaultDatabase() {
         TransactionManager.defaultDatabase = database
     }
 
     /**
-     * 테스트 클래스 최초 실행 전, Redis의 모든 데이터를 삭제합니다.
+     * 테스트 클래스 최초 실행 전, 캐시 관련 키를 삭제합니다.
      *
      * - 컨테이너 재사용(reuse=true)으로 인한 이전 JVM의 잔존 데이터를 정리합니다.
-     * - Write-Behind 미완료 큐, 스테일 Near Cache 항목 등을 포함한 모든 Redis 키를 제거합니다.
+     * - `flushall()` 대신 패턴 삭제를 사용하여 활성 PUB/SUB 구독을 유지합니다.
+     * - `*exposed:*` 패턴으로 캐시 데이터, 분산 락(`{exposed:...}:lock`), 업데이트 로그 등을 모두 제거합니다.
      */
     @BeforeAll
     fun flushRedisBeforeTests() {
         if (!redisInitialized) {
-            log.info { "Redis 캐시 키 초기화: exposed:* 패턴의 잔존 데이터를 제거합니다." }
+            log.info { "Redis 캐시 키 초기화: *exposed:* 패턴의 잔존 데이터를 제거합니다." }
             redissonClient.keys.deleteByPattern("*exposed:*")
             redisInitialized = true
             log.info { "Redis 캐시 키 초기화 완료." }

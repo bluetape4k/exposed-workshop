@@ -24,7 +24,7 @@ dependencies {
     testImplementation(platform(libs.kotlinx.serialization.bom))
     testImplementation(libs.kotlinx.serialization.json)
 
-    testImplementation(libs.bluetape4k.exposed)
+    testImplementation(libs.bluetape4k.exposed.core)
     testImplementation(libs.bluetape4k.junit5)
 
     testImplementation(libs.bluetape4k.testcontainers)

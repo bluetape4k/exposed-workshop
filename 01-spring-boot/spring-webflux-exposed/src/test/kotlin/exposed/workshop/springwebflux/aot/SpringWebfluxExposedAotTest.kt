@@ -4,6 +4,7 @@ import exposed.workshop.springwebflux.config.ExposedDatabaseConfig
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.assertions.shouldNotBeNull
 import org.jetbrains.exposed.v1.jdbc.Database
+import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.getBean
 import org.springframework.boot.test.context.runner.ApplicationContextRunner
@@ -32,13 +33,16 @@ class SpringWebfluxExposedAotTest {
     fun `h2 프로파일에서 DataSource 빈이 생성되어야 한다`() {
         contextRunner.run { context ->
             context.getBean<DataSource>().shouldNotBeNull()
+            TransactionManager.closeAndUnregister(context.getBean<Database>())
         }
     }
 
     @Test
     fun `Exposed Database 빈이 생성되어야 한다`() {
         contextRunner.run { context ->
-            context.getBean<Database>().shouldNotBeNull()
+            val database = context.getBean<Database>()
+            database.shouldNotBeNull()
+            TransactionManager.closeAndUnregister(database)
         }
     }
 
@@ -50,6 +54,7 @@ class SpringWebfluxExposedAotTest {
 
             dataSource.shouldNotBeNull()
             database.shouldNotBeNull()
+            TransactionManager.closeAndUnregister(database)
         }
     }
 }

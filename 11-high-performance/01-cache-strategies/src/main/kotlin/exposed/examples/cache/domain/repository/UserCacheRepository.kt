@@ -20,14 +20,12 @@ import java.time.Instant
  *
  * - 조회 시: 캐시에 없으면 DB에서 읽어 캐시에 채웁니다.
  * - 저장 시: 캐시와 DB를 함께 갱신합니다.
- * - 무효화 시: 캐시 계층만 비우고 DB 데이터는 유지합니다.
  */
 @Repository
 class UserCacheRepository(redissonClient: RedissonClient): AbstractJdbcRedissonRepository<Long, UserRecord>(
     redissonClient = redissonClient,
     config = RedissonCacheConfig.READ_WRITE_THROUGH_WITH_NEAR_CACHE.copy(
         name = "exposed:users",
-        deleteFromDBOnInvalidate = false
     )
 ) {
     companion object: KLoggingChannel()

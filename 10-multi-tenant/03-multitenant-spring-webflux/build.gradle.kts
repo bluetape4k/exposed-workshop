@@ -34,12 +34,12 @@ dependencies {
     implementation(libs.exposed.spring.boot.starter)
 
     // bluetape4k
-    implementation(libs.bluetape4k.exposed)
+    implementation(libs.bluetape4k.exposed.core)
     implementation(libs.bluetape4k.jackson2)
     implementation(libs.bluetape4k.jdbc)
     implementation(libs.bluetape4k.testcontainers)
     testImplementation(libs.bluetape4k.junit5)
-    testImplementation(libs.bluetape4k.spring.boot.core)
+    testImplementation(libs.bluetape4k.spring.boot4.core)
 
     // Database Drivers
     implementation(libs.hikaricp)
@@ -71,7 +71,6 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
     }
-    testImplementation("org.springframework.boot:spring-boot-webtestclient")
 
     // Coroutines
     implementation(libs.bluetape4k.coroutines)

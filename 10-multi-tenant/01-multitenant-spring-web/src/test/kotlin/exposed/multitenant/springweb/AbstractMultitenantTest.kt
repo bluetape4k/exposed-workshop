@@ -6,12 +6,12 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient
 import org.springframework.test.context.ActiveProfiles
 
-@ActiveProfiles("postgres")
+@ActiveProfiles("h2")
+@AutoConfigureWebTestClient
 @SpringBootTest(
     classes = [ExposedMultitenantApplication::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 )
-@AutoConfigureWebTestClient
 abstract class AbstractMultitenantTest {
 
     companion object: KLogging() {

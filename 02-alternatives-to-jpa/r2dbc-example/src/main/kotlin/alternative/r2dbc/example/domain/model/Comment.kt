@@ -11,8 +11,8 @@ data class Comment(
     val content: String? = null,
     @Column("post_id")
     val postId: Long? = null,
-    @Column("id")
     @Id
+    @Column("id")
     val id: Long? = null,
 ): Serializable {
     val hasId: Boolean get() = id != null

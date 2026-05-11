@@ -156,7 +156,7 @@ class UserCacheRepositoryTest(
     }
 
     @Test
-    fun `캐시 무효화는 DB 데이터를 삭제하지 않는다`() {
+    fun `캐시 무효화 후 재조회 시 DB에서 다시 읽어온다`() {
         transaction {
             val userId = idsInDB.random()
 
@@ -164,27 +164,31 @@ class UserCacheRepositoryTest(
             val cachedUser = repository.get(userId)
             cachedUser.shouldNotBeNull()
 
-            // 캐시 무효화 - deleteFromDBOnInvalidate=false이므로 DB 데이터는 유지
+            // 캐시 무효화 - DB는 유지되고 캐시만 삭제된다
             repository.invalidate(userId)
 
-            // 캐시 미스 후 DB에서 다시 읽어온다.
-            repository.get(userId).shouldNotBeNull()
+            // 캐시 무효화 후에도 DB에서 다시 읽어온다
+            val reloadedUser = repository.get(userId)
+            reloadedUser.shouldNotBeNull()
+            reloadedUser.id shouldBeEqualTo userId
         }
     }
 
     @Test
-    fun `복수 ID를 한 번에 무효화해도 DB 데이터는 유지된다`() {
+    fun `복수 ID를 한 번에 무효화하면 캐시만 삭제된다`() {
         val idsToInvalidate = idsInDB.take(3)
         transaction {
             // 캐시에 로드
             idsToInvalidate.forEach { repository.get(it).shouldNotBeNull() }
 
-            // 복수 ID 무효화 - deleteFromDBOnInvalidate=false이므로 DB 데이터는 유지
+            // 복수 ID 무효화 - DB는 유지되고 캐시만 삭제된다
             repository.invalidateAll(idsToInvalidate)
 
-            // 캐시 미스 후 DB에서 다시 읽어온다.
+            // 캐시 무효화 후에도 DB에서 다시 읽어온다
             idsToInvalidate.forEach { id ->
-                repository.get(id).shouldNotBeNull()
+                val reloadedUser = repository.get(id)
+                reloadedUser.shouldNotBeNull()
+                reloadedUser.id shouldBeEqualTo id
             }
         }
     }

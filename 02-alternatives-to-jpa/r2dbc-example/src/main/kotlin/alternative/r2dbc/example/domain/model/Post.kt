@@ -11,8 +11,8 @@ data class Post(
     val title: String? = null,
     @Column("content")
     val content: String? = null,
-    @Column("id")
     @Id
+    @Column("id")
     val id: Long? = null,
 ): Serializable {
     val hasId: Boolean get() = id != null

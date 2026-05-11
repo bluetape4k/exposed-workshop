@@ -35,13 +35,13 @@ dependencies {
     implementation(libs.exposed.spring.boot.starter)
 
     // bluetape4k
-    implementation(libs.bluetape4k.exposed)
+    implementation(libs.bluetape4k.exposed.core)
     implementation(libs.bluetape4k.exposed.jdbc.redisson)
     implementation(libs.bluetape4k.idgenerators)
     implementation(libs.bluetape4k.redis)
     implementation(libs.bluetape4k.testcontainers)
     testImplementation(libs.bluetape4k.junit5)
-    testImplementation(libs.bluetape4k.spring.boot.core)
+    testImplementation(libs.bluetape4k.spring.boot4.core)
 
     // Codecs
     runtimeOnly(libs.fory.kotlin)
@@ -72,7 +72,7 @@ dependencies {
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
-    testImplementation("org.springframework.boot:spring-boot-webtestclient")
+    testImplementation(libs.spring.boot.starter.webmvc.test)
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

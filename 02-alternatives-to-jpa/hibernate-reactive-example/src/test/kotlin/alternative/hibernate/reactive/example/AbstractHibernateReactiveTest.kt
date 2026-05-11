@@ -8,11 +8,11 @@ import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTest
 import org.springframework.test.context.ActiveProfiles
 
 @ActiveProfiles("postgres")
+@AutoConfigureWebTestClient
 @SpringBootTest(
     classes = [HibernateReactiveApplication::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@AutoConfigureWebTestClient
 abstract class AbstractHibernateReactiveTest {
 
     companion object: KLoggingChannel() {

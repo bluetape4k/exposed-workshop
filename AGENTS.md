@@ -60,3 +60,25 @@ for example:
 - Versions live in `buildSrc/src/main/kotlin/Libs.kt`.
 - Compiler opts include coroutine experimental APIs, `-Xcontext-parameters`,
   and preview JVM support.
+
+## Project Documentation Artifacts
+
+Store durable project design/history artifacts in repo-local docs paths:
+
+- Specs: `docs/superpowers/specs/YYYY-MM-DD-{slug}-design.md`
+- Plans: `docs/superpowers/plans/YYYY-MM-DD-{slug}-plan.md`
+- Research notes, when needed: `docs/superpowers/research/YYYY-MM-DD-{slug}-research.md`
+- Lessons Learned / work retrospectives: `docs/lessons/YYYY-MM-DD-{slug}.md`
+- Use lowercase ASCII kebab-case slugs; include `issue-{number}-` when the
+  artifact is tied to a GitHub issue.
+- Treat `.omx/plans`, `.omx/notepad.md`, chat summaries, and runtime notes as
+  transient. Promote durable decisions and lessons into `docs/superpowers/` or
+  `docs/lessons/`.
+
+## GitHub Issue And Pull Request Workflow
+
+When creating GitHub issues or pull requests for bluetape4k repositories,
+assign them to `debop` by default unless the user explicitly says otherwise.
+Use `--assignee debop` with `gh issue create` and `gh pr create`, or the
+equivalent GitHub API `assignees` field. If a repository rejects the assignee,
+report that blocker instead of creating an unassigned issue or PR silently.

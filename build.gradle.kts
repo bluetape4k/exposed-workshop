@@ -23,6 +23,7 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.kover)
 
+    alias(libs.plugins.dependency.management)
     alias(libs.plugins.spring.boot) apply false
 
     alias(libs.plugins.test.logger)
@@ -37,7 +38,7 @@ allprojects {
         mavenCentral()
         google()
 
-        // bluetape4k-assertions 는 1.8.0-SNAPSHOT 에만 존재하므로 snapshot 저장소 사용
+        // bluetape4k snapshot 버전 사용 시만 사용하세요.
         maven {
             name = "central-snapshots"
             url = uri("https://central.sonatype.com/repository/maven-snapshots/")
@@ -45,9 +46,9 @@ allprojects {
     }
 
     // bluetape4k snapshot 버전 사용 시만 사용하세요.
-//    configurations.all {
-//        resolutionStrategy.cacheChangingModulesFor(1, TimeUnit.DAYS)
-//    }
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
+    }
 }
 
 subprojects {
@@ -56,6 +57,7 @@ subprojects {
         // Kotlin 1.9.20 부터는 pluginId 를 지정해줘야 합니다.
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.kotlinx.atomicfu")
+        plugin("io.spring.dependency-management")
         plugin("com.adarshr.test-logger")
         plugin("org.jetbrains.kotlinx.kover")
     }
@@ -186,33 +188,79 @@ subprojects {
         }
     }
 
+    dependencyManagement {
+        // HINT: Gradle 빌드 시, detachedConfiguration 이 많이 발생하는데, setApplyMavenExclusions(false) 를 추가하면 속도가 개선됩니다.
+        // https://discuss.gradle.org/t/what-is-detachedconfiguration-i-have-a-lots-of-them-for-each-subproject-and-resolving-them-takes-95-of-build-time/31595/6
+        setApplyMavenExclusions(false)
+
+        imports {
+            mavenBom(rootLibs.spring.boot.dependencies.get().toString())
+            mavenBom(rootLibs.bluetape4k.bom.get().toString())
+            mavenBom(rootLibs.kotlinx.coroutines.bom.get().toString())
+            mavenBom(rootLibs.kotlin.bom.get().toString())
+            mavenBom(rootLibs.netty.bom.get().toString())
+            mavenBom(rootLibs.jackson.bom.get().toString())
+            mavenBom(rootLibs.jackson3.bom.get().toString())
+        }
+        dependencies {
+            // Kotlinx Coroutines (mavenBom 이 적용이 안되어서 추가로 명시했습니다)
+            val coroutinesVersion = rootLibs.versions.kotlinx.coroutines.get()
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-bom:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-debug:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-rx3:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+            dependency("org.jetbrains.kotlinx:kotlinx-coroutines-test-jvm:$coroutinesVersion")
+
+            // Netty 4.2 기반 라이브러리가 Spring Boot BOM의 Netty 4.1로 내려가지 않도록 고정합니다.
+            val nettyVersion = rootLibs.versions.netty.get()
+            dependency("io.netty:netty-all:$nettyVersion")
+            dependency("io.netty:netty-buffer:$nettyVersion")
+            dependency("io.netty:netty-common:$nettyVersion")
+            dependency("io.netty:netty-codec:$nettyVersion")
+            dependency("io.netty:netty-codec-dns:$nettyVersion")
+            dependency("io.netty:netty-codec-http:$nettyVersion")
+            dependency("io.netty:netty-codec-http2:$nettyVersion")
+            dependency("io.netty:netty-codec-socks:$nettyVersion")
+            dependency("io.netty:netty-handler:$nettyVersion")
+            dependency("io.netty:netty-handler-proxy:$nettyVersion")
+            dependency("io.netty:netty-resolver:$nettyVersion")
+            dependency("io.netty:netty-resolver-dns:$nettyVersion")
+            dependency("io.netty:netty-resolver-dns-classes-macos:$nettyVersion")
+            dependency("io.netty:netty-resolver-dns-native-macos:$nettyVersion")
+            dependency("io.netty:netty-transport:$nettyVersion")
+            dependency("io.netty:netty-transport-classes-epoll:$nettyVersion")
+            dependency("io.netty:netty-transport-classes-kqueue:$nettyVersion")
+            dependency("io.netty:netty-transport-native-epoll:$nettyVersion")
+            dependency("io.netty:netty-transport-native-kqueue:$nettyVersion")
+            dependency("io.netty:netty-transport-native-unix-common:$nettyVersion")
+
+            // Spring Boot BOM 보다 catalog 의 Jakarta/Hibernate 축이 우선되도록 고정합니다.
+            val hibernateValidatorVersion = rootLibs.versions.hibernate.validator.get()
+            dependency(rootLibs.jakarta.persistence.api.get().toString())
+            dependency(rootLibs.hibernate.core.get().toString())
+            dependency(rootLibs.hibernate.jcache.get().toString())
+            dependency(rootLibs.hibernate.jpamodelgen.get().toString())
+            dependency("org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion")
+            dependency("org.hibernate:hibernate-validator-annotation-processor:$hibernateValidatorVersion")
+            dependency(rootLibs.r2dbc.h2.get().toString())
+        }
+    }
+
     dependencies {
         val api by configurations
         val testApi by configurations
         val implementation by configurations
-        val annotationProcessor by configurations
         val testImplementation by configurations
 
         val compileOnly by configurations
         val testCompileOnly by configurations
         val testRuntimeOnly by configurations
-
-        api(platform(rootLibs.spring.boot.dependencies.get()))
-        api(platform(rootLibs.bluetape4k.dependencies.get()))
-        api(platform(rootLibs.kotlinx.coroutines.bom.get()))
-        api(platform(rootLibs.kotlin.bom.get()))
-
-        implementation(platform(rootLibs.spring.boot.dependencies.get()))
-        implementation(platform(rootLibs.bluetape4k.dependencies.get()))
-        implementation(platform(rootLibs.kotlinx.coroutines.bom.get()))
-        implementation(platform(rootLibs.kotlin.bom.get()))
-
-        annotationProcessor(platform(rootLibs.spring.boot.dependencies.get()))
-
-        testImplementation(platform(rootLibs.spring.boot.dependencies.get()))
-        testImplementation(platform(rootLibs.bluetape4k.dependencies.get()))
-        testImplementation(platform(rootLibs.kotlinx.coroutines.bom.get()))
-        testImplementation(platform(rootLibs.kotlin.bom.get()))
 
         implementation(rootLibs.kotlin.stdlib)
         implementation(rootLibs.kotlin.reflect)
@@ -225,6 +273,10 @@ subprojects {
         // 개발 시에는 logback 이 검증하기에 더 좋고, Production에서 비동기 로깅은 log4j2 가 성능이 좋다고 합니다.
         implementation(rootLibs.slf4j.api)
         implementation(rootLibs.bluetape4k.logging)
+        implementation(rootLibs.bluetape4k.exposed.dao)
+        implementation(rootLibs.bluetape4k.exposed.jdbc)
+        implementation(rootLibs.jackson3.module.kotlin)
+        implementation(rootLibs.jackson3.module.blackbird)
         implementation(rootLibs.logback)
 
         // JUnit 5
@@ -232,7 +284,8 @@ subprojects {
         testImplementation(rootLibs.junit.jupiter)
         testRuntimeOnly(rootLibs.junit.platform.engine)
 
-        testImplementation(rootLibs.bluetape4k.assertions)
+        testImplementation(rootLibs.spring.boot.starter.webflux.test)
+
         testImplementation(rootLibs.mockk)
         testImplementation(rootLibs.awaitility.kotlin)
 

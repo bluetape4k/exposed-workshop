@@ -54,13 +54,12 @@ class CountryRepository(private val cacheManager: CacheManager) {
     fun update(countryRecord: CountryRecord): Int {
         log.debug { "----> Updating country with code[${countryRecord.code}] ..." }
 
-        val updated = CountryTable.update({ CountryTable.code eq countryRecord.code }) {
+        return CountryTable.update({ CountryTable.code eq countryRecord.code }) {
             it[name] = countryRecord.name
             it[description] = countryRecord.description
+        }.also {
+            cacheManager.getCache(COUNTRY_CACHE_NAME)?.evictIfPresent("country:${countryRecord.code}")
         }
-        evictCountryCache(countryRecord.code)
-
-        return updated
     }
 
     /**
@@ -69,9 +68,5 @@ class CountryRepository(private val cacheManager: CacheManager) {
     fun evictCacheAll() {
         log.debug { "----> Evicting all country cache ..." }
         cacheManager.getCache(COUNTRY_CACHE_NAME)?.invalidate()
-    }
-
-    private fun evictCountryCache(code: String) {
-        cacheManager.getCache(COUNTRY_CACHE_NAME)?.evictIfPresent("country:$code")
     }
 }

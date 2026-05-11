@@ -7,7 +7,6 @@ import kotlinx.datetime.LocalTime
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toKotlinLocalDateTime
 import kotlinx.serialization.Serializable
-import io.bluetape4k.assertions.fail
 import io.bluetape4k.assertions.shouldBeEqualTo
 import org.jetbrains.exposed.v1.core.Column
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
@@ -78,7 +77,7 @@ internal infix fun Int.shouldFractionalPartEqualTo(nano2: Int) {
         // milliseconds
         is OracleDialect                                    -> nano1.nanoRoundToMilli() shouldBeEqualTo nano2.nanoRoundToMilli()
         is SQLiteDialect                                    -> nano1.nanoFloorToMilli() shouldBeEqualTo nano2.nanoFloorToMilli()
-        else                                                -> fail("Unknown dialect $db")
+        else                                                -> io.bluetape4k.assertions.fail("Unknown dialect $db")
     }
 }
 

@@ -3,8 +3,6 @@
 
 [versions]
 bluetape4k = "1.8.0-SNAPSHOT"
-bluetape4k-dependencies = "1.0.0-SNAPSHOT"
-bluetape4k-assertions-version = "1.8.0-SNAPSHOT"
 
 kotlin = "2.3.21"
 kotlinx-coroutines = "1.11.0"
@@ -32,22 +30,23 @@ mysql-connector-j = "9.6.0"
 mariadb-java-client = "3.5.8"
 postgresql-driver = "42.7.10"
 pgjdbc-ng = "0.8.9"
-r2dbc-h2 = "1.0.0.RELEASE"
+r2dbc-h2 = "1.1.0.RELEASE"
 r2dbc-pool = "1.0.2.RELEASE"
 r2dbc-postgresql = "1.1.1.RELEASE"
 
 lettuce = "6.8.2.RELEASE"
-redisson = "4.3.1"
+redisson = "4.3.0"
 
-hibernate = "6.6.44.Final"
-hibernate-reactive = "2.4.11.Final"
+hibernate = "7.3.3.Final"
+hibernate-reactive = "4.3.3.Final"
 hibernate-validator = "9.1.0.Final"
 
 micrometer = "1.16.1"
+netty = "4.2.13.Final"
 
-jackson = "2.21.3"
+jackson = "2.21.1"
 jackson-annotations = "2.21"
-jackson3 = "3.1.3"
+jackson3 = "3.1.0"
 
 caffeine = "3.2.3"
 
@@ -68,7 +67,7 @@ logcaptor = "2.12.1"
 mybatis-dynamic-sql = "1.5.2"
 
 snappy-java = "1.1.10.8"
-lz4-java = "1.11.0"
+lz4-java = "1.8.0"
 zstd-jni = "1.5.7-1"
 
 findbugs = "3.0.2"
@@ -112,42 +111,42 @@ gatling = { id = "io.gatling.gradle", version = "3.15.0.1" }
 jetbrains-annotations = { module = "org.jetbrains:annotations", version = "26.1.0" }
 
 # bluetape4k
-bluetape4k-dependencies = { module = "io.github.bluetape4k:bluetape4k-dependencies", version.ref = "bluetape4k-dependencies" }
-bluetape4k-core = { module = "io.github.bluetape4k:bluetape4k-core" }
-bluetape4k-coroutines = { module = "io.github.bluetape4k:bluetape4k-coroutines" }
-bluetape4k-logging = { module = "io.github.bluetape4k:bluetape4k-logging" }
-bluetape4k-assertions = { module = "io.github.bluetape4k:bluetape4k-assertions", version.ref = "bluetape4k-assertions-version" }
-bluetape4k-junit5 = { module = "io.github.bluetape4k:bluetape4k-junit5" }
-bluetape4k-testcontainers = { module = "io.github.bluetape4k:bluetape4k-testcontainers" }
-bluetape4k-idgenerators = { module = "io.github.bluetape4k:bluetape4k-idgenerators" }
-bluetape4k-io = { module = "io.github.bluetape4k:bluetape4k-io" }
-bluetape4k-jdbc = { module = "io.github.bluetape4k:bluetape4k-jdbc" }
-bluetape4k-money = { module = "io.github.bluetape4k:bluetape4k-money" }
-bluetape4k-redis = { module = "io.github.bluetape4k:bluetape4k-redis" }
-bluetape4k-vertx = { module = "io.github.bluetape4k:bluetape4k-vertx", version.ref = "bluetape4k" }
-bluetape4k-grpc = { module = "io.github.bluetape4k:bluetape4k-grpc", version.ref = "bluetape4k" }
-bluetape4k-jackson2 = { module = "io.github.bluetape4k:bluetape4k-jackson2" }
-bluetape4k-jackson3 = { module = "io.github.bluetape4k:bluetape4k-jackson3" }
+bluetape4k-bom = { module = "io.github.bluetape4k:bluetape4k-bom", version.ref = "bluetape4k" }
+bluetape4k-core = { module = "io.github.bluetape4k:bluetape4k-core" , version.ref = "bluetape4k" }
+bluetape4k-coroutines = { module = "io.github.bluetape4k:bluetape4k-coroutines" , version.ref = "bluetape4k" }
+bluetape4k-logging = { module = "io.github.bluetape4k:bluetape4k-logging" , version.ref = "bluetape4k" }
+bluetape4k-junit5 = { module = "io.github.bluetape4k:bluetape4k-junit5" , version.ref = "bluetape4k" }
+bluetape4k-testcontainers = { module = "io.github.bluetape4k:bluetape4k-testcontainers" , version.ref = "bluetape4k" }
+bluetape4k-idgenerators = { module = "io.github.bluetape4k:bluetape4k-idgenerators" , version.ref = "bluetape4k" }
+bluetape4k-io = { module = "io.github.bluetape4k:bluetape4k-io" , version.ref = "bluetape4k" }
+bluetape4k-jdbc = { module = "io.github.bluetape4k:bluetape4k-jdbc" , version.ref = "bluetape4k" }
+bluetape4k-money = { module = "io.github.bluetape4k:bluetape4k-money" , version.ref = "bluetape4k" }
+bluetape4k-redis = { module = "io.github.bluetape4k:bluetape4k-redis" , version.ref = "bluetape4k" }
+bluetape4k-vertx = { module = "io.github.bluetape4k:bluetape4k-vertx" , version.ref = "bluetape4k" }
+bluetape4k-grpc = { module = "io.github.bluetape4k:bluetape4k-grpc" , version.ref = "bluetape4k" }
+bluetape4k-jackson2 = { module = "io.github.bluetape4k:bluetape4k-jackson2" , version.ref = "bluetape4k" }
+bluetape4k-jackson3 = { module = "io.github.bluetape4k:bluetape4k-jackson3" , version.ref = "bluetape4k" }
 
 # bluetape4k exposed
-bluetape4k-exposed = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc" }
-bluetape4k-exposed-fastjson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-fastjson2" }
-bluetape4k-exposed-jackson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson2" }
-bluetape4k-exposed-jackson3 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson3" }
-bluetape4k-exposed-jdbc = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc" }
-bluetape4k-exposed-jdbc-redisson = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-redisson" }
-bluetape4k-exposed-tink = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-tink" }
+bluetape4k-exposed-core = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-core" , version.ref = "bluetape4k" }
+bluetape4k-exposed-dao = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-dao" , version.ref = "bluetape4k" }
+bluetape4k-exposed-fastjson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-fastjson2" , version.ref = "bluetape4k" }
+bluetape4k-exposed-jackson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson2" , version.ref = "bluetape4k" }
+bluetape4k-exposed-jackson3 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson3" , version.ref = "bluetape4k" }
+bluetape4k-exposed-jdbc = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc" , version.ref = "bluetape4k" }
+bluetape4k-exposed-jdbc-redisson = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-redisson" , version.ref = "bluetape4k" }
+bluetape4k-exposed-tink = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-tink" , version.ref = "bluetape4k" }
 
 # bluetape4k hibernate
-bluetape4k-hibernate-reactive = { module = "io.github.bluetape4k:bluetape4k-hibernate-reactive", version.ref = "bluetape4k" }
+bluetape4k-hibernate-reactive = { module = "io.github.bluetape4k:bluetape4k-hibernate-reactive" , version.ref = "bluetape4k" }
 
-# bluetape4k spring-boot
-bluetape4k-spring-boot-core = { module = "io.github.bluetape4k:bluetape4k-spring-boot-core" }
-bluetape4k-spring-boot-r2dbc = { module = "io.github.bluetape4k:bluetape4k-spring-boot-r2dbc" }
-bluetape4k-spring-boot-redis = { module = "io.github.bluetape4k:bluetape4k-spring-boot-redis" }
+# bluetape4k spring-boot4
+bluetape4k-spring-boot4-core = { module = "io.github.bluetape4k:bluetape4k-spring-boot4-core" , version.ref = "bluetape4k" }
+bluetape4k-spring-boot4-r2dbc = { module = "io.github.bluetape4k:bluetape4k-spring-boot4-r2dbc" , version.ref = "bluetape4k" }
+bluetape4k-spring-boot4-redis = { module = "io.github.bluetape4k:bluetape4k-spring-boot4-redis" , version.ref = "bluetape4k" }
 
 # bluetape4k virtualthread
-bluetape4k-virtualthread-jdk21 = { module = "io.github.bluetape4k:bluetape4k-virtualthread-jdk21", version.ref = "bluetape4k" }
+bluetape4k-virtualthread-jdk21 = { module = "io.github.bluetape4k:bluetape4k-virtualthread-jdk21" , version.ref = "bluetape4k" }
 
 # Kotlin
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
@@ -204,6 +203,8 @@ spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-star
 spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
 spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+spring-boot-starter-webflux-test = { module = "org.springframework.boot:spring-boot-starter-webflux-test" }
+spring-boot-starter-webmvc-test = { module = "org.springframework.boot:spring-boot-starter-webmvc-test" }
 
 # Reactor (BOM-managed, no version)
 reactor-bom = { module = "io.projectreactor:reactor-bom", version.ref = "reactor-bom" }
@@ -211,6 +212,9 @@ reactor-core = { module = "io.projectreactor:reactor-core" }
 reactor-kotlin-extensions = { module = "io.projectreactor.kotlin:reactor-kotlin-extensions" }
 reactor-netty = { module = "io.projectreactor.netty:reactor-netty" }
 reactor-test = { module = "io.projectreactor:reactor-test" }
+
+# Netty
+netty-bom = { module = "io.netty:netty-bom", version.ref = "netty" }
 
 # Exposed
 exposed-bom = { module = "org.jetbrains.exposed:exposed-bom", version.ref = "exposed" }
@@ -315,7 +319,7 @@ java-uuid-generator = { module = "com.fasterxml.uuid:java-uuid-generator", versi
 
 # Compression
 snappy-java = { module = "org.xerial.snappy:snappy-java", version.ref = "snappy-java" }
-lz4-java = { module = "at.yawk.lz4:lz4-java", version.ref = "lz4-java" }
+lz4-java = { module = "org.lz4:lz4-java", version.ref = "lz4-java" }
 zstd-jni = { module = "com.github.luben:zstd-jni", version.ref = "zstd-jni" }
 
 # Utils
@@ -338,7 +342,7 @@ jakarta-interceptor-api = { module = "jakarta.interceptor:jakarta.interceptor-ap
 jakarta-jms-api = { module = "jakarta.jms:jakarta.jms-api", version = "3.1.0" }
 jakarta-json-api = { module = "jakarta.json:jakarta.json-api", version = "2.1.3" }
 jakarta-json = { module = "org.glassfish:jakarta.json", version = "2.0.1" }
-jakarta-persistence-api = { module = "jakarta.persistence:jakarta.persistence-api", version = "3.1.0" }
+jakarta-persistence-api = { module = "jakarta.persistence:jakarta.persistence-api", version = "3.2.0" }
 jakarta-servlet-api = { module = "jakarta.servlet:jakarta.servlet-api", version = "6.1.0" }
 jakarta-transaction-api = { module = "jakarta.transaction:jakarta.transaction-api", version = "2.0.1" }
 jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version = "3.1.1" }

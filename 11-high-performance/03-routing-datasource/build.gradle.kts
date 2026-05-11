@@ -33,9 +33,9 @@ dependencies {
     runtimeOnly(libs.h2.v2)
     implementation(libs.hikaricp)
 
-    testImplementation("org.springframework.boot:spring-boot-webmvc-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+    testImplementation(libs.spring.boot.starter.webmvc.test)
 }

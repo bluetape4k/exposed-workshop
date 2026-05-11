@@ -48,10 +48,9 @@ dependencies {
     implementation(libs.bluetape4k.testcontainers)
 
     implementation(libs.bluetape4k.jackson2)
-    implementation(libs.jackson3.module.kotlin)
     implementation(libs.bluetape4k.vertx)
     testImplementation(libs.bluetape4k.junit5)
-    testImplementation(libs.bluetape4k.spring.boot.core)
+    testImplementation(libs.bluetape4k.spring.boot4.core)
 
     api(libs.jakarta.annotation.api)
     api(libs.jakarta.persistence.api)
@@ -85,7 +84,6 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
     }
-    testImplementation("org.springframework.boot:spring-boot-webtestclient")
 
     // Postgres
     implementation(libs.testcontainers.postgresql)

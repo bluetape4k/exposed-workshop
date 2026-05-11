@@ -11,8 +11,8 @@ data class Customer(
     val firstname: String,
     @Column("lastname")
     val lastname: String,
-    @Column("id")
     @Id
+    @Column("id")
     var id: Long? = null,
 ): Serializable {
     val hasId: Boolean get() = id != null

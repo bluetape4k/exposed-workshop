@@ -21,10 +21,10 @@ dependencies {
     implementation(libs.exposed.spring.boot.starter)
 
     // Bluetape4k
-    implementation(libs.bluetape4k.exposed)
+    implementation(libs.bluetape4k.exposed.core)
     implementation(libs.bluetape4k.io)
     implementation(libs.bluetape4k.jdbc)
-    implementation(libs.bluetape4k.spring.boot.core)
+    implementation(libs.bluetape4k.spring.boot4.core)
 
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
