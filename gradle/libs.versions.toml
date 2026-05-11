@@ -56,7 +56,7 @@ springdoc-openapi = "2.8.14"
 
 gatling = "3.14.9"
 
-agroal = "3.0"
+agroal = "3.1"
 
 jmh = "1.37"
 datafaker = "2.5.4"
