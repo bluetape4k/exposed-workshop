@@ -5,6 +5,10 @@ on:
     - cron: '0 19 * * *'  # 매일 UTC 19:00 (KST 04:00)
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   JAVA_VERSION: '21'
   JAVA_DISTRIBUTION: 'temurin'
@@ -32,7 +36,7 @@ jobs:
         with:
           gradle-version: wrapper
       - name: Build (compile only)
-        run: ./gradlew build -x test --parallel
+        run: ./gradlew assemble --parallel
         env:
           GRADLE_OPTS: "-Dorg.gradle.daemon=false"
       - name: Detekt static analysis
@@ -46,7 +50,7 @@ jobs:
           retention-days: 14
 
   test:
-    name: Test / ${{ matrix.db-name }}
+    name: Test / ${{ matrix.db-name }} / ${{ matrix.shard-name }}
     runs-on: ubuntu-latest
     needs: build
     strategy:
@@ -56,23 +60,146 @@ jobs:
           - db: H2
             db-name: H2
             slug: h2
+            shard-name: full
             needs-docker: false
             collect-coverage: true
+            module-tasks: test
           - db: POSTGRESQL
             db-name: PostgreSQL
-            slug: postgresql
+            slug: postgresql-shard-1
+            shard-name: shard-1
             needs-docker: true
             collect-coverage: false
+            module-tasks: >-
+              :01-convert-jpa-basic:test
+              :05-exposed-repository-coroutines:test
+              :spring-mvc-exposed:test
+              :01-connection:test
+              :06-custom-columns:test
+              :04-exposed-json:test
+              :05-exposed-money:test
+              :09-exposed-fastjson2:test
+              :01-coroutines-basic:test
+          - db: POSTGRESQL
+            db-name: PostgreSQL
+            slug: postgresql-shard-2
+            shard-name: shard-2
+            needs-docker: true
+            collect-coverage: false
+            module-tasks: >-
+              :01-dml:test
+              :05-entities:test
+              :03-spring-transaction:test
+              :01-cache-strategies:test
+              :01-springboot-autoconfigure:test
+              :02-multitenant-spring-web-virtualthread:test
+              :03-exposed-kotlin-datetime:test
+              :vertx-sqlclient-example:test
+              :08-exposed-jackson:test
+              :12-exposed-tink:test
+          - db: POSTGRESQL
+            db-name: PostgreSQL
+            slug: postgresql-shard-3
+            shard-name: shard-3
+            needs-docker: true
+            collect-coverage: false
+            module-tasks: >-
+              :02-convert-jpa-advanced:test
+              :02-types:test
+              :spring-webflux-exposed:test
+              :02-cache-strategies-coroutines:test
+              :04-exposed-repository:test
+              :04-transactions:test
+              :02-ddl:test
+              :03-routing-datasource:test
+              :hibernate-reactive-example:test
+              :01-multitenant-spring-web:test
+              :03-functions:test
+              :r2dbc-example:test
+              :03-multitenant-spring-webflux:test
+              :06-spring-cache:test
+              :02-exposed-javatime:test
+              :exposed-dao-example:test
+              :exposed-sql-example:test
+              :01-exposed-crypt:test
+              :02-virtualthreads-basic:test
+              :exposed-shared-tests:test
           - db: MYSQL_V8
             db-name: MySQL 8
-            slug: mysql
+            slug: mysql-shard-1
+            shard-name: shard-1
             needs-docker: true
             collect-coverage: false
+            module-tasks: >-
+              :01-convert-jpa-basic:test
+              :05-exposed-repository-coroutines:test
+              :spring-mvc-exposed:test
+              :01-connection:test
+              :06-custom-columns:test
+              :04-exposed-json:test
+              :05-exposed-money:test
+              :09-exposed-fastjson2:test
+              :01-coroutines-basic:test
+          - db: MYSQL_V8
+            db-name: MySQL 8
+            slug: mysql-shard-2
+            shard-name: shard-2
+            needs-docker: true
+            collect-coverage: false
+            module-tasks: >-
+              :01-dml:test
+              :05-entities:test
+              :03-spring-transaction:test
+              :01-cache-strategies:test
+              :01-springboot-autoconfigure:test
+              :02-multitenant-spring-web-virtualthread:test
+              :03-exposed-kotlin-datetime:test
+              :vertx-sqlclient-example:test
+              :08-exposed-jackson:test
+              :12-exposed-tink:test
+          - db: MYSQL_V8
+            db-name: MySQL 8
+            slug: mysql-shard-3
+            shard-name: shard-3
+            needs-docker: true
+            collect-coverage: false
+            module-tasks: >-
+              :02-convert-jpa-advanced:test
+              :02-types:test
+              :spring-webflux-exposed:test
+              :02-cache-strategies-coroutines:test
+              :04-exposed-repository:test
+              :04-transactions:test
+              :02-ddl:test
+              :03-routing-datasource:test
+              :hibernate-reactive-example:test
+              :01-multitenant-spring-web:test
+              :03-functions:test
+              :r2dbc-example:test
+              :03-multitenant-spring-webflux:test
+              :06-spring-cache:test
+              :02-exposed-javatime:test
+              :exposed-dao-example:test
+              :exposed-sql-example:test
+              :01-exposed-crypt:test
+              :02-virtualthreads-basic:test
+              :exposed-shared-tests:test
           - db: MARIADB
             db-name: MariaDB
-            slug: mariadb
+            slug: mariadb-smoke
+            shard-name: smoke
             needs-docker: true
             collect-coverage: false
+            module-tasks: >-
+              :01-convert-jpa-basic:test
+              :05-exposed-repository-coroutines:test
+              :spring-mvc-exposed:test
+              :01-connection:test
+              :06-custom-columns:test
+              :04-exposed-json:test
+              :05-exposed-money:test
+              :09-exposed-fastjson2:test
+              :01-coroutines-basic:test
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -87,21 +214,20 @@ jobs:
         env:
           USE_DB: ${{ matrix.db }}
           NEEDS_DOCKER: ${{ matrix.needs-docker }}
+          COLLECT_COVERAGE: ${{ matrix.collect-coverage }}
+          MODULE_TASKS: ${{ matrix.module-tasks }}
           GRADLE_OPTS: ${{ matrix.needs-docker && '-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false' || '-Dorg.gradle.daemon=false' }}
           TESTCONTAINERS_RYUK_DISABLED: "true"
           DOCKER_HOST: "unix:///var/run/docker.sock"
         run: |
-          if [ "$NEEDS_DOCKER" = "true" ]; then
-            ./gradlew test "-PuseDB=$USE_DB" --continue --max-workers=1
+          read -r -a module_tasks <<< "$MODULE_TASKS"
+          if [ "$COLLECT_COVERAGE" = "true" ]; then
+            ./gradlew test koverXmlReport "-PuseDB=$USE_DB" --continue
+          elif [ "$NEEDS_DOCKER" = "true" ]; then
+            ./gradlew "${module_tasks[@]}" "-PuseDB=$USE_DB" --continue --max-workers=1
           else
             ./gradlew test "-PuseDB=$USE_DB" --continue
           fi
-      - name: Generate Kover XML report
-        if: matrix.collect-coverage && always()
-        env:
-          USE_DB: ${{ matrix.db }}
-        run: ./gradlew koverXmlReport "-PuseDB=$USE_DB" --continue
-        continue-on-error: true
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
