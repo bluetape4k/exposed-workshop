@@ -11,7 +11,7 @@ kotlinx-atomicfu = "0.32.1"
 kotlinx-benchmark = "0.4.15"
 
 spring-boot = "4.0.6"
-reactor-bom = "2024.0.14"
+reactor-bom = "2025.0.5"
 
 exposed = "1.2.0"
 
