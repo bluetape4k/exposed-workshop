@@ -54,7 +54,7 @@ vertx = "5.0.12"
 
 springdoc-openapi = "2.8.14"
 
-gatling = "3.14.9"
+gatling = "3.15.0"
 
 agroal = "3.0"
 
