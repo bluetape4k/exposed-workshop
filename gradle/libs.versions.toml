@@ -63,7 +63,7 @@ datafaker = "2.5.4"
 random-beans = "3.9.0"
 
 java-uuid-generator = "5.2.0"
-logcaptor = "2.12.1"
+logcaptor = "2.12.6"
 mybatis-dynamic-sql = "1.5.2"
 
 snappy-java = "1.1.10.8"
