@@ -37,6 +37,9 @@ for example:
 | `10-multi-tenant` | Schema-based multi-tenancy |
 | `11-high-performance` | Cache strategies, routing datasource, benchmarks |
 
+Root README visual assets live under `docs/assets/` and should be shared by
+`README.md` and `README.ko.md` through the same relative path.
+
 ## Exposed Rules
 
 - DSL uses `object Table` plus `transaction { }`.
