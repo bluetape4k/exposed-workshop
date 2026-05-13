@@ -7,7 +7,21 @@
 
 [English](./README.md) | 한국어
 
+![Exposed workshop 작업대 일러스트](./docs/assets/exposed-workshop-workbench.png)
+
 이 저장소는 Kotlin Exposed 프레임워크의 사용법을 단계별로 학습할 수 있는 예제와 워크샵 모음입니다. 초보자부터 고급 사용자까지 Exposed의 다양한 기능을 실습하며 익힐 수 있도록 구성되어 있습니다.
+
+## 프로젝트 목적
+
+`exposed-workshop`은 Spring Boot 진입점과 SQL DSL 기초부터 멀티테넌시, 캐시,
+routing datasource, 고성능 패턴까지 테스트 가능한 모듈로 Kotlin Exposed를 학습하도록 구성된 워크숍입니다.
+
+## 제공 기능
+
+- **단계별 학습 경로** — 기초부터 운영형 패턴까지 순차 학습
+- **DSL/DAO 예제** — transaction 및 coroutine variant 포함
+- **Multi-database 테스트** — H2, PostgreSQL, MySQL, MariaDB 검증
+- **Spring 통합 예제** — transaction, cache, repository, WebFlux/MVC 스타일
 
 ## Kotlin Exposed 란?
 
@@ -561,4 +575,4 @@ Multi-Tenant 또는 Read Replica 구조를 위한 유연한 DataSource 라우팅
 
 ## 라이선스
 
-Apache License 2.0
+MIT License

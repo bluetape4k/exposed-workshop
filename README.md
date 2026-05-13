@@ -7,7 +7,22 @@
 
 English | [한국어](./README.ko.md)
 
+![Exposed workshop workbench](./docs/assets/exposed-workshop-workbench.png)
+
 A hands-on workshop collection for learning the Kotlin Exposed SQL framework step by step. Designed for beginners through advanced users to practice and master the various features of Exposed.
+
+## Project Purpose
+
+`exposed-workshop` teaches Kotlin Exposed through runnable, test-backed modules
+that progress from Spring Boot entrypoints and SQL DSL basics to multi-tenancy,
+caching, routing data sources, and high-performance patterns.
+
+## What It Provides
+
+- **Step-by-step learning path** from basics to production-style patterns.
+- **DSL and DAO examples** with transaction and coroutine variants.
+- **Multi-database tests** for H2, PostgreSQL, MySQL, and MariaDB.
+- **Spring integration examples** for transactions, cache, repository, and WebFlux/MVC styles.
 
 ## What is Kotlin Exposed?
 
@@ -560,4 +575,4 @@ This project is designed for learning purposes. All contributions including typo
 
 ## License
 
-Apache License 2.0
+MIT License
