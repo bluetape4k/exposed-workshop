@@ -273,8 +273,8 @@ subprojects {
         // 개발 시에는 logback 이 검증하기에 더 좋고, Production에서 비동기 로깅은 log4j2 가 성능이 좋다고 합니다.
         implementation(rootLibs.slf4j.api)
         implementation(rootLibs.bluetape4k.logging)
-        implementation(rootLibs.bluetape4k.exposed.dao)
-        implementation(rootLibs.bluetape4k.exposed.jdbc)
+        implementation(rootLibs.exposed.dao)
+        implementation(rootLibs.exposed.jdbc)
         implementation(rootLibs.jackson3.module.kotlin)
         implementation(rootLibs.jackson3.module.blackbird)
         implementation(rootLibs.logback)

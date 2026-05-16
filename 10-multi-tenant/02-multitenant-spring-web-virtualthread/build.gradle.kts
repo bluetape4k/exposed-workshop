@@ -24,13 +24,13 @@ dependencies {
     testImplementation(project(":exposed-shared-tests"))
 
     // Exposed
-    implementation(libs.bluetape4k.exposed.core)
     implementation(libs.exposed.core)
-    implementation(libs.exposed.jdbc)
-    implementation(libs.exposed.dao)
-    implementation(libs.exposed.java.time)
-    implementation(libs.exposed.migration.jdbc)
-    implementation(libs.exposed.spring.boot.starter)
+    implementation(libs.jetbrains.exposed.core)
+    implementation(libs.jetbrains.exposed.jdbc)
+    implementation(libs.jetbrains.exposed.dao)
+    implementation(libs.jetbrains.exposed.java.time)
+    implementation(libs.jetbrains.exposed.migration.jdbc)
+    implementation(libs.jetbrains.exposed.spring.boot.starter)
 
     // bluetape4k
     implementation(libs.bluetape4k.io)

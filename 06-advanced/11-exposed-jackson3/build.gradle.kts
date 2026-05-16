@@ -3,18 +3,18 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(libs.exposed.bom))
+    implementation(platform(libs.jetbrains.exposed.bom))
     implementation(platform(libs.bluetape4k.bom))
 
     testImplementation(project(":exposed-shared-tests"))
 
-    testImplementation(libs.exposed.core)
-    testImplementation(libs.exposed.dao)
-    testImplementation(libs.exposed.jdbc)
-    testImplementation(libs.exposed.migration.jdbc)
+    testImplementation(libs.jetbrains.exposed.core)
+    testImplementation(libs.jetbrains.exposed.dao)
+    testImplementation(libs.jetbrains.exposed.jdbc)
+    testImplementation(libs.jetbrains.exposed.migration.jdbc)
 
-    testImplementation(libs.bluetape4k.exposed.core)
-    testImplementation(libs.bluetape4k.exposed.jackson3)
+    testImplementation(libs.exposed.core)
+    testImplementation(libs.exposed.jackson3)
 
     // Jackson 3
     testImplementation(libs.bluetape4k.jackson3)

@@ -3,15 +3,15 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(libs.exposed.bom))
+    implementation(platform(libs.jetbrains.exposed.bom))
 
     testImplementation(project(":exposed-shared-tests"))
 
+    testImplementation(libs.jetbrains.exposed.core)
+    testImplementation(libs.jetbrains.exposed.jdbc)
+    testImplementation(libs.jetbrains.exposed.dao)
+    testImplementation(libs.jetbrains.exposed.java.time)
     testImplementation(libs.exposed.core)
-    testImplementation(libs.exposed.jdbc)
-    testImplementation(libs.exposed.dao)
-    testImplementation(libs.exposed.java.time)
-    testImplementation(libs.bluetape4k.exposed.core)
 
     testImplementation(libs.bluetape4k.jdbc)
     testImplementation(libs.bluetape4k.idgenerators)

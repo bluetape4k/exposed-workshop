@@ -7,25 +7,25 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(libs.exposed.bom))
+    implementation(platform(libs.jetbrains.exposed.bom))
 
     testImplementation(project(":exposed-shared-tests"))
 
-    implementation(libs.bluetape4k.exposed.core)
     implementation(libs.exposed.core)
-    implementation(libs.exposed.dao)
-    implementation(libs.exposed.jdbc)
-    implementation(libs.exposed.migration.jdbc)
+    implementation(libs.jetbrains.exposed.core)
+    implementation(libs.jetbrains.exposed.dao)
+    implementation(libs.jetbrains.exposed.jdbc)
+    implementation(libs.jetbrains.exposed.migration.jdbc)
 
     // java time 지원 라이브러리
-    implementation(libs.exposed.java.time)
+    implementation(libs.jetbrains.exposed.java.time)
 
     // Kotlin Serialization Json
-    implementation(libs.exposed.json)
+    implementation(libs.jetbrains.exposed.json)
     implementation(platform(libs.kotlinx.serialization.bom))
     implementation(libs.kotlinx.serialization.json)
 
-    testImplementation(libs.bluetape4k.exposed.core)
+    testImplementation(libs.exposed.core)
     testImplementation(libs.bluetape4k.junit5)
 
     testImplementation(libs.bluetape4k.testcontainers)

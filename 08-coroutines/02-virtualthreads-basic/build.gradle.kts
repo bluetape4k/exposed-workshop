@@ -3,18 +3,18 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(libs.exposed.bom))
+    implementation(platform(libs.jetbrains.exposed.bom))
 
     testImplementation(project(":exposed-shared-tests"))
 
-    testImplementation(libs.exposed.core)
-    testImplementation(libs.exposed.dao)
-    testImplementation(libs.exposed.jdbc)
+    testImplementation(libs.jetbrains.exposed.core)
+    testImplementation(libs.jetbrains.exposed.dao)
+    testImplementation(libs.jetbrains.exposed.jdbc)
 
     // Java 21 에서 Virtual Thread 를 사용할 때 (Java 25 에서는 jdk25 를 사용하세요)
     testRuntimeOnly(libs.bluetape4k.virtualthread.jdk21)
 
-    testImplementation(libs.bluetape4k.exposed.core)
+    testImplementation(libs.exposed.core)
     testImplementation(libs.bluetape4k.junit5)
 
     testRuntimeOnly(libs.h2.v2)

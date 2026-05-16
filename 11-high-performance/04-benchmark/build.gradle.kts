@@ -15,11 +15,11 @@ dependencies {
     implementation(libs.jmh.core)
 
     // Exposed
-    implementation(platform(libs.exposed.bom))
-    implementation(libs.exposed.core)
-    implementation(libs.exposed.jdbc)
-    implementation(libs.exposed.dao)
-    implementation(libs.exposed.java.time)
+    implementation(platform(libs.jetbrains.exposed.bom))
+    implementation(libs.jetbrains.exposed.core)
+    implementation(libs.jetbrains.exposed.jdbc)
+    implementation(libs.jetbrains.exposed.dao)
+    implementation(libs.jetbrains.exposed.java.time)
 
     // JPA / Hibernate
     implementation(libs.jakarta.persistence.api)

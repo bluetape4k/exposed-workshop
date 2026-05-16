@@ -6,12 +6,12 @@ Google Tink 라이브러리를 활용하여 Exposed 컬럼 데이터를 투명�
 
 ## 개요
 
-`bluetape4k-exposed-tink`가 제공하는 확장 함수로 컬럼을 선언하면, INSERT 시 자동 암호화, SELECT 시 자동 복호화가 이루어집니다. Google Tink의 표준 AEAD 인터페이스를 기반으로 하여 무결성 검증(인증 태그)도 함께 수행합니다.
+`exposed-tink`가 제공하는 확장 함수로 컬럼을 선언하면, INSERT 시 자동 암호화, SELECT 시 자동 복호화가 이루어집니다. Google Tink의 표준 AEAD 인터페이스를 기반으로 하여 무결성 검증(인증 태그)도 함께 수행합니다.
 
 ## 학습 목표
 
 - Google Tink의 AEAD와 DAEAD 차이를 이해한다.
-- `bluetape4k-exposed-tink` 확장 함수로 암호화 컬럼을 선언한다.
+- `exposed-tink` 확장 함수로 암호화 컬럼을 선언한다.
 - DSL/DAO 양쪽에서 암호화 컬럼을 사용한다.
 - DAEAD 컬럼으로 암호화된 상태에서 WHERE 절 검색을 수행한다.
 

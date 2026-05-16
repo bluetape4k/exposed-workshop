@@ -26,9 +26,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
-    implementation(platform(libs.exposed.bom))
-    implementation(libs.exposed.core)
-    implementation(libs.exposed.jdbc)
+    implementation(platform(libs.jetbrains.exposed.bom))
+    implementation(libs.jetbrains.exposed.core)
+    implementation(libs.jetbrains.exposed.jdbc)
 
     runtimeOnly(libs.h2.v2)
     implementation(libs.hikaricp)

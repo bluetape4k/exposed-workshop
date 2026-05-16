@@ -3,25 +3,25 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(libs.exposed.bom))
+    implementation(platform(libs.jetbrains.exposed.bom))
 
     // Bluetape4k Exposed
-    api(libs.bluetape4k.exposed.core)
-    api(libs.bluetape4k.exposed.dao)
-    api(libs.bluetape4k.exposed.jdbc)
-    implementation(libs.bluetape4k.exposed.jackson2)
-    implementation(libs.bluetape4k.exposed.fastjson2)
-
-    // Exposed
     api(libs.exposed.core)
     api(libs.exposed.dao)
     api(libs.exposed.jdbc)
-    implementation(libs.exposed.java.time)
-    implementation(libs.exposed.crypt)
-    implementation(libs.exposed.json)
-    implementation(libs.exposed.migration.jdbc)
-    implementation(libs.exposed.money)
-    implementation(libs.exposed.spring.boot.starter)
+    implementation(libs.exposed.jackson2)
+    implementation(libs.exposed.fastjson2)
+
+    // Exposed
+    api(libs.jetbrains.exposed.core)
+    api(libs.jetbrains.exposed.dao)
+    api(libs.jetbrains.exposed.jdbc)
+    implementation(libs.jetbrains.exposed.java.time)
+    implementation(libs.jetbrains.exposed.crypt)
+    implementation(libs.jetbrains.exposed.json)
+    implementation(libs.jetbrains.exposed.migration.jdbc)
+    implementation(libs.jetbrains.exposed.money)
+    implementation(libs.jetbrains.exposed.spring.boot.starter)
 
     implementation(libs.bluetape4k.jdbc)
     implementation(libs.bluetape4k.junit5)

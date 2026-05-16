@@ -31,13 +31,13 @@ dependencies {
     implementation(libs.bluetape4k.redis)
     implementation(libs.bluetape4k.testcontainers)
     // Exposed
-    implementation(libs.bluetape4k.exposed.core)
     implementation(libs.exposed.core)
-    implementation(libs.exposed.jdbc)
-    implementation(libs.exposed.dao)
-    implementation(libs.exposed.java.time)
+    implementation(libs.jetbrains.exposed.core)
+    implementation(libs.jetbrains.exposed.jdbc)
+    implementation(libs.jetbrains.exposed.dao)
+    implementation(libs.jetbrains.exposed.java.time)
     testImplementation(libs.bluetape4k.junit5)
-    implementation(libs.exposed.spring.boot.starter)
+    implementation(libs.jetbrains.exposed.spring.boot.starter)
 
     // Database Drivers
     implementation(libs.hikaricp)
