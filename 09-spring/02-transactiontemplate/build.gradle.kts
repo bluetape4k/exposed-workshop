@@ -10,17 +10,17 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(libs.exposed.bom))
+    implementation(platform(libs.jetbrains.exposed.bom))
 
     testImplementation(project(":exposed-shared-tests"))
 
     // Exposed
-    implementation(libs.exposed.core)
-    implementation(libs.exposed.dao)
-    implementation(libs.exposed.spring.boot.starter)
+    implementation(libs.jetbrains.exposed.core)
+    implementation(libs.jetbrains.exposed.dao)
+    implementation(libs.jetbrains.exposed.spring.boot.starter)
 
     // Bluetape4k
-    implementation(libs.bluetape4k.exposed.core)
+    implementation(libs.exposed.core)
     implementation(libs.bluetape4k.io)
     testImplementation(libs.bluetape4k.junit5)
 

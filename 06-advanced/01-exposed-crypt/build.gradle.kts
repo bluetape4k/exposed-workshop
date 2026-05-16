@@ -3,19 +3,19 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(libs.exposed.bom))
+    implementation(platform(libs.jetbrains.exposed.bom))
 
 
     testImplementation(project(":exposed-shared-tests"))
 
-    testImplementation(libs.exposed.core)
-    testImplementation(libs.exposed.dao)
-    testImplementation(libs.exposed.jdbc)
+    testImplementation(libs.jetbrains.exposed.core)
+    testImplementation(libs.jetbrains.exposed.dao)
+    testImplementation(libs.jetbrains.exposed.jdbc)
 
     // 암호화 관련 라이브러리
-    implementation(libs.exposed.crypt)
+    implementation(libs.jetbrains.exposed.crypt)
 
-    testImplementation(libs.bluetape4k.exposed.core)
+    testImplementation(libs.exposed.core)
     testImplementation(libs.bluetape4k.junit5)
 
     testImplementation(libs.bluetape4k.testcontainers)

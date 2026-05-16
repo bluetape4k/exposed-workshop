@@ -127,15 +127,15 @@ bluetape4k-grpc = { module = "io.github.bluetape4k:bluetape4k-grpc" , version.re
 bluetape4k-jackson2 = { module = "io.github.bluetape4k:bluetape4k-jackson2" , version.ref = "bluetape4k" }
 bluetape4k-jackson3 = { module = "io.github.bluetape4k:bluetape4k-jackson3" , version.ref = "bluetape4k" }
 
-# bluetape4k exposed
-bluetape4k-exposed-core = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-core" , version.ref = "bluetape4k" }
-bluetape4k-exposed-dao = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-dao" , version.ref = "bluetape4k" }
-bluetape4k-exposed-fastjson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-fastjson2" , version.ref = "bluetape4k" }
-bluetape4k-exposed-jackson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson2" , version.ref = "bluetape4k" }
-bluetape4k-exposed-jackson3 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson3" , version.ref = "bluetape4k" }
-bluetape4k-exposed-jdbc = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc" , version.ref = "bluetape4k" }
-bluetape4k-exposed-jdbc-redisson = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-redisson" , version.ref = "bluetape4k" }
-bluetape4k-exposed-tink = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-tink" , version.ref = "bluetape4k" }
+# exposed
+exposed-core = { module = "io.github.bluetape4k.exposed:exposed-core" , version.ref = "bluetape4k" }
+exposed-dao = { module = "io.github.bluetape4k.exposed:exposed-dao" , version.ref = "bluetape4k" }
+exposed-fastjson2 = { module = "io.github.bluetape4k.exposed:exposed-fastjson2" , version.ref = "bluetape4k" }
+exposed-jackson2 = { module = "io.github.bluetape4k.exposed:exposed-jackson2" , version.ref = "bluetape4k" }
+exposed-jackson3 = { module = "io.github.bluetape4k.exposed:exposed-jackson3" , version.ref = "bluetape4k" }
+exposed-jdbc = { module = "io.github.bluetape4k.exposed:exposed-jdbc" , version.ref = "bluetape4k" }
+exposed-jdbc-redisson = { module = "io.github.bluetape4k.exposed:exposed-jdbc-redisson" , version.ref = "bluetape4k" }
+exposed-tink = { module = "io.github.bluetape4k.exposed:exposed-tink" , version.ref = "bluetape4k" }
 
 # bluetape4k hibernate
 bluetape4k-hibernate-reactive = { module = "io.github.bluetape4k:bluetape4k-hibernate-reactive" , version.ref = "bluetape4k" }
@@ -216,18 +216,18 @@ reactor-test = { module = "io.projectreactor:reactor-test" }
 # Netty
 netty-bom = { module = "io.netty:netty-bom", version.ref = "netty" }
 
-# Exposed
-exposed-bom = { module = "org.jetbrains.exposed:exposed-bom", version.ref = "exposed" }
-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
-exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt", version.ref = "exposed" }
-exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
-exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
-exposed-json = { module = "org.jetbrains.exposed:exposed-json", version.ref = "exposed" }
-exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
-exposed-migration-jdbc = { module = "org.jetbrains.exposed:exposed-migration-jdbc", version.ref = "exposed" }
-exposed-money = { module = "org.jetbrains.exposed:exposed-money", version.ref = "exposed" }
-exposed-spring-boot-starter = { module = "org.jetbrains.exposed:exposed-spring-boot-starter", version.ref = "exposed" }
+# JetBrains Exposed
+jetbrains-exposed-bom = { module = "org.jetbrains.exposed:exposed-bom", version.ref = "exposed" }
+jetbrains-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+jetbrains-exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt", version.ref = "exposed" }
+jetbrains-exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+jetbrains-exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
+jetbrains-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+jetbrains-exposed-json = { module = "org.jetbrains.exposed:exposed-json", version.ref = "exposed" }
+jetbrains-exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
+jetbrains-exposed-migration-jdbc = { module = "org.jetbrains.exposed:exposed-migration-jdbc", version.ref = "exposed" }
+jetbrains-exposed-money = { module = "org.jetbrains.exposed:exposed-money", version.ref = "exposed" }
+jetbrains-exposed-spring-boot-starter = { module = "org.jetbrains.exposed:exposed-spring-boot-starter", version.ref = "exposed" }
 
 # Micrometer
 micrometer-bom = { module = "io.micrometer:micrometer-bom", version.ref = "micrometer" }

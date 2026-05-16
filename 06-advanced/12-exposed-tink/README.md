@@ -6,12 +6,12 @@ A module that uses the Google Tink library to transparently encrypt and decrypt 
 
 ## Overview
 
-Declaring a column with extension functions provided by `bluetape4k-exposed-tink` enables automatic encryption on INSERT and automatic decryption on SELECT. Built on Google Tink's standard AEAD interface, it also performs integrity verification via authentication tags.
+Declaring a column with extension functions provided by `exposed-tink` enables automatic encryption on INSERT and automatic decryption on SELECT. Built on Google Tink's standard AEAD interface, it also performs integrity verification via authentication tags.
 
 ## Learning Objectives
 
 - Understand the difference between AEAD and DAEAD in Google Tink.
-- Declare encrypted columns using `bluetape4k-exposed-tink` extension functions.
+- Declare encrypted columns using `exposed-tink` extension functions.
 - Use encrypted columns in both DSL and DAO styles.
 - Perform WHERE clause searches on DAEAD columns while data remains encrypted.
 
