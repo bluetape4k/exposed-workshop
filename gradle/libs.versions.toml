@@ -8,7 +8,7 @@ kotlin = "2.3.21"
 kotlinx-coroutines = "1.11.0"
 kotlinx-serialization = "1.11.0"
 kotlinx-atomicfu = "0.32.1"
-kotlinx-benchmark = "0.4.15"
+kotlinx-benchmark = "0.4.17"
 ktor = "3.4.3"
 
 spring-boot = "4.0.6"
