@@ -38,7 +38,7 @@ dependencies {
     implementation(libs.bluetape4k.jackson2)
     implementation(libs.bluetape4k.jdbc)
     testImplementation(libs.bluetape4k.junit5)
-    testImplementation(libs.bluetape4k.spring.boot4.core)
+    testImplementation(libs.bluetape4k.spring.boot.core)
 
     // Database Drivers
     implementation(libs.hikaricp)

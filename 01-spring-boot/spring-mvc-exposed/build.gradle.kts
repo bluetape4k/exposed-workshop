@@ -63,7 +63,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    testImplementation(libs.bluetape4k.spring.boot4.core)
+    testImplementation(libs.bluetape4k.spring.boot.core)
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
     testImplementation(libs.spring.boot.starter.webmvc.test)
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
