@@ -12,11 +12,28 @@ JSON, 오류 매핑, service 경계, H2 기반 Exposed JDBC repository만 다룹
 ## 학습 목표
 
 - Spring 인프라 없이 Ktor 애플리케이션을 조립합니다.
+- Ktor codebase를 application, route, service, repository, persistence, model
+  package 경계로 읽습니다.
 - route는 얇게 유지하고 validation은 service 계층으로 둡니다.
 - blocking Exposed JDBC 작업은 repository가 소유한 `Dispatchers.IO` 경계 안에 둡니다.
 - validation, not-found, malformed JSON, oversized body, fallback 오류를 Ktor
   `StatusPages`로 매핑합니다.
 - Ktor `testApplication`으로 route를 검증합니다.
+
+## Package Layout
+
+```text
+exposed.examples.ktor.architecture
+├── config       # Ktor plugin, JSON, HTTP error mapping
+├── model        # Request/response DTO, command, record, validation error
+├── persistence  # Hikari와 Exposed Database lifecycle
+├── repository   # Exposed JDBC repository boundary
+├── routes       # HTTP route와 request body limit 처리
+└── service      # Use case와 caller input validation
+```
+
+테스트도 같은 계층을 따릅니다. application wiring, route behavior, service
+validation/mapping, repository persistence/concurrency를 각각 검증합니다.
 
 ## 실행
 
