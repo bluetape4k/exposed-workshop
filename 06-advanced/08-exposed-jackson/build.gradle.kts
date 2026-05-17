@@ -4,7 +4,7 @@ configurations {
 
 dependencies {
     testImplementation(platform(libs.jetbrains.exposed.bom))
-    testImplementation(platform(libs.bluetape4k.bom))
+    testImplementation(platform(libs.bluetape4k.dependencies))
 
     testImplementation(project(":exposed-shared-tests"))
 

@@ -50,7 +50,7 @@ dependencies {
     implementation(libs.bluetape4k.jackson2)
     implementation(libs.bluetape4k.vertx)
     testImplementation(libs.bluetape4k.junit5)
-    testImplementation(libs.bluetape4k.spring.boot4.core)
+    testImplementation(libs.bluetape4k.spring.boot.core)
 
     api(libs.jakarta.annotation.api)
     api(libs.jakarta.persistence.api)
