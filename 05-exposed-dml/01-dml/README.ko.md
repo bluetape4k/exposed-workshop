@@ -184,7 +184,7 @@ erDiagram
 | 기본 DML | `Ex01_Select.kt`, `Ex02_Insert.kt`, `Ex03_Update.kt`, `Ex04_Upsert.kt`, `Ex05_Delete.kt`                                                                                                                                           |
 | 조회 고급  | `Ex06_Exists.kt`, `Ex07_DistinctOn.kt`, `Ex08_Count.kt`, `Ex09_GroupBy.kt`, `Ex10_OrderBy.kt`, `Ex11_Join.kt`                                                                                                                      |
 | 변경 고급  | `Ex12_InsertInto_Select.kt`, `Ex13_Replace.kt`, `Ex14_MergeBase.kt`, `Ex14_MergeTable.kt`, `Ex14_MergeSelect.kt`, `Ex15_Returning.kt`                                                                                              |
-| 성능/확장  | `Ex16_FetchBatchedResults.kt`, `Ex17_Union.kt`, `Ex20_AdjustQuery.kt`, `Ex21_Arithmetic.kt`, `Ex22_ColumnWithTransform.kt`, `Ex23_Conditions.kt`, `Ex30_Explain.kt`, `Ex40_LateralJoin.kt`, `Ex50_RecursiveCTE.kt`, `Ex99_Dual.kt` |
+| 성능/확장  | `Ex16_FetchBatchedResults.kt`, `Ex17_Union.kt`, `Ex20_AdjustQuery.kt`, `Ex21_Arithmetic.kt`, `Ex22_ColumnWithTransform.kt`, `Ex23_Conditions.kt`, `Ex30_Explain.kt`, `Ex40_LateralJoin.kt`, `Ex50_RecursiveCTE.kt`, `Ex51_CteQueryBuilder.kt`, `Ex99_Dual.kt` |
 
 ## DB별 기능 지원 현황
 
@@ -195,7 +195,7 @@ erDiagram
 | `MERGE`        | O  | O          | X        | X       |
 | `REPLACE`      | X  | X          | O        | O       |
 | `LATERAL JOIN` | X  | O          | O        | X       |
-| `CTE (WITH)`   | X  | O          | O        | O       |
+| `CTE (WITH)`   | O  | O          | O        | O       |
 | `UPSERT`       | O  | O          | O        | O       |
 
 ## 실행 방법
@@ -236,7 +236,9 @@ USE_FAST_DB=true ./gradlew :05-exposed-dml:01-dml:test
 재귀 CTE를 Raw SQL로 실행하는 방법을 학습합니다. `WITH RECURSIVE` 구문을 통해 계층형 데이터(트리 구조)를 조회합니다.
 
 - 예제: [`Ex50_RecursiveCTE.kt`](src/test/kotlin/exposed/examples/dml/Ex50_RecursiveCTE.kt)
-- 지원 DB: PostgreSQL, MySQL V8, MariaDB (H2 미지원)
+- Query Builder 예제: [`Ex51_CteQueryBuilder.kt`](src/test/kotlin/exposed/examples/dml/Ex51_CteQueryBuilder.kt)
+- Raw SQL 예제 지원 DB: PostgreSQL, MySQL V8, MariaDB.
+- Query Builder 예제 지원 DB: H2, PostgreSQL, MySQL V8.
 
 ### Window Function
 
