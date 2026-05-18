@@ -1,57 +1,7 @@
 version: 2
+# Gradle/Maven library version updates are centralized in bluetape4k-dependencies.
+# Leaf repositories keep Dependabot only for GitHub Actions updates.
 updates:
-  - package-ecosystem: "gradle"
-    directory: "/"
-    target-branch: "develop"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "06:00"
-      timezone: "Asia/Seoul"
-    open-pull-requests-limit: 8
-    groups:
-      kotlin:
-        patterns:
-          - "org.jetbrains.kotlin*"
-          - "org.jetbrains.kotlinx*"
-      spring:
-        patterns:
-          - "org.springframework*"
-          - "io.spring*"
-      testcontainers:
-        patterns:
-          - "org.testcontainers*"
-      jackson2:
-        patterns:
-          - "com.fasterxml.jackson*"
-      jackson3:
-        patterns:
-          - "tools.jackson*"
-      bluetape4k:
-        patterns:
-          - "io.github.bluetape4k*"
-    ignore:
-      # Compatibility-line aliases such as jackson2/jackson3 and spring-boot3/spring-boot4
-      # are manual major migrations. Dependabot may still propose patch/minor updates.
-      - dependency-name: "com.fasterxml.jackson*"
-        update-types:
-          - "version-update:semver-major"
-      - dependency-name: "tools.jackson*"
-        update-types:
-          - "version-update:semver-major"
-      - dependency-name: "org.springframework.boot"
-        update-types:
-          - "version-update:semver-major"
-      - dependency-name: "org.springframework.boot:*"
-        update-types:
-          - "version-update:semver-major"
-      # Redis client major baselines follow bluetape4k-projects after validation.
-      - dependency-name: "io.lettuce:lettuce-core"
-        update-types:
-          - "version-update:semver-major"
-      - dependency-name: "org.redisson:*"
-        update-types:
-          - "version-update:semver-major"
   - package-ecosystem: "github-actions"
     directory: "/"
     target-branch: "develop"
