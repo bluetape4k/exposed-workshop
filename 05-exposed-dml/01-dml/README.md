@@ -114,7 +114,7 @@ Source location: `src/test/kotlin/exposed/examples/dml`
 | Basic DML       | `Ex01_Select.kt`, `Ex02_Insert.kt`, `Ex03_Update.kt`, `Ex04_Upsert.kt`, `Ex05_Delete.kt`                                                                                                                                            |
 | Advanced SELECT | `Ex06_Exists.kt`, `Ex07_DistinctOn.kt`, `Ex08_Count.kt`, `Ex09_GroupBy.kt`, `Ex10_OrderBy.kt`, `Ex11_Join.kt`                                                                                                                       |
 | Advanced DML    | `Ex12_InsertInto_Select.kt`, `Ex13_Replace.kt`, `Ex14_MergeBase.kt`, `Ex14_MergeTable.kt`, `Ex14_MergeSelect.kt`, `Ex15_Returning.kt`                                                                                               |
-| Performance/Extension | `Ex16_FetchBatchedResults.kt`, `Ex17_Union.kt`, `Ex20_AdjustQuery.kt`, `Ex21_Arithmetic.kt`, `Ex22_ColumnWithTransform.kt`, `Ex23_Conditions.kt`, `Ex30_Explain.kt`, `Ex40_LateralJoin.kt`, `Ex50_RecursiveCTE.kt`, `Ex99_Dual.kt` |
+| Performance/Extension | `Ex16_FetchBatchedResults.kt`, `Ex17_Union.kt`, `Ex20_AdjustQuery.kt`, `Ex21_Arithmetic.kt`, `Ex22_ColumnWithTransform.kt`, `Ex23_Conditions.kt`, `Ex30_Explain.kt`, `Ex40_LateralJoin.kt`, `Ex50_RecursiveCTE.kt`, `Ex51_CteQueryBuilder.kt`, `Ex99_Dual.kt` |
 
 ## Feature Support by DB
 
@@ -125,7 +125,7 @@ Source location: `src/test/kotlin/exposed/examples/dml`
 | `MERGE`        | O  | O          | X        | X       |
 | `REPLACE`      | X  | X          | O        | O       |
 | `LATERAL JOIN` | X  | O          | O        | X       |
-| `CTE (WITH)`   | X  | O          | O        | O       |
+| `CTE (WITH)`   | O  | O          | O        | O       |
 | `UPSERT`       | O  | O          | O        | O       |
 
 ## Running Tests
@@ -166,7 +166,9 @@ USE_FAST_DB=true ./gradlew :05-exposed-dml:01-dml:test
 Learn how to run recursive CTEs as raw SQL. Use `WITH RECURSIVE` syntax to query hierarchical data (tree structures).
 
 - Example: [`Ex50_RecursiveCTE.kt`](src/test/kotlin/exposed/examples/dml/Ex50_RecursiveCTE.kt)
-- Supported DBs: PostgreSQL, MySQL V8, MariaDB (not H2)
+- Query Builder example: [`Ex51_CteQueryBuilder.kt`](src/test/kotlin/exposed/examples/dml/Ex51_CteQueryBuilder.kt)
+- Raw SQL example support: PostgreSQL, MySQL V8, MariaDB.
+- Query Builder example support: H2, PostgreSQL, MySQL V8.
 
 ### Window Function
 

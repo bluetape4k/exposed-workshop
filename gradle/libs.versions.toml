@@ -3,6 +3,7 @@
 
 [versions]
 bluetape4k = "1.8.0-SNAPSHOT"
+bluetape4k-exposed = "1.8.1-SNAPSHOT"
 
 kotlin = "2.3.21"
 kotlinx-coroutines = "1.11.0"
@@ -129,14 +130,14 @@ bluetape4k-jackson2 = { module = "io.github.bluetape4k:bluetape4k-jackson2" , ve
 bluetape4k-jackson3 = { module = "io.github.bluetape4k:bluetape4k-jackson3" , version.ref = "bluetape4k" }
 
 # exposed
-exposed-core = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-core" , version.ref = "bluetape4k" }
-exposed-dao = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-dao" , version.ref = "bluetape4k" }
-exposed-fastjson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-fastjson2" , version.ref = "bluetape4k" }
-exposed-jackson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson2" , version.ref = "bluetape4k" }
-exposed-jackson3 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson3" , version.ref = "bluetape4k" }
-exposed-jdbc = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc" , version.ref = "bluetape4k" }
-exposed-jdbc-redisson = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-redisson" , version.ref = "bluetape4k" }
-exposed-tink = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-tink" , version.ref = "bluetape4k" }
+exposed-core = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-core" , version.ref = "bluetape4k-exposed" }
+exposed-dao = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-dao" , version.ref = "bluetape4k-exposed" }
+exposed-fastjson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-fastjson2" , version.ref = "bluetape4k-exposed" }
+exposed-jackson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson2" , version.ref = "bluetape4k-exposed" }
+exposed-jackson3 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson3" , version.ref = "bluetape4k-exposed" }
+exposed-jdbc = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc" , version.ref = "bluetape4k-exposed" }
+exposed-jdbc-redisson = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-redisson" , version.ref = "bluetape4k-exposed" }
+exposed-tink = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-tink" , version.ref = "bluetape4k-exposed" }
 
 # bluetape4k hibernate
 bluetape4k-hibernate-reactive = { module = "io.github.bluetape4k:bluetape4k-hibernate-reactive" , version.ref = "bluetape4k" }
