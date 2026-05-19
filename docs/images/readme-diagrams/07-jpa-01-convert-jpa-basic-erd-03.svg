@@ -1,80 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1050" viewBox="0 0 1600 1050" role="img" aria-label="PersonSchema ERD ERD">
+<svg xmlns="http://www.w3.org/2000/svg" width="842" height="561" viewBox="0 0 842 561" role="img" aria-label="PersonSchema ERD">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
-    <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#1f2937" flood-opacity="0.10"/>
-  </filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
-    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#8a97a8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-  </marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth">
-    <path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#8a97a8" stroke-width="1.7"/>
-  </marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
   <style>
-    .canvas { fill: #f7f9fc; }
-    .frame { fill: #ffffff; stroke: #d8e0ea; stroke-width: 1.5; }
-    .title { font-family: "Architects Daughter", "Comic Mono", cursive; font-size: 54px; font-weight: 400; fill: #102033; }
-    .subtitle { font-family: "Comic Mono", "SFMono-Regular", Menlo, Consolas, monospace; font-size: 18px; fill: #536273; }
-    .label { font-family: "Architects Daughter", "Comic Mono", cursive; font-size: 30px; font-weight: 400; fill: #102033; }
-    .smallLabel { font-family: "Architects Daughter", "Comic Mono", cursive; font-size: 24px; font-weight: 400; fill: #102033; }
-    .mono { font-family: "Comic Mono", "SFMono-Regular", Menlo, Consolas, monospace; font-size: 15px; fill: #102033; }
-    .small { font-family: "Comic Mono", "SFMono-Regular", Menlo, Consolas, monospace; font-size: 13px; fill: #536273; }
-    .strong { font-family: "Comic Mono", "SFMono-Regular", Menlo, Consolas, monospace; font-size: 15px; font-weight: 700; fill: #102033; }
-    .card { stroke-width: 2.2; filter: url(#shadow); }
-    .line { stroke: #8a97a8; stroke-width: 2.1; fill: none; marker-end: url(#openArrow); }
-    .softLine { stroke: #8a97a8; stroke-width: 2.1; fill: none; }
-    .dashed { stroke: #8a97a8; stroke-width: 2.1; stroke-dasharray: 7 6; fill: none; marker-end: url(#openArrow); }
-    .inheritLine { stroke: #8a97a8; stroke-width: 2.2; fill: none; marker-end: url(#inherit); }
-    .implLine { stroke: #8a97a8; stroke-width: 2.2; stroke-dasharray: 8 7; fill: none; marker-end: url(#inherit); }
-    .compartment { stroke-width: 1.6; fill: none; }
-    .chip { stroke-width: 1.5; rx: 16; }
-    .chipText { font-family: "Comic Mono", "SFMono-Regular", Menlo, Consolas, monospace; font-size: 13px; font-weight: 700; fill: #102033; }
+    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
+    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
+    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
+    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
+    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
+    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
+    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
+    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
+    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1600" height="1050"/>
-<rect class="frame" x="46" y="34" width="1508" height="982" rx="32"/>
-<text class="title" x="86" y="98">PersonSchema ERD ERD</text>
-<text class="subtitle" x="90" y="132">Table compartments with FK direction and cardinality labels</text>
-<rect class="chip" x="1010" y="64" width="130" height="36" fill="#e8f3ff" stroke="#5b8def"/>
-<text class="chipText" x="1075" y="88" text-anchor="middle">entity</text>
-<rect class="chip" x="1158" y="64" width="130" height="36" fill="#eaf7ef" stroke="#58a978"/>
-<text class="chipText" x="1223" y="88" text-anchor="middle">detail</text>
-<rect class="chip" x="1306" y="64" width="130" height="36" fill="#fff3d9" stroke="#d6a441"/>
-<text class="chipText" x="1371" y="88" text-anchor="middle">bridge</text>
-<g transform="translate(594,196)">
-  <rect class="card" x="0" y="0" width="412" height="200" rx="4" fill="#e8f3ff" stroke="#5b8def"/>
-  <line class="compartment" x1="0" y1="78" x2="412" y2="78" stroke="#5b8def"/>
-  <line class="compartment" x1="0" y1="156" x2="412" y2="156" stroke="#5b8def"/>
-  <text class="small" x="206" y="28" text-anchor="middle">«table»</text>
-  <text class="label" x="206" y="62" text-anchor="middle">addresses</text>
-  <text class="mono" x="24" y="108">Item</text>
-<text class="mono" x="24" y="136">BIGSERIAL id PK</text>
-<text class="mono" x="24" y="164">VARCHAR_255 street &quot;NOT NULL&quot;</text>
-<text class="mono" x="24" y="192">VARCHAR_255 city &quot;NOT NULL&quot;</text>
-<text class="mono" x="24" y="220">VARCHAR_2 state &quot;NOT NULL&quot;</text>
-<text class="mono" x="24" y="248">VARCHAR_10 zip &quot;NULL&quot;</text>
+<rect class="canvas" width="842" height="561"/>
+<rect class="frame" x="32" y="28" width="778" height="505" rx="28"/>
+<text class="title" x="66" y="82">PersonSchema ERD</text>
+<text class="subtitle" x="70" y="118">ERD tables and relationships from the original Mermaid source</text>
+<path class="line" d="M622 320.5 C622 307 220 307 220 293.5"/>
+<g transform="translate(60,170)">
+  <rect class="card" x="0" y="0" width="320" height="247" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
+  <text class="label" x="160" y="52" text-anchor="middle">addresses</text>
+  <text class="mono" x="18" y="104">BIGSERIAL id PK</text>
+<text class="mono" x="18" y="131">VARCHAR_255 street NOT NULL</text>
+<text class="mono" x="18" y="158">VARCHAR_255 city NOT NULL</text>
+<text class="mono" x="18" y="185">VARCHAR_2 state NOT NULL</text>
+<text class="mono" x="18" y="212">VARCHAR_10 zip NULL</text>
 </g>
-<g transform="translate(1096,236)">
-  <rect class="card" x="0" y="0" width="364" height="226" rx="4" fill="#eaf7ef" stroke="#58a978"/>
-  <line class="compartment" x1="0" y1="78" x2="364" y2="78" stroke="#58a978"/>
-  <line class="compartment" x1="0" y1="156" x2="364" y2="156" stroke="#58a978"/>
-  <text class="small" x="182" y="28" text-anchor="middle">«table»</text>
-  <text class="label" x="182" y="62" text-anchor="middle">persons</text>
-  <text class="mono" x="24" y="108">Item</text>
-<text class="mono" x="24" y="136">BIGSERIAL id PK</text>
-<text class="mono" x="24" y="164">VARCHAR_50 first_name &quot;NOT NULL&quot;</text>
-<text class="mono" x="24" y="192">VARCHAR_50 last_name &quot;NOT NULL&quot;</text>
-<text class="mono" x="24" y="220">DATE birth_date &quot;NOT NULL&quot;</text>
-<text class="mono" x="24" y="248">BOOLEAN employed &quot;DEFAULT TRUE&quot;</text>
-</g>
-<path class="softLine" d="M1006 300 C1052 300 1064 312 1096 328"/>
-<text class="strong" x="1018" y="292">1</text><text class="strong" x="1070" y="318">1</text>
-<path class="dashed" d="M1096 354 C1054 344 1034 328 1006 324"/>
-<rect x="1018" y="348" width="80" height="30" rx="15" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="1032" y="368">FK</text>
-<g transform="translate(112,816)">
-  <rect class="card" x="0" y="0" width="620" height="118" rx="18" fill="#eef4ff" stroke="#5b8def"/>
-  <text class="smallLabel" x="28" y="46">Reading rule</text>
-  <text class="mono" x="30" y="82">Dashed FK arrows point from child/bridge table to parent PK.</text>
-  <text class="small" x="30" y="108">Solid relation labels show cardinality near each endpoint.</text>
+<g transform="translate(462,170)">
+  <rect class="card" x="0" y="0" width="320" height="301" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
+  <text class="label" x="160" y="52" text-anchor="middle">persons</text>
+  <text class="mono" x="18" y="104">BIGSERIAL id PK</text>
+<text class="mono" x="18" y="131">VARCHAR_50 first_name NOT NULL</text>
+<text class="mono" x="18" y="158">VARCHAR_50 last_name NOT NULL</text>
+<text class="mono" x="18" y="185">DATE birth_date NOT NULL</text>
+<text class="mono" x="18" y="212">BOOLEAN employed DEFAULT TRUE</text>
+<text class="mono" x="18" y="239">VARCHAR_255 occupation NULL</text>
+<text class="mono" x="18" y="266">BIGINT address_id FK</text>
 </g>
 </svg>
