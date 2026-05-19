@@ -38,42 +38,7 @@ Exposed provides two data access patterns. The **DSL (SQL DSL)** pattern express
 
 ## Domain Model (classDiagram)
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class CityTable {
-        +Column~Int~ id
-        +Column~String~ name
-    }
-    class UserTable {
-        +Column~Int~ id
-        +Column~String~ name
-        +Column~Int~ age
-        +Column~Int?~ cityId
-    }
-    class City {
-        +EntityID~Int~ id
-        +String name
-        +SizedIterable~User~ users
-    }
-    class User {
-        +EntityID~Int~ id
-        +String name
-        +Int age
-        +City? city
-    }
-
-    CityTable <|-- City : DAO maps to
-    UserTable <|-- User : DAO maps to
-    UserTable --> CityTable : cityId FK
-    User --> City : optionalReferencedOn
-    City --> User : optionalReferrersOn
-
-    style CityTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style UserTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style City fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style User fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Domain Model (classDiagram) diagram](../docs/images/readme-diagrams/03-exposed-basic-class-01.png)
 
 ## DSL-Style Schema Definition
 

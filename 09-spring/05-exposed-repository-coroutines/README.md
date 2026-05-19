@@ -19,78 +19,11 @@ It executes Exposed queries within suspend functions using `newSuspendedTransact
 
 ## Domain Model
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    MOVIES {
-        BIGSERIAL id PK
-        VARCHAR name
-        VARCHAR producerName
-        DATE releaseDate
-    }
-    ACTORS {
-        BIGSERIAL id PK
-        VARCHAR firstName
-        VARCHAR lastName
-        DATE birthday
-    }
-    ACTORS_IN_MOVIES {
-        BIGINT movieId FK
-        BIGINT actorId FK
-    }
-
-    MOVIES ||--o{ ACTORS_IN_MOVIES : "movieId"
-    ACTORS ||--o{ ACTORS_IN_MOVIES : "actorId"
-```
+![Domain Model diagram](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-erd-01.png)
 
 ## Architecture
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class JdbcRepository {
-        <<interface>>
-        +table: T
-        +toEntity(ResultRow) E
-    }
-    class MovieExposedRepository {
-        <<@Repository>>
-        +searchMovie(params) List~MovieRecord~
-        +create(movie) MovieRecord
-        +getAllMoviesWithActors() List~MovieWithActorRecord~
-        +getMovieWithActors(movieId) MovieWithActorRecord?
-        +getMovieActorsCount() List~MovieActorCountRecord~
-        +findMoviesWithActingProducers() List~MovieWithProducingActorRecord~
-    }
-    class ActorExposedRepository {
-        <<@Repository>>
-        +searchActors(params) List~ActorRecord~
-        +create(actor) ActorRecord
-    }
-    class MovieTransactionalService {
-        <<@Component>>
-        -movieRepository: MovieExposedRepository
-        +monoSave(movieRecord) Mono~MovieEntity~
-        +suspendedSave(movieRecord) MovieRecord
-    }
-    class MovieController {
-        <<suspend>>
-        +getMovies(params) List~MovieRecord~
-        +createMovie(record) MovieRecord
-    }
-
-    JdbcRepository <|-- MovieExposedRepository
-    JdbcRepository <|-- ActorExposedRepository
-    MovieTransactionalService --> MovieExposedRepository : delegates
-    MovieController --> MovieExposedRepository : calls
-    MovieController --> MovieTransactionalService : calls
-
-    style JdbcRepository fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style MovieExposedRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style ActorExposedRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style MovieTransactionalService fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style MovieController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-```
+![Architecture diagram](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-class-02.png)
 
 ## Key Concepts
 
@@ -152,25 +85,7 @@ class MovieTransactionalService(
 
 ## Synchronous vs Coroutine Repository Comparison
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant Client
-    participant Controller
-    participant Repository
-    participant STM as newSuspendedTransaction
-    participant DB
-
-    Note over Client,DB: Coroutine path (WebFlux)
-    Client->>Controller: HTTP GET (suspend)
-    Controller->>Repository: getAllMoviesWithActors()
-    Repository->>STM: newSuspendedTransaction { }
-    STM->>DB: SELECT ... INNER JOIN ...
-    DB-->>STM: ResultSet
-    STM-->>Repository: List~MovieWithActorRecord~
-    Repository-->>Controller: List
-    Controller-->>Client: JSON Response
-```
+![Synchronous vs Coroutine Repository Comparison diagram](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-sequence-03.png)
 
 ## Join Optimization Pattern
 

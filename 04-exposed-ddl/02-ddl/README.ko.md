@@ -23,103 +23,15 @@ Exposed에서 스키마 정의는 `object` 선언으로 이루어집니다. `Tab
 
 ## 아키텍처 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph TableDef["테이블 정의 (Kotlin object)"]
-        T1["Table / IntIdTable / UUIDTable"]
-        COL["컬럼 정의\n(varchar, integer, bool, ...)"]
-        CONS["제약조건\n(primaryKey, uniqueIndex, foreignKey)"]
-        IDX["인덱스\n(index, uniqueIndex, functional)"]
-    end
-
-    subgraph SchemaUtils["SchemaUtils / MigrationUtils"]
-        CR["SchemaUtils.create(tables)"]
-        CM["MigrationUtils.statementsRequiredForDatabaseMigration(tables)"]
-        DR["SchemaUtils.drop(tables)"]
-    end
-
-    subgraph DB["데이터베이스"]
-        PG["PostgreSQL"]
-        MY["MySQL V8"]
-        H2["H2"]
-    end
-
-    T1 --> COL --> CONS --> IDX
-    IDX --> CR & CM
-    CR & CM --> DB
-    DR --> DB
-
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class T1,COL,CONS,IDX purple
-    class CR,CM,DR green
-    class PG,MY,H2 orange
-```
+![Architecture diagram](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-architecture-01.png)
 
 ## 테이블 클래스 계층
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class Table {
-        +String tableName
-        +PrimaryKey? primaryKey
-        +columns List~Column~
-    }
-    class IdTable~T~ {
-        +Column~EntityID~T~~ id
-    }
-    class IntIdTable {
-        +Column~EntityID~Int~~ id
-    }
-    class LongIdTable {
-        +Column~EntityID~Long~~ id
-    }
-    class UUIDTable {
-        +Column~EntityID~UUID~~ id
-    }
-    class CompositeIdTable {
-        +List~Column~ compositeColumns
-    }
-
-    Table <|-- IdTable
-    IdTable <|-- IntIdTable
-    IdTable <|-- LongIdTable
-    IdTable <|-- UUIDTable
-    IdTable <|-- CompositeIdTable
-
-    style Table fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style IdTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style IntIdTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style LongIdTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style UUIDTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style CompositeIdTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-```
+![Table diagram](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-class-02.png)
 
 ## 복합 PK / FK 관계 ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    PARENT {
-        int id_a PK
-        int id_b PK
-    }
-    CHILD1 {
-        int id_a FK
-        int id_b FK
-    }
-    CHILD2 {
-        int id_a FK
-        int id_b FK
-    }
-
-    PARENT ||--o{ CHILD1 : "FK (CASCADE)"
-    PARENT ||--o{ CHILD2 : "FK (pair mapping)"
-```
+![PK / FK Relation ERD diagram](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-erd-03.png)
 
 ## 컬럼 타입 표
 

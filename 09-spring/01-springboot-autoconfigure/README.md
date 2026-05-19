@@ -20,41 +20,7 @@ to learn the pattern of connecting DataSource and transactions with a single `ap
 
 ## Architecture
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class SpringBootApplication {
-        +exclude: DataSourceTransactionManagerAutoConfiguration
-    }
-    class ExposedAutoConfiguration {
-        <<AutoConfiguration>>
-        +springTransactionManager() SpringTransactionManager
-        +databaseInitializer() DatabaseInitializer
-    }
-    class SpringTransactionManager {
-        +dataSource: DataSource
-        +databaseConfig: DatabaseConfig
-    }
-    class DatabaseInitializer {
-        +tables: List~Table~
-        +generateDdl: Boolean
-    }
-    class DatabaseConfig {
-        +maxEntitiesToStoreInCachePerEntity: Int
-        +useNestedTransactions: Boolean
-    }
-
-    SpringBootApplication --> ExposedAutoConfiguration : auto-configure
-    ExposedAutoConfiguration --> SpringTransactionManager : creates
-    ExposedAutoConfiguration --> DatabaseInitializer : creates (when generate-ddl=true)
-    SpringTransactionManager --> DatabaseConfig : uses
-
-    style SpringBootApplication fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style ExposedAutoConfiguration fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style SpringTransactionManager fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style DatabaseInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style DatabaseConfig fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-```
+![Architecture diagram](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-class-01.png)
 
 ## Key Concepts
 
@@ -98,21 +64,7 @@ The `DataSourceTransactionManager` registered by `DataSourceTransactionManagerAu
 
 ## Auto-Registered Bean Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant Boot as Spring Boot
-    participant AC as ExposedAutoConfiguration
-    participant STM as SpringTransactionManager
-    participant DI as DatabaseInitializer
-
-    Boot->>AC: Execute auto-configure
-    AC->>STM: Register SpringTransactionManager bean
-    Note over AC: Only when spring.exposed.generate-ddl=true
-    AC->>DI: Register DatabaseInitializer bean
-    DI->>DI: SchemaUtils.create(tables...)
-    Boot->>STM: Delegate @Transactional requests
-```
+![Auto-Registered Bean Flow diagram](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-sequence-02.png)
 
 ## Table Definition Example
 

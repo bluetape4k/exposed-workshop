@@ -24,60 +24,11 @@ Exposed DAO 패턴은 `IntIdTable`과 `IntEntity`/
 
 ## ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    cities {
-        SERIAL id PK
-        VARCHAR name
-    }
-    users {
-        SERIAL id PK
-        VARCHAR name
-        INT age
-        INT city_id FK
-    }
-    cities ||--o{ users : "city_id"
-```
+![ERD diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-dao-example-erd-01.png)
 
 ## 도메인 모델
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class CityTable {
-        +Column~Int~ id  [PK]
-        +Column~String~ name
-    }
-    class UserTable {
-        +Column~Int~ id  [PK]
-        +Column~String~ name
-        +Column~Int~ age
-        +Column~Int?~ cityId  [FK → CityTable]
-    }
-    class City {
-        +EntityID~Int~ id
-        +String name
-        +SizedIterable~User~ users
-    }
-    class User {
-        +EntityID~Int~ id
-        +String name
-        +Int age
-        +City? city
-    }
-
-    CityTable <|-- City: maps to
-    UserTable <|-- User: maps to
-    UserTable --> CityTable: cityId optReference
-    City --> User: optionalReferrersOn
-    User --> City: optionalReferencedOn
-
-    style CityTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style UserTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style City fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style User fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Domain diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-dao-example-class-02.png)
 
 ## 핵심 개념
 

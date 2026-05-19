@@ -37,26 +37,7 @@ A `TenantAwareDataSource` (extending `AbstractRoutingDataSource`) is provided so
 
 ### Per-Tenant Schema Isolation Architecture
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    Request[HTTP Request] --> TenantResolver[Tenant Resolver]
-    TenantResolver --> |tenant_id extracted| TenantContext[TenantContext\nThreadLocal / ScopedValue / ReactorContext]
-    TenantContext --> RoutingDS[RoutingDataSource]
-    RoutingDS --> |tenant_a| SchemaA[(Schema: korean\nMovies, Actors)]
-    RoutingDS --> |tenant_b| SchemaB[(Schema: english\nMovies, Actors)]
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class Request blue
-    class TenantResolver green
-    class TenantContext purple
-    class RoutingDS purple
-    class SchemaA,SchemaB orange
-```
+![Per-Tenant Schema Isolation Architecture diagram](../docs/images/readme-diagrams/10-multi-tenant-architecture-01.png)
 
 ---
 
@@ -72,69 +53,7 @@ flowchart TD
 
 ## Module Implementation Comparison
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class TenantFilter_MVC {
-        jakarta.servlet.Filter
-        ThreadLocal 바인딩
-    }
-    class TenantFilter_VT {
-        jakarta.servlet.Filter
-        ScopedValue 바인딩
-    }
-    class TenantFilter_WebFlux {
-        WebFilter (Reactor)
-        contextWrite()
-    }
-
-    class TenantContext_MVC {
-        ThreadLocal~Tenant~
-        withTenant() + finally clear()
-    }
-    class TenantContext_VT {
-        ScopedValue~Tenant~
-        ScopedValue.where().run()
-    }
-    class TenantId_WebFlux {
-        CoroutineContext.Element
-        ReactorContext 브릿지
-    }
-
-    class SchemaAspect_MVC {
-        TenantSchemaAspect
-        AOP @Before @Transactional
-        setSchema()
-    }
-    class SchemaAspect_VT {
-        TransactionSchemaAspect
-        AOP @Before @Transactional
-        createSchema() + setSchema()
-    }
-    class SuspendedTx_WebFlux {
-        newSuspendedTransactionWithTenant()
-        Dispatchers.IO + TenantId
-        setSchema()
-    }
-
-    TenantFilter_MVC --> TenantContext_MVC
-    TenantFilter_VT --> TenantContext_VT
-    TenantFilter_WebFlux --> TenantId_WebFlux
-
-    TenantContext_MVC --> SchemaAspect_MVC
-    TenantContext_VT --> SchemaAspect_VT
-    TenantId_WebFlux --> SuspendedTx_WebFlux
-
-    style TenantFilter_MVC fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style TenantFilter_VT fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style TenantFilter_WebFlux fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style TenantContext_MVC fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style TenantContext_VT fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style TenantId_WebFlux fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style SchemaAspect_MVC fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style SchemaAspect_VT fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style SuspendedTx_WebFlux fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-```
+![Module Implementation Comparison diagram](../docs/images/readme-diagrams/10-multi-tenant-class-02.png)
 
 ### Key Differences by Environment
 
@@ -153,25 +72,7 @@ classDiagram
 
 All modules follow the flow below. Only the context propagation mechanism differs by environment.
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant Client
-    participant Filter
-    participant Context
-    participant Controller
-    participant Repository
-    participant DB
-
-    Client->>Filter: GET /actors (X-TENANT-ID: {tenant})
-    Filter->>Context: Bind tenant (ThreadLocal / ScopedValue / ReactorContext)
-    Filter->>Controller: Forward request
-    Controller->>DB: Switch schema (setSchema({tenant}))
-    Controller->>Repository: Fetch data
-    Repository->>DB: SELECT * FROM {tenant}.actor
-    DB-->>Client: Tenant-isolated response
-    Note over Filter,Context: Clean up context after request completes
-```
+![Common Request Flow diagram](../docs/images/readme-diagrams/10-multi-tenant-sequence-03.png)
 
 ---
 

@@ -26,42 +26,7 @@ Spring Boot + Exposed로 REST API를 구현하는 챕터입니다. 동기 블로
 
 ### 모듈 비교
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class SpringMvcModule {
-        <<spring-mvc-exposed>>
-        Tomcat + Virtual Threads
-        @Transactional
-        HttpServletRequest
-        ActorRepository (동기)
-        MovieRepository (동기)
-    }
-
-    class SpringWebFluxModule {
-        <<spring-webflux-exposed>>
-        Netty + Coroutines
-        newSuspendedTransaction
-        ServerHttpRequest
-        ActorRepository (suspend)
-        MovieRepository (suspend)
-    }
-
-    class SharedDomain {
-        <<공통 도메인>>
-        MovieTable / MovieEntity
-        ActorTable / ActorEntity
-        ActorInMovieTable
-        MovieRecord / ActorRecord
-    }
-
-    SpringMvcModule --> SharedDomain : 동일 스키마 사용
-    SpringWebFluxModule --> SharedDomain : 동일 스키마 사용
-
-    style SpringMvcModule fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style SpringWebFluxModule fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style SharedDomain fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Module diagram](../docs/images/readme-diagrams/01-spring-boot-class-01.png)
 
 ---
 
@@ -71,28 +36,7 @@ classDiagram
 
 ### 데이터베이스 스키마
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    MOVIES {
-        bigint id PK
-        varchar name
-        varchar producer_name
-        date release_date
-    }
-    ACTORS {
-        bigint id PK
-        varchar first_name
-        varchar last_name
-        date birthday
-    }
-    ACTORS_IN_MOVIES {
-        bigint movie_id FK
-        bigint actor_id FK
-    }
-    MOVIES ||--o{ ACTORS_IN_MOVIES : "출연"
-    ACTORS ||--o{ ACTORS_IN_MOVIES : "출연"
-```
+![Database diagram](../docs/images/readme-diagrams/01-spring-boot-erd-02.png)
 
 ### REST API 구조
 

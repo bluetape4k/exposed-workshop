@@ -17,48 +17,7 @@ A declarative transaction integration module centered on `@Transactional`. It re
 
 ## Architecture
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class DataSourceConfig {
-        +dataSource() DataSource
-        +annotationDrivenTransactionManager() TransactionManager
-        +orderService() OrderService
-    }
-    class SpringTransactionManager {
-        <<exposed-spring>>
-        +dataSource: DataSource
-        +databaseConfig: DatabaseConfig
-    }
-    class OrderService {
-        <<@Service @Transactional>>
-        +init()
-        +createCustomer(name, mobile) CustomerEntity
-        +createOrder(customer, productName) OrderEntity
-        +doBoth(customerName, productName) OrderEntity
-        +findOrderByProductName(productName) OrderEntity?
-        +cleanUp()
-    }
-    class CustomerEntity {
-        +name: String
-        +mobile: String?
-    }
-    class OrderEntity {
-        +customer: CustomerEntity
-        +productName: String
-    }
-
-    DataSourceConfig --> SpringTransactionManager : registers as default TM
-    OrderService --> CustomerEntity : creates
-    OrderService --> OrderEntity : creates
-    OrderEntity --> CustomerEntity : many-to-one
-
-    style DataSourceConfig fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style SpringTransactionManager fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style OrderService fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style CustomerEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style OrderEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Architecture diagram](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-class-01.png)
 
 ## Key Concepts
 
@@ -156,27 +115,7 @@ object OrderSchema {
 
 ## Transaction Propagation Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant Test
-    participant OrderService
-    participant STM as SpringTransactionManager
-    participant DB
-
-    Test->>OrderService: doBoth(customerName, productName)
-    Note over OrderService: @Transactional(REQUIRED) → BEGIN
-    STM->>DB: BEGIN
-    OrderService->>DB: INSERT INTO customers(...)
-    OrderService->>DB: INSERT INTO orders(...)
-    alt Successful completion
-        STM->>DB: COMMIT
-    else RuntimeException thrown
-        STM->>DB: ROLLBACK
-        Note over DB: Both customers and orders rolled back
-    end
-    OrderService-->>Test: OrderEntity
-```
+![Transaction Propagation Flow diagram](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-sequence-02.png)
 
 ## How to Run
 

@@ -20,67 +20,15 @@ Exposed DSL expresses SQL queries as Kotlin type-safe function chains. You defin
 
 ## ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    cities {
-        INT id PK
-        VARCHAR name
-    }
-    users {
-        VARCHAR id PK
-        VARCHAR name
-        INT city_id FK
-    }
-    cities ||--o{ users : "city_id"
-```
+![ERD diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-erd-01.png)
 
 ## DSL Query Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant App as Application
-    participant TX as transaction { }
-    participant DSL as Exposed DSL
-    participant DB as Database
-
-    App ->> TX: transaction { }
-    TX ->> DSL: CityTable.insert { it[name] = "Seoul" }
-    DSL ->> DB: INSERT INTO cities (name) VALUES (?)
-    DB -->> DSL: generated id
-    DSL -->> TX: ResultRow
-
-    TX ->> DSL: UserTable.insert { it[id] = "debop"; it[cityId] = seoulId }
-    DSL ->> DB: INSERT INTO users (id, name, city_id) VALUES (?, ?, ?)
-    DB -->> DSL: OK
-
-    TX ->> DSL: CityTable.innerJoin(UserTable).selectAll()
-    DSL ->> DB: SELECT * FROM cities INNER JOIN users ON ...
-    DB -->> DSL: ResultSet
-    DSL -->> TX: List~ResultRow~
-    TX -->> App: Return result
-```
+![DSL Query Flow diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-sequence-02.png)
 
 ## Domain Model
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class CityTable {
-        +Column~Int~ id  [PK, autoIncrement]
-        +Column~String~ name
-    }
-    class UserTable {
-        +Column~String~ id  [PK]
-        +Column~String~ name
-        +Column~Int?~ cityId  [FK → CityTable.id]
-    }
-    CityTable "1" --> "0..*" UserTable: cityId
-
-    style CityTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style UserTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-```
+![Domain Model diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-class-03.png)
 
 ### Table Definition
 

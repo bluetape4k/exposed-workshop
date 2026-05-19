@@ -42,41 +42,7 @@ Kotlin Exposed is a Kotlin-specific SQL framework developed by JetBrains. It lev
 
 ### Exposed API Structure
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph API["Exposed API"]
-        DSL["SQL DSL\nTable.selectAll()\nTable.insert {}"]
-        DAO["DAO / Entity\nEntity.findById()\nEntity.new {}"]
-    end
-
-    subgraph TX["Transactions"]
-        JDBC["transaction { }"]
-        SUSPEND["newSuspendedTransaction { }"]
-    end
-
-    subgraph DB["Databases"]
-        H2["H2"]
-        PG["PostgreSQL"]
-        MY["MySQL"]
-        MA["MariaDB"]
-    end
-
-    DSL --> JDBC
-    DSL --> SUSPEND
-    DAO --> JDBC
-    DAO --> SUSPEND
-    JDBC --> H2 & PG & MY & MA
-    SUSPEND --> H2 & PG & MY & MA
-
-    classDef api fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef tx fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef db fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class DSL,DAO api
-    class JDBC,SUSPEND tx
-    class H2,PG,MY,MA db
-```
+![Exposed API Structure diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-01.png)
 
 ## Tech Stack
 
@@ -107,59 +73,7 @@ The recommended learning order for this workshop:
 
 ### Learning Path
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    START(["Start"])
-
-    subgraph Basics["Basics"]
-        S01["01 Spring Boot\n+ Exposed"]
-        S02["02 JPA Alternatives\nComparison"]
-        S03["03 Exposed Basics\nDSL & DAO"]
-    end
-
-    subgraph Core["Core"]
-        S04["04 DDL\nSchema Definition"]
-        S05["05 DML\nData Manipulation"]
-        S06["06 Advanced\nEncryption / JSON / Custom"]
-    end
-
-    subgraph Migration["Migration"]
-        S07["07 JPA → Exposed\nConversion Patterns"]
-    end
-
-    subgraph Async["Async & Integration"]
-        S08["08 Coroutines\n& Virtual Threads"]
-        S09["09 Spring Integration\nTx / Cache / Repo"]
-    end
-
-    subgraph Production["Production-Ready"]
-        S10["10 Multi-Tenancy\nSchema Isolation"]
-        S11["11 High Performance\nCache / Routing / Bench"]
-    end
-
-    START --> S01 --> S02 --> S03
-    S03 --> S04 --> S05 --> S06
-    S06 --> S07
-    S06 --> S08
-    S07 --> S08
-    S08 --> S09
-    S09 --> S10 --> S11
-
-    classDef startEnd fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A,font-weight:bold
-    classDef basics fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef core fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef migration fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    classDef async fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef production fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-
-    class START startEnd
-    class S01,S02,S03 basics
-    class S04,S05,S06 core
-    class S07 migration
-    class S08,S09 async
-    class S10,S11 production
-```
+![Learning Path diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-02.png)
 
 ## Detailed Documentation
 
@@ -169,109 +83,7 @@ Full explanations for all examples are available at [Kotlin Exposed Book](https:
 
 ## Module Structure
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TB
-    subgraph Shared["00 Shared Infrastructure"]
-        EST["exposed-shared-tests\nTest Utilities"]
-    end
-
-    subgraph SpringBoot["01 Spring Boot"]
-        MVC["Spring MVC\n+ Virtual Threads"]
-        WF["Spring WebFlux\n+ Coroutines"]
-    end
-
-    subgraph Alt["02 JPA Alternatives"]
-        HIB["Hibernate\nReactive"]
-        R2["R2DBC"]
-        VX["Vert.x\nSQL Client"]
-    end
-
-    subgraph Basic["03 Exposed Basics"]
-        DSLEX["SQL DSL"]
-        DAOEX["DAO Entity"]
-    end
-
-    subgraph DDL["04 DDL"]
-        CONN["Connection"]
-        SCH["Schema DDL"]
-    end
-
-    subgraph DML["05 DML"]
-        CRUD["DML Basics"]
-        TYPE["Column Types"]
-        FUNC["SQL Functions"]
-        TXN["Transactions"]
-        ENT["Entity API"]
-    end
-
-    subgraph Adv["06 Advanced"]
-        CRYPT["Encryption"]
-        JSON["JSON"]
-        CUSTOM["Custom Columns\n& Entities"]
-        DT["Date / Time"]
-    end
-
-    subgraph JPA["07 JPA Migration"]
-        JPAB["JPA Basic"]
-        JPAA["JPA Advanced"]
-    end
-
-    subgraph Async["08 Async"]
-        CORO["Coroutines"]
-        VT["Virtual Threads"]
-    end
-
-    subgraph Spring["09 Spring Integration"]
-        AUTO["AutoConfig"]
-        TXMGR["Tx Management"]
-        REPO["Repository"]
-        CACHE["Cache"]
-    end
-
-    subgraph MT["10 Multi-Tenancy"]
-        MTW["Web"]
-        MTVT["Web + VT"]
-        MTWF["WebFlux"]
-    end
-
-    subgraph Perf["11 High Performance"]
-        CS["Cache Strategies"]
-        RDS["Routing DS"]
-        BENCH["Benchmark"]
-    end
-
-    EST -.-> SpringBoot & Basic & DDL & DML & Adv & JPA & Async & Spring & MT & Perf
-    Basic --> DDL --> DML --> Adv
-    Adv --> JPA & Async
-    Async --> Spring --> MT --> Perf
-
-    classDef shared fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-    classDef spring fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef alt fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    classDef basic fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef ddl fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef dml fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef adv fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef jpa fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    classDef async fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-    classDef springInt fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef mt fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef perf fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-
-    class EST shared
-    class MVC,WF spring
-    class HIB,R2,VX alt
-    class DSLEX,DAOEX basic
-    class CONN,SCH ddl
-    class CRUD,TYPE,FUNC,TXN,ENT dml
-    class CRYPT,JSON,CUSTOM,DT adv
-    class JPAB,JPAA jpa
-    class CORO,VT async
-    class AUTO,TXMGR,REPO,CACHE springInt
-    class MTW,MTVT,MTWF mt
-    class CS,RDS,BENCH perf
-```
+![Module Structure diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-03.png)
 
 ## Module List
 

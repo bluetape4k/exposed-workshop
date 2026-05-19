@@ -32,105 +32,15 @@
 
 ## 전환 전략 개요
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    A[JPA 코드베이스] --> B{전환 범위 분석}
-    B --> C[기본 CRUD\n01-convert-jpa-basic]
-    B --> D[복잡 관계/상속\n02-convert-jpa-advanced]
-    C --> E[동등성 테스트\n작성]
-    D --> E
-    E --> F[점진적 전환\n모듈 단위]
-    F --> G[회귀 검증\nCI 통합]
-    G --> H[JPA 의존성 제거]
-
-    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-
-    class A red
-    class B orange
-    class C,D blue
-    class E,F green
-    class G,H purple
-```
+![07-jpa diagram diagram](../docs/images/readme-diagrams/07-jpa-architecture-01.png)
 
 ## JPA vs Exposed 개념 비교 다이어그램
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    direction LR
-    class JPA_Entity {
-        <<JPA 방식>>
-        +annotation Entity
-        +annotation Table
-        +annotation Id GeneratedValue
-        +annotation Column
-        +annotation OneToMany ManyToOne
-        +Spring AOP Transactional
-    }
-    class Exposed_DSL {
-        <<Exposed DSL 방식>>
-        +Table object extends LongIdTable
-        +Column varchar text integer
-        +transaction block
-        +selectAll where filter
-        +batchInsert list
-    }
-    class Exposed_DAO {
-        <<Exposed DAO 방식>>
-        +Entity extends LongEntity
-        +EntityClass companion object
-        +delegate by Table column
-        +Entity new create
-        +Entity findById
-    }
-
-    JPA_Entity ..> Exposed_DSL : 전환 SQL 제어
-    JPA_Entity ..> Exposed_DAO : 전환 객체 중심
-
-    style JPA_Entity fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    style Exposed_DSL fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style Exposed_DAO fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-```
+![JPA vs Exposed diagram](../docs/images/readme-diagrams/07-jpa-class-02.png)
 
 ## 전환 접근법 비교
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    A[기존 JPA 코드베이스] --> B{엔티티 유형 분석}
-    B --> C[단순 CRUD\n어노테이션 매핑]
-    B --> D[복잡 관계\nOneToMany / ManyToMany]
-    B --> E[상속 전략\nSINGLE_TABLE / JOINED / TABLE_PER_CLASS]
-    B --> F[고급 기능\n감사 필드 / 낙관적 잠금 / 트리]
-
-    C --> G[01-convert-jpa-basic\nDSL / DAO 기본 전환]
-    D --> G
-    E --> H[02-convert-jpa-advanced\n고급 패턴 전환]
-    F --> H
-
-    G --> I[동등성 테스트 작성\n전환 전후 결과 비교]
-    H --> I
-    I --> J[점진적 JPA 의존성 제거]
-    J --> K[CI 회귀 검증]
-
-    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-
-    class A red
-    class B orange
-    class C,D,E,F blue
-    class G,H green
-    class I purple
-    class J,K green
-```
+![07-jpa diagram diagram](../docs/images/readme-diagrams/07-jpa-architecture-03.png)
 
 ## 포함 모듈
 

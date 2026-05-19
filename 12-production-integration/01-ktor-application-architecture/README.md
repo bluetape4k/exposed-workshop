@@ -8,15 +8,7 @@ repository backed by H2.
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    Client[HTTP client] --> Routes[Ktor routes]
-    Routes --> Service[CustomerService]
-    Service --> Repository[CustomerRepository]
-    Repository --> IO[Dispatchers.IO transaction boundary]
-    IO --> Exposed[Exposed JDBC]
-    Exposed --> H2[(H2)]
-```
+![Architecture diagram](../../docs/images/readme-diagrams/12-production-integration-01-ktor-application-architecture-architecture-01.png)
 
 ## Learning Goals
 

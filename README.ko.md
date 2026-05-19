@@ -41,41 +41,7 @@ Kotlin Exposed는 JetBrains에서 개발한 Kotlin 언어 전용 SQL 프레임�
 
 ### Exposed API 구조
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph API["Exposed API"]
-        DSL["SQL DSL\nTable.selectAll()\nTable.insert {}"]
-        DAO["DAO / Entity\nEntity.findById()\nEntity.new {}"]
-    end
-
-    subgraph TX["트랜잭션"]
-        JDBC["transaction { }"]
-        SUSPEND["newSuspendedTransaction { }"]
-    end
-
-    subgraph DB["데이터베이스"]
-        H2["H2"]
-        PG["PostgreSQL"]
-        MY["MySQL"]
-        MA["MariaDB"]
-    end
-
-    DSL --> JDBC
-    DSL --> SUSPEND
-    DAO --> JDBC
-    DAO --> SUSPEND
-    JDBC --> H2 & PG & MY & MA
-    SUSPEND --> H2 & PG & MY & MA
-
-    classDef api fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef tx fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef db fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class DSL,DAO api
-    class JDBC,SUSPEND tx
-    class H2,PG,MY,MA db
-```
+![Exposed API Structure diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-01.png)
 
 ## 기술 스택
 
@@ -106,59 +72,7 @@ flowchart LR
 
 ### 학습 경로
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    START(["시작"])
-
-    subgraph Basics["기초"]
-        S01["01 Spring Boot\n+ Exposed"]
-        S02["02 JPA 대안\n기술 비교"]
-        S03["03 Exposed 기본\nDSL & DAO"]
-    end
-
-    subgraph Core["핵심"]
-        S04["04 DDL\n스키마 정의"]
-        S05["05 DML\n데이터 조작"]
-        S06["06 고급 기능\n암호화·JSON·커스텀"]
-    end
-
-    subgraph Migration["마이그레이션"]
-        S07["07 JPA → Exposed\n전환 패턴"]
-    end
-
-    subgraph Async["비동기 & 통합"]
-        S08["08 Coroutines\n& Virtual Threads"]
-        S09["09 Spring 통합\n트랜잭션·캐시·레포"]
-    end
-
-    subgraph Production["운영 수준"]
-        S10["10 멀티테넌시\n스키마 분리"]
-        S11["11 고성능\n캐시·라우팅·벤치마크"]
-    end
-
-    START --> S01 --> S02 --> S03
-    S03 --> S04 --> S05 --> S06
-    S06 --> S07
-    S06 --> S08
-    S07 --> S08
-    S08 --> S09
-    S09 --> S10 --> S11
-
-    classDef startEnd fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A,font-weight:bold
-    classDef basics fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef core fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef migration fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    classDef async fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef production fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-
-    class START startEnd
-    class S01,S02,S03 basics
-    class S04,S05,S06 core
-    class S07 migration
-    class S08,S09 async
-    class S10,S11 production
-```
+![. diagram diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-02.png)
 
 ## 상세 문서
 
@@ -168,109 +82,7 @@ flowchart TD
 
 ## 모듈 구조
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TB
-    subgraph Shared["00 공유 인프라"]
-        EST["exposed-shared-tests\n테스트 유틸리티"]
-    end
-
-    subgraph SpringBoot["01 Spring Boot"]
-        MVC["Spring MVC\n+ Virtual Threads"]
-        WF["Spring WebFlux\n+ Coroutines"]
-    end
-
-    subgraph Alt["02 JPA 대안"]
-        HIB["Hibernate\nReactive"]
-        R2["R2DBC"]
-        VX["Vert.x\nSQL Client"]
-    end
-
-    subgraph Basic["03 Exposed 기본"]
-        DSLEX["SQL DSL"]
-        DAOEX["DAO Entity"]
-    end
-
-    subgraph DDL["04 DDL"]
-        CONN["Connection"]
-        SCH["Schema DDL"]
-    end
-
-    subgraph DML["05 DML"]
-        CRUD["DML 기본"]
-        TYPE["컬럼 타입"]
-        FUNC["SQL 함수"]
-        TXN["트랜잭션"]
-        ENT["Entity API"]
-    end
-
-    subgraph Adv["06 고급"]
-        CRYPT["암호화"]
-        JSON["JSON"]
-        CUSTOM["커스텀 컬럼·엔티티"]
-        DT["날짜/시간"]
-    end
-
-    subgraph JPA["07 JPA 마이그레이션"]
-        JPAB["JPA 기본"]
-        JPAA["JPA 고급"]
-    end
-
-    subgraph Async["08 비동기"]
-        CORO["Coroutines"]
-        VT["Virtual Threads"]
-    end
-
-    subgraph Spring["09 Spring 통합"]
-        AUTO["AutoConfig"]
-        TXMGR["트랜잭션 관리"]
-        REPO["Repository"]
-        CACHE["캐시"]
-    end
-
-    subgraph MT["10 멀티테넌시"]
-        MTW["Web"]
-        MTVT["Web + VT"]
-        MTWF["WebFlux"]
-    end
-
-    subgraph Perf["11 고성능"]
-        CS["캐시 전략"]
-        RDS["라우팅 DS"]
-        BENCH["벤치마크"]
-    end
-
-    EST -.-> SpringBoot & Basic & DDL & DML & Adv & JPA & Async & Spring & MT & Perf
-    Basic --> DDL --> DML --> Adv
-    Adv --> JPA & Async
-    Async --> Spring --> MT --> Perf
-
-    classDef shared fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-    classDef spring fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef alt fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    classDef basic fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef ddl fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef dml fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef adv fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef jpa fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    classDef async fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-    classDef springInt fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef mt fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef perf fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-
-    class EST shared
-    class MVC,WF spring
-    class HIB,R2,VX alt
-    class DSLEX,DAOEX basic
-    class CONN,SCH ddl
-    class CRUD,TYPE,FUNC,TXN,ENT dml
-    class CRYPT,JSON,CUSTOM,DT adv
-    class JPAB,JPAA jpa
-    class CORO,VT async
-    class AUTO,TXMGR,REPO,CACHE springInt
-    class MTW,MTVT,MTWF mt
-    class CS,RDS,BENCH perf
-```
+![Module Structure diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-03.png)
 
 ## 모듈 목록
 

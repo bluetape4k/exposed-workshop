@@ -16,46 +16,7 @@ Jackson 3 기반 JSON 컬럼 연동 모듈입니다. Jackson 2에서 3으로 이
 
 ## Jackson3 처리 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph KotlinObj["Kotlin 객체"]
-        DH["DataHolder\n(user, logins, active, team)"]
-        UG["UserGroup\n(users: List~User~)"]
-    end
-
-    subgraph Jackson3["Jackson 3 ObjectMapper"]
-        SER["ObjectMapper.writeValueAsString()\n(Jackson 3 API)"]
-        DESER["ObjectMapper.readValue()\n(Jackson 3 API)"]
-    end
-
-    subgraph DBCol["DB 컬럼"]
-        JCOL["JSON column\n(텍스트 저장)"]
-        JBCOL["JSONB column\n(PostgreSQL)"]
-    end
-
-    DH -->|INSERT/UPDATE| SER --> JCOL
-    DH -->|INSERT/UPDATE| SER --> JBCOL
-    JCOL -->|SELECT| DESER --> DH
-    JBCOL -->|SELECT| DESER --> DH
-    UG -->|INSERT/UPDATE| SER --> JCOL
-
-    subgraph Migration["Jackson 2 → 3 변경점"]
-        PKG["패키지: com.fasterxml → tools.jackson"]
-        MOD["모듈 시스템 변경"]
-        COMPAT["하위 호환성 주의"]
-    end
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-
-    class DH,UG blue
-    class SER,DESER green
-    class JCOL,JBCOL orange
-    class PKG,MOD,COMPAT yellow
-```
+![Jackson3 Processing diagram](../../docs/images/readme-diagrams/06-advanced-11-exposed-jackson3-architecture-01.png)
 
 ## 핵심 개념
 

@@ -17,40 +17,7 @@ A module for writing analytical queries by combining SQL functions in the Expose
 
 ## SQL Function Classification Diagram
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    F["Exposed SQL Functions"] --> STR["String Functions\ntrim / lowerCase / upperCase\nsubstring / concat / like / ilike"]
-    F --> MATH["Math Functions\nround / abs / floor / ceiling\nsqrt / power"]
-    F --> AGG["Aggregate Functions\ncount / sum / avg / min / max\ngroupBy + having"]
-    F --> STAT["Statistical Functions\nstdDevPop / stdDevSamp\nvarPop / varSamp"]
-    F --> TRIG["Trigonometric Functions\nsin / cos / tan\natan / atan2"]
-    F --> WIN["Window Functions\nrowNumber / rank / denseRank\nlead / lag / firstValue / lastValue"]
-    F --> COND["Conditional Functions\ncase / coalesce / nullIf"]
-    F --> BIT["Bitwise Functions\nbitwiseAnd / bitwiseOr / bitwiseXor"]
-
-    WIN --> OVER["over()\n.partitionBy(col)\n.orderBy(col, SortOrder)"]
-
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-
-    class F purple
-    class STR blue
-    class MATH green
-    class AGG orange
-    class STAT pink
-    class TRIG teal
-    class WIN yellow
-    class COND red
-    class BIT teal
-    class OVER yellow
-```
+![SQL Function Classification Diagram diagram](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-architecture-01.png)
 
 ## Key Concepts
 
@@ -113,28 +80,7 @@ Sales.select(Sales.region, Sales.amount, rowNum, rankVal)
 
 ## Window Function Structure
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    A["Window Function\n(rowNumber / rank / lead / lag)"] --> B["over()"]
-    B --> C["partitionBy(column)"]
-    B --> D["orderBy(column, SortOrder)"]
-    C --> E["PARTITION BY clause"]
-    D --> F["ORDER BY clause"]
-    E --> G["SQL: OVER(PARTITION BY ... ORDER BY ...)"]
-    F --> G
-
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class A purple
-    class B blue
-    class C,D green
-    class E,F green
-    class G orange
-```
+![Window Function Structure diagram](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-architecture-02.png)
 
 ## Example Map
 
