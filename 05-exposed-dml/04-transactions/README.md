@@ -94,63 +94,11 @@ transaction(db) {
 
 ## Nested Transaction Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    A["transaction (outer)"] --> B["INSERT city1"]
-    B --> C{"useNestedTransactions?"}
-    C -->|true| D["transaction (nested 1)\nSAVEPOINT sp1"]
-    C -->|false| E["Reuse same transaction"]
-    D --> F["INSERT city2"]
-    F --> G{Exception/rollback?}
-    G -->|rollback| H["ROLLBACK TO sp1\ncity2 cancelled, city1 retained"]
-    G -->|normal| I["RELEASE sp1\ncity2 commit scheduled"]
-    H --> J["Outer transaction COMMIT\ncity1 only saved"]
-    I --> J
-    E --> K["Same scope as outer transaction"]
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-
-    class A blue
-    class B green
-    class C purple
-    class D,F teal
-    class E orange
-    class G purple
-    class H red
-    class I green
-    class J,K blue
-```
+![Nested Transaction Flow 1](../../docs/images/readme-diagrams/05-exposed-dml-04-transactions-diagram-01.svg)
 
 ## Coroutine Transaction Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant C as Caller (Coroutine)
-    participant T as newSuspendedTransaction
-    participant DB as Database
-
-    C ->> T: newSuspendedTransaction(Dispatchers.IO)
-    T ->> DB: BEGIN
-    T ->> DB: Execute SQL (INSERT/SELECT...)
-    alt Normal completion
-        T ->> DB: COMMIT
-        T -->> C: Return result
-    else Exception
-        T ->> DB: ROLLBACK
-        T -->> C: Propagate exception
-    end
-
-    C ->> T: suspendedTransactionAsync { ... }
-    T -->> C: Return Deferred<T> immediately
-    C ->> C: Receive result via await()
-```
+![Coroutine Transaction Flow 2](../../docs/images/readme-diagrams/05-exposed-dml-04-transactions-diagram-02.svg)
 
 ## Example Map
 

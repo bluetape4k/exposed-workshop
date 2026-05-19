@@ -7,15 +7,7 @@ JSON, 오류 매핑, service 경계, H2 기반 Exposed JDBC repository만 다룹
 
 ## 아키텍처
 
-```mermaid
-flowchart LR
-    Client[HTTP client] --> Routes[Ktor routes]
-    Routes --> Service[CustomerService]
-    Service --> Repository[CustomerRepository]
-    Repository --> IO[Dispatchers.IO transaction boundary]
-    IO --> Exposed[Exposed JDBC]
-    Exposed --> H2[(H2)]
-```
+![Architecture 1](../../docs/images/readme-diagrams/12-production-integration-01-ktor-application-architecture-ko-diagram-01.svg)
 
 ## 학습 목표
 

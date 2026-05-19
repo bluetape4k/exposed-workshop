@@ -60,82 +60,15 @@ newSuspendedTransaction(singleThreadDispatcher) { ... }
 
 ## Coroutine Transaction Sequence Diagram
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant C as Coroutine (runSuspendIO)
-    participant T1 as newSuspendedTransaction
-    participant T2 as suspendedTransactionAsync
-    participant DB as Database
-
-    C->>T1: newSuspendedTransaction(Dispatchers.IO)
-    T1->>DB: BEGIN
-    T1->>DB: INSERT INTO coroutines_tester ...
-    alt Success
-        T1->>DB: COMMIT
-        T1-->>C: EntityID returned
-    else Exception
-        T1->>DB: ROLLBACK
-        T1-->>C: Exception propagated
-    end
-
-    C->>T2: suspendedTransactionAsync { ... }
-    T2-->>C: Deferred<T> (returned immediately)
-    Note over C,T2: Actual execution when coroutine resumes
-    C->>C: awaitAll() parallel wait
-    T2->>DB: BEGIN
-    T2->>DB: SQL execution
-    T2->>DB: COMMIT
-    T2-->>C: Result returned
-```
+![Coroutine Transaction Sequence Diagram 1](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-diagram-01.svg)
 
 ## newSuspendedTransaction Processing Sequence Diagram
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant App
-    participant CoroutineContext as CoroutineContext (Dispatchers.IO)
-    participant ExposedDB as Exposed Transaction
-    participant DB as Database
-
-    App->>CoroutineContext: newSuspendedTransaction { }
-    CoroutineContext->>ExposedDB: Start transaction block
-    ExposedDB->>DB: BEGIN
-    ExposedDB->>DB: SQL Query (INSERT / SELECT ...)
-    DB-->>ExposedDB: Result
-    alt Success
-        ExposedDB->>DB: COMMIT
-        ExposedDB-->>CoroutineContext: mapped result
-        CoroutineContext-->>App: suspend return
-    else Exception
-        ExposedDB->>DB: ROLLBACK
-        ExposedDB-->>CoroutineContext: Exception propagated
-        CoroutineContext-->>App: Exception propagated
-    end
-
-    App->>CoroutineContext: suspendedTransactionAsync { }
-    CoroutineContext-->>App: Deferred&lt;T&gt; (returned immediately)
-    Note over App,CoroutineContext: awaitAll() waits after parallel execution
-    CoroutineContext->>ExposedDB: transaction block (parallel)
-    ExposedDB->>DB: BEGIN → SQL → COMMIT
-    DB-->>ExposedDB: Result
-    ExposedDB-->>CoroutineContext: Result
-    CoroutineContext-->>App: awaitAll() result returned
-```
+![newSuspendedTransaction Processing Sequence Diagram 2](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-diagram-02.svg)
 
 ## Table ERD (coroutines_tester)
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    coroutines_tester {
-        SERIAL id PK
-    }
-    coroutines_tester_unique {
-        INT id PK "UNIQUE INDEX"
-    }
-```
+![Table ERD (coroutinestester) 3](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-diagram-03.svg)
 
 ## Example Structure
 

@@ -19,49 +19,7 @@ It applies Redis-based caching declaratively using `@Cacheable` and `@CacheEvict
 
 ## Architecture
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class LettuceCacheConfig {
-        <<@Configuration @EnableCaching>>
-        +redisCacheConfiguration() RedisCacheConfiguration
-        +cacheManager(factory, config) CacheManager
-    }
-    class RedisCacheManager {
-        +transactionAware: true
-        +defaultTtl: 10min
-        +serializer: LZ4Fory
-    }
-    class CountryRepository {
-        <<@Component @CacheConfig>>
-        +COUNTRY_CACHE_NAME: "cache:code:country"
-        +findByCode(code) CountryRecord?
-        +update(countryRecord) Int
-        +evictCacheAll()
-    }
-    class CountryRecord {
-        +code: String
-        +name: String
-        +description: String?
-    }
-    class CountryTable {
-        <<IntIdTable: countries>>
-        +code: Column~String~
-        +name: Column~String~
-        +description: Column~String?~
-    }
-
-    LettuceCacheConfig --> RedisCacheManager : creates
-    CountryRepository --> RedisCacheManager : uses
-    CountryRepository --> CountryTable : queries
-    CountryRepository --> CountryRecord : returns
-
-    style LettuceCacheConfig fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style RedisCacheManager fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    style CountryRepository fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style CountryRecord fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style CountryTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-```
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-06-spring-cache-diagram-01.svg)
 
 ## Key Concepts
 
@@ -131,36 +89,7 @@ class CountryRepository(private val cacheManager: CacheManager) {
 
 ## Cache Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    A[Client calls findByCode] --> B{Redis cache hit?}
-    B -- Yes --> C[Return CountryRecord from cache]
-    B -- No --> D[Start transaction block]
-    D --> E[CountryTable.selectAll WHERE code = ?]
-    E --> F[Query CountryRecord from DB]
-    F --> G[Store in Redis cache\ncache:code:country:KR]
-    G --> H[Return CountryRecord]
-
-    I[Client calls update] --> J[@Transactional start]
-    J --> K[CountryTable.update]
-    K --> L[Transaction commit]
-    L --> M[@CacheEvict executed\ncache:code:country:KR deleted]
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-
-    class A,I blue
-    class B,D yellow
-    class C,H green
-    class E,F orange
-    class G,M pink
-    class J,K,L teal
-```
+![Cache Flow 2](../../docs/images/readme-diagrams/09-spring-06-spring-cache-diagram-02.svg)
 
 ## Domain Model
 
@@ -180,35 +109,7 @@ data class CountryRecord(
 
 ## Cache Hit/Miss Sequence
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant Client
-    participant CountryRepository as CountryRepository (@Cacheable)
-    participant CacheManager as RedisCacheManager
-    participant DB
-
-    Client->>CountryRepository: findByCode("KR")
-    CountryRepository->>CacheManager: get("country:KR")
-    alt Cache hit
-        CacheManager-->>CountryRepository: CountryRecord
-        CountryRepository-->>Client: CountryRecord (no DB query)
-    else Cache miss
-        CacheManager-->>CountryRepository: null
-        CountryRepository->>DB: transaction { SELECT WHERE code='KR' }
-        DB-->>CountryRepository: CountryRecord
-        CountryRepository->>CacheManager: put("country:KR", CountryRecord)
-        CountryRepository-->>Client: CountryRecord
-    end
-
-    Client->>CountryRepository: update(countryRecord)
-    Note over CountryRepository: @Transactional start
-    CountryRepository->>DB: CountryTable.update(...)
-    DB-->>CountryRepository: Updated row count
-    Note over CountryRepository: @CacheEvict executed after transaction commit
-    CountryRepository->>CacheManager: evict("country:KR")
-    CountryRepository-->>Client: Updated row count
-```
+![Cache Hit/Miss Sequence 3](../../docs/images/readme-diagrams/09-spring-06-spring-cache-diagram-03.svg)
 
 ## Cache Key Design Principles
 

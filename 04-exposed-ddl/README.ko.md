@@ -25,39 +25,7 @@ Exposed에서 데이터베이스 연결과 스키마 정의(DDL)를 다루는 �
 
 ## 아키텍처 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph App["애플리케이션"]
-        DB["Database.connect(url, driver)"]
-        TP["TransactionManager"]
-        TX["transaction { ... }"]
-    end
-
-    subgraph DDL["스키마 관리"]
-        SC["SchemaUtils.create(tables)"]
-        SM["MigrationUtils.statementsRequiredForDatabaseMigration(tables)"]
-        SD["SchemaUtils.drop(tables)"]
-    end
-
-    subgraph Pool["커넥션 풀 (HikariCP)"]
-        DS["DataSource"]
-    end
-
-    DB --> DS
-    DS --> TP
-    TP --> TX
-    TX --> SC & SM & SD
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-
-    class DB,TP,TX blue
-    class SC,SM,SD green
-    class DS orange
-```
+![Architecture Component 1](../docs/images/readme-diagrams/04-exposed-ddl-ko-diagram-01.svg)
 
 ## 선수 지식
 

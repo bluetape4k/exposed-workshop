@@ -24,218 +24,31 @@ Spring MVC + Virtual Threads 환경에서 Redisson + Exposed로 캐시 전략을
 
 ## 도메인 ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    users {
-        BIGSERIAL id PK
-        VARCHAR username UK
-        VARCHAR first_name
-        VARCHAR last_name
-        VARCHAR address
-        VARCHAR zipcode
-        DATE birth_date
-        BLOB avatar
-        TIMESTAMP created_at
-        TIMESTAMP updated_at
-    }
-
-    user_credentials {
-        VARCHAR id PK "TimebasedUUID Base62"
-        VARCHAR username UK
-        VARCHAR email
-        TIMESTAMP last_login_at
-        TIMESTAMP created_at
-        TIMESTAMP updated_at
-    }
-
-    user_action {
-        BIGSERIAL id PK
-        VARCHAR username
-        VARCHAR event_source
-        VARCHAR event_type
-        VARCHAR event_details
-        TIMESTAMP event_time
-    }
-```
+![Domain ERD 1](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-01.svg)
 
 ---
 
 ## 캐시 전략 아키텍처
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    Client([Client])
-
-    subgraph "Read-Through"
-        RT_Cache{Near Cache\nL1}
-        RT_Redis[(Redis L2)]
-        RT_DB[(Database)]
-        RT_Cache -- hit --> Client
-        RT_Cache -- miss --> RT_Redis
-        RT_Redis -- hit --> RT_Cache
-        RT_Redis -- miss --> RT_DB
-        RT_DB -- load --> RT_Redis
-        RT_Redis -- fill --> RT_Cache
-    end
-
-    subgraph "Write-Through"
-        WT_Cache{Near Cache\nL1}
-        WT_Redis[(Redis L2)]
-        WT_DB[(Database)]
-        Client -- save --> WT_Cache
-        WT_Cache -- sync --> WT_Redis
-        WT_Redis -- sync --> WT_DB
-    end
-
-    subgraph "Write-Behind"
-        WB_Cache{Near Cache\nL1}
-        WB_Redis[(Redis L2)]
-        WB_DB[(Database)]
-        WB_Queue[[Async Queue]]
-        Client -- save --> WB_Cache
-        WB_Cache -- immediate --> WB_Redis
-        WB_Redis -- enqueue --> WB_Queue
-        WB_Queue -- batch flush --> WB_DB
-    end
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-
-    class Client blue
-    class RT_Cache,WT_Cache,WB_Cache pink
-    class RT_Redis,WT_Redis,WB_Redis orange
-    class RT_DB,WT_DB,WB_DB orange
-    class WB_Queue yellow
-```
+![Cache Component Architecture 2](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-02.svg)
 
 ---
 
 ## 클래스 구조
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class AbstractJdbcRedissonRepository {
-        <<abstract>>
-        +cacheName: String
-        +config: RedisCacheConfig
-        +entityTable: T
-        +findById(id): E?
-        +findAll(): List~E~
-        +saveAll(entities): List~E~
-        +deleteById(id)
-        +invalidate(ids)
-        #doInsertEntity(stmt, entity)
-        #doUpdateEntity(stmt, entity)
-        #toEntity(row): E
-    }
-
-    class UserCacheRepository {
-        +cacheName = "exposed:users"
-        +config = READ_WRITE_THROUGH_WITH_NEAR_CACHE
-        +entityTable: UserTable
-        #doInsertEntity(stmt, entity)
-        #doUpdateEntity(stmt, entity)
-    }
-
-    class UserCredentialsCacheRepository {
-        +cacheName = "exposed:user-credentials"
-        +config = READ_ONLY_WITH_NEAR_CACHE
-        +entityTable: UserCredentialsTable
-    }
-
-    class UserEventCacheRepository {
-        +cacheName = "exposed:user-events"
-        +config = WRITE_BEHIND_WITH_NEAR_CACHE
-        +entityTable: UserEventTable
-        #doInsertEntity(stmt, entity)
-        #doUpdateEntity(stmt, entity)
-    }
-
-    class RedisCacheConfig {
-<<enum-likeobject>>
-READ_WRITE_THROUGH_WITH_NEAR_CACHE
-READ_ONLY_WITH_NEAR_CACHE
-WRITE_BEHIND_WITH_NEAR_CACHE
-}
-
-AbstractJdbcRedissonRepository <|-- UserCacheRepository
-AbstractJdbcRedissonRepository <|-- UserCredentialsCacheRepository
-AbstractJdbcRedissonRepository <|-- UserEventCacheRepository
-AbstractJdbcRedissonRepository --> RedisCacheConfig
-
-    style AbstractJdbcRedissonRepository fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style UserCacheRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style UserCredentialsCacheRepository fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style UserEventCacheRepository fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style RedisCacheConfig fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-```
+![Component Component 3](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-03.svg)
 
 ---
 
 ## 요청 처리 흐름 — Write-Behind 비동기 이벤트 적재
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant C as Client
-    participant R as UserEventCacheRepository
-    participant NC as Near Cache (L1)
-    participant RD as Redis (L2)
-    participant Q as Async Write Queue
-    participant DB as Database
-    C ->> R: saveAll(events)
-    R ->> NC: put events (즉시)
-    R ->> RD: put events (즉시)
-    RD -->> C: 저장 완료 응답
-    Note over RD, Q: 비동기 배치 플러시
-    RD ->> Q: enqueue dirty entries
-    Q ->> DB: batchInsert (Exposed)
-    DB -->> Q: commit
-    Q -->> RD: flush 완료
-    C ->> R: findById(id)
-    R ->> NC: get(id)
-    NC -->> R: hit → 반환
-    R -->> C: UserEventRecord
-```
+![Request Component Component — Write-Behind Async Component Component 4](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-04.svg)
 
 ---
 
 ## 요청 처리 흐름 — Read-Through + Write-Through (User)
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant C as Client
-    participant R as UserCacheRepository
-    participant NC as Near Cache (L1)
-    participant RD as Redis (L2)
-    participant DB as Database
-    C ->> R: findById(id)
-    R ->> NC: get(id)
-    NC -->> R: miss
-    R ->> RD: get(id)
-    RD -->> R: miss
-    R ->> DB: SELECT (Exposed)
-    DB -->> R: UserRecord
-    R ->> RD: put(id, record)
-    R ->> NC: put(id, record)
-    R -->> C: UserRecord (첫 번째 조회)
-    C ->> R: findById(id)
-    R ->> NC: get(id)
-    NC -->> R: hit
-    R -->> C: UserRecord (캐시 적중)
-    C ->> R: save(updated)
-    R ->> DB: UPDATE (Exposed, 동기)
-    R ->> RD: put(id, updated)
-    R ->> NC: put(id, updated)
-    R -->> C: 저장 완료
-```
+![Request Component Component — Read-Through + Write-Through (User) 5](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-05.svg)
 
 ---
 

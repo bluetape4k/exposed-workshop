@@ -27,41 +27,7 @@ A chapter covering the full read/write flow in Exposed 1.1.1, from SELECT/INSERT
 
 ## Architecture Overview
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    subgraph DSL["DSL Layer (org.jetbrains.exposed.v1.jdbc)"]
-        S[selectAll / select]
-        I[insert / batchInsert]
-        U[update / upsert]
-        D[deleteWhere]
-    end
-
-    subgraph DAO["DAO Layer (org.jetbrains.exposed.v1.dao)"]
-        E[Entity / EntityClass]
-        R[referrersOn / referencedOn / via]
-    end
-
-    subgraph TX["Transaction"]
-        T["transaction { }"]
-        ST["newSuspendedTransaction { }"]
-    end
-
-    TX --> DSL
-    TX --> DAO
-    DSL --> DB[(Database)]
-    DAO --> DB
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class S,I,U,D blue
-    class E,R green
-    class T,ST purple
-    class DB orange
-```
+![Architecture Overview 1](../docs/images/readme-diagrams/05-exposed-dml-diagram-01.svg)
 
 ## Recommended Study Order
 

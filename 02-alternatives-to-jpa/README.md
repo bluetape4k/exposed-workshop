@@ -39,40 +39,7 @@ Hands-on exploration of database access technologies beyond JPA, so you can unde
 
 ## Architecture Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph App["Application Layer"]
-        Controller["Controller\n(REST)"]
-    end
-
-    subgraph Stacks["Data Access Stacks"]
-        direction TB
-        HR["Hibernate Reactive\nMutiny.Session"]
-        R2["Spring Data R2DBC\nCrudRepository"]
-        VX["Vert.x SQL Client\nSqlTemplate"]
-        EX["Exposed\ntransaction { }"]
-    end
-
-    subgraph DB["Database"]
-        PG["PostgreSQL"]
-        H2["H2 (In-Memory)"]
-    end
-
-    Controller --> HR & R2 & VX & EX
-    HR -->|Netty Non-blocking| PG
-    R2 -->|R2DBC Non-blocking| PG & H2
-    VX -->|Event Loop| PG & H2
-    EX -->|JDBC / Virtual Thread| PG & H2
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class Controller blue
-    class HR,R2,VX,EX purple
-    class PG,H2 orange
-```
+![Architecture Flow 1](../docs/images/readme-diagrams/02-alternatives-to-jpa-diagram-01.svg)
 
 ## Recommended Study Order
 

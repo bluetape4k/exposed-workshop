@@ -30,45 +30,7 @@ Spring Boot 환경에서 Exposed를 안정적으로 운영하기 위한 통합 �
 
 ## 전체 아키텍처 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    subgraph AutoConfig["01 AutoConfiguration"]
-        AC[ExposedAutoConfiguration] --> STM[SpringTransactionManager]
-        AC --> DI[DatabaseInitializer]
-    end
-    subgraph TxControl["02-03 트랜잭션 제어"]
-        TT[TransactionTemplate] --> STM
-        AT["@Transactional"] --> STM
-    end
-    subgraph Repo["04-05 Repository 패턴"]
-        MVC[MovieExposedRepository\nActorExposedRepository\nSpring MVC] --> AT
-        WF[MovieExposedRepository\nActorExposedRepository\nWebFlux Coroutine] --> NST[newSuspendedTransaction]
-    end
-    subgraph Cache["06-07 캐시 통합"]
-        SC[CountryRepository\n@Cacheable/@CacheEvict] --> Redis[(Redis)]
-        CC[CachedCountrySuspendedRepository\nLettuceSuspendedCache] --> Redis
-        SC --> AT
-        CC --> NST
-    end
-    STM --> DB[(Database)]
-    NST --> DB
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-
-    class AC,DI blue
-    class STM purple
-    class TT,AT green
-    class MVC,WF teal
-    class NST teal
-    class SC,CC pink
-    class Redis,DB orange
-```
+![Component Architecture Component 1](../docs/images/readme-diagrams/09-spring-ko-diagram-01.svg)
 
 ## 핵심 패턴 요약
 

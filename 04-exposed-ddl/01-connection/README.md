@@ -22,37 +22,7 @@ A module covering Exposed database connection setup and connection reliability v
 
 ## Architecture Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph Connect["Database.connect()"]
-        URL["URL + Driver"]
-        DS["DataSource (HikariCP)"]
-    end
-
-    subgraph TM["TransactionManager"]
-        Default["defaultDatabase"]
-        Multi["DB1 / DB2"]
-    end
-
-    subgraph Retry["Retry Policy"]
-        MA["maxAttempts"]
-        TO["connectionTimeout"]
-    end
-
-    URL --> TM
-    DS --> TM
-    TM --> Default & Multi
-    TM --> Retry
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class URL,DS blue
-    class Default,Multi green
-    class MA,TO orange
-```
+![Architecture Flow 1](../../docs/images/readme-diagrams/04-exposed-ddl-01-connection-diagram-01.svg)
 
 ## Key Concepts
 

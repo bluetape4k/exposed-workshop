@@ -19,77 +19,15 @@ Spring Data R2DBC는 완전 Non-blocking R2DBC 드라이버 위에서 Spring Dat
 
 ## 아키텍처 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant Client as WebClient
-    participant PC as PostController
-    participant PR as PostRepository
-    participant CR as CommentRepository
-    participant DB as H2/PostgreSQL
-    Client ->> PC: GET /posts/{id}
-    PC ->> PR: findById(id) [suspend]
-    PR ->> DB: R2DBC Non-blocking SELECT
-    DB -->> PR: Post
-    PR -->> PC: Post?
-    PC -->> Client: 200 OK / 404 Not Found
-    Client ->> PC: GET /posts/{id}/comments/count
-    PC ->> CR: countByPostId(id) [suspend]
-    CR ->> DB: COUNT 집계
-    DB -->> CR: Long
-    CR -->> PC: Long
-    PC -->> Client: 200 OK count
-```
+![Architecture Component 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-ko-diagram-01.svg)
 
 ## ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    posts {
-        BIGINT id PK
-        VARCHAR title
-        TEXT content
-    }
-    comments {
-        BIGINT id PK
-        BIGINT post_id FK
-        TEXT content
-    }
-    customer {
-        BIGINT id PK
-        VARCHAR firstname
-        VARCHAR lastname
-    }
-    posts ||--o{ comments : "post_id"
-```
+![ERD 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-ko-diagram-02.svg)
 
 ## 도메인 모델
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class Post {
-        +Long? id
-        +String? title
-        +String? content
-    }
-    class Comment {
-        +Long? id
-        +Long postId
-        +String content
-    }
-    class Customer {
-        +Long? id
-        +String firstname
-        +String lastname
-    }
-    Post "1" --> "0..*" Comment: postId
-
-    style Post fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style Comment fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Customer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Domain Component 3](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-ko-diagram-03.svg)
 
 ### R2DBC 엔티티 선언
 

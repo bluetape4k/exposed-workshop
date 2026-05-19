@@ -20,29 +20,7 @@ An example that extends the multi-tenancy structure from module `01` to a Java 2
 
 ## Domain Model
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    MovieTable {
-        BIGSERIAL id PK
-        VARCHAR(255) name
-        VARCHAR(255) producerName
-        DATE releaseDate
-    }
-    ActorTable {
-        BIGSERIAL id PK
-        VARCHAR(255) firstName
-        VARCHAR(255) lastName
-        DATE birthday
-    }
-    ActorInMovieTable {
-        BIGINT movieId FK
-        BIGINT actorId FK
-    }
-
-    MovieTable ||--o{ ActorInMovieTable : "has"
-    ActorTable ||--o{ ActorInMovieTable : "appears in"
-```
+![Domain Model 1](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-diagram-01.svg)
 
 ---
 
@@ -59,81 +37,7 @@ erDiagram
 
 ## Architecture
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class TomcatVirtualThreadConfig {
-        +protocolHandlerVirtualThreadExecutorCustomizer()
-    }
-
-    class TenantFilter {
-        +TENANT_HEADER: String
-        +doFilter(request, response, chain)
-        -extractTenant(request) Tenant
-    }
-
-    class TenantContext {
-        +CURRENT_TENANT: ScopedValue~Tenant~
-        +getCurrentTenant() Tenant
-        +getCurrentTenantSchema() Schema
-        +withTenant(tenant, block)
-    }
-
-    class Tenants {
-        +DEFAULT_TENANT: Tenant
-        +getById(tenantId) Tenant
-    }
-
-    class Tenant {
-        <<enumeration>>
-        KOREAN
-        ENGLISH
-        +id: String
-    }
-
-    class TenantAwareDataSource {
-        +determineCurrentLookupKey() Any
-    }
-
-    class TransactionSchemaAspect {
-        +setSchemaForTransaction()
-    }
-
-    class TenantInitializer {
-        +onApplicationEvent(event)
-    }
-
-    class DataInitializer {
-        +initialize()
-    }
-
-    class ActorController {
-        +getAllActors() List~ActorRecord~
-        +findById(id) ActorRecord
-    }
-
-    TomcatVirtualThreadConfig --> Executors : newVirtualThreadPerTaskExecutor()
-    TenantFilter --> TenantContext : withTenant()
-    TenantContext --> Tenants : lookup tenant
-    Tenants --> Tenant : enum member
-    TenantContext --> ScopedValue : where().run()
-    TenantAwareDataSource --> TenantContext : getCurrentTenant()
-    TransactionSchemaAspect --> TenantContext : getCurrentTenantSchema()
-    TransactionSchemaAspect --> SchemaUtils : createSchema() + setSchema()
-    TenantInitializer --> DataInitializer : initialize()
-    ActorController --> TransactionSchemaAspect : @Transactional(AOP)
-
-    style TomcatVirtualThreadConfig fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-    style TenantFilter fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style TenantContext fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Tenants fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Tenant fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    style TenantAwareDataSource fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style TransactionSchemaAspect fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style TenantInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style DataInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style ActorController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-```
+![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-diagram-02.svg)
 
 ### ScopedValue-Based Context Propagation
 
@@ -146,66 +50,13 @@ ScopedValue  → Immutable binding, automatically destroyed when scope exits
 
 ### Platform Thread vs Virtual Thread Comparison
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph PT["Platform Thread (Module 01)"]
-        PT1[Thread-1] --> DB1[(Schema: korean)]
-        PT2[Thread-2] --> DB2[(Schema: english)]
-    end
-    subgraph VT["Virtual Thread (Module 02)"]
-        VT1[VThread-1] --> DB3[(Schema: korean)]
-        VT2[VThread-2] --> DB3
-        VT3[VThread-3] --> DB4[(Schema: english)]
-        VT4[VThread-n...] --> DB4
-    end
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class PT1,PT2 blue
-    class VT1,VT2,VT3,VT4 green
-    class DB1,DB2,DB3,DB4 orange
-```
+![Platform Thread vs Virtual Thread Comparison 3](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-diagram-03.svg)
 
 ---
 
 ## Request Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant Client
-    participant Tomcat
-    participant TenantFilter
-    participant TenantContext
-    participant TransactionSchemaAspect
-    participant ActorController
-    participant ActorExposedRepository
-    participant Database
-
-    Client->>Tomcat: GET /actors (X-TENANT-ID: english)
-    Note over Tomcat: VirtualThread assigned (newVirtualThreadPerTaskExecutor)
-
-    Tomcat->>TenantFilter: doFilter()
-    TenantFilter->>TenantContext: withTenant(ENGLISH) { ... }
-    Note over TenantContext: ScopedValue.where(CURRENT_TENANT, ENGLISH).run { }
-
-    TenantFilter->>ActorController: chain.doFilter()
-    ActorController->>TransactionSchemaAspect: @Transactional entry (AOP Before)
-    TransactionSchemaAspect->>TenantContext: getCurrentTenantSchema()
-    TransactionSchemaAspect->>Database: SchemaUtils.createSchema("english")
-    TransactionSchemaAspect->>Database: SchemaUtils.setSchema("english")
-
-    ActorController->>ActorExposedRepository: findAll()
-    ActorExposedRepository->>Database: SELECT * FROM english.actor
-    Database-->>ActorExposedRepository: ResultSet
-    ActorExposedRepository-->>ActorController: List~ActorRecord~
-    ActorController-->>Client: 200 OK [{ "firstName": "Johnny", ... }]
-
-    Note over TenantContext: ScopedValue scope ends automatically (no explicit clear needed)
-```
+![Request Flow 4](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-diagram-04.svg)
 
 ---
 

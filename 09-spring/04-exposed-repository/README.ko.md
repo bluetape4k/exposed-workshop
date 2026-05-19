@@ -18,79 +18,7 @@
 
 ## 아키텍처
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class JdbcRepository {
-        <<interface>>
-        +table: T
-        +toEntity(ResultRow) E
-        +findById(id) E?
-        +findAll() List~E~
-        +deleteById(id)
-    }
-    class MovieExposedRepository {
-        <<@Repository>>
-        +searchMovies(params) List~MovieRecord~
-        +create(movieRecord) MovieRecord
-        +getAllMoviesWithActors() List~MovieWithActorRecord~
-        +getMovieWithActors(movieId) MovieWithActorRecord?
-        +getMovieActorsCount() List~MovieActorCountRecord~
-        +findMoviesWithActingProducers() List~MovieWithProducingActorRecord~
-    }
-    class ActorExposedRepository {
-        <<@Repository>>
-        +searchActors(params) List~ActorRecord~
-        +create(actor) ActorRecord
-    }
-    class MovieRecord {
-        +id: Long
-        +name: String
-        +producerName: String
-        +releaseDate: String
-    }
-    class ActorRecord {
-        +id: Long
-        +firstName: String
-        +lastName: String
-        +birthday: String?
-    }
-    class MovieWithActorRecord {
-        +id: Long
-        +name: String
-        +actors: List~ActorRecord~
-    }
-    class MovieTable {
-        <<object>>
-        +name: Column~String~
-        +producerName: Column~String~
-        +releaseDate: Column~LocalDate~
-    }
-    class ActorTable {
-        <<object>>
-        +firstName: Column~String~
-        +lastName: Column~String~
-        +birthday: Column~LocalDate?~
-    }
-
-    JdbcRepository <|-- MovieExposedRepository
-    JdbcRepository <|-- ActorExposedRepository
-    MovieExposedRepository --> MovieTable : table
-    MovieExposedRepository --> MovieRecord : returns
-    MovieExposedRepository --> MovieWithActorRecord : returns
-    ActorExposedRepository --> ActorTable : table
-    ActorExposedRepository --> ActorRecord : returns
-    MovieWithActorRecord o-- ActorRecord
-
-    style JdbcRepository fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style MovieExposedRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style ActorExposedRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style MovieRecord fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style ActorRecord fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style MovieWithActorRecord fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style MovieTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style ActorTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-```
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-ko-diagram-01.svg)
 
 ## 핵심 개념
 
@@ -175,76 +103,9 @@ fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
 
 ## 도메인 모델
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    MOVIES {
-        BIGSERIAL id PK
-        VARCHAR name
-        VARCHAR producerName
-        DATE releaseDate
-    }
-    ACTORS {
-        BIGSERIAL id PK
-        VARCHAR firstName
-        VARCHAR lastName
-        DATE birthday
-    }
-    ACTORS_IN_MOVIES {
-        BIGINT movieId FK
-        BIGINT actorId FK
-    }
+![Domain Component 2](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-ko-diagram-02.svg)
 
-    MOVIES ||--o{ ACTORS_IN_MOVIES : "movieId"
-    ACTORS ||--o{ ACTORS_IN_MOVIES : "actorId"
-```
-
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class MovieTable {
-        <<LongIdTable: movies>>
-        +name: Column~String~
-        +producerName: Column~String~
-        +releaseDate: Column~LocalDate~
-    }
-    class ActorTable {
-        <<LongIdTable: actors>>
-        +firstName: Column~String~
-        +lastName: Column~String~
-        +birthday: Column~LocalDate?~
-    }
-    class ActorInMovieTable {
-        <<Table: actors_in_movies>>
-        +movieId: Column~EntityID~Long~~
-        +actorId: Column~EntityID~Long~~
-        +PrimaryKey(movieId, actorId)
-    }
-    class MovieEntity {
-        +name: String
-        +producerName: String
-        +releaseDate: LocalDate
-        +actors: SizedIterable~ActorEntity~
-    }
-    class ActorEntity {
-        +firstName: String
-        +lastName: String
-        +birthday: LocalDate?
-        +movies: SizedIterable~MovieEntity~
-    }
-
-    MovieTable "1" --> "*" ActorInMovieTable : movieId FK
-    ActorTable "1" --> "*" ActorInMovieTable : actorId FK
-    MovieEntity --> MovieTable : maps to
-    ActorEntity --> ActorTable : maps to
-    MovieEntity "*" -- "*" ActorEntity : via ActorInMovieTable
-
-    style MovieTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style ActorTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style ActorInMovieTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style MovieEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style ActorEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Domain Component 3](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-ko-diagram-03.svg)
 
 ## REST API 엔드포인트
 

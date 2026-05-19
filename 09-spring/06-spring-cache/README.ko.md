@@ -19,49 +19,7 @@ Spring Cache 추상화와 Exposed를 통합하는 모듈입니다.
 
 ## 아키텍처
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class LettuceCacheConfig {
-        <<@Configuration @EnableCaching>>
-        +redisCacheConfiguration() RedisCacheConfiguration
-        +cacheManager(factory, config) CacheManager
-    }
-    class RedisCacheManager {
-        +transactionAware: true
-        +defaultTtl: 10min
-        +serializer: LZ4Fory
-    }
-    class CountryRepository {
-        <<@Component @CacheConfig>>
-        +COUNTRY_CACHE_NAME: "cache:code:country"
-        +findByCode(code) CountryRecord?
-        +update(countryRecord) Int
-        +evictCacheAll()
-    }
-    class CountryRecord {
-        +code: String
-        +name: String
-        +description: String?
-    }
-    class CountryTable {
-        <<IntIdTable: countries>>
-        +code: Column~String~
-        +name: Column~String~
-        +description: Column~String?~
-    }
-
-    LettuceCacheConfig --> RedisCacheManager : creates
-    CountryRepository --> RedisCacheManager : uses
-    CountryRepository --> CountryTable : queries
-    CountryRepository --> CountryRecord : returns
-
-    style LettuceCacheConfig fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style RedisCacheManager fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    style CountryRepository fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style CountryRecord fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style CountryTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-```
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-06-spring-cache-ko-diagram-01.svg)
 
 ## 핵심 개념
 
@@ -131,36 +89,7 @@ class CountryRepository(private val cacheManager: CacheManager) {
 
 ## 캐시 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    A[클라이언트 findByCode 호출] --> B{Redis 캐시 히트?}
-    B -- 예 --> C[캐시에서 CountryRecord 반환]
-    B -- 아니오 --> D[transaction 블록 시작]
-    D --> E[CountryTable.selectAll WHERE code = ?]
-    E --> F[DB에서 CountryRecord 조회]
-    F --> G[Redis에 캐시 저장\ncache:code:country:KR]
-    G --> H[CountryRecord 반환]
-
-    I[클라이언트 update 호출] --> J[@Transactional 시작]
-    J --> K[CountryTable.update]
-    K --> L[트랜잭션 커밋]
-    L --> M[@CacheEvict 실행\ncache:code:country:KR 삭제]
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-
-    class A,I blue
-    class B,D yellow
-    class C,H green
-    class E,F orange
-    class G,M pink
-    class J,K,L teal
-```
+![Cache Component 2](../../docs/images/readme-diagrams/09-spring-06-spring-cache-ko-diagram-02.svg)
 
 ## 도메인 모델
 
@@ -180,35 +109,7 @@ data class CountryRecord(
 
 ## 캐시 히트/미스 시퀀스
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant Client
-    participant CountryRepository as CountryRepository (@Cacheable)
-    participant CacheManager as RedisCacheManager
-    participant DB
-
-    Client->>CountryRepository: findByCode("KR")
-    CountryRepository->>CacheManager: get("country:KR")
-    alt 캐시 히트
-        CacheManager-->>CountryRepository: CountryRecord
-        CountryRepository-->>Client: CountryRecord (DB 조회 없음)
-    else 캐시 미스
-        CacheManager-->>CountryRepository: null
-        CountryRepository->>DB: transaction { SELECT WHERE code='KR' }
-        DB-->>CountryRepository: CountryRecord
-        CountryRepository->>CacheManager: put("country:KR", CountryRecord)
-        CountryRepository-->>Client: CountryRecord
-    end
-
-    Client->>CountryRepository: update(countryRecord)
-    Note over CountryRepository: @Transactional 시작
-    CountryRepository->>DB: CountryTable.update(...)
-    DB-->>CountryRepository: 갱신 행 수
-    Note over CountryRepository: 트랜잭션 커밋 후 @CacheEvict 실행
-    CountryRepository->>CacheManager: evict("country:KR")
-    CountryRepository-->>Client: 갱신 행 수
-```
+![Cache Hit/Miss Component 3](../../docs/images/readme-diagrams/09-spring-06-spring-cache-ko-diagram-03.svg)
 
 ## 캐시 키 설계 원칙
 

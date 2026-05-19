@@ -15,103 +15,13 @@
 
 ## 도메인 ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    persons {
-        BIGSERIAL id PK
-        VARCHAR first_name
-        VARCHAR last_name
-        VARCHAR email UK
-        VARCHAR phone
-        INT age
-        VARCHAR address
-        VARCHAR zipcode
-        TEXT bio
-        BLOB picture
-        TIMESTAMP created_at
-        TIMESTAMP updated_at
-    }
-
-    departments {
-        BIGSERIAL id PK
-        VARCHAR name UK
-        VARCHAR code UK
-        TEXT description
-        DECIMAL budget
-        INT head_count
-        BOOLEAN is_active
-        TIMESTAMP created_at
-        TIMESTAMP updated_at
-    }
-
-    employees {
-        BIGSERIAL id PK
-        VARCHAR first_name
-        VARCHAR last_name
-        VARCHAR email UK
-        VARCHAR phone
-        VARCHAR position
-        DECIMAL salary
-        TIMESTAMP hire_date
-        BOOLEAN is_active
-        TEXT bio
-        BLOB picture
-        BIGINT department_id FK
-        TIMESTAMP created_at
-        TIMESTAMP updated_at
-    }
-
-    departments ||--o{ employees : "has"
-```
+![Domain ERD 1](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-ko-diagram-01.svg)
 
 ---
 
 ## Exposed vs JPA 벤치마크 구조
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    JMH[JMH Benchmark Runner]
-
-    subgraph SingleEntity["SingleEntityCrudBenchmark (Person)"]
-        SE_EXP[Exposed DSL\nPersonTable]
-        SE_JPA[JPA\nPersonJpa]
-    end
-
-    subgraph OneToMany["OneToManyCrudBenchmark (Department + Employee)"]
-        OTM_EXP[Exposed DSL/DAO\nDepartmentTable + EmployeeTable]
-        OTM_JPA[JPA\nDepartmentJpa + EmployeeJpa]
-    end
-
-    subgraph Concurrent["ConcurrentCrudBenchmark"]
-        CC_EXP[Exposed DSL\n멀티스레드]
-        CC_JPA[JPA\n멀티스레드]
-    end
-
-    DB[(H2 InMemory)]
-
-    JMH --> SingleEntity
-    JMH --> OneToMany
-    JMH --> Concurrent
-
-    SE_EXP --> DB
-    SE_JPA --> DB
-    OTM_EXP --> DB
-    OTM_JPA --> DB
-    CC_EXP --> DB
-    CC_JPA --> DB
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class JMH purple
-    class SE_EXP,OTM_EXP,CC_EXP green
-    class SE_JPA,OTM_JPA,CC_JPA blue
-    class DB orange
-```
+![Exposed vs JPA Component Component 2](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-ko-diagram-02.svg)
 
 ---
 
@@ -127,78 +37,7 @@ flowchart TD
 
 ## 클래스 구조
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class ReadThroughCacheBenchmark {
-        +payloadBytes: Int [256, 4096]
-        -db: Map~Long, UserPayload~
-        -cache: Cache~Long, UserPayload~
-        -missKeys: LongArray
-        -hotKey: Long = 1L
-        +setupTrial()
-        +setupIteration()
-        +dbOnlyRead(): UserPayload
-        +readThroughCacheHit(): UserPayload
-        +readThroughCacheMiss(): UserPayload
-    }
-
-    class RoutingKeyResolverBenchmark {
-        +tenant: String ["tenant-a", ""]
-        +readOnly: Boolean [true, false]
-        -resolver: ContextAwareRoutingKeyResolver
-        +setup()
-        +currentLookupKey(): String
-    }
-
-    class UserPayload {
-        +id: Long
-        +bytes: ByteArray
-    }
-
-    class ContextAwareRoutingKeyResolver {
-        +currentLookupKey(): String
-    }
-
-    class CacheStrategyComparisonBenchmark {
-        +strategyType: CacheStrategy [NO_CACHE, READ_THROUGH, WRITE_THROUGH]
-        +workloadPattern: WorkloadPattern [READ_HEAVY, WRITE_HEAVY]
-        +payloadBytes: Int [256, 4096]
-        -strategy: CacheStrategy
-        -pattern: WorkloadPattern
-        -operationCounter: AtomicLong
-        +setupTrial()
-        +tearDownTrial()
-        +executeOperation(): Unit
-    }
-
-    class CacheStrategy {
-        <<enum>>
-        NO_CACHE
-        READ_THROUGH
-        WRITE_THROUGH
-    }
-
-    class WorkloadPattern {
-        <<enum>>
-        READ_HEAVY (90:10)
-        WRITE_HEAVY (10:90)
-    }
-
-    ReadThroughCacheBenchmark --> UserPayload
-    RoutingKeyResolverBenchmark --> ContextAwareRoutingKeyResolver
-    CacheStrategyComparisonBenchmark --> CacheStrategy
-    CacheStrategyComparisonBenchmark --> WorkloadPattern
-    CacheStrategyComparisonBenchmark --> UserPayload
-
-    style ReadThroughCacheBenchmark fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style RoutingKeyResolverBenchmark fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style CacheStrategyComparisonBenchmark fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-    style UserPayload fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style ContextAwareRoutingKeyResolver fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style CacheStrategy fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-    style WorkloadPattern fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-```
+![Component Component 3](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-ko-diagram-03.svg)
 
 ---
 
@@ -255,48 +94,7 @@ classDiagram
 
 ## 벤치마크 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    Start([JMH Start])
-    Fork[Fork JVM x1]
-    Warmup[Warmup\n5 iterations × 500ms]
-Measure[Measurement\n10 iterations × 1s]
-Report[JSON Report]
-MD[Markdown Report]
-
-Start --> Fork --> Warmup --> Measure --> Report --> MD
-
-subgraph ReadThroughCacheBenchmark
-direction TB
-RT1[dbOnlyRead\nMap 직접 조회]
-RT2[readThroughCacheHit\nCaffeine hit]
-RT3[readThroughCacheMiss\ncache.invalidate + DB폴백]
-end
-
-subgraph RoutingKeyResolverBenchmark
-direction TB
-RK1[currentLookupKey\ntenant-a:rw]
-RK2[currentLookupKey\ntenant-a:ro]
-RK3[currentLookupKey\ndefault:rw]
-RK4[currentLookupKey\ndefault:ro]
-end
-
-Measure --> ReadThroughCacheBenchmark
-Measure --> RoutingKeyResolverBenchmark
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-
-    class Start purple
-    class Fork,Warmup,Measure blue
-    class Report,MD yellow
-    class RT1,RT2,RT3 green
-    class RK1,RK2,RK3,RK4 orange
-```
+![Component Component 4](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-ko-diagram-04.svg)
 
 ---
 

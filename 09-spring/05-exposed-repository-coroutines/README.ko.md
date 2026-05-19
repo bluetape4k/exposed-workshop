@@ -20,78 +20,11 @@ Spring WebFlux + 코루틴 환경에서 Exposed를 비동기 Repository 패턴�
 
 ## 도메인 모델
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    MOVIES {
-        BIGSERIAL id PK
-        VARCHAR name
-        VARCHAR producerName
-        DATE releaseDate
-    }
-    ACTORS {
-        BIGSERIAL id PK
-        VARCHAR firstName
-        VARCHAR lastName
-        DATE birthday
-    }
-    ACTORS_IN_MOVIES {
-        BIGINT movieId FK
-        BIGINT actorId FK
-    }
-
-    MOVIES ||--o{ ACTORS_IN_MOVIES : "movieId"
-    ACTORS ||--o{ ACTORS_IN_MOVIES : "actorId"
-```
+![Domain Component 1](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-ko-diagram-01.svg)
 
 ## 아키텍처
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class JdbcRepository {
-        <<interface>>
-        +table: T
-        +toEntity(ResultRow) E
-    }
-    class MovieExposedRepository {
-        <<@Repository>>
-        +searchMovie(params) List~MovieRecord~
-        +create(movie) MovieRecord
-        +getAllMoviesWithActors() List~MovieWithActorRecord~
-        +getMovieWithActors(movieId) MovieWithActorRecord?
-        +getMovieActorsCount() List~MovieActorCountRecord~
-        +findMoviesWithActingProducers() List~MovieWithProducingActorRecord~
-    }
-    class ActorExposedRepository {
-        <<@Repository>>
-        +searchActors(params) List~ActorRecord~
-        +create(actor) ActorRecord
-    }
-    class MovieTransactionalService {
-        <<@Component>>
-        -movieRepository: MovieExposedRepository
-        +monoSave(movieRecord) Mono~MovieEntity~
-        +suspendedSave(movieRecord) MovieRecord
-    }
-    class MovieController {
-        <<suspend>>
-        +getMovies(params) List~MovieRecord~
-        +createMovie(record) MovieRecord
-    }
-
-    JdbcRepository <|-- MovieExposedRepository
-    JdbcRepository <|-- ActorExposedRepository
-    MovieTransactionalService --> MovieExposedRepository : delegates
-    MovieController --> MovieExposedRepository : calls
-    MovieController --> MovieTransactionalService : calls
-
-    style JdbcRepository fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style MovieExposedRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style ActorExposedRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style MovieTransactionalService fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style MovieController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-```
+![Architecture 2](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-ko-diagram-02.svg)
 
 ## 핵심 개념
 
@@ -153,25 +86,7 @@ class MovieTransactionalService(
 
 ## 동기 vs 코루틴 Repository 비교
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant Client
-    participant Controller
-    participant Repository
-    participant STM as newSuspendedTransaction
-    participant DB
-
-    Note over Client,DB: 코루틴 경로 (WebFlux)
-    Client->>Controller: HTTP GET (suspend)
-    Controller->>Repository: getAllMoviesWithActors()
-    Repository->>STM: newSuspendedTransaction { }
-    STM->>DB: SELECT ... INNER JOIN ...
-    DB-->>STM: ResultSet
-    STM-->>Repository: List~MovieWithActorRecord~
-    Repository-->>Controller: List
-    Controller-->>Client: JSON Response
-```
+![Component vs Coroutines Repository Component 3](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-ko-diagram-03.svg)
 
 ## 조인 최적화 패턴
 

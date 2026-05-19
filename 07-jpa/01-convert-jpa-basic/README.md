@@ -78,218 +78,29 @@ transaction {
 
 ## Relationship Mapping Conversion Diagram
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class BlogTable {
-        +EntityID~Long~ id
-        +String title
-        +String content
-    }
-    class PostTable {
-        +EntityID~Long~ id
-        +EntityID~Long~ blogId
-        +String content
-    }
-    class TagTable {
-        +EntityID~Long~ id
-        +String name
-    }
-    class BlogTagTable {
-        +EntityID~Long~ blogId
-        +EntityID~Long~ tagId
-    }
-    class PersonTable {
-        +EntityID~Long~ id
-        +String name
-    }
-    class AddressTable {
-        +EntityID~Long~ id
-        +EntityID~Long~ personId
-        +String street
-    }
-
-    BlogTable "1" --> "0..*" PostTable : One-to-Many blogId FK
-    BlogTable "0..*" --> "0..*" TagTable : Many-to-Many via BlogTagTable
-    BlogTagTable --> BlogTable
-    BlogTagTable --> TagTable
-    PersonTable "1" --> "0..*" AddressTable : One-to-Many personId FK
-
-    style BlogTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style PostTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style TagTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style BlogTagTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style PersonTable fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style AddressTable fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Relationship Mapping Conversion Diagram 1](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-01.svg)
 
 ## Domain ERDs
 
 ### SimpleSchema ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    simple_entity {
-        BIGSERIAL id PK
-        VARCHAR_255 name "UNIQUE NOT NULL"
-        TEXT description "NULL"
-    }
-```
+![SimpleSchema ERD 2](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-02.svg)
 
 ### PersonSchema ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    addresses {
-        BIGSERIAL id PK
-        VARCHAR_255 street "NOT NULL"
-        VARCHAR_255 city "NOT NULL"
-        VARCHAR_2 state "NOT NULL"
-        VARCHAR_10 zip "NULL"
-    }
-    persons {
-        BIGSERIAL id PK
-        VARCHAR_50 first_name "NOT NULL"
-        VARCHAR_50 last_name "NOT NULL"
-        DATE birth_date "NOT NULL"
-        BOOLEAN employed "DEFAULT TRUE"
-        VARCHAR_255 occupation "NULL"
-        BIGINT address_id FK
-    }
-    persons }o--|| addresses : "N:1 (address_id)"
-```
+![PersonSchema ERD 3](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-03.svg)
 
 ### BlogSchema ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    posts {
-        BIGSERIAL id PK
-        VARCHAR_255 title "NOT NULL"
-    }
-    post_details {
-        BIGINT id PK "FK to posts"
-        DATE created_on "NOT NULL"
-        VARCHAR_255 created_by "NOT NULL"
-    }
-    post_comments {
-        BIGSERIAL id PK
-        BIGINT post_id FK
-        VARCHAR_255 review "NOT NULL"
-    }
-    tags {
-        BIGSERIAL id PK
-        VARCHAR_255 name "NOT NULL"
-    }
-    post_tags {
-        BIGSERIAL id PK
-        BIGINT post_id FK
-        BIGINT tag_id FK
-    }
-
-    posts ||--|| post_details : "1:1 (shared PK)"
-    posts ||--o{ post_comments : "1:N (post_id)"
-    posts ||--o{ post_tags : "N:N via post_tags"
-    tags ||--o{ post_tags : "N:N via post_tags"
-```
+![BlogSchema ERD 4](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-04.svg)
 
 ### BookSchema ERD (Composite PK)
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    publishers {
-        INT pub_id PK "autoIncrement"
-        UUID isbn_code PK "autoGenerate"
-        VARCHAR_32 publisher_name "NOT NULL"
-    }
-    authors {
-        SERIAL id PK
-        INT publisher_id FK
-        UUID publisher_isbn FK
-        VARCHAR_32 pen_name "NOT NULL"
-    }
-    books {
-        INT book_id PK "autoIncrement"
-        VARCHAR_32 title "NOT NULL"
-        INT author_id FK "NULL"
-    }
-    reviews {
-        VARCHAR_8 code PK
-        BIGINT rank PK
-        INT book_id FK "NOT NULL"
-    }
-    offices {
-        VARCHAR_8 zip_code PK
-        VARCHAR_64 name PK
-        INT area_code PK
-        BIGINT staff "NULL"
-        INT publisher_id FK "NULL"
-        UUID publisher_isbn FK "NULL"
-    }
-
-    publishers ||--o{ authors : "1:N (pub_id, isbn_code)"
-    authors ||--o{ books : "1:N (author_id)"
-    books ||--o{ reviews : "1:N (book_id)"
-    publishers ||--o{ offices : "1:N (publisher_id, publisher_isbn)"
-```
+![BookSchema ERD (Composite PK) 5](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-05.svg)
 
 ### Entity Class Diagram — JPA Entity vs Exposed DAO
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    direction LR
-    class JPA_SimpleEntity {
-        <<JPA Entity>>
-        @Entity @Table(name="simple_entity")
-        @Id @GeneratedValue Long id
-        @Column String name
-        @Column String description
-    }
-    class Exposed_SimpleTable {
-        <<Exposed Table (DSL)>>
-        object SimpleTable : LongIdTable
-        val name = varchar(255).uniqueIndex()
-        val description = text().nullable()
-    }
-    class Exposed_SimpleEntity {
-        <<Exposed Entity (DAO)>>
-        class SimpleEntity : LongEntity
-        var name by SimpleTable.name
-        var description by SimpleTable.description
-        companion object : LongEntityClass
-    }
-
-    JPA_SimpleEntity ..> Exposed_SimpleTable : DSL migration
-    JPA_SimpleEntity ..> Exposed_SimpleEntity : DAO migration
-
-    class JPA_PersonEntity {
-        <<JPA Entity>>
-        @Entity @ManyToOne Address address
-        String firstName / lastName
-        LocalDate birthDate
-        Boolean employed
-    }
-    class Exposed_PersonDAO {
-        <<Exposed DAO>>
-        class Person : LongEntity
-        var address by Address referencedOn addressId
-        var firstName / lastName / birthDate
-        var employed / occupation
-    }
-
-    JPA_PersonEntity ..> Exposed_PersonDAO : migration
-
-    style JPA_SimpleEntity fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    style Exposed_SimpleTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style Exposed_SimpleEntity fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style JPA_PersonEntity fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    style Exposed_PersonDAO fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-```
+![Entity Class Diagram — JPA Entity vs Exposed DAO 6](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-06.svg)
 
 ## JPA Annotation → Exposed Mapping Reference
 

@@ -26,42 +26,7 @@ This chapter implements REST APIs with Spring Boot + Exposed. It compares two we
 
 ### Module Comparison
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class SpringMvcModule {
-        <<spring-mvc-exposed>>
-        Tomcat + Virtual Threads
-        @Transactional
-        HttpServletRequest
-        ActorRepository (sync)
-        MovieRepository (sync)
-    }
-
-    class SpringWebFluxModule {
-        <<spring-webflux-exposed>>
-        Netty + Coroutines
-        newSuspendedTransaction
-        ServerHttpRequest
-        ActorRepository (suspend)
-        MovieRepository (suspend)
-    }
-
-    class SharedDomain {
-        <<Shared Domain>>
-        MovieTable / MovieEntity
-        ActorTable / ActorEntity
-        ActorInMovieTable
-        MovieRecord / ActorRecord
-    }
-
-    SpringMvcModule --> SharedDomain : uses same schema
-    SpringWebFluxModule --> SharedDomain : uses same schema
-
-    style SpringMvcModule fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style SpringWebFluxModule fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style SharedDomain fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Module Comparison 1](../docs/images/readme-diagrams/01-spring-boot-diagram-01.svg)
 
 ---
 
@@ -71,28 +36,7 @@ Both modules share the same schema and REST API structure.
 
 ### Database Schema
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    MOVIES {
-        bigint id PK
-        varchar name
-        varchar producer_name
-        date release_date
-    }
-    ACTORS {
-        bigint id PK
-        varchar first_name
-        varchar last_name
-        date birthday
-    }
-    ACTORS_IN_MOVIES {
-        bigint movie_id FK
-        bigint actor_id FK
-    }
-    MOVIES ||--o{ ACTORS_IN_MOVIES : "cast"
-    ACTORS ||--o{ ACTORS_IN_MOVIES : "cast"
-```
+![Database Schema 2](../docs/images/readme-diagrams/01-spring-boot-diagram-02.svg)
 
 ### REST API Structure
 

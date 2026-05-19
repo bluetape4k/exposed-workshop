@@ -39,40 +39,7 @@ JPA 외의 데이터베이스 접근 기술을 직접 실습하여 각각의 설
 
 ## 아키텍처 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph App["애플리케이션 레이어"]
-        Controller["Controller\n(REST)"]
-    end
-
-    subgraph Stacks["데이터 접근 스택"]
-        direction TB
-        HR["Hibernate Reactive\nMutiny.Session"]
-        R2["Spring Data R2DBC\nCrudRepository"]
-        VX["Vert.x SQL Client\nSqlTemplate"]
-        EX["Exposed\ntransaction { }"]
-    end
-
-    subgraph DB["데이터베이스"]
-        PG["PostgreSQL"]
-        H2["H2 (In-Memory)"]
-    end
-
-    Controller --> HR & R2 & VX & EX
-    HR -->|Netty Non-blocking| PG
-    R2 -->|R2DBC Non-blocking| PG & H2
-    VX -->|Event Loop| PG & H2
-    EX -->|JDBC / Virtual Thread| PG & H2
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class Controller blue
-    class HR,R2,VX,EX purple
-    class PG,H2 orange
-```
+![Architecture Component 1](../docs/images/readme-diagrams/02-alternatives-to-jpa-ko-diagram-01.svg)
 
 ## 권장 학습 순서
 

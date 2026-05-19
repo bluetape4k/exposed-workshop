@@ -16,62 +16,11 @@ JavaMoney 기반 통화 값을 Exposed 컬럼으로 다루는 모듈입니다. �
 
 ## AccountTable ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    Accounts {
-        SERIAL id PK
-        DECIMAL composite_money "amount (precision=8, scale=5), nullable"
-        VARCHAR composite_money_C "currency code (3자), nullable"
-    }
-```
+![AccountTable ERD 1](../../docs/images/readme-diagrams/06-advanced-05-exposed-money-ko-diagram-01.svg)
 
 ## MonetaryAmount 타입 매핑
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class AccountTable {
-        +id: Column~EntityID~Int~~
-        +composite_money: CompositeMoneyColumn~MonetaryAmount?~
-    }
-    class CompositeMoneyColumn {
-        +amount: Column~BigDecimal?~
-        +currency: Column~CurrencyUnit?~
-    }
-    class MonetaryAmount {
-        <<javax.money>>
-        +number: NumberValue
-        +currency: CurrencyUnit
-    }
-    class BigDecimal {
-        <<java.math>>
-    }
-    class CurrencyUnit {
-        <<javax.money>>
-        +currencyCode: String
-    }
-    class AccountEntity {
-        +money: MonetaryAmount?
-        +amount: BigDecimal?
-        +currency: CurrencyUnit?
-    }
-
-    AccountTable --> CompositeMoneyColumn : compositeMoney()
-    CompositeMoneyColumn --> BigDecimal : amount column
-    CompositeMoneyColumn --> CurrencyUnit : currency column
-    MonetaryAmount --> BigDecimal : number
-    MonetaryAmount --> CurrencyUnit : currency
-    AccountEntity --> AccountTable : maps to
-    AccountEntity --> MonetaryAmount : reads/writes
-
-    style AccountTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style CompositeMoneyColumn fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style MonetaryAmount fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style BigDecimal fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style CurrencyUnit fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style AccountEntity fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-```
+![MonetaryAmount Component Component 2](../../docs/images/readme-diagrams/06-advanced-05-exposed-money-ko-diagram-02.svg)
 
 ## 핵심 개념
 

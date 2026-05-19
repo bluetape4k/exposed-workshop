@@ -16,69 +16,7 @@ A module for integrating `kotlinx.datetime` types with Exposed. Provides standar
 
 ## Kotlin DateTime Type Mapping
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class KotlinDateTimeTable {
-        +date(name): Column~LocalDate~
-        +datetime(name): Column~LocalDateTime~
-        +timestamp(name): Column~Instant~
-        +timestampWithTimeZone(name): Column~LocalDateTime~
-        +time(name): Column~LocalTime~
-    }
-
-    class KotlinLocalDate {
-        <<kotlinx.datetime>>
-        LocalDate
-    }
-    class KotlinLocalDateTime {
-        <<kotlinx.datetime>>
-        LocalDateTime
-    }
-    class KotlinInstant {
-        <<kotlin.time>>
-        Instant
-    }
-    class KotlinLocalTime {
-        <<kotlinx.datetime>>
-        LocalTime
-    }
-
-    class JavaTimeEquivalent {
-        <<java.time (JVM only)>>
-        LocalDate
-        LocalDateTime
-        Instant
-        LocalTime
-    }
-
-    class DBColumn {
-        <<Database>>
-        DATE
-        DATETIME / TIMESTAMP
-        TIMESTAMP / TIMESTAMPTZ
-        TIME
-    }
-
-    KotlinDateTimeTable --> KotlinLocalDate : date()
-    KotlinDateTimeTable --> KotlinLocalDateTime : datetime()
-    KotlinDateTimeTable --> KotlinInstant : timestamp()
-    KotlinDateTimeTable --> KotlinLocalTime : time()
-    KotlinLocalDate --> DBColumn : DATE
-    KotlinLocalDateTime --> DBColumn : DATETIME
-    KotlinInstant --> DBColumn : TIMESTAMP
-    KotlinLocalTime --> DBColumn : TIME
-    KotlinLocalDate .. JavaTimeEquivalent : KMP equivalent
-    KotlinLocalDateTime .. JavaTimeEquivalent : KMP equivalent
-
-    style KotlinDateTimeTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style KotlinLocalDate fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style KotlinLocalDateTime fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style KotlinInstant fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style KotlinLocalTime fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style JavaTimeEquivalent fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style DBColumn fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Kotlin DateTime Type Mapping 1](../../docs/images/readme-diagrams/06-advanced-03-exposed-kotlin-datetime-diagram-01.svg)
 
 ## Key Concepts
 

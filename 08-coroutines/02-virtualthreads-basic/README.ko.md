@@ -49,33 +49,7 @@ val ids = futures.awaitAll()
 
 ## Virtual Thread 트랜잭션 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant C as Caller (일반 코드)
-    participant VT as newVirtualThreadJdbcTransaction
-    participant VTA as virtualThreadJdbcTransactionAsync
-    participant DB as Database
-
-    C->>VT: newVirtualThreadJdbcTransaction { }
-    Note over VT: JVM이 Virtual Thread 생성, 플랫폼 스레드에 마운트
-    VT->>DB: BEGIN
-    VT->>DB: INSERT / SELECT ...
-    alt 정상 완료
-        VT->>DB: COMMIT
-        VT-->>C: 결과 반환
-    else 예외 발생
-        VT->>DB: ROLLBACK
-        VT-->>C: 예외 전파
-    end
-
-    C->>VTA: virtualThreadJdbcTransactionAsync { }
-    VTA-->>C: VirtualFuture<T> (즉시 반환)
-    Note over C,VTA: 병렬로 여러 Virtual Thread 실행
-    C->>C: futures.awaitAll()
-    VTA->>DB: BEGIN → SQL → COMMIT
-    VTA-->>C: 결과 반환
-```
+![Virtual Thread Transaction Component 1](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-ko-diagram-01.svg)
 
 ## 코루틴 vs Virtual Threads 실무 선택 가이드
 
@@ -91,84 +65,15 @@ sequenceDiagram
 
 ## Virtual Thread 처리 모델 flowchart
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    A["일반 코드 (블로킹 스타일)"] --> B["newVirtualThreadJdbcTransaction { }"]
-    B --> C["JVM: Virtual Thread 생성"]
-    C --> D["플랫폼 스레드에 마운트\n(OS Thread-N)"]
-    D --> E["Exposed Transaction 시작\nBEGIN"]
-    E --> F["DB 작업 수행\n(INSERT / SELECT / UPDATE)"]
-    F --> G{결과}
-    G -->|정상| H["COMMIT\n결과 반환"]
-    G -->|예외| I["ROLLBACK\n예외 전파"]
-    H --> J["Virtual Thread 종료\n(플랫폼 스레드 반환)"]
-    I --> J
-
-    B2["virtualThreadJdbcTransactionAsync { }"] --> K["VirtualFuture&lt;T&gt; 즉시 반환"]
-    K --> L["병렬 Virtual Thread들 실행"]
-    L --> M["futures.awaitAll() 대기"]
-    M --> N["모든 결과 수집"]
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-
-    class A blue
-    class B,C,D green
-    class E,F orange
-    class H green
-    class I red
-    class J purple
-    class B2,K,L,M,N blue
-```
+![Virtual Thread Component Component flowchart 2](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-ko-diagram-02.svg)
 
 ## Virtual Thread vs Platform Thread 비교 다이어그램
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph PlatformThread["플랫폼 스레드 (전통적 방식)"]
-        direction TD
-        P1["요청 1 → OS Thread-1 점유\n(I/O 대기 중에도 스레드 블로킹)"]
-        P2["요청 2 → OS Thread-2 점유"]
-        P3["요청 N → OS Thread-N 점유"]
-        P1 & P2 & P3 --> PLimit["스레드 수 한계\n→ 동시성 제한"]
-    end
-
-    subgraph VirtualThread["Virtual Thread (Java 21+)"]
-        direction TD
-        V1["Virtual Thread 1"] & V2["Virtual Thread 2"] & V3["Virtual Thread N"]
-        V1 & V2 & V3 --> |"I/O 대기 시 언마운트"| Carrier["소수의 Carrier(OS) Thread"]
-        Carrier --> |"작업 재개 시 마운트"| V1
-        Carrier --> VScale["수백만 개 동시 실행 가능"]
-    end
-
-    PlatformThread -. "Java 21 이상에서 대체" .-> VirtualThread
-
-    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class P1,P2,P3,PLimit red
-    class V1,V2,V3,Carrier,VScale green
-```
+![Virtual Thread vs Platform Thread Component Diagram 3](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-ko-diagram-03.svg)
 
 ## 테이블 ERD (virtualthreads_table)
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    virtualthreads_table {
-        SERIAL id PK
-        VARCHAR_50 name "NULL"
-    }
-    virtualthreads_table_unique {
-        INT id PK "UNIQUE INDEX"
-    }
-```
+![Table ERD (virtualthreadstable) 4](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-ko-diagram-04.svg)
 
 ## 예제 구성
 

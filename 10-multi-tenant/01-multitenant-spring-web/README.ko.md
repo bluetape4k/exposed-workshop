@@ -21,162 +21,17 @@ Spring MVC 환경에서 Exposed 기반 Schema 멀티테넌시를 구현하는 �
 
 ## 도메인 모델
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    MovieTable {
-        BIGSERIAL id PK
-        VARCHAR(255) name
-        VARCHAR(255) producerName
-        DATE releaseDate
-    }
-    ActorTable {
-        BIGSERIAL id PK
-        VARCHAR(255) firstName
-        VARCHAR(255) lastName
-        DATE birthday
-    }
-    ActorInMovieTable {
-        BIGINT movieId FK
-        BIGINT actorId FK
-    }
-
-    MovieTable ||--o{ ActorInMovieTable : "has"
-    ActorTable ||--o{ ActorInMovieTable : "appears in"
-```
+![Domain Component 1](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-ko-diagram-01.svg)
 
 ---
 
 ## 아키텍처
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class TenantFilter {
-        +TENANT_HEADER: String
-        +doFilter(request, response, chain)
-        -extractTenant(request) Tenant
-    }
-
-    class TenantContext {
-        -currentTenant: ThreadLocal~Tenant~
-        +setCurrentTenant(tenant)
-        +getCurrentTenant() Tenant
-        +getCurrentTenantSchema() Schema
-        +clear()
-        +withTenant(tenant, block)
-    }
-
-    class Tenants {
-        +DEFAULT_TENANT: Tenant
-        +getById(tenantId) Tenant
-        +getTenantSchema(tenant) Schema
-    }
-
-    class Tenant {
-        <<enumeration>>
-        KOREAN
-        ENGLISH
-        +id: String
-    }
-
-    class TenantAwareDataSource {
-        +determineCurrentLookupKey() Any
-    }
-
-    class TenantSchemaAspect {
-        +setSchemaForTransaction()
-    }
-
-    class TenantInitializer {
-        +onApplicationEvent(event)
-    }
-
-    class DataInitializer {
-        +initialize()
-        -createSchema(tenant)
-        -populateData(tenant)
-    }
-
-    class ExposedMutitenantConfig {
-        +tenantAwareDataSource() TenantAwareDataSource
-        +dataSource() DataSource
-        +database(dataSource, config) Database
-    }
-
-    class ActorController {
-        +getAllActors() List~ActorRecord~
-        +findById(id) ActorRecord
-    }
-
-    TenantFilter --> TenantContext : withTenant()
-    TenantContext --> Tenants : 테넌트 조회
-    Tenants --> Tenant : 열거형 멤버
-    TenantAwareDataSource --> TenantContext : getCurrentTenant()
-    TenantSchemaAspect --> TenantContext : getCurrentTenantSchema()
-    TenantInitializer --> DataInitializer : initialize()
-    TenantInitializer --> TenantContext : withTenant()
-    ExposedMutitenantConfig --> TenantAwareDataSource : 빈 생성
-    ActorController --> TenantContext : 간접 참조(AOP)
-
-    style TenantFilter fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style TenantContext fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Tenants fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Tenant fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    style TenantAwareDataSource fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style TenantSchemaAspect fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style TenantInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style DataInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style ExposedMutitenantConfig fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-    style ActorController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-```
+![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-ko-diagram-02.svg)
 
 ### TenantResolver 클래스 계층
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class Filter {
-        <<interface>>
-        +doFilter(request, response, chain)
-    }
-    class TenantFilter {
-        +TENANT_HEADER: String
-        +doFilter(request, response, chain)
-        -extractTenant(request) Tenant
-    }
-    class TenantContext {
-        -currentTenant: ThreadLocal~Tenant~
-        +setCurrentTenant(tenant)
-        +getCurrentTenant() Tenant
-        +getCurrentTenantSchema() Schema
-        +clear()
-        +withTenant(tenant, block)
-    }
-    class Tenants {
-        <<object>>
-        +DEFAULT_TENANT: Tenant
-        +getById(tenantId) Tenant
-        +getTenantSchema(tenant) Schema
-    }
-    class Tenant {
-        <<enumeration>>
-        KOREAN
-        ENGLISH
-        +id: String
-    }
-
-    Filter <|.. TenantFilter
-    TenantFilter --> TenantContext : withTenant()
-    TenantContext --> Tenants : 테넌트 조회
-    Tenants --> Tenant : 열거형 멤버
-
-    style Filter fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style TenantFilter fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style TenantContext fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Tenants fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Tenant fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-```
+![TenantResolver Component Component 3](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-ko-diagram-03.svg)
 
 ### 멀티테넌시 전략: Shared Database / Separate Schema
 
@@ -193,34 +48,7 @@ classDiagram
 
 ## 요청 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant Client
-    participant TenantFilter
-    participant TenantContext
-    participant TenantSchemaAspect
-    participant ActorController
-    participant ActorExposedRepository
-    participant Database
-
-    Client->>TenantFilter: GET /actors (X-TENANT-ID: korean)
-    TenantFilter->>TenantContext: withTenant(KOREAN) { ... }
-    TenantContext->>TenantContext: ThreadLocal.set(KOREAN)
-
-    TenantFilter->>ActorController: chain.doFilter()
-    ActorController->>TenantSchemaAspect: @Transactional 진입 (AOP Before)
-    TenantSchemaAspect->>TenantContext: getCurrentTenantSchema()
-    TenantSchemaAspect->>Database: SchemaUtils.setSchema("korean")
-
-    ActorController->>ActorExposedRepository: findAll()
-    ActorExposedRepository->>Database: SELECT * FROM korean.actor
-    Database-->>ActorExposedRepository: ResultSet
-    ActorExposedRepository-->>ActorController: List~ActorRecord~
-    ActorController-->>Client: 200 OK [{ "firstName": "조니", ... }]
-
-    Note over TenantFilter,TenantContext: 요청 완료 후 finally 블록에서 ThreadLocal.clear()
-```
+![Request Component 4](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-ko-diagram-04.svg)
 
 ---
 
