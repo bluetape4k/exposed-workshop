@@ -35,7 +35,7 @@
   <text class="label" x="175" y="57" text-anchor="middle">AbstractJdbcRedissonRepository</text>
   <text class="mono" x="18" y="108">+cacheName: String</text>
 <text class="mono" x="18" y="132">+config: RedisCacheConfig</text>
-<text class="mono" x="18" y="156">+entityTable: T</text>
+<text class="mono" x="18" y="156">+table: T</text>
 <text class="mono" x="18" y="180">+findById(id): E?</text>
 <text class="mono" x="18" y="204">+findAll(): List~E~</text>
 <text class="mono" x="18" y="228">+saveAll(entities): List~E~</text>
@@ -56,7 +56,7 @@
   <text class="label" x="175" y="57" text-anchor="middle">UserCacheRepository</text>
   <text class="mono" x="18" y="108">+cacheName = exposed:users</text>
 <text class="mono" x="18" y="132">+config = READ_WRITE_THROUGH_WITH_NEAR_CACHE</text>
-<text class="mono" x="18" y="156">+entityTable: UserTable</text>
+<text class="mono" x="18" y="156">+table: UserTable</text>
 <text class="mono" x="18" y="180">#doInsertEntity(stmt, entity)</text>
 <text class="mono" x="18" y="204">#doUpdateEntity(stmt, entity)</text>
 </g>
@@ -67,7 +67,7 @@
   <text class="label" x="175" y="57" text-anchor="middle">UserCredentialsCacheRepository</text>
   <text class="mono" x="18" y="108">+cacheName = exposed:user-credentials</text>
 <text class="mono" x="18" y="132">+config = READ_ONLY_WITH_NEAR_CACHE</text>
-<text class="mono" x="18" y="156">+entityTable: UserCredentialsTable</text>
+<text class="mono" x="18" y="156">+table: UserCredentialsTable</text>
 </g>
 <g transform="translate(928,570)">
   <rect class="card" x="0" y="0" width="350" height="216" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
@@ -76,7 +76,7 @@
   <text class="label" x="175" y="57" text-anchor="middle">UserEventCacheRepository</text>
   <text class="mono" x="18" y="108">+cacheName = exposed:user-events</text>
 <text class="mono" x="18" y="132">+config = WRITE_BEHIND_WITH_NEAR_CACHE</text>
-<text class="mono" x="18" y="156">+entityTable: UserEventTable</text>
+<text class="mono" x="18" y="156">+table: UserEventTable</text>
 <text class="mono" x="18" y="180">#doInsertEntity(stmt, entity)</text>
 <text class="mono" x="18" y="204">#doUpdateEntity(stmt, entity)</text>
 </g>
