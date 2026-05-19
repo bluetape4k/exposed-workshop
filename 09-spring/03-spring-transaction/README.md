@@ -17,7 +17,7 @@ A declarative transaction integration module centered on `@Transactional`. It re
 
 ## Architecture
 
-![Architecture 1](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-diagram-01.png)
 
 ## Key Concepts
 
@@ -115,7 +115,7 @@ object OrderSchema {
 
 ## Transaction Propagation Flow
 
-![Transaction Propagation Flow 2](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-diagram-02.svg)
+![Transaction Propagation Flow 2](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-diagram-02.png)
 
 ## How to Run
 

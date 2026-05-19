@@ -20,11 +20,11 @@ Spring WebFlux + 코루틴 환경에서 Exposed를 비동기 Repository 패턴�
 
 ## 도메인 모델
 
-![Domain Component 1](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-ko-diagram-01.svg)
+![Domain Component 1](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-ko-diagram-01.png)
 
 ## 아키텍처
 
-![Architecture 2](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-ko-diagram-02.svg)
+![Architecture 2](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-ko-diagram-02.png)
 
 ## 핵심 개념
 
@@ -86,7 +86,7 @@ class MovieTransactionalService(
 
 ## 동기 vs 코루틴 Repository 비교
 
-![Component vs Coroutines Repository Component 3](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-ko-diagram-03.svg)
+![Component vs Coroutines Repository Component 3](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-ko-diagram-03.png)
 
 ## 조인 최적화 패턴
 

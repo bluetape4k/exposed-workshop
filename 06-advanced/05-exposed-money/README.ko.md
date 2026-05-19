@@ -16,11 +16,11 @@ JavaMoney 기반 통화 값을 Exposed 컬럼으로 다루는 모듈입니다. �
 
 ## AccountTable ERD
 
-![AccountTable ERD 1](../../docs/images/readme-diagrams/06-advanced-05-exposed-money-ko-diagram-01.svg)
+![AccountTable ERD 1](../../docs/images/readme-diagrams/06-advanced-05-exposed-money-ko-diagram-01.png)
 
 ## MonetaryAmount 타입 매핑
 
-![MonetaryAmount Component Component 2](../../docs/images/readme-diagrams/06-advanced-05-exposed-money-ko-diagram-02.svg)
+![MonetaryAmount Component Component 2](../../docs/images/readme-diagrams/06-advanced-05-exposed-money-ko-diagram-02.png)
 
 ## 핵심 개념
 

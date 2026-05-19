@@ -18,7 +18,7 @@
 
 ## 아키텍처
 
-![Architecture 1](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-ko-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-ko-diagram-01.png)
 
 ## 핵심 개념
 
@@ -103,9 +103,9 @@ fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
 
 ## 도메인 모델
 
-![Domain Component 2](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-ko-diagram-02.svg)
+![Domain Component 2](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-ko-diagram-02.png)
 
-![Domain Component 3](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-ko-diagram-03.svg)
+![Domain Component 3](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-ko-diagram-03.png)
 
 ## REST API 엔드포인트
 

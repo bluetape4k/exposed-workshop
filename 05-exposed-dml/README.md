@@ -27,7 +27,7 @@ A chapter covering the full read/write flow in Exposed 1.1.1, from SELECT/INSERT
 
 ## Architecture Overview
 
-![Architecture Overview 1](../docs/images/readme-diagrams/05-exposed-dml-diagram-01.svg)
+![Architecture Overview 1](../docs/images/readme-diagrams/05-exposed-dml-diagram-01.png)
 
 ## Recommended Study Order
 

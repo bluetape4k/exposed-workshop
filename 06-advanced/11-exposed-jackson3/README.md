@@ -16,7 +16,7 @@ A module for integrating JSON columns using Jackson 3. Covers the serialization 
 
 ## Jackson 3 Processing Flow
 
-![Jackson 3 Processing Flow 1](../../docs/images/readme-diagrams/06-advanced-11-exposed-jackson3-diagram-01.svg)
+![Jackson 3 Processing Flow 1](../../docs/images/readme-diagrams/06-advanced-11-exposed-jackson3-diagram-01.png)
 
 ## Key Concepts
 

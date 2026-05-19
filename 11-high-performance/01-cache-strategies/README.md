@@ -24,31 +24,31 @@ By extending `AbstractJdbcRedissonRepository`, you can select among three cache 
 
 ## Domain ERD
 
-![Domain ERD 1](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-diagram-01.svg)
+![Domain ERD 1](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-diagram-01.png)
 
 ---
 
 ## Cache Strategy Architecture
 
-![Cache Strategy Architecture 2](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-diagram-02.svg)
+![Cache Strategy Architecture 2](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-diagram-02.png)
 
 ---
 
 ## Class Structure
 
-![Class Structure 3](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-diagram-03.svg)
+![Class Structure 3](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-diagram-03.png)
 
 ---
 
 ## Request Processing Flow — Write-Behind Async Event Loading
 
-![Request Processing Flow — Write-Behind Async Event Loading 4](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-diagram-04.svg)
+![Request Processing Flow — Write-Behind Async Event Loading 4](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-diagram-04.png)
 
 ---
 
 ## Request Processing Flow — Read-Through + Write-Through (User)
 
-![Request Processing Flow — Read-Through + Write-Through (User) 5](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-diagram-05.svg)
+![Request Processing Flow — Read-Through + Write-Through (User) 5](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-diagram-05.png)
 
 ---
 

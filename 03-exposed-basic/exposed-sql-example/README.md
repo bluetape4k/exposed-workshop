@@ -20,15 +20,15 @@ Exposed DSL expresses SQL queries as Kotlin type-safe function chains. You defin
 
 ## ERD
 
-![ERD 1](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-diagram-01.svg)
+![ERD 1](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-diagram-01.png)
 
 ## DSL Query Flow
 
-![DSL Query Flow 2](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-diagram-02.svg)
+![DSL Query Flow 2](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-diagram-02.png)
 
 ## Domain Model
 
-![Domain Model 3](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-diagram-03.svg)
+![Domain Model 3](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-diagram-03.png)
 
 ### Table Definition
 

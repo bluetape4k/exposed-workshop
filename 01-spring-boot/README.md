@@ -26,7 +26,7 @@ This chapter implements REST APIs with Spring Boot + Exposed. It compares two we
 
 ### Module Comparison
 
-![Module Comparison 1](../docs/images/readme-diagrams/01-spring-boot-diagram-01.svg)
+![Module Comparison 1](../docs/images/readme-diagrams/01-spring-boot-diagram-01.png)
 
 ---
 
@@ -36,7 +36,7 @@ Both modules share the same schema and REST API structure.
 
 ### Database Schema
 
-![Database Schema 2](../docs/images/readme-diagrams/01-spring-boot-diagram-02.svg)
+![Database Schema 2](../docs/images/readme-diagrams/01-spring-boot-diagram-02.png)
 
 ### REST API Structure
 

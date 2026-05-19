@@ -22,7 +22,7 @@ WebFlux + Coroutines 기반의 논블로킹 멀티테넌트 예제입니다. Rea
 
 ## 도메인 모델
 
-![Domain Component 1](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-ko-diagram-01.svg)
+![Domain Component 1](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-ko-diagram-01.png)
 
 ---
 
@@ -40,7 +40,7 @@ WebFlux + Coroutines 기반의 논블로킹 멀티테넌트 예제입니다. Rea
 
 ## 아키텍처
 
-![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-ko-diagram-02.svg)
+![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-ko-diagram-02.png)
 
 ### 컨텍스트 전파 체계
 
@@ -58,13 +58,13 @@ HTTP 요청
 
 ### Reactor Context를 통한 테넌트 전파 흐름
 
-![Reactor ContextComponent Component Component Component Component 3](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-ko-diagram-03.svg)
+![Reactor ContextComponent Component Component Component Component 3](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-ko-diagram-03.png)
 
 ---
 
 ## 요청 흐름
 
-![Request Component 4](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-ko-diagram-04.svg)
+![Request Component 4](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-ko-diagram-04.png)
 
 ---
 

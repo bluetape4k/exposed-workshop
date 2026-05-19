@@ -21,17 +21,17 @@ Spring MVC 환경에서 Exposed 기반 Schema 멀티테넌시를 구현하는 �
 
 ## 도메인 모델
 
-![Domain Component 1](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-ko-diagram-01.svg)
+![Domain Component 1](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-ko-diagram-01.png)
 
 ---
 
 ## 아키텍처
 
-![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-ko-diagram-02.svg)
+![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-ko-diagram-02.png)
 
 ### TenantResolver 클래스 계층
 
-![TenantResolver Component Component 3](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-ko-diagram-03.svg)
+![TenantResolver Component Component 3](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-ko-diagram-03.png)
 
 ### 멀티테넌시 전략: Shared Database / Separate Schema
 
@@ -48,7 +48,7 @@ Spring MVC 환경에서 Exposed 기반 Schema 멀티테넌시를 구현하는 �
 
 ## 요청 흐름
 
-![Request Component 4](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-ko-diagram-04.svg)
+![Request Component 4](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-ko-diagram-04.png)
 
 ---
 

@@ -105,15 +105,15 @@ EntityHook.subscribe { change ->
 
 ## Entity 관계 매핑 다이어그램
 
-![Entity Component Component Diagram 1](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-ko-diagram-01.svg)
+![Entity Component Component Diagram 1](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-ko-diagram-01.png)
 
 ## XEntity-YEntity 관계 ERD
 
-![XEntity-YEntity Component ERD 2](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-ko-diagram-02.svg)
+![XEntity-YEntity Component ERD 2](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-ko-diagram-02.png)
 
 ## Entity 클래스 계층 다이어그램
 
-![Entity Component Component Diagram 3](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-ko-diagram-03.svg)
+![Entity Component Component Diagram 3](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-ko-diagram-03.png)
 
 ## PK 전략 비교
 

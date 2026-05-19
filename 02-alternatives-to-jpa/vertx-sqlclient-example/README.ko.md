@@ -18,11 +18,11 @@ Vert.x SQL Client는 ORM 없이 SQL을 직접 작성하고 이벤트 루프에�
 
 ## 아키텍처 흐름
 
-![Architecture Component 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-ko-diagram-01.svg)
+![Architecture Component 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-ko-diagram-01.png)
 
 ## ERD
 
-![ERD 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-ko-diagram-02.svg)
+![ERD 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-ko-diagram-02.png)
 
 ## 도메인 모델
 

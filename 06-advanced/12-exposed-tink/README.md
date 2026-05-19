@@ -32,11 +32,11 @@ Declaring a column with extension functions provided by `exposed-tink` enables a
 
 ## Encryption Flow
 
-![Encryption Flow 1](../../docs/images/readme-diagrams/06-advanced-12-exposed-tink-diagram-01.svg)
+![Encryption Flow 1](../../docs/images/readme-diagrams/06-advanced-12-exposed-tink-diagram-01.png)
 
 ## Tink Encryption Class Hierarchy
 
-![Tink Encryption Class Hierarchy 2](../../docs/images/readme-diagrams/06-advanced-12-exposed-tink-diagram-02.svg)
+![Tink Encryption Class Hierarchy 2](../../docs/images/readme-diagrams/06-advanced-12-exposed-tink-diagram-02.png)
 
 ## Provided Column Extension Functions
 

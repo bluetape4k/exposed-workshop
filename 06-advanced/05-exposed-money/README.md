@@ -16,11 +16,11 @@ A module for handling JavaMoney-based currency values as Exposed columns. Provid
 
 ## AccountTable ERD
 
-![AccountTable ERD 1](../../docs/images/readme-diagrams/06-advanced-05-exposed-money-diagram-01.svg)
+![AccountTable ERD 1](../../docs/images/readme-diagrams/06-advanced-05-exposed-money-diagram-01.png)
 
 ## MonetaryAmount Type Mapping
 
-![MonetaryAmount Type Mapping 2](../../docs/images/readme-diagrams/06-advanced-05-exposed-money-diagram-02.svg)
+![MonetaryAmount Type Mapping 2](../../docs/images/readme-diagrams/06-advanced-05-exposed-money-diagram-02.png)
 
 ## Key Concepts
 

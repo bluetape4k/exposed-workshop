@@ -26,19 +26,19 @@ Uses a custom `DynamicRoutingDataSource` instead of Spring's `AbstractRoutingDat
 
 ## Routing Key Resolution Flow
 
-![Routing Key Resolution Flow 1](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-diagram-01.svg)
+![Routing Key Resolution Flow 1](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-diagram-01.png)
 
 ---
 
 ## Class Structure
 
-![Class Structure 2](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-diagram-02.svg)
+![Class Structure 2](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-diagram-02.png)
 
 ---
 
 ## Request Processing Flow — Multi-Tenant Read/Write Separation Routing
 
-![Request Processing Flow — Multi-Tenant Read/Write Separation Routing 3](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-diagram-03.svg)
+![Request Processing Flow — Multi-Tenant Read/Write Separation Routing 3](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-diagram-03.png)
 
 ---
 

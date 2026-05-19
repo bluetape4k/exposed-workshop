@@ -30,7 +30,7 @@ This chapter covers integration patterns for running Exposed reliably in a Sprin
 
 ## Overall Architecture Flow
 
-![Overall Architecture Flow 1](../docs/images/readme-diagrams/09-spring-diagram-01.svg)
+![Overall Architecture Flow 1](../docs/images/readme-diagrams/09-spring-diagram-01.png)
 
 ## Key Pattern Summary
 

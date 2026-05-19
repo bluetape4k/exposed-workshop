@@ -60,15 +60,15 @@ newSuspendedTransaction(singleThreadDispatcher) { ... }
 
 ## Coroutine Transaction Sequence Diagram
 
-![Coroutine Transaction Sequence Diagram 1](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-diagram-01.svg)
+![Coroutine Transaction Sequence Diagram 1](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-diagram-01.png)
 
 ## newSuspendedTransaction Processing Sequence Diagram
 
-![newSuspendedTransaction Processing Sequence Diagram 2](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-diagram-02.svg)
+![newSuspendedTransaction Processing Sequence Diagram 2](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-diagram-02.png)
 
 ## Table ERD (coroutines_tester)
 
-![Table ERD (coroutinestester) 3](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-diagram-03.svg)
+![Table ERD (coroutinestester) 3](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-diagram-03.png)
 
 ## Example Structure
 

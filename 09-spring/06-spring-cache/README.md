@@ -19,7 +19,7 @@ It applies Redis-based caching declaratively using `@Cacheable` and `@CacheEvict
 
 ## Architecture
 
-![Architecture 1](../../docs/images/readme-diagrams/09-spring-06-spring-cache-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-06-spring-cache-diagram-01.png)
 
 ## Key Concepts
 
@@ -89,7 +89,7 @@ class CountryRepository(private val cacheManager: CacheManager) {
 
 ## Cache Flow
 
-![Cache Flow 2](../../docs/images/readme-diagrams/09-spring-06-spring-cache-diagram-02.svg)
+![Cache Flow 2](../../docs/images/readme-diagrams/09-spring-06-spring-cache-diagram-02.png)
 
 ## Domain Model
 
@@ -109,7 +109,7 @@ data class CountryRecord(
 
 ## Cache Hit/Miss Sequence
 
-![Cache Hit/Miss Sequence 3](../../docs/images/readme-diagrams/09-spring-06-spring-cache-diagram-03.svg)
+![Cache Hit/Miss Sequence 3](../../docs/images/readme-diagrams/09-spring-06-spring-cache-diagram-03.png)
 
 ## Cache Key Design Principles
 

@@ -38,7 +38,7 @@ Exposed provides two data access patterns. The **DSL (SQL DSL)** pattern express
 
 ## Domain Model (classDiagram)
 
-![Domain Model (classDiagram) 1](../docs/images/readme-diagrams/03-exposed-basic-diagram-01.svg)
+![Domain Model (classDiagram) 1](../docs/images/readme-diagrams/03-exposed-basic-diagram-01.png)
 
 ## DSL-Style Schema Definition
 

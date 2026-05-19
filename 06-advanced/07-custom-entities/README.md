@@ -34,11 +34,11 @@ Extends Exposed's `IdTable` to implement custom ID strategies such as KSUID, Sno
 
 ## Architecture Flow
 
-![Architecture Flow 1](../../docs/images/readme-diagrams/06-advanced-07-custom-entities-diagram-01.svg)
+![Architecture Flow 1](../../docs/images/readme-diagrams/06-advanced-07-custom-entities-diagram-01.png)
 
 ## Custom ID Strategy Comparison Flow
 
-![Custom ID Strategy Comparison Flow 2](../../docs/images/readme-diagrams/06-advanced-07-custom-entities-diagram-02.svg)
+![Custom ID Strategy Comparison Flow 2](../../docs/images/readme-diagrams/06-advanced-07-custom-entities-diagram-02.png)
 
 ## Key Concepts
 

@@ -16,7 +16,7 @@ Fastjson2 기반 JSON 컬럼 처리를 다루는 모듈입니다. Jackson 대안
 
 ## Fastjson2 처리 흐름
 
-![Fastjson2 Component Component 1](../../docs/images/readme-diagrams/06-advanced-09-exposed-fastjson2-ko-diagram-01.svg)
+![Fastjson2 Component Component 1](../../docs/images/readme-diagrams/06-advanced-09-exposed-fastjson2-ko-diagram-01.png)
 
 ## 핵심 개념
 

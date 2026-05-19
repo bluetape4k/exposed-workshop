@@ -21,11 +21,11 @@ The Exposed DAO pattern provides ORM-style data access via an `IntIdTable` and `
 
 ## ERD
 
-![ERD 1](../../docs/images/readme-diagrams/03-exposed-basic-exposed-dao-example-diagram-01.svg)
+![ERD 1](../../docs/images/readme-diagrams/03-exposed-basic-exposed-dao-example-diagram-01.png)
 
 ## Domain Model
 
-![Domain Model 2](../../docs/images/readme-diagrams/03-exposed-basic-exposed-dao-example-diagram-02.svg)
+![Domain Model 2](../../docs/images/readme-diagrams/03-exposed-basic-exposed-dao-example-diagram-02.png)
 
 ## Core Concepts
 

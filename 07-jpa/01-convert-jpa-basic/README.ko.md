@@ -78,29 +78,29 @@ transaction {
 
 ## 관계 매핑 변환 다이어그램
 
-![Component Component Component Diagram 1](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-ko-diagram-01.svg)
+![Component Component Component Diagram 1](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-ko-diagram-01.png)
 
 ## 도메인 ERD
 
 ### SimpleSchema ERD
 
-![SimpleSchema ERD 2](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-ko-diagram-02.svg)
+![SimpleSchema ERD 2](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-ko-diagram-02.png)
 
 ### PersonSchema ERD
 
-![PersonSchema ERD 3](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-ko-diagram-03.svg)
+![PersonSchema ERD 3](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-ko-diagram-03.png)
 
 ### BlogSchema ERD
 
-![BlogSchema ERD 4](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-ko-diagram-04.svg)
+![BlogSchema ERD 4](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-ko-diagram-04.png)
 
 ### BookSchema ERD (복합 PK)
 
-![BookSchema ERD (Component PK) 5](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-ko-diagram-05.svg)
+![BookSchema ERD (Component PK) 5](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-ko-diagram-05.png)
 
 ### Entity 클래스 다이어그램 — JPA Entity vs Exposed DAO
 
-![Entity Component Diagram — JPA Entity vs Exposed DAO 6](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-ko-diagram-06.svg)
+![Entity Component Diagram — JPA Entity vs Exposed DAO 6](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-ko-diagram-06.png)
 
 ## JPA 어노테이션 → Exposed 매핑 대비표
 

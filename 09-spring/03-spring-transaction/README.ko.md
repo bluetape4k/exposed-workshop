@@ -18,7 +18,7 @@
 
 ## 아키텍처
 
-![Architecture 1](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-ko-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-ko-diagram-01.png)
 
 ## 핵심 개념
 
@@ -116,7 +116,7 @@ object OrderSchema {
 
 ## 트랜잭션 전파 흐름
 
-![Transaction Component Component 2](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-ko-diagram-02.svg)
+![Transaction Component Component 2](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-ko-diagram-02.png)
 
 ## 실행 방법
 

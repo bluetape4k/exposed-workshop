@@ -19,7 +19,7 @@ Spring Cache 추상화와 Exposed를 통합하는 모듈입니다.
 
 ## 아키텍처
 
-![Architecture 1](../../docs/images/readme-diagrams/09-spring-06-spring-cache-ko-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-06-spring-cache-ko-diagram-01.png)
 
 ## 핵심 개념
 
@@ -89,7 +89,7 @@ class CountryRepository(private val cacheManager: CacheManager) {
 
 ## 캐시 흐름
 
-![Cache Component 2](../../docs/images/readme-diagrams/09-spring-06-spring-cache-ko-diagram-02.svg)
+![Cache Component 2](../../docs/images/readme-diagrams/09-spring-06-spring-cache-ko-diagram-02.png)
 
 ## 도메인 모델
 
@@ -109,7 +109,7 @@ data class CountryRecord(
 
 ## 캐시 히트/미스 시퀀스
 
-![Cache Hit/Miss Component 3](../../docs/images/readme-diagrams/09-spring-06-spring-cache-ko-diagram-03.svg)
+![Cache Hit/Miss Component 3](../../docs/images/readme-diagrams/09-spring-06-spring-cache-ko-diagram-03.png)
 
 ## 캐시 키 설계 원칙
 

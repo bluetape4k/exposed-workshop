@@ -20,7 +20,7 @@ A REST API module using Exposed DSL/DAO in a Spring MVC + Virtual Threads enviro
 
 ## Architecture
 
-![Architecture 1](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-diagram-01.png)
 
 ---
 
@@ -74,7 +74,7 @@ A REST API module using Exposed DSL/DAO in a Spring MVC + Virtual Threads enviro
 
 ## Request Processing Flow
 
-![Request Processing Flow 2](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-diagram-02.svg)
+![Request Processing Flow 2](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-diagram-02.png)
 
 ---
 
@@ -168,7 +168,7 @@ Switch databases using Spring Profiles:
 
 ## Domain Model
 
-![Domain Model 3](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-diagram-03.svg)
+![Domain Model 3](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-diagram-03.png)
 
 | Class                            | Description                                                     |
 |----------------------------------|-----------------------------------------------------------------|

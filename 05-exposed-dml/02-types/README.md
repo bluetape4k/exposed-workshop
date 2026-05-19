@@ -16,7 +16,7 @@ A module for validating Exposed column types per DB Dialect. Covers not only bas
 
 ## Exposed Column Type Hierarchy
 
-![Exposed Column Type Hierarchy 1](../../docs/images/readme-diagrams/05-exposed-dml-02-types-diagram-01.svg)
+![Exposed Column Type Hierarchy 1](../../docs/images/readme-diagrams/05-exposed-dml-02-types-diagram-01.png)
 
 ## Key Concepts
 

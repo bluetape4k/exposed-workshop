@@ -7,7 +7,7 @@ JSON, 오류 매핑, service 경계, H2 기반 Exposed JDBC repository만 다룹
 
 ## 아키텍처
 
-![Architecture 1](../../docs/images/readme-diagrams/12-production-integration-01-ktor-application-architecture-ko-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/12-production-integration-01-ktor-application-architecture-ko-diagram-01.png)
 
 ## 학습 목표
 

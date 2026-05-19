@@ -22,11 +22,11 @@ Through extension functions provided by the `bluetape4k-exposed` library, you ca
 
 ## Architecture Flow
 
-![Architecture Flow 1](../../docs/images/readme-diagrams/06-advanced-06-custom-columns-diagram-01.svg)
+![Architecture Flow 1](../../docs/images/readme-diagrams/06-advanced-06-custom-columns-diagram-01.png)
 
 ## Custom ColumnType Hierarchy
 
-![Custom ColumnType Hierarchy 2](../../docs/images/readme-diagrams/06-advanced-06-custom-columns-diagram-02.svg)
+![Custom ColumnType Hierarchy 2](../../docs/images/readme-diagrams/06-advanced-06-custom-columns-diagram-02.png)
 
 ## Custom Column Type List
 

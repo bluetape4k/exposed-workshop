@@ -15,13 +15,13 @@
 
 ## 도메인 ERD
 
-![Domain ERD 1](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-ko-diagram-01.svg)
+![Domain ERD 1](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-ko-diagram-01.png)
 
 ---
 
 ## Exposed vs JPA 벤치마크 구조
 
-![Exposed vs JPA Component Component 2](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-ko-diagram-02.svg)
+![Exposed vs JPA Component Component 2](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-ko-diagram-02.png)
 
 ---
 
@@ -37,7 +37,7 @@
 
 ## 클래스 구조
 
-![Component Component 3](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-ko-diagram-03.svg)
+![Component Component 3](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-ko-diagram-03.png)
 
 ---
 
@@ -94,7 +94,7 @@
 
 ## 벤치마크 흐름
 
-![Component Component 4](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-ko-diagram-04.svg)
+![Component Component 4](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-ko-diagram-04.png)
 
 ---
 

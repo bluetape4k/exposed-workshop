@@ -16,7 +16,7 @@ A module for handling JSON columns using Fastjson2. Provides integration pattern
 
 ## Fastjson2 Processing Flow
 
-![Fastjson2 Processing Flow 1](../../docs/images/readme-diagrams/06-advanced-09-exposed-fastjson2-diagram-01.svg)
+![Fastjson2 Processing Flow 1](../../docs/images/readme-diagrams/06-advanced-09-exposed-fastjson2-diagram-01.png)
 
 ## Key Concepts
 

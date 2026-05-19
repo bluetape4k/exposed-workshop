@@ -32,15 +32,15 @@
 
 ## 전환 전략 개요
 
-![Component Component Component 1](../docs/images/readme-diagrams/07-jpa-ko-diagram-01.svg)
+![Component Component Component 1](../docs/images/readme-diagrams/07-jpa-ko-diagram-01.png)
 
 ## JPA vs Exposed 개념 비교 다이어그램
 
-![JPA vs Exposed Component Component Diagram 2](../docs/images/readme-diagrams/07-jpa-ko-diagram-02.svg)
+![JPA vs Exposed Component Component Diagram 2](../docs/images/readme-diagrams/07-jpa-ko-diagram-02.png)
 
 ## 전환 접근법 비교
 
-![Component Component Component 3](../docs/images/readme-diagrams/07-jpa-ko-diagram-03.svg)
+![Component Component Component 3](../docs/images/readme-diagrams/07-jpa-ko-diagram-03.png)
 
 ## 포함 모듈
 

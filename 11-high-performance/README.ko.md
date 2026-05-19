@@ -30,13 +30,13 @@
 
 ## 모듈 관계
 
-![Component Component 1](../docs/images/readme-diagrams/11-high-performance-ko-diagram-01.svg)
+![Component Component 1](../docs/images/readme-diagrams/11-high-performance-ko-diagram-01.png)
 
 ---
 
 ## 전체 아키텍처
 
-![Component Architecture 2](../docs/images/readme-diagrams/11-high-performance-ko-diagram-02.svg)
+![Component Architecture 2](../docs/images/readme-diagrams/11-high-performance-ko-diagram-02.png)
 
 ---
 

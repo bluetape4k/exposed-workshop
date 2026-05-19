@@ -95,15 +95,15 @@ Cities.deleteWhere { Cities.id eq targetId }
 
 ## DML Flow Diagram
 
-![DML Flow Diagram 1](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-diagram-01.svg)
+![DML Flow Diagram 1](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-diagram-01.png)
 
 ## CRUD Sequence Diagram
 
-![CRUD Sequence Diagram 2](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-diagram-02.svg)
+![CRUD Sequence Diagram 2](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-diagram-02.png)
 
 ## City-User Domain ERD
 
-![City-User Domain ERD 3](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-diagram-03.svg)
+![City-User Domain ERD 3](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-diagram-03.png)
 
 ## Example Map
 

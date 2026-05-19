@@ -26,25 +26,25 @@
 
 ## 캐시 전략 아키텍처
 
-![Cache Component Architecture 1](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-ko-diagram-01.svg)
+![Cache Component Architecture 1](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-ko-diagram-01.png)
 
 ---
 
 ## 클래스 구조
 
-![Component Component 2](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-ko-diagram-02.svg)
+![Component Component 2](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-ko-diagram-02.png)
 
 ---
 
 ## 요청 처리 흐름 — Write-Behind 비동기 이벤트 적재 (코루틴)
 
-![Request Component Component — Write-Behind Async Component Component (Coroutines) 3](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-ko-diagram-03.svg)
+![Request Component Component — Write-Behind Async Component Component (Coroutines) 3](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-ko-diagram-03.png)
 
 ---
 
 ## 요청 처리 흐름 — Read-Through + Write-Through (코루틴 User)
 
-![Request Component Component — Read-Through + Write-Through (Coroutines User) 4](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-ko-diagram-04.svg)
+![Request Component Component — Read-Through + Write-Through (Coroutines User) 4](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-ko-diagram-04.png)
 
 ---
 

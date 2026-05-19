@@ -16,7 +16,7 @@ A module for integrating `kotlinx.datetime` types with Exposed. Provides standar
 
 ## Kotlin DateTime Type Mapping
 
-![Kotlin DateTime Type Mapping 1](../../docs/images/readme-diagrams/06-advanced-03-exposed-kotlin-datetime-diagram-01.svg)
+![Kotlin DateTime Type Mapping 1](../../docs/images/readme-diagrams/06-advanced-03-exposed-kotlin-datetime-diagram-01.png)
 
 ## Key Concepts
 

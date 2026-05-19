@@ -78,29 +78,29 @@ transaction {
 
 ## Relationship Mapping Conversion Diagram
 
-![Relationship Mapping Conversion Diagram 1](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-01.svg)
+![Relationship Mapping Conversion Diagram 1](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-01.png)
 
 ## Domain ERDs
 
 ### SimpleSchema ERD
 
-![SimpleSchema ERD 2](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-02.svg)
+![SimpleSchema ERD 2](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-02.png)
 
 ### PersonSchema ERD
 
-![PersonSchema ERD 3](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-03.svg)
+![PersonSchema ERD 3](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-03.png)
 
 ### BlogSchema ERD
 
-![BlogSchema ERD 4](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-04.svg)
+![BlogSchema ERD 4](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-04.png)
 
 ### BookSchema ERD (Composite PK)
 
-![BookSchema ERD (Composite PK) 5](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-05.svg)
+![BookSchema ERD (Composite PK) 5](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-05.png)
 
 ### Entity Class Diagram — JPA Entity vs Exposed DAO
 
-![Entity Class Diagram — JPA Entity vs Exposed DAO 6](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-06.svg)
+![Entity Class Diagram — JPA Entity vs Exposed DAO 6](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-diagram-06.png)
 
 ## JPA Annotation → Exposed Mapping Reference
 

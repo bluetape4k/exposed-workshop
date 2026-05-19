@@ -24,31 +24,31 @@ Spring MVC + Virtual Threads 환경에서 Redisson + Exposed로 캐시 전략을
 
 ## 도메인 ERD
 
-![Domain ERD 1](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-01.svg)
+![Domain ERD 1](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-01.png)
 
 ---
 
 ## 캐시 전략 아키텍처
 
-![Cache Component Architecture 2](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-02.svg)
+![Cache Component Architecture 2](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-02.png)
 
 ---
 
 ## 클래스 구조
 
-![Component Component 3](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-03.svg)
+![Component Component 3](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-03.png)
 
 ---
 
 ## 요청 처리 흐름 — Write-Behind 비동기 이벤트 적재
 
-![Request Component Component — Write-Behind Async Component Component 4](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-04.svg)
+![Request Component Component — Write-Behind Async Component Component 4](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-04.png)
 
 ---
 
 ## 요청 처리 흐름 — Read-Through + Write-Through (User)
 
-![Request Component Component — Read-Through + Write-Through (User) 5](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-05.svg)
+![Request Component Component — Read-Through + Write-Through (User) 5](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-ko-diagram-05.png)
 
 ---
 

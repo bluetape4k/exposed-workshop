@@ -94,11 +94,11 @@ transaction(db) {
 
 ## Nested Transaction Flow
 
-![Nested Transaction Flow 1](../../docs/images/readme-diagrams/05-exposed-dml-04-transactions-diagram-01.svg)
+![Nested Transaction Flow 1](../../docs/images/readme-diagrams/05-exposed-dml-04-transactions-diagram-01.png)
 
 ## Coroutine Transaction Flow
 
-![Coroutine Transaction Flow 2](../../docs/images/readme-diagrams/05-exposed-dml-04-transactions-diagram-02.svg)
+![Coroutine Transaction Flow 2](../../docs/images/readme-diagrams/05-exposed-dml-04-transactions-diagram-02.png)
 
 ## Example Map
 

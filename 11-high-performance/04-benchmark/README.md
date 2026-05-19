@@ -14,13 +14,13 @@ Uses Caffeine near-cache + in-memory storage instead of real Redis/DB I/O to rel
 
 ## Domain ERD
 
-![Domain ERD 1](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-diagram-01.svg)
+![Domain ERD 1](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-diagram-01.png)
 
 ---
 
 ## Exposed vs JPA Benchmark Structure
 
-![Exposed vs JPA Benchmark Structure 2](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-diagram-02.svg)
+![Exposed vs JPA Benchmark Structure 2](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-diagram-02.png)
 
 ---
 
@@ -36,7 +36,7 @@ Uses Caffeine near-cache + in-memory storage instead of real Redis/DB I/O to rel
 
 ## Class Structure
 
-![Class Structure 3](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-diagram-03.svg)
+![Class Structure 3](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-diagram-03.png)
 
 ---
 
@@ -93,7 +93,7 @@ Measured method:
 
 ## Benchmark Flow
 
-![Benchmark Flow 4](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-diagram-04.svg)
+![Benchmark Flow 4](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-diagram-04.png)
 
 ---
 

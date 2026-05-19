@@ -37,7 +37,7 @@ A `TenantAwareDataSource` (extending `AbstractRoutingDataSource`) is provided so
 
 ### Per-Tenant Schema Isolation Architecture
 
-![Per-Tenant Schema Isolation Architecture 1](../docs/images/readme-diagrams/10-multi-tenant-diagram-01.svg)
+![Per-Tenant Schema Isolation Architecture 1](../docs/images/readme-diagrams/10-multi-tenant-diagram-01.png)
 
 ---
 
@@ -53,7 +53,7 @@ A `TenantAwareDataSource` (extending `AbstractRoutingDataSource`) is provided so
 
 ## Module Implementation Comparison
 
-![Module Implementation Comparison 2](../docs/images/readme-diagrams/10-multi-tenant-diagram-02.svg)
+![Module Implementation Comparison 2](../docs/images/readme-diagrams/10-multi-tenant-diagram-02.png)
 
 ### Key Differences by Environment
 
@@ -72,7 +72,7 @@ A `TenantAwareDataSource` (extending `AbstractRoutingDataSource`) is provided so
 
 All modules follow the flow below. Only the context propagation mechanism differs by environment.
 
-![Common Request Flow 3](../docs/images/readme-diagrams/10-multi-tenant-diagram-03.svg)
+![Common Request Flow 3](../docs/images/readme-diagrams/10-multi-tenant-diagram-03.png)
 
 ---
 

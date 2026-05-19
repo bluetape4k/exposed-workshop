@@ -20,7 +20,7 @@ Spring MVC + Virtual Threads 환경에서 Exposed DSL/DAO를 사용하는 REST A
 
 ## 아키텍처
 
-![Architecture 1](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-ko-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-ko-diagram-01.png)
 
 ---
 
@@ -74,7 +74,7 @@ Spring MVC + Virtual Threads 환경에서 Exposed DSL/DAO를 사용하는 REST A
 
 ## 요청 처리 흐름
 
-![Request Component Component 2](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-ko-diagram-02.svg)
+![Request Component Component 2](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-ko-diagram-02.png)
 
 ---
 
@@ -168,7 +168,7 @@ Spring Profile로 데이터베이스를 전환합니다:
 
 ## 도메인 모델
 
-![Domain Component 3](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-ko-diagram-03.svg)
+![Domain Component 3](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-ko-diagram-03.png)
 
 | 클래스                             | 설명                                                      |
 |---------------------------------|---------------------------------------------------------|

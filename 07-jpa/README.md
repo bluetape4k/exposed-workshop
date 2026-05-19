@@ -32,15 +32,15 @@ A chapter that lays out step-by-step strategies for migrating an existing JPA-ce
 
 ## Migration Strategy Overview
 
-![Migration Strategy Overview 1](../docs/images/readme-diagrams/07-jpa-diagram-01.svg)
+![Migration Strategy Overview 1](../docs/images/readme-diagrams/07-jpa-diagram-01.png)
 
 ## JPA vs Exposed Concept Comparison Diagram
 
-![JPA vs Exposed Concept Comparison Diagram 2](../docs/images/readme-diagrams/07-jpa-diagram-02.svg)
+![JPA vs Exposed Concept Comparison Diagram 2](../docs/images/readme-diagrams/07-jpa-diagram-02.png)
 
 ## Migration Approach Comparison
 
-![Migration Approach Comparison 3](../docs/images/readme-diagrams/07-jpa-diagram-03.svg)
+![Migration Approach Comparison 3](../docs/images/readme-diagrams/07-jpa-diagram-03.png)
 
 ## Included Modules
 

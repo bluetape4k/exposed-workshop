@@ -16,11 +16,11 @@ A module for serializing and deserializing JSON columns using Jackson. Provides 
 
 ## Table Structure
 
-![Table Structure 1](../../docs/images/readme-diagrams/06-advanced-08-exposed-jackson-diagram-01.svg)
+![Table Structure 1](../../docs/images/readme-diagrams/06-advanced-08-exposed-jackson-diagram-01.png)
 
 ## Jackson Serialization Flow
 
-![Jackson Serialization Flow 2](../../docs/images/readme-diagrams/06-advanced-08-exposed-jackson-diagram-02.svg)
+![Jackson Serialization Flow 2](../../docs/images/readme-diagrams/06-advanced-08-exposed-jackson-diagram-02.png)
 
 ## Key Concepts
 

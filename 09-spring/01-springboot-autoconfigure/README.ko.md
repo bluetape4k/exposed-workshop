@@ -20,7 +20,7 @@ Spring Boot 자동 설정으로 Exposed를 최소 구성으로 통합하는 모�
 
 ## 아키텍처
 
-![Architecture 1](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-ko-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-ko-diagram-01.png)
 
 ## 핵심 개념
 
@@ -64,7 +64,7 @@ class Application
 
 ## 자동 등록 빈 흐름
 
-![Component Register Component Component 2](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-ko-diagram-02.svg)
+![Component Register Component Component 2](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-ko-diagram-02.png)
 
 ## 테이블 정의 예시
 

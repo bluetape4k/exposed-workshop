@@ -37,7 +37,7 @@ Single DB Instance
 
 ### 테넌트별 스키마 분리 아키텍처
 
-![Component Component Component Architecture 1](../docs/images/readme-diagrams/10-multi-tenant-ko-diagram-01.svg)
+![Component Component Component Architecture 1](../docs/images/readme-diagrams/10-multi-tenant-ko-diagram-01.png)
 
 ---
 
@@ -53,7 +53,7 @@ Single DB Instance
 
 ## 모듈 간 구현 비교
 
-![Component Component Component Component 2](../docs/images/readme-diagrams/10-multi-tenant-ko-diagram-02.svg)
+![Component Component Component Component 2](../docs/images/readme-diagrams/10-multi-tenant-ko-diagram-02.png)
 
 ### 환경별 핵심 차이 요약
 
@@ -72,7 +72,7 @@ Single DB Instance
 
 모든 모듈은 다음 흐름을 따릅니다. 컨텍스트 전파 방식만 환경에 따라 달라집니다.
 
-![Component Request Component 3](../docs/images/readme-diagrams/10-multi-tenant-ko-diagram-03.svg)
+![Component Request Component 3](../docs/images/readme-diagrams/10-multi-tenant-ko-diagram-03.png)
 
 ---
 

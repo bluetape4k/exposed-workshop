@@ -21,11 +21,11 @@ Store Kotlin serializable objects in JSON columns using `json<T>()` / `jsonb<T>(
 
 ## Architecture Flow
 
-![Architecture Flow 1](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-diagram-01.svg)
+![Architecture Flow 1](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-diagram-01.png)
 
 ## Table ERD
 
-![Table ERD 2](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-diagram-02.svg)
+![Table ERD 2](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-diagram-02.png)
 
 ## Domain Model
 
@@ -53,7 +53,7 @@ data class UserGroup(
 
 ## Domain Class Diagram
 
-![Domain Class Diagram 3](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-diagram-03.svg)
+![Domain Class Diagram 3](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-diagram-03.png)
 
 ## Key Concepts
 

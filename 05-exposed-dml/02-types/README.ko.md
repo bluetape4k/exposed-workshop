@@ -16,7 +16,7 @@ Exposed 컬럼 타입을 DB Dialect별로 검증하는 모듈입니다. 기본 �
 
 ## Exposed 컬럼 타입 계층
 
-![Exposed Component Component Component 1](../../docs/images/readme-diagrams/05-exposed-dml-02-types-ko-diagram-01.svg)
+![Exposed Component Component Component 1](../../docs/images/readme-diagrams/05-exposed-dml-02-types-ko-diagram-01.png)
 
 ## 핵심 개념
 

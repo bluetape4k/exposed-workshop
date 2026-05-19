@@ -94,33 +94,33 @@ CreditCardTable.selectAll()
 
 ## Inheritance Strategy classDiagram
 
-![Inheritance Strategy classDiagram 1](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-01.svg)
+![Inheritance Strategy classDiagram 1](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-01.png)
 
 ## Domain ERDs
 
 ### Single Table Inheritance ERD
 
-![Single Table Inheritance ERD 2](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-02.svg)
+![Single Table Inheritance ERD 2](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-02.png)
 
 ### Joined Table Inheritance ERD
 
-![Joined Table Inheritance ERD 3](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-03.svg)
+![Joined Table Inheritance ERD 3](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-03.png)
 
 ### Table Per Class Inheritance ERD
 
-![Table Per Class Inheritance ERD 4](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-04.svg)
+![Table Per Class Inheritance ERD 4](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-04.png)
 
 ### TreeNode ERD (Self-reference Tree Structure)
 
-![TreeNode ERD (Self-reference Tree Structure) 5](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-05.svg)
+![TreeNode ERD (Self-reference Tree Structure) 5](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-05.png)
 
 ### Tree Structure Hierarchy Example
 
-![Tree Structure Hierarchy Example 6](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-06.svg)
+![Tree Structure Hierarchy Example 6](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-06.png)
 
 ## Inheritance Strategy Comparison classDiagram
 
-![Inheritance Strategy Comparison classDiagram 7](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-07.svg)
+![Inheritance Strategy Comparison classDiagram 7](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-diagram-07.png)
 
 ## Advanced Feature JPA ↔ Exposed Conversion Reference
 

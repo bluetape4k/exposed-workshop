@@ -17,7 +17,7 @@ Exposed DSL에서 SQL 함수를 조합해 분석 쿼리를 작성하는 모듈�
 
 ## SQL 함수 분류 다이어그램
 
-![SQL Function Component Diagram 1](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-ko-diagram-01.svg)
+![SQL Function Component Diagram 1](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-ko-diagram-01.png)
 
 ## 핵심 개념
 
@@ -80,7 +80,7 @@ Sales.select(Sales.region, Sales.amount, rowNum, rankVal)
 
 ## 윈도우 함수 구조
 
-![Component Function Component 2](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-ko-diagram-02.svg)
+![Component Function Component 2](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-ko-diagram-02.png)
 
 ## 예제 지도
 

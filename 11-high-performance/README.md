@@ -30,13 +30,13 @@ Covers cache and routing strategies for improving throughput and responsiveness 
 
 ## Module Relationships
 
-![Module Relationships 1](../docs/images/readme-diagrams/11-high-performance-diagram-01.svg)
+![Module Relationships 1](../docs/images/readme-diagrams/11-high-performance-diagram-01.png)
 
 ---
 
 ## Overall Architecture
 
-![Overall Architecture 2](../docs/images/readme-diagrams/11-high-performance-diagram-02.svg)
+![Overall Architecture 2](../docs/images/readme-diagrams/11-high-performance-diagram-02.png)
 
 ---
 

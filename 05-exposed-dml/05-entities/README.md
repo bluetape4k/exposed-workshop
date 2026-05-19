@@ -105,15 +105,15 @@ EntityHook.subscribe { change ->
 
 ## Entity Relationship Mapping Diagram
 
-![Entity Relationship Mapping Diagram 1](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-diagram-01.svg)
+![Entity Relationship Mapping Diagram 1](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-diagram-01.png)
 
 ## XEntity-YEntity Relationship ERD
 
-![XEntity-YEntity Relationship ERD 2](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-diagram-02.svg)
+![XEntity-YEntity Relationship ERD 2](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-diagram-02.png)
 
 ## Entity Class Hierarchy Diagram
 
-![Entity Class Hierarchy Diagram 3](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-diagram-03.svg)
+![Entity Class Hierarchy Diagram 3](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-diagram-03.png)
 
 ## PK Strategy Comparison
 

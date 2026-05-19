@@ -20,11 +20,11 @@
 
 ## 도메인 모델
 
-![Domain Component 1](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-ko-diagram-01.svg)
+![Domain Component 1](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-ko-diagram-01.png)
 
 ## 아키텍처
 
-![Architecture 2](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-ko-diagram-02.svg)
+![Architecture 2](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-ko-diagram-02.png)
 
 ## 핵심 개념
 
@@ -115,7 +115,7 @@ class DefaultCountrySuspendedRepository: CountrySuspendedRepository {
 
 ## 캐시 흐름
 
-![Cache Component 3](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-ko-diagram-03.svg)
+![Cache Component 3](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-ko-diagram-03.png)
 
 ## LettuceSuspendedCacheManager 설정
 
@@ -148,7 +148,7 @@ class SuspendedRepositoryConfig {
 
 ## Coroutine + Cache 통합 시퀀스
 
-![Coroutine + Cache Integration Component 4](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-ko-diagram-04.svg)
+![Coroutine + Cache Integration Component 4](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-ko-diagram-04.png)
 
 ## Spring Cache vs LettuceSuspendedCache 비교
 

@@ -33,11 +33,11 @@
 
 ## 아키텍처 개요
 
-![Architecture Component 1](../docs/images/readme-diagrams/06-advanced-ko-diagram-01.svg)
+![Architecture Component 1](../docs/images/readme-diagrams/06-advanced-ko-diagram-01.png)
 
 ## 모듈 분류
 
-![Component Component 2](../docs/images/readme-diagrams/06-advanced-ko-diagram-02.svg)
+![Component Component 2](../docs/images/readme-diagrams/06-advanced-ko-diagram-02.png)
 
 ## 권장 학습 순서
 

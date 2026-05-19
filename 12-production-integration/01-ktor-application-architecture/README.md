@@ -8,7 +8,7 @@ repository backed by H2.
 
 ## Architecture
 
-![Architecture 1](../../docs/images/readme-diagrams/12-production-integration-01-ktor-application-architecture-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/12-production-integration-01-ktor-application-architecture-diagram-01.png)
 
 ## Learning Goals
 

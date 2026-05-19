@@ -74,7 +74,7 @@ Available values for `-PuseDB`:
 
 ## Test Infrastructure Class Structure
 
-![Test Infrastructure Class Structure 1](../../docs/images/readme-diagrams/00-shared-exposed-shared-tests-diagram-01.svg)
+![Test Infrastructure Class Structure 1](../../docs/images/readme-diagrams/00-shared-exposed-shared-tests-diagram-01.png)
 
 ## Core Usage Patterns
 

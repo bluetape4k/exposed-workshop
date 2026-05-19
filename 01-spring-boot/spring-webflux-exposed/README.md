@@ -35,7 +35,7 @@ A REST API module using Exposed DSL/DAO in a non-blocking fashion with Spring We
 
 ## Architecture
 
-![Architecture 1](../../docs/images/readme-diagrams/01-spring-boot-spring-webflux-exposed-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/01-spring-boot-spring-webflux-exposed-diagram-01.png)
 
 ---
 
@@ -89,7 +89,7 @@ A REST API module using Exposed DSL/DAO in a non-blocking fashion with Spring We
 
 ## Request Processing Flow
 
-![Request Processing Flow 2](../../docs/images/readme-diagrams/01-spring-boot-spring-webflux-exposed-diagram-02.svg)
+![Request Processing Flow 2](../../docs/images/readme-diagrams/01-spring-boot-spring-webflux-exposed-diagram-02.png)
 
 ---
 
@@ -223,7 +223,7 @@ Switch databases using Spring Profiles:
 
 ## Domain Model
 
-![Domain Model 3](../../docs/images/readme-diagrams/01-spring-boot-spring-webflux-exposed-diagram-03.svg)
+![Domain Model 3](../../docs/images/readme-diagrams/01-spring-boot-spring-webflux-exposed-diagram-03.png)
 
 | Class                            | Description                                                            |
 |----------------------------------|------------------------------------------------------------------------|

@@ -22,11 +22,11 @@ Exposed의 `ColumnType`을 확장하면 DB 저장 시 자동으로 변환(직렬
 
 ## 아키텍처 흐름
 
-![Architecture Component 1](../../docs/images/readme-diagrams/06-advanced-06-custom-columns-ko-diagram-01.svg)
+![Architecture Component 1](../../docs/images/readme-diagrams/06-advanced-06-custom-columns-ko-diagram-01.png)
 
 ## 커스텀 ColumnType 계층
 
-![Component ColumnType Component 2](../../docs/images/readme-diagrams/06-advanced-06-custom-columns-ko-diagram-02.svg)
+![Component ColumnType Component 2](../../docs/images/readme-diagrams/06-advanced-06-custom-columns-ko-diagram-02.png)
 
 ## 커스텀 컬럼 타입 목록
 

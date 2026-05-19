@@ -22,7 +22,7 @@
 
 ## 암호화 흐름
 
-![Encryption Component 1](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-ko-diagram-01.svg)
+![Encryption Component 1](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-ko-diagram-01.png)
 
 ## 지원 알고리즘
 
@@ -148,7 +148,7 @@ insertLog.shouldContainNone(listOf("testName"))  // 평문 미노출 확인
 
 ## 컬럼 타입 계층
 
-![Component Component Component 2](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-ko-diagram-02.svg)
+![Component Component Component 2](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-ko-diagram-02.png)
 
 ## 예제 구성
 

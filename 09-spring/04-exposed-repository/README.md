@@ -18,7 +18,7 @@ It implements the `JdbcRepository` interface to learn a structure where the serv
 
 ## Architecture
 
-![Architecture 1](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-diagram-01.png)
 
 ## Key Concepts
 
@@ -103,9 +103,9 @@ fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
 
 ## Domain Model
 
-![Domain Model 2](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-diagram-02.svg)
+![Domain Model 2](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-diagram-02.png)
 
-![Domain Model 3](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-diagram-03.svg)
+![Domain Model 3](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-diagram-03.png)
 
 ## REST API Endpoints
 

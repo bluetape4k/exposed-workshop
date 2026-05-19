@@ -17,7 +17,7 @@ A module for writing analytical queries by combining SQL functions in the Expose
 
 ## SQL Function Classification Diagram
 
-![SQL Function Classification Diagram 1](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-diagram-01.svg)
+![SQL Function Classification Diagram 1](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-diagram-01.png)
 
 ## Key Concepts
 
@@ -80,7 +80,7 @@ Sales.select(Sales.region, Sales.amount, rowNum, rankVal)
 
 ## Window Function Structure
 
-![Window Function Structure 2](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-diagram-02.svg)
+![Window Function Structure 2](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-diagram-02.png)
 
 ## Example Map
 

@@ -16,11 +16,11 @@ Jackson 기반으로 JSON 컬럼을 직렬화/역직렬화하는 모듈입니다
 
 ## 테이블 구조
 
-![Table Component 1](../../docs/images/readme-diagrams/06-advanced-08-exposed-jackson-ko-diagram-01.svg)
+![Table Component 1](../../docs/images/readme-diagrams/06-advanced-08-exposed-jackson-ko-diagram-01.png)
 
 ## Jackson 직렬화 흐름
 
-![Jackson Component Component 2](../../docs/images/readme-diagrams/06-advanced-08-exposed-jackson-ko-diagram-02.svg)
+![Jackson Component Component 2](../../docs/images/readme-diagrams/06-advanced-08-exposed-jackson-ko-diagram-02.png)
 
 ## 핵심 개념
 

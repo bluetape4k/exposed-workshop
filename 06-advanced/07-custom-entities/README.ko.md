@@ -35,11 +35,11 @@ Exposed의 `IdTable`을 확장하여 KSUID, Snowflake, Timebased UUID 등 커스
 
 ## 아키텍처 흐름
 
-![Architecture Component 1](../../docs/images/readme-diagrams/06-advanced-07-custom-entities-ko-diagram-01.svg)
+![Architecture Component 1](../../docs/images/readme-diagrams/06-advanced-07-custom-entities-ko-diagram-01.png)
 
 ## 커스텀 ID 전략 비교 플로우
 
-![Component ID Component Component Component 2](../../docs/images/readme-diagrams/06-advanced-07-custom-entities-ko-diagram-02.svg)
+![Component ID Component Component Component 2](../../docs/images/readme-diagrams/06-advanced-07-custom-entities-ko-diagram-02.png)
 
 ## 핵심 개념
 

@@ -17,15 +17,15 @@ Hibernate Reactive retains the existing JPA annotations (`@Entity`, `@OneToMany`
 
 ## Architecture Flow
 
-![Architecture Flow 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-diagram-01.svg)
+![Architecture Flow 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-diagram-01.png)
 
 ## ERD
 
-![ERD 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-diagram-02.svg)
+![ERD 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-diagram-02.png)
 
 ## Domain Model
 
-![Domain Model 3](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-diagram-03.svg)
+![Domain Model 3](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-diagram-03.png)
 
 ### JPA Entity Declaration
 

@@ -23,15 +23,15 @@ Schema definition in Exposed is done through `object` declarations. You extend `
 
 ## Architecture Flow
 
-![Architecture Flow 1](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-diagram-01.svg)
+![Architecture Flow 1](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-diagram-01.png)
 
 ## Table Class Hierarchy
 
-![Table Class Hierarchy 2](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-diagram-02.svg)
+![Table Class Hierarchy 2](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-diagram-02.png)
 
 ## Composite PK / FK Relationship ERD
 
-![Composite PK / FK Relationship ERD 3](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-diagram-03.svg)
+![Composite PK / FK Relationship ERD 3](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-diagram-03.png)
 
 ## Column Type Reference
 

@@ -21,7 +21,7 @@ A non-blocking multi-tenant example based on WebFlux + Coroutines. Propagates te
 
 ## Domain Model
 
-![Domain Model 1](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-diagram-01.svg)
+![Domain Model 1](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-diagram-01.png)
 
 ---
 
@@ -39,7 +39,7 @@ A non-blocking multi-tenant example based on WebFlux + Coroutines. Propagates te
 
 ## Architecture
 
-![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-diagram-02.svg)
+![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-diagram-02.png)
 
 ### Context Propagation System
 
@@ -56,13 +56,13 @@ HTTP Request
 
 ### Tenant Propagation Flow via Reactor Context
 
-![Tenant Propagation Flow via Reactor Context 3](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-diagram-03.svg)
+![Tenant Propagation Flow via Reactor Context 3](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-diagram-03.png)
 
 ---
 
 ## Request Flow
 
-![Request Flow 4](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-diagram-04.svg)
+![Request Flow 4](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-diagram-04.png)
 
 ---
 

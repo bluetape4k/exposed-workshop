@@ -95,15 +95,15 @@ Cities.deleteWhere { Cities.id eq targetId }
 
 ## DML 흐름 다이어그램
 
-![DML Component Diagram 1](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-ko-diagram-01.svg)
+![DML Component Diagram 1](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-ko-diagram-01.png)
 
 ## CRUD 시퀀스 다이어그램
 
-![CRUD Component Diagram 2](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-ko-diagram-02.svg)
+![CRUD Component Diagram 2](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-ko-diagram-02.png)
 
 ## City-User 도메인 ERD
 
-![City-User Domain ERD 3](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-ko-diagram-03.svg)
+![City-User Domain ERD 3](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-ko-diagram-03.png)
 
 ## 예제 지도
 

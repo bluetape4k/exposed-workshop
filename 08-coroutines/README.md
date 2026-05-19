@@ -32,11 +32,11 @@ Covers patterns for running Exposed in Kotlin Coroutines and Java Virtual Thread
 
 ### Coroutines vs Virtual Thread Processing Flow
 
-![Coroutines vs Virtual Thread Processing Flow 1](../docs/images/readme-diagrams/08-coroutines-diagram-01.svg)
+![Coroutines vs Virtual Thread Processing Flow 1](../docs/images/readme-diagrams/08-coroutines-diagram-01.png)
 
 ### Thread Model Structure Comparison
 
-![Thread Model Structure Comparison 2](../docs/images/readme-diagrams/08-coroutines-diagram-02.svg)
+![Thread Model Structure Comparison 2](../docs/images/readme-diagrams/08-coroutines-diagram-02.png)
 
 ## Included Modules
 
@@ -65,11 +65,11 @@ Covers patterns for running Exposed in Kotlin Coroutines and Java Virtual Thread
 
 ### Coroutines Transaction Flow
 
-![Coroutines Transaction Flow 3](../docs/images/readme-diagrams/08-coroutines-diagram-03.svg)
+![Coroutines Transaction Flow 3](../docs/images/readme-diagrams/08-coroutines-diagram-03.png)
 
 ### Virtual Thread Transaction Flow
 
-![Virtual Thread Transaction Flow 4](../docs/images/readme-diagrams/08-coroutines-diagram-04.svg)
+![Virtual Thread Transaction Flow 4](../docs/images/readme-diagrams/08-coroutines-diagram-04.png)
 
 ## Test Points
 

@@ -32,11 +32,11 @@ Exposed를 Kotlin 코루틴과 Virtual Thread 기반 동시성 모델에서 운�
 
 ### 코루틴 vs Virtual Thread 처리 흐름
 
-![Coroutines vs Virtual Thread Component Component 1](../docs/images/readme-diagrams/08-coroutines-ko-diagram-01.svg)
+![Coroutines vs Virtual Thread Component Component 1](../docs/images/readme-diagrams/08-coroutines-ko-diagram-01.png)
 
 ### 스레드 모델 구조 비교
 
-![Component Component Component Component 2](../docs/images/readme-diagrams/08-coroutines-ko-diagram-02.svg)
+![Component Component Component Component 2](../docs/images/readme-diagrams/08-coroutines-ko-diagram-02.png)
 
 ## 포함 모듈
 
@@ -65,11 +65,11 @@ Exposed를 Kotlin 코루틴과 Virtual Thread 기반 동시성 모델에서 운�
 
 ### Coroutines Transaction Flow
 
-![Coroutines Transaction Flow 3](../docs/images/readme-diagrams/08-coroutines-ko-diagram-03.svg)
+![Coroutines Transaction Flow 3](../docs/images/readme-diagrams/08-coroutines-ko-diagram-03.png)
 
 ### Virtual Thread Transaction Flow
 
-![Virtual Thread Transaction Flow 4](../docs/images/readme-diagrams/08-coroutines-ko-diagram-04.svg)
+![Virtual Thread Transaction Flow 4](../docs/images/readme-diagrams/08-coroutines-ko-diagram-04.png)
 
 ## 테스트 포인트
 

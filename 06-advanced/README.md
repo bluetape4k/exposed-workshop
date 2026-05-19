@@ -33,11 +33,11 @@ This chapter covers extension scenarios frequently encountered in production bey
 
 ## Architecture Overview
 
-![Architecture Overview 1](../docs/images/readme-diagrams/06-advanced-diagram-01.svg)
+![Architecture Overview 1](../docs/images/readme-diagrams/06-advanced-diagram-01.png)
 
 ## Module Classification
 
-![Module Classification 2](../docs/images/readme-diagrams/06-advanced-diagram-02.svg)
+![Module Classification 2](../docs/images/readme-diagrams/06-advanced-diagram-02.png)
 
 ## Recommended Learning Order
 

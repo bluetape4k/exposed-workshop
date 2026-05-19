@@ -39,7 +39,7 @@ Hands-on exploration of database access technologies beyond JPA, so you can unde
 
 ## Architecture Flow
 
-![Architecture Flow 1](../docs/images/readme-diagrams/02-alternatives-to-jpa-diagram-01.svg)
+![Architecture Flow 1](../docs/images/readme-diagrams/02-alternatives-to-jpa-diagram-01.png)
 
 ## Recommended Study Order
 

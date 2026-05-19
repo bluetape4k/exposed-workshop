@@ -24,11 +24,11 @@ Exposed DAO 패턴은 `IntIdTable`과 `IntEntity`/
 
 ## ERD
 
-![ERD 1](../../docs/images/readme-diagrams/03-exposed-basic-exposed-dao-example-ko-diagram-01.svg)
+![ERD 1](../../docs/images/readme-diagrams/03-exposed-basic-exposed-dao-example-ko-diagram-01.png)
 
 ## 도메인 모델
 
-![Domain Component 2](../../docs/images/readme-diagrams/03-exposed-basic-exposed-dao-example-ko-diagram-02.svg)
+![Domain Component 2](../../docs/images/readme-diagrams/03-exposed-basic-exposed-dao-example-ko-diagram-02.png)
 
 ## 핵심 개념
 

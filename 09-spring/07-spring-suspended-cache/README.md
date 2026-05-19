@@ -18,11 +18,11 @@ A module for applying Redis caching in a non-blocking manner from coroutine `sus
 
 ## Domain Model
 
-![Domain Model 1](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-diagram-01.svg)
+![Domain Model 1](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-diagram-01.png)
 
 ## Architecture
 
-![Architecture 2](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-diagram-02.svg)
+![Architecture 2](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-diagram-02.png)
 
 ## Key Concepts
 
@@ -113,7 +113,7 @@ class DefaultCountrySuspendedRepository: CountrySuspendedRepository {
 
 ## Cache Flow
 
-![Cache Flow 3](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-diagram-03.svg)
+![Cache Flow 3](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-diagram-03.png)
 
 ## LettuceSuspendedCacheManager Configuration
 
@@ -146,7 +146,7 @@ class SuspendedRepositoryConfig {
 
 ## Coroutine + Cache Integration Sequence
 
-![Coroutine + Cache Integration Sequence 4](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-diagram-04.svg)
+![Coroutine + Cache Integration Sequence 4](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-diagram-04.png)
 
 ## Spring Cache vs LettuceSuspendedCache Comparison
 

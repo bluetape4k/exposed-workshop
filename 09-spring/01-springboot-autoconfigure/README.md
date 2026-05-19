@@ -20,7 +20,7 @@ to learn the pattern of connecting DataSource and transactions with a single `ap
 
 ## Architecture
 
-![Architecture 1](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-diagram-01.png)
 
 ## Key Concepts
 
@@ -64,7 +64,7 @@ The `DataSourceTransactionManager` registered by `DataSourceTransactionManagerAu
 
 ## Auto-Registered Bean Flow
 
-![Auto-Registered Bean Flow 2](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-diagram-02.svg)
+![Auto-Registered Bean Flow 2](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-diagram-02.png)
 
 ## Table Definition Example
 

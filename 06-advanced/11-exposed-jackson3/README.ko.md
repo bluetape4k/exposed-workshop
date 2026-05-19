@@ -16,7 +16,7 @@ Jackson 3 기반 JSON 컬럼 연동 모듈입니다. Jackson 2에서 3으로 이
 
 ## Jackson3 처리 흐름
 
-![Jackson3 Component Component 1](../../docs/images/readme-diagrams/06-advanced-11-exposed-jackson3-ko-diagram-01.svg)
+![Jackson3 Component Component 1](../../docs/images/readme-diagrams/06-advanced-11-exposed-jackson3-ko-diagram-01.png)
 
 ## 핵심 개념
 

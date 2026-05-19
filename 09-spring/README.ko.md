@@ -30,7 +30,7 @@ Spring Boot 환경에서 Exposed를 안정적으로 운영하기 위한 통합 �
 
 ## 전체 아키텍처 흐름
 
-![Component Architecture Component 1](../docs/images/readme-diagrams/09-spring-ko-diagram-01.svg)
+![Component Architecture Component 1](../docs/images/readme-diagrams/09-spring-ko-diagram-01.png)
 
 ## 핵심 패턴 요약
 

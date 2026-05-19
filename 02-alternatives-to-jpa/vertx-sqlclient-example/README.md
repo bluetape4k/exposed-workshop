@@ -17,11 +17,11 @@ Vert.x SQL Client writes SQL directly without an ORM and executes it on the even
 
 ## Architecture Flow
 
-![Architecture Flow 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-diagram-01.svg)
+![Architecture Flow 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-diagram-01.png)
 
 ## ERD
 
-![ERD 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-diagram-02.svg)
+![ERD 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-diagram-02.png)
 
 ## Domain Model
 

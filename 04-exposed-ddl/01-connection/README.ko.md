@@ -23,7 +23,7 @@ Exposed 데이터베이스 연결 설정과 연결 안정성 검증을 다루는
 
 ## 아키텍처 흐름
 
-![Architecture Component 1](../../docs/images/readme-diagrams/04-exposed-ddl-01-connection-ko-diagram-01.svg)
+![Architecture Component 1](../../docs/images/readme-diagrams/04-exposed-ddl-01-connection-ko-diagram-01.png)
 
 ## 핵심 개념
 

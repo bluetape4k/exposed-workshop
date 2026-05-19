@@ -7,7 +7,7 @@
 
 ## 모듈 의존성 구조
 
-![Component Component Component 1](../docs/images/readme-diagrams/00-shared-ko-diagram-01.svg)
+![Component Component Component 1](../docs/images/readme-diagrams/00-shared-ko-diagram-01.png)
 
 ## 포함 모듈
 

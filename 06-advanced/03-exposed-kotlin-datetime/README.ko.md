@@ -16,7 +16,7 @@
 
 ## Kotlin DateTime 타입 매핑
 
-![Kotlin DateTime Component Component 1](../../docs/images/readme-diagrams/06-advanced-03-exposed-kotlin-datetime-ko-diagram-01.svg)
+![Kotlin DateTime Component Component 1](../../docs/images/readme-diagrams/06-advanced-03-exposed-kotlin-datetime-ko-diagram-01.png)
 
 ## 핵심 개념
 

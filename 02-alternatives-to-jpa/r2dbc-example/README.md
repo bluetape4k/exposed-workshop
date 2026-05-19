@@ -17,15 +17,15 @@ Spring Data R2DBC provides a Spring Data-style Repository abstraction on top of 
 
 ## Architecture Flow
 
-![Architecture Flow 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-diagram-01.svg)
+![Architecture Flow 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-diagram-01.png)
 
 ## ERD
 
-![ERD 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-diagram-02.svg)
+![ERD 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-diagram-02.png)
 
 ## Domain Model
 
-![Domain Model 3](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-diagram-03.svg)
+![Domain Model 3](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-diagram-03.png)
 
 ### R2DBC Entity Declaration
 

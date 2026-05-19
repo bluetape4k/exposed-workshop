@@ -23,7 +23,7 @@ This chapter covers two foundational topics for Exposed applications. **Connecti
 
 ## Architecture Flow
 
-![Architecture Flow 1](../docs/images/readme-diagrams/04-exposed-ddl-diagram-01.svg)
+![Architecture Flow 1](../docs/images/readme-diagrams/04-exposed-ddl-diagram-01.png)
 
 ## Prerequisites
 

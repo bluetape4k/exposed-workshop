@@ -17,7 +17,7 @@ A module for programmatic transaction control based on `TransactionTemplate`. It
 
 ## Architecture
 
-![Architecture 1](../../docs/images/readme-diagrams/09-spring-02-transactiontemplate-diagram-01.svg)
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-02-transactiontemplate-diagram-01.png)
 
 ## Key Concepts
 
@@ -83,7 +83,7 @@ class BookService(
 
 ## Transaction Flow
 
-![Transaction Flow 2](../../docs/images/readme-diagrams/09-spring-02-transactiontemplate-diagram-02.svg)
+![Transaction Flow 2](../../docs/images/readme-diagrams/09-spring-02-transactiontemplate-diagram-02.png)
 
 ## Domain Model
 

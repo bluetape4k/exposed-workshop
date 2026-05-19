@@ -26,7 +26,7 @@ Spring Boot + Exposed로 REST API를 구현하는 챕터입니다. 동기 블로
 
 ### 모듈 비교
 
-![Component Component 1](../docs/images/readme-diagrams/01-spring-boot-ko-diagram-01.svg)
+![Component Component 1](../docs/images/readme-diagrams/01-spring-boot-ko-diagram-01.png)
 
 ---
 
@@ -36,7 +36,7 @@ Spring Boot + Exposed로 REST API를 구현하는 챕터입니다. 동기 블로
 
 ### 데이터베이스 스키마
 
-![Database Component 2](../docs/images/readme-diagrams/01-spring-boot-ko-diagram-02.svg)
+![Database Component 2](../docs/images/readme-diagrams/01-spring-boot-ko-diagram-02.png)
 
 ### REST API 구조
 

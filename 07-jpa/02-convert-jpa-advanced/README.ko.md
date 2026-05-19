@@ -94,33 +94,33 @@ CreditCardTable.selectAll()
 
 ## 상속 전략 classDiagram
 
-![Component Component classDiagram 1](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-01.svg)
+![Component Component classDiagram 1](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-01.png)
 
 ## 도메인 ERD
 
 ### Single Table Inheritance ERD
 
-![Single Table Inheritance ERD 2](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-02.svg)
+![Single Table Inheritance ERD 2](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-02.png)
 
 ### Joined Table Inheritance ERD
 
-![Joined Table Inheritance ERD 3](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-03.svg)
+![Joined Table Inheritance ERD 3](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-03.png)
 
 ### Table Per Class Inheritance ERD
 
-![Table Per Class Inheritance ERD 4](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-04.svg)
+![Table Per Class Inheritance ERD 4](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-04.png)
 
 ### TreeNode ERD (자기 참조 트리 구조)
 
-![TreeNode ERD (Component Component Component Component) 5](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-05.svg)
+![TreeNode ERD (Component Component Component Component) 5](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-05.png)
 
 ### 트리 구조 계층 예시
 
-![Component Component Component YesComponent 6](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-06.svg)
+![Component Component Component YesComponent 6](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-06.png)
 
 ## 상속 전략 비교 classDiagram
 
-![Component Component Component classDiagram 7](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-07.svg)
+![Component Component Component classDiagram 7](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-ko-diagram-07.png)
 
 ## 고급 기능 JPA ↔ Exposed 변환 대비표
 

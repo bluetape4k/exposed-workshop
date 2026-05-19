@@ -21,7 +21,7 @@ Columns declared with `encryptedVarchar` / `encryptedBinary` functions automatic
 
 ## Encryption Flow
 
-![Encryption Flow 1](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-diagram-01.svg)
+![Encryption Flow 1](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-diagram-01.png)
 
 ## Supported Algorithms
 
@@ -146,7 +146,7 @@ insertLog.shouldContainNone(listOf("testName"))  // Verify plaintext not exposed
 
 ## Column Type Hierarchy
 
-![Column Type Hierarchy 2](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-diagram-02.svg)
+![Column Type Hierarchy 2](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-diagram-02.png)
 
 ## Example Files
 

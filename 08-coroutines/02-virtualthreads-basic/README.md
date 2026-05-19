@@ -49,7 +49,7 @@ val ids = futures.awaitAll()
 
 ## Virtual Thread Transaction Flow
 
-![Virtual Thread Transaction Flow 1](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-diagram-01.svg)
+![Virtual Thread Transaction Flow 1](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-diagram-01.png)
 
 ## Coroutines vs Virtual Threads Practical Selection Guide
 
@@ -65,15 +65,15 @@ val ids = futures.awaitAll()
 
 ## Virtual Thread Processing Model Flowchart
 
-![Virtual Thread Processing Model Flowchart 2](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-diagram-02.svg)
+![Virtual Thread Processing Model Flowchart 2](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-diagram-02.png)
 
 ## Virtual Thread vs Platform Thread Comparison Diagram
 
-![Virtual Thread vs Platform Thread Comparison Diagram 3](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-diagram-03.svg)
+![Virtual Thread vs Platform Thread Comparison Diagram 3](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-diagram-03.png)
 
 ## Table ERD (virtualthreads_table)
 
-![Table ERD (virtualthreadstable) 4](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-diagram-04.svg)
+![Table ERD (virtualthreadstable) 4](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-diagram-04.png)
 
 ## Example Structure
 

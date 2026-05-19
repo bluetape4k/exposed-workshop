@@ -22,11 +22,11 @@ JSON/JSONB 컬럼에 Kotlin 객체를 저장/조회하는 모듈입니다. 문�
 
 ## 아키텍처 흐름
 
-![Architecture Component 1](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-ko-diagram-01.svg)
+![Architecture Component 1](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-ko-diagram-01.png)
 
 ## 테이블 ERD
 
-![Table ERD 2](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-ko-diagram-02.svg)
+![Table ERD 2](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-ko-diagram-02.png)
 
 ## 도메인 모델
 
@@ -54,7 +54,7 @@ data class UserGroup(
 
 ## 도메인 클래스 다이어그램
 
-![Domain Component Diagram 3](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-ko-diagram-03.svg)
+![Domain Component Diagram 3](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-ko-diagram-03.png)
 
 ## 핵심 개념
 

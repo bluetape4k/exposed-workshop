@@ -7,7 +7,7 @@ Provides database connections, table/schema creation and deletion, and Faker-bas
 
 ## Module Dependency Structure
 
-![Module Dependency Structure 1](../docs/images/readme-diagrams/00-shared-diagram-01.svg)
+![Module Dependency Structure 1](../docs/images/readme-diagrams/00-shared-diagram-01.png)
 
 ## Included Modules
 

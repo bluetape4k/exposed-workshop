@@ -16,7 +16,7 @@ A module for mapping `java.time` types to Exposed columns. Practice time type st
 
 ## Java Time Type Mapping
 
-![Java Time Type Mapping 1](../../docs/images/readme-diagrams/06-advanced-02-exposed-javatime-diagram-01.svg)
+![Java Time Type Mapping 1](../../docs/images/readme-diagrams/06-advanced-02-exposed-javatime-diagram-01.png)
 
 ## Key Concepts
 

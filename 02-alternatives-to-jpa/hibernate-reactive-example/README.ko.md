@@ -19,15 +19,15 @@ Hibernate Reactive는 기존 JPA 어노테이션(`@Entity`,
 
 ## 아키텍처 흐름
 
-![Architecture Component 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-ko-diagram-01.svg)
+![Architecture Component 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-ko-diagram-01.png)
 
 ## ERD
 
-![ERD 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-ko-diagram-02.svg)
+![ERD 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-ko-diagram-02.png)
 
 ## 도메인 모델
 
-![Domain Component 3](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-ko-diagram-03.svg)
+![Domain Component 3](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-ko-diagram-03.png)
 
 ### JPA 엔티티 선언
 

@@ -16,7 +16,7 @@
 
 ## Java Time 타입 매핑
 
-![Java Time Component Component 1](../../docs/images/readme-diagrams/06-advanced-02-exposed-javatime-ko-diagram-01.svg)
+![Java Time Component Component 1](../../docs/images/readme-diagrams/06-advanced-02-exposed-javatime-ko-diagram-01.png)
 
 ## 핵심 개념
 

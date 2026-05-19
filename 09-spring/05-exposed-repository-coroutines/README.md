@@ -19,11 +19,11 @@ It executes Exposed queries within suspend functions using `newSuspendedTransact
 
 ## Domain Model
 
-![Domain Model 1](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-diagram-01.svg)
+![Domain Model 1](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-diagram-01.png)
 
 ## Architecture
 
-![Architecture 2](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-diagram-02.svg)
+![Architecture 2](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-diagram-02.png)
 
 ## Key Concepts
 
@@ -85,7 +85,7 @@ class MovieTransactionalService(
 
 ## Synchronous vs Coroutine Repository Comparison
 
-![Synchronous vs Coroutine Repository Comparison 3](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-diagram-03.svg)
+![Synchronous vs Coroutine Repository Comparison 3](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-diagram-03.png)
 
 ## Join Optimization Pattern
 

@@ -22,7 +22,7 @@ A module covering Exposed database connection setup and connection reliability v
 
 ## Architecture Flow
 
-![Architecture Flow 1](../../docs/images/readme-diagrams/04-exposed-ddl-01-connection-diagram-01.svg)
+![Architecture Flow 1](../../docs/images/readme-diagrams/04-exposed-ddl-01-connection-diagram-01.png)
 
 ## Key Concepts
 

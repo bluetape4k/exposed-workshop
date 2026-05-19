@@ -20,17 +20,17 @@ A production example implementing Exposed-based schema multi-tenancy in a Spring
 
 ## Domain Model
 
-![Domain Model 1](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-diagram-01.svg)
+![Domain Model 1](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-diagram-01.png)
 
 ---
 
 ## Architecture
 
-![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-diagram-02.svg)
+![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-diagram-02.png)
 
 ### TenantResolver Class Hierarchy
 
-![TenantResolver Class Hierarchy 3](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-diagram-03.svg)
+![TenantResolver Class Hierarchy 3](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-diagram-03.png)
 
 ### Multi-Tenancy Strategy: Shared Database / Separate Schema
 
@@ -47,7 +47,7 @@ This example uses the **Shared DB / Separate Schema** approach combining `dataSo
 
 ## Request Flow
 
-![Request Flow 4](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-diagram-04.svg)
+![Request Flow 4](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-diagram-04.png)
 
 ---
 

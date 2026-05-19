@@ -25,25 +25,25 @@ By extending `AbstractSuspendedJdbcRedissonRepository`, you can apply cache stra
 
 ## Cache Strategy Architecture
 
-![Cache Strategy Architecture 1](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-diagram-01.svg)
+![Cache Strategy Architecture 1](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-diagram-01.png)
 
 ---
 
 ## Class Structure
 
-![Class Structure 2](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-diagram-02.svg)
+![Class Structure 2](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-diagram-02.png)
 
 ---
 
 ## Request Processing Flow — Write-Behind Async Event Loading (Coroutines)
 
-![Request Processing Flow — Write-Behind Async Event Loading (Coroutines) 3](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-diagram-03.svg)
+![Request Processing Flow — Write-Behind Async Event Loading (Coroutines) 3](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-diagram-03.png)
 
 ---
 
 ## Request Processing Flow — Read-Through + Write-Through (Coroutines User)
 
-![Request Processing Flow — Read-Through + Write-Through (Coroutines User) 4](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-diagram-04.svg)
+![Request Processing Flow — Read-Through + Write-Through (Coroutines User) 4](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-diagram-04.png)
 
 ---
 

@@ -23,15 +23,15 @@ Exposed에서 스키마 정의는 `object` 선언으로 이루어집니다. `Tab
 
 ## 아키텍처 흐름
 
-![Architecture Component 1](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-ko-diagram-01.svg)
+![Architecture Component 1](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-ko-diagram-01.png)
 
 ## 테이블 클래스 계층
 
-![Table Component Component 2](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-ko-diagram-02.svg)
+![Table Component Component 2](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-ko-diagram-02.png)
 
 ## 복합 PK / FK 관계 ERD
 
-![Component PK / FK Component ERD 3](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-ko-diagram-03.svg)
+![Component PK / FK Component ERD 3](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-ko-diagram-03.png)
 
 ## 컬럼 타입 표
 

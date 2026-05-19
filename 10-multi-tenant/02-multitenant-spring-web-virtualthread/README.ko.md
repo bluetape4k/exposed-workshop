@@ -21,7 +21,7 @@
 
 ## 도메인 모델
 
-![Domain Component 1](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-ko-diagram-01.svg)
+![Domain Component 1](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-ko-diagram-01.png)
 
 ---
 
@@ -38,7 +38,7 @@
 
 ## 아키텍처
 
-![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-ko-diagram-02.svg)
+![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-ko-diagram-02.png)
 
 ### ScopedValue 기반 컨텍스트 전파
 
@@ -52,13 +52,13 @@ ScopedValue  → 불변 바인딩, 스코프 벗어나면 자동 소멸
 
 ### Platform Thread vs Virtual Thread 비교
 
-![Platform Thread vs Virtual Thread Component 3](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-ko-diagram-03.svg)
+![Platform Thread vs Virtual Thread Component 3](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-ko-diagram-03.png)
 
 ---
 
 ## 요청 흐름
 
-![Request Component 4](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-ko-diagram-04.svg)
+![Request Component 4](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-ko-diagram-04.png)
 
 ---
 

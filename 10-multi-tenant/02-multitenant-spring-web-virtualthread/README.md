@@ -20,7 +20,7 @@ An example that extends the multi-tenancy structure from module `01` to a Java 2
 
 ## Domain Model
 
-![Domain Model 1](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-diagram-01.svg)
+![Domain Model 1](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-diagram-01.png)
 
 ---
 
@@ -37,7 +37,7 @@ An example that extends the multi-tenancy structure from module `01` to a Java 2
 
 ## Architecture
 
-![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-diagram-02.svg)
+![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-diagram-02.png)
 
 ### ScopedValue-Based Context Propagation
 
@@ -50,13 +50,13 @@ ScopedValue  → Immutable binding, automatically destroyed when scope exits
 
 ### Platform Thread vs Virtual Thread Comparison
 
-![Platform Thread vs Virtual Thread Comparison 3](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-diagram-03.svg)
+![Platform Thread vs Virtual Thread Comparison 3](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-diagram-03.png)
 
 ---
 
 ## Request Flow
 
-![Request Flow 4](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-diagram-04.svg)
+![Request Flow 4](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-diagram-04.png)
 
 ---
 
