@@ -27,41 +27,7 @@ Exposed 1.1.1 기준으로 SELECT/INSERT/UPDATE/DELETE/UPSERT, 타입, 함수, �
 
 ## 아키텍처 개요
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    subgraph DSL["DSL Layer (org.jetbrains.exposed.v1.jdbc)"]
-        S[selectAll / select]
-        I[insert / batchInsert]
-        U[update / upsert]
-        D[deleteWhere]
-    end
-
-    subgraph DAO["DAO Layer (org.jetbrains.exposed.v1.dao)"]
-        E[Entity / EntityClass]
-        R[referrersOn / referencedOn / via]
-    end
-
-    subgraph TX["Transaction"]
-        T["transaction { }"]
-        ST["newSuspendedTransaction { }"]
-    end
-
-    TX --> DSL
-    TX --> DAO
-    DSL --> DB[(Database)]
-    DAO --> DB
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class S,I,U,D blue
-    class E,R green
-    class T,ST purple
-    class DB orange
-```
+![Architecture diagram](../docs/images/readme-diagrams/05-exposed-dml-architecture-01.png)
 
 ## 권장 학습 순서
 

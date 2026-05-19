@@ -21,32 +21,7 @@ Columns declared with `encryptedVarchar` / `encryptedBinary` functions automatic
 
 ## Encryption Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph Write["Write Path"]
-        PW["Plaintext"]
-        ENC["Encryptor.encrypt()"]
-        DB_W["DB Storage\n(Ciphertext Base64)"]
-    end
-
-    subgraph Read["Read Path"]
-        DB_R["DB Query\n(Ciphertext Base64)"]
-        DEC["Encryptor.decrypt()"]
-        PR["Plaintext"]
-    end
-
-    PW -->|INSERT/UPDATE| ENC --> DB_W
-    DB_R -->|SELECT| DEC --> PR
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class PW,PR blue
-    class ENC,DEC green
-    class DB_W,DB_R orange
-```
+![Encryption Flow diagram](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-architecture-01.png)
 
 ## Supported Algorithms
 
@@ -171,72 +146,7 @@ insertLog.shouldContainNone(listOf("testName"))  // Verify plaintext not exposed
 
 ## Column Type Hierarchy
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class ColumnType {
-        +valueFromDB(value: Any): Any
-        +notNullValueToDB(value: Any): Any
-    }
-    class VarCharColumnType {
-        +colLength: Int
-    }
-    class BinaryColumnType {
-        +length: Int
-    }
-    class EncryptedVarCharColumnType {
-        +encryptor: Encryptor
-        +valueFromDB(value): String
-        +notNullValueToDB(value): String
-    }
-    class EncryptedBinaryColumnType {
-        +encryptor: Encryptor
-        +valueFromDB(value): ByteArray
-        +notNullValueToDB(value): ByteArray
-    }
-    class Encryptor {
-        <<interface>>
-        +encrypt(value: String): String
-        +decrypt(value: String): String
-        +maxColLength(inputLength: Int): Int
-    }
-    class AES_256_PBE_GCM {
-        +password: String
-        +salt: String
-    }
-    class AES_256_PBE_CBC {
-        +password: String
-        +salt: String
-    }
-    class BLOW_FISH {
-        +key: String
-    }
-    class TRIPLE_DES {
-        +key: String
-    }
-
-    ColumnType <|-- VarCharColumnType
-    ColumnType <|-- BinaryColumnType
-    VarCharColumnType <|-- EncryptedVarCharColumnType
-    BinaryColumnType <|-- EncryptedBinaryColumnType
-    EncryptedVarCharColumnType --> Encryptor : uses
-    EncryptedBinaryColumnType --> Encryptor : uses
-    Encryptor <|.. AES_256_PBE_GCM
-    Encryptor <|.. AES_256_PBE_CBC
-    Encryptor <|.. BLOW_FISH
-    Encryptor <|.. TRIPLE_DES
-
-    style ColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style VarCharColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style BinaryColumnType fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style EncryptedVarCharColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style EncryptedBinaryColumnType fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Encryptor fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style AES_256_PBE_GCM fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style AES_256_PBE_CBC fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style BLOW_FISH fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style TRIPLE_DES fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Column Type Hierarchy diagram](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-class-02.png)
 
 ## Example Files
 

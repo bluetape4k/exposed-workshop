@@ -18,70 +18,11 @@ A module for applying Redis caching in a non-blocking manner from coroutine `sus
 
 ## Domain Model
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    COUNTRIES {
-        INT id PK
-        CHAR(2) code UK
-        VARCHAR name
-        TEXT description
-    }
-```
+![Domain Model diagram](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-erd-01.png)
 
 ## Architecture
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class CountrySuspendedRepository {
-        <<interface>>
-        +findByCode(code) CountryRecord?
-        +update(countryRecord) Int
-        +evictCacheAll()
-    }
-    class DefaultCountrySuspendedRepository {
-        +findByCode(code) CountryRecord?
-        +update(countryRecord) Int
-        +evictCacheAll()
-    }
-    class CachedCountrySuspendedRepository {
-        -delegate: CountrySuspendedRepository
-        -cacheManager: LettuceSuspendedCacheManager
-        -cache: LettuceSuspendedCache~String, CountryRecord~
-        +CACHE_NAME: "caches:country:code"
-        +findByCode(code) CountryRecord?
-        +update(countryRecord) Int
-        +evictCacheAll()
-    }
-    class LettuceSuspendedCacheManager {
-        -redisClient: RedisClient
-        -ttlSeconds: Long
-        -codec: RedisCodec
-        +getOrCreate(name, ttlSeconds) LettuceSuspendedCache
-    }
-    class LettuceSuspendedCache {
-        +name: String
-        +commands: RedisCoroutinesCommands
-        +ttlSeconds: Long?
-        +get(key) V?
-        +put(key, value)
-        +evict(key)
-        +clear()
-    }
-
-    CountrySuspendedRepository <|.. DefaultCountrySuspendedRepository
-    CountrySuspendedRepository <|.. CachedCountrySuspendedRepository
-    CachedCountrySuspendedRepository --> CountrySuspendedRepository : delegate
-    CachedCountrySuspendedRepository --> LettuceSuspendedCacheManager : uses
-    LettuceSuspendedCacheManager --> LettuceSuspendedCache : creates
-
-    style CountrySuspendedRepository fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style DefaultCountrySuspendedRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style CachedCountrySuspendedRepository fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style LettuceSuspendedCacheManager fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    style LettuceSuspendedCache fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-```
+![Architecture diagram](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-class-02.png)
 
 ## Key Concepts
 
@@ -172,38 +113,7 @@ class DefaultCountrySuspendedRepository: CountrySuspendedRepository {
 
 ## Cache Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    A[suspend findByCode called] --> B{LettuceSuspendedCache\ncache.get hit?}
-    B -- Yes --> C[Return CountryRecord immediately\nNo DB query]
-    B -- No --> D[Call delegate.findByCode]
-    D --> E[Start newSuspendedTransaction]
-    E --> F[CountryTable.selectAll WHERE code = ?]
-    F --> G[DB result CountryRecord]
-    G --> H[Save to Redis via cache.put\nTTL 60s]
-    H --> I[Return CountryRecord]
-
-    J[suspend update called] --> K[Immediately evict cache via cache.evict]
-    K --> L[Call delegate.update]
-    L --> M[newSuspendedTransaction]
-    M --> N[CountryTable.update]
-    N --> O[Return number of updated rows]
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-
-    class A,J blue
-    class B yellow
-    class C,I,O green
-    class D,E,L,M teal
-    class F,G,N orange
-    class H,K pink
-```
+![Cache Flow diagram](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-architecture-03.png)
 
 ## LettuceSuspendedCacheManager Configuration
 
@@ -236,39 +146,7 @@ class SuspendedRepositoryConfig {
 
 ## Coroutine + Cache Integration Sequence
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant Client
-    participant Cached as CachedCountrySuspendedRepository
-    participant Default as DefaultCountrySuspendedRepository
-    participant Cache as LettuceSuspendedCache (Redis)
-    participant DB
-
-    Client->>Cached: suspend findByCode("KR")
-    Cached->>Cache: suspend get("KR")
-    alt Cache Hit
-        Cache-->>Cached: CountryRecord
-        Cached-->>Client: CountryRecord (no DB transaction)
-    else Cache Miss
-        Cache-->>Cached: null
-        Cached->>Default: suspend findByCode("KR")
-        Default->>DB: newSuspendedTransaction { SELECT WHERE code='KR' }
-        DB-->>Default: CountryRecord
-        Default-->>Cached: CountryRecord
-        Cached->>Cache: suspend put("KR", CountryRecord, ttl=60s)
-        Cached-->>Client: CountryRecord
-    end
-
-    Client->>Cached: suspend update(countryRecord)
-    Cached->>Cache: suspend evict("KR")
-    Cache-->>Cached: Deletion complete
-    Cached->>Default: suspend update(countryRecord)
-    Default->>DB: newSuspendedTransaction { UPDATE ... }
-    DB-->>Default: Number of updated rows
-    Default-->>Cached: Number of updated rows
-    Cached-->>Client: Number of updated rows
-```
+![Coroutine + Cache Integration Sequence diagram](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-sequence-04.png)
 
 ## Spring Cache vs LettuceSuspendedCache Comparison
 

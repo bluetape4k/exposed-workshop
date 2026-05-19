@@ -34,80 +34,11 @@ Extends Exposed's `IdTable` to implement custom ID strategies such as KSUID, Sno
 
 ## Architecture Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class IdTable~T~ {
-        +Column~EntityID~T~~ id
-        +PrimaryKey primaryKey
-    }
-    class KsuidTable {
-        +Column~EntityID~String~~ id
-    }
-    class SnowflakeIdTable {
-        +Column~EntityID~Long~~ id
-    }
-    class TimebasedUUIDTable {
-        +Column~EntityID~String~~ id
-    }
-    class KsuidEntity {
-        +KsuidEntityID id
-    }
-    class SnowflakeIdEntity {
-        +SnowflakeIdEntityID id
-    }
-
-    IdTable <|-- KsuidTable
-    IdTable <|-- SnowflakeIdTable
-    IdTable <|-- TimebasedUUIDTable
-    KsuidTable --> KsuidEntity: maps to
-    SnowflakeIdTable --> SnowflakeIdEntity: maps to
-
-    style IdTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style KsuidTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style SnowflakeIdTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style TimebasedUUIDTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style KsuidEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style SnowflakeIdEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Architecture Flow diagram](../../docs/images/readme-diagrams/06-advanced-07-custom-entities-class-01.png)
 
 ## Custom ID Strategy Comparison Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph Standard["Standard ID (DB Sequence)"]
-        INT["IntIdTable\nINT AUTO_INCREMENT"]
-        LONG["LongIdTable\nBIGINT AUTO_INCREMENT"]
-        UUID4["UUIDTable\nBINARY(16) - UUID v4"]
-    end
-
-    subgraph Custom["Custom ID (Application-generated)"]
-        KSUID["KsuidTable\nVARCHAR(27)\ntime+random, sortable"]
-        KSUIDM["KsuidMillisTable\nVARCHAR(27)\nmillisecond precision"]
-        SNOW["SnowflakeIdTable\nBIGINT\nmachineID+sequence+timestamp"]
-        UUIDV7["TimebasedUUIDTable\nVARCHAR(36)\nUUID v7 time-based"]
-        B62["TimebasedUUIDBase62Table\nVARCHAR(22)\nBase62 URL-friendly"]
-    end
-
-    subgraph Props["Properties"]
-        SORT["Sortable\n(time-order)"]
-        DIST["Distributed\n(no DB needed)"]
-        IDX["Index\nefficient"]
-    end
-
-    KSUID & KSUIDM & SNOW & UUIDV7 & B62 --> SORT
-    KSUID & KSUIDM & SNOW & UUIDV7 & B62 & UUID4 --> DIST
-    INT & LONG & KSUID & SNOW --> IDX
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-
-    class INT,LONG,UUID4 blue
-    class KSUID,KSUIDM,SNOW,UUIDV7,B62 green
-    class SORT,DIST,IDX teal
-```
+![Custom ID Strategy Comparison Flow diagram](../../docs/images/readme-diagrams/06-advanced-07-custom-entities-architecture-02.png)
 
 ## Key Concepts
 

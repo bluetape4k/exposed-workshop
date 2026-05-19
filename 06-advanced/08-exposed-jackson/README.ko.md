@@ -16,63 +16,11 @@ Jackson 기반으로 JSON 컬럼을 직렬화/역직렬화하는 모듈입니다
 
 ## 테이블 구조
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    jackson_table {
-        SERIAL id PK
-        JSON jackson_column
-    }
-    jackson_b_table {
-        SERIAL id PK
-        JSONB jackson_b_column
-    }
-    jackson_arrays {
-        SERIAL id PK
-        JSON groups
-        JSON numbers
-    }
-    jackson_b_arrays {
-        SERIAL id PK
-        JSONB groups
-        JSONB numbers
-    }
-```
+![Table Structure diagram](../../docs/images/readme-diagrams/06-advanced-08-exposed-jackson-erd-01.png)
 
 ## Jackson 직렬화 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph KotlinObj["Kotlin 객체"]
-        DH["DataHolder\n(user, logins, active, team)"]
-        UG["UserGroup\n(users: List~User~)"]
-    end
-
-    subgraph Jackson["Jackson ObjectMapper"]
-        SER["ObjectMapper.writeValueAsString()"]
-        DESER["ObjectMapper.readValue()"]
-    end
-
-    subgraph DBCol["DB 컬럼"]
-        JCOL["JSON column\n(텍스트 저장)"]
-        JBCOL["JSONB column\n(바이너리, PostgreSQL)"]
-    end
-
-    DH -->|INSERT/UPDATE| SER --> JCOL
-    DH -->|INSERT/UPDATE| SER --> JBCOL
-    JCOL -->|SELECT| DESER --> DH
-    JBCOL -->|SELECT| DESER --> DH
-    UG -->|INSERT/UPDATE| SER --> JCOL
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class DH,UG blue
-    class SER,DESER green
-    class JCOL,JBCOL orange
-```
+![Jackson Serialization diagram](../../docs/images/readme-diagrams/06-advanced-08-exposed-jackson-architecture-02.png)
 
 ## 핵심 개념
 

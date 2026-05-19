@@ -22,66 +22,11 @@ JSON/JSONB 컬럼에 Kotlin 객체를 저장/조회하는 모듈입니다. 문�
 
 ## 아키텍처 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph Kotlin["Kotlin 코드"]
-        DH["DataHolder\n(Serializable data class)"]
-        JT["JsonTable / JsonBTable"]
-    end
-
-    subgraph Exposed["Exposed JSON API"]
-        JC["json(col, Json.Default)"]
-        JB["jsonb(col, Json.Default)"]
-        EX["extract(path)"]
-        CO["contains(json)"]
-        EXI["exists(path)"]
-    end
-
-    subgraph DB["데이터베이스"]
-        PG_JSON["PostgreSQL JSON\n(텍스트 저장)"]
-        PG_JSONB["PostgreSQL JSONB\n(바이너리, 인덱싱)"]
-        MY_JSON["MySQL JSON"]
-    end
-
-    DH --> JC & JB
-    JC --> PG_JSON & MY_JSON
-    JB --> PG_JSONB
-    EX & CO & EXI --> PG_JSON & PG_JSONB
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class DH,JT blue
-    class JC,JB,EX,CO,EXI green
-    class PG_JSON,PG_JSONB,MY_JSON orange
-```
+![Architecture diagram](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-architecture-01.png)
 
 ## 테이블 ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    JsonTable {
-        SERIAL id PK
-        JSON j_column
-    }
-    JsonBTable {
-        SERIAL id PK
-        JSONB j_b_column
-    }
-    JsonArrayTable {
-        SERIAL id PK
-        JSON groups
-        JSON numbers
-    }
-    JsonBArrayTable {
-        SERIAL id PK
-        JSONB groups
-        JSONB numbers
-    }
-```
+![Table ERD diagram](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-erd-02.png)
 
 ## 도메인 모델
 
@@ -109,30 +54,7 @@ data class UserGroup(
 
 ## 도메인 클래스 다이어그램
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class DataHolder {
-        +user: User
-        +logins: Int
-        +active: Boolean
-        +team: String?
-    }
-    class User {
-        +name: String
-        +team: String?
-    }
-    class UserGroup {
-        +users: List~User~
-    }
-
-    DataHolder --> User : contains
-    UserGroup --> User : contains 0..*
-
-    style DataHolder fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style User fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style UserGroup fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-```
+![Domain diagram](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-class-03.png)
 
 ## 핵심 개념
 

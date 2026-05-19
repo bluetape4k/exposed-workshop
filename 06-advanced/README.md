@@ -33,97 +33,11 @@ This chapter covers extension scenarios frequently encountered in production bey
 
 ## Architecture Overview
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph Column["Custom Column Extensions"]
-        CRYPT["encryptedVarchar\nencryptedBinary"]
-        TINK["tinkAeadVarChar\ntinkDaeadVarChar"]
-        JSON["json / jsonb"]
-        COMP["compressedBinary"]
-        SER["binarySerializedBinary"]
-    end
-
-    subgraph Entity["Custom Entity ID"]
-        KSUID["KsuidTable\nKsuidEntity"]
-        SNOW["SnowflakeIdTable\nSnowflakeIdEntity"]
-        UUID["TimebasedUUIDTable"]
-    end
-
-    subgraph Storage["DB Storage"]
-        VARCHAR["VARCHAR (encrypted/serialized)"]
-        BINARY["BINARY/BYTEA (compressed/serialized)"]
-        JSONTYPE["JSON/JSONB"]
-        BIGINT["BIGINT (Snowflake)"]
-    end
-
-    CRYPT & TINK --> VARCHAR
-    COMP & SER --> BINARY
-    JSON --> JSONTYPE
-    KSUID --> VARCHAR
-    SNOW --> BIGINT
-
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class CRYPT,TINK,JSON,COMP,SER purple
-    class KSUID,SNOW,UUID green
-    class VARCHAR,BINARY,JSONTYPE,BIGINT orange
-```
+![Architecture Overview diagram](../docs/images/readme-diagrams/06-advanced-architecture-01.png)
 
 ## Module Classification
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    subgraph Crypto["Encryption"]
-        M01["01-exposed-crypt\nAES/Blowfish/3DES\nNon-deterministic encryption"]
-        M10["10-exposed-jasypt\nJasypt deterministic encryption\nWHERE searchable"]
-        M12["12-exposed-tink\nGoogle Tink AEAD/DAEAD\nIntegrity verification + search"]
-    end
-
-    subgraph DateTime["Date/Time"]
-        M02["02-exposed-javatime\njava.time type mapping\nLocalDate/Instant etc."]
-        M03["03-exposed-kotlin-datetime\nkotlinx.datetime type mapping\nKMP support"]
-    end
-
-    subgraph JSON["JSON Serialization"]
-        M04["04-exposed-json\nkotlinx.serialization\nJSON/JSONB path queries"]
-        M08["08-exposed-jackson\nJackson 2 ObjectMapper\nJSON/JSONB columns"]
-        M09["09-exposed-fastjson2\nFastjson2\nHigh-performance JSON parsing"]
-        M11["11-exposed-jackson3\nJackson 3 ObjectMapper\nMigration compatibility"]
-    end
-
-    subgraph Money["Currency/Amount"]
-        M05["05-exposed-money\nJavaMoney MonetaryAmount\nComposite column mapping"]
-    end
-
-    subgraph Custom["Custom Extensions"]
-        M06["06-custom-columns\nColumnType inheritance\nSerialization/compression/encryption"]
-        M07["07-custom-entities\nKSUID/Snowflake/UUID\nCustom ID strategies"]
-    end
-
-    M01 -->|"When search needed"| M10
-    M10 -->|"Advanced encryption"| M12
-    M02 -->|"KMP environment"| M03
-    M04 -->|"Jackson ecosystem"| M08
-    M08 -->|"Jackson 3 migration"| M11
-    M04 -->|"High performance needed"| M09
-    M06 -->|"Custom ID"| M07
-
-    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-
-    class M01,M10,M12 red
-    class M02,M03 blue
-    class M04,M08,M09,M11 purple
-    class M05 orange
-    class M06,M07 green
-```
+![Module Classification diagram](../docs/images/readme-diagrams/06-advanced-architecture-02.png)
 
 ## Recommended Learning Order
 

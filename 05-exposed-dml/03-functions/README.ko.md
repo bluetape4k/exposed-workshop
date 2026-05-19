@@ -17,40 +17,7 @@ Exposed DSL에서 SQL 함수를 조합해 분석 쿼리를 작성하는 모듈�
 
 ## SQL 함수 분류 다이어그램
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    F["Exposed SQL 함수"] --> STR["문자열 함수\ntrim / lowerCase / upperCase\nsubstring / concat / like / ilike"]
-    F --> MATH["수학 함수\nround / abs / floor / ceiling\nsqrt / power"]
-    F --> AGG["집계 함수\ncount / sum / avg / min / max\ngroupBy + having"]
-    F --> STAT["통계 함수\nstdDevPop / stdDevSamp\nvarPop / varSamp"]
-    F --> TRIG["삼각 함수\nsin / cos / tan\natan / atan2"]
-    F --> WIN["윈도우 함수\nrowNumber / rank / denseRank\nlead / lag / firstValue / lastValue"]
-    F --> COND["조건 함수\ncase / coalesce / nullIf"]
-    F --> BIT["비트 함수\nbitwiseAnd / bitwiseOr / bitwiseXor"]
-
-    WIN --> OVER["over()\n.partitionBy(col)\n.orderBy(col, SortOrder)"]
-
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-
-    class F purple
-    class STR blue
-    class MATH green
-    class AGG orange
-    class STAT pink
-    class TRIG teal
-    class WIN yellow
-    class COND red
-    class BIT teal
-    class OVER yellow
-```
+![SQL diagram](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-architecture-01.png)
 
 ## 핵심 개념
 
@@ -113,28 +80,7 @@ Sales.select(Sales.region, Sales.amount, rowNum, rankVal)
 
 ## 윈도우 함수 구조
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    A["윈도우 함수\n(rowNumber / rank / lead / lag)"] --> B["over()"]
-    B --> C["partitionBy(컬럼)"]
-    B --> D["orderBy(컬럼, SortOrder)"]
-    C --> E["PARTITION BY 절"]
-    D --> F["ORDER BY 절"]
-    E --> G["SQL: OVER(PARTITION BY ... ORDER BY ...)"]
-    F --> G
-
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class A purple
-    class B blue
-    class C,D green
-    class E,F green
-    class G orange
-```
+![Structure diagram](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-architecture-02.png)
 
 ## 예제 지도
 

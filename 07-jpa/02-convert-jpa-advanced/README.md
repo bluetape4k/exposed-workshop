@@ -94,210 +94,33 @@ CreditCardTable.selectAll()
 
 ## Inheritance Strategy classDiagram
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class Billing {
-        <<abstract>>
-        +Int id
-        +String owner
-        +String swift
-    }
-    class CreditCard {
-        +String cardNumber
-        +Int expMonth
-        +Int expYear
-        +LocalDate startDate
-        +LocalDate endDate
-    }
-    class BankAccount {
-        +String accountNumber
-        +String bankName
-    }
-
-    Billing <|-- CreditCard : 3 inheritance strategies applied
-    Billing <|-- BankAccount : 3 inheritance strategies applied
-
-    note for Billing "SingleTable: 1 BillingTable / Joined: billing + credit_card / TablePerClass: independent tables"
-
-    style Billing fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style CreditCard fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style BankAccount fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-```
+![Inheritance Strategy classDiagram diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-class-01.png)
 
 ## Domain ERDs
 
 ### Single Table Inheritance ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    billing {
-        SERIAL id PK
-        VARCHAR_64 owner "NOT NULL"
-        VARCHAR_16 swift "NOT NULL"
-        VARCHAR_32 dtype "DEFAULT UNKNOWN"
-        VARCHAR_24 card_number "NULL (CreditCard only)"
-        INT exp_month "NULL (CreditCard only)"
-        INT exp_year "NULL (CreditCard only)"
-        DATE start_date "NULL (CreditCard only)"
-        DATE end_date "NULL (CreditCard only)"
-        VARCHAR_255 account_number "NULL (BankAccount only)"
-        VARCHAR_255 bank_name "NULL (BankAccount only)"
-    }
-```
+![Single Table Inheritance ERD diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-erd-02.png)
 
 ### Joined Table Inheritance ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    joined_person {
-        SERIAL id PK
-        VARCHAR_128 person_name "NOT NULL"
-        VARCHAR_128 ssn "NOT NULL"
-    }
-    joined_employee {
-        INT id PK "joined_person FK"
-        VARCHAR_128 emp_no "NOT NULL"
-        VARCHAR_128 emp_title "NOT NULL"
-        INT manager_id FK "NULL (self-reference)"
-    }
-
-    joined_person ||--o| joined_employee : "1:1 Joined (id=FK)"
-    joined_employee }o--o| joined_employee : "self-reference (manager_id)"
-```
+![Joined Table Inheritance ERD diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-erd-03.png)
 
 ### Table Per Class Inheritance ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    credit_card {
-        SERIAL id PK
-        VARCHAR_64 owner "NOT NULL"
-        VARCHAR_24 card_number "NOT NULL"
-        INT exp_month "NOT NULL"
-        INT exp_year "NOT NULL"
-    }
-    bank_account {
-        SERIAL id PK
-        VARCHAR_64 owner "NOT NULL"
-        VARCHAR_255 account_number "NOT NULL"
-        VARCHAR_255 bank_name "NOT NULL"
-    }
-```
+![Table Per Class Inheritance ERD diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-erd-04.png)
 
 ### TreeNode ERD (Self-reference Tree Structure)
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    tree_nodes {
-        BIGINT id PK "autoIncrement"
-        VARCHAR_255 title "NOT NULL"
-        TEXT description "NULL"
-        INT depth "DEFAULT 0"
-        BIGINT parent_id FK "NULL (self-reference)"
-    }
-
-    tree_nodes }o--o| tree_nodes : "self-reference (parent_id)"
-```
+![TreeNode ERD (Self-reference Tree Structure) diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-erd-05.png)
 
 ### Tree Structure Hierarchy Example
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    Root["root (depth=1)"]
-    Child1["child1 (depth=2)"]
-    Child2["child2 (depth=2)"]
-    GrandChild1["grandChild1 (depth=3)"]
-    GrandChild2["grandChild2 (depth=3)"]
-
-    Root --> Child1
-    Root --> Child2
-    Child1 --> GrandChild1
-    Child1 --> GrandChild2
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-
-    class Root blue
-    class Child1,Child2 green
-    class GrandChild1,GrandChild2 purple
-```
+![Tree Structure Hierarchy Example diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-architecture-06.png)
 
 ## Inheritance Strategy Comparison classDiagram
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    direction TD
-    class Billing {
-        <<abstract common>>
-        +Int id
-        +String owner
-        +String swift
-    }
-    class CreditCard_SingleTable {
-        <<Single Table billing>>
-        +String dtype
-        +String cardNumber
-        +Int expMonth
-        +Int expYear
-    }
-    class BankAccount_SingleTable {
-        <<Single Table billing>>
-        +String dtype
-        +String accountNumber
-        +String bankName
-    }
-    class Person_Joined {
-        <<Joined joined_person>>
-        +Int id
-        +String name
-        +String ssn
-    }
-    class Employee_Joined {
-        <<Joined joined_employee>>
-        +Int id
-        +String empNo
-        +String empTitle
-        +Employee manager
-    }
-    class CreditCard_TablePerClass {
-        <<Table Per Class credit_card>>
-        +Int id
-        +String owner
-        +String cardNumber
-        +Int expMonth
-        +Int expYear
-    }
-    class BankAccount_TablePerClass {
-        <<Table Per Class: bank_account>>
-        +Int id PK
-        +String owner
-        +String accountNumber
-        +String bankName
-    }
-
-    Billing <|-- CreditCard_SingleTable
-    Billing <|-- BankAccount_SingleTable
-    Person_Joined <|-- Employee_Joined
-    Employee_Joined --> Employee_Joined : manager self-reference
-    Billing <|-- CreditCard_TablePerClass
-    Billing <|-- BankAccount_TablePerClass
-
-    style Billing fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style CreditCard_SingleTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style BankAccount_SingleTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style Person_Joined fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Employee_Joined fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style CreditCard_TablePerClass fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style BankAccount_TablePerClass fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Inheritance Strategy Comparison classDiagram diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-class-07.png)
 
 ## Advanced Feature JPA ↔ Exposed Conversion Reference
 

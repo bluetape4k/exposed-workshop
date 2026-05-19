@@ -18,56 +18,11 @@ Vert.x SQL Client는 ORM 없이 SQL을 직접 작성하고 이벤트 루프에�
 
 ## 아키텍처 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph Test["테스트 코드"]
-        JE["JDBCPoolExamples\n(H2 JDBC Pool)"]
-        TE["SqlClientTemplatePostgresExamples\n(PostgreSQL SqlTemplate)"]
-    end
-
-    subgraph Vertx["Vert.x 레이어"]
-        Pool["JDBCPool / PgPool"]
-        Conn["SqlConnection"]
-        Tmpl["SqlTemplate"]
-    end
-
-    subgraph DB["데이터베이스"]
-        H2["H2 In-Memory"]
-        PG["PostgreSQL"]
-    end
-
-    JE -->|getH2Pool ()|Pool
-TE -->|getPgPool ()|Pool
-Pool -->|withSuspendTransaction|Conn
-Conn --> Tmpl
-Pool --> H2
-Tmpl --> PG
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class JE,TE blue
-    class Pool,Conn,Tmpl green
-    class H2,PG orange
-```
+![Architecture diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-architecture-01.png)
 
 ## ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    customer {
-        INT id PK
-        VARCHAR name
-        INT age
-    }
-    test {
-        INT id PK
-        VARCHAR value
-    }
-```
+![ERD diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-erd-02.png)
 
 ## 도메인 모델
 

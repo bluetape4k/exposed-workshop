@@ -17,77 +17,15 @@ Spring Data R2DBC provides a Spring Data-style Repository abstraction on top of 
 
 ## Architecture Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant Client as WebClient
-    participant PC as PostController
-    participant PR as PostRepository
-    participant CR as CommentRepository
-    participant DB as H2/PostgreSQL
-    Client ->> PC: GET /posts/{id}
-    PC ->> PR: findById(id) [suspend]
-    PR ->> DB: R2DBC Non-blocking SELECT
-    DB -->> PR: Post
-    PR -->> PC: Post?
-    PC -->> Client: 200 OK / 404 Not Found
-    Client ->> PC: GET /posts/{id}/comments/count
-    PC ->> CR: countByPostId(id) [suspend]
-    CR ->> DB: COUNT aggregation
-    DB -->> CR: Long
-    CR -->> PC: Long
-    PC -->> Client: 200 OK count
-```
+![Architecture Flow diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-sequence-01.png)
 
 ## ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    posts {
-        BIGINT id PK
-        VARCHAR title
-        TEXT content
-    }
-    comments {
-        BIGINT id PK
-        BIGINT post_id FK
-        TEXT content
-    }
-    customer {
-        BIGINT id PK
-        VARCHAR firstname
-        VARCHAR lastname
-    }
-    posts ||--o{ comments : "post_id"
-```
+![ERD diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-erd-02.png)
 
 ## Domain Model
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class Post {
-        +Long? id
-        +String? title
-        +String? content
-    }
-    class Comment {
-        +Long? id
-        +Long postId
-        +String content
-    }
-    class Customer {
-        +Long? id
-        +String firstname
-        +String lastname
-    }
-    Post "1" --> "0..*" Comment: postId
-
-    style Post fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style Comment fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Customer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Domain Model diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-class-03.png)
 
 ### R2DBC Entity Declaration
 

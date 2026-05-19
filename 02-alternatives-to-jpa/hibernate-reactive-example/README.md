@@ -17,61 +17,15 @@ Hibernate Reactive retains the existing JPA annotations (`@Entity`, `@OneToMany`
 
 ## Architecture Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant C as TeamController
-    participant SF as Mutiny.SessionFactory
-    participant R as TeamSessionRepository
-    participant DB as PostgreSQL
-    C ->> SF: withSession { session -> }
-    SF ->> R: findAllByName(session, name)
-    R ->> DB: Criteria query (Non-blocking)
-    DB -->> R: Uni<List<Team>>
-    R -->> R: awaitSuspending()
-    R -->> C: List<Team>
-    C -->> C: toTeamRecord() mapping
-```
+![Architecture Flow diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-sequence-01.png)
 
 ## ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    teams {
-        BIGINT id PK
-        VARCHAR name
-    }
-    members {
-        BIGINT id PK
-        VARCHAR name
-        BIGINT team_id FK
-    }
-    teams ||--o{ members : "team_id"
-```
+![ERD diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-erd-02.png)
 
 ## Domain Model
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class Team {
-        +Long id
-        +String name
-        +MutableList~Member~ members
-        +addMember(member)
-        +removeMember(member)
-    }
-    class Member {
-        +Long id
-        +String name
-        +Team? team
-    }
-    Team "1" --> "0..*" Member: members
-
-    style Team fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style Member fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-```
+![Domain Model diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-class-03.png)
 
 ### JPA Entity Declaration
 

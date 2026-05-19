@@ -21,67 +21,15 @@ Exposed DSL은 SQL 쿼리를 Kotlin 타입 안전 함수 체인으로 표현합�
 
 ## ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    cities {
-        INT id PK
-        VARCHAR name
-    }
-    users {
-        VARCHAR id PK
-        VARCHAR name
-        INT city_id FK
-    }
-    cities ||--o{ users : "city_id"
-```
+![ERD diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-erd-01.png)
 
 ## DSL 쿼리 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant App as 애플리케이션
-    participant TX as transaction { }
-    participant DSL as Exposed DSL
-    participant DB as Database
-
-    App ->> TX: transaction { }
-    TX ->> DSL: CityTable.insert { it[name] = "Seoul" }
-    DSL ->> DB: INSERT INTO cities (name) VALUES (?)
-    DB -->> DSL: generated id
-    DSL -->> TX: ResultRow
-
-    TX ->> DSL: UserTable.insert { it[id] = "debop"; it[cityId] = seoulId }
-    DSL ->> DB: INSERT INTO users (id, name, city_id) VALUES (?, ?, ?)
-    DB -->> DSL: OK
-
-    TX ->> DSL: CityTable.innerJoin(UserTable).selectAll()
-    DSL ->> DB: SELECT * FROM cities INNER JOIN users ON ...
-    DB -->> DSL: ResultSet
-    DSL -->> TX: List~ResultRow~
-    TX -->> App: 결과 반환
-```
+![DSL diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-sequence-02.png)
 
 ## 도메인 모델
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class CityTable {
-        +Column~Int~ id  [PK, autoIncrement]
-        +Column~String~ name
-    }
-    class UserTable {
-        +Column~String~ id  [PK]
-        +Column~String~ name
-        +Column~Int?~ cityId  [FK → CityTable.id]
-    }
-    CityTable "1" --> "0..*" UserTable: cityId
-
-    style CityTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style UserTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-```
+![Domain diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-class-03.png)
 
 ### 테이블 정의
 

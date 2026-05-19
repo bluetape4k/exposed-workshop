@@ -60,82 +60,15 @@ newSuspendedTransaction(singleThreadDispatcher) { ... }
 
 ## 코루틴 트랜잭션 시퀀스 다이어그램
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant C as Coroutine (runSuspendIO)
-    participant T1 as newSuspendedTransaction
-    participant T2 as suspendedTransactionAsync
-    participant DB as Database
-
-    C->>T1: newSuspendedTransaction(Dispatchers.IO)
-    T1->>DB: BEGIN
-    T1->>DB: INSERT INTO coroutines_tester ...
-    alt 정상 완료
-        T1->>DB: COMMIT
-        T1-->>C: EntityID 반환
-    else 예외 발생
-        T1->>DB: ROLLBACK
-        T1-->>C: 예외 전파
-    end
-
-    C->>T2: suspendedTransactionAsync { ... }
-    T2-->>C: Deferred<T> (즉시 반환)
-    Note over C,T2: 코루틴 재개 시 실제 실행
-    C->>C: awaitAll() 병렬 대기
-    T2->>DB: BEGIN
-    T2->>DB: SQL 실행
-    T2->>DB: COMMIT
-    T2-->>C: 결과 반환
-```
+![Coroutine Transaction diagram](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-sequence-01.png)
 
 ## newSuspendedTransaction 처리 시퀀스 다이어그램
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant App
-    participant CoroutineContext as CoroutineContext (Dispatchers.IO)
-    participant ExposedDB as Exposed Transaction
-    participant DB as Database
-
-    App->>CoroutineContext: newSuspendedTransaction { }
-    CoroutineContext->>ExposedDB: transaction block 시작
-    ExposedDB->>DB: BEGIN
-    ExposedDB->>DB: SQL Query (INSERT / SELECT ...)
-    DB-->>ExposedDB: Result
-    alt 정상 완료
-        ExposedDB->>DB: COMMIT
-        ExposedDB-->>CoroutineContext: mapped result
-        CoroutineContext-->>App: suspend 반환
-    else 예외 발생
-        ExposedDB->>DB: ROLLBACK
-        ExposedDB-->>CoroutineContext: 예외 전파
-        CoroutineContext-->>App: 예외 전파
-    end
-
-    App->>CoroutineContext: suspendedTransactionAsync { }
-    CoroutineContext-->>App: Deferred&lt;T&gt; (즉시 반환)
-    Note over App,CoroutineContext: 병렬 실행 후 awaitAll() 대기
-    CoroutineContext->>ExposedDB: transaction block (병렬)
-    ExposedDB->>DB: BEGIN → SQL → COMMIT
-    DB-->>ExposedDB: Result
-    ExposedDB-->>CoroutineContext: 결과
-    CoroutineContext-->>App: awaitAll() 결과 반환
-```
+![newSuspendedTransaction Processing diagram](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-sequence-02.png)
 
 ## 테이블 ERD (coroutines_tester)
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    coroutines_tester {
-        SERIAL id PK
-    }
-    coroutines_tester_unique {
-        INT id PK "UNIQUE INDEX"
-    }
-```
+![Table ERD (coroutines_tester) diagram](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-erd-03.png)
 
 ## 예제 구성
 

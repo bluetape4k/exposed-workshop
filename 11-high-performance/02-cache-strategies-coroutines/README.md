@@ -25,191 +25,25 @@ By extending `AbstractSuspendedJdbcRedissonRepository`, you can apply cache stra
 
 ## Cache Strategy Architecture
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    Client([WebFlux Client])
-
-    subgraph "Read-Through suspend"
-        RT_Cache{Near Cache\nL1}
-        RT_Redis[(Redis L2)]
-        RT_DB[(Database)]
-        Client -- suspend get --> RT_Cache
-        RT_Cache -- miss --> RT_Redis
-        RT_Redis -- miss --> RT_DB
-        RT_DB -- load --> RT_Redis
-        RT_Redis -- fill --> RT_Cache
-        RT_Cache -- hit --> Client
-    end
-
-    subgraph "Write-Through suspend"
-        WT_Cache{Near Cache\nL1}
-        WT_Redis[(Redis L2)]
-        WT_DB[(Database)]
-        Client -- suspend save --> WT_Cache
-        WT_Cache -- sync --> WT_Redis
-        WT_Redis -- sync --> WT_DB
-        WT_DB -->|done| WT_Cache
-    end
-
-    subgraph "Write-Behind suspend"
-        WB_Cache{Near Cache\nL1}
-        WB_Redis[(Redis L2)]
-        WB_Queue[[Coroutine\nAsync Queue]]
-        WB_DB[(Database)]
-        Client -- suspend save --> WB_Cache
-        WB_Cache -- immediate --> WB_Redis
-        WB_Redis -- enqueue --> WB_Queue
-        WB_Queue -- batch flush --> WB_DB
-    end
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-    classDef yellow fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-
-    class Client blue
-    class RT_Cache,WT_Cache,WB_Cache pink
-    class RT_Redis,WT_Redis,WB_Redis orange
-    class RT_DB,WT_DB,WB_DB orange
-    class WB_Queue yellow
-```
+![Cache Strategy Architecture diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-architecture-01.png)
 
 ---
 
 ## Class Structure
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class AbstractSuspendedJdbcRedissonRepository {
-        <<abstract>>
-        +cacheName: String
-        +config: RedisCacheConfig
-        +entityTable: T
-        +suspend findById(id): E?
-        +suspend findAll(): List~E~
-        +suspend saveAll(entities): List~E~
-        +suspend deleteById(id)
-        +suspend invalidate(ids)
-        #doInsertEntity(stmt, entity)
-        #doUpdateEntity(stmt, entity)
-        #toEntity(row): E
-    }
-
-    class UserCacheRepository {
-        +cacheName = "exposed:coroutines:users"
-        +config = READ_WRITE_THROUGH_WITH_NEAR_CACHE
-        +entityTable: UserTable
-        #doInsertEntity(stmt, entity)
-        #doUpdateEntity(stmt, entity)
-    }
-
-    class UserCredentialsCacheRepository {
-        +cacheName = "exposed:coroutines:user-credentials"
-        +config = READ_ONLY_WITH_NEAR_CACHE
-        +entityTable: UserCredentialsTable
-    }
-
-    class UserEventCacheRepository {
-        +cacheName = "exposed:coroutines:user-events"
-        +config = WRITE_BEHIND_WITH_NEAR_CACHE
-        +entityTable: UserEventTable
-        #doInsertEntity(stmt, entity)
-        #doUpdateEntity(stmt, entity)
-    }
-
-    class RedisCacheConfig {
-<<enum-likeobject>>
-READ_WRITE_THROUGH_WITH_NEAR_CACHE
-READ_ONLY_WITH_NEAR_CACHE
-WRITE_BEHIND_WITH_NEAR_CACHE
-}
-
-AbstractSuspendedJdbcRedissonRepository <|-- UserCacheRepository
-AbstractSuspendedJdbcRedissonRepository <|-- UserCredentialsCacheRepository
-AbstractSuspendedJdbcRedissonRepository <|-- UserEventCacheRepository
-AbstractSuspendedJdbcRedissonRepository --> RedisCacheConfig
-
-    style AbstractSuspendedJdbcRedissonRepository fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style UserCacheRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style UserCredentialsCacheRepository fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style UserEventCacheRepository fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style RedisCacheConfig fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-```
+![Class Structure diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-class-02.png)
 
 ---
 
 ## Request Processing Flow — Write-Behind Async Event Loading (Coroutines)
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant C as WebFlux Client
-    participant Ctrl as UserEventController
-    participant R as UserEventCacheRepository
-    participant NC as Near Cache (L1)
-    participant RD as Redis (L2)
-    participant Q as Coroutine Async Queue
-    participant DB as Database
-    C ->> Ctrl: POST /user-events/bulk (suspend)
-    Ctrl ->> R: saveAll(events) [suspend]
-    R ->> NC: put events (immediately)
-    R ->> RD: put events (immediately)
-    RD -->> Ctrl: Save complete
-    Ctrl -->> C: 200 OK
-    Note over RD, Q: Coroutine async batch flush
-    RD ->> Q: enqueue dirty entries
-    Q ->> DB: newSuspendedTransaction { batchInsert }
-    DB -->> Q: commit
-    Q -->> RD: flush complete
-    C ->> Ctrl: GET /user-events/{id} (suspend)
-    Ctrl ->> R: findById(id) [suspend]
-    R ->> NC: get(id)
-    NC -->> R: hit
-    R -->> Ctrl: UserEventRecord
-    Ctrl -->> C: 200 OK + body
-```
+![Request Processing Flow — Write-Behind Async Event Loading (Coroutines) diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-sequence-03.png)
 
 ---
 
 ## Request Processing Flow — Read-Through + Write-Through (Coroutines User)
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-sequenceDiagram
-    participant C as WebFlux Client
-    participant Ctrl as UserController
-    participant R as UserCacheRepository
-    participant NC as Near Cache (L1)
-    participant RD as Redis (L2)
-    participant DB as Database
-    C ->> Ctrl: GET /users/{id}
-    Ctrl ->> R: findById(id) [suspend]
-    R ->> NC: get(id)
-    NC -->> R: miss
-    R ->> RD: get(id)
-    RD -->> R: miss
-    R ->> DB: newSuspendedTransaction { SELECT }
-    DB -->> R: UserRecord
-    R ->> RD: put(id, record)
-    R ->> NC: put(id, record)
-    R -->> Ctrl: UserRecord
-    Ctrl -->> C: 200 OK (first query)
-    C ->> Ctrl: GET /users/{id}
-    Ctrl ->> R: findById(id) [suspend]
-    R ->> NC: get(id)
-    NC -->> Ctrl: hit → UserRecord
-    Ctrl -->> C: 200 OK (cache hit)
-    C ->> Ctrl: POST /users (save)
-    Ctrl ->> R: saveAll([user]) [suspend]
-    R ->> DB: newSuspendedTransaction { UPDATE }
-    R ->> RD: put(id, updated)
-    R ->> NC: put(id, updated)
-    R -->> Ctrl: Save complete
-    Ctrl -->> C: 200 OK
-```
+![Request Processing Flow — Read-Through + Write-Through (Coroutines User) diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-sequence-04.png)
 
 ---
 

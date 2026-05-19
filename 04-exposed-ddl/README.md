@@ -23,39 +23,7 @@ This chapter covers two foundational topics for Exposed applications. **Connecti
 
 ## Architecture Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph App["Application"]
-        DB["Database.connect(url, driver)"]
-        TP["TransactionManager"]
-        TX["transaction { ... }"]
-    end
-
-    subgraph DDL["Schema Management"]
-        SC["SchemaUtils.create(tables)"]
-        SM["MigrationUtils.statementsRequiredForDatabaseMigration(tables)"]
-        SD["SchemaUtils.drop(tables)"]
-    end
-
-    subgraph Pool["Connection Pool (HikariCP)"]
-        DS["DataSource"]
-    end
-
-    DB --> DS
-    DS --> TP
-    TP --> TX
-    TX --> SC & SM & SD
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-
-    class DB,TP,TX blue
-    class SC,SM,SD green
-    class DS orange
-```
+![Architecture Flow diagram](../docs/images/readme-diagrams/04-exposed-ddl-architecture-01.png)
 
 ## Prerequisites
 

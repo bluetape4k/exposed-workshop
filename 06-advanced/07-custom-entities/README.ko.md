@@ -35,80 +35,11 @@ Exposed의 `IdTable`을 확장하여 KSUID, Snowflake, Timebased UUID 등 커스
 
 ## 아키텍처 흐름
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class IdTable~T~ {
-        +Column~EntityID~T~~ id
-        +PrimaryKey primaryKey
-    }
-    class KsuidTable {
-        +Column~EntityID~String~~ id
-    }
-    class SnowflakeIdTable {
-        +Column~EntityID~Long~~ id
-    }
-    class TimebasedUUIDTable {
-        +Column~EntityID~String~~ id
-    }
-    class KsuidEntity {
-        +KsuidEntityID id
-    }
-    class SnowflakeIdEntity {
-        +SnowflakeIdEntityID id
-    }
-
-    IdTable <|-- KsuidTable
-    IdTable <|-- SnowflakeIdTable
-    IdTable <|-- TimebasedUUIDTable
-    KsuidTable --> KsuidEntity: maps to
-    SnowflakeIdTable --> SnowflakeIdEntity: maps to
-
-    style IdTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style KsuidTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style SnowflakeIdTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style TimebasedUUIDTable fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style KsuidEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style SnowflakeIdEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Architecture diagram](../../docs/images/readme-diagrams/06-advanced-07-custom-entities-class-01.png)
 
 ## 커스텀 ID 전략 비교 플로우
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph Standard["표준 ID (DB 시퀀스)"]
-        INT["IntIdTable\nINT AUTO_INCREMENT"]
-        LONG["LongIdTable\nBIGINT AUTO_INCREMENT"]
-        UUID4["UUIDTable\nBINARY(16) - UUID v4"]
-    end
-
-    subgraph Custom["커스텀 ID (애플리케이션 생성)"]
-        KSUID["KsuidTable\nVARCHAR(27)\n시간+랜덤, 정렬 가능"]
-        KSUIDM["KsuidMillisTable\nVARCHAR(27)\n밀리초 정밀도"]
-        SNOW["SnowflakeIdTable\nBIGINT\n기계ID+시퀀스+타임스탬프"]
-        UUIDV7["TimebasedUUIDTable\nVARCHAR(36)\nUUID v7 시간기반"]
-        B62["TimebasedUUIDBase62Table\nVARCHAR(22)\nBase62 URL친화적"]
-    end
-
-    subgraph Props["특성"]
-        SORT["정렬 가능\n(시간순)"]
-        DIST["분산 생성\n(DB 불필요)"]
-        IDX["인덱스\n효율적"]
-    end
-
-    KSUID & KSUIDM & SNOW & UUIDV7 & B62 --> SORT
-    KSUID & KSUIDM & SNOW & UUIDV7 & B62 & UUID4 --> DIST
-    INT & LONG & KSUID & SNOW --> IDX
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-
-    class INT,LONG,UUID4 blue
-    class KSUID,KSUIDM,SNOW,UUIDV7,B62 green
-    class SORT,DIST,IDX teal
-```
+![ID diagram](../../docs/images/readme-diagrams/06-advanced-07-custom-entities-architecture-02.png)
 
 ## 핵심 개념
 
