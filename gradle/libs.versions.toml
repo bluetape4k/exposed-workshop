@@ -2,7 +2,7 @@
 # Gradle Version Catalog — migrated from buildSrc/src/main/kotlin/Libs.kt
 
 [versions]
-bluetape4k-dependencies = "1.0.0"
+bluetape4k-dependencies = "1.0.1-SNAPSHOT"
 
 kotlin = "2.3.21"
 kotlinx-coroutines = "1.11.0"
