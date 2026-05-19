@@ -39,42 +39,7 @@ Exposed는 두 가지 데이터 접근 패턴을 제공합니다. **DSL(SQL DSL)
 
 ## 도메인 모델 (classDiagram)
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class CityTable {
-        +Column~Int~ id
-        +Column~String~ name
-    }
-    class UserTable {
-        +Column~Int~ id
-        +Column~String~ name
-        +Column~Int~ age
-        +Column~Int?~ cityId
-    }
-    class City {
-        +EntityID~Int~ id
-        +String name
-        +SizedIterable~User~ users
-    }
-    class User {
-        +EntityID~Int~ id
-        +String name
-        +Int age
-        +City? city
-    }
-
-    CityTable <|-- City : DAO maps to
-    UserTable <|-- User : DAO maps to
-    UserTable --> CityTable : cityId FK
-    User --> City : optionalReferencedOn
-    City --> User : optionalReferrersOn
-
-    style CityTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style UserTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style City fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style User fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![도메인 모델 (classDiagram) 1](../docs/images/readme-diagrams/03-exposed-basic-ko-diagram-01.svg)
 
 ## DSL 방식 스키마 정의
 

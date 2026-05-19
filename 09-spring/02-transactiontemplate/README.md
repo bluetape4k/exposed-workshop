@@ -17,46 +17,7 @@ A module for programmatic transaction control based on `TransactionTemplate`. It
 
 ## Architecture
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class TransactionTemplateConfig {
-        +exposedTransactionTemplate(tm) TransactionTemplate
-        +withoutTransactionOperations() TransactionOperations
-    }
-    class BookService {
-        -exposedTransactionTemplate: TransactionOperations
-        -withoutTransactionOperations: TransactionOperations
-        -jdbcTemplate: JdbcTemplate
-        +executeSpringTransaction()
-        +execWithExposedTransaction()
-        +execWithoutSpringTransaction()
-        +execTransactionalAnnotation()
-    }
-    class SpringTransactionManager {
-        <<exposed-spring>>
-    }
-    class TransactionTemplate {
-        +execute(block)
-    }
-    class TransactionOperations {
-        <<interface>>
-        +execute(block)
-        +withoutTransaction()$ TransactionOperations
-    }
-
-    TransactionTemplateConfig --> SpringTransactionManager : wraps
-    TransactionTemplateConfig --> TransactionTemplate : creates
-    TransactionTemplateConfig --> TransactionOperations : creates (no-tx)
-    BookService --> TransactionTemplate : exposedTransactionTemplate
-    BookService --> TransactionOperations : withoutTransactionOperations
-
-    style TransactionTemplateConfig fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style BookService fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style SpringTransactionManager fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style TransactionTemplate fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style TransactionOperations fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-```
+![Architecture 1](../../docs/images/readme-diagrams/09-spring-02-transactiontemplate-diagram-01.svg)
 
 ## Key Concepts
 

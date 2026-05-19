@@ -20,78 +20,11 @@ Spring WebFlux + 코루틴 환경에서 Exposed를 비동기 Repository 패턴�
 
 ## 도메인 모델
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    MOVIES {
-        BIGSERIAL id PK
-        VARCHAR name
-        VARCHAR producerName
-        DATE releaseDate
-    }
-    ACTORS {
-        BIGSERIAL id PK
-        VARCHAR firstName
-        VARCHAR lastName
-        DATE birthday
-    }
-    ACTORS_IN_MOVIES {
-        BIGINT movieId FK
-        BIGINT actorId FK
-    }
-
-    MOVIES ||--o{ ACTORS_IN_MOVIES : "movieId"
-    ACTORS ||--o{ ACTORS_IN_MOVIES : "actorId"
-```
+![도메인 모델 1](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-ko-diagram-01.svg)
 
 ## 아키텍처
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class JdbcRepository {
-        <<interface>>
-        +table: T
-        +toEntity(ResultRow) E
-    }
-    class MovieExposedRepository {
-        <<@Repository>>
-        +searchMovie(params) List~MovieRecord~
-        +create(movie) MovieRecord
-        +getAllMoviesWithActors() List~MovieWithActorRecord~
-        +getMovieWithActors(movieId) MovieWithActorRecord?
-        +getMovieActorsCount() List~MovieActorCountRecord~
-        +findMoviesWithActingProducers() List~MovieWithProducingActorRecord~
-    }
-    class ActorExposedRepository {
-        <<@Repository>>
-        +searchActors(params) List~ActorRecord~
-        +create(actor) ActorRecord
-    }
-    class MovieTransactionalService {
-        <<@Component>>
-        -movieRepository: MovieExposedRepository
-        +monoSave(movieRecord) Mono~MovieEntity~
-        +suspendedSave(movieRecord) MovieRecord
-    }
-    class MovieController {
-        <<suspend>>
-        +getMovies(params) List~MovieRecord~
-        +createMovie(record) MovieRecord
-    }
-
-    JdbcRepository <|-- MovieExposedRepository
-    JdbcRepository <|-- ActorExposedRepository
-    MovieTransactionalService --> MovieExposedRepository : delegates
-    MovieController --> MovieExposedRepository : calls
-    MovieController --> MovieTransactionalService : calls
-
-    style JdbcRepository fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style MovieExposedRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style ActorExposedRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style MovieTransactionalService fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style MovieController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-```
+![아키텍처 2](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-ko-diagram-02.svg)
 
 ## 핵심 개념
 

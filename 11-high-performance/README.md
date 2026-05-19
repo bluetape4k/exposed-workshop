@@ -30,83 +30,13 @@ Covers cache and routing strategies for improving throughput and responsiveness 
 
 ## Module Relationships
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    M1[01-cache-strategies\nSpring MVC + Virtual Threads\n캐시 전략]
-    M2[02-cache-strategies-coroutines\nWebFlux + Coroutines\n비동기 캐시]
-    M3[03-routing-datasource\nDynamicRoutingDataSource\n멀티테넌트 DB 라우팅]
-    M4[04-benchmark\nJMH\n성능 측정]
-
-    Redis[(Redis\nRedisson)]
-    DB[(Database\nExposed)]
-
-    M1 -- Near Cache + Redis --> Redis
-    M1 -- Exposed JDBC --> DB
-    M2 -- Near Cache + Redis --> Redis
-    M2 -- Exposed JDBC --> DB
-    M3 -- Per-tenant DataSource --> DB
-    M4 -- Cache benchmark --> M1
-    M4 -- Routing benchmark --> M3
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class M1,M2 blue
-    class M3 green
-    class M4 purple
-    class Redis,DB orange
-```
+![Module Relationships 1](../docs/images/readme-diagrams/11-high-performance-diagram-01.svg)
 
 ---
 
 ## Overall Architecture
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph "Cache Layers"
-        direction TB
-        NC[Near Cache\nL1 Local Memory]
-        Redis[(Redis L2\nDistributed Cache)]
-        DB[(Database\nExposed)]
-        NC -- miss --> Redis
-        Redis -- miss --> DB
-        DB -- load --> Redis
-        Redis -- fill --> NC
-    end
-
-    subgraph "Strategies"
-        RT[Read-Through\nUserCacheRepository]
-        WT[Write-Through\nUserCacheRepository]
-        WB[Write-Behind\nUserEventCacheRepository]
-        RO[Read-Only\nUserCredentialsCacheRepository]
-    end
-
-    subgraph "Routing"
-        TH[TenantHeaderFilter\nX-Tenant-Id]
-        TC[TenantContext\nThreadLocal]
-        KR[ContextAwareRoutingKeyResolver\ntenant:rw/ro]
-        REG[DataSourceRegistry\nConcurrentHashMap]
-        DDS[DynamicRoutingDataSource]
-        TH --> TC --> KR --> REG --> DDS
-    end
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef pink fill:#FCE4EC,stroke:#F48FB1,color:#AD1457
-    classDef teal fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-
-    class NC pink
-    class Redis,DB orange
-    class RT,WT,WB,RO green
-    class TH,TC blue
-    class KR,REG,DDS purple
-```
+![Overall Architecture 2](../docs/images/readme-diagrams/11-high-performance-diagram-02.svg)
 
 ---
 

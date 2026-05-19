@@ -126,16 +126,7 @@ sequenceDiagram
 
 ## 테이블 ERD (coroutines_tester)
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    coroutines_tester {
-        SERIAL id PK
-    }
-    coroutines_tester_unique {
-        INT id PK "UNIQUE INDEX"
-    }
-```
+![테이블 ERD (coroutinestester) 1](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-ko-diagram-01.svg)
 
 ## 예제 구성
 

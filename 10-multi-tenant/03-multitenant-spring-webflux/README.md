@@ -21,29 +21,7 @@ A non-blocking multi-tenant example based on WebFlux + Coroutines. Propagates te
 
 ## Domain Model
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    MovieTable {
-        BIGSERIAL id PK
-        VARCHAR(255) name
-        VARCHAR(255) producerName
-        DATE releaseDate
-    }
-    ActorTable {
-        BIGSERIAL id PK
-        VARCHAR(255) firstName
-        VARCHAR(255) lastName
-        DATE birthday
-    }
-    ActorInMovieTable {
-        BIGINT movieId FK
-        BIGINT actorId FK
-    }
-
-    MovieTable ||--o{ ActorInMovieTable : "has"
-    ActorTable ||--o{ ActorInMovieTable : "appears in"
-```
+![Domain Model 1](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-diagram-01.svg)
 
 ---
 
@@ -61,81 +39,7 @@ erDiagram
 
 ## Architecture
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class TenantFilter {
-        +TENANT_HEADER: String
-        +filter(exchange, chain) Mono~Void~
-    }
-
-    class TenantId {
-        +value: Tenant
-        +TENANT_ID_KEY: String
-        +DEFAULT: TenantId
-        +key: CoroutineContext.Key
-    }
-
-    class Tenants {
-        +DEFAULT_TENANT: Tenant
-        +getById(tenantId) Tenant
-    }
-
-    class Tenant {
-        <<enumeration>>
-        KOREAN
-        ENGLISH
-        +id: String
-    }
-
-    class TenantAwareDataSource {
-        +determineCurrentLookupKey() Any
-    }
-
-    class ActorController {
-        +getAllActors() List~ActorRecord~
-        +findById(id) ActorRecord
-    }
-
-    class TenantInitializer {
-        +onApplicationEvent(event)
-    }
-
-    class DataInitializer {
-        +initialize(tenant)
-    }
-
-    class ExposedMultitenantConfig {
-        +tenantAwareDataSource() TenantAwareDataSource
-        +dataSource() DataSource
-        +database(dataSource, config) Database
-    }
-
-    class NettyConfig {
-        +nettyReactiveWebServerFactory() NettyReactiveWebServerFactory
-    }
-
-    TenantFilter --> Tenants : getById()
-    TenantFilter --> TenantId : contextWrite()
-    TenantId --> CoroutineContext_Element : implements
-    TenantId --> Tenant : value
-    Tenants --> Tenant : enum member
-    TenantAwareDataSource --> TenantId : currentTenant()
-    ActorController --> TenantId : newSuspendedTransactionWithCurrentReactorTenant()
-    TenantInitializer --> DataInitializer : initialize(tenant)
-    ExposedMultitenantConfig --> TenantAwareDataSource : creates bean
-
-    style TenantFilter fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style TenantId fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Tenants fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Tenant fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-    style TenantAwareDataSource fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style ActorController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style TenantInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style DataInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style ExposedMultitenantConfig fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-    style NettyConfig fill:#E0F2F1,stroke:#80CBC4,color:#00695C
-```
+![Architecture 2](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-diagram-02.svg)
 
 ### Context Propagation System
 
@@ -152,27 +56,7 @@ HTTP Request
 
 ### Tenant Propagation Flow via Reactor Context
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    Request[WebFlux Request] --> |Mono/Flux| WebFilter[WebFilter\nTenant extracted]
-    WebFilter --> |contextWrite| ReactorCtx[Reactor Context\nTenantId stored]
-    ReactorCtx --> |coroutineContext| CoroutineScope[CoroutineScope\n+ ReactorContext]
-    CoroutineScope --> |newSuspendedTransactionWithTenant| ExposedDB[Exposed\nnewSuspendedTransaction]
-    ExposedDB --> |useSchema| TenantDB[(Tenant Schema)]
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class Request blue
-    class WebFilter green
-    class ReactorCtx purple
-    class CoroutineScope purple
-    class ExposedDB green
-    class TenantDB orange
-```
+![Tenant Propagation Flow via Reactor Context 3](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-diagram-03.svg)
 
 ---
 

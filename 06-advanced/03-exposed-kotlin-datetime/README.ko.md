@@ -16,69 +16,7 @@
 
 ## Kotlin DateTime 타입 매핑
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class KotlinDateTimeTable {
-        +date(name): Column~LocalDate~
-        +datetime(name): Column~LocalDateTime~
-        +timestamp(name): Column~Instant~
-        +timestampWithTimeZone(name): Column~LocalDateTime~
-        +time(name): Column~LocalTime~
-    }
-
-    class KotlinLocalDate {
-        <<kotlinx.datetime>>
-        LocalDate
-    }
-    class KotlinLocalDateTime {
-        <<kotlinx.datetime>>
-        LocalDateTime
-    }
-    class KotlinInstant {
-        <<kotlin.time>>
-        Instant
-    }
-    class KotlinLocalTime {
-        <<kotlinx.datetime>>
-        LocalTime
-    }
-
-    class JavaTimeEquivalent {
-        <<java.time (JVM only)>>
-        LocalDate
-        LocalDateTime
-        Instant
-        LocalTime
-    }
-
-    class DBColumn {
-        <<Database>>
-        DATE
-        DATETIME / TIMESTAMP
-        TIMESTAMP / TIMESTAMPTZ
-        TIME
-    }
-
-    KotlinDateTimeTable --> KotlinLocalDate : date()
-    KotlinDateTimeTable --> KotlinLocalDateTime : datetime()
-    KotlinDateTimeTable --> KotlinInstant : timestamp()
-    KotlinDateTimeTable --> KotlinLocalTime : time()
-    KotlinLocalDate --> DBColumn : DATE
-    KotlinLocalDateTime --> DBColumn : DATETIME
-    KotlinInstant --> DBColumn : TIMESTAMP
-    KotlinLocalTime --> DBColumn : TIME
-    KotlinLocalDate .. JavaTimeEquivalent : KMP 대응
-    KotlinLocalDateTime .. JavaTimeEquivalent : KMP 대응
-
-    style KotlinDateTimeTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style KotlinLocalDate fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style KotlinLocalDateTime fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style KotlinInstant fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style KotlinLocalTime fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style JavaTimeEquivalent fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style DBColumn fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Kotlin DateTime 타입 매핑 1](../../docs/images/readme-diagrams/06-advanced-03-exposed-kotlin-datetime-ko-diagram-01.svg)
 
 ## 핵심 개념
 

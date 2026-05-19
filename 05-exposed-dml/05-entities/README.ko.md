@@ -105,122 +105,15 @@ EntityHook.subscribe { change ->
 
 ## Entity 관계 매핑 다이어그램
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class Projects {
-        +EntityID~Long~ id
-        +String name
-    }
-    class ProjectConfigs {
-        +EntityID~Long~ id
-        +String ownerId
-        +Boolean setting
-    }
-    class Actors {
-        +EntityID~Long~ id
-        +String name
-    }
-    class Movies {
-        +EntityID~Long~ id
-        +String title
-        +EntityID~Long~ directorId
-    }
-    class StarringTable {
-        +EntityID~Long~ actorId
-        +EntityID~Long~ movieId
-    }
-
-    Projects "1" --> "1" ProjectConfigs: one-to-one shared PK
-    Actors "1" --> "0..*" Movies: one-to-many directorId FK
-    Actors "0..*" --> "0..*" Movies: many-to-many via StarringTable
-    StarringTable --> Actors
-    StarringTable --> Movies
-
-    style Projects fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style ProjectConfigs fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style Actors fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Movies fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style StarringTable fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Entity 관계 매핑 다이어그램 1](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-ko-diagram-01.svg)
 
 ## XEntity-YEntity 관계 ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    YTABLE {
-        varchar uuid PK
-        boolean x
-    }
-    XTABLE {
-        int id PK
-        boolean b1
-        boolean b2
-        varchar y1 FK
-    }
-
-    YTABLE ||--o| XTABLE : "optReference (nullable)"
-```
+![XEntity-YEntity 관계 ERD 2](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-ko-diagram-02.svg)
 
 ## Entity 클래스 계층 다이어그램
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class Entity~T~ {
-        +EntityID~T~ id
-    }
-    class IntEntity {
-        +EntityID~Int~ id
-    }
-    class LongEntity {
-        +EntityID~Long~ id
-    }
-    class UUIDEntity {
-        +EntityID~UUID~ id
-    }
-    class CompositeEntity {
-        +EntityID~CompositeID~ id
-    }
-    class AEntity {
-        +Boolean b1
-    }
-    class BEntity {
-        +Boolean b2
-        +YEntity? y
-    }
-    class XEntity {
-        +Boolean b1
-        +Boolean b2
-    }
-    class YEntity {
-        +Boolean x
-        +BEntity? b
-    }
-
-    Entity <|-- IntEntity
-    Entity <|-- LongEntity
-    Entity <|-- UUIDEntity
-    Entity <|-- CompositeEntity
-    IntEntity <|-- AEntity
-    AEntity <|-- BEntity
-    IntEntity <|-- XEntity
-    Entity <|-- YEntity
-
-    BEntity --> YEntity : "optionalReferencedOn"
-    YEntity --> BEntity : "backReferencedOn"
-
-    style Entity fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style IntEntity fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style LongEntity fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style UUIDEntity fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style CompositeEntity fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style AEntity fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style BEntity fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style XEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style YEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Entity 클래스 계층 다이어그램 3](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-ko-diagram-03.svg)
 
 ## PK 전략 비교
 

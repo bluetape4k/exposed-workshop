@@ -21,20 +21,7 @@ Exposed DSL은 SQL 쿼리를 Kotlin 타입 안전 함수 체인으로 표현합�
 
 ## ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    cities {
-        INT id PK
-        VARCHAR name
-    }
-    users {
-        VARCHAR id PK
-        VARCHAR name
-        INT city_id FK
-    }
-    cities ||--o{ users : "city_id"
-```
+![ERD 1](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-ko-diagram-01.svg)
 
 ## DSL 쿼리 흐름
 
@@ -65,23 +52,7 @@ sequenceDiagram
 
 ## 도메인 모델
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class CityTable {
-        +Column~Int~ id  [PK, autoIncrement]
-        +Column~String~ name
-    }
-    class UserTable {
-        +Column~String~ id  [PK]
-        +Column~String~ name
-        +Column~Int?~ cityId  [FK → CityTable.id]
-    }
-    CityTable "1" --> "0..*" UserTable: cityId
-
-    style CityTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style UserTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-```
+![도메인 모델 2](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-ko-diagram-02.svg)
 
 ### 테이블 정의
 

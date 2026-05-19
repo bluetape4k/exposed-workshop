@@ -33,97 +33,11 @@
 
 ## 아키텍처 개요
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph Column["커스텀 컬럼 확장"]
-        CRYPT["encryptedVarchar\nencryptedBinary"]
-        TINK["tinkAeadVarChar\ntinkDaeadVarChar"]
-        JSON["json / jsonb"]
-        COMP["compressedBinary"]
-        SER["binarySerializedBinary"]
-    end
-
-    subgraph Entity["커스텀 Entity ID"]
-        KSUID["KsuidTable\nKsuidEntity"]
-        SNOW["SnowflakeIdTable\nSnowflakeIdEntity"]
-        UUID["TimebasedUUIDTable"]
-    end
-
-    subgraph Storage["DB 저장"]
-        VARCHAR["VARCHAR (암호화/직렬화)"]
-        BINARY["BINARY/BYTEA (압축/직렬화)"]
-        JSONTYPE["JSON/JSONB"]
-        BIGINT["BIGINT (Snowflake)"]
-    end
-
-    CRYPT & TINK --> VARCHAR
-    COMP & SER --> BINARY
-    JSON --> JSONTYPE
-    KSUID --> VARCHAR
-    SNOW --> BIGINT
-
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class CRYPT,TINK,JSON,COMP,SER purple
-    class KSUID,SNOW,UUID green
-    class VARCHAR,BINARY,JSONTYPE,BIGINT orange
-```
+![아키텍처 개요 1](../docs/images/readme-diagrams/06-advanced-ko-diagram-01.svg)
 
 ## 모듈 분류
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    subgraph Crypto["암호화"]
-        M01["01-exposed-crypt\nAES/Blowfish/3DES\n비결정적 암호화"]
-        M10["10-exposed-jasypt\nJasypt 결정적 암호화\nWHERE 검색 가능"]
-        M12["12-exposed-tink\nGoogle Tink AEAD/DAEAD\n무결성 검증 + 검색"]
-    end
-
-    subgraph DateTime["날짜/시간"]
-        M02["02-exposed-javatime\njava.time 타입 매핑\nLocalDate/Instant 등"]
-        M03["03-exposed-kotlin-datetime\nkotlinx.datetime 타입 매핑\nKMP 지원"]
-    end
-
-    subgraph JSON["JSON 직렬화"]
-        M04["04-exposed-json\nkotlinx.serialization\nJSON/JSONB 경로 쿼리"]
-        M08["08-exposed-jackson\nJackson 2 ObjectMapper\nJSON/JSONB 컬럼"]
-        M09["09-exposed-fastjson2\nFastjson2\n고성능 JSON 파싱"]
-        M11["11-exposed-jackson3\nJackson 3 ObjectMapper\n마이그레이션 호환성"]
-    end
-
-    subgraph Money["통화/금액"]
-        M05["05-exposed-money\nJavaMoney MonetaryAmount\n복합 컬럼 매핑"]
-    end
-
-    subgraph Custom["커스텀 확장"]
-        M06["06-custom-columns\nColumnType 상속\n직렬화/압축/암호화"]
-        M07["07-custom-entities\nKSUID/Snowflake/UUID\n커스텀 ID 전략"]
-    end
-
-    M01 -->|"검색 필요 시"| M10
-    M10 -->|"고급 암호화"| M12
-    M02 -->|"KMP 환경"| M03
-    M04 -->|"Jackson 생태계"| M08
-    M08 -->|"Jackson 3 이행"| M11
-    M04 -->|"고성능 필요"| M09
-    M06 -->|"커스텀 ID"| M07
-
-    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-
-    class M01,M10,M12 red
-    class M02,M03 blue
-    class M04,M08,M09,M11 purple
-    class M05 orange
-    class M06,M07 green
-```
+![모듈 분류 2](../docs/images/readme-diagrams/06-advanced-ko-diagram-02.svg)
 
 ## 권장 학습 순서
 

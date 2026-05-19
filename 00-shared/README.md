@@ -7,51 +7,7 @@ Provides database connections, table/schema creation and deletion, and Faker-bas
 
 ## Module Dependency Structure
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph shared["00-shared"]
-        EST["exposed-shared-tests\nShared Test Utilities"]
-    end
-
-    subgraph external["External Libraries"]
-        EXP["Exposed\n(core/dao/jdbc)"]
-        BT4K["bluetape4k-exposed\nExtension Utils"]
-        TC["Testcontainers\n(PostgreSQL/MySQL/MariaDB)"]
-        H2["H2\nIn-Memory DB"]
-        HK["HikariCP\nConnection Pool"]
-    end
-
-    subgraph consumers["Workshop Modules (Consumers)"]
-        M01["01-spring-boot"]
-        M03["03-exposed-basic"]
-        M04["04-exposed-ddl"]
-        M05["05-exposed-dml"]
-        M06["06-advanced"]
-        MREST["...Other Modules"]
-    end
-
-    EST --> EXP
-    EST --> BT4K
-    EST --> TC
-    EST --> H2
-    EST --> HK
-
-    M01 --> EST
-    M03 --> EST
-    M04 --> EST
-    M05 --> EST
-    M06 --> EST
-    MREST --> EST
-
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-
-    class EST green
-    class EXP,BT4K,TC,H2,HK purple
-    class M01,M03,M04,M05,M06,MREST blue
-```
+![Module Dependency Structure 1](../docs/images/readme-diagrams/00-shared-diagram-01.svg)
 
 ## Included Modules
 

@@ -20,20 +20,7 @@ Exposed DSL expresses SQL queries as Kotlin type-safe function chains. You defin
 
 ## ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    cities {
-        INT id PK
-        VARCHAR name
-    }
-    users {
-        VARCHAR id PK
-        VARCHAR name
-        INT city_id FK
-    }
-    cities ||--o{ users : "city_id"
-```
+![ERD 1](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-diagram-01.svg)
 
 ## DSL Query Flow
 
@@ -64,23 +51,7 @@ sequenceDiagram
 
 ## Domain Model
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class CityTable {
-        +Column~Int~ id  [PK, autoIncrement]
-        +Column~String~ name
-    }
-    class UserTable {
-        +Column~String~ id  [PK]
-        +Column~String~ name
-        +Column~Int?~ cityId  [FK → CityTable.id]
-    }
-    CityTable "1" --> "0..*" UserTable: cityId
-
-    style CityTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style UserTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-```
+![Domain Model 2](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-diagram-02.svg)
 
 ### Table Definition
 

@@ -43,53 +43,11 @@ sequenceDiagram
 
 ## ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    posts {
-        BIGINT id PK
-        VARCHAR title
-        TEXT content
-    }
-    comments {
-        BIGINT id PK
-        BIGINT post_id FK
-        TEXT content
-    }
-    customer {
-        BIGINT id PK
-        VARCHAR firstname
-        VARCHAR lastname
-    }
-    posts ||--o{ comments : "post_id"
-```
+![ERD 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-ko-diagram-01.svg)
 
 ## 도메인 모델
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class Post {
-        +Long? id
-        +String? title
-        +String? content
-    }
-    class Comment {
-        +Long? id
-        +Long postId
-        +String content
-    }
-    class Customer {
-        +Long? id
-        +String firstname
-        +String lastname
-    }
-    Post "1" --> "0..*" Comment: postId
-
-    style Post fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style Comment fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Customer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![도메인 모델 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-ko-diagram-02.svg)
 
 ### R2DBC 엔티티 선언
 

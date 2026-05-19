@@ -20,41 +20,7 @@ Spring Boot 자동 설정으로 Exposed를 최소 구성으로 통합하는 모�
 
 ## 아키텍처
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class SpringBootApplication {
-        +exclude: DataSourceTransactionManagerAutoConfiguration
-    }
-    class ExposedAutoConfiguration {
-        <<AutoConfiguration>>
-        +springTransactionManager() SpringTransactionManager
-        +databaseInitializer() DatabaseInitializer
-    }
-    class SpringTransactionManager {
-        +dataSource: DataSource
-        +databaseConfig: DatabaseConfig
-    }
-    class DatabaseInitializer {
-        +tables: List~Table~
-        +generateDdl: Boolean
-    }
-    class DatabaseConfig {
-        +maxEntitiesToStoreInCachePerEntity: Int
-        +useNestedTransactions: Boolean
-    }
-
-    SpringBootApplication --> ExposedAutoConfiguration : auto-configure
-    ExposedAutoConfiguration --> SpringTransactionManager : creates
-    ExposedAutoConfiguration --> DatabaseInitializer : creates (when generate-ddl=true)
-    SpringTransactionManager --> DatabaseConfig : uses
-
-    style SpringBootApplication fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style ExposedAutoConfiguration fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style SpringTransactionManager fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style DatabaseInitializer fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style DatabaseConfig fill:#FFFDE7,stroke:#FFF176,color:#F57F17
-```
+![아키텍처 1](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-ko-diagram-01.svg)
 
 ## 핵심 개념
 

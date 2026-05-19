@@ -16,68 +16,7 @@
 
 ## Java Time 타입 매핑
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class JavaTimeTable {
-        +date(name): Column~LocalDate~
-        +datetime(name): Column~LocalDateTime~
-        +timestamp(name): Column~Instant~
-        +timestampWithTimeZone(name): Column~OffsetDateTime~
-        +time(name): Column~LocalTime~
-        +duration(name): Column~Duration~
-    }
-
-    class LocalDate {
-        <<java.time>>
-    }
-    class LocalDateTime {
-        <<java.time>>
-    }
-    class Instant {
-        <<java.time>>
-    }
-    class OffsetDateTime {
-        <<java.time>>
-    }
-    class LocalTime {
-        <<java.time>>
-    }
-    class Duration {
-        <<java.time>>
-    }
-
-    class DBColumn {
-        <<Database>>
-        DATE
-        DATETIME / TIMESTAMP
-        TIMESTAMP / TIMESTAMPTZ
-        TIME
-        BIGINT / INTERVAL
-    }
-
-    JavaTimeTable --> LocalDate : date()
-    JavaTimeTable --> LocalDateTime : datetime()
-    JavaTimeTable --> Instant : timestamp()
-    JavaTimeTable --> OffsetDateTime : timestampWithTimeZone()
-    JavaTimeTable --> LocalTime : time()
-    JavaTimeTable --> Duration : duration()
-    LocalDate --> DBColumn : DATE
-    LocalDateTime --> DBColumn : DATETIME
-    Instant --> DBColumn : TIMESTAMP
-    OffsetDateTime --> DBColumn : TIMESTAMPTZ
-    LocalTime --> DBColumn : TIME
-    Duration --> DBColumn : BIGINT
-
-    style JavaTimeTable fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style LocalDate fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style LocalDateTime fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Instant fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style OffsetDateTime fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style LocalTime fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style Duration fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style DBColumn fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![Java Time 타입 매핑 1](../../docs/images/readme-diagrams/06-advanced-02-exposed-javatime-ko-diagram-01.svg)
 
 ## 핵심 개념
 

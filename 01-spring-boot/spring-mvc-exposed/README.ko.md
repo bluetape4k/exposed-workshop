@@ -20,109 +20,7 @@ Spring MVC + Virtual Threads 환경에서 Exposed DSL/DAO를 사용하는 REST A
 
 ## 아키텍처
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class ActorController {
-        -ActorRepository actorRepository
-        +getActorById(actorId: Long): ActorRecord?
-        +searchActors(request: HttpServletRequest): List~ActorRecord~
-        +createActor(actor: ActorRecord): ActorRecord
-        +deleteActorById(actorId: Long): Int
-    }
-
-    class MovieController {
-        -MovieRepository movieRepository
-        +getMovieById(movieId: Long): MovieRecord?
-        +searchMovies(request: HttpServletRequest): List~MovieRecord~
-        +createMovie(movieRecord: MovieRecord): MovieRecord?
-        +deleteMovieById(movieId: Long): Int
-    }
-
-    class MovieActorsController {
-        -MovieRepository movieRepo
-        +getMovieWithActors(movieId: Long): MovieWithActorRecord?
-        +getMovieActorsCount(): List~MovieActorCountRecord~
-        +findMoviesWithActingProducers(): List~MovieWithProducingActorRecord~
-    }
-
-    class ActorRepository {
-        +findById(actorId: Long): ActorRecord?
-        +searchActors(params: Map): List~ActorRecord~
-        +create(actor: ActorRecord): ActorRecord
-        +deleteById(actorId: Long): Int
-    }
-
-    class MovieRepository {
-        -db: Database
-        +findById(movieId: Long): MovieRecord?
-        +searchMovies(params: Map): List~MovieRecord~
-        +create(movieRecord: MovieRecord): MovieRecord
-        +deleteById(movieId: Long): Int
-        +getMovieWithActors(movieId: Long): MovieWithActorRecord?
-        +getMovieActorsCount(): List~MovieActorCountRecord~
-        +findMoviesWithActingProducers(): List~MovieWithProducingActorRecord~
-    }
-
-    class MovieTable {
-        <<LongIdTable>>
-        +name: Column~String~
-        +producerName: Column~String~
-        +releaseDate: Column~LocalDateTime~
-    }
-
-    class ActorTable {
-        <<LongIdTable>>
-        +firstName: Column~String~
-        +lastName: Column~String~
-        +birthday: Column~LocalDate?~
-    }
-
-    class ActorInMovieTable {
-        <<Table>>
-        +movieId: Column~EntityID~Long~~
-        +actorId: Column~EntityID~Long~~
-    }
-
-    class MovieEntity {
-        <<LongEntity>>
-        +name: String
-        +producerName: String
-        +releaseDate: LocalDateTime
-        +actors: SizedIterable~ActorEntity~
-    }
-
-    class ActorEntity {
-        <<LongEntity>>
-        +firstName: String
-        +lastName: String
-        +birthday: LocalDate?
-        +movies: SizedIterable~MovieEntity~
-    }
-
-    ActorController --> ActorRepository
-    MovieController --> MovieRepository
-    MovieActorsController --> MovieRepository
-    ActorRepository --> ActorTable
-    MovieRepository --> MovieTable
-    MovieRepository --> ActorInMovieTable
-    MovieRepository --> MovieEntity
-    MovieTable --> MovieEntity
-    ActorTable --> ActorEntity
-    ActorInMovieTable --> MovieTable
-    ActorInMovieTable --> ActorTable
-
-    style ActorController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style MovieController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style MovieActorsController fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style ActorRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style MovieRepository fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style MovieTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style ActorTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style ActorInMovieTable fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-    style MovieEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    style ActorEntity fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-```
+![아키텍처 1](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-ko-diagram-01.svg)
 
 ---
 
@@ -297,28 +195,7 @@ Spring Profile로 데이터베이스를 전환합니다:
 
 ## 도메인 모델
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    MOVIES {
-        bigint id PK
-        varchar name
-        varchar producer_name
-        timestamp release_date
-    }
-    ACTORS {
-        bigint id PK
-        varchar first_name
-        varchar last_name
-        date birthday
-    }
-    ACTORS_IN_MOVIES {
-        bigint movie_id FK
-        bigint actor_id FK
-    }
-    MOVIES ||--o{ ACTORS_IN_MOVIES : "출연"
-    ACTORS ||--o{ ACTORS_IN_MOVIES : "출연"
-```
+![도메인 모델 2](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-ko-diagram-02.svg)
 
 | 클래스                             | 설명                                                      |
 |---------------------------------|---------------------------------------------------------|

@@ -32,105 +32,15 @@ A chapter that lays out step-by-step strategies for migrating an existing JPA-ce
 
 ## Migration Strategy Overview
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    A[JPA Codebase] --> B{Analyze migration scope}
-    B --> C[Basic CRUD\n01-convert-jpa-basic]
-    B --> D[Complex relationships/inheritance\n02-convert-jpa-advanced]
-    C --> E[Write equivalence\ntests]
-    D --> E
-    E --> F[Incremental migration\nby module]
-    F --> G[Regression verification\nCI integration]
-    G --> H[Remove JPA dependency]
-
-    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-
-    class A red
-    class B orange
-    class C,D blue
-    class E,F green
-    class G,H purple
-```
+![Migration Strategy Overview 1](../docs/images/readme-diagrams/07-jpa-diagram-01.svg)
 
 ## JPA vs Exposed Concept Comparison Diagram
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    direction LR
-    class JPA_Entity {
-        <<JPA Style>>
-        +annotation Entity
-        +annotation Table
-        +annotation Id GeneratedValue
-        +annotation Column
-        +annotation OneToMany ManyToOne
-        +Spring AOP Transactional
-    }
-    class Exposed_DSL {
-        <<Exposed DSL Style>>
-        +Table object extends LongIdTable
-        +Column varchar text integer
-        +transaction block
-        +selectAll where filter
-        +batchInsert list
-    }
-    class Exposed_DAO {
-        <<Exposed DAO Style>>
-        +Entity extends LongEntity
-        +EntityClass companion object
-        +delegate by Table column
-        +Entity new create
-        +Entity findById
-    }
-
-    JPA_Entity ..> Exposed_DSL : migrate SQL control
-    JPA_Entity ..> Exposed_DAO : migrate object-centric
-
-    style JPA_Entity fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    style Exposed_DSL fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style Exposed_DAO fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-```
+![JPA vs Exposed Concept Comparison Diagram 2](../docs/images/readme-diagrams/07-jpa-diagram-02.svg)
 
 ## Migration Approach Comparison
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart TD
-    A[Existing JPA Codebase] --> B{Analyze entity types}
-    B --> C[Simple CRUD\nannotation mapping]
-    B --> D[Complex relationships\nOneToMany / ManyToMany]
-    B --> E[Inheritance strategies\nSINGLE_TABLE / JOINED / TABLE_PER_CLASS]
-    B --> F[Advanced features\naudit fields / optimistic locking / tree]
-
-    C --> G[01-convert-jpa-basic\nBasic DSL / DAO migration]
-    D --> G
-    E --> H[02-convert-jpa-advanced\nAdvanced pattern migration]
-    F --> H
-
-    G --> I[Write equivalence tests\nCompare results before and after migration]
-    H --> I
-    I --> J[Incrementally remove JPA dependency]
-    J --> K[CI regression verification]
-
-    classDef red fill:#FFEBEE,stroke:#EF9A9A,color:#C62828
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-    classDef purple fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-
-    class A red
-    class B orange
-    class C,D,E,F blue
-    class G,H green
-    class I purple
-    class J,K green
-```
+![Migration Approach Comparison 3](../docs/images/readme-diagrams/07-jpa-diagram-03.svg)
 
 ## Included Modules
 

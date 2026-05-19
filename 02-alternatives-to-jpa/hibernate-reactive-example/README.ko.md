@@ -37,43 +37,11 @@ sequenceDiagram
 
 ## ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    teams {
-        BIGINT id PK
-        VARCHAR name
-    }
-    members {
-        BIGINT id PK
-        VARCHAR name
-        BIGINT team_id FK
-    }
-    teams ||--o{ members : "team_id"
-```
+![ERD 1](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-ko-diagram-01.svg)
 
 ## 도메인 모델
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class Team {
-        +Long id
-        +String name
-        +MutableList~Member~ members
-        +addMember(member)
-        +removeMember(member)
-    }
-    class Member {
-        +Long id
-        +String name
-        +Team? team
-    }
-    Team "1" --> "0..*" Member: members
-
-    style Team fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style Member fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-```
+![도메인 모델 2](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-ko-diagram-02.svg)
 
 ### JPA 엔티티 선언
 

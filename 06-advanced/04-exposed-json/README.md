@@ -21,66 +21,11 @@ Store Kotlin serializable objects in JSON columns using `json<T>()` / `jsonb<T>(
 
 ## Architecture Flow
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-flowchart LR
-    subgraph Kotlin["Kotlin Code"]
-        DH["DataHolder\n(Serializable data class)"]
-        JT["JsonTable / JsonBTable"]
-    end
-
-    subgraph Exposed["Exposed JSON API"]
-        JC["json(col, Json.Default)"]
-        JB["jsonb(col, Json.Default)"]
-        EX["extract(path)"]
-        CO["contains(json)"]
-        EXI["exists(path)"]
-    end
-
-    subgraph DB["Database"]
-        PG_JSON["PostgreSQL JSON\n(text storage)"]
-        PG_JSONB["PostgreSQL JSONB\n(binary, indexing)"]
-        MY_JSON["MySQL JSON"]
-    end
-
-    DH --> JC & JB
-    JC --> PG_JSON & MY_JSON
-    JB --> PG_JSONB
-    EX & CO & EXI --> PG_JSON & PG_JSONB
-
-    classDef blue fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    classDef green fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    classDef orange fill:#FFF3E0,stroke:#FFCC80,color:#E65100
-
-    class DH,JT blue
-    class JC,JB,EX,CO,EXI green
-    class PG_JSON,PG_JSONB,MY_JSON orange
-```
+![Architecture Flow 1](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-diagram-01.svg)
 
 ## Table ERD
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-erDiagram
-    JsonTable {
-        SERIAL id PK
-        JSON j_column
-    }
-    JsonBTable {
-        SERIAL id PK
-        JSONB j_b_column
-    }
-    JsonArrayTable {
-        SERIAL id PK
-        JSON groups
-        JSON numbers
-    }
-    JsonBArrayTable {
-        SERIAL id PK
-        JSONB groups
-        JSONB numbers
-    }
-```
+![Table ERD 2](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-diagram-02.svg)
 
 ## Domain Model
 
@@ -108,30 +53,7 @@ data class UserGroup(
 
 ## Domain Class Diagram
 
-```mermaid
-%%{init: {"theme": "neutral", "themeVariables": {"fontFamily": "'Comic Mono', 'goorm sans code', 'JetBrains Mono', 'goorm sans'"}}}%%
-classDiagram
-    class DataHolder {
-        +user: User
-        +logins: Int
-        +active: Boolean
-        +team: String?
-    }
-    class User {
-        +name: String
-        +team: String?
-    }
-    class UserGroup {
-        +users: List~User~
-    }
-
-    DataHolder --> User : contains
-    UserGroup --> User : contains 0..*
-
-    style DataHolder fill:#E3F2FD,stroke:#90CAF9,color:#1565C0
-    style User fill:#E8F5E9,stroke:#A5D6A7,color:#2E7D32
-    style UserGroup fill:#F3E5F5,stroke:#CE93D8,color:#6A1B9A
-```
+![Domain Class Diagram 3](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-diagram-03.svg)
 
 ## Key Concepts
 
