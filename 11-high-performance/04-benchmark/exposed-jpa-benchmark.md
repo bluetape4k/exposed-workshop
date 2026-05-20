@@ -18,6 +18,8 @@
 | **batchCreate** (100건) | **51,203 ± 640** | 423,816 ± 37,053 | **8.3× 빠름** |
 | **readAll** (엔티티 로드)   |         713 ± 13 |         705 ± 20 | 유사 (1.0×)   |
 
+![Single entity CRUD latency chart](../../docs/images/readme-charts/exposed-jpa-single-crud-chart-01.png)
+
 ---
 
 ## 2. One-to-Many (Department → 20 Employees — 8+12컬럼) CRUD
@@ -30,6 +32,8 @@
 | **delete** (CASCADE)             |  **15,136 ± 1,024** | 226,083 ± 12,795 | **14.9× 빠름** |
 | **batchCreate** (10부서×20명)       | **136,876 ± 5,550** | 838,145 ± 59,213 | **6.1× 빠름**  |
 | **readAll** (eager + JOIN FETCH) |             716 ± 9 |         723 ± 20 | 유사 (1.0×)    |
+
+![One-to-many CRUD latency chart](../../docs/images/readme-charts/exposed-jpa-one-to-many-chart-01.png)
 
 ---
 
@@ -61,6 +65,8 @@
 | **concurrentRead**   |       64,464 |  272,958 | **4.2× 빠름** |
 | **concurrentMixed**  |       39,298 |  157,837 | **4.0× 빠름** |
 
+![Concurrent CRUD latency chart](../../docs/images/readme-charts/exposed-jpa-concurrency-chart-01.png)
+
 ---
 
 ## 4. Virtual Threads 분석
@@ -77,30 +83,11 @@
 
 ## 5. 종합 비교
 
-```
-                  Exposed 우위                                              JPA 우위
-                  ◄────────────────────────────────────────┼──────────────────►
-Single Entity:
-  create          █████████ (3.9×)
-  read            ██████████████ (5.9×)
-  update          ███████████████████ (7.7×)
-  delete          ███████████████ (6.2×)
-  batchCreate     ████████████████████ (8.3×)
-  readAll                                                  ■ (유사)
+![Single entity CRUD latency chart](../../docs/images/readme-charts/exposed-jpa-single-crud-chart-01.png)
 
-One-to-Many:
-  create          ████████████████ (6.5×)
-  read            ████████████████████████████████ (12.7×)
-  update          ██████████████████████████████████████████████ (18.6×)
-  delete          █████████████████████████████████████████ (14.9×)
-  batchCreate     ███████████████ (6.1×)
-  readAll                                                  ■ (유사)
+![One-to-many CRUD latency chart](../../docs/images/readme-charts/exposed-jpa-one-to-many-chart-01.png)
 
-Concurrent (50 tasks):
-  create          ██████████ (2.8×)
-  read            █████████████ (4.2×)
-  mixed           ████████████ (4.0×)
-```
+![Concurrent CRUD latency chart](../../docs/images/readme-charts/exposed-jpa-concurrency-chart-01.png)
 
 ---
 

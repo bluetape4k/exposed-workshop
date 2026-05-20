@@ -38,6 +38,8 @@
 | VirtualThreadPerTaskExecutor | **1,298** | ±50 | **×1.79** |
 | ForkJoinPool                 |     1,317 | ±33 |     ×1.82 |
 
+![VirtualThread JDBC throughput chart](../docs/images/readme-charts/virtualthread-jdbc-throughput-chart-01.png)
+
 ### +10ms 네트워크 지연 시뮬레이션
 
 | 실행 방식                        |     ops/s |        배율 | 비고            |
@@ -91,6 +93,8 @@
 | Platform Threads (순차) |    115 ms |       ~220 req/s |
 | Virtual Threads (병렬)  | **43 ms** | **~2,600 req/s** |
 | 향상                    |  **-62%** |        **×11.8** |
+
+![Spring Boot VirtualThread load chart](../docs/images/readme-charts/springboot-virtualthread-load-chart-01.png)
 
 > 병렬 DB 쿼리에서 Virtual Threads의 효과가 극대화됨.
 
