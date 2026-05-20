@@ -35,7 +35,7 @@ A REST API module using Exposed DSL/DAO in a non-blocking fashion with Spring We
 
 ## Architecture
 
-![Architecture diagram](../../docs/images/readme-diagrams/01-spring-boot-spring-webflux-exposed-class-01.png)
+![spring webflux exposed Class Structure diagram](../../docs/images/readme-diagrams/01-spring-boot-spring-webflux-exposed-class-01.png)
 
 ---
 

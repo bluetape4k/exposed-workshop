@@ -27,21 +27,21 @@
 <g transform="translate(60,170)">
   <rect class="card" x="0" y="0" width="320" height="166" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="52" text-anchor="middle">jsontable</text>
+  <text class="label" x="160" y="44" text-anchor="middle">jsontable</text>
   <text class="mono" x="18" y="104">SERIAL id PK</text>
 <text class="mono" x="18" y="131">JSON j_column</text>
 </g>
 <g transform="translate(462,170)">
   <rect class="card" x="0" y="0" width="320" height="166" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
-  <text class="label" x="160" y="52" text-anchor="middle">jsonbtable</text>
+  <text class="label" x="160" y="44" text-anchor="middle">jsonbtable</text>
   <text class="mono" x="18" y="104">SERIAL id PK</text>
 <text class="mono" x="18" y="131">JSONB j_b_column</text>
 </g>
 <g transform="translate(60,412)">
   <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#D6A441"/>
-  <text class="label" x="160" y="52" text-anchor="middle">jsonarraytable</text>
+  <text class="label" x="160" y="44" text-anchor="middle">jsonarraytable</text>
   <text class="mono" x="18" y="104">SERIAL id PK</text>
 <text class="mono" x="18" y="131">JSON groups</text>
 <text class="mono" x="18" y="158">JSON numbers</text>
@@ -49,7 +49,7 @@
 <g transform="translate(462,412)">
   <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#DC6B82"/>
-  <text class="label" x="160" y="52" text-anchor="middle">jsonbarraytable</text>
+  <text class="label" x="160" y="44" text-anchor="middle">jsonbarraytable</text>
   <text class="mono" x="18" y="104">SERIAL id PK</text>
 <text class="mono" x="18" y="131">JSONB groups</text>
 <text class="mono" x="18" y="158">JSONB numbers</text>

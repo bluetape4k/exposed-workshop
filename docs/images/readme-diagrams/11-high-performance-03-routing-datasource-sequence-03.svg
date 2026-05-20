@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2120" height="2328" viewBox="0 0 2120 2328" role="img" aria-label="Request Processing Flow — Multi-Tenant Read/Write Separation Routing">
+<svg xmlns="http://www.w3.org/2000/svg" width="2968" height="3036" viewBox="0 0 2968 3036" role="img" aria-label="Request Processing Flow — Multi-Tenant Read/Write Separation Routing">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
   <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -20,113 +20,109 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="2120" height="2328"/>
-<rect class="frame" x="32" y="28" width="2056" height="2272" rx="28"/>
+<rect class="canvas" width="2968" height="3036"/>
+<rect class="frame" x="32" y="28" width="2904" height="2980" rx="28"/>
 <text class="title" x="66" y="82">Request Processing Flow — Multi-Tenant Read/Write Separation Routing</text>
 <text class="subtitle" x="70" y="118">Sequence messages from the original Mermaid source</text>
-<rect class="card" x="35" y="166" width="210" height="72" rx="20" fill="#E8F3FF" stroke="#5B8DEF"/>
+<rect class="card" x="-10" y="166" width="300" height="72" rx="20" fill="#E8F3FF" stroke="#5B8DEF"/>
 <text class="smallLabel" x="140" y="209" text-anchor="middle">HTTP Client</text>
-<line x1="140" y1="252" x2="140" y2="2268" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="297.85714285714283" y="166" width="210" height="72" rx="20" fill="#EAF7EF" stroke="#58A978"/>
-<text class="smallLabel" x="402.85714285714283" y="209" text-anchor="middle">TenantHeaderFilter</text>
-<line x1="402.85714285714283" y1="252" x2="402.85714285714283" y2="2268" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="560.7142857142857" y="166" width="210" height="72" rx="20" fill="#FFF3D9" stroke="#D6A441"/>
-<text class="smallLabel" x="665.7142857142857" y="209" text-anchor="middle">TenantContext</text>
-<line x1="665.7142857142857" y1="252" x2="665.7142857142857" y2="2268" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="823.5714285714284" y="166" width="210" height="72" rx="20" fill="#FDECEF" stroke="#DC6B82"/>
-<text class="smallLabel" x="928.5714285714284" y="198.5" text-anchor="middle">Routing Marker</text>
-<text class="smallLabel" x="928.5714285714284" y="219.5" text-anchor="middle">Controller</text>
-<line x1="928.5714285714284" y1="252" x2="928.5714285714284" y2="2268" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="1086.4285714285713" y="166" width="210" height="72" rx="20" fill="#E9F7F6" stroke="#45A7A1"/>
-<text class="smallLabel" x="1191.4285714285713" y="198.5" text-anchor="middle">Dynamic Routing</text>
-<text class="smallLabel" x="1191.4285714285713" y="219.5" text-anchor="middle">Data Source</text>
-<line x1="1191.4285714285713" y1="252" x2="1191.4285714285713" y2="2268" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="1349.2857142857142" y="166" width="210" height="72" rx="20" fill="#F1ECFF" stroke="#8A72D6"/>
-<text class="smallLabel" x="1454.2857142857142" y="198.5" text-anchor="middle">Context Aware</text>
-<text class="smallLabel" x="1454.2857142857142" y="219.5" text-anchor="middle">Routing Key</text>
-<line x1="1454.2857142857142" y1="252" x2="1454.2857142857142" y2="2268" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="1612.1428571428569" y="166" width="210" height="72" rx="20" fill="#F7F1E7" stroke="#B88A44"/>
-<text class="smallLabel" x="1717.1428571428569" y="198.5" text-anchor="middle">In Memory Data</text>
-<text class="smallLabel" x="1717.1428571428569" y="219.5" text-anchor="middle">Source Registry</text>
-<line x1="1717.1428571428569" y1="252" x2="1717.1428571428569" y2="2268" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="1874.9999999999998" y="166" width="210" height="72" rx="20" fill="#EEF6D9" stroke="#8BA84D"/>
-<text class="smallLabel" x="1979.9999999999998" y="198.5" text-anchor="middle">DataSource</text>
-<text class="smallLabel" x="1979.9999999999998" y="219.5" text-anchor="middle">(selected)</text>
-<line x1="1979.9999999999998" y1="252" x2="1979.9999999999998" y2="2268" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect x="158" y="270" width="226.85714285714283" height="62" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="174" y="297" text-anchor="start">1. GET /routing/marker X-Tenant-Id:</text>
-<text class="strong" x="174" y="320" text-anchor="start">acme</text>
-<path class="line" d="M140 310 L402.85714285714283 310"/>
-<rect x="420.85714285714283" y="352" width="226.85714285714283" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="436.85714285714283" y="379" text-anchor="start">2. withTenant(acme) { ... }</text>
-<path class="line" d="M402.85714285714283 392 L665.7142857142857 392"/>
-<rect x="420.85714285714283" y="434" width="489.71428571428555" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="436.85714285714283" y="461" text-anchor="start">3. doFilter → enter controller</text>
-<path class="line" d="M402.85714285714283 474 L928.5714285714284 474"/>
-<rect x="946.5714285714284" y="516" width="226.8571428571429" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="962.5714285714284" y="543" text-anchor="start">4. getConnection()</text>
-<path class="line" d="M928.5714285714284 556 L1191.4285714285713 556"/>
-<rect x="1209.4285714285713" y="598" width="226.8571428571429" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1225.4285714285713" y="625" text-anchor="start">5. currentLookupKey()</text>
-<path class="line" d="M1191.4285714285713 638 L1454.2857142857142 638"/>
-<rect x="683.7142857142857" y="680" width="752.5714285714286" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="699.7142857142857" y="707" text-anchor="start">6. currentTenant() → acme</text>
-<path class="line" d="M1454.2857142857142 720 L665.7142857142857 720"/>
-<rect x="1472.2857142857142" y="762" width="190" height="62" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1488.2857142857142" y="789" text-anchor="start">7. is Current</text>
-<text class="strong" x="1488.2857142857142" y="812" text-anchor="start">Transaction Read</text>
-<path class="line" d="M1454.2857142857142 802 C1510.2857142857142 802 1510.2857142857142 832 1454.2857142857142 832"/>
-<rect x="1209.4285714285713" y="844" width="226.8571428571429" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1225.4285714285713" y="871" text-anchor="start">8. acme:rw</text>
-<path class="dashed" d="M1454.2857142857142 884 L1191.4285714285713 884"/>
-<rect x="1209.4285714285713" y="926" width="489.71428571428555" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1225.4285714285713" y="953" text-anchor="start">9. get(acme:rw)</text>
-<path class="line" d="M1191.4285714285713 966 L1717.1428571428569 966"/>
-<rect x="1209.4285714285713" y="1008" width="489.71428571428555" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1225.4285714285713" y="1035" text-anchor="start">10. HikariDataSource(acme-rw)</text>
-<path class="dashed" d="M1717.1428571428569 1048 L1191.4285714285713 1048"/>
-<rect x="1209.4285714285713" y="1090" width="752.5714285714284" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1225.4285714285713" y="1117" text-anchor="start">11. connection</text>
-<path class="line" d="M1191.4285714285713 1130 L1979.9999999999998 1130"/>
-<rect x="946.5714285714284" y="1172" width="1015.4285714285713" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="962.5714285714284" y="1199" text-anchor="start">12. MarkerRecord</text>
-<path class="dashed" d="M1979.9999999999998 1212 L928.5714285714284 1212"/>
-<rect x="158" y="1254" width="752.5714285714284" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="174" y="1281" text-anchor="start">13. 200 OK</text>
-<path class="dashed" d="M928.5714285714284 1294 L140 1294"/>
-<rect x="158" y="1336" width="226.85714285714283" height="62" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="174" y="1363" text-anchor="start">14. GET /routing/marker/readonly</text>
-<text class="strong" x="174" y="1386" text-anchor="start">X-Tenant-Id: acme</text>
-<path class="line" d="M140 1376 L402.85714285714283 1376"/>
-<rect x="420.85714285714283" y="1418" width="226.85714285714283" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="436.85714285714283" y="1445" text-anchor="start">15. withTenant(acme) { ... }</text>
-<path class="line" d="M402.85714285714283 1458 L665.7142857142857 1458"/>
-<rect x="946.5714285714284" y="1500" width="226.8571428571429" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="962.5714285714284" y="1527" text-anchor="start">16. getConnection()</text>
-<path class="line" d="M928.5714285714284 1540 L1191.4285714285713 1540"/>
-<rect x="1209.4285714285713" y="1582" width="226.8571428571429" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1225.4285714285713" y="1609" text-anchor="start">17. currentLookupKey()</text>
-<path class="line" d="M1191.4285714285713 1622 L1454.2857142857142 1622"/>
-<rect x="1472.2857142857142" y="1664" width="190" height="62" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1488.2857142857142" y="1691" text-anchor="start">18. is Current</text>
-<text class="strong" x="1488.2857142857142" y="1714" text-anchor="start">Transaction Read</text>
-<path class="line" d="M1454.2857142857142 1704 C1510.2857142857142 1704 1510.2857142857142 1734 1454.2857142857142 1734"/>
-<rect x="1209.4285714285713" y="1746" width="226.8571428571429" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1225.4285714285713" y="1773" text-anchor="start">19. acme:ro</text>
-<path class="dashed" d="M1454.2857142857142 1786 L1191.4285714285713 1786"/>
-<rect x="1209.4285714285713" y="1828" width="489.71428571428555" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1225.4285714285713" y="1855" text-anchor="start">20. get(acme:ro)</text>
-<path class="line" d="M1191.4285714285713 1868 L1717.1428571428569 1868"/>
-<rect x="1209.4285714285713" y="1910" width="489.71428571428555" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1225.4285714285713" y="1937" text-anchor="start">21. HikariDataSource(acme-ro)</text>
-<path class="dashed" d="M1717.1428571428569 1950 L1191.4285714285713 1950"/>
-<rect x="1209.4285714285713" y="1992" width="752.5714285714284" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1225.4285714285713" y="2019" text-anchor="start">22. connection (read replica)</text>
-<path class="line" d="M1191.4285714285713 2032 L1979.9999999999998 2032"/>
-<rect x="946.5714285714284" y="2074" width="1015.4285714285713" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="962.5714285714284" y="2101" text-anchor="start">23. MarkerRecord</text>
-<path class="dashed" d="M1979.9999999999998 2114 L928.5714285714284 2114"/>
-<rect x="158" y="2156" width="752.5714285714284" height="39" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="174" y="2183" text-anchor="start">24. 200 OK</text>
-<path class="dashed" d="M928.5714285714284 2196 L140 2196"/>
+<line class="lifeline" x1="140" y1="252" x2="140" y2="2976" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
+<rect class="card" x="374" y="166" width="300" height="72" rx="20" fill="#EAF7EF" stroke="#58A978"/>
+<text class="smallLabel" x="524" y="209" text-anchor="middle">TenantHeaderFilter</text>
+<line class="lifeline" x1="524" y1="252" x2="524" y2="2976" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
+<rect class="card" x="758" y="166" width="300" height="72" rx="20" fill="#FFF3D9" stroke="#D6A441"/>
+<text class="smallLabel" x="908" y="209" text-anchor="middle">TenantContext</text>
+<line class="lifeline" x1="908" y1="252" x2="908" y2="2976" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
+<rect class="card" x="1142" y="166" width="300" height="72" rx="20" fill="#FDECEF" stroke="#DC6B82"/>
+<text class="smallLabel" x="1292" y="198.5" text-anchor="middle">Routing Marker</text>
+<text class="smallLabel" x="1292" y="219.5" text-anchor="middle">Controller</text>
+<line class="lifeline" x1="1292" y1="252" x2="1292" y2="2976" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
+<rect class="card" x="1526" y="166" width="300" height="72" rx="20" fill="#E9F7F6" stroke="#45A7A1"/>
+<text class="smallLabel" x="1676" y="198.5" text-anchor="middle">Dynamic Routing</text>
+<text class="smallLabel" x="1676" y="219.5" text-anchor="middle">Data Source</text>
+<line class="lifeline" x1="1676" y1="252" x2="1676" y2="2976" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
+<rect class="card" x="1910" y="166" width="300" height="72" rx="20" fill="#F1ECFF" stroke="#8A72D6"/>
+<text class="smallLabel" x="2060" y="198.5" text-anchor="middle">Context Aware</text>
+<text class="smallLabel" x="2060" y="219.5" text-anchor="middle">Routing Key</text>
+<line class="lifeline" x1="2060" y1="252" x2="2060" y2="2976" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
+<rect class="card" x="2294" y="166" width="300" height="72" rx="20" fill="#F7F1E7" stroke="#B88A44"/>
+<text class="smallLabel" x="2444" y="198.5" text-anchor="middle">In Memory Data</text>
+<text class="smallLabel" x="2444" y="219.5" text-anchor="middle">Source Registry</text>
+<line class="lifeline" x1="2444" y1="252" x2="2444" y2="2976" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
+<rect class="card" x="2678" y="166" width="300" height="72" rx="20" fill="#EEF6D9" stroke="#8BA84D"/>
+<text class="smallLabel" x="2828" y="198.5" text-anchor="middle">DataSource</text>
+<text class="smallLabel" x="2828" y="219.5" text-anchor="middle">(selected)</text>
+<line class="lifeline" x1="2828" y1="252" x2="2828" y2="2976" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
+<rect x="152.5" y="286" width="359" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="170.5" y="313" text-anchor="start">1. GET /routing/marker X-Tenant-Id: acme</text>
+<path class="line" d="M140 344 L524 344"/>
+<rect x="589" y="396" width="254" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="607" y="423" text-anchor="start">2. withTenant(acme) { ... }</text>
+<path class="line" d="M524 454 L908 454"/>
+<rect x="769" y="506" width="278" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="787" y="533" text-anchor="start">3. doFilter → enter controller</text>
+<path class="line" d="M524 564 L1292 564"/>
+<rect x="1379" y="616" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1397" y="643" text-anchor="start">4. getConnection()</text>
+<path class="line" d="M1292 674 L1676 674"/>
+<rect x="1763" y="726" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1781" y="753" text-anchor="start">5. currentLookupKey()</text>
+<path class="line" d="M1676 784 L2060 784"/>
+<rect x="1365" y="836" width="238" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1383" y="863" text-anchor="start">6. currentTenant() → acme</text>
+<path class="line" d="M2060 894 L908 894"/>
+<rect x="1924.5" y="946" width="367" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1942.5" y="973" text-anchor="start">7. isCurrentTransactionReadOnly() → false</text>
+<path class="line" d="M2060 1004 C2124 1004 2124 1038 2060 1038"/>
+<rect x="1763" y="1076" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1781" y="1103" text-anchor="start">8. acme:rw</text>
+<path class="dashed" d="M2060 1134 L1676 1134"/>
+<rect x="1955" y="1186" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1973" y="1213" text-anchor="start">9. get(acme:rw)</text>
+<path class="line" d="M1676 1244 L2444 1244"/>
+<rect x="1925" y="1296" width="270" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1943" y="1323" text-anchor="start">10. HikariDataSource(acme-rw)</text>
+<path class="dashed" d="M2444 1354 L1676 1354"/>
+<rect x="2147" y="1406" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="2165" y="1433" text-anchor="start">11. connection</text>
+<path class="line" d="M1676 1464 L2828 1464"/>
+<rect x="1955" y="1516" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1973" y="1543" text-anchor="start">12. MarkerRecord</text>
+<path class="dashed" d="M2828 1574 L1292 1574"/>
+<rect x="611" y="1626" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="629" y="1653" text-anchor="start">13. 200 OK</text>
+<path class="dashed" d="M1292 1684 L140 1684"/>
+<rect x="112.5" y="1736" width="439" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="130.5" y="1763" text-anchor="start">14. GET /routing/marker/readonly X-Tenant-Id: acme</text>
+<path class="line" d="M140 1794 L524 1794"/>
+<rect x="585" y="1846" width="262" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="603" y="1873" text-anchor="start">15. withTenant(acme) { ... }</text>
+<path class="line" d="M524 1904 L908 1904"/>
+<rect x="1379" y="1956" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1397" y="1983" text-anchor="start">16. getConnection()</text>
+<path class="line" d="M1292 2014 L1676 2014"/>
+<rect x="1761" y="2066" width="214" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1779" y="2093" text-anchor="start">17. currentLookupKey()</text>
+<path class="line" d="M1676 2124 L2060 2124"/>
+<rect x="1924.5" y="2176" width="367" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1942.5" y="2203" text-anchor="start">18. isCurrentTransactionReadOnly() → true</text>
+<path class="line" d="M2060 2234 C2124 2234 2124 2268 2060 2268"/>
+<rect x="1763" y="2306" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1781" y="2333" text-anchor="start">19. acme:ro</text>
+<path class="dashed" d="M2060 2364 L1676 2364"/>
+<rect x="1955" y="2416" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1973" y="2443" text-anchor="start">20. get(acme:ro)</text>
+<path class="line" d="M1676 2474 L2444 2474"/>
+<rect x="1925" y="2526" width="270" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1943" y="2553" text-anchor="start">21. HikariDataSource(acme-ro)</text>
+<path class="dashed" d="M2444 2584 L1676 2584"/>
+<rect x="2117" y="2636" width="270" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="2135" y="2663" text-anchor="start">22. connection (read replica)</text>
+<path class="line" d="M1676 2694 L2828 2694"/>
+<rect x="1955" y="2746" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="1973" y="2773" text-anchor="start">23. MarkerRecord</text>
+<path class="dashed" d="M2828 2804 L1292 2804"/>
+<rect x="611" y="2856" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
+<text class="strong" x="629" y="2883" text-anchor="start">24. 200 OK</text>
+<path class="dashed" d="M1292 2914 L140 2914"/>
 </svg>

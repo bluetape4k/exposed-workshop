@@ -24,13 +24,13 @@
 <rect class="frame" x="32" y="28" width="1314" height="636" rx="28"/>
 <text class="title" x="66" y="82">Module Relationships</text>
 <text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M1190 220 C1190 386 1023 386 1023 552"/>
-<path class="line" d="M1190 220 C1190 386 689 386 689 552"/>
-<path class="line" d="M856 220 C856 386 355 386 355 552"/>
-<path class="line" d="M522 220 C522 303 1190 303 1190 386"/>
-<path class="line" d="M522 220 C522 303 856 303 856 386"/>
-<path class="line" d="M188 220 C188 303 1190 303 1190 386"/>
-<path class="line" d="M188 220 C188 303 856 303 856 386"/>
+<path class="line" d="M1190 280 C1190 386 1023 386 1023 492"/>
+<path class="line" d="M1040 220 C1040 386 839 386 839 552"/>
+<path class="line" d="M706 220 C706 386 505 386 505 552"/>
+<path class="line" d="M672 220 C672 303 1040 303 1040 386"/>
+<path class="line" d="M672 220 C672 303 706 303 706 386"/>
+<path class="line" d="M338 220 C338 303 1040 303 1040 386"/>
+<path class="line" d="M338 220 C338 303 706 303 706 386"/>
 <g transform="translate(48,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
   <text class="smallLabel" x="140" y="21" text-anchor="middle">01-cache-strategies</text>
@@ -39,14 +39,15 @@
 </g>
 <g transform="translate(382,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">02-cache-strategies-coroutines</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">WebFlux + Coroutines</text>
+  <text class="smallLabel" x="140" y="21" text-anchor="middle">02-cache-strategies-</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">coroutines WebFlux +</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">Coroutines</text>
 </g>
 <g transform="translate(716,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
-  <text class="smallLabel" x="140" y="21" text-anchor="middle">03-routing-datasource</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">DynamicRoutingDataSource</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">DB</text>
+  <text class="smallLabel" x="140" y="21" text-anchor="middle">03-routing-datasourc</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">e Dynamic Routing</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">Data Source DB</text>
 </g>
 <g transform="translate(1050,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>

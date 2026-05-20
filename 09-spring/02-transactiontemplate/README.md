@@ -17,7 +17,7 @@ A module for programmatic transaction control based on `TransactionTemplate`. It
 
 ## Architecture
 
-![Architecture diagram](../../docs/images/readme-diagrams/09-spring-02-transactiontemplate-class-01.png)
+![02 transactiontemplate Class Structure diagram](../../docs/images/readme-diagrams/09-spring-02-transactiontemplate-class-01.png)
 
 ## Key Concepts
 

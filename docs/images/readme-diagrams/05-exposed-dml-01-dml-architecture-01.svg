@@ -24,20 +24,20 @@
 <rect class="frame" x="32" y="28" width="1314" height="636" rx="28"/>
 <text class="title" x="66" y="82">DML Flow Diagram</text>
 <text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M689 552 C689 552 1023 552 1023 552"/>
-<path class="line" d="M355 552 C355 552 689 552 689 552"/>
-<path class="line" d="M1190 386 C1190 469 355 469 355 552"/>
-<path class="line" d="M856 386 C856 386 1190 386 1190 386"/>
-<path class="line" d="M522 386 C522 386 1190 386 1190 386"/>
-<path class="line" d="M188 386 C188 386 1190 386 1190 386"/>
-<path class="line" d="M1190 220 C1190 303 1190 303 1190 386"/>
-<path class="line" d="M856 220 C856 303 1190 303 1190 386"/>
-<path class="line" d="M522 220 C522 303 856 303 856 386"/>
-<path class="line" d="M522 220 C522 303 522 303 522 386"/>
-<path class="line" d="M522 220 C522 303 188 303 188 386"/>
-<path class="line" d="M522 220 C522 220 1190 220 1190 220"/>
-<path class="line" d="M522 220 C522 220 856 220 856 220"/>
-<path class="line" d="M188 220 C188 220 522 220 522 220"/>
+<path class="line" d="M839 552 C839 552 873 552 873 552"/>
+<path class="line" d="M505 552 C505 552 539 552 539 552"/>
+<path class="line" d="M1040 386 C1040 469 505 469 505 552"/>
+<path class="line" d="M1006 386 C1006 386 1040 386 1040 386"/>
+<path class="line" d="M672 386 C672 386 1040 386 1040 386"/>
+<path class="line" d="M338 386 C338 386 1040 386 1040 386"/>
+<path class="line" d="M1190 280 C1190 303 1190 303 1190 326"/>
+<path class="line" d="M1006 220 C1006 303 1040 303 1040 386"/>
+<path class="line" d="M672 220 C672 303 706 303 706 386"/>
+<path class="line" d="M522 280 C522 303 522 303 522 326"/>
+<path class="line" d="M372 220 C372 303 338 303 338 386"/>
+<path class="line" d="M672 220 C672 220 1040 220 1040 220"/>
+<path class="line" d="M672 220 C672 220 706 220 706 220"/>
+<path class="line" d="M338 220 C338 220 372 220 372 220"/>
 <g transform="translate(48,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
   <text class="smallLabel" x="140" y="45" text-anchor="middle">Kotlin Code</text>
@@ -48,11 +48,13 @@
 </g>
 <g transform="translate(716,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">selectAll() / select()</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">selectAll() /</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">select()</text>
 </g>
 <g transform="translate(1050,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">insert() / batchInsert()</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">insert() /</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">batchInsert()</text>
 </g>
 <g transform="translate(48,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
@@ -64,7 +66,8 @@
 </g>
 <g transform="translate(716,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F7F1E7" stroke="#B88A44"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">upsert() / batchUpsert()</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">upsert() /</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">batchUpsert()</text>
 </g>
 <g transform="translate(1050,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EEF6D9" stroke="#8BA84D"/>
@@ -82,9 +85,4 @@
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
   <text class="smallLabel" x="140" y="45" text-anchor="middle">ResultRow / Int</text>
 </g>
-<text class="small" x="689" y="212" text-anchor="middle">SELECT</text>
-<text class="small" x="856" y="212" text-anchor="middle">INSERT</text>
-<text class="small" x="355" y="295" text-anchor="middle">UPDATE</text>
-<text class="small" x="522" y="295" text-anchor="middle">DELETE</text>
-<text class="small" x="689" y="295" text-anchor="middle">UPSERT</text>
 </svg>

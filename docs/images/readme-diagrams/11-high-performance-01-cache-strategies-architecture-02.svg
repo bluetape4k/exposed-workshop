@@ -24,17 +24,17 @@
 <rect class="frame" x="32" y="28" width="1314" height="968" rx="28"/>
 <text class="title" x="66" y="82">Cache Strategy Architecture</text>
 <text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M522 718 C522 801 856 801 856 884"/>
-<path class="line" d="M188 220 C188 386 1190 386 1190 552"/>
-<path class="line" d="M522 552 C522 635 188 635 188 718"/>
-<path class="line" d="M188 552 C188 635 188 635 188 718"/>
-<path class="line" d="M188 220 C188 386 1190 386 1190 552"/>
-<path class="line" d="M856 220 C856 303 1190 303 1190 386"/>
-<path class="line" d="M1190 220 C1190 303 856 303 856 386"/>
-<path class="line" d="M856 220 C856 303 522 303 522 386"/>
-<path class="line" d="M856 220 C856 303 188 303 188 386"/>
-<path class="line" d="M522 220 C522 303 522 303 522 386"/>
-<path class="line" d="M522 220 C522 303 188 303 188 386"/>
+<path class="line" d="M672 718 C672 801 706 801 706 884"/>
+<path class="line" d="M338 220 C338 386 1040 386 1040 552"/>
+<path class="line" d="M372 552 C372 635 338 635 338 718"/>
+<path class="line" d="M188 612 C188 635 188 635 188 658"/>
+<path class="line" d="M338 220 C338 386 1040 386 1040 552"/>
+<path class="line" d="M1006 220 C1006 303 1040 303 1040 386"/>
+<path class="line" d="M1040 220 C1040 303 1006 303 1006 386"/>
+<path class="line" d="M706 220 C706 303 672 303 672 386"/>
+<path class="line" d="M706 220 C706 303 338 303 338 386"/>
+<path class="line" d="M522 280 C522 303 522 303 522 326"/>
+<path class="line" d="M372 220 C372 303 338 303 338 386"/>
 <g transform="translate(48,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
   <text class="smallLabel" x="140" y="45" text-anchor="middle">[Client]</text>

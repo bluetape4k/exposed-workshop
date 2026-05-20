@@ -24,31 +24,31 @@ Spring MVC + Virtual Threads 환경에서 Redisson + Exposed로 캐시 전략을
 
 ## 도메인 ERD
 
-![Domain ERD diagram](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-erd-01.png)
+![01 cache strategies Entity Relationship diagram](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-erd-01.png)
 
 ---
 
 ## 캐시 전략 아키텍처
 
-![Cache Architecture diagram](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-architecture-02.png)
+![01 cache strategies Architecture 2 diagram](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-architecture-02.png)
 
 ---
 
 ## 클래스 구조
 
-![Structure diagram](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-class-03.png)
+![01 cache strategies Class Structure 3 diagram](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-class-03.png)
 
 ---
 
 ## 요청 처리 흐름 — Write-Behind 비동기 이벤트 적재
 
-![Request Processing — Write-Behind Event diagram](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-sequence-04.png)
+![— Write-Behind diagram](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-sequence-04.png)
 
 ---
 
 ## 요청 처리 흐름 — Read-Through + Write-Through (User)
 
-![Request Processing — Read-Through + Write-Through (User) diagram](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-sequence-05.png)
+![— Read-Through + Write-Through (User) diagram](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-sequence-05.png)
 
 ---
 

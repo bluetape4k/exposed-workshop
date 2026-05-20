@@ -24,18 +24,18 @@
 <rect class="frame" x="32" y="28" width="1314" height="968" rx="28"/>
 <text class="title" x="66" y="82">Cache Strategy Architecture</text>
 <text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M522 718 C522 801 856 801 856 884"/>
-<path class="line" d="M188 220 C188 303 188 303 188 386"/>
-<path class="line" d="M1190 552 C1190 552 522 552 522 552"/>
-<path class="line" d="M856 552 C856 635 188 635 188 718"/>
-<path class="line" d="M522 552 C522 635 188 635 188 718"/>
-<path class="line" d="M188 220 C188 303 188 303 188 386"/>
-<path class="line" d="M522 220 C522 386 188 386 188 552"/>
-<path class="line" d="M856 220 C856 303 1190 303 1190 386"/>
-<path class="line" d="M1190 220 C1190 303 856 303 856 386"/>
-<path class="line" d="M856 220 C856 303 522 303 522 386"/>
-<path class="line" d="M522 220 C522 303 522 303 522 386"/>
-<path class="line" d="M188 220 C188 303 188 303 188 386"/>
+<path class="line" d="M672 718 C672 801 706 801 706 884"/>
+<path class="line" d="M188 280 C188 303 188 303 188 326"/>
+<path class="line" d="M1040 552 C1040 552 672 552 672 552"/>
+<path class="line" d="M706 552 C706 635 338 635 338 718"/>
+<path class="line" d="M372 552 C372 635 338 635 338 718"/>
+<path class="line" d="M188 280 C188 303 188 303 188 326"/>
+<path class="line" d="M372 220 C372 386 338 386 338 552"/>
+<path class="line" d="M1006 220 C1006 303 1040 303 1040 386"/>
+<path class="line" d="M1040 220 C1040 303 1006 303 1006 386"/>
+<path class="line" d="M706 220 C706 303 672 303 672 386"/>
+<path class="line" d="M522 280 C522 303 522 303 522 326"/>
+<path class="line" d="M188 280 C188 303 188 303 188 326"/>
 <g transform="translate(48,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
   <text class="smallLabel" x="140" y="45" text-anchor="middle">[WebFlux Client]</text>
@@ -98,7 +98,8 @@
 </g>
 <g transform="translate(1050,668)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EEF6D9" stroke="#8BA84D"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Coroutine Async Queue</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Coroutine Async</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">Queue</text>
 </g>
 <g transform="translate(382,834)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
@@ -108,5 +109,4 @@
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
   <text class="smallLabel" x="140" y="45" text-anchor="middle">immediate</text>
 </g>
-<text class="small" x="856" y="544" text-anchor="middle">done</text>
 </svg>

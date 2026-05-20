@@ -20,7 +20,7 @@ Spring Boot 자동 설정으로 Exposed를 최소 구성으로 통합하는 모�
 
 ## 아키텍처
 
-![Architecture diagram](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-class-01.png)
+![01 springboot autoconfigure Class Structure diagram](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-class-01.png)
 
 ## 핵심 개념
 
@@ -64,7 +64,7 @@ class Application
 
 ## 자동 등록 빈 흐름
 
-![01-springboot-autoconfigure diagram diagram](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-sequence-02.png)
+![01 springboot autoconfigure Sequence Flow 2 diagram](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-sequence-02.png)
 
 ## 테이블 정의 예시
 

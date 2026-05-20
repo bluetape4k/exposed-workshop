@@ -103,7 +103,7 @@ Cities.deleteWhere { Cities.id eq targetId }
 
 ## City-User 도메인 ERD
 
-![City-User Domain ERD diagram](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-erd-03.png)
+![City-User ERD diagram](../../docs/images/readme-diagrams/05-exposed-dml-01-dml-erd-03.png)
 
 ## 예제 지도
 

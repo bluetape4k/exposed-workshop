@@ -17,7 +17,7 @@ A declarative transaction integration module centered on `@Transactional`. It re
 
 ## Architecture
 
-![Architecture diagram](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-class-01.png)
+![03 spring transaction Class Structure diagram](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-class-01.png)
 
 ## Key Concepts
 

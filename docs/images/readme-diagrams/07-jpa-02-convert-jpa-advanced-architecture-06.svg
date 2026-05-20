@@ -24,10 +24,10 @@
 <rect class="frame" x="32" y="28" width="980" height="470" rx="28"/>
 <text class="title" x="66" y="82">Tree Structure Hierarchy Example</text>
 <text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M522 220 C522 303 689 303 689 386"/>
-<path class="line" d="M522 220 C522 303 355 303 355 386"/>
-<path class="line" d="M188 220 C188 220 856 220 856 220"/>
-<path class="line" d="M188 220 C188 220 522 220 522 220"/>
+<path class="line" d="M672 220 C672 303 539 303 539 386"/>
+<path class="line" d="M372 220 C372 303 505 303 505 386"/>
+<path class="line" d="M338 220 C338 220 706 220 706 220"/>
+<path class="line" d="M338 220 C338 220 372 220 372 220"/>
 <g transform="translate(48,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
   <text class="smallLabel" x="140" y="45" text-anchor="middle">root (depth=1)</text>
@@ -42,10 +42,12 @@
 </g>
 <g transform="translate(215,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">grandChild1 (depth=3)</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">grandChild1</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">(depth=3)</text>
 </g>
 <g transform="translate(549,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">grandChild2 (depth=3)</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">grandChild2</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">(depth=3)</text>
 </g>
 </svg>

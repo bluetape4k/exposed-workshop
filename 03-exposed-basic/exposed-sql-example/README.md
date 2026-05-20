@@ -20,7 +20,7 @@ Exposed DSL expresses SQL queries as Kotlin type-safe function chains. You defin
 
 ## ERD
 
-![ERD diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-erd-01.png)
+![exposed sql example Entity Relationship diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-erd-01.png)
 
 ## DSL Query Flow
 

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="842" height="722" viewBox="0 0 842 722" role="img" aria-label="ERD">
+<svg xmlns="http://www.w3.org/2000/svg" width="842" height="722" viewBox="0 0 842 722" role="img" aria-label="r2dbc example Entity Relationship 2">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
   <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -22,13 +22,13 @@
 </defs>
 <rect class="canvas" width="842" height="722"/>
 <rect class="frame" x="32" y="28" width="778" height="666" rx="28"/>
-<text class="title" x="66" y="82">ERD</text>
+<text class="title" x="66" y="82">r2dbc example Entity Relat.</text>
 <text class="subtitle" x="70" y="118">ERD tables and relationships from the original Mermaid source</text>
 <path class="line" d="M220 266.5 C220 266.5 622 266.5 622 266.5"/>
 <g transform="translate(60,170)">
   <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="52" text-anchor="middle">posts</text>
+  <text class="label" x="160" y="44" text-anchor="middle">posts</text>
   <text class="mono" x="18" y="104">BIGINT id PK</text>
 <text class="mono" x="18" y="131">VARCHAR title</text>
 <text class="mono" x="18" y="158">TEXT content</text>
@@ -36,7 +36,7 @@
 <g transform="translate(462,170)">
   <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
-  <text class="label" x="160" y="52" text-anchor="middle">comments</text>
+  <text class="label" x="160" y="44" text-anchor="middle">comments</text>
   <text class="mono" x="18" y="104">BIGINT id PK</text>
 <text class="mono" x="18" y="131">BIGINT post_id FK</text>
 <text class="mono" x="18" y="158">TEXT content</text>
@@ -44,7 +44,7 @@
 <g transform="translate(261,439)">
   <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#D6A441"/>
-  <text class="label" x="160" y="52" text-anchor="middle">customer</text>
+  <text class="label" x="160" y="44" text-anchor="middle">customer</text>
   <text class="mono" x="18" y="104">BIGINT id PK</text>
 <text class="mono" x="18" y="131">VARCHAR firstname</text>
 <text class="mono" x="18" y="158">VARCHAR lastname</text>

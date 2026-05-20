@@ -27,7 +27,7 @@ Exposed 1.1.1 기준으로 SELECT/INSERT/UPDATE/DELETE/UPSERT, 타입, 함수, �
 
 ## 아키텍처 개요
 
-![Architecture diagram](../docs/images/readme-diagrams/05-exposed-dml-architecture-01.png)
+![05 exposed dml Architecture diagram](../docs/images/readme-diagrams/05-exposed-dml-architecture-01.png)
 
 ## 권장 학습 순서
 

@@ -18,7 +18,7 @@ It implements the `JdbcRepository` interface to learn a structure where the serv
 
 ## Architecture
 
-![Architecture diagram](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-class-01.png)
+![04 exposed repository Class Structure diagram](../../docs/images/readme-diagrams/09-spring-04-exposed-repository-class-01.png)
 
 ## Key Concepts
 

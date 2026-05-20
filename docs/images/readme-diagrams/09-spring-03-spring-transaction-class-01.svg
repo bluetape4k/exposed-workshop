@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="910" viewBox="0 0 1754 910" role="img" aria-label="Architecture">
+<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="1002" viewBox="0 0 1754 1002" role="img" aria-label="03 spring transaction Class Structure">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
   <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -20,61 +20,62 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1754" height="910"/>
-<rect class="frame" x="32" y="28" width="1690" height="854" rx="28"/>
-<text class="title" x="66" y="82">Architecture</text>
+<rect class="canvas" width="1754" height="1002"/>
+<rect class="frame" x="32" y="28" width="1690" height="946" rx="28"/>
+<text class="title" x="66" y="82">03 spring transaction Class Structure</text>
 <text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="line" d="M1082 172 C1082 252 262 252 262 332"/>
-<path class="line" d="M1492 172 C1492 252 1082 252 1082 332"/>
-<path class="line" d="M1492 172 C1492 252 262 252 262 332"/>
-<path class="line" d="M672 356 C672 447 877 447 877 538"/>
+<path class="line" d="M1082 172 C1082 257 262 257 262 342"/>
+<path class="line" d="M1492 172 C1492 257 1082 257 1082 342"/>
+<path class="line" d="M1492 172 C1492 257 262 257 262 342"/>
+<path class="line" d="M672 384 C672 502 877 502 877 620"/>
 <g transform="translate(92,180)">
-  <rect class="card" x="0" y="0" width="340" height="144" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">CustomerEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">CustomerEntity</text>
   <text class="mono" x="18" y="108">+name: String</text>
-<text class="mono" x="18" y="132">+mobile: String?</text>
+<text class="mono" x="18" y="129">+mobile: String?</text>
 </g>
 <g transform="translate(502,180)">
-  <rect class="card" x="0" y="0" width="340" height="168" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">DataSourceConfig</text>
+  <text class="label" x="170" y="61" text-anchor="middle">DataSourceConfig</text>
   <text class="mono" x="18" y="108">+dataSource() DataSource</text>
-<text class="mono" x="18" y="132">+annotationDrivenTransactionManager() TransactionM.</text>
-<text class="mono" x="18" y="156">+orderService() OrderService</text>
+<text class="mono" x="18" y="129">+annotationDrivenTransactionManager()</text>
+<text class="mono" x="18" y="150">TransactionManager</text>
+<text class="mono" x="18" y="171">+orderService() OrderService</text>
 </g>
 <g transform="translate(912,180)">
-  <rect class="card" x="0" y="0" width="340" height="144" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#D6A441"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">OrderEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">OrderEntity</text>
   <text class="mono" x="18" y="108">+customer: CustomerEntity</text>
-<text class="mono" x="18" y="132">+productName: String</text>
+<text class="mono" x="18" y="129">+productName: String</text>
 </g>
 <g transform="translate(1322,180)">
-  <rect class="card" x="0" y="0" width="340" height="240" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+  <rect class="card" x="0" y="0" width="340" height="322" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#DC6B82"/>
   <text class="small" x="170" y="26" text-anchor="middle">«@Service @Transaction.»</text>
-  <text class="label" x="170" y="57" text-anchor="middle">OrderService</text>
+  <text class="label" x="170" y="61" text-anchor="middle">OrderService</text>
   <text class="mono" x="18" y="108">+init()</text>
-<text class="mono" x="18" y="132">+createCustomer(name, mobile) CustomerEntity</text>
-<text class="mono" x="18" y="156">+createOrder(customer, productName) OrderEntity</text>
-<text class="mono" x="18" y="180">+doBoth(customerName, productName) OrderEntity</text>
-<text class="mono" x="18" y="204">+findOrderByProductName(productName) OrderEntity?</text>
-<text class="mono" x="18" y="228">+cleanUp()</text>
+<text class="mono" x="18" y="129">+createCustomer(name, mobile)</text>
+<text class="mono" x="18" y="150">CustomerEntity</text>
+<text class="mono" x="18" y="171">+createOrder(customer, productName)</text>
+<text class="mono" x="18" y="192">OrderEntity</text>
+<text class="mono" x="18" y="213">+doBoth(customerName, productName)</text>
+<text class="mono" x="18" y="234">OrderEntity</text>
+<text class="mono" x="18" y="255">+findOrderByProductName(productName)</text>
+<text class="mono" x="18" y="276">OrderEntity?</text>
+<text class="mono" x="18" y="297">+cleanUp()</text>
 </g>
-<g transform="translate(707,546)">
-  <rect class="card" x="0" y="0" width="340" height="144" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+<g transform="translate(707,628)">
+  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#45A7A1"/>
   <text class="small" x="170" y="26" text-anchor="middle">«exposed-spring»</text>
-  <text class="label" x="170" y="57" text-anchor="middle">SpringTransactionManager</text>
+  <text class="label" x="170" y="61" text-anchor="middle">SpringTransactionManager</text>
   <text class="mono" x="18" y="108">+dataSource: DataSource</text>
-<text class="mono" x="18" y="132">+databaseConfig: DatabaseConfig</text>
+<text class="mono" x="18" y="129">+databaseConfig: DatabaseConfig</text>
 </g>
-<rect x="716.5" y="432" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="774.5" y="450" text-anchor="middle">registers as defa.</text>
-<rect x="614" y="237" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="672" y="255" text-anchor="middle">many-to-one</text>
 </svg>

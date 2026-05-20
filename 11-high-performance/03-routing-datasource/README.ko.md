@@ -29,19 +29,19 @@ Spring의 `AbstractRoutingDataSource` 대신 직접 구현한 `DynamicRoutingDat
 
 ## 라우팅 키 결정 흐름
 
-![03-routing-datasource diagram diagram](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-architecture-01.png)
+![03 routing datasource Architecture diagram](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-architecture-01.png)
 
 ---
 
 ## 클래스 구조
 
-![Structure diagram](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-class-02.png)
+![03 routing datasource Class Structure 2 diagram](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-class-02.png)
 
 ---
 
 ## 요청 처리 흐름 — 멀티테넌트 read/write 분리 라우팅
 
-![Request Processing — read / write diagram](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-sequence-03.png)
+![— read/write diagram](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-sequence-03.png)
 
 ---
 

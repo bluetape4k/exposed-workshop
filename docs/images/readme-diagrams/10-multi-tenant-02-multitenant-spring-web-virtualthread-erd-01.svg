@@ -29,7 +29,7 @@
 <g transform="translate(60,170)">
   <rect class="card" x="0" y="0" width="320" height="220" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="52" text-anchor="middle">movietable</text>
+  <text class="label" x="160" y="44" text-anchor="middle">movietable</text>
   <text class="mono" x="18" y="104">BIGSERIAL id PK</text>
 <text class="mono" x="18" y="131">VARCHAR(255) name</text>
 <text class="mono" x="18" y="158">VARCHAR(255) producerName</text>
@@ -38,7 +38,7 @@
 <g transform="translate(462,170)">
   <rect class="card" x="0" y="0" width="320" height="220" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
-  <text class="label" x="160" y="52" text-anchor="middle">actortable</text>
+  <text class="label" x="160" y="44" text-anchor="middle">actortable</text>
   <text class="mono" x="18" y="104">BIGSERIAL id PK</text>
 <text class="mono" x="18" y="131">VARCHAR(255) firstName</text>
 <text class="mono" x="18" y="158">VARCHAR(255) lastName</text>
@@ -47,7 +47,7 @@
 <g transform="translate(261,466)">
   <rect class="card" x="0" y="0" width="320" height="166" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#D6A441"/>
-  <text class="label" x="160" y="52" text-anchor="middle">actorinmovietable</text>
+  <text class="label" x="160" y="44" text-anchor="middle">actorinmovietable</text>
   <text class="mono" x="18" y="104">BIGINT movieId FK</text>
 <text class="mono" x="18" y="131">BIGINT actorId FK</text>
 </g>

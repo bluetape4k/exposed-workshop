@@ -25,7 +25,7 @@ Exposed에서 데이터베이스 연결과 스키마 정의(DDL)를 다루는 �
 
 ## 아키텍처 흐름
 
-![Architecture diagram](../docs/images/readme-diagrams/04-exposed-ddl-architecture-01.png)
+![04 exposed ddl Architecture diagram](../docs/images/readme-diagrams/04-exposed-ddl-architecture-01.png)
 
 ## 선수 지식
 

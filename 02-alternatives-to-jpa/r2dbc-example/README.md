@@ -21,7 +21,7 @@ Spring Data R2DBC provides a Spring Data-style Repository abstraction on top of 
 
 ## ERD
 
-![ERD diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-erd-02.png)
+![r2dbc example Entity Relationship 2 diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-erd-02.png)
 
 ## Domain Model
 

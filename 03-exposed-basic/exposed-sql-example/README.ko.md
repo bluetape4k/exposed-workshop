@@ -21,7 +21,7 @@ Exposed DSL은 SQL 쿼리를 Kotlin 타입 안전 함수 체인으로 표현합�
 
 ## ERD
 
-![ERD diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-erd-01.png)
+![exposed sql example Entity Relationship diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-erd-01.png)
 
 ## DSL 쿼리 흐름
 
@@ -29,7 +29,7 @@ Exposed DSL은 SQL 쿼리를 Kotlin 타입 안전 함수 체인으로 표현합�
 
 ## 도메인 모델
 
-![Domain diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-class-03.png)
+![exposed sql example Class Structure 3 diagram](../../docs/images/readme-diagrams/03-exposed-basic-exposed-sql-example-class-03.png)
 
 ### 테이블 정의
 

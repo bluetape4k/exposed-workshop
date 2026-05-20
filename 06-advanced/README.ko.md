@@ -33,11 +33,11 @@
 
 ## 아키텍처 개요
 
-![Architecture diagram](../docs/images/readme-diagrams/06-advanced-architecture-01.png)
+![06 advanced Architecture diagram](../docs/images/readme-diagrams/06-advanced-architecture-01.png)
 
 ## 모듈 분류
 
-![Module diagram](../docs/images/readme-diagrams/06-advanced-architecture-02.png)
+![06 advanced Architecture 2 diagram](../docs/images/readme-diagrams/06-advanced-architecture-02.png)
 
 ## 권장 학습 순서
 

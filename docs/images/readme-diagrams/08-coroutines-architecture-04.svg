@@ -24,23 +24,24 @@
 <rect class="frame" x="32" y="28" width="1314" height="636" rx="28"/>
 <text class="title" x="66" y="82">Virtual Thread Transaction Flow</text>
 <text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M1190 386 C1190 469 689 469 689 552"/>
-<path class="line" d="M856 220 C856 303 1190 303 1190 386"/>
-<path class="line" d="M188 386 C188 386 856 386 856 386"/>
-<path class="line" d="M188 386 C188 386 522 386 522 386"/>
-<path class="line" d="M1190 220 C1190 303 188 303 188 386"/>
-<path class="line" d="M856 220 C856 220 1190 220 1190 220"/>
-<path class="line" d="M522 220 C522 220 1190 220 1190 220"/>
-<path class="line" d="M188 220 C188 220 856 220 856 220"/>
-<path class="line" d="M188 220 C188 220 522 220 522 220"/>
+<path class="line" d="M1040 386 C1040 469 839 469 839 552"/>
+<path class="line" d="M1006 220 C1006 303 1040 303 1040 386"/>
+<path class="line" d="M338 386 C338 386 706 386 706 386"/>
+<path class="line" d="M338 386 C338 386 372 386 372 386"/>
+<path class="line" d="M1040 220 C1040 303 338 303 338 386"/>
+<path class="line" d="M1006 220 C1006 220 1040 220 1040 220"/>
+<path class="line" d="M672 220 C672 220 1040 220 1040 220"/>
+<path class="line" d="M338 220 C338 220 706 220 706 220"/>
+<path class="line" d="M338 220 C338 220 372 220 372 220"/>
 <g transform="translate(48,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Caller (Blocking Code)</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Caller (Blocking</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">Code)</text>
 </g>
 <g transform="translate(382,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">new Virtual Thread Jdbc</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">Transaction</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">new Virtual Thread</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">Jdbc Transaction</text>
 </g>
 <g transform="translate(716,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
@@ -49,7 +50,8 @@
 </g>
 <g transform="translate(1050,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">DB Operation (DSL/DAO)</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">DB Operation</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">(DSL/DAO)</text>
 </g>
 <g transform="translate(48,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
@@ -65,12 +67,11 @@
 </g>
 <g transform="translate(1050,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EEF6D9" stroke="#8BA84D"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">VirtualFuture&amp;lt;T&amp;gt;</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Virtual</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">Future&amp;lt;T&amp;gt;</text>
 </g>
 <g transform="translate(549,502)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
   <text class="smallLabel" x="140" y="45" text-anchor="middle">awaitAll()</text>
 </g>
-<text class="small" x="355" y="378" text-anchor="middle">Success</text>
-<text class="small" x="522" y="378" text-anchor="middle">Exception</text>
 </svg>

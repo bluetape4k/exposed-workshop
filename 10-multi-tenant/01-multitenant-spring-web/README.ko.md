@@ -21,13 +21,13 @@ Spring MVC 환경에서 Exposed 기반 Schema 멀티테넌시를 구현하는 �
 
 ## 도메인 모델
 
-![Domain diagram](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-erd-01.png)
+![01 multitenant spring web Entity Relationship diagram](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-erd-01.png)
 
 ---
 
 ## 아키텍처
 
-![Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-class-02.png)
+![01 multitenant spring web Class Structure 2 diagram](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-class-02.png)
 
 ### TenantResolver 클래스 계층
 
@@ -48,7 +48,7 @@ Spring MVC 환경에서 Exposed 기반 Schema 멀티테넌시를 구현하는 �
 
 ## 요청 흐름
 
-![Request diagram](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-sequence-04.png)
+![01 multitenant spring web Sequence Flow 4 diagram](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-sequence-04.png)
 
 ---
 

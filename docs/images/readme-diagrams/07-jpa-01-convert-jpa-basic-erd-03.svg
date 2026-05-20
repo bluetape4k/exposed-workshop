@@ -28,7 +28,7 @@
 <g transform="translate(60,170)">
   <rect class="card" x="0" y="0" width="320" height="247" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="52" text-anchor="middle">addresses</text>
+  <text class="label" x="160" y="44" text-anchor="middle">addresses</text>
   <text class="mono" x="18" y="104">BIGSERIAL id PK</text>
 <text class="mono" x="18" y="131">VARCHAR_255 street NOT NULL</text>
 <text class="mono" x="18" y="158">VARCHAR_255 city NOT NULL</text>
@@ -38,7 +38,7 @@
 <g transform="translate(462,170)">
   <rect class="card" x="0" y="0" width="320" height="301" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
-  <text class="label" x="160" y="52" text-anchor="middle">persons</text>
+  <text class="label" x="160" y="44" text-anchor="middle">persons</text>
   <text class="mono" x="18" y="104">BIGSERIAL id PK</text>
 <text class="mono" x="18" y="131">VARCHAR_50 first_name NOT NULL</text>
 <text class="mono" x="18" y="158">VARCHAR_50 last_name NOT NULL</text>

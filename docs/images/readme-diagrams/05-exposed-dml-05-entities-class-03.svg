@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="1648" viewBox="0 0 1754 1648" role="img" aria-label="Entity Class Hierarchy Diagram">
+<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="1704" viewBox="0 0 1754 1704" role="img" aria-label="Entity Class Hierarchy Diagram">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
   <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -20,95 +20,91 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1754" height="1648"/>
-<rect class="frame" x="32" y="28" width="1690" height="1592" rx="28"/>
+<rect class="canvas" width="1754" height="1704"/>
+<rect class="frame" x="32" y="28" width="1690" height="1648" rx="28"/>
 <text class="title" x="66" y="82">Entity Class Hierarchy Diagram</text>
 <text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="line" d="M877 848 C877 1062 877 1062 877 1276"/>
-<path class="line" d="M877 1276 C877 1062 877 1062 877 848"/>
-<path class="inheritLine" d="M877 688 C877 486 672 486 672 284"/>
-<path class="inheritLine" d="M1082 982 C1082 780 672 780 672 578"/>
-<path class="inheritLine" d="M877 1276 C877 1197 672 1197 672 1118"/>
-<path class="inheritLine" d="M672 982 C672 780 672 780 672 578"/>
-<path class="inheritLine" d="M262 442 C262 363 672 363 672 284"/>
-<path class="inheritLine" d="M1492 442 C1492 363 672 363 672 284"/>
-<path class="inheritLine" d="M1082 442 C1082 363 672 363 672 284"/>
-<path class="inheritLine" d="M672 442 C672 363 672 363 672 284"/>
+<path class="line" d="M877 884 C877 1103 877 1103 877 1322"/>
+<path class="line" d="M877 1322 C877 1103 877 1103 877 884"/>
+<path class="inheritLine" d="M877 714 C877 507 672 507 672 300"/>
+<path class="inheritLine" d="M1082 1018 C1082 811 672 811 672 604"/>
+<path class="inheritLine" d="M877 1322 C877 1244.5 672 1244.5 672 1167"/>
+<path class="inheritLine" d="M672 1018 C672 811 672 811 672 604"/>
+<path class="inheritLine" d="M262 455 C262 377.5 672 377.5 672 300"/>
+<path class="inheritLine" d="M1492 455 C1492 377.5 672 377.5 672 300"/>
+<path class="inheritLine" d="M1082 455 C1082 377.5 672 377.5 672 300"/>
+<path class="inheritLine" d="M672 455 C672 377.5 672 377.5 672 300"/>
 <g transform="translate(502,180)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">Entity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">Entity</text>
 
 </g>
 <g transform="translate(912,180)">
-  <rect class="card" x="0" y="0" width="340" height="120" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">EntityT</text>
+  <text class="label" x="170" y="61" text-anchor="middle">EntityT</text>
   <text class="mono" x="18" y="108">+EntityID~T~ id</text>
 </g>
-<g transform="translate(92,450)">
-  <rect class="card" x="0" y="0" width="340" height="120" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+<g transform="translate(92,463)">
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#D6A441"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">CompositeEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">CompositeEntity</text>
   <text class="mono" x="18" y="108">+EntityID~CompositeID~ id</text>
 </g>
-<g transform="translate(502,450)">
-  <rect class="card" x="0" y="0" width="340" height="120" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+<g transform="translate(502,463)">
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#DC6B82"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">IntEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">IntEntity</text>
   <text class="mono" x="18" y="108">+EntityID~Int~ id</text>
 </g>
-<g transform="translate(912,450)">
-  <rect class="card" x="0" y="0" width="340" height="120" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+<g transform="translate(912,463)">
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#45A7A1"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">LongEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">LongEntity</text>
   <text class="mono" x="18" y="108">+EntityID~Long~ id</text>
 </g>
-<g transform="translate(1322,450)">
-  <rect class="card" x="0" y="0" width="340" height="120" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
+<g transform="translate(1322,463)">
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8A72D6"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">UUIDEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">UUIDEntity</text>
   <text class="mono" x="18" y="108">+EntityID~UUID~ id</text>
 </g>
-<g transform="translate(707,696)">
-  <rect class="card" x="0" y="0" width="340" height="144" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
+<g transform="translate(707,722)">
+  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#B88A44"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">YEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">YEntity</text>
   <text class="mono" x="18" y="108">+Boolean x</text>
-<text class="mono" x="18" y="132">+BEntity? b</text>
+<text class="mono" x="18" y="129">+BEntity? b</text>
 </g>
-<g transform="translate(502,990)">
-  <rect class="card" x="0" y="0" width="340" height="120" rx="5" fill="#EEF6D9" stroke="#8BA84D"/>
+<g transform="translate(502,1026)">
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#EEF6D9" stroke="#8BA84D"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8BA84D"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">AEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">AEntity</text>
   <text class="mono" x="18" y="108">+Boolean b1</text>
 </g>
-<g transform="translate(912,990)">
-  <rect class="card" x="0" y="0" width="340" height="144" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+<g transform="translate(912,1026)">
+  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">XEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">XEntity</text>
   <text class="mono" x="18" y="108">+Boolean b1</text>
-<text class="mono" x="18" y="132">+Boolean b2</text>
+<text class="mono" x="18" y="129">+Boolean b2</text>
 </g>
-<g transform="translate(707,1284)">
-  <rect class="card" x="0" y="0" width="340" height="144" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+<g transform="translate(707,1330)">
+  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">BEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">BEntity</text>
   <text class="mono" x="18" y="108">+Boolean b2</text>
-<text class="mono" x="18" y="132">+YEntity? y</text>
+<text class="mono" x="18" y="129">+YEntity? y</text>
 </g>
-<rect x="819" y="1047" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="877" y="1065" text-anchor="middle">optionalReference.</text>
-<rect x="819" y="1047" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="877" y="1065" text-anchor="middle">backReferencedOn</text>
 </svg>

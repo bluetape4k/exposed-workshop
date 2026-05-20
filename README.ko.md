@@ -41,7 +41,7 @@ Kotlin Exposed는 JetBrains에서 개발한 Kotlin 언어 전용 SQL 프레임�
 
 ### Exposed API 구조
 
-![Exposed API Structure diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-01.png)
+![Exposed API diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-01.png)
 
 ## 기술 스택
 
@@ -72,7 +72,7 @@ Kotlin Exposed는 JetBrains에서 개발한 Kotlin 언어 전용 SQL 프레임�
 
 ### 학습 경로
 
-![. diagram diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-02.png)
+![exposed workshop Architecture 2 diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-02.png)
 
 ## 상세 문서
 
@@ -82,7 +82,7 @@ Kotlin Exposed는 JetBrains에서 개발한 Kotlin 언어 전용 SQL 프레임�
 
 ## 모듈 구조
 
-![Module Structure diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-03.png)
+![exposed workshop Architecture 3 diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-03.png)
 
 ## 모듈 목록
 

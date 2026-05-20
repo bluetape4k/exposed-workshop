@@ -94,11 +94,11 @@ transaction(db) {
 
 ## 중첩 트랜잭션 흐름
 
-![Transaction diagram](../../docs/images/readme-diagrams/05-exposed-dml-04-transactions-architecture-01.png)
+![04 transactions Architecture diagram](../../docs/images/readme-diagrams/05-exposed-dml-04-transactions-architecture-01.png)
 
 ## 코루틴 트랜잭션 흐름
 
-![Coroutine Transaction diagram](../../docs/images/readme-diagrams/05-exposed-dml-04-transactions-sequence-02.png)
+![04 transactions Sequence Flow 2 diagram](../../docs/images/readme-diagrams/05-exposed-dml-04-transactions-sequence-02.png)
 
 ## 예제 지도
 

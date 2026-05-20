@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="910" viewBox="0 0 1754 910" role="img" aria-label="Entity Class Diagram — JPA Entity vs Exposed DAO">
+<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="939" viewBox="0 0 1754 939" role="img" aria-label="Entity Class Diagram — JPA Entity vs Exposed DAO">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
   <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -20,80 +20,75 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1754" height="910"/>
-<rect class="frame" x="32" y="28" width="1690" height="854" rx="28"/>
+<rect class="canvas" width="1754" height="939"/>
+<rect class="frame" x="32" y="28" width="1690" height="883" rx="28"/>
 <text class="title" x="66" y="82">Entity Class Diagram — JPA Entity vs Exposed DAO</text>
 <text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="dashed" d="M1492 172 C1492 276 262 276 262 380"/>
-<path class="dashed" d="M467 490 C467 435 672 435 672 380"/>
-<path class="dashed" d="M467 490 C467 423 1082 423 1082 356"/>
+<path class="dashed" d="M1492 172 C1492 288.5 262 288.5 262 405"/>
+<path class="dashed" d="M467 515 C467 449.5 672 449.5 672 384"/>
+<path class="dashed" d="M467 515 C467 439 1082 439 1082 363"/>
 <g transform="translate(92,180)">
-  <rect class="card" x="0" y="0" width="340" height="192" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <rect class="card" x="0" y="0" width="340" height="217" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
   <text class="small" x="170" y="26" text-anchor="middle">«Exposed DAO»</text>
-  <text class="label" x="170" y="57" text-anchor="middle">Exposed_PersonDAO</text>
+  <text class="label" x="170" y="61" text-anchor="middle">Exposed_PersonDAO</text>
   <text class="mono" x="18" y="108">class Person : LongEntity</text>
-<text class="mono" x="18" y="132">var address by Address referencedOn addressId</text>
-<text class="mono" x="18" y="156">var firstName / lastName / birthDate</text>
-<text class="mono" x="18" y="180">var employed / occupation</text>
+<text class="mono" x="18" y="129">var address by Address referencedOn</text>
+<text class="mono" x="18" y="150">addressId</text>
+<text class="mono" x="18" y="171">var firstName / lastName / birthDate</text>
+<text class="mono" x="18" y="192">var employed / occupation</text>
 </g>
 <g transform="translate(502,180)">
-  <rect class="card" x="0" y="0" width="340" height="192" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
   <text class="small" x="170" y="26" text-anchor="middle">«Exposed Entity (DAO)»</text>
-  <text class="label" x="170" y="57" text-anchor="middle">Exposed_SimpleEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">Exposed_SimpleEntity</text>
   <text class="mono" x="18" y="108">class SimpleEntity : LongEntity</text>
-<text class="mono" x="18" y="132">var name by SimpleTable.name</text>
-<text class="mono" x="18" y="156">var description by SimpleTable.description</text>
-<text class="mono" x="18" y="180">companion object : LongEntityClass</text>
+<text class="mono" x="18" y="129">var name by SimpleTable.name</text>
+<text class="mono" x="18" y="150">var description by SimpleTable.description</text>
+<text class="mono" x="18" y="171">companion object : LongEntityClass</text>
 </g>
 <g transform="translate(912,180)">
-  <rect class="card" x="0" y="0" width="340" height="168" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#D6A441"/>
   <text class="small" x="170" y="26" text-anchor="middle">«Exposed Table (DSL)»</text>
-  <text class="label" x="170" y="57" text-anchor="middle">Exposed_SimpleTable</text>
+  <text class="label" x="170" y="61" text-anchor="middle">Exposed_SimpleTable</text>
   <text class="mono" x="18" y="108">object SimpleTable : LongIdTable</text>
-<text class="mono" x="18" y="132">val name = varchar(255).uniqueIndex()</text>
-<text class="mono" x="18" y="156">val description = text().nullable()</text>
+<text class="mono" x="18" y="129">val name = varchar(255).uniqueIndex()</text>
+<text class="mono" x="18" y="150">val description = text().nullable()</text>
 </g>
 <g transform="translate(1322,180)">
-  <rect class="card" x="0" y="0" width="340" height="192" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#DC6B82"/>
   <text class="small" x="170" y="26" text-anchor="middle">«JPA Entity»</text>
-  <text class="label" x="170" y="57" text-anchor="middle">JPA_PersonEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">JPA_PersonEntity</text>
   <text class="mono" x="18" y="108">@Entity @ManyToOne Address address</text>
-<text class="mono" x="18" y="132">String firstName / lastName</text>
-<text class="mono" x="18" y="156">LocalDate birthDate</text>
-<text class="mono" x="18" y="180">Boolean employed</text>
+<text class="mono" x="18" y="129">String firstName / lastName</text>
+<text class="mono" x="18" y="150">LocalDate birthDate</text>
+<text class="mono" x="18" y="171">Boolean employed</text>
 </g>
-<g transform="translate(297,498)">
-  <rect class="card" x="0" y="0" width="340" height="192" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+<g transform="translate(297,523)">
+  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#45A7A1"/>
   <text class="small" x="170" y="26" text-anchor="middle">«JPA Entity»</text>
-  <text class="label" x="170" y="57" text-anchor="middle">JPA_SimpleEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">JPA_SimpleEntity</text>
   <text class="mono" x="18" y="108">@Entity @Table(name=simple_entity)</text>
-<text class="mono" x="18" y="132">@Id @GeneratedValue Long id</text>
-<text class="mono" x="18" y="156">@Column String name</text>
-<text class="mono" x="18" y="180">@Column String description</text>
+<text class="mono" x="18" y="129">@Id @GeneratedValue Long id</text>
+<text class="mono" x="18" y="150">@Column String name</text>
+<text class="mono" x="18" y="171">@Column String description</text>
 </g>
-<g transform="translate(707,498)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
+<g transform="translate(707,523)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8A72D6"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">Person</text>
+  <text class="label" x="170" y="61" text-anchor="middle">Person</text>
 
 </g>
-<g transform="translate(1117,498)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
+<g transform="translate(1117,523)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#B88A44"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">SimpleEntity</text>
+  <text class="label" x="170" y="61" text-anchor="middle">SimpleEntity</text>
 
 </g>
-<rect x="716.5" y="408" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="774.5" y="426" text-anchor="middle">DSL migration</text>
-<rect x="511.5" y="420" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="569.5" y="438" text-anchor="middle">DAO migration</text>
-<rect x="819" y="261" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="877" y="279" text-anchor="middle">migration</text>
 </svg>

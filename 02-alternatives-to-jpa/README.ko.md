@@ -39,7 +39,7 @@ JPA 외의 데이터베이스 접근 기술을 직접 실습하여 각각의 설
 
 ## 아키텍처 흐름
 
-![Architecture diagram](../docs/images/readme-diagrams/02-alternatives-to-jpa-architecture-01.png)
+![02 alternatives to jpa Architecture diagram](../docs/images/readme-diagrams/02-alternatives-to-jpa-architecture-01.png)
 
 ## 권장 학습 순서
 

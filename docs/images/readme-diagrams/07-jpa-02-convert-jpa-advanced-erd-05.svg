@@ -22,13 +22,12 @@
 </defs>
 <rect class="canvas" width="842" height="507"/>
 <rect class="frame" x="32" y="28" width="778" height="451" rx="28"/>
-<text class="title" x="66" y="82">TreeNode ERD (Self-reference Tree Structure)</text>
+<text class="title" x="66" y="82">TreeNode ERD</text>
 <text class="subtitle" x="70" y="118">ERD tables and relationships from the original Mermaid source</text>
-<path class="line" d="M421 293.5 C421 293.5 421 293.5 421 293.5"/>
 <g transform="translate(261,170)">
   <rect class="card" x="0" y="0" width="320" height="247" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="52" text-anchor="middle">tree_nodes</text>
+  <text class="label" x="160" y="44" text-anchor="middle">tree_nodes</text>
   <text class="mono" x="18" y="104">BIGINT id PK autoIncrement</text>
 <text class="mono" x="18" y="131">VARCHAR_255 title NOT NULL</text>
 <text class="mono" x="18" y="158">TEXT description NULL</text>

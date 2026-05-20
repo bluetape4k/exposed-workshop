@@ -37,13 +37,13 @@ By extending `AbstractSuspendedJdbcRedissonRepository`, you can apply cache stra
 
 ## Request Processing Flow — Write-Behind Async Event Loading (Coroutines)
 
-![Request Processing Flow — Write-Behind Async Event Loading (Coroutines) diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-sequence-03.png)
+![Request Processing Flow — Write-Behind Async Event Loading. diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-sequence-03.png)
 
 ---
 
 ## Request Processing Flow — Read-Through + Write-Through (Coroutines User)
 
-![Request Processing Flow — Read-Through + Write-Through (Coroutines User) diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-sequence-04.png)
+![Request Processing Flow — Read-Through + Write-Through (Cor. diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-sequence-04.png)
 
 ---
 

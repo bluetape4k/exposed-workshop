@@ -62,10 +62,10 @@
 </g>
 <g transform="translate(525,378)">
   <rect class="card" x="0" y="0" width="260" height="112" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
-  <text class="smallLabel" x="130" y="31.5" text-anchor="middle">03-exposed-kotlin-datetime</text>
-<text class="smallLabel" x="130" y="52.5" text-anchor="middle">kotlinx.datetime</text>
-<text class="smallLabel" x="130" y="73.5" text-anchor="middle">type mapping KMP</text>
-<text class="smallLabel" x="130" y="94.5" text-anchor="middle">support</text>
+  <text class="smallLabel" x="130" y="31.5" text-anchor="middle">03-exposed-kotlin-da</text>
+<text class="smallLabel" x="130" y="52.5" text-anchor="middle">tetime</text>
+<text class="smallLabel" x="130" y="73.5" text-anchor="middle">kotlinx.datetime</text>
+<text class="smallLabel" x="130" y="94.5" text-anchor="middle">type mapping KMP</text>
 </g>
 <g transform="translate(900,160)">
   <rect x="0" y="0" width="350" height="648" rx="18" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.5"/>
@@ -74,8 +74,8 @@
 <g transform="translate(945,236)">
   <rect class="card" x="0" y="0" width="260" height="112" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
   <text class="smallLabel" x="130" y="31.5" text-anchor="middle">04-exposed-json</text>
-<text class="smallLabel" x="130" y="52.5" text-anchor="middle">kotlinx.serialization</text>
-<text class="smallLabel" x="130" y="73.5" text-anchor="middle">JSON/JSONB path</text>
+<text class="smallLabel" x="130" y="52.5" text-anchor="middle">kotlinx.serializatio</text>
+<text class="smallLabel" x="130" y="73.5" text-anchor="middle">n JSON/JSONB path</text>
 <text class="smallLabel" x="130" y="94.5" text-anchor="middle">queries</text>
 </g>
 <g transform="translate(945,378)">
@@ -119,7 +119,7 @@
   <text class="smallLabel" x="130" y="31.5" text-anchor="middle">06-custom-columns</text>
 <text class="smallLabel" x="130" y="52.5" text-anchor="middle">ColumnType</text>
 <text class="smallLabel" x="130" y="73.5" text-anchor="middle">inheritance</text>
-<text class="smallLabel" x="130" y="94.5" text-anchor="middle">Serialization/compression/encryption</text>
+<text class="smallLabel" x="130" y="94.5" text-anchor="middle">Serialization/compre</text>
 </g>
 <g transform="translate(1365,662)">
   <rect class="card" x="0" y="0" width="260" height="112" rx="14" fill="#F1ECFF" stroke="#8A72D6"/>

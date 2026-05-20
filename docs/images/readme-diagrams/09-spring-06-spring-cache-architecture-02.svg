@@ -24,20 +24,21 @@
 <rect class="frame" x="32" y="28" width="1314" height="802" rx="28"/>
 <text class="title" x="66" y="82">Cache Flow</text>
 <text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M689 718 C689 718 1023 718 1023 718"/>
-<path class="line" d="M355 718 C355 718 689 718 689 718"/>
-<path class="line" d="M1190 552 C1190 635 355 635 355 718"/>
-<path class="line" d="M856 552 C856 552 1190 552 1190 552"/>
-<path class="line" d="M188 552 C188 552 522 552 522 552"/>
-<path class="line" d="M1190 386 C1190 469 188 469 188 552"/>
-<path class="line" d="M856 386 C856 386 1190 386 1190 386"/>
-<path class="line" d="M188 386 C188 386 856 386 856 386"/>
-<path class="line" d="M522 220 C522 303 522 303 522 386"/>
-<path class="line" d="M522 220 C522 220 1190 220 1190 220"/>
-<path class="line" d="M188 220 C188 220 522 220 522 220"/>
+<path class="line" d="M839 718 C839 718 873 718 873 718"/>
+<path class="line" d="M505 718 C505 718 539 718 539 718"/>
+<path class="line" d="M1040 552 C1040 635 505 635 505 718"/>
+<path class="line" d="M1006 552 C1006 552 1040 552 1040 552"/>
+<path class="line" d="M338 552 C338 552 372 552 372 552"/>
+<path class="line" d="M1040 386 C1040 469 338 469 338 552"/>
+<path class="line" d="M1006 386 C1006 386 1040 386 1040 386"/>
+<path class="line" d="M338 386 C338 386 706 386 706 386"/>
+<path class="line" d="M522 280 C522 303 522 303 522 326"/>
+<path class="line" d="M672 220 C672 220 1040 220 1040 220"/>
+<path class="line" d="M338 220 C338 220 372 220 372 220"/>
 <g transform="translate(48,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Client calls findByCode</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Client calls</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">findByCode</text>
 </g>
 <g transform="translate(382,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
@@ -54,7 +55,8 @@
 </g>
 <g transform="translate(48,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Start transaction block</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Start transaction</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">block</text>
 </g>
 <g transform="translate(382,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F1ECFF" stroke="#8A72D6"/>
@@ -62,18 +64,19 @@
 </g>
 <g transform="translate(716,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F7F1E7" stroke="#B88A44"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">CountryTable.selectAll</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">WHERE code = ?</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Country Table.select</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">All WHERE code = ?</text>
 </g>
 <g transform="translate(1050,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EEF6D9" stroke="#8BA84D"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Query CountryRecord from</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">DB</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Query CountryRecord</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">from DB</text>
 </g>
 <g transform="translate(48,502)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Store in Redis cache</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">cache:code:country:KR</text>
+  <text class="smallLabel" x="140" y="21" text-anchor="middle">Store in Redis cache</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">cache:code:country:K</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">R</text>
 </g>
 <g transform="translate(382,502)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
@@ -98,7 +101,7 @@
 <g transform="translate(883,668)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F7F1E7" stroke="#B88A44"/>
   <text class="smallLabel" x="140" y="21" text-anchor="middle">@CacheEvict executed</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">cache:code:country:KR</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">deleted</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">cache:code:country:K</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">R deleted</text>
 </g>
 </svg>

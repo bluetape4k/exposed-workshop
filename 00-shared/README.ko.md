@@ -7,7 +7,7 @@
 
 ## 모듈 의존성 구조
 
-![Module Dependency Structure diagram](../docs/images/readme-diagrams/00-shared-architecture-01.png)
+![00 shared Architecture diagram](../docs/images/readme-diagrams/00-shared-architecture-01.png)
 
 ## 포함 모듈
 

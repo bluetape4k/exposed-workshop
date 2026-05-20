@@ -32,11 +32,11 @@ Exposed를 Kotlin 코루틴과 Virtual Thread 기반 동시성 모델에서 운�
 
 ### 코루틴 vs Virtual Thread 처리 흐름
 
-![Coroutine vs Virtual Thread Processing diagram](../docs/images/readme-diagrams/08-coroutines-architecture-01.png)
+![vs Virtual Thread diagram](../docs/images/readme-diagrams/08-coroutines-architecture-01.png)
 
 ### 스레드 모델 구조 비교
 
-![Structure diagram](../docs/images/readme-diagrams/08-coroutines-architecture-02.png)
+![08 coroutines Architecture 2 diagram](../docs/images/readme-diagrams/08-coroutines-architecture-02.png)
 
 ## 포함 모듈
 

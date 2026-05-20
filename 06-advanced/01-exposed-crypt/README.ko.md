@@ -22,7 +22,7 @@
 
 ## 암호화 흐름
 
-![Encryption diagram](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-architecture-01.png)
+![01 exposed crypt Architecture diagram](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-architecture-01.png)
 
 ## 지원 알고리즘
 
@@ -148,7 +148,7 @@ insertLog.shouldContainNone(listOf("testName"))  // 평문 미노출 확인
 
 ## 컬럼 타입 계층
 
-![01-exposed-crypt diagram diagram](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-class-02.png)
+![01 exposed crypt Class Structure 2 diagram](../../docs/images/readme-diagrams/06-advanced-01-exposed-crypt-class-02.png)
 
 ## 예제 구성
 

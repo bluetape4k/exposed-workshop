@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="838" viewBox="0 0 1754 838" role="img" aria-label="Entity Relationship Mapping Diagram">
+<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="855" viewBox="0 0 1754 855" role="img" aria-label="Entity Relationship Mapping Diagram">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
   <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -20,52 +20,52 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1754" height="838"/>
-<rect class="frame" x="32" y="28" width="1690" height="782" rx="28"/>
+<rect class="canvas" width="1754" height="855"/>
+<rect class="frame" x="32" y="28" width="1690" height="799" rx="28"/>
 <text class="title" x="66" y="82">Entity Relationship Mapping Diagram</text>
 <text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="line" d="M877 466 C877 411 672 411 672 356"/>
-<path class="line" d="M877 466 C877 399 262 399 262 332"/>
+<path class="line" d="M877 473 C877 418 672 418 672 363"/>
+<path class="line" d="M877 473 C877 407.5 262 407.5 262 342"/>
 <g transform="translate(92,180)">
-  <rect class="card" x="0" y="0" width="340" height="144" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">Actors</text>
+  <text class="label" x="170" y="61" text-anchor="middle">Actors</text>
   <text class="mono" x="18" y="108">+EntityID~Long~ id</text>
-<text class="mono" x="18" y="132">+String name</text>
+<text class="mono" x="18" y="129">+String name</text>
 </g>
 <g transform="translate(502,180)">
-  <rect class="card" x="0" y="0" width="340" height="168" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">Movies</text>
+  <text class="label" x="170" y="61" text-anchor="middle">Movies</text>
   <text class="mono" x="18" y="108">+EntityID~Long~ id</text>
-<text class="mono" x="18" y="132">+String title</text>
-<text class="mono" x="18" y="156">+EntityID~Long~ directorId</text>
+<text class="mono" x="18" y="129">+String title</text>
+<text class="mono" x="18" y="150">+EntityID~Long~ directorId</text>
 </g>
 <g transform="translate(912,180)">
-  <rect class="card" x="0" y="0" width="340" height="168" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#D6A441"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">ProjectConfigs</text>
+  <text class="label" x="170" y="61" text-anchor="middle">ProjectConfigs</text>
   <text class="mono" x="18" y="108">+EntityID~Long~ id</text>
-<text class="mono" x="18" y="132">+String ownerId</text>
-<text class="mono" x="18" y="156">+Boolean setting</text>
+<text class="mono" x="18" y="129">+String ownerId</text>
+<text class="mono" x="18" y="150">+Boolean setting</text>
 </g>
 <g transform="translate(1322,180)">
-  <rect class="card" x="0" y="0" width="340" height="144" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#DC6B82"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">Projects</text>
+  <text class="label" x="170" y="61" text-anchor="middle">Projects</text>
   <text class="mono" x="18" y="108">+EntityID~Long~ id</text>
-<text class="mono" x="18" y="132">+String name</text>
+<text class="mono" x="18" y="129">+String name</text>
 </g>
-<g transform="translate(707,474)">
-  <rect class="card" x="0" y="0" width="340" height="144" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+<g transform="translate(707,481)">
+  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#45A7A1"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">StarringTable</text>
+  <text class="label" x="170" y="61" text-anchor="middle">StarringTable</text>
   <text class="mono" x="18" y="108">+EntityID~Long~ actorId</text>
-<text class="mono" x="18" y="132">+EntityID~Long~ movieId</text>
+<text class="mono" x="18" y="129">+EntityID~Long~ movieId</text>
 </g>
 </svg>

@@ -39,7 +39,7 @@ Exposed는 두 가지 데이터 접근 패턴을 제공합니다. **DSL(SQL DSL)
 
 ## 도메인 모델 (classDiagram)
 
-![Domain (classDiagram) diagram](../docs/images/readme-diagrams/03-exposed-basic-class-01.png)
+![(classDiagram) diagram](../docs/images/readme-diagrams/03-exposed-basic-class-01.png)
 
 ## DSL 방식 스키마 정의
 

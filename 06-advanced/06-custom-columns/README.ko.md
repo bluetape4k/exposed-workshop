@@ -22,7 +22,7 @@ Exposed의 `ColumnType`을 확장하면 DB 저장 시 자동으로 변환(직렬
 
 ## 아키텍처 흐름
 
-![Architecture diagram](../../docs/images/readme-diagrams/06-advanced-06-custom-columns-architecture-01.png)
+![06 custom columns Architecture diagram](../../docs/images/readme-diagrams/06-advanced-06-custom-columns-architecture-01.png)
 
 ## 커스텀 ColumnType 계층
 

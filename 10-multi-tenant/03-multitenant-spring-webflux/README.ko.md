@@ -22,7 +22,7 @@ WebFlux + Coroutines 기반의 논블로킹 멀티테넌트 예제입니다. Rea
 
 ## 도메인 모델
 
-![Domain diagram](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-erd-01.png)
+![03 multitenant spring webflux Entity Relationship diagram](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-erd-01.png)
 
 ---
 
@@ -40,7 +40,7 @@ WebFlux + Coroutines 기반의 논블로킹 멀티테넌트 예제입니다. Rea
 
 ## 아키텍처
 
-![Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-class-02.png)
+![03 multitenant spring webflux Class Structure 2 diagram](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-class-02.png)
 
 ### 컨텍스트 전파 체계
 
@@ -64,7 +64,7 @@ HTTP 요청
 
 ## 요청 흐름
 
-![Request diagram](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-sequence-04.png)
+![03 multitenant spring webflux Sequence Flow 4 diagram](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-sequence-04.png)
 
 ---
 

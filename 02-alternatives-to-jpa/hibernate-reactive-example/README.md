@@ -21,7 +21,7 @@ Hibernate Reactive retains the existing JPA annotations (`@Entity`, `@OneToMany`
 
 ## ERD
 
-![ERD diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-erd-02.png)
+![hibernate reactive example Entity Relationship 2 diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-erd-02.png)
 
 ## Domain Model
 

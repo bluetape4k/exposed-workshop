@@ -22,7 +22,7 @@ A module for applying Redis caching in a non-blocking manner from coroutine `sus
 
 ## Architecture
 
-![Architecture diagram](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-class-02.png)
+![07 spring suspended cache Class Structure 2 diagram](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-class-02.png)
 
 ## Key Concepts
 
