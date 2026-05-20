@@ -23,6 +23,8 @@
 | WRITE_THROUGH | WRITE_HEAVY | 256 | 448.564 | ±81.004 | us/op |
 | WRITE_THROUGH | WRITE_HEAVY | 4096 | 491.862 | ±440.753 | us/op |
 
+![Cache strategy latency chart](../../docs/images/readme-charts/cache-strategy-latency-chart-01.png)
+
 ### 캐시 전략 효과 분석
 
 #### READ_HEAVY 워크로드 (읽기 90% / 쓰기 10%)
@@ -57,6 +59,8 @@
 | readThroughCacheHit | 4096 | 0.002 | ±0.000 | us/op |
 | readThroughCacheMiss | 256 | 0.112 | ±0.327 | us/op |
 | readThroughCacheMiss | 4096 | 0.134 | ±0.296 | us/op |
+
+![Read-through cache hit/miss latency chart](../../docs/images/readme-charts/readthrough-cache-latency-chart-01.png)
 
 ### 캐시 계층 오버헤드 분석
 

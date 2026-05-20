@@ -14,6 +14,8 @@
 | Native SQL (JDBC) | ~5,000 쿼리/초  |
 | Exposed DSL       | ~400 쿼리/초    |
 
+![VirtualThread JDBC throughput chart](../docs/images/readme-charts/virtualthread-jdbc-throughput-chart-01.png)
+
 **격차 원인**: Exposed DSL의 쿼리 빌더가 매 호출마다 SQL 문자열을 동적으로 생성하는 오버헤드. 실제 I/O 바운드 운영 환경에서는 DB 왕복 지연이 지배적이므로 체감 차이는 훨씬 줄어듦.
 
 추가 이슈: [Issue #898](https://github.com/JetBrains/Exposed/issues/898) — 35만 행 결과셋에서 쿼리 자체는 120ms이나 ResultRows 취득까지 약 1.5분 소요 (대용량 ResultSet 처리 오버헤드).
