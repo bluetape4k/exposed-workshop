@@ -112,11 +112,11 @@ CreditCardTable.selectAll()
 
 ### TreeNode ERD (자기 참조 트리 구조)
 
-![TreeNode ERD ( Structure) diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-erd-05.png)
+![TreeNode ERD ( ) diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-erd-05.png)
 
 ### 트리 구조 계층 예시
 
-![Structure diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-architecture-06.png)
+![02 convert jpa advanced Architecture 6 diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-architecture-06.png)
 
 ## 상속 전략 비교 classDiagram
 

@@ -22,12 +22,12 @@
 </defs>
 <rect class="canvas" width="842" height="507"/>
 <rect class="frame" x="32" y="28" width="778" height="451" rx="28"/>
-<text class="title" x="66" y="82">Table Per Class Inheritance ERD</text>
+<text class="title" x="66" y="82">Table Per Class Inheritanc.</text>
 <text class="subtitle" x="70" y="118">ERD tables and relationships from the original Mermaid source</text>
 <g transform="translate(60,170)">
   <rect class="card" x="0" y="0" width="320" height="247" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="52" text-anchor="middle">credit_card</text>
+  <text class="label" x="160" y="44" text-anchor="middle">credit_card</text>
   <text class="mono" x="18" y="104">SERIAL id PK</text>
 <text class="mono" x="18" y="131">VARCHAR_64 owner NOT NULL</text>
 <text class="mono" x="18" y="158">VARCHAR_24 card_number NOT NULL</text>
@@ -37,7 +37,7 @@
 <g transform="translate(462,170)">
   <rect class="card" x="0" y="0" width="320" height="220" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
-  <text class="label" x="160" y="52" text-anchor="middle">bank_account</text>
+  <text class="label" x="160" y="44" text-anchor="middle">bank_account</text>
   <text class="mono" x="18" y="104">SERIAL id PK</text>
 <text class="mono" x="18" y="131">VARCHAR_64 owner NOT NULL</text>
 <text class="mono" x="18" y="158">VARCHAR_255 account_number NOT NU.</text>

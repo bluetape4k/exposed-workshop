@@ -27,7 +27,7 @@
 <g transform="translate(261,170)">
   <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="52" text-anchor="middle">simple_entity</text>
+  <text class="label" x="160" y="44" text-anchor="middle">simple_entity</text>
   <text class="mono" x="18" y="104">BIGSERIAL id PK</text>
 <text class="mono" x="18" y="131">VARCHAR_255 name UNIQUE NOT NULL</text>
 <text class="mono" x="18" y="158">TEXT description NULL</text>

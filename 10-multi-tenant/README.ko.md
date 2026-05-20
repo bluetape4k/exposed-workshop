@@ -37,7 +37,7 @@ Single DB Instance
 
 ### 테넌트별 스키마 분리 아키텍처
 
-![Architecture diagram](../docs/images/readme-diagrams/10-multi-tenant-architecture-01.png)
+![10 multi tenant Architecture diagram](../docs/images/readme-diagrams/10-multi-tenant-architecture-01.png)
 
 ---
 
@@ -53,7 +53,7 @@ Single DB Instance
 
 ## 모듈 간 구현 비교
 
-![Module diagram](../docs/images/readme-diagrams/10-multi-tenant-class-02.png)
+![10 multi tenant Class Structure 2 diagram](../docs/images/readme-diagrams/10-multi-tenant-class-02.png)
 
 ### 환경별 핵심 차이 요약
 
@@ -72,7 +72,7 @@ Single DB Instance
 
 모든 모듈은 다음 흐름을 따릅니다. 컨텍스트 전파 방식만 환경에 따라 달라집니다.
 
-![Shared Request diagram](../docs/images/readme-diagrams/10-multi-tenant-sequence-03.png)
+![10 multi tenant Sequence Flow 3 diagram](../docs/images/readme-diagrams/10-multi-tenant-sequence-03.png)
 
 ---
 

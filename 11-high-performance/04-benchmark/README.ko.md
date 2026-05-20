@@ -15,13 +15,13 @@
 
 ## 도메인 ERD
 
-![Domain ERD diagram](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-erd-01.png)
+![04 benchmark Entity Relationship diagram](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-erd-01.png)
 
 ---
 
 ## Exposed vs JPA 벤치마크 구조
 
-![Exposed vs JPA Structure diagram](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-architecture-02.png)
+![Exposed vs JPA diagram](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-architecture-02.png)
 
 ---
 
@@ -37,7 +37,7 @@
 
 ## 클래스 구조
 
-![Structure diagram](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-class-03.png)
+![04 benchmark Class Structure 3 diagram](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-class-03.png)
 
 ---
 
@@ -94,7 +94,7 @@
 
 ## 벤치마크 흐름
 
-![04-benchmark diagram diagram](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-architecture-04.png)
+![04 benchmark Architecture 4 diagram](../../docs/images/readme-diagrams/11-high-performance-04-benchmark-architecture-04.png)
 
 ---
 

@@ -48,7 +48,7 @@ By extending `AbstractJdbcRedissonRepository`, you can select among three cache 
 
 ## Request Processing Flow — Read-Through + Write-Through (User)
 
-![Request Processing Flow — Read-Through + Write-Through (User) diagram](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-sequence-05.png)
+![Request Processing Flow — Read-Through + Write-Through (Use. diagram](../../docs/images/readme-diagrams/11-high-performance-01-cache-strategies-sequence-05.png)
 
 ---
 

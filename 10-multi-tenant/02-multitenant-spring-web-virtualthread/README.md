@@ -37,7 +37,7 @@ An example that extends the multi-tenancy structure from module `01` to a Java 2
 
 ## Architecture
 
-![Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-class-02.png)
+![02 multitenant spring web virtualthread Class Structure 2 diagram](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-class-02.png)
 
 ### ScopedValue-Based Context Propagation
 

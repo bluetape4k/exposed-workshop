@@ -18,7 +18,7 @@
 
 ## 아키텍처
 
-![Architecture diagram](../../docs/images/readme-diagrams/09-spring-02-transactiontemplate-class-01.png)
+![02 transactiontemplate Class Structure diagram](../../docs/images/readme-diagrams/09-spring-02-transactiontemplate-class-01.png)
 
 ## 핵심 개념
 
@@ -84,7 +84,7 @@ class BookService(
 
 ## 트랜잭션 흐름
 
-![Transaction diagram](../../docs/images/readme-diagrams/09-spring-02-transactiontemplate-sequence-02.png)
+![02 transactiontemplate Sequence Flow 2 diagram](../../docs/images/readme-diagrams/09-spring-02-transactiontemplate-sequence-02.png)
 
 ## 도메인 모델
 

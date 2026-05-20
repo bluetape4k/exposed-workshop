@@ -49,7 +49,7 @@ val ids = futures.awaitAll()
 
 ## Virtual Thread 트랜잭션 흐름
 
-![Virtual Thread Transaction diagram](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-sequence-01.png)
+![Virtual Thread diagram](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-sequence-01.png)
 
 ## 코루틴 vs Virtual Threads 실무 선택 가이드
 
@@ -65,7 +65,7 @@ val ids = futures.awaitAll()
 
 ## Virtual Thread 처리 모델 flowchart
 
-![Virtual Thread Processing flowchart diagram](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-architecture-02.png)
+![Virtual Thread flowchart diagram](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-architecture-02.png)
 
 ## Virtual Thread vs Platform Thread 비교 다이어그램
 
@@ -73,7 +73,7 @@ val ids = futures.awaitAll()
 
 ## 테이블 ERD (virtualthreads_table)
 
-![Table ERD (virtualthreads_table) diagram](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-erd-04.png)
+![ERD (virtualthreads_table) diagram](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-erd-04.png)
 
 ## 예제 구성
 

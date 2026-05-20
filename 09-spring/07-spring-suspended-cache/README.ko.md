@@ -20,11 +20,11 @@
 
 ## 도메인 모델
 
-![Domain diagram](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-erd-01.png)
+![07 spring suspended cache Entity Relationship diagram](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-erd-01.png)
 
 ## 아키텍처
 
-![Architecture diagram](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-class-02.png)
+![07 spring suspended cache Class Structure 2 diagram](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-class-02.png)
 
 ## 핵심 개념
 
@@ -115,7 +115,7 @@ class DefaultCountrySuspendedRepository: CountrySuspendedRepository {
 
 ## 캐시 흐름
 
-![Cache diagram](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-architecture-03.png)
+![07 spring suspended cache Architecture 3 diagram](../../docs/images/readme-diagrams/09-spring-07-spring-suspended-cache-architecture-03.png)
 
 ## LettuceSuspendedCacheManager 설정
 

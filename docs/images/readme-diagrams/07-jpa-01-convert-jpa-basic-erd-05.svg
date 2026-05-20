@@ -31,7 +31,7 @@
 <g transform="translate(60,170)">
   <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="52" text-anchor="middle">publishers</text>
+  <text class="label" x="160" y="44" text-anchor="middle">publishers</text>
   <text class="mono" x="18" y="104">INT pub_id PK autoIncrement</text>
 <text class="mono" x="18" y="131">UUID isbn_code PK autoGenerate</text>
 <text class="mono" x="18" y="158">VARCHAR_32 publisher_name NOT NULL</text>
@@ -39,7 +39,7 @@
 <g transform="translate(462,170)">
   <rect class="card" x="0" y="0" width="320" height="220" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
-  <text class="label" x="160" y="52" text-anchor="middle">authors</text>
+  <text class="label" x="160" y="44" text-anchor="middle">authors</text>
   <text class="mono" x="18" y="104">SERIAL id PK</text>
 <text class="mono" x="18" y="131">INT publisher_id FK</text>
 <text class="mono" x="18" y="158">UUID publisher_isbn FK</text>
@@ -48,7 +48,7 @@
 <g transform="translate(864,170)">
   <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#D6A441"/>
-  <text class="label" x="160" y="52" text-anchor="middle">books</text>
+  <text class="label" x="160" y="44" text-anchor="middle">books</text>
   <text class="mono" x="18" y="104">INT book_id PK autoIncrement</text>
 <text class="mono" x="18" y="131">VARCHAR_32 title NOT NULL</text>
 <text class="mono" x="18" y="158">INT author_id FK NULL</text>
@@ -56,7 +56,7 @@
 <g transform="translate(261,466)">
   <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#DC6B82"/>
-  <text class="label" x="160" y="52" text-anchor="middle">reviews</text>
+  <text class="label" x="160" y="44" text-anchor="middle">reviews</text>
   <text class="mono" x="18" y="104">VARCHAR_8 code PK</text>
 <text class="mono" x="18" y="131">BIGINT rank PK</text>
 <text class="mono" x="18" y="158">INT book_id FK NOT NULL</text>
@@ -64,7 +64,7 @@
 <g transform="translate(663,466)">
   <rect class="card" x="0" y="0" width="320" height="274" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#45A7A1"/>
-  <text class="label" x="160" y="52" text-anchor="middle">offices</text>
+  <text class="label" x="160" y="44" text-anchor="middle">offices</text>
   <text class="mono" x="18" y="104">VARCHAR_8 zip_code PK</text>
 <text class="mono" x="18" y="131">VARCHAR_64 name PK</text>
 <text class="mono" x="18" y="158">INT area_code PK</text>

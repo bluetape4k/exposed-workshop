@@ -20,7 +20,7 @@ A REST API module using Exposed DSL/DAO in a Spring MVC + Virtual Threads enviro
 
 ## Architecture
 
-![Architecture diagram](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-class-01.png)
+![spring mvc exposed Class Structure diagram](../../docs/images/readme-diagrams/01-spring-boot-spring-mvc-exposed-class-01.png)
 
 ---
 

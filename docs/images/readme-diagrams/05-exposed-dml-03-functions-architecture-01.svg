@@ -24,69 +24,72 @@
 <rect class="frame" x="32" y="28" width="1314" height="636" rx="28"/>
 <text class="title" x="66" y="82">SQL Function Classification Diagram</text>
 <text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M856 386 C856 469 856 469 856 552"/>
-<path class="line" d="M188 220 C188 386 522 386 522 552"/>
-<path class="line" d="M188 220 C188 303 1190 303 1190 386"/>
-<path class="line" d="M188 220 C188 303 856 303 856 386"/>
-<path class="line" d="M188 220 C188 303 522 303 522 386"/>
-<path class="line" d="M188 220 C188 303 188 303 188 386"/>
-<path class="line" d="M188 220 C188 220 1190 220 1190 220"/>
-<path class="line" d="M188 220 C188 220 856 220 856 220"/>
-<path class="line" d="M188 220 C188 220 522 220 522 220"/>
+<path class="line" d="M856 446 C856 469 856 469 856 492"/>
+<path class="line" d="M338 220 C338 386 372 386 372 552"/>
+<path class="line" d="M338 220 C338 303 1040 303 1040 386"/>
+<path class="line" d="M338 220 C338 303 706 303 706 386"/>
+<path class="line" d="M338 220 C338 303 372 303 372 386"/>
+<path class="line" d="M188 280 C188 303 188 303 188 326"/>
+<path class="line" d="M338 220 C338 220 1040 220 1040 220"/>
+<path class="line" d="M338 220 C338 220 706 220 706 220"/>
+<path class="line" d="M338 220 C338 220 372 220 372 220"/>
 <g transform="translate(48,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Exposed SQL Functions</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Exposed SQL</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">Functions</text>
 </g>
 <g transform="translate(382,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
-  <text class="smallLabel" x="140" y="21" text-anchor="middle">String Functions trim /</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">lowerCase / upperCase</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">substring / concat /</text>
+  <text class="smallLabel" x="140" y="21" text-anchor="middle">String Functions</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">trim / lowerCase /</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">upperCase substring</text>
 </g>
 <g transform="translate(716,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
-  <text class="smallLabel" x="140" y="21" text-anchor="middle">Math Functions round /</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">abs / floor / ceiling</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">sqrt / power</text>
+  <text class="smallLabel" x="140" y="21" text-anchor="middle">Math Functions round</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">/ abs / floor /</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">ceiling sqrt / power</text>
 </g>
 <g transform="translate(1050,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>
   <text class="smallLabel" x="140" y="21" text-anchor="middle">Aggregate Functions</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">count / sum / avg / min</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">/ max groupBy + having</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">count / sum / avg /</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">min / max groupBy +</text>
 </g>
 <g transform="translate(48,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
-  <text class="smallLabel" x="140" y="21" text-anchor="middle">Statistical Functions</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">stdDevPop / stdDevSamp</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">varPop / varSamp</text>
+  <text class="smallLabel" x="140" y="21" text-anchor="middle">Statistical</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">Functions stdDevPop</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">/ stdDevSamp varPop</text>
 </g>
 <g transform="translate(382,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F1ECFF" stroke="#8A72D6"/>
-  <text class="smallLabel" x="140" y="21" text-anchor="middle">Trigonometric Functions</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">sin / cos / tan atan /</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">atan2</text>
+  <text class="smallLabel" x="140" y="21" text-anchor="middle">Trigonometric</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">Functions sin / cos</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">/ tan atan / atan2</text>
 </g>
 <g transform="translate(716,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F7F1E7" stroke="#B88A44"/>
   <text class="smallLabel" x="140" y="21" text-anchor="middle">Window Functions</text>
 <text class="smallLabel" x="140" y="47" text-anchor="middle">rowNumber / rank /</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">denseRank lead / lag /</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">denseRank lead / lag</text>
 </g>
 <g transform="translate(1050,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EEF6D9" stroke="#8BA84D"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Conditional Functions</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">case / coalesce / nullIf</text>
+  <text class="smallLabel" x="140" y="21" text-anchor="middle">Conditional</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">Functions case /</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">coalesce / nullIf</text>
 </g>
 <g transform="translate(382,502)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
   <text class="smallLabel" x="140" y="21" text-anchor="middle">Bitwise Functions</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">bitwiseAnd / bitwiseOr /</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">bitwiseXor</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">bitwiseAnd /</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">bitwiseOr /</text>
 </g>
 <g transform="translate(716,502)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">over() .partitionBy(col)</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">.orderBy(col, SortOrder)</text>
+  <text class="smallLabel" x="140" y="21" text-anchor="middle">over()</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">.partitionBy(col)</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">.orderBy(col,</text>
 </g>
 </svg>

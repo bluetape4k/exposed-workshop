@@ -26,7 +26,7 @@
 <text class="subtitle" x="70" y="118">Grouped architecture from the original Mermaid source</text>
 <g transform="translate(60,160)">
   <rect x="0" y="0" width="350" height="364" rx="18" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.5"/>
-  <text class="smallLabel" x="175" y="44" text-anchor="middle">Kotlin Object</text>
+	  <text class="smallLabel" x="175" y="44" text-anchor="middle">Domain Payload</text>
 </g>
 <g transform="translate(105,236)">
   <rect class="card" x="0" y="0" width="260" height="112" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1366" height="640" viewBox="0 0 1366 640" role="img" aria-label="JPA vs Exposed Concept Comparison Diagram">
+<svg xmlns="http://www.w3.org/2000/svg" width="1366" height="638" viewBox="0 0 1366 638" role="img" aria-label="JPA vs Exposed Concept Comparison Diagram">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
   <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -20,48 +20,44 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1366" height="640"/>
-<rect class="frame" x="32" y="28" width="1302" height="584" rx="28"/>
+<rect class="canvas" width="1366" height="638"/>
+<rect class="frame" x="32" y="28" width="1302" height="582" rx="28"/>
 <text class="title" x="66" y="82">JPA vs Exposed Concept Comparison Diagram</text>
 <text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="dashed" d="M1103 172 C1103 288 263 288 263 404"/>
-<path class="dashed" d="M1103 172 C1103 288 683 288 683 404"/>
+<path class="dashed" d="M1103 172 C1103 288.5 263 288.5 263 405"/>
+<path class="dashed" d="M1103 172 C1103 288.5 683 288.5 683 405"/>
 <g transform="translate(88,180)">
-  <rect class="card" x="0" y="0" width="350" height="216" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <rect class="card" x="0" y="0" width="350" height="217" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#5B8DEF"/>
   <text class="small" x="175" y="26" text-anchor="middle">«Exposed DAO Style»</text>
-  <text class="label" x="175" y="57" text-anchor="middle">Exposed_DAO</text>
+  <text class="label" x="175" y="61" text-anchor="middle">Exposed_DAO</text>
   <text class="mono" x="18" y="108">+Entity extends LongEntity</text>
-<text class="mono" x="18" y="132">+EntityClass companion object</text>
-<text class="mono" x="18" y="156">+delegate by Table column</text>
-<text class="mono" x="18" y="180">+Entity new create</text>
-<text class="mono" x="18" y="204">+Entity findById</text>
+<text class="mono" x="18" y="129">+EntityClass companion object</text>
+<text class="mono" x="18" y="150">+delegate by Table column</text>
+<text class="mono" x="18" y="171">+Entity new create</text>
+<text class="mono" x="18" y="192">+Entity findById</text>
 </g>
 <g transform="translate(508,180)">
-  <rect class="card" x="0" y="0" width="350" height="216" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <rect class="card" x="0" y="0" width="350" height="217" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#58A978"/>
   <text class="small" x="175" y="26" text-anchor="middle">«Exposed DSL Style»</text>
-  <text class="label" x="175" y="57" text-anchor="middle">Exposed_DSL</text>
+  <text class="label" x="175" y="61" text-anchor="middle">Exposed_DSL</text>
   <text class="mono" x="18" y="108">+Table object extends LongIdTable</text>
-<text class="mono" x="18" y="132">+Column varchar text integer</text>
-<text class="mono" x="18" y="156">+transaction block</text>
-<text class="mono" x="18" y="180">+selectAll where filter</text>
-<text class="mono" x="18" y="204">+batchInsert list</text>
+<text class="mono" x="18" y="129">+Column varchar text integer</text>
+<text class="mono" x="18" y="150">+transaction block</text>
+<text class="mono" x="18" y="171">+selectAll where filter</text>
+<text class="mono" x="18" y="192">+batchInsert list</text>
 </g>
 <g transform="translate(928,180)">
-  <rect class="card" x="0" y="0" width="350" height="240" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+  <rect class="card" x="0" y="0" width="350" height="238" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#D6A441"/>
   <text class="small" x="175" y="26" text-anchor="middle">«JPA Style»</text>
-  <text class="label" x="175" y="57" text-anchor="middle">JPA_Entity</text>
+  <text class="label" x="175" y="61" text-anchor="middle">JPA_Entity</text>
   <text class="mono" x="18" y="108">+annotation Entity</text>
-<text class="mono" x="18" y="132">+annotation Table</text>
-<text class="mono" x="18" y="156">+annotation Id GeneratedValue</text>
-<text class="mono" x="18" y="180">+annotation Column</text>
-<text class="mono" x="18" y="204">+annotation OneToMany ManyToOne</text>
-<text class="mono" x="18" y="228">+Spring AOP Transactional</text>
+<text class="mono" x="18" y="129">+annotation Table</text>
+<text class="mono" x="18" y="150">+annotation Id GeneratedValue</text>
+<text class="mono" x="18" y="171">+annotation Column</text>
+<text class="mono" x="18" y="192">+annotation OneToMany ManyToOne</text>
+<text class="mono" x="18" y="213">+Spring AOP Transactional</text>
 </g>
-<rect x="835" y="273" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="893" y="291" text-anchor="middle">migrate SQL contr.</text>
-<rect x="625" y="273" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="683" y="291" text-anchor="middle">migrate object-ce.</text>
 </svg>

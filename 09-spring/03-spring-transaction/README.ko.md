@@ -18,7 +18,7 @@
 
 ## 아키텍처
 
-![Architecture diagram](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-class-01.png)
+![03 spring transaction Class Structure diagram](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-class-01.png)
 
 ## 핵심 개념
 
@@ -116,7 +116,7 @@ object OrderSchema {
 
 ## 트랜잭션 전파 흐름
 
-![Transaction diagram](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-sequence-02.png)
+![03 spring transaction Sequence Flow 2 diagram](../../docs/images/readme-diagrams/09-spring-03-spring-transaction-sequence-02.png)
 
 ## 실행 방법
 

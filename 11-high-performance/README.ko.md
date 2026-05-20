@@ -30,13 +30,13 @@
 
 ## 모듈 관계
 
-![Module Relation diagram](../docs/images/readme-diagrams/11-high-performance-architecture-01.png)
+![11 high performance Architecture diagram](../docs/images/readme-diagrams/11-high-performance-architecture-01.png)
 
 ---
 
 ## 전체 아키텍처
 
-![Architecture diagram](../docs/images/readme-diagrams/11-high-performance-architecture-02.png)
+![11 high performance Architecture 2 diagram](../docs/images/readme-diagrams/11-high-performance-architecture-02.png)
 
 ---
 

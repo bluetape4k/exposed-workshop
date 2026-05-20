@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="1354" viewBox="0 0 1754 1354" role="img" aria-label="Exposed Column Type Hierarchy">
+<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="1397" viewBox="0 0 1754 1397" role="img" aria-label="Exposed Column Type Hierarchy">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
   <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -20,122 +20,122 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1754" height="1354"/>
-<rect class="frame" x="32" y="28" width="1690" height="1298" rx="28"/>
+<rect class="canvas" width="1754" height="1397"/>
+<rect class="frame" x="32" y="28" width="1690" height="1341" rx="28"/>
 <text class="title" x="66" y="82">Exposed Column Type Hierarchy</text>
 <text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="inheritLine" d="M262 514 C262 447 1082 447 1082 380"/>
-<path class="inheritLine" d="M1082 1006 C1082 693 1082 693 1082 380"/>
-<path class="inheritLine" d="M1082 514 C1082 447 1082 447 1082 380"/>
-<path class="inheritLine" d="M672 514 C672 447 1082 447 1082 380"/>
-<path class="inheritLine" d="M672 1006 C672 693 1082 693 1082 380"/>
-<path class="inheritLine" d="M1492 1006 C1492 693 1082 693 1082 380"/>
-<path class="inheritLine" d="M262 736 C262 558 1082 558 1082 380"/>
-<path class="inheritLine" d="M672 736 C672 558 1082 558 1082 380"/>
-<path class="inheritLine" d="M1082 736 C1082 558 1082 558 1082 380"/>
-<path class="inheritLine" d="M262 1006 C262 693 1082 693 1082 380"/>
-<path class="inheritLine" d="M1492 736 C1492 558 1082 558 1082 380"/>
-<path class="inheritLine" d="M1492 514 C1492 447 1082 447 1082 380"/>
+<path class="inheritLine" d="M262 518 C262 451 1082 451 1082 384"/>
+<path class="inheritLine" d="M1082 1036 C1082 710 1082 710 1082 384"/>
+<path class="inheritLine" d="M1082 518 C1082 451 1082 451 1082 384"/>
+<path class="inheritLine" d="M672 518 C672 451 1082 451 1082 384"/>
+<path class="inheritLine" d="M672 1036 C672 710 1082 710 1082 384"/>
+<path class="inheritLine" d="M1492 1036 C1492 710 1082 710 1082 384"/>
+<path class="inheritLine" d="M262 756 C262 570 1082 570 1082 384"/>
+<path class="inheritLine" d="M672 756 C672 570 1082 570 1082 384"/>
+<path class="inheritLine" d="M1082 756 C1082 570 1082 570 1082 384"/>
+<path class="inheritLine" d="M262 1036 C262 710 1082 710 1082 384"/>
+<path class="inheritLine" d="M1492 756 C1492 570 1082 570 1082 384"/>
+<path class="inheritLine" d="M1492 518 C1492 451 1082 451 1082 384"/>
 <g transform="translate(502,180)">
-  <rect class="card" x="0" y="0" width="340" height="120" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">ArrayColumnTypeT</text>
+  <text class="label" x="170" y="61" text-anchor="middle">ArrayColumnTypeT</text>
   <text class="mono" x="18" y="108">+dimensions Int</text>
 </g>
 <g transform="translate(912,180)">
-  <rect class="card" x="0" y="0" width="340" height="192" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">ColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">ColumnType</text>
   <text class="mono" x="18" y="108">+nullable Boolean</text>
-<text class="mono" x="18" y="132">+valueFromDB(value)</text>
-<text class="mono" x="18" y="156">+valueToDB(value)</text>
-<text class="mono" x="18" y="180">+sqlType() String</text>
+<text class="mono" x="18" y="129">+valueFromDB(value)</text>
+<text class="mono" x="18" y="150">+valueToDB(value)</text>
+<text class="mono" x="18" y="171">+sqlType() String</text>
 </g>
-<g transform="translate(92,522)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+<g transform="translate(92,526)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#D6A441"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">ArrayColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">ArrayColumnType</text>
 
 </g>
-<g transform="translate(502,522)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+<g transform="translate(502,526)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#DC6B82"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">BasicBinaryColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">BasicBinaryColumnType</text>
 
 </g>
-<g transform="translate(912,522)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+<g transform="translate(912,526)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#45A7A1"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">BlobColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">BlobColumnType</text>
 
 </g>
-<g transform="translate(1322,522)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
+<g transform="translate(1322,526)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8A72D6"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">BooleanColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">BooleanColumnType</text>
 
 </g>
-<g transform="translate(92,744)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
+<g transform="translate(92,764)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#B88A44"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">CharacterColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">CharacterColumnType</text>
 
 </g>
-<g transform="translate(502,744)">
-  <rect class="card" x="0" y="0" width="340" height="144" rx="5" fill="#EEF6D9" stroke="#8BA84D"/>
+<g transform="translate(502,764)">
+  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#EEF6D9" stroke="#8BA84D"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8BA84D"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">DecimalColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">DecimalColumnType</text>
   <text class="mono" x="18" y="108">+precision Int</text>
-<text class="mono" x="18" y="132">+scale Int</text>
+<text class="mono" x="18" y="129">+scale Int</text>
 </g>
-<g transform="translate(912,744)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+<g transform="translate(912,764)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">DoubleColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">DoubleColumnType</text>
 
 </g>
-<g transform="translate(1322,744)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+<g transform="translate(1322,764)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">IntegerColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">IntegerColumnType</text>
 
 </g>
-<g transform="translate(92,1014)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+<g transform="translate(92,1044)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#D6A441"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">LongColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">LongColumnType</text>
 
 </g>
-<g transform="translate(502,1014)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+<g transform="translate(502,1044)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#DC6B82"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">TextColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">TextColumnType</text>
 
 </g>
-<g transform="translate(912,1014)">
-  <rect class="card" x="0" y="0" width="340" height="96" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+<g transform="translate(912,1044)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#45A7A1"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">UUIDColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">UUIDColumnType</text>
 
 </g>
-<g transform="translate(1322,1014)">
-  <rect class="card" x="0" y="0" width="340" height="120" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
+<g transform="translate(1322,1044)">
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8A72D6"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">VarCharColumnType</text>
+  <text class="label" x="170" y="61" text-anchor="middle">VarCharColumnType</text>
   <text class="mono" x="18" y="108">+colLength Int</text>
 </g>
 </svg>

@@ -28,7 +28,7 @@
 <g transform="translate(60,170)">
   <rect class="card" x="0" y="0" width="320" height="328" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="52" text-anchor="middle">persons</text>
+  <text class="label" x="160" y="44" text-anchor="middle">persons</text>
   <text class="mono" x="18" y="104">BIGSERIAL id PK</text>
 <text class="mono" x="18" y="131">VARCHAR first_name</text>
 <text class="mono" x="18" y="158">VARCHAR last_name</text>
@@ -41,7 +41,7 @@
 <g transform="translate(462,170)">
   <rect class="card" x="0" y="0" width="320" height="328" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
-  <text class="label" x="160" y="52" text-anchor="middle">departments</text>
+  <text class="label" x="160" y="44" text-anchor="middle">departments</text>
   <text class="mono" x="18" y="104">BIGSERIAL id PK</text>
 <text class="mono" x="18" y="131">VARCHAR name UK</text>
 <text class="mono" x="18" y="158">VARCHAR code UK</text>
@@ -54,7 +54,7 @@
 <g transform="translate(261,574)">
   <rect class="card" x="0" y="0" width="320" height="328" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#D6A441"/>
-  <text class="label" x="160" y="52" text-anchor="middle">employees</text>
+  <text class="label" x="160" y="44" text-anchor="middle">employees</text>
   <text class="mono" x="18" y="104">BIGSERIAL id PK</text>
 <text class="mono" x="18" y="131">VARCHAR first_name</text>
 <text class="mono" x="18" y="158">VARCHAR last_name</text>

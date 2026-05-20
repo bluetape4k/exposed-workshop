@@ -22,20 +22,20 @@
 </defs>
 <rect class="canvas" width="842" height="480"/>
 <rect class="frame" x="32" y="28" width="778" height="424" rx="28"/>
-<text class="title" x="66" y="82">XEntity-YEntity Relationship ERD</text>
+<text class="title" x="66" y="82">XEntity-YEntity Relationsh.</text>
 <text class="subtitle" x="70" y="118">ERD tables and relationships from the original Mermaid source</text>
 <path class="line" d="M220 253 C220 266.5 622 266.5 622 280"/>
 <g transform="translate(60,170)">
   <rect class="card" x="0" y="0" width="320" height="166" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="52" text-anchor="middle">ytable</text>
+  <text class="label" x="160" y="44" text-anchor="middle">ytable</text>
   <text class="mono" x="18" y="104">varchar uuid PK</text>
 <text class="mono" x="18" y="131">boolean x</text>
 </g>
 <g transform="translate(462,170)">
   <rect class="card" x="0" y="0" width="320" height="220" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
-  <text class="label" x="160" y="52" text-anchor="middle">xtable</text>
+  <text class="label" x="160" y="44" text-anchor="middle">xtable</text>
   <text class="mono" x="18" y="104">int id PK</text>
 <text class="mono" x="18" y="131">boolean b1</text>
 <text class="mono" x="18" y="158">boolean b2</text>

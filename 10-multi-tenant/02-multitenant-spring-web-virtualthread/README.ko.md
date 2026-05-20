@@ -21,7 +21,7 @@
 
 ## 도메인 모델
 
-![Domain diagram](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-erd-01.png)
+![02 multitenant spring web virtualthread Entity Relationship diagram](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-erd-01.png)
 
 ---
 
@@ -38,7 +38,7 @@
 
 ## 아키텍처
 
-![Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-class-02.png)
+![02 multitenant spring web virtualthread Class Structure 2 diagram](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-class-02.png)
 
 ### ScopedValue 기반 컨텍스트 전파
 
@@ -58,7 +58,7 @@ ScopedValue  → 불변 바인딩, 스코프 벗어나면 자동 소멸
 
 ## 요청 흐름
 
-![Request diagram](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-sequence-04.png)
+![02 multitenant spring web virtualthread Sequence Flow 4 diagram](../../docs/images/readme-diagrams/10-multi-tenant-02-multitenant-spring-web-virtualthread-sequence-04.png)
 
 ---
 

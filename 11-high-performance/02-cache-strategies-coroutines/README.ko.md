@@ -26,25 +26,25 @@
 
 ## 캐시 전략 아키텍처
 
-![Cache Architecture diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-architecture-01.png)
+![02 cache strategies coroutines Architecture diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-architecture-01.png)
 
 ---
 
 ## 클래스 구조
 
-![Structure diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-class-02.png)
+![02 cache strategies coroutines Class Structure 2 diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-class-02.png)
 
 ---
 
 ## 요청 처리 흐름 — Write-Behind 비동기 이벤트 적재 (코루틴)
 
-![Request Processing — Write-Behind Event (Coroutine) diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-sequence-03.png)
+![— Write-Behind () diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-sequence-03.png)
 
 ---
 
 ## 요청 처리 흐름 — Read-Through + Write-Through (코루틴 User)
 
-![Request Processing — Read-Through + Write-Through (Coroutine User) diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-sequence-04.png)
+![— Read-Through + Write-Through ( User) diagram](../../docs/images/readme-diagrams/11-high-performance-02-cache-strategies-coroutines-sequence-04.png)
 
 ---
 

@@ -60,15 +60,15 @@ newSuspendedTransaction(singleThreadDispatcher) { ... }
 
 ## 코루틴 트랜잭션 시퀀스 다이어그램
 
-![Coroutine Transaction diagram](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-sequence-01.png)
+![01 coroutines basic Sequence Flow diagram](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-sequence-01.png)
 
 ## newSuspendedTransaction 처리 시퀀스 다이어그램
 
-![newSuspendedTransaction Processing diagram](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-sequence-02.png)
+![newSuspendedTransaction diagram](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-sequence-02.png)
 
 ## 테이블 ERD (coroutines_tester)
 
-![Table ERD (coroutines_tester) diagram](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-erd-03.png)
+![ERD (coroutines_tester) diagram](../../docs/images/readme-diagrams/08-coroutines-01-coroutines-basic-erd-03.png)
 
 ## 예제 구성
 

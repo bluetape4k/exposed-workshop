@@ -78,7 +78,7 @@ transaction {
 
 ## 관계 매핑 변환 다이어그램
 
-![Relation diagram](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-class-01.png)
+![01 convert jpa basic Class Structure diagram](../../docs/images/readme-diagrams/07-jpa-01-convert-jpa-basic-class-01.png)
 
 ## 도메인 ERD
 

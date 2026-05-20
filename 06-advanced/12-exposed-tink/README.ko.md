@@ -32,11 +32,11 @@ Google Tink 라이브러리를 활용하여 Exposed 컬럼 데이터를 투명�
 
 ## 암호화 흐름
 
-![Encryption diagram](../../docs/images/readme-diagrams/06-advanced-12-exposed-tink-architecture-01.png)
+![12 exposed tink Architecture diagram](../../docs/images/readme-diagrams/06-advanced-12-exposed-tink-architecture-01.png)
 
 ## Tink 암호화 계층 구조
 
-![Tink Encryption Structure diagram](../../docs/images/readme-diagrams/06-advanced-12-exposed-tink-class-02.png)
+![Tink diagram](../../docs/images/readme-diagrams/06-advanced-12-exposed-tink-class-02.png)
 
 ## 제공 컬럼 확장 함수
 

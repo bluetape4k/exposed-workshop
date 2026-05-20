@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="1300" viewBox="0 0 1754 1300" role="img" aria-label="Architecture">
+<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="1390" viewBox="0 0 1754 1390" role="img" aria-label="04 exposed repository Class Structure">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
   <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -20,103 +20,97 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1754" height="1300"/>
-<rect class="frame" x="32" y="28" width="1690" height="1244" rx="28"/>
-<text class="title" x="66" y="82">Architecture</text>
+<rect class="canvas" width="1754" height="1390"/>
+<rect class="frame" x="32" y="28" width="1690" height="1334" rx="28"/>
+<text class="title" x="66" y="82">04 exposed repository Class Structure</text>
 <text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="line" d="M672 832 C672 606 262 606 262 380"/>
-<path class="line" d="M672 832 C672 594 672 594 672 356"/>
-<path class="line" d="M1082 832 C1082 765 1082 765 1082 698"/>
-<path class="line" d="M1082 832 C1082 606 1492 606 1492 380"/>
-<path class="line" d="M1082 832 C1082 765 672 765 672 698"/>
-<path class="inheritLine" d="M672 832 C672 618 1082 618 1082 404"/>
-<path class="inheritLine" d="M1082 832 C1082 618 1082 618 1082 404"/>
+<path class="line" d="M672 840 C672 612 262 612 262 384"/>
+<path class="line" d="M672 840 C672 601.5 672 601.5 672 363"/>
+<path class="line" d="M1082 840 C1082 773 1082 773 1082 706"/>
+<path class="line" d="M1082 840 C1082 612 1492 612 1492 384"/>
+<path class="line" d="M1082 840 C1082 773 672 773 672 706"/>
+<path class="inheritLine" d="M672 840 C672 622.5 1082 622.5 1082 405"/>
+<path class="inheritLine" d="M1082 840 C1082 622.5 1082 622.5 1082 405"/>
 <g transform="translate(92,180)">
-  <rect class="card" x="0" y="0" width="340" height="192" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">ActorRecord</text>
+  <text class="label" x="170" y="61" text-anchor="middle">ActorRecord</text>
   <text class="mono" x="18" y="108">+id: Long</text>
-<text class="mono" x="18" y="132">+firstName: String</text>
-<text class="mono" x="18" y="156">+lastName: String</text>
-<text class="mono" x="18" y="180">+birthday: String?</text>
+<text class="mono" x="18" y="129">+firstName: String</text>
+<text class="mono" x="18" y="150">+lastName: String</text>
+<text class="mono" x="18" y="171">+birthday: String?</text>
 </g>
 <g transform="translate(502,180)">
-  <rect class="card" x="0" y="0" width="340" height="168" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
   <text class="small" x="170" y="26" text-anchor="middle">«object»</text>
-  <text class="label" x="170" y="57" text-anchor="middle">ActorTable</text>
+  <text class="label" x="170" y="61" text-anchor="middle">ActorTable</text>
   <text class="mono" x="18" y="108">+firstName: Column~String~</text>
-<text class="mono" x="18" y="132">+lastName: Column~String~</text>
-<text class="mono" x="18" y="156">+birthday: Column~LocalDate?~</text>
+<text class="mono" x="18" y="129">+lastName: Column~String~</text>
+<text class="mono" x="18" y="150">+birthday: Column~LocalDate?~</text>
 </g>
 <g transform="translate(912,180)">
-  <rect class="card" x="0" y="0" width="340" height="216" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+  <rect class="card" x="0" y="0" width="340" height="217" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#D6A441"/>
   <text class="small" x="170" y="26" text-anchor="middle">«interface»</text>
-  <text class="label" x="170" y="57" text-anchor="middle">JdbcRepository</text>
+  <text class="label" x="170" y="61" text-anchor="middle">JdbcRepository</text>
   <text class="mono" x="18" y="108">+table: T</text>
-<text class="mono" x="18" y="132">+toEntity(ResultRow) E</text>
-<text class="mono" x="18" y="156">+findById(id) E?</text>
-<text class="mono" x="18" y="180">+findAll() List~E~</text>
-<text class="mono" x="18" y="204">+deleteById(id)</text>
+<text class="mono" x="18" y="129">+toEntity(ResultRow) E</text>
+<text class="mono" x="18" y="150">+findById(id) E?</text>
+<text class="mono" x="18" y="171">+findAll() List~E~</text>
+<text class="mono" x="18" y="192">+deleteById(id)</text>
 </g>
 <g transform="translate(1322,180)">
-  <rect class="card" x="0" y="0" width="340" height="192" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#DC6B82"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">MovieRecord</text>
+  <text class="label" x="170" y="61" text-anchor="middle">MovieRecord</text>
   <text class="mono" x="18" y="108">+id: Long</text>
-<text class="mono" x="18" y="132">+name: String</text>
-<text class="mono" x="18" y="156">+producerName: String</text>
-<text class="mono" x="18" y="180">+releaseDate: String</text>
+<text class="mono" x="18" y="129">+name: String</text>
+<text class="mono" x="18" y="150">+producerName: String</text>
+<text class="mono" x="18" y="171">+releaseDate: String</text>
 </g>
-<g transform="translate(502,522)">
-  <rect class="card" x="0" y="0" width="340" height="168" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+<g transform="translate(502,523)">
+  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#45A7A1"/>
   <text class="small" x="170" y="26" text-anchor="middle">«object»</text>
-  <text class="label" x="170" y="57" text-anchor="middle">MovieTable</text>
+  <text class="label" x="170" y="61" text-anchor="middle">MovieTable</text>
   <text class="mono" x="18" y="108">+name: Column~String~</text>
-<text class="mono" x="18" y="132">+producerName: Column~String~</text>
-<text class="mono" x="18" y="156">+releaseDate: Column~LocalDate~</text>
+<text class="mono" x="18" y="129">+producerName: Column~String~</text>
+<text class="mono" x="18" y="150">+releaseDate: Column~LocalDate~</text>
 </g>
-<g transform="translate(912,522)">
-  <rect class="card" x="0" y="0" width="340" height="168" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
+<g transform="translate(912,523)">
+  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8A72D6"/>
   <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="57" text-anchor="middle">MovieWithActorRecord</text>
+  <text class="label" x="170" y="61" text-anchor="middle">MovieWithActorRecord</text>
   <text class="mono" x="18" y="108">+id: Long</text>
-<text class="mono" x="18" y="132">+name: String</text>
-<text class="mono" x="18" y="156">+actors: List~ActorRecord~</text>
+<text class="mono" x="18" y="129">+name: String</text>
+<text class="mono" x="18" y="150">+actors: List~ActorRecord~</text>
 </g>
-<g transform="translate(502,840)">
-  <rect class="card" x="0" y="0" width="340" height="144" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
+<g transform="translate(502,848)">
+  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#B88A44"/>
   <text class="small" x="170" y="26" text-anchor="middle">«@Repository»</text>
-  <text class="label" x="170" y="57" text-anchor="middle">ActorExposedRepository</text>
+  <text class="label" x="170" y="61" text-anchor="middle">ActorExposedRepository</text>
   <text class="mono" x="18" y="108">+searchActors(params) List~ActorRecord~</text>
-<text class="mono" x="18" y="132">+create(actor) ActorRecord</text>
+<text class="mono" x="18" y="129">+create(actor) ActorRecord</text>
 </g>
-<g transform="translate(912,840)">
-  <rect class="card" x="0" y="0" width="340" height="240" rx="5" fill="#EEF6D9" stroke="#8BA84D"/>
+<g transform="translate(912,848)">
+  <rect class="card" x="0" y="0" width="340" height="322" rx="5" fill="#EEF6D9" stroke="#8BA84D"/>
   <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8BA84D"/>
   <text class="small" x="170" y="26" text-anchor="middle">«@Repository»</text>
-  <text class="label" x="170" y="57" text-anchor="middle">MovieExposedRepository</text>
+  <text class="label" x="170" y="61" text-anchor="middle">MovieExposedRepository</text>
   <text class="mono" x="18" y="108">+searchMovies(params) List~MovieRecord~</text>
-<text class="mono" x="18" y="132">+create(movieRecord) MovieRecord</text>
-<text class="mono" x="18" y="156">+getAllMoviesWithActors() List~MovieWithActorRecor.</text>
-<text class="mono" x="18" y="180">+getMovieWithActors(movieId) MovieWithActorRecord?</text>
-<text class="mono" x="18" y="204">+getMovieActorsCount() List~MovieActorCountRecord~</text>
-<text class="mono" x="18" y="228">+findMoviesWithActingProducers() List~MovieWithPro.</text>
+<text class="mono" x="18" y="129">+create(movieRecord) MovieRecord</text>
+<text class="mono" x="18" y="150">+getAllMoviesWithActors()</text>
+<text class="mono" x="18" y="171">List~MovieWithActorRecord~</text>
+<text class="mono" x="18" y="192">+getMovieWithActors(movieId)</text>
+<text class="mono" x="18" y="213">MovieWithActorRecord?</text>
+<text class="mono" x="18" y="234">+getMovieActorsCount()</text>
+<text class="mono" x="18" y="255">List~MovieActorCountRecord~</text>
+<text class="mono" x="18" y="276">+findMoviesWithActingProducers()</text>
+<text class="mono" x="18" y="297">List~MovieWithProducingActorRecord~</text>
 </g>
-<rect x="819" y="750" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="877" y="768" text-anchor="middle">table</text>
-<rect x="1229" y="591" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="1287" y="609" text-anchor="middle">returns</text>
-<rect x="1024" y="750" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="1082" y="768" text-anchor="middle">returns</text>
-<rect x="614" y="579" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="672" y="597" text-anchor="middle">table</text>
-<rect x="409" y="591" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="467" y="609" text-anchor="middle">returns</text>
 </svg>

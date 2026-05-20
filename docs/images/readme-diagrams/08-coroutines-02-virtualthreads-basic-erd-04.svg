@@ -22,19 +22,21 @@
 </defs>
 <rect class="canvas" width="842" height="426"/>
 <rect class="frame" x="32" y="28" width="778" height="370" rx="28"/>
-<text class="title" x="66" y="82">Table ERD (virtualthreads_table)</text>
+<text class="title" x="66" y="82">Table ERD</text>
 <text class="subtitle" x="70" y="118">ERD tables and relationships from the original Mermaid source</text>
 <g transform="translate(60,170)">
   <rect class="card" x="0" y="0" width="320" height="166" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="52" text-anchor="middle">virtualthreads_table</text>
+  <text class="label" x="160" y="32" text-anchor="middle">virtualthreads_tab</text>
+<text class="label" x="160" y="56" text-anchor="middle">le</text>
   <text class="mono" x="18" y="104">SERIAL id PK</text>
 <text class="mono" x="18" y="131">VARCHAR_50 name NULL</text>
 </g>
 <g transform="translate(462,170)">
   <rect class="card" x="0" y="0" width="320" height="139" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
-  <text class="label" x="160" y="52" text-anchor="middle">virtualthreads_table_un.</text>
+  <text class="label" x="160" y="32" text-anchor="middle">virtualthreads_tab</text>
+<text class="label" x="160" y="56" text-anchor="middle">le_unique</text>
   <text class="mono" x="18" y="104">INT id PK UNIQUE INDEX</text>
 </g>
 </svg>

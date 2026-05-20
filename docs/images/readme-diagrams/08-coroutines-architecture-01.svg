@@ -22,7 +22,7 @@
 </defs>
 <rect class="canvas" width="890" height="1020"/>
 <rect class="frame" x="32" y="28" width="826" height="964" rx="28"/>
-<text class="title" x="66" y="82">Coroutines vs Virtual Thread Processing Flow</text>
+<text class="title" x="66" y="82">Coroutines vs Virtual Thread.</text>
 <text class="subtitle" x="70" y="118">Grouped architecture from the original Mermaid source</text>
 <g transform="translate(60,160)">
   <rect x="0" y="0" width="350" height="790" rx="18" fill="#ffffff" stroke="#d8e0ea" stroke-width="1.5"/>

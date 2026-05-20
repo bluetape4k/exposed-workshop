@@ -105,11 +105,11 @@ EntityHook.subscribe { change ->
 
 ## Entity 관계 매핑 다이어그램
 
-![Entity Relation diagram](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-class-01.png)
+![Entity diagram](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-class-01.png)
 
 ## XEntity-YEntity 관계 ERD
 
-![XEntity-YEntity Relation ERD diagram](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-erd-02.png)
+![XEntity-YEntity ERD diagram](../../docs/images/readme-diagrams/05-exposed-dml-05-entities-erd-02.png)
 
 ## Entity 클래스 계층 다이어그램
 

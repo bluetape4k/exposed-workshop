@@ -24,11 +24,11 @@
 <rect class="frame" x="32" y="28" width="1314" height="470" rx="28"/>
 <text class="title" x="66" y="82">Tenant Propagation Flow via Reactor Context</text>
 <text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M522 386 C522 386 856 386 856 386"/>
-<path class="line" d="M1190 220 C1190 303 522 303 522 386"/>
-<path class="line" d="M856 220 C856 220 1190 220 1190 220"/>
-<path class="line" d="M522 220 C522 220 856 220 856 220"/>
-<path class="line" d="M188 220 C188 220 522 220 522 220"/>
+<path class="line" d="M672 386 C672 386 706 386 706 386"/>
+<path class="line" d="M1040 220 C1040 303 672 303 672 386"/>
+<path class="line" d="M1006 220 C1006 220 1040 220 1040 220"/>
+<path class="line" d="M672 220 C672 220 706 220 706 220"/>
+<path class="line" d="M338 220 C338 220 372 220 372 220"/>
 <g transform="translate(48,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
   <text class="smallLabel" x="140" y="45" text-anchor="middle">WebFlux Request</text>
@@ -40,8 +40,8 @@
 </g>
 <g transform="translate(716,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Reactor Context TenantId</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">stored</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Reactor Context</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">TenantId stored</text>
 </g>
 <g transform="translate(1050,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>
@@ -50,16 +50,12 @@
 </g>
 <g transform="translate(382,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Exposed</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">newSuspendedTransaction</text>
+  <text class="smallLabel" x="140" y="21" text-anchor="middle">Exposed new</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">Suspended</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">Transaction</text>
 </g>
 <g transform="translate(716,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F1ECFF" stroke="#8A72D6"/>
   <text class="smallLabel" x="140" y="45" text-anchor="middle">(Tenant Schema)</text>
 </g>
-<text class="small" x="355" y="212" text-anchor="middle">Mono/Flux</text>
-<text class="small" x="689" y="212" text-anchor="middle">contextWrite</text>
-<text class="small" x="1023" y="212" text-anchor="middle">coroutineContext</text>
-<text class="small" x="856" y="295" text-anchor="middle">newSuspendedTrans.</text>
-<text class="small" x="689" y="378" text-anchor="middle">useSchema</text>
 </svg>

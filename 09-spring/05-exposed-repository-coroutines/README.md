@@ -23,7 +23,7 @@ It executes Exposed queries within suspend functions using `newSuspendedTransact
 
 ## Architecture
 
-![Architecture diagram](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-class-02.png)
+![05 exposed repository coroutines Class Structure 2 diagram](../../docs/images/readme-diagrams/09-spring-05-exposed-repository-coroutines-class-02.png)
 
 ## Key Concepts
 

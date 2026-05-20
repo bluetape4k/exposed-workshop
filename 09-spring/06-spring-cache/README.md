@@ -19,7 +19,7 @@ It applies Redis-based caching declaratively using `@Cacheable` and `@CacheEvict
 
 ## Architecture
 
-![Architecture diagram](../../docs/images/readme-diagrams/09-spring-06-spring-cache-class-01.png)
+![06 spring cache Class Structure diagram](../../docs/images/readme-diagrams/09-spring-06-spring-cache-class-01.png)
 
 ## Key Concepts
 
@@ -109,7 +109,7 @@ data class CountryRecord(
 
 ## Cache Hit/Miss Sequence
 
-![Cache Hit / Miss Sequence diagram](../../docs/images/readme-diagrams/09-spring-06-spring-cache-sequence-03.png)
+![Cache Hit/Miss Sequence diagram](../../docs/images/readme-diagrams/09-spring-06-spring-cache-sequence-03.png)
 
 ## Cache Key Design Principles
 

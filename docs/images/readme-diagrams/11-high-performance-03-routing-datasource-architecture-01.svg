@@ -24,16 +24,16 @@
 <rect class="frame" x="32" y="28" width="1314" height="636" rx="28"/>
 <text class="title" x="66" y="82">Routing Key Resolution Flow</text>
 <text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M522 552 C522 552 856 552 856 552"/>
-<path class="line" d="M856 386 C856 469 522 469 522 552"/>
-<path class="line" d="M856 386 C856 386 1190 386 1190 386"/>
-<path class="line" d="M522 386 C522 386 856 386 856 386"/>
-<path class="line" d="M522 386 C522 386 856 386 856 386"/>
-<path class="line" d="M1190 220 C1190 303 522 303 522 386"/>
-<path class="line" d="M188 386 C188 303 1190 303 1190 220"/>
-<path class="line" d="M856 220 C856 220 1190 220 1190 220"/>
-<path class="line" d="M522 220 C522 220 856 220 856 220"/>
-<path class="line" d="M188 220 C188 220 522 220 522 220"/>
+<path class="line" d="M672 552 C672 552 706 552 706 552"/>
+<path class="line" d="M706 386 C706 469 672 469 672 552"/>
+<path class="line" d="M1006 386 C1006 386 1040 386 1040 386"/>
+<path class="line" d="M672 386 C672 386 706 386 706 386"/>
+<path class="line" d="M672 386 C672 386 706 386 706 386"/>
+<path class="line" d="M1040 220 C1040 303 672 303 672 386"/>
+<path class="line" d="M338 386 C338 303 1040 303 1040 220"/>
+<path class="line" d="M1006 220 C1006 220 1040 220 1040 220"/>
+<path class="line" d="M672 220 C672 220 706 220 706 220"/>
+<path class="line" d="M338 220 C338 220 372 220 372 220"/>
 <g transform="translate(48,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
   <text class="smallLabel" x="140" y="45" text-anchor="middle">[HTTP Request]</text>
@@ -49,19 +49,19 @@
 </g>
 <g transform="translate(1050,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Context Aware Routing</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">Key Resolver</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Context Aware</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">Routing Key Resolver</text>
 </g>
 <g transform="translate(48,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
   <text class="smallLabel" x="140" y="21" text-anchor="middle">Transaction</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">Synchronization Manager</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">.is Current Transaction</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">Synchronization</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">Manager .is Current</text>
 </g>
 <g transform="translate(382,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F1ECFF" stroke="#8A72D6"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Key format tenant:rw or</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">ro</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Key format tenant:rw</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">or ro</text>
 </g>
 <g transform="translate(716,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F7F1E7" stroke="#B88A44"/>
@@ -78,12 +78,7 @@
 </g>
 <g transform="translate(716,502)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">(rw DataSource reused)</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">(rw DataSource</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">reused)</text>
 </g>
-<text class="small" x="689" y="212" text-anchor="middle">X - Tenant - Id h.</text>
-<text class="small" x="689" y="378" text-anchor="middle">tenant:ro</text>
-<text class="small" x="689" y="378" text-anchor="middle">tenant:rw</text>
-<text class="small" x="1023" y="378" text-anchor="middle">key exists</text>
-<text class="small" x="689" y="461" text-anchor="middle">ro not registered</text>
-<text class="small" x="689" y="544" text-anchor="middle">rw fallback</text>
 </svg>

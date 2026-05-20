@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1366" height="958" viewBox="0 0 1366 958" role="img" aria-label="Architecture">
+<svg xmlns="http://www.w3.org/2000/svg" width="1366" height="1047" viewBox="0 0 1366 1047" role="img" aria-label="05 exposed repository coroutines Class Structure 2">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
   <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -20,64 +20,62 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1366" height="958"/>
-<rect class="frame" x="32" y="28" width="1302" height="902" rx="28"/>
-<text class="title" x="66" y="82">Architecture</text>
+<rect class="canvas" width="1366" height="1047"/>
+<rect class="frame" x="32" y="28" width="1302" height="991" rx="28"/>
+<text class="title" x="66" y="82">05 exposed repository coroutines Class Structur.</text>
 <text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="line" d="M683 172 C683 264 1103 264 1103 356"/>
-<path class="line" d="M683 332 C683 411 893 411 893 490"/>
-<path class="line" d="M1103 356 C1103 423 893 423 893 490"/>
-<path class="inheritLine" d="M473 490 C473 411 263 411 263 332"/>
-<path class="inheritLine" d="M893 490 C893 411 263 411 263 332"/>
+<path class="line" d="M683 172 C683 267.5 1103 267.5 1103 363"/>
+<path class="line" d="M683 342 C683 419.5 893 419.5 893 497"/>
+<path class="line" d="M1103 363 C1103 430 893 430 893 497"/>
+<path class="inheritLine" d="M473 497 C473 419.5 263 419.5 263 342"/>
+<path class="inheritLine" d="M893 497 C893 419.5 263 419.5 263 342"/>
 <g transform="translate(88,180)">
-  <rect class="card" x="0" y="0" width="350" height="144" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <rect class="card" x="0" y="0" width="350" height="154" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#5B8DEF"/>
   <text class="small" x="175" y="26" text-anchor="middle">«interface»</text>
-  <text class="label" x="175" y="57" text-anchor="middle">JdbcRepository</text>
+  <text class="label" x="175" y="61" text-anchor="middle">JdbcRepository</text>
   <text class="mono" x="18" y="108">+table: T</text>
-<text class="mono" x="18" y="132">+toEntity(ResultRow) E</text>
+<text class="mono" x="18" y="129">+toEntity(ResultRow) E</text>
 </g>
 <g transform="translate(508,180)">
-  <rect class="card" x="0" y="0" width="350" height="144" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <rect class="card" x="0" y="0" width="350" height="154" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#58A978"/>
   <text class="small" x="175" y="26" text-anchor="middle">«suspend»</text>
-  <text class="label" x="175" y="57" text-anchor="middle">MovieController</text>
+  <text class="label" x="175" y="61" text-anchor="middle">MovieController</text>
   <text class="mono" x="18" y="108">+getMovies(params) List~MovieRecord~</text>
-<text class="mono" x="18" y="132">+createMovie(record) MovieRecord</text>
+<text class="mono" x="18" y="129">+createMovie(record) MovieRecord</text>
 </g>
 <g transform="translate(928,180)">
-  <rect class="card" x="0" y="0" width="350" height="168" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+  <rect class="card" x="0" y="0" width="350" height="175" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
   <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#D6A441"/>
   <text class="small" x="175" y="26" text-anchor="middle">«@Component»</text>
-  <text class="label" x="175" y="57" text-anchor="middle">MovieTransactionalService</text>
+  <text class="label" x="175" y="61" text-anchor="middle">MovieTransactionalService</text>
   <text class="mono" x="18" y="108">-movieRepository: MovieExposedRepository</text>
-<text class="mono" x="18" y="132">+monoSave(movieRecord) Mono~MovieEntity~</text>
-<text class="mono" x="18" y="156">+suspendedSave(movieRecord) MovieRecord</text>
+<text class="mono" x="18" y="129">+monoSave(movieRecord) Mono~MovieEntity~</text>
+<text class="mono" x="18" y="150">+suspendedSave(movieRecord) MovieRecord</text>
 </g>
-<g transform="translate(298,498)">
-  <rect class="card" x="0" y="0" width="350" height="144" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+<g transform="translate(298,505)">
+  <rect class="card" x="0" y="0" width="350" height="154" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
   <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#DC6B82"/>
   <text class="small" x="175" y="26" text-anchor="middle">«@Repository»</text>
-  <text class="label" x="175" y="57" text-anchor="middle">ActorExposedRepository</text>
+  <text class="label" x="175" y="61" text-anchor="middle">ActorExposedRepository</text>
   <text class="mono" x="18" y="108">+searchActors(params) List~ActorRecord~</text>
-<text class="mono" x="18" y="132">+create(actor) ActorRecord</text>
+<text class="mono" x="18" y="129">+create(actor) ActorRecord</text>
 </g>
-<g transform="translate(718,498)">
-  <rect class="card" x="0" y="0" width="350" height="240" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+<g transform="translate(718,505)">
+  <rect class="card" x="0" y="0" width="350" height="322" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
   <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#45A7A1"/>
   <text class="small" x="175" y="26" text-anchor="middle">«@Repository»</text>
-  <text class="label" x="175" y="57" text-anchor="middle">MovieExposedRepository</text>
+  <text class="label" x="175" y="61" text-anchor="middle">MovieExposedRepository</text>
   <text class="mono" x="18" y="108">+searchMovie(params) List~MovieRecord~</text>
-<text class="mono" x="18" y="132">+create(movie) MovieRecord</text>
-<text class="mono" x="18" y="156">+getAllMoviesWithActors() List~MovieWithActorRecord~</text>
-<text class="mono" x="18" y="180">+getMovieWithActors(movieId) MovieWithActorRecord?</text>
-<text class="mono" x="18" y="204">+getMovieActorsCount() List~MovieActorCountRecord~</text>
-<text class="mono" x="18" y="228">+findMoviesWithActingProducers() List~MovieWithProd.</text>
+<text class="mono" x="18" y="129">+create(movie) MovieRecord</text>
+<text class="mono" x="18" y="150">+getAllMoviesWithActors()</text>
+<text class="mono" x="18" y="171">List~MovieWithActorRecord~</text>
+<text class="mono" x="18" y="192">+getMovieWithActors(movieId)</text>
+<text class="mono" x="18" y="213">MovieWithActorRecord?</text>
+<text class="mono" x="18" y="234">+getMovieActorsCount()</text>
+<text class="mono" x="18" y="255">List~MovieActorCountRecord~</text>
+<text class="mono" x="18" y="276">+findMoviesWithActingProducers()</text>
+<text class="mono" x="18" y="297">List~MovieWithProducingActorRecord~</text>
 </g>
-<rect x="940" y="408" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="998" y="426" text-anchor="middle">delegates</text>
-<rect x="730" y="396" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="788" y="414" text-anchor="middle">calls</text>
-<rect x="835" y="249" width="116" height="26" rx="13" fill="#ffffff" opacity="0.94"/>
-<text class="small" x="893" y="267" text-anchor="middle">calls</text>
 </svg>

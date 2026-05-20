@@ -19,15 +19,15 @@ Spring Data R2DBC는 완전 Non-blocking R2DBC 드라이버 위에서 Spring Dat
 
 ## 아키텍처 흐름
 
-![Architecture diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-sequence-01.png)
+![r2dbc example Sequence Flow diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-sequence-01.png)
 
 ## ERD
 
-![ERD diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-erd-02.png)
+![r2dbc example Entity Relationship 2 diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-erd-02.png)
 
 ## 도메인 모델
 
-![Domain diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-class-03.png)
+![r2dbc example Class Structure 3 diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-class-03.png)
 
 ### R2DBC 엔티티 선언
 

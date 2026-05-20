@@ -20,7 +20,7 @@ to learn the pattern of connecting DataSource and transactions with a single `ap
 
 ## Architecture
 
-![Architecture diagram](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-class-01.png)
+![01 springboot autoconfigure Class Structure diagram](../../docs/images/readme-diagrams/09-spring-01-springboot-autoconfigure-class-01.png)
 
 ## Key Concepts
 

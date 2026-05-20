@@ -80,7 +80,7 @@ Sales.select(Sales.region, Sales.amount, rowNum, rankVal)
 
 ## 윈도우 함수 구조
 
-![Structure diagram](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-architecture-02.png)
+![03 functions Architecture 2 diagram](../../docs/images/readme-diagrams/05-exposed-dml-03-functions-architecture-02.png)
 
 ## 예제 지도
 

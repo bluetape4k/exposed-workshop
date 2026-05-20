@@ -22,18 +22,19 @@
 </defs>
 <rect class="canvas" width="842" height="410"/>
 <rect class="frame" x="32" y="28" width="778" height="354" rx="28"/>
-<text class="title" x="66" y="82">Table ERD (coroutines_tester)</text>
+<text class="title" x="66" y="82">Table ERD</text>
 <text class="subtitle" x="70" y="118">ERD tables and relationships from the original Mermaid source</text>
 <g transform="translate(60,170)">
   <rect class="card" x="0" y="0" width="320" height="139" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="52" text-anchor="middle">coroutines_tester</text>
+  <text class="label" x="160" y="44" text-anchor="middle">coroutines_tester</text>
   <text class="mono" x="18" y="104">SERIAL id PK</text>
 </g>
 <g transform="translate(462,170)">
   <rect class="card" x="0" y="0" width="320" height="139" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
-  <text class="label" x="160" y="52" text-anchor="middle">coroutines_tester_unique</text>
+  <text class="label" x="160" y="32" text-anchor="middle">coroutines_tester_</text>
+<text class="label" x="160" y="56" text-anchor="middle">unique</text>
   <text class="mono" x="18" y="104">INT id PK UNIQUE INDEX</text>
 </g>
 </svg>

@@ -74,7 +74,7 @@
 
 ## 테스트 인프라 클래스 구조
 
-![Test Infrastructure Structure diagram](../../docs/images/readme-diagrams/00-shared-exposed-shared-tests-class-01.png)
+![exposed shared tests Class Structure diagram](../../docs/images/readme-diagrams/00-shared-exposed-shared-tests-class-01.png)
 
 ## 핵심 사용 패턴
 

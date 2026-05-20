@@ -32,7 +32,7 @@
 
 ## 전환 전략 개요
 
-![07-jpa diagram diagram](../docs/images/readme-diagrams/07-jpa-architecture-01.png)
+![07 jpa Architecture diagram](../docs/images/readme-diagrams/07-jpa-architecture-01.png)
 
 ## JPA vs Exposed 개념 비교 다이어그램
 
@@ -40,7 +40,7 @@
 
 ## 전환 접근법 비교
 
-![07-jpa diagram diagram](../docs/images/readme-diagrams/07-jpa-architecture-03.png)
+![07 jpa Architecture 3 diagram](../docs/images/readme-diagrams/07-jpa-architecture-03.png)
 
 ## 포함 모듈
 

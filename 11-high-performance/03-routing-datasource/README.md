@@ -38,7 +38,7 @@ Uses a custom `DynamicRoutingDataSource` instead of Spring's `AbstractRoutingDat
 
 ## Request Processing Flow — Multi-Tenant Read/Write Separation Routing
 
-![Request Processing Flow — Multi-Tenant Read / Write Separation Routing diagram](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-sequence-03.png)
+![Request Processing Flow — Multi-Tenant Read/Write Separatio. diagram](../../docs/images/readme-diagrams/11-high-performance-03-routing-datasource-sequence-03.png)
 
 ---
 

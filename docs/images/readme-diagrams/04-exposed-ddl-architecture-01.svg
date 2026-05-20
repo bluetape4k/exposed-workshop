@@ -30,8 +30,8 @@
 </g>
 <g transform="translate(105,236)">
   <rect class="card" x="0" y="0" width="260" height="112" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <text class="smallLabel" x="130" y="52.5" text-anchor="middle">Database.connect(url,</text>
-<text class="smallLabel" x="130" y="73.5" text-anchor="middle">driver)</text>
+  <text class="smallLabel" x="130" y="52.5" text-anchor="middle">Database.connect(url</text>
+<text class="smallLabel" x="130" y="73.5" text-anchor="middle">, driver)</text>
 </g>
 <g transform="translate(105,378)">
   <rect class="card" x="0" y="0" width="260" height="112" rx="14" fill="#EAF7EF" stroke="#58A978"/>

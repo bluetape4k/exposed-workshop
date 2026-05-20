@@ -21,7 +21,7 @@ Vert.x SQL Client writes SQL directly without an ORM and executes it on the even
 
 ## ERD
 
-![ERD diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-erd-02.png)
+![vertx sqlclient example Entity Relationship 2 diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-erd-02.png)
 
 ## Domain Model
 

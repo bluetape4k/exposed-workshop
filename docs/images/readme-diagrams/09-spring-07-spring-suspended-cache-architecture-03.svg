@@ -24,19 +24,19 @@
 <rect class="frame" x="32" y="28" width="1314" height="968" rx="28"/>
 <text class="title" x="66" y="82">Cache Flow</text>
 <text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M1190 718 C1190 801 689 801 689 884"/>
-<path class="line" d="M856 718 C856 718 1190 718 1190 718"/>
-<path class="line" d="M522 718 C522 718 856 718 856 718"/>
-<path class="line" d="M188 718 C188 718 522 718 522 718"/>
-<path class="line" d="M1190 552 C1190 635 188 635 188 718"/>
-<path class="line" d="M522 552 C522 552 856 552 856 552"/>
-<path class="line" d="M188 552 C188 552 522 552 522 552"/>
-<path class="line" d="M1190 386 C1190 469 188 469 188 552"/>
-<path class="line" d="M856 386 C856 386 1190 386 1190 386"/>
-<path class="line" d="M188 386 C188 386 856 386 856 386"/>
-<path class="line" d="M522 220 C522 303 522 303 522 386"/>
-<path class="line" d="M522 220 C522 220 1190 220 1190 220"/>
-<path class="line" d="M188 220 C188 220 522 220 522 220"/>
+<path class="line" d="M1040 718 C1040 801 839 801 839 884"/>
+<path class="line" d="M1006 718 C1006 718 1040 718 1040 718"/>
+<path class="line" d="M672 718 C672 718 706 718 706 718"/>
+<path class="line" d="M338 718 C338 718 372 718 372 718"/>
+<path class="line" d="M1040 552 C1040 635 338 635 338 718"/>
+<path class="line" d="M672 552 C672 552 706 552 706 552"/>
+<path class="line" d="M338 552 C338 552 372 552 372 552"/>
+<path class="line" d="M1040 386 C1040 469 338 469 338 552"/>
+<path class="line" d="M1006 386 C1006 386 1040 386 1040 386"/>
+<path class="line" d="M338 386 C338 386 706 386 706 386"/>
+<path class="line" d="M522 280 C522 303 522 303 522 326"/>
+<path class="line" d="M672 220 C672 220 1040 220 1040 220"/>
+<path class="line" d="M338 220 C338 220 372 220 372 220"/>
 <g transform="translate(48,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
   <text class="smallLabel" x="140" y="33" text-anchor="middle">suspend findByCode</text>
@@ -44,13 +44,14 @@
 </g>
 <g transform="translate(382,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">LettuceSuspendedCache</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">cache.get hit?</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Lettuce Suspended</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">Cache cache.get hit?</text>
 </g>
 <g transform="translate(716,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Return CountryRecord</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">immediately No DB query</text>
+  <text class="smallLabel" x="140" y="21" text-anchor="middle">Return CountryRecord</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">immediately No DB</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">query</text>
 </g>
 <g transform="translate(1050,170)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>
@@ -58,7 +59,8 @@
 </g>
 <g transform="translate(48,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Call delegate.findByCode</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Call</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">delegate.findByCode</text>
 </g>
 <g transform="translate(382,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F1ECFF" stroke="#8A72D6"/>
@@ -66,17 +68,18 @@
 </g>
 <g transform="translate(716,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F7F1E7" stroke="#B88A44"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Start</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">newSuspendedTransaction</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Start new Suspended</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">Transaction</text>
 </g>
 <g transform="translate(1050,336)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EEF6D9" stroke="#8BA84D"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">CountryTable.selectAll</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">WHERE code = ?</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Country Table.select</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">All WHERE code = ?</text>
 </g>
 <g transform="translate(48,502)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">DB result CountryRecord</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">DB result</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">CountryRecord</text>
 </g>
 <g transform="translate(382,502)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
@@ -89,12 +92,14 @@
 </g>
 <g transform="translate(1050,502)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">suspend update called</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">suspend update</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">called</text>
 </g>
 <g transform="translate(48,668)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Immediately evict cache</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">via cache.evict</text>
+  <text class="smallLabel" x="140" y="21" text-anchor="middle">Immediately evict</text>
+<text class="smallLabel" x="140" y="47" text-anchor="middle">cache via</text>
+<text class="smallLabel" x="140" y="73" text-anchor="middle">cache.evict</text>
 </g>
 <g transform="translate(382,668)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F1ECFF" stroke="#8A72D6"/>
@@ -102,7 +107,8 @@
 </g>
 <g transform="translate(716,668)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F7F1E7" stroke="#B88A44"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">newSuspendedTransaction</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">new Suspended</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">Transaction</text>
 </g>
 <g transform="translate(1050,668)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EEF6D9" stroke="#8BA84D"/>
@@ -110,7 +116,7 @@
 </g>
 <g transform="translate(549,834)">
   <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Return number of updated</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">rows</text>
+  <text class="smallLabel" x="140" y="33" text-anchor="middle">Return number of</text>
+<text class="smallLabel" x="140" y="59" text-anchor="middle">updated rows</text>
 </g>
 </svg>

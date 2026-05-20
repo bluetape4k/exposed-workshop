@@ -39,7 +39,7 @@ A non-blocking multi-tenant example based on WebFlux + Coroutines. Propagates te
 
 ## Architecture
 
-![Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-class-02.png)
+![03 multitenant spring webflux Class Structure 2 diagram](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-class-02.png)
 
 ### Context Propagation System
 
