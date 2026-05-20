@@ -44,6 +44,16 @@ Kotlin Exposed is a Kotlin-specific SQL framework developed by JetBrains. It lev
 
 ![Exposed API Structure diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-01.png)
 
+<!-- README_VISUAL_OVERVIEW:START -->
+## Overview Diagram
+
+![Exposed Workshop overview diagram](docs/assets/readme-diagrams/root-readme-overview-01.png)
+
+## Module Composition Chart
+
+![Exposed Workshop module composition chart](docs/assets/readme-charts/root-readme-module-chart-01.png)
+<!-- README_VISUAL_OVERVIEW:END -->
+
 ## Tech Stack
 
 | Technology           | Version |

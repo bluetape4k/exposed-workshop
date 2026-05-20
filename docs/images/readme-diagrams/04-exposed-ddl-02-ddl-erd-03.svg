@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="842" height="668" viewBox="0 0 842 668" role="img" aria-label="Composite PK / FK Relationship ERD">
+<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="1048" viewBox="0 0 1754 1048" role="img" aria-label="Table Class Hierarchy">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <marker id="openArrow" markerWidth="10" markerHeight="8" refX="8.5" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 8.5 4 L 1 7" fill="none" stroke="#758297" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0.5 1 L 9.5 5 L 0.5 9 Z" fill="#ffffff" stroke="#758297" stroke-width="1.7"/></marker>
   <style>
     .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
     .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
@@ -20,31 +20,64 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="842" height="668"/>
-<rect class="frame" x="32" y="28" width="778" height="612" rx="28"/>
-<text class="title" x="66" y="82">Composite PK / FK Relation.</text>
-<text class="subtitle" x="70" y="118">ERD tables and relationships from the original Mermaid source</text>
-<path class="line" d="M220 253 C220 374 421 374 421 495"/>
-<path class="line" d="M220 253 C220 253 622 253 622 253"/>
-<g transform="translate(60,170)">
-  <rect class="card" x="0" y="0" width="320" height="166" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="44" text-anchor="middle">parent</text>
-  <text class="mono" x="18" y="104">int id_a PK</text>
-<text class="mono" x="18" y="131">int id_b PK</text>
+<rect class="canvas" width="1754" height="1048"/>
+<rect class="frame" x="32" y="28" width="1690" height="992" rx="28"/>
+<text class="title" x="66" y="82">Table Class Hierarchy</text>
+<text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
+<path class="inheritLine" d="M672 719 L672 664 L877 664 L877 593"/>
+<path class="inheritLine" d="M1492 719 L1492 656 L877 656 L877 593"/>
+<path class="inheritLine" d="M262 719 L262 648 L877 648 L877 593"/>
+<path class="inheritLine" d="M1082 719 L1082 640 L877 640 L877 593"/>
+<path class="inheritLine" d="M877 481 L877 394 L672 394 L672 355"/>
+<g transform="translate(502,180)">
+  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
+  <text class="small" x="170" y="26" text-anchor="middle"></text>
+  <text class="label" x="170" y="61" text-anchor="middle">Table</text>
+  <text class="mono" x="18" y="108">+String tableName</text>
+<text class="mono" x="18" y="129">+PrimaryKey? primaryKey</text>
+<text class="mono" x="18" y="150">+columns List~Column~</text>
 </g>
-<g transform="translate(462,170)">
-  <rect class="card" x="0" y="0" width="320" height="166" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
-  <text class="label" x="160" y="44" text-anchor="middle">child1</text>
-  <text class="mono" x="18" y="104">int id_a FK</text>
-<text class="mono" x="18" y="131">int id_b FK</text>
+<g transform="translate(912,180)">
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
+  <text class="small" x="170" y="26" text-anchor="middle"></text>
+  <text class="label" x="170" y="61" text-anchor="middle">IdTableT</text>
+  <text class="mono" x="18" y="108">+Column~EntityID~T~~ id</text>
 </g>
-<g transform="translate(261,412)">
-  <rect class="card" x="0" y="0" width="320" height="166" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
-  <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#D6A441"/>
-  <text class="label" x="160" y="44" text-anchor="middle">child2</text>
-  <text class="mono" x="18" y="104">int id_a FK</text>
-<text class="mono" x="18" y="131">int id_b FK</text>
+<g transform="translate(707,481)">
+  <rect class="card" x="0" y="0" width="340" height="112" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#D6A441"/>
+  <text class="small" x="170" y="26" text-anchor="middle"></text>
+  <text class="label" x="170" y="61" text-anchor="middle">IdTable</text>
+
+</g>
+<g transform="translate(92,719)">
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#DC6B82"/>
+  <text class="small" x="170" y="26" text-anchor="middle"></text>
+  <text class="label" x="170" y="61" text-anchor="middle">LongIdTable</text>
+  <text class="mono" x="18" y="108">+Column~EntityID~Long~~ id</text>
+</g>
+<g transform="translate(502,719)">
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#45A7A1"/>
+  <text class="small" x="170" y="26" text-anchor="middle"></text>
+  <text class="label" x="170" y="61" text-anchor="middle">CompositeIdTable</text>
+  <text class="mono" x="18" y="108">+List~Column~ compositeColumns</text>
+</g>
+<g transform="translate(912,719)">
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
+  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8A72D6"/>
+  <text class="small" x="170" y="26" text-anchor="middle"></text>
+  <text class="label" x="170" y="61" text-anchor="middle">IntIdTable</text>
+  <text class="mono" x="18" y="108">+Column~EntityID~Int~~ id</text>
+</g>
+<g transform="translate(1322,719)">
+  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
+  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#B88A44"/>
+  <text class="small" x="170" y="26" text-anchor="middle"></text>
+  <text class="label" x="170" y="61" text-anchor="middle">UUIDTable</text>
+  <text class="mono" x="18" y="108">+Column~EntityID~UUID~~ id</text>
 </g>
 </svg>

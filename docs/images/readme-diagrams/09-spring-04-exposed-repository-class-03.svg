@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="897" viewBox="0 0 1754 897" role="img" aria-label="Domain Model">
+<svg xmlns="http://www.w3.org/2000/svg" width="1366" height="873" viewBox="0 0 1366 873" role="img" aria-label="Domain Model">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <marker id="openArrow" markerWidth="10" markerHeight="8" refX="8.5" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 8.5 4 L 1 7" fill="none" stroke="#758297" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0.5 1 L 9.5 5 L 0.5 9 Z" fill="#ffffff" stroke="#758297" stroke-width="1.7"/></marker>
   <style>
     .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
     .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
@@ -20,55 +20,55 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1754" height="897"/>
-<rect class="frame" x="32" y="28" width="1690" height="841" rx="28"/>
+<rect class="canvas" width="1366" height="873"/>
+<rect class="frame" x="32" y="28" width="1302" height="817" rx="28"/>
 <text class="title" x="66" y="82">Domain Model</text>
 <text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="line" d="M262 172 C262 267.5 1082 267.5 1082 363"/>
-<path class="line" d="M1492 384 C1492 439 877 439 877 494"/>
-<g transform="translate(92,180)">
-  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">ActorEntity</text>
-  <text class="mono" x="18" y="108">+firstName: String</text>
-<text class="mono" x="18" y="129">+lastName: String</text>
-<text class="mono" x="18" y="150">+birthday: LocalDate?</text>
-<text class="mono" x="18" y="171">+movies: SizedIterable~MovieEntity~</text>
-</g>
-<g transform="translate(502,180)">
-  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«Table: actors_in_movi.»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">ActorInMovieTable</text>
-  <text class="mono" x="18" y="108">+movieId: Column~EntityID~Long~~</text>
-<text class="mono" x="18" y="129">+actorId: Column~EntityID~Long~~</text>
-<text class="mono" x="18" y="150">+PrimaryKey(movieId, actorId)</text>
-</g>
-<g transform="translate(912,180)">
-  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#D6A441"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«LongIdTable: actors»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">ActorTable</text>
-  <text class="mono" x="18" y="108">+firstName: Column~String~</text>
-<text class="mono" x="18" y="129">+lastName: Column~String~</text>
-<text class="mono" x="18" y="150">+birthday: Column~LocalDate?~</text>
-</g>
-<g transform="translate(1322,180)">
-  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#DC6B82"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">MovieEntity</text>
+<path class="line" d="M683 376 L683 423 L473 423 L473 502"/>
+<path class="line" d="M263 376 L263 415 L893 415 L893 502"/>
+<g transform="translate(88,180)">
+  <rect class="card" x="0" y="0" width="350" height="196" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#5B8DEF"/>
+  <text class="small" x="175" y="26" text-anchor="middle"></text>
+  <text class="label" x="175" y="61" text-anchor="middle">MovieEntity</text>
   <text class="mono" x="18" y="108">+name: String</text>
 <text class="mono" x="18" y="129">+producerName: String</text>
 <text class="mono" x="18" y="150">+releaseDate: LocalDate</text>
 <text class="mono" x="18" y="171">+actors: SizedIterable~ActorEntity~</text>
 </g>
-<g transform="translate(707,502)">
-  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#45A7A1"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«LongIdTable: movies»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">MovieTable</text>
+<g transform="translate(508,180)">
+  <rect class="card" x="0" y="0" width="350" height="196" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#58A978"/>
+  <text class="small" x="175" y="26" text-anchor="middle"></text>
+  <text class="label" x="175" y="61" text-anchor="middle">ActorEntity</text>
+  <text class="mono" x="18" y="108">+firstName: String</text>
+<text class="mono" x="18" y="129">+lastName: String</text>
+<text class="mono" x="18" y="150">+birthday: LocalDate?</text>
+<text class="mono" x="18" y="171">+movies: SizedIterable~MovieEntity~</text>
+</g>
+<g transform="translate(928,180)">
+  <rect class="card" x="0" y="0" width="350" height="175" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#D6A441"/>
+  <text class="small" x="175" y="26" text-anchor="middle">«Table: actors_in_movi.»</text>
+  <text class="label" x="175" y="61" text-anchor="middle">ActorInMovieTable</text>
+  <text class="mono" x="18" y="108">+movieId: Column~EntityID~Long~~</text>
+<text class="mono" x="18" y="129">+actorId: Column~EntityID~Long~~</text>
+<text class="mono" x="18" y="150">+PrimaryKey(movieId, actorId)</text>
+</g>
+<g transform="translate(298,502)">
+  <rect class="card" x="0" y="0" width="350" height="175" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#DC6B82"/>
+  <text class="small" x="175" y="26" text-anchor="middle">«LongIdTable: actors»</text>
+  <text class="label" x="175" y="61" text-anchor="middle">ActorTable</text>
+  <text class="mono" x="18" y="108">+firstName: Column~String~</text>
+<text class="mono" x="18" y="129">+lastName: Column~String~</text>
+<text class="mono" x="18" y="150">+birthday: Column~LocalDate?~</text>
+</g>
+<g transform="translate(718,502)">
+  <rect class="card" x="0" y="0" width="350" height="175" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#45A7A1"/>
+  <text class="small" x="175" y="26" text-anchor="middle">«LongIdTable: movies»</text>
+  <text class="label" x="175" y="61" text-anchor="middle">MovieTable</text>
   <text class="mono" x="18" y="108">+name: Column~String~</text>
 <text class="mono" x="18" y="129">+producerName: Column~String~</text>
 <text class="mono" x="18" y="150">+releaseDate: Column~LocalDate~</text>

@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="1261" viewBox="0 0 1754 1261" role="img" aria-label="01 multitenant spring web Class Structure 2">
+<svg xmlns="http://www.w3.org/2000/svg" width="1406" height="1664" viewBox="0 0 1406 1664" role="img" aria-label="01 multitenant spring web Class Structure 2">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <marker id="openArrow" markerWidth="10" markerHeight="8" refX="8.5" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 8.5 4 L 1 7" fill="none" stroke="#758297" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0.5 1 L 9.5 5 L 0.5 9 Z" fill="#ffffff" stroke="#758297" stroke-width="1.7"/></marker>
   <style>
     .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
     .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
@@ -20,67 +20,31 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1754" height="1261"/>
-<rect class="frame" x="32" y="28" width="1690" height="1205" rx="28"/>
+<rect class="canvas" width="1406" height="1664"/>
+<rect class="frame" x="32" y="28" width="1342" height="1608" rx="28"/>
 <text class="title" x="66" y="82">01 multitenant spring web Class Structure 2</text>
 <text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="line" d="M262 342 C262 418 672 418 672 494"/>
-<path class="line" d="M1082 384 C1082 439 262 439 262 494"/>
-<path class="line" d="M1492 494 C1492 621 672 621 672 748"/>
-<path class="line" d="M1492 494 C1492 428.5 672 428.5 672 363"/>
-<path class="line" d="M1082 858 C1082 803 672 803 672 748"/>
-<path class="line" d="M262 494 C262 621 672 621 672 748"/>
-<path class="line" d="M672 858 C672 610.5 1492 610.5 1492 363"/>
-<path class="line" d="M672 748 C672 803 672 803 672 858"/>
-<path class="line" d="M1082 494 C1082 621 672 621 672 748"/>
-<g transform="translate(92,180)">
-  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">ActorController</text>
-  <text class="mono" x="18" y="108">+getAllActors() List~ActorRecord~</text>
-<text class="mono" x="18" y="129">+findById(id) ActorRecord</text>
-</g>
-<g transform="translate(502,180)">
-  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">DataInitializer</text>
-  <text class="mono" x="18" y="108">+initialize()</text>
-<text class="mono" x="18" y="129">-createSchema(tenant)</text>
-<text class="mono" x="18" y="150">-populateData(tenant)</text>
-</g>
-<g transform="translate(912,180)">
-  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#D6A441"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">ExposedMutitenantConfig</text>
-  <text class="mono" x="18" y="108">+tenantAwareDataSource()</text>
-<text class="mono" x="18" y="129">TenantAwareDataSource</text>
-<text class="mono" x="18" y="150">+dataSource() DataSource</text>
-<text class="mono" x="18" y="171">+database(dataSource, config) Database</text>
-</g>
-<g transform="translate(1322,180)">
-  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#DC6B82"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«enumeration»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">Tenant</text>
-  <text class="mono" x="18" y="108">KOREAN</text>
-<text class="mono" x="18" y="129">ENGLISH</text>
-<text class="mono" x="18" y="150">+id: String</text>
-</g>
-<g transform="translate(92,502)">
-  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#45A7A1"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">TenantAwareDataSource</text>
+<path class="line" d="M261 586 L261 486 L703 486 L703 418"/>
+<path class="line" d="M703 929 L703 821 L74 821 L74 478 L261 478 L261 313"/>
+<path class="line" d="M1145 313 L1145 92 L703 92 L703 180"/>
+<path class="line" d="M1145 313 L1145 586"/>
+<path class="line" d="M703 1293 L703 1217 L34 1217 L34 510 L703 510 L703 418"/>
+<path class="line" d="M261 313 L261 122 L703 122 L703 180"/>
+<path class="line" d="M703 761 L703 837 L261 837 L261 929"/>
+<path class="line" d="M703 418 L703 586"/>
+<path class="line" d="M1145 929 L1145 821 L1332 821 L1332 478 L703 478 L703 418"/>
+<g transform="translate(96,180)">
+  <rect class="card" x="0" y="0" width="330" height="133" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#5B8DEF"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">TenantAwareDataSource</text>
   <text class="mono" x="18" y="108">+determineCurrentLookupKey() Any</text>
 </g>
-<g transform="translate(502,502)">
-  <rect class="card" x="0" y="0" width="340" height="238" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8A72D6"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">TenantContext</text>
+<g transform="translate(538,180)">
+  <rect class="card" x="0" y="0" width="330" height="238" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#58A978"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">TenantContext</text>
   <text class="mono" x="18" y="108">-currentTenant: ThreadLocal~Tenant~</text>
 <text class="mono" x="18" y="129">+setCurrentTenant(tenant)</text>
 <text class="mono" x="18" y="150">+getCurrentTenant() Tenant</text>
@@ -88,36 +52,72 @@
 <text class="mono" x="18" y="192">+clear()</text>
 <text class="mono" x="18" y="213">+withTenant(tenant, block)</text>
 </g>
-<g transform="translate(912,502)">
-  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#B88A44"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">TenantFilter</text>
-  <text class="mono" x="18" y="108">+TENANT_HEADER: String</text>
-<text class="mono" x="18" y="129">+doFilter(request, response, chain)</text>
-<text class="mono" x="18" y="150">-extractTenant(request) Tenant</text>
-</g>
-<g transform="translate(1322,502)">
-  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#EEF6D9" stroke="#8BA84D"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8BA84D"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">TenantInitializer</text>
+<g transform="translate(980,180)">
+  <rect class="card" x="0" y="0" width="330" height="133" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#D6A441"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">TenantInitializer</text>
   <text class="mono" x="18" y="108">+onApplicationEvent(event)</text>
 </g>
-<g transform="translate(502,866)">
-  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">Tenants</text>
+<g transform="translate(96,586)">
+  <rect class="card" x="0" y="0" width="330" height="154" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#DC6B82"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">ActorController</text>
+  <text class="mono" x="18" y="108">+getAllActors() List~ActorRecord~</text>
+<text class="mono" x="18" y="129">+findById(id) ActorRecord</text>
+</g>
+<g transform="translate(538,586)">
+  <rect class="card" x="0" y="0" width="330" height="175" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#45A7A1"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">Tenants</text>
   <text class="mono" x="18" y="108">+DEFAULT_TENANT: Tenant</text>
 <text class="mono" x="18" y="129">+getById(tenantId) Tenant</text>
 <text class="mono" x="18" y="150">+getTenantSchema(tenant) Schema</text>
 </g>
-<g transform="translate(912,866)">
-  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">TenantSchemaAspect</text>
+<g transform="translate(980,586)">
+  <rect class="card" x="0" y="0" width="330" height="175" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#8A72D6"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">DataInitializer</text>
+  <text class="mono" x="18" y="108">+initialize()</text>
+<text class="mono" x="18" y="129">-createSchema(tenant)</text>
+<text class="mono" x="18" y="150">-populateData(tenant)</text>
+</g>
+<g transform="translate(96,929)">
+  <rect class="card" x="0" y="0" width="330" height="175" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#B88A44"/>
+  <text class="small" x="165" y="26" text-anchor="middle">«enumeration»</text>
+  <text class="label" x="165" y="61" text-anchor="middle">Tenant</text>
+  <text class="mono" x="18" y="108">KOREAN</text>
+<text class="mono" x="18" y="129">ENGLISH</text>
+<text class="mono" x="18" y="150">+id: String</text>
+</g>
+<g transform="translate(538,929)">
+  <rect class="card" x="0" y="0" width="330" height="196" rx="5" fill="#EEF6D9" stroke="#8BA84D"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#8BA84D"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">ExposedMutitenantConfig</text>
+  <text class="mono" x="18" y="108">+tenantAwareDataSource()</text>
+<text class="mono" x="18" y="129">TenantAwareDataSource</text>
+<text class="mono" x="18" y="150">+dataSource() DataSource</text>
+<text class="mono" x="18" y="171">+database(dataSource, config) Database</text>
+</g>
+<g transform="translate(980,929)">
+  <rect class="card" x="0" y="0" width="330" height="175" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#5B8DEF"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">TenantFilter</text>
+  <text class="mono" x="18" y="108">+TENANT_HEADER: String</text>
+<text class="mono" x="18" y="129">+doFilter(request, response, chain)</text>
+<text class="mono" x="18" y="150">-extractTenant(request) Tenant</text>
+</g>
+<g transform="translate(538,1293)">
+  <rect class="card" x="0" y="0" width="330" height="133" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#58A978"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">TenantSchemaAspect</text>
   <text class="mono" x="18" y="108">+setSchemaForTransaction()</text>
 </g>
 </svg>

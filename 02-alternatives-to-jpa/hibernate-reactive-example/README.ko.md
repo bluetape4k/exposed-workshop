@@ -27,7 +27,7 @@ Hibernate Reactive는 기존 JPA 어노테이션(`@Entity`,
 
 ## 도메인 모델
 
-![hibernate reactive example Class Structure 3 diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-class-03.png)
+![hibernate reactive example Entity Relationship 2 diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-hibernate-reactive-example-erd-02.png)
 
 ### JPA 엔티티 선언
 
