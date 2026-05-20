@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="897" viewBox="0 0 1754 897" role="img" aria-label="Kotlin DateTime Type Mapping">
+<svg xmlns="http://www.w3.org/2000/svg" width="1366" height="1454" viewBox="0 0 1366 1454" role="img" aria-label="Kotlin DateTime Type Mapping">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <marker id="openArrow" markerWidth="10" markerHeight="8" refX="8.5" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 8.5 4 L 1 7" fill="none" stroke="#758297" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0.5 1 L 9.5 5 L 0.5 9 Z" fill="#ffffff" stroke="#758297" stroke-width="1.7"/></marker>
   <style>
     .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
     .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
@@ -20,76 +20,76 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1754" height="897"/>
-<rect class="frame" x="32" y="28" width="1690" height="841" rx="28"/>
+<rect class="canvas" width="1366" height="1454"/>
+<rect class="frame" x="32" y="28" width="1302" height="1398" rx="28"/>
 <text class="title" x="66" y="82">Kotlin DateTime Type Mapping</text>
 <text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="line" d="M1287 536 C1287 460 262 460 262 384"/>
-<path class="line" d="M1492 172 C1492 278 262 278 262 384"/>
-<path class="line" d="M877 536 C877 460 262 460 262 384"/>
-<path class="line" d="M467 536 C467 460 262 460 262 384"/>
-<path class="line" d="M1082 426 C1082 481 1287 481 1287 536"/>
-<path class="line" d="M1082 172 C1082 246.5 1492 246.5 1492 321"/>
-<path class="line" d="M1082 426 C1082 481 877 481 877 536"/>
-<path class="line" d="M1082 426 C1082 481 467 481 467 536"/>
-<g transform="translate(92,180)">
-  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«Database»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">DBColumn</text>
+<path class="line" d="M683 761 L683 674 L473 674 L473 376"/>
+<path class="line" d="M683 502 L683 92 L473 92 L473 376"/>
+<path class="line" d="M263 502 L263 455 L473 455 L473 376"/>
+<path class="line" d="M1103 502 L1103 447 L473 447 L473 376"/>
+<path class="line" d="M683 1020 L683 894"/>
+<path class="line" d="M683 1020 L683 949 L46 949 L46 690 L683 690 L683 635"/>
+<path class="line" d="M683 1020 L683 941 L263 941 L263 635"/>
+<path class="line" d="M683 1020 L683 933 L1103 933 L1103 635"/>
+<g transform="translate(298,180)">
+  <rect class="card" x="0" y="0" width="350" height="196" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#5B8DEF"/>
+  <text class="small" x="175" y="26" text-anchor="middle">«Database»</text>
+  <text class="label" x="175" y="61" text-anchor="middle">DBColumn</text>
   <text class="mono" x="18" y="108">DATE</text>
 <text class="mono" x="18" y="129">DATETIME / TIMESTAMP</text>
 <text class="mono" x="18" y="150">TIMESTAMP / TIMESTAMPTZ</text>
 <text class="mono" x="18" y="171">TIME</text>
 </g>
-<g transform="translate(502,180)">
-  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«java.time (JVM only)»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">JavaTimeEquivalent</text>
+<g transform="translate(718,180)">
+  <rect class="card" x="0" y="0" width="350" height="196" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#58A978"/>
+  <text class="small" x="175" y="26" text-anchor="middle">«java.time (JVM only)»</text>
+  <text class="label" x="175" y="61" text-anchor="middle">JavaTimeEquivalent</text>
   <text class="mono" x="18" y="108">LocalDate</text>
 <text class="mono" x="18" y="129">LocalDateTime</text>
 <text class="mono" x="18" y="150">Instant</text>
 <text class="mono" x="18" y="171">LocalTime</text>
 </g>
-<g transform="translate(912,180)">
-  <rect class="card" x="0" y="0" width="340" height="238" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#D6A441"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">KotlinDateTimeTable</text>
+<g transform="translate(88,502)">
+  <rect class="card" x="0" y="0" width="350" height="133" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#D6A441"/>
+  <text class="small" x="175" y="26" text-anchor="middle">«kotlinx.datetime»</text>
+  <text class="label" x="175" y="61" text-anchor="middle">KotlinLocalDateTime</text>
+  <text class="mono" x="18" y="108">LocalDateTime</text>
+</g>
+<g transform="translate(508,502)">
+  <rect class="card" x="0" y="0" width="350" height="133" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#DC6B82"/>
+  <text class="small" x="175" y="26" text-anchor="middle">«kotlin.time»</text>
+  <text class="label" x="175" y="61" text-anchor="middle">KotlinInstant</text>
+  <text class="mono" x="18" y="108">Instant</text>
+</g>
+<g transform="translate(928,502)">
+  <rect class="card" x="0" y="0" width="350" height="133" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#45A7A1"/>
+  <text class="small" x="175" y="26" text-anchor="middle">«kotlinx.datetime»</text>
+  <text class="label" x="175" y="61" text-anchor="middle">KotlinLocalDate</text>
+  <text class="mono" x="18" y="108">LocalDate</text>
+</g>
+<g transform="translate(508,761)">
+  <rect class="card" x="0" y="0" width="350" height="133" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
+  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#8A72D6"/>
+  <text class="small" x="175" y="26" text-anchor="middle">«kotlinx.datetime»</text>
+  <text class="label" x="175" y="61" text-anchor="middle">KotlinLocalTime</text>
+  <text class="mono" x="18" y="108">LocalTime</text>
+</g>
+<g transform="translate(508,1020)">
+  <rect class="card" x="0" y="0" width="350" height="238" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
+  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#B88A44"/>
+  <text class="small" x="175" y="26" text-anchor="middle"></text>
+  <text class="label" x="175" y="61" text-anchor="middle">KotlinDateTimeTable</text>
   <text class="mono" x="18" y="108">+date(name): Column~LocalDate~</text>
 <text class="mono" x="18" y="129">+datetime(name): Column~LocalDateTime~</text>
 <text class="mono" x="18" y="150">+timestamp(name): Column~Instant~</text>
 <text class="mono" x="18" y="171">+timestampWithTimeZone(name):</text>
 <text class="mono" x="18" y="192">Column~LocalDateTime~</text>
 <text class="mono" x="18" y="213">+time(name): Column~LocalTime~</text>
-</g>
-<g transform="translate(1322,180)">
-  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#DC6B82"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«kotlin.time»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">KotlinInstant</text>
-  <text class="mono" x="18" y="108">Instant</text>
-</g>
-<g transform="translate(297,544)">
-  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#45A7A1"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«kotlinx.datetime»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">KotlinLocalDate</text>
-  <text class="mono" x="18" y="108">LocalDate</text>
-</g>
-<g transform="translate(707,544)">
-  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8A72D6"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«kotlinx.datetime»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">KotlinLocalDateTime</text>
-  <text class="mono" x="18" y="108">LocalDateTime</text>
-</g>
-<g transform="translate(1117,544)">
-  <rect class="card" x="0" y="0" width="340" height="133" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#B88A44"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«kotlinx.datetime»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">KotlinLocalTime</text>
-  <text class="mono" x="18" y="108">LocalTime</text>
 </g>
 </svg>

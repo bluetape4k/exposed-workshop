@@ -37,9 +37,9 @@ Exposed는 두 가지 데이터 접근 패턴을 제공합니다. **DSL(SQL DSL)
 | 코루틴 지원 | `newSuspendedTransaction { }`                        | `newSuspendedTransaction { }` 내 Entity 접근          |
 | N+1 위험 | 없음 (명시적 JOIN)                                        | Lazy Loading 시 주의 필요                               |
 
-## 도메인 모델 (classDiagram)
+## 도메인 모델
 
-![(classDiagram) diagram](../docs/images/readme-diagrams/03-exposed-basic-class-01.png)
+![03 exposed basic Class Structure diagram](../docs/images/readme-diagrams/03-exposed-basic-class-01.png)
 
 ## DSL 방식 스키마 정의
 

@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="842" height="480" viewBox="0 0 842 480" role="img" aria-label="exposed dao example Entity Relationship">
+<svg xmlns="http://www.w3.org/2000/svg" width="842" height="722" viewBox="0 0 842 722" role="img" aria-label="exposed dao example Entity Relationship">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <marker id="openArrow" markerWidth="10" markerHeight="8" refX="8.5" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 8.5 4 L 1 7" fill="none" stroke="#758297" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0.5 1 L 9.5 5 L 0.5 9 Z" fill="#ffffff" stroke="#758297" stroke-width="1.7"/></marker>
   <style>
     .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
     .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
@@ -20,19 +20,19 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="842" height="480"/>
-<rect class="frame" x="32" y="28" width="778" height="424" rx="28"/>
+<rect class="canvas" width="842" height="722"/>
+<rect class="frame" x="32" y="28" width="778" height="666" rx="28"/>
 <text class="title" x="66" y="82">exposed dao example Entity.</text>
 <text class="subtitle" x="70" y="118">ERD tables and relationships from the original Mermaid source</text>
-<path class="line" d="M220 253 C220 266.5 622 266.5 622 280"/>
-<g transform="translate(60,170)">
+<path class="line" d="M421 336 L421 412"/>
+<g transform="translate(261,170)">
   <rect class="card" x="0" y="0" width="320" height="166" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
   <text class="label" x="160" y="44" text-anchor="middle">cities</text>
   <text class="mono" x="18" y="104">SERIAL id PK</text>
 <text class="mono" x="18" y="131">VARCHAR name</text>
 </g>
-<g transform="translate(462,170)">
+<g transform="translate(261,412)">
   <rect class="card" x="0" y="0" width="320" height="220" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
   <text class="label" x="160" y="44" text-anchor="middle">users</text>

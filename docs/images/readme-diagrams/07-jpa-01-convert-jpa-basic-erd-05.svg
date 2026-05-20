@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1244" height="830" viewBox="0 0 1244 830" role="img" aria-label="BookSchema ERD (Composite PK)">
+<svg xmlns="http://www.w3.org/2000/svg" width="1025.3333333333335" height="1135" viewBox="0 0 1025.3333333333335 1135" role="img" aria-label="BookSchema ERD (Composite PK)">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <marker id="openArrow" markerWidth="10" markerHeight="8" refX="8.5" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 8.5 4 L 1 7" fill="none" stroke="#758297" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0.5 1 L 9.5 5 L 0.5 9 Z" fill="#ffffff" stroke="#758297" stroke-width="1.7"/></marker>
   <style>
     .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
     .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
@@ -20,48 +20,48 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1244" height="830"/>
-<rect class="frame" x="32" y="28" width="1180" height="774" rx="28"/>
+<rect class="canvas" width="1025.3333333333335" height="1135"/>
+<rect class="frame" x="32" y="28" width="961.3333333333335" height="1079" rx="28"/>
 <text class="title" x="66" y="82">BookSchema ERD (Composite PK)</text>
 <text class="subtitle" x="70" y="118">ERD tables and relationships from the original Mermaid source</text>
-<path class="line" d="M220 266.5 C220 434.75 823 434.75 823 603"/>
-<path class="line" d="M1024 266.5 C1024 414.5 421 414.5 421 562.5"/>
-<path class="line" d="M622 280 C622 273.25 1024 273.25 1024 266.5"/>
-<path class="line" d="M220 266.5 C220 273.25 622 273.25 622 280"/>
-<g transform="translate(60,170)">
+<path class="line" d="M795 687 L795 739 L230 739 L230 791"/>
+<path class="line" d="M371 687 L371 731 L654 731 L654 791"/>
+<path class="line" d="M442 390 L442 426 L371 426 L371 494"/>
+<path class="line" d="M795 494 L795 418 L442 418 L442 390"/>
+<g transform="translate(494,791)">
   <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="44" text-anchor="middle">publishers</text>
-  <text class="mono" x="18" y="104">INT pub_id PK autoIncrement</text>
-<text class="mono" x="18" y="131">UUID isbn_code PK autoGenerate</text>
-<text class="mono" x="18" y="158">VARCHAR_32 publisher_name NOT NULL</text>
+  <text class="label" x="160" y="44" text-anchor="middle">reviews</text>
+  <text class="mono" x="18" y="104">VARCHAR_8 code PK</text>
+<text class="mono" x="18" y="131">BIGINT rank PK</text>
+<text class="mono" x="18" y="158">INT book_id FK NOT NULL</text>
 </g>
-<g transform="translate(462,170)">
-  <rect class="card" x="0" y="0" width="320" height="220" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+<g transform="translate(211,494)">
+  <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#EAF7EF" stroke="#58A978"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
+  <text class="label" x="160" y="44" text-anchor="middle">books</text>
+  <text class="mono" x="18" y="104">INT book_id PK autoIncrement</text>
+<text class="mono" x="18" y="131">VARCHAR_32 title NOT NULL</text>
+<text class="mono" x="18" y="158">INT author_id FK NULL</text>
+</g>
+<g transform="translate(282,170)">
+  <rect class="card" x="0" y="0" width="320" height="220" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+  <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#D6A441"/>
   <text class="label" x="160" y="44" text-anchor="middle">authors</text>
   <text class="mono" x="18" y="104">SERIAL id PK</text>
 <text class="mono" x="18" y="131">INT publisher_id FK</text>
 <text class="mono" x="18" y="158">UUID publisher_isbn FK</text>
 <text class="mono" x="18" y="185">VARCHAR_32 pen_name NOT NULL</text>
 </g>
-<g transform="translate(864,170)">
-  <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
-  <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#D6A441"/>
-  <text class="label" x="160" y="44" text-anchor="middle">books</text>
-  <text class="mono" x="18" y="104">INT book_id PK autoIncrement</text>
-<text class="mono" x="18" y="131">VARCHAR_32 title NOT NULL</text>
-<text class="mono" x="18" y="158">INT author_id FK NULL</text>
-</g>
-<g transform="translate(261,466)">
+<g transform="translate(635,494)">
   <rect class="card" x="0" y="0" width="320" height="193" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#DC6B82"/>
-  <text class="label" x="160" y="44" text-anchor="middle">reviews</text>
-  <text class="mono" x="18" y="104">VARCHAR_8 code PK</text>
-<text class="mono" x="18" y="131">BIGINT rank PK</text>
-<text class="mono" x="18" y="158">INT book_id FK NOT NULL</text>
+  <text class="label" x="160" y="44" text-anchor="middle">publishers</text>
+  <text class="mono" x="18" y="104">INT pub_id PK autoIncrement</text>
+<text class="mono" x="18" y="131">UUID isbn_code PK autoGenerate</text>
+<text class="mono" x="18" y="158">VARCHAR_32 publisher_name NOT NULL</text>
 </g>
-<g transform="translate(663,466)">
+<g transform="translate(70,791)">
   <rect class="card" x="0" y="0" width="320" height="274" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
   <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#45A7A1"/>
   <text class="label" x="160" y="44" text-anchor="middle">offices</text>

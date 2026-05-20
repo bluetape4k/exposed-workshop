@@ -43,6 +43,16 @@ Kotlin Exposed는 JetBrains에서 개발한 Kotlin 언어 전용 SQL 프레임�
 
 ![Exposed API diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-01.png)
 
+<!-- README_VISUAL_OVERVIEW:START -->
+## Overview Diagram
+
+![Exposed Workshop overview diagram](docs/assets/readme-diagrams/root-readme-overview-01.png)
+
+## Module Composition Chart
+
+![Exposed Workshop module composition chart](docs/assets/readme-charts/root-readme-module-chart-01.png)
+<!-- README_VISUAL_OVERVIEW:END -->
+
 ## 기술 스택
 
 | 기술                 | 버전     |

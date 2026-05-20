@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1754" height="1429" viewBox="0 0 1754 1429" role="img" aria-label="spring webflux exposed Class Structure">
+<svg xmlns="http://www.w3.org/2000/svg" width="1406" height="2770" viewBox="0 0 1406 2770" role="img" aria-label="spring webflux exposed Class Structure">
 <defs>
   <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <marker id="openArrow" markerWidth="10" markerHeight="8" refX="8.5" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 8.5 4 L 1 7" fill="none" stroke="#758297" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0.5 1 L 9.5 5 L 0.5 9 Z" fill="#ffffff" stroke="#758297" stroke-width="1.7"/></marker>
   <style>
     .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
     .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
@@ -20,116 +20,27 @@
     .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
   </style>
 </defs>
-<rect class="canvas" width="1754" height="1429"/>
-<rect class="frame" x="32" y="28" width="1690" height="1373" rx="28"/>
+<rect class="canvas" width="1406" height="2770"/>
+<rect class="frame" x="32" y="28" width="1342" height="2714" rx="28"/>
 <text class="title" x="66" y="82">spring webflux exposed Class Structure</text>
 <text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="line" d="M1082 342 C1082 449.5 262 449.5 262 557"/>
-<path class="line" d="M1082 342 C1082 642 1082 642 1082 942"/>
-<path class="line" d="M262 557 C262 470.5 672 470.5 672 384"/>
-<path class="line" d="M1082 942 C1082 855.5 1492 855.5 1492 769"/>
-<path class="line" d="M672 942 C672 855.5 1492 855.5 1492 769"/>
-<path class="line" d="M672 942 C672 642 1082 642 1082 342"/>
-<path class="line" d="M672 942 C672 1037.5 1082 1037.5 1082 1133"/>
-<path class="line" d="M1492 172 C1492 278 672 278 672 384"/>
-<path class="line" d="M1492 447 C1492 502 262 502 262 557"/>
-<path class="line" d="M672 832 C672 887 672 887 672 942"/>
-<path class="line" d="M1082 832 C1082 887 672 887 672 942"/>
-<path class="line" d="M262 172 C262 309.5 1492 309.5 1492 447"/>
-<g transform="translate(92,180)">
-  <rect class="card" x="0" y="0" width="340" height="259" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">ActorController</text>
-  <text class="mono" x="18" y="108">-ActorRepository actorRepository</text>
-<text class="mono" x="18" y="129">+getActorById(actorId: Long): ActorRecord?</text>
-<text class="mono" x="18" y="150">+searchActors(request: ServerHttpRequest):</text>
-<text class="mono" x="18" y="171">List~ActorRecord~</text>
-<text class="mono" x="18" y="192">+createActor(actor: ActorRecord):</text>
-<text class="mono" x="18" y="213">ActorRecord</text>
-<text class="mono" x="18" y="234">+deleteActor(actorId: Long): Int</text>
-</g>
-<g transform="translate(502,180)">
-  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«LongEntity»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">ActorEntity</text>
-  <text class="mono" x="18" y="108">+firstName: String</text>
-<text class="mono" x="18" y="129">+lastName: String</text>
-<text class="mono" x="18" y="150">+birthday: LocalDate?</text>
-<text class="mono" x="18" y="171">+movies: SizedIterable~MovieEntity~</text>
-</g>
-<g transform="translate(912,180)">
-  <rect class="card" x="0" y="0" width="340" height="154" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#D6A441"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«Table»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">ActorInMovieTable</text>
-  <text class="mono" x="18" y="108">+movieId: Column~EntityID~Long~~</text>
-<text class="mono" x="18" y="129">+actorId: Column~EntityID~Long~~</text>
-</g>
-<g transform="translate(1322,180)">
-  <rect class="card" x="0" y="0" width="340" height="259" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#DC6B82"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">ActorRepository</text>
-  <text class="mono" x="18" y="108">+count(): Long</text>
-<text class="mono" x="18" y="129">+findById(id: Long): ActorEntity?</text>
-<text class="mono" x="18" y="150">+findAll(): List~ActorEntity~</text>
-<text class="mono" x="18" y="171">+searchActor(params: Map):</text>
-<text class="mono" x="18" y="192">List~ActorRecord~</text>
-<text class="mono" x="18" y="213">+create(actor: ActorRecord): ActorEntity</text>
-<text class="mono" x="18" y="234">+deleteById(actorId: Long): Int</text>
-</g>
-<g transform="translate(92,565)">
-  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#45A7A1"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«LongIdTable»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">ActorTable</text>
-  <text class="mono" x="18" y="108">+firstName: Column~String~</text>
-<text class="mono" x="18" y="129">+lastName: Column~String~</text>
-<text class="mono" x="18" y="150">+birthday: Column~LocalDate?~</text>
-</g>
-<g transform="translate(502,565)">
-  <rect class="card" x="0" y="0" width="340" height="259" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8A72D6"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">MovieActorsController</text>
-  <text class="mono" x="18" y="108">-MovieRepository movieRepository</text>
-<text class="mono" x="18" y="129">+getMovieWithActors(movieId: Long):</text>
-<text class="mono" x="18" y="150">MovieWithActorRecord?</text>
-<text class="mono" x="18" y="171">+getMovieActorsCount():</text>
-<text class="mono" x="18" y="192">List~MovieActorCountRecord~</text>
-<text class="mono" x="18" y="213">+findMoviesWithActingProducers():</text>
-<text class="mono" x="18" y="234">List~MovieWithProducingActorRecord~</text>
-</g>
-<g transform="translate(912,565)">
-  <rect class="card" x="0" y="0" width="340" height="259" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#B88A44"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">MovieController</text>
-  <text class="mono" x="18" y="108">-MovieRepository movieRepository</text>
-<text class="mono" x="18" y="129">+getMovieById(movieId: Long): MovieRecord?</text>
-<text class="mono" x="18" y="150">+searchMovies(request: ServerHttpRequest):</text>
-<text class="mono" x="18" y="171">List~MovieRecord~</text>
-<text class="mono" x="18" y="192">+createMovie(movie: MovieRecord):</text>
-<text class="mono" x="18" y="213">MovieRecord</text>
-<text class="mono" x="18" y="234">+deleteMovie(movieId: Long): Int</text>
-</g>
-<g transform="translate(1322,565)">
-  <rect class="card" x="0" y="0" width="340" height="196" rx="5" fill="#EEF6D9" stroke="#8BA84D"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#8BA84D"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«LongEntity»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">MovieEntity</text>
-  <text class="mono" x="18" y="108">+name: String</text>
-<text class="mono" x="18" y="129">+producerName: String</text>
-<text class="mono" x="18" y="150">+releaseDate: LocalDateTime</text>
-<text class="mono" x="18" y="171">+actors: SizedIterable~ActorEntity~</text>
-</g>
-<g transform="translate(502,950)">
-  <rect class="card" x="0" y="0" width="340" height="259" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#5B8DEF"/>
-  <text class="small" x="170" y="26" text-anchor="middle"></text>
-  <text class="label" x="170" y="61" text-anchor="middle">MovieRepository</text>
+<path class="line" d="M1145 761 L1145 958 L703 958 L703 1482"/>
+<path class="line" d="M1145 761 L1145 523 L703 523 L703 607"/>
+<path class="line" d="M703 1657 L703 1733 L924 1733 L924 1825"/>
+<path class="line" d="M703 782 L703 934 L482 934 L482 1034"/>
+<path class="line" d="M703 439 L703 499 L482 499 L482 1034"/>
+<path class="line" d="M703 439 L703 547 L1145 547 L1145 607"/>
+<path class="line" d="M703 439 L703 607"/>
+<path class="line" d="M482 1825 L482 1749 L924 1749 L924 2021"/>
+<path class="line" d="M482 1825 L482 1741 L703 1741 L703 1657"/>
+<path class="line" d="M261 607 L261 515 L703 515 L703 439"/>
+<path class="line" d="M924 1034 L924 507 L703 507 L703 439"/>
+<path class="line" d="M703 2252 L703 2144 L482 2144 L482 2084"/>
+<g transform="translate(538,180)">
+  <rect class="card" x="0" y="0" width="330" height="259" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#5B8DEF"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">MovieRepository</text>
   <text class="mono" x="18" y="108">+count(): Long</text>
 <text class="mono" x="18" y="129">+findById(movieId: Long): MovieEntity?</text>
 <text class="mono" x="18" y="150">+findAll(): List~MovieEntity~</text>
@@ -138,13 +49,104 @@
 <text class="mono" x="18" y="213">+create(movie: MovieRecord): MovieEntity</text>
 <text class="mono" x="18" y="234">+deleteById(movieId: Long): Int</text>
 </g>
-<g transform="translate(912,950)">
-  <rect class="card" x="0" y="0" width="340" height="175" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="78" x2="340" y2="78" stroke="#58A978"/>
-  <text class="small" x="170" y="26" text-anchor="middle">«LongIdTable»</text>
-  <text class="label" x="170" y="61" text-anchor="middle">MovieTable</text>
+<g transform="translate(96,607)">
+  <rect class="card" x="0" y="0" width="330" height="259" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#58A978"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">MovieActorsController</text>
+  <text class="mono" x="18" y="108">-MovieRepository movieRepository</text>
+<text class="mono" x="18" y="129">+getMovieWithActors(movieId: Long):</text>
+<text class="mono" x="18" y="150">MovieWithActorRecord?</text>
+<text class="mono" x="18" y="171">+getMovieActorsCount():</text>
+<text class="mono" x="18" y="192">List~MovieActorCountRecord~</text>
+<text class="mono" x="18" y="213">+findMoviesWithActingProducers():</text>
+<text class="mono" x="18" y="234">List~MovieWithProducingActorRecord~</text>
+</g>
+<g transform="translate(538,607)">
+  <rect class="card" x="0" y="0" width="330" height="175" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#D6A441"/>
+  <text class="small" x="165" y="26" text-anchor="middle">«LongIdTable»</text>
+  <text class="label" x="165" y="61" text-anchor="middle">MovieTable</text>
   <text class="mono" x="18" y="108">+name: Column~String~</text>
 <text class="mono" x="18" y="129">+producerName: Column~String~</text>
 <text class="mono" x="18" y="150">+releaseDate: Column~LocalDateTime~</text>
+</g>
+<g transform="translate(980,607)">
+  <rect class="card" x="0" y="0" width="330" height="154" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#DC6B82"/>
+  <text class="small" x="165" y="26" text-anchor="middle">«Table»</text>
+  <text class="label" x="165" y="61" text-anchor="middle">ActorInMovieTable</text>
+  <text class="mono" x="18" y="108">+movieId: Column~EntityID~Long~~</text>
+<text class="mono" x="18" y="129">+actorId: Column~EntityID~Long~~</text>
+</g>
+<g transform="translate(317,1034)">
+  <rect class="card" x="0" y="0" width="330" height="196" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#45A7A1"/>
+  <text class="small" x="165" y="26" text-anchor="middle">«LongEntity»</text>
+  <text class="label" x="165" y="61" text-anchor="middle">MovieEntity</text>
+  <text class="mono" x="18" y="108">+name: String</text>
+<text class="mono" x="18" y="129">+producerName: String</text>
+<text class="mono" x="18" y="150">+releaseDate: LocalDateTime</text>
+<text class="mono" x="18" y="171">+actors: SizedIterable~ActorEntity~</text>
+</g>
+<g transform="translate(759,1034)">
+  <rect class="card" x="0" y="0" width="330" height="280" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#8A72D6"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">MovieController</text>
+  <text class="mono" x="18" y="108">-MovieRepository movieRepository</text>
+<text class="mono" x="18" y="129">+getMovieById(movieId: Long):</text>
+<text class="mono" x="18" y="150">MovieRecord?</text>
+<text class="mono" x="18" y="171">+searchMovies(request:</text>
+<text class="mono" x="18" y="192">ServerHttpRequest): List~MovieRecord~</text>
+<text class="mono" x="18" y="213">+createMovie(movie: MovieRecord):</text>
+<text class="mono" x="18" y="234">MovieRecord</text>
+<text class="mono" x="18" y="255">+deleteMovie(movieId: Long): Int</text>
+</g>
+<g transform="translate(538,1482)">
+  <rect class="card" x="0" y="0" width="330" height="175" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#B88A44"/>
+  <text class="small" x="165" y="26" text-anchor="middle">«LongIdTable»</text>
+  <text class="label" x="165" y="61" text-anchor="middle">ActorTable</text>
+  <text class="mono" x="18" y="108">+firstName: Column~String~</text>
+<text class="mono" x="18" y="129">+lastName: Column~String~</text>
+<text class="mono" x="18" y="150">+birthday: Column~LocalDate?~</text>
+</g>
+<g transform="translate(317,1825)">
+  <rect class="card" x="0" y="0" width="330" height="259" rx="5" fill="#EEF6D9" stroke="#8BA84D"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#8BA84D"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">ActorRepository</text>
+  <text class="mono" x="18" y="108">+count(): Long</text>
+<text class="mono" x="18" y="129">+findById(id: Long): ActorEntity?</text>
+<text class="mono" x="18" y="150">+findAll(): List~ActorEntity~</text>
+<text class="mono" x="18" y="171">+searchActor(params: Map):</text>
+<text class="mono" x="18" y="192">List~ActorRecord~</text>
+<text class="mono" x="18" y="213">+create(actor: ActorRecord): ActorEntity</text>
+<text class="mono" x="18" y="234">+deleteById(actorId: Long): Int</text>
+</g>
+<g transform="translate(759,1825)">
+  <rect class="card" x="0" y="0" width="330" height="196" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#5B8DEF"/>
+  <text class="small" x="165" y="26" text-anchor="middle">«LongEntity»</text>
+  <text class="label" x="165" y="61" text-anchor="middle">ActorEntity</text>
+  <text class="mono" x="18" y="108">+firstName: String</text>
+<text class="mono" x="18" y="129">+lastName: String</text>
+<text class="mono" x="18" y="150">+birthday: LocalDate?</text>
+<text class="mono" x="18" y="171">+movies: SizedIterable~MovieEntity~</text>
+</g>
+<g transform="translate(538,2252)">
+  <rect class="card" x="0" y="0" width="330" height="280" rx="5" fill="#EAF7EF" stroke="#58A978"/>
+  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#58A978"/>
+  <text class="small" x="165" y="26" text-anchor="middle"></text>
+  <text class="label" x="165" y="61" text-anchor="middle">ActorController</text>
+  <text class="mono" x="18" y="108">-ActorRepository actorRepository</text>
+<text class="mono" x="18" y="129">+getActorById(actorId: Long):</text>
+<text class="mono" x="18" y="150">ActorRecord?</text>
+<text class="mono" x="18" y="171">+searchActors(request:</text>
+<text class="mono" x="18" y="192">ServerHttpRequest): List~ActorRecord~</text>
+<text class="mono" x="18" y="213">+createActor(actor: ActorRecord):</text>
+<text class="mono" x="18" y="234">ActorRecord</text>
+<text class="mono" x="18" y="255">+deleteActor(actorId: Long): Int</text>
 </g>
 </svg>

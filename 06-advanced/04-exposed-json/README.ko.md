@@ -54,7 +54,7 @@ data class UserGroup(
 
 ## 도메인 클래스 다이어그램
 
-![04 exposed json Class Structure 3 diagram](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-class-03.png)
+![04 exposed json Entity Relationship 2 diagram](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-erd-02.png)
 
 ## 핵심 개념
 

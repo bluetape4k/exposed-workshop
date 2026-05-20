@@ -36,9 +36,9 @@ Exposed provides two data access patterns. The **DSL (SQL DSL)** pattern express
 | Coroutine support | `newSuspendedTransaction { }`                      | Entity access within `newSuspendedTransaction { }` |
 | N+1 risk        | None (explicit JOIN)                                 | Caution needed with Lazy Loading                   |
 
-## Domain Model (classDiagram)
+## User Cities Domain Model
 
-![Domain Model (classDiagram) diagram](../docs/images/readme-diagrams/03-exposed-basic-class-01.png)
+![User Cities Domain Model diagram](../docs/images/readme-diagrams/03-exposed-basic-class-01.png)
 
 ## DSL-Style Schema Definition
 

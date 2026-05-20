@@ -31,7 +31,7 @@ Exposed에서 스키마 정의는 `object` 선언으로 이루어집니다. `Tab
 
 ## 복합 PK / FK 관계 ERD
 
-![PK / FK ERD diagram](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-erd-03.png)
+![PK / FK ERD diagram](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-class-02.png)
 
 ## 컬럼 타입 표
 
