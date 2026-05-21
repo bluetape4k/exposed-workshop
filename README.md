@@ -323,6 +323,20 @@ Learn flexible DataSource routing configuration for multi-tenant or read replica
 
 Measure performance of cache/routing examples using `kotlinx-benchmark` micro-benchmarks. Provides smoke and main profiles with Markdown report generation.
 
+### Production Integration
+
+#### [Chapter 12 Overview](12-production-integration/README.md)
+
+Compare production-grade Spring Boot 4 and Ktor service patterns backed by Exposed.
+
+#### [Ktor Application Architecture](12-production-integration/01-ktor-application-architecture/README.md)
+
+Build a small Ktor service with explicit routing, service validation, sanitized errors, and an Exposed JDBC repository.
+
+#### [Spring Boot Application Architecture](12-production-integration/02-spring-application-architecture/README.md)
+
+Build the Spring Boot 4 pair with MVC controllers, controller advice, service validation, and an Exposed JDBC repository.
+
 ---
 
 ## Getting Started

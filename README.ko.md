@@ -323,6 +323,20 @@ Multi-Tenant 또는 Read Replica 구조를 위한 유연한 DataSource 라우팅
 
 `kotlinx-benchmark` 기반 마이크로벤치마크로 캐시/라우팅 예제의 성능을 측정합니다. smoke 프로파일과 main 프로파일을 제공하며 Markdown 리포트를 생성할 수 있습니다.
 
+### 운영 통합
+
+#### [Chapter 12 개요](12-production-integration/README.ko.md)
+
+Exposed 기반 운영형 서비스 패턴을 Spring Boot 4와 Ktor로 비교합니다.
+
+#### [Ktor 애플리케이션 아키텍처](12-production-integration/01-ktor-application-architecture/README.ko.md)
+
+명시적 라우팅, 서비스 검증, 정제된 오류, Exposed JDBC 저장소를 갖춘 작은 Ktor 서비스를 구현합니다.
+
+#### [Spring Boot 애플리케이션 아키텍처](12-production-integration/02-spring-application-architecture/README.ko.md)
+
+MVC 컨트롤러, 컨트롤러 advice, 서비스 검증, Exposed JDBC 저장소를 갖춘 Spring Boot 4 쌍을 구현합니다.
+
 ---
 
 ## 시작하기
