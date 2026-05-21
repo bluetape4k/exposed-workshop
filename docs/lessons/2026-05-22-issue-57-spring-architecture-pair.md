@@ -30,6 +30,11 @@ README files that mark later production-integration topics as planned work.
 - `./gradlew :01-ktor-application-architecture:test
   :02-spring-application-architecture:test --no-daemon` passed after Claude
   advisor fixes.
+- `.github/workflows/examples.yml` added to run the paired chapter 12
+  architecture examples in the `Examples` workflow.
+- `./gradlew :01-ktor-application-architecture:build
+  :02-spring-application-architecture:build --no-daemon --continue` passed.
+- `actionlint .github/workflows/examples.yml` passed.
 - `git diff --check` passed.
 - `:02-spring-application-architecture:detekt` is not registered.
 - Claude CLI P0/P1 advisor review returned no P0 and two P1 findings in
