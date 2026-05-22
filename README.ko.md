@@ -337,6 +337,14 @@ Exposed 기반 운영형 서비스 패턴을 Spring Boot 4와 Ktor로 비교합�
 
 MVC 컨트롤러, 컨트롤러 advice, 서비스 검증, Exposed JDBC 저장소를 갖춘 Spring Boot 4 쌍을 구현합니다.
 
+#### [Spring HTTP 아웃박스와 멱등성](12-production-integration/03-spring-http-outbox-idempotency/README.ko.md)
+
+외부 HTTP 결제 요청을 전송 전에 저장하고, 멱등성 키로 중복을 방지하며, Spring Boot 4에서 재시도 가능한 gateway 실패와 영구 실패를 분리합니다.
+
+#### [Ktor HTTP 아웃박스와 멱등성](12-production-integration/04-ktor-http-outbox-idempotency/README.ko.md)
+
+suspend route handler, `Dispatchers.IO` 뒤의 Exposed JDBC 저장소, 성공/재시도/중복/영구 실패를 검증하는 fake-gateway 테스트를 갖춘 Ktor 쌍을 구현합니다.
+
 ---
 
 ## 시작하기
