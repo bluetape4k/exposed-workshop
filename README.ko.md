@@ -295,13 +295,17 @@ Lettuce를 활용한 Suspended Cache를 코루틴 환경에서 Exposed와 함께
 
 Spring Web Application에서 Schema-based Multi-tenancy를 구현하는 방법을 학습합니다.
 
-#### [Spring Web + VirtualThreads + Multitenant](10-multi-tenant/02-mutitenant-spring-web-virtualthread/README.ko.md)
+#### [Spring Web + VirtualThreads + Multitenant](10-multi-tenant/02-multitenant-spring-web-virtualthread/README.ko.md)
 
 Virtual Threads 환경에서 멀티테넌시를 구현하는 방법을 학습합니다.
 
 #### [Spring WebFlux + Multitenant](10-multi-tenant/03-multitenant-spring-webflux/README.ko.md)
 
 WebFlux와 Coroutines를 이용하여 반응형 멀티테넌시를 구현하는 방법을 학습합니다.
+
+#### [Schema-per-Tenant Spring Web](10-multi-tenant/04-schema-per-tenant-spring-web/README.ko.md)
+
+하나의 shared Hikari pool을 사용하면서 Exposed 트랜잭션을 허용된 tenant schema로 전환하고 connection을 안전하게 reset하는 방법을 학습합니다.
 
 ---
 
