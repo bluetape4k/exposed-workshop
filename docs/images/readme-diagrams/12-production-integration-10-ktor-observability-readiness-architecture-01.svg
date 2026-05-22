@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1380" height="560" viewBox="0 0 1380 560" role="img" aria-label="10 ktor observability readiness Architecture">
+<defs>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <style>
+    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
+    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
+    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
+    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#536273}
+    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:14px;font-weight:400;fill:#102033}
+    .card{stroke-width:2.1;filter:url(#shadow)}.line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
+    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
+  </style>
+</defs>
+<rect class="canvas" width="1380" height="560"/>
+<rect class="frame" x="32" y="28" width="1316" height="504" rx="28"/>
+<text class="title" x="66" y="82">10 ktor observability readiness Architecture</text>
+<text class="subtitle" x="70" y="118">Ktor plugins and explicit routes define readiness, correlation, and diagnostics</text>
+
+<path d="M238 248 C286 248 306 248 354 248" stroke="#758297" stroke-width="3" fill="none"/>
+<path d="M564 248 C612 248 632 248 680 248" stroke="#758297" stroke-width="3" fill="none"/>
+<path d="M890 248 C936 248 956 248 1002 248" stroke="#758297" stroke-width="3" fill="none"/>
+<path d="M792 330 C792 362 792 374 792 406" stroke="#758297" stroke-width="3" fill="none"/>
+<path d="M1118 304 C1118 360 1012 386 902 386 C828 386 792 370 792 330" stroke="#758297" stroke-width="3" fill="none"/>
+<path d="M238 386 C410 450 612 450 680 320" stroke="#758297" stroke-width="3" stroke-dasharray="9 7" fill="none"/>
+<path d="M348 242 L360 248 L348 254 Z" fill="#758297"/>
+<path d="M674 242 L686 248 L674 254 Z" fill="#758297"/>
+<path d="M996 242 L1008 248 L996 254 Z" fill="#758297"/>
+<path d="M786 400 L792 412 L798 400 Z" fill="#758297"/>
+<path d="M786 324 L792 312 L798 324 Z" fill="#758297"/>
+<path d="M674 314 L686 318 L678 328 Z" fill="#758297"/>
+
+<g transform="translate(88,188)">
+  <rect class="card" x="0" y="0" width="150" height="120" rx="18" fill="#eff6ff" stroke="#8bb8f5"/>
+  <text class="smallLabel" x="75" y="44" text-anchor="middle">HTTP Client</text>
+  <text class="small" x="75" y="74" text-anchor="middle">/readyz</text>
+  <text class="small" x="75" y="96" text-anchor="middle">diagnostics API</text>
+</g>
+
+<g transform="translate(354,172)">
+  <rect class="card" x="0" y="0" width="210" height="152" rx="18" fill="#ecfdf5" stroke="#7bcfa2"/>
+  <text class="smallLabel" x="105" y="42" text-anchor="middle">Ktor Plugins</text>
+  <text class="small" x="105" y="74" text-anchor="middle">CallId + CallLogging</text>
+  <text class="small" x="105" y="97" text-anchor="middle">ContentNegotiation</text>
+  <text class="small" x="105" y="120" text-anchor="middle">StatusPages</text>
+</g>
+
+<g transform="translate(680,160)">
+  <rect class="card" x="0" y="0" width="210" height="176" rx="18" fill="#fff7ed" stroke="#f3b268"/>
+  <text class="smallLabel" x="105" y="42" text-anchor="middle">Explicit Routes</text>
+  <text class="strong" x="105" y="75" text-anchor="middle">GET /readyz</text>
+  <text class="small" x="105" y="99" text-anchor="middle">operation records</text>
+  <text class="small" x="105" y="122" text-anchor="middle">structured failures</text>
+  <text class="small" x="105" y="145" text-anchor="middle">request-id response</text>
+</g>
+
+<g transform="translate(1002,172)">
+  <rect class="card" x="0" y="0" width="210" height="156" rx="18" fill="#f5f3ff" stroke="#b4a7f5"/>
+  <text class="smallLabel" x="105" y="42" text-anchor="middle">Exposed JDBC</text>
+  <text class="small" x="105" y="73" text-anchor="middle">health ping</text>
+  <text class="small" x="105" y="96" text-anchor="middle">diagnostic_operations</text>
+  <text class="small" x="105" y="119" text-anchor="middle">H2 datasource</text>
+</g>
+
+<g transform="translate(342,338)">
+  <rect class="card" x="0" y="0" width="224" height="104" rx="18" fill="#fefce8" stroke="#d9c75f"/>
+  <text class="smallLabel" x="112" y="40" text-anchor="middle">StatusPages</text>
+  <text class="small" x="112" y="70" text-anchor="middle">sanitized error body</text>
+  <text class="small" x="112" y="91" text-anchor="middle">correlation id included</text>
+</g>
+
+<g transform="translate(680,402)">
+  <rect class="card" x="0" y="0" width="224" height="92" rx="18" fill="#f0f9ff" stroke="#7cc4e8"/>
+  <text class="smallLabel" x="112" y="40" text-anchor="middle">ReadinessState</text>
+  <text class="small" x="112" y="70" text-anchor="middle">UP or degraded</text>
+</g>
+
+<g stroke="#758297" stroke-width="3" stroke-linecap="round">
+  <line x1="238" y1="248" x2="354" y2="248"/>
+  <line x1="564" y1="248" x2="680" y2="248"/>
+  <line x1="890" y1="248" x2="1002" y2="248"/>
+  <line x1="792" y1="336" x2="792" y2="402"/>
+  <line x1="902" y1="386" x2="1002" y2="306"/>
+  <line x1="566" y1="390" x2="680" y2="320" stroke-dasharray="9 7"/>
+</g>
+
+<text class="subtitle" x="70" y="508">Ktor keeps readiness and error contracts in application code; tests exercise both success and degraded states.</text>
+</svg>

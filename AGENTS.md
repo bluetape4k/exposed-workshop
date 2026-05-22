@@ -40,6 +40,14 @@ for example:
 Root README visual assets live under `docs/assets/` and should be shared by
 `README.md` and `README.ko.md` through the same relative path.
 
+Every example README must include an Architecture Diagram rendered as a PNG
+image with the editable SVG source stored next to it under
+`docs/images/readme-diagrams/`. Use the same PNG link from `README.md` and
+`README.ko.md`, keep diagram text in English, and do not leave raw Mermaid
+blocks in README files. Add additional UML-style diagrams such as class,
+sequence, or ERD diagrams when they clarify non-trivial type relationships,
+request flows, database schema, or concurrency/lifecycle behavior.
+
 ## Exposed Rules
 
 - DSL uses `object Table` plus `transaction { }`.
