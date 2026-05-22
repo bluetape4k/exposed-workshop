@@ -6,16 +6,9 @@
 구현입니다. 외부 HTTP 서비스를 호출하기 전에 발신 결제 의도를 먼저
 저장하고, 멱등성 키를 중복 요청의 경계로 사용합니다.
 
-```mermaid
-flowchart TD
-    Client[HTTP client] --> Controller[Spring MVC controller]
-    Controller --> Service[PaymentService]
-    Service --> Repository[PaymentOutboxRepository]
-    Repository --> Exposed[Exposed transactions]
-    Exposed --> H2[(H2 via HikariCP)]
-    Service --> Gateway[RestClientPaymentGateway]
-    Gateway --> External[External payment API]
-```
+## 아키텍처
+
+![Spring HTTP outbox idempotency Architecture diagram](../../docs/images/readme-diagrams/12-production-integration-03-spring-http-outbox-idempotency-architecture-01.png)
 
 ## 학습 내용
 

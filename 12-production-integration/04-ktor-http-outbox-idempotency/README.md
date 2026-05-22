@@ -6,17 +6,9 @@ This module is the Ktor pair for the chapter 12 HTTP client
 outbox/idempotency topic. It mirrors the Spring Boot 4 sample while keeping
 blocking Exposed JDBC work behind a repository-owned `Dispatchers.IO` boundary.
 
-```mermaid
-flowchart TD
-    Client[HTTP client] --> Routes[Ktor routes]
-    Routes --> Service[PaymentService]
-    Service --> Repository[PaymentOutboxRepository]
-    Repository --> IO[Dispatchers.IO boundary]
-    IO --> Exposed[Exposed transactions]
-    Exposed --> H2[(H2 via HikariCP)]
-    Service --> Gateway[KtorPaymentGateway]
-    Gateway --> External[External payment API]
-```
+## Architecture
+
+![Ktor HTTP outbox idempotency Architecture diagram](../../docs/images/readme-diagrams/12-production-integration-04-ktor-http-outbox-idempotency-architecture-01.png)
 
 ## What This Shows
 
