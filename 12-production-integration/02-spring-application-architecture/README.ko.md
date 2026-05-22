@@ -6,15 +6,9 @@
 Ktor 모듈과 같은 문제를 얇은 컨트롤러 계층, 서비스 경계, Exposed JDBC
 저장소로 구현합니다.
 
-```mermaid
-flowchart TD
-    Client[HTTP client] --> Controller[Spring MVC controllers]
-    Controller --> Advice[Controller advice]
-    Controller --> Service[CustomerService]
-    Service --> Repository[CustomerRepository]
-    Repository --> Exposed[Exposed transactions]
-    Exposed --> H2[(H2 via HikariCP)]
-```
+## 아키텍처
+
+![Spring Boot application architecture Architecture diagram](../../docs/images/readme-diagrams/12-production-integration-02-spring-application-architecture-architecture-01.png)
 
 ## 보여주는 내용
 
@@ -39,4 +33,3 @@ flowchart TD
 ./gradlew :02-spring-application-architecture:test
 ./gradlew :02-spring-application-architecture:compileKotlin
 ```
-

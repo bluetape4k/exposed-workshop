@@ -6,16 +6,9 @@ This module is the Spring Boot 4 implementation for the chapter 12 HTTP client
 outbox/idempotency topic. It persists an outbound payment intent before calling
 an external HTTP service and uses the idempotency key as the duplicate boundary.
 
-```mermaid
-flowchart TD
-    Client[HTTP client] --> Controller[Spring MVC controller]
-    Controller --> Service[PaymentService]
-    Service --> Repository[PaymentOutboxRepository]
-    Repository --> Exposed[Exposed transactions]
-    Exposed --> H2[(H2 via HikariCP)]
-    Service --> Gateway[RestClientPaymentGateway]
-    Gateway --> External[External payment API]
-```
+## Architecture
+
+![Spring HTTP outbox idempotency Architecture diagram](../../docs/images/readme-diagrams/12-production-integration-03-spring-http-outbox-idempotency-architecture-01.png)
 
 ## What This Shows
 

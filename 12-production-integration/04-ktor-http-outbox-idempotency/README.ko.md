@@ -6,17 +6,9 @@
 Spring Boot 4 예제와 같은 계약을 유지하되, blocking Exposed JDBC 작업은
 저장소가 소유한 `Dispatchers.IO` 경계 뒤에 둡니다.
 
-```mermaid
-flowchart TD
-    Client[HTTP client] --> Routes[Ktor routes]
-    Routes --> Service[PaymentService]
-    Service --> Repository[PaymentOutboxRepository]
-    Repository --> IO[Dispatchers.IO boundary]
-    IO --> Exposed[Exposed transactions]
-    Exposed --> H2[(H2 via HikariCP)]
-    Service --> Gateway[KtorPaymentGateway]
-    Gateway --> External[External payment API]
-```
+## 아키텍처
+
+![Ktor HTTP outbox idempotency Architecture diagram](../../docs/images/readme-diagrams/12-production-integration-04-ktor-http-outbox-idempotency-architecture-01.png)
 
 ## 학습 내용
 

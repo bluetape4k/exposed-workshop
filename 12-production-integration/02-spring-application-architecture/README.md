@@ -6,15 +6,9 @@ This module is the Spring Boot 4 pair for the chapter 12 application
 architecture topic. It mirrors the Ktor module with a thin controller layer, a
 service boundary, and an Exposed JDBC repository.
 
-```mermaid
-flowchart TD
-    Client[HTTP client] --> Controller[Spring MVC controllers]
-    Controller --> Advice[Controller advice]
-    Controller --> Service[CustomerService]
-    Service --> Repository[CustomerRepository]
-    Repository --> Exposed[Exposed transactions]
-    Exposed --> H2[(H2 via HikariCP)]
-```
+## Architecture
+
+![Spring Boot application architecture Architecture diagram](../../docs/images/readme-diagrams/12-production-integration-02-spring-application-architecture-architecture-01.png)
 
 ## What This Shows
 
@@ -39,4 +33,3 @@ flowchart TD
 ./gradlew :02-spring-application-architecture:test
 ./gradlew :02-spring-application-architecture:compileKotlin
 ```
-
