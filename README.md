@@ -311,6 +311,10 @@ Use one shared Hikari pool while switching Exposed transactions between whitelis
 
 Route whitelisted tenants to dedicated Hikari pools and Exposed databases with no default datasource fallback.
 
+#### [Spring Security Tenant Authorization Spring Web](10-multi-tenant/06-spring-security-tenant-authorization-spring-web/README.md)
+
+Authorize the requested tenant from JWT, API key, or demo session identity before routing to a tenant database.
+
 ---
 
 ### High Performance
