@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#f8fafc"/>
+  <text x="640" y="56" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" fill="#172033">Database-per-Tenant Request Flow</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="14" markerHeight="10" refX="12" refY="5" orient="auto">
+      <path d="M 0 0 L 14 5 L 0 10 z" fill="#0f766e"/>
+    </marker>
+    <style>
+      .lane { stroke:#94a3b8; stroke-width:2; stroke-dasharray:6 8; }
+      .head { fill:#ffffff; stroke:#0f766e; stroke-width:2.5; rx:8; }
+      .title { font-family:Inter, Arial, sans-serif; font-size:18px; font-weight:700; fill:#172033; }
+      .msg { font-family:Inter, Arial, sans-serif; font-size:15px; fill:#263244; }
+      .note { fill:#fff7ed; stroke:#ea580c; stroke-width:2; rx:8; }
+      .arrow { stroke:#0f766e; stroke-width:2.5; fill:none; marker-end:url(#arrow); }
+    </style>
+  </defs>
+
+  <g>
+    <rect class="head" x="44" y="100" width="156" height="56"/>
+    <text class="title" x="122" y="135" text-anchor="middle">Client</text>
+    <line class="lane" x1="122" y1="156" x2="122" y2="650"/>
+  </g>
+  <g>
+    <rect class="head" x="256" y="100" width="156" height="56"/>
+    <text class="title" x="334" y="135" text-anchor="middle">TenantFilter</text>
+    <line class="lane" x1="334" y1="156" x2="334" y2="650"/>
+  </g>
+  <g>
+    <rect class="head" x="468" y="100" width="156" height="56"/>
+    <text class="title" x="546" y="135" text-anchor="middle">Controller</text>
+    <line class="lane" x1="546" y1="156" x2="546" y2="650"/>
+  </g>
+  <g>
+    <rect class="head" x="680" y="100" width="176" height="56"/>
+    <text class="title" x="768" y="135" text-anchor="middle">TenantTransaction</text>
+    <line class="lane" x1="768" y1="156" x2="768" y2="650"/>
+  </g>
+  <g>
+    <rect class="head" x="912" y="100" width="156" height="56"/>
+    <text class="title" x="990" y="135" text-anchor="middle">Registry</text>
+    <line class="lane" x1="990" y1="156" x2="990" y2="650"/>
+  </g>
+  <g>
+    <rect class="head" x="1124" y="100" width="112" height="56"/>
+    <text class="title" x="1180" y="135" text-anchor="middle">Tenant DB</text>
+    <line class="lane" x1="1180" y1="156" x2="1180" y2="650"/>
+  </g>
+
+  <path class="arrow" d="M122 210 H334"/>
+  <text class="msg" x="228" y="200" text-anchor="middle">GET /inventory/{sku}, X-Tenant-ID</text>
+
+  <rect class="note" x="242" y="238" width="184" height="58"/>
+  <text class="msg" x="334" y="262" text-anchor="middle">Validate whitelist</text>
+  <text class="msg" x="334" y="284" text-anchor="middle">set ThreadLocal</text>
+
+  <path class="arrow" d="M334 330 H546"/>
+  <text class="msg" x="440" y="320" text-anchor="middle">Forward request</text>
+
+  <path class="arrow" d="M546 386 H768"/>
+  <text class="msg" x="657" y="376" text-anchor="middle">Repository call</text>
+
+  <path class="arrow" d="M768 442 H990"/>
+  <text class="msg" x="879" y="432" text-anchor="middle">databaseFor(current tenant)</text>
+
+  <path class="arrow" d="M990 498 H1180"/>
+  <text class="msg" x="1085" y="488" text-anchor="middle">Use selected datasource</text>
+
+  <path class="arrow" d="M1180 554 H768"/>
+  <text class="msg" x="974" y="544" text-anchor="middle">Rows from selected tenant database</text>
+
+  <path class="arrow" d="M768 598 H546"/>
+  <path class="arrow" d="M546 628 H334"/>
+  <path class="arrow" d="M334 660 H122"/>
+  <text class="msg" x="228" y="648" text-anchor="middle">finally clear ThreadLocal</text>
+</svg>

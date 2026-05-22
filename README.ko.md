@@ -307,6 +307,10 @@ WebFlux와 Coroutines를 이용하여 반응형 멀티테넌시를 구현하는 
 
 하나의 shared Hikari pool을 사용하면서 Exposed 트랜잭션을 허용된 tenant schema로 전환하고 connection을 안전하게 reset하는 방법을 학습합니다.
 
+#### [Database-per-Tenant Spring Web](10-multi-tenant/05-database-per-tenant-spring-web/README.ko.md)
+
+허용된 tenant를 전용 Hikari pool과 Exposed database로 라우팅하고 기본 datasource fallback을 두지 않는 방법을 학습합니다.
+
 ---
 
 ### 고성능

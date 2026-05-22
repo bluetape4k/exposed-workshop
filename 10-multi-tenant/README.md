@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A chapter for implementing production-grade multi-tenant architecture with Exposed + Spring, covering schema-based tenant isolation, dynamic routing, and context propagation flows. Compares how the same multi-tenancy requirements are implemented across Spring MVC, Virtual Thread, WebFlux, and explicit schema-per-tenant transaction boundaries.
+A chapter for implementing production-grade multi-tenant architecture with Exposed + Spring, covering schema-based tenant isolation, database-per-tenant routing, dynamic routing, and context propagation flows. Compares how the same multi-tenancy requirements are implemented across Spring MVC, Virtual Thread, WebFlux, explicit schema-per-tenant transaction boundaries, and dedicated tenant databases.
 
 ## Chapter Goals
 
@@ -19,7 +19,7 @@ A chapter for implementing production-grade multi-tenant architecture with Expos
 
 ## Multi-Tenancy Strategy Overview
 
-This chapter uses the **Shared Database / Separate Schema** strategy as its foundation. Data is isolated by separating per-tenant schemas (`korean`, `english`) within a single DB instance.
+This chapter starts with the **Shared Database / Separate Schema** strategy. Data is isolated by separating per-tenant schemas (`korean`, `english`) within a single DB instance.
 
 ```
 Single DB Instance
@@ -33,7 +33,7 @@ Single DB Instance
     └── actor_in_movie
 ```
 
-A `TenantAwareDataSource` (extending `AbstractRoutingDataSource`) is provided so you can also switch to a **Database per Tenant** approach.
+It then compares that baseline with **Database per Tenant**, where each whitelisted tenant owns a dedicated Hikari pool and Exposed `Database`.
 
 ### Per-Tenant Schema Isolation Architecture
 
@@ -49,6 +49,7 @@ A `TenantAwareDataSource` (extending `AbstractRoutingDataSource`) is provided so
 | `02-multitenant-spring-web-virtualthread` | Multi-tenant with Java 21 Virtual Threads          | `ScopedValue`         |
 | `03-multitenant-spring-webflux`           | Multi-tenant with WebFlux + Coroutines             | Reactor `Context`     |
 | `04-schema-per-tenant-spring-web`         | Schema-per-tenant with one shared Hikari pool      | `ThreadLocal`         |
+| `05-database-per-tenant-spring-web`       | Database-per-tenant with dedicated Hikari pools    | `ThreadLocal`         |
 
 ---
 
@@ -58,15 +59,15 @@ A `TenantAwareDataSource` (extending `AbstractRoutingDataSource`) is provided so
 
 ### Key Differences by Environment
 
-| Item             |  01 Spring MVC   |     02 Virtual Threads     |             03 WebFlux              |             04 Schema-per-Tenant             |
-|------------------|:----------------:|:--------------------------:|:-----------------------------------:|:--------------------------------------------:|
-| Server           |      Tomcat      |        Tomcat + VT         |                Netty                |                    Tomcat                    |
-| Thread Model     |  OS thread pool  | Virtual Thread per request |             Event loop              |                OS thread pool                |
-| Context          |  `ThreadLocal`   |       `ScopedValue`        |          Reactor `Context`          |                `ThreadLocal`                 |
-| Schema Switch    |  AOP `@Before`   |       AOP `@Before`        |    Inside `newSuspendedTransaction` |        Inside `TenantTransaction`            |
-| Transaction Decl | `@Transactional` |      `@Transactional`      | `newSuspendedTransactionWithTenant` | Explicit `tenantTransaction.execute { }`     |
-| Isolation Guard  |      Schema      |           Schema           |                Schema               | Header whitelist + reset/evict on failure    |
-| Blocking Allowed |       Yes        |            Yes             |     No (event loop must not block)  |                     Yes                      |
+| Item             |  01 Spring MVC   |     02 Virtual Threads     |             03 WebFlux              |             04 Schema-per-Tenant             |          05 Database-per-Tenant           |
+|------------------|:----------------:|:--------------------------:|:-----------------------------------:|:--------------------------------------------:|:-----------------------------------------:|
+| Server           |      Tomcat      |        Tomcat + VT         |                Netty                |                    Tomcat                    |                  Tomcat                   |
+| Thread Model     |  OS thread pool  | Virtual Thread per request |             Event loop              |                OS thread pool                |              OS thread pool               |
+| Context          |  `ThreadLocal`   |       `ScopedValue`        |          Reactor `Context`          |                `ThreadLocal`                 |               `ThreadLocal`               |
+| Schema Switch    |  AOP `@Before`   |       AOP `@Before`        |    Inside `newSuspendedTransaction` |        Inside `TenantTransaction`            |                    None                   |
+| Transaction Decl | `@Transactional` |      `@Transactional`      | `newSuspendedTransactionWithTenant` | Explicit `tenantTransaction.execute { }`     | Explicit `tenantTransaction.execute { }`  |
+| Isolation Guard  |      Schema      |           Schema           |                Schema               | Header whitelist + reset/evict on failure    | Header whitelist + no default datasource  |
+| Blocking Allowed |       Yes        |            Yes             |     No (event loop must not block)  |                     Yes                      |                    Yes                    |
 
 ---
 
@@ -84,6 +85,7 @@ All modules follow the flow below. Only the context propagation mechanism differ
 2. [`02-multitenant-spring-web-virtualthread`](02-multitenant-spring-web-virtualthread/README.md) — Switch to ScopedValue, compare Virtual Thread configuration
 3. [`03-multitenant-spring-webflux`](03-multitenant-spring-webflux/README.md) — Understand Reactor Context + coroutine bridge pattern
 4. [`04-schema-per-tenant-spring-web`](04-schema-per-tenant-spring-web/README.md) — Practice explicit schema switching, reset, and connection eviction with one shared pool
+5. [`05-database-per-tenant-spring-web`](05-database-per-tenant-spring-web/README.md) — Route each tenant to a dedicated datasource with no fallback database
 
 ---
 
@@ -95,9 +97,10 @@ All modules follow the flow below. Only the context propagation mechanism differ
 ./gradlew :02-multitenant-spring-web-virtualthread:test
 ./gradlew :03-multitenant-spring-webflux:test
 ./gradlew :04-schema-per-tenant-spring-web:test
+./gradlew :05-database-per-tenant-spring-web:test
 
 # Full chapter build
-./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build
+./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build
 ```
 
 ---
@@ -141,6 +144,12 @@ In WebFlux, tenant information is propagated to the coroutine context via Reacto
 `04-schema-per-tenant-spring-web` keeps a single Hikari pool and switches schemas only inside `TenantTransaction`. It validates `X-Tenant-ID` through a closed whitelist, resets every connection to `PUBLIC`, and evicts the connection when reset fails to prevent tenant schema leakage.
 
 - Related module: [`04-schema-per-tenant-spring-web`](04-schema-per-tenant-spring-web/)
+
+### Dedicated Database Routing per Tenant
+
+`05-database-per-tenant-spring-web` creates one Hikari pool and Exposed `Database` per whitelisted tenant. `TenantTransaction` selects the database from the current `TenantContext`, so there is no default datasource fallback when a tenant is missing or unknown.
+
+- Related module: [`05-database-per-tenant-spring-web`](05-database-per-tenant-spring-web/)
 
 ---
 

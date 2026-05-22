@@ -2,7 +2,7 @@
 
 [English](./README.md) | 한국어
 
-실전 멀티테넌트 아키텍처를 Exposed + Spring으로 구현하며 Schema 기반 테넌트 분리, 동적 라우팅, 컨텍스트 전파 흐름을 학습하는 챕터입니다. Spring MVC, Virtual Thread, WebFlux, 명시적 schema-per-tenant transaction boundary에서 동일한 멀티테넌시 요구사항을 각각 어떻게 구현하는지 비교합니다.
+실전 멀티테넌트 아키텍처를 Exposed + Spring으로 구현하며 Schema 기반 테넌트 분리, database-per-tenant 라우팅, 동적 라우팅, 컨텍스트 전파 흐름을 학습하는 챕터입니다. Spring MVC, Virtual Thread, WebFlux, 명시적 schema-per-tenant transaction boundary, 전용 tenant database에서 동일한 멀티테넌시 요구사항을 각각 어떻게 구현하는지 비교합니다.
 
 ## 챕터 목표
 
@@ -19,7 +19,7 @@
 
 ## 멀티테넌시 전략 개요
 
-이 챕터는 **Shared Database / Separate Schema** 전략을 기본으로 사용합니다. 하나의 DB 인스턴스에 테넌트별 스키마(`korean`, `english`)를 분리해 데이터를 격리합니다.
+이 챕터는 **Shared Database / Separate Schema** 전략에서 시작합니다. 하나의 DB 인스턴스에 테넌트별 스키마(`korean`, `english`)를 분리해 데이터를 격리합니다.
 
 ```
 Single DB Instance
@@ -33,7 +33,7 @@ Single DB Instance
     └── actor_in_movie
 ```
 
-`TenantAwareDataSource`(`AbstractRoutingDataSource` 상속)를 제공해 **Database per Tenant** 방식으로도 전환할 수 있습니다.
+이후 각 허용 tenant가 전용 Hikari pool과 Exposed `Database`를 소유하는 **Database per Tenant** 전략과 비교합니다.
 
 ### 테넌트별 스키마 분리 아키텍처
 
@@ -49,6 +49,7 @@ Single DB Instance
 | `02-multitenant-spring-web-virtualthread` | Java 21 Virtual Thread 기반 멀티테넌트 | `ScopedValue`     |
 | `03-multitenant-spring-webflux`           | WebFlux + Coroutines 기반 멀티테넌트   | Reactor `Context` |
 | `04-schema-per-tenant-spring-web`         | 하나의 Hikari pool을 쓰는 schema-per-tenant 예제 | `ThreadLocal`     |
+| `05-database-per-tenant-spring-web`       | tenant별 전용 Hikari pool을 쓰는 database-per-tenant 예제 | `ThreadLocal`     |
 
 ---
 
@@ -58,15 +59,15 @@ Single DB Instance
 
 ### 환경별 핵심 차이 요약
 
-| 항목      |  01 Spring MVC   |     02 Virtual Threads     |             03 WebFlux              |              04 Schema-per-Tenant              |
-|---------|:----------------:|:--------------------------:|:-----------------------------------:|:----------------------------------------------:|
-| 서버      |      Tomcat      |        Tomcat + VT         |                Netty                |                     Tomcat                     |
-| 스레드 모델  |     OS 스레드 풀     | Virtual Thread per request |               이벤트 루프                |                   OS 스레드 풀                    |
-| 컨텍스트    |  `ThreadLocal`   |       `ScopedValue`        |          Reactor `Context`          |                 `ThreadLocal`                  |
-| 스키마 전환  |  AOP `@Before`   |       AOP `@Before`        |    `newSuspendedTransaction` 내부     |            `TenantTransaction` 내부              |
-| 트랜잭션 선언 | `@Transactional` |      `@Transactional`      | `newSuspendedTransactionWithTenant` |       명시적 `tenantTransaction.execute { }`       |
-| 격리 가드   |      Schema      |           Schema           |                Schema               |    Header whitelist + reset 실패 시 eviction     |
-| 블로킹 허용  |        허용        |             허용             |          금지 (이벤트 루프 차단 불가)          |                       허용                       |
+| 항목      |  01 Spring MVC   |     02 Virtual Threads     |             03 WebFlux              |              04 Schema-per-Tenant              |          05 Database-per-Tenant           |
+|---------|:----------------:|:--------------------------:|:-----------------------------------:|:----------------------------------------------:|:-----------------------------------------:|
+| 서버      |      Tomcat      |        Tomcat + VT         |                Netty                |                     Tomcat                     |                  Tomcat                   |
+| 스레드 모델  |     OS 스레드 풀     | Virtual Thread per request |               이벤트 루프                |                   OS 스레드 풀                    |               OS 스레드 풀                |
+| 컨텍스트    |  `ThreadLocal`   |       `ScopedValue`        |          Reactor `Context`          |                 `ThreadLocal`                  |               `ThreadLocal`               |
+| 스키마 전환  |  AOP `@Before`   |       AOP `@Before`        |    `newSuspendedTransaction` 내부     |            `TenantTransaction` 내부              |                    없음                    |
+| 트랜잭션 선언 | `@Transactional` |      `@Transactional`      | `newSuspendedTransactionWithTenant` |       명시적 `tenantTransaction.execute { }`       |    명시적 `tenantTransaction.execute { }`    |
+| 격리 가드   |      Schema      |           Schema           |                Schema               |    Header whitelist + reset 실패 시 eviction     | Header whitelist + 기본 datasource 없음 |
+| 블로킹 허용  |        허용        |             허용             |          금지 (이벤트 루프 차단 불가)          |                       허용                       |                    허용                    |
 
 ---
 
@@ -84,6 +85,7 @@ Single DB Instance
 2. [`02-multitenant-spring-web-virtualthread`](02-multitenant-spring-web-virtualthread/README.ko.md) — ScopedValue로 전환, Virtual Thread 설정 비교
 3. [`03-multitenant-spring-webflux`](03-multitenant-spring-webflux/README.ko.md) — Reactor Context + 코루틴 브릿지 패턴 이해
 4. [`04-schema-per-tenant-spring-web`](04-schema-per-tenant-spring-web/README.ko.md) — 하나의 shared pool에서 명시적 schema switch, reset, connection eviction을 실습
+5. [`05-database-per-tenant-spring-web`](05-database-per-tenant-spring-web/README.ko.md) — tenant마다 전용 datasource를 선택하고 fallback database가 없도록 구성
 
 ---
 
@@ -95,9 +97,10 @@ Single DB Instance
 ./gradlew :02-multitenant-spring-web-virtualthread:test
 ./gradlew :03-multitenant-spring-webflux:test
 ./gradlew :04-schema-per-tenant-spring-web:test
+./gradlew :05-database-per-tenant-spring-web:test
 
 # 전체 챕터 빌드
-./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build
+./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build
 ```
 
 ---
@@ -144,6 +147,12 @@ WebFlux에서는 Reactor `Context`를 통해 코루틴 컨텍스트에 테넌트
 `04-schema-per-tenant-spring-web`은 하나의 Hikari pool을 유지하고 `TenantTransaction` 내부에서만 스키마를 전환합니다. `X-Tenant-ID`는 닫힌 허용 목록으로 검증하고, 매 트랜잭션 후 `PUBLIC`으로 reset하며, reset 실패 시 connection을 evict해 tenant schema leakage를 막습니다.
 
 - 관련 모듈: [`04-schema-per-tenant-spring-web`](04-schema-per-tenant-spring-web/)
+
+### Tenant별 전용 Database 라우팅
+
+`05-database-per-tenant-spring-web`은 허용된 tenant마다 하나의 Hikari pool과 Exposed `Database`를 생성합니다. `TenantTransaction`은 현재 `TenantContext`에서 database를 선택하므로 tenant가 없거나 알 수 없는 경우 기본 datasource로 fallback하지 않습니다.
+
+- 관련 모듈: [`05-database-per-tenant-spring-web`](05-database-per-tenant-spring-web/)
 
 ---
 
