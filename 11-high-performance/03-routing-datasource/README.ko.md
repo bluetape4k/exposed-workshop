@@ -11,6 +11,7 @@
 - 정적 `targetDataSources` 맵 대신 Registry 기반 라우팅 구조를 구성한다.
 - `TenantContext`와 `@Transactional(readOnly = true)`를 하나의 라우팅 규칙으로 통합한다.
 - 미등록 키, 기본 tenant fallback, 동시 등록 같은 운영성 이슈를 테스트로 검증한다.
+- Spring 종료 시 registry가 소유한 Hikari pool을 결정적으로 닫는다.
 
 ## 선수 지식
 
@@ -72,7 +73,7 @@ routing:
 
 | Bean                             | 타입                               | 역할                |
 |----------------------------------|----------------------------------|-------------------|
-| `dataSourceRegistry`             | `InMemoryDataSourceRegistry`     | 키별 DataSource 등록소 |
+| `dataSourceRegistry`             | `InMemoryDataSourceRegistry`     | 종료 lifecycle을 포함한 키별 DataSource 등록소 |
 | `routingKeyResolver`             | `ContextAwareRoutingKeyResolver` | 라우팅 키 계산기         |
 | `routingDataSource` (`@Primary`) | `DynamicRoutingDataSource`       | 실제 연결 위임자         |
 | `exposedDatabase`                | `Database`                       | Exposed DB 연결     |
@@ -171,6 +172,7 @@ curl -X PATCH \
 | 예외 처리    | 미등록 키 조회                      | `IllegalStateException`     |
 | 동시성      | 등록/조회 병행                      | 레이스 없이 항상 유효한 DataSource 반환 |
 | 헤더 처리    | 공백 헤더                         | `defaultTenant` 적용          |
+| Lifecycle | 애플리케이션 종료                    | 등록된 Hikari pool close       |
 
 ---
 
