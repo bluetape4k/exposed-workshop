@@ -10,7 +10,7 @@
 |---|---|---|
 | 애플리케이션 아키텍처 | [02-spring-application-architecture](02-spring-application-architecture/README.ko.md) | [01-ktor-application-architecture](01-ktor-application-architecture/README.ko.md) |
 | 인증/세션 | issue #59 예정 | issue #59 예정 |
-| 리얼타임 아웃박스 | issue #60 예정 | issue #60 예정 |
+| 리얼타임 아웃박스 | [07-spring-outbox-realtime](07-spring-outbox-realtime/README.ko.md) | [08-ktor-outbox-realtime](08-ktor-outbox-realtime/README.ko.md) |
 | HTTP 클라이언트 아웃박스/멱등성 | [03-spring-http-outbox-idempotency](03-spring-http-outbox-idempotency/README.ko.md) | [04-ktor-http-outbox-idempotency](04-ktor-http-outbox-idempotency/README.ko.md) |
 | 관측성/준비 상태 | issue #62 예정 | issue #62 예정 |
 
@@ -21,6 +21,8 @@
 ./gradlew :02-spring-application-architecture:test
 ./gradlew :03-spring-http-outbox-idempotency:test
 ./gradlew :04-ktor-http-outbox-idempotency:test
+./gradlew :07-spring-outbox-realtime:test
+./gradlew :08-ktor-outbox-realtime:test
 ```
 
 완료된 주제는 Spring/Ktor 쌍, 집중 테스트, README의 트레이드오프 설명, 실제

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Spring Boot realtime outbox architecture</title>
+  <desc id="desc">A layered Spring Boot 4 example that persists notifications and outbox events with Exposed before publishing Server-Sent Events.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .band { fill: #e0f2fe; stroke: #0369a1; stroke-width: 2; }
+      .store { fill: #ecfdf5; stroke: #047857; stroke-width: 2; }
+      .edge { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .dash { stroke-dasharray: 8 7; }
+      .title { font: 700 30px Arial, sans-serif; fill: #0f172a; }
+      .label { font: 700 20px Arial, sans-serif; fill: #0f172a; }
+      .text { font: 16px Arial, sans-serif; fill: #334155; }
+      .small { font: 14px Arial, sans-serif; fill: #475569; }
+    </style>
+  </defs>
+  <rect class="bg" width="1280" height="720"/>
+  <text class="title" x="60" y="62">Spring Boot 4 Realtime Outbox</text>
+  <text class="text" x="60" y="92">Persist first with Exposed, then publish Server-Sent Events from an explicit outbox step.</text>
+
+  <rect class="band" x="70" y="160" width="230" height="110" rx="8"/>
+  <text class="label" x="105" y="204">Client</text>
+  <text class="text" x="105" y="232">POST /notifications</text>
+  <text class="text" x="105" y="254">GET /events</text>
+
+  <rect class="band" x="380" y="130" width="270" height="170" rx="8"/>
+  <text class="label" x="415" y="176">Spring WebFlux</text>
+  <text class="text" x="415" y="206">NotificationController</text>
+  <text class="text" x="415" y="232">SSE endpoint</text>
+  <text class="text" x="415" y="258">ErrorAdvice</text>
+
+  <rect class="band" x="740" y="130" width="270" height="170" rx="8"/>
+  <text class="label" x="775" y="176">Application Service</text>
+  <text class="text" x="775" y="206">validate command</text>
+  <text class="text" x="775" y="232">publish pending events</text>
+  <text class="text" x="775" y="258">record failed delivery</text>
+
+  <rect class="store" x="380" y="410" width="270" height="140" rx="8"/>
+  <text class="label" x="415" y="456">Exposed Repository</text>
+  <text class="text" x="415" y="486">notifications table</text>
+  <text class="text" x="415" y="512">realtime_outbox table</text>
+
+  <rect class="store" x="740" y="410" width="270" height="140" rx="8"/>
+  <text class="label" x="775" y="456">H2 Database</text>
+  <text class="text" x="775" y="486">PENDING</text>
+  <text class="text" x="775" y="512">PUBLISHED / FAILED</text>
+
+  <rect class="band" x="1040" y="185" width="170" height="110" rx="8"/>
+  <text class="label" x="1078" y="230">RealtimeHub</text>
+  <text class="text" x="1078" y="258">SSE sink</text>
+
+  <path class="edge" d="M300 215 H380"/>
+  <path class="edge" d="M650 215 H740"/>
+  <path class="edge" d="M875 300 V410"/>
+  <path class="edge" d="M650 480 H740"/>
+  <path class="edge" d="M1010 215 H1040"/>
+  <path class="edge dash" d="M1040 255 C760 360 420 350 300 245"/>
+
+  <text class="small" x="520" y="360">same transaction: domain row + outbox row</text>
+  <text class="small" x="965" y="350">publish step is retryable</text>
+</svg>

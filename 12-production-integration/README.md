@@ -11,7 +11,7 @@ use cases, Exposed persistence, tests, and operational documentation.
 |---|---|---|
 | Application architecture | [02-spring-application-architecture](02-spring-application-architecture/README.md) | [01-ktor-application-architecture](01-ktor-application-architecture/README.md) |
 | Auth/session | Planned by issue #59 | Planned by issue #59 |
-| Realtime outbox | Planned by issue #60 | Planned by issue #60 |
+| Realtime outbox | [07-spring-outbox-realtime](07-spring-outbox-realtime/README.md) | [08-ktor-outbox-realtime](08-ktor-outbox-realtime/README.md) |
 | HTTP client outbox/idempotency | [03-spring-http-outbox-idempotency](03-spring-http-outbox-idempotency/README.md) | [04-ktor-http-outbox-idempotency](04-ktor-http-outbox-idempotency/README.md) |
 | Observability/readiness | Planned by issue #62 | Planned by issue #62 |
 
@@ -22,6 +22,8 @@ use cases, Exposed persistence, tests, and operational documentation.
 ./gradlew :02-spring-application-architecture:test
 ./gradlew :03-spring-http-outbox-idempotency:test
 ./gradlew :04-ktor-http-outbox-idempotency:test
+./gradlew :07-spring-outbox-realtime:test
+./gradlew :08-ktor-outbox-realtime:test
 ```
 
 Completed topics should keep the same shape: paired Spring/Ktor coverage,
