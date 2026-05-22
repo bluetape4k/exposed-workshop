@@ -337,6 +337,14 @@ Build a small Ktor service with explicit routing, service validation, sanitized 
 
 Build the Spring Boot 4 pair with MVC controllers, controller advice, service validation, and an Exposed JDBC repository.
 
+#### [Spring HTTP Outbox and Idempotency](12-production-integration/03-spring-http-outbox-idempotency/README.md)
+
+Persist outbound HTTP payment requests before dispatch, enforce duplicate-safe idempotency keys, and separate retryable from permanent gateway failures in Spring Boot 4.
+
+#### [Ktor HTTP Outbox and Idempotency](12-production-integration/04-ktor-http-outbox-idempotency/README.md)
+
+Implement the Ktor pair with suspend route handlers, an Exposed JDBC repository behind `Dispatchers.IO`, and fake-gateway tests for success, retry, duplicate, and permanent-failure paths.
+
 ---
 
 ## Getting Started

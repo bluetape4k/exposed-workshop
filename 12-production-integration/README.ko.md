@@ -11,7 +11,7 @@
 | 애플리케이션 아키텍처 | [02-spring-application-architecture](02-spring-application-architecture/README.ko.md) | [01-ktor-application-architecture](01-ktor-application-architecture/README.ko.md) |
 | 인증/세션 | issue #59 예정 | issue #59 예정 |
 | 리얼타임 아웃박스 | issue #60 예정 | issue #60 예정 |
-| HTTP 클라이언트 아웃박스/멱등성 | issue #61 예정 | issue #61 예정 |
+| HTTP 클라이언트 아웃박스/멱등성 | [03-spring-http-outbox-idempotency](03-spring-http-outbox-idempotency/README.ko.md) | [04-ktor-http-outbox-idempotency](04-ktor-http-outbox-idempotency/README.ko.md) |
 | 관측성/준비 상태 | issue #62 예정 | issue #62 예정 |
 
 ## 검증
@@ -19,9 +19,9 @@
 ```bash
 ./gradlew :01-ktor-application-architecture:test
 ./gradlew :02-spring-application-architecture:test
+./gradlew :03-spring-http-outbox-idempotency:test
+./gradlew :04-ktor-http-outbox-idempotency:test
 ```
 
-쌍을 이룬 아키텍처 모듈은 chapter 12 에픽의 첫 완료 주제입니다. 남은 주제도
-Spring/Ktor 쌍, 집중 테스트, README의 트레이드오프 설명을 같은 형태로
-확장합니다.
-
+완료된 주제는 Spring/Ktor 쌍, 집중 테스트, README의 트레이드오프 설명, 실제
+외부 서비스에 의존하지 않는 예제 구조를 같은 형태로 유지합니다.

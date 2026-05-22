@@ -42,7 +42,7 @@ jobs:
       - uses: gradle/actions/wrapper-validation@v6
 
   build-examples:
-    name: Build / Chapter 12 Architecture Examples
+    name: Build / Chapter 12 Examples
     runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: validate-wrapper
@@ -64,6 +64,8 @@ jobs:
           ./gradlew \
             :01-ktor-application-architecture:build \
             :02-spring-application-architecture:build \
+            :03-spring-http-outbox-idempotency:build \
+            :04-ktor-http-outbox-idempotency:build \
             --no-daemon --continue
         env:
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false"
