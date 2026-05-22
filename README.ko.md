@@ -345,6 +345,30 @@ MVC 컨트롤러, 컨트롤러 advice, 서비스 검증, Exposed JDBC 저장소�
 
 suspend route handler, `Dispatchers.IO` 뒤의 Exposed JDBC 저장소, 성공/재시도/중복/영구 실패를 검증하는 fake-gateway 테스트를 갖춘 Ktor 쌍을 구현합니다.
 
+#### [Spring 인증 세션](12-production-integration/05-spring-auth-session/README.ko.md)
+
+credential 검증, Exposed 기반 사용자/세션, structured error, session invalidation 테스트를 포함한 Spring Boot 4 cookie-session 흐름을 구현합니다.
+
+#### [Ktor 인증 세션](12-production-integration/06-ktor-auth-session/README.ko.md)
+
+명시적 auth route, Exposed 기반 persistence, cookie 처리, login/current-user/logout 동작을 검증하는 `testApplication` 테스트를 갖춘 Ktor 쌍을 구현합니다.
+
+#### [Spring 리얼타임 아웃박스](12-production-integration/07-spring-outbox-realtime/README.ko.md)
+
+database outbox로 notification event를 발행하고 server-sent events를 노출하며, Spring Boot 4에서 duplicate-safe dispatch를 검증합니다.
+
+#### [Ktor 리얼타임 아웃박스](12-production-integration/08-ktor-outbox-realtime/README.ko.md)
+
+suspend dispatch, SSE streaming, realtime notification을 위한 Exposed 기반 outbox state transition을 갖춘 Ktor 쌍을 구현합니다.
+
+#### [Spring 관측성/준비 상태](12-production-integration/09-spring-observability-readiness/README.ko.md)
+
+Spring Boot 4 서비스의 Actuator readiness, request correlation, structured error, slow-operation diagnostics를 보여줍니다.
+
+#### [Ktor 관측성/준비 상태](12-production-integration/10-ktor-observability-readiness/README.ko.md)
+
+명시적 `/readyz`, sanitize된 `X-Request-ID`, structured `StatusPages`, Exposed 기반 diagnostics를 갖춘 Ktor 쌍을 구현합니다.
+
 ---
 
 ## 시작하기

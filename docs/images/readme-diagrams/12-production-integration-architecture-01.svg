@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1380" height="640" viewBox="0 0 1380 640" role="img" aria-label="Chapter 12 production integration architecture">
+<defs>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <style>
+    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
+    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
+    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
+    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#536273}
+    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:14px;font-weight:400;fill:#102033}
+    .card{stroke-width:2.1;filter:url(#shadow)}.line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
+    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
+  </style>
+</defs>
+<rect class="canvas" width="1380" height="640"/>
+<rect class="frame" x="32" y="28" width="1316" height="584" rx="28"/>
+<text class="title" x="66" y="82">Chapter 12 Production Integration</text>
+<text class="subtitle" x="70" y="118">Paired Spring Boot 4 and Ktor examples for production-ready Exposed service patterns</text>
+
+<path class="line" d="M210 230 C254 230 282 230 326 230"/>
+<path class="line" d="M210 410 C254 410 282 410 326 410"/>
+<path class="line" d="M582 230 C626 230 654 230 698 230"/>
+<path class="line" d="M582 410 C626 410 654 410 698 410"/>
+<path class="line" d="M954 230 C1018 230 1020 320 1082 320"/>
+<path class="line" d="M954 410 C1018 410 1020 320 1082 320"/>
+<g transform="translate(80,180)">
+  <rect class="card" x="0" y="0" width="130" height="100" rx="16" fill="#eff6ff" stroke="#8bb8f5"/>
+  <text class="smallLabel" x="65" y="40" text-anchor="middle">HTTP</text>
+  <text class="small" x="65" y="68" text-anchor="middle">requests</text>
+</g>
+
+<g transform="translate(80,360)">
+  <rect class="card" x="0" y="0" width="130" height="100" rx="16" fill="#eff6ff" stroke="#8bb8f5"/>
+  <text class="smallLabel" x="65" y="40" text-anchor="middle">Ops</text>
+  <text class="small" x="65" y="68" text-anchor="middle">checks</text>
+</g>
+
+<g transform="translate(326,154)">
+  <rect class="card" x="0" y="0" width="256" height="152" rx="18" fill="#ecfdf5" stroke="#7bcfa2"/>
+  <text class="label" x="128" y="42" text-anchor="middle">Spring Boot 4</text>
+  <text class="small" x="128" y="76" text-anchor="middle">MVC controllers</text>
+  <text class="small" x="128" y="100" text-anchor="middle">Actuator readiness</text>
+  <text class="strong" x="128" y="126" text-anchor="middle">05 / 07 / 09</text>
+</g>
+
+<g transform="translate(326,334)">
+  <rect class="card" x="0" y="0" width="256" height="152" rx="18" fill="#f0f9ff" stroke="#7cc4e8"/>
+  <text class="label" x="128" y="42" text-anchor="middle">Ktor</text>
+  <text class="small" x="128" y="76" text-anchor="middle">routes and plugins</text>
+  <text class="small" x="128" y="100" text-anchor="middle">custom readiness</text>
+  <text class="strong" x="128" y="126" text-anchor="middle">06 / 08 / 10</text>
+</g>
+
+<g transform="translate(698,154)">
+  <rect class="card" x="0" y="0" width="256" height="152" rx="18" fill="#fff7ed" stroke="#f3b268"/>
+  <text class="label" x="128" y="42" text-anchor="middle">Use Cases</text>
+  <text class="small" x="128" y="76" text-anchor="middle">auth session</text>
+  <text class="small" x="128" y="100" text-anchor="middle">realtime outbox</text>
+  <text class="small" x="128" y="124" text-anchor="middle">observability readiness</text>
+</g>
+
+<g transform="translate(698,334)">
+  <rect class="card" x="0" y="0" width="256" height="152" rx="18" fill="#fefce8" stroke="#d9c75f"/>
+  <text class="label" x="128" y="42" text-anchor="middle">Foundation</text>
+  <text class="small" x="128" y="76" text-anchor="middle">application architecture</text>
+  <text class="small" x="128" y="100" text-anchor="middle">HTTP outbox idempotency</text>
+  <text class="strong" x="128" y="126" text-anchor="middle">01 / 02 / 03 / 04</text>
+</g>
+
+<g transform="translate(1082,224)">
+  <rect class="card" x="0" y="0" width="210" height="192" rx="18" fill="#f5f3ff" stroke="#b4a7f5"/>
+  <text class="label" x="105" y="46" text-anchor="middle">Exposed</text>
+  <text class="small" x="105" y="84" text-anchor="middle">repositories</text>
+  <text class="small" x="105" y="108" text-anchor="middle">transactions</text>
+  <text class="small" x="105" y="132" text-anchor="middle">outbox tables</text>
+  <text class="small" x="105" y="156" text-anchor="middle">H2 tests</text>
+</g>
+
+<g transform="translate(232,526)">
+  <rect class="card" x="0" y="0" width="916" height="48" rx="14" fill="#ffffff" stroke="#d8e0ea"/>
+  <text class="small" x="458" y="30" text-anchor="middle">Each paired topic documents framework tradeoffs, embeds PNG Architecture Diagrams, and keeps tests independently runnable.</text>
+</g>
+</svg>

@@ -345,6 +345,30 @@ Persist outbound HTTP payment requests before dispatch, enforce duplicate-safe i
 
 Implement the Ktor pair with suspend route handlers, an Exposed JDBC repository behind `Dispatchers.IO`, and fake-gateway tests for success, retry, duplicate, and permanent-failure paths.
 
+#### [Spring Auth Session](12-production-integration/05-spring-auth-session/README.md)
+
+Build a Spring Boot 4 cookie-session flow with credential validation, Exposed-backed users/sessions, structured errors, and session invalidation tests.
+
+#### [Ktor Auth Session](12-production-integration/06-ktor-auth-session/README.md)
+
+Implement the Ktor pair with explicit auth routes, Exposed-backed persistence, cookie handling, and testApplication coverage for login, current-user, and logout behavior.
+
+#### [Spring Realtime Outbox](12-production-integration/07-spring-outbox-realtime/README.md)
+
+Publish notification events through a database outbox, expose realtime server-sent events, and verify duplicate-safe dispatch in Spring Boot 4.
+
+#### [Ktor Realtime Outbox](12-production-integration/08-ktor-outbox-realtime/README.md)
+
+Implement the Ktor pair with suspend dispatch, SSE streaming, and Exposed-backed outbox state transitions for realtime notifications.
+
+#### [Spring Observability Readiness](12-production-integration/09-spring-observability-readiness/README.md)
+
+Demonstrate Actuator readiness, request correlation, structured errors, and slow-operation diagnostics for a Spring Boot 4 service.
+
+#### [Ktor Observability Readiness](12-production-integration/10-ktor-observability-readiness/README.md)
+
+Implement the Ktor pair with explicit `/readyz`, sanitized `X-Request-ID`, structured `StatusPages`, and Exposed-backed diagnostics.
+
 ---
 
 ## Getting Started
