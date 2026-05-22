@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+      <path d="M0,0 L12,4 L0,8 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 34px Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475569; }
+      .layer-title { font: 700 18px Arial, sans-serif; fill: #111827; }
+      .box-title { font: 700 17px Arial, sans-serif; fill: #111827; }
+      .box-text { font: 400 14px Arial, sans-serif; fill: #334155; }
+      .small { font: 400 12px Arial, sans-serif; fill: #475569; }
+      .arrow { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .dashed { stroke: #64748b; stroke-width: 2.5; stroke-dasharray: 8 6; fill: none; marker-end: url(#arrow); }
+      .lane { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 2; rx: 18; }
+      .client { fill: #dbeafe; stroke: #2563eb; stroke-width: 2; rx: 14; }
+      .web { fill: #dcfce7; stroke: #16a34a; stroke-width: 2; rx: 14; }
+      .service { fill: #fef3c7; stroke: #d97706; stroke-width: 2; rx: 14; }
+      .data { fill: #fae8ff; stroke: #9333ea; stroke-width: 2; rx: 14; }
+      .guard { fill: #fee2e2; stroke: #dc2626; stroke-width: 2; rx: 14; }
+      .schema { fill: #ffffff; stroke: #64748b; stroke-width: 2; rx: 12; }
+    </style>
+  </defs>
+  <rect width="1400" height="900" fill="#ffffff"/>
+  <text x="60" y="70" class="title">Schema-per-Tenant Spring MVC Example</text>
+  <text x="60" y="102" class="subtitle">One Hikari pool, strict tenant whitelist, Exposed schema switch inside a transaction boundary</text>
+  <rect x="50" y="140" width="1300" height="120" class="lane"/>
+  <text x="80" y="174" class="layer-title">Request Boundary</text>
+  <rect x="90" y="190" width="245" height="46" class="client"/>
+  <text x="112" y="219" class="box-title">HTTP Client</text>
+  <text x="365" y="206" class="box-title">X-Tenant-ID</text>
+  <text x="365" y="228" class="box-text">acme or globex only</text>
+  <rect x="565" y="178" width="290" height="70" class="web"/>
+  <text x="588" y="205" class="box-title">TenantFilter</text>
+  <text x="588" y="226" class="box-text">rejects unsafe tenant headers</text>
+  <rect x="1060" y="178" width="220" height="70" class="guard"/>
+  <text x="1084" y="205" class="box-title">TenantContext</text>
+  <text x="1084" y="226" class="box-text">ThreadLocal cleared in finally</text>
+  <path d="M335 213 L545 213" class="arrow"/>
+  <path d="M855 213 L1040 213" class="arrow"/>
+  <rect x="50" y="300" width="1300" height="140" class="lane"/>
+  <text x="80" y="334" class="layer-title">Application Layer</text>
+  <rect x="120" y="358" width="260" height="58" class="web"/>
+  <text x="144" y="383" class="box-title">InventoryController</text>
+  <text x="144" y="404" class="box-text">GET/POST /inventory</text>
+  <rect x="550" y="358" width="260" height="58" class="service"/>
+  <text x="574" y="383" class="box-title">InventoryService</text>
+  <text x="574" y="404" class="box-text">validates use case boundary</text>
+  <rect x="980" y="358" width="260" height="58" class="service"/>
+  <text x="1004" y="383" class="box-title">ExposedInventoryRepository</text>
+  <text x="1004" y="404" class="box-text">SQL DSL table access</text>
+  <path d="M380 387 L530 387" class="arrow"/>
+  <path d="M810 387 L960 387" class="arrow"/>
+  <rect x="50" y="480" width="1300" height="150" class="lane"/>
+  <text x="80" y="514" class="layer-title">Tenant Transaction Boundary</text>
+  <rect x="120" y="538" width="270" height="64" class="guard"/>
+  <text x="144" y="564" class="box-title">TenantTransaction</text>
+  <text x="144" y="585" class="box-text">single schema switch boundary</text>
+  <rect x="540" y="538" width="300" height="64" class="data"/>
+  <text x="564" y="564" class="box-title">SchemaUtils.setSchema(...)</text>
+  <text x="564" y="585" class="box-text">TENANT_ACME or TENANT_GLOBEX</text>
+  <rect x="980" y="538" width="260" height="64" class="guard"/>
+  <text x="1004" y="564" class="box-title">Reset to PUBLIC</text>
+  <text x="1004" y="585" class="box-text">evict connection on reset failure</text>
+  <path d="M390 570 L520 570" class="arrow"/>
+  <path d="M840 570 L960 570" class="arrow"/>
+  <rect x="50" y="670" width="1300" height="170" class="lane"/>
+  <text x="80" y="704" class="layer-title">Shared Database / Separate Schemas</text>
+  <rect x="120" y="728" width="270" height="84" class="data"/>
+  <text x="144" y="754" class="box-title">Shared HikariDataSource</text>
+  <text x="144" y="775" class="box-text">maximum-pool-size: 1 in example</text>
+  <text x="144" y="796" class="box-text">connection-init-sql: SET SCHEMA PUBLIC</text>
+  <rect x="540" y="718" width="270" height="104" class="schema"/>
+  <text x="564" y="744" class="box-title">TENANT_ACME</text>
+  <text x="564" y="767" class="box-text">inventory_items</text>
+  <text x="564" y="789" class="small">shared-widget = Acme Shared Widget</text>
+  <rect x="980" y="718" width="270" height="104" class="schema"/>
+  <text x="1004" y="744" class="box-title">TENANT_GLOBEX</text>
+  <text x="1004" y="767" class="box-text">inventory_items</text>
+  <text x="1004" y="789" class="small">shared-widget = Globex Shared Widget</text>
+  <path d="M1110 416 L1110 518" class="dashed"/>
+  <path d="M690 602 L690 698" class="dashed"/>
+  <path d="M390 770 L520 770" class="arrow"/>
+  <path d="M810 770 L960 770" class="arrow"/>
+  <text x="60" y="872" class="small">Demo boundary: the example trusts X-Tenant-ID only after whitelist validation. Production systems should derive tenant identity from authenticated principals.</text>
+</svg>

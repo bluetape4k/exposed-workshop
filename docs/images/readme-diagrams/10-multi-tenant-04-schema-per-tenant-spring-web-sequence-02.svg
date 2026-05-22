@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="840" viewBox="0 0 1400 840">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+      <path d="M0,0 L12,4 L0,8 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 32px Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 400 17px Arial, sans-serif; fill: #475569; }
+      .head { fill: #e0f2fe; stroke: #0284c7; stroke-width: 2; rx: 12; }
+      .guard { fill: #fee2e2; stroke: #dc2626; stroke-width: 2; rx: 12; }
+      .work { fill: #ecfccb; stroke: #65a30d; stroke-width: 2; rx: 12; }
+      .data { fill: #f3e8ff; stroke: #9333ea; stroke-width: 2; rx: 12; }
+      .note { fill: #fffbeb; stroke: #d97706; stroke-width: 2; rx: 12; }
+      .label { font: 700 15px Arial, sans-serif; fill: #111827; }
+      .text { font: 400 14px Arial, sans-serif; fill: #334155; }
+      .small { font: 400 12px Arial, sans-serif; fill: #475569; }
+      .line { stroke: #94a3b8; stroke-width: 2; stroke-dasharray: 7 7; }
+      .msg { stroke: #334155; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .return { stroke: #64748b; stroke-width: 2; stroke-dasharray: 8 6; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1400" height="840" fill="#ffffff"/>
+  <text x="60" y="62" class="title">Tenant Request and Schema Reset Flow</text>
+  <text x="60" y="94" class="subtitle">Happy path and reset-failure path for one servlet request using a shared H2 datasource</text>
+  <rect x="70" y="130" width="150" height="58" class="head"/>
+  <text x="102" y="164" class="label">Client</text>
+  <rect x="300" y="130" width="170" height="58" class="head"/>
+  <text x="329" y="164" class="label">TenantFilter</text>
+  <rect x="550" y="130" width="190" height="58" class="head"/>
+  <text x="576" y="164" class="label">Controller</text>
+  <rect x="820" y="130" width="210" height="58" class="head"/>
+  <text x="847" y="164" class="label">TenantTransaction</text>
+  <rect x="1110" y="130" width="210" height="58" class="head"/>
+  <text x="1142" y="164" class="label">H2 Connection</text>
+  <line x1="145" y1="188" x2="145" y2="760" class="line"/>
+  <line x1="385" y1="188" x2="385" y2="760" class="line"/>
+  <line x1="645" y1="188" x2="645" y2="760" class="line"/>
+  <line x1="925" y1="188" x2="925" y2="760" class="line"/>
+  <line x1="1215" y1="188" x2="1215" y2="760" class="line"/>
+  <path d="M145 230 L385 230" class="msg"/>
+  <text x="170" y="220" class="text">GET /inventory/shared-widget</text>
+  <text x="170" y="248" class="small">X-Tenant-ID: acme</text>
+  <rect x="270" y="268" width="230" height="72" class="guard"/>
+  <text x="294" y="294" class="label">Validate Header</text>
+  <text x="294" y="316" class="text">one value, whitelist match</text>
+  <path d="M385 370 L645 370" class="msg"/>
+  <text x="416" y="360" class="text">bind TenantContext and continue</text>
+  <path d="M645 440 L925 440" class="msg"/>
+  <text x="682" y="430" class="text">service calls repository in tenantTransaction</text>
+  <path d="M925 500 L1215 500" class="msg"/>
+  <text x="956" y="490" class="text">set schema TENANT_ACME</text>
+  <path d="M1215 560 L925 560" class="return"/>
+  <text x="956" y="550" class="text">query inventory_items</text>
+  <path d="M925 620 L1215 620" class="msg"/>
+  <text x="956" y="610" class="text">finally reset schema PUBLIC</text>
+  <path d="M925 680 L645 680" class="return"/>
+  <text x="684" y="670" class="text">return isolated tenant record</text>
+  <path d="M645 725 L385 725" class="return"/>
+  <path d="M385 725 L145 725" class="return"/>
+  <text x="166" y="715" class="text">200 OK, context cleared</text>
+  <rect x="720" y="248" width="570" height="80" class="note"/>
+  <text x="748" y="276" class="label">Reset Failure Guard</text>
+  <text x="748" y="300" class="text">Successful work + reset failure throws TenantSchemaResetFailedException.</text>
+  <text x="748" y="322" class="text">The Hikari connection is evicted before the next checkout.</text>
+  <rect x="720" y="342" width="570" height="74" class="work"/>
+  <text x="748" y="370" class="label">Block Failure Rule</text>
+  <text x="748" y="394" class="text">Business failure remains primary; reset failure is suppressed.</text>
+</svg>

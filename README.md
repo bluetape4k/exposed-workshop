@@ -295,13 +295,17 @@ Learn how to use Lettuce-based Suspended Cache with Exposed in a coroutine envir
 
 Learn how to implement schema-based multi-tenancy in a Spring Web application.
 
-#### [Spring Web + VirtualThreads + Multitenant](10-multi-tenant/02-mutitenant-spring-web-virtualthread/README.md)
+#### [Spring Web + VirtualThreads + Multitenant](10-multi-tenant/02-multitenant-spring-web-virtualthread/README.md)
 
 Learn how to implement multi-tenancy in a Virtual Threads environment.
 
 #### [Spring WebFlux + Multitenant](10-multi-tenant/03-multitenant-spring-webflux/README.md)
 
 Learn how to implement reactive multi-tenancy using WebFlux and Coroutines.
+
+#### [Schema-per-Tenant Spring Web](10-multi-tenant/04-schema-per-tenant-spring-web/README.md)
+
+Use one shared Hikari pool while switching Exposed transactions between whitelisted tenant schemas and resetting connections safely.
 
 ---
 

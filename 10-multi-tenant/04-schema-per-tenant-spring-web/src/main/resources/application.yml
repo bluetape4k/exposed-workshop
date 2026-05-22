@@ -1,0 +1,24 @@
+spring:
+    application:
+        name: schema-per-tenant-spring-web
+    datasource:
+        url: jdbc:h2:mem:schema-per-tenant;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
+        username: sa
+        password:
+        driver-class-name: org.h2.Driver
+        hikari:
+            maximum-pool-size: 1
+            minimum-idle: 1
+            connection-init-sql: SET SCHEMA PUBLIC
+    exposed:
+        show-sql: false
+        generate-ddl: false
+
+server:
+    shutdown: graceful
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health,info
