@@ -311,6 +311,10 @@ WebFlux와 Coroutines를 이용하여 반응형 멀티테넌시를 구현하는 
 
 허용된 tenant를 전용 Hikari pool과 Exposed database로 라우팅하고 기본 datasource fallback을 두지 않는 방법을 학습합니다.
 
+#### [Spring Security Tenant Authorization Spring Web](10-multi-tenant/06-spring-security-tenant-authorization-spring-web/README.ko.md)
+
+JWT, API key, demo session identity에서 요청 tenant를 인가한 뒤 tenant database로 라우팅하는 방법을 학습합니다.
+
 ---
 
 ### 고성능

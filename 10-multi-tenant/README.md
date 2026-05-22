@@ -50,6 +50,7 @@ It then compares that baseline with **Database per Tenant**, where each whitelis
 | `03-multitenant-spring-webflux`           | Multi-tenant with WebFlux + Coroutines             | Reactor `Context`     |
 | `04-schema-per-tenant-spring-web`         | Schema-per-tenant with one shared Hikari pool      | `ThreadLocal`         |
 | `05-database-per-tenant-spring-web`       | Database-per-tenant with dedicated Hikari pools    | `ThreadLocal`         |
+| `06-spring-security-tenant-authorization-spring-web` | Tenant authorization with Spring Security before database routing | `ThreadLocal` |
 
 ---
 
@@ -59,15 +60,15 @@ It then compares that baseline with **Database per Tenant**, where each whitelis
 
 ### Key Differences by Environment
 
-| Item             |  01 Spring MVC   |     02 Virtual Threads     |             03 WebFlux              |             04 Schema-per-Tenant             |          05 Database-per-Tenant           |
-|------------------|:----------------:|:--------------------------:|:-----------------------------------:|:--------------------------------------------:|:-----------------------------------------:|
-| Server           |      Tomcat      |        Tomcat + VT         |                Netty                |                    Tomcat                    |                  Tomcat                   |
-| Thread Model     |  OS thread pool  | Virtual Thread per request |             Event loop              |                OS thread pool                |              OS thread pool               |
-| Context          |  `ThreadLocal`   |       `ScopedValue`        |          Reactor `Context`          |                `ThreadLocal`                 |               `ThreadLocal`               |
-| Schema Switch    |  AOP `@Before`   |       AOP `@Before`        |    Inside `newSuspendedTransaction` |        Inside `TenantTransaction`            |                    None                   |
-| Transaction Decl | `@Transactional` |      `@Transactional`      | `newSuspendedTransactionWithTenant` | Explicit `tenantTransaction.execute { }`     | Explicit `tenantTransaction.execute { }`  |
-| Isolation Guard  |      Schema      |           Schema           |                Schema               | Header whitelist + reset/evict on failure    | Header whitelist + no default datasource  |
-| Blocking Allowed |       Yes        |            Yes             |     No (event loop must not block)  |                     Yes                      |                    Yes                    |
+| Item             |  01 Spring MVC   |     02 Virtual Threads     |             03 WebFlux              |             04 Schema-per-Tenant             |          05 Database-per-Tenant           |          06 Spring Security Tenant Auth          |
+|------------------|:----------------:|:--------------------------:|:-----------------------------------:|:--------------------------------------------:|:-----------------------------------------:|:------------------------------------------------:|
+| Server           |      Tomcat      |        Tomcat + VT         |                Netty                |                    Tomcat                    |                  Tomcat                   |                      Tomcat                      |
+| Thread Model     |  OS thread pool  | Virtual Thread per request |             Event loop              |                OS thread pool                |              OS thread pool               |                  OS thread pool                  |
+| Context          |  `ThreadLocal`   |       `ScopedValue`        |          Reactor `Context`          |                `ThreadLocal`                 |               `ThreadLocal`               |                   `ThreadLocal`                  |
+| Schema Switch    |  AOP `@Before`   |       AOP `@Before`        |    Inside `newSuspendedTransaction` |        Inside `TenantTransaction`            |                    None                   |                       None                       |
+| Transaction Decl | `@Transactional` |      `@Transactional`      | `newSuspendedTransactionWithTenant` | Explicit `tenantTransaction.execute { }`     | Explicit `tenantTransaction.execute { }`  |       Explicit `tenantTransaction.execute { }`   |
+| Isolation Guard  |      Schema      |           Schema           |                Schema               | Header whitelist + reset/evict on failure    | Header whitelist + no default datasource  | Authenticated tenant match + no fallback database |
+| Blocking Allowed |       Yes        |            Yes             |     No (event loop must not block)  |                     Yes                      |                    Yes                    |                       Yes                        |
 
 ---
 
@@ -86,6 +87,7 @@ All modules follow the flow below. Only the context propagation mechanism differ
 3. [`03-multitenant-spring-webflux`](03-multitenant-spring-webflux/README.md) — Understand Reactor Context + coroutine bridge pattern
 4. [`04-schema-per-tenant-spring-web`](04-schema-per-tenant-spring-web/README.md) — Practice explicit schema switching, reset, and connection eviction with one shared pool
 5. [`05-database-per-tenant-spring-web`](05-database-per-tenant-spring-web/README.md) — Route each tenant to a dedicated datasource with no fallback database
+6. [`06-spring-security-tenant-authorization-spring-web`](06-spring-security-tenant-authorization-spring-web/README.md) — Bind tenant routing to authenticated identity before database selection
 
 ---
 
@@ -98,9 +100,10 @@ All modules follow the flow below. Only the context propagation mechanism differ
 ./gradlew :03-multitenant-spring-webflux:test
 ./gradlew :04-schema-per-tenant-spring-web:test
 ./gradlew :05-database-per-tenant-spring-web:test
+./gradlew :06-spring-security-tenant-authorization-spring-web:test
 
 # Full chapter build
-./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build
+./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build :06-spring-security-tenant-authorization-spring-web:build
 ```
 
 ---
@@ -150,6 +153,15 @@ In WebFlux, tenant information is propagated to the coroutine context via Reacto
 `05-database-per-tenant-spring-web` creates one Hikari pool and Exposed `Database` per whitelisted tenant. `TenantTransaction` selects the database from the current `TenantContext`, so there is no default datasource fallback when a tenant is missing or unknown.
 
 - Related module: [`05-database-per-tenant-spring-web`](05-database-per-tenant-spring-web/)
+
+### Spring Security Tenant Authorization
+
+`06-spring-security-tenant-authorization-spring-web` authenticates the caller
+with a demo JWT, API key, or demo session header, then authorizes the requested
+`X-Tenant-ID` before setting `TenantContext`. It keeps the database-per-tenant
+routing boundary but removes raw header-only tenant trust from request paths.
+
+- Related module: [`06-spring-security-tenant-authorization-spring-web`](06-spring-security-tenant-authorization-spring-web/)
 
 ---
 

@@ -50,6 +50,7 @@ Single DB Instance
 | `03-multitenant-spring-webflux`           | WebFlux + Coroutines 기반 멀티테넌트   | Reactor `Context` |
 | `04-schema-per-tenant-spring-web`         | 하나의 Hikari pool을 쓰는 schema-per-tenant 예제 | `ThreadLocal`     |
 | `05-database-per-tenant-spring-web`       | tenant별 전용 Hikari pool을 쓰는 database-per-tenant 예제 | `ThreadLocal`     |
+| `06-spring-security-tenant-authorization-spring-web` | database routing 전 Spring Security로 tenant authorization 수행 | `ThreadLocal` |
 
 ---
 
@@ -59,15 +60,15 @@ Single DB Instance
 
 ### 환경별 핵심 차이 요약
 
-| 항목      |  01 Spring MVC   |     02 Virtual Threads     |             03 WebFlux              |              04 Schema-per-Tenant              |          05 Database-per-Tenant           |
-|---------|:----------------:|:--------------------------:|:-----------------------------------:|:----------------------------------------------:|:-----------------------------------------:|
-| 서버      |      Tomcat      |        Tomcat + VT         |                Netty                |                     Tomcat                     |                  Tomcat                   |
-| 스레드 모델  |     OS 스레드 풀     | Virtual Thread per request |               이벤트 루프                |                   OS 스레드 풀                    |               OS 스레드 풀                |
-| 컨텍스트    |  `ThreadLocal`   |       `ScopedValue`        |          Reactor `Context`          |                 `ThreadLocal`                  |               `ThreadLocal`               |
-| 스키마 전환  |  AOP `@Before`   |       AOP `@Before`        |    `newSuspendedTransaction` 내부     |            `TenantTransaction` 내부              |                    없음                    |
-| 트랜잭션 선언 | `@Transactional` |      `@Transactional`      | `newSuspendedTransactionWithTenant` |       명시적 `tenantTransaction.execute { }`       |    명시적 `tenantTransaction.execute { }`    |
-| 격리 가드   |      Schema      |           Schema           |                Schema               |    Header whitelist + reset 실패 시 eviction     | Header whitelist + 기본 datasource 없음 |
-| 블로킹 허용  |        허용        |             허용             |          금지 (이벤트 루프 차단 불가)          |                       허용                       |                    허용                    |
+| 항목      |  01 Spring MVC   |     02 Virtual Threads     |             03 WebFlux              |              04 Schema-per-Tenant              |          05 Database-per-Tenant           |       06 Spring Security Tenant Auth       |
+|---------|:----------------:|:--------------------------:|:-----------------------------------:|:----------------------------------------------:|:-----------------------------------------:|:------------------------------------------:|
+| 서버      |      Tomcat      |        Tomcat + VT         |                Netty                |                     Tomcat                     |                  Tomcat                   |                   Tomcat                   |
+| 스레드 모델  |     OS 스레드 풀     | Virtual Thread per request |               이벤트 루프                |                   OS 스레드 풀                    |               OS 스레드 풀                |                OS 스레드 풀                |
+| 컨텍스트    |  `ThreadLocal`   |       `ScopedValue`        |          Reactor `Context`          |                 `ThreadLocal`                  |               `ThreadLocal`               |                `ThreadLocal`               |
+| 스키마 전환  |  AOP `@Before`   |       AOP `@Before`        |    `newSuspendedTransaction` 내부     |            `TenantTransaction` 내부              |                    없음                    |                    없음                    |
+| 트랜잭션 선언 | `@Transactional` |      `@Transactional`      | `newSuspendedTransactionWithTenant` |       명시적 `tenantTransaction.execute { }`       |    명시적 `tenantTransaction.execute { }`    | 명시적 `tenantTransaction.execute { }` |
+| 격리 가드   |      Schema      |           Schema           |                Schema               |    Header whitelist + reset 실패 시 eviction     | Header whitelist + 기본 datasource 없음 | 인증된 tenant match + 기본 datasource 없음 |
+| 블로킹 허용  |        허용        |             허용             |          금지 (이벤트 루프 차단 불가)          |                       허용                       |                    허용                    |                    허용                    |
 
 ---
 
@@ -86,6 +87,7 @@ Single DB Instance
 3. [`03-multitenant-spring-webflux`](03-multitenant-spring-webflux/README.ko.md) — Reactor Context + 코루틴 브릿지 패턴 이해
 4. [`04-schema-per-tenant-spring-web`](04-schema-per-tenant-spring-web/README.ko.md) — 하나의 shared pool에서 명시적 schema switch, reset, connection eviction을 실습
 5. [`05-database-per-tenant-spring-web`](05-database-per-tenant-spring-web/README.ko.md) — tenant마다 전용 datasource를 선택하고 fallback database가 없도록 구성
+6. [`06-spring-security-tenant-authorization-spring-web`](06-spring-security-tenant-authorization-spring-web/README.ko.md) — 인증된 identity와 tenant routing을 연결한 뒤 database를 선택
 
 ---
 
@@ -98,9 +100,10 @@ Single DB Instance
 ./gradlew :03-multitenant-spring-webflux:test
 ./gradlew :04-schema-per-tenant-spring-web:test
 ./gradlew :05-database-per-tenant-spring-web:test
+./gradlew :06-spring-security-tenant-authorization-spring-web:test
 
 # 전체 챕터 빌드
-./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build
+./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build :06-spring-security-tenant-authorization-spring-web:build
 ```
 
 ---
@@ -153,6 +156,15 @@ WebFlux에서는 Reactor `Context`를 통해 코루틴 컨텍스트에 테넌트
 `05-database-per-tenant-spring-web`은 허용된 tenant마다 하나의 Hikari pool과 Exposed `Database`를 생성합니다. `TenantTransaction`은 현재 `TenantContext`에서 database를 선택하므로 tenant가 없거나 알 수 없는 경우 기본 datasource로 fallback하지 않습니다.
 
 - 관련 모듈: [`05-database-per-tenant-spring-web`](05-database-per-tenant-spring-web/)
+
+### Spring Security Tenant Authorization
+
+`06-spring-security-tenant-authorization-spring-web`은 demo JWT, API key,
+demo session header로 caller를 인증하고, 요청된 `X-Tenant-ID`를 인가한 뒤에만
+`TenantContext`를 설정합니다. database-per-tenant routing 경계는 유지하되
+request path에서 raw header-only tenant trust를 제거합니다.
+
+- 관련 모듈: [`06-spring-security-tenant-authorization-spring-web`](06-spring-security-tenant-authorization-spring-web/)
 
 ---
 

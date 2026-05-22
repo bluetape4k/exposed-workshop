@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">Spring Security Tenant Authorization Request Flow</title>
+  <desc id="desc">Sequence diagram for credential conflict checks, authentication, tenant authorization, and Exposed routing.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#263645"/>
+    </marker>
+    <style>
+      .bg { fill: #fbfcfe; }
+      .head { fill: #e8f3ff; stroke: #6b9ed0; stroke-width: 2; rx: 8; ry: 8; }
+      .line { stroke: #94a3b8; stroke-width: 2; stroke-dasharray: 5 5; }
+      .arrow { stroke: #263645; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .fail { stroke: #a33b3b; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .title { font: 700 30px Arial, sans-serif; fill: #17212b; }
+      .label { font: 700 16px Arial, sans-serif; fill: #17212b; }
+      .small { font: 14px Arial, sans-serif; fill: #263645; }
+      .note { fill: #fff6dc; stroke: #c89b2c; stroke-width: 2; rx: 8; ry: 8; }
+    </style>
+  </defs>
+  <rect class="bg" width="1280" height="760"/>
+  <text x="52" y="58" class="title">Request Flow</text>
+  <text x="52" y="86" class="small">Credential conflict rejection happens before authentication; tenant context is written only after authorization.</text>
+
+  <g>
+    <rect x="42" y="120" width="130" height="54" class="head"/>
+    <text x="78" y="153" class="label">Client</text>
+    <line x1="107" y1="174" x2="107" y2="690" class="line"/>
+
+    <rect x="220" y="120" width="170" height="54" class="head"/>
+    <text x="238" y="153" class="label">Conflict Filter</text>
+    <line x1="305" y1="174" x2="305" y2="690" class="line"/>
+
+    <rect x="438" y="120" width="160" height="54" class="head"/>
+    <text x="463" y="153" class="label">Authentication</text>
+    <line x1="518" y1="174" x2="518" y2="690" class="line"/>
+
+    <rect x="646" y="120" width="160" height="54" class="head"/>
+    <text x="685" y="153" class="label">Authorization</text>
+    <line x1="726" y1="174" x2="726" y2="690" class="line"/>
+
+    <rect x="854" y="120" width="170" height="54" class="head"/>
+    <text x="874" y="153" class="label">Tenant Filter</text>
+    <line x1="939" y1="174" x2="939" y2="690" class="line"/>
+
+    <rect x="1072" y="120" width="156" height="54" class="head"/>
+    <text x="1102" y="153" class="label">Exposed DB</text>
+    <line x1="1150" y1="174" x2="1150" y2="690" class="line"/>
+  </g>
+
+  <path class="arrow" d="M107 220 H305"/>
+  <text x="122" y="210" class="small">Bearer/API key/session + X-Tenant-ID</text>
+
+  <path class="fail" d="M305 262 H107"/>
+  <text x="130" y="252" class="small">400 if supported credentials are mixed</text>
+
+  <path class="arrow" d="M305 310 H518"/>
+  <text x="330" y="300" class="small">one credential source</text>
+
+  <path class="fail" d="M518 352 H107"/>
+  <text x="132" y="342" class="small">401 if missing or invalid credential</text>
+
+  <path class="arrow" d="M518 400 H726"/>
+  <text x="552" y="390" class="small">authenticated principal</text>
+
+  <path class="arrow" d="M726 448 H939"/>
+  <text x="748" y="438" class="small">authenticated request</text>
+
+  <path class="fail" d="M939 490 H107"/>
+  <text x="130" y="480" class="small">403 if claim missing, malformed, unknown, or mismatched</text>
+
+  <path class="fail" d="M939 532 H107"/>
+  <text x="130" y="522" class="small">400/404 if selector missing, malformed, or unknown</text>
+
+  <path class="arrow" d="M939 584 H1150"/>
+  <text x="964" y="574" class="small">TenantContext = authorized tenant</text>
+
+  <path class="arrow" d="M1150 634 H107"/>
+  <text x="366" y="624" class="small">tenant-specific inventory response</text>
+
+  <rect x="426" y="668" width="430" height="48" class="note"/>
+  <text x="448" y="698" class="small">No default datasource. No raw header-only TenantContext write.</text>
+</svg>
