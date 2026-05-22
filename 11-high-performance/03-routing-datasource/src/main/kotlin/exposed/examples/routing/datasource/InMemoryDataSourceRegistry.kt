@@ -1,5 +1,7 @@
 package exposed.examples.routing.datasource
 
+import java.util.Collections
+import java.util.IdentityHashMap
 import java.util.concurrent.ConcurrentHashMap
 import javax.sql.DataSource
 
@@ -18,5 +20,32 @@ class InMemoryDataSourceRegistry: DataSourceRegistry {
     override fun contains(key: String): Boolean = dataSources.containsKey(key)
 
     override fun keys(): Set<String> = dataSources.keys
+
+    override fun close() {
+        val closeableDataSources = dataSources.values
+            .filterIsInstance<AutoCloseable>()
+            .distinctByIdentity()
+        val failures = mutableListOf<Exception>()
+
+        dataSources.clear()
+
+        closeableDataSources.forEach { dataSource ->
+            try {
+                dataSource.close()
+            } catch (e: Exception) {
+                failures.add(e)
+            }
+        }
+
+        if (failures.isNotEmpty()) {
+            throw IllegalStateException("Failed to close registered DataSources.").apply {
+                failures.forEach(::addSuppressed)
+            }
+        }
+    }
 }
 
+private fun <T: Any> Iterable<T>.distinctByIdentity(): List<T> {
+    val seen = Collections.newSetFromMap(IdentityHashMap<T, Boolean>())
+    return filter { seen.add(it) }
+}

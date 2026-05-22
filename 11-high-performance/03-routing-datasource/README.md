@@ -10,6 +10,7 @@ Combines `tenant + transaction readOnly` information to form a `<tenant>:<rw|ro>
 - Build a Registry-based routing structure instead of a static `targetDataSources` map.
 - Combine `TenantContext` and `@Transactional(readOnly = true)` into a single routing rule.
 - Verify operational concerns such as unregistered keys, default tenant fallback, and concurrent registration through tests.
+- Close registry-owned Hikari pools deterministically during Spring shutdown.
 
 ## Prerequisites
 
@@ -69,7 +70,7 @@ If the `ro` entry is omitted, `RoutingDataSourceConfig` registers the `rw` DataS
 
 | Bean                             | Type                             | Role                          |
 |----------------------------------|----------------------------------|-------------------------------|
-| `dataSourceRegistry`             | `InMemoryDataSourceRegistry`     | Per-key DataSource registry   |
+| `dataSourceRegistry`             | `InMemoryDataSourceRegistry`     | Per-key DataSource registry with shutdown lifecycle |
 | `routingKeyResolver`             | `ContextAwareRoutingKeyResolver` | Routing key calculator        |
 | `routingDataSource` (`@Primary`) | `DynamicRoutingDataSource`       | Actual connection delegator   |
 | `exposedDatabase`                | `Database`                       | Exposed DB connection         |
@@ -166,6 +167,7 @@ curl -X PATCH \
 | Error handling | Lookup of unregistered key        | `IllegalStateException`                  |
 | Concurrency    | Concurrent registration/lookup    | Always returns valid DataSource, no race |
 | Header handling | Blank header                     | Apply `defaultTenant`                    |
+| Lifecycle      | Application shutdown              | Registered Hikari pools are closed       |
 
 ---
 

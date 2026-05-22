@@ -1,8 +1,8 @@
 package exposed.examples.routing.config
 
 import com.zaxxer.hikari.HikariDataSource
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import io.bluetape4k.assertions.shouldBeEqualTo
+import io.bluetape4k.assertions.shouldBeTrue
 import org.junit.jupiter.api.Test
 
 class RoutingDataSourceConfigTest {
@@ -24,13 +24,12 @@ class RoutingDataSourceConfigTest {
         val ro = registry.get("default:ro") as HikariDataSource
 
         try {
-            assertTrue(registry.contains("default:rw"))
-            assertTrue(registry.contains("default:ro"))
-            assertEquals("jdbc:h2:mem:routing_default_rw", rw.jdbcUrl)
-            assertEquals("jdbc:h2:mem:routing_default_rw", ro.jdbcUrl)
+            registry.contains("default:rw").shouldBeTrue()
+            registry.contains("default:ro").shouldBeTrue()
+            rw.jdbcUrl shouldBeEqualTo "jdbc:h2:mem:routing_default_rw"
+            ro.jdbcUrl shouldBeEqualTo "jdbc:h2:mem:routing_default_rw"
         } finally {
-            rw.close()
-            ro.close()
+            registry.close()
         }
     }
 
@@ -42,7 +41,28 @@ class RoutingDataSourceConfigTest {
 
         val resolver = config.routingKeyResolver(properties)
 
-        assertEquals("fallback-tenant:rw", resolver.currentLookupKey())
+        resolver.currentLookupKey() shouldBeEqualTo "fallback-tenant:rw"
+    }
+
+    @Test
+    fun `dataSourceRegistry 종료 시 등록된 Hikari pool을 닫는다`() {
+        val properties = RoutingDataSourceProperties().apply {
+            defaultTenant = "default"
+            tenants["default"] = TenantDataSourceProperties().apply {
+                rw = dataSourceNode("jdbc:h2:mem:routing_close_default_rw")
+                ro = dataSourceNode("jdbc:h2:mem:routing_close_default_ro")
+            }
+        }
+
+        val registry = config.dataSourceRegistry(properties)
+        val rw = registry.get("default:rw") as HikariDataSource
+        val ro = registry.get("default:ro") as HikariDataSource
+
+        registry.close()
+
+        rw.isClosed.shouldBeTrue()
+        ro.isClosed.shouldBeTrue()
+        registry.keys().size shouldBeEqualTo 0
     }
 
     private fun dataSourceNode(url: String) =

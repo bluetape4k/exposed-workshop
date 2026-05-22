@@ -6,6 +6,7 @@ on:
   push:
     branches: [ develop, main ]
     paths:
+      - '11-high-performance/03-routing-datasource/**'
       - '12-production-integration/**'
       - 'buildSrc/**'
       - 'gradle/**'
@@ -15,6 +16,7 @@ on:
   pull_request:
     branches: [ develop, main ]
     paths:
+      - '11-high-performance/03-routing-datasource/**'
       - '12-production-integration/**'
       - 'buildSrc/**'
       - 'gradle/**'
@@ -42,7 +44,7 @@ jobs:
       - uses: gradle/actions/wrapper-validation@v6
 
   build-examples:
-    name: Build / Chapter 12 Examples
+    name: Build / Examples (selected modules)
     runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: validate-wrapper
@@ -59,14 +61,16 @@ jobs:
           gradle-version: wrapper
           cache-read-only: ${{ github.event_name == 'pull_request' }}
 
-      - name: Build and test chapter 12 examples
+      - name: Build and test selected examples
         run: |
+          # Routing DataSource uses GraalVM AOT tasks; disable configuration cache for this mixed example build.
           ./gradlew \
+            :03-routing-datasource:build \
             :01-ktor-application-architecture:build \
             :02-spring-application-architecture:build \
             :03-spring-http-outbox-idempotency:build \
             :04-ktor-http-outbox-idempotency:build \
-            --no-daemon --continue
+            --no-daemon --no-configuration-cache --continue
         env:
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false"
 
