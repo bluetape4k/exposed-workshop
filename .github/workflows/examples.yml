@@ -70,6 +70,12 @@ jobs:
             :02-spring-application-architecture:build \
             :03-spring-http-outbox-idempotency:build \
             :04-ktor-http-outbox-idempotency:build \
+            :05-spring-auth-session:build \
+            :06-ktor-auth-session:build \
+            :07-spring-outbox-realtime:build \
+            :08-ktor-outbox-realtime:build \
+            :09-spring-observability-readiness:build \
+            :10-ktor-observability-readiness:build \
             --no-daemon --no-configuration-cache --continue
         env:
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false"
