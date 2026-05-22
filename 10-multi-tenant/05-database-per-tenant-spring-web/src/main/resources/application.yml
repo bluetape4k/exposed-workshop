@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: database-per-tenant-spring-web
+  main:
+    banner-mode: off
+
+server:
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+app:
+  tenants:
+    acme:
+      jdbc-url: jdbc:h2:mem:tenant_acme_inventory;MODE=PostgreSQL;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1
+      username: sa
+      password:
+    globex:
+      jdbc-url: jdbc:h2:mem:tenant_globex_inventory;MODE=PostgreSQL;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1
+      username: sa
+      password:

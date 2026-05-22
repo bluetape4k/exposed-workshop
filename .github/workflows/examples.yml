@@ -7,6 +7,7 @@ on:
     branches: [ develop, main ]
     paths:
       - '10-multi-tenant/04-schema-per-tenant-spring-web/**'
+      - '10-multi-tenant/05-database-per-tenant-spring-web/**'
       - '11-high-performance/03-routing-datasource/**'
       - '12-production-integration/**'
       - 'buildSrc/**'
@@ -18,6 +19,7 @@ on:
     branches: [ develop, main ]
     paths:
       - '10-multi-tenant/04-schema-per-tenant-spring-web/**'
+      - '10-multi-tenant/05-database-per-tenant-spring-web/**'
       - '11-high-performance/03-routing-datasource/**'
       - '12-production-integration/**'
       - 'buildSrc/**'
@@ -69,6 +71,7 @@ jobs:
           ./gradlew \
             :03-routing-datasource:build \
             :04-schema-per-tenant-spring-web:build \
+            :05-database-per-tenant-spring-web:build \
             :01-ktor-application-architecture:build \
             :02-spring-application-architecture:build \
             :03-spring-http-outbox-idempotency:build \

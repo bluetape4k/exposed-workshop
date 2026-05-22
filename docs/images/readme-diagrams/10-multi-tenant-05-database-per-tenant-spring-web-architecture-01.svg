@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760">
+  <rect width="1280" height="760" fill="#f7fafc"/>
+  <text x="640" y="58" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" fill="#172033">Database-per-Tenant Spring Web Architecture</text>
+  <text x="640" y="92" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="18" fill="#4a5568">One tenant header selects one owned datasource, one Exposed Database, and one physical tenant database.</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="14" markerHeight="10" refX="12" refY="5" orient="auto">
+      <path d="M 0 0 L 14 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <style>
+      .box { fill:#ffffff; stroke:#2563eb; stroke-width:2.5; rx:10; }
+      .db { fill:#fff7ed; stroke:#ea580c; stroke-width:2.5; }
+      .title { font-family:Inter, Arial, sans-serif; font-size:21px; font-weight:700; fill:#172033; }
+      .text { font-family:Inter, Arial, sans-serif; font-size:16px; fill:#263244; }
+      .small { font-family:Inter, Arial, sans-serif; font-size:14px; fill:#4a5568; }
+      .arrow { stroke:#2563eb; stroke-width:3; fill:none; marker-end:url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="box" x="56" y="160" width="220" height="126"/>
+  <text class="title" x="166" y="202" text-anchor="middle">HTTP Client</text>
+  <text class="text" x="166" y="236" text-anchor="middle">X-Tenant-ID</text>
+  <text class="small" x="166" y="262" text-anchor="middle">acme | globex</text>
+
+  <rect class="box" x="346" y="144" width="254" height="158"/>
+  <text class="title" x="473" y="188" text-anchor="middle">TenantFilter</text>
+  <text class="text" x="473" y="222" text-anchor="middle">Strict whitelist</text>
+  <text class="small" x="473" y="250" text-anchor="middle">400 missing, 404 unknown</text>
+  <text class="small" x="473" y="276" text-anchor="middle">ThreadLocal cleared in finally</text>
+
+  <rect class="box" x="670" y="144" width="254" height="158"/>
+  <text class="title" x="797" y="188" text-anchor="middle">TenantTransaction</text>
+  <text class="text" x="797" y="222" text-anchor="middle">transaction(database)</text>
+  <text class="small" x="797" y="250" text-anchor="middle">Repository never chooses datasource</text>
+  <text class="small" x="797" y="276" text-anchor="middle">Rollback stays tenant-local</text>
+
+  <rect class="box" x="994" y="144" width="230" height="158"/>
+  <text class="title" x="1109" y="188" text-anchor="middle">Registry</text>
+  <text class="text" x="1109" y="222" text-anchor="middle">TenantId -> DataSource</text>
+  <text class="small" x="1109" y="250" text-anchor="middle">Fail-fast config validation</text>
+  <text class="small" x="1109" y="276" text-anchor="middle">Closes all Hikari pools</text>
+
+  <rect class="box" x="346" y="412" width="254" height="126"/>
+  <text class="title" x="473" y="454" text-anchor="middle">Inventory API</text>
+  <text class="text" x="473" y="488" text-anchor="middle">Controller -> Service</text>
+  <text class="small" x="473" y="514" text-anchor="middle">Tenant-agnostic endpoints</text>
+
+  <rect class="box" x="670" y="412" width="254" height="126"/>
+  <text class="title" x="797" y="454" text-anchor="middle">Repository</text>
+  <text class="text" x="797" y="488" text-anchor="middle">Exposed DSL</text>
+  <text class="small" x="797" y="514" text-anchor="middle">Uses TenantTransaction only</text>
+
+  <rect class="db" x="978" y="394" width="246" height="116" rx="10"/>
+  <text class="title" x="1101" y="438" text-anchor="middle">ACME DB</text>
+  <text class="small" x="1101" y="468" text-anchor="middle">jdbc:h2:mem:tenant_acme</text>
+  <text class="small" x="1101" y="492" text-anchor="middle">Dedicated Hikari pool</text>
+
+  <rect class="db" x="978" y="574" width="246" height="116" rx="10"/>
+  <text class="title" x="1101" y="618" text-anchor="middle">GLOBEX DB</text>
+  <text class="small" x="1101" y="648" text-anchor="middle">jdbc:h2:mem:tenant_globex</text>
+  <text class="small" x="1101" y="672" text-anchor="middle">Dedicated Hikari pool</text>
+
+  <path class="arrow" d="M276 223 H346"/>
+  <path class="arrow" d="M600 223 H670"/>
+  <path class="arrow" d="M924 223 H994"/>
+  <path class="arrow" d="M473 302 V412"/>
+  <path class="arrow" d="M600 475 H670"/>
+  <path class="arrow" d="M797 412 V302"/>
+  <path class="arrow" d="M924 448 H978"/>
+  <path class="arrow" d="M924 502 C954 548 954 626 978 626"/>
+</svg>

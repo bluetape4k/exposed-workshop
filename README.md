@@ -307,6 +307,10 @@ Learn how to implement reactive multi-tenancy using WebFlux and Coroutines.
 
 Use one shared Hikari pool while switching Exposed transactions between whitelisted tenant schemas and resetting connections safely.
 
+#### [Database-per-Tenant Spring Web](10-multi-tenant/05-database-per-tenant-spring-web/README.md)
+
+Route whitelisted tenants to dedicated Hikari pools and Exposed databases with no default datasource fallback.
+
 ---
 
 ### High Performance
