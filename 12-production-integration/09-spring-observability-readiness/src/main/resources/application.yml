@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: spring-observability-readiness
+  datasource:
+    url: jdbc:h2:mem:spring_observability_readiness;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+        add-additional-paths: true
+      # Workshop-only: production services should use `when-authorized`
+      # or omit component details unless actuator endpoints are secured.
+      show-details: always
+      group:
+        readiness:
+          include: readinessState,databaseReadiness
+  endpoints:
+    web:
+      exposure:
+        include: health,info

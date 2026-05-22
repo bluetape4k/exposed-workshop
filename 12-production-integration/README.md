@@ -18,7 +18,7 @@ rendered documentation is stable across GitHub, IDEs, and offline readers.
 | Auth/session | [05-spring-auth-session](05-spring-auth-session/README.md) | [06-ktor-auth-session](06-ktor-auth-session/README.md) |
 | Realtime outbox | [07-spring-outbox-realtime](07-spring-outbox-realtime/README.md) | [08-ktor-outbox-realtime](08-ktor-outbox-realtime/README.md) |
 | HTTP client outbox/idempotency | [03-spring-http-outbox-idempotency](03-spring-http-outbox-idempotency/README.md) | [04-ktor-http-outbox-idempotency](04-ktor-http-outbox-idempotency/README.md) |
-| Observability/readiness | Planned by issue #62 | Planned by issue #62 |
+| Observability/readiness | [09-spring-observability-readiness](09-spring-observability-readiness/README.md) | [10-ktor-observability-readiness](10-ktor-observability-readiness/README.md) |
 
 ## Verification
 
@@ -31,6 +31,8 @@ rendered documentation is stable across GitHub, IDEs, and offline readers.
 ./gradlew :06-ktor-auth-session:test
 ./gradlew :07-spring-outbox-realtime:test
 ./gradlew :08-ktor-outbox-realtime:test
+./gradlew :09-spring-observability-readiness:test
+./gradlew :10-ktor-observability-readiness:test
 ```
 
 Completed topics should keep the same shape: paired Spring/Ktor coverage,

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1380" height="560" viewBox="0 0 1380 560" role="img" aria-label="09 spring observability readiness Architecture">
+<defs>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <style>
+    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
+    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
+    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
+    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#536273}
+    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:14px;font-weight:400;fill:#102033}
+    .card{stroke-width:2.1;filter:url(#shadow)}.line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
+    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
+  </style>
+</defs>
+<rect class="canvas" width="1380" height="560"/>
+<rect class="frame" x="32" y="28" width="1316" height="504" rx="28"/>
+<text class="title" x="66" y="82">09 spring observability readiness Architecture</text>
+<text class="subtitle" x="70" y="118">Spring Boot 4 Actuator readiness plus Exposed-backed operation diagnostics</text>
+
+<path d="M240 250 C286 250 306 250 352 250" stroke="#758297" stroke-width="3" fill="none"/>
+<path d="M562 250 C608 250 628 250 674 250" stroke="#758297" stroke-width="3" fill="none"/>
+<path d="M884 250 C930 250 950 250 996 250" stroke="#758297" stroke-width="3" fill="none"/>
+<path d="M1116 302 C1116 360 1018 384 900 384 C782 384 720 360 720 318" stroke="#758297" stroke-width="3" fill="none"/>
+<path d="M240 388 C370 456 742 456 996 305" stroke="#758297" stroke-width="3" stroke-dasharray="9 7" fill="none"/>
+<path d="M566 388 C610 388 634 388 674 388" stroke="#758297" stroke-width="3" fill="none"/>
+<path d="M346 244 L358 250 L346 256 Z" fill="#758297"/>
+<path d="M668 244 L680 250 L668 256 Z" fill="#758297"/>
+<path d="M990 244 L1002 250 L990 256 Z" fill="#758297"/>
+<path d="M714 324 L720 312 L726 324 Z" fill="#758297"/>
+<path d="M990 299 L1002 302 L994 311 Z" fill="#758297"/>
+<path d="M668 382 L680 388 L668 394 Z" fill="#758297"/>
+
+<g transform="translate(90,190)">
+  <rect class="card" x="0" y="0" width="150" height="120" rx="18" fill="#eff6ff" stroke="#8bb8f5"/>
+  <text class="smallLabel" x="75" y="44" text-anchor="middle">HTTP Client</text>
+  <text class="small" x="75" y="74" text-anchor="middle">probe + API calls</text>
+  <text class="small" x="75" y="96" text-anchor="middle">X-Request-ID</text>
+</g>
+
+<g transform="translate(352,182)">
+  <rect class="card" x="0" y="0" width="210" height="136" rx="18" fill="#ecfdf5" stroke="#7bcfa2"/>
+  <text class="smallLabel" x="105" y="42" text-anchor="middle">Correlation Filter</text>
+  <text class="small" x="105" y="72" text-anchor="middle">echo or generate</text>
+  <text class="strong" x="105" y="98" text-anchor="middle">X-Request-ID</text>
+</g>
+
+<g transform="translate(674,172)">
+  <rect class="card" x="0" y="0" width="210" height="156" rx="18" fill="#fff7ed" stroke="#f3b268"/>
+  <text class="smallLabel" x="105" y="42" text-anchor="middle">Diagnostics API</text>
+  <text class="small" x="105" y="73" text-anchor="middle">structured errors</text>
+  <text class="small" x="105" y="96" text-anchor="middle">slow operations</text>
+  <text class="small" x="105" y="119" text-anchor="middle">operation history</text>
+</g>
+
+<g transform="translate(996,172)">
+  <rect class="card" x="0" y="0" width="210" height="156" rx="18" fill="#f5f3ff" stroke="#b4a7f5"/>
+  <text class="smallLabel" x="105" y="42" text-anchor="middle">Exposed JDBC</text>
+  <text class="small" x="105" y="73" text-anchor="middle">health ping</text>
+  <text class="small" x="105" y="96" text-anchor="middle">diagnostic_operations</text>
+  <text class="small" x="105" y="119" text-anchor="middle">H2 datasource</text>
+</g>
+
+<g transform="translate(342,332)">
+  <rect class="card" x="0" y="0" width="224" height="112" rx="18" fill="#fefce8" stroke="#d9c75f"/>
+  <text class="smallLabel" x="112" y="42" text-anchor="middle">Actuator Readiness</text>
+  <text class="small" x="112" y="72" text-anchor="middle">/actuator/health/readiness</text>
+  <text class="small" x="112" y="94" text-anchor="middle">readinessState + database</text>
+</g>
+
+<g transform="translate(674,332)">
+  <rect class="card" x="0" y="0" width="226" height="112" rx="18" fill="#f0f9ff" stroke="#7cc4e8"/>
+  <text class="smallLabel" x="113" y="42" text-anchor="middle">Health Indicator</text>
+  <text class="small" x="113" y="72" text-anchor="middle">databaseReadiness</text>
+  <text class="small" x="113" y="94" text-anchor="middle">UP or DOWN</text>
+</g>
+
+<g stroke="#758297" stroke-width="3" stroke-linecap="round">
+  <line x1="240" y1="250" x2="352" y2="250"/>
+  <line x1="562" y1="250" x2="674" y2="250"/>
+  <line x1="884" y1="250" x2="996" y2="250"/>
+  <line x1="566" y1="388" x2="674" y2="388"/>
+  <line x1="900" y1="388" x2="996" y2="306"/>
+</g>
+
+<text class="subtitle" x="70" y="488">Readiness uses Spring platform conventions; diagnostics remain ordinary controller/service/repository code.</text>
+</svg>
