@@ -47,14 +47,7 @@ WebFlux + Coroutines 기반의 논블로킹 멀티테넌트 예제입니다. Rea
 WebFlux에서는 스레드가 요청에 고정되지 않아 `ThreadLocal`/`ScopedValue`를 사용할 수 없습니다. 대신 Reactor `Context` → `ReactorContext` →
 `CoroutineContext` 경로로 테넌트를 전파합니다.
 
-```
-HTTP 요청
-  └── TenantFilter (WebFilter)
-        └── chain.filter(exchange).contextWrite { it.put("TenantId", TenantId(tenant)) }
-              └── Reactor Context (비동기 체인 전파)
-                    └── coroutineContext[ReactorContext]?.context?.get("TenantId")
-                          └── newSuspendedTransactionWithTenant { SchemaUtils.setSchema(...) }
-```
+![WebFlux tenant context propagation diagram](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-context-propagation-05.png)
 
 ### Reactor Context를 통한 테넌트 전파 흐름
 

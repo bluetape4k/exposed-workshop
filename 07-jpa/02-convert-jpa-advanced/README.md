@@ -92,9 +92,9 @@ CreditCardTable.selectAll()
     .union(BankAccountTable.selectAll())
 ```
 
-## Inheritance Strategy classDiagram
+## Inheritance Strategy Diagram
 
-![Inheritance Strategy classDiagram diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-class-01.png)
+![Inheritance Strategy diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-class-01.png)
 
 ## Domain ERDs
 
@@ -118,9 +118,9 @@ CreditCardTable.selectAll()
 
 ![Tree Structure Hierarchy Example diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-architecture-06.png)
 
-## Inheritance Strategy Comparison classDiagram
+## Inheritance Strategy Comparison Diagram
 
-![Inheritance Strategy Comparison classDiagram diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-class-07.png)
+![Inheritance Strategy Comparison diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-class-07.png)
 
 ## Advanced Feature JPA ↔ Exposed Conversion Reference
 

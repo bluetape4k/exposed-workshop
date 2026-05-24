@@ -92,9 +92,9 @@ CreditCardTable.selectAll()
     .union(BankAccountTable.selectAll())
 ```
 
-## 상속 전략 classDiagram
+## 상속 전략 다이어그램
 
-![classDiagram diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-class-01.png)
+![Inheritance Strategy diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-class-01.png)
 
 ## 도메인 ERD
 
@@ -118,9 +118,9 @@ CreditCardTable.selectAll()
 
 ![02 convert jpa advanced Architecture 6 diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-architecture-06.png)
 
-## 상속 전략 비교 classDiagram
+## 상속 전략 비교 다이어그램
 
-![classDiagram diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-class-07.png)
+![Inheritance Strategy Comparison diagram](../../docs/images/readme-diagrams/07-jpa-02-convert-jpa-advanced-class-07.png)
 
 ## 고급 기능 JPA ↔ Exposed 변환 대비표
 

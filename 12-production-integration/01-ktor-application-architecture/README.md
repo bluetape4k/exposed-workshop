@@ -24,15 +24,7 @@ repository backed by H2.
 
 ## Package Layout
 
-```text
-exposed.examples.ktor.architecture
-├── config       # Ktor plugins, JSON, and HTTP error mapping
-├── model        # Request/response DTOs, commands, records, and validation errors
-├── persistence  # Hikari and Exposed Database lifecycle
-├── repository   # Exposed JDBC repository boundary
-├── routes       # HTTP routes and request body limit handling
-└── service      # Use cases and caller input validation
-```
+![Ktor package layout diagram](../../docs/images/readme-diagrams/12-production-integration-01-ktor-application-architecture-package-layout-02.png)
 
 Tests mirror the same layering: application wiring, route behavior, service
 validation/mapping, and repository persistence/concurrency.

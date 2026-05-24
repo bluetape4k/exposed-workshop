@@ -63,9 +63,9 @@ val ids = futures.awaitAll()
 | Java 17 이하 환경                | Kotlin Coroutines |
 | Java 21+ 환경, 코드 변경 최소화       | Virtual Threads   |
 
-## Virtual Thread 처리 모델 flowchart
+## Virtual Thread 처리 모델 다이어그램
 
-![Virtual Thread flowchart diagram](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-architecture-02.png)
+![Virtual Thread processing model diagram](../../docs/images/readme-diagrams/08-coroutines-02-virtualthreads-basic-architecture-02.png)
 
 ## Virtual Thread vs Platform Thread 비교 다이어그램
 
