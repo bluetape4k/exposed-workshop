@@ -1,62 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1378" height="526" viewBox="0 0 1378 526" role="img" aria-label="01 ktor application architecture Architecture">
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="658" viewBox="0 0 922 658" role="img" aria-label="01 ktor application architecture Architecture">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
-    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
-    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="1378" height="526"/>
-<rect class="frame" x="32" y="28" width="1314" height="470" rx="28"/>
-<text class="title" x="66" y="82">01 ktor application architecture Architecture</text>
-<text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M839 386 C839 386 873 386 873 386"/>
-<path class="line" d="M505 386 C505 386 539 386 539 386"/>
-<path class="line" d="M1040 220 C1040 303 505 303 505 386"/>
-<path class="line" d="M1006 220 C1006 220 1040 220 1040 220"/>
-<path class="line" d="M672 220 C672 220 706 220 706 220"/>
-<path class="line" d="M338 220 C338 220 372 220 372 220"/>
-<g transform="translate(48,170)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">HTTP client</text>
-</g>
-<g transform="translate(382,170)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Ktor routes</text>
-</g>
-<g transform="translate(716,170)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">CustomerService</text>
-</g>
-<g transform="translate(1050,170)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">CustomerRepository</text>
-</g>
-<g transform="translate(215,336)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Dispatchers.IO</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">transaction boundary</text>
-</g>
-<g transform="translate(549,336)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F1ECFF" stroke="#8A72D6"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Exposed JDBC</text>
-</g>
-<g transform="translate(883,336)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F7F1E7" stroke="#B88A44"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">(H2)</text>
-</g>
+
+<rect class="canvas" x="0" y="0" width="922" height="100%"/>
+<rect class="frame" x="20" y="20" width="882" height="618" rx="18"/>
+<text class="title" x="54" y="72">01 ktor application architecture</text>
+<text class="title" x="54" y="116">Architecture</text>
+<text class="subtitle" x="56" y="144">Pastel architecture overview</text>
+<rect class="card" x="48" y="184" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="230" text-anchor="middle">HTTP client</text>
+<rect class="card" x="338" y="184" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="230" text-anchor="middle">Ktor routes</text>
+<rect class="card" x="628" y="184" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="230" text-anchor="middle">CustomerService</text>
+<rect class="card" x="48" y="340" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="386" text-anchor="middle">CustomerRepository</text>
+<rect class="card" x="338" y="340" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="386" text-anchor="middle">Dispatchers.IO</text>
+<rect class="card" x="628" y="340" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="386" text-anchor="middle">transaction</text>
+<text class="label" x="751" y="411" text-anchor="middle">boundary</text>
+<rect class="card" x="48" y="496" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="542" text-anchor="middle">Exposed JDBC</text>
+<rect class="card" x="338" y="496" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="542" text-anchor="middle">(H2)</text>
+<path class="line" d="M 302 243 L 330 243" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 310 L 171 332" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 243 L 620 243" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 310 L 461 332" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 310 L 751 332" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 399 L 330 399" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 466 L 171 488" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 399 L 620 399" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 466 L 461 488" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 555 L 330 555" marker-end="url(#openArrow)"/>
 </svg>

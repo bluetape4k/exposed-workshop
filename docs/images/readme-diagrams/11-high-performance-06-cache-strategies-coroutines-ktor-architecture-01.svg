@@ -1,51 +1,88 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
-  <title id="title">Ktor coroutine cache architecture</title>
-  <desc id="desc">Suspending Ktor routes call a coroutine cache service with per-key mutex coalescing and Exposed suspended transactions on Dispatchers.IO.</desc>
-  <defs>
-    <style>
-      .bg { fill: #f8fafc; }
-      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 8; }
-      .cache { fill: #e0f2fe; stroke: #0369a1; }
-      .db { fill: #ecfdf5; stroke: #047857; }
-      .text { font: 18px sans-serif; fill: #0f172a; }
-      .small { font: 14px sans-serif; fill: #334155; }
-      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
-    </style>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
-    </marker>
-  </defs>
-  <rect class="bg" width="1120" height="560"/>
-  <text x="56" y="56" class="text" style="font-size:28px;font-weight:700">Coroutine-safe Ktor cache flow</text>
-  <text x="56" y="86" class="small">Suspending routes never block the event loop; database work runs through suspended Exposed transactions on Dispatchers.IO.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="928" viewBox="0 0 922 928" role="img" aria-label="Coroutine-safe Ktor cache flow">
+<defs>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
+</defs>
 
-  <rect x="60" y="142" width="210" height="112" class="box"/>
-  <text x="98" y="184" class="text">Ktor suspend route</text>
-  <text x="92" y="214" class="small">read-through / write-through</text>
-
-  <rect x="340" y="122" width="250" height="152" class="box cache"/>
-  <text x="374" y="172" class="text">Coroutine cache service</text>
-  <text x="382" y="202" class="small">ConcurrentHashMap cache</text>
-  <text x="382" y="226" class="small">per-key Mutex coalescing</text>
-
-  <rect x="660" y="122" width="210" height="152" class="box cache"/>
-  <text x="694" y="172" class="text">In-flight load</text>
-  <text x="706" y="202" class="small">one DB call per SKU</text>
-  <text x="706" y="226" class="small">other callers await</text>
-
-  <rect x="480" y="360" width="240" height="112" class="box db"/>
-  <text x="522" y="404" class="text">Suspending repository</text>
-  <text x="524" y="432" class="small">newSuspendedTransaction</text>
-
-  <rect x="800" y="360" width="190" height="112" class="box db"/>
-  <text x="850" y="404" class="text">H2 database</text>
-  <text x="848" y="432" class="small">products table</text>
-
-  <path d="M270 198 L340 198" class="arrow"/>
-  <path d="M590 198 L660 198" class="arrow"/>
-  <path d="M760 274 C750 326 700 350 660 360" class="arrow"/>
-  <path d="M720 416 L800 416" class="arrow"/>
-  <path d="M480 416 C390 370 390 276 452 274" class="arrow"/>
-
-  <text x="82" y="506" class="small">CancellationException is rethrown by StatusPages; no runBlocking is used in production request paths.</text>
+<rect class="canvas" x="0" y="0" width="922" height="100%"/>
+<rect class="frame" x="20" y="20" width="882" height="888" rx="18"/>
+<text class="title" x="54" y="72">Coroutine-safe Ktor cache flow</text>
+<text class="subtitle" x="56" y="100">Pastel architecture overview</text>
+<rect class="card" x="48" y="142" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="188" text-anchor="middle">Suspending routes</text>
+<text class="label" x="171" y="213" text-anchor="middle">never block the</text>
+<text class="label" x="171" y="238" text-anchor="middle">event loop;...</text>
+<rect class="card" x="338" y="142" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="188" text-anchor="middle">Ktor suspend route</text>
+<rect class="card" x="628" y="142" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="188" text-anchor="middle">read-through /</text>
+<text class="label" x="751" y="213" text-anchor="middle">write-through</text>
+<rect class="card" x="48" y="298" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="344" text-anchor="middle">Coroutine cache</text>
+<text class="label" x="171" y="369" text-anchor="middle">service</text>
+<rect class="card" x="338" y="298" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="344" text-anchor="middle">ConcurrentHashMap</text>
+<text class="label" x="461" y="369" text-anchor="middle">cache</text>
+<rect class="card" x="628" y="298" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="344" text-anchor="middle">per-key Mutex</text>
+<text class="label" x="751" y="369" text-anchor="middle">coalescing</text>
+<rect class="card" x="48" y="454" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="500" text-anchor="middle">In-flight load</text>
+<rect class="card" x="338" y="454" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="500" text-anchor="middle">one DB call per SKU</text>
+<rect class="card" x="628" y="454" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="751" y="500" text-anchor="middle">other callers await</text>
+<rect class="card" x="48" y="610" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="171" y="656" text-anchor="middle">Suspending</text>
+<text class="label" x="171" y="681" text-anchor="middle">repository</text>
+<rect class="card" x="338" y="610" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="461" y="656" text-anchor="middle">new Suspended</text>
+<text class="label" x="461" y="681" text-anchor="middle">Transaction</text>
+<rect class="card" x="628" y="610" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="751" y="656" text-anchor="middle">H2 database</text>
+<rect class="card" x="48" y="766" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="171" y="812" text-anchor="middle">products table</text>
+<rect class="card" x="338" y="766" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="461" y="812" text-anchor="middle">Cancellation</text>
+<text class="label" x="461" y="837" text-anchor="middle">Exception is</text>
+<text class="label" x="461" y="862" text-anchor="middle">rethrown by...</text>
+<path class="line" d="M 302 201 L 330 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 268 L 171 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 201 L 620 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 268 L 461 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 268 L 751 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 357 L 330 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 424 L 171 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 357 L 620 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 424 L 461 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 424 L 751 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 513 L 330 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 580 L 171 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 513 L 620 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 580 L 461 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 580 L 751 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 669 L 330 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 736 L 171 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 669 L 620 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 736 L 461 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 825 L 330 825" marker-end="url(#openArrow)"/>
 </svg>

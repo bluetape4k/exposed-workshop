@@ -1,98 +1,110 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1624" height="2472" viewBox="0 0 1624 2472" role="img" aria-label="newSuspendedTransaction Processing Sequence Diagram">
+<svg xmlns="http://www.w3.org/2000/svg" width="1370" height="1394" viewBox="0 0 1370 1394" role="img" aria-label="Coroutines Coroutines Basic">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
-    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
-    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="1624" height="2472"/>
-<rect class="frame" x="32" y="28" width="1560" height="2416" rx="28"/>
-<text class="title" x="66" y="82">newSuspendedTransaction Processing Sequence Diagram</text>
-<text class="subtitle" x="70" y="118">Sequence messages from the original Mermaid source</text>
-<rect class="card" x="-10" y="166" width="300" height="72" rx="20" fill="#E8F3FF" stroke="#5B8DEF"/>
-<text class="smallLabel" x="140" y="209" text-anchor="middle">App</text>
-<line class="lifeline" x1="140" y1="252" x2="140" y2="2412" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="438" y="166" width="300" height="72" rx="20" fill="#EAF7EF" stroke="#58A978"/>
-<text class="smallLabel" x="588" y="198.5" text-anchor="middle">CoroutineContext</text>
-<text class="smallLabel" x="588" y="219.5" text-anchor="middle">(Dispatchers.IO)</text>
-<line class="lifeline" x1="588" y1="252" x2="588" y2="2412" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="886" y="166" width="300" height="72" rx="20" fill="#FFF3D9" stroke="#D6A441"/>
-<text class="smallLabel" x="1036" y="209" text-anchor="middle">Exposed Transaction</text>
-<line class="lifeline" x1="1036" y1="252" x2="1036" y2="2412" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="1334" y="166" width="300" height="72" rx="20" fill="#FDECEF" stroke="#DC6B82"/>
-<text class="smallLabel" x="1484" y="209" text-anchor="middle">Database</text>
-<line class="lifeline" x1="1484" y1="252" x2="1484" y2="2412" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect x="225" y="286" width="278" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="243" y="313" text-anchor="start">1. newSuspendedTransaction { }</text>
-<path class="line" d="M140 344 L588 344"/>
-<rect x="689" y="396" width="246" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="707" y="423" text-anchor="start">2. Start transaction block</text>
-<path class="line" d="M588 454 L1036 454"/>
-<rect x="1155" y="506" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1173" y="533" text-anchor="start">3. BEGIN</text>
-<path class="line" d="M1036 564 L1484 564"/>
-<rect x="1104.5" y="616" width="311" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1122.5" y="643" text-anchor="start">4. SQL Query (INSERT / SELECT ...)</text>
-<path class="line" d="M1036 674 L1484 674"/>
-<rect x="1155" y="726" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1173" y="753" text-anchor="start">5. Result</text>
-<path class="dashed" d="M1484 784 L1036 784"/>
-<rect x="70" y="836" width="1484" height="40" rx="16" fill="#F7F1E7" stroke="#B88A44" stroke-width="1.6" opacity="0.96"/>
-<text class="strong" x="92" y="863" text-anchor="start">ALT: Success</text>
-<rect x="1155" y="904" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1173" y="931" text-anchor="start">7. COMMIT</text>
-<path class="line" d="M1036 962 L1484 962"/>
-<rect x="707" y="1014" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="725" y="1041" text-anchor="start">8. mapped result</text>
-<path class="dashed" d="M1036 1072 L588 1072"/>
-<rect x="259" y="1124" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="277" y="1151" text-anchor="start">9. suspend return</text>
-<path class="dashed" d="M588 1182 L140 1182"/>
-<rect x="70" y="1234" width="1484" height="40" rx="16" fill="#F7F1E7" stroke="#B88A44" stroke-width="1.6" opacity="0.96"/>
-<text class="strong" x="92" y="1261" text-anchor="start">ELSE: Exception</text>
-<rect x="1155" y="1302" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1173" y="1329" text-anchor="start">11. ROLLBACK</text>
-<path class="line" d="M1036 1360 L1484 1360"/>
-<rect x="697" y="1412" width="230" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="715" y="1439" text-anchor="start">12. Exception propagated</text>
-<path class="dashed" d="M1036 1470 L588 1470"/>
-<rect x="249" y="1522" width="230" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="267" y="1549" text-anchor="start">13. Exception propagated</text>
-<path class="dashed" d="M588 1580 L140 1580"/>
-<rect x="213" y="1632" width="302" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="231" y="1659" text-anchor="start">14. suspendedTransactionAsync { }</text>
-<path class="line" d="M140 1690 L588 1690"/>
-<rect x="168.5" y="1742" width="391" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="186.5" y="1769" text-anchor="start">15. Deferred&amp;lt;T&amp;gt; (returned immediately)</text>
-<path class="dashed" d="M588 1800 L140 1800"/>
-<rect x="665" y="1852" width="294" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="683" y="1879" text-anchor="start">16. transaction block (parallel)</text>
-<path class="line" d="M588 1910 L1036 1910"/>
-<rect x="1145" y="1962" width="230" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1163" y="1989" text-anchor="start">17. BEGIN → SQL → COMMIT</text>
-<path class="line" d="M1036 2020 L1484 2020"/>
-<rect x="1155" y="2072" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1173" y="2099" text-anchor="start">18. Result</text>
-<path class="dashed" d="M1484 2130 L1036 2130"/>
-<rect x="707" y="2182" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="725" y="2209" text-anchor="start">19. Result</text>
-<path class="dashed" d="M1036 2240 L588 2240"/>
-<rect x="225" y="2292" width="278" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="243" y="2319" text-anchor="start">20. awaitAll() result returned</text>
-<path class="dashed" d="M588 2350 L140 2350"/>
+
+<rect class="canvas" x="0" y="0" width="1370" height="100%"/>
+<rect class="frame" x="20" y="20" width="1330" height="1354" rx="18"/>
+<text class="title" x="54" y="72">Coroutines Coroutines Basic</text>
+<text class="subtitle" x="56" y="100">Request and data flow</text>
+<rect class="card" x="72" y="142" width="176" height="58" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="smallLabel" x="160" y="166" text-anchor="middle">new Suspended</text>
+<text class="smallLabel" x="160" y="186" text-anchor="middle">Transaction...</text>
+<path class="dash" d="M 160 208 L 160 1340"/>
+<rect class="card" x="282" y="142" width="176" height="58" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="smallLabel" x="370" y="166" text-anchor="middle">App</text>
+<path class="dash" d="M 370 208 L 370 1340"/>
+<rect class="card" x="492" y="142" width="176" height="58" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="smallLabel" x="580" y="166" text-anchor="middle">CoroutineContext</text>
+<path class="dash" d="M 580 208 L 580 1340"/>
+<rect class="card" x="702" y="142" width="176" height="58" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="smallLabel" x="790" y="166" text-anchor="middle">(Dispatchers.IO)</text>
+<path class="dash" d="M 790 208 L 790 1340"/>
+<rect class="card" x="912" y="142" width="176" height="58" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="smallLabel" x="1000" y="166" text-anchor="middle">Exposed</text>
+<text class="smallLabel" x="1000" y="186" text-anchor="middle">Transaction</text>
+<path class="dash" d="M 1000 208 L 1000 1340"/>
+<rect class="card" x="1122" y="142" width="176" height="58" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="smallLabel" x="1210" y="166" text-anchor="middle">Database</text>
+<path class="dash" d="M 1210 208 L 1210 1340"/>
+<path class="line" d="M 172 248 L 356 248" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="216" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="233" text-anchor="middle">1. newSuspendedTransaction { }</text>
+<path class="line" d="M 382 302 L 566 302" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="270" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="287" text-anchor="middle">2. Start transaction block</text>
+<path class="line" d="M 592 356 L 776 356" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="324" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="341" text-anchor="middle">3. BEGIN</text>
+<path class="line" d="M 802 410 L 986 410" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="378" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="395" text-anchor="middle">4. SQL Query (INSERT / SELECT ...)</text>
+<path class="line" d="M 1012 464 L 1196 464" marker-end="url(#openArrow)"/>
+<rect class="note" x="973" y="432" width="264" height="24" rx="8"/>
+<text class="small" x="1105" y="449" text-anchor="middle">5. Result</text>
+<path class="line" d="M 1198 518 L 174 518" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="486" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="503" text-anchor="middle">ALT: Success</text>
+<path class="line" d="M 172 572 L 356 572" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="540" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="557" text-anchor="middle">7. COMMIT</text>
+<path class="line" d="M 382 626 L 566 626" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="594" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="611" text-anchor="middle">8. mapped result</text>
+<path class="line" d="M 592 680 L 776 680" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="648" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="665" text-anchor="middle">9. suspend return</text>
+<path class="line" d="M 802 734 L 986 734" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="702" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="719" text-anchor="middle">ELSE: Exception</text>
+<path class="line" d="M 1012 788 L 1196 788" marker-end="url(#openArrow)"/>
+<rect class="note" x="973" y="756" width="264" height="24" rx="8"/>
+<text class="small" x="1105" y="773" text-anchor="middle">11. ROLLBACK</text>
+<path class="line" d="M 1198 842 L 174 842" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="810" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="827" text-anchor="middle">12. Exception propagated</text>
+<path class="line" d="M 172 896 L 356 896" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="864" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="881" text-anchor="middle">13. Exception propagated</text>
+<path class="line" d="M 382 950 L 566 950" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="918" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="935" text-anchor="middle">14. suspendedTransactionAsync { }</text>
+<path class="line" d="M 592 1004 L 776 1004" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="972" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="989" text-anchor="middle">15. Deferred&lt;T&gt; (returned immediately)</text>
+<path class="line" d="M 802 1058 L 986 1058" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="1026" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="1043" text-anchor="middle">16. transaction block (parallel)</text>
+<path class="line" d="M 1012 1112 L 1196 1112" marker-end="url(#openArrow)"/>
+<rect class="note" x="973" y="1080" width="264" height="24" rx="8"/>
+<text class="small" x="1105" y="1097" text-anchor="middle">17. BEGIN → SQL → COMMIT</text>
+<path class="line" d="M 1198 1166 L 174 1166" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="1134" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="1151" text-anchor="middle">18. Result</text>
+<path class="line" d="M 172 1220 L 356 1220" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="1188" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="1205" text-anchor="middle">19. Result</text>
+<path class="line" d="M 382 1274 L 566 1274" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="1242" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="1259" text-anchor="middle">20. awaitAll() result returned</text>
 </svg>

@@ -1,76 +1,76 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
-  <rect width="1280" height="720" fill="#f8fafc"/>
-  <text x="640" y="56" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" fill="#172033">Database-per-Tenant Request Flow</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="854" viewBox="0 0 1160 854" role="img" aria-label="Database-per-Tenant Request Flow">
+<defs>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
+</defs>
 
-  <defs>
-    <marker id="arrow" markerWidth="14" markerHeight="10" refX="12" refY="5" orient="auto">
-      <path d="M 0 0 L 14 5 L 0 10 z" fill="#0f766e"/>
-    </marker>
-    <style>
-      .lane { stroke:#94a3b8; stroke-width:2; stroke-dasharray:6 8; }
-      .head { fill:#ffffff; stroke:#0f766e; stroke-width:2.5; rx:8; }
-      .title { font-family:Inter, Arial, sans-serif; font-size:18px; font-weight:700; fill:#172033; }
-      .msg { font-family:Inter, Arial, sans-serif; font-size:15px; fill:#263244; }
-      .note { fill:#fff7ed; stroke:#ea580c; stroke-width:2; rx:8; }
-      .arrow { stroke:#0f766e; stroke-width:2.5; fill:none; marker-end:url(#arrow); }
-    </style>
-  </defs>
-
-  <g>
-    <rect class="head" x="44" y="100" width="156" height="56"/>
-    <text class="title" x="122" y="135" text-anchor="middle">Client</text>
-    <line class="lane" x1="122" y1="156" x2="122" y2="650"/>
-  </g>
-  <g>
-    <rect class="head" x="256" y="100" width="156" height="56"/>
-    <text class="title" x="334" y="135" text-anchor="middle">TenantFilter</text>
-    <line class="lane" x1="334" y1="156" x2="334" y2="650"/>
-  </g>
-  <g>
-    <rect class="head" x="468" y="100" width="156" height="56"/>
-    <text class="title" x="546" y="135" text-anchor="middle">Controller</text>
-    <line class="lane" x1="546" y1="156" x2="546" y2="650"/>
-  </g>
-  <g>
-    <rect class="head" x="680" y="100" width="176" height="56"/>
-    <text class="title" x="768" y="135" text-anchor="middle">TenantTransaction</text>
-    <line class="lane" x1="768" y1="156" x2="768" y2="650"/>
-  </g>
-  <g>
-    <rect class="head" x="912" y="100" width="156" height="56"/>
-    <text class="title" x="990" y="135" text-anchor="middle">Registry</text>
-    <line class="lane" x1="990" y1="156" x2="990" y2="650"/>
-  </g>
-  <g>
-    <rect class="head" x="1124" y="100" width="112" height="56"/>
-    <text class="title" x="1180" y="135" text-anchor="middle">Tenant DB</text>
-    <line class="lane" x1="1180" y1="156" x2="1180" y2="650"/>
-  </g>
-
-  <path class="arrow" d="M122 210 H334"/>
-  <text class="msg" x="228" y="200" text-anchor="middle">GET /inventory/{sku}, X-Tenant-ID</text>
-
-  <rect class="note" x="242" y="238" width="184" height="58"/>
-  <text class="msg" x="334" y="262" text-anchor="middle">Validate whitelist</text>
-  <text class="msg" x="334" y="284" text-anchor="middle">set ThreadLocal</text>
-
-  <path class="arrow" d="M334 330 H546"/>
-  <text class="msg" x="440" y="320" text-anchor="middle">Forward request</text>
-
-  <path class="arrow" d="M546 386 H768"/>
-  <text class="msg" x="657" y="376" text-anchor="middle">Repository call</text>
-
-  <path class="arrow" d="M768 442 H990"/>
-  <text class="msg" x="879" y="432" text-anchor="middle">databaseFor(current tenant)</text>
-
-  <path class="arrow" d="M990 498 H1180"/>
-  <text class="msg" x="1085" y="488" text-anchor="middle">Use selected datasource</text>
-
-  <path class="arrow" d="M1180 554 H768"/>
-  <text class="msg" x="974" y="544" text-anchor="middle">Rows from selected tenant database</text>
-
-  <path class="arrow" d="M768 598 H546"/>
-  <path class="arrow" d="M546 628 H334"/>
-  <path class="arrow" d="M334 660 H122"/>
-  <text class="msg" x="228" y="648" text-anchor="middle">finally clear ThreadLocal</text>
+<rect class="canvas" x="0" y="0" width="1160" height="100%"/>
+<rect class="frame" x="20" y="20" width="1120" height="814" rx="18"/>
+<text class="title" x="54" y="72">Database-per-Tenant Request Flow</text>
+<text class="subtitle" x="56" y="100">Request and data flow</text>
+<rect class="card" x="72" y="142" width="176" height="58" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="smallLabel" x="160" y="166" text-anchor="middle">Client</text>
+<path class="dash" d="M 160 208 L 160 800"/>
+<rect class="card" x="282" y="142" width="176" height="58" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="smallLabel" x="370" y="166" text-anchor="middle">TenantFilter</text>
+<path class="dash" d="M 370 208 L 370 800"/>
+<rect class="card" x="492" y="142" width="176" height="58" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="smallLabel" x="580" y="166" text-anchor="middle">Controller</text>
+<path class="dash" d="M 580 208 L 580 800"/>
+<rect class="card" x="702" y="142" width="176" height="58" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="smallLabel" x="790" y="166" text-anchor="middle">Tenant</text>
+<text class="smallLabel" x="790" y="186" text-anchor="middle">Transaction</text>
+<path class="dash" d="M 790 208 L 790 800"/>
+<rect class="card" x="912" y="142" width="176" height="58" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="smallLabel" x="1000" y="166" text-anchor="middle">Registry</text>
+<path class="dash" d="M 1000 208 L 1000 800"/>
+<path class="line" d="M 172 248 L 356 248" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="216" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="233" text-anchor="middle">Tenant DB</text>
+<path class="line" d="M 382 302 L 566 302" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="270" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="287" text-anchor="middle">GET /inventory/{sku}, X-Tenant-ID</text>
+<path class="line" d="M 592 356 L 776 356" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="324" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="341" text-anchor="middle">Validate whitelist</text>
+<path class="line" d="M 802 410 L 986 410" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="378" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="395" text-anchor="middle">set ThreadLocal</text>
+<path class="line" d="M 988 464 L 174 464" marker-end="url(#openArrow)"/>
+<rect class="note" x="448" y="432" width="264" height="24" rx="8"/>
+<text class="small" x="580" y="449" text-anchor="middle">Forward request</text>
+<path class="line" d="M 172 518 L 356 518" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="486" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="503" text-anchor="middle">Repository call</text>
+<path class="line" d="M 382 572 L 566 572" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="540" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="557" text-anchor="middle">databaseFor(current tenant)</text>
+<path class="line" d="M 592 626 L 776 626" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="594" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="611" text-anchor="middle">Use selected datasource</text>
+<path class="line" d="M 802 680 L 986 680" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="648" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="665" text-anchor="middle">Rows from selected tenant database</text>
+<path class="line" d="M 988 734 L 174 734" marker-end="url(#openArrow)"/>
+<rect class="note" x="448" y="702" width="264" height="24" rx="8"/>
+<text class="small" x="580" y="719" text-anchor="middle">finally clear ThreadLocal</text>
 </svg>

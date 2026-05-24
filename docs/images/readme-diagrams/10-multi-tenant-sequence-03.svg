@@ -1,66 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1876" height="1126" viewBox="0 0 1876 1126" role="img" aria-label="Common Request Flow">
+<svg xmlns="http://www.w3.org/2000/svg" width="1370" height="692" viewBox="0 0 1370 692" role="img" aria-label="Common Request Flow">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
-    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
-    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="1876" height="1126"/>
-<rect class="frame" x="32" y="28" width="1812" height="1070" rx="28"/>
-<text class="title" x="66" y="82">Common Request Flow</text>
-<text class="subtitle" x="70" y="118">Sequence messages from the original Mermaid source</text>
-<rect class="card" x="25" y="166" width="230" height="72" rx="20" fill="#E8F3FF" stroke="#5B8DEF"/>
-<text class="smallLabel" x="140" y="209" text-anchor="middle">Client</text>
-<line class="lifeline" x1="140" y1="252" x2="140" y2="1066" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="344.2" y="166" width="230" height="72" rx="20" fill="#EAF7EF" stroke="#58A978"/>
-<text class="smallLabel" x="459.2" y="209" text-anchor="middle">Filter</text>
-<line class="lifeline" x1="459.2" y1="252" x2="459.2" y2="1066" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="663.4" y="166" width="230" height="72" rx="20" fill="#FFF3D9" stroke="#D6A441"/>
-<text class="smallLabel" x="778.4" y="209" text-anchor="middle">Context</text>
-<line class="lifeline" x1="778.4" y1="252" x2="778.4" y2="1066" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="982.5999999999999" y="166" width="230" height="72" rx="20" fill="#FDECEF" stroke="#DC6B82"/>
-<text class="smallLabel" x="1097.6" y="209" text-anchor="middle">Controller</text>
-<line class="lifeline" x1="1097.6" y1="252" x2="1097.6" y2="1066" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="1301.8" y="166" width="230" height="72" rx="20" fill="#E9F7F6" stroke="#45A7A1"/>
-<text class="smallLabel" x="1416.8" y="209" text-anchor="middle">Repository</text>
-<line class="lifeline" x1="1416.8" y1="252" x2="1416.8" y2="1066" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="1621" y="166" width="230" height="72" rx="20" fill="#F1ECFF" stroke="#8A72D6"/>
-<text class="smallLabel" x="1736" y="209" text-anchor="middle">DB</text>
-<line class="lifeline" x1="1736" y1="252" x2="1736" y2="1066" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect x="128.10000000000002" y="286" width="343" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="146.10000000000002" y="313" text-anchor="start">1. GET /actors (X-TENANT-ID: {tenant})</text>
-<path class="line" d="M140 344 L459.2 344"/>
-<rect x="362.79999999999995" y="396" width="512" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="380.79999999999995" y="423" text-anchor="start">2. Bind tenant (ThreadLocal / ScopedValue / ReactorContext)</text>
-<path class="line" d="M459.2 454 L778.4 454"/>
-<rect x="673.4" y="506" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="691.4" y="533" text-anchor="start">3. Forward request</text>
-<path class="line" d="M459.2 564 L1097.6 564"/>
-<rect x="1245.3" y="616" width="343" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1263.3" y="643" text-anchor="start">4. Switch schema (setSchema({tenant}))</text>
-<path class="line" d="M1097.6 674 L1736 674"/>
-<rect x="1152.1999999999998" y="726" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1170.1999999999998" y="753" text-anchor="start">5. Fetch data</text>
-<path class="line" d="M1097.6 784 L1416.8 784"/>
-<rect x="1433.4" y="836" width="286" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1451.4" y="863" text-anchor="start">6. SELECT * FROM {tenant}.actor</text>
-<path class="line" d="M1416.8 894 L1736 894"/>
-<rect x="811" y="946" width="254" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="829" y="973" text-anchor="start">7. Tenant-isolated response</text>
-<path class="dashed" d="M1736 1004 L140 1004"/>
+
+<rect class="canvas" x="0" y="0" width="1370" height="100%"/>
+<rect class="frame" x="20" y="20" width="1330" height="652" rx="18"/>
+<text class="title" x="54" y="72">Common Request Flow</text>
+<text class="subtitle" x="56" y="100">Request and data flow</text>
+<rect class="card" x="72" y="142" width="176" height="58" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="smallLabel" x="160" y="166" text-anchor="middle">Client</text>
+<path class="dash" d="M 160 208 L 160 638"/>
+<rect class="card" x="282" y="142" width="176" height="58" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="smallLabel" x="370" y="166" text-anchor="middle">Filter</text>
+<path class="dash" d="M 370 208 L 370 638"/>
+<rect class="card" x="492" y="142" width="176" height="58" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="smallLabel" x="580" y="166" text-anchor="middle">Context</text>
+<path class="dash" d="M 580 208 L 580 638"/>
+<rect class="card" x="702" y="142" width="176" height="58" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="smallLabel" x="790" y="166" text-anchor="middle">Controller</text>
+<path class="dash" d="M 790 208 L 790 638"/>
+<rect class="card" x="912" y="142" width="176" height="58" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="smallLabel" x="1000" y="166" text-anchor="middle">Repository</text>
+<path class="dash" d="M 1000 208 L 1000 638"/>
+<rect class="card" x="1122" y="142" width="176" height="58" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="smallLabel" x="1210" y="166" text-anchor="middle">DB</text>
+<path class="dash" d="M 1210 208 L 1210 638"/>
+<path class="line" d="M 172 248 L 356 248" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="216" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="233" text-anchor="middle">1. GET /actors (X-TENANT-ID: {tenant})</text>
+<path class="line" d="M 382 302 L 566 302" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="270" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="287" text-anchor="middle">2. Bind tenant (Thr...e / ReactorContext)</text>
+<path class="line" d="M 592 356 L 776 356" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="324" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="341" text-anchor="middle">3. Forward request</text>
+<path class="line" d="M 802 410 L 986 410" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="378" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="395" text-anchor="middle">4. Switch schema (setSchema({tenant}))</text>
+<path class="line" d="M 1012 464 L 1196 464" marker-end="url(#openArrow)"/>
+<rect class="note" x="973" y="432" width="264" height="24" rx="8"/>
+<text class="small" x="1105" y="449" text-anchor="middle">5. Fetch data</text>
+<path class="line" d="M 1198 518 L 174 518" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="486" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="503" text-anchor="middle">6. SELECT * FROM {tenant}.actor</text>
+<path class="line" d="M 172 572 L 356 572" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="540" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="557" text-anchor="middle">7. Tenant-isolated response</text>
 </svg>

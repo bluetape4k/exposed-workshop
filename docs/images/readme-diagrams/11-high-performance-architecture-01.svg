@@ -1,84 +1,93 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1378" height="692" viewBox="0 0 1378 692" role="img" aria-label="Module Relationships">
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="1084" viewBox="0 0 922 1084" role="img" aria-label="Module Relationships">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
-    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
-    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="1378" height="692"/>
-<rect class="frame" x="32" y="28" width="1314" height="636" rx="28"/>
-<text class="title" x="66" y="82">Module Relationships</text>
-<text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M1190 280 C1190 386 1023 386 1023 492"/>
-<path class="line" d="M1040 220 C1040 386 839 386 839 552"/>
-<path class="line" d="M706 220 C706 386 505 386 505 552"/>
-<path class="line" d="M672 220 C672 303 1040 303 1040 386"/>
-<path class="line" d="M672 220 C672 303 706 303 706 386"/>
-<path class="line" d="M338 220 C338 303 1040 303 1040 386"/>
-<path class="line" d="M338 220 C338 303 706 303 706 386"/>
-<g transform="translate(48,170)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <text class="smallLabel" x="140" y="21" text-anchor="middle">01-cache-strategies</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">Spring MVC + Virtual</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">Threads</text>
-</g>
-<g transform="translate(382,170)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
-  <text class="smallLabel" x="140" y="21" text-anchor="middle">02-cache-strategies-</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">coroutines WebFlux +</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">Coroutines</text>
-</g>
-<g transform="translate(716,170)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
-  <text class="smallLabel" x="140" y="21" text-anchor="middle">03-routing-datasourc</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">e Dynamic Routing</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">Data Source DB</text>
-</g>
-<g transform="translate(1050,170)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">04-benchmark JMH</text>
-</g>
-<g transform="translate(48,336)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">(Redis Redisson)</text>
-</g>
-<g transform="translate(382,336)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F1ECFF" stroke="#8A72D6"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">(Database Exposed)</text>
-</g>
-<g transform="translate(716,336)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F7F1E7" stroke="#B88A44"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Near</text>
-</g>
-<g transform="translate(1050,336)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EEF6D9" stroke="#8BA84D"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Exposed</text>
-</g>
-<g transform="translate(215,502)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Per-tenant</text>
-</g>
-<g transform="translate(549,502)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Cache</text>
-</g>
-<g transform="translate(883,502)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Routing</text>
-</g>
+
+<rect class="canvas" x="0" y="0" width="922" height="100%"/>
+<rect class="frame" x="20" y="20" width="882" height="1044" rx="18"/>
+<text class="title" x="54" y="72">Module Relationships</text>
+<text class="subtitle" x="56" y="100">Pastel architecture overview</text>
+<rect class="card" x="48" y="142" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="188" text-anchor="middle">01-cache-strategies</text>
+<rect class="card" x="338" y="142" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="188" text-anchor="middle">Spring MVC +</text>
+<text class="label" x="461" y="213" text-anchor="middle">Virtual</text>
+<rect class="card" x="628" y="142" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="188" text-anchor="middle">Threads</text>
+<rect class="card" x="48" y="298" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="344" text-anchor="middle">02- cache-</text>
+<text class="label" x="171" y="369" text-anchor="middle">strategies-</text>
+<rect class="card" x="338" y="298" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="344" text-anchor="middle">coroutines WebFlux</text>
+<text class="label" x="461" y="369" text-anchor="middle">+</text>
+<rect class="card" x="628" y="298" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="344" text-anchor="middle">Coroutines</text>
+<rect class="card" x="48" y="454" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="500" text-anchor="middle">03- routing-</text>
+<text class="label" x="171" y="525" text-anchor="middle">datasourc</text>
+<rect class="card" x="338" y="454" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="500" text-anchor="middle">e Dynamic Routing</text>
+<rect class="card" x="628" y="454" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="751" y="500" text-anchor="middle">Data Source DB</text>
+<rect class="card" x="48" y="610" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="171" y="656" text-anchor="middle">04-benchmark JMH</text>
+<rect class="card" x="338" y="610" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="461" y="656" text-anchor="middle">(Redis Redisson)</text>
+<rect class="card" x="628" y="610" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="751" y="656" text-anchor="middle">(Database Exposed)</text>
+<rect class="card" x="48" y="766" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="171" y="812" text-anchor="middle">Near</text>
+<rect class="card" x="338" y="766" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="461" y="812" text-anchor="middle">Exposed</text>
+<rect class="card" x="628" y="766" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="751" y="812" text-anchor="middle">Per-tenant</text>
+<rect class="card" x="48" y="922" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="171" y="968" text-anchor="middle">Cache</text>
+<rect class="card" x="338" y="922" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="461" y="968" text-anchor="middle">Routing</text>
+<path class="line" d="M 302 201 L 330 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 268 L 171 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 201 L 620 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 268 L 461 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 268 L 751 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 357 L 330 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 424 L 171 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 357 L 620 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 424 L 461 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 424 L 751 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 513 L 330 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 580 L 171 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 513 L 620 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 580 L 461 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 580 L 751 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 669 L 330 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 736 L 171 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 669 L 620 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 736 L 461 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 736 L 751 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 825 L 330 825" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 892 L 171 914" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 825 L 620 825" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 892 L 461 914" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 981 L 330 981" marker-end="url(#openArrow)"/>
 </svg>

@@ -1,68 +1,98 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="840" viewBox="0 0 1400 840">
-  <defs>
-    <marker id="arrow" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
-      <path d="M0,0 L12,4 L0,8 Z" fill="#334155"/>
-    </marker>
-    <style>
-      .title { font: 700 32px Arial, sans-serif; fill: #111827; }
-      .subtitle { font: 400 17px Arial, sans-serif; fill: #475569; }
-      .head { fill: #e0f2fe; stroke: #0284c7; stroke-width: 2; rx: 12; }
-      .guard { fill: #fee2e2; stroke: #dc2626; stroke-width: 2; rx: 12; }
-      .work { fill: #ecfccb; stroke: #65a30d; stroke-width: 2; rx: 12; }
-      .data { fill: #f3e8ff; stroke: #9333ea; stroke-width: 2; rx: 12; }
-      .note { fill: #fffbeb; stroke: #d97706; stroke-width: 2; rx: 12; }
-      .label { font: 700 15px Arial, sans-serif; fill: #111827; }
-      .text { font: 400 14px Arial, sans-serif; fill: #334155; }
-      .small { font: 400 12px Arial, sans-serif; fill: #475569; }
-      .line { stroke: #94a3b8; stroke-width: 2; stroke-dasharray: 7 7; }
-      .msg { stroke: #334155; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
-      .return { stroke: #64748b; stroke-width: 2; stroke-dasharray: 8 6; fill: none; marker-end: url(#arrow); }
-    </style>
-  </defs>
-  <rect width="1400" height="840" fill="#ffffff"/>
-  <text x="60" y="62" class="title">Tenant Request and Schema Reset Flow</text>
-  <text x="60" y="94" class="subtitle">Happy path and reset-failure path for one servlet request using a shared H2 datasource</text>
-  <rect x="70" y="130" width="150" height="58" class="head"/>
-  <text x="102" y="164" class="label">Client</text>
-  <rect x="300" y="130" width="170" height="58" class="head"/>
-  <text x="329" y="164" class="label">TenantFilter</text>
-  <rect x="550" y="130" width="190" height="58" class="head"/>
-  <text x="576" y="164" class="label">Controller</text>
-  <rect x="820" y="130" width="210" height="58" class="head"/>
-  <text x="847" y="164" class="label">TenantTransaction</text>
-  <rect x="1110" y="130" width="210" height="58" class="head"/>
-  <text x="1142" y="164" class="label">H2 Connection</text>
-  <line x1="145" y1="188" x2="145" y2="760" class="line"/>
-  <line x1="385" y1="188" x2="385" y2="760" class="line"/>
-  <line x1="645" y1="188" x2="645" y2="760" class="line"/>
-  <line x1="925" y1="188" x2="925" y2="760" class="line"/>
-  <line x1="1215" y1="188" x2="1215" y2="760" class="line"/>
-  <path d="M145 230 L385 230" class="msg"/>
-  <text x="170" y="220" class="text">GET /inventory/shared-widget</text>
-  <text x="170" y="248" class="small">X-Tenant-ID: acme</text>
-  <rect x="270" y="268" width="230" height="72" class="guard"/>
-  <text x="294" y="294" class="label">Validate Header</text>
-  <text x="294" y="316" class="text">one value, whitelist match</text>
-  <path d="M385 370 L645 370" class="msg"/>
-  <text x="416" y="360" class="text">bind TenantContext and continue</text>
-  <path d="M645 440 L925 440" class="msg"/>
-  <text x="682" y="430" class="text">service calls repository in tenantTransaction</text>
-  <path d="M925 500 L1215 500" class="msg"/>
-  <text x="956" y="490" class="text">set schema TENANT_ACME</text>
-  <path d="M1215 560 L925 560" class="return"/>
-  <text x="956" y="550" class="text">query inventory_items</text>
-  <path d="M925 620 L1215 620" class="msg"/>
-  <text x="956" y="610" class="text">finally reset schema PUBLIC</text>
-  <path d="M925 680 L645 680" class="return"/>
-  <text x="684" y="670" class="text">return isolated tenant record</text>
-  <path d="M645 725 L385 725" class="return"/>
-  <path d="M385 725 L145 725" class="return"/>
-  <text x="166" y="715" class="text">200 OK, context cleared</text>
-  <rect x="720" y="248" width="570" height="80" class="note"/>
-  <text x="748" y="276" class="label">Reset Failure Guard</text>
-  <text x="748" y="300" class="text">Successful work + reset failure throws TenantSchemaResetFailedException.</text>
-  <text x="748" y="322" class="text">The Hikari connection is evicted before the next checkout.</text>
-  <rect x="720" y="342" width="570" height="74" class="work"/>
-  <text x="748" y="370" class="label">Block Failure Rule</text>
-  <text x="748" y="394" class="text">Business failure remains primary; reset failure is suppressed.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="1232" viewBox="0 0 1160 1232" role="img" aria-label="Tenant Request and Schema Reset Flow">
+<defs>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
+</defs>
+
+<rect class="canvas" x="0" y="0" width="1160" height="100%"/>
+<rect class="frame" x="20" y="20" width="1120" height="1192" rx="18"/>
+<text class="title" x="54" y="72">Tenant Request and Schema Reset Flow</text>
+<text class="subtitle" x="56" y="100">Request and data flow</text>
+<rect class="card" x="72" y="142" width="176" height="58" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="smallLabel" x="160" y="166" text-anchor="middle">Happy path and</text>
+<text class="smallLabel" x="160" y="186" text-anchor="middle">reset-failure...</text>
+<path class="dash" d="M 160 208 L 160 1178"/>
+<rect class="card" x="282" y="142" width="176" height="58" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="smallLabel" x="370" y="166" text-anchor="middle">Client</text>
+<path class="dash" d="M 370 208 L 370 1178"/>
+<rect class="card" x="492" y="142" width="176" height="58" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="smallLabel" x="580" y="166" text-anchor="middle">TenantFilter</text>
+<path class="dash" d="M 580 208 L 580 1178"/>
+<rect class="card" x="702" y="142" width="176" height="58" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="smallLabel" x="790" y="166" text-anchor="middle">Controller</text>
+<path class="dash" d="M 790 208 L 790 1178"/>
+<rect class="card" x="912" y="142" width="176" height="58" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="smallLabel" x="1000" y="166" text-anchor="middle">Tenant</text>
+<text class="smallLabel" x="1000" y="186" text-anchor="middle">Transaction</text>
+<path class="dash" d="M 1000 208 L 1000 1178"/>
+<path class="line" d="M 172 248 L 356 248" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="216" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="233" text-anchor="middle">H2 Connection</text>
+<path class="line" d="M 382 302 L 566 302" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="270" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="287" text-anchor="middle">GET /inventory/shared-widget</text>
+<path class="line" d="M 592 356 L 776 356" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="324" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="341" text-anchor="middle">X-Tenant-ID: acme</text>
+<path class="line" d="M 802 410 L 986 410" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="378" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="395" text-anchor="middle">Validate Header</text>
+<path class="line" d="M 988 464 L 174 464" marker-end="url(#openArrow)"/>
+<rect class="note" x="448" y="432" width="264" height="24" rx="8"/>
+<text class="small" x="580" y="449" text-anchor="middle">one value, whitelist match</text>
+<path class="line" d="M 172 518 L 356 518" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="486" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="503" text-anchor="middle">bind TenantContext and continue</text>
+<path class="line" d="M 382 572 L 566 572" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="540" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="557" text-anchor="middle">service calls repos...n tenantTransaction</text>
+<path class="line" d="M 592 626 L 776 626" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="594" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="611" text-anchor="middle">set schema TENANT_ACME</text>
+<path class="line" d="M 802 680 L 986 680" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="648" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="665" text-anchor="middle">query inventory_items</text>
+<path class="line" d="M 988 734 L 174 734" marker-end="url(#openArrow)"/>
+<rect class="note" x="448" y="702" width="264" height="24" rx="8"/>
+<text class="small" x="580" y="719" text-anchor="middle">finally reset schema PUBLIC</text>
+<path class="line" d="M 172 788 L 356 788" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="756" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="773" text-anchor="middle">return isolated tenant record</text>
+<path class="line" d="M 382 842 L 566 842" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="810" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="827" text-anchor="middle">200 OK, context cleared</text>
+<path class="line" d="M 592 896 L 776 896" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="864" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="881" text-anchor="middle">Reset Failure Guard</text>
+<path class="line" d="M 802 950 L 986 950" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="918" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="935" text-anchor="middle">Successful work + r...setFailedException.</text>
+<path class="line" d="M 988 1004 L 174 1004" marker-end="url(#openArrow)"/>
+<rect class="note" x="448" y="972" width="264" height="24" rx="8"/>
+<text class="small" x="580" y="989" text-anchor="middle">The Hikari connecti... the next checkout.</text>
+<path class="line" d="M 172 1058 L 356 1058" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="1026" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="1043" text-anchor="middle">Block Failure Rule</text>
+<path class="line" d="M 382 1112 L 566 1112" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="1080" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="1097" text-anchor="middle">Business failure re...lure is suppressed.</text>
 </svg>

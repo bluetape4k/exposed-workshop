@@ -1,75 +1,123 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
-  <title id="title">Spring Security Tenant Authorization Architecture</title>
-  <desc id="desc">Architecture diagram for authenticated tenant authorization before Exposed database routing.</desc>
-  <defs>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M2,2 L10,6 L2,10 Z" fill="#2f4050"/>
-    </marker>
-    <style>
-      .bg { fill: #f7fafc; }
-      .band { fill: #e8f3ff; stroke: #7aa8d8; stroke-width: 2; }
-      .security { fill: #fff6dc; stroke: #c89b2c; stroke-width: 2; }
-      .app { fill: #eaf7ec; stroke: #5ea772; stroke-width: 2; }
-      .db { fill: #f1ecff; stroke: #8d77c8; stroke-width: 2; }
-      .box { rx: 8; ry: 8; }
-      .title { font: 700 30px Arial, sans-serif; fill: #17212b; }
-      .label { font: 700 18px Arial, sans-serif; fill: #17212b; }
-      .small { font: 15px Arial, sans-serif; fill: #263645; }
-      .tiny { font: 13px Arial, sans-serif; fill: #405060; }
-      .arrow { stroke: #2f4050; stroke-width: 3; fill: none; marker-end: url(#arrow); }
-      .muted { stroke: #728195; stroke-width: 2; stroke-dasharray: 6 5; fill: none; marker-end: url(#arrow); }
-    </style>
-  </defs>
-  <rect class="bg" width="1280" height="760"/>
-  <text x="52" y="58" class="title">Spring Security Tenant Authorization</text>
-  <text x="52" y="86" class="small">Authenticate first, authorize tenant identity, then route Exposed JDBC work to the tenant database.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="1396" viewBox="0 0 922 1396" role="img" aria-label="Spring Security Tenant Authorization">
+<defs>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
+</defs>
 
-  <rect x="50" y="126" width="250" height="500" class="band box"/>
-  <text x="78" y="164" class="label">HTTP Request</text>
-  <rect x="82" y="198" width="186" height="92" class="box" fill="#ffffff" stroke="#7aa8d8" stroke-width="2"/>
-  <text x="105" y="232" class="small">Authorization</text>
-  <text x="105" y="256" class="tiny">Bearer demo-acme-token</text>
-  <rect x="82" y="318" width="186" height="92" class="box" fill="#ffffff" stroke="#7aa8d8" stroke-width="2"/>
-  <text x="105" y="352" class="small">X-API-Key</text>
-  <text x="105" y="376" class="tiny">demo-acme-key</text>
-  <rect x="82" y="438" width="186" height="92" class="box" fill="#ffffff" stroke="#7aa8d8" stroke-width="2"/>
-  <text x="105" y="472" class="small">X-Tenant-ID</text>
-  <text x="105" y="496" class="tiny">acme</text>
-
-  <rect x="360" y="126" width="360" height="500" class="security box"/>
-  <text x="390" y="164" class="label">Spring Security Chain</text>
-  <rect x="392" y="198" width="296" height="66" class="box" fill="#ffffff" stroke="#c89b2c" stroke-width="2"/>
-  <text x="416" y="238" class="small">CredentialConflictFilter</text>
-  <rect x="392" y="286" width="296" height="66" class="box" fill="#ffffff" stroke="#c89b2c" stroke-width="2"/>
-  <text x="416" y="326" class="small">JWT / API-Key / Demo Session</text>
-  <rect x="392" y="374" width="296" height="66" class="box" fill="#ffffff" stroke="#c89b2c" stroke-width="2"/>
-  <text x="416" y="414" class="small">AuthorizationFilter</text>
-  <rect x="392" y="462" width="296" height="82" class="box" fill="#ffffff" stroke="#c89b2c" stroke-width="2"/>
-  <text x="416" y="496" class="small">TenantAuthorizationFilter</text>
-  <text x="416" y="520" class="tiny">sets TenantContext only after match</text>
-
-  <rect x="780" y="126" width="225" height="500" class="app box"/>
-  <text x="810" y="164" class="label">MVC + Exposed</text>
-  <rect x="812" y="210" width="160" height="72" class="box" fill="#ffffff" stroke="#5ea772" stroke-width="2"/>
-  <text x="838" y="252" class="small">Controller</text>
-  <rect x="812" y="326" width="160" height="72" class="box" fill="#ffffff" stroke="#5ea772" stroke-width="2"/>
-  <text x="858" y="368" class="small">Service</text>
-  <rect x="812" y="442" width="160" height="72" class="box" fill="#ffffff" stroke="#5ea772" stroke-width="2"/>
-  <text x="836" y="484" class="small">Repository</text>
-
-  <rect x="1060" y="126" width="170" height="500" class="db box"/>
-  <text x="1088" y="164" class="label">Tenant DBs</text>
-  <rect x="1088" y="232" width="116" height="104" class="box" fill="#ffffff" stroke="#8d77c8" stroke-width="2"/>
-  <text x="1110" y="272" class="small">ACME</text>
-  <text x="1104" y="296" class="tiny">Hikari pool</text>
-  <rect x="1088" y="410" width="116" height="104" class="box" fill="#ffffff" stroke="#8d77c8" stroke-width="2"/>
-  <text x="1102" y="450" class="small">GLOBEX</text>
-  <text x="1104" y="474" class="tiny">Hikari pool</text>
-
-  <path class="arrow" d="M300 376 H360"/>
-  <path class="arrow" d="M720 376 H780"/>
-  <path class="arrow" d="M1005 370 H1060"/>
-  <path class="muted" d="M540 544 C650 670 880 670 892 514"/>
-  <text x="618" y="682" class="tiny">authorized TenantContext</text>
-  <text x="420" y="586" class="tiny">400 conflict / 401 unauthenticated / 403 mismatch</text>
+<rect class="canvas" x="0" y="0" width="922" height="100%"/>
+<rect class="frame" x="20" y="20" width="882" height="1356" rx="18"/>
+<text class="title" x="54" y="72">Spring Security Tenant Authorization</text>
+<text class="subtitle" x="56" y="100">Pastel architecture overview</text>
+<rect class="card" x="48" y="142" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="188" text-anchor="middle">Authenticate first,</text>
+<text class="label" x="171" y="213" text-anchor="middle">authorize tenant</text>
+<text class="label" x="171" y="238" text-anchor="middle">identity, then...</text>
+<rect class="card" x="338" y="142" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="188" text-anchor="middle">HTTP Request</text>
+<rect class="card" x="628" y="142" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="188" text-anchor="middle">Authorization</text>
+<rect class="card" x="48" y="298" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="344" text-anchor="middle">Bearer</text>
+<text class="label" x="171" y="369" text-anchor="middle">demo-acme-token</text>
+<rect class="card" x="338" y="298" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="344" text-anchor="middle">X-API-Key</text>
+<rect class="card" x="628" y="298" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="344" text-anchor="middle">demo-acme-key</text>
+<rect class="card" x="48" y="454" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="500" text-anchor="middle">X-Tenant-ID</text>
+<rect class="card" x="338" y="454" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="500" text-anchor="middle">acme</text>
+<rect class="card" x="628" y="454" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="751" y="500" text-anchor="middle">Spring Security</text>
+<text class="label" x="751" y="525" text-anchor="middle">Chain</text>
+<rect class="card" x="48" y="610" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="171" y="656" text-anchor="middle">Credential Conflict</text>
+<text class="label" x="171" y="681" text-anchor="middle">Filter</text>
+<rect class="card" x="338" y="610" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="461" y="656" text-anchor="middle">JWT / API-Key /</text>
+<text class="label" x="461" y="681" text-anchor="middle">Demo Session</text>
+<rect class="card" x="628" y="610" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="751" y="656" text-anchor="middle">AuthorizationFilter</text>
+<rect class="card" x="48" y="766" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="171" y="812" text-anchor="middle">Tenant</text>
+<text class="label" x="171" y="837" text-anchor="middle">Authorization</text>
+<text class="label" x="171" y="862" text-anchor="middle">Filter</text>
+<rect class="card" x="338" y="766" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="461" y="812" text-anchor="middle">sets TenantContext</text>
+<text class="label" x="461" y="837" text-anchor="middle">only after match</text>
+<rect class="card" x="628" y="766" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="751" y="812" text-anchor="middle">MVC + Exposed</text>
+<rect class="card" x="48" y="922" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="171" y="968" text-anchor="middle">Controller</text>
+<rect class="card" x="338" y="922" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="461" y="968" text-anchor="middle">Service</text>
+<rect class="card" x="628" y="922" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="751" y="968" text-anchor="middle">Repository</text>
+<rect class="card" x="48" y="1078" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="171" y="1124" text-anchor="middle">Tenant DBs</text>
+<rect class="card" x="338" y="1078" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="461" y="1124" text-anchor="middle">Hikari pool</text>
+<rect class="card" x="628" y="1078" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="751" y="1124" text-anchor="middle">GLOBEX</text>
+<rect class="card" x="48" y="1234" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="171" y="1280" text-anchor="middle">authorized</text>
+<text class="label" x="171" y="1305" text-anchor="middle">TenantContext</text>
+<rect class="card" x="338" y="1234" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="461" y="1280" text-anchor="middle">400 conflict / 401</text>
+<text class="label" x="461" y="1305" text-anchor="middle">unauthenticated /</text>
+<text class="label" x="461" y="1330" text-anchor="middle">403 mismatch</text>
+<path class="line" d="M 302 201 L 330 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 268 L 171 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 201 L 620 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 268 L 461 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 268 L 751 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 357 L 330 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 424 L 171 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 357 L 620 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 424 L 461 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 424 L 751 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 513 L 330 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 580 L 171 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 513 L 620 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 580 L 461 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 580 L 751 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 669 L 330 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 736 L 171 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 669 L 620 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 736 L 461 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 736 L 751 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 825 L 330 825" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 892 L 171 914" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 825 L 620 825" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 892 L 461 914" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 892 L 751 914" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 981 L 330 981" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1048 L 171 1070" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 981 L 620 981" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1048 L 461 1070" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1048 L 751 1070" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1137 L 330 1137" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1204 L 171 1226" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1137 L 620 1137" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1204 L 461 1226" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1293 L 330 1293" marker-end="url(#openArrow)"/>
 </svg>

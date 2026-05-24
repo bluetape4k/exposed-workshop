@@ -1,64 +1,116 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
-  <title id="title">Spring Boot realtime outbox architecture</title>
-  <desc id="desc">A layered Spring Boot 4 example that persists notifications and outbox events with Exposed before publishing Server-Sent Events.</desc>
-  <defs>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
-    </marker>
-    <style>
-      .bg { fill: #f8fafc; }
-      .band { fill: #e0f2fe; stroke: #0369a1; stroke-width: 2; }
-      .store { fill: #ecfdf5; stroke: #047857; stroke-width: 2; }
-      .edge { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#arrow); }
-      .dash { stroke-dasharray: 8 7; }
-      .title { font: 700 30px Arial, sans-serif; fill: #0f172a; }
-      .label { font: 700 20px Arial, sans-serif; fill: #0f172a; }
-      .text { font: 16px Arial, sans-serif; fill: #334155; }
-      .small { font: 14px Arial, sans-serif; fill: #475569; }
-    </style>
-  </defs>
-  <rect class="bg" width="1280" height="720"/>
-  <text class="title" x="60" y="62">Spring Boot 4 Realtime Outbox</text>
-  <text class="text" x="60" y="92">Persist first with Exposed, then publish Server-Sent Events from an explicit outbox step.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="1396" viewBox="0 0 922 1396" role="img" aria-label="Spring Boot 4 Realtime Outbox">
+<defs>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
+</defs>
 
-  <rect class="band" x="70" y="160" width="230" height="110" rx="8"/>
-  <text class="label" x="105" y="204">Client</text>
-  <text class="text" x="105" y="232">POST /notifications</text>
-  <text class="text" x="105" y="254">GET /events</text>
-
-  <rect class="band" x="380" y="130" width="270" height="170" rx="8"/>
-  <text class="label" x="415" y="176">Spring WebFlux</text>
-  <text class="text" x="415" y="206">NotificationController</text>
-  <text class="text" x="415" y="232">SSE endpoint</text>
-  <text class="text" x="415" y="258">ErrorAdvice</text>
-
-  <rect class="band" x="740" y="130" width="270" height="170" rx="8"/>
-  <text class="label" x="775" y="176">Application Service</text>
-  <text class="text" x="775" y="206">validate command</text>
-  <text class="text" x="775" y="232">publish pending events</text>
-  <text class="text" x="775" y="258">record failed delivery</text>
-
-  <rect class="store" x="380" y="410" width="270" height="140" rx="8"/>
-  <text class="label" x="415" y="456">Exposed Repository</text>
-  <text class="text" x="415" y="486">notifications table</text>
-  <text class="text" x="415" y="512">realtime_outbox table</text>
-
-  <rect class="store" x="740" y="410" width="270" height="140" rx="8"/>
-  <text class="label" x="775" y="456">H2 Database</text>
-  <text class="text" x="775" y="486">PENDING</text>
-  <text class="text" x="775" y="512">PUBLISHED / FAILED</text>
-
-  <rect class="band" x="1040" y="185" width="170" height="110" rx="8"/>
-  <text class="label" x="1078" y="230">RealtimeHub</text>
-  <text class="text" x="1078" y="258">SSE sink</text>
-
-  <path class="edge" d="M300 215 H380"/>
-  <path class="edge" d="M650 215 H740"/>
-  <path class="edge" d="M875 300 V410"/>
-  <path class="edge" d="M650 480 H740"/>
-  <path class="edge" d="M1010 215 H1040"/>
-  <path class="edge dash" d="M1040 255 C760 360 420 350 300 245"/>
-
-  <text class="small" x="520" y="360">same transaction: domain row + outbox row</text>
-  <text class="small" x="965" y="350">publish step is retryable</text>
+<rect class="canvas" x="0" y="0" width="922" height="100%"/>
+<rect class="frame" x="20" y="20" width="882" height="1356" rx="18"/>
+<text class="title" x="54" y="72">Spring Boot 4 Realtime Outbox</text>
+<text class="subtitle" x="56" y="100">Pastel architecture overview</text>
+<rect class="card" x="48" y="142" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="188" text-anchor="middle">Persist first with</text>
+<text class="label" x="171" y="213" text-anchor="middle">Exposed, then</text>
+<text class="label" x="171" y="238" text-anchor="middle">publish Server-Sent...</text>
+<rect class="card" x="338" y="142" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="188" text-anchor="middle">Client</text>
+<rect class="card" x="628" y="142" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="188" text-anchor="middle">POST /notifications</text>
+<rect class="card" x="48" y="298" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="344" text-anchor="middle">GET /events</text>
+<rect class="card" x="338" y="298" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="344" text-anchor="middle">Spring WebFlux</text>
+<rect class="card" x="628" y="298" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="344" text-anchor="middle">Notification</text>
+<text class="label" x="751" y="369" text-anchor="middle">Controller</text>
+<rect class="card" x="48" y="454" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="500" text-anchor="middle">SSE endpoint</text>
+<rect class="card" x="338" y="454" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="500" text-anchor="middle">ErrorAdvice</text>
+<rect class="card" x="628" y="454" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="751" y="500" text-anchor="middle">Application Service</text>
+<rect class="card" x="48" y="610" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="171" y="656" text-anchor="middle">validate command</text>
+<rect class="card" x="338" y="610" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="461" y="656" text-anchor="middle">publish pending</text>
+<text class="label" x="461" y="681" text-anchor="middle">events</text>
+<rect class="card" x="628" y="610" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="751" y="656" text-anchor="middle">record failed</text>
+<text class="label" x="751" y="681" text-anchor="middle">delivery</text>
+<rect class="card" x="48" y="766" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="171" y="812" text-anchor="middle">Exposed Repository</text>
+<rect class="card" x="338" y="766" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="461" y="812" text-anchor="middle">notifications table</text>
+<rect class="card" x="628" y="766" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="751" y="812" text-anchor="middle">realtime_outbox</text>
+<text class="label" x="751" y="837" text-anchor="middle">table</text>
+<rect class="card" x="48" y="922" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="171" y="968" text-anchor="middle">H2 Database</text>
+<rect class="card" x="338" y="922" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="461" y="968" text-anchor="middle">PENDING</text>
+<rect class="card" x="628" y="922" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="751" y="968" text-anchor="middle">PUBLISHED / FAILED</text>
+<rect class="card" x="48" y="1078" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="171" y="1124" text-anchor="middle">RealtimeHub</text>
+<rect class="card" x="338" y="1078" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="461" y="1124" text-anchor="middle">SSE sink</text>
+<rect class="card" x="628" y="1078" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="751" y="1124" text-anchor="middle">same transaction:</text>
+<text class="label" x="751" y="1149" text-anchor="middle">domain row + outbox</text>
+<text class="label" x="751" y="1174" text-anchor="middle">row</text>
+<rect class="card" x="48" y="1234" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="171" y="1280" text-anchor="middle">publish step is</text>
+<text class="label" x="171" y="1305" text-anchor="middle">retryable</text>
+<path class="line" d="M 302 201 L 330 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 268 L 171 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 201 L 620 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 268 L 461 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 268 L 751 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 357 L 330 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 424 L 171 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 357 L 620 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 424 L 461 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 424 L 751 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 513 L 330 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 580 L 171 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 513 L 620 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 580 L 461 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 580 L 751 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 669 L 330 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 736 L 171 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 669 L 620 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 736 L 461 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 736 L 751 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 825 L 330 825" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 892 L 171 914" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 825 L 620 825" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 892 L 461 914" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 892 L 751 914" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 981 L 330 981" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1048 L 171 1070" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 981 L 620 981" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1048 L 461 1070" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1048 L 751 1070" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1137 L 330 1137" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1204 L 171 1226" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1137 L 620 1137" marker-end="url(#openArrow)"/>
 </svg>

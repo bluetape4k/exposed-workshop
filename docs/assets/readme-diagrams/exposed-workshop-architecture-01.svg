@@ -1,13 +1,82 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1310" height="760" viewBox="0 0 1310 760" role="img" aria-labelledby="title desc">
-<title id="title">Exposed API Structure</title><desc id="desc">Current workshop API boundaries rendered as a reviewed PNG/SVG diagram.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="928" viewBox="0 0 922 928" role="img" aria-label="Exposed API Structure">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#203040" flood-opacity="0.10"/></filter>
-  <marker id="arrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#F6F9FC}.frame{fill:#FFFFFF;stroke:#D7E2EC;stroke-width:2}.title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;fill:#22344A;font-weight:400}.subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:16px;fill:#536476;font-weight:400}.group{filter:url(#shadow);stroke-width:2}.gtitle{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:23px;fill:#22344A;font-weight:400}.label{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;fill:#34465B;font-weight:400}.small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#627184;font-weight:400}.axis{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:22px;fill:#22344A;font-weight:400}.line{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#arrow)}.plain{stroke:#758297;stroke-width:2;fill:none}.pill{fill:#FFFFFF;opacity:.78;stroke:#D7E2EC;stroke-width:1.2}.num{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:22px;fill:#22344A;font-weight:400}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="1310" height="760"/><rect class="frame" x="36" y="28" width="1238" height="704" rx="24"/>
-<text class="title" x="72" y="82">Exposed API Structure</text><text class="subtitle" x="76" y="114">Current workshop API boundaries rendered as a reviewed PNG/SVG diagram.</text>
-<g transform="translate(72,165)"><rect class="group" x="0" y="0" width="280" height="178" rx="16" fill="#E8F3FF" stroke="#75A9E8"/><text class="gtitle" x="140" y="36" text-anchor="middle">Query APIs</text><rect class="pill" x="24" y="49" width="232" height="25" rx="8"/><text class="label" x="140" y="67" text-anchor="middle">SQL DSL</text><rect class="pill" x="24" y="79" width="232" height="25" rx="8"/><text class="label" x="140" y="97" text-anchor="middle">DAO / Entity</text><rect class="pill" x="24" y="109" width="232" height="25" rx="8"/><text class="label" x="140" y="127" text-anchor="middle">Custom columns</text></g><g transform="translate(72,430)"><rect class="group" x="0" y="0" width="280" height="178" rx="16" fill="#EAF7EF" stroke="#69B888"/><text class="gtitle" x="140" y="36" text-anchor="middle">Transaction Boundaries</text><rect class="pill" x="24" y="49" width="232" height="25" rx="8"/><text class="label" x="140" y="67" text-anchor="middle">transaction { }</text><rect class="pill" x="24" y="79" width="232" height="25" rx="8"/><text class="label" x="140" y="97" text-anchor="middle">newSuspendedTransaction</text><rect class="pill" x="24" y="109" width="232" height="25" rx="8"/><text class="label" x="140" y="127" text-anchor="middle">Dispatchers.IO bridge</text></g><g transform="translate(510,175)"><rect class="group" x="0" y="0" width="300" height="160" rx="16" fill="#FFF3D9" stroke="#D9AA4D"/><text class="gtitle" x="150" y="36" text-anchor="middle">Exposed Core</text><rect class="pill" x="24" y="49" width="252" height="25" rx="8"/><text class="label" x="150" y="67" text-anchor="middle">Table / Column</text><rect class="pill" x="24" y="79" width="252" height="25" rx="8"/><text class="label" x="150" y="97" text-anchor="middle">Expression / Op</text><rect class="pill" x="24" y="109" width="252" height="25" rx="8"/><text class="label" x="150" y="127" text-anchor="middle">Database / Transaction</text></g><g transform="translate(510,450)"><rect class="group" x="0" y="0" width="300" height="160" rx="16" fill="#FDECEF" stroke="#DB7890"/><text class="gtitle" x="150" y="36" text-anchor="middle">Workshop Tests</text><rect class="pill" x="24" y="49" width="252" height="25" rx="8"/><text class="label" x="150" y="67" text-anchor="middle">H2 fast path</text><rect class="pill" x="24" y="79" width="252" height="25" rx="8"/><text class="label" x="150" y="97" text-anchor="middle">PostgreSQL / MySQL</text><rect class="pill" x="24" y="109" width="252" height="25" rx="8"/><text class="label" x="150" y="127" text-anchor="middle">Testcontainers</text></g><g transform="translate(960,165)"><rect class="group" x="0" y="0" width="290" height="178" rx="16" fill="#E9F7F6" stroke="#55B5AF"/><text class="gtitle" x="145" y="36" text-anchor="middle">App Integrations</text><rect class="pill" x="24" y="49" width="242" height="25" rx="8"/><text class="label" x="145" y="67" text-anchor="middle">Spring MVC / WebFlux</text><rect class="pill" x="24" y="79" width="242" height="25" rx="8"/><text class="label" x="145" y="97" text-anchor="middle">Ktor</text><rect class="pill" x="24" y="109" width="242" height="25" rx="8"/><text class="label" x="145" y="127" text-anchor="middle">Cache / routing</text></g><g transform="translate(960,430)"><rect class="group" x="0" y="0" width="290" height="178" rx="16" fill="#F1ECFF" stroke="#A58BE3"/><text class="gtitle" x="145" y="36" text-anchor="middle">Production Patterns</text><rect class="pill" x="24" y="49" width="242" height="25" rx="8"/><text class="label" x="145" y="67" text-anchor="middle">Multitenancy</text><rect class="pill" x="24" y="79" width="242" height="25" rx="8"/><text class="label" x="145" y="97" text-anchor="middle">Outbox / idempotency</text><rect class="pill" x="24" y="109" width="242" height="25" rx="8"/><text class="label" x="145" y="127" text-anchor="middle">Observability</text></g><path class="line" d="M 352 255 C 420 255 435 255 510 255"/><path class="line" d="M 352 520 C 420 520 435 520 510 520"/><path class="line" d="M 810 255 C 880 255 895 255 960 255"/><path class="line" d="M 810 520 C 880 520 895 520 960 520"/><path class="plain" d="M 660 335 L 660 450"/>
+
+<rect class="canvas" x="0" y="0" width="922" height="100%"/>
+<rect class="frame" x="20" y="20" width="882" height="888" rx="18"/>
+<text class="title" x="54" y="72">Exposed API Structure</text>
+<text class="subtitle" x="56" y="100">Pastel architecture overview</text>
+<rect class="card" x="48" y="142" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="188" text-anchor="middle">Exposed API</text>
+<rect class="card" x="338" y="142" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="188" text-anchor="middle">SQL DSL</text>
+<rect class="card" x="628" y="142" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="188" text-anchor="middle">Table.selectAll()</text>
+<rect class="card" x="48" y="298" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="344" text-anchor="middle">Table.insert {}</text>
+<rect class="card" x="338" y="298" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="344" text-anchor="middle">DAO / Entity</text>
+<rect class="card" x="628" y="298" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="344" text-anchor="middle">Entity.findById()</text>
+<rect class="card" x="48" y="454" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="500" text-anchor="middle">Entity.new {}</text>
+<rect class="card" x="338" y="454" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="500" text-anchor="middle">Transactions</text>
+<rect class="card" x="628" y="454" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="751" y="500" text-anchor="middle">transaction { }</text>
+<rect class="card" x="48" y="610" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="171" y="656" text-anchor="middle">new Suspended</text>
+<rect class="card" x="338" y="610" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="461" y="656" text-anchor="middle">Databases</text>
+<rect class="card" x="628" y="610" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="751" y="656" text-anchor="middle">H2</text>
+<rect class="card" x="48" y="766" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="171" y="812" text-anchor="middle">PostgreSQL</text>
+<rect class="card" x="338" y="766" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="461" y="812" text-anchor="middle">MySQL</text>
+<rect class="card" x="628" y="766" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="751" y="812" text-anchor="middle">MariaDB</text>
+<path class="line" d="M 302 201 L 330 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 268 L 171 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 201 L 620 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 268 L 461 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 268 L 751 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 357 L 330 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 424 L 171 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 357 L 620 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 424 L 461 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 424 L 751 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 513 L 330 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 580 L 171 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 513 L 620 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 580 L 461 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 580 L 751 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 669 L 330 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 736 L 171 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 669 L 620 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 736 L 461 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 736 L 751 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 825 L 330 825" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 825 L 620 825" marker-end="url(#openArrow)"/>
 </svg>

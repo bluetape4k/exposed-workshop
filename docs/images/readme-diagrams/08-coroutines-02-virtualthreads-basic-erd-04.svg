@@ -1,42 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="842" height="426" viewBox="0 0 842 426" role="img" aria-label="Table ERD (virtualthreads_table)">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="540" viewBox="0 0 800 540" role="img" aria-label="Table ERD">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="10" markerHeight="8" refX="8.5" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 8.5 4 L 1 7" fill="none" stroke="#758297" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0.5 1 L 9.5 5 L 0.5 9 Z" fill="#ffffff" stroke="#758297" stroke-width="1.7"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
-    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
-    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="842" height="426"/>
-<rect class="frame" x="32" y="28" width="778" height="370" rx="28"/>
-<text class="title" x="66" y="82">Table ERD</text>
-<text class="subtitle" x="70" y="118">ERD tables and relationships from the original Mermaid source</text>
-<g transform="translate(60,170)">
-  <rect class="card" x="0" y="0" width="320" height="166" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#5B8DEF"/>
-  <text class="label" x="160" y="32" text-anchor="middle">virtualthreads_tab</text>
-<text class="label" x="160" y="56" text-anchor="middle">le</text>
-  <text class="mono" x="18" y="104">SERIAL id PK</text>
-<text class="mono" x="18" y="131">VARCHAR_50 name NULL</text>
-</g>
-<g transform="translate(462,170)">
-  <rect class="card" x="0" y="0" width="320" height="139" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="74" x2="320" y2="74" stroke="#58A978"/>
-  <text class="label" x="160" y="32" text-anchor="middle">virtualthreads_tab</text>
-<text class="label" x="160" y="56" text-anchor="middle">le_unique</text>
-  <text class="mono" x="18" y="104">INT id PK UNIQUE INDEX</text>
-</g>
+
+<rect class="canvas" x="0" y="0" width="800" height="100%"/>
+<rect class="frame" x="20" y="20" width="760" height="500" rx="18"/>
+<text class="title" x="54" y="72">Table ERD</text>
+<text class="subtitle" x="56" y="100">Entity relationship view</text>
+<rect class="card" x="132" y="142" width="244" height="154" rx="14" fill="#ffffff" stroke="#d9899b"/>
+<rect x="132" y="142" width="244" height="42" rx="14" fill="#f7d9df" stroke="#d9899b" stroke-width="0"/>
+<text class="smallLabel" x="254" y="170" text-anchor="middle">virtualthreads_tab</text>
+<rect class="card" x="424" y="142" width="244" height="154" rx="14" fill="#ffffff" stroke="#7eaad3"/>
+<rect x="424" y="142" width="244" height="42" rx="14" fill="#d9ecff" stroke="#7eaad3" stroke-width="0"/>
+<text class="smallLabel" x="546" y="170" text-anchor="middle">le</text>
+<text class="mono" x="442" y="208">SERIAL id PK</text>
+<rect class="card" x="132" y="338" width="244" height="154" rx="14" fill="#ffffff" stroke="#7fb895"/>
+<rect x="132" y="338" width="244" height="42" rx="14" fill="#dcf3e4" stroke="#7fb895" stroke-width="0"/>
+<text class="smallLabel" x="254" y="366" text-anchor="middle">VARCHAR_50 name NULL</text>
+<rect class="card" x="424" y="338" width="244" height="154" rx="14" fill="#ffffff" stroke="#d0a84e"/>
+<rect x="424" y="338" width="244" height="42" rx="14" fill="#fff0c9" stroke="#d0a84e" stroke-width="0"/>
+<text class="smallLabel" x="546" y="366" text-anchor="middle">le_unique</text>
+<text class="mono" x="442" y="404">INT id PK UNIQUE INDEX</text>
+<path class="line" d="M 384 219 L 416 219" marker-end="url(#openArrow)"/>
+<path class="line" d="M 254 304 L 254 330" marker-end="url(#openArrow)"/>
+<path class="line" d="M 546 304 L 546 330" marker-end="url(#openArrow)"/>
+<path class="line" d="M 384 415 L 416 415" marker-end="url(#openArrow)"/>
 </svg>

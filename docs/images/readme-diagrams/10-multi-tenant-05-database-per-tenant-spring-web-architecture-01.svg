@@ -1,71 +1,144 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760">
-  <rect width="1280" height="760" fill="#f7fafc"/>
-  <text x="640" y="58" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" fill="#172033">Database-per-Tenant Spring Web Architecture</text>
-  <text x="640" y="92" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="18" fill="#4a5568">One tenant header selects one owned datasource, one Exposed Database, and one physical tenant database.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="1594" viewBox="0 0 922 1594" role="img" aria-label="Database-per-Tenant Spring Web Architecture">
+<defs>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
+</defs>
 
-  <defs>
-    <marker id="arrow" markerWidth="14" markerHeight="10" refX="12" refY="5" orient="auto">
-      <path d="M 0 0 L 14 5 L 0 10 z" fill="#2563eb"/>
-    </marker>
-    <style>
-      .box { fill:#ffffff; stroke:#2563eb; stroke-width:2.5; rx:10; }
-      .db { fill:#fff7ed; stroke:#ea580c; stroke-width:2.5; }
-      .title { font-family:Inter, Arial, sans-serif; font-size:21px; font-weight:700; fill:#172033; }
-      .text { font-family:Inter, Arial, sans-serif; font-size:16px; fill:#263244; }
-      .small { font-family:Inter, Arial, sans-serif; font-size:14px; fill:#4a5568; }
-      .arrow { stroke:#2563eb; stroke-width:3; fill:none; marker-end:url(#arrow); }
-    </style>
-  </defs>
-
-  <rect class="box" x="56" y="160" width="220" height="126"/>
-  <text class="title" x="166" y="202" text-anchor="middle">HTTP Client</text>
-  <text class="text" x="166" y="236" text-anchor="middle">X-Tenant-ID</text>
-  <text class="small" x="166" y="262" text-anchor="middle">acme | globex</text>
-
-  <rect class="box" x="346" y="144" width="254" height="158"/>
-  <text class="title" x="473" y="188" text-anchor="middle">TenantFilter</text>
-  <text class="text" x="473" y="222" text-anchor="middle">Strict whitelist</text>
-  <text class="small" x="473" y="250" text-anchor="middle">400 missing, 404 unknown</text>
-  <text class="small" x="473" y="276" text-anchor="middle">ThreadLocal cleared in finally</text>
-
-  <rect class="box" x="670" y="144" width="254" height="158"/>
-  <text class="title" x="797" y="188" text-anchor="middle">TenantTransaction</text>
-  <text class="text" x="797" y="222" text-anchor="middle">transaction(database)</text>
-  <text class="small" x="797" y="250" text-anchor="middle">Repository never chooses datasource</text>
-  <text class="small" x="797" y="276" text-anchor="middle">Rollback stays tenant-local</text>
-
-  <rect class="box" x="994" y="144" width="230" height="158"/>
-  <text class="title" x="1109" y="188" text-anchor="middle">Registry</text>
-  <text class="text" x="1109" y="222" text-anchor="middle">TenantId -> DataSource</text>
-  <text class="small" x="1109" y="250" text-anchor="middle">Fail-fast config validation</text>
-  <text class="small" x="1109" y="276" text-anchor="middle">Closes all Hikari pools</text>
-
-  <rect class="box" x="346" y="412" width="254" height="126"/>
-  <text class="title" x="473" y="454" text-anchor="middle">Inventory API</text>
-  <text class="text" x="473" y="488" text-anchor="middle">Controller -> Service</text>
-  <text class="small" x="473" y="514" text-anchor="middle">Tenant-agnostic endpoints</text>
-
-  <rect class="box" x="670" y="412" width="254" height="126"/>
-  <text class="title" x="797" y="454" text-anchor="middle">Repository</text>
-  <text class="text" x="797" y="488" text-anchor="middle">Exposed DSL</text>
-  <text class="small" x="797" y="514" text-anchor="middle">Uses TenantTransaction only</text>
-
-  <rect class="db" x="978" y="394" width="246" height="116" rx="10"/>
-  <text class="title" x="1101" y="438" text-anchor="middle">ACME DB</text>
-  <text class="small" x="1101" y="468" text-anchor="middle">jdbc:h2:mem:tenant_acme</text>
-  <text class="small" x="1101" y="492" text-anchor="middle">Dedicated Hikari pool</text>
-
-  <rect class="db" x="978" y="574" width="246" height="116" rx="10"/>
-  <text class="title" x="1101" y="618" text-anchor="middle">GLOBEX DB</text>
-  <text class="small" x="1101" y="648" text-anchor="middle">jdbc:h2:mem:tenant_globex</text>
-  <text class="small" x="1101" y="672" text-anchor="middle">Dedicated Hikari pool</text>
-
-  <path class="arrow" d="M276 223 H346"/>
-  <path class="arrow" d="M600 223 H670"/>
-  <path class="arrow" d="M924 223 H994"/>
-  <path class="arrow" d="M473 302 V412"/>
-  <path class="arrow" d="M600 475 H670"/>
-  <path class="arrow" d="M797 412 V302"/>
-  <path class="arrow" d="M924 448 H978"/>
-  <path class="arrow" d="M924 502 C954 548 954 626 978 626"/>
+<rect class="canvas" x="0" y="0" width="922" height="100%"/>
+<rect class="frame" x="20" y="20" width="882" height="1554" rx="18"/>
+<text class="title" x="54" y="72">Database-per-Tenant Spring Web</text>
+<text class="title" x="54" y="116">Architecture</text>
+<text class="subtitle" x="56" y="144">Pastel architecture overview</text>
+<rect class="card" x="48" y="184" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="230" text-anchor="middle">One tenant header</text>
+<text class="label" x="171" y="255" text-anchor="middle">selects one owned</text>
+<text class="label" x="171" y="280" text-anchor="middle">datasource, one...</text>
+<rect class="card" x="338" y="184" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="230" text-anchor="middle">HTTP Client</text>
+<rect class="card" x="628" y="184" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="230" text-anchor="middle">X-Tenant-ID</text>
+<rect class="card" x="48" y="340" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="386" text-anchor="middle">acme | globex</text>
+<rect class="card" x="338" y="340" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="386" text-anchor="middle">TenantFilter</text>
+<rect class="card" x="628" y="340" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="386" text-anchor="middle">Strict whitelist</text>
+<rect class="card" x="48" y="496" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="542" text-anchor="middle">400 missing, 404</text>
+<text class="label" x="171" y="567" text-anchor="middle">unknown</text>
+<rect class="card" x="338" y="496" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="542" text-anchor="middle">ThreadLocal cleared</text>
+<text class="label" x="461" y="567" text-anchor="middle">in finally</text>
+<rect class="card" x="628" y="496" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="751" y="542" text-anchor="middle">TenantTransaction</text>
+<rect class="card" x="48" y="652" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="171" y="698" text-anchor="middle">transaction(databa</text>
+<text class="label" x="171" y="723" text-anchor="middle">se)</text>
+<rect class="card" x="338" y="652" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="461" y="698" text-anchor="middle">Repository never</text>
+<text class="label" x="461" y="723" text-anchor="middle">chooses datasource</text>
+<rect class="card" x="628" y="652" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="751" y="698" text-anchor="middle">Rollback stays</text>
+<text class="label" x="751" y="723" text-anchor="middle">tenant-local</text>
+<rect class="card" x="48" y="808" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="171" y="854" text-anchor="middle">Registry</text>
+<rect class="card" x="338" y="808" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="461" y="854" text-anchor="middle">TenantId -&gt;</text>
+<text class="label" x="461" y="879" text-anchor="middle">DataSource</text>
+<rect class="card" x="628" y="808" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="751" y="854" text-anchor="middle">Fail-fast config</text>
+<text class="label" x="751" y="879" text-anchor="middle">validation</text>
+<rect class="card" x="48" y="964" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="171" y="1010" text-anchor="middle">Closes all Hikari</text>
+<text class="label" x="171" y="1035" text-anchor="middle">pools</text>
+<rect class="card" x="338" y="964" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="461" y="1010" text-anchor="middle">Inventory API</text>
+<rect class="card" x="628" y="964" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="751" y="1010" text-anchor="middle">Controller -&gt;</text>
+<text class="label" x="751" y="1035" text-anchor="middle">Service</text>
+<rect class="card" x="48" y="1120" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="171" y="1166" text-anchor="middle">Tenant-agnostic</text>
+<text class="label" x="171" y="1191" text-anchor="middle">endpoints</text>
+<rect class="card" x="338" y="1120" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="461" y="1166" text-anchor="middle">Repository</text>
+<rect class="card" x="628" y="1120" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="751" y="1166" text-anchor="middle">Exposed DSL</text>
+<rect class="card" x="48" y="1276" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="171" y="1322" text-anchor="middle">Uses</text>
+<text class="label" x="171" y="1347" text-anchor="middle">TenantTransaction</text>
+<text class="label" x="171" y="1372" text-anchor="middle">only</text>
+<rect class="card" x="338" y="1276" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="461" y="1322" text-anchor="middle">ACME DB</text>
+<rect class="card" x="628" y="1276" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="751" y="1322" text-anchor="middle">jdbc:h2:mem:tenant_</text>
+<text class="label" x="751" y="1347" text-anchor="middle">acme</text>
+<rect class="card" x="48" y="1432" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="1478" text-anchor="middle">Dedicated Hikari</text>
+<text class="label" x="171" y="1503" text-anchor="middle">pool</text>
+<rect class="card" x="338" y="1432" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="1478" text-anchor="middle">GLOBEX DB</text>
+<rect class="card" x="628" y="1432" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="1478" text-anchor="middle">jdbc:h2:mem:tenant_</text>
+<text class="label" x="751" y="1503" text-anchor="middle">globex</text>
+<path class="line" d="M 302 243 L 330 243" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 310 L 171 332" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 243 L 620 243" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 310 L 461 332" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 310 L 751 332" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 399 L 330 399" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 466 L 171 488" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 399 L 620 399" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 466 L 461 488" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 466 L 751 488" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 555 L 330 555" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 622 L 171 644" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 555 L 620 555" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 622 L 461 644" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 622 L 751 644" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 711 L 330 711" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 778 L 171 800" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 711 L 620 711" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 778 L 461 800" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 778 L 751 800" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 867 L 330 867" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 934 L 171 956" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 867 L 620 867" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 934 L 461 956" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 934 L 751 956" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1023 L 330 1023" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1090 L 171 1112" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1023 L 620 1023" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1090 L 461 1112" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1090 L 751 1112" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1179 L 330 1179" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1246 L 171 1268" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1179 L 620 1179" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1246 L 461 1268" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1246 L 751 1268" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1335 L 330 1335" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1402 L 171 1424" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1335 L 620 1335" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1402 L 461 1424" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1402 L 751 1424" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1491 L 330 1491" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1491 L 620 1491" marker-end="url(#openArrow)"/>
 </svg>

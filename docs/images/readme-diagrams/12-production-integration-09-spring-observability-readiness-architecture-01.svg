@@ -1,88 +1,112 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1380" height="560" viewBox="0 0 1380 560" role="img" aria-label="09 spring observability readiness Architecture">
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="1282" viewBox="0 0 922 1282" role="img" aria-label="09 spring observability readiness Architecture">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:14px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="1380" height="560"/>
-<rect class="frame" x="32" y="28" width="1316" height="504" rx="28"/>
-<text class="title" x="66" y="82">09 spring observability readiness Architecture</text>
-<text class="subtitle" x="70" y="118">Spring Boot 4 Actuator readiness plus Exposed-backed operation diagnostics</text>
 
-<path d="M240 250 C286 250 306 250 352 250" stroke="#758297" stroke-width="3" fill="none"/>
-<path d="M562 250 C608 250 628 250 674 250" stroke="#758297" stroke-width="3" fill="none"/>
-<path d="M884 250 C930 250 950 250 996 250" stroke="#758297" stroke-width="3" fill="none"/>
-<path d="M1116 302 C1116 360 1018 384 900 384 C782 384 720 360 720 318" stroke="#758297" stroke-width="3" fill="none"/>
-<path d="M240 388 C370 456 742 456 996 305" stroke="#758297" stroke-width="3" stroke-dasharray="9 7" fill="none"/>
-<path d="M566 388 C610 388 634 388 674 388" stroke="#758297" stroke-width="3" fill="none"/>
-<path d="M346 244 L358 250 L346 256 Z" fill="#758297"/>
-<path d="M668 244 L680 250 L668 256 Z" fill="#758297"/>
-<path d="M990 244 L1002 250 L990 256 Z" fill="#758297"/>
-<path d="M714 324 L720 312 L726 324 Z" fill="#758297"/>
-<path d="M990 299 L1002 302 L994 311 Z" fill="#758297"/>
-<path d="M668 382 L680 388 L668 394 Z" fill="#758297"/>
-
-<g transform="translate(90,190)">
-  <rect class="card" x="0" y="0" width="150" height="120" rx="18" fill="#eff6ff" stroke="#8bb8f5"/>
-  <text class="smallLabel" x="75" y="44" text-anchor="middle">HTTP Client</text>
-  <text class="small" x="75" y="74" text-anchor="middle">probe + API calls</text>
-  <text class="small" x="75" y="96" text-anchor="middle">X-Request-ID</text>
-</g>
-
-<g transform="translate(352,182)">
-  <rect class="card" x="0" y="0" width="210" height="136" rx="18" fill="#ecfdf5" stroke="#7bcfa2"/>
-  <text class="smallLabel" x="105" y="42" text-anchor="middle">Correlation Filter</text>
-  <text class="small" x="105" y="72" text-anchor="middle">echo or generate</text>
-  <text class="strong" x="105" y="98" text-anchor="middle">X-Request-ID</text>
-</g>
-
-<g transform="translate(674,172)">
-  <rect class="card" x="0" y="0" width="210" height="156" rx="18" fill="#fff7ed" stroke="#f3b268"/>
-  <text class="smallLabel" x="105" y="42" text-anchor="middle">Diagnostics API</text>
-  <text class="small" x="105" y="73" text-anchor="middle">structured errors</text>
-  <text class="small" x="105" y="96" text-anchor="middle">slow operations</text>
-  <text class="small" x="105" y="119" text-anchor="middle">operation history</text>
-</g>
-
-<g transform="translate(996,172)">
-  <rect class="card" x="0" y="0" width="210" height="156" rx="18" fill="#f5f3ff" stroke="#b4a7f5"/>
-  <text class="smallLabel" x="105" y="42" text-anchor="middle">Exposed JDBC</text>
-  <text class="small" x="105" y="73" text-anchor="middle">health ping</text>
-  <text class="small" x="105" y="96" text-anchor="middle">diagnostic_operations</text>
-  <text class="small" x="105" y="119" text-anchor="middle">H2 datasource</text>
-</g>
-
-<g transform="translate(342,332)">
-  <rect class="card" x="0" y="0" width="224" height="112" rx="18" fill="#fefce8" stroke="#d9c75f"/>
-  <text class="smallLabel" x="112" y="42" text-anchor="middle">Actuator Readiness</text>
-  <text class="small" x="112" y="72" text-anchor="middle">/actuator/health/readiness</text>
-  <text class="small" x="112" y="94" text-anchor="middle">readinessState + database</text>
-</g>
-
-<g transform="translate(674,332)">
-  <rect class="card" x="0" y="0" width="226" height="112" rx="18" fill="#f0f9ff" stroke="#7cc4e8"/>
-  <text class="smallLabel" x="113" y="42" text-anchor="middle">Health Indicator</text>
-  <text class="small" x="113" y="72" text-anchor="middle">databaseReadiness</text>
-  <text class="small" x="113" y="94" text-anchor="middle">UP or DOWN</text>
-</g>
-
-<g stroke="#758297" stroke-width="3" stroke-linecap="round">
-  <line x1="240" y1="250" x2="352" y2="250"/>
-  <line x1="562" y1="250" x2="674" y2="250"/>
-  <line x1="884" y1="250" x2="996" y2="250"/>
-  <line x1="566" y1="388" x2="674" y2="388"/>
-  <line x1="900" y1="388" x2="996" y2="306"/>
-</g>
-
-<text class="subtitle" x="70" y="488">Readiness uses Spring platform conventions; diagnostics remain ordinary controller/service/repository code.</text>
+<rect class="canvas" x="0" y="0" width="922" height="100%"/>
+<rect class="frame" x="20" y="20" width="882" height="1242" rx="18"/>
+<text class="title" x="54" y="72">09 spring observability readiness</text>
+<text class="title" x="54" y="116">Architecture</text>
+<text class="subtitle" x="56" y="144">Pastel architecture overview</text>
+<rect class="card" x="48" y="184" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="230" text-anchor="middle">Spring Boot 4</text>
+<text class="label" x="171" y="255" text-anchor="middle">Actuator readiness</text>
+<text class="label" x="171" y="280" text-anchor="middle">plus Exposed-backed...</text>
+<rect class="card" x="338" y="184" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="230" text-anchor="middle">HTTP Client</text>
+<rect class="card" x="628" y="184" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="230" text-anchor="middle">probe + API calls</text>
+<rect class="card" x="48" y="340" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="386" text-anchor="middle">X-Request-ID</text>
+<rect class="card" x="338" y="340" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="386" text-anchor="middle">Correlation Filter</text>
+<rect class="card" x="628" y="340" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="386" text-anchor="middle">echo or generate</text>
+<rect class="card" x="48" y="496" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="542" text-anchor="middle">Diagnostics API</text>
+<rect class="card" x="338" y="496" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="542" text-anchor="middle">structured errors</text>
+<rect class="card" x="628" y="496" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="751" y="542" text-anchor="middle">slow operations</text>
+<rect class="card" x="48" y="652" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="171" y="698" text-anchor="middle">operation history</text>
+<rect class="card" x="338" y="652" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="461" y="698" text-anchor="middle">Exposed JDBC</text>
+<rect class="card" x="628" y="652" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="751" y="698" text-anchor="middle">health ping</text>
+<rect class="card" x="48" y="808" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="171" y="854" text-anchor="middle">diagnostic_</text>
+<text class="label" x="171" y="879" text-anchor="middle">operations</text>
+<rect class="card" x="338" y="808" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="461" y="854" text-anchor="middle">H2 datasource</text>
+<rect class="card" x="628" y="808" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="751" y="854" text-anchor="middle">Actuator Readiness</text>
+<rect class="card" x="48" y="964" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="171" y="1010" text-anchor="middle">/ actuator/ health/</text>
+<text class="label" x="171" y="1035" text-anchor="middle">readiness</text>
+<rect class="card" x="338" y="964" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="461" y="1010" text-anchor="middle">readinessState +</text>
+<text class="label" x="461" y="1035" text-anchor="middle">database</text>
+<rect class="card" x="628" y="964" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="751" y="1010" text-anchor="middle">Health Indicator</text>
+<rect class="card" x="48" y="1120" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="171" y="1166" text-anchor="middle">databaseReadiness</text>
+<rect class="card" x="338" y="1120" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="461" y="1166" text-anchor="middle">UP or DOWN</text>
+<rect class="card" x="628" y="1120" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="751" y="1166" text-anchor="middle">Readiness uses</text>
+<text class="label" x="751" y="1191" text-anchor="middle">Spring platform</text>
+<text class="label" x="751" y="1216" text-anchor="middle">conventions;...</text>
+<path class="line" d="M 302 243 L 330 243" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 310 L 171 332" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 243 L 620 243" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 310 L 461 332" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 310 L 751 332" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 399 L 330 399" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 466 L 171 488" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 399 L 620 399" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 466 L 461 488" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 466 L 751 488" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 555 L 330 555" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 622 L 171 644" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 555 L 620 555" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 622 L 461 644" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 622 L 751 644" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 711 L 330 711" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 778 L 171 800" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 711 L 620 711" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 778 L 461 800" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 778 L 751 800" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 867 L 330 867" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 934 L 171 956" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 867 L 620 867" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 934 L 461 956" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 934 L 751 956" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1023 L 330 1023" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1090 L 171 1112" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1023 L 620 1023" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1090 L 461 1112" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1090 L 751 1112" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1179 L 330 1179" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1179 L 620 1179" marker-end="url(#openArrow)"/>
 </svg>

@@ -1,63 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1366" height="638" viewBox="0 0 1366 638" role="img" aria-label="JPA vs Exposed Concept Comparison Diagram">
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="540" viewBox="0 0 820 540" role="img" aria-label="JPA vs Exposed Concept Comparison Diagram">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="10" markerHeight="8" refX="8.5" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 8.5 4 L 1 7" fill="none" stroke="#758297" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0.5 1 L 9.5 5 L 0.5 9 Z" fill="#ffffff" stroke="#758297" stroke-width="1.7"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
-    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
-    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="1366" height="638"/>
-<rect class="frame" x="32" y="28" width="1302" height="582" rx="28"/>
-<text class="title" x="66" y="82">JPA vs Exposed Concept Comparison Diagram</text>
-<text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="dashed" d="M683 180 L683 132 L263 132 L263 397"/>
-<path class="dashed" d="M683 180 L683 456 L1103 456 L1103 397"/>
-<g transform="translate(88,180)">
-  <rect class="card" x="0" y="0" width="350" height="217" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#5B8DEF"/>
-  <text class="small" x="175" y="26" text-anchor="middle">«Exposed DAO Style»</text>
-  <text class="label" x="175" y="61" text-anchor="middle">Exposed_DAO</text>
-  <text class="mono" x="18" y="108">+Entity extends LongEntity</text>
-<text class="mono" x="18" y="129">+EntityClass companion object</text>
-<text class="mono" x="18" y="150">+delegate by Table column</text>
-<text class="mono" x="18" y="171">+Entity new create</text>
-<text class="mono" x="18" y="192">+Entity findById</text>
-</g>
-<g transform="translate(508,180)">
-  <rect class="card" x="0" y="0" width="350" height="238" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#58A978"/>
-  <text class="small" x="175" y="26" text-anchor="middle">«JPA Style»</text>
-  <text class="label" x="175" y="61" text-anchor="middle">JPA_Entity</text>
-  <text class="mono" x="18" y="108">+annotation Entity</text>
-<text class="mono" x="18" y="129">+annotation Table</text>
-<text class="mono" x="18" y="150">+annotation Id GeneratedValue</text>
-<text class="mono" x="18" y="171">+annotation Column</text>
-<text class="mono" x="18" y="192">+annotation OneToMany ManyToOne</text>
-<text class="mono" x="18" y="213">+Spring AOP Transactional</text>
-</g>
-<g transform="translate(928,180)">
-  <rect class="card" x="0" y="0" width="350" height="217" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
-  <line class="compartment" x1="0" y1="78" x2="350" y2="78" stroke="#D6A441"/>
-  <text class="small" x="175" y="26" text-anchor="middle">«Exposed DSL Style»</text>
-  <text class="label" x="175" y="61" text-anchor="middle">Exposed_DSL</text>
-  <text class="mono" x="18" y="108">+Table object extends LongIdTable</text>
-<text class="mono" x="18" y="129">+Column varchar text integer</text>
-<text class="mono" x="18" y="150">+transaction block</text>
-<text class="mono" x="18" y="171">+selectAll where filter</text>
-<text class="mono" x="18" y="192">+batchInsert list</text>
-</g>
+
+<rect class="canvas" x="0" y="0" width="820" height="100%"/>
+<rect class="frame" x="20" y="20" width="780" height="500" rx="18"/>
+<text class="title" x="54" y="72">JPA vs Exposed Concept Comparison</text>
+<text class="title" x="54" y="116">Diagram</text>
+<text class="subtitle" x="56" y="144">Class and component responsibilities</text>
+<rect class="card" x="112" y="184" width="280" height="138" rx="14" fill="#f7d9df" stroke="#d9899b"/>
+<text class="smallLabel" x="252" y="220" text-anchor="middle">«Exposed DAO Style»</text>
+<line class="dash" x1="130" y1="246" x2="374" y2="246"/>
+<text class="mono" x="136" y="270">+ Exposed_DAO</text>
+<text class="mono" x="136" y="287">+ +Entity extends LongEntity</text>
+<text class="mono" x="136" y="304">+ +EntityClass companion object</text>
+<text class="mono" x="136" y="321">+ +delegate by Table column</text>
+<rect class="card" x="428" y="184" width="280" height="138" rx="14" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="smallLabel" x="568" y="220" text-anchor="middle">«JPA Style»</text>
+<line class="dash" x1="446" y1="246" x2="690" y2="246"/>
+<text class="mono" x="452" y="270">+ JPA_Entity</text>
+<text class="mono" x="452" y="287">+ +annotation Entity</text>
+<text class="mono" x="452" y="304">+ +annotation Table</text>
+<text class="mono" x="452" y="321">+ +annotation Id GeneratedValue</text>
+<rect class="card" x="112" y="356" width="280" height="138" rx="14" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="smallLabel" x="252" y="392" text-anchor="middle">«Exposed DSL Style»</text>
+<line class="dash" x1="130" y1="418" x2="374" y2="418"/>
+<text class="mono" x="136" y="442">+ Exposed_DSL</text>
+<text class="mono" x="136" y="459">+ +Table object extends LongIdTable</text>
+<text class="mono" x="136" y="476">+ +Column varchar text integer</text>
+<text class="mono" x="136" y="493">+ +transaction block</text>
 </svg>
