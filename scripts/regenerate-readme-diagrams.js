@@ -4,37 +4,39 @@ const fs = require("fs");
 const path = require("path");
 const { spawnSync } = require("child_process");
 
-const ROOT = process.cwd();
 const RSVG = process.env.RSVG_CONVERT || "rsvg-convert";
 
-const PALETTE = [
-  { fill: "#f7d9df", stroke: "#d9899b" },
-  { fill: "#d9ecff", stroke: "#7eaad3" },
-  { fill: "#dcf3e4", stroke: "#7fb895" },
-  { fill: "#fff0c9", stroke: "#d0a84e" },
-  { fill: "#eadff8", stroke: "#a287c8" },
-  { fill: "#dff4f1", stroke: "#75aaa3" },
-  { fill: "#ffe1cc", stroke: "#d5905f" },
-  { fill: "#e9edf5", stroke: "#9ca9bd" },
+const COLORS = [
+  ["#dbeafe", "#3b82f6"],
+  ["#ede9fe", "#7c3aed"],
+  ["#dcfce7", "#16a34a"],
+  ["#ffedd5", "#ea580c"],
+  ["#fce7f3", "#db2777"],
+  ["#ccfbf1", "#0f766e"],
+  ["#fef3c7", "#d97706"],
+  ["#e2e8f0", "#64748b"],
 ];
 
 const STYLE = `
-  .canvas{fill:#f7f9fc}
-  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
-  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-  .card{stroke-width:2;filter:url(#shadow)}
-  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
-  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
-  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+  .canvas{fill:#f6f9fc}
+  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+  .card{stroke-width:1.7;filter:url(#shadow)}
+  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
+  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
+  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
+  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
+  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
+  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
 `;
 
 function walk(dir, out = []) {
+  if (!fs.existsSync(dir)) return out;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     if ([".git", ".gradle", "build", ".worktrees"].includes(entry.name)) continue;
     const file = path.join(dir, entry.name);
@@ -48,94 +50,24 @@ function readmeFiles() {
   return walk(".").filter((file) => /^README(\..+)?\.md$/i.test(path.basename(file)));
 }
 
-function referencedDiagramSvgs() {
-  const refs = new Set();
+function referencedDiagrams() {
+  const refs = new Map();
   const imageRe = /!\[[^\]]*]\(([^)]+)\)|<img\s+[^>]*src=["']([^"']+)["']/gi;
   for (const readme of readmeFiles()) {
     const body = fs.readFileSync(readme, "utf8");
     let match;
     while ((match = imageRe.exec(body))) {
       const raw = (match[1] || match[2] || "").split(/[?#]/)[0];
-      if (/^https?:/i.test(raw)) continue;
-      if (!/\.(png|svg|jpg|jpeg|webp)$/i.test(raw)) continue;
+      if (/^https?:/i.test(raw) || !/\.(png|svg|jpg|jpeg|webp)$/i.test(raw)) continue;
       if (!/docs\/(assets|images)\/readme-diagrams\//.test(raw)) continue;
-      const abs = path.normalize(path.join(path.dirname(readme), raw));
-      if (/\.svg$/i.test(abs)) refs.add(abs);
-      if (/\.png$/i.test(abs)) refs.add(abs.replace(/\.png$/i, ".svg"));
+      const abs = path.normalize(path.join(path.dirname(readme), raw)).replace(/\.(png|jpg|jpeg|webp)$/i, ".svg");
+      if (!fs.existsSync(abs)) continue;
+      const current = refs.get(abs) || { svg: abs, readmes: [] };
+      current.readmes.push(readme);
+      refs.set(abs, current);
     }
   }
-  return [...refs].filter((file) => fs.existsSync(file)).sort();
-}
-
-function decodeXml(text) {
-  return text
-    .replace(/<!\[CDATA\[([\s\S]*?)]]>/g, "$1")
-    .replace(/<br\s*\/?>/gi, " ")
-    .replace(/<\/(div|p|span|tspan)>/gi, " ")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function extractLabels(svg) {
-  const values = [];
-  for (const re of [
-    /<text\b[^>]*>([\s\S]*?)<\/text>/gi,
-    /<span\b[^>]*>([\s\S]*?)<\/span>/gi,
-    /<div\b[^>]*>([\s\S]*?)<\/div>/gi,
-    /<p\b[^>]*>([\s\S]*?)<\/p>/gi,
-  ]) {
-    let match;
-    while ((match = re.exec(svg))) {
-      values.push(decodeXml(match[1]));
-    }
-  }
-  return unique(
-    values
-      .flatMap((value) => value.split(/\s{2,}|\n/))
-      .map(cleanLabel)
-      .filter((value) => value.length > 0)
-      .filter((value) => !/^(classDiagram|flowchart|sequenceDiagram|erDiagram)$/i.test(value))
-      .filter((value) => !/Mermaid/i.test(value))
-      .filter((value) => !/^Grouped architecture from the original source$/i.test(value))
-      .filter((value) => !/^(UML classes|ERD tables and relationships|Sequence messages) from the original source$/i.test(value)),
-  );
-}
-
-function cleanLabel(value) {
-  return value
-    .replace(/\bPostgre SQL\b/g, "PostgreSQL")
-    .replace(/\bMy SQL\b/g, "MySQL")
-    .replace(/\bMaria DB\b/g, "MariaDB")
-    .replace(/\bHikari CP\b/g, "HikariCP")
-    .replace(/\s+\/\s+/g, " / ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function unique(values) {
-  const seen = new Set();
-  const out = [];
-  for (const value of values) {
-    const key = value.toLowerCase();
-    if (seen.has(key)) continue;
-    seen.add(key);
-    out.push(value);
-  }
-  return out;
-}
-
-function isBadSvg(svg) {
-  return (
-    /class="flowchart"|aria-roledescription="flowchart|trebuchet ms|mermaid/i.test(svg) ||
-    !/Architects Daughter/i.test(svg)
-  );
+  return [...refs.values()].sort((a, b) => a.svg.localeCompare(b.svg));
 }
 
 function diagramType(file) {
@@ -145,343 +77,617 @@ function diagramType(file) {
   return "architecture";
 }
 
-function titleFromFile(file) {
-  const stem = path.basename(file, ".svg").replace(/-\d+$/, "");
-  return stem
-    .replace(/-(architecture|class|sequence|erd)$/i, "")
-    .split("-")
-    .filter((part) => !/^\d+$/.test(part))
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ")
-    .replace(/\bDml\b/g, "DML")
-    .replace(/\bDdl\b/g, "DDL")
-    .replace(/\bJpa\b/g, "JPA")
-    .replace(/\bJdbc\b/g, "JDBC")
-    .replace(/\bR2dbc\b/g, "R2DBC")
-    .replace(/\bSql\b/g, "SQL")
-    .replace(/\bJson\b/g, "JSON")
-    .replace(/\bHttp\b/g, "HTTP")
-    .replace(/\bKtor\b/g, "Ktor");
+function moduleDirFor(ref) {
+  const dirs = ref.readmes.map((readme) => path.dirname(readme)).filter((dir) => dir !== ".");
+  if (dirs.length === 0) return ".";
+  dirs.sort((a, b) => b.length - a.length);
+  return dirs[0];
 }
 
-function classify(file, labels) {
-  const type = diagramType(file);
-  const title = looksLikeTitle(labels[0]) ? labels[0] : titleFromFile(file);
-  const body = labels.filter((label) => label !== title).slice(0, 64);
-  return { type, title, body };
+function readText(file) {
+  return fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "";
 }
 
-function looksLikeTitle(value) {
-  return Boolean(value && value.length <= 48 && !/[{}();=]/.test(value) && !/^\d+\./.test(value));
+function stripMarkdown(text) {
+  return text
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/!\[[^\]]*]\([^)]+\)/g, " ")
+    .replace(/\[[^\]]+]\([^)]+\)/g, " ")
+    .replace(/[#>*`|_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
-function esc(value) {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+function sourceFiles(moduleDir) {
+  if (moduleDir === ".") return [];
+  const roots = sourceRoots(moduleDir);
+  const files = unique(roots.flatMap((root) => walk(root).filter((file) => file.endsWith(".kt"))));
+  return files.slice(0, moduleDir === "." ? 260 : 140);
 }
 
-function wrapText(value, maxChars = 22, maxLines = 3) {
-  const words = String(value)
-    .split(/\s+/)
-    .filter(Boolean)
-    .flatMap((word) => splitLongWord(word, maxChars));
-  const lines = [];
-  let line = "";
-  for (const word of words) {
-    const next = line ? `${line} ${word}` : word;
-    if (next.length > maxChars && line) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = next;
+function sourceRoots(moduleDir) {
+  const mainRoot = path.join(moduleDir, "src/main/kotlin");
+  const testRoot = path.join(moduleDir, "src/test/kotlin");
+  const roots = [mainRoot].filter((root) => fs.existsSync(root));
+  const directMainCount = roots.flatMap((root) => walk(root).filter((file) => file.endsWith(".kt"))).length;
+  if (directMainCount === 0 && fs.existsSync(testRoot)) roots.push(testRoot);
+  if (directMainCount >= 3 && moduleDir !== ".") return roots;
+
+  const nested = walk(moduleDir)
+    .filter((file) => path.basename(file) === "build.gradle.kts")
+    .map((file) => path.dirname(file))
+    .filter((dir) => dir !== moduleDir && !dir.includes(`${path.sep}buildSrc`))
+    .flatMap((dir) => {
+      const main = path.join(dir, "src/main/kotlin");
+      const test = path.join(dir, "src/test/kotlin");
+      return fs.existsSync(main) ? [main] : [test];
+    })
+    .filter((root) => fs.existsSync(root));
+
+  return unique([...roots, ...nested]);
+}
+
+function parseSources(moduleDir) {
+  const files = sourceFiles(moduleDir);
+  const symbols = [];
+  const functions = [];
+  const tables = [];
+  for (const file of files) {
+    const source = readText(file);
+    let match;
+    const symbolRe = /(?:^|\n)\s*(?:@[A-Za-z0-9_.()=",\s]+\s*)*(interface|abstract\s+class|open\s+class|data\s+class|class|object|enum\s+class)\s+([A-Z][A-Za-z0-9_]*)\s*([^\n{]*)/g;
+    while ((match = symbolRe.exec(source))) {
+      const kind = match[1].replace(/\s+/g, " ");
+      const name = match[2];
+      const tail = match[3] || "";
+      const supers = parseSupers(tail);
+      if (validSymbolName(name)) {
+        const role = roleFor(file, name, kind);
+        symbols.push({ file, kind, name, supers, role });
+      }
+    }
+    const functionRe = /(?:@(?:Get|Post|Put|Delete|Patch)Mapping\(([^)]*)\)\s*)?(?:suspend\s+)?fun\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(/g;
+    while ((match = functionRe.exec(source))) functions.push({ file, route: match[1] || "", name: match[2], role: roleFor(file, match[2], "function") });
+    tables.push(...parseTables(file, source));
+  }
+  return { files, symbols: uniqueBy(symbols, (s) => `${s.file}:${s.name}`), functions, tables: uniqueBy(tables, (t) => t.name) };
+}
+
+function validSymbolName(name) {
+  if (!name || name.length < 3) return false;
+  if (/^(String|Int|Long|Double|Float|Boolean|List|Set|Map|Pair|Triple|Record)$/.test(name)) return false;
+  return true;
+}
+
+function parseSupers(tail) {
+  const colon = tail.indexOf(":");
+  if (colon < 0) return [];
+  return unique(
+    tail
+      .slice(colon + 1)
+      .split(",")
+      .map((part) => part.replace(/\(.*/, "").replace(/<.*/, "").trim())
+      .filter((part) => /^[A-Z][A-Za-z0-9_]+$/.test(part))
+      .filter(validSymbolName),
+  );
+}
+
+function parseTables(file, source) {
+  const out = [];
+  const tableRe = /\b(object|class)\s+([A-Z][A-Za-z0-9_]*)\s*:[^\n{]*(?:Table|IdTable|LongIdTable|IntIdTable)[^\n{]*\{/g;
+  let match;
+  while ((match = tableRe.exec(source))) {
+    const body = blockBody(source, tableRe.lastIndex - 1);
+    const columns = [];
+    const refs = [];
+    let col;
+    const columnRe = /(?:val\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*(?::[^=]+)?=\s*([A-Za-z_][A-Za-z0-9_]*)\("([^"]+)"/g;
+    while ((col = columnRe.exec(body))) columns.push(`${col[3]} ${columnType(col[2], col[1])}`);
+    const referenceRe = /(?:val\s+)?[A-Za-z_][A-Za-z0-9_]*\s*(?::[^=]+)?=\s*(?:optReference|reference)\("([^"]+)",\s*([A-Z][A-Za-z0-9_]*)/g;
+    while ((col = referenceRe.exec(body))) refs.push(col[2]);
+    if (/IdTable/i.test(match[0])) columns.unshift("id PK");
+    out.push({ name: match[2], file, columns: unique(columns.length ? columns : ["id PK"]), refs: unique(refs) });
+  }
+  return out;
+}
+
+function blockBody(source, openBraceIndex) {
+  let depth = 0;
+  for (let i = openBraceIndex; i < source.length; i += 1) {
+    if (source[i] === "{") depth += 1;
+    if (source[i] === "}") {
+      depth -= 1;
+      if (depth === 0) return source.slice(openBraceIndex + 1, i);
     }
   }
-  if (line) lines.push(line);
-  const clipped = lines.slice(0, maxLines);
-  if (lines.length > maxLines) clipped[maxLines - 1] = `${clipped[maxLines - 1].replace(/[. ]+$/, "")}...`;
-  return clipped;
+  return source.slice(openBraceIndex + 1);
 }
 
-function splitLongWord(word, maxChars) {
-  if (word.length <= maxChars) return [word];
-  const normalized = word
-    .replace(/([a-z])([A-Z])/g, "$1 $2")
-    .replace(/([/_-])/g, "$1 ");
-  if (normalized !== word) {
-    return normalized.split(/\s+/).filter(Boolean).flatMap((part) => splitLongWord(part, maxChars));
+function columnType(builder, property) {
+  if (/reference|optReference/i.test(builder)) return "FK";
+  if (/id/i.test(property)) return "PK";
+  return builder.replace(/Column$/i, "");
+}
+
+function roleFor(file, name, kind) {
+  const value = `${file}/${name}/${kind}`;
+  if (/\b(controller|route|handler|endpoint|api|web)\b/i.test(value)) return "entry";
+  if (/\b(service|usecase|workflow|job|scheduler)\b/i.test(value)) return "service";
+  if (/\b(repository|dao|persistence)\b/i.test(value)) return "repository";
+  if (/\b(table|entity|model|domain|record|dto)\b/i.test(value)) return "model";
+  if (/\b(config|configuration|plugin|security|tenant|context|filter|cache|datasource|outbox|transaction)\b/i.test(value)) return "infra";
+  if (/\b(application|module)\b/i.test(value)) return "app";
+  return "component";
+}
+
+function buildModel(ref) {
+  const moduleDir = moduleDirFor(ref);
+  const readme = englishReadme(ref.readmes) || path.join(moduleDir, "README.md");
+  const readmeText = readText(readme);
+  const title = titleFromReadme(readmeText) || titleFromFile(ref.svg);
+  const source = parseSources(moduleDir);
+  enrichFromReadme(source, readmeText);
+  return {
+    ref,
+    moduleDir,
+    readme,
+    title,
+    summary: stripMarkdown(readmeText).slice(0, 500),
+    source,
+    type: diagramType(ref.svg),
+  };
+}
+
+function englishReadme(readmes) {
+  return [...readmes].sort((a, b) => readmeRank(a) - readmeRank(b) || a.localeCompare(b))[0];
+}
+
+function readmeRank(file) {
+  const base = path.basename(file).toLowerCase();
+  if (base === "readme.md") return 0;
+  if (/^readme\.[a-z-]+\.md$/.test(base)) return 2;
+  return 1;
+}
+
+function enrichFromReadme(source, readmeText) {
+  if (source.symbols.length >= 4) return;
+  const concepts = readmeConcepts(readmeText);
+  const existing = new Set(source.symbols.map((symbol) => symbol.name.toLowerCase()));
+  for (const concept of concepts) {
+    if (existing.has(concept.name.toLowerCase())) continue;
+    existing.add(concept.name.toLowerCase());
+    source.symbols.push({
+      file: "README.md",
+      kind: concept.kind,
+      name: concept.name,
+      supers: [],
+      role: roleFor("README.md", concept.name, concept.kind),
+    });
   }
-  const chunks = [];
-  for (let i = 0; i < word.length; i += maxChars - 1) {
-    chunks.push(word.slice(i, i + maxChars - 1));
+}
+
+function readmeConcepts(text) {
+  const out = [];
+  const add = (name, kind = "class") => {
+    const clean = name.replace(/^[./:-]+|[./:-]+$/g, "").replace(/[-_/]+/g, " ");
+    if (!/^[A-Z][A-Za-z0-9_ ]{2,}$/.test(clean)) return;
+    if (/^(README|HTTP|GET|POST|PUT|DELETE|H2|SQL|JPA|DDL|DML)$/.test(clean)) return;
+    if (/^[A-Z0-9_]+$/.test(clean)) return;
+    out.push({ name: clean, kind });
+  };
+  for (const match of text.matchAll(/`([A-Za-z][A-Za-z0-9_./:-]+)`/g)) {
+    const raw = match[1].split(/[/:]/).filter(Boolean).pop() || "";
+    const token = raw.includes("-") ? cleanTitle(raw.replace(/-/g, " ")) : raw.split(/[.-]/).filter(Boolean).pop() || "";
+    add(token, /Repository|Controller|Table|Entity|Record|Config|Application$/.test(token) ? "class" : "object");
   }
-  return chunks;
+  for (const line of text.split(/\r?\n/)) {
+    if (!line.startsWith("|")) continue;
+    const first = line.split("|")[1]?.replace(/[*`]/g, "").trim();
+    if (first && !/^-+$|module|class|controller|profile|path|http/i.test(first)) add(first);
+  }
+  return uniqueBy(out, (item) => item.name).slice(0, 16);
 }
 
-function textLines(lines, x, y, cls, lineHeight = 18, anchor = "middle") {
-  return lines
-    .map((line, index) => `<text class="${cls}" x="${x}" y="${y + index * lineHeight}" text-anchor="${anchor}">${esc(line)}</text>`)
-    .join("\n");
+function titleFromReadme(text) {
+  const match = text.match(/^#\s+(.+)$/m);
+  return match ? cleanTitle(match[1]) : "";
 }
 
-function svgShell(width, height, label, body) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(label)}">
-<defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
-    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
-  </filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
-    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-  </marker>
-  <style>${STYLE}</style>
-</defs>
+function titleFromFile(file) {
+  return cleanTitle(
+    path
+      .basename(file, ".svg")
+      .replace(/-\d+$/, "")
+      .replace(/-(architecture|class|sequence|erd)$/i, "")
+      .split("-")
+      .filter((part) => !/^\d+$/.test(part))
+      .join(" "),
+  );
+}
+
+function cleanTitle(title) {
+  return title
+    .replace(/\s*\[[^\]]+]\([^)]+\)\s*/g, " ")
+    .replace(/\bDml\b/gi, "DML")
+    .replace(/\bDdl\b/gi, "DDL")
+    .replace(/\bJpa\b/gi, "JPA")
+    .replace(/\bJdbc\b/gi, "JDBC")
+    .replace(/\bR2dbc\b/gi, "R2DBC")
+    .replace(/\bSql\b/gi, "SQL")
+    .replace(/\bJson\b/gi, "JSON")
+    .replace(/\bHttp\b/gi, "HTTP")
+    .replace(/\bKtor\b/g, "Ktor")
+    .replace(/\bSpring\b/g, "Spring")
+    .replace(/(^|\s)([a-z])/g, (m) => m.toUpperCase())
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function shell(width, height, title, body) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" role="img" aria-label="${esc(title)}">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
+    </marker>
+    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
+      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
+    </marker>
+    <style>${STYLE}</style>
+  </defs>
+  <rect width="${width}" height="${height}" class="canvas"/>
+  <rect x="20" y="20" width="${width - 40}" height="${height - 40}" rx="16" class="frame"/>
 ${body}
 </svg>
 `;
 }
 
-function headerSpec(title, width) {
-  const maxChars = Math.max(18, Math.floor((width - 110) / 20));
-  const lines = wrapText(title, maxChars, 2);
+function header(title, subtitle) {
+  return `<text x="48" y="58" class="title">${esc(trim(title, 82))}</text>
+  <text x="48" y="80" class="subtitle">${esc(subtitle)}</text>`;
+}
+
+function renderArchitecture(model) {
+  const width = 1378;
+  const height = 650;
+  const groups = architectureGroups(model);
+  let body = header(model.title, "Source-derived component flow · README plus Kotlin implementation");
+
+  body += `\n${panel(36, 112, 270, 350, "Entry points")}`;
+  groups.entry.slice(0, 4).forEach((item, i) => (body += `\n${card(56, 132 + i * 76, 230, 58, item, i, detailFor(item))}`));
+
+  body += `\n${panel(390, 112, 360, 350, "Application / domain")}`;
+  groups.app.slice(0, 3).forEach((item, i) => (body += `\n${card(420, 136 + i * 112, 300, 76, item, i + 1, detailFor(item))}`));
+
+  body += `\n${panel(842, 112, 250, 350, "Persistence")}`;
+  groups.persistence.slice(0, 4).forEach((item, i) => (body += `\n${card(864, 138 + i * 74, 206, 56, item, i + 3, detailFor(item))}`));
+
+  body += `\n${panel(1120, 112, 222, 350, "Runtime / infrastructure")}`;
+  groups.infra.slice(0, 4).forEach((item, i) => (body += `\n${card(1138, 138 + i * 74, 186, 56, item, i + 5, detailFor(item))}`));
+
+  body += `\n<path d="M286,176 C330,176 366,174 420,174" class="arrow"/>`;
+  body += `\n<path d="M720,288 C774,288 812,236 864,236" class="arrow"/>`;
+  body += `\n<path d="M720,400 C790,400 1050,404 1138,404" class="softArrow"/>`;
+  body += `\n<path d="M1070,240 C1098,240 1108,240 1138,240" class="softArrow"/>`;
+
+  body += `\n<rect x="36" y="510" width="1306" height="58" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>`;
+  body += `\n<text x="689" y="535" class="smallLabel" text-anchor="middle">${esc(outcomeFor(model))}</text>`;
+  body += `\n<text x="689" y="554" class="detail" text-anchor="middle">Source packages decide the panels; arrows show only the important runtime or dependency flow.</text>`;
+  return shell(width, height, model.title, body);
+}
+
+function architectureGroups(model) {
+  const byRole = (role) => model.source.symbols.filter((symbol) => symbol.role === role).map((symbol) => symbol.name);
+  const entry = unique([...byRole("entry"), ...model.source.functions.filter((f) => f.role === "entry").map((f) => f.name)]);
+  const service = unique([...byRole("service"), ...byRole("app"), ...byRole("component")]);
+  const persistence = unique([...byRole("repository"), ...byRole("model"), ...model.source.tables.map((table) => table.name)]);
+  const infra = unique(byRole("infra"));
   return {
-    lines,
-    height: lines.length > 1 ? 166 : 124,
+    entry: fallback(entry, ["README User", "HTTP Request", "Workshop Example"]),
+    app: fallback(service, [model.title, "Service Boundary", "Use Case Flow"]),
+    persistence: fallback(persistence, ["Repository", "Exposed Table", "Database"]),
+    infra: fallback(infra, ["Runtime", "Configuration", "Test Fixture"]),
   };
 }
 
-function renderHeader(title, subtitle, width, height) {
-  const header = headerSpec(title, width);
-  const titleLines = header.lines
-    .map((line, index) => `<text class="title" x="54" y="${72 + index * 44}">${esc(line)}</text>`)
-    .join("\n");
-  return `
-<rect class="canvas" x="0" y="0" width="${width}" height="100%"/>
-<rect class="frame" x="20" y="20" width="${width - 40}" height="${height - 40}" rx="18"/>
-${titleLines}
-<text class="subtitle" x="56" y="${header.lines.length > 1 ? 144 : 100}">${esc(subtitle)}</text>`;
+function fallback(values, defaults) {
+  return values.filter(Boolean).slice(0, 10).length ? values.filter(Boolean).slice(0, 10) : defaults;
 }
 
-function renderArchitecture(title, labels) {
-  const nodes = labels.length ? labels : ["Application", "Exposed", "Database"];
-  const cardW = 246;
-  const cardH = 118;
-  const cols = nodes.length <= 4 ? 2 : 3;
-  const rows = Math.ceil(nodes.length / cols);
-  const width = Math.max(860, 80 + cols * cardW + (cols - 1) * 52);
-  const header = headerSpec(title, width);
-  const top = header.height + 18;
-  const height = top + rows * cardH + (rows - 1) * 38 + 44;
-  const x0 = (width - (cols * cardW + (cols - 1) * 44)) / 2;
-  let body = renderHeader(title, "Pastel architecture overview", width, height);
-  const centers = [];
-  nodes.forEach((node, index) => {
-    const col = index % cols;
-    const row = Math.floor(index / cols);
-    const x = x0 + col * (cardW + 44);
-    const y = top + row * (cardH + 38);
-    const color = PALETTE[index % PALETTE.length];
-    centers.push([x + cardW / 2, y + cardH / 2]);
-    body += `\n<rect class="card" x="${x}" y="${y}" width="${cardW}" height="${cardH}" rx="16" fill="${color.fill}" stroke="${color.stroke}"/>`;
-    body += "\n" + textLines(wrapText(node, 19, 3), x + cardW / 2, y + 46, "label", 25);
+function detailFor(name) {
+  if (/controller|route|handler|api|http/i.test(name)) return "entry";
+  if (/service|job|workflow/i.test(name)) return "use case";
+  if (/repository|dao/i.test(name)) return "persistence";
+  if (/table|entity|items|movies|actors|orders|users/i.test(name)) return "table/model";
+  if (/tenant|security|context|filter|transaction/i.test(name)) return "cross-cutting";
+  if (/config|plugin|cache|datasource|outbox|redis/i.test(name)) return "infrastructure";
+  return "";
+}
+
+function outcomeFor(model) {
+  const text = `${model.title} ${model.summary}`;
+  if (/tenant/i.test(text)) return "Tenant context is resolved before service, repository, and Exposed table access.";
+  if (/cache/i.test(text)) return "Cache policy is explicit between request handling, service logic, and repository fallback.";
+  if (/routing datasource|datasource routing/i.test(text)) return "Routing context selects the datasource before repository code executes.";
+  if (/coroutine|suspend/i.test(text)) return "Suspending boundaries are visible between request handlers and Exposed transactions.";
+  if (/virtual thread/i.test(text)) return "Blocking JDBC work is isolated behind the virtual-thread runtime boundary.";
+  return "The diagram follows source packages from entry point to application logic, persistence, and runtime support.";
+}
+
+function renderClass(model) {
+  const hierarchy = classHierarchy(model);
+  const bottomCols = 3;
+  const topCols = Math.min(5, Math.max(3, hierarchy.top.length));
+  const topW = Math.floor((1128 - (topCols - 1) * 28) / topCols);
+  const bottomW = 320;
+  const topRows = Math.max(1, Math.ceil(hierarchy.top.length / topCols));
+  const bottomRows = Math.max(1, Math.ceil(hierarchy.bottom.length / bottomCols));
+  const topH = 34 + topRows * 96;
+  const bottomH = 42 + bottomRows * 108;
+  const width = 1220;
+  const height = 180 + topH + bottomH + 106;
+  let body = header(model.title, "Source-derived hierarchy · supertypes and abstractions above concrete implementations");
+  body += `\n${panel(46, 120, 1128, topH, "Abstractions / supertypes")}`;
+  const topPos = placeGrid(hierarchy.top, 74, 146, topW, 72, topCols, 0, 28);
+  topPos.parts.forEach((part) => (body += `\n${part}`));
+  body += `\n${panel(46, 172 + topH, 1128, bottomH, "Concrete implementations / data types")}`;
+  const bottomPos = placeGrid(hierarchy.bottom, 74, 198 + topH, bottomW, 84, bottomCols, 3, 46);
+  bottomPos.parts.forEach((part) => (body += `\n${part}`));
+  hierarchy.edges.slice(0, 14).forEach((edge) => {
+    const parent = topPos.positions.get(edge.parent);
+    const child = bottomPos.positions.get(edge.child);
+    if (parent && child) {
+      const laneY = 152 + topH;
+      body += `\n<path d="M${child.x},${child.y - 42} L${child.x},${laneY} L${parent.x},${laneY} L${parent.x},${parent.y + 42}" class="inherit"/>`;
+    }
   });
-  for (let index = 0; index < nodes.length; index += 1) {
-    const col = index % cols;
-    const row = Math.floor(index / cols);
-    const x = x0 + col * (cardW + 44);
-    const y = top + row * (cardH + 38);
-    if (col < cols - 1 && index + 1 < nodes.length && Math.floor((index + 1) / cols) === row) {
-      body += `\n<path class="line" d="M ${x + cardW + 8} ${y + cardH / 2} L ${x + cardW + 36} ${y + cardH / 2}" marker-end="url(#openArrow)"/>`;
-    }
-    if (row < rows - 1 && index + cols < nodes.length) {
-      body += `\n<path class="line" d="M ${x + cardW / 2} ${y + cardH + 8} L ${x + cardW / 2} ${y + cardH + 30}" marker-end="url(#openArrow)"/>`;
-    }
-  }
-  return svgShell(width, height, title, body);
+  const noteY = height - 74;
+  body += `\n<rect x="46" y="${noteY}" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>`;
+  body += `\n<text x="610" y="${noteY + 27}" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>`;
+  return shell(width, height, model.title, body);
 }
 
-function renderClass(title, labels) {
-  const classes = bucketClassLabels(labels);
-  const cardW = 280;
-  const cardH = 138;
-  const cols = classes.length <= 3 ? 2 : 3;
-  const rows = Math.ceil(classes.length / cols);
-  const width = Math.max(820, 86 + cols * cardW + (cols - 1) * 36);
-  const header = headerSpec(title, width);
-  const top = header.height + 18;
-  const height = top + rows * cardH + (rows - 1) * 34 + 46;
-  const x0 = (width - (cols * cardW + (cols - 1) * 36)) / 2;
-  let body = renderHeader(title, "Class and component responsibilities", width, height);
-  classes.forEach((item, index) => {
+function classHierarchy(model) {
+  const symbols = model.source.symbols.filter((s) => s.name.length <= 48);
+  const topNames = new Set();
+  for (const symbol of symbols) {
+    if (/interface|abstract|open/.test(symbol.kind) || /Base|Abstract|Support|Contract/.test(symbol.name)) topNames.add(symbol.name);
+    symbol.supers.forEach((superName) => topNames.add(superName));
+  }
+  const top = unique([...topNames]).filter((name) => symbols.some((s) => s.name === name) || /^[A-Z]/.test(name)).slice(0, 9);
+  const edges = [];
+  for (const symbol of symbols) {
+    for (const parent of symbol.supers) {
+      if (top.includes(parent)) edges.push({ parent, child: symbol.name });
+    }
+  }
+  const preferred = new Map(edges.map((edge) => [edge.child, top.indexOf(edge.parent) % 3]));
+  const bottom = symbols
+    .map((s, index) => ({ name: s.name, index }))
+    .filter((item) => !top.includes(item.name))
+    .sort((a, b) => (preferred.get(a.name) ?? 99) - (preferred.get(b.name) ?? 99) || a.index - b.index)
+    .map((item) => item.name)
+    .slice(0, 15);
+  return {
+    top: fallback(top, symbols.slice(0, 3).map((s) => s.name)),
+    bottom: fallback(bottom, symbols.slice(3, 12).map((s) => s.name)),
+    edges,
+  };
+}
+
+function placeGrid(items, x, y, w, h, cols, colorOffset, gap = 46) {
+  const parts = [];
+  const positions = new Map();
+  items.forEach((item, index) => {
     const col = index % cols;
     const row = Math.floor(index / cols);
-    const x = x0 + col * (cardW + 36);
-    const y = top + row * (cardH + 34);
-    const color = PALETTE[index % PALETTE.length];
-    body += `\n<rect class="card" x="${x}" y="${y}" width="${cardW}" height="${cardH}" rx="14" fill="${color.fill}" stroke="${color.stroke}"/>`;
-    body += "\n" + textLines(wrapText(item.name, 24, 2), x + cardW / 2, y + 36, "smallLabel", 23);
-    body += `\n<line class="dash" x1="${x + 18}" y1="${y + 62}" x2="${x + cardW - 18}" y2="${y + 62}"/>`;
-    item.members.slice(0, 4).forEach((member, m) => {
-      body += `\n<text class="mono" x="${x + 24}" y="${y + 86 + m * 17}">+ ${esc(trimMiddle(member, 34))}</text>`;
-    });
+    const cx = x + col * (w + gap);
+    const cy = y + row * (h + 24);
+    parts.push(card(cx, cy, w, h, item, index + colorOffset, detailFor(item)));
+    positions.set(item, { x: cx + w / 2, y: cy + h / 2 });
   });
-  return svgShell(width, height, title, body);
+  return { parts, positions };
 }
 
-function bucketClassLabels(labels) {
-  const result = [];
-  let current = null;
-  for (const label of labels) {
-    if (/^«.*»$/.test(label) || result.length === 0 || /^[A-Z][A-Za-z0-9]+$/.test(label)) {
-      current = { name: label, members: [] };
-      result.push(current);
-    } else if (current) {
-      current.members.push(label);
-    }
-  }
-  if (result.length < 2) {
-    return labels.slice(0, 12).map((label) => ({ name: label, members: [] }));
-  }
-  return result.slice(0, 18);
-}
-
-function renderErd(title, labels) {
-  const tables = bucketTables(labels);
-  const tableW = 244;
-  const tableH = 154;
+function renderErd(model) {
+  const tables = model.source.tables.length ? model.source.tables : inferredTables(model);
   const cols = tables.length <= 4 ? 2 : 3;
+  const tableW = 286;
+  const tableH = 154;
   const rows = Math.ceil(tables.length / cols);
-  const width = Math.max(800, 90 + cols * tableW + (cols - 1) * 48);
-  const header = headerSpec(title, width);
-  const top = header.height + 18;
-  const height = top + rows * tableH + (rows - 1) * 42 + 48;
-  const x0 = (width - (cols * tableW + (cols - 1) * 48)) / 2;
-  let body = renderHeader(title, "Entity relationship view", width, height);
+  const width = Math.max(980, 92 + cols * tableW + (cols - 1) * 76);
+  const height = 170 + rows * (tableH + 58) + 76;
+  let body = header(model.title, "Source-derived ERD · Exposed table objects and column builders");
+  const x0 = (width - (cols * tableW + (cols - 1) * 76)) / 2;
   const centers = [];
-  tables.forEach((table, index) => {
+  const positions = new Map();
+  tables.slice(0, 12).forEach((table, index) => {
     const col = index % cols;
     const row = Math.floor(index / cols);
-    const x = x0 + col * (tableW + 48);
-    const y = top + row * (tableH + 42);
-    const color = PALETTE[index % PALETTE.length];
+    const x = x0 + col * (tableW + 76);
+    const y = 126 + row * (tableH + 58);
     centers.push([x + tableW / 2, y + tableH / 2]);
-    body += `\n<rect class="card" x="${x}" y="${y}" width="${tableW}" height="${tableH}" rx="14" fill="#ffffff" stroke="${color.stroke}"/>`;
-    body += `\n<rect x="${x}" y="${y}" width="${tableW}" height="42" rx="14" fill="${color.fill}" stroke="${color.stroke}" stroke-width="0"/>`;
-    body += "\n" + textLines(wrapText(table.name, 22, 1), x + tableW / 2, y + 28, "smallLabel", 22);
+    positions.set(table.name, { x, y, cx: x + tableW / 2, cy: y + tableH / 2, w: tableW, h: tableH });
+    const [fill, stroke] = COLORS[index % COLORS.length];
+    body += `\n<rect x="${x}" y="${y}" width="${tableW}" height="${tableH}" rx="12" fill="#fff" stroke="${stroke}" class="card"/>`;
+    body += `\n<path d="M${x},${y + 38} L${x},${y + 12} Q${x},${y} ${x + 12},${y} L${x + tableW - 12},${y} Q${x + tableW},${y} ${x + tableW},${y + 12} L${x + tableW},${y + 38} Z" fill="${fill}"/>`;
+    body += `\n${textBlock(wrap(table.name, 27, 1), x + tableW / 2, y + 25, "smallLabel", 18)}`;
     table.columns.slice(0, 6).forEach((column, c) => {
-      body += `\n<text class="mono" x="${x + 18}" y="${y + 66 + c * 15}">${esc(trimMiddle(column, 32))}</text>`;
+      body += `\n<text x="${x + 18}" y="${y + 62 + c * 15}" class="tiny">${esc(trim(column, 40))}</text>`;
     });
   });
-  for (let index = 0; index < tables.length; index += 1) {
-    const col = index % cols;
-    const row = Math.floor(index / cols);
-    const x = x0 + col * (tableW + 48);
-    const y = top + row * (tableH + 42);
-    if (col < cols - 1 && index + 1 < tables.length && Math.floor((index + 1) / cols) === row) {
-      body += `\n<path class="line" d="M ${x + tableW + 8} ${y + tableH / 2} L ${x + tableW + 40} ${y + tableH / 2}" marker-end="url(#openArrow)"/>`;
-    }
-    if (row < rows - 1 && index + cols < tables.length) {
-      body += `\n<path class="line" d="M ${x + tableW / 2} ${y + tableH + 8} L ${x + tableW / 2} ${y + tableH + 34}" marker-end="url(#openArrow)"/>`;
-    }
+  const relations = tables.flatMap((table) => (table.refs || []).map((parent) => ({ child: table.name, parent })));
+  for (const relation of relations.slice(0, 14)) {
+    const child = positions.get(relation.child);
+    const parent = positions.get(relation.parent);
+    if (!child || !parent) continue;
+    const startX = child.cy > parent.cy ? child.cx : child.x + child.w;
+    const startY = child.cy > parent.cy ? child.y : child.cy;
+    const endX = child.cy > parent.cy ? parent.cx : parent.x;
+    const endY = child.cy > parent.cy ? parent.y + parent.h : parent.cy;
+    const midY = child.cy > parent.cy ? (startY + endY) / 2 : startY;
+    body += `\n<path d="M${startX},${startY} L${startX},${midY} L${endX},${midY} L${endX},${endY}" class="softArrow"/>`;
   }
-  return svgShell(width, height, title, body);
+  body += `\n<text x="${width / 2}" y="110" class="panelTitle" text-anchor="middle">TABLES AND RELATIONSHIPS</text>`;
+  return shell(width, height, model.title, body);
 }
 
-function bucketTables(labels) {
-  const result = [];
-  let current = null;
-  for (const label of labels) {
-    const isColumn = /\b(PK|FK|id|varchar|text|date|timestamp|bigint|int|boolean|decimal|json|uuid)\b/i.test(label);
-    if (!isColumn || !current) {
-      current = { name: label, columns: [] };
-      result.push(current);
-    } else {
-      current.columns.push(label);
-    }
-  }
-  if (result.length < 2) {
-    return labels.slice(0, 10).map((label) => ({ name: label, columns: [] }));
-  }
-  return result.slice(0, 18);
+function inferredTables(model) {
+  return model.source.symbols
+    .filter((s) => s.role === "model")
+    .slice(0, 8)
+    .map((symbol) => ({ name: symbol.name, columns: ["id PK", "domain fields"] }));
 }
 
-function renderSequence(title, labels) {
-  const splitAt = labels.findIndex((label) => /^\d+\./.test(label));
-  const participants = (splitAt > 0 ? labels.slice(0, splitAt) : labels.slice(0, Math.min(5, labels.length))).slice(0, 7);
-  const messages = (splitAt > 0 ? labels.slice(splitAt) : labels.slice(participants.length)).slice(0, 22);
-  const lanes = participants.length || 3;
-  const laneGap = 210;
-  const width = Math.max(900, 100 + (lanes - 1) * laneGap + 220);
-  const header = headerSpec(title, width);
-  const top = header.height + 18;
-  const height = top + 92 + Math.max(messages.length, 6) * 54 + 80;
-  const x0 = (width - (lanes - 1) * laneGap) / 2;
-  let body = renderHeader(title, "Request and data flow", width, height);
+function renderSequence(model) {
+  const participants = sequenceParticipants(model);
+  const messages = sequenceMessages(model, participants);
+  const width = Math.max(1120, participants.length * 180 + 160);
+  const height = 220 + messages.length * 54 + 88;
+  const gap = (width - 180) / Math.max(1, participants.length - 1);
+  let body = header(model.title, "Source-derived sequence · request path through implementation roles");
   participants.forEach((participant, index) => {
-    const x = x0 + index * laneGap;
-    const color = PALETTE[index % PALETTE.length];
-    body += `\n<rect class="card" x="${x - 88}" y="${top}" width="176" height="58" rx="16" fill="${color.fill}" stroke="${color.stroke}"/>`;
-    body += "\n" + textLines(wrapText(participant, 16, 2), x, top + 24, "smallLabel", 20);
-    body += `\n<path class="dash" d="M ${x} ${top + 66} L ${x} ${height - 54}"/>`;
+    const x = 90 + index * gap;
+    body += `\n${card(x - 78, 118, 156, 54, participant, index, "")}`;
+    body += `\n<path d="M${x},182 L${x},${height - 64}" class="softArrow"/>`;
   });
   messages.forEach((message, index) => {
-    const y = top + 106 + index * 54;
-    const from = index % lanes;
-    const to = (index + 1) % lanes;
-    const x1 = x0 + from * laneGap;
-    const x2 = x0 + to * laneGap;
-    const left = Math.min(x1, x2);
-    const right = Math.max(x1, x2);
-    const labelX = (x1 + x2) / 2;
-    const direction = x1 <= x2 ? `M ${x1 + 12} ${y} L ${x2 - 14} ${y}` : `M ${x1 - 12} ${y} L ${x2 + 14} ${y}`;
-    body += `\n<path class="line" d="${direction}" marker-end="url(#openArrow)"/>`;
-    body += `\n<rect class="note" x="${labelX - 132}" y="${y - 32}" width="264" height="24" rx="8"/>`;
-    body += `\n<text class="small" x="${labelX}" y="${y - 15}" text-anchor="middle">${esc(trimMiddle(message, 42))}</text>`;
-    if (right - left < 40) body += `\n<path class="line" d="M ${x1} ${y} c 58 0 58 36 0 36" marker-end="url(#openArrow)"/>`;
+    const from = Math.min(index, participants.length - 2);
+    const to = from + 1;
+    const x1 = 90 + from * gap;
+    const x2 = 90 + to * gap;
+    const y = 220 + index * 54;
+    body += `\n<path d="M${x1 + 18},${y} L${x2 - 18},${y}" class="arrow"/>`;
+    body += `\n<rect x="${(x1 + x2) / 2 - 142}" y="${y - 30}" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>`;
+    body += `\n<text x="${(x1 + x2) / 2}" y="${y - 13}" class="tiny" text-anchor="middle">${esc(trim(message, 48))}</text>`;
   });
-  return svgShell(width, height, title, body);
+  return shell(width, height, model.title, body);
 }
 
-function trimMiddle(value, max) {
-  if (value.length <= max) return value;
-  const keep = Math.max(8, Math.floor((max - 3) / 2));
-  return `${value.slice(0, keep)}...${value.slice(value.length - keep)}`;
+function sequenceParticipants(model) {
+  const groups = architectureGroups(model);
+  return unique([
+    "Client",
+    groups.entry[0],
+    groups.app[0],
+    groups.app[1],
+    groups.persistence[0],
+    groups.persistence[1] || "DB",
+  ]).slice(0, 7);
 }
 
-function renderDiagram(file, labels) {
-  const spec = classify(file, labels);
-  if (spec.type === "class") return renderClass(spec.title, spec.body);
-  if (spec.type === "erd") return renderErd(spec.title, spec.body);
-  if (spec.type === "sequence") return renderSequence(spec.title, spec.body);
-  return renderArchitecture(spec.title, spec.body);
+function sequenceMessages(model, participants) {
+  const verbs = model.source.functions.filter((f) => f.role === "entry").map((f) => f.name).slice(0, 2);
+  const main = verbs.length ? verbs : ["handle request"];
+  return [
+    `${main[0]}()`,
+    `validate input and resolve context`,
+    `call ${participants[2] || "service"}`,
+    `execute use case boundary`,
+    `delegate to ${participants[4] || "repository"}`,
+    `run Exposed transaction`,
+    `map rows to response model`,
+    `return HTTP response`,
+  ];
 }
 
-function originalSvg(file) {
-  const result = spawnSync("git", ["show", `HEAD:${file}`], { encoding: "utf8" });
-  return result.status === 0 ? result.stdout : null;
+function renderDiagram(model) {
+  if (model.type === "class") return renderClass(model);
+  if (model.type === "erd") return renderErd(model);
+  if (model.type === "sequence") return renderSequence(model);
+  return renderArchitecture(model);
+}
+
+function panel(x, y, w, h, title) {
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" class="panel"/>
+  <text x="${x + w / 2}" y="${y - 6}" class="panelTitle" text-anchor="middle">${esc(title.toUpperCase())}</text>`;
+}
+
+function card(x, y, w, h, label, colorIndex, detail = "") {
+  const [fill, stroke] = COLORS[colorIndex % COLORS.length];
+  const lines = wrap(label, Math.max(12, Math.floor(w / 11)), detail && h < 70 ? 1 : h >= 54 ? 2 : 1);
+  const y0 = y + (detail ? 29 : h / 2 - (lines.length - 1) * 10 + 6);
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${fill}" stroke="${stroke}" class="card"/>
+${textBlock(lines, x + w / 2, y0, "smallLabel", 18)}
+${detail ? `<text x="${x + w / 2}" y="${y + h - 16}" class="detail" text-anchor="middle">${esc(trim(detail, 30))}</text>` : ""}`;
+}
+
+function wrap(value, max = 24, lines = 2) {
+  const words = String(value)
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/([/_-])/g, "$1 ")
+    .split(/\s+/)
+    .filter(Boolean);
+  const out = [];
+  let line = "";
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word;
+    if (next.length > max && line) {
+      out.push(line);
+      line = word;
+    } else {
+      line = next;
+    }
+  }
+  if (line) out.push(line);
+  const clipped = out.slice(0, lines);
+  if (out.length > lines) clipped[lines - 1] = `${clipped[lines - 1].replace(/[. ]+$/, "")}...`;
+  return clipped;
+}
+
+function textBlock(lines, x, y, cls = "label", step = 20, anchor = "middle") {
+  return lines.map((line, index) => `<text x="${x}" y="${y + index * step}" class="${cls}" text-anchor="${anchor}">${esc(line)}</text>`).join("\n");
+}
+
+function trim(value, max) {
+  return value.length <= max ? value : `${value.slice(0, max - 3)}...`;
+}
+
+function esc(value) {
+  return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function unique(values) {
+  const out = [];
+  const seen = new Set();
+  for (const value of values) {
+    if (!value) continue;
+    const key = value.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(value);
+  }
+  return out;
+}
+
+function uniqueBy(values, keyFn) {
+  const out = [];
+  const seen = new Set();
+  for (const value of values) {
+    const key = keyFn(value);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(value);
+  }
+  return out;
 }
 
 function convertToPng(svgFile) {
   const pngFile = svgFile.replace(/\.svg$/i, ".png");
   const result = spawnSync(RSVG, ["-f", "png", "-o", pngFile, svgFile], { encoding: "utf8" });
-  if (result.status !== 0) {
-    throw new Error(`rsvg-convert failed for ${svgFile}: ${result.stderr || result.stdout}`);
-  }
+  if (result.status !== 0) throw new Error(`rsvg-convert failed for ${svgFile}: ${result.stderr || result.stdout}`);
 }
 
 function main() {
-  const forceAll = process.argv.includes("--all");
-  const svgs = referencedDiagramSvgs();
+  const refs = referencedDiagrams();
   const targets = [];
-  for (const file of svgs) {
-    const svg = fs.readFileSync(file, "utf8");
-    if (!forceAll && !isBadSvg(svg)) continue;
-    const labels = extractLabels(originalSvg(file) || svg);
-    const next = renderDiagram(file, labels);
-    fs.writeFileSync(file, next);
-    convertToPng(file);
-    targets.push(file);
+  for (const ref of refs) {
+    const model = buildModel(ref);
+    fs.writeFileSync(ref.svg, renderDiagram(model));
+    convertToPng(ref.svg);
+    targets.push(ref.svg);
   }
   const byType = targets.reduce((acc, file) => {
     const type = diagramType(file);
