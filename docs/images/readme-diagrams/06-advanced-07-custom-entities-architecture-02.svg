@@ -1,89 +1,107 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1378 650" width="1378" height="650" role="img" aria-label="06 Advanced: Custom Entities (07)">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-    </marker>
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 940" width="1560" height="940" role="img" aria-label="Custom ID Generation Flow">
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
+<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
+.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
+.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
-  </defs>
-  <rect width="1378" height="650" class="canvas"/>
-  <rect x="20" y="20" width="1338" height="610" rx="16" class="frame"/>
-<text x="48" y="58" class="title">06 Advanced: Custom Entities (07)</text>
-  <text x="48" y="80" class="subtitle">Source-derived component flow · README plus Kotlin implementation</text>
-<rect x="36" y="112" width="270" height="350" rx="12" class="panel"/>
-  <text x="171" y="106" class="panelTitle" text-anchor="middle">ENTRY POINTS</text>
-<rect x="56" y="132" width="230" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="171" y="167" class="smallLabel" text-anchor="middle">README User</text>
-
-<rect x="56" y="208" width="230" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="171" y="237" class="smallLabel" text-anchor="middle">HTTP Request</text>
-<text x="171" y="250" class="detail" text-anchor="middle">entry</text>
-<rect x="56" y="284" width="230" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="171" y="319" class="smallLabel" text-anchor="middle">Workshop Example</text>
-
-<rect x="390" y="112" width="360" height="350" rx="12" class="panel"/>
-  <text x="570" y="106" class="panelTitle" text-anchor="middle">APPLICATION / DOMAIN</text>
-<rect x="420" y="136" width="300" height="76" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="570" y="165" class="smallLabel" text-anchor="middle">Abstract Custom Id Table</text>
-<text x="570" y="183" class="smallLabel" text-anchor="middle">Test</text>
-<text x="570" y="196" class="detail" text-anchor="middle">table/model</text>
-<rect x="420" y="248" width="300" height="76" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="570" y="277" class="smallLabel" text-anchor="middle">Ksuid Millis Table Test</text>
-<text x="570" y="308" class="detail" text-anchor="middle">table/model</text>
-<rect x="420" y="360" width="300" height="76" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="570" y="389" class="smallLabel" text-anchor="middle">Ksuid Table Test</text>
-<text x="570" y="420" class="detail" text-anchor="middle">table/model</text>
-<rect x="842" y="112" width="250" height="350" rx="12" class="panel"/>
-  <text x="967" y="106" class="panelTitle" text-anchor="middle">PERSISTENCE</text>
-<rect x="864" y="138" width="206" height="56" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="967" y="167" class="smallLabel" text-anchor="middle">Ksuid Millis Table...</text>
-<text x="967" y="178" class="detail" text-anchor="middle">table/model</text>
-<rect x="864" y="212" width="206" height="56" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="967" y="246" class="smallLabel" text-anchor="middle">T1</text>
-
-<rect x="864" y="286" width="206" height="56" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="967" y="315" class="smallLabel" text-anchor="middle">Ksuid Table Test</text>
-<text x="967" y="326" class="detail" text-anchor="middle">table/model</text>
-<rect x="864" y="360" width="206" height="56" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="967" y="389" class="smallLabel" text-anchor="middle">Snowflake Id Table...</text>
-<text x="967" y="400" class="detail" text-anchor="middle">table/model</text>
-<rect x="1120" y="112" width="222" height="350" rx="12" class="panel"/>
-  <text x="1231" y="106" class="panelTitle" text-anchor="middle">RUNTIME / INFRASTRUCTURE</text>
-<rect x="1138" y="138" width="186" height="56" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1231" y="172" class="smallLabel" text-anchor="middle">Runtime</text>
-
-<rect x="1138" y="212" width="186" height="56" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="1231" y="241" class="smallLabel" text-anchor="middle">Configuration</text>
-<text x="1231" y="252" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="1138" y="286" width="186" height="56" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="1231" y="320" class="smallLabel" text-anchor="middle">Test Fixture</text>
-
-<path d="M286,176 C330,176 366,174 420,174" class="arrow"/>
-<path d="M720,288 C774,288 812,236 864,236" class="arrow"/>
-<path d="M720,400 C790,400 1050,404 1138,404" class="softArrow"/>
-<path d="M1070,240 C1098,240 1108,240 1138,240" class="softArrow"/>
-<rect x="36" y="510" width="1306" height="58" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="689" y="535" class="smallLabel" text-anchor="middle">The diagram follows source packages from entry point to application logic, persistence, and runtime support.</text>
-<text x="689" y="554" class="detail" text-anchor="middle">Source packages decide the panels; arrows show only the important runtime or dependency flow.</text>
+</defs>
+<rect width="1560" height="940" class="canvas"/>
+<rect x="20" y="20" width="1520" height="900" rx="16" class="frame"/>
+<text x="48" y="58" class="title">Custom ID Generation Flow</text>
+<text x="48" y="80" class="subtitle">Custom entity tests exercise Timebased UUID, Base62, Snowflake, KSUID, and KSUID millis IDs through DSL and DAO paths</text>
+<rect x="58" y="130" width="310" height="640" rx="12" class="panel"/><text x="213" y="122" class="panelTitle" text-anchor="middle">ID STRATEGY</text>
+<rect x="106" y="180" width="214" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="213" y="205" class="label" text-anchor="middle">Timebased UUID</text>
+<text x="213" y="224" class="detail" text-anchor="middle">UUID</text>
+<rect x="106" y="278" width="214" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="213" y="303" class="label" text-anchor="middle">UUID Base62</text>
+<text x="213" y="322" class="detail" text-anchor="middle">24-char string</text>
+<rect x="106" y="376" width="214" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="213" y="401" class="label" text-anchor="middle">Snowflake</text>
+<text x="213" y="420" class="detail" text-anchor="middle">Long</text>
+<rect x="106" y="474" width="214" height="58" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="213" y="499" class="label" text-anchor="middle">KSUID</text>
+<text x="213" y="518" class="detail" text-anchor="middle">27-char string</text>
+<rect x="106" y="572" width="214" height="58" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="213" y="597" class="label" text-anchor="middle">KSUID millis</text>
+<text x="213" y="616" class="detail" text-anchor="middle">time sortable</text>
+<rect x="444" y="130" width="306" height="640" rx="12" class="panel"/><text x="597" y="122" class="panelTitle" text-anchor="middle">TESTS</text>
+<rect x="492" y="178" width="210" height="66" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="597" y="203" class="label" text-anchor="middle">DSL path</text>
+<text x="597" y="230" class="detail" text-anchor="middle">T1 insert/select</text>
+<rect x="492" y="306" width="210" height="66" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="597" y="331" class="label" text-anchor="middle">DAO path</text>
+<text x="597" y="358" class="detail" text-anchor="middle">E1 new/find</text>
+<rect x="492" y="434" width="210" height="66" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="597" y="459" class="label" text-anchor="middle">Batch insert</text>
+<text x="597" y="486" class="detail" text-anchor="middle">insertIgnore</text>
+<rect x="492" y="562" width="210" height="66" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="597" y="587" class="label" text-anchor="middle">Concurrent DAO</text>
+<text x="597" y="614" class="detail" text-anchor="middle">async new/find</text>
+<rect x="824" y="130" width="310" height="640" rx="12" class="panel"/><text x="979" y="122" class="panelTitle" text-anchor="middle">CUSTOM TABLES</text>
+<rect x="862" y="178" width="232" height="154" rx="10" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M862,220 L862,188 Q862,178 872,178 L1084,178 Q1094,178 1094,188 L1094,220 Z" fill="#dcfce7"/>
+<text x="978" y="206" class="label" text-anchor="middle">T1 tables</text>
+<text x="878" y="246" class="tiny">id custom generated</text>
+<text x="878" y="264" class="tiny">name VARCHAR(255)</text>
+<text x="878" y="282" class="tiny">age INT</text>
+<text x="878" y="300" class="tiny">five table variants</text>
+<rect x="862" y="474" width="232" height="110" rx="10" fill="#fff" stroke="#d97706" class="card"/>
+<path d="M862,516 L862,484 Q862,474 872,474 L1084,474 Q1094,474 1094,484 L1094,516 Z" fill="#fef3c7"/>
+<text x="978" y="502" class="label" text-anchor="middle">Record</text>
+<text x="878" y="542" class="tiny">name: String</text>
+<text x="878" y="560" class="tiny">age: Int</text>
+<rect x="1204" y="130" width="184" height="640" rx="12" class="panel"/><text x="1296" y="122" class="panelTitle" text-anchor="middle">DAO ENTITIES</text>
+<desc>E1</desc>
+<rect x="1226" y="230" width="140" height="116" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
+<path d="M1226,270 L1226,234 Q1226,230 1230,230 L1362,230 Q1366,230 1366,234 L1366,270 Z" fill="#ccfbf1"/>
+<line x1="1226" y1="270" x2="1366" y2="270" stroke="#0f766e" stroke-width="1.2"/>
+<text x="1296" y="256" class="label" text-anchor="middle">E1</text>
+<text x="1242" y="294" class="tiny">custom id</text>
+<text x="1242" y="312" class="tiny">name</text>
+<text x="1242" y="330" class="tiny">age</text>
+<desc>EntityClass</desc>
+<rect x="1226" y="500" width="140" height="116" rx="4" fill="#fff" stroke="#64748b" class="card"/>
+<path d="M1226,540 L1226,504 Q1226,500 1230,500 L1362,500 Q1366,500 1366,504 L1366,540 Z" fill="#e2e8f0"/>
+<line x1="1226" y1="540" x2="1366" y2="540" stroke="#64748b" stroke-width="1.2"/>
+<text x="1296" y="526" class="label" text-anchor="middle">EntityClass</text>
+<text x="1242" y="582" class="tiny">matching table</text>
+<path d="M1420,377 C1420,356 1524,356 1524,377 L1524,533 C1524,554 1420,554 1420,533 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
+<ellipse cx="1472" cy="377" rx="52" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1420,533 C1420,554 1524,554 1524,533" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<text x="1472" y="408" class="label" text-anchor="middle">DB</text>
+<text x="1434" y="440" class="tiny">custom PK</text>
+<text x="1434" y="458" class="tiny">name</text>
+<text x="1434" y="476" class="tiny">age</text>
+<path d="M320,209 L404,209 L404,211 L492,211" class="arrow"/>
+<path d="M320,307 L404,307 L404,211 L492,211" class="arrow"/>
+<path d="M320,405 L404,405 L404,211 L492,211" class="arrow"/>
+<path d="M320,503 L404,503 L404,211 L492,211" class="arrow"/>
+<path d="M320,601 L404,601 L404,211 L492,211" class="arrow"/>
+<path d="M702,211 L782,211 L782,255 L862,255" class="mapLine"/>
+<path d="M702,339 L782,339 L782,255 L862,255" class="mapLine"/>
+<path d="M702,467 L782,467 L782,530 L862,530" class="mapLine"/>
+<path d="M1094,255 L1160,255 L1160,288 L1226,288" class="mapLine"/>
+<path d="M1094,530 L1160,530 L1160,558 L1226,558" class="runtimeUse"/>
+<path d="M1366,288 L1394,288 L1394,420 L1420,420" class="dbUse"/>
+<path d="M1366,558 L1394,558 L1394,586 L1472,586 L1472,550" class="dbUse"/>
+<rect x="128" y="838" width="1196" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="726" y="869" class="detail" text-anchor="middle">Source check: five custom ID table tests share DSL, DAO, batch, and concurrent creation paths over T1/E1 records.</text>
 </svg>

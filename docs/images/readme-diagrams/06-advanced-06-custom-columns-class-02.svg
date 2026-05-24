@@ -1,91 +1,178 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 890" width="1220" height="890" role="img" aria-label="06 Advanced: Custom Columns (06)">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-    </marker>
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 960" width="1560" height="960" role="img" aria-label="Custom Column Class and Table Model">
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
+<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
+.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
+.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
-  </defs>
-  <rect width="1220" height="890" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="850" rx="16" class="frame"/>
-<text x="48" y="58" class="title">06 Advanced: Custom Columns (06)</text>
-  <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="120" width="1128" height="130" rx="12" class="panel"/>
-  <text x="610" y="114" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="74" y="146" width="357" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="252.5" y="188" class="smallLabel" text-anchor="middle">Abstract Exposed Test</text>
-
-<rect x="459" y="146" width="357" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="637.5" y="175" class="smallLabel" text-anchor="middle">Int Id Table</text>
-<text x="637.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="844" y="146" width="357" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="1022.5" y="175" class="smallLabel" text-anchor="middle">Entity ID</text>
-<text x="1022.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="46" y="302" width="1128" height="474" rx="12" class="panel"/>
-  <text x="610" y="296" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="74" y="328" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="234" y="366" class="smallLabel" text-anchor="middle">Custom Client Default</text>
-<text x="234" y="384" class="smallLabel" text-anchor="middle">Functions Test</text>
-
-<rect x="440" y="328" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="600" y="366" class="smallLabel" text-anchor="middle">Compressed Binary Column Type</text>
-<text x="600" y="384" class="smallLabel" text-anchor="middle">Test</text>
-
-<rect x="806" y="328" width="320" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="966" y="366" class="smallLabel" text-anchor="middle">Compressed Blob Column Type</text>
-<text x="966" y="384" class="smallLabel" text-anchor="middle">Test</text>
-
-<rect x="74" y="436" width="320" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="234" y="474" class="smallLabel" text-anchor="middle">Binary Serialized Binary</text>
-<text x="234" y="492" class="smallLabel" text-anchor="middle">Column Type Test</text>
-
-<rect x="440" y="436" width="320" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="600" y="474" class="smallLabel" text-anchor="middle">Binary Serialized Blob Column</text>
-<text x="600" y="492" class="smallLabel" text-anchor="middle">Type Test</text>
-
-<rect x="806" y="436" width="320" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="966" y="484" class="smallLabel" text-anchor="middle">Client Generated</text>
-
-<rect x="74" y="544" width="320" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="234" y="573" class="smallLabel" text-anchor="middle">Client Generated Entity</text>
-<text x="234" y="612" class="detail" text-anchor="middle">table/model</text>
-<rect x="440" y="544" width="320" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="600" y="592" class="smallLabel" text-anchor="middle">Embeddable</text>
-
-<rect x="806" y="544" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="966" y="592" class="smallLabel" text-anchor="middle">Embeddable2</text>
-
-<rect x="74" y="652" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="234" y="700" class="smallLabel" text-anchor="middle">Embeddable</text>
-
-<path d="M234,328 L234,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M966,436 L966,282 L637.5,282 L637.5,224" class="inherit"/>
-<path d="M234,544 L234,282 L1022.5,282 L1022.5,224" class="inherit"/>
-<path d="M600,328 L600,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M966,328 L966,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M234,436 L234,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M600,436 L600,282 L252.5,282 L252.5,224" class="inherit"/>
-<rect x="46" y="816" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="610" y="843" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+</defs>
+<rect width="1560" height="960" class="canvas"/>
+<rect x="20" y="20" width="1520" height="920" rx="16" class="frame"/>
+<text x="48" y="58" class="title">Custom Column Class and Table Model</text>
+<text x="48" y="80" class="subtitle">Custom column tests share Exposed test bases, T1 tables, IntEntity DAO classes, codecs, and embeddable payloads</text>
+<rect x="58" y="130" width="618" height="740" rx="12" class="panel"/><text x="367" y="122" class="panelTitle" text-anchor="middle">TEST HIERARCHY</text>
+<desc>AbstractExposedTest</desc>
+<rect x="246" y="156" width="230" height="94" rx="4" fill="#fff" stroke="#64748b" class="card"/>
+<path d="M246,196 L246,160 Q246,156 250,156 L472,156 Q476,156 476,160 L476,196 Z" fill="#e2e8f0"/>
+<line x1="246" y1="196" x2="476" y2="196" stroke="#64748b" stroke-width="1.2"/>
+<text x="361" y="182" class="label" text-anchor="middle">AbstractExposedTest</text>
+<line x1="246" y1="230" x2="476" y2="230" stroke="#64748b" stroke-width="1.2"/>
+<text x="262" y="217" class="tiny">withTables(testDB, ...)</text>
+<text x="262" y="244" class="tiny">fixture base</text>
+<polygon points="361,250 352,266 370,266" fill="#fff" stroke="#475569" stroke-width="1.8"/>
+<path d="M361,266 L361,306" class="inheritStem"/>
+<path d="M68,306 L660,306" class="inheritStem"/>
+<path d="M200,306 L200,360" class="inheritStem"/>
+<path d="M452,306 L452,360" class="inheritStem"/>
+<path d="M68,306 L68,490 L200,490 L200,510" class="inheritStem"/>
+<path d="M660,306 L660,490 L452,490 L452,510" class="inheritStem"/>
+<path d="M660,306 L660,646 L326,646 L326,666" class="inheritStem"/>
+<desc>CompressedBinaryColumnTypeTest</desc>
+<rect x="80" y="360" width="240" height="96" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M80,416 L80,364 Q80,360 84,360 L316,360 Q320,360 320,364 L320,416 Z" fill="#dbeafe"/>
+<line x1="80" y1="416" x2="320" y2="416" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="200" y="382" class="label" text-anchor="middle">CompressedBinaryColumnType</text>
+<text x="200" y="400" class="label" text-anchor="middle">Test</text>
+<text x="96" y="431" class="tiny">compressedBinary</text>
+<text x="96" y="449" class="tiny">BINARY(4096)</text>
+<desc>CompressedBlobColumnTypeTest</desc>
+<rect x="332" y="360" width="240" height="96" rx="4" fill="#fff" stroke="#ea580c" class="card"/>
+<path d="M332,416 L332,364 Q332,360 336,360 L568,360 Q572,360 572,364 L572,416 Z" fill="#ffedd5"/>
+<line x1="332" y1="416" x2="572" y2="416" stroke="#ea580c" stroke-width="1.2"/>
+<text x="452" y="382" class="label" text-anchor="middle">CompressedBlobColumnType</text>
+<text x="452" y="400" class="label" text-anchor="middle">Test</text>
+<text x="348" y="431" class="tiny">compressedBlob</text>
+<text x="348" y="449" class="tiny">BLOB</text>
+<desc>BinarySerializedBinaryTest</desc>
+<rect x="80" y="510" width="240" height="96" rx="4" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M80,550 L80,514 Q80,510 84,510 L316,510 Q320,510 320,514 L320,550 Z" fill="#fce7f3"/>
+<line x1="80" y1="550" x2="320" y2="550" stroke="#db2777" stroke-width="1.2"/>
+<text x="200" y="536" class="label" text-anchor="middle">BinarySerializedBinaryTest</text>
+<text x="96" y="573" class="tiny">binarySerializedBinary</text>
+<text x="96" y="591" class="tiny">LZ4/Zstd serializers</text>
+<desc>BinarySerializedBlobTest</desc>
+<rect x="332" y="510" width="240" height="96" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
+<path d="M332,550 L332,514 Q332,510 336,510 L568,510 Q572,510 572,514 L572,550 Z" fill="#ede9fe"/>
+<line x1="332" y1="550" x2="572" y2="550" stroke="#7c3aed" stroke-width="1.2"/>
+<text x="452" y="536" class="label" text-anchor="middle">BinarySerializedBlobTest</text>
+<text x="348" y="573" class="tiny">binarySerializedBlob</text>
+<text x="348" y="591" class="tiny">Fory/Kryo payloads</text>
+<desc>CustomClientDefaultTest</desc>
+<rect x="206" y="666" width="240" height="96" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M206,706 L206,670 Q206,666 210,666 L442,666 Q446,666 446,670 L446,706 Z" fill="#dcfce7"/>
+<line x1="206" y1="706" x2="446" y2="706" stroke="#16a34a" stroke-width="1.2"/>
+<text x="326" y="692" class="label" text-anchor="middle">CustomClientDefaultTest</text>
+<text x="222" y="729" class="tiny">timebased / snowflake</text>
+<text x="222" y="747" class="tiny">ksuid / ksuidMillis</text>
+<rect x="744" y="130" width="744" height="740" rx="12" class="panel"/><text x="1116" y="122" class="panelTitle" text-anchor="middle">TABLES, DAO, AND PAYLOADS</text>
+<desc>IntIdTable</desc>
+<rect x="844" y="156" width="210" height="94" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
+<path d="M844,196 L844,160 Q844,156 848,156 L1050,156 Q1054,156 1054,160 L1054,196 Z" fill="#ede9fe"/>
+<line x1="844" y1="196" x2="1054" y2="196" stroke="#7c3aed" stroke-width="1.2"/>
+<text x="949" y="182" class="label" text-anchor="middle">IntIdTable</text>
+<line x1="844" y1="230" x2="1054" y2="230" stroke="#7c3aed" stroke-width="1.2"/>
+<text x="860" y="217" class="tiny">id: EntityID&lt;Int&gt;</text>
+<text x="860" y="244" class="tiny">table base</text>
+<desc>Compression T1</desc>
+<rect x="770" y="326" width="210" height="112" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M770,366 L770,330 Q770,326 774,326 L976,326 Q980,326 980,330 L980,366 Z" fill="#dbeafe"/>
+<line x1="770" y1="366" x2="980" y2="366" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="875" y="352" class="label" text-anchor="middle">Compression T1</text>
+<line x1="770" y1="407" x2="980" y2="407" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="786" y="372.5" class="tiny">lz4</text>
+<text x="786" y="390.5" class="tiny">snappy</text>
+<text x="786" y="408.5" class="tiny">zstd</text>
+<text x="786" y="426.5" class="tiny">binary/blob columns</text>
+<desc>Serialized T1</desc>
+<rect x="1010" y="326" width="210" height="112" rx="4" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M1010,366 L1010,330 Q1010,326 1014,326 L1216,326 Q1220,326 1220,330 L1220,366 Z" fill="#fce7f3"/>
+<line x1="1010" y1="366" x2="1220" y2="366" stroke="#db2777" stroke-width="1.2"/>
+<text x="1115" y="352" class="label" text-anchor="middle">Serialized T1</text>
+<text x="1026" y="388" class="tiny">name</text>
+<text x="1026" y="406" class="tiny">lz4Fory / lz4Kryo</text>
+<text x="1026" y="424" class="tiny">zstdFory / zstdKryo</text>
+<desc>ClientGenerated</desc>
+<rect x="1250" y="326" width="210" height="112" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M1250,366 L1250,330 Q1250,326 1254,326 L1456,326 Q1460,326 1460,330 L1460,366 Z" fill="#dcfce7"/>
+<line x1="1250" y1="366" x2="1460" y2="366" stroke="#16a34a" stroke-width="1.2"/>
+<text x="1355" y="352" class="label" text-anchor="middle">ClientGenerated</text>
+<text x="1266" y="388" class="tiny">timebasedUuid</text>
+<text x="1266" y="406" class="tiny">snowflake</text>
+<text x="1266" y="424" class="tiny">ksuid</text>
+<polygon points="949,250 940,266 958,266" fill="#fff" stroke="#475569" stroke-width="1.8"/>
+<path d="M949,266 L949,294" class="inheritStem"/>
+<path d="M875,294 L1355,294" class="inheritStem"/>
+<path d="M875,294 L875,326" class="inheritStem"/>
+<path d="M1115,294 L1115,326" class="inheritStem"/>
+<path d="M1355,294 L1355,326" class="inheritStem"/>
+<desc>IntEntity</desc>
+<rect x="1010" y="510" width="210" height="94" rx="4" fill="#fff" stroke="#64748b" class="card"/>
+<path d="M1010,550 L1010,514 Q1010,510 1014,510 L1216,510 Q1220,510 1220,514 L1220,550 Z" fill="#e2e8f0"/>
+<line x1="1010" y1="550" x2="1220" y2="550" stroke="#64748b" stroke-width="1.2"/>
+<text x="1115" y="536" class="label" text-anchor="middle">IntEntity</text>
+<line x1="1010" y1="584" x2="1220" y2="584" stroke="#64748b" stroke-width="1.2"/>
+<text x="1026" y="571" class="tiny">EntityID&lt;Int&gt;</text>
+<text x="1026" y="598" class="tiny">DAO base</text>
+<desc>E1</desc>
+<rect x="770" y="664" width="210" height="86" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
+<path d="M770,704 L770,668 Q770,664 774,664 L976,664 Q980,664 980,668 L980,704 Z" fill="#ccfbf1"/>
+<line x1="770" y1="704" x2="980" y2="704" stroke="#0f766e" stroke-width="1.2"/>
+<text x="875" y="690" class="label" text-anchor="middle">E1</text>
+<text x="786" y="713" class="tiny">lz4Data</text>
+<text x="786" y="731" class="tiny">snappyData</text>
+<text x="786" y="749" class="tiny">zstdData</text>
+<desc>E1</desc>
+<rect x="1010" y="664" width="210" height="86" rx="4" fill="#fff" stroke="#d97706" class="card"/>
+<path d="M1010,704 L1010,668 Q1010,664 1014,664 L1216,664 Q1220,664 1220,668 L1220,704 Z" fill="#fef3c7"/>
+<line x1="1010" y1="704" x2="1220" y2="704" stroke="#d97706" stroke-width="1.2"/>
+<text x="1115" y="690" class="label" text-anchor="middle">E1</text>
+<text x="1026" y="722" class="tiny">name</text>
+<text x="1026" y="740" class="tiny">serialized fields</text>
+<desc>ClientGeneratedEntity</desc>
+<rect x="1250" y="664" width="210" height="86" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
+<path d="M1250,704 L1250,668 Q1250,664 1254,664 L1456,664 Q1460,664 1460,668 L1460,704 Z" fill="#ccfbf1"/>
+<line x1="1250" y1="704" x2="1460" y2="704" stroke="#0f766e" stroke-width="1.2"/>
+<text x="1355" y="690" class="label" text-anchor="middle">ClientGeneratedEntity</text>
+<text x="1266" y="731" class="tiny">generated id fields</text>
+<polygon points="1115,604 1106,620 1124,620" fill="#fff" stroke="#475569" stroke-width="1.8"/>
+<path d="M1115,620 L1115,632" class="inheritStem"/>
+<path d="M875,632 L1355,632" class="inheritStem"/>
+<path d="M875,632 L875,664" class="inheritStem"/>
+<path d="M1115,632 L1115,664" class="inheritStem"/>
+<path d="M1355,632 L1355,664" class="inheritStem"/>
+<path d="M875,438 L845,438 L845,644 L875,644 L875,664" class="mapLine"/>
+<path d="M1115,438 L1115,480 L990,480 L990,644 L1115,644 L1115,664" class="mapLine"/>
+<path d="M1355,438 L1385,438 L1385,644 L1355,644 L1355,664" class="mapLine"/>
+<desc>Embeddable</desc>
+<rect x="800" y="786" width="260" height="64" rx="4" fill="#fff" stroke="#d97706" class="card"/>
+<path d="M800,826 L800,790 Q800,786 804,786 L1056,786 Q1060,786 1060,790 L1060,826 Z" fill="#fef3c7"/>
+<line x1="800" y1="826" x2="1060" y2="826" stroke="#d97706" stroke-width="1.2"/>
+<text x="930" y="812" class="label" text-anchor="middle">Embeddable</text>
+<text x="816" y="842" class="tiny">name, age, address</text>
+<desc>Embeddable2</desc>
+<rect x="1130" y="786" width="260" height="64" rx="4" fill="#fff" stroke="#ea580c" class="card"/>
+<path d="M1130,826 L1130,790 Q1130,786 1134,786 L1386,786 Q1390,786 1390,790 L1390,826 Z" fill="#ffedd5"/>
+<line x1="1130" y1="826" x2="1390" y2="826" stroke="#ea580c" stroke-width="1.2"/>
+<text x="1260" y="812" class="label" text-anchor="middle">Embeddable2</text>
+<text x="1146" y="842" class="tiny">name, age, address, zipcode</text>
+<path d="M1115,438 L1240,438 L1240,764 L930,764 L930,786" class="runtimeUse"/>
+<path d="M1115,438 L1240,438 L1240,764 L1260,764 L1260,786" class="runtimeUse"/>
+<rect x="148" y="884" width="1260" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="778" y="915" class="detail" text-anchor="middle">Source check: compression, binary serialization, and generated client-default tests each define T1 tables and DAO entities.</text>
 </svg>
