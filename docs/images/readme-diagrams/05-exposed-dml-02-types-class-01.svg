@@ -1,89 +1,116 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 890" width="1220" height="890" role="img" aria-label="05 Exposed DML: Column Types (02-types)">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-    </marker>
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1520 900" width="1520" height="900" role="img" aria-label="Exposed DML Column Type Test Model">
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
+<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
+<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
+.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.fkArrow{fill:none;stroke:#0f766e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}
+.returnLine{fill:none;stroke:#64748b;stroke-width:1.8;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.lifeline{stroke:#cbd5e1;stroke-width:1.5;stroke-dasharray:5 6}
+.inherit{fill:none;stroke:#475569;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
 </style>
-  </defs>
-  <rect width="1220" height="890" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="850" rx="16" class="frame"/>
-<text x="48" y="58" class="title">05 Exposed DML: Column Types (02-types)</text>
-  <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="120" width="1128" height="130" rx="12" class="panel"/>
-  <text x="610" y="114" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="74" y="146" width="261" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="204.5" y="188" class="smallLabel" text-anchor="middle">Abstract Exposed Test</text>
-
-<rect x="363" y="146" width="261" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="493.5" y="175" class="smallLabel" text-anchor="middle">Int Id Table</text>
-<text x="493.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="652" y="146" width="261" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="782.5" y="175" class="smallLabel" text-anchor="middle">Entity ID</text>
-<text x="782.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="941" y="146" width="261" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="1071.5" y="175" class="smallLabel" text-anchor="middle">Table</text>
-<text x="1071.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="46" y="302" width="1128" height="474" rx="12" class="panel"/>
-  <text x="610" y="296" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="74" y="328" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="234" y="376" class="smallLabel" text-anchor="middle">Ex01_ Boolean Column Type</text>
-
-<rect x="440" y="328" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="600" y="376" class="smallLabel" text-anchor="middle">Ex02_ Char Column Type</text>
-
-<rect x="806" y="328" width="320" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="966" y="376" class="smallLabel" text-anchor="middle">Ex03_ Numeric Column Type</text>
-
-<rect x="74" y="436" width="320" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="234" y="484" class="smallLabel" text-anchor="middle">Ex04_ Double Column Type</text>
-
-<rect x="440" y="436" width="320" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="600" y="484" class="smallLabel" text-anchor="middle">Ex05_ Array Column Type</text>
-
-<rect x="806" y="436" width="320" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="966" y="484" class="smallLabel" text-anchor="middle">Ex06_ Multi Array Column Type</text>
-
-<rect x="74" y="544" width="320" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="234" y="592" class="smallLabel" text-anchor="middle">Ex07_ Unsigned Column Type</text>
-
-<rect x="440" y="544" width="320" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="600" y="573" class="smallLabel" text-anchor="middle">UByte Table</text>
-<text x="600" y="612" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="544" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="966" y="573" class="smallLabel" text-anchor="middle">UShort Table</text>
-<text x="966" y="612" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="652" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="234" y="681" class="smallLabel" text-anchor="middle">UInt Table</text>
-<text x="234" y="720" class="detail" text-anchor="middle">table/model</text>
-<path d="M234,328 L234,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M600,328 L600,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M966,328 L966,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M234,436 L234,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M600,436 L600,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M966,436 L966,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M234,544 L234,282 L204.5,282 L204.5,224" class="inherit"/>
-<rect x="46" y="816" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="610" y="843" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+</defs>
+<rect width="1520" height="900" class="canvas"/>
+<rect x="20" y="20" width="1480" height="860" rx="16" class="frame"/>
+<text x="48" y="58" class="title">Exposed DML Column Type Test Model</text>
+<text x="48" y="80" class="subtitle">Column type tests extend the shared test base and exercise Table column factories across supported DB dialects</text>
+<rect x="54" y="128" width="704" height="622" rx="12" class="panel"/><text x="406" y="120" class="panelTitle" text-anchor="middle">TEST CLASS HIERARCHY</text>
+<rect x="286" y="166" width="222" height="82" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M286,214 L286,170 Q286,166 290,166 L504,166 Q508,166 508,170 L508,214 Z" fill="#dbeafe"/>
+<text x="397" y="184" class="tiny" text-anchor="middle">&lt;&lt;test base&gt;&gt;</text>
+<text x="397" y="204" class="label" text-anchor="middle">AbstractExposedTest</text>
+<path d="M286,214 H508" stroke="#3b82f6" stroke-width="1.1"/>
+<text x="300" y="232" class="tiny">ENABLE_DIALECTS_METHOD</text>
+<rect x="100" y="330" width="210" height="126" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M100,378 L100,334 Q100,330 104,330 L306,330 Q310,330 310,334 L310,378 Z" fill="#dcfce7"/>
+<text x="205" y="348" class="tiny" text-anchor="middle">&lt;&lt;classes&gt;&gt;</text>
+<text x="205" y="368" class="label" text-anchor="middle">Basic Type Tests</text>
+<path d="M100,378 H310" stroke="#16a34a" stroke-width="1.1"/>
+<text x="114" y="396" class="tiny">Ex01 Boolean</text>
+<text x="114" y="411" class="tiny">Ex02 Char</text>
+<text x="114" y="426" class="tiny">Ex03 Numeric</text>
+<text x="114" y="441" class="tiny">Ex04 Double</text>
+<rect x="432" y="330" width="210" height="126" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
+<path d="M432,378 L432,334 Q432,330 436,330 L638,330 Q642,330 642,334 L642,378 Z" fill="#ccfbf1"/>
+<text x="537" y="348" class="tiny" text-anchor="middle">&lt;&lt;classes&gt;&gt;</text>
+<text x="537" y="368" class="label" text-anchor="middle">Array Type Tests</text>
+<path d="M432,378 H642" stroke="#0f766e" stroke-width="1.1"/>
+<text x="446" y="396" class="tiny">Ex05 Array</text>
+<text x="446" y="411" class="tiny">Ex06 MultiArray</text>
+<rect x="100" y="560" width="210" height="126" rx="4" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M100,608 L100,564 Q100,560 104,560 L306,560 Q310,560 310,564 L310,608 Z" fill="#fce7f3"/>
+<text x="205" y="578" class="tiny" text-anchor="middle">&lt;&lt;classes&gt;&gt;</text>
+<text x="205" y="598" class="label" text-anchor="middle">Extended Type Tests</text>
+<path d="M100,608 H310" stroke="#db2777" stroke-width="1.1"/>
+<text x="114" y="626" class="tiny">Ex07 Unsigned</text>
+<text x="114" y="641" class="tiny">Ex08 Blob</text>
+<text x="114" y="656" class="tiny">Ex09 Java UUID</text>
+<text x="114" y="671" class="tiny">Ex10 Kotlin UUID</text>
+<rect x="432" y="560" width="210" height="126" rx="4" fill="#fff" stroke="#d97706" class="card"/>
+<path d="M432,608 L432,564 Q432,560 436,560 L638,560 Q642,560 642,564 L642,608 Z" fill="#fef3c7"/>
+<text x="537" y="578" class="tiny" text-anchor="middle">&lt;&lt;objects&gt;&gt;</text>
+<text x="537" y="598" class="label" text-anchor="middle">Table Models</text>
+<path d="M432,608 H642" stroke="#d97706" stroke-width="1.1"/>
+<text x="446" y="626" class="tiny">anonymous Table(&quot;tester&quot;)</text>
+<text x="446" y="641" class="tiny">IntIdTable(&quot;double_table&quot;)</text>
+<text x="446" y="656" class="tiny">UUID tables</text>
+<path d="M205,330 L205,292 L397,292 L397,264" class="inherit"/>
+<path d="M397,248 L385,264 L409,264 Z" class="inheritHead"/>
+<path d="M537,330 L537,292 L397,292 L397,264" class="inherit"/>
+<path d="M397,248 L385,264 L409,264 Z" class="inheritHead"/>
+<path d="M205,560 L205,520 L397,520 L397,264" class="inherit"/>
+<path d="M397,248 L385,264 L409,264 Z" class="inheritHead"/>
+<path d="M310,623 L432,623" class="runtimeUse"/>
+<rect x="822" y="128" width="614" height="622" rx="12" class="panel"/><text x="1129" y="120" class="panelTitle" text-anchor="middle">COLUMN FACTORIES AND DIALECT BEHAVIOR</text>
+<rect x="880" y="182" width="210" height="112" rx="4" fill="#fff" stroke="#64748b" class="card"/>
+<path d="M880,230 L880,186 Q880,182 884,182 L1086,182 Q1090,182 1090,186 L1090,230 Z" fill="#e2e8f0"/>
+<text x="985" y="200" class="tiny" text-anchor="middle">&lt;&lt;schema API&gt;&gt;</text>
+<text x="985" y="220" class="label" text-anchor="middle">Table</text>
+<path d="M880,230 H1090" stroke="#64748b" stroke-width="1.1"/>
+<text x="894" y="248" class="tiny">bool(), char(), varchar()</text>
+<text x="894" y="263" class="tiny">integer(), decimal()</text>
+<text x="894" y="278" class="tiny">array(), blob(), uuid()</text>
+<rect x="1160" y="182" width="210" height="112" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M1160,230 L1160,186 Q1160,182 1164,182 L1366,182 Q1370,182 1370,186 L1370,230 Z" fill="#dbeafe"/>
+<text x="1265" y="200" class="tiny" text-anchor="middle">&lt;&lt;generic&gt;&gt;</text>
+<text x="1265" y="220" class="label" text-anchor="middle">Column&lt;T&gt;</text>
+<path d="M1160,230 H1370" stroke="#3b82f6" stroke-width="1.1"/>
+<text x="1174" y="248" class="tiny">typed value binding</text>
+<text x="1174" y="263" class="tiny">nullable/default/check</text>
+<rect x="878" y="370" width="224" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="990" y="395" class="label" text-anchor="middle">Basic columns</text>
+<text x="990" y="428" class="detail" text-anchor="middle">bool/char/numeric/double</text>
+<rect x="1150" y="370" width="224" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="1262" y="395" class="label" text-anchor="middle">Special columns</text>
+<text x="1262" y="428" class="detail" text-anchor="middle">array/blob/uuid/unsigned</text>
+<path d="M1068,564 C1068,544 1208,544 1208,564 L1208,674 C1208,694 1068,694 1068,674 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
+<ellipse cx="1138" cy="564" rx="70" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1068,674 C1068,694 1208,694 1208,674" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<text x="1138" y="592" class="label" text-anchor="middle">DB Dialects</text>
+<text x="1086" y="618" class="tiny">H2</text>
+<text x="1086" y="635" class="tiny">Postgres</text>
+<text x="1086" y="652" class="tiny">MySQL</text>
+<text x="1086" y="669" class="tiny">MariaDB</text>
+<path d="M1090,238 L1160,238" class="arrow"/>
+<path d="M985,294 L985,370" class="arrow"/>
+<path d="M1265,294 L1265,370" class="arrow"/>
+<path d="M990,442 L1038,442 L1038,606 L1068,606" class="dbUse"/>
+<path d="M1262,442 L1232,442 L1232,606 L1208,606" class="dbUse"/>
+<path d="M642,623 L790,623 L790,406 L878,406" class="runtimeUse"/>
+<rect x="128" y="804" width="1260" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="758" y="835" class="detail" text-anchor="middle">Source check: 02-types examples validate bool/char/numeric/double, arrays, multi-arrays, unsigned values, blobs, Java UUID, and Kotlin UUID across DB dialects.</text>
 </svg>
