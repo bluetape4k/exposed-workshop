@@ -1,91 +1,150 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 890" width="1220" height="890" role="img" aria-label="04 Exposed DDL: Schema Definition (02-DDL)">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-    </marker>
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 920" width="1500" height="920" role="img" aria-label="Exposed DDL Table Type Model">
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
+<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
+<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
+.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.fkArrow{fill:none;stroke:#0f766e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}
+.migration{fill:none;stroke:#db2777;stroke-width:1.9;stroke-dasharray:7 4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
+.returnLine{fill:none;stroke:#64748b;stroke-width:1.8;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.inherit{fill:none;stroke:#475569;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
 </style>
-  </defs>
-  <rect width="1220" height="890" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="850" rx="16" class="frame"/>
-<text x="48" y="58" class="title">04 Exposed DDL: Schema Definition (02-DDL)</text>
-  <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="120" width="1128" height="130" rx="12" class="panel"/>
-  <text x="610" y="114" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="74" y="146" width="357" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="252.5" y="188" class="smallLabel" text-anchor="middle">Abstract Exposed Test</text>
-
-<rect x="459" y="146" width="357" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="637.5" y="175" class="smallLabel" text-anchor="middle">Table</text>
-<text x="637.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="844" y="146" width="357" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="1022.5" y="175" class="smallLabel" text-anchor="middle">Int Id Table</text>
-<text x="1022.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="46" y="302" width="1128" height="474" rx="12" class="panel"/>
-  <text x="610" y="296" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="74" y="328" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="234" y="376" class="smallLabel" text-anchor="middle">Ex01_ Create Database</text>
-
-<rect x="440" y="328" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="600" y="357" class="smallLabel" text-anchor="middle">Ex02_ Create Table</text>
-<text x="600" y="396" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="328" width="320" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="966" y="357" class="smallLabel" text-anchor="middle">Ex03_ Create Missing Table</text>
-<text x="966" y="375" class="smallLabel" text-anchor="middle">And Columns</text>
-<text x="966" y="396" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="436" width="320" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="234" y="484" class="smallLabel" text-anchor="middle">Ex04_ Column Definition</text>
-
-<rect x="440" y="436" width="320" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="600" y="484" class="smallLabel" text-anchor="middle">Ex05_ Create Index</text>
-
-<rect x="806" y="436" width="320" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="966" y="484" class="smallLabel" text-anchor="middle">Ex06_ Sequence</text>
-
-<rect x="74" y="544" width="320" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="234" y="592" class="smallLabel" text-anchor="middle">Ex07_ Custom Enumeration</text>
-
-<rect x="440" y="544" width="320" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="600" y="592" class="smallLabel" text-anchor="middle">Ex10_ DDL_ Examples</text>
-
-<rect x="806" y="544" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="966" y="573" class="smallLabel" text-anchor="middle">Table With Duplicated Column</text>
-<text x="966" y="612" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="652" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="234" y="681" class="smallLabel" text-anchor="middle">Table Duplicated Column Refer</text>
-<text x="234" y="699" class="smallLabel" text-anchor="middle">To Table</text>
-<text x="234" y="720" class="detail" text-anchor="middle">table/model</text>
-<path d="M234,328 L234,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M600,328 L600,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M966,544 L966,282 L637.5,282 L637.5,224" class="inherit"/>
-<path d="M234,652 L234,282 L637.5,282 L637.5,224" class="inherit"/>
-<path d="M966,328 L966,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M234,436 L234,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M600,436 L600,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M966,436 L966,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M234,544 L234,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M600,544 L600,282 L252.5,282 L252.5,224" class="inherit"/>
-<rect x="46" y="816" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="610" y="843" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+</defs>
+<rect width="1500" height="920" class="canvas"/>
+<rect x="20" y="20" width="1460" height="880" rx="16" class="frame"/>
+<text x="48" y="58" class="title">Exposed DDL Table Type Model</text>
+<text x="48" y="80" class="subtitle">DDL examples combine the Exposed Table hierarchy with concrete schema objects and SchemaUtils operations</text>
+<rect x="52" y="128" width="704" height="638" rx="12" class="panel"/><text x="404" y="120" class="panelTitle" text-anchor="middle">EXPOSED TABLE HIERARCHY</text>
+<rect x="300" y="166" width="176" height="82" rx="4" fill="#fff" stroke="#64748b" class="card"/>
+<path d="M300,214 L300,170 Q300,166 304,166 L472,166 Q476,166 476,170 L476,214 Z" fill="#e2e8f0"/>
+<text x="388" y="184" class="tiny" text-anchor="middle">&lt;&lt;base&gt;&gt;</text>
+<text x="388" y="204" class="label" text-anchor="middle">Table</text>
+<path d="M300,214 H476" stroke="#64748b" stroke-width="1.1"/>
+<text x="314" y="232" class="tiny">PrimaryKey</text>
+<rect x="292" y="306" width="192" height="82" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M292,354 L292,310 Q292,306 296,306 L480,306 Q484,306 484,310 L484,354 Z" fill="#dbeafe"/>
+<text x="388" y="324" class="tiny" text-anchor="middle">&lt;&lt;abstract table&gt;&gt;</text>
+<text x="388" y="344" class="label" text-anchor="middle">IdTable&lt;T&gt;</text>
+<path d="M292,354 H484" stroke="#3b82f6" stroke-width="1.1"/>
+<text x="306" y="372" class="tiny">id: Column&lt;EntityID&lt;T&gt;&gt;</text>
+<rect x="146" y="470" width="194" height="96" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M146,518 L146,474 Q146,470 150,470 L336,470 Q340,470 340,474 L340,518 Z" fill="#dcfce7"/>
+<text x="243" y="488" class="tiny" text-anchor="middle">&lt;&lt;id table&gt;&gt;</text>
+<text x="243" y="508" class="label" text-anchor="middle">IntIdTable</text>
+<path d="M146,518 H340" stroke="#16a34a" stroke-width="1.1"/>
+<text x="160" y="536" class="tiny">integer id</text>
+<text x="160" y="551" class="tiny">auto increment</text>
+<rect x="438" y="470" width="194" height="96" rx="4" fill="#fff" stroke="#ea580c" class="card"/>
+<path d="M438,518 L438,474 Q438,470 442,470 L628,470 Q632,470 632,474 L632,518 Z" fill="#ffedd5"/>
+<text x="535" y="488" class="tiny" text-anchor="middle">&lt;&lt;id table&gt;&gt;</text>
+<text x="535" y="508" class="label" text-anchor="middle">LongIdTable</text>
+<path d="M438,518 H632" stroke="#ea580c" stroke-width="1.1"/>
+<text x="452" y="536" class="tiny">long id</text>
+<text x="452" y="551" class="tiny">BIGSERIAL/BIGINT</text>
+<rect x="78" y="636" width="172" height="82" rx="4" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M78,684 L78,640 Q78,636 82,636 L246,636 Q250,636 250,640 L250,684 Z" fill="#fce7f3"/>
+<text x="164" y="654" class="tiny" text-anchor="middle">&lt;&lt;object&gt;&gt;</text>
+<text x="164" y="674" class="label" text-anchor="middle">EnumTable</text>
+<path d="M78,684 H250" stroke="#db2777" stroke-width="1.1"/>
+<text x="92" y="702" class="tiny">IntIdTable(&quot;enum_table&quot;)</text>
+<rect x="286" y="636" width="172" height="82" rx="4" fill="#fff" stroke="#d97706" class="card"/>
+<path d="M286,684 L286,640 Q286,636 290,636 L454,636 Q458,636 458,640 L458,684 Z" fill="#fef3c7"/>
+<text x="372" y="654" class="tiny" text-anchor="middle">&lt;&lt;object&gt;&gt;</text>
+<text x="372" y="674" class="label" text-anchor="middle">IDTable</text>
+<path d="M286,684 H458" stroke="#d97706" stroke-width="1.1"/>
+<text x="300" y="702" class="tiny">IntIdTable(&quot;IntIdTable&quot;)</text>
+<rect x="494" y="636" width="172" height="82" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
+<path d="M494,684 L494,640 Q494,636 498,636 L662,636 Q666,636 666,640 L666,684 Z" fill="#ccfbf1"/>
+<text x="580" y="654" class="tiny" text-anchor="middle">&lt;&lt;object&gt;&gt;</text>
+<text x="580" y="674" class="label" text-anchor="middle">People</text>
+<path d="M494,684 H666" stroke="#0f766e" stroke-width="1.1"/>
+<text x="508" y="702" class="tiny">LongIdTable()</text>
+<path d="M388,306 L388,276 L388,276 L388,264" class="inherit"/>
+<path d="M388,248 L376,264 L400,264 Z" class="inheritHead"/>
+<path d="M243,470 L243,426 L388,426 L388,404" class="inherit"/>
+<path d="M388,388 L376,404 L400,404 Z" class="inheritHead"/>
+<path d="M535,470 L535,426 L388,426 L388,404" class="inherit"/>
+<path d="M388,388 L376,404 L400,404 Z" class="inheritHead"/>
+<path d="M164,636 L164,598 L243,598 L243,582" class="inherit"/>
+<path d="M243,566 L231,582 L255,582 Z" class="inheritHead"/>
+<path d="M372,636 L372,598 L243,598 L243,582" class="inherit"/>
+<path d="M243,566 L231,582 L255,582 Z" class="inheritHead"/>
+<path d="M580,636 L580,598 L535,598 L535,582" class="inherit"/>
+<path d="M535,566 L523,582 L547,582 Z" class="inheritHead"/>
+<rect x="806" y="128" width="642" height="638" rx="12" class="panel"/><text x="1127" y="120" class="panelTitle" text-anchor="middle">CONCRETE DDL EXAMPLES</text>
+<rect x="844" y="170" width="190" height="110" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M844,218 L844,174 Q844,170 848,170 L1030,170 Q1034,170 1034,174 L1034,218 Z" fill="#dbeafe"/>
+<text x="939" y="188" class="tiny" text-anchor="middle">&lt;&lt;object&gt;&gt;</text>
+<text x="939" y="208" class="label" text-anchor="middle">BookTable</text>
+<path d="M844,218 H1034" stroke="#3b82f6" stroke-width="1.1"/>
+<text x="858" y="236" class="tiny">Table(&quot;book&quot;)</text>
+<text x="858" y="251" class="tiny">id autoIncrement</text>
+<text x="858" y="266" class="tiny">PK_Book_ID</text>
+<rect x="1108" y="170" width="210" height="110" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
+<path d="M1108,218 L1108,174 Q1108,170 1112,170 L1314,170 Q1318,170 1318,174 L1318,218 Z" fill="#ccfbf1"/>
+<text x="1213" y="188" class="tiny" text-anchor="middle">&lt;&lt;object&gt;&gt;</text>
+<text x="1213" y="208" class="label" text-anchor="middle">PersonTable</text>
+<path d="M1108,218 H1318" stroke="#0f766e" stroke-width="1.1"/>
+<text x="1122" y="236" class="tiny">Table(&quot;person&quot;)</text>
+<text x="1122" y="251" class="tiny">id1, id2</text>
+<text x="1122" y="266" class="tiny">composite PK</text>
+<rect x="844" y="334" width="190" height="126" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M844,382 L844,338 Q844,334 848,334 L1030,334 Q1034,334 1034,338 L1034,382 Z" fill="#dcfce7"/>
+<text x="939" y="352" class="tiny" text-anchor="middle">&lt;&lt;object&gt;&gt;</text>
+<text x="939" y="372" class="label" text-anchor="middle">Developer</text>
+<path d="M844,382 H1034" stroke="#16a34a" stroke-width="1.1"/>
+<text x="858" y="400" class="tiny">Table(&quot;developer&quot;)</text>
+<text x="858" y="415" class="tiny">id, name</text>
+<text x="858" y="430" class="tiny">composite PK</text>
+<text x="858" y="445" class="tiny">Sequence value</text>
+<rect x="1108" y="334" width="210" height="126" rx="4" fill="#fff" stroke="#d97706" class="card"/>
+<path d="M1108,382 L1108,338 Q1108,334 1112,334 L1314,334 Q1318,334 1318,338 L1318,382 Z" fill="#fef3c7"/>
+<text x="1213" y="352" class="tiny" text-anchor="middle">&lt;&lt;anonymous table&gt;&gt;</text>
+<text x="1213" y="372" class="label" text-anchor="middle">tester</text>
+<path d="M1108,382 H1318" stroke="#d97706" stroke-width="1.1"/>
+<text x="1122" y="400" class="tiny">IntIdTable(&quot;tester&quot;)</text>
+<text x="1122" y="415" class="tiny">index variants</text>
+<text x="1122" y="430" class="tiny">partial/functional</text>
+<rect x="844" y="534" width="210" height="112" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
+<path d="M844,582 L844,538 Q844,534 848,534 L1050,534 Q1054,534 1054,538 L1054,582 Z" fill="#ede9fe"/>
+<text x="949" y="552" class="tiny" text-anchor="middle">&lt;&lt;jdbc utility&gt;&gt;</text>
+<text x="949" y="572" class="label" text-anchor="middle">SchemaUtils</text>
+<path d="M844,582 H1054" stroke="#7c3aed" stroke-width="1.1"/>
+<text x="858" y="600" class="tiny">create/drop</text>
+<text x="858" y="615" class="tiny">createSequence/dropSequence</text>
+<text x="858" y="630" class="tiny">createMissingTablesAndColumns</text>
+<rect x="1108" y="534" width="210" height="112" rx="4" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M1108,582 L1108,538 Q1108,534 1112,534 L1314,534 Q1318,534 1318,538 L1318,582 Z" fill="#fce7f3"/>
+<text x="1213" y="552" class="tiny" text-anchor="middle">&lt;&lt;migration utility&gt;&gt;</text>
+<text x="1213" y="572" class="label" text-anchor="middle">MigrationUtils</text>
+<path d="M1108,582 H1318" stroke="#db2777" stroke-width="1.1"/>
+<text x="1122" y="600" class="tiny">statementsRequiredForDatabaseMigration</text>
+<rect x="882" y="292" width="114" height="24" rx="8" fill="#dbeafe" stroke="#99f6e4"/>
+<text x="939" y="308" class="tiny" text-anchor="middle">extends Table</text>
+<rect x="1154" y="292" width="124" height="24" rx="8" fill="#dbeafe" stroke="#99f6e4"/>
+<text x="1216" y="308" class="tiny" text-anchor="middle">extends Table</text>
+<rect x="882" y="474" width="114" height="24" rx="8" fill="#dbeafe" stroke="#99f6e4"/>
+<text x="939" y="490" class="tiny" text-anchor="middle">extends Table</text>
+<rect x="1130" y="474" width="158" height="24" rx="8" fill="#dcfce7" stroke="#99f6e4"/>
+<text x="1209" y="490" class="tiny" text-anchor="middle">extends IntIdTable</text>
+<path d="M844,590 L812,590 L812,397 L844,397" class="runtimeUse"/>
+<path d="M1054,590 L1082,590 L1082,397 L1108,397" class="runtimeUse"/>
+<path d="M1318,590 L1356,590 L1356,397 L1318,397" class="migration"/>
+<rect x="138" y="822" width="1224" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="750" y="853" class="detail" text-anchor="middle">UML check: supertypes stay above children, hollow generalization triangles are explicit, and every stem meets the triangle base vertically.</text>
 </svg>
