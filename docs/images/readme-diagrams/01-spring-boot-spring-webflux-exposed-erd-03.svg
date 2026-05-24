@@ -1,56 +1,125 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 670" width="980" height="670" role="img" aria-label="Spring WebFlux With Exposed">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-    </marker>
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1460 860" width="1460" height="860" role="img" aria-label="Spring WebFlux Domain Model">
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
+<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
+.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+.arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.softArrow{fill:none;stroke:#94a3b8;stroke-width:1.35;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.movieMap{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.actorMap{fill:none;stroke:#7c3aed;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.lifeline{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
+.inherit{fill:none;stroke:#475569;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
 </style>
-  </defs>
-  <rect width="980" height="670" class="canvas"/>
-  <rect x="20" y="20" width="940" height="630" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Spring WebFlux With Exposed</text>
-  <text x="48" y="80" class="subtitle">Source-derived ERD · Exposed table objects and column builders</text>
-<rect x="166" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M166,164 L166,138 Q166,126 178,126 L440,126 Q452,126 452,138 L452,164 Z" fill="#dbeafe"/>
-<text x="309" y="151" class="smallLabel" text-anchor="middle">Movie Table</text>
-<text x="184" y="188" class="tiny">id PK</text>
-<text x="184" y="203" class="tiny">name varchar</text>
-<text x="184" y="218" class="tiny">producer_name varchar</text>
-<text x="184" y="233" class="tiny">release_date datetime</text>
-<rect x="528" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M528,164 L528,138 Q528,126 540,126 L802,126 Q814,126 814,138 L814,164 Z" fill="#ede9fe"/>
-<text x="671" y="151" class="smallLabel" text-anchor="middle">Actor Table</text>
-<text x="546" y="188" class="tiny">id PK</text>
-<text x="546" y="203" class="tiny">first_name varchar</text>
-<text x="546" y="218" class="tiny">last_name varchar</text>
-<text x="546" y="233" class="tiny">birthday date</text>
-<rect x="166" y="338" width="286" height="154" rx="12" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M166,376 L166,350 Q166,338 178,338 L440,338 Q452,338 452,350 L452,376 Z" fill="#dcfce7"/>
-<text x="309" y="363" class="smallLabel" text-anchor="middle">Actor In Movie Table</text>
-<text x="184" y="400" class="tiny">movie_id FK</text>
-<text x="184" y="415" class="tiny">actor_id FK</text>
-<path d="M309,338 L309,309 L309,309 L309,280" class="softArrow"/>
-<path d="M309,338 L309,309 L671,309 L671,280" class="softArrow"/>
-<text x="490" y="110" class="panelTitle" text-anchor="middle">TABLES AND RELATIONSHIPS</text>
+</defs>
+<rect width="1460" height="860" class="canvas"/>
+<rect x="20" y="20" width="1420" height="820" rx="16" class="frame"/>
+<text x="48" y="58" class="title">Spring WebFlux Domain Model</text>
+<text x="48" y="80" class="subtitle">Shared Movie/Actor tables, Exposed DAO entities, and immutable API records</text>
+<rect x="58" y="120" width="580" height="250" rx="12" class="panel"/><text x="348" y="112" class="panelTitle" text-anchor="middle">PERSISTENCE TABLES</text>
+<rect x="86" y="160" width="230" height="130" rx="12" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M86,200 L86,172 Q86,160 98,160 L304,160 Q316,160 316,172 L316,200 Z" fill="#dbeafe"/>
+<text x="201" y="187" class="label" text-anchor="middle">MovieTable</text>
+<text x="104" y="226" class="tiny">id PK</text>
+<text x="104" y="243" class="tiny">name</text>
+<text x="104" y="260" class="tiny">producerName</text>
+<text x="104" y="277" class="tiny">releaseDate</text>
+<rect x="370" y="160" width="230" height="130" rx="12" fill="#fff" stroke="#7c3aed" class="card"/>
+<path d="M370,200 L370,172 Q370,160 382,160 L588,160 Q600,160 600,172 L600,200 Z" fill="#ede9fe"/>
+<text x="485" y="187" class="label" text-anchor="middle">ActorTable</text>
+<text x="388" y="226" class="tiny">id PK</text>
+<text x="388" y="243" class="tiny">firstName</text>
+<text x="388" y="260" class="tiny">lastName</text>
+<text x="388" y="277" class="tiny">birthday</text>
+<rect x="240" y="390" width="250" height="128" rx="12" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M240,430 L240,402 Q240,390 252,390 L478,390 Q490,390 490,402 L490,430 Z" fill="#dcfce7"/>
+<text x="365" y="417" class="label" text-anchor="middle">ActorInMovieTable</text>
+<text x="258" y="456" class="tiny">movieId FK</text>
+<text x="258" y="473" class="tiny">actorId FK</text>
+<text x="258" y="490" class="tiny">composite PK</text>
+<rect x="720" y="120" width="660" height="250" rx="12" class="panel"/><text x="1050" y="112" class="panelTitle" text-anchor="middle">DAO ENTITIES</text>
+<rect x="934" y="146" width="230" height="90" rx="4" fill="#fff" stroke="#64748b" class="card"/>
+<path d="M934,192 L934,150 Q934,146 938,146 L1160,146 Q1164,146 1164,150 L1164,192 Z" fill="#e2e8f0"/>
+<text x="1049" y="164" class="tiny" text-anchor="middle">&lt;&lt;superclass&gt;&gt;</text>
+<text x="1049" y="182" class="label" text-anchor="middle">LongEntity</text>
+<path d="M934,192 H1164" stroke="#64748b" stroke-width="1.1"/>
+<text x="948" y="210" class="tiny">id: EntityID&lt;Long&gt;</text>
+<rect x="780" y="280" width="240" height="90" rx="4" fill="#fff" stroke="#ea580c" class="card"/>
+<path d="M780,326 L780,284 Q780,280 784,280 L1016,280 Q1020,280 1020,284 L1020,326 Z" fill="#ffedd5"/>
+<text x="900" y="298" class="tiny" text-anchor="middle">&lt;&lt;DAO&gt;&gt;</text>
+<text x="900" y="316" class="label" text-anchor="middle">MovieEntity</text>
+<path d="M780,326 H1020" stroke="#ea580c" stroke-width="1.1"/>
+<text x="794" y="344" class="tiny">name</text>
+<text x="794" y="359" class="tiny">producerName</text>
+<text x="794" y="374" class="tiny">actors</text>
+<rect x="1080" y="280" width="240" height="90" rx="4" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M1080,326 L1080,284 Q1080,280 1084,280 L1316,280 Q1320,280 1320,284 L1320,326 Z" fill="#fce7f3"/>
+<text x="1200" y="298" class="tiny" text-anchor="middle">&lt;&lt;DAO&gt;&gt;</text>
+<text x="1200" y="316" class="label" text-anchor="middle">ActorEntity</text>
+<path d="M1080,326 H1320" stroke="#db2777" stroke-width="1.1"/>
+<text x="1094" y="344" class="tiny">firstName</text>
+<text x="1094" y="359" class="tiny">lastName</text>
+<text x="1094" y="374" class="tiny">movies</text>
+<path d="M900,280 L900,264 L1000,264 L1000,252" class="inherit"/>
+<path d="M1000,236 L988,252 L1012,252 Z" class="inheritHead"/>
+<path d="M1200,280 L1200,264 L1100,264 L1100,252" class="inherit"/>
+<path d="M1100,236 L1088,252 L1112,252 Z" class="inheritHead"/>
+<rect x="90" y="550" width="1280" height="160" rx="12" class="panel"/><text x="730" y="542" class="panelTitle" text-anchor="middle">DTO RECORDS</text>
+<rect x="130" y="580" width="190" height="108" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M130,626 L130,584 Q130,580 134,580 L316,580 Q320,580 320,584 L320,626 Z" fill="#dbeafe"/>
+<text x="225" y="598" class="tiny" text-anchor="middle">&lt;&lt;record&gt;&gt;</text>
+<text x="225" y="616" class="label" text-anchor="middle">MovieRecord</text>
+<path d="M130,626 H320" stroke="#3b82f6" stroke-width="1.1"/>
+<text x="144" y="644" class="tiny">id</text>
+<text x="144" y="659" class="tiny">name</text>
+<text x="144" y="674" class="tiny">producerName</text>
+<rect x="350" y="580" width="230" height="108" rx="4" fill="#fff" stroke="#d97706" class="card"/>
+<path d="M350,626 L350,584 Q350,580 354,580 L576,580 Q580,580 580,584 L580,626 Z" fill="#fef3c7"/>
+<text x="465" y="598" class="tiny" text-anchor="middle">&lt;&lt;record&gt;&gt;</text>
+<text x="465" y="616" class="label" text-anchor="middle">MovieActorCountRecord</text>
+<path d="M350,626 H580" stroke="#d97706" stroke-width="1.1"/>
+<text x="364" y="644" class="tiny">movieName</text>
+<text x="364" y="659" class="tiny">actorCount</text>
+<rect x="610" y="580" width="220" height="108" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
+<path d="M610,640 L610,584 Q610,580 614,580 L826,580 Q830,580 830,584 L830,640 Z" fill="#ccfbf1"/>
+<text x="720" y="598" class="tiny" text-anchor="middle">&lt;&lt;record&gt;&gt;</text>
+<text x="720" y="616" class="label" text-anchor="middle">MovieWithProducing</text>
+<text x="720" y="633" class="label" text-anchor="middle">ActorRecord</text>
+<path d="M610,640 H830" stroke="#0f766e" stroke-width="1.1"/>
+<text x="624" y="658" class="tiny">movieName</text>
+<text x="624" y="673" class="tiny">producerActorName</text>
+<rect x="860" y="580" width="260" height="108" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M860,626 L860,584 Q860,580 864,580 L1116,580 Q1120,580 1120,584 L1120,626 Z" fill="#dcfce7"/>
+<text x="990" y="598" class="tiny" text-anchor="middle">&lt;&lt;record&gt;&gt;</text>
+<text x="990" y="616" class="label" text-anchor="middle">MovieWithActorRecord</text>
+<path d="M860,626 H1120" stroke="#16a34a" stroke-width="1.1"/>
+<text x="874" y="644" class="tiny">movie</text>
+<text x="874" y="659" class="tiny">actors: List&lt;ActorRecord&gt;</text>
+<rect x="1150" y="580" width="190" height="108" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
+<path d="M1150,626 L1150,584 Q1150,580 1154,580 L1336,580 Q1340,580 1340,584 L1340,626 Z" fill="#ede9fe"/>
+<text x="1245" y="598" class="tiny" text-anchor="middle">&lt;&lt;record&gt;&gt;</text>
+<text x="1245" y="616" class="label" text-anchor="middle">ActorRecord</text>
+<path d="M1150,626 H1340" stroke="#7c3aed" stroke-width="1.1"/>
+<text x="1164" y="644" class="tiny">id</text>
+<text x="1164" y="659" class="tiny">firstName</text>
+<text x="1164" y="674" class="tiny">lastName</text>
+<path d="M365,390 L365,340 L201,340 L201,290" class="softArrow"/>
+<rect x="229" y="326" width="108" height="21" rx="8" fill="#fff" stroke="#d7e2ec"/>
+<text x="283" y="341" class="tiny" text-anchor="middle">movieId</text>
+<path d="M365,390 L365,340 L485,340 L485,290" class="softArrow"/>
+<rect x="371" y="326" width="108" height="21" rx="8" fill="#fff" stroke="#d7e2ec"/>
+<text x="425" y="341" class="tiny" text-anchor="middle">actorId</text>
+<path d="M900,370 L900,532 L990,532 L990,580" class="movieMap"/>
+<path d="M1200,370 L1200,532 L1245,532 L1245,580" class="actorMap"/>
+<rect x="180" y="760" width="1100" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="730" y="790" class="detail" text-anchor="middle">The WebFlux module shares the Movie/Actor schema with MVC; coroutine controllers return records instead of Exposed entities.</text>
 </svg>

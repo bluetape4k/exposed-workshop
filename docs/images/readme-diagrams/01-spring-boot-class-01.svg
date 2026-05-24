@@ -1,101 +1,79 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 986" width="1220" height="986" role="img" aria-label="01 Spring Boot With Exposed">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-    </marker>
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 690" width="1260" height="690" role="img" aria-label="Spring Boot Module Comparison">
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
+<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto"><path d="M1,1 L12,6 L1,11 Z" fill="#fff" stroke="#475569" stroke-width="1.8"/></marker>
+<style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
+.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+.arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.softArrow{fill:none;stroke:#94a3b8;stroke-width:1.35;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.movieMap{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.actorMap{fill:none;stroke:#7c3aed;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.lifeline{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
+.inherit{fill:none;stroke:#475569;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
 </style>
-  </defs>
-  <rect width="1220" height="986" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="946" rx="16" class="frame"/>
-<text x="48" y="58" class="title">01 Spring Boot With Exposed</text>
-  <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="120" width="1128" height="226" rx="12" class="panel"/>
-  <text x="610" y="114" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="74" y="146" width="203" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="175.5" y="188" class="smallLabel" text-anchor="middle">Task Decorator</text>
-
-<rect x="305" y="146" width="203" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="406.5" y="178" class="smallLabel" text-anchor="middle">Application</text>
-<text x="406.5" y="196" class="smallLabel" text-anchor="middle">Listener</text>
-
-<rect x="536" y="146" width="203" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="637.5" y="175" class="smallLabel" text-anchor="middle">Long Id Table</text>
-<text x="637.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="767" y="146" width="203" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="868.5" y="175" class="smallLabel" text-anchor="middle">Table</text>
-<text x="868.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="998" y="146" width="203" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="1099.5" y="175" class="smallLabel" text-anchor="middle">Entity ID</text>
-<text x="1099.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="242" width="203" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="175.5" y="274" class="smallLabel" text-anchor="middle">Netty Server</text>
-<text x="175.5" y="292" class="smallLabel" text-anchor="middle">Customizer</text>
-
-<rect x="46" y="398" width="1128" height="474" rx="12" class="panel"/>
-  <text x="610" y="392" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="74" y="424" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="234" y="472" class="smallLabel" text-anchor="middle">Logging Task Decorator</text>
-
-<rect x="440" y="424" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="600" y="453" class="smallLabel" text-anchor="middle">Actor In Movie Table</text>
-<text x="600" y="492" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="424" width="320" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="966" y="453" class="smallLabel" text-anchor="middle">Actor In Movie Table</text>
-<text x="966" y="492" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="532" width="320" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="234" y="580" class="smallLabel" text-anchor="middle">Data Initializer</text>
-
-<rect x="440" y="532" width="320" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="600" y="561" class="smallLabel" text-anchor="middle">Movie Entity</text>
-<text x="600" y="600" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="532" width="320" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="966" y="561" class="smallLabel" text-anchor="middle">Actor Entity</text>
-<text x="966" y="600" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="640" width="320" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="234" y="669" class="smallLabel" text-anchor="middle">Movie Entity</text>
-<text x="234" y="708" class="detail" text-anchor="middle">table/model</text>
-<rect x="440" y="640" width="320" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="600" y="669" class="smallLabel" text-anchor="middle">Actor Entity</text>
-<text x="600" y="708" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="640" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="966" y="688" class="smallLabel" text-anchor="middle">Data Initializer</text>
-
-<rect x="74" y="748" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="234" y="777" class="smallLabel" text-anchor="middle">Movie Table</text>
-<text x="234" y="816" class="detail" text-anchor="middle">table/model</text>
-<path d="M234,424 L234,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M966,640 L966,378 L406.5,378 L406.5,224" class="inherit"/>
-<path d="M234,748 L234,378 L637.5,378 L637.5,224" class="inherit"/>
-<path d="M966,424 L966,378 L868.5,378 L868.5,224" class="inherit"/>
-<path d="M234,640 L234,378 L1099.5,378 L1099.5,224" class="inherit"/>
-<path d="M600,640 L600,378 L1099.5,378 L1099.5,224" class="inherit"/>
-<path d="M234,748 L234,378 L637.5,378 L637.5,224" class="inherit"/>
-<path d="M966,424 L966,378 L868.5,378 L868.5,224" class="inherit"/>
-<path d="M234,640 L234,378 L1099.5,378 L1099.5,224" class="inherit"/>
-<path d="M600,640 L600,378 L1099.5,378 L1099.5,224" class="inherit"/>
-<path d="M966,640 L966,378 L406.5,378 L406.5,224" class="inherit"/>
-<rect x="46" y="912" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="610" y="939" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+</defs>
+<rect width="1260" height="690" class="canvas"/>
+<rect x="20" y="20" width="1220" height="650" rx="16" class="frame"/>
+<text x="48" y="58" class="title">Spring Boot Module Comparison</text>
+<text x="48" y="80" class="subtitle">Same Movie/Actor domain implemented with two Spring concurrency models</text>
+<rect x="56" y="120" width="520" height="330" rx="12" class="panel"/><text x="316" y="112" class="panelTitle" text-anchor="middle">SPRING MVC MODULE</text>
+<rect x="86" y="152" width="210" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="191" y="176" class="label" text-anchor="middle">Actor Controller /</text>
+<text x="191" y="194" class="label" text-anchor="middle">Movie Controller</text>
+<text x="191" y="210" class="detail" text-anchor="middle">Servlet endpoints</text>
+<rect x="336" y="152" width="210" height="72" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="441" y="176" class="label" text-anchor="middle">Tomcat Virtual</text>
+<text x="441" y="194" class="label" text-anchor="middle">Threads</text>
+<text x="441" y="210" class="detail" text-anchor="middle">blocking JDBC is acceptable</text>
+<rect x="86" y="260" width="210" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="191" y="284" class="label" text-anchor="middle">@Transactional</text>
+<text x="191" y="302" class="label" text-anchor="middle">boundary</text>
+<text x="191" y="318" class="detail" text-anchor="middle">Spring AOP transaction</text>
+<rect x="336" y="260" width="210" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="441" y="284" class="label" text-anchor="middle">Exposed JDBC DSL /</text>
+<text x="441" y="302" class="label" text-anchor="middle">DAO</text>
+<text x="441" y="318" class="detail" text-anchor="middle">repository methods</text>
+<rect x="206" y="368" width="250" height="54" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="331" y="392" class="label" text-anchor="middle">HikariCP + Profiles</text>
+<text x="331" y="408" class="detail" text-anchor="middle">H2 / MySQL / PostgreSQL</text>
+<rect x="684" y="120" width="520" height="330" rx="12" class="panel"/><text x="944" y="112" class="panelTitle" text-anchor="middle">SPRING WEBFLUX MODULE</text>
+<rect x="714" y="152" width="210" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="819" y="176" class="label" text-anchor="middle">Suspend Controllers</text>
+<text x="819" y="210" class="detail" text-anchor="middle">non-blocking HTTP layer</text>
+<rect x="964" y="152" width="210" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="1069" y="176" class="label" text-anchor="middle">Netty EventLoop</text>
+<text x="1069" y="210" class="detail" text-anchor="middle">kept off JDBC blocking work</text>
+<rect x="714" y="260" width="210" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="819" y="284" class="label" text-anchor="middle">Dispatchers.IO bridge</text>
+<text x="819" y="318" class="detail" text-anchor="middle">moves JDBC work</text>
+<rect x="964" y="260" width="210" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="1069" y="284" class="label" text-anchor="middle">new Suspended</text>
+<text x="1069" y="302" class="label" text-anchor="middle">Transaction</text>
+<text x="1069" y="318" class="detail" text-anchor="middle">coroutine transaction</text>
+<rect x="834" y="368" width="250" height="54" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="959" y="391" class="label" text-anchor="middle">Same schema and API</text>
+<text x="959" y="409" class="label" text-anchor="middle">surface</text>
+<rect x="120" y="510" width="1020" height="96" rx="12" class="panel"/><text x="630" y="502" class="panelTitle" text-anchor="middle">SHARED LEARNING TARGET</text>
+<rect x="160" y="536" width="210" height="44" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="265" y="564" class="label" text-anchor="middle">Movie / Actor domain</text>
+<rect x="410" y="536" width="210" height="44" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="515" y="554" class="label" text-anchor="middle">Repository search</text>
+<text x="515" y="572" class="label" text-anchor="middle">patterns</text>
+<rect x="660" y="536" width="210" height="44" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="765" y="564" class="label" text-anchor="middle">Swagger verified APIs</text>
+<rect x="910" y="536" width="190" height="44" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="1005" y="564" class="label" text-anchor="middle">Profile switching</text>
+<path d="M576,284 C630,284 630,284 684,284" class="arrow"/>
+<path d="M290,450 C290,450 290,510 290,510" class="softArrow"/>
+<path d="M970,450 C970,450 970,510 970,510" class="softArrow"/>
 </svg>
