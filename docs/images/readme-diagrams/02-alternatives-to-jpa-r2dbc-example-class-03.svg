@@ -1,90 +1,151 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 890" width="1220" height="890" role="img" aria-label="02 Alternatives: R2DBC Example">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-    </marker>
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1460 880" width="1460" height="880" role="img" aria-label="R2DBC Class Model">
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
+<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
+<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
+.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+.arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.softArrow{fill:none;stroke:#94a3b8;stroke-width:1.35;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.fkArrow{fill:none;stroke:#0f766e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}
+.mapArrow{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.sessionUse{fill:none;stroke:#7c3aed;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.repoUse{fill:none;stroke:#2563eb;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.opsUse{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.clientUse{fill:none;stroke:#ea580c;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.converterUse{fill:none;stroke:#db2777;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
+.lifeline{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
+.inherit{fill:none;stroke:#475569;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
+.assoc{fill:none;stroke:#0f766e;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 </style>
-  </defs>
-  <rect width="1220" height="890" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="850" rx="16" class="frame"/>
-<text x="48" y="58" class="title">02 Alternatives: R2DBC Example</text>
-  <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="120" width="1128" height="130" rx="12" class="panel"/>
-  <text x="610" y="114" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="74" y="146" width="203" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="175.5" y="175" class="smallLabel" text-anchor="middle">Abstract R2dbc</text>
-<text x="175.5" y="193" class="smallLabel" text-anchor="middle">Configuration</text>
-<text x="175.5" y="202" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="305" y="146" width="203" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="406.5" y="175" class="smallLabel" text-anchor="middle">Customer</text>
-<text x="406.5" y="193" class="smallLabel" text-anchor="middle">Repository</text>
-<text x="406.5" y="202" class="detail" text-anchor="middle">persistence</text>
-<rect x="536" y="146" width="203" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="637.5" y="175" class="smallLabel" text-anchor="middle">Coroutine Crud</text>
-<text x="637.5" y="193" class="smallLabel" text-anchor="middle">Repository</text>
-<text x="637.5" y="202" class="detail" text-anchor="middle">persistence</text>
-<rect x="767" y="146" width="203" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="868.5" y="178" class="smallLabel" text-anchor="middle">Post Not Found</text>
-<text x="868.5" y="196" class="smallLabel" text-anchor="middle">Exception</text>
-
-<rect x="998" y="146" width="203" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="1099.5" y="188" class="smallLabel" text-anchor="middle">R2dbc Exception</text>
-
-<rect x="46" y="302" width="1128" height="474" rx="12" class="panel"/>
-  <text x="610" y="296" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="74" y="328" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="234" y="357" class="smallLabel" text-anchor="middle">R2dbc Config</text>
-<text x="234" y="396" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="440" y="328" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="600" y="376" class="smallLabel" text-anchor="middle">R2dbc Application</text>
-
-<rect x="806" y="328" width="320" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="966" y="357" class="smallLabel" text-anchor="middle">Post Controller</text>
-<text x="966" y="396" class="detail" text-anchor="middle">entry</text>
-<rect x="74" y="436" width="320" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="234" y="484" class="smallLabel" text-anchor="middle">Comment</text>
-
-<rect x="440" y="436" width="320" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="600" y="484" class="smallLabel" text-anchor="middle">Customer</text>
-
-<rect x="806" y="436" width="320" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="966" y="484" class="smallLabel" text-anchor="middle">Post</text>
-
-<rect x="74" y="544" width="320" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="234" y="573" class="smallLabel" text-anchor="middle">Comment Repository</text>
-<text x="234" y="612" class="detail" text-anchor="middle">persistence</text>
-<rect x="440" y="544" width="320" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="600" y="573" class="smallLabel" text-anchor="middle">Post Repository</text>
-<text x="600" y="612" class="detail" text-anchor="middle">persistence</text>
-<rect x="806" y="544" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="966" y="573" class="smallLabel" text-anchor="middle">Rest Api Exception Handler</text>
-<text x="966" y="612" class="detail" text-anchor="middle">entry</text>
-<rect x="74" y="652" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="234" y="700" class="smallLabel" text-anchor="middle">Database Initializer</text>
-
-<path d="M234,328 L234,282 L175.5,282 L175.5,224" class="inherit"/>
-<rect x="46" y="816" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="610" y="843" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+</defs>
+<rect width="1460" height="880" class="canvas"/>
+<rect x="20" y="20" width="1420" height="840" rx="16" class="frame"/>
+<text x="48" y="58" class="title">R2DBC Class Model</text>
+<text x="48" y="80" class="subtitle">Spring Data R2DBC repositories use coroutine flows, entity operations, and mapped table records</text>
+<rect x="46" y="120" width="1368" height="158" rx="12" class="panel"/><text x="730" y="112" class="panelTitle" text-anchor="middle">SPRING DATA R2DBC ABSTRACTIONS</text>
+<rect x="78" y="150" width="270" height="92" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M78,196 L78,154 Q78,150 82,150 L344,150 Q348,150 348,154 L348,196 Z" fill="#dbeafe"/>
+<text x="213" y="168" class="tiny" text-anchor="middle">&lt;&lt;Spring base&gt;&gt;</text>
+<text x="213" y="186" class="label" text-anchor="middle">AbstractR2dbcConfiguration</text>
+<path d="M78,196 H348" stroke="#3b82f6" stroke-width="1.1"/>
+<text x="92" y="214" class="tiny">connectionFactory()</text>
+<text x="92" y="229" class="tiny">repository infrastructure</text>
+<rect x="410" y="150" width="220" height="92" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M410,196 L410,154 Q410,150 414,150 L626,150 Q630,150 630,154 L630,196 Z" fill="#dcfce7"/>
+<text x="520" y="168" class="tiny" text-anchor="middle">&lt;&lt;operations&gt;&gt;</text>
+<text x="520" y="186" class="label" text-anchor="middle">R2dbcEntityOperations</text>
+<path d="M410,196 H630" stroke="#16a34a" stroke-width="1.1"/>
+<text x="424" y="214" class="tiny">select/insert/count/delete</text>
+<rect x="686" y="150" width="180" height="92" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
+<path d="M686,196 L686,154 Q686,150 690,150 L862,150 Q866,150 866,154 L866,196 Z" fill="#ccfbf1"/>
+<text x="776" y="168" class="tiny" text-anchor="middle">&lt;&lt;R2DBC&gt;&gt;</text>
+<text x="776" y="186" class="label" text-anchor="middle">DatabaseClient</text>
+<path d="M686,196 H866" stroke="#0f766e" stroke-width="1.1"/>
+<text x="700" y="214" class="tiny">SQL client</text>
+<rect x="914" y="150" width="180" height="92" rx="4" fill="#fff" stroke="#d97706" class="card"/>
+<path d="M914,210 L914,154 Q914,150 918,150 L1090,150 Q1094,150 1094,154 L1094,210 Z" fill="#fef3c7"/>
+<text x="1004" y="168" class="tiny" text-anchor="middle">&lt;&lt;converter&gt;&gt;</text>
+<text x="1004" y="186" class="label" text-anchor="middle">MappingR2dbc</text>
+<text x="1004" y="203" class="label" text-anchor="middle">Converter</text>
+<path d="M914,210 H1094" stroke="#d97706" stroke-width="1.1"/>
+<text x="928" y="228" class="tiny">row mapping</text>
+<rect x="1136" y="150" width="240" height="92" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
+<path d="M1136,210 L1136,154 Q1136,150 1140,150 L1372,150 Q1376,150 1376,154 L1376,210 Z" fill="#ede9fe"/>
+<text x="1256" y="168" class="tiny" text-anchor="middle">&lt;&lt;repository base&gt;&gt;</text>
+<text x="1256" y="186" class="label" text-anchor="middle">CoroutineCrudRepository&lt;</text>
+<text x="1256" y="203" class="label" text-anchor="middle">Customer, Long&gt;</text>
+<path d="M1136,210 H1376" stroke="#7c3aed" stroke-width="1.1"/>
+<text x="1150" y="228" class="tiny">findById/save/delete</text>
+<rect x="58" y="326" width="370" height="300" rx="12" class="panel"/><text x="243" y="318" class="panelTitle" text-anchor="middle">CONFIGURATION AND RECORDS</text>
+<rect x="94" y="356" width="292" height="104" rx="4" fill="#fff" stroke="#ea580c" class="card"/>
+<path d="M94,402 L94,360 Q94,356 98,356 L382,356 Q386,356 386,360 L386,402 Z" fill="#ffedd5"/>
+<text x="240" y="374" class="tiny" text-anchor="middle">&lt;&lt;configuration&gt;&gt;</text>
+<text x="240" y="392" class="label" text-anchor="middle">R2dbcConfig</text>
+<path d="M94,402 H386" stroke="#ea580c" stroke-width="1.1"/>
+<text x="108" y="420" class="tiny">@EnableR2dbcRepositories</text>
+<text x="108" y="435" class="tiny">h2/postgres profiles</text>
+<text x="108" y="450" class="tiny">initializer()</text>
+<rect x="94" y="498" width="138" height="96" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M94,544 L94,502 Q94,498 98,498 L228,498 Q232,498 232,502 L232,544 Z" fill="#dbeafe"/>
+<text x="163" y="516" class="tiny" text-anchor="middle">&lt;&lt;table record&gt;&gt;</text>
+<text x="163" y="534" class="label" text-anchor="middle">Post</text>
+<path d="M94,544 H232" stroke="#3b82f6" stroke-width="1.1"/>
+<text x="108" y="562" class="tiny">id</text>
+<text x="108" y="577" class="tiny">title</text>
+<rect x="248" y="498" width="138" height="96" rx="4" fill="#fff" stroke="#d97706" class="card"/>
+<path d="M248,544 L248,502 Q248,498 252,498 L382,498 Q386,498 386,502 L386,544 Z" fill="#fef3c7"/>
+<text x="317" y="516" class="tiny" text-anchor="middle">&lt;&lt;table record&gt;&gt;</text>
+<text x="317" y="534" class="label" text-anchor="middle">Comment</text>
+<path d="M248,544 H386" stroke="#d97706" stroke-width="1.1"/>
+<text x="262" y="562" class="tiny">id</text>
+<text x="262" y="577" class="tiny">content</text>
+<path d="M240,356 L240,300 L214,300 L214,258" class="inherit"/>
+<path d="M214,242 L202,258 L226,258 Z" class="inheritHead"/>
+<rect x="478" y="326" width="392" height="300" rx="12" class="panel"/><text x="674" y="318" class="panelTitle" text-anchor="middle">REPOSITORIES</text>
+<rect x="516" y="356" width="300" height="104" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M516,402 L516,360 Q516,356 520,356 L812,356 Q816,356 816,360 L816,402 Z" fill="#dcfce7"/>
+<text x="666" y="374" class="tiny" text-anchor="middle">&lt;&lt;repository&gt;&gt;</text>
+<text x="666" y="392" class="label" text-anchor="middle">PostRepository</text>
+<path d="M516,402 H816" stroke="#16a34a" stroke-width="1.1"/>
+<text x="530" y="420" class="tiny">findByIdOrNull()</text>
+<text x="530" y="435" class="tiny">save()</text>
+<text x="530" y="450" class="tiny">deleteById()</text>
+<rect x="516" y="500" width="300" height="104" rx="4" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M516,546 L516,504 Q516,500 520,500 L812,500 Q816,500 816,504 L816,546 Z" fill="#fce7f3"/>
+<text x="666" y="518" class="tiny" text-anchor="middle">&lt;&lt;repository&gt;&gt;</text>
+<text x="666" y="536" class="label" text-anchor="middle">CommentRepository</text>
+<path d="M516,546 H816" stroke="#db2777" stroke-width="1.1"/>
+<text x="530" y="564" class="tiny">findAllByPostId()</text>
+<text x="530" y="579" class="tiny">countByPostId()</text>
+<text x="530" y="594" class="tiny">save()</text>
+<path d="M520,242 L520,300 L610,300 L610,356" class="opsUse"/>
+<path d="M544,242 L544,294 L848,294 L848,552 L816,552" class="opsUse"/>
+<path d="M776,242 L776,302 L748,302 L748,356" class="clientUse"/>
+<path d="M1004,242 L1004,310 L816,310 L816,408" class="converterUse"/>
+<rect x="920" y="326" width="438" height="300" rx="12" class="panel"/><text x="1139" y="318" class="panelTitle" text-anchor="middle">ENTRY AND REPOSITORY INTERFACE</text>
+<rect x="958" y="356" width="284" height="104" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
+<path d="M958,402 L958,360 Q958,356 962,356 L1238,356 Q1242,356 1242,360 L1242,402 Z" fill="#ccfbf1"/>
+<text x="1100" y="374" class="tiny" text-anchor="middle">&lt;&lt;rest controller&gt;&gt;</text>
+<text x="1100" y="392" class="label" text-anchor="middle">PostController</text>
+<path d="M958,402 H1242" stroke="#0f766e" stroke-width="1.1"/>
+<text x="972" y="420" class="tiny">GET/POST /posts</text>
+<text x="972" y="435" class="tiny">comments endpoints</text>
+<text x="972" y="450" class="tiny">CoroutineScope(IO)</text>
+<rect x="958" y="500" width="180" height="96" rx="4" fill="#fff" stroke="#64748b" class="card"/>
+<path d="M958,546 L958,504 Q958,500 962,500 L1134,500 Q1138,500 1138,504 L1138,546 Z" fill="#e2e8f0"/>
+<text x="1048" y="518" class="tiny" text-anchor="middle">&lt;&lt;table record&gt;&gt;</text>
+<text x="1048" y="536" class="label" text-anchor="middle">Customer</text>
+<path d="M958,546 H1138" stroke="#64748b" stroke-width="1.1"/>
+<text x="972" y="564" class="tiny">id</text>
+<text x="972" y="579" class="tiny">firstname</text>
+<rect x="1162" y="500" width="160" height="96" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
+<path d="M1162,560 L1162,504 Q1162,500 1166,500 L1318,500 Q1322,500 1322,504 L1322,560 Z" fill="#ede9fe"/>
+<text x="1242" y="518" class="tiny" text-anchor="middle">&lt;&lt;repository interface&gt;&gt;</text>
+<text x="1242" y="536" class="label" text-anchor="middle">Customer</text>
+<text x="1242" y="553" class="label" text-anchor="middle">Repository</text>
+<path d="M1162,560 H1322" stroke="#7c3aed" stroke-width="1.1"/>
+<text x="1176" y="578" class="tiny">findByFirstname()</text>
+<path d="M1242,500 L1242,310 L1248,310 L1248,258" class="inherit"/>
+<path d="M1248,242 L1236,258 L1260,258 Z" class="inheritHead"/>
+<path d="M958,408 L816,408" class="repoUse"/>
+<path d="M958,438 L848,438 L848,552 L816,552" class="repoUse"/>
+<path d="M386,548 L476,548 L476,548 L516,548" class="fkArrow"/>
+<rect x="412" y="532" width="90" height="24" rx="8" fill="#fff" stroke="#99f6e4"/>
+<text x="457" y="549" class="tiny" text-anchor="middle">postId FK</text>
+<path d="M232,546 L248,546" class="assoc"/>
+<rect x="150" y="798" width="1120" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="710" y="828" class="detail" text-anchor="middle">Source check: PostRepository and CommentRepository are classes over R2dbcEntityOperations; only CustomerRepository extends CoroutineCrudRepository.</text>
 </svg>

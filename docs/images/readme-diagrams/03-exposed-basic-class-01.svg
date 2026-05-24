@@ -1,92 +1,153 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 890" width="1220" height="890" role="img" aria-label="03 Exposed Basic">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-    </marker>
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Exposed Basic User Cities Domain">
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
+<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
+.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+.arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.queryUse{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.mapUse{fill:none;stroke:#16a34a;stroke-width:1.8;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.8;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.fkArrow{fill:none;stroke:#0f766e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}
+.assoc{fill:none;stroke:#0f766e;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.inherit{fill:none;stroke:#475569;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
 </style>
-  </defs>
-  <rect width="1220" height="890" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="850" rx="16" class="frame"/>
-<text x="48" y="58" class="title">03 Exposed Basic</text>
-  <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="120" width="1128" height="130" rx="12" class="panel"/>
-  <text x="610" y="114" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="74" y="146" width="261" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="204.5" y="188" class="smallLabel" text-anchor="middle">Abstract Exposed Test</text>
-
-<rect x="363" y="146" width="261" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="493.5" y="175" class="smallLabel" text-anchor="middle">Int Id Table</text>
-<text x="493.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="652" y="146" width="261" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="782.5" y="175" class="smallLabel" text-anchor="middle">Entity ID</text>
-<text x="782.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="941" y="146" width="261" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="1071.5" y="175" class="smallLabel" text-anchor="middle">Table</text>
-<text x="1071.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="46" y="302" width="1128" height="474" rx="12" class="panel"/>
-  <text x="610" y="296" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="74" y="328" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="234" y="357" class="smallLabel" text-anchor="middle">Exposed Dao Example</text>
-<text x="234" y="396" class="detail" text-anchor="middle">persistence</text>
-<rect x="440" y="328" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="600" y="357" class="smallLabel" text-anchor="middle">Exposed Dao Suspended Example</text>
-<text x="600" y="396" class="detail" text-anchor="middle">persistence</text>
-<rect x="806" y="328" width="320" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="966" y="357" class="smallLabel" text-anchor="middle">City Table</text>
-<text x="966" y="396" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="436" width="320" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="234" y="465" class="smallLabel" text-anchor="middle">User Table</text>
-<text x="234" y="504" class="detail" text-anchor="middle">table/model</text>
-<rect x="440" y="436" width="320" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="600" y="484" class="smallLabel" text-anchor="middle">Exposed SQLExample</text>
-
-<rect x="806" y="436" width="320" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="966" y="484" class="smallLabel" text-anchor="middle">Exposed SQLSuspended Example</text>
-
-<rect x="74" y="544" width="320" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="234" y="573" class="smallLabel" text-anchor="middle">City Table</text>
-<text x="234" y="612" class="detail" text-anchor="middle">table/model</text>
-<rect x="440" y="544" width="320" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="600" y="573" class="smallLabel" text-anchor="middle">User Table</text>
-<text x="600" y="612" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="544" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="966" y="592" class="smallLabel" text-anchor="middle">City</text>
-
-<rect x="74" y="652" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="234" y="700" class="smallLabel" text-anchor="middle">User</text>
-
-<path d="M234,328 L234,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M600,328 L600,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M234,544 L234,282 L493.5,282 L493.5,224" class="inherit"/>
-<path d="M600,544 L600,282 L493.5,282 L493.5,224" class="inherit"/>
-<path d="M966,544 L966,282 L782.5,282 L782.5,224" class="inherit"/>
-<path d="M234,652 L234,282 L782.5,282 L782.5,224" class="inherit"/>
-<path d="M600,436 L600,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M966,436 L966,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M234,544 L234,282 L1071.5,282 L1071.5,224" class="inherit"/>
-<path d="M600,544 L600,282 L1071.5,282 L1071.5,224" class="inherit"/>
-<rect x="46" y="816" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="610" y="843" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+</defs>
+<rect width="1500" height="900" class="canvas"/>
+<rect x="20" y="20" width="1460" height="860" rx="16" class="frame"/>
+<text x="48" y="58" class="title">Exposed Basic User Cities Domain</text>
+<text x="48" y="80" class="subtitle">The chapter compares SQL DSL table objects with DAO entity modeling over the same City/User shape</text>
+<rect x="48" y="124" width="660" height="674" rx="12" class="panel"/><text x="378" y="116" class="panelTitle" text-anchor="middle">SQL DSL PATH</text>
+<rect x="92" y="164" width="220" height="90" rx="4" fill="#fff" stroke="#64748b" class="card"/>
+<path d="M92,212 L92,168 Q92,164 96,164 L308,164 Q312,164 312,168 L312,212 Z" fill="#e2e8f0"/>
+<text x="202" y="182" class="tiny" text-anchor="middle">&lt;&lt;Exposed base&gt;&gt;</text>
+<text x="202" y="202" class="label" text-anchor="middle">Table</text>
+<path d="M92,212 H312" stroke="#64748b" stroke-width="1.1"/>
+<text x="106" y="230" class="tiny">base for plain DSL tables</text>
+<text x="106" y="245" class="tiny">explicit PrimaryKey</text>
+<rect x="426" y="164" width="220" height="90" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
+<path d="M426,212 L426,168 Q426,164 430,164 L642,164 Q646,164 646,168 L646,212 Z" fill="#ede9fe"/>
+<text x="536" y="182" class="tiny" text-anchor="middle">&lt;&lt;transaction&gt;&gt;</text>
+<text x="536" y="202" class="label" text-anchor="middle">JdbcTransaction</text>
+<path d="M426,212 H646" stroke="#7c3aed" stroke-width="1.1"/>
+<text x="440" y="230" class="tiny">withTables()</text>
+<text x="440" y="245" class="tiny">withTablesSuspending()</text>
+<rect x="92" y="326" width="224" height="132" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M92,374 L92,330 Q92,326 96,326 L312,326 Q316,326 316,330 L316,374 Z" fill="#dbeafe"/>
+<text x="204" y="344" class="tiny" text-anchor="middle">&lt;&lt;SQL DSL table&gt;&gt;</text>
+<text x="204" y="364" class="label" text-anchor="middle">CityTable</text>
+<path d="M92,374 H316" stroke="#3b82f6" stroke-width="1.1"/>
+<text x="106" y="392" class="tiny">Table(&quot;cities&quot;)</text>
+<text x="106" y="407" class="tiny">id autoIncrement</text>
+<text x="106" y="422" class="tiny">name varchar(50)</text>
+<text x="106" y="437" class="tiny">PrimaryKey(id)</text>
+<rect x="388" y="326" width="224" height="148" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M388,374 L388,330 Q388,326 392,326 L608,326 Q612,326 612,330 L612,374 Z" fill="#dcfce7"/>
+<text x="500" y="344" class="tiny" text-anchor="middle">&lt;&lt;SQL DSL table&gt;&gt;</text>
+<text x="500" y="364" class="label" text-anchor="middle">UserTable</text>
+<path d="M388,374 H612" stroke="#16a34a" stroke-width="1.1"/>
+<text x="402" y="392" class="tiny">Table(&quot;users&quot;)</text>
+<text x="402" y="407" class="tiny">id varchar(10)</text>
+<text x="402" y="422" class="tiny">name varchar(50)</text>
+<text x="402" y="437" class="tiny">cityId optReference</text>
+<rect x="92" y="584" width="248" height="130" rx="4" fill="#fff" stroke="#d97706" class="card"/>
+<path d="M92,632 L92,588 Q92,584 96,584 L336,584 Q340,584 340,588 L340,632 Z" fill="#fef3c7"/>
+<text x="216" y="602" class="tiny" text-anchor="middle">&lt;&lt;sync test&gt;&gt;</text>
+<text x="216" y="622" class="label" text-anchor="middle">ExposedSQLExample</text>
+<path d="M92,632 H340" stroke="#d97706" stroke-width="1.1"/>
+<text x="106" y="650" class="tiny">update/delete</text>
+<text x="106" y="665" class="tiny">innerJoin/leftJoin</text>
+<text x="106" y="680" class="tiny">groupBy count</text>
+<rect x="388" y="584" width="248" height="130" rx="4" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M388,646 L388,588 Q388,584 392,584 L632,584 Q636,584 636,588 L636,646 Z" fill="#fce7f3"/>
+<text x="512" y="602" class="tiny" text-anchor="middle">&lt;&lt;coroutine test&gt;&gt;</text>
+<text x="512" y="622" class="label" text-anchor="middle">ExposedSQLSuspended</text>
+<text x="512" y="639" class="label" text-anchor="middle">Example</text>
+<path d="M388,646 H636" stroke="#db2777" stroke-width="1.1"/>
+<text x="402" y="664" class="tiny">same DSL scenarios</text>
+<text x="402" y="679" class="tiny">runSuspendIO</text>
+<text x="402" y="694" class="tiny">suspended helper</text>
+<path d="M204,326 L204,286 L204,286 L204,270" class="inherit"/>
+<path d="M204,254 L192,270 L216,270 Z" class="inheritHead"/>
+<path d="M500,326 L500,286 L204,286 L204,270" class="inherit"/>
+<path d="M204,254 L192,270 L216,270 Z" class="inheritHead"/>
+<path d="M388,400 L316,400" class="fkArrow"/>
+<rect x="328" y="382" width="48" height="24" rx="8" fill="#fff" stroke="#99f6e4"/>
+<text x="352" y="399" class="tiny" text-anchor="middle">FK</text>
+<path d="M204,458 L204,584" class="queryUse"/>
+<path d="M500,474 L500,584" class="queryUse"/>
+<path d="M426,210 L360,210 L360,649 L340,649" class="runtimeUse"/>
+<path d="M536,254 L536,300 L674,300 L674,550 L512,550 L512,584" class="runtimeUse"/>
+<rect x="792" y="124" width="660" height="674" rx="12" class="panel"/><text x="1122" y="116" class="panelTitle" text-anchor="middle">DAO ENTITY PATH</text>
+<rect x="832" y="164" width="210" height="90" rx="4" fill="#fff" stroke="#64748b" class="card"/>
+<path d="M832,212 L832,168 Q832,164 836,164 L1038,164 Q1042,164 1042,168 L1042,212 Z" fill="#e2e8f0"/>
+<text x="937" y="182" class="tiny" text-anchor="middle">&lt;&lt;Exposed base&gt;&gt;</text>
+<text x="937" y="202" class="label" text-anchor="middle">IntIdTable</text>
+<path d="M832,212 H1042" stroke="#64748b" stroke-width="1.1"/>
+<text x="846" y="230" class="tiny">id EntityID&lt;Int&gt;</text>
+<text x="846" y="245" class="tiny">SERIAL PK</text>
+<rect x="1120" y="164" width="210" height="90" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
+<path d="M1120,212 L1120,168 Q1120,164 1124,164 L1326,164 Q1330,164 1330,168 L1330,212 Z" fill="#ede9fe"/>
+<text x="1225" y="182" class="tiny" text-anchor="middle">&lt;&lt;Exposed base&gt;&gt;</text>
+<text x="1225" y="202" class="label" text-anchor="middle">IntEntity</text>
+<path d="M1120,212 H1330" stroke="#7c3aed" stroke-width="1.1"/>
+<text x="1134" y="230" class="tiny">id: EntityID&lt;Int&gt;</text>
+<text x="1134" y="245" class="tiny">entity cache</text>
+<rect x="832" y="326" width="210" height="132" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M832,374 L832,330 Q832,326 836,326 L1038,326 Q1042,326 1042,330 L1042,374 Z" fill="#dbeafe"/>
+<text x="937" y="344" class="tiny" text-anchor="middle">&lt;&lt;DAO table&gt;&gt;</text>
+<text x="937" y="364" class="label" text-anchor="middle">CityTable</text>
+<path d="M832,374 H1042" stroke="#3b82f6" stroke-width="1.1"/>
+<text x="846" y="392" class="tiny">IntIdTable(&quot;cities&quot;)</text>
+<text x="846" y="407" class="tiny">name varchar(50)</text>
+<rect x="1100" y="326" width="210" height="148" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M1100,374 L1100,330 Q1100,326 1104,326 L1306,326 Q1310,326 1310,330 L1310,374 Z" fill="#dcfce7"/>
+<text x="1205" y="344" class="tiny" text-anchor="middle">&lt;&lt;DAO table&gt;&gt;</text>
+<text x="1205" y="364" class="label" text-anchor="middle">UserTable</text>
+<path d="M1100,374 H1310" stroke="#16a34a" stroke-width="1.1"/>
+<text x="1114" y="392" class="tiny">IntIdTable(&quot;users&quot;)</text>
+<text x="1114" y="407" class="tiny">name varchar(50)</text>
+<text x="1114" y="422" class="tiny">age integer</text>
+<text x="1114" y="437" class="tiny">cityId optReference</text>
+<rect x="832" y="548" width="210" height="132" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
+<path d="M832,596 L832,552 Q832,548 836,548 L1038,548 Q1042,548 1042,552 L1042,596 Z" fill="#ccfbf1"/>
+<text x="937" y="566" class="tiny" text-anchor="middle">&lt;&lt;DAO entity&gt;&gt;</text>
+<text x="937" y="586" class="label" text-anchor="middle">City</text>
+<path d="M832,596 H1042" stroke="#0f766e" stroke-width="1.1"/>
+<text x="846" y="614" class="tiny">var name</text>
+<text x="846" y="629" class="tiny">users optionalReferrersOn</text>
+<rect x="1100" y="548" width="210" height="148" rx="4" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M1100,596 L1100,552 Q1100,548 1104,548 L1306,548 Q1310,548 1310,552 L1310,596 Z" fill="#fce7f3"/>
+<text x="1205" y="566" class="tiny" text-anchor="middle">&lt;&lt;DAO entity&gt;&gt;</text>
+<text x="1205" y="586" class="label" text-anchor="middle">User</text>
+<path d="M1100,596 H1310" stroke="#db2777" stroke-width="1.1"/>
+<text x="1114" y="614" class="tiny">var name</text>
+<text x="1114" y="629" class="tiny">var age</text>
+<text x="1114" y="644" class="tiny">city optionalReferencedOn</text>
+<path d="M936,326 L936,286 L936,286 L936,270" class="inherit"/>
+<path d="M936,254 L924,270 L948,270 Z" class="inheritHead"/>
+<path d="M1205,326 L1205,286 L936,286 L936,270" class="inherit"/>
+<path d="M936,254 L924,270 L948,270 Z" class="inheritHead"/>
+<path d="M936,548 L936,516 L1342,516 L1342,286 L1225,286 L1225,270" class="inherit"/>
+<path d="M1205,548 L1205,528 L1358,528 L1358,302 L1225,302 L1225,270" class="inherit"/>
+<path d="M1225,254 L1213,270 L1237,270 Z" class="inheritHead"/>
+<path d="M1100,400 L1042,400" class="fkArrow"/>
+<path d="M1042,614 L1100,614" class="assoc"/>
+<text x="1072" y="602" class="tiny" text-anchor="middle">City.users / User.city</text>
+<path d="M1100,636 L1042,636" class="assoc"/>
+<rect x="166" y="826" width="1168" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="750" y="856" class="detail" text-anchor="middle">Root chapter diagram intentionally compares modeling paths; table-to-entity mapping lines are omitted because DAO names already pair them.</text>
 </svg>
