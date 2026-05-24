@@ -37,7 +37,7 @@ Kotlin Exposed는 JetBrains에서 개발한 Kotlin 언어 전용 SQL 프레임�
 | **경량화**       | JPA 대비 적은 메모리 사용량                                    |
 | **다양한 DB 지원** | H2, MySQL, PostgreSQL, MariaDB, Oracle, SQL Server 등 |
 
-![Kotlin Exposed Mindmap](doc/exposed-mindmap-felo-ai.jpg)
+![Kotlin Exposed feature map](docs/assets/readme-diagrams/exposed-workshop-mindmap-01.png)
 
 ### Exposed API 구조
 

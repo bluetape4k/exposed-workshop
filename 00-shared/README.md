@@ -141,24 +141,7 @@ withSchemas(testDB, Schema("hr"), Schema("sales")) {
 
 ## Directory Structure
 
-```
-00-shared/exposed-shared-tests/src/main/kotlin/exposed/shared/
-├── tests/
-│   ├── AbstractExposedTest.kt      # Test base class
-│   ├── TestDB.kt                   # Supported DB enum + connection config
-│   ├── TestSupport.kt              # Common utility functions
-│   ├── WithDb.kt                   # JDBC DB connection helper
-│   ├── WithDBSuspending.kt         # Coroutine DB connection helper
-│   ├── WithTables.kt               # JDBC table create/drop
-│   ├── WithTablesSuspending.kt     # Coroutine table create/drop
-│   ├── WithSchemas.kt              # JDBC schema management
-│   ├── WithSchemasSuspending.kt    # Coroutine schema management
-│   └── WithAutoCommitSuspending.kt # AutoCommit coroutine helper
-├── dml/
-│   └── DMLTestData.kt              # Shared tables/data for DML tests
-└── entities/
-    └── BoardSchema.kt              # Schema for entity tests
-```
+![Shared test source layout diagram](../docs/images/readme-diagrams/00-shared-directory-structure-02.png)
 
 ---
 

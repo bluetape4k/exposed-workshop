@@ -22,15 +22,7 @@ JSON, 오류 매핑, service 경계, H2 기반 Exposed JDBC repository만 다룹
 
 ## Package Layout
 
-```text
-exposed.examples.ktor.architecture
-├── config       # Ktor plugin, JSON, HTTP error mapping
-├── model        # Request/response DTO, command, record, validation error
-├── persistence  # Hikari와 Exposed Database lifecycle
-├── repository   # Exposed JDBC repository boundary
-├── routes       # HTTP route와 request body limit 처리
-└── service      # Use case와 caller input validation
-```
+![Ktor package layout diagram](../../docs/images/readme-diagrams/12-production-integration-01-ktor-application-architecture-package-layout-02.png)
 
 테스트도 같은 계층을 따릅니다. application wiring, route behavior, service
 validation/mapping, repository persistence/concurrency를 각각 검증합니다.

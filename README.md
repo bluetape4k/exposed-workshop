@@ -38,7 +38,7 @@ Kotlin Exposed is a Kotlin-specific SQL framework developed by JetBrains. It lev
 | **Lightweight**      | Lower memory footprint compared to JPA               |
 | **Multi-DB Support** | H2, MySQL, PostgreSQL, MariaDB, Oracle, SQL Server   |
 
-![Kotlin Exposed Mindmap](doc/exposed-mindmap-felo-ai.jpg)
+![Kotlin Exposed feature map](docs/assets/readme-diagrams/exposed-workshop-mindmap-01.png)
 
 ### Exposed API Structure
 

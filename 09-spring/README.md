@@ -93,17 +93,7 @@ class CachedCountrySuspendedRepository(
 
 ## Recommended Learning Order
 
-```
-01-springboot-autoconfigure
-        ↓
-02-transactiontemplate
-        ↓
-03-spring-transaction
-        ↓
-04-exposed-repository ──────────────→ 05-exposed-repository-coroutines
-        ↓                                          ↓
-06-spring-cache ──────────────────→ 07-spring-suspended-cache
-```
+![Spring integration learning order diagram](../docs/images/readme-diagrams/09-spring-learning-order-02.png)
 
 ## How to Run
 

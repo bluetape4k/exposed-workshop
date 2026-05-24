@@ -21,17 +21,7 @@ A chapter for implementing production-grade multi-tenant architecture with Expos
 
 This chapter starts with the **Shared Database / Separate Schema** strategy. Data is isolated by separating per-tenant schemas (`korean`, `english`) within a single DB instance.
 
-```
-Single DB Instance
-├── Schema: korean
-│   ├── actor
-│   ├── movie
-│   └── actor_in_movie
-└── Schema: english
-    ├── actor
-    ├── movie
-    └── actor_in_movie
-```
+![Per-tenant schema layout diagram](../docs/images/readme-diagrams/10-multi-tenant-schema-layout-04.png)
 
 It then compares that baseline with **Database per Tenant**, where each whitelisted tenant owns a dedicated Hikari pool and Exposed `Database`.
 

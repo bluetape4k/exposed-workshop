@@ -45,14 +45,7 @@ A non-blocking multi-tenant example based on WebFlux + Coroutines. Propagates te
 
 In WebFlux, threads are not pinned to requests, so `ThreadLocal`/`ScopedValue` cannot be used. Instead, tenant information is propagated via the Reactor `Context` → `ReactorContext` → `CoroutineContext` path.
 
-```
-HTTP Request
-  └── TenantFilter (WebFilter)
-        └── chain.filter(exchange).contextWrite { it.put("TenantId", TenantId(tenant)) }
-              └── Reactor Context (propagated through async chain)
-                    └── coroutineContext[ReactorContext]?.context?.get("TenantId")
-                          └── newSuspendedTransactionWithTenant { SchemaUtils.setSchema(...) }
-```
+![WebFlux tenant context propagation diagram](../../docs/images/readme-diagrams/10-multi-tenant-03-multitenant-spring-webflux-context-propagation-05.png)
 
 ### Tenant Propagation Flow via Reactor Context
 

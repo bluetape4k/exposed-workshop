@@ -21,17 +21,7 @@
 
 이 챕터는 **Shared Database / Separate Schema** 전략에서 시작합니다. 하나의 DB 인스턴스에 테넌트별 스키마(`korean`, `english`)를 분리해 데이터를 격리합니다.
 
-```
-Single DB Instance
-├── Schema: korean
-│   ├── actor
-│   ├── movie
-│   └── actor_in_movie
-└── Schema: english
-    ├── actor
-    ├── movie
-    └── actor_in_movie
-```
+![Per-tenant schema layout diagram](../docs/images/readme-diagrams/10-multi-tenant-schema-layout-04.png)
 
 이후 각 허용 tenant가 전용 Hikari pool과 Exposed `Database`를 소유하는 **Database per Tenant** 전략과 비교합니다.
 
