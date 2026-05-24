@@ -51,6 +51,7 @@ It then compares that baseline with **Database per Tenant**, where each whitelis
 | `04-schema-per-tenant-spring-web`         | Schema-per-tenant with one shared Hikari pool      | `ThreadLocal`         |
 | `05-database-per-tenant-spring-web`       | Database-per-tenant with dedicated Hikari pools    | `ThreadLocal`         |
 | `06-spring-security-tenant-authorization-spring-web` | Tenant authorization with Spring Security before database routing | `ThreadLocal` |
+| `07-multitenant-ktor`                     | Multi-tenant with Ktor request plugins             | Coroutine `ThreadContextElement` |
 
 ---
 

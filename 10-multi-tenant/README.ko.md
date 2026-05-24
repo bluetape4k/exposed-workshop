@@ -51,6 +51,7 @@ Single DB Instance
 | `04-schema-per-tenant-spring-web`         | 하나의 Hikari pool을 쓰는 schema-per-tenant 예제 | `ThreadLocal`     |
 | `05-database-per-tenant-spring-web`       | tenant별 전용 Hikari pool을 쓰는 database-per-tenant 예제 | `ThreadLocal`     |
 | `06-spring-security-tenant-authorization-spring-web` | database routing 전 Spring Security로 tenant authorization 수행 | `ThreadLocal` |
+| `07-multitenant-ktor`                     | Ktor request plugin 기반 멀티테넌트 예제 | Coroutine `ThreadContextElement` |
 
 ---
 
