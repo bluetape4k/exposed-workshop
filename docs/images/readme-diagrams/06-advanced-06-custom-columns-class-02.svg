@@ -1,155 +1,79 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2222" height="1843" viewBox="0 0 2222 1843" role="img" aria-label="Custom ColumnType Hierarchy">
+<svg xmlns="http://www.w3.org/2000/svg" width="998" height="842" viewBox="0 0 998 842" role="img" aria-label="Custom ColumnType Hierarchy">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="10" markerHeight="8" refX="8.5" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 8.5 4 L 1 7" fill="none" stroke="#758297" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0.5 1 L 9.5 5 L 0.5 9 Z" fill="#ffffff" stroke="#758297" stroke-width="1.7"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
-    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
-    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="2222" height="1843"/>
-<rect class="frame" x="32" y="28" width="2158" height="1787" rx="28"/>
-<text class="title" x="66" y="82">Custom ColumnType Hierarchy</text>
-<text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="line" d="M1744 1337 L1744 831 L689 831 L689 313"/>
-<path class="line" d="M478 1337 L478 863 L689 863 L689 313"/>
-<path class="line" d="M1322 1337 L1322 855 L267 855 L267 313"/>
-<path class="line" d="M900 1337 L900 847 L1533 847 L1533 292"/>
-<path class="inheritLine" d="M1744 1337 L1744 1217 L689 1217 L689 1092"/>
-<path class="inheritLine" d="M478 1337 L478 1209 L1111 1209 L1111 1113"/>
-<path class="inheritLine" d="M1322 1337 L1322 1241 L1111 1241 L1111 1113"/>
-<path class="inheritLine" d="M900 1337 L900 1233 L1111 1233 L1111 1113"/>
-<path class="inheritLine" d="M689 959 L689 476 L1111 476 L1111 292"/>
-<path class="inheritLine" d="M1533 959 L1533 468 L1111 468 L1111 292"/>
-<path class="inheritLine" d="M1111 959 L1111 292"/>
-<g transform="translate(112,180)">
-  <rect class="card" x="0" y="0" width="310" height="133" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="78" x2="310" y2="78" stroke="#5B8DEF"/>
-  <text class="small" x="155" y="26" text-anchor="middle">«interface»</text>
-  <text class="label" x="155" y="61" text-anchor="middle">Compressor</text>
-  <text class="mono" x="18" y="108">LZ4 / Snappy / Zstd</text>
-</g>
-<g transform="translate(534,180)">
-  <rect class="card" x="0" y="0" width="310" height="133" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="78" x2="310" y2="78" stroke="#58A978"/>
-  <text class="small" x="155" y="26" text-anchor="middle">«interface»</text>
-  <text class="label" x="155" y="61" text-anchor="middle">Encryptor</text>
-  <text class="mono" x="18" y="108">AES-GCM / AES-CBC / Blowfish / 3DES</text>
-</g>
-<g transform="translate(956,180)">
-  <rect class="card" x="0" y="0" width="310" height="112" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
-  <line class="compartment" x1="0" y1="78" x2="310" y2="78" stroke="#D6A441"/>
-  <text class="small" x="155" y="26" text-anchor="middle"></text>
-  <text class="label" x="155" y="61" text-anchor="middle">ColumnType</text>
 
-</g>
-<g transform="translate(1378,180)">
-  <rect class="card" x="0" y="0" width="310" height="112" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
-  <line class="compartment" x1="0" y1="78" x2="310" y2="78" stroke="#DC6B82"/>
-  <text class="small" x="155" y="26" text-anchor="middle"></text>
-  <text class="label" x="155" y="61" text-anchor="middle">BinarySerializer</text>
-
-</g>
-<g transform="translate(1800,180)">
-  <rect class="card" x="0" y="0" width="310" height="212" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
-  <line class="compartment" x1="0" y1="94" x2="310" y2="94" stroke="#45A7A1"/>
-  <text class="small" x="155" y="26" text-anchor="middle"></text>
-  <text class="label" x="155" y="56.5" text-anchor="middle">Binary Serialized</text>
-<text class="label" x="155" y="81.5" text-anchor="middle">Binary Column Type T</text>
-  <text class="mono" x="18" y="124">+serializer: BinarySerializer~T~</text>
-<text class="mono" x="18" y="145">+length: Int</text>
-<text class="mono" x="18" y="166">+valueFromDB(): T</text>
-<text class="mono" x="18" y="187">+notNullValueToDB(): ByteArray</text>
-</g>
-<g transform="translate(745,560)">
-  <rect class="card" x="0" y="0" width="310" height="154" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
-  <line class="compartment" x1="0" y1="78" x2="310" y2="78" stroke="#8A72D6"/>
-  <text class="small" x="155" y="26" text-anchor="middle">«interface»</text>
-  <text class="label" x="155" y="61" text-anchor="middle">BinarySerializerT</text>
-  <text class="mono" x="18" y="108">+serialize(value: T): ByteArray</text>
-<text class="mono" x="18" y="129">+deserialize(bytes: ByteArray): T</text>
-</g>
-<g transform="translate(1167,560)">
-  <rect class="card" x="0" y="0" width="310" height="175" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
-  <line class="compartment" x1="0" y1="78" x2="310" y2="78" stroke="#B88A44"/>
-  <text class="small" x="155" y="26" text-anchor="middle">«Exposed Core»</text>
-  <text class="label" x="155" y="61" text-anchor="middle">ColumnTypeT</text>
-  <text class="mono" x="18" y="108">+valueFromDB(value: Any): T</text>
-<text class="mono" x="18" y="129">+notNullValueToDB(value: T): Any</text>
-<text class="mono" x="18" y="150">+sqlType(): String</text>
-</g>
-<g transform="translate(534,959)">
-  <rect class="card" x="0" y="0" width="310" height="133" rx="5" fill="#EEF6D9" stroke="#8BA84D"/>
-  <line class="compartment" x1="0" y1="78" x2="310" y2="78" stroke="#8BA84D"/>
-  <text class="small" x="155" y="26" text-anchor="middle"></text>
-  <text class="label" x="155" y="61" text-anchor="middle">VarCharColumnType</text>
-  <text class="mono" x="18" y="108">+colLength: Int</text>
-</g>
-<g transform="translate(956,959)">
-  <rect class="card" x="0" y="0" width="310" height="154" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="78" x2="310" y2="78" stroke="#5B8DEF"/>
-  <text class="small" x="155" y="26" text-anchor="middle"></text>
-  <text class="label" x="155" y="61" text-anchor="middle">BinaryColumnType</text>
-  <text class="mono" x="18" y="108">+length: Int</text>
-<text class="mono" x="18" y="129">+sqlType(): String</text>
-</g>
-<g transform="translate(1378,959)">
-  <rect class="card" x="0" y="0" width="310" height="133" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="78" x2="310" y2="78" stroke="#58A978"/>
-  <text class="small" x="155" y="26" text-anchor="middle"></text>
-  <text class="label" x="155" y="61" text-anchor="middle">BlobColumnType</text>
-  <text class="mono" x="18" y="108">+sqlType(): String</text>
-</g>
-<g transform="translate(323,1337)">
-  <rect class="card" x="0" y="0" width="310" height="191" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
-  <line class="compartment" x1="0" y1="94" x2="310" y2="94" stroke="#D6A441"/>
-  <text class="small" x="155" y="26" text-anchor="middle"></text>
-  <text class="label" x="155" y="56.5" text-anchor="middle">Encrypted Binary</text>
-<text class="label" x="155" y="81.5" text-anchor="middle">Column Type</text>
-  <text class="mono" x="18" y="124">+encryptor: Encryptor</text>
-<text class="mono" x="18" y="145">+valueFromDB(): ByteArray</text>
-<text class="mono" x="18" y="166">+notNullValueToDB(): ByteArray</text>
-</g>
-<g transform="translate(745,1337)">
-  <rect class="card" x="0" y="0" width="310" height="128" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
-  <line class="compartment" x1="0" y1="94" x2="310" y2="94" stroke="#DC6B82"/>
-  <text class="small" x="155" y="26" text-anchor="middle"></text>
-  <text class="label" x="155" y="56.5" text-anchor="middle">Binary Serialized</text>
-<text class="label" x="155" y="81.5" text-anchor="middle">Binary Column Type</text>
-
-</g>
-<g transform="translate(1167,1337)">
-  <rect class="card" x="0" y="0" width="310" height="212" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
-  <line class="compartment" x1="0" y1="94" x2="310" y2="94" stroke="#45A7A1"/>
-  <text class="small" x="155" y="26" text-anchor="middle"></text>
-  <text class="label" x="155" y="56.5" text-anchor="middle">Compressed Binary</text>
-<text class="label" x="155" y="81.5" text-anchor="middle">Column Type</text>
-  <text class="mono" x="18" y="124">+compressor: Compressor</text>
-<text class="mono" x="18" y="145">+length: Int</text>
-<text class="mono" x="18" y="166">+valueFromDB(): ByteArray</text>
-<text class="mono" x="18" y="187">+notNullValueToDB(): ByteArray</text>
-</g>
-<g transform="translate(1589,1337)">
-  <rect class="card" x="0" y="0" width="310" height="191" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
-  <line class="compartment" x1="0" y1="94" x2="310" y2="94" stroke="#8A72D6"/>
-  <text class="small" x="155" y="26" text-anchor="middle"></text>
-  <text class="label" x="155" y="56.5" text-anchor="middle">Encrypted Var Char</text>
-<text class="label" x="155" y="81.5" text-anchor="middle">Column Type</text>
-  <text class="mono" x="18" y="124">+encryptor: Encryptor</text>
-<text class="mono" x="18" y="145">+valueFromDB(): String</text>
-<text class="mono" x="18" y="166">+notNullValueToDB(): String</text>
-</g>
+<rect class="canvas" x="0" y="0" width="998" height="100%"/>
+<rect class="frame" x="20" y="20" width="958" height="802" rx="18"/>
+<text class="title" x="54" y="72">Custom ColumnType Hierarchy</text>
+<text class="subtitle" x="56" y="100">Class and component responsibilities</text>
+<rect class="card" x="43" y="142" width="280" height="138" rx="14" fill="#f7d9df" stroke="#d9899b"/>
+<text class="smallLabel" x="183" y="178" text-anchor="middle">«interface»</text>
+<line class="dash" x1="61" y1="204" x2="305" y2="204"/>
+<rect class="card" x="359" y="142" width="280" height="138" rx="14" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="smallLabel" x="499" y="178" text-anchor="middle">Compressor</text>
+<line class="dash" x1="377" y1="204" x2="621" y2="204"/>
+<text class="mono" x="383" y="228">+ LZ4 / Snappy / Zstd</text>
+<rect class="card" x="675" y="142" width="280" height="138" rx="14" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="smallLabel" x="815" y="178" text-anchor="middle">Encryptor</text>
+<line class="dash" x1="693" y1="204" x2="937" y2="204"/>
+<text class="mono" x="699" y="228">+ AES-GCM / AES-C...Blowfish / 3DES</text>
+<rect class="card" x="43" y="314" width="280" height="138" rx="14" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="smallLabel" x="183" y="350" text-anchor="middle">ColumnType</text>
+<line class="dash" x1="61" y1="376" x2="305" y2="376"/>
+<rect class="card" x="359" y="314" width="280" height="138" rx="14" fill="#eadff8" stroke="#a287c8"/>
+<text class="smallLabel" x="499" y="350" text-anchor="middle">BinarySerializer</text>
+<line class="dash" x1="377" y1="376" x2="621" y2="376"/>
+<text class="mono" x="383" y="400">+ Binary Serialized</text>
+<text class="mono" x="383" y="417">+ Binary Column Type T</text>
+<text class="mono" x="383" y="434">+ +serializer: BinarySerializer~T~</text>
+<text class="mono" x="383" y="451">+ +length: Int</text>
+<rect class="card" x="675" y="314" width="280" height="138" rx="14" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="smallLabel" x="815" y="350" text-anchor="middle">BinarySerializerT</text>
+<line class="dash" x1="693" y1="376" x2="937" y2="376"/>
+<text class="mono" x="699" y="400">+ +serialize(value: T): ByteArray</text>
+<text class="mono" x="699" y="417">+ +deserialize(bytes: ByteArray): T</text>
+<rect class="card" x="43" y="486" width="280" height="138" rx="14" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="smallLabel" x="183" y="522" text-anchor="middle">«Exposed Core»</text>
+<line class="dash" x1="61" y1="548" x2="305" y2="548"/>
+<rect class="card" x="359" y="486" width="280" height="138" rx="14" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="smallLabel" x="499" y="522" text-anchor="middle">ColumnTypeT</text>
+<line class="dash" x1="377" y1="548" x2="621" y2="548"/>
+<text class="mono" x="383" y="572">+ +valueFromDB(value: Any): T</text>
+<text class="mono" x="383" y="589">+ +notNullValueToDB(value: T): Any</text>
+<text class="mono" x="383" y="606">+ +sqlType(): String</text>
+<rect class="card" x="675" y="486" width="280" height="138" rx="14" fill="#f7d9df" stroke="#d9899b"/>
+<text class="smallLabel" x="815" y="522" text-anchor="middle">VarCharColumnType</text>
+<line class="dash" x1="693" y1="548" x2="937" y2="548"/>
+<text class="mono" x="699" y="572">+ +colLength: Int</text>
+<rect class="card" x="43" y="658" width="280" height="138" rx="14" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="smallLabel" x="183" y="694" text-anchor="middle">BinaryColumnType</text>
+<line class="dash" x1="61" y1="720" x2="305" y2="720"/>
+<rect class="card" x="359" y="658" width="280" height="138" rx="14" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="smallLabel" x="499" y="694" text-anchor="middle">BlobColumnType</text>
+<line class="dash" x1="377" y1="720" x2="621" y2="720"/>
+<text class="mono" x="383" y="744">+ Encrypted Binary</text>
+<text class="mono" x="383" y="761">+ Column Type</text>
+<text class="mono" x="383" y="778">+ +encryptor: Encryptor</text>
+<text class="mono" x="383" y="795">+ +valueFromDB(): ByteArray</text>
 </svg>

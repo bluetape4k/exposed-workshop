@@ -1,86 +1,170 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
-  <defs>
-    <marker id="arrow" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
-      <path d="M0,0 L12,4 L0,8 Z" fill="#334155"/>
-    </marker>
-    <style>
-      .title { font: 700 34px Arial, sans-serif; fill: #111827; }
-      .subtitle { font: 400 18px Arial, sans-serif; fill: #475569; }
-      .layer-title { font: 700 18px Arial, sans-serif; fill: #111827; }
-      .box-title { font: 700 17px Arial, sans-serif; fill: #111827; }
-      .box-text { font: 400 14px Arial, sans-serif; fill: #334155; }
-      .small { font: 400 12px Arial, sans-serif; fill: #475569; }
-      .arrow { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#arrow); }
-      .dashed { stroke: #64748b; stroke-width: 2.5; stroke-dasharray: 8 6; fill: none; marker-end: url(#arrow); }
-      .lane { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 2; rx: 18; }
-      .client { fill: #dbeafe; stroke: #2563eb; stroke-width: 2; rx: 14; }
-      .web { fill: #dcfce7; stroke: #16a34a; stroke-width: 2; rx: 14; }
-      .service { fill: #fef3c7; stroke: #d97706; stroke-width: 2; rx: 14; }
-      .data { fill: #fae8ff; stroke: #9333ea; stroke-width: 2; rx: 14; }
-      .guard { fill: #fee2e2; stroke: #dc2626; stroke-width: 2; rx: 14; }
-      .schema { fill: #ffffff; stroke: #64748b; stroke-width: 2; rx: 12; }
-    </style>
-  </defs>
-  <rect width="1400" height="900" fill="#ffffff"/>
-  <text x="60" y="70" class="title">Schema-per-Tenant Spring MVC Example</text>
-  <text x="60" y="102" class="subtitle">One Hikari pool, strict tenant whitelist, Exposed schema switch inside a transaction boundary</text>
-  <rect x="50" y="140" width="1300" height="120" class="lane"/>
-  <text x="80" y="174" class="layer-title">Request Boundary</text>
-  <rect x="90" y="190" width="245" height="46" class="client"/>
-  <text x="112" y="219" class="box-title">HTTP Client</text>
-  <text x="365" y="206" class="box-title">X-Tenant-ID</text>
-  <text x="365" y="228" class="box-text">acme or globex only</text>
-  <rect x="565" y="178" width="290" height="70" class="web"/>
-  <text x="588" y="205" class="box-title">TenantFilter</text>
-  <text x="588" y="226" class="box-text">rejects unsafe tenant headers</text>
-  <rect x="1060" y="178" width="220" height="70" class="guard"/>
-  <text x="1084" y="205" class="box-title">TenantContext</text>
-  <text x="1084" y="226" class="box-text">ThreadLocal cleared in finally</text>
-  <path d="M335 213 L545 213" class="arrow"/>
-  <path d="M855 213 L1040 213" class="arrow"/>
-  <rect x="50" y="300" width="1300" height="140" class="lane"/>
-  <text x="80" y="334" class="layer-title">Application Layer</text>
-  <rect x="120" y="358" width="260" height="58" class="web"/>
-  <text x="144" y="383" class="box-title">InventoryController</text>
-  <text x="144" y="404" class="box-text">GET/POST /inventory</text>
-  <rect x="550" y="358" width="260" height="58" class="service"/>
-  <text x="574" y="383" class="box-title">InventoryService</text>
-  <text x="574" y="404" class="box-text">validates use case boundary</text>
-  <rect x="980" y="358" width="260" height="58" class="service"/>
-  <text x="1004" y="383" class="box-title">ExposedInventoryRepository</text>
-  <text x="1004" y="404" class="box-text">SQL DSL table access</text>
-  <path d="M380 387 L530 387" class="arrow"/>
-  <path d="M810 387 L960 387" class="arrow"/>
-  <rect x="50" y="480" width="1300" height="150" class="lane"/>
-  <text x="80" y="514" class="layer-title">Tenant Transaction Boundary</text>
-  <rect x="120" y="538" width="270" height="64" class="guard"/>
-  <text x="144" y="564" class="box-title">TenantTransaction</text>
-  <text x="144" y="585" class="box-text">single schema switch boundary</text>
-  <rect x="540" y="538" width="300" height="64" class="data"/>
-  <text x="564" y="564" class="box-title">SchemaUtils.setSchema(...)</text>
-  <text x="564" y="585" class="box-text">TENANT_ACME or TENANT_GLOBEX</text>
-  <rect x="980" y="538" width="260" height="64" class="guard"/>
-  <text x="1004" y="564" class="box-title">Reset to PUBLIC</text>
-  <text x="1004" y="585" class="box-text">evict connection on reset failure</text>
-  <path d="M390 570 L520 570" class="arrow"/>
-  <path d="M840 570 L960 570" class="arrow"/>
-  <rect x="50" y="670" width="1300" height="170" class="lane"/>
-  <text x="80" y="704" class="layer-title">Shared Database / Separate Schemas</text>
-  <rect x="120" y="728" width="270" height="84" class="data"/>
-  <text x="144" y="754" class="box-title">Shared HikariDataSource</text>
-  <text x="144" y="775" class="box-text">maximum-pool-size: 1 in example</text>
-  <text x="144" y="796" class="box-text">connection-init-sql: SET SCHEMA PUBLIC</text>
-  <rect x="540" y="718" width="270" height="104" class="schema"/>
-  <text x="564" y="744" class="box-title">TENANT_ACME</text>
-  <text x="564" y="767" class="box-text">inventory_items</text>
-  <text x="564" y="789" class="small">shared-widget = Acme Shared Widget</text>
-  <rect x="980" y="718" width="270" height="104" class="schema"/>
-  <text x="1004" y="744" class="box-title">TENANT_GLOBEX</text>
-  <text x="1004" y="767" class="box-text">inventory_items</text>
-  <text x="1004" y="789" class="small">shared-widget = Globex Shared Widget</text>
-  <path d="M1110 416 L1110 518" class="dashed"/>
-  <path d="M690 602 L690 698" class="dashed"/>
-  <path d="M390 770 L520 770" class="arrow"/>
-  <path d="M810 770 L960 770" class="arrow"/>
-  <text x="60" y="872" class="small">Demo boundary: the example trusts X-Tenant-ID only after whitelist validation. Production systems should derive tenant identity from authenticated principals.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="1864" viewBox="0 0 922 1864" role="img" aria-label="Schema-per-Tenant Spring MVC Example">
+<defs>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
+</defs>
+
+<rect class="canvas" x="0" y="0" width="922" height="100%"/>
+<rect class="frame" x="20" y="20" width="882" height="1824" rx="18"/>
+<text class="title" x="54" y="72">Schema-per-Tenant Spring MVC Example</text>
+<text class="subtitle" x="56" y="100">Pastel architecture overview</text>
+<rect class="card" x="48" y="142" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="188" text-anchor="middle">One Hikari pool,</text>
+<text class="label" x="171" y="213" text-anchor="middle">strict tenant</text>
+<text class="label" x="171" y="238" text-anchor="middle">whitelist, Exposed...</text>
+<rect class="card" x="338" y="142" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="188" text-anchor="middle">Request Boundary</text>
+<rect class="card" x="628" y="142" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="188" text-anchor="middle">HTTP Client</text>
+<rect class="card" x="48" y="298" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="344" text-anchor="middle">X-Tenant-ID</text>
+<rect class="card" x="338" y="298" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="344" text-anchor="middle">acme or globex only</text>
+<rect class="card" x="628" y="298" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="344" text-anchor="middle">TenantFilter</text>
+<rect class="card" x="48" y="454" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="500" text-anchor="middle">rejects unsafe</text>
+<text class="label" x="171" y="525" text-anchor="middle">tenant headers</text>
+<rect class="card" x="338" y="454" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="500" text-anchor="middle">TenantContext</text>
+<rect class="card" x="628" y="454" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="751" y="500" text-anchor="middle">ThreadLocal cleared</text>
+<text class="label" x="751" y="525" text-anchor="middle">in finally</text>
+<rect class="card" x="48" y="610" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="171" y="656" text-anchor="middle">Application Layer</text>
+<rect class="card" x="338" y="610" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="461" y="656" text-anchor="middle">InventoryController</text>
+<rect class="card" x="628" y="610" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="751" y="656" text-anchor="middle">GET/POST /inventory</text>
+<rect class="card" x="48" y="766" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="171" y="812" text-anchor="middle">InventoryService</text>
+<rect class="card" x="338" y="766" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="461" y="812" text-anchor="middle">validates use case</text>
+<text class="label" x="461" y="837" text-anchor="middle">boundary</text>
+<rect class="card" x="628" y="766" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="751" y="812" text-anchor="middle">Exposed Inventory</text>
+<text class="label" x="751" y="837" text-anchor="middle">Repository</text>
+<rect class="card" x="48" y="922" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="171" y="968" text-anchor="middle">SQL DSL table</text>
+<text class="label" x="171" y="993" text-anchor="middle">access</text>
+<rect class="card" x="338" y="922" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="461" y="968" text-anchor="middle">Tenant Transaction</text>
+<text class="label" x="461" y="993" text-anchor="middle">Boundary</text>
+<rect class="card" x="628" y="922" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="751" y="968" text-anchor="middle">TenantTransaction</text>
+<rect class="card" x="48" y="1078" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="171" y="1124" text-anchor="middle">single schema</text>
+<text class="label" x="171" y="1149" text-anchor="middle">switch boundary</text>
+<rect class="card" x="338" y="1078" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="461" y="1124" text-anchor="middle">Schema Utils.set</text>
+<text class="label" x="461" y="1149" text-anchor="middle">Schema(...)</text>
+<rect class="card" x="628" y="1078" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="751" y="1124" text-anchor="middle">TENANT_ACME or</text>
+<text class="label" x="751" y="1149" text-anchor="middle">TENANT_GLOBEX</text>
+<rect class="card" x="48" y="1234" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="171" y="1280" text-anchor="middle">Reset to PUBLIC</text>
+<rect class="card" x="338" y="1234" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="461" y="1280" text-anchor="middle">evict connection on</text>
+<text class="label" x="461" y="1305" text-anchor="middle">reset failure</text>
+<rect class="card" x="628" y="1234" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="751" y="1280" text-anchor="middle">Shared Database /</text>
+<text class="label" x="751" y="1305" text-anchor="middle">Separate Schemas</text>
+<rect class="card" x="48" y="1390" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="1436" text-anchor="middle">Shared</text>
+<text class="label" x="171" y="1461" text-anchor="middle">HikariDataSource</text>
+<rect class="card" x="338" y="1390" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="1436" text-anchor="middle">maximum-pool-size:</text>
+<text class="label" x="461" y="1461" text-anchor="middle">1 in example</text>
+<rect class="card" x="628" y="1390" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="1436" text-anchor="middle">connection- init-</text>
+<text class="label" x="751" y="1461" text-anchor="middle">sql: SET SCHEMA</text>
+<text class="label" x="751" y="1486" text-anchor="middle">PUBLIC</text>
+<rect class="card" x="48" y="1546" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="1592" text-anchor="middle">TENANT_ACME</text>
+<rect class="card" x="338" y="1546" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="1592" text-anchor="middle">inventory_items</text>
+<rect class="card" x="628" y="1546" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="1592" text-anchor="middle">shared-widget =</text>
+<text class="label" x="751" y="1617" text-anchor="middle">Acme Shared Widget</text>
+<rect class="card" x="48" y="1702" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="1748" text-anchor="middle">TENANT_GLOBEX</text>
+<rect class="card" x="338" y="1702" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="1748" text-anchor="middle">shared-widget =</text>
+<text class="label" x="461" y="1773" text-anchor="middle">Globex Shared</text>
+<text class="label" x="461" y="1798" text-anchor="middle">Widget</text>
+<rect class="card" x="628" y="1702" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="751" y="1748" text-anchor="middle">Demo boundary: the</text>
+<text class="label" x="751" y="1773" text-anchor="middle">example trusts</text>
+<text class="label" x="751" y="1798" text-anchor="middle">X-Tenant-ID only...</text>
+<path class="line" d="M 302 201 L 330 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 268 L 171 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 201 L 620 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 268 L 461 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 268 L 751 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 357 L 330 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 424 L 171 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 357 L 620 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 424 L 461 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 424 L 751 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 513 L 330 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 580 L 171 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 513 L 620 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 580 L 461 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 580 L 751 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 669 L 330 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 736 L 171 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 669 L 620 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 736 L 461 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 736 L 751 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 825 L 330 825" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 892 L 171 914" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 825 L 620 825" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 892 L 461 914" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 892 L 751 914" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 981 L 330 981" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1048 L 171 1070" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 981 L 620 981" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1048 L 461 1070" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1048 L 751 1070" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1137 L 330 1137" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1204 L 171 1226" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1137 L 620 1137" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1204 L 461 1226" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1204 L 751 1226" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1293 L 330 1293" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1360 L 171 1382" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1293 L 620 1293" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1360 L 461 1382" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1360 L 751 1382" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1449 L 330 1449" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1516 L 171 1538" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1449 L 620 1449" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1516 L 461 1538" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1516 L 751 1538" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1605 L 330 1605" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1672 L 171 1694" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1605 L 620 1605" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1672 L 461 1694" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1672 L 751 1694" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1761 L 330 1761" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1761 L 620 1761" marker-end="url(#openArrow)"/>
 </svg>

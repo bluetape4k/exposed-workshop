@@ -1,75 +1,78 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1376" height="1676" viewBox="0 0 1376 1676" role="img" aria-label="CRUD Sequence Diagram">
+<svg xmlns="http://www.w3.org/2000/svg" width="950" height="962" viewBox="0 0 950 962" role="img" aria-label="CRUD Sequence Diagram">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
-    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
-    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="1376" height="1676"/>
-<rect class="frame" x="32" y="28" width="1312" height="1620" rx="28"/>
-<text class="title" x="66" y="82">CRUD Sequence Diagram</text>
-<text class="subtitle" x="70" y="118">Sequence messages from the original Mermaid source</text>
-<rect class="card" x="21" y="166" width="238" height="72" rx="20" fill="#E8F3FF" stroke="#5B8DEF"/>
-<text class="smallLabel" x="140" y="209" text-anchor="middle">Application</text>
-<line class="lifeline" x1="140" y1="252" x2="140" y2="1616" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="386.3333333333333" y="166" width="238" height="72" rx="20" fill="#EAF7EF" stroke="#58A978"/>
-<text class="smallLabel" x="505.3333333333333" y="209" text-anchor="middle">transaction { }</text>
-<line class="lifeline" x1="505.3333333333333" y1="252" x2="505.3333333333333" y2="1616" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="751.6666666666666" y="166" width="238" height="72" rx="20" fill="#FFF3D9" stroke="#D6A441"/>
-<text class="smallLabel" x="870.6666666666666" y="209" text-anchor="middle">Exposed DSL</text>
-<line class="lifeline" x1="870.6666666666666" y1="252" x2="870.6666666666666" y2="1616" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="1117" y="166" width="238" height="72" rx="20" fill="#FDECEF" stroke="#DC6B82"/>
-<text class="smallLabel" x="1236" y="209" text-anchor="middle">Database</text>
-<line class="lifeline" x1="1236" y1="252" x2="1236" y2="1616" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect x="217.66666666666663" y="286" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="235.66666666666663" y="313" text-anchor="start">1. transaction { }</text>
-<path class="line" d="M140 344 L505.3333333333333 344"/>
-<rect x="520.5" y="396" width="335" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="538.5" y="423" text-anchor="start">2. Cities.insert { it[name] = Seoul }</text>
-<path class="line" d="M505.3333333333333 454 L870.6666666666666 454"/>
-<rect x="934.3333333333333" y="506" width="238" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="952.3333333333333" y="533" text-anchor="start">3. INSERT INTO cities ...</text>
-<path class="line" d="M870.6666666666666 564 L1236 564"/>
-<rect x="948.3333333333333" y="616" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="966.3333333333333" y="643" text-anchor="start">4. generated id</text>
-<path class="dashed" d="M1236 674 L870.6666666666666 674"/>
-<rect x="528.5" y="726" width="319" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="546.5" y="753" text-anchor="start">5. Cities.selectAll().where { ... }</text>
-<path class="line" d="M505.3333333333333 784 L870.6666666666666 784"/>
-<rect x="902.3333333333333" y="836" width="302" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="920.3333333333333" y="863" text-anchor="start">6. SELECT * FROM cities WHERE ...</text>
-<path class="line" d="M870.6666666666666 894 L1236 894"/>
-<rect x="948.3333333333333" y="946" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="966.3333333333333" y="973" text-anchor="start">7. ResultRow list</text>
-<path class="dashed" d="M1236 1004 L870.6666666666666 1004"/>
-<rect x="468.5" y="1056" width="439" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="486.5" y="1083" text-anchor="start">8. Cities.update({ id eq 1 }) { it[name] = Busan }</text>
-<path class="line" d="M505.3333333333333 1114 L870.6666666666666 1114"/>
-<rect x="849.8333333333333" y="1166" width="407" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="867.8333333333333" y="1193" text-anchor="start">9. UPDATE cities SET name = Busan WHERE id = 1</text>
-<path class="line" d="M870.6666666666666 1224 L1236 1224"/>
-<rect x="532.5" y="1276" width="311" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="550.5" y="1303" text-anchor="start">10. Cities.deleteWhere { id eq 1 }</text>
-<path class="line" d="M505.3333333333333 1334 L870.6666666666666 1334"/>
-<rect x="893.8333333333333" y="1386" width="319" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="911.8333333333333" y="1413" text-anchor="start">11. DELETE FROM cities WHERE id = 1</text>
-<path class="line" d="M870.6666666666666 1444 L1236 1444"/>
-<rect x="217.66666666666663" y="1496" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="235.66666666666663" y="1523" text-anchor="start">12. COMMIT</text>
-<path class="dashed" d="M505.3333333333333 1554 L140 1554"/>
+
+<rect class="canvas" x="0" y="0" width="950" height="100%"/>
+<rect class="frame" x="20" y="20" width="910" height="922" rx="18"/>
+<text class="title" x="54" y="72">CRUD Sequence Diagram</text>
+<text class="subtitle" x="56" y="100">Request and data flow</text>
+<rect class="card" x="72" y="142" width="176" height="58" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="smallLabel" x="160" y="166" text-anchor="middle">Application</text>
+<path class="dash" d="M 160 208 L 160 908"/>
+<rect class="card" x="282" y="142" width="176" height="58" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="smallLabel" x="370" y="166" text-anchor="middle">transaction { }</text>
+<path class="dash" d="M 370 208 L 370 908"/>
+<rect class="card" x="492" y="142" width="176" height="58" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="smallLabel" x="580" y="166" text-anchor="middle">Exposed DSL</text>
+<path class="dash" d="M 580 208 L 580 908"/>
+<rect class="card" x="702" y="142" width="176" height="58" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="smallLabel" x="790" y="166" text-anchor="middle">Database</text>
+<path class="dash" d="M 790 208 L 790 908"/>
+<path class="line" d="M 172 248 L 356 248" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="216" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="233" text-anchor="middle">1. transaction { }</text>
+<path class="line" d="M 382 302 L 566 302" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="270" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="287" text-anchor="middle">2. Cities.insert { it[name] = Seoul }</text>
+<path class="line" d="M 592 356 L 776 356" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="324" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="341" text-anchor="middle">3. INSERT INTO cities ...</text>
+<path class="line" d="M 778 410 L 174 410" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="378" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="395" text-anchor="middle">4. generated id</text>
+<path class="line" d="M 172 464 L 356 464" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="432" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="449" text-anchor="middle">5. Cities.selectAll().where { ... }</text>
+<path class="line" d="M 382 518 L 566 518" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="486" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="503" text-anchor="middle">6. SELECT * FROM cities WHERE ...</text>
+<path class="line" d="M 592 572 L 776 572" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="540" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="557" text-anchor="middle">7. ResultRow list</text>
+<path class="line" d="M 778 626 L 174 626" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="594" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="611" text-anchor="middle">8. Cities.update({ ... it[name] = Busan }</text>
+<path class="line" d="M 172 680 L 356 680" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="648" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="665" text-anchor="middle">9. UPDATE cities SE... Busan WHERE id = 1</text>
+<path class="line" d="M 382 734 L 566 734" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="702" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="719" text-anchor="middle">10. Cities.deleteWhere { id eq 1 }</text>
+<path class="line" d="M 592 788 L 776 788" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="756" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="773" text-anchor="middle">11. DELETE FROM cities WHERE id = 1</text>
+<path class="line" d="M 778 842 L 174 842" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="810" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="827" text-anchor="middle">12. COMMIT</text>
 </svg>

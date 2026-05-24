@@ -1,115 +1,137 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1378" height="858" viewBox="0 0 1378 858" role="img" aria-label="Virtual Thread Processing Model Flowchart">
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="1750" viewBox="0 0 922 1750" role="img" aria-label="Virtual Thread Processing Model Flowchart">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
-    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
-    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="1378" height="858"/>
-<rect class="frame" x="32" y="28" width="1314" height="802" rx="28"/>
-<text class="title" x="66" y="82">Virtual Thread Processing Model Flowchart</text>
-<text class="subtitle" x="70" y="118">Architecture nodes and edges from the original Mermaid source</text>
-<path class="line" d="M839 718 C839 718 873 718 873 718"/>
-<path class="line" d="M505 718 C505 718 539 718 539 718"/>
-<path class="line" d="M1040 552 C1040 635 505 635 505 718"/>
-<path class="line" d="M1006 552 C1006 552 1040 552 1040 552"/>
-<path class="line" d="M338 552 C338 552 372 552 372 552"/>
-<path class="line" d="M1040 386 C1040 469 672 469 672 552"/>
-<path class="line" d="M706 386 C706 469 338 469 338 552"/>
-<path class="line" d="M1006 386 C1006 386 1040 386 1040 386"/>
-<path class="line" d="M672 386 C672 386 706 386 706 386"/>
-<path class="line" d="M338 386 C338 386 372 386 372 386"/>
-<path class="line" d="M1040 220 C1040 303 338 303 338 386"/>
-<path class="line" d="M1006 220 C1006 220 1040 220 1040 220"/>
-<path class="line" d="M672 220 C672 220 706 220 706 220"/>
-<path class="line" d="M338 220 C338 220 372 220 372 220"/>
-<g transform="translate(48,170)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">( )</text>
-</g>
-<g transform="translate(382,170)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">new Virtual Thread</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">Jdbc Transaction { }</text>
-</g>
-<g transform="translate(716,170)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">JVM: Virtual Thread</text>
-</g>
-<g transform="translate(1050,170)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">(OS Thread-N)</text>
-</g>
-<g transform="translate(48,336)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Exposed Transaction</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">BEGIN</text>
-</g>
-<g transform="translate(382,336)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F1ECFF" stroke="#8A72D6"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">DB (INSERT / SELECT</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">/ UPDATE)</text>
-</g>
-<g transform="translate(716,336)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F7F1E7" stroke="#B88A44"/>
-  <text class="smallLabel" x="140" y="45" text-anchor="middle">Result</text>
-</g>
-<g transform="translate(1050,336)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EEF6D9" stroke="#8BA84D"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">COMMIT Result</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">returned</text>
-</g>
-<g transform="translate(48,502)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">ROLLBACK Exception</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">propagated</text>
-</g>
-<g transform="translate(382,502)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#EAF7EF" stroke="#58A978"/>
-  <text class="smallLabel" x="140" y="21" text-anchor="middle">Virtual Thread</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">terminated (platform</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">thread released)</text>
-</g>
-<g transform="translate(716,502)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FFF3D9" stroke="#D6A441"/>
-  <text class="smallLabel" x="140" y="21" text-anchor="middle">virtual Thread Jdbc</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">Transaction Async {</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">}</text>
-</g>
-<g transform="translate(1050,502)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#FDECEF" stroke="#DC6B82"/>
-  <text class="smallLabel" x="140" y="21" text-anchor="middle">Virtual</text>
-<text class="smallLabel" x="140" y="47" text-anchor="middle">Future&amp;lt;T&amp;gt;</text>
-<text class="smallLabel" x="140" y="73" text-anchor="middle">returned immediately</text>
-</g>
-<g transform="translate(215,668)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#E9F7F6" stroke="#45A7A1"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">Parallel Virtual</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">Threads execute</text>
-</g>
-<g transform="translate(549,668)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F1ECFF" stroke="#8A72D6"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">futures.awaitAll()</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">wait</text>
-</g>
-<g transform="translate(883,668)">
-  <rect class="card" x="0" y="0" width="280" height="100" rx="14" fill="#F7F1E7" stroke="#B88A44"/>
-  <text class="smallLabel" x="140" y="33" text-anchor="middle">All results</text>
-<text class="smallLabel" x="140" y="59" text-anchor="middle">collected</text>
-</g>
+
+<rect class="canvas" x="0" y="0" width="922" height="100%"/>
+<rect class="frame" x="20" y="20" width="882" height="1710" rx="18"/>
+<text class="title" x="54" y="72">Virtual Thread Processing Model</text>
+<text class="title" x="54" y="116">Flowchart</text>
+<text class="subtitle" x="56" y="144">Pastel architecture overview</text>
+<rect class="card" x="48" y="184" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="230" text-anchor="middle">( )</text>
+<rect class="card" x="338" y="184" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="230" text-anchor="middle">new Virtual Thread</text>
+<rect class="card" x="628" y="184" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="230" text-anchor="middle">Jdbc Transaction {</text>
+<text class="label" x="751" y="255" text-anchor="middle">}</text>
+<rect class="card" x="48" y="340" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="386" text-anchor="middle">JVM: Virtual Thread</text>
+<rect class="card" x="338" y="340" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="386" text-anchor="middle">(OS Thread-N)</text>
+<rect class="card" x="628" y="340" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="386" text-anchor="middle">Exposed Transaction</text>
+<rect class="card" x="48" y="496" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="542" text-anchor="middle">BEGIN</text>
+<rect class="card" x="338" y="496" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="542" text-anchor="middle">DB (INSERT / SELECT</text>
+<rect class="card" x="628" y="496" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="751" y="542" text-anchor="middle">/ UPDATE)</text>
+<rect class="card" x="48" y="652" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="171" y="698" text-anchor="middle">Result</text>
+<rect class="card" x="338" y="652" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="461" y="698" text-anchor="middle">COMMIT Result</text>
+<rect class="card" x="628" y="652" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="751" y="698" text-anchor="middle">returned</text>
+<rect class="card" x="48" y="808" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="171" y="854" text-anchor="middle">ROLLBACK Exception</text>
+<rect class="card" x="338" y="808" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="461" y="854" text-anchor="middle">propagated</text>
+<rect class="card" x="628" y="808" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="751" y="854" text-anchor="middle">Virtual Thread</text>
+<rect class="card" x="48" y="964" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="171" y="1010" text-anchor="middle">terminated</text>
+<text class="label" x="171" y="1035" text-anchor="middle">(platform</text>
+<rect class="card" x="338" y="964" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="461" y="1010" text-anchor="middle">thread released)</text>
+<rect class="card" x="628" y="964" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="751" y="1010" text-anchor="middle">virtual Thread Jdbc</text>
+<rect class="card" x="48" y="1120" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="171" y="1166" text-anchor="middle">Transaction Async {</text>
+<rect class="card" x="338" y="1120" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="461" y="1166" text-anchor="middle">}</text>
+<rect class="card" x="628" y="1120" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="751" y="1166" text-anchor="middle">Virtual</text>
+<rect class="card" x="48" y="1276" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="171" y="1322" text-anchor="middle">Future&lt;T&gt;</text>
+<rect class="card" x="338" y="1276" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="461" y="1322" text-anchor="middle">returned</text>
+<text class="label" x="461" y="1347" text-anchor="middle">immediately</text>
+<rect class="card" x="628" y="1276" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="751" y="1322" text-anchor="middle">Parallel Virtual</text>
+<rect class="card" x="48" y="1432" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="1478" text-anchor="middle">Threads execute</text>
+<rect class="card" x="338" y="1432" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="1478" text-anchor="middle">futures.awaitAll()</text>
+<rect class="card" x="628" y="1432" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="1478" text-anchor="middle">wait</text>
+<rect class="card" x="48" y="1588" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="1634" text-anchor="middle">All results</text>
+<rect class="card" x="338" y="1588" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="1634" text-anchor="middle">collected</text>
+<path class="line" d="M 302 243 L 330 243" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 310 L 171 332" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 243 L 620 243" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 310 L 461 332" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 310 L 751 332" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 399 L 330 399" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 466 L 171 488" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 399 L 620 399" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 466 L 461 488" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 466 L 751 488" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 555 L 330 555" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 622 L 171 644" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 555 L 620 555" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 622 L 461 644" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 622 L 751 644" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 711 L 330 711" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 778 L 171 800" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 711 L 620 711" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 778 L 461 800" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 778 L 751 800" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 867 L 330 867" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 934 L 171 956" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 867 L 620 867" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 934 L 461 956" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 934 L 751 956" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1023 L 330 1023" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1090 L 171 1112" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1023 L 620 1023" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1090 L 461 1112" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1090 L 751 1112" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1179 L 330 1179" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1246 L 171 1268" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1179 L 620 1179" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1246 L 461 1268" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1246 L 751 1268" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1335 L 330 1335" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1402 L 171 1424" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1335 L 620 1335" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1402 L 461 1424" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 1402 L 751 1424" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1491 L 330 1491" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 1558 L 171 1580" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 1491 L 620 1491" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 1558 L 461 1580" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 1647 L 330 1647" marker-end="url(#openArrow)"/>
 </svg>

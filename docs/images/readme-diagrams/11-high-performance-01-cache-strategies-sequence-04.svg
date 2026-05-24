@@ -1,82 +1,89 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2296" height="1676" viewBox="0 0 2296 1676" role="img" aria-label="Request Processing Flow — Write-Behind Async Event Loading">
+<svg xmlns="http://www.w3.org/2000/svg" width="1580" height="962" viewBox="0 0 1580 962" role="img" aria-label="High Performance Cache Strategies">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
-    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
-    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="2296" height="1676"/>
-<rect class="frame" x="32" y="28" width="2232" height="1620" rx="28"/>
-<text class="title" x="66" y="82">Request Processing Flow — Write-Behind Async Event Loading</text>
-<text class="subtitle" x="70" y="118">Sequence messages from the original Mermaid source</text>
-<rect class="card" x="-10" y="166" width="300" height="72" rx="20" fill="#E8F3FF" stroke="#5B8DEF"/>
-<text class="smallLabel" x="140" y="209" text-anchor="middle">Client</text>
-<line class="lifeline" x1="140" y1="252" x2="140" y2="1616" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="393.20000000000005" y="166" width="300" height="72" rx="20" fill="#EAF7EF" stroke="#58A978"/>
-<text class="smallLabel" x="543.2" y="198.5" text-anchor="middle">User Event Cache</text>
-<text class="smallLabel" x="543.2" y="219.5" text-anchor="middle">Repository</text>
-<line class="lifeline" x1="543.2" y1="252" x2="543.2" y2="1616" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="796.4" y="166" width="300" height="72" rx="20" fill="#FFF3D9" stroke="#D6A441"/>
-<text class="smallLabel" x="946.4" y="209" text-anchor="middle">Near Cache (L1)</text>
-<line class="lifeline" x1="946.4" y1="252" x2="946.4" y2="1616" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="1199.6" y="166" width="300" height="72" rx="20" fill="#FDECEF" stroke="#DC6B82"/>
-<text class="smallLabel" x="1349.6" y="209" text-anchor="middle">Redis (L2)</text>
-<line class="lifeline" x1="1349.6" y1="252" x2="1349.6" y2="1616" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="1602.8" y="166" width="300" height="72" rx="20" fill="#E9F7F6" stroke="#45A7A1"/>
-<text class="smallLabel" x="1752.8" y="209" text-anchor="middle">Async Write Queue</text>
-<line class="lifeline" x1="1752.8" y1="252" x2="1752.8" y2="1616" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="2006" y="166" width="300" height="72" rx="20" fill="#F1ECFF" stroke="#8A72D6"/>
-<text class="smallLabel" x="2156" y="209" text-anchor="middle">Database</text>
-<line class="lifeline" x1="2156" y1="252" x2="2156" y2="1616" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect x="236.60000000000002" y="286" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="254.60000000000002" y="313" text-anchor="start">1. saveAll(events)</text>
-<path class="line" d="M140 344 L543.2 344"/>
-<rect x="617.8" y="396" width="254" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="635.8" y="423" text-anchor="start">2. put events (immediately)</text>
-<path class="line" d="M543.2 454 L946.4 454"/>
-<rect x="819.4" y="506" width="254" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="837.4" y="533" text-anchor="start">3. put events (immediately)</text>
-<path class="line" d="M543.2 564 L1349.6 564"/>
-<rect x="625.8" y="616" width="238" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="643.8" y="643" text-anchor="start">4. Save complete response</text>
-<path class="dashed" d="M1349.6 674 L140 674"/>
-<rect x="1436.1999999999998" y="726" width="230" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1454.1999999999998" y="753" text-anchor="start">5. enqueue dirty entries</text>
-<path class="line" d="M1349.6 784 L1752.8 784"/>
-<rect x="1839.4" y="836" width="230" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1857.4" y="863" text-anchor="start">6. batchInsert (Exposed)</text>
-<path class="line" d="M1752.8 894 L2156 894"/>
-<rect x="1849.4" y="946" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1867.4" y="973" text-anchor="start">7. commit</text>
-<path class="dashed" d="M2156 1004 L1752.8 1004"/>
-<rect x="1446.1999999999998" y="1056" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1464.1999999999998" y="1083" text-anchor="start">8. flush complete</text>
-<path class="dashed" d="M1752.8 1114 L1349.6 1114"/>
-<rect x="236.60000000000002" y="1166" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="254.60000000000002" y="1193" text-anchor="start">9. findById(id)</text>
-<path class="line" d="M140 1224 L543.2 1224"/>
-<rect x="639.8" y="1276" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="657.8" y="1303" text-anchor="start">10. get(id)</text>
-<path class="line" d="M543.2 1334 L946.4 1334"/>
-<rect x="639.8" y="1386" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="657.8" y="1413" text-anchor="start">11. hit → return</text>
-<path class="dashed" d="M946.4 1444 L543.2 1444"/>
-<rect x="236.60000000000002" y="1496" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="254.60000000000002" y="1523" text-anchor="start">12. UserEventRecord</text>
-<path class="dashed" d="M543.2 1554 L140 1554"/>
+
+<rect class="canvas" x="0" y="0" width="1580" height="100%"/>
+<rect class="frame" x="20" y="20" width="1540" height="922" rx="18"/>
+<text class="title" x="54" y="72">High Performance Cache Strategies</text>
+<text class="subtitle" x="56" y="100">Request and data flow</text>
+<rect class="card" x="72" y="142" width="176" height="58" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="smallLabel" x="160" y="166" text-anchor="middle">Request</text>
+<text class="smallLabel" x="160" y="186" text-anchor="middle">Processing Flow...</text>
+<path class="dash" d="M 160 208 L 160 908"/>
+<rect class="card" x="282" y="142" width="176" height="58" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="smallLabel" x="370" y="166" text-anchor="middle">Client</text>
+<path class="dash" d="M 370 208 L 370 908"/>
+<rect class="card" x="492" y="142" width="176" height="58" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="smallLabel" x="580" y="166" text-anchor="middle">User Event Cache</text>
+<path class="dash" d="M 580 208 L 580 908"/>
+<rect class="card" x="702" y="142" width="176" height="58" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="smallLabel" x="790" y="166" text-anchor="middle">Repository</text>
+<path class="dash" d="M 790 208 L 790 908"/>
+<rect class="card" x="912" y="142" width="176" height="58" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="smallLabel" x="1000" y="166" text-anchor="middle">Near Cache (L1)</text>
+<path class="dash" d="M 1000 208 L 1000 908"/>
+<rect class="card" x="1122" y="142" width="176" height="58" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="smallLabel" x="1210" y="166" text-anchor="middle">Redis (L2)</text>
+<path class="dash" d="M 1210 208 L 1210 908"/>
+<rect class="card" x="1332" y="142" width="176" height="58" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="smallLabel" x="1420" y="166" text-anchor="middle">Async Write</text>
+<text class="smallLabel" x="1420" y="186" text-anchor="middle">Queue</text>
+<path class="dash" d="M 1420 208 L 1420 908"/>
+<path class="line" d="M 172 248 L 356 248" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="216" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="233" text-anchor="middle">1. saveAll(events)</text>
+<path class="line" d="M 382 302 L 566 302" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="270" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="287" text-anchor="middle">2. put events (immediately)</text>
+<path class="line" d="M 592 356 L 776 356" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="324" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="341" text-anchor="middle">3. put events (immediately)</text>
+<path class="line" d="M 802 410 L 986 410" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="378" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="395" text-anchor="middle">4. Save complete response</text>
+<path class="line" d="M 1012 464 L 1196 464" marker-end="url(#openArrow)"/>
+<rect class="note" x="973" y="432" width="264" height="24" rx="8"/>
+<text class="small" x="1105" y="449" text-anchor="middle">5. enqueue dirty entries</text>
+<path class="line" d="M 1222 518 L 1406 518" marker-end="url(#openArrow)"/>
+<rect class="note" x="1183" y="486" width="264" height="24" rx="8"/>
+<text class="small" x="1315" y="503" text-anchor="middle">6. batchInsert (Exposed)</text>
+<path class="line" d="M 1408 572 L 174 572" marker-end="url(#openArrow)"/>
+<rect class="note" x="658" y="540" width="264" height="24" rx="8"/>
+<text class="small" x="790" y="557" text-anchor="middle">7. commit</text>
+<path class="line" d="M 172 626 L 356 626" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="594" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="611" text-anchor="middle">8. flush complete</text>
+<path class="line" d="M 382 680 L 566 680" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="648" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="665" text-anchor="middle">9. findById(id)</text>
+<path class="line" d="M 592 734 L 776 734" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="702" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="719" text-anchor="middle">10. get(id)</text>
+<path class="line" d="M 802 788 L 986 788" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="756" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="773" text-anchor="middle">11. hit → return</text>
+<path class="line" d="M 1012 842 L 1196 842" marker-end="url(#openArrow)"/>
+<rect class="note" x="973" y="810" width="264" height="24" rx="8"/>
+<text class="small" x="1105" y="827" text-anchor="middle">12. UserEventRecord</text>
 </svg>

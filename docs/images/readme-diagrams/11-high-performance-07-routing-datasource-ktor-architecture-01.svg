@@ -1,50 +1,84 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
-  <title id="title">Ktor routing datasource architecture</title>
-  <desc id="desc">Ktor request plugin selects read or write datasource before repository transactions run against the selected Exposed database.</desc>
-  <defs>
-    <style>
-      .bg { fill: #f8fafc; }
-      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 8; }
-      .route { fill: #ede9fe; stroke: #6d28d9; }
-      .db { fill: #ecfdf5; stroke: #047857; }
-      .text { font: 18px sans-serif; fill: #0f172a; }
-      .small { font: 14px sans-serif; fill: #334155; }
-      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
-    </style>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
-    </marker>
-  </defs>
-  <rect class="bg" width="1120" height="560"/>
-  <text x="56" y="56" class="text" style="font-size:28px;font-weight:700">Ktor read/write datasource routing</text>
-  <text x="56" y="86" class="small">The plugin selects READ or WRITE before route handlers enter repository transactions.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="928" viewBox="0 0 922 928" role="img" aria-label="Ktor read/write datasource routing">
+<defs>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
+</defs>
 
-  <rect x="70" y="150" width="200" height="110" class="box"/>
-  <text x="112" y="192" class="text">HTTP request</text>
-  <text x="100" y="222" class="small">method + X-Data-Source</text>
-
-  <rect x="340" y="128" width="230" height="154" class="box route"/>
-  <text x="378" y="174" class="text">RoutingDataSourcePlugin</text>
-  <text x="390" y="204" class="small">GET -> READ</text>
-  <text x="390" y="228" class="small">PUT/POST -> WRITE</text>
-  <text x="390" y="252" class="small">header override</text>
-
-  <rect x="640" y="150" width="210" height="110" class="box"/>
-  <text x="668" y="194" class="text">Repository</text>
-  <text x="676" y="222" class="small">selected Database</text>
-
-  <rect x="640" y="360" width="170" height="100" class="box db"/>
-  <text x="690" y="402" class="text">READ</text>
-  <text x="676" y="430" class="small">replica-like H2</text>
-
-  <rect x="880" y="360" width="170" height="100" class="box db"/>
-  <text x="926" y="402" class="text">WRITE</text>
-  <text x="914" y="430" class="small">primary-like H2</text>
-
-  <path d="M270 206 L340 206" class="arrow"/>
-  <path d="M570 206 L640 206" class="arrow"/>
-  <path d="M735 260 L724 360" class="arrow"/>
-  <path d="M780 260 C862 294 938 320 965 360" class="arrow"/>
-
-  <text x="90" y="504" class="small">Tests assert selected datasource values and read/write selection counters without relying on Spring transaction infrastructure.</text>
+<rect class="canvas" x="0" y="0" width="922" height="100%"/>
+<rect class="frame" x="20" y="20" width="882" height="888" rx="18"/>
+<text class="title" x="54" y="72">Ktor read/write datasource routing</text>
+<text class="subtitle" x="56" y="100">Pastel architecture overview</text>
+<rect class="card" x="48" y="142" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="188" text-anchor="middle">The plugin selects</text>
+<text class="label" x="171" y="213" text-anchor="middle">READ or WRITE</text>
+<text class="label" x="171" y="238" text-anchor="middle">before route...</text>
+<rect class="card" x="338" y="142" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="188" text-anchor="middle">HTTP request</text>
+<rect class="card" x="628" y="142" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="188" text-anchor="middle">method +</text>
+<text class="label" x="751" y="213" text-anchor="middle">X-Data-Source</text>
+<rect class="card" x="48" y="298" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="344" text-anchor="middle">Routing Data Source</text>
+<text class="label" x="171" y="369" text-anchor="middle">Plugin</text>
+<rect class="card" x="338" y="298" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="344" text-anchor="middle">GET -&gt; READ</text>
+<rect class="card" x="628" y="298" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="344" text-anchor="middle">PUT/POST -&gt; WRITE</text>
+<rect class="card" x="48" y="454" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="500" text-anchor="middle">header override</text>
+<rect class="card" x="338" y="454" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="500" text-anchor="middle">Repository</text>
+<rect class="card" x="628" y="454" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="751" y="500" text-anchor="middle">selected Database</text>
+<rect class="card" x="48" y="610" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="171" y="656" text-anchor="middle">READ</text>
+<rect class="card" x="338" y="610" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="461" y="656" text-anchor="middle">replica-like H2</text>
+<rect class="card" x="628" y="610" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="751" y="656" text-anchor="middle">WRITE</text>
+<rect class="card" x="48" y="766" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="171" y="812" text-anchor="middle">primary-like H2</text>
+<rect class="card" x="338" y="766" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="461" y="812" text-anchor="middle">Tests assert</text>
+<text class="label" x="461" y="837" text-anchor="middle">selected datasource</text>
+<text class="label" x="461" y="862" text-anchor="middle">values and...</text>
+<path class="line" d="M 302 201 L 330 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 268 L 171 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 201 L 620 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 268 L 461 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 268 L 751 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 357 L 330 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 424 L 171 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 357 L 620 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 424 L 461 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 424 L 751 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 513 L 330 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 580 L 171 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 513 L 620 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 580 L 461 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 580 L 751 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 669 L 330 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 736 L 171 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 669 L 620 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 736 L 461 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 825 L 330 825" marker-end="url(#openArrow)"/>
 </svg>

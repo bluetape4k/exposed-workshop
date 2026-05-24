@@ -1,127 +1,97 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1406" height="1638" viewBox="0 0 1406 1638" role="img" aria-label="03 multitenant spring webflux Class Structure 2">
+<svg xmlns="http://www.w3.org/2000/svg" width="998" height="1056" viewBox="0 0 998 1056" role="img" aria-label="03 multitenant spring webflux Class Structure 2">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="10" markerHeight="8" refX="8.5" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 8.5 4 L 1 7" fill="none" stroke="#758297" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 0.5 1 L 9.5 5 L 0.5 9 Z" fill="#ffffff" stroke="#758297" stroke-width="1.7"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
-    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
-    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="1406" height="1638"/>
-<rect class="frame" x="32" y="28" width="1342" height="1582" rx="28"/>
-<text class="title" x="66" y="82">03 multitenant spring webflux Class Structure 2</text>
-<text class="subtitle" x="70" y="118">UML classes from the original Mermaid source</text>
-<path class="line" d="M1145 866 L1145 766 L1342 766 L1342 444 L1145 444 L1145 313"/>
-<path class="line" d="M482 1246 L482 1138 L261 1138 L261 999"/>
-<path class="line" d="M1145 544 L1145 484 L703 484 L703 376"/>
-<path class="line" d="M1145 313 L1145 102 L703 102 L703 180"/>
-<path class="line" d="M261 544 L261 355"/>
-<path class="line" d="M703 180 L703 122 L261 122 L261 355"/>
-<path class="line" d="M703 376 L703 452 L54 452 L54 774 L703 774 L703 866"/>
-<path class="line" d="M703 544 L703 376"/>
-<path class="line" d="M703 698 L703 758 L261 758 L261 544"/>
-<g transform="translate(96,180)">
-  <rect class="card" x="0" y="0" width="330" height="175" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#5B8DEF"/>
-  <text class="small" x="165" y="26" text-anchor="middle">«enumeration»</text>
-  <text class="label" x="165" y="61" text-anchor="middle">Tenant</text>
-  <text class="mono" x="18" y="108">KOREAN</text>
-<text class="mono" x="18" y="129">ENGLISH</text>
-<text class="mono" x="18" y="150">+id: String</text>
-</g>
-<g transform="translate(538,180)">
-  <rect class="card" x="0" y="0" width="330" height="196" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#58A978"/>
-  <text class="small" x="165" y="26" text-anchor="middle"></text>
-  <text class="label" x="165" y="61" text-anchor="middle">TenantId</text>
-  <text class="mono" x="18" y="108">+value: Tenant</text>
-<text class="mono" x="18" y="129">+TENANT_ID_KEY: String</text>
-<text class="mono" x="18" y="150">+DEFAULT: TenantId</text>
-<text class="mono" x="18" y="171">+key: CoroutineContext.Key</text>
-</g>
-<g transform="translate(980,180)">
-  <rect class="card" x="0" y="0" width="330" height="133" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
-  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#D6A441"/>
-  <text class="small" x="165" y="26" text-anchor="middle"></text>
-  <text class="label" x="165" y="61" text-anchor="middle">TenantAwareDataSource</text>
-  <text class="mono" x="18" y="108">+determineCurrentLookupKey() Any</text>
-</g>
-<g transform="translate(96,544)">
-  <rect class="card" x="0" y="0" width="330" height="154" rx="5" fill="#FDECEF" stroke="#DC6B82"/>
-  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#DC6B82"/>
-  <text class="small" x="165" y="26" text-anchor="middle"></text>
-  <text class="label" x="165" y="61" text-anchor="middle">Tenants</text>
-  <text class="mono" x="18" y="108">+DEFAULT_TENANT: Tenant</text>
-<text class="mono" x="18" y="129">+getById(tenantId) Tenant</text>
-</g>
-<g transform="translate(538,544)">
-  <rect class="card" x="0" y="0" width="330" height="154" rx="5" fill="#E9F7F6" stroke="#45A7A1"/>
-  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#45A7A1"/>
-  <text class="small" x="165" y="26" text-anchor="middle"></text>
-  <text class="label" x="165" y="61" text-anchor="middle">TenantFilter</text>
-  <text class="mono" x="18" y="108">+TENANT_HEADER: String</text>
-<text class="mono" x="18" y="129">+filter(exchange, chain) Mono~Void~</text>
-</g>
-<g transform="translate(980,544)">
-  <rect class="card" x="0" y="0" width="330" height="154" rx="5" fill="#F1ECFF" stroke="#8A72D6"/>
-  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#8A72D6"/>
-  <text class="small" x="165" y="26" text-anchor="middle"></text>
-  <text class="label" x="165" y="61" text-anchor="middle">ActorController</text>
-  <text class="mono" x="18" y="108">+getAllActors() List~ActorRecord~</text>
-<text class="mono" x="18" y="129">+findById(id) ActorRecord</text>
-</g>
-<g transform="translate(96,866)">
-  <rect class="card" x="0" y="0" width="330" height="133" rx="5" fill="#F7F1E7" stroke="#B88A44"/>
-  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#B88A44"/>
-  <text class="small" x="165" y="26" text-anchor="middle"></text>
-  <text class="label" x="165" y="61" text-anchor="middle">DataInitializer</text>
-  <text class="mono" x="18" y="108">+initialize(tenant)</text>
-</g>
-<g transform="translate(538,866)">
-  <rect class="card" x="0" y="0" width="330" height="128" rx="5" fill="#EEF6D9" stroke="#8BA84D"/>
-  <line class="compartment" x1="0" y1="94" x2="330" y2="94" stroke="#8BA84D"/>
-  <text class="small" x="165" y="26" text-anchor="middle"></text>
-  <text class="label" x="165" y="56.5" text-anchor="middle">Coroutine</text>
-<text class="label" x="165" y="81.5" text-anchor="middle">Context_Element</text>
 
-</g>
-<g transform="translate(980,866)">
-  <rect class="card" x="0" y="0" width="330" height="212" rx="5" fill="#E8F3FF" stroke="#5B8DEF"/>
-  <line class="compartment" x1="0" y1="94" x2="330" y2="94" stroke="#5B8DEF"/>
-  <text class="small" x="165" y="26" text-anchor="middle"></text>
-  <text class="label" x="165" y="56.5" text-anchor="middle">Exposed Multitenant</text>
-<text class="label" x="165" y="81.5" text-anchor="middle">Config</text>
-  <text class="mono" x="18" y="124">+tenantAwareDataSource()</text>
-<text class="mono" x="18" y="145">TenantAwareDataSource</text>
-<text class="mono" x="18" y="166">+dataSource() DataSource</text>
-<text class="mono" x="18" y="187">+database(dataSource, config) Database</text>
-</g>
-<g transform="translate(317,1246)">
-  <rect class="card" x="0" y="0" width="330" height="133" rx="5" fill="#EAF7EF" stroke="#58A978"/>
-  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#58A978"/>
-  <text class="small" x="165" y="26" text-anchor="middle"></text>
-  <text class="label" x="165" y="61" text-anchor="middle">TenantInitializer</text>
-  <text class="mono" x="18" y="108">+onApplicationEvent(event)</text>
-</g>
-<g transform="translate(759,1246)">
-  <rect class="card" x="0" y="0" width="330" height="154" rx="5" fill="#FFF3D9" stroke="#D6A441"/>
-  <line class="compartment" x1="0" y1="78" x2="330" y2="78" stroke="#D6A441"/>
-  <text class="small" x="165" y="26" text-anchor="middle"></text>
-  <text class="label" x="165" y="61" text-anchor="middle">NettyConfig</text>
-  <text class="mono" x="18" y="108">+nettyReactiveWebServerFactory()</text>
-<text class="mono" x="18" y="129">NettyReactiveWebServerFactory</text>
-</g>
+<rect class="canvas" x="0" y="0" width="998" height="100%"/>
+<rect class="frame" x="20" y="20" width="958" height="1016" rx="18"/>
+<text class="title" x="54" y="72">03 multitenant spring webflux Class</text>
+<text class="title" x="54" y="116">Structure 2</text>
+<text class="subtitle" x="56" y="144">Class and component responsibilities</text>
+<rect class="card" x="43" y="184" width="280" height="138" rx="14" fill="#f7d9df" stroke="#d9899b"/>
+<text class="smallLabel" x="183" y="220" text-anchor="middle">«enumeration»</text>
+<line class="dash" x1="61" y1="246" x2="305" y2="246"/>
+<rect class="card" x="359" y="184" width="280" height="138" rx="14" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="smallLabel" x="499" y="220" text-anchor="middle">Tenant</text>
+<line class="dash" x1="377" y1="246" x2="621" y2="246"/>
+<rect class="card" x="675" y="184" width="280" height="138" rx="14" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="smallLabel" x="815" y="220" text-anchor="middle">KOREAN</text>
+<line class="dash" x1="693" y1="246" x2="937" y2="246"/>
+<rect class="card" x="43" y="356" width="280" height="138" rx="14" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="smallLabel" x="183" y="392" text-anchor="middle">ENGLISH</text>
+<line class="dash" x1="61" y1="418" x2="305" y2="418"/>
+<text class="mono" x="67" y="442">+ +id: String</text>
+<rect class="card" x="359" y="356" width="280" height="138" rx="14" fill="#eadff8" stroke="#a287c8"/>
+<text class="smallLabel" x="499" y="392" text-anchor="middle">TenantId</text>
+<line class="dash" x1="377" y1="418" x2="621" y2="418"/>
+<text class="mono" x="383" y="442">+ +value: Tenant</text>
+<text class="mono" x="383" y="459">+ +TENANT_ID_KEY: String</text>
+<text class="mono" x="383" y="476">+ +DEFAULT: TenantId</text>
+<text class="mono" x="383" y="493">+ +key: CoroutineContext.Key</text>
+<rect class="card" x="675" y="356" width="280" height="138" rx="14" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="smallLabel" x="815" y="392" text-anchor="middle">TenantAwareDataSource</text>
+<line class="dash" x1="693" y1="418" x2="937" y2="418"/>
+<text class="mono" x="699" y="442">+ +determineCurrentLookupKey() Any</text>
+<rect class="card" x="43" y="528" width="280" height="138" rx="14" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="smallLabel" x="183" y="564" text-anchor="middle">Tenants</text>
+<line class="dash" x1="61" y1="590" x2="305" y2="590"/>
+<text class="mono" x="67" y="614">+ +DEFAULT_TENANT: Tenant</text>
+<text class="mono" x="67" y="631">+ +getById(tenantId) Tenant</text>
+<rect class="card" x="359" y="528" width="280" height="138" rx="14" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="smallLabel" x="499" y="564" text-anchor="middle">TenantFilter</text>
+<line class="dash" x1="377" y1="590" x2="621" y2="590"/>
+<text class="mono" x="383" y="614">+ +TENANT_HEADER: String</text>
+<text class="mono" x="383" y="631">+ +filter(exchang...ain) Mono~Void~</text>
+<rect class="card" x="675" y="528" width="280" height="138" rx="14" fill="#f7d9df" stroke="#d9899b"/>
+<text class="smallLabel" x="815" y="564" text-anchor="middle">ActorController</text>
+<line class="dash" x1="693" y1="590" x2="937" y2="590"/>
+<text class="mono" x="699" y="614">+ +getAllActors() List~ActorRecord~</text>
+<text class="mono" x="699" y="631">+ +findById(id) ActorRecord</text>
+<rect class="card" x="43" y="700" width="280" height="138" rx="14" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="smallLabel" x="183" y="736" text-anchor="middle">DataInitializer</text>
+<line class="dash" x1="61" y1="762" x2="305" y2="762"/>
+<text class="mono" x="67" y="786">+ +initialize(tenant)</text>
+<rect class="card" x="359" y="700" width="280" height="138" rx="14" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="smallLabel" x="499" y="736" text-anchor="middle">Coroutine</text>
+<line class="dash" x1="377" y1="762" x2="621" y2="762"/>
+<text class="mono" x="383" y="786">+ Context_Element</text>
+<text class="mono" x="383" y="803">+ Exposed Multitenant</text>
+<rect class="card" x="675" y="700" width="280" height="138" rx="14" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="smallLabel" x="815" y="736" text-anchor="middle">Config</text>
+<line class="dash" x1="693" y1="762" x2="937" y2="762"/>
+<text class="mono" x="699" y="786">+ +tenantAwareDataSource()</text>
+<text class="mono" x="699" y="803">+ +dataSource() DataSource</text>
+<text class="mono" x="699" y="820">+ +database(dataS...onfig) Database</text>
+<rect class="card" x="43" y="872" width="280" height="138" rx="14" fill="#eadff8" stroke="#a287c8"/>
+<text class="smallLabel" x="183" y="908" text-anchor="middle">TenantInitializer</text>
+<line class="dash" x1="61" y1="934" x2="305" y2="934"/>
+<text class="mono" x="67" y="958">+ +onApplicationEvent(event)</text>
+<rect class="card" x="359" y="872" width="280" height="138" rx="14" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="smallLabel" x="499" y="908" text-anchor="middle">NettyConfig</text>
+<line class="dash" x1="377" y1="934" x2="621" y2="934"/>
+<text class="mono" x="383" y="958">+ +nettyReactiveWebServerFactory()</text>
+<rect class="card" x="675" y="872" width="280" height="138" rx="14" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="smallLabel" x="815" y="908" text-anchor="middle">Netty Reactive Web</text>
+<text class="smallLabel" x="815" y="931" text-anchor="middle">Server Factory</text>
+<line class="dash" x1="693" y1="934" x2="937" y2="934"/>
 </svg>

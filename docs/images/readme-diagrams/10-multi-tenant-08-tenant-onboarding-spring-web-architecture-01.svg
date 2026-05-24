@@ -1,51 +1,84 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
-  <title id="title">Tenant onboarding provisioning architecture</title>
-  <desc id="desc">Tenant onboarding validates input, checks tenant catalog, provisions schema resources, and cleans up on provisioning failure.</desc>
-  <defs>
-    <style>
-      .bg { fill: #f8fafc; }
-      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 8; }
-      .service { fill: #e0f2fe; stroke: #0369a1; }
-      .db { fill: #ecfdf5; stroke: #047857; }
-      .warn { fill: #fef3c7; stroke: #b45309; }
-      .text { font: 18px sans-serif; fill: #0f172a; }
-      .small { font: 14px sans-serif; fill: #334155; }
-      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
-    </style>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
-    </marker>
-  </defs>
-  <rect class="bg" width="1120" height="560"/>
-  <text x="56" y="56" class="text" style="font-size:28px;font-weight:700">Tenant onboarding and provisioning</text>
-  <text x="56" y="86" class="small">Metadata is committed only after schema resources are provisioned; failures drop partial schemas.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="928" viewBox="0 0 922 928" role="img" aria-label="Tenant onboarding and provisioning">
+<defs>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
+</defs>
 
-  <rect x="70" y="150" width="190" height="110" class="box"/>
-  <text x="114" y="194" class="text">POST /tenants</text>
-  <text x="108" y="224" class="small">tenantId + displayName</text>
-
-  <rect x="330" y="128" width="240" height="154" class="box service"/>
-  <text x="370" y="176" class="text">TenantOnboardingService</text>
-  <text x="374" y="206" class="small">validate duplicate</text>
-  <text x="374" y="230" class="small">provision schema</text>
-  <text x="374" y="254" class="small">cleanup on failure</text>
-
-  <rect x="650" y="128" width="190" height="120" class="box db"/>
-  <text x="686" y="176" class="text">Tenant catalog</text>
-  <text x="694" y="206" class="small">metadata row</text>
-
-  <rect x="650" y="360" width="190" height="112" class="box db"/>
-  <text x="696" y="404" class="text">Tenant schema</text>
-  <text x="690" y="432" class="small">marker table</text>
-
-  <rect x="890" y="360" width="160" height="112" class="box warn"/>
-  <text x="934" y="404" class="text">Failure</text>
-  <text x="922" y="432" class="small">DROP SCHEMA</text>
-
-  <path d="M260 206 L330 206" class="arrow"/>
-  <path d="M570 182 L650 182" class="arrow"/>
-  <path d="M470 282 C512 338 590 390 650 410" class="arrow"/>
-  <path d="M840 416 L890 416" class="arrow"/>
-
-  <text x="90" y="506" class="small">Tests cover success, duplicate tenant rejection, and failure cleanup after schema creation.</text>
+<rect class="canvas" x="0" y="0" width="922" height="100%"/>
+<rect class="frame" x="20" y="20" width="882" height="888" rx="18"/>
+<text class="title" x="54" y="72">Tenant onboarding and provisioning</text>
+<text class="subtitle" x="56" y="100">Pastel architecture overview</text>
+<rect class="card" x="48" y="142" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="171" y="188" text-anchor="middle">Metadata is</text>
+<text class="label" x="171" y="213" text-anchor="middle">committed only</text>
+<text class="label" x="171" y="238" text-anchor="middle">after schema...</text>
+<rect class="card" x="338" y="142" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="461" y="188" text-anchor="middle">POST /tenants</text>
+<rect class="card" x="628" y="142" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="751" y="188" text-anchor="middle">tenantId +</text>
+<text class="label" x="751" y="213" text-anchor="middle">displayName</text>
+<rect class="card" x="48" y="298" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="171" y="344" text-anchor="middle">Tenant Onboarding</text>
+<text class="label" x="171" y="369" text-anchor="middle">Service</text>
+<rect class="card" x="338" y="298" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="461" y="344" text-anchor="middle">validate duplicate</text>
+<rect class="card" x="628" y="298" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="751" y="344" text-anchor="middle">provision schema</text>
+<rect class="card" x="48" y="454" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
+<text class="label" x="171" y="500" text-anchor="middle">cleanup on failure</text>
+<rect class="card" x="338" y="454" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
+<text class="label" x="461" y="500" text-anchor="middle">Tenant catalog</text>
+<rect class="card" x="628" y="454" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="label" x="751" y="500" text-anchor="middle">metadata row</text>
+<rect class="card" x="48" y="610" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="label" x="171" y="656" text-anchor="middle">Tenant schema</text>
+<rect class="card" x="338" y="610" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="label" x="461" y="656" text-anchor="middle">marker table</text>
+<rect class="card" x="628" y="610" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="label" x="751" y="656" text-anchor="middle">Failure</text>
+<rect class="card" x="48" y="766" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="label" x="171" y="812" text-anchor="middle">DROP SCHEMA</text>
+<rect class="card" x="338" y="766" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
+<text class="label" x="461" y="812" text-anchor="middle">Tests cover</text>
+<text class="label" x="461" y="837" text-anchor="middle">success, duplicate</text>
+<text class="label" x="461" y="862" text-anchor="middle">tenant rejection,...</text>
+<path class="line" d="M 302 201 L 330 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 268 L 171 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 201 L 620 201" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 268 L 461 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 268 L 751 290" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 357 L 330 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 424 L 171 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 357 L 620 357" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 424 L 461 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 424 L 751 446" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 513 L 330 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 580 L 171 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 513 L 620 513" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 580 L 461 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 751 580 L 751 602" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 669 L 330 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 171 736 L 171 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 592 669 L 620 669" marker-end="url(#openArrow)"/>
+<path class="line" d="M 461 736 L 461 758" marker-end="url(#openArrow)"/>
+<path class="line" d="M 302 825 L 330 825" marker-end="url(#openArrow)"/>
 </svg>

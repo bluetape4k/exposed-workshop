@@ -1,90 +1,93 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1650" height="2116" viewBox="0 0 1650 2116" role="img" aria-label="Request Processing Flow">
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="1178" viewBox="0 0 1160 1178" role="img" aria-label="Request Processing Flow">
 <defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/></filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M 0 1 L 12 6 L 0 11 Z" fill="#ffffff" stroke="#758297" stroke-width="1.8"/></marker>
+  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
+  </filter>
+  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
   <style>
-    .canvas{fill:#f7f9fc}.frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-    .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:43px;font-weight:400;fill:#102033}
-    .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-    .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:25px;font-weight:400;fill:#102033}
-    .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:21px;font-weight:400;fill:#102033}
-    .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-    .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-    .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-    .card{stroke-width:2.1;filter:url(#shadow)}.compartment{stroke-width:1.5;fill:none}
-    .line{stroke:#758297;stroke-width:2.1;fill:none;marker-end:url(#openArrow)}
-    .plainLine{stroke:#758297;stroke-width:2.1;fill:none}
-    .dashed{stroke:#758297;stroke-width:2.1;stroke-dasharray:7 6;fill:none;marker-end:url(#openArrow)}
-    .inheritLine{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#inherit)}
-    .implLine{stroke:#758297;stroke-width:2.2;stroke-dasharray:8 7;fill:none;marker-end:url(#inherit)}
-  </style>
+  .canvas{fill:#f7f9fc}
+  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
+  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
+  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
+  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
+  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
+  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
+  .card{stroke-width:2;filter:url(#shadow)}
+  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
+  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+</style>
 </defs>
-<rect class="canvas" width="1650" height="2116"/>
-<rect class="frame" x="32" y="28" width="1586" height="2060" rx="28"/>
-<text class="title" x="66" y="82">Request Processing Flow</text>
-<text class="subtitle" x="70" y="118">Sequence messages from the original Mermaid source</text>
-<rect class="card" x="21" y="166" width="238" height="72" rx="20" fill="#E8F3FF" stroke="#5B8DEF"/>
-<text class="smallLabel" x="140" y="209" text-anchor="middle">Client</text>
-<line class="lifeline" x1="140" y1="252" x2="140" y2="2056" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="363.5" y="166" width="238" height="72" rx="20" fill="#EAF7EF" stroke="#58A978"/>
-<text class="smallLabel" x="482.5" y="209" text-anchor="middle">ActorController</text>
-<line class="lifeline" x1="482.5" y1="252" x2="482.5" y2="2056" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="706" y="166" width="238" height="72" rx="20" fill="#FFF3D9" stroke="#D6A441"/>
-<text class="smallLabel" x="825" y="209" text-anchor="middle">ActorRepository</text>
-<line class="lifeline" x1="825" y1="252" x2="825" y2="2056" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="1048.5" y="166" width="238" height="72" rx="20" fill="#FDECEF" stroke="#DC6B82"/>
-<text class="smallLabel" x="1167.5" y="209" text-anchor="middle">ActorTable</text>
-<line class="lifeline" x1="1167.5" y1="252" x2="1167.5" y2="2056" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect class="card" x="1391" y="166" width="238" height="72" rx="20" fill="#E9F7F6" stroke="#45A7A1"/>
-<text class="smallLabel" x="1510" y="209" text-anchor="middle">DB</text>
-<line class="lifeline" x1="1510" y1="252" x2="1510" y2="2056" stroke="#b7c2d1" stroke-width="2" stroke-dasharray="10 10"/>
-<rect x="155.75" y="286" width="311" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="173.75" y="313" text-anchor="start">1. POST /actors (ActorRecord JSON)</text>
-<path class="line" d="M140 344 L482.5 344"/>
-<rect x="548.75" y="396" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="566.75" y="423" text-anchor="start">2. create(actor)</text>
-<path class="line" d="M482.5 454 L825 454"/>
-<rect x="772.25" y="506" width="448" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="790.25" y="533" text-anchor="start">3. insertAndGetId { firstName, lastName, birthday }</text>
-<path class="line" d="M825 564 L1167.5 564"/>
-<rect x="1219.75" y="616" width="238" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1237.75" y="643" text-anchor="start">4. INSERT INTO actors ...</text>
-<path class="line" d="M1167.5 674 L1510 674"/>
-<rect x="1233.75" y="726" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1251.75" y="753" text-anchor="start">5. generated id</text>
-<path class="dashed" d="M1510 784 L1167.5 784"/>
-<rect x="891.25" y="836" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="909.25" y="863" text-anchor="start">6. EntityID&lt;Long&gt;</text>
-<path class="dashed" d="M1167.5 894 L825 894"/>
-<rect x="538.75" y="946" width="230" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="556.75" y="973" text-anchor="start">7. ActorRecord (with id)</text>
-<path class="dashed" d="M825 1004 L482.5 1004"/>
-<rect x="200.25" y="1056" width="222" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="218.25" y="1083" text-anchor="start">8. 201 ActorRecord JSON</text>
-<path class="dashed" d="M482.5 1114 L140 1114"/>
-<rect x="180.25" y="1166" width="262" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="198.25" y="1193" text-anchor="start">9. GET /actors?firstName=Tom</text>
-<path class="line" d="M140 1224 L482.5 1224"/>
-<rect x="538.75" y="1276" width="230" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="556.75" y="1303" text-anchor="start">10. searchActors(params)</text>
-<path class="line" d="M482.5 1334 L825 1334"/>
-<rect x="796.75" y="1386" width="399" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="814.75" y="1413" text-anchor="start">11. selectAll().andWhere { firstName eq Tom }</text>
-<path class="line" d="M825 1444 L1167.5 1444"/>
-<rect x="1131.25" y="1496" width="415" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1149.25" y="1523" text-anchor="start">12. SELECT * FROM actors WHERE first_name = Tom</text>
-<path class="line" d="M1167.5 1554 L1510 1554"/>
-<rect x="1233.75" y="1606" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="1251.75" y="1633" text-anchor="start">13. ResultSet</text>
-<path class="dashed" d="M1510 1664 L1167.5 1664"/>
-<rect x="891.25" y="1716" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="909.25" y="1743" text-anchor="start">14. List&lt;ActorRecord&gt;</text>
-<path class="dashed" d="M1167.5 1774 L825 1774"/>
-<rect x="548.75" y="1826" width="210" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="566.75" y="1853" text-anchor="start">15. List&lt;ActorRecord&gt;</text>
-<path class="dashed" d="M825 1884 L482.5 1884"/>
-<rect x="172.25" y="1936" width="278" height="40" rx="12" fill="#ffffff" opacity="0.97"/>
-<text class="strong" x="190.25" y="1963" text-anchor="start">16. 200 List&lt;ActorRecord&gt; JSON</text>
-<path class="dashed" d="M482.5 1994 L140 1994"/>
+
+<rect class="canvas" x="0" y="0" width="1160" height="100%"/>
+<rect class="frame" x="20" y="20" width="1120" height="1138" rx="18"/>
+<text class="title" x="54" y="72">Request Processing Flow</text>
+<text class="subtitle" x="56" y="100">Request and data flow</text>
+<rect class="card" x="72" y="142" width="176" height="58" rx="16" fill="#f7d9df" stroke="#d9899b"/>
+<text class="smallLabel" x="160" y="166" text-anchor="middle">Client</text>
+<path class="dash" d="M 160 208 L 160 1124"/>
+<rect class="card" x="282" y="142" width="176" height="58" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
+<text class="smallLabel" x="370" y="166" text-anchor="middle">ActorController</text>
+<path class="dash" d="M 370 208 L 370 1124"/>
+<rect class="card" x="492" y="142" width="176" height="58" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
+<text class="smallLabel" x="580" y="166" text-anchor="middle">ActorRepository</text>
+<path class="dash" d="M 580 208 L 580 1124"/>
+<rect class="card" x="702" y="142" width="176" height="58" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
+<text class="smallLabel" x="790" y="166" text-anchor="middle">ActorTable</text>
+<path class="dash" d="M 790 208 L 790 1124"/>
+<rect class="card" x="912" y="142" width="176" height="58" rx="16" fill="#eadff8" stroke="#a287c8"/>
+<text class="smallLabel" x="1000" y="166" text-anchor="middle">DB</text>
+<path class="dash" d="M 1000 208 L 1000 1124"/>
+<path class="line" d="M 172 248 L 356 248" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="216" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="233" text-anchor="middle">1. POST /actors (ActorRecord JSON)</text>
+<path class="line" d="M 382 302 L 566 302" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="270" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="287" text-anchor="middle">2. create(actor)</text>
+<path class="line" d="M 592 356 L 776 356" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="324" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="341" text-anchor="middle">3. insertAndGetId {...astName, birthday }</text>
+<path class="line" d="M 802 410 L 986 410" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="378" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="395" text-anchor="middle">4. INSERT INTO actors ...</text>
+<path class="line" d="M 988 464 L 174 464" marker-end="url(#openArrow)"/>
+<rect class="note" x="448" y="432" width="264" height="24" rx="8"/>
+<text class="small" x="580" y="449" text-anchor="middle">5. generated id</text>
+<path class="line" d="M 172 518 L 356 518" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="486" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="503" text-anchor="middle">6. EntityID&lt;Long&gt;</text>
+<path class="line" d="M 382 572 L 566 572" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="540" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="557" text-anchor="middle">7. ActorRecord (with id)</text>
+<path class="line" d="M 592 626 L 776 626" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="594" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="611" text-anchor="middle">8. 201 ActorRecord JSON</text>
+<path class="line" d="M 802 680 L 986 680" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="648" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="665" text-anchor="middle">9. GET /actors?firstName=Tom</text>
+<path class="line" d="M 988 734 L 174 734" marker-end="url(#openArrow)"/>
+<rect class="note" x="448" y="702" width="264" height="24" rx="8"/>
+<text class="small" x="580" y="719" text-anchor="middle">10. searchActors(params)</text>
+<path class="line" d="M 172 788 L 356 788" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="756" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="773" text-anchor="middle">11. selectAll().and... firstName eq Tom }</text>
+<path class="line" d="M 382 842 L 566 842" marker-end="url(#openArrow)"/>
+<rect class="note" x="343" y="810" width="264" height="24" rx="8"/>
+<text class="small" x="475" y="827" text-anchor="middle">12. SELECT * FROM a...RE first_name = Tom</text>
+<path class="line" d="M 592 896 L 776 896" marker-end="url(#openArrow)"/>
+<rect class="note" x="553" y="864" width="264" height="24" rx="8"/>
+<text class="small" x="685" y="881" text-anchor="middle">13. ResultSet</text>
+<path class="line" d="M 802 950 L 986 950" marker-end="url(#openArrow)"/>
+<rect class="note" x="763" y="918" width="264" height="24" rx="8"/>
+<text class="small" x="895" y="935" text-anchor="middle">14. List&lt;ActorRecord&gt;</text>
+<path class="line" d="M 988 1004 L 174 1004" marker-end="url(#openArrow)"/>
+<rect class="note" x="448" y="972" width="264" height="24" rx="8"/>
+<text class="small" x="580" y="989" text-anchor="middle">15. List&lt;ActorRecord&gt;</text>
+<path class="line" d="M 172 1058 L 356 1058" marker-end="url(#openArrow)"/>
+<rect class="note" x="133" y="1026" width="264" height="24" rx="8"/>
+<text class="small" x="265" y="1043" text-anchor="middle">16. 200 List&lt;ActorRecord&gt; JSON</text>
 </svg>
