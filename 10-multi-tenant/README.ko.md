@@ -52,6 +52,7 @@ Single DB Instance
 | `05-database-per-tenant-spring-web`       | tenant별 전용 Hikari pool을 쓰는 database-per-tenant 예제 | `ThreadLocal`     |
 | `06-spring-security-tenant-authorization-spring-web` | database routing 전 Spring Security로 tenant authorization 수행 | `ThreadLocal` |
 | `07-multitenant-ktor`                     | Ktor request plugin 기반 멀티테넌트 예제 | Coroutine `ThreadContextElement` |
+| `08-tenant-onboarding-spring-web`         | Tenant catalog 저장과 schema provisioning 예제 | Service transaction |
 
 ---
 
@@ -89,6 +90,7 @@ Single DB Instance
 4. [`04-schema-per-tenant-spring-web`](04-schema-per-tenant-spring-web/README.ko.md) — 하나의 shared pool에서 명시적 schema switch, reset, connection eviction을 실습
 5. [`05-database-per-tenant-spring-web`](05-database-per-tenant-spring-web/README.ko.md) — tenant마다 전용 datasource를 선택하고 fallback database가 없도록 구성
 6. [`06-spring-security-tenant-authorization-spring-web`](06-spring-security-tenant-authorization-spring-web/README.ko.md) — 인증된 identity와 tenant routing을 연결한 뒤 database를 선택
+7. [`08-tenant-onboarding-spring-web`](08-tenant-onboarding-spring-web/README.ko.md) — Tenant metadata를 저장하고 cleanup 가능한 tenant schema를 provisioning
 
 ---
 
@@ -102,9 +104,10 @@ Single DB Instance
 ./gradlew :04-schema-per-tenant-spring-web:test
 ./gradlew :05-database-per-tenant-spring-web:test
 ./gradlew :06-spring-security-tenant-authorization-spring-web:test
+./gradlew :08-tenant-onboarding-spring-web:test
 
 # 전체 챕터 빌드
-./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build :06-spring-security-tenant-authorization-spring-web:build
+./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build :06-spring-security-tenant-authorization-spring-web:build :08-tenant-onboarding-spring-web:build
 ```
 
 ---
@@ -114,6 +117,8 @@ Single DB Instance
 - `X-TENANT-ID` 누락/오입력 시 실패 동작을 검증한다.
 - 테넌트 A 요청에서 테넌트 B 데이터가 노출되지 않는지 확인한다.
 - 동시 요청 환경에서 컨텍스트 누수 여부를 검증한다.
+- Tenant onboarding이 duplicate를 거부하고 실패 후 부분 provisioning schema를 제거하는지 확인한다.
+- H2-only onboarding test는 일반 CI에 두고, container-heavy tenant module은 nightly coverage에 유지한다.
 
 ## 성능·안정성 체크포인트
 

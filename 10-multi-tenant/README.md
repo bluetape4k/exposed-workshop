@@ -52,6 +52,7 @@ It then compares that baseline with **Database per Tenant**, where each whitelis
 | `05-database-per-tenant-spring-web`       | Database-per-tenant with dedicated Hikari pools    | `ThreadLocal`         |
 | `06-spring-security-tenant-authorization-spring-web` | Tenant authorization with Spring Security before database routing | `ThreadLocal` |
 | `07-multitenant-ktor`                     | Multi-tenant with Ktor request plugins             | Coroutine `ThreadContextElement` |
+| `08-tenant-onboarding-spring-web`         | Tenant catalog persistence and schema provisioning | Service transaction   |
 
 ---
 
@@ -89,6 +90,7 @@ All modules follow the flow below. Only the context propagation mechanism differ
 4. [`04-schema-per-tenant-spring-web`](04-schema-per-tenant-spring-web/README.md) — Practice explicit schema switching, reset, and connection eviction with one shared pool
 5. [`05-database-per-tenant-spring-web`](05-database-per-tenant-spring-web/README.md) — Route each tenant to a dedicated datasource with no fallback database
 6. [`06-spring-security-tenant-authorization-spring-web`](06-spring-security-tenant-authorization-spring-web/README.md) — Bind tenant routing to authenticated identity before database selection
+7. [`08-tenant-onboarding-spring-web`](08-tenant-onboarding-spring-web/README.md) — Persist tenant metadata and provision tenant schemas with cleanup
 
 ---
 
@@ -102,9 +104,10 @@ All modules follow the flow below. Only the context propagation mechanism differ
 ./gradlew :04-schema-per-tenant-spring-web:test
 ./gradlew :05-database-per-tenant-spring-web:test
 ./gradlew :06-spring-security-tenant-authorization-spring-web:test
+./gradlew :08-tenant-onboarding-spring-web:test
 
 # Full chapter build
-./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build :06-spring-security-tenant-authorization-spring-web:build
+./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build :06-spring-security-tenant-authorization-spring-web:build :08-tenant-onboarding-spring-web:build
 ```
 
 ---
@@ -114,6 +117,8 @@ All modules follow the flow below. Only the context propagation mechanism differ
 - Verify failure behavior when `X-TENANT-ID` is missing or invalid.
 - Confirm that tenant B data is not exposed in tenant A requests.
 - Verify no context leakage under concurrent request load.
+- Confirm tenant onboarding rejects duplicates and removes partially provisioned schemas after failure.
+- H2-only onboarding tests stay in normal CI; container-heavy tenant modules should remain in nightly coverage.
 
 ## Performance & Stability Checkpoints
 
