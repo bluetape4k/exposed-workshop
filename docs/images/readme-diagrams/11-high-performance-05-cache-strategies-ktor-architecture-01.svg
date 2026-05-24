@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+  <title id="title">Ktor cache strategy architecture</title>
+  <desc id="desc">Ktor routes call a cached service that coordinates cache-aside, read-through, write-through, invalidation, Exposed repository, and H2 database.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 8; }
+      .cache { fill: #fef3c7; stroke: #b45309; }
+      .db { fill: #dcfce7; stroke: #15803d; }
+      .text { font: 18px sans-serif; fill: #0f172a; }
+      .small { font: 14px sans-serif; fill: #334155; }
+      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1120" height="560"/>
+  <text x="56" y="56" class="text" style="font-size:28px;font-weight:700">Ktor cache strategy routes</text>
+  <text x="56" y="86" class="small">Every route exposes whether data came from cache or database so tests can prove hit, miss, update, and invalidation behavior.</text>
+
+  <rect x="70" y="156" width="190" height="96" class="box"/>
+  <text x="108" y="196" class="text">Ktor routes</text>
+  <text x="96" y="224" class="small">cache-aside / read-through</text>
+
+  <rect x="340" y="130" width="230" height="148" class="box"/>
+  <text x="386" y="176" class="text">CachedUserService</text>
+  <text x="376" y="206" class="small">strategy decision</text>
+  <text x="376" y="230" class="small">stats counters</text>
+
+  <rect x="650" y="128" width="190" height="150" class="box cache"/>
+  <text x="704" y="176" class="text">Cache</text>
+  <text x="690" y="206" class="small">ConcurrentHashMap</text>
+  <text x="690" y="230" class="small">hit / miss</text>
+
+  <rect x="650" y="360" width="190" height="110" class="box db"/>
+  <text x="690" y="404" class="text">Exposed JDBC</text>
+  <text x="704" y="432" class="small">users table</text>
+
+  <rect x="900" y="360" width="160" height="110" class="box db"/>
+  <text x="948" y="404" class="text">H2</text>
+  <text x="934" y="432" class="small">database</text>
+
+  <path d="M260 204 L340 204" class="arrow"/>
+  <path d="M570 176 L650 176" class="arrow"/>
+  <path d="M650 232 C590 294 590 376 650 410" class="arrow"/>
+  <path d="M840 416 L900 416" class="arrow"/>
+  <path d="M840 178 C920 210 930 318 900 370" class="arrow"/>
+
+  <text x="92" y="498" class="small">Write-through updates database first, then refreshes cache. Invalidation removes cache and forces database fallback on next read.</text>
+</svg>
