@@ -1,137 +1,82 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="922" height="1750" viewBox="0 0 922 1750" role="img" aria-label="Virtual Thread Processing Model Flowchart">
-<defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
-    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#1f2937" flood-opacity="0.10"/>
-  </filter>
-  <marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
-    <path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-  </marker>
-  <style>
-  .canvas{fill:#f7f9fc}
-  .frame{fill:#fff;stroke:#d8e0ea;stroke-width:1.5}
-  .title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;font-weight:400;fill:#102033}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;font-weight:400;fill:#536273}
-  .label{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:24px;font-weight:400;fill:#102033}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:20px;font-weight:400;fill:#102033}
-  .mono{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#102033}
-  .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:400;fill:#536273}
-  .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:400;fill:#102033}
-  .card{stroke-width:2;filter:url(#shadow)}
-  .line{fill:none;stroke:#758297;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
-  .dash{fill:none;stroke:#9aa6b8;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:6 8}
-  .note{fill:#ffffff;stroke:#d8e0ea;stroke-width:1.2}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1378 650" width="1378" height="650" role="img" aria-label="08 Coroutines: Virtual Threads Basic (02-virtualthreads-basic)">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
+    </marker>
+    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
+      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
+    </marker>
+    <style>
+  .canvas{fill:#f6f9fc}
+  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+  .card{stroke-width:1.7;filter:url(#shadow)}
+  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
+  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
+  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
+  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
+  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
+  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
 </style>
-</defs>
+  </defs>
+  <rect width="1378" height="650" class="canvas"/>
+  <rect x="20" y="20" width="1338" height="610" rx="16" class="frame"/>
+<text x="48" y="58" class="title">08 Coroutines: Virtual Threads Basic (02-virtualthreads-basic)</text>
+  <text x="48" y="80" class="subtitle">Source-derived component flow · README plus Kotlin implementation</text>
+<rect x="36" y="112" width="270" height="350" rx="12" class="panel"/>
+  <text x="171" y="106" class="panelTitle" text-anchor="middle">ENTRY POINTS</text>
+<rect x="56" y="132" width="230" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="171" y="167" class="smallLabel" text-anchor="middle">README User</text>
 
-<rect class="canvas" x="0" y="0" width="922" height="100%"/>
-<rect class="frame" x="20" y="20" width="882" height="1710" rx="18"/>
-<text class="title" x="54" y="72">Virtual Thread Processing Model</text>
-<text class="title" x="54" y="116">Flowchart</text>
-<text class="subtitle" x="56" y="144">Pastel architecture overview</text>
-<rect class="card" x="48" y="184" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
-<text class="label" x="171" y="230" text-anchor="middle">( )</text>
-<rect class="card" x="338" y="184" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
-<text class="label" x="461" y="230" text-anchor="middle">new Virtual Thread</text>
-<rect class="card" x="628" y="184" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
-<text class="label" x="751" y="230" text-anchor="middle">Jdbc Transaction {</text>
-<text class="label" x="751" y="255" text-anchor="middle">}</text>
-<rect class="card" x="48" y="340" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
-<text class="label" x="171" y="386" text-anchor="middle">JVM: Virtual Thread</text>
-<rect class="card" x="338" y="340" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
-<text class="label" x="461" y="386" text-anchor="middle">(OS Thread-N)</text>
-<rect class="card" x="628" y="340" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
-<text class="label" x="751" y="386" text-anchor="middle">Exposed Transaction</text>
-<rect class="card" x="48" y="496" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
-<text class="label" x="171" y="542" text-anchor="middle">BEGIN</text>
-<rect class="card" x="338" y="496" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
-<text class="label" x="461" y="542" text-anchor="middle">DB (INSERT / SELECT</text>
-<rect class="card" x="628" y="496" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
-<text class="label" x="751" y="542" text-anchor="middle">/ UPDATE)</text>
-<rect class="card" x="48" y="652" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
-<text class="label" x="171" y="698" text-anchor="middle">Result</text>
-<rect class="card" x="338" y="652" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
-<text class="label" x="461" y="698" text-anchor="middle">COMMIT Result</text>
-<rect class="card" x="628" y="652" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
-<text class="label" x="751" y="698" text-anchor="middle">returned</text>
-<rect class="card" x="48" y="808" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
-<text class="label" x="171" y="854" text-anchor="middle">ROLLBACK Exception</text>
-<rect class="card" x="338" y="808" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
-<text class="label" x="461" y="854" text-anchor="middle">propagated</text>
-<rect class="card" x="628" y="808" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
-<text class="label" x="751" y="854" text-anchor="middle">Virtual Thread</text>
-<rect class="card" x="48" y="964" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
-<text class="label" x="171" y="1010" text-anchor="middle">terminated</text>
-<text class="label" x="171" y="1035" text-anchor="middle">(platform</text>
-<rect class="card" x="338" y="964" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
-<text class="label" x="461" y="1010" text-anchor="middle">thread released)</text>
-<rect class="card" x="628" y="964" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
-<text class="label" x="751" y="1010" text-anchor="middle">virtual Thread Jdbc</text>
-<rect class="card" x="48" y="1120" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
-<text class="label" x="171" y="1166" text-anchor="middle">Transaction Async {</text>
-<rect class="card" x="338" y="1120" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
-<text class="label" x="461" y="1166" text-anchor="middle">}</text>
-<rect class="card" x="628" y="1120" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
-<text class="label" x="751" y="1166" text-anchor="middle">Virtual</text>
-<rect class="card" x="48" y="1276" width="246" height="118" rx="16" fill="#dff4f1" stroke="#75aaa3"/>
-<text class="label" x="171" y="1322" text-anchor="middle">Future&lt;T&gt;</text>
-<rect class="card" x="338" y="1276" width="246" height="118" rx="16" fill="#ffe1cc" stroke="#d5905f"/>
-<text class="label" x="461" y="1322" text-anchor="middle">returned</text>
-<text class="label" x="461" y="1347" text-anchor="middle">immediately</text>
-<rect class="card" x="628" y="1276" width="246" height="118" rx="16" fill="#e9edf5" stroke="#9ca9bd"/>
-<text class="label" x="751" y="1322" text-anchor="middle">Parallel Virtual</text>
-<rect class="card" x="48" y="1432" width="246" height="118" rx="16" fill="#f7d9df" stroke="#d9899b"/>
-<text class="label" x="171" y="1478" text-anchor="middle">Threads execute</text>
-<rect class="card" x="338" y="1432" width="246" height="118" rx="16" fill="#d9ecff" stroke="#7eaad3"/>
-<text class="label" x="461" y="1478" text-anchor="middle">futures.awaitAll()</text>
-<rect class="card" x="628" y="1432" width="246" height="118" rx="16" fill="#dcf3e4" stroke="#7fb895"/>
-<text class="label" x="751" y="1478" text-anchor="middle">wait</text>
-<rect class="card" x="48" y="1588" width="246" height="118" rx="16" fill="#fff0c9" stroke="#d0a84e"/>
-<text class="label" x="171" y="1634" text-anchor="middle">All results</text>
-<rect class="card" x="338" y="1588" width="246" height="118" rx="16" fill="#eadff8" stroke="#a287c8"/>
-<text class="label" x="461" y="1634" text-anchor="middle">collected</text>
-<path class="line" d="M 302 243 L 330 243" marker-end="url(#openArrow)"/>
-<path class="line" d="M 171 310 L 171 332" marker-end="url(#openArrow)"/>
-<path class="line" d="M 592 243 L 620 243" marker-end="url(#openArrow)"/>
-<path class="line" d="M 461 310 L 461 332" marker-end="url(#openArrow)"/>
-<path class="line" d="M 751 310 L 751 332" marker-end="url(#openArrow)"/>
-<path class="line" d="M 302 399 L 330 399" marker-end="url(#openArrow)"/>
-<path class="line" d="M 171 466 L 171 488" marker-end="url(#openArrow)"/>
-<path class="line" d="M 592 399 L 620 399" marker-end="url(#openArrow)"/>
-<path class="line" d="M 461 466 L 461 488" marker-end="url(#openArrow)"/>
-<path class="line" d="M 751 466 L 751 488" marker-end="url(#openArrow)"/>
-<path class="line" d="M 302 555 L 330 555" marker-end="url(#openArrow)"/>
-<path class="line" d="M 171 622 L 171 644" marker-end="url(#openArrow)"/>
-<path class="line" d="M 592 555 L 620 555" marker-end="url(#openArrow)"/>
-<path class="line" d="M 461 622 L 461 644" marker-end="url(#openArrow)"/>
-<path class="line" d="M 751 622 L 751 644" marker-end="url(#openArrow)"/>
-<path class="line" d="M 302 711 L 330 711" marker-end="url(#openArrow)"/>
-<path class="line" d="M 171 778 L 171 800" marker-end="url(#openArrow)"/>
-<path class="line" d="M 592 711 L 620 711" marker-end="url(#openArrow)"/>
-<path class="line" d="M 461 778 L 461 800" marker-end="url(#openArrow)"/>
-<path class="line" d="M 751 778 L 751 800" marker-end="url(#openArrow)"/>
-<path class="line" d="M 302 867 L 330 867" marker-end="url(#openArrow)"/>
-<path class="line" d="M 171 934 L 171 956" marker-end="url(#openArrow)"/>
-<path class="line" d="M 592 867 L 620 867" marker-end="url(#openArrow)"/>
-<path class="line" d="M 461 934 L 461 956" marker-end="url(#openArrow)"/>
-<path class="line" d="M 751 934 L 751 956" marker-end="url(#openArrow)"/>
-<path class="line" d="M 302 1023 L 330 1023" marker-end="url(#openArrow)"/>
-<path class="line" d="M 171 1090 L 171 1112" marker-end="url(#openArrow)"/>
-<path class="line" d="M 592 1023 L 620 1023" marker-end="url(#openArrow)"/>
-<path class="line" d="M 461 1090 L 461 1112" marker-end="url(#openArrow)"/>
-<path class="line" d="M 751 1090 L 751 1112" marker-end="url(#openArrow)"/>
-<path class="line" d="M 302 1179 L 330 1179" marker-end="url(#openArrow)"/>
-<path class="line" d="M 171 1246 L 171 1268" marker-end="url(#openArrow)"/>
-<path class="line" d="M 592 1179 L 620 1179" marker-end="url(#openArrow)"/>
-<path class="line" d="M 461 1246 L 461 1268" marker-end="url(#openArrow)"/>
-<path class="line" d="M 751 1246 L 751 1268" marker-end="url(#openArrow)"/>
-<path class="line" d="M 302 1335 L 330 1335" marker-end="url(#openArrow)"/>
-<path class="line" d="M 171 1402 L 171 1424" marker-end="url(#openArrow)"/>
-<path class="line" d="M 592 1335 L 620 1335" marker-end="url(#openArrow)"/>
-<path class="line" d="M 461 1402 L 461 1424" marker-end="url(#openArrow)"/>
-<path class="line" d="M 751 1402 L 751 1424" marker-end="url(#openArrow)"/>
-<path class="line" d="M 302 1491 L 330 1491" marker-end="url(#openArrow)"/>
-<path class="line" d="M 171 1558 L 171 1580" marker-end="url(#openArrow)"/>
-<path class="line" d="M 592 1491 L 620 1491" marker-end="url(#openArrow)"/>
-<path class="line" d="M 461 1558 L 461 1580" marker-end="url(#openArrow)"/>
-<path class="line" d="M 302 1647 L 330 1647" marker-end="url(#openArrow)"/>
+<rect x="56" y="208" width="230" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="171" y="237" class="smallLabel" text-anchor="middle">HTTP Request</text>
+<text x="171" y="250" class="detail" text-anchor="middle">entry</text>
+<rect x="56" y="284" width="230" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="171" y="319" class="smallLabel" text-anchor="middle">Workshop Example</text>
+
+<rect x="390" y="112" width="360" height="350" rx="12" class="panel"/>
+  <text x="570" y="106" class="panelTitle" text-anchor="middle">APPLICATION / DOMAIN</text>
+<rect x="420" y="136" width="300" height="76" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="570" y="180" class="smallLabel" text-anchor="middle">Ex01_ Virtual Threads</text>
+
+<rect x="420" y="248" width="300" height="76" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="570" y="292" class="smallLabel" text-anchor="middle">VTester</text>
+
+<rect x="420" y="360" width="300" height="76" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="570" y="404" class="smallLabel" text-anchor="middle">VTester Unique</text>
+
+<rect x="842" y="112" width="250" height="350" rx="12" class="panel"/>
+  <text x="967" y="106" class="panelTitle" text-anchor="middle">PERSISTENCE</text>
+<rect x="864" y="138" width="206" height="56" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="967" y="172" class="smallLabel" text-anchor="middle">VTester</text>
+
+<rect x="864" y="212" width="206" height="56" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="967" y="246" class="smallLabel" text-anchor="middle">VTester Unique</text>
+
+<rect x="1120" y="112" width="222" height="350" rx="12" class="panel"/>
+  <text x="1231" y="106" class="panelTitle" text-anchor="middle">RUNTIME / INFRASTRUCTURE</text>
+<rect x="1138" y="138" width="186" height="56" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="1231" y="172" class="smallLabel" text-anchor="middle">Runtime</text>
+
+<rect x="1138" y="212" width="186" height="56" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="1231" y="241" class="smallLabel" text-anchor="middle">Configuration</text>
+<text x="1231" y="252" class="detail" text-anchor="middle">infrastructure</text>
+<rect x="1138" y="286" width="186" height="56" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="1231" y="320" class="smallLabel" text-anchor="middle">Test Fixture</text>
+
+<path d="M286,176 C330,176 366,174 420,174" class="arrow"/>
+<path d="M720,288 C774,288 812,236 864,236" class="arrow"/>
+<path d="M720,400 C790,400 1050,404 1138,404" class="softArrow"/>
+<path d="M1070,240 C1098,240 1108,240 1138,240" class="softArrow"/>
+<rect x="36" y="510" width="1306" height="58" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="689" y="535" class="smallLabel" text-anchor="middle">Suspending boundaries are visible between request handlers and Exposed transactions.</text>
+<text x="689" y="554" class="detail" text-anchor="middle">Source packages decide the panels; arrows show only the important runtime or dependency flow.</text>
 </svg>

@@ -1,14 +1,85 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
-<title id="title">Kotlin Exposed feature map</title><desc id="desc">Public README diagram generated as SVG source with PNG rendering.</desc>
-<defs>
-  <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#203040" flood-opacity="0.10"/></filter>
-  <marker id="arrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <style>
-    .canvas{fill:#F6F9FC}.frame{fill:#FFFFFF;stroke:#D7E2EC;stroke-width:2}.title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:42px;fill:#22344A;font-weight:400}.subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:16px;fill:#536476;font-weight:400}.group{filter:url(#shadow);stroke-width:2}.gtitle{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:23px;fill:#22344A;font-weight:400}.label{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:15px;fill:#34465B;font-weight:400}.small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#627184;font-weight:400}.axis{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:22px;fill:#22344A;font-weight:400}.line{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#arrow)}.plain{stroke:#758297;stroke-width:2;fill:none}.pill{fill:#FFFFFF;opacity:.78;stroke:#D7E2EC;stroke-width:1.2}.num{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:22px;fill:#22344A;font-weight:400}
-  </style>
-</defs>
-<rect class="canvas" width="1400" height="760"/><rect class="frame" x="36" y="28" width="1328" height="704" rx="24"/>
-<text class="title" x="72" y="82">Kotlin Exposed feature map</text><text class="subtitle" x="76" y="114">Public README diagram generated as SVG source with PNG rendering.</text>
-<circle cx="700" cy="430" r="112" fill="#FFFFFF" stroke="#75A9E8" stroke-width="3" filter="url(#shadow)"/><text class="gtitle" x="700" y="412" text-anchor="middle">Kotlin</text>
-<text class="gtitle" x="700" y="438" text-anchor="middle">Exposed</text><path class="line" d="M 700.0 312.0 L 700.0 240.0"/><g transform="translate(570,147)"><rect class="group" x="0" y="0" width="260" height="96" rx="16" fill="#E8F3FF" stroke="#75A9E8"/><text class="gtitle" x="130" y="36" text-anchor="middle">SQL DSL</text><rect class="pill" x="24" y="49" width="212" height="25" rx="8"/><text class="label" x="130" y="67" text-anchor="middle">Type-safe queries</text></g><path class="line" d="M 783.4 346.6 L 885.3 295.6"/><g transform="translate(845.7716446627535,215.82990642116135)"><rect class="group" x="0" y="0" width="260" height="96" rx="16" fill="#EAF7EF" stroke="#69B888"/><text class="gtitle" x="130" y="36" text-anchor="middle">DAO / Entity</text><rect class="pill" x="24" y="49" width="212" height="25" rx="8"/><text class="label" x="130" y="67" text-anchor="middle">Object mapping</text></g><path class="line" d="M 818.0 430.0 L 962.0 430.0"/><g transform="translate(960,382)"><rect class="group" x="0" y="0" width="260" height="96" rx="16" fill="#FFF3D9" stroke="#D9AA4D"/><text class="gtitle" x="130" y="36" text-anchor="middle">Transactions</text><rect class="pill" x="24" y="49" width="212" height="25" rx="8"/><text class="label" x="130" y="67" text-anchor="middle">JDBC and suspend variants</text></g><path class="line" d="M 783.4 513.4 L 885.3 564.4"/><g transform="translate(845.7716446627535,548.1700935788386)"><rect class="group" x="0" y="0" width="260" height="96" rx="16" fill="#FDECEF" stroke="#DB7890"/><text class="gtitle" x="130" y="36" text-anchor="middle">Schema</text><rect class="pill" x="24" y="49" width="212" height="25" rx="8"/><text class="label" x="130" y="67" text-anchor="middle">DDL and migrations</text></g><path class="line" d="M 700.0 548.0 L 700.0 620.0"/><g transform="translate(570,617)"><rect class="group" x="0" y="0" width="260" height="96" rx="16" fill="#E9F7F6" stroke="#55B5AF"/><text class="gtitle" x="130" y="36" text-anchor="middle">Data Access</text><rect class="pill" x="24" y="49" width="212" height="25" rx="8"/><text class="label" x="130" y="67" text-anchor="middle">DML, functions, entities</text></g><path class="line" d="M 616.6 513.4 L 514.7 564.4"/><g transform="translate(294.2283553372465,548.1700935788386)"><rect class="group" x="0" y="0" width="260" height="96" rx="16" fill="#F1ECFF" stroke="#A58BE3"/><text class="gtitle" x="130" y="36" text-anchor="middle">Integrations</text><rect class="pill" x="24" y="49" width="212" height="25" rx="8"/><text class="label" x="130" y="67" text-anchor="middle">Spring, Ktor, cache</text></g><path class="line" d="M 582.0 430.0 L 438.0 430.0"/><g transform="translate(180,382.00000000000006)"><rect class="group" x="0" y="0" width="260" height="96" rx="16" fill="#F7F1E7" stroke="#B68C55"/><text class="gtitle" x="130" y="36" text-anchor="middle">Multitenancy</text><rect class="pill" x="24" y="49" width="212" height="25" rx="8"/><text class="label" x="130" y="67" text-anchor="middle">Schema and database routing</text></g><path class="line" d="M 616.6 346.6 L 514.7 295.6"/><g transform="translate(294.2283553372464,215.82990642116135)"><rect class="group" x="0" y="0" width="260" height="96" rx="16" fill="#EEF6D9" stroke="#91AA58"/><text class="gtitle" x="130" y="36" text-anchor="middle">Production</text><rect class="pill" x="24" y="49" width="212" height="25" rx="8"/><text class="label" x="130" y="67" text-anchor="middle">Outbox, auth, readiness</text></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1378 650" width="1378" height="650" role="img" aria-label="Exposed Workshop (Kotlin Exposed Tutorial)">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
+    </marker>
+    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
+      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
+    </marker>
+    <style>
+  .canvas{fill:#f6f9fc}
+  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+  .card{stroke-width:1.7;filter:url(#shadow)}
+  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
+  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
+  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
+  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
+  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
+  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+</style>
+  </defs>
+  <rect width="1378" height="650" class="canvas"/>
+  <rect x="20" y="20" width="1338" height="610" rx="16" class="frame"/>
+<text x="48" y="58" class="title">Exposed Workshop (Kotlin Exposed Tutorial)</text>
+  <text x="48" y="80" class="subtitle">Source-derived component flow · README plus Kotlin implementation</text>
+<rect x="36" y="112" width="270" height="350" rx="12" class="panel"/>
+  <text x="171" y="106" class="panelTitle" text-anchor="middle">ENTRY POINTS</text>
+<rect x="56" y="132" width="230" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="171" y="167" class="smallLabel" text-anchor="middle">README User</text>
+
+<rect x="56" y="208" width="230" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="171" y="237" class="smallLabel" text-anchor="middle">HTTP Request</text>
+<text x="171" y="250" class="detail" text-anchor="middle">entry</text>
+<rect x="56" y="284" width="230" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="171" y="319" class="smallLabel" text-anchor="middle">Workshop Example</text>
+
+<rect x="390" y="112" width="360" height="350" rx="12" class="panel"/>
+  <text x="570" y="106" class="panelTitle" text-anchor="middle">APPLICATION / DOMAIN</text>
+<rect x="420" y="136" width="300" height="76" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="570" y="180" class="smallLabel" text-anchor="middle">Exposed Workshop</text>
+
+<rect x="420" y="248" width="300" height="76" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="570" y="292" class="smallLabel" text-anchor="middle">Exposed Crypt</text>
+
+<rect x="420" y="360" width="300" height="76" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="570" y="404" class="smallLabel" text-anchor="middle">Exposed JSON</text>
+
+<rect x="842" y="112" width="250" height="350" rx="12" class="panel"/>
+  <text x="967" y="106" class="panelTitle" text-anchor="middle">PERSISTENCE</text>
+<rect x="864" y="138" width="206" height="56" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="967" y="167" class="smallLabel" text-anchor="middle">Repository</text>
+<text x="967" y="178" class="detail" text-anchor="middle">persistence</text>
+<rect x="864" y="212" width="206" height="56" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="967" y="241" class="smallLabel" text-anchor="middle">Exposed Table</text>
+<text x="967" y="252" class="detail" text-anchor="middle">table/model</text>
+<rect x="864" y="286" width="206" height="56" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="967" y="320" class="smallLabel" text-anchor="middle">Database</text>
+
+<rect x="1120" y="112" width="222" height="350" rx="12" class="panel"/>
+  <text x="1231" y="106" class="panelTitle" text-anchor="middle">RUNTIME / INFRASTRUCTURE</text>
+<rect x="1138" y="138" width="186" height="56" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="1231" y="172" class="smallLabel" text-anchor="middle">Runtime</text>
+
+<rect x="1138" y="212" width="186" height="56" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="1231" y="241" class="smallLabel" text-anchor="middle">Configuration</text>
+<text x="1231" y="252" class="detail" text-anchor="middle">infrastructure</text>
+<rect x="1138" y="286" width="186" height="56" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="1231" y="320" class="smallLabel" text-anchor="middle">Test Fixture</text>
+
+<path d="M286,176 C330,176 366,174 420,174" class="arrow"/>
+<path d="M720,288 C774,288 812,236 864,236" class="arrow"/>
+<path d="M720,400 C790,400 1050,404 1138,404" class="softArrow"/>
+<path d="M1070,240 C1098,240 1108,240 1138,240" class="softArrow"/>
+<rect x="36" y="510" width="1306" height="58" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="689" y="535" class="smallLabel" text-anchor="middle">The diagram follows source packages from entry point to application logic, persistence, and runtime support.</text>
+<text x="689" y="554" class="detail" text-anchor="middle">Source packages decide the panels; arrows show only the important runtime or dependency flow.</text>
 </svg>

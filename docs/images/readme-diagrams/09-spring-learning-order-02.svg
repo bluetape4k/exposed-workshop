@@ -1,1 +1,94 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="640" viewBox="0 0 1120 640" role="img" aria-labelledby="title desc"><title id="title">Spring integration learning order</title><desc id="desc">ASCII learning path converted to committed diagram assets.</desc><defs><filter id="shadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#203040" flood-opacity="0.10"/></filter><marker id="arrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth"><path d="M 1 1 L 10 5 L 1 9" fill="none" stroke="#758297" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker><style>.canvas{fill:#F6F9FC}.frame{fill:#fff;stroke:#D7E2EC;stroke-width:2}.title{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:40px;fill:#22344A}.subtitle,.label{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}.subtitle{font-size:16px}.label{font-size:15px}.small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#627184}.gtitle{font-family:"Architects Daughter","Comic Sans MS","Comic Sans",cursive;font-size:23px;fill:#22344A}.group{filter:url(#shadow);stroke-width:2}.pill{fill:#fff;opacity:.78;stroke:#D7E2EC}.line{stroke:#758297;stroke-width:2.2;fill:none;marker-end:url(#arrow)}.plain{stroke:#758297;stroke-width:2;fill:none}</style></defs><rect class="canvas" width="1120" height="640"/><rect class="frame" x="36" y="28" width="1048" height="584" rx="24"/><text class="title" x="72" y="82">Spring integration learning order</text><text class="subtitle" x="76" y="114">ASCII learning path converted to committed diagram assets.</text><g transform="translate(80,190)"><rect class="group" x="0" y="0" width="280" height="95" rx="16" fill="#E8F3FF" stroke="#75A9E8"/><text class="gtitle" x="140" y="36" text-anchor="middle">01 Auto-configure</text></g><g transform="translate(80,320)"><rect class="group" x="0" y="0" width="280" height="95" rx="16" fill="#EAF7EF" stroke="#69B888"/><text class="gtitle" x="140" y="36" text-anchor="middle">02 TransactionTemplate</text></g><g transform="translate(80,450)"><rect class="group" x="0" y="0" width="280" height="95" rx="16" fill="#FFF3D9" stroke="#D9AA4D"/><text class="gtitle" x="140" y="36" text-anchor="middle">03 Spring Transaction</text></g><g transform="translate(425,320)"><rect class="group" x="0" y="0" width="280" height="95" rx="16" fill="#FDECEF" stroke="#DB7890"/><text class="gtitle" x="140" y="36" text-anchor="middle">04 Sync Repository</text></g><g transform="translate(765,320)"><rect class="group" x="0" y="0" width="280" height="95" rx="16" fill="#E9F7F6" stroke="#55B5AF"/><text class="gtitle" x="140" y="36" text-anchor="middle">05 Coroutine Repository</text></g><g transform="translate(425,450)"><rect class="group" x="0" y="0" width="280" height="95" rx="16" fill="#F1ECFF" stroke="#A58BE3"/><text class="gtitle" x="140" y="36" text-anchor="middle">06 Spring Cache</text></g><g transform="translate(765,450)"><rect class="group" x="0" y="0" width="280" height="95" rx="16" fill="#E8F3FF" stroke="#75A9E8"/><text class="gtitle" x="140" y="36" text-anchor="middle">07 Suspended Cache</text></g><path class="line" d="M 220 285 L 220 320"/><path class="line" d="M 220 415 L 220 450"/><path class="line" d="M 360 367 L 425 367"/><path class="line" d="M 705 367 L 765 367"/><path class="line" d="M 565 415 L 565 450"/><path class="line" d="M 705 497 L 765 497"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1378 650" width="1378" height="650" role="img" aria-label="09 Spring Integration">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
+    </marker>
+    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
+      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
+    </marker>
+    <style>
+  .canvas{fill:#f6f9fc}
+  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+  .card{stroke-width:1.7;filter:url(#shadow)}
+  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
+  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
+  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
+  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
+  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
+  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
+  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
+  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+</style>
+  </defs>
+  <rect width="1378" height="650" class="canvas"/>
+  <rect x="20" y="20" width="1338" height="610" rx="16" class="frame"/>
+<text x="48" y="58" class="title">09 Spring Integration</text>
+  <text x="48" y="80" class="subtitle">Source-derived component flow · README plus Kotlin implementation</text>
+<rect x="36" y="112" width="270" height="350" rx="12" class="panel"/>
+  <text x="171" y="106" class="panelTitle" text-anchor="middle">ENTRY POINTS</text>
+<rect x="56" y="132" width="230" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="171" y="161" class="smallLabel" text-anchor="middle">Actor Controller</text>
+<text x="171" y="174" class="detail" text-anchor="middle">entry</text>
+<rect x="56" y="208" width="230" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="171" y="237" class="smallLabel" text-anchor="middle">Index Controller</text>
+<text x="171" y="250" class="detail" text-anchor="middle">entry</text>
+<rect x="56" y="284" width="230" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="171" y="313" class="smallLabel" text-anchor="middle">Movie Actors...</text>
+<text x="171" y="326" class="detail" text-anchor="middle">entry</text>
+<rect x="56" y="360" width="230" height="58" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="171" y="389" class="smallLabel" text-anchor="middle">Movie Controller</text>
+<text x="171" y="402" class="detail" text-anchor="middle">entry</text>
+<rect x="390" y="112" width="360" height="350" rx="12" class="panel"/>
+  <text x="570" y="106" class="panelTitle" text-anchor="middle">APPLICATION / DOMAIN</text>
+<rect x="420" y="136" width="300" height="76" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="570" y="165" class="smallLabel" text-anchor="middle">Order Service</text>
+<text x="570" y="196" class="detail" text-anchor="middle">use case</text>
+<rect x="420" y="248" width="300" height="76" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="570" y="277" class="smallLabel" text-anchor="middle">Movie Transactional Service</text>
+<text x="570" y="308" class="detail" text-anchor="middle">use case</text>
+<rect x="420" y="360" width="300" height="76" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="570" y="404" class="smallLabel" text-anchor="middle">Application</text>
+
+<rect x="842" y="112" width="250" height="350" rx="12" class="panel"/>
+  <text x="967" y="106" class="panelTitle" text-anchor="middle">PERSISTENCE</text>
+<rect x="864" y="138" width="206" height="56" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="967" y="167" class="smallLabel" text-anchor="middle">Exposed Repository...</text>
+<text x="967" y="178" class="detail" text-anchor="middle">persistence</text>
+<rect x="864" y="212" width="206" height="56" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="967" y="241" class="smallLabel" text-anchor="middle">Exposed Database...</text>
+<text x="967" y="252" class="detail" text-anchor="middle">infrastructure</text>
+<rect x="864" y="286" width="206" height="56" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="967" y="315" class="smallLabel" text-anchor="middle">Swagger Config</text>
+<text x="967" y="326" class="detail" text-anchor="middle">infrastructure</text>
+<rect x="864" y="360" width="206" height="56" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="967" y="389" class="smallLabel" text-anchor="middle">Tomcat Virtual...</text>
+<text x="967" y="400" class="detail" text-anchor="middle">infrastructure</text>
+<rect x="1120" y="112" width="222" height="350" rx="12" class="panel"/>
+  <text x="1231" y="106" class="panelTitle" text-anchor="middle">RUNTIME / INFRASTRUCTURE</text>
+<rect x="1138" y="138" width="186" height="56" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="1231" y="167" class="smallLabel" text-anchor="middle">Transaction...</text>
+<text x="1231" y="178" class="detail" text-anchor="middle">cross-cutting</text>
+<rect x="1138" y="212" width="186" height="56" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="1231" y="241" class="smallLabel" text-anchor="middle">Transaction...</text>
+<text x="1231" y="252" class="detail" text-anchor="middle">cross-cutting</text>
+<rect x="1138" y="286" width="186" height="56" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="1231" y="315" class="smallLabel" text-anchor="middle">Spring...</text>
+<text x="1231" y="326" class="detail" text-anchor="middle">cross-cutting</text>
+<rect x="1138" y="360" width="186" height="56" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="1231" y="389" class="smallLabel" text-anchor="middle">Data Source...</text>
+<text x="1231" y="400" class="detail" text-anchor="middle">infrastructure</text>
+<path d="M286,176 C330,176 366,174 420,174" class="arrow"/>
+<path d="M720,288 C774,288 812,236 864,236" class="arrow"/>
+<path d="M720,400 C790,400 1050,404 1138,404" class="softArrow"/>
+<path d="M1070,240 C1098,240 1108,240 1138,240" class="softArrow"/>
+<rect x="36" y="510" width="1306" height="58" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="689" y="535" class="smallLabel" text-anchor="middle">Cache policy is explicit between request handling, service logic, and repository fallback.</text>
+<text x="689" y="554" class="detail" text-anchor="middle">Source packages decide the panels; arrows show only the important runtime or dependency flow.</text>
+</svg>
