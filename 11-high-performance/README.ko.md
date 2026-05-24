@@ -25,6 +25,9 @@
 | [`02-cache-strategies-coroutines`](02-cache-strategies-coroutines/README.md) | WebFlux + Coroutines 기반 캐시 전략        |
 | [`03-routing-datasource`](03-routing-datasource/README.md)                   | DataSource 라우팅 설계 가이드                |
 | [`04-benchmark`](04-benchmark/README.md)                                     | `kotlinx-benchmark` 기반 성능 측정         |
+| [`05-cache-strategies-ktor`](05-cache-strategies-ktor/README.md)             | Ktor cache-aside/read-through/write-through 예제 |
+| [`06-cache-strategies-coroutines-ktor`](06-cache-strategies-coroutines-ktor/README.md) | Coroutine-safe Ktor cache 예제 |
+| [`07-routing-datasource-ktor`](07-routing-datasource-ktor/README.md)         | Ktor read/write datasource routing 예제 |
 
 ---
 
@@ -58,6 +61,9 @@
 | `02-cache-strategies-coroutines` | WebFlux    | Coroutines + Netty 이벤트 루프 | Netty   |
 | `03-routing-datasource`          | Spring MVC | 스레드 기반                    | Tomcat  |
 | `04-benchmark`                   | JMH        | JMH 스레드                   | N/A     |
+| `05-cache-strategies-ktor`       | Ktor       | CIO 이벤트 루프 + blocking repository | CIO     |
+| `06-cache-strategies-coroutines-ktor` | Ktor  | Suspend route + `Dispatchers.IO` DB | CIO     |
+| `07-routing-datasource-ktor`     | Ktor       | Request plugin + coroutine context | CIO     |
 
 ---
 
@@ -67,6 +73,9 @@
 2. [`02-cache-strategies-coroutines`](02-cache-strategies-coroutines/README.md) — 코루틴 비동기 캐시
 3. [`03-routing-datasource`](03-routing-datasource/README.md) — 동적 DataSource 라우팅
 4. [`04-benchmark`](04-benchmark/README.md) — 성능 측정 및 비교
+5. [`05-cache-strategies-ktor`](05-cache-strategies-ktor/README.md) — Ktor cache strategy route
+6. [`06-cache-strategies-coroutines-ktor`](06-cache-strategies-coroutines-ktor/README.md) — Coroutine-safe Ktor cache
+7. [`07-routing-datasource-ktor`](07-routing-datasource-ktor/README.md) — Ktor read/write datasource routing
 
 ---
 
@@ -77,6 +86,9 @@
 ./gradlew :11-high-performance:01-cache-strategies:test
 ./gradlew :11-high-performance:02-cache-strategies-coroutines:test
 ./gradlew :11-high-performance:03-routing-datasource:test
+./gradlew :05-cache-strategies-ktor:test
+./gradlew :06-cache-strategies-coroutines-ktor:test
+./gradlew :07-routing-datasource-ktor:test
 
 # 벤치마크 (smoke: 빠른 추세, main: 정밀 측정)
 ./gradlew :11-high-performance:04-benchmark:smokeBenchmark
@@ -90,6 +102,8 @@
 - 캐시 적중률/지연시간/DB 부하 감소 효과를 검증한다.
 - Write-Behind 지연 반영 시 정합성 보장 시나리오를 점검한다.
 - 장애 시 폴백 경로(캐시 실패 → DB)가 정상 동작하는지 확인한다.
+- Ktor 모듈은 route response에서 cache source 또는 selected datasource role이 드러나는지 확인한다.
+- Ktor 예제는 H2-only라 container-backed nightly coverage가 필요하지 않다.
 
 ---
 

@@ -25,6 +25,9 @@ Covers cache and routing strategies for improving throughput and responsiveness 
 | [`02-cache-strategies-coroutines`](02-cache-strategies-coroutines/README.md) | Cache strategies with WebFlux + Coroutines                |
 | [`03-routing-datasource`](03-routing-datasource/README.md)                   | DataSource routing design guide                           |
 | [`04-benchmark`](04-benchmark/README.md)                                     | Performance measurement with `kotlinx-benchmark`          |
+| [`05-cache-strategies-ktor`](05-cache-strategies-ktor/README.md)             | Ktor cache-aside/read-through/write-through examples      |
+| [`06-cache-strategies-coroutines-ktor`](06-cache-strategies-coroutines-ktor/README.md) | Coroutine-safe Ktor cache examples               |
+| [`07-routing-datasource-ktor`](07-routing-datasource-ktor/README.md)         | Ktor read/write datasource routing examples               |
 
 ---
 
@@ -58,6 +61,9 @@ Covers cache and routing strategies for improving throughput and responsiveness 
 | `02-cache-strategies-coroutines` | WebFlux    | Coroutines + Netty event loop         | Netty       |
 | `03-routing-datasource`          | Spring MVC | Thread-based                         | Tomcat      |
 | `04-benchmark`                   | JMH        | JMH threads                          | N/A         |
+| `05-cache-strategies-ktor`       | Ktor       | CIO event loop + blocking repository | CIO         |
+| `06-cache-strategies-coroutines-ktor` | Ktor  | Suspend routes + `Dispatchers.IO` DB | CIO         |
+| `07-routing-datasource-ktor`     | Ktor       | Request plugin + coroutine context   | CIO         |
 
 ---
 
@@ -67,6 +73,9 @@ Covers cache and routing strategies for improving throughput and responsiveness 
 2. [`02-cache-strategies-coroutines`](02-cache-strategies-coroutines/README.md) — Coroutine async cache
 3. [`03-routing-datasource`](03-routing-datasource/README.md) — Dynamic DataSource routing
 4. [`04-benchmark`](04-benchmark/README.md) — Performance measurement and comparison
+5. [`05-cache-strategies-ktor`](05-cache-strategies-ktor/README.md) — Ktor cache strategy routes
+6. [`06-cache-strategies-coroutines-ktor`](06-cache-strategies-coroutines-ktor/README.md) — Coroutine-safe Ktor cache
+7. [`07-routing-datasource-ktor`](07-routing-datasource-ktor/README.md) — Ktor read/write datasource routing
 
 ---
 
@@ -77,6 +86,9 @@ Covers cache and routing strategies for improving throughput and responsiveness 
 ./gradlew :11-high-performance:01-cache-strategies:test
 ./gradlew :11-high-performance:02-cache-strategies-coroutines:test
 ./gradlew :11-high-performance:03-routing-datasource:test
+./gradlew :05-cache-strategies-ktor:test
+./gradlew :06-cache-strategies-coroutines-ktor:test
+./gradlew :07-routing-datasource-ktor:test
 
 # Benchmark (smoke: fast trend check, main: precise measurement)
 ./gradlew :11-high-performance:04-benchmark:smokeBenchmark
@@ -90,6 +102,8 @@ Covers cache and routing strategies for improving throughput and responsiveness 
 - Verify cache hit rate/latency/DB load reduction effects.
 - Check consistency guarantee scenarios during Write-Behind delayed propagation.
 - Confirm fallback path (cache failure → DB) operates correctly on failure.
+- For Ktor modules, confirm route responses expose cache source or selected datasource role.
+- Ktor examples are H2-only and do not require container-backed nightly coverage.
 
 ---
 
