@@ -134,17 +134,17 @@
 <text x="1213" y="572" class="label" text-anchor="middle">MigrationUtils</text>
 <path d="M1108,582 H1318" stroke="#db2777" stroke-width="1.1"/>
 <text x="1122" y="600" class="tiny">statementsRequiredForDatabaseMigration</text>
-<rect x="882" y="292" width="114" height="24" rx="8" fill="#dbeafe" stroke="#99f6e4"/>
-<text x="939" y="308" class="tiny" text-anchor="middle">extends Table</text>
-<rect x="1154" y="292" width="124" height="24" rx="8" fill="#dbeafe" stroke="#99f6e4"/>
-<text x="1216" y="308" class="tiny" text-anchor="middle">extends Table</text>
-<rect x="882" y="474" width="114" height="24" rx="8" fill="#dbeafe" stroke="#99f6e4"/>
-<text x="939" y="490" class="tiny" text-anchor="middle">extends Table</text>
-<rect x="1130" y="474" width="158" height="24" rx="8" fill="#dcfce7" stroke="#99f6e4"/>
-<text x="1209" y="490" class="tiny" text-anchor="middle">extends IntIdTable</text>
-<path d="M844,590 L812,590 L812,397 L844,397" class="runtimeUse"/>
+<rect x="882" y="142" width="114" height="24" rx="8" fill="#dbeafe" stroke="#99f6e4"/>
+<text x="939" y="158" class="tiny" text-anchor="middle">extends Table</text>
+<rect x="1154" y="142" width="124" height="24" rx="8" fill="#dbeafe" stroke="#99f6e4"/>
+<text x="1216" y="158" class="tiny" text-anchor="middle">extends Table</text>
+<rect x="882" y="306" width="114" height="24" rx="8" fill="#dbeafe" stroke="#99f6e4"/>
+<text x="939" y="322" class="tiny" text-anchor="middle">extends Table</text>
+<rect x="1130" y="306" width="158" height="24" rx="8" fill="#dcfce7" stroke="#99f6e4"/>
+<text x="1209" y="322" class="tiny" text-anchor="middle">extends IntIdTable</text>
+<path d="M949,534 L949,460" class="runtimeUse"/>
 <path d="M1054,590 L1082,590 L1082,397 L1108,397" class="runtimeUse"/>
-<path d="M1318,590 L1356,590 L1356,397 L1318,397" class="migration"/>
+<path d="M1213,534 L1213,460" class="migration"/>
 <rect x="138" y="822" width="1224" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="853" class="detail" text-anchor="middle">UML check: supertypes stay above children, hollow generalization triangles are explicit, and every stem meets the triangle base vertically.</text>
 </svg>

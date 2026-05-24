@@ -51,7 +51,7 @@ const diagrams = [
     file: `${outDir}/04-exposed-ddl-02-ddl-architecture-01.svg`,
     title: "Exposed DDL Schema Execution Flow",
     subtitle: "Table declarations feed SchemaUtils and MigrationUtils before dialect-specific SQL reaches the database",
-    width: 1500,
+    width: 1600,
     height: 900,
     body: ddlExecutionArchitecture,
   },
@@ -208,12 +208,14 @@ function ddlExecutionArchitecture() {
   b += card(608, 466, 242, 82, "MigrationUtils", 4, "statementsRequired");
   b += card(608, 626, 242, 70, "Dialect guards", 7, "Postgres/MySQL/H2");
 
-  b += panel(986, 130, 456, 608, "Generated database shape");
-  b += card(1028, 178, 258, 70, "CREATE TABLE", 0, "PK, FK, columns");
-  b += card(1028, 290, 258, 70, "ALTER TABLE", 4, "unique, column drift");
-  b += card(1028, 402, 258, 70, "CREATE INDEX", 6, "predicate/functions");
-  b += card(1028, 514, 258, 70, "CREATE SEQUENCE", 2, "start/increment/cache");
-  b += cylinder(1308, 248, 96, 300, "DB", ["H2", "Postgres", "MySQL"], 3);
+  b += panel(986, 130, 334, 608, "Generated DDL");
+  b += card(1034, 178, 238, 70, "CREATE TABLE", 0, "PK, FK, columns");
+  b += card(1034, 290, 238, 70, "ALTER TABLE", 4, "unique, column drift");
+  b += card(1034, 402, 238, 70, "CREATE INDEX", 6, "predicate/functions");
+  b += card(1034, 514, 238, 70, "CREATE SEQUENCE", 2, "start/increment/cache");
+
+  b += panel(1370, 130, 150, 608, "Database");
+  b += cylinder(1390, 264, 110, 300, "DB", ["H2", "Postgres", "MySQL"], 3);
 
   b += path("M382,213 L608,277", "arrow", "M382,213 L510,213 L510,277 L608,277");
   b += path("M382,325 L608,277", "arrow", "M382,325 L510,325 L510,277 L608,277");
@@ -222,17 +224,17 @@ function ddlExecutionArchitecture() {
   b += path("M382,661 L608,277", "arrow", "M382,661 L510,661 L510,277 L608,277");
   b += path("M382,325 L608,507", "migration", "M382,325 L520,325 L520,507 L608,507");
 
-  b += path("M850,277 L1028,213", "arrow", "M850,277 L940,277 L940,213 L1028,213");
-  b += path("M850,507 L1028,325", "migration", "M850,507 L940,507 L940,325 L1028,325");
-  b += path("M850,277 L1028,437", "arrow", "M850,277 L958,277 L958,437 L1028,437");
-  b += path("M850,277 L1028,549", "arrow", "M850,277 L976,277 L976,549 L1028,549");
+  b += path("M850,277 L1034,213", "arrow", "M850,277 L940,277 L940,213 L1034,213");
+  b += path("M850,507 L1034,325", "migration", "M850,507 L940,507 L940,325 L1034,325");
+  b += path("M850,277 L1034,437", "arrow", "M850,277 L958,277 L958,437 L1034,437");
+  b += path("M850,277 L1034,549", "arrow", "M850,277 L976,277 L976,549 L1034,549");
 
-  b += path("M1286,213 L1308,314", "dbUse", "M1286,213 L1298,213 L1298,314 L1308,314");
-  b += path("M1286,325 L1308,354", "dbUse", "M1286,325 L1298,325 L1298,354 L1308,354");
-  b += path("M1286,437 L1308,394", "dbUse", "M1286,437 L1298,437 L1298,394 L1308,394");
-  b += path("M1286,549 L1308,434", "dbUse", "M1286,549 L1298,549 L1298,434 L1308,434");
+  b += path("M1272,213 L1390,314", "dbUse", "M1272,213 L1338,213 L1338,314 L1390,314");
+  b += path("M1272,325 L1390,354", "dbUse", "M1272,325 L1338,325 L1338,354 L1390,354");
+  b += path("M1272,437 L1390,394", "dbUse", "M1272,437 L1338,437 L1338,394 L1390,394");
+  b += path("M1272,549 L1390,434", "dbUse", "M1272,549 L1338,549 L1338,434 L1390,434");
 
-  b += note(122, 794, 1256, "Source check: Ex02 creates tables and composite FKs; Ex03 runs MigrationUtils; Ex05 creates index variants; Ex06 creates sequences; Ex07 maps custom enum SQL types and references.");
+  b += note(122, 794, 1356, "Source check: Ex02 creates tables and composite FKs; Ex03 runs MigrationUtils; Ex05 creates index variants; Ex06 creates sequences; Ex07 maps custom enum SQL types and references.");
   return b;
 }
 
@@ -261,13 +263,13 @@ function ddlClassModel() {
   b += umlClass(844, 534, 210, 112, "SchemaUtils", ["create/drop", "createSequence/dropSequence", "createMissingTablesAndColumns"], 1, "jdbc utility");
   b += umlClass(1108, 534, 210, 112, "MigrationUtils", ["statementsRequiredForDatabaseMigration"], 4, "migration utility");
 
-  b += labelPill(882, 292, 114, "extends Table", "#dbeafe");
-  b += labelPill(1154, 292, 124, "extends Table", "#dbeafe");
-  b += labelPill(882, 474, 114, "extends Table", "#dbeafe");
-  b += labelPill(1130, 474, 158, "extends IntIdTable", "#dcfce7");
-  b += path("M844,590 L812,590 L812,397 L844,397", "runtimeUse");
+  b += labelPill(882, 142, 114, "extends Table", "#dbeafe");
+  b += labelPill(1154, 142, 124, "extends Table", "#dbeafe");
+  b += labelPill(882, 306, 114, "extends Table", "#dbeafe");
+  b += labelPill(1130, 306, 158, "extends IntIdTable", "#dcfce7");
+  b += path("M949,534 L949,460", "runtimeUse");
   b += path("M1054,590 L1082,590 L1082,397 L1108,397", "runtimeUse");
-  b += path("M1318,590 L1356,590 L1356,397 L1318,397", "migration");
+  b += path("M1213,534 L1213,460", "migration");
   b += note(138, 822, 1224, "UML check: supertypes stay above children, hollow generalization triangles are explicit, and every stem meets the triangle base vertically.");
   return b;
 }
