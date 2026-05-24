@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+  <title id="title">Multitenant Ktor architecture</title>
+  <desc id="desc">Request tenant header flows through a Ktor plugin, coroutine tenant context, Exposed repository, and per-tenant schemas.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 8; }
+      .accent { fill: #e0f2fe; stroke: #0369a1; }
+      .schema { fill: #ecfdf5; stroke: #047857; }
+      .text { font: 18px sans-serif; fill: #0f172a; }
+      .small { font: 14px sans-serif; fill: #334155; }
+      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1120" height="560"/>
+  <text x="56" y="54" class="text" style="font-size:28px;font-weight:700">Ktor request-scoped tenant routing</text>
+  <text x="56" y="84" class="small">X-Tenant-ID is validated once, then bound to Exposed schema selection for the current coroutine.</text>
+
+  <rect x="56" y="150" width="190" height="94" class="box"/>
+  <text x="88" y="190" class="text">HTTP request</text>
+  <text x="82" y="218" class="small">X-Tenant-ID: acme</text>
+
+  <rect x="310" y="132" width="220" height="130" class="box accent"/>
+  <text x="352" y="176" class="text">TenantPlugin</text>
+  <text x="342" y="206" class="small">validate header</text>
+  <text x="342" y="230" class="small">store call attribute</text>
+
+  <rect x="594" y="132" width="220" height="130" class="box accent"/>
+  <text x="638" y="176" class="text">Route handler</text>
+  <text x="626" y="206" class="small">withTenantContext</text>
+  <text x="626" y="230" class="small">ThreadContextElement</text>
+
+  <rect x="878" y="132" width="190" height="130" class="box"/>
+  <text x="910" y="176" class="text">Repository</text>
+  <text x="910" y="206" class="small">transaction</text>
+  <text x="910" y="230" class="small">SET SCHEMA</text>
+
+  <path d="M246 197 L310 197" class="arrow"/>
+  <path d="M530 197 L594 197" class="arrow"/>
+  <path d="M814 197 L878 197" class="arrow"/>
+
+  <rect x="358" y="356" width="190" height="100" class="box schema"/>
+  <text x="398" y="398" class="text">TENANT_ACME</text>
+  <text x="406" y="426" class="small">movies table</text>
+
+  <rect x="628" y="356" width="190" height="100" class="box schema"/>
+  <text x="658" y="398" class="text">TENANT_GLOBEX</text>
+  <text x="676" y="426" class="small">movies table</text>
+
+  <path d="M973 262 C973 330 518 310 454 356" class="arrow"/>
+  <path d="M973 262 C973 330 714 310 723 356" class="arrow"/>
+
+  <text x="82" y="492" class="small">Missing or unknown tenant IDs stop at StatusPages with 400 Bad Request.</text>
+</svg>
