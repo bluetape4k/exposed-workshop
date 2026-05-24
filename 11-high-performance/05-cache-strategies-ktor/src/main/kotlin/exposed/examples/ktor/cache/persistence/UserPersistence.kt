@@ -6,6 +6,7 @@ import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
+import java.io.Serializable
 
 object Users: Table("users") {
     val id = varchar("id", 40)
@@ -40,5 +41,9 @@ class UserPersistence(
         val id: String,
         val displayName: String,
         val version: Int,
-    )
+    ) : Serializable {
+        companion object {
+            private const val serialVersionUID: Long = 1L
+        }
+    }
 }
