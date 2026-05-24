@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+  <title id="title">Ktor routing datasource architecture</title>
+  <desc id="desc">Ktor request plugin selects read or write datasource before repository transactions run against the selected Exposed database.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 8; }
+      .route { fill: #ede9fe; stroke: #6d28d9; }
+      .db { fill: #ecfdf5; stroke: #047857; }
+      .text { font: 18px sans-serif; fill: #0f172a; }
+      .small { font: 14px sans-serif; fill: #334155; }
+      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1120" height="560"/>
+  <text x="56" y="56" class="text" style="font-size:28px;font-weight:700">Ktor read/write datasource routing</text>
+  <text x="56" y="86" class="small">The plugin selects READ or WRITE before route handlers enter repository transactions.</text>
+
+  <rect x="70" y="150" width="200" height="110" class="box"/>
+  <text x="112" y="192" class="text">HTTP request</text>
+  <text x="100" y="222" class="small">method + X-Data-Source</text>
+
+  <rect x="340" y="128" width="230" height="154" class="box route"/>
+  <text x="378" y="174" class="text">RoutingDataSourcePlugin</text>
+  <text x="390" y="204" class="small">GET -> READ</text>
+  <text x="390" y="228" class="small">PUT/POST -> WRITE</text>
+  <text x="390" y="252" class="small">header override</text>
+
+  <rect x="640" y="150" width="210" height="110" class="box"/>
+  <text x="668" y="194" class="text">Repository</text>
+  <text x="676" y="222" class="small">selected Database</text>
+
+  <rect x="640" y="360" width="170" height="100" class="box db"/>
+  <text x="690" y="402" class="text">READ</text>
+  <text x="676" y="430" class="small">replica-like H2</text>
+
+  <rect x="880" y="360" width="170" height="100" class="box db"/>
+  <text x="926" y="402" class="text">WRITE</text>
+  <text x="914" y="430" class="small">primary-like H2</text>
+
+  <path d="M270 206 L340 206" class="arrow"/>
+  <path d="M570 206 L640 206" class="arrow"/>
+  <path d="M735 260 L724 360" class="arrow"/>
+  <path d="M780 260 C862 294 938 320 965 360" class="arrow"/>
+
+  <text x="90" y="504" class="small">Tests assert selected datasource values and read/write selection counters without relying on Spring transaction infrastructure.</text>
+</svg>
