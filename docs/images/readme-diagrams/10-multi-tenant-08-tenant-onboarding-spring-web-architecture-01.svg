@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+  <title id="title">Tenant onboarding provisioning architecture</title>
+  <desc id="desc">Tenant onboarding validates input, checks tenant catalog, provisions schema resources, and cleans up on provisioning failure.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 8; }
+      .service { fill: #e0f2fe; stroke: #0369a1; }
+      .db { fill: #ecfdf5; stroke: #047857; }
+      .warn { fill: #fef3c7; stroke: #b45309; }
+      .text { font: 18px sans-serif; fill: #0f172a; }
+      .small { font: 14px sans-serif; fill: #334155; }
+      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1120" height="560"/>
+  <text x="56" y="56" class="text" style="font-size:28px;font-weight:700">Tenant onboarding and provisioning</text>
+  <text x="56" y="86" class="small">Metadata is committed only after schema resources are provisioned; failures drop partial schemas.</text>
+
+  <rect x="70" y="150" width="190" height="110" class="box"/>
+  <text x="114" y="194" class="text">POST /tenants</text>
+  <text x="108" y="224" class="small">tenantId + displayName</text>
+
+  <rect x="330" y="128" width="240" height="154" class="box service"/>
+  <text x="370" y="176" class="text">TenantOnboardingService</text>
+  <text x="374" y="206" class="small">validate duplicate</text>
+  <text x="374" y="230" class="small">provision schema</text>
+  <text x="374" y="254" class="small">cleanup on failure</text>
+
+  <rect x="650" y="128" width="190" height="120" class="box db"/>
+  <text x="686" y="176" class="text">Tenant catalog</text>
+  <text x="694" y="206" class="small">metadata row</text>
+
+  <rect x="650" y="360" width="190" height="112" class="box db"/>
+  <text x="696" y="404" class="text">Tenant schema</text>
+  <text x="690" y="432" class="small">marker table</text>
+
+  <rect x="890" y="360" width="160" height="112" class="box warn"/>
+  <text x="934" y="404" class="text">Failure</text>
+  <text x="922" y="432" class="small">DROP SCHEMA</text>
+
+  <path d="M260 206 L330 206" class="arrow"/>
+  <path d="M570 182 L650 182" class="arrow"/>
+  <path d="M470 282 C512 338 590 390 650 410" class="arrow"/>
+  <path d="M840 416 L890 416" class="arrow"/>
+
+  <text x="90" y="506" class="small">Tests cover success, duplicate tenant rejection, and failure cleanup after schema creation.</text>
+</svg>
