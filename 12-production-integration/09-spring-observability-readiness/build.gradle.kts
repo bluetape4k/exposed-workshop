@@ -12,7 +12,6 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(libs.jetbrains.exposed.bom))
 
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.jdbc)

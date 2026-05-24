@@ -12,7 +12,6 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(libs.jetbrains.exposed.bom))
 
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.cio)

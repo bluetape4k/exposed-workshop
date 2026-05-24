@@ -3,7 +3,6 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(libs.jetbrains.exposed.bom))
 
     // Bluetape4k Exposed
     api(libs.exposed.core)

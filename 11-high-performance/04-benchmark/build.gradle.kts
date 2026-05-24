@@ -15,7 +15,6 @@ dependencies {
     implementation(libs.jmh.core)
 
     // Exposed
-    implementation(platform(libs.jetbrains.exposed.bom))
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.jdbc)
     implementation(libs.jetbrains.exposed.dao)

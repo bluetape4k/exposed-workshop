@@ -3,7 +3,6 @@ configurations {
 }
 
 dependencies {
-    implementation(platform(libs.jetbrains.exposed.bom))
 
 
     testImplementation(project(":exposed-shared-tests"))

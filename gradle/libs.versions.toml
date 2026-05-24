@@ -2,7 +2,7 @@
 # Gradle Version Catalog — migrated from buildSrc/src/main/kotlin/Libs.kt
 
 [versions]
-bluetape4k-dependencies = "1.1.1"
+bluetape4k-dependencies = "1.1.3"
 
 kotlin = "2.3.21"
 kotlinx-coroutines = "1.11.0"
@@ -233,7 +233,6 @@ reactor-test = { module = "io.projectreactor:reactor-test" }
 netty-bom = { module = "io.netty:netty-bom", version.ref = "netty" }
 
 # JetBrains Exposed
-jetbrains-exposed-bom = { module = "org.jetbrains.exposed:exposed-bom", version.ref = "exposed" }
 jetbrains-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 jetbrains-exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt", version.ref = "exposed" }
 jetbrains-exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
