@@ -383,6 +383,27 @@ Spring Boot 4 서비스의 Actuator readiness, request correlation, structured e
 
 ---
 
+## exposed-r2dbc-workshop 예제 parity
+
+이슈 [#99](https://github.com/bluetape4k/exposed-workshop/issues/99)는
+[`exposed-r2dbc-workshop`](https://github.com/bluetape4k/exposed-r2dbc-workshop)과의 개념 수준 parity를 추적합니다.
+정확한 모듈명 일치가 목적은 아니며, JDBC/blocking과 R2DBC의 데이터베이스 API 모델이 다를 때는 서로 다른 아키텍처 선택을 유지합니다.
+R2DBC 쪽 대응 추적 이슈는
+[exposed-r2dbc-workshop#89](https://github.com/bluetape4k/exposed-r2dbc-workshop/issues/89)입니다(닫힘; 이 결정을 반영).
+
+| `exposed-workshop` 주제 | R2DBC 대응 항목 | 결정 |
+|------------------------|----------------|------|
+| Ktor 예제 epic `#45` 및 멀티테넌트 `#46` | 닫힌 R2DBC 이슈 `#32`, `#33`; 모듈 `10-multi-tenant/07-multitenant-ktor` | 대응 항목으로 충족 |
+| Ktor 캐시/라우팅 구현 이슈 `#47`, `#48`, `#49` 및 wiring `#50`; JDBC 모듈 `11-high-performance/05-07-*` | 닫힌 R2DBC 이슈 `#34`, `#35`, `#36`, `#69`; R2DBC 모듈 `11-high-performance/04-06-*` | 대응 항목으로 충족; `#50`은 문서 wiring |
+| Spring Boot 테넌트 전략 epic `#51`, 구현 `#52`-`#55`, wiring `#56`; JDBC 모듈 `10-multi-tenant/04-06-*`, `08-tenant-onboarding-spring-web` | 닫힌 R2DBC 이슈 `#37`-`#42`; R2DBC 모듈 `10-multi-tenant/03-06-*` | 대응 항목으로 충족; `#56`은 문서 wiring |
+| Chapter 12 production integration epic `#57` 및 분리 모듈 `12-production-integration/01-10-*` | 닫힌 R2DBC 이슈 `#43`-`#49`; 통합 모듈 `12-production-integration/01-spring-production-integration`, `02-ktor-production-integration` | 대응 항목으로 충족 |
+| R2DBC connection-factory-per-tenant | 닫힌 R2DBC 이슈 `#39`; JDBC는 database-per-tenant `#53` 및 schema-per-tenant `#52` 사용 | 플랫폼 특화, 중복 이슈 없음 |
+| JDBC DAO/entities, transaction template, Spring cache, benchmark | `03-exposed-basic`, `05-exposed-dml`, `09-spring`, `11-high-performance`의 blocking/JDBC 전용 모듈 | 플랫폼 특화, 중복 이슈 없음 |
+
+2026-05-24 기준 남은 차이는 플랫폼 특화 항목이므로 새 후속 이슈는 만들지 않습니다.
+
+---
+
 ## 시작하기
 
 ### 사전 요구사항

@@ -383,6 +383,26 @@ Implement the Ktor pair with explicit `/readyz`, sanitized `X-Request-ID`, struc
 
 ---
 
+## Example parity with exposed-r2dbc-workshop
+
+Issue [#99](https://github.com/bluetape4k/exposed-workshop/issues/99) tracks concept-level parity with
+[`exposed-r2dbc-workshop`](https://github.com/bluetape4k/exposed-r2dbc-workshop), not exact module-name parity. JDBC/blocking
+and R2DBC examples keep distinct architecture choices when the database API model differs. The R2DBC-side counterpart is
+[exposed-r2dbc-workshop#89](https://github.com/bluetape4k/exposed-r2dbc-workshop/issues/89) (closed; mirrors this decision).
+
+| Topic in `exposed-workshop` | R2DBC counterpart | Decision |
+|-----------------------------|-------------------|----------|
+| Ktor examples epic `#45` and multi-tenant `#46` | Closed R2DBC issues `#32`, `#33`; module `10-multi-tenant/07-multitenant-ktor` | Covered by counterpart |
+| Ktor cache/routing implementation issues `#47`, `#48`, `#49` plus wiring `#50`; JDBC modules `11-high-performance/05-07-*` | Closed R2DBC issues `#34`, `#35`, `#36`, `#69`; R2DBC modules `11-high-performance/04-06-*` | Covered by counterpart; `#50` is docs wiring |
+| Spring Boot tenant strategy epic `#51`, implementations `#52`-`#55`, plus wiring `#56`; JDBC modules `10-multi-tenant/04-06-*`, `08-tenant-onboarding-spring-web` | Closed R2DBC issues `#37`-`#42`; R2DBC modules `10-multi-tenant/03-06-*` | Covered by counterpart; `#56` is docs wiring |
+| Chapter 12 production integration epic `#57` and split modules `12-production-integration/01-10-*` | Closed R2DBC issues `#43`-`#49`; consolidated modules `12-production-integration/01-spring-production-integration`, `02-ktor-production-integration` | Covered by counterpart |
+| R2DBC connection-factory-per-tenant | Closed R2DBC issue `#39`; JDBC uses database-per-tenant `#53` and schema-per-tenant `#52` | Platform-specific, no duplicate issue |
+| JDBC DAO/entities, transaction template, Spring cache, benchmark | Blocking/JDBC-only modules in `03-exposed-basic`, `05-exposed-dml`, `09-spring`, and `11-high-performance` | Platform-specific, no duplicate issue |
+
+No new follow-up issues are needed as of 2026-05-24 because the remaining differences are platform-specific.
+
+---
+
 ## Getting Started
 
 ### Prerequisites
