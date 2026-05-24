@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Exposed DDL Schema Execution Flow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Exposed DDL Schema Execution Flow">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
 <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
@@ -25,8 +25,8 @@
 .inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
 </style>
 </defs>
-<rect width="1500" height="900" class="canvas"/>
-<rect x="20" y="20" width="1460" height="860" rx="16" class="frame"/>
+<rect width="1600" height="900" class="canvas"/>
+<rect x="20" y="20" width="1560" height="860" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Exposed DDL Schema Execution Flow</text>
 <text x="48" y="80" class="subtitle">Table declarations feed SchemaUtils and MigrationUtils before dialect-specific SQL reaches the database</text>
 <rect x="58" y="130" width="414" height="608" rx="12" class="panel"/><text x="265" y="122" class="panelTitle" text-anchor="middle">DECLARATIONS</text>
@@ -55,40 +55,41 @@
 <rect x="608" y="626" width="242" height="70" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
 <text x="729" y="651" class="label" text-anchor="middle">Dialect guards</text>
 <text x="729" y="682" class="detail" text-anchor="middle">Postgres/MySQL/H2</text>
-<rect x="986" y="130" width="456" height="608" rx="12" class="panel"/><text x="1214" y="122" class="panelTitle" text-anchor="middle">GENERATED DATABASE SHAPE</text>
-<rect x="1028" y="178" width="258" height="70" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1157" y="203" class="label" text-anchor="middle">CREATE TABLE</text>
-<text x="1157" y="234" class="detail" text-anchor="middle">PK, FK, columns</text>
-<rect x="1028" y="290" width="258" height="70" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="1157" y="315" class="label" text-anchor="middle">ALTER TABLE</text>
-<text x="1157" y="346" class="detail" text-anchor="middle">unique, column drift</text>
-<rect x="1028" y="402" width="258" height="70" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="1157" y="427" class="label" text-anchor="middle">CREATE INDEX</text>
-<text x="1157" y="458" class="detail" text-anchor="middle">predicate/functions</text>
-<rect x="1028" y="514" width="258" height="70" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="1157" y="539" class="label" text-anchor="middle">CREATE SEQUENCE</text>
-<text x="1157" y="570" class="detail" text-anchor="middle">start/increment/cache</text>
-<path d="M1308,264 C1308,244 1404,244 1404,264 L1404,532 C1404,552 1308,552 1308,532 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
-<ellipse cx="1356" cy="264" rx="48" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1308,532 C1308,552 1404,552 1404,532" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1356" y="292" class="label" text-anchor="middle">DB</text>
-<text x="1326" y="318" class="tiny">H2</text>
-<text x="1326" y="335" class="tiny">Postgres</text>
-<text x="1326" y="352" class="tiny">MySQL</text>
+<rect x="986" y="130" width="334" height="608" rx="12" class="panel"/><text x="1153" y="122" class="panelTitle" text-anchor="middle">GENERATED DDL</text>
+<rect x="1034" y="178" width="238" height="70" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="1153" y="203" class="label" text-anchor="middle">CREATE TABLE</text>
+<text x="1153" y="234" class="detail" text-anchor="middle">PK, FK, columns</text>
+<rect x="1034" y="290" width="238" height="70" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="1153" y="315" class="label" text-anchor="middle">ALTER TABLE</text>
+<text x="1153" y="346" class="detail" text-anchor="middle">unique, column drift</text>
+<rect x="1034" y="402" width="238" height="70" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="1153" y="427" class="label" text-anchor="middle">CREATE INDEX</text>
+<text x="1153" y="458" class="detail" text-anchor="middle">predicate/functions</text>
+<rect x="1034" y="514" width="238" height="70" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="1153" y="539" class="label" text-anchor="middle">CREATE SEQUENCE</text>
+<text x="1153" y="570" class="detail" text-anchor="middle">start/increment/cache</text>
+<rect x="1370" y="130" width="150" height="608" rx="12" class="panel"/><text x="1445" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
+<path d="M1390,280 C1390,260 1500,260 1500,280 L1500,548 C1500,568 1390,568 1390,548 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
+<ellipse cx="1445" cy="280" rx="55" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1390,548 C1390,568 1500,568 1500,548" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<text x="1445" y="308" class="label" text-anchor="middle">DB</text>
+<text x="1408" y="334" class="tiny">H2</text>
+<text x="1408" y="351" class="tiny">Postgres</text>
+<text x="1408" y="368" class="tiny">MySQL</text>
 <path d="M382,213 L510,213 L510,277 L608,277" class="arrow"/>
 <path d="M382,325 L510,325 L510,277 L608,277" class="arrow"/>
 <path d="M382,437 L510,437 L510,277 L608,277" class="arrow"/>
 <path d="M382,549 L510,549 L510,277 L608,277" class="arrow"/>
 <path d="M382,661 L510,661 L510,277 L608,277" class="arrow"/>
 <path d="M382,325 L520,325 L520,507 L608,507" class="migration"/>
-<path d="M850,277 L940,277 L940,213 L1028,213" class="arrow"/>
-<path d="M850,507 L940,507 L940,325 L1028,325" class="migration"/>
-<path d="M850,277 L958,277 L958,437 L1028,437" class="arrow"/>
-<path d="M850,277 L976,277 L976,549 L1028,549" class="arrow"/>
-<path d="M1286,213 L1298,213 L1298,314 L1308,314" class="dbUse"/>
-<path d="M1286,325 L1298,325 L1298,354 L1308,354" class="dbUse"/>
-<path d="M1286,437 L1298,437 L1298,394 L1308,394" class="dbUse"/>
-<path d="M1286,549 L1298,549 L1298,434 L1308,434" class="dbUse"/>
-<rect x="122" y="794" width="1256" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="750" y="825" class="detail" text-anchor="middle">Source check: Ex02 creates tables and composite FKs; Ex03 runs MigrationUtils; Ex05 creates index variants; Ex06 creates sequences; Ex07 maps custom enum SQL types and references.</text>
+<path d="M850,277 L940,277 L940,213 L1034,213" class="arrow"/>
+<path d="M850,507 L940,507 L940,325 L1034,325" class="migration"/>
+<path d="M850,277 L958,277 L958,437 L1034,437" class="arrow"/>
+<path d="M850,277 L976,277 L976,549 L1034,549" class="arrow"/>
+<path d="M1272,213 L1338,213 L1338,314 L1390,314" class="dbUse"/>
+<path d="M1272,325 L1338,325 L1338,354 L1390,354" class="dbUse"/>
+<path d="M1272,437 L1338,437 L1338,394 L1390,394" class="dbUse"/>
+<path d="M1272,549 L1338,549 L1338,434 L1390,434" class="dbUse"/>
+<rect x="122" y="794" width="1356" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="800" y="825" class="detail" text-anchor="middle">Source check: Ex02 creates tables and composite FKs; Ex03 runs MigrationUtils; Ex05 creates index variants; Ex06 creates sequences; Ex07 maps custom enum SQL types and references.</text>
 </svg>
