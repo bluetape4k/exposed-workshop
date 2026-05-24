@@ -1,51 +1,82 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 670" width="980" height="670" role="img" aria-label="06 Advanced: Exposed-JSON (04)">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-    </marker>
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Exposed JSON Table Storage Model">
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
+<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
+.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
+.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
-  </defs>
-  <rect width="980" height="670" class="canvas"/>
-  <rect x="20" y="20" width="940" height="630" rx="16" class="frame"/>
-<text x="48" y="58" class="title">06 Advanced: Exposed-JSON (04)</text>
-  <text x="48" y="80" class="subtitle">Source-derived ERD · Exposed table objects and column builders</text>
-<rect x="166" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M166,164 L166,138 Q166,126 178,126 L440,126 Q452,126 452,138 L452,164 Z" fill="#dbeafe"/>
-<text x="309" y="151" class="smallLabel" text-anchor="middle">Json Table</text>
-<text x="184" y="188" class="tiny">id PK</text>
-<rect x="528" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M528,164 L528,138 Q528,126 540,126 L802,126 Q814,126 814,138 L814,164 Z" fill="#ede9fe"/>
-<text x="671" y="151" class="smallLabel" text-anchor="middle">Json BTable</text>
-<text x="546" y="188" class="tiny">id PK</text>
-<rect x="166" y="338" width="286" height="154" rx="12" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M166,376 L166,350 Q166,338 178,338 L440,338 Q452,338 452,350 L452,376 Z" fill="#dcfce7"/>
-<text x="309" y="363" class="smallLabel" text-anchor="middle">Json Array Table</text>
-<text x="184" y="400" class="tiny">id PK</text>
-<rect x="528" y="338" width="286" height="154" rx="12" fill="#fff" stroke="#ea580c" class="card"/>
-<path d="M528,376 L528,350 Q528,338 540,338 L802,338 Q814,338 814,350 L814,376 Z" fill="#ffedd5"/>
-<text x="671" y="363" class="smallLabel" text-anchor="middle">Json BArray Table</text>
-<text x="546" y="400" class="tiny">id PK</text>
-<text x="490" y="110" class="panelTitle" text-anchor="middle">TABLES AND RELATIONSHIPS</text>
+</defs>
+<rect width="1500" height="900" class="canvas"/>
+<rect x="20" y="20" width="1460" height="860" rx="16" class="frame"/>
+<text x="48" y="58" class="title">Exposed JSON Table Storage Model</text>
+<text x="48" y="80" class="subtitle">JSON examples define four IntIdTable objects with JSON/JSONB columns and no relational foreign keys</text>
+<rect x="58" y="130" width="870" height="600" rx="12" class="panel"/><text x="493" y="122" class="panelTitle" text-anchor="middle">DATABASE TABLES</text>
+<rect x="106" y="186" width="300" height="152" rx="10" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M106,228 L106,196 Q106,186 116,186 L396,186 Q406,186 406,196 L406,228 Z" fill="#dbeafe"/>
+<text x="256" y="214" class="label" text-anchor="middle">JsonTable</text>
+<text x="122" y="254" class="tiny">id PK</text>
+<text x="122" y="272" class="tiny">j_column JSON NOT NULL</text>
+<text x="122" y="290" class="tiny">builder: json&lt;DataHolder&gt;</text>
+<rect x="520" y="186" width="300" height="152" rx="10" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M520,228 L520,196 Q520,186 530,186 L810,186 Q820,186 820,196 L820,228 Z" fill="#fce7f3"/>
+<text x="670" y="214" class="label" text-anchor="middle">JsonBTable</text>
+<text x="536" y="254" class="tiny">id PK</text>
+<text x="536" y="272" class="tiny">j_b_column JSONB NOT NULL</text>
+<text x="536" y="290" class="tiny">builder: jsonb&lt;DataHolder&gt;</text>
+<rect x="106" y="476" width="300" height="152" rx="10" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M106,518 L106,486 Q106,476 116,476 L396,476 Q406,476 406,486 L406,518 Z" fill="#dcfce7"/>
+<text x="256" y="504" class="label" text-anchor="middle">JsonArrayTable</text>
+<text x="122" y="544" class="tiny">id PK</text>
+<text x="122" y="562" class="tiny">groups JSON NOT NULL</text>
+<text x="122" y="580" class="tiny">numbers JSON NOT NULL</text>
+<rect x="520" y="476" width="300" height="152" rx="10" fill="#fff" stroke="#ea580c" class="card"/>
+<path d="M520,518 L520,486 Q520,476 530,476 L810,476 Q820,476 820,486 L820,518 Z" fill="#ffedd5"/>
+<text x="670" y="504" class="label" text-anchor="middle">JsonBArrayTable</text>
+<text x="536" y="544" class="tiny">id PK</text>
+<text x="536" y="562" class="tiny">groups JSONB NOT NULL</text>
+<text x="536" y="580" class="tiny">numbers JSONB NOT NULL</text>
+<rect x="1010" y="130" width="350" height="600" rx="12" class="panel"/><text x="1185" y="122" class="panelTitle" text-anchor="middle">SERIALIZED PAYLOADS</text>
+<rect x="1060" y="196" width="250" height="126" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M1060,236 L1060,200 Q1060,196 1064,196 L1306,196 Q1310,196 1310,200 L1310,236 Z" fill="#dcfce7"/>
+<line x1="1060" y1="236" x2="1310" y2="236" stroke="#16a34a" stroke-width="1.2"/>
+<text x="1185" y="222" class="label" text-anchor="middle">DataHolder</text>
+<text x="1076" y="256" class="tiny">user: User</text>
+<text x="1076" y="274" class="tiny">logins: Int</text>
+<text x="1076" y="292" class="tiny">active: Boolean</text>
+<text x="1076" y="310" class="tiny">team: String?</text>
+<rect x="1060" y="394" width="250" height="92" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M1060,434 L1060,398 Q1060,394 1064,394 L1306,394 Q1310,394 1310,398 L1310,434 Z" fill="#dbeafe"/>
+<line x1="1060" y1="434" x2="1310" y2="434" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="1185" y="420" class="label" text-anchor="middle">User</text>
+<text x="1076" y="455" class="tiny">name: String</text>
+<text x="1076" y="473" class="tiny">team: String?</text>
+<rect x="1060" y="562" width="250" height="92" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
+<path d="M1060,602 L1060,566 Q1060,562 1064,562 L1306,562 Q1310,562 1310,566 L1310,602 Z" fill="#ede9fe"/>
+<line x1="1060" y1="602" x2="1310" y2="602" stroke="#7c3aed" stroke-width="1.2"/>
+<text x="1185" y="588" class="label" text-anchor="middle">UserGroup</text>
+<text x="1076" y="632" class="tiny">users: List&lt;User&gt;</text>
+<path d="M406,262 L466,262 L466,154 L946,154 L946,244 L1060,244" class="mapLine"/>
+<path d="M820,262 L946,262 L946,276 L1060,276" class="mapLine"/>
+<path d="M406,552 L466,552 L466,690 L946,690 L946,608 L1060,608" class="mapLine"/>
+<path d="M820,552 L946,552 L946,632 L1060,632" class="mapLine"/>
+<path d="M1185,322 L1185,394" class="runtimeUse"/>
+<path d="M1185,562 L1185,486" class="runtimeUse"/>
+<rect x="126" y="794" width="1188" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="720" y="825" class="detail" text-anchor="middle">No FK lines are drawn: the relationships are JSON payload shape references, not relational constraints.</text>
 </svg>
