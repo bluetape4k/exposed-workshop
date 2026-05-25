@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1550 900" width="1550" height="900" role="img" aria-label="Advanced Exposed Extension Architecture">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 940" width="1560" height="940" role="img" aria-label="Advanced Exposed Extension Architecture">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
 <marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
 <marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
 <marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -16,74 +16,76 @@
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
 .arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
 .mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.fkLine{fill:none;stroke:#0f766e;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
 .dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
-<rect width="1550" height="900" class="canvas"/>
-<rect x="20" y="20" width="1510" height="860" rx="16" class="frame"/>
+<rect width="1560" height="940" class="canvas"/>
+<rect x="20" y="20" width="1520" height="900" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Advanced Exposed Extension Architecture</text>
-<text x="48" y="80" class="subtitle">Current 06-advanced modules extend Table columns, Entity IDs, serializers, and encryption adapters before SQL reaches databases</text>
-<rect x="58" y="130" width="286" height="590" rx="12" class="panel"/><text x="201" y="122" class="panelTitle" text-anchor="middle">CURRENT MODULES</text>
-<rect x="92" y="182" width="218" height="58" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="201" y="207" class="label" text-anchor="middle">Security</text>
-<text x="201" y="226" class="detail" text-anchor="middle">01 crypt / 12 tink</text>
-<rect x="92" y="274" width="218" height="58" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="201" y="299" class="label" text-anchor="middle">Time and Money</text>
-<text x="201" y="318" class="detail" text-anchor="middle">02 / 03 / 05</text>
-<rect x="92" y="366" width="218" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="201" y="391" class="label" text-anchor="middle">JSON Serialization</text>
-<text x="201" y="410" class="detail" text-anchor="middle">04 / 08 / 09 / 11</text>
-<rect x="92" y="458" width="218" height="58" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="201" y="483" class="label" text-anchor="middle">Custom Extensions</text>
-<text x="201" y="502" class="detail" text-anchor="middle">06 columns / 07 ids</text>
-<rect x="420" y="130" width="338" height="590" rx="12" class="panel"/><text x="589" y="122" class="panelTitle" text-anchor="middle">EXPOSED EXTENSION POINT</text>
-<rect x="468" y="184" width="242" height="70" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="589" y="209" class="label" text-anchor="middle">Table column DSL</text>
-<text x="589" y="240" class="detail" text-anchor="middle">registerColumn()</text>
-<rect x="468" y="326" width="242" height="70" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="589" y="351" class="label" text-anchor="middle">ColumnType</text>
-<text x="589" y="382" class="detail" text-anchor="middle">serialize / parse</text>
-<rect x="468" y="468" width="242" height="70" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="589" y="493" class="label" text-anchor="middle">Entity ID strategy</text>
-<text x="589" y="524" class="detail" text-anchor="middle">KSUID / Snowflake / UUID</text>
-<rect x="468" y="606" width="242" height="58" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="589" y="631" class="label" text-anchor="middle">Entity API</text>
-<text x="589" y="650" class="detail" text-anchor="middle">custom IdTable</text>
-<rect x="828" y="130" width="330" height="590" rx="12" class="panel"/><text x="993" y="122" class="panelTitle" text-anchor="middle">GENERATED PERSISTENCE</text>
-<rect x="874" y="194" width="238" height="64" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="993" y="219" class="label" text-anchor="middle">DDL columns</text>
-<text x="993" y="244" class="detail" text-anchor="middle">varchar / jsonb / binary</text>
-<rect x="874" y="326" width="238" height="64" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="993" y="351" class="label" text-anchor="middle">DML values</text>
-<text x="993" y="376" class="detail" text-anchor="middle">round-trip tests</text>
-<rect x="874" y="458" width="238" height="64" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="993" y="483" class="label" text-anchor="middle">Path queries</text>
-<text x="993" y="508" class="detail" text-anchor="middle">extract / contains</text>
-<rect x="874" y="590" width="238" height="64" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="993" y="615" class="label" text-anchor="middle">Default expressions</text>
-<text x="993" y="640" class="detail" text-anchor="middle">date/time/current</text>
-<rect x="1244" y="130" width="216" height="590" rx="12" class="panel"/><text x="1352" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
-<path d="M1288,267 C1288,246 1416,246 1416,267 L1416,463 C1416,484 1288,484 1288,463 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
-<ellipse cx="1352" cy="267" rx="64" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1288,463 C1288,484 1416,484 1416,463" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1352" y="298" class="label" text-anchor="middle">DB</text>
-<text x="1304" y="328" class="tiny">H2</text>
-<text x="1304" y="346" class="tiny">Postgres</text>
-<text x="1304" y="364" class="tiny">MySQL</text>
-<text x="1304" y="382" class="tiny">MariaDB</text>
-<path d="M310,211 L388,211 L388,219 L468,219" class="arrow"/>
-<path d="M310,303 L388,303 L388,361 L468,361" class="arrow"/>
-<path d="M310,395 L388,395 L388,361 L468,361" class="arrow"/>
-<path d="M310,487 L388,487 L388,503 L468,503" class="arrow"/>
-<path d="M710,219 L790,219 L790,226 L874,226" class="mapLine"/>
-<path d="M710,361 L790,361 L790,358 L874,358" class="mapLine"/>
-<path d="M710,503 L790,503 L790,622 L874,622" class="mapLine"/>
-<path d="M1112,226 L1190,226 L1190,326 L1288,326" class="dbUse"/>
-<path d="M1112,358 L1288,358" class="dbUse"/>
-<path d="M1112,490 L1190,490 L1190,390 L1288,390" class="dbUse"/>
-<rect x="108" y="796" width="1336" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="776" y="827" class="detail" text-anchor="middle">Source check: module directories present are 01,02,03,04,05,06,07,08,09,11,12; stale README-only entries are not treated as source-owned modules.</text>
+<text x="48" y="80" class="subtitle">Advanced modules extend ColumnType, Table DSL, Entity IDs, JSON predicates, and encrypted persistence before values reach databases</text>
+<rect x="58" y="130" width="282" height="620" rx="12" class="panel"/><text x="199" y="122" class="panelTitle" text-anchor="middle">PRODUCTION CONCERNS</text>
+<desc>Sensitive data</desc><rect x="94" y="178" width="210" height="66" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="199" y="203" class="label" text-anchor="middle">Sensitive data</text>
+<text x="199" y="230" class="detail" text-anchor="middle">crypt + Tink</text>
+<desc>Structured JSON</desc><rect x="94" y="304" width="210" height="66" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="199" y="329" class="label" text-anchor="middle">Structured JSON</text>
+<text x="199" y="356" class="detail" text-anchor="middle">json/jackson/fastjson</text>
+<desc>Domain values</desc><rect x="94" y="430" width="210" height="66" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="199" y="455" class="label" text-anchor="middle">Domain values</text>
+<text x="199" y="482" class="detail" text-anchor="middle">time + money</text>
+<desc>Custom identity</desc><rect x="94" y="556" width="210" height="66" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="199" y="581" class="label" text-anchor="middle">Custom identity</text>
+<text x="199" y="608" class="detail" text-anchor="middle">KSUID/Snowflake/UUID</text>
+<rect x="420" y="130" width="328" height="620" rx="12" class="panel"/><text x="584" y="122" class="panelTitle" text-anchor="middle">EXPOSED EXTENSION POINTS</text>
+<desc>Table column DSL</desc><rect x="470" y="176" width="228" height="64" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="584" y="201" class="label" text-anchor="middle">Table column DSL</text>
+<text x="584" y="226" class="detail" text-anchor="middle">registerColumn()</text>
+<desc>ColumnType</desc><rect x="470" y="302" width="228" height="64" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="584" y="327" class="label" text-anchor="middle">ColumnType</text>
+<text x="584" y="352" class="detail" text-anchor="middle">serialize / parse</text>
+<desc>EntityID strategy</desc><rect x="470" y="428" width="228" height="64" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="584" y="453" class="label" text-anchor="middle">EntityID strategy</text>
+<text x="584" y="478" class="detail" text-anchor="middle">custom IdTable</text>
+<desc>Query predicates</desc><rect x="470" y="554" width="228" height="64" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="584" y="579" class="label" text-anchor="middle">Query predicates</text>
+<text x="584" y="604" class="detail" text-anchor="middle">extract/contains/exists</text>
+<rect x="828" y="130" width="326" height="620" rx="12" class="panel"/><text x="991" y="122" class="panelTitle" text-anchor="middle">TESTED PERSISTENCE</text>
+<desc>DDL columns</desc><rect x="874" y="176" width="234" height="64" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="991" y="201" class="label" text-anchor="middle">DDL columns</text>
+<text x="991" y="226" class="detail" text-anchor="middle">varchar/jsonb/binary</text>
+<desc>Round-trip values</desc><rect x="874" y="302" width="234" height="64" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="991" y="327" class="label" text-anchor="middle">Round-trip values</text>
+<text x="991" y="352" class="detail" text-anchor="middle">DAO + DSL tests</text>
+<desc>Path queries</desc><rect x="874" y="428" width="234" height="64" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="991" y="453" class="label" text-anchor="middle">Path queries</text>
+<text x="991" y="478" class="detail" text-anchor="middle">JSON predicates</text>
+<desc>Encrypted rows</desc><rect x="874" y="554" width="234" height="64" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="991" y="579" class="label" text-anchor="middle">Encrypted rows</text>
+<text x="991" y="604" class="detail" text-anchor="middle">search constraints</text>
+<rect x="1244" y="130" width="196" height="620" rx="12" class="panel"/><text x="1342" y="122" class="panelTitle" text-anchor="middle">DATABASES</text>
+<path d="M1288,303 C1288,282 1396,282 1396,303 L1396,493 C1396,514 1288,514 1288,493 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
+<ellipse cx="1342" cy="303" rx="54" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1288,493 C1288,514 1396,514 1396,493" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<text x="1342" y="338" class="label" text-anchor="middle">DB</text>
+<text x="1302" y="372" class="tiny">H2</text>
+<text x="1302" y="390" class="tiny">Postgres</text>
+<text x="1302" y="408" class="tiny">MySQL</text>
+<text x="1302" y="426" class="tiny">MariaDB</text>
+<path d="M304,211 L386,211 L386,208 L470,208" class="arrow"/>
+<path d="M304,337 L386,337 L386,334 L470,334" class="arrow"/>
+<path d="M304,463 L386,463 L386,334 L470,334" class="arrow"/>
+<path d="M304,589 L386,589 L386,460 L470,460" class="arrow"/>
+<path d="M698,208 L786,208 L786,208 L874,208" class="mapLine"/>
+<path d="M698,334 L874,334" class="mapLine"/>
+<path d="M698,460 L780,460 L780,586 L874,586" class="mapLine"/>
+<path d="M698,586 L760,586 L760,520 L812,520 L812,460 L874,460" class="codecLine"/>
+<path d="M1108,208 L1196,208 L1196,356 L1288,356" class="dbUse"/>
+<path d="M1108,334 L1196,334 L1196,394 L1288,394" class="dbUse"/>
+<path d="M1108,460 L1196,460 L1196,432 L1288,432" class="dbUse"/>
+<path d="M1108,586 L1196,586 L1196,470 L1288,470" class="dbUse"/>
+<rect x="126" y="824" width="1208" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="730" y="855" class="detail" text-anchor="middle">Source check: advanced chapter directories present modules 01-09, 11, and 12; stale README-only rows are not treated as source-owned modules.</text>
 </svg>
