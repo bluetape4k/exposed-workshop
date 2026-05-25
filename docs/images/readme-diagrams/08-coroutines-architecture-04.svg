@@ -1,85 +1,87 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1378 650" width="1378" height="650" role="img" aria-label="08 Coroutines">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-    </marker>
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Virtual Thread Transaction Flow">
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
+<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
+.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
+.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.returnLine{fill:none;stroke:#64748b;stroke-width:1.7;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGray)}
+.lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
 </style>
-  </defs>
-  <rect width="1378" height="650" class="canvas"/>
-  <rect x="20" y="20" width="1338" height="610" rx="16" class="frame"/>
-<text x="48" y="58" class="title">08 Coroutines</text>
-  <text x="48" y="80" class="subtitle">Source-derived component flow · README plus Kotlin implementation</text>
-<rect x="36" y="112" width="270" height="350" rx="12" class="panel"/>
-  <text x="171" y="106" class="panelTitle" text-anchor="middle">ENTRY POINTS</text>
-<rect x="56" y="132" width="230" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="171" y="167" class="smallLabel" text-anchor="middle">README User</text>
-
-<rect x="56" y="208" width="230" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="171" y="237" class="smallLabel" text-anchor="middle">HTTP Request</text>
-<text x="171" y="250" class="detail" text-anchor="middle">entry</text>
-<rect x="56" y="284" width="230" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="171" y="319" class="smallLabel" text-anchor="middle">Workshop Example</text>
-
-<rect x="390" y="112" width="360" height="350" rx="12" class="panel"/>
-  <text x="570" y="106" class="panelTitle" text-anchor="middle">APPLICATION / DOMAIN</text>
-<rect x="420" y="136" width="300" height="76" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="570" y="180" class="smallLabel" text-anchor="middle">Ex01_ Coroutines</text>
-
-<rect x="420" y="248" width="300" height="76" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="570" y="292" class="smallLabel" text-anchor="middle">Tester</text>
-
-<rect x="420" y="360" width="300" height="76" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="570" y="404" class="smallLabel" text-anchor="middle">Tester Unique</text>
-
-<rect x="842" y="112" width="250" height="350" rx="12" class="panel"/>
-  <text x="967" y="106" class="panelTitle" text-anchor="middle">PERSISTENCE</text>
-<rect x="864" y="138" width="206" height="56" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="967" y="172" class="smallLabel" text-anchor="middle">Tester Unique</text>
-
-<rect x="864" y="212" width="206" height="56" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="967" y="246" class="smallLabel" text-anchor="middle">VTester</text>
-
-<rect x="864" y="286" width="206" height="56" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="967" y="320" class="smallLabel" text-anchor="middle">VTester Unique</text>
-
-<rect x="1120" y="112" width="222" height="350" rx="12" class="panel"/>
-  <text x="1231" y="106" class="panelTitle" text-anchor="middle">RUNTIME / INFRASTRUCTURE</text>
-<rect x="1138" y="138" width="186" height="56" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1231" y="172" class="smallLabel" text-anchor="middle">Runtime</text>
-
-<rect x="1138" y="212" width="186" height="56" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="1231" y="241" class="smallLabel" text-anchor="middle">Configuration</text>
-<text x="1231" y="252" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="1138" y="286" width="186" height="56" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="1231" y="320" class="smallLabel" text-anchor="middle">Test Fixture</text>
-
-<path d="M286,176 C330,176 366,174 420,174" class="arrow"/>
-<path d="M720,288 C774,288 812,236 864,236" class="arrow"/>
-<path d="M720,400 C790,400 1050,404 1138,404" class="softArrow"/>
-<path d="M1070,240 C1098,240 1108,240 1138,240" class="softArrow"/>
-<rect x="36" y="510" width="1306" height="58" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="689" y="535" class="smallLabel" text-anchor="middle">Suspending boundaries are visible between request handlers and Exposed transactions.</text>
-<text x="689" y="554" class="detail" text-anchor="middle">Source packages decide the panels; arrows show only the important runtime or dependency flow.</text>
+</defs>
+<rect width="1500" height="900" class="canvas"/>
+<rect x="20" y="20" width="1460" height="860" rx="16" class="frame"/>
+<text x="48" y="58" class="title">Virtual Thread Transaction Flow</text>
+<text x="48" y="80" class="subtitle">Ex01_VirtualThreads runs Java 21-only JDBC transactions through newVirtualThreadJdbcTransaction and virtualThreadJdbcTransactionAsync</text>
+<rect x="58" y="130" width="320" height="590" rx="12" class="panel"/><text x="218" y="122" class="panelTitle" text-anchor="middle">TEST HARNESS</text>
+<desc>Java 21 gate</desc><rect x="98" y="178" width="220" height="62" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="208" y="203" class="label" text-anchor="middle">Java 21 gate</text>
+<text x="208" y="226" class="detail" text-anchor="middle">@EnabledForJreRange</text>
+<desc>withTables</desc><rect x="98" y="298" width="220" height="62" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="208" y="323" class="label" text-anchor="middle">withTables</text>
+<text x="208" y="346" class="detail" text-anchor="middle">create/drop tables</text>
+<desc>regular transaction</desc><rect x="98" y="418" width="220" height="62" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="208" y="443" class="label" text-anchor="middle">regular transaction</text>
+<text x="208" y="466" class="detail" text-anchor="middle">mixed comparison</text>
+<desc>assertions</desc><rect x="98" y="538" width="220" height="62" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="208" y="563" class="label" text-anchor="middle">assertions</text>
+<text x="208" y="586" class="detail" text-anchor="middle">ExecutionException</text>
+<rect x="452" y="130" width="350" height="590" rx="12" class="panel"/><text x="627" y="122" class="panelTitle" text-anchor="middle">VIRTUAL THREAD APIS</text>
+<desc>newVirtualThread Tx</desc><rect x="506" y="176" width="236" height="64" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="624" y="201" class="label" text-anchor="middle">newVirtualThread Tx</text>
+<text x="624" y="226" class="detail" text-anchor="middle">JDBC transaction</text>
+<desc>VT transaction async</desc><rect x="506" y="302" width="236" height="64" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="624" y="327" class="label" text-anchor="middle">VT transaction async</text>
+<text x="624" y="352" class="detail" text-anchor="middle">10 parallel tasks</text>
+<desc>VirtualFuture.awaitAll</desc><rect x="506" y="428" width="236" height="64" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="624" y="453" class="label" text-anchor="middle">VirtualFuture.awaitAll</text>
+<text x="624" y="478" class="detail" text-anchor="middle">join results</text>
+<desc>commit / cleanup</desc><rect x="506" y="554" width="236" height="64" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="624" y="579" class="label" text-anchor="middle">commit / cleanup</text>
+<text x="624" y="604" class="detail" text-anchor="middle">close inner connection</text>
+<rect x="878" y="130" width="310" height="590" rx="12" class="panel"/><text x="1033" y="122" class="panelTitle" text-anchor="middle">EXPOSED SCHEMA</text>
+<desc>VTester</desc><rect x="922" y="198" width="222" height="70" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="1033" y="223" class="label" text-anchor="middle">VTester</text>
+<text x="1033" y="254" class="detail" text-anchor="middle">IntIdTable virtualthreads_table</text>
+<desc>VTesterUnique</desc><rect x="922" y="384" width="222" height="70" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="1033" y="409" class="label" text-anchor="middle">VTesterUnique</text>
+<text x="1033" y="440" class="detail" text-anchor="middle">Table + unique PK</text>
+<desc>TesterEntity</desc><rect x="922" y="570" width="222" height="70" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="1033" y="595" class="label" text-anchor="middle">TesterEntity</text>
+<text x="1033" y="626" class="detail" text-anchor="middle">IntEntity duplicate test</text>
+<rect x="1260" y="130" width="180" height="590" rx="12" class="panel"/><text x="1350" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
+<path d="M1292,309 C1292,288 1404,288 1404,309 L1404,485 C1404,506 1292,506 1292,485 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
+<ellipse cx="1348" cy="309" rx="56" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1292,485 C1292,506 1404,506 1404,485" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<text x="1348" y="344" class="label" text-anchor="middle">DB</text>
+<text x="1306" y="378" class="tiny">H2</text>
+<text x="1306" y="396" class="tiny">Postgres</text>
+<text x="1306" y="414" class="tiny">MySQL</text>
+<path d="M318,209 L410,209 L410,208 L506,208" class="arrow"/>
+<path d="M318,329 L410,329 L410,208 L506,208" class="arrow"/>
+<path d="M318,449 L410,449 L410,586 L506,586" class="runtimeUse"/>
+<path d="M742,208 L836,208 L836,218 L922,218" class="mapLine"/>
+<path d="M742,334 L818,334 L818,238 L922,238" class="arrow"/>
+<path d="M742,460 L802,460 L802,258 L922,258" class="arrow"/>
+<path d="M742,586 L836,586 L836,605 L922,605" class="runtimeUse"/>
+<path d="M1144,233 L1220,233 L1220,360 L1292,360" class="dbUse"/>
+<path d="M1144,419 L1220,419 L1220,420 L1292,420" class="dbUse"/>
+<path d="M1144,605 L1220,605 L1220,480 L1292,480" class="dbUse"/>
+<rect x="132" y="780" width="1236" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="750" y="811" class="detail" text-anchor="middle">Source check: Ex01_VirtualThreads verifies Java 21 virtual-thread transactions, async fan-out, regular transaction mixing, and inner connection cleanup after duplicate ID failure.</text>
 </svg>
