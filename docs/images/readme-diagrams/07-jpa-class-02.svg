@@ -1,102 +1,91 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 986" width="1220" height="986" role="img" aria-label="07 JPA Migration">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-    </marker>
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 980" width="1320" height="980" role="img" aria-label="JPA and Exposed Concept Mapping">
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
+<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
+.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
+.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
-  </defs>
-  <rect width="1220" height="986" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="946" rx="16" class="frame"/>
-<text x="48" y="58" class="title">07 JPA Migration</text>
-  <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="120" width="1128" height="226" rx="12" class="panel"/>
-  <text x="610" y="114" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="74" y="146" width="203" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="175.5" y="178" class="smallLabel" text-anchor="middle">Abstract Exposed</text>
-<text x="175.5" y="196" class="smallLabel" text-anchor="middle">Test</text>
-
-<rect x="305" y="146" width="203" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="406.5" y="175" class="smallLabel" text-anchor="middle">Long Id Table</text>
-<text x="406.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="536" y="146" width="203" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="637.5" y="175" class="smallLabel" text-anchor="middle">Entity ID</text>
-<text x="637.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="767" y="146" width="203" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="868.5" y="175" class="smallLabel" text-anchor="middle">Id Table</text>
-<text x="868.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="998" y="146" width="203" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="1099.5" y="175" class="smallLabel" text-anchor="middle">Table</text>
-<text x="1099.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="242" width="203" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="175.5" y="284" class="smallLabel" text-anchor="middle">Serializable</text>
-
-<rect x="305" y="242" width="203" height="72" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="406.5" y="284" class="smallLabel" text-anchor="middle">Email Column Type</text>
-
-<rect x="536" y="242" width="203" height="72" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="637.5" y="284" class="smallLabel" text-anchor="middle">Column Transformer</text>
-
-<rect x="767" y="242" width="203" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="868.5" y="284" class="smallLabel" text-anchor="middle">Comparable</text>
-
-<rect x="46" y="398" width="1128" height="474" rx="12" class="panel"/>
-  <text x="610" y="392" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="74" y="424" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="234" y="472" class="smallLabel" text-anchor="middle">Ex01_ Simple_ DSL</text>
-
-<rect x="440" y="424" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="600" y="453" class="smallLabel" text-anchor="middle">Ex02_ Simple_ DAO</text>
-<text x="600" y="492" class="detail" text-anchor="middle">persistence</text>
-<rect x="806" y="424" width="320" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="966" y="453" class="smallLabel" text-anchor="middle">Post Detail Table</text>
-<text x="966" y="492" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="532" width="320" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="234" y="580" class="smallLabel" text-anchor="middle">Ex01_ Blog</text>
-
-<rect x="440" y="532" width="320" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="600" y="580" class="smallLabel" text-anchor="middle">Ex02_ Person</text>
-
-<rect x="806" y="532" width="320" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="966" y="580" class="smallLabel" text-anchor="middle">Ex03_ Task</text>
-
-<rect x="74" y="640" width="320" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="234" y="688" class="smallLabel" text-anchor="middle">Ex01_ Custom Id</text>
-
-<rect x="440" y="640" width="320" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="600" y="669" class="smallLabel" text-anchor="middle">Custom Id Table</text>
-<text x="600" y="708" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="640" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="966" y="688" class="smallLabel" text-anchor="middle">Ex01_ Composite Id</text>
-
-<rect x="74" y="748" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="234" y="796" class="smallLabel" text-anchor="middle">Ex02_ Id Class</text>
-
-<path d="M234,424 L234,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M600,424 L600,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M966,424 L966,378 L868.5,378 L868.5,224" class="inherit"/>
-<path d="M234,532 L234,378 L175.5,378 L175.5,224" class="inherit"/>
-<rect x="46" y="912" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="610" y="939" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+</defs>
+<rect width="1320" height="980" class="canvas"/>
+<rect x="20" y="20" width="1280" height="940" rx="16" class="frame"/>
+<text x="48" y="58" class="title">JPA and Exposed Concept Mapping</text>
+<text x="48" y="80" class="subtitle">Root JPA migration examples map JPA annotations and EntityManager behavior to Table DSL, DAO entities, Query DSL, and transaction blocks</text>
+<rect x="58" y="130" width="650" height="700" rx="12" class="panel"/><text x="383" y="122" class="panelTitle" text-anchor="middle">JPA CONCEPTS</text>
+<desc>@Entity class</desc><rect x="98" y="178" width="230" height="64" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="213" y="203" class="label" text-anchor="middle">@Entity class</text>
+<text x="213" y="228" class="detail" text-anchor="middle">SimpleEntity / Person</text>
+<desc>@Column fields</desc><rect x="98" y="294" width="230" height="64" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="213" y="319" class="label" text-anchor="middle">@Column fields</text>
+<text x="213" y="344" class="detail" text-anchor="middle">name, address, version</text>
+<desc>@Id / @EmbeddedId</desc><rect x="98" y="410" width="230" height="64" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="213" y="435" class="label" text-anchor="middle">@Id / @EmbeddedId</text>
+<text x="213" y="460" class="detail" text-anchor="middle">Long id / composite id</text>
+<desc>Relationships</desc><rect x="98" y="526" width="230" height="64" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="213" y="551" class="label" text-anchor="middle">Relationships</text>
+<text x="213" y="576" class="detail" text-anchor="middle">OneToOne/ManyToMany</text>
+<desc>Lifecycle behavior</desc><rect x="98" y="642" width="230" height="64" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="213" y="667" class="label" text-anchor="middle">Lifecycle behavior</text>
+<text x="213" y="692" class="detail" text-anchor="middle">audit / version / lazy</text>
+<rect x="838" y="130" width="424" height="700" rx="12" class="panel"/><text x="1050" y="122" class="panelTitle" text-anchor="middle">EXPOSED COUNTERPART</text>
+<desc>Table + DAO</desc><rect x="920" y="178" width="260" height="64" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="1050" y="203" class="label" text-anchor="middle">Table + DAO</text>
+<text x="1050" y="228" class="detail" text-anchor="middle">LongIdTable + LongEntity</text>
+<desc>Column delegates</desc><rect x="920" y="294" width="260" height="64" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="1050" y="319" class="label" text-anchor="middle">Column delegates</text>
+<text x="1050" y="344" class="detail" text-anchor="middle">var field by Table.col</text>
+<desc>IdTable variants</desc><rect x="920" y="410" width="260" height="64" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="1050" y="435" class="label" text-anchor="middle">IdTable variants</text>
+<text x="1050" y="460" class="detail" text-anchor="middle">LongIdTable / CompositeIdTable</text>
+<desc>Reference APIs</desc><rect x="920" y="526" width="260" height="64" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="1050" y="551" class="label" text-anchor="middle">Reference APIs</text>
+<text x="1050" y="576" class="detail" text-anchor="middle">referencedOn / referrersOn / via</text>
+<desc>Explicit tests</desc><rect x="920" y="642" width="260" height="64" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="1050" y="667" class="label" text-anchor="middle">Explicit tests</text>
+<text x="1050" y="692" class="detail" text-anchor="middle">transaction + EntityHook</text>
+<rect x="432" y="200" width="270" height="560" rx="12" class="panel"/><text x="567" y="192" class="panelTitle" text-anchor="middle">SOURCE EXAMPLES</text>
+<desc>SimpleSchema</desc><rect x="468" y="244" width="196" height="54" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="566" y="269" class="label" text-anchor="middle">SimpleSchema</text>
+<text x="566" y="284" class="detail" text-anchor="middle">CRUD</text>
+<desc>BlogSchema</desc><rect x="468" y="354" width="196" height="54" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="566" y="379" class="label" text-anchor="middle">BlogSchema</text>
+<text x="566" y="394" class="detail" text-anchor="middle">relations</text>
+<desc>PersonSchema</desc><rect x="468" y="464" width="196" height="54" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="566" y="489" class="label" text-anchor="middle">PersonSchema</text>
+<text x="566" y="504" class="detail" text-anchor="middle">many-to-one</text>
+<desc>BookSchema</desc><rect x="468" y="574" width="196" height="54" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="566" y="599" class="label" text-anchor="middle">BookSchema</text>
+<text x="566" y="614" class="detail" text-anchor="middle">composite PK</text>
+<desc>Inheritance tests</desc><rect x="468" y="684" width="196" height="54" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="566" y="709" class="label" text-anchor="middle">Inheritance tests</text>
+<text x="566" y="724" class="detail" text-anchor="middle">3 strategies</text>
+<path d="M328,210 L398,210 L398,271 L468,271" class="arrow"/>
+<path d="M328,326 L398,326 L398,381 L468,381" class="arrow"/>
+<path d="M328,442 L398,442 L398,601 L468,601" class="arrow"/>
+<path d="M328,558 L398,558 L398,381 L468,381" class="arrow"/>
+<path d="M328,548 L418,548 L418,491 L468,491" class="mapLine"/>
+<path d="M328,674 L398,674 L398,711 L468,711" class="runtimeUse"/>
+<path d="M664,271 L780,271 L780,210 L920,210" class="mapLine"/>
+<path d="M664,271 L760,271 L760,326 L920,326" class="mapLine"/>
+<path d="M664,601 L760,601 L760,442 L920,442" class="mapLine"/>
+<path d="M664,381 L760,381 L760,558 L920,558" class="mapLine"/>
+<path d="M664,491 L790,491 L790,558 L920,558" class="mapLine"/>
+<path d="M664,711 L760,711 L760,674 L920,674" class="runtimeUse"/>
+<rect x="128" y="884" width="1064" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="660" y="915" class="detail" text-anchor="middle">Concept rule: Exposed splits mapping into explicit table definitions, DAO classes, query DSL, and transaction-scoped verification.</text>
 </svg>
