@@ -1,5 +1,15 @@
 plugins {
+    alias(libs.plugins.exposed)
     alias(libs.plugins.kotlin.serialization)
+}
+
+exposed {
+    migrations {
+        tablesPackage = "exposed.examples.ktor.cache.persistence"
+        databaseUrl = "jdbc:h2:mem:11-high-performance-05-cache-strategies-ktor-migrations;DB_CLOSE_DELAY=-1;MODE=PostgreSQL"
+        databaseUser = "sa"
+        databasePassword = ""
+    }
 }
 
 dependencies {

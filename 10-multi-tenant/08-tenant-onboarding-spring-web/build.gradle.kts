@@ -1,6 +1,16 @@
 plugins {
+    alias(libs.plugins.exposed)
     kotlin("plugin.spring")
     alias(libs.plugins.spring.boot)
+}
+
+exposed {
+    migrations {
+        tablesPackage = "exposed.multitenant.onboarding"
+        databaseUrl = "jdbc:h2:mem:10-multi-tenant-08-tenant-onboarding-spring-web-migrations;DB_CLOSE_DELAY=-1;MODE=PostgreSQL"
+        databaseUser = "sa"
+        databasePassword = ""
+    }
 }
 
 dependencies {

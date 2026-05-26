@@ -1,5 +1,15 @@
 plugins {
+    alias(libs.plugins.exposed)
     alias(libs.plugins.kotlin.serialization)
+}
+
+exposed {
+    migrations {
+        tablesPackage = "exposed.multitenant.ktor.persistence"
+        databaseUrl = "jdbc:h2:mem:10-multi-tenant-07-multitenant-ktor-migrations;DB_CLOSE_DELAY=-1;MODE=PostgreSQL"
+        databaseUser = "sa"
+        databasePassword = ""
+    }
 }
 
 dependencies {

@@ -1,7 +1,17 @@
 plugins {
+    alias(libs.plugins.exposed)
     kotlin("plugin.spring")
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.graalvm.native)
+}
+
+exposed {
+    migrations {
+        tablesPackage = "exposed.multitenant.springweb"
+        databaseUrl = "jdbc:h2:mem:10-multi-tenant-02-multitenant-spring-web-virtualthread-migrations;DB_CLOSE_DELAY=-1;MODE=PostgreSQL"
+        databaseUser = "sa"
+        databasePassword = ""
+    }
 }
 
 springBoot {

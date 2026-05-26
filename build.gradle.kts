@@ -29,6 +29,7 @@ plugins {
     alias(libs.plugins.test.logger)
     alias(libs.plugins.kotlinx.benchmark) apply false
     alias(libs.plugins.graalvm.native) apply false
+    alias(libs.plugins.exposed) apply false
 }
 
 val rootLibs = libs

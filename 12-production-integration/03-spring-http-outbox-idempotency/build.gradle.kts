@@ -1,6 +1,16 @@
 plugins {
+    alias(libs.plugins.exposed)
     kotlin("plugin.spring")
     alias(libs.plugins.spring.boot)
+}
+
+exposed {
+    migrations {
+        tablesPackage = "exposed.examples.spring.httpoutbox.repository"
+        databaseUrl = "jdbc:h2:mem:12-production-integration-03-spring-http-outbox-idempotency-migrations;DB_CLOSE_DELAY=-1;MODE=PostgreSQL"
+        databaseUser = "sa"
+        databasePassword = ""
+    }
 }
 
 springBoot {

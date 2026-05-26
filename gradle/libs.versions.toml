@@ -107,6 +107,7 @@ test-logger = { id = "com.adarshr.test-logger", version.ref = "test-logger" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 graalvm-native = { id = "org.graalvm.buildtools.native", version.ref = "graalvm-native" }
 gatling = { id = "io.gatling.gradle", version = "3.15.0" }
+exposed = { id = "org.jetbrains.exposed.plugin", version.ref = "exposed" }
 
 [libraries]
 jetbrains-annotations = { module = "org.jetbrains:annotations", version = "26.1.0" }

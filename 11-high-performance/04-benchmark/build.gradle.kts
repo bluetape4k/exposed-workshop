@@ -2,8 +2,18 @@ import groovy.json.JsonSlurper
 import java.time.Instant
 
 plugins {
+    alias(libs.plugins.exposed)
     kotlin("plugin.allopen")
     alias(libs.plugins.kotlinx.benchmark)
+}
+
+exposed {
+    migrations {
+        tablesPackage = "exposed.examples.benchmark"
+        databaseUrl = "jdbc:h2:mem:11-high-performance-04-benchmark-migrations;DB_CLOSE_DELAY=-1;MODE=PostgreSQL"
+        databaseUser = "sa"
+        databasePassword = ""
+    }
 }
 
 dependencies {

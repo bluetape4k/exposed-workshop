@@ -1,7 +1,17 @@
 plugins {
+    alias(libs.plugins.exposed)
     kotlin("plugin.spring")
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.graalvm.native)
+}
+
+exposed {
+    migrations {
+        tablesPackage = "exposed.examples.transaction.domain"
+        databaseUrl = "jdbc:h2:mem:09-spring-02-transactiontemplate-migrations;DB_CLOSE_DELAY=-1;MODE=PostgreSQL"
+        databaseUser = "sa"
+        databasePassword = ""
+    }
 }
 
 @Suppress("UnstableApiUsage")
