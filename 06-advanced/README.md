@@ -27,7 +27,6 @@ This chapter covers extension scenarios frequently encountered in production bey
 | `07-custom-entities`         | KSUID/Snowflake/UUID-based custom ID Entity              |
 | `08-exposed-jackson`         | Jackson ObjectMapper JSON column integration             |
 | `09-exposed-fastjson2`       | Fastjson2 JSON column integration                        |
-| `10-exposed-jasypt`          | Jasypt-based deterministic encryption (WHERE searchable) |
 | `11-exposed-jackson3`        | Jackson3 JSON column integration                         |
 | `12-exposed-tink`            | Google Tink AEAD/DAEAD encryption columns                |
 

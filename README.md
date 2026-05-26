@@ -219,10 +219,6 @@ Learn how to process JSON/JSONB columns using the Jackson library.
 
 Learn how to process JSON columns using the Alibaba Fastjson2 library.
 
-#### [Exposed Jasypt (Deterministic Encryption)](06-advanced/10-exposed-jasypt/README.md)
-
-Learn how to implement searchable (deterministic) encryption using Jasypt.
-
 #### [Exposed Jackson 3](06-advanced/11-exposed-jackson3/README.md)
 
 Learn how to process JSON/JSONB columns using Jackson 3.x.

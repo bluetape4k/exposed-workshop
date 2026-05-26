@@ -218,10 +218,6 @@ Jackson 라이브러리를 사용하여 JSON/JSONB 컬럼을 처리하는 방법
 
 Alibaba Fastjson2 라이브러리를 사용하여 JSON 컬럼을 처리하는 방법을 학습합니다.
 
-#### [Exposed Jasypt (결정적 암호화)](06-advanced/10-exposed-jasypt/README.ko.md)
-
-Jasypt를 사용하여 검색 가능한(결정적) 암호화를 구현하는 방법을 학습합니다.
-
 #### [Exposed Jackson 3](06-advanced/11-exposed-jackson3/README.ko.md)
 
 Jackson 3.x 버전을 사용하여 JSON/JSONB 컬럼을 처리하는 방법을 학습합니다.

@@ -27,7 +27,6 @@
 | `07-custom-entities`         | KSUID/Snowflake/UUID 기반 커스텀 ID Entity        |
 | `08-exposed-jackson`         | Jackson ObjectMapper 연동 JSON 컬럼              |
 | `09-exposed-fastjson2`       | Fastjson2 연동 JSON 컬럼                         |
-| `10-exposed-jasypt`          | Jasypt 기반 결정적 암호화 (WHERE 검색 가능)              |
 | `11-exposed-jackson3`        | Jackson3 연동 JSON 컬럼                          |
 | `12-exposed-tink`            | Google Tink AEAD/DAEAD 암복호화 컬럼               |
 

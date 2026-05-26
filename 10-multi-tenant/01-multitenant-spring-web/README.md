@@ -28,9 +28,9 @@ A production example implementing Exposed-based schema multi-tenancy in a Spring
 
 ![01 multitenant spring web Class Structure 2 diagram](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-class-02.png)
 
-### TenantResolver Class Hierarchy
+### Tenant Context Support Classes
 
-![TenantResolver Class Hierarchy diagram](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-class-03.png)
+![Tenant Context Support Classes diagram](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-class-03.png)
 
 ### Multi-Tenancy Strategy: Shared Database / Separate Schema
 
