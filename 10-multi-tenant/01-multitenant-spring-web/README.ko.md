@@ -29,9 +29,9 @@ Spring MVC 환경에서 Exposed 기반 Schema 멀티테넌시를 구현하는 �
 
 ![01 multitenant spring web Class Structure 2 diagram](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-class-02.png)
 
-### TenantResolver 클래스 계층
+### Tenant Context 지원 클래스
 
-![TenantResolver diagram](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-class-03.png)
+![Tenant Context 지원 클래스 diagram](../../docs/images/readme-diagrams/10-multi-tenant-01-multitenant-spring-web-class-03.png)
 
 ### 멀티테넌시 전략: Shared Database / Separate Schema
 
