@@ -1,6 +1,16 @@
 plugins {
+    alias(libs.plugins.exposed)
     kotlin("plugin.spring")
     alias(libs.plugins.spring.boot)
+}
+
+exposed {
+    migrations {
+        tablesPackage = "exposed.examples.spring.auth.repository"
+        databaseUrl = "jdbc:h2:mem:12-production-integration-05-spring-auth-session-migrations;DB_CLOSE_DELAY=-1;MODE=PostgreSQL"
+        databaseUser = "sa"
+        databasePassword = ""
+    }
 }
 
 springBoot {

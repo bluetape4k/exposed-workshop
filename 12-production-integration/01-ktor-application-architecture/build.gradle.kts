@@ -1,6 +1,16 @@
 plugins {
+    alias(libs.plugins.exposed)
     application
     alias(libs.plugins.kotlin.serialization)
+}
+
+exposed {
+    migrations {
+        tablesPackage = "exposed.examples.ktor.architecture.repository"
+        databaseUrl = "jdbc:h2:mem:12-production-integration-01-ktor-application-architecture-migrations;DB_CLOSE_DELAY=-1;MODE=PostgreSQL"
+        databaseUser = "sa"
+        databasePassword = ""
+    }
 }
 
 application {

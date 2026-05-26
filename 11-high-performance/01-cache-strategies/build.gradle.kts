@@ -1,7 +1,17 @@
 plugins {
+    alias(libs.plugins.exposed)
     kotlin("plugin.spring")
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.graalvm.native)
+}
+
+exposed {
+    migrations {
+        tablesPackage = "exposed.examples.cache.domain"
+        databaseUrl = "jdbc:h2:mem:11-high-performance-01-cache-strategies-migrations;DB_CLOSE_DELAY=-1;MODE=PostgreSQL"
+        databaseUser = "sa"
+        databasePassword = ""
+    }
 }
 
 
