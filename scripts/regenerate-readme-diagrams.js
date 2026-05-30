@@ -134,9 +134,13 @@ function parseSources(moduleDir) {
   const tables = [];
   for (const file of files) {
     const source = readText(file);
-    let match;
-    const symbolRe = /(?:^|\n)\s*(?:@[A-Za-z0-9_.()=",\s]+\s*)*(interface|abstract\s+class|open\s+class|data\s+class|class|object|enum\s+class)\s+([A-Z][A-Za-z0-9_]*)\s*([^\n{]*)/g;
-    while ((match = symbolRe.exec(source))) {
+    const lines = source.split(/\r?\n/);
+    const symbolRe = /^\s*(interface|abstract\s+class|open\s+class|data\s+class|class|object|enum\s+class)\s+([A-Z][A-Za-z0-9_]*)\s*([^{]*)/;
+    const functionRe = /^\s*(?:@(?:Get|Post|Put|Delete|Patch)Mapping\(([^)]*)\)\s*)?(?:suspend\s+)?fun\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(/;
+
+    for (const line of lines) {
+      const match = symbolRe.exec(line);
+      if (!match) continue;
       const kind = match[1].replace(/\s+/g, " ");
       const name = match[2];
       const tail = match[3] || "";
@@ -146,8 +150,10 @@ function parseSources(moduleDir) {
         symbols.push({ file, kind, name, supers, role });
       }
     }
-    const functionRe = /(?:@(?:Get|Post|Put|Delete|Patch)Mapping\(([^)]*)\)\s*)?(?:suspend\s+)?fun\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(/g;
-    while ((match = functionRe.exec(source))) functions.push({ file, route: match[1] || "", name: match[2], role: roleFor(file, match[2], "function") });
+    for (const line of lines) {
+      const match = functionRe.exec(line);
+      if (match) functions.push({ file, route: match[1] || "", name: match[2], role: roleFor(file, match[2], "function") });
+    }
     tables.push(...parseTables(file, source));
   }
   return { files, symbols: uniqueBy(symbols, (s) => `${s.file}:${s.name}`), functions, tables: uniqueBy(tables, (t) => t.name) };
@@ -166,10 +172,19 @@ function parseSupers(tail) {
     tail
       .slice(colon + 1)
       .split(",")
-      .map((part) => part.replace(/\(.*/, "").replace(/<.*/, "").trim())
+      .map((part) => beforeAny(part, ["(", "<"]).trim())
       .filter((part) => /^[A-Z][A-Za-z0-9_]+$/.test(part))
       .filter(validSymbolName),
   );
+}
+
+function beforeAny(value, delimiters) {
+  let end = value.length;
+  for (const delimiter of delimiters) {
+    const index = value.indexOf(delimiter);
+    if (index >= 0 && index < end) end = index;
+  }
+  return value.slice(0, end);
 }
 
 function parseTables(file, source) {
@@ -316,8 +331,6 @@ function cleanTitle(title) {
     .replace(/\bSql\b/gi, "SQL")
     .replace(/\bJson\b/gi, "JSON")
     .replace(/\bHttp\b/gi, "HTTP")
-    .replace(/\bKtor\b/g, "Ktor")
-    .replace(/\bSpring\b/g, "Spring")
     .replace(/(^|\s)([a-z])/g, (m) => m.toUpperCase())
     .replace(/\s+/g, " ")
     .trim();
