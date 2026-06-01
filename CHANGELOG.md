@@ -15,6 +15,8 @@
 
 ### Changed
 
+- **Dependency governance**: `bluetape4k-dependencies` aligned to the published
+  `1.2.0` BOM.
 - **Bluetape4k**: `1.6.2` → `1.7.0`
 - **Kotlin**: `2.3.20` → `2.3.21`
 - **MariaDB JDBC 드라이버**: `mariadb-java-client` `3.5.7` → `3.5.8`, `r2dbc-mariadb` `1.3.0` → `1.4.0`
