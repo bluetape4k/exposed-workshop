@@ -1,8 +1,8 @@
 # WIP - exposed-workshop
 
-Snapshot: 2026-05-18 KST
+Snapshot: 2026-06-02 KST
 Scope: open GitHub issues assigned to `debop`, created on or after 2026-01-01.
-Open count: 20 issues.
+Open count: 1 issue.
 
 ## Recently Completed
 
