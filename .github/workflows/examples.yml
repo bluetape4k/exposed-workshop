@@ -2,7 +2,7 @@ name: Examples
 
 on:
   schedule:
-    - cron: '0 21 * * *'  # Daily example coverage, UTC 21:00 (KST 06:00)
+    - cron: '0 21 * * 0'  # Weekly example coverage, Sunday UTC 21:00 (Monday KST 06:00)
   push:
     branches: [ develop, main ]
     paths:
@@ -72,6 +72,13 @@ jobs:
 
       - name: Build and test selected examples
         run: |
+          # Weekly downstream gate:
+          # - multi-tenant Spring examples
+          # - routing datasource example
+          # - production-integration Spring/Ktor examples
+          #
+          # Keep Testcontainers-backed modules in one Gradle invocation so shared
+          # test infrastructure can serialize container usage.
           # Routing DataSource uses GraalVM AOT tasks; disable configuration cache for this mixed example build.
           ./gradlew \
             :03-routing-datasource:build \
@@ -91,6 +98,18 @@ jobs:
             --no-daemon --no-configuration-cache --continue
         env:
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false"
+
+      - name: Upload failed example reports
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: exposed-workshop-example-reports
+          if-no-files-found: ignore
+          retention-days: 7
+          path: |
+            **/build/reports/tests/**
+            **/build/test-results/test/**
+            **/build/reports/problems/**
 
   examples-status:
     name: Examples Status
