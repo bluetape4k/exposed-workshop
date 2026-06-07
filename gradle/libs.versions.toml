@@ -369,11 +369,11 @@ jakarta-xml-bind = { module = "jakarta.xml.bind:jakarta.xml.bind-api", version =
 commons-beanutils = { module = "commons-beanutils:commons-beanutils", version = "1.11.0" }
 commons-codec = { module = "commons-codec:commons-codec", version = "1.22.0" }
 commons-collections4 = { module = "org.apache.commons:commons-collections4", version = "4.5.0" }
-commons-compress = { module = "org.apache.commons:commons-compress", version = "1.27.1" }
+commons-compress = { module = "org.apache.commons:commons-compress", version = "1.28.0" }
 commons-csv = { module = "org.apache.commons:commons-csv", version = "1.14.1" }
 commons-exec = { module = "org.apache.commons:commons-exec", version = "1.6.0" }
 commons-io = { module = "commons-io:commons-io", version = "2.22.0" }
-commons-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.17.0" }
+commons-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.20.0" }
 commons-logging = { module = "commons-logging:commons-logging", version = "1.3.6" }
 commons-math3 = { module = "org.apache.commons:commons-math3", version = "3.6.1" }
 commons-pool2 = { module = "org.apache.commons:commons-pool2", version = "2.13.1" }
