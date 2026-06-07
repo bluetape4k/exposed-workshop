@@ -101,7 +101,7 @@ jobs:
 
       - name: Upload failed example reports
         if: failure()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: exposed-workshop-example-reports
           if-no-files-found: ignore
