@@ -2,7 +2,7 @@
 
 ## Context
 
-The 2026-05-18 qmd-backed exposed-workshop audit compared prior README/WIP
+The 2026-05-18 GNO-backed exposed-workshop audit compared prior README/WIP
 refresh lessons, live GitHub issue state, and current source markers.
 
 ## Decision or Finding
@@ -20,7 +20,7 @@ Registered GitHub issue #70 and refreshed `WIP.md` from 0 assigned issues to
 
 ## Verification
 
-- `qmd query ... --no-rerank -c bluetape4k-docs` surfaced the prior
+- `gno query ... --no-rerank -c bluetape4k-docs` surfaced the prior
   exposed-workshop WIP refresh lesson.
 - `gh issue list --assignee debop` confirmed 20 live assigned open issues after
   registering #70.

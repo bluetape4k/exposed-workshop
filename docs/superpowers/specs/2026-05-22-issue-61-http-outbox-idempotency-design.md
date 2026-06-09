@@ -7,9 +7,9 @@ for Spring Boot 4 and Ktor services backed by Exposed JDBC.
 
 Prior retrieval:
 
-- `qmd query "HTTP client outbox idempotency external API persisted outbound requests retry duplicate permanent failure examples" -c bluetape4k-docs --no-rerank`
-- `qmd query "Spring Boot Ktor Exposed outbox idempotency retry transaction cancellation testcontainers cautions" -c bluetape4k-docs --no-rerank`
-- `qmd query "outbox idempotency external API retry duplicate key permanent failure Kotlin Exposed" -c wiki --no-rerank`
+- `gno query "HTTP client outbox idempotency external API persisted outbound requests retry duplicate permanent failure examples" -c bluetape4k-docs --no-rerank`
+- `gno query "Spring Boot Ktor Exposed outbox idempotency retry transaction cancellation testcontainers cautions" -c bluetape4k-docs --no-rerank`
+- `gno query "outbox idempotency external API retry duplicate key permanent failure Kotlin Exposed" -c wiki --no-rerank`
 
 Relevant cautions:
 
