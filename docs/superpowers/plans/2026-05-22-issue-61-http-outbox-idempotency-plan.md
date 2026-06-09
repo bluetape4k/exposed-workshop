@@ -2,8 +2,8 @@
 
 ## Retrieval
 
-- qmd similar work lookup: complete.
-- qmd caution lookup: complete.
+- GNO similar work lookup: complete.
+- GNO caution lookup: complete.
 - Current issue body: verified from GitHub issue #61.
 - `$bluetape4k-patterns`: applied to all Kotlin tasks.
 

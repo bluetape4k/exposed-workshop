@@ -10,7 +10,7 @@ Open count: 1 issue.
   compatibility guards, and Redisson baseline alignment are merged.
 - Test cleanup and Kluent to `bluetape4k-assertions` migration are merged.
 - README hero/architecture refresh is merged.
-- QMD-backed audit registered `#70` for routing datasource pool lifecycle.
+- GNO-backed audit registered `#70` for routing datasource pool lifecycle.
 
 ## Current Direction
 
