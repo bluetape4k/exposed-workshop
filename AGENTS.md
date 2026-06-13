@@ -1,5 +1,10 @@
 # AGENTS.md - exposed-workshop
 
+This repository inherits the workspace guidance from `../AGENTS.md`.
+Read and follow the workspace root guide first. This file only adds
+repo-specific layout, commands, domain rules, and local exceptions.
+
+
 Kotlin Exposed ORM workshop using Kotlin 2.3, Java 21, Spring Boot 3.x, and a
 Gradle multi-module layout.
 
@@ -37,9 +42,6 @@ for example:
 | `10-multi-tenant` | Schema-based multi-tenancy |
 | `11-high-performance` | Cache strategies, routing datasource, benchmarks |
 
-Root README visual assets live under `docs/assets/` and should be shared by
-`README.md` and `README.ko.md` through the same relative path.
-
 Every example README must include an Architecture Diagram rendered as a PNG
 image with the editable SVG source stored next to it under
 `docs/images/readme-diagrams/`. Use the same PNG link from `README.md` and
@@ -71,25 +73,3 @@ request flows, database schema, or concurrency/lifecycle behavior.
 - Versions live in `buildSrc/src/main/kotlin/Libs.kt`.
 - Compiler opts include coroutine experimental APIs, `-Xcontext-parameters`,
   and preview JVM support.
-
-## Project Documentation Artifacts
-
-Store durable project design/history artifacts in repo-local docs paths:
-
-- Specs: `docs/superpowers/specs/YYYY-MM-DD-{slug}-design.md`
-- Plans: `docs/superpowers/plans/YYYY-MM-DD-{slug}-plan.md`
-- Research notes, when needed: `docs/superpowers/research/YYYY-MM-DD-{slug}-research.md`
-- Lessons Learned / work retrospectives: `docs/lessons/YYYY-MM-DD-{slug}.md`
-- Use lowercase ASCII kebab-case slugs; include `issue-{number}-` when the
-  artifact is tied to a GitHub issue.
-- Treat `.omx/plans`, `.omx/notepad.md`, chat summaries, and runtime notes as
-  transient. Promote durable decisions and lessons into `docs/superpowers/` or
-  `docs/lessons/`.
-
-## GitHub Issue And Pull Request Workflow
-
-When creating GitHub issues or pull requests for bluetape4k repositories,
-assign them to `debop` by default unless the user explicitly says otherwise.
-Use `--assignee debop` with `gh issue create` and `gh pr create`, or the
-equivalent GitHub API `assignees` field. If a repository rejects the assignee,
-report that blocker instead of creating an unassigned issue or PR silently.
