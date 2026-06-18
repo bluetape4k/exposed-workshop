@@ -2,19 +2,17 @@
 
 [English](./README.md) | 한국어
 
-Exposed DDL API로 테이블, 컬럼, 인덱스, 시퀀스, 커스텀 enum을 정의하는 모듈입니다. `SchemaUtils`를 통한 DDL 실행과 마이그레이션 패턴을 다룹니다.
+Exposed DDL API로 테이블, 컬럼, 인덱스, 시퀀스, 커스텀 enum을 정의하는 모듈입니다. `SchemaUtils`를 통한 DDL 실행과 `MigrationUtils`를 통한 스키마 차이 보완 패턴을 다룹니다.
 
 ## 개요
 
-Exposed에서 스키마 정의는 `object` 선언으로 이루어집니다. `Table`, `IntIdTable`, `UUIDTable` 등을 상속하여 컬럼과 제약조건을 선언하고,
-`SchemaUtils.create()`로 DDL을 실행합니다. 마이그레이션은
-`MigrationUtils.statementsRequiredForDatabaseMigration()`으로 필요한 DDL 구문을 생성한 뒤 각각 실행합니다. DB Dialect별 차이(PostgreSQL, MySQL, H2)를 파라미터화 테스트로 검증합니다.
+Exposed에서 스키마 정의는 `object` 선언으로 이루어집니다. `Table`, `IdTable`, `IntIdTable`, `LongIdTable`, `UUIDTable` 등을 상속하여 컬럼과 제약조건을 선언하고, `SchemaUtils.create()`와 관련 헬퍼로 DDL을 실행합니다. 마이그레이션 성격의 검증은 `MigrationUtils.statementsRequiredForDatabaseMigration()`으로 필요한 DDL 구문을 생성한 뒤 `exec()`로 적용합니다. PostgreSQL, MySQL, H2 dialect 차이는 assumptions와 파라미터화 테스트로 구분합니다.
 
 ## 학습 목표
 
 - 테이블/컬럼/제약조건 정의를 익힌다.
 - 복합 PK, 복합 FK, 조건부/함수형 인덱스, 시퀀스 사용법을 익힌다.
-- `SchemaUtils`로 스키마 생성·마이그레이션·삭제를 관리한다.
+- `SchemaUtils`로 스키마 생성/삭제를 관리하고, `MigrationUtils`로 마이그레이션 구문을 검증한다.
 - DB별 DDL 차이(enum 타입, INVISIBLE 컬럼, partial index)를 파악한다.
 
 ## 선수 지식
@@ -31,7 +29,7 @@ Exposed에서 스키마 정의는 `object` 선언으로 이루어집니다. `Tab
 
 ## 복합 PK / FK 관계 ERD
 
-![PK / FK ERD diagram](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-class-02.png)
+![PK / FK ERD diagram](../../docs/images/readme-diagrams/04-exposed-ddl-02-ddl-erd-03.png)
 
 ## 컬럼 타입 표
 
@@ -228,14 +226,14 @@ transaction {
 
 ```bash
 # 전체 모듈 테스트
-./gradlew :04-exposed-ddl:02-ddl:test
+./gradlew :02-ddl:test
 
 # H2만 대상으로 빠른 테스트
-./gradlew :04-exposed-ddl:02-ddl:test -PuseFastDB=true
+./gradlew :02-ddl:test -PuseFastDB=true
 
 # 특정 테스트 클래스만 실행
-./gradlew :04-exposed-ddl:02-ddl:test --tests "exposed.examples.ddl.Ex02_CreateTable"
-./gradlew :04-exposed-ddl:02-ddl:test --tests "exposed.examples.ddl.Ex10_DDL_Examples"
+./gradlew :02-ddl:test --tests "exposed.examples.ddl.Ex02_CreateTable"
+./gradlew :02-ddl:test --tests "exposed.examples.ddl.Ex10_DDL_Examples"
 ```
 
 ## 복잡한 시나리오

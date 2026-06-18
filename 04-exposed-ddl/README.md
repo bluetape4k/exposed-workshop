@@ -2,24 +2,24 @@
 
 English | [한국어](./README.ko.md)
 
-A chapter covering database connection and schema definition (DDL) in Exposed, from connection setup to table and constraint authoring.
+A chapter covering database connection and schema definition (DDL) in Exposed, from connection metadata and retry behavior to table, constraint, index, sequence, and enum authoring.
 
 ## Overview
 
-This chapter covers two foundational topics for Exposed applications. **Connection management** (`01-connection`) covers `Database.connect`, HikariCP pool configuration, and exception/timeout/multi-DB handling. **Schema definition** (`02-ddl`) covers `Table` declarations, indexes, sequences, custom enums, and DDL execution via `SchemaUtils`.
+This chapter covers two foundational topics for Exposed applications. **Connection management** (`01-connection`) covers `Database.connect`, connection metadata, transaction retry attempts, HikariCP pool reuse, and H2 multi-database transactions. **Schema definition** (`02-ddl`) covers `Table` declarations, indexes, sequences, custom enums, and DDL execution through `SchemaUtils` and `MigrationUtils`.
 
 ## Learning Objectives
 
-- Understand `Database.connect` configuration and DataSource integration patterns.
-- Learn to write tables, indexes, and constraints declaratively.
-- Establish a verification flow for DB Dialect differences and portability when executing DDL.
+- Understand `Database.connect` with URL/DataSource inputs and metadata inspection.
+- Learn to declare tables, primary keys, foreign keys, indexes, sequences, and enum columns.
+- Verify DB dialect differences and migration statements through parameterized tests.
 
 ## Included Modules
 
 | Module          | Description                                                          |
 |-----------------|----------------------------------------------------------------------|
-| `01-connection` | DataSource configuration for each DB Dialect and `Database.connect` |
-| `02-ddl`        | Table/index/constraint declarations and DDL execution via `SchemaUtils` |
+| `01-connection` | `Database.connect`, metadata lookup, retry attempts, HikariCP reuse, and H2 multi-DB transaction examples |
+| `02-ddl`        | Table/index/constraint/sequence/enum declarations and DDL execution via `SchemaUtils`/`MigrationUtils` |
 
 ## Architecture Flow
 
@@ -39,22 +39,22 @@ This chapter covers two foundational topics for Exposed applications. **Connecti
 
 ```bash
 # Connection management module tests
-./gradlew :04-exposed-ddl:01-connection:test
+./gradlew :01-connection:test
 
 # DDL module tests
-./gradlew :04-exposed-ddl:02-ddl:test
+./gradlew :02-ddl:test
 
 # Fast tests targeting H2 only
-./gradlew :04-exposed-ddl:01-connection:test -PuseFastDB=true
-./gradlew :04-exposed-ddl:02-ddl:test -PuseFastDB=true
+./gradlew :01-connection:test -PuseFastDB=true
+./gradlew :02-ddl:test -PuseFastDB=true
 ```
 
 ## Test Points
 
-- Verify that schema creation and deletion per Dialect are independent across tests.
-- Validate that constraint violations or duplicate index errors are raised as expected.
-- Identify full-scan risks caused by missing indexes.
-- Document portability issues from DDL differences per DB using test code.
+- Verify connection metadata, transaction retry counts, and H2 multi-DB isolation.
+- Verify schema creation/drop, missing-table/column migration, and duplicate-column failures per dialect.
+- Validate index variants, sequence support, enum mappings, and dialect-specific guards.
+- Document portability issues from DDL differences using executable tests.
 
 ## Next Chapter
 

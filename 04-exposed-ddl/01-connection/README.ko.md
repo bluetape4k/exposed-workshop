@@ -2,19 +2,18 @@
 
 [English](./README.md) | 한국어
 
-Exposed 데이터베이스 연결 설정과 연결 안정성 검증을 다루는 모듈입니다. 연결 예외, 타임아웃, H2 커넥션 풀 및 다중 DB 연결 시나리오를 실습합니다.
+Exposed 데이터베이스 연결 설정과 연결 안정성 검증을 다루는 모듈입니다. 메타데이터 조회, 트랜잭션 재시도 횟수, H2 HikariCP 커넥션 재사용, H2 다중 DB 트랜잭션 시나리오를 실습합니다.
 
 ## 개요
 
-`Database.connect()`는 Exposed의 진입점입니다. URL 문자열 또는 `DataSource`를 받아 내부
-`TransactionManager`를 초기화합니다. 이 모듈에서는 정상 연결 외에 예외 발생 시 재시도, 타임아웃 우선순위, HikariCP 풀 고갈 복구, 다중 DB 중첩 트랜잭션을 검증합니다.
+`Database.connect()`는 Exposed의 진입점입니다. URL 문자열 또는 `DataSource`를 받아 `TransactionManager`에 `Database` 핸들을 등록합니다. 이 모듈에서는 정상 연결 외에 컬럼/제약조건 메타데이터 조회, rollback/commit/getConnection 실패 후 재시도 횟수, 풀 크기보다 많은 작업을 실행할 때의 HikariCP 커넥션 재사용, H2 다중 DB 중첩 트랜잭션을 검증합니다.
 
 ## 학습 목표
 
 - `Database.connect` 구성 방식(URL/DataSource)을 이해한다.
-- 연결 예외/타임아웃 처리 패턴과 `maxAttempts` 재시도 설정을 익힌다.
-- HikariCP 풀 고갈 후 커넥션 재활용 동작을 확인한다.
-- 다중 DB 연결 시 트랜잭션 격리 전략을 이해한다.
+- `maxAttempts`와 `DatabaseConfig.defaultMaxAttempts`를 통한 트랜잭션 재시도 동작을 익힌다.
+- 코루틴 트랜잭션 수가 `maximumPoolSize`를 초과할 때 HikariCP 커넥션이 재사용되는지 확인한다.
+- 명시적 DB 핸들, 기본 DB 선택, 다중 DB 중첩 트랜잭션을 이해한다.
 
 ## 선수 지식
 
@@ -48,25 +47,27 @@ val db = Database.connect(HikariDataSource(hikariConfig))
 ### 연결 예외 재시도
 
 ```kotlin
-// ConnectionSpy로 commit/rollback/close 시 예외 강제 발생
-// maxAttempts = 5 설정 시 정확히 5번 재시도 후 예외 전파
-val db = Database.connect(
-    datasource = ConnectionSpy(dataSource) { throw SQLException("forced") },
-    databaseConfig = DatabaseConfig { maxAttempts = 5 }
-)
+// ConnectionSpy로 commit/rollback/close 실패를 강제한 뒤
+// 트랜잭션 블록에서 재시도 횟수를 설정합니다. 테스트는 래핑된 커넥션이 정확히 5개인지 검증합니다.
+val db = Database.connect(datasource = wrappingDataSource)
+
+transaction(db = db) {
+    maxAttempts = 5
+    exec("SELECT 1;")
+}
 ```
 
 ### 타임아웃 우선순위
 
 ```kotlin
-// DatabaseConfig 기본값보다 트랜잭션 블록 내 설정이 우선 적용됨
+// DatabaseConfig는 기본값을 제공하고, 트랜잭션 블록의 설정은 이를 덮어쓸 수 있음
 val db = Database.connect(
     datasource = dataSource,
     databaseConfig = DatabaseConfig { defaultMaxAttempts = 3 }
 )
 
 transaction(db) {
-    maxAttempts = 1  // 이 값이 우선 적용됨 (defaultMaxAttempts = 3 무시)
+    maxAttempts = 5  // 이 값이 defaultMaxAttempts = 3보다 우선 적용됨
     // ...
 }
 ```
@@ -104,8 +105,8 @@ transaction(db1) {
 | 파일                             | 설명                                                |
 |--------------------------------|---------------------------------------------------|
 | `Ex01_Connection.kt`           | URL/DataSource 기반 기본 연결                           |
-| `Ex02_ConnectionException.kt`  | `ConnectionSpy`로 예외 강제 + `maxAttempts` 재시도        |
-| `Ex03_ConnectionTimeout.kt`    | `defaultMaxAttempts` vs 트랜잭션 내 `maxAttempts` 우선순위 |
+| `Ex02_ConnectionException.kt`  | `ConnectionSpy`로 commit/rollback/close 실패 강제 + 트랜잭션 내 `maxAttempts` |
+| `Ex03_ConnectionTimeout.kt`    | `getConnection()` 실패 재시도 횟수와 `defaultMaxAttempts` vs 트랜잭션 내 `maxAttempts` 우선순위 |
 | `DataSourceStub.kt`            | 테스트용 DataSource 스텁                                |
 | `h2/Ex01_H2_ConnectionPool.kt` | HikariCP 풀 고갈 + 재활용 시나리오 (H2 전용)                  |
 | `h2/Ex02_H2_MultiDatabase.kt`  | 다중 DB 중첩 트랜잭션 격리 검증 (H2 전용)                       |
@@ -122,14 +123,14 @@ transaction(db1) {
 
 ```bash
 # 전체 모듈 테스트
-./gradlew :04-exposed-ddl:01-connection:test
+./gradlew :01-connection:test
 
 # 특정 테스트 클래스만 실행
-./gradlew :04-exposed-ddl:01-connection:test \
+./gradlew :01-connection:test \
     --tests "exposed.examples.connection.Ex01_Connection"
 
 # H2 전용 테스트
-./gradlew :04-exposed-ddl:01-connection:test \
+./gradlew :01-connection:test \
     --tests "exposed.examples.connection.h2.*"
 ```
 
@@ -150,12 +151,11 @@ HikariCP `maximumPoolSize`를 초과하는 수의 코루틴 트랜잭션을
 
 ### 커넥션 예외 재시도 (`Ex02_ConnectionException.kt`)
 
-`ConnectionSpy`로 실제 연결을 래핑하여 commit/rollback/close 시 예외를 강제로 발생시킵니다.
-`maxAttempts = 5` 설정 시 정확히 5번 재시도 후 예외가 전파되는지 검증합니다.
+`ConnectionSpy`로 실제 연결을 래핑하여 commit, rollback, close 시 예외를 강제로 발생시킵니다. 트랜잭션 블록에서 `maxAttempts = 5`를 설정했을 때 정확히 5번 재시도 후 예외가 전파되는지 검증합니다.
 
 ### 타임아웃 우선순위 (`Ex03_ConnectionTimeout.kt`)
 
-`DatabaseConfig.defaultMaxAttempts`와 트랜잭션 블록 내 `maxAttempts` 중 어느 값이 우선 적용되는지 검증합니다. 트랜잭션 블록 내 설정이 항상 우선입니다.
+`getConnection()`이 항상 실패하는 `DataSource`를 사용합니다. 첫 번째 테스트는 트랜잭션 블록에 `maxAttempts = 3`을 직접 설정하고, 두 번째 테스트는 블록 설정이 없을 때 `DatabaseConfig.defaultMaxAttempts = 3`이 적용되며 블록의 `maxAttempts = 5`가 이를 덮어쓰는지 확인합니다.
 
 ## 실습 체크리스트
 
