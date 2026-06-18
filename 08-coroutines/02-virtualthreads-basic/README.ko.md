@@ -2,13 +2,13 @@
 
 [English](./README.md) | 한국어
 
-Java 21 Virtual Threads 기반으로 Exposed 트랜잭션을 실행하는 모듈입니다. 블로킹 코드 스타일을 유지하면서 높은 동시성을 확보하는 패턴을 다룹니다.
+이 모듈은 Exposed 트랜잭션 예제를 Java 21 Virtual Thread 위에서 실행합니다. `Ex01_VirtualThreads.kt`는 블로킹 코드 스타일을 유지하되, 실행 경로를 `newVirtualThreadJdbcTransaction`과 `virtualThreadJdbcTransactionAsync`로 옮겨 fan-out, 일반 transaction 혼용, 예외 발생 후 정리 동작을 소스에서 확인할 수 있게 합니다.
 
 ## 학습 목표
 
-- `newVirtualThreadJdbcTransaction` 사용법을 익힌다.
-- Virtual Thread 비동기 실행 패턴을 이해한다.
-- 플랫폼 스레드 방식 및 코루틴 방식과의 차이를 비교한다.
+- Java 21 조건에서 실행되는 테스트에서 `newVirtualThreadJdbcTransaction`을 사용한다.
+- `virtualThreadJdbcTransactionAsync`, `VirtualFuture.awaitAll()`로 async fan-out을 실행한다.
+- Virtual Thread 트랜잭션을 일반 `transaction { }` 및 앞 모듈의 코루틴 예제와 비교한다.
 
 ## 선수 지식
 
@@ -79,28 +79,28 @@ val ids = futures.awaitAll()
 
 소스 위치: `src/test/kotlin/exposed/examples/virtualthreads`
 
-| 파일                       | 주요 테스트 시나리오                                                            |
-|--------------------------|------------------------------------------------------------------------|
-| `Ex01_VirtualThreads.kt` | 존재하지 않는 ID 조회, 단건 삽입/조회, 병렬 삽입, 중복 키 예외, 일반 `transaction` 혼용, 중첩 예외 처리 |
+| 파일                       | 주요 테스트 시나리오 |
+|--------------------------|---|
+| `Ex01_VirtualThreads.kt` | Java 21 실행 조건, 존재하지 않는 ID 조회, 순차 Virtual Thread 트랜잭션, async fan-out, 일반 `transaction { }` 혼용, 중복 엔티티 ID 예외 래핑, 커넥션 정리 |
 
 ### 주요 테스트 시나리오
 
-| 시나리오                               | 사용 API                                                 |
-|------------------------------------|--------------------------------------------------------|
-| 기본 Virtual Thread 트랜잭션             | `newVirtualThreadJdbcTransaction`                      |
-| 기존 트랜잭션 내 중첩 실행                    | `newVirtualThreadJdbcTransaction` (내부 중첩)              |
-| 비동기 병렬 삽입 (10건)                    | `virtualThreadJdbcTransactionAsync` + `awaitAll`       |
-| 중복 키 삽입 → 예외 검증                    | `assertFailsWith<ExecutionException>`                  |
-| 일반 `transaction { }` 혼용 비교         | `transaction { }` vs `newVirtualThreadJdbcTransaction` |
-| Java 21 전용 실행 조건 (`@EnabledOnJre`) | `@EnabledOnJre(JRE.JAVA_21)` 어노테이션                     |
+| 시나리오 | 사용 API |
+|---|---|
+| 기본 Virtual Thread 트랜잭션 | `newVirtualThreadJdbcTransaction` |
+| `JdbcTransaction` receiver에서 중첩 조회 | `newVirtualThreadJdbcTransaction` |
+| async fan-out insert/select 작업 | `virtualThreadJdbcTransactionAsync`, `VirtualFuture.awaitAll()` |
+| 중복 엔티티 ID 예외 래핑 | `assertFailsWith<ExecutionException>`, 원인 `ExposedSQLException` |
+| 일반 `transaction { }` 혼용 비교 | `transaction { }` vs `newVirtualThreadJdbcTransaction` |
+| Java 21 전용 실행 조건 | `@EnabledForJreRange(min = JRE.JAVA_21)` |
 
 ## 실행 방법
 
 ```bash
-./gradlew :08-coroutines:02-virtualthreads-basic:test
+./gradlew :02-virtualthreads-basic:test
 ```
 
-> Java 21 이상 환경에서만 실행됩니다. `@EnabledOnJre(JRE.JAVA_21)` 어노테이션으로 보호되어 있습니다.
+> Java 21 이상 환경에서만 실행됩니다. `@EnabledForJreRange(min = JRE.JAVA_21)`로 보호되어 있습니다.
 
 ```bash
 # Java 버전 확인
@@ -108,7 +108,7 @@ java -version
 
 # 특정 Java 버전으로 실행
 mise use java@21
-./gradlew :08-coroutines:02-virtualthreads-basic:test
+./gradlew :02-virtualthreads-basic:test
 ```
 
 ## 실습 체크리스트

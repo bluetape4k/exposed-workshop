@@ -2,13 +2,13 @@
 
 English | [한국어](./README.ko.md)
 
-A module for running Exposed transactions on Java 21 Virtual Threads. Covers patterns for achieving high concurrency while retaining a blocking code style.
+This module runs the same kind of Exposed transaction scenarios on Java 21 Virtual Threads. `Ex01_VirtualThreads.kt` keeps the blocking style, but moves execution through `newVirtualThreadJdbcTransaction` and `virtualThreadJdbcTransactionAsync` so fan-out, regular transaction interop, and exception cleanup are visible in the source.
 
 ## Learning Goals
 
-- Learn how to use `newVirtualThreadJdbcTransaction`.
-- Understand the Virtual Thread async execution pattern.
-- Compare differences with platform thread and coroutine approaches.
+- Use `newVirtualThreadJdbcTransaction` in Java 21-gated tests.
+- Run async fan-out through `virtualThreadJdbcTransactionAsync` and `VirtualFuture.awaitAll()`.
+- Compare Virtual Thread transactions with regular `transaction { }` and coroutine examples from the previous module.
 
 ## Prerequisites
 
@@ -79,28 +79,28 @@ val ids = futures.awaitAll()
 
 Source location: `src/test/kotlin/exposed/examples/virtualthreads`
 
-| File                       | Key Test Scenarios                                                                                                        |
-|--------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| `Ex01_VirtualThreads.kt` | Query non-existent ID, single insert/query, parallel insert, duplicate key exception, mixing regular `transaction`, nested exception handling |
+| File                       | Key Test Scenarios |
+|--------------------------|---|
+| `Ex01_VirtualThreads.kt` | Java 21 gate, missing ID lookup, sequential Virtual Thread transaction, async fan-out, regular `transaction { }` interop, duplicate entity ID exception wrapping, connection cleanup |
 
 ### Key Test Scenarios
 
-| Scenario                                      | API Used                                                 |
-|------------------------------------|--------------------------------------------------------|
-| Basic Virtual Thread transaction             | `newVirtualThreadJdbcTransaction`                      |
-| Nested execution within existing transaction | `newVirtualThreadJdbcTransaction` (inner nesting)       |
-| Async parallel insert (10 records)           | `virtualThreadJdbcTransactionAsync` + `awaitAll`       |
-| Duplicate key insert → exception verification | `assertFailsWith<ExecutionException>`                  |
-| Comparison with regular `transaction { }`   | `transaction { }` vs `newVirtualThreadJdbcTransaction` |
-| Java 21-only execution condition             | `@EnabledOnJre(JRE.JAVA_21)` annotation                |
+| Scenario | API Used |
+|---|---|
+| Basic Virtual Thread transaction | `newVirtualThreadJdbcTransaction` |
+| Nested lookup from a `JdbcTransaction` receiver | `newVirtualThreadJdbcTransaction` |
+| Async fan-out insert/select work | `virtualThreadJdbcTransactionAsync`, `VirtualFuture.awaitAll()` |
+| Duplicate entity ID exception wrapping | `assertFailsWith<ExecutionException>`, `ExposedSQLException` cause |
+| Comparison with regular `transaction { }` | `transaction { }` vs `newVirtualThreadJdbcTransaction` |
+| Java 21-only execution condition | `@EnabledForJreRange(min = JRE.JAVA_21)` |
 
 ## How to Run
 
 ```bash
-./gradlew :08-coroutines:02-virtualthreads-basic:test
+./gradlew :02-virtualthreads-basic:test
 ```
 
-> Runs only on Java 21+. Protected by the `@EnabledOnJre(JRE.JAVA_21)` annotation.
+> Runs only on Java 21+. Protected by `@EnabledForJreRange(min = JRE.JAVA_21)`.
 
 ```bash
 # Check Java version
@@ -108,7 +108,7 @@ java -version
 
 # Run with a specific Java version
 mise use java@21
-./gradlew :08-coroutines:02-virtualthreads-basic:test
+./gradlew :02-virtualthreads-basic:test
 ```
 
 ## Practice Checklist

@@ -2,14 +2,13 @@
 
 English | [한국어](./README.ko.md)
 
-The basic module for using Exposed with Kotlin Coroutines.
-Hands-on practice for asynchronous DB access centered on `newSuspendedTransaction`, `suspendedTransactionAsync`, and `withSuspendTransaction`.
+This module keeps the examples intentionally small so the transaction boundary is easy to see. `Ex01_Coroutines.kt` uses `Tester` and `TesterUnique` to verify suspended transactions, nested lookups, async insert/update races, transaction isolation, and exception cleanup.
 
 ## Learning Goals
 
-- Learn the coroutine transaction API.
-- Implement asynchronous parallel query patterns.
-- Understand transaction cleanup behavior on cancellation/exceptions.
+- Use `newSuspendedTransaction`, `withSuspendTransaction`, and `suspendedTransactionAsync` in the same fixture style used by the tests.
+- Compare sequential suspended work with parallel insert/update jobs.
+- Verify rollback and connection cleanup when duplicate keys or nested transaction failures occur.
 
 ## Prerequisites
 
@@ -74,31 +73,31 @@ newSuspendedTransaction(singleThreadDispatcher) { ... }
 
 Source location: `src/test/kotlin/exposed/examples/coroutines`
 
-| File                   | Key Test Scenarios                                                                                        |
-|----------------------|----------------------------------------------------------------------------------------------------------|
-| `Ex01_Coroutines.kt` | Query non-existent ID, single insert/query, parallel insert, duplicate key exception, transaction isolation, rollback on cancel |
+| File                   | Key Test Scenarios |
+|----------------------|---|
+| `Ex01_Coroutines.kt` | Missing ID lookup, sequential suspended transaction, async insert/update race on `TesterUnique`, nested suspended transactions, parallel fan-out, regular `transaction { }` interop, duplicate entity ID exception cleanup |
 
 ### Key Test Scenarios
 
-| Scenario            | API Used                                   |
-|-----------------|------------------------------------------|
-| Basic suspend transaction | `newSuspendedTransaction`                |
-| Nested execution within existing transaction | `withSuspendTransaction`                 |
-| Async parallel insert (10 records) | `suspendedTransactionAsync` + `awaitAll` |
-| Duplicate key insert → exception verification | `assertFailsWith<ExposedSQLException>`   |
-| Specify transaction isolation level | `newSuspendedTransaction(isolation=...)` |
+| Scenario | API Used |
+|---|---|
+| Basic suspended transaction and missing-row lookup | `newSuspendedTransaction`, `withSuspendTransaction` |
+| Async insert/update race on `TesterUnique` | `suspendedTransactionAsync`, `awaitAll`, `maxAttempts` |
+| Nested suspended transaction fan-out | `newSuspendedTransaction`, `suspendedTransactionAsync` |
+| Duplicate entity ID exception cleanup | `assertFailsWith<ExposedSQLException>` |
+| Transaction isolation setup | `connection.transactionIsolation = Connection.TRANSACTION_READ_COMMITTED` |
 
 ## How to Run
 
 ```bash
-./gradlew :08-coroutines:01-coroutines-basic:test
+./gradlew :01-coroutines-basic:test
 ```
 
 Test environment variables:
 
 ```bash
 # Fast test using H2 only
-USE_FAST_DB=true ./gradlew :08-coroutines:01-coroutines-basic:test
+USE_FAST_DB=true ./gradlew :01-coroutines-basic:test
 ```
 
 ## Practice Checklist

@@ -2,13 +2,13 @@
 
 [English](./README.md) | 한국어
 
-Exposed를 Kotlin 코루틴과 Virtual Thread 기반 동시성 모델에서 운영하는 패턴을 정리하며, 비동기 트랜잭션 설계 기준을 제공합니다.
+이 챕터는 소스 예제가 실제로 다루는 두 가지 동시성 방식을 비교합니다. 하나는 Exposed의 코루틴 트랜잭션 API이고, 다른 하나는 bluetape4k의 Java Virtual Thread JDBC 헬퍼입니다. 테스트는 중첩 조회, 비동기 fan-out, insert/update 경합, 일반 `transaction { }`과의 혼용, 예외 발생 후 정리 동작처럼 트랜잭션 경계가 흔들리기 쉬운 지점을 중심으로 구성되어 있습니다.
 
 ## 챕터 목표
 
-- `newSuspendedTransaction` 기반 비동기 접근 흐름을 이해한다.
-- 코루틴 모델과 Virtual Thread 모델의 장단점을 비교하고 실무 선택 기준을 마련한다.
-- 동시성 환경에서 안정적인 트랜잭션 경계를 설계한다.
+- `newSuspendedTransaction`, `withSuspendTransaction`, `suspendedTransactionAsync`로 이어지는 실제 접근 흐름을 이해한다.
+- `newVirtualThreadJdbcTransaction`, `virtualThreadJdbcTransactionAsync` 기반 Virtual Thread 트랜잭션과 코루틴 트랜잭션을 비교한다.
+- 병렬 실행, 재시도, 예외 전파 상황에서도 명확하게 유지되는 트랜잭션 경계를 설계한다.
 
 ## 선수 지식
 
@@ -40,10 +40,10 @@ Exposed를 Kotlin 코루틴과 Virtual Thread 기반 동시성 모델에서 운�
 
 ## 포함 모듈
 
-| 모듈                        | 설명                       |
-|---------------------------|--------------------------|
-| `01-coroutines-basic`     | 코루틴 기반 Exposed 기본 예제     |
-| `02-virtualthreads-basic` | Virtual Thread 기반 동시성 예제 |
+| 모듈                        | 소스 기준 학습 범위 |
+|---------------------------|---|
+| `01-coroutines-basic`     | `Tester`, `TesterUnique`로 suspended transaction, 중첩 조회, 비동기 insert/update, 예외 정리를 검증 |
+| `02-virtualthreads-basic` | Java 21에서만 실행되는 `VTester` 예제로 Virtual Thread 트랜잭션, async fan-out, 일반 transaction 혼용, SQL 예외 래핑을 검증 |
 
 ## 권장 학습 순서
 
@@ -54,11 +54,11 @@ Exposed를 Kotlin 코루틴과 Virtual Thread 기반 동시성 모델에서 운�
 
 ```bash
 # 서브모듈 단독 실행
-./gradlew :08-coroutines:01-coroutines-basic:test
-./gradlew :08-coroutines:02-virtualthreads-basic:test
+./gradlew :01-coroutines-basic:test
+./gradlew :02-virtualthreads-basic:test
 
 # 전체 챕터 실행
-./gradlew :08-coroutines:test
+./gradlew :01-coroutines-basic:test :02-virtualthreads-basic:test --no-parallel
 ```
 
 ## 트랜잭션 흐름 비교
@@ -87,17 +87,17 @@ Exposed를 Kotlin 코루틴과 Virtual Thread 기반 동시성 모델에서 운�
 
 | 시나리오 | 구현 파일 |
 |---|---|
-| `newSuspendedTransaction` 기본 사용 | [`Ex01_Coroutines.kt`](01-coroutines-basic/src/test/kotlin/exposed/examples/coroutines/Ex01_Coroutines.kt) |
-| `suspendedTransactionAsync` 병렬 실행 | [`Ex01_Coroutines.kt`](01-coroutines-basic/src/test/kotlin/exposed/examples/coroutines/Ex01_Coroutines.kt) |
+| `newSuspendedTransaction`, `withSuspendTransaction` 기본 흐름 | [`Ex01_Coroutines.kt`](01-coroutines-basic/src/test/kotlin/exposed/examples/coroutines/Ex01_Coroutines.kt) |
+| `suspendedTransactionAsync`, `awaitAll`, `maxAttempts`를 이용한 병렬 insert/update | [`Ex01_Coroutines.kt`](01-coroutines-basic/src/test/kotlin/exposed/examples/coroutines/Ex01_Coroutines.kt) |
 
 ### Virtual Thread 트랜잭션 패턴 (`02-virtualthreads-basic/`)
 
 | 시나리오 | 구현 파일 |
 |---|---|
-| `newVirtualThreadJdbcTransaction` 기본 사용 | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
-| `virtualThreadJdbcTransactionAsync` 비동기 병렬 실행 | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
-| Virtual Thread + 일반 `transaction` 혼용 | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
-| 중첩 트랜잭션 예외 처리 | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
+| Java 21 조건에서 실행되는 `newVirtualThreadJdbcTransaction` 기본 흐름 | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
+| `virtualThreadJdbcTransactionAsync`, `VirtualFuture.awaitAll()` 기반 async fan-out | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
+| Virtual Thread 트랜잭션과 일반 `transaction { }` 혼용 | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
+| 중복 엔티티 ID 예외 래핑과 커넥션 정리 검증 | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
 
 ## 다음 챕터
 
