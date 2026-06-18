@@ -56,14 +56,14 @@
 
 ```bash
 # 개별 모듈 테스트
-./gradlew :06-advanced:01-exposed-crypt:test
-./gradlew :06-advanced:04-exposed-json:test
-./gradlew :06-advanced:06-custom-columns:test
-./gradlew :06-advanced:07-custom-entities:test
-./gradlew :06-advanced:12-exposed-tink:test
+./gradlew :01-exposed-crypt:test
+./gradlew :04-exposed-json:test
+./gradlew :06-custom-columns:test
+./gradlew :07-custom-entities:test
+./gradlew :12-exposed-tink:test
 
 # H2만 대상으로 빠른 테스트
-./gradlew :06-advanced:01-exposed-crypt:test -PuseFastDB=true
+./gradlew :01-exposed-crypt:test -PuseFastDB=true
 ```
 
 ## 테스트 포인트

@@ -128,4 +128,4 @@ println("Fastjson2: $fastjsonOutput")
 
 ## 다음 모듈
 
-- [`../10-exposed-jasypt/README.md`](../10-exposed-jasypt/README.md)
+- [`../11-exposed-jackson3/README.ko.md`](../11-exposed-jackson3/README.ko.md)

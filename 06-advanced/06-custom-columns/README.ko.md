@@ -138,17 +138,17 @@ object T1: IntIdTable() {
 
 ```bash
 # 전체 테스트
-./gradlew :06-advanced:06-custom-columns:test
+./gradlew :06-custom-columns:test
 
 # H2만 대상으로 빠른 테스트
-./gradlew :06-advanced:06-custom-columns:test -PuseFastDB=true
+./gradlew :06-custom-columns:test -PuseFastDB=true
 
 # 직렬화 테스트만 실행
-./gradlew :06-advanced:06-custom-columns:test \
+./gradlew :06-custom-columns:test \
     --tests "exposed.examples.custom.columns.serialization.*"
 
 # 압축 테스트만 실행
-./gradlew :06-advanced:06-custom-columns:test \
+./gradlew :06-custom-columns:test \
     --tests "exposed.examples.custom.columns.compress.*"
 ```
 

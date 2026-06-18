@@ -161,13 +161,13 @@ insertLog.shouldContainNone(listOf("testName"))  // 평문 미노출 확인
 
 ```bash
 # 전체 테스트
-./gradlew :06-advanced:01-exposed-crypt:test
+./gradlew :01-exposed-crypt:test
 
 # H2만 대상으로 빠른 테스트
-./gradlew :06-advanced:01-exposed-crypt:test -PuseFastDB=true
+./gradlew :01-exposed-crypt:test -PuseFastDB=true
 
 # 특정 테스트 클래스만 실행
-./gradlew :06-advanced:01-exposed-crypt:test \
+./gradlew :01-exposed-crypt:test \
     --tests "exposed.examples.crypt.Ex01_EncryptedColumn"
 ```
 

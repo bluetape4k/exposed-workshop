@@ -12,7 +12,7 @@ A module for mapping `java.time` types to Exposed columns. Practice time type st
 
 ## Prerequisites
 
-- [`../05-exposed-dml/02-types/README.md`](../05-exposed-dml/02-types/README.md)
+- [`05-exposed-dml/02-types`](../../05-exposed-dml/02-types/README.md)
 
 ## Java Time Type Mapping
 
@@ -125,7 +125,7 @@ println("Event at ${event.eventTime} on ${event.createdAt}")
 ## How to Run
 
 ```bash
-./gradlew :06-advanced:02-exposed-javatime:test
+./gradlew :02-exposed-javatime:test
 ```
 
 ## Advanced Scenarios

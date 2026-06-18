@@ -12,7 +12,7 @@ JavaMoney 기반 통화 값을 Exposed 컬럼으로 다루는 모듈입니다. �
 
 ## 선수 지식
 
-- [`../05-exposed-dml/02-types/README.ko.md`](../05-exposed-dml/02-types/README.ko.md)
+- [`05-exposed-dml/02-types`](../../05-exposed-dml/02-types/README.ko.md)
 
 ## AccountTable ERD
 
@@ -198,7 +198,7 @@ val id = AccountTable.insertAndGetId {
 ## 실행 방법
 
 ```bash
-./gradlew :06-advanced:05-exposed-money:test
+./gradlew :05-exposed-money:test
 ```
 
 ## 복잡한 시나리오
