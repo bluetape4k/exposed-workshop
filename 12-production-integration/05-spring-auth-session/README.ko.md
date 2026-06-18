@@ -1,6 +1,6 @@
 # Spring Boot 인증 세션
 
-[English](README.md) | [한국어](README.ko.md)
+[English](README.md) | 한국어
 
 이 모듈은 12장 인증/세션 예제의 Spring Boot 4 구현입니다. Spring Security
 HTTP Basic, 데이터베이스 기반 사용자 조회, 역할 기반 인가, Exposed 기반 세션

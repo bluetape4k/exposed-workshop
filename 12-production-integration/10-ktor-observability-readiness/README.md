@@ -1,6 +1,6 @@
 # Ktor Observability Readiness
 
-English | [한국어](./README.ko.md)
+English | [한국어](README.ko.md)
 
 This module shows a Ktor 3 production diagnostics slice for an Exposed-backed
 HTTP service. It pairs with the Spring Boot 4 module and keeps readiness,

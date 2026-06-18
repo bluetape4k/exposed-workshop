@@ -1,6 +1,6 @@
 # Ktor 인증 세션
 
-[English](README.md) | [한국어](README.ko.md)
+[English](README.md) | 한국어
 
 이 모듈은 12장 인증/세션 예제의 Ktor 구현입니다. Ktor Authentication, Ktor
 Sessions, service 계층 역할 검사, Exposed 기반 사용자/세션 메타데이터 저장을

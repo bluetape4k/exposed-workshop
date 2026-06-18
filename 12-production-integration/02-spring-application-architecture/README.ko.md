@@ -1,6 +1,6 @@
 # Spring Boot 애플리케이션 아키텍처
 
-[English](README.md) | [한국어](README.ko.md)
+[English](README.md) | 한국어
 
 이 모듈은 chapter 12 애플리케이션 아키텍처 주제의 Spring Boot 4 쌍입니다.
 Ktor 모듈과 같은 문제를 얇은 컨트롤러 계층, 서비스 경계, Exposed JDBC

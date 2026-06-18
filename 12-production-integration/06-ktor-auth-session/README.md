@@ -1,6 +1,6 @@
 # Ktor Auth Session
 
-[English](README.md) | [한국어](README.ko.md)
+English | [한국어](README.ko.md)
 
 This module is the Ktor half of the chapter 12 authentication/session example.
 It uses Ktor Authentication, Ktor Sessions, service-level role checks, and

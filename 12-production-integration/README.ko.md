@@ -1,21 +1,29 @@
 # 12장 - 운영 통합
 
-이 장은 데이터베이스 기반 서비스의 운영형 패턴을 Spring Boot 4와 Ktor로
-나란히 비교합니다. 각 예제는 HTTP 계층, 서비스 유스케이스, Exposed 영속성,
-테스트, 운영 문서화 경계를 작게 유지하면서도 실제 서비스 구조를 보여줍니다.
+[English](README.md) | 한국어
+
+이 장은 소스 트리에 있는 예제를 기준으로 운영형 서비스 패턴을 Spring Boot 4와
+Ktor에서 나란히 비교합니다. 각 예제는 코드를 읽기 쉬운 크기로 유지하면서도
+운영에서 중요한 경계, 즉 HTTP entrypoint, service use case, Exposed persistence,
+test, security, outbox delivery, operational diagnostics를 분리해서 보여줍니다.
+
+## 챕터 목표
+
+- Spring Boot 4와 Ktor 중 하나를 기본값으로 놓지 않고, 같은 service pattern을
+  두 프레임워크에서 비교한다.
+- Exposed persistence를 테스트하기 쉬운 repository boundary 뒤에 둔다.
+- authentication, idempotency, realtime delivery, readiness, request
+  correlation이 작은 서비스의 어느 지점에 놓이는지 확인한다.
+- H2, fake gateway, in-process hub, focused test를 사용해 기본 workshop path에서
+  실제 외부 시스템 의존성을 제거한다.
 
 ## 아키텍처 다이어그램
 
 ![12장 운영 통합 아키텍처](../docs/images/readme-diagrams/12-production-integration-architecture-01.png)
 
-Foundation 예제 01-04는 Spring/Ktor 애플리케이션 아키텍처와 HTTP
-아웃박스/멱등성 기준선을 쌍으로 다룹니다. Use-case 예제 05-10은 그 위에
-인증/세션, 리얼타임 아웃박스, 관측성/준비 상태 패턴을 올립니다.
-
-이 장의 완료된 예제 README는 모두 `docs/images/readme-diagrams/` 아래에
-커밋된 PNG Architecture Diagram을 포함해야 합니다. Mermaid는 중간 소스로
-사용할 수 있지만, 최종 README에는 GitHub, IDE, 오프라인 리더에서 안정적으로
-보이는 PNG 다이어그램을 임베드합니다.
+Foundation 예제 01-04는 application architecture와 HTTP outbox/idempotency를
+다룹니다. 예제 05-10은 그 위에 authentication/session metadata, realtime outbox
+delivery, observability/readiness behavior를 올립니다.
 
 ## 모듈
 
@@ -42,9 +50,9 @@ Foundation 예제 01-04는 Spring/Ktor 애플리케이션 아키텍처와 HTTP
 ./gradlew :10-ktor-observability-readiness:test
 ```
 
-완료된 주제는 Spring/Ktor 쌍, 집중 테스트, README의 트레이드오프 설명,
-PNG Architecture Diagram 자산, 실제 외부 서비스에 의존하지 않는 예제 구조를
-같은 형태로 유지합니다.
+각 예제는 필요한 경우 Spring/Ktor 쌍, focused test, 생성된 PNG/SVG architecture
+asset, 명시적인 tradeoff, 기본 workshop path에서 실제 외부 서비스에 의존하지
+않는 구조를 같은 형태로 유지합니다.
 
 ## 검증 범위
 

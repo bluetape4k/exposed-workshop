@@ -1,6 +1,6 @@
 # Spring HTTP Outbox and Idempotency
 
-[English](README.md) | [한국어](README.ko.md)
+English | [한국어](README.ko.md)
 
 This module is the Spring Boot 4 implementation for the chapter 12 HTTP client
 outbox/idempotency topic. It persists an outbound payment intent before calling

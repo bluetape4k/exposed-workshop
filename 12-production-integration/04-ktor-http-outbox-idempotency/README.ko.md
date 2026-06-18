@@ -1,6 +1,6 @@
 # Ktor HTTP 아웃박스와 멱등성
 
-[English](README.md) | [한국어](README.ko.md)
+[English](README.md) | 한국어
 
 이 모듈은 chapter 12 HTTP 클라이언트 아웃박스/멱등성 주제의 Ktor 쌍입니다.
 Spring Boot 4 예제와 같은 계약을 유지하되, blocking Exposed JDBC 작업은
