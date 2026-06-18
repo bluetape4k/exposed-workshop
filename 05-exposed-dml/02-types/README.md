@@ -95,7 +95,7 @@ Source location: `src/test/kotlin/exposed/examples/types`
 ## Running Tests
 
 ```bash
-./gradlew :05-exposed-dml:02-types:test
+./gradlew :02-types:test
 ```
 
 ## Practice Checklist

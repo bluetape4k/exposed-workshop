@@ -98,7 +98,7 @@ Source location: `src/test/kotlin/exposed/examples/functions`
 ## Running Tests
 
 ```bash
-./gradlew :05-exposed-dml:03-functions:test
+./gradlew :03-functions:test
 ```
 
 ## Practice Checklist

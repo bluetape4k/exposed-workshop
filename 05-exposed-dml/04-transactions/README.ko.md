@@ -119,7 +119,7 @@ transaction(db) {
 ## 실행 방법
 
 ```bash
-./gradlew :05-exposed-dml:04-transactions:test
+./gradlew :04-transactions:test
 ```
 
 ## 실습 체크리스트

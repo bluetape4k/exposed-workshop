@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A module for learning the core DML syntax of the Exposed 1.1.1 DSL (SELECT/INSERT/UPDATE/DELETE/aggregation/JOIN). All examples are provided as test code so you can also verify DB Dialect differences.
+A module for learning the core DML syntax of the current Exposed DSL: SELECT, INSERT, UPDATE, DELETE, UPSERT, aggregation, JOIN, CTE, and dialect-specific extensions. Every example is test code, so the same scenarios also document DB dialect differences.
 
 ## Learning Objectives
 
@@ -131,13 +131,13 @@ Source location: `src/test/kotlin/exposed/examples/dml`
 ## Running Tests
 
 ```bash
-./gradlew :05-exposed-dml:01-dml:test
+./gradlew :01-dml:test
 ```
 
 Fast test run targeting H2 only:
 
 ```bash
-USE_FAST_DB=true ./gradlew :05-exposed-dml:01-dml:test
+./gradlew :01-dml:test -PuseFastDB=true
 ```
 
 ## Practice Checklist

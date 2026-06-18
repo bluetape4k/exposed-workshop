@@ -140,7 +140,7 @@ EntityHook.subscribe { change ->
 ## 실행 방법
 
 ```bash
-./gradlew :05-exposed-dml:05-entities:test
+./gradlew :05-entities:test
 ```
 
 ## 실습 체크리스트

@@ -98,7 +98,7 @@ Sales.select(Sales.region, Sales.amount, rowNum, rankVal)
 ## 실행 방법
 
 ```bash
-./gradlew :05-exposed-dml:03-functions:test
+./gradlew :03-functions:test
 ```
 
 ## 실습 체크리스트
