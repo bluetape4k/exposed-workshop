@@ -2,12 +2,12 @@
 
 English | [한국어](./README.ko.md)
 
-A chapter that lays out step-by-step strategies for migrating an existing JPA-centric codebase to Exposed.
+A source-backed migration chapter for teams moving JPA/Hibernate examples to Exposed without losing behavior. The examples keep the original JPA concerns visible, then show the Exposed table, DAO, query, relation, inheritance, audit, and locking replacements through executable tests.
 
 ## Chapter Goals
 
 - Compare the conceptual and behavioral differences between JPA and Exposed, and understand patterns that reduce migration risk.
-- Build a strategy for incremental migration from basic CRUD to complex relationships and transactions.
+- Build an incremental strategy from basic CRUD and relationship mapping to inheritance, recursive queries, auditing, and optimistic locking.
 - Establish a test-driven regression-prevention process.
 
 ## Prerequisites
@@ -58,11 +58,11 @@ A chapter that lays out step-by-step strategies for migrating an existing JPA-ce
 
 ```bash
 # Run submodule individually
-./gradlew :07-jpa:01-convert-jpa-basic:test
-./gradlew :07-jpa:02-convert-jpa-advanced:test
+./gradlew :01-convert-jpa-basic:test
+./gradlew :02-convert-jpa-advanced:test
 
 # Run the entire chapter
-./gradlew :07-jpa:test
+./gradlew :01-convert-jpa-basic:test :02-convert-jpa-advanced:test --no-parallel
 ```
 
 ## Test Points
