@@ -14,7 +14,7 @@ Spring MVC 환경에서 Exposed 기반 Schema 멀티테넌시를 구현하는 �
 
 ## 선수 지식
 
-- [`../09-spring/README.md`](../09-spring/README.md)
+- [`../09-spring/README.md`](../../09-spring/README.md)
 - Spring MVC 필터/AOP 기초
 
 ---
@@ -143,10 +143,10 @@ fun setSchemaForTransaction() {
 
 ```bash
 # 모듈 테스트 실행
-./gradlew :10-multi-tenant:01-multitenant-spring-web:test
+./gradlew :01-multitenant-spring-web:test
 
 # 애플리케이션 기동 (H2 프로파일 기본)
-./gradlew :10-multi-tenant:01-multitenant-spring-web:bootRun
+./gradlew :01-multitenant-spring-web:bootRun
 ```
 
 ### API 실습

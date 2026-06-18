@@ -139,10 +139,10 @@ fun setSchemaForTransaction() {
 
 ```bash
 # 모듈 테스트 실행
-./gradlew :10-multi-tenant:02-multitenant-spring-web-virtualthread:test
+./gradlew :02-multitenant-spring-web-virtualthread:test
 
 # 애플리케이션 기동
-./gradlew :10-multi-tenant:02-multitenant-spring-web-virtualthread:bootRun
+./gradlew :02-multitenant-spring-web-virtualthread:bootRun
 ```
 
 ### API 실습

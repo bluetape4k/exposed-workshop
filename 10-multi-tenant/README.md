@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A chapter for implementing production-grade multi-tenant architecture with Exposed + Spring, covering schema-based tenant isolation, database-per-tenant routing, dynamic routing, and context propagation flows. Compares how the same multi-tenancy requirements are implemented across Spring MVC, Virtual Thread, WebFlux, explicit schema-per-tenant transaction boundaries, and dedicated tenant databases.
+This chapter follows the multi-tenant implementations in the source tree: Spring MVC schema routing, Tomcat Virtual Thread tenant propagation, WebFlux/Reactor context bridging, explicit schema-per-tenant and database-per-tenant transaction helpers, Spring Security tenant authorization, a Ktor variant, and tenant onboarding. The examples focus on where tenant identity is accepted, how it is propagated, and where database isolation is enforced.
 
 ## Chapter Goals
 
@@ -94,10 +94,11 @@ All modules follow the flow below. Only the context propagation mechanism differ
 ./gradlew :04-schema-per-tenant-spring-web:test
 ./gradlew :05-database-per-tenant-spring-web:test
 ./gradlew :06-spring-security-tenant-authorization-spring-web:test
+./gradlew :07-multitenant-ktor:test
 ./gradlew :08-tenant-onboarding-spring-web:test
 
 # Full chapter build
-./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build :06-spring-security-tenant-authorization-spring-web:build :08-tenant-onboarding-spring-web:build
+./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build :06-spring-security-tenant-authorization-spring-web:build :07-multitenant-ktor:build :08-tenant-onboarding-spring-web:build --no-parallel
 ```
 
 ---
