@@ -2,24 +2,24 @@
 
 English | [한국어](./README.ko.md)
 
-An introductory chapter for first-time Exposed learners. DSL and DAO are compared side-by-side, and the common query/save flow is learned through test-driven practice.
+An introductory chapter for first-time Exposed learners. SQL DSL and DAO are compared over the same `City`/`User` domain, with every concept anchored in executable tests.
 
 ## Overview
 
-Exposed provides two data access patterns. The **DSL (SQL DSL)** pattern expresses SQL as a Kotlin type-safe function chain, while the **DAO** pattern operates in an ORM style via `Entity`/`EntityClass`. Both patterns are practised side-by-side with the same domain (`City`/`User`) so you can observe the differences directly.
+Exposed provides two data access patterns. The **DSL (SQL DSL)** pattern expresses SQL as Kotlin type-safe query chains over `Table` objects, while the **DAO** pattern maps `IntIdTable` rows to `IntEntity` objects. This chapter uses the same `City`/`User` shape in both modules so the schema, transaction boundary, relationship handling, and result type differences are easy to compare.
 
 ## Learning Goals
 
-- Clearly understand the role differences between DSL and DAO, then reproduce common CRUD scenarios.
-- Gain stable query-writing experience by verifying conditional/sorting/paging results through test code.
-- Organise the structures (schema/utility classes) to be reused in `04-exposed-ddl` and `05-exposed-dml`.
+- Understand when to use SQL DSL query chains and when to use DAO entity objects.
+- Verify update, delete, join, group-by, relationship loading, and coroutine transaction behavior through tests.
+- Recognize the schema/helper/test structure that later chapters extend for DDL and DML practice.
 
 ## Included Modules
 
 | Module                  | Description                                                           |
 |-----------------------|-----------------------------------------------------------------------|
-| `exposed-sql-example` | Test-based example confirming the basic SELECT/INSERT/UPDATE/DELETE flow with a DSL focus |
-| `exposed-dao-example` | Example covering DAO (Entity) modelling, relationship mapping, and coroutine transaction cases |
+| `exposed-sql-example` | Test-based example for SQL DSL updates, deletes, joins, aggregation, and coroutine transactions |
+| `exposed-dao-example` | Test-based example for DAO entity lookup, optional relationships, eager loading, update/delete, and coroutine transactions |
 
 ## DSL vs DAO Pattern Comparison
 
@@ -112,10 +112,10 @@ class User(id: EntityID<Int>) : IntEntity(id) {
 
 ## Test Points
 
-- Verify that the same business scenario can be reproduced in both DSL and DAO
-- Confirm that query conditions, sorting, and paging results match expected values
-- Identify query patterns with N+1 potential early
-- Pin tests to prevent lazy entity access from occurring outside the transaction boundary
+- Verify how the same `City`/`User` model is expressed as SQL DSL tables and DAO entities.
+- Confirm that query conditions, joins, aggregation, updates, and deletes match expected values.
+- Identify DAO relationship reads that can create N+1 query patterns.
+- Keep entity traversal inside the transaction boundary and prefer eager loading for relationship-focused tests.
 
 ## Next Chapter
 

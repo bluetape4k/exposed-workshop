@@ -2,20 +2,17 @@
 
 [English](./README.md) | 한국어
 
-Exposed DAO(Entity) 패턴의 기본을 학습하는 모듈입니다. `Entity`/`EntityClass` 모델링, 관계 매핑(`referencedOn`,
-`referrersOn`), CRUD, 코루틴 연동을 다룹니다.
+Exposed DAO(Entity) 패턴의 기본을 학습하는 모듈입니다. `IntIdTable`/`IntEntity` 모델링, `optionalReferencedOn`과 `optionalReferrersOn`을 사용하는 nullable 관계 매핑, eager loading, update/delete, 코루틴 트랜잭션을 다룹니다.
 
 ## 개요
 
-Exposed DAO 패턴은 `IntIdTable`과 `IntEntity`/
-`IntEntityClass` 쌍으로 ORM 스타일의 데이터 접근을 제공합니다. 테이블 컬럼을 Kotlin 프로퍼티로 위임(delegate)하여 객체처럼 다루며, 관계는 `referencedOn`/
-`referrersOn`으로 선언합니다.
+Exposed DAO 패턴은 `IntIdTable`과 `IntEntity`/`IntEntityClass` 쌍으로 ORM 스타일의 데이터 접근을 제공합니다. `Schema.kt`는 `City`와 `User`를 `cities`, `users` 테이블에 매핑하고, `User.city`를 nullable 관계로 두며, 반대 방향인 `City.users` 컬렉션도 노출합니다. 테스트는 엔티티 조회, one-to-many와 many-to-one eager loading, 프로퍼티 기반 update, delete, `newSuspendedTransaction { }` 안에서의 동일 동작을 검증합니다.
 
 ## 학습 목표
 
-- `IntEntity`/`IntEntityClass` 기반 Entity 모델링을 익힌다.
-- `referencedOn`(many-to-one), `referrersOn`(one-to-many) 관계 매핑을 이해한다.
-- `.with()` eager loading으로 N+1 문제를 방지한다.
+- `IntIdTable`, `IntEntity`, `IntEntityClass` 기반 엔티티 모델링을 익힌다.
+- `optionalReferencedOn`, `optionalReferrersOn`을 통해 nullable many-to-one, one-to-many 관계 매핑을 이해한다.
+- `.with()` eager loading으로 관계 조회의 N+1 패턴을 방지한다.
 - `newSuspendedTransaction` 기반 코루틴 트랜잭션에서 DAO를 사용한다.
 
 ## 선수 지식
@@ -132,9 +129,9 @@ withSuspendedCityUsers(testDB) {
 
 | 파일                              | 설명                                 |
 |---------------------------------|------------------------------------|
-| `Schema.kt`                     | Entity/Table 정의, 샘플 데이터 삽입, 테스트 헬퍼 |
-| `ExposedDaoExample.kt`          | 동기 DAO CRUD, 관계 조회, Eager Loading  |
-| `ExposedDaoSuspendedExample.kt` | 코루틴 DAO 예제 (동일 시나리오 비동기 실행)        |
+| `Schema.kt`                     | DAO 테이블/엔티티 정의, 샘플 행, 캐시 flush, 동기/suspending 헬퍼 |
+| `ExposedDaoExample.kt`          | 동기 DAO 조회, eager loading, update, delete 테스트 |
+| `ExposedDaoSuspendedExample.kt` | `withSuspendedCityUsers`로 같은 시나리오를 반복하는 코루틴 DAO 테스트 |
 
 ## 테스트 실행 방법
 
@@ -154,7 +151,7 @@ withSuspendedCityUsers(testDB) {
 
 ### N+1 문제와 Eager Loading
 
-DAO 패턴에서 연관 엔티티를 반복 접근하면 N+1 쿼리 문제가 발생합니다.
+DAO 패턴에서 연관 엔티티를 지연 로딩으로 반복 접근하면 N+1 쿼리 문제가 생길 수 있습니다. 테스트는 `City.users`나 `User.city`를 순회하기 전에 `.with()`로 관계를 미리 로딩합니다.
 
 관련 테스트:
 
@@ -167,7 +164,7 @@ DAO 패턴에서 연관 엔티티를 반복 접근하면 N+1 쿼리 문제가 �
 
 ## 실습 체크리스트
 
-- DAO와 DSL로 동일 유스케이스를 각각 구현해 비교한다.
+- DAO와 SQL DSL로 비교 가능한 유스케이스를 각각 구현해 코드 형태를 비교한다.
 - 관계 조회 시 eager loading 유무에 따른 쿼리 수를 비교한다.
 - 트랜잭션 경계 밖에서 Entity 지연 접근을 피한다.
 - 관계 탐색이 깊어질수록 N+1 위험을 테스트로 고정한다.

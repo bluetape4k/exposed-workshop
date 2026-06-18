@@ -2,18 +2,18 @@
 
 English | [한국어](./README.ko.md)
 
-A module for learning the fundamentals of the Exposed DAO (Entity) pattern. Covers `Entity`/`EntityClass` modelling, relationship mapping (`referencedOn`, `referrersOn`), CRUD, and coroutine integration.
+A module for learning the fundamentals of the Exposed DAO (Entity) pattern. It covers `IntIdTable`/`IntEntity` modelling, nullable relationship mapping with `optionalReferencedOn` and `optionalReferrersOn`, eager loading, update/delete, and coroutine transactions.
 
 ## Overview
 
-The Exposed DAO pattern provides ORM-style data access via an `IntIdTable` and `IntEntity`/`IntEntityClass` pair. Table columns are delegated to Kotlin properties so you can work with them like objects, and relationships are declared with `referencedOn`/`referrersOn`.
+The Exposed DAO pattern provides ORM-style data access via an `IntIdTable` and `IntEntity`/`IntEntityClass` pair. `Schema.kt` maps `City` and `User` to `cities` and `users`, keeps `User.city` nullable, and exposes the inverse `City.users` collection. The tests then verify entity lookup, eager loading for one-to-many and many-to-one relationships, property-based updates, deletes, and the same behavior inside `newSuspendedTransaction { }`.
 
 ## Learning Goals
 
-- Learn Entity modelling based on `IntEntity`/`IntEntityClass`.
-- Understand `referencedOn` (many-to-one) and `referrersOn` (one-to-many) relationship mapping.
-- Prevent the N+1 problem with `.with()` eager loading.
-- Use DAO within coroutine transactions based on `newSuspendedTransaction`.
+- Learn entity modelling based on `IntIdTable`, `IntEntity`, and `IntEntityClass`.
+- Understand nullable many-to-one and one-to-many mapping through `optionalReferencedOn` and `optionalReferrersOn`.
+- Prevent relationship-query N+1 patterns with `.with()` eager loading.
+- Use DAO inside coroutine transactions based on `newSuspendedTransaction`.
 
 ## Prerequisites
 
@@ -129,9 +129,9 @@ withSuspendedCityUsers(testDB) {
 
 | File                              | Description                                           |
 |---------------------------------|-------------------------------------------------------|
-| `Schema.kt`                     | Entity/Table definitions, sample data insertion, test helpers |
-| `ExposedDaoExample.kt`          | Synchronous DAO CRUD, relationship queries, Eager Loading |
-| `ExposedDaoSuspendedExample.kt` | Coroutine DAO example (same scenarios run asynchronously) |
+| `Schema.kt`                     | DAO table/entity definitions, sample rows, cache flush, and sync/suspending helpers |
+| `ExposedDaoExample.kt`          | Synchronous DAO lookup, eager loading, update, and delete tests |
+| `ExposedDaoSuspendedExample.kt` | Coroutine DAO tests that repeat the same scenarios through `withSuspendedCityUsers` |
 
 ## Running Tests
 
@@ -151,7 +151,7 @@ withSuspendedCityUsers(testDB) {
 
 ### N+1 Problem and Eager Loading
 
-Repeatedly accessing related entities in the DAO pattern causes N+1 query issues.
+Repeatedly accessing related entities lazily in the DAO pattern can create N+1 query issues. The tests use `.with()` to preload the relation before iterating over `City.users` or `User.city`.
 
 Related tests:
 
@@ -164,7 +164,7 @@ Related test: `ExposedDaoSuspendedExample`
 
 ## Practice Checklist
 
-- Implement the same use case in both DAO and DSL and compare.
+- Implement comparable use cases in both DAO and SQL DSL and compare the resulting code shape.
 - Compare the number of queries with and without eager loading during relationship queries.
 - Avoid lazy entity access outside the transaction boundary.
 - As relationship traversal deepens, pin N+1 risks with tests.
