@@ -2,14 +2,13 @@
 
 [English](./README.md) | 한국어
 
-Exposed를 Kotlin Coroutines와 함께 사용하는 기본 모듈입니다.
-`newSuspendedTransaction`, `suspendedTransactionAsync`, `withSuspendTransaction`을 중심으로 비동기 DB 접근을 실습합니다.
+이 모듈은 트랜잭션 경계가 눈에 보이도록 예제를 작게 유지합니다. `Ex01_Coroutines.kt`는 `Tester`, `TesterUnique`를 사용해 suspended transaction, 중첩 조회, 비동기 insert/update 경합, 트랜잭션 격리, 예외 발생 후 정리 동작을 검증합니다.
 
 ## 학습 목표
 
-- 코루틴 트랜잭션 API를 익힌다.
-- 비동기 병렬 쿼리 패턴을 구현한다.
-- 취소/예외 시 트랜잭션 정리 동작을 이해한다.
+- 테스트가 사용하는 fixture 흐름 안에서 `newSuspendedTransaction`, `withSuspendTransaction`, `suspendedTransactionAsync`를 익힌다.
+- 순차 suspended 작업과 병렬 insert/update 작업의 차이를 비교한다.
+- 중복 키나 중첩 트랜잭션 실패가 발생했을 때 rollback과 connection 정리가 어떻게 검증되는지 확인한다.
 
 ## 선수 지식
 
@@ -74,31 +73,31 @@ newSuspendedTransaction(singleThreadDispatcher) { ... }
 
 소스 위치: `src/test/kotlin/exposed/examples/coroutines`
 
-| 파일                   | 주요 테스트 시나리오                                               |
-|----------------------|-----------------------------------------------------------|
-| `Ex01_Coroutines.kt` | 존재하지 않는 ID 조회, 단건 삽입/조회, 병렬 삽입, 중복 키 예외, 트랜잭션 격리, 취소 시 롤백 |
+| 파일                   | 주요 테스트 시나리오 |
+|----------------------|---|
+| `Ex01_Coroutines.kt` | 존재하지 않는 ID 조회, 순차 suspended transaction, `TesterUnique` insert/update 경합, 중첩 suspended transaction, 병렬 fan-out, 일반 `transaction { }` 혼용, 중복 엔티티 ID 예외 정리 |
 
 ### 주요 테스트 시나리오
 
-| 시나리오            | 사용 API                                   |
-|-----------------|------------------------------------------|
-| 기본 suspend 트랜잭션 | `newSuspendedTransaction`                |
-| 기존 트랜잭션 내 중첩 실행 | `withSuspendTransaction`                 |
-| 비동기 병렬 삽입 (10건) | `suspendedTransactionAsync` + `awaitAll` |
-| 중복 키 삽입 → 예외 검증 | `assertFailsWith<ExposedSQLException>`   |
-| 트랜잭션 격리 수준 지정   | `newSuspendedTransaction(isolation=...)` |
+| 시나리오 | 사용 API |
+|---|---|
+| 기본 suspended transaction과 누락 행 조회 | `newSuspendedTransaction`, `withSuspendTransaction` |
+| `TesterUnique` insert/update 경합 | `suspendedTransactionAsync`, `awaitAll`, `maxAttempts` |
+| 중첩 suspended transaction fan-out | `newSuspendedTransaction`, `suspendedTransactionAsync` |
+| 중복 엔티티 ID 예외 정리 | `assertFailsWith<ExposedSQLException>` |
+| 트랜잭션 격리 수준 설정 | `connection.transactionIsolation = Connection.TRANSACTION_READ_COMMITTED` |
 
 ## 실행 방법
 
 ```bash
-./gradlew :08-coroutines:01-coroutines-basic:test
+./gradlew :01-coroutines-basic:test
 ```
 
 테스트 환경 변수:
 
 ```bash
 # H2만 사용하는 빠른 테스트
-USE_FAST_DB=true ./gradlew :08-coroutines:01-coroutines-basic:test
+USE_FAST_DB=true ./gradlew :01-coroutines-basic:test
 ```
 
 ## 실습 체크리스트

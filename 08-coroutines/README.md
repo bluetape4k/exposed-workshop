@@ -2,13 +2,13 @@
 
 English | [한국어](./README.ko.md)
 
-Covers patterns for running Exposed in Kotlin Coroutines and Java Virtual Thread concurrency models, and provides guidelines for designing asynchronous transaction boundaries.
+This chapter compares the two concurrency styles used by the source examples: Exposed's coroutine transaction APIs and bluetape4k's Java Virtual Thread JDBC helpers. The tests focus on concrete transaction behavior: nested lookups, async fan-out, insert/update races, regular `transaction { }` interop, and exception cleanup.
 
 ## Chapter Goals
 
-- Understand the asynchronous access flow based on `newSuspendedTransaction`.
-- Compare the pros and cons of the coroutine model vs. Virtual Thread model and establish practical selection criteria.
-- Design stable transaction boundaries in concurrent environments.
+- Follow the source-backed access flow around `newSuspendedTransaction`, `withSuspendTransaction`, and `suspendedTransactionAsync`.
+- Compare coroutine transactions with `newVirtualThreadJdbcTransaction` and `virtualThreadJdbcTransactionAsync`.
+- Design transaction boundaries that remain clear under parallel execution, retries, and exception propagation.
 
 ## Prerequisites
 
@@ -40,10 +40,10 @@ Covers patterns for running Exposed in Kotlin Coroutines and Java Virtual Thread
 
 ## Included Modules
 
-| Module                    | Description                                        |
-|---------------------------|--------------------------------------------------|
-| `01-coroutines-basic`     | Basic Exposed examples using coroutines           |
-| `02-virtualthreads-basic` | Concurrency examples using Virtual Threads        |
+| Module                    | Source Focus |
+|---------------------------|---|
+| `01-coroutines-basic`     | `Tester` and `TesterUnique` examples for suspended transactions, nested lookup, async insert/update, and exception cleanup |
+| `02-virtualthreads-basic` | Java 21-gated `VTester` examples for Virtual Thread transactions, async fan-out, regular transaction interop, and wrapped SQL exceptions |
 
 ## Recommended Learning Order
 
@@ -54,11 +54,11 @@ Covers patterns for running Exposed in Kotlin Coroutines and Java Virtual Thread
 
 ```bash
 # Run individual submodules
-./gradlew :08-coroutines:01-coroutines-basic:test
-./gradlew :08-coroutines:02-virtualthreads-basic:test
+./gradlew :01-coroutines-basic:test
+./gradlew :02-virtualthreads-basic:test
 
 # Run full chapter
-./gradlew :08-coroutines:test
+./gradlew :01-coroutines-basic:test :02-virtualthreads-basic:test --no-parallel
 ```
 
 ## Transaction Flow Comparison
@@ -87,17 +87,17 @@ Covers patterns for running Exposed in Kotlin Coroutines and Java Virtual Thread
 
 | Scenario | Implementation File |
 |---|---|
-| Basic usage of `newSuspendedTransaction` | [`Ex01_Coroutines.kt`](01-coroutines-basic/src/test/kotlin/exposed/examples/coroutines/Ex01_Coroutines.kt) |
-| Parallel execution with `suspendedTransactionAsync` | [`Ex01_Coroutines.kt`](01-coroutines-basic/src/test/kotlin/exposed/examples/coroutines/Ex01_Coroutines.kt) |
+| Basic usage of `newSuspendedTransaction` and `withSuspendTransaction` | [`Ex01_Coroutines.kt`](01-coroutines-basic/src/test/kotlin/exposed/examples/coroutines/Ex01_Coroutines.kt) |
+| Parallel insert/update with `suspendedTransactionAsync`, `awaitAll`, and `maxAttempts` | [`Ex01_Coroutines.kt`](01-coroutines-basic/src/test/kotlin/exposed/examples/coroutines/Ex01_Coroutines.kt) |
 
 ### Virtual Thread Transaction Patterns (`02-virtualthreads-basic/`)
 
 | Scenario | Implementation File |
 |---|---|
-| Basic usage of `newVirtualThreadJdbcTransaction` | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
-| Async parallel execution with `virtualThreadJdbcTransactionAsync` | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
-| Mixing Virtual Thread with regular `transaction` | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
-| Nested transaction exception handling | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
+| Java 21-gated `newVirtualThreadJdbcTransaction` usage | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
+| Async fan-out with `virtualThreadJdbcTransactionAsync` and `VirtualFuture.awaitAll()` | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
+| Mixing Virtual Thread transactions with regular `transaction { }` | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
+| Duplicate entity ID exception wrapping and connection cleanup | [`Ex01_VirtualThreads.kt`](02-virtualthreads-basic/src/test/kotlin/exposed/examples/virtualthreads/Ex01_VirtualThreads.kt) |
 
 ## Next Chapter
 
