@@ -2,12 +2,12 @@
 
 English | [한국어](./README.ko.md)
 
-This chapter implements REST APIs with Spring Boot + Exposed. It compares two web models -- synchronous blocking (Spring MVC + Virtual Threads) and asynchronous non-blocking (Spring WebFlux + Kotlin Coroutines) -- implementing the same Movie/Actor domain to compare Exposed transaction handling approaches.
+This chapter implements REST APIs with Spring Boot + Exposed. It compares two web models -- synchronous blocking (Spring MVC + Virtual Threads) and coroutine-based WebFlux -- using the same Movie/Actor domain so the transaction boundaries are easy to compare.
 
 ## Chapter Goals
 
 - Compare Exposed-based Repository patterns in Spring MVC and WebFlux while verifying consistent data flow.
-- Understand the differences in transaction/connection handling between Virtual Threads and Kotlin Coroutines.
+- Understand the differences between Spring-managed blocking transactions and explicit suspended transactions.
 - Auto-document and verify APIs through Swagger/OpenAPI.
 
 ## Prerequisites
@@ -22,7 +22,7 @@ This chapter implements REST APIs with Spring Boot + Exposed. It compares two we
 | Module                    | Server  | Concurrency Model                       | Transaction Management               |
 |---------------------------|---------|----------------------------------------|--------------------------------------|
 | `spring-mvc-exposed`      | Tomcat  | Virtual Threads (blocking allowed)      | `@Transactional` (Spring AOP)        |
-| `spring-webflux-exposed`  | Netty   | Kotlin Coroutines + Dispatchers.IO      | `newSuspendedTransaction { }` (direct) |
+| `spring-webflux-exposed`  | Netty   | Kotlin Coroutines + suspend handlers    | `newSuspendedTransaction { }` (direct) |
 
 ### Module Comparison
 
@@ -51,7 +51,7 @@ Both modules share the same schema and REST API structure.
 ## Recommended Learning Order
 
 1. **`spring-mvc-exposed`**: Learn Exposed DSL/DAO patterns first in the familiar synchronous model.
-2. **`spring-webflux-exposed`**: Compare how the same domain is implemented with suspend functions and `newSuspendedTransaction`.
+2. **`spring-webflux-exposed`**: Compare how the same domain is implemented with suspend handlers and explicit `newSuspendedTransaction` blocks.
 
 ---
 
@@ -59,14 +59,14 @@ Both modules share the same schema and REST API structure.
 
 ```bash
 # Start Spring MVC module
-./gradlew :01-spring-boot:spring-mvc-exposed:bootRun
+./gradlew :spring-mvc-exposed:bootRun
 
 # Start Spring WebFlux module
-./gradlew :01-spring-boot:spring-webflux-exposed:bootRun
+./gradlew :spring-webflux-exposed:bootRun
 
 # Test each module
-./gradlew :01-spring-boot:spring-mvc-exposed:test
-./gradlew :01-spring-boot:spring-webflux-exposed:test
+./gradlew :spring-mvc-exposed:test
+./gradlew :spring-webflux-exposed:test
 
 # Swagger UI (same path for both modules)
 open http://localhost:8080/swagger-ui.html
@@ -83,7 +83,7 @@ open http://localhost:8080/swagger-ui.html
 ## Performance & Stability Checkpoints
 
 - **MVC**: Check that connection pool/DB load does not spike when increasing Virtual Threads.
-- **WebFlux**: Verify that the Netty EventLoop and Exposed JDBC transactions are properly separated via `Dispatchers.IO`.
+- **WebFlux**: Verify that Netty request handling stays outside the Exposed JDBC transaction block and that repository work runs inside `newSuspendedTransaction`.
 - Switch both modules to `spring.profiles.active=postgres` and verify behavior on PostgreSQL.
 
 ---

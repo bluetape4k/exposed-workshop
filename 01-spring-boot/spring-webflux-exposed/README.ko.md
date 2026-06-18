@@ -2,20 +2,19 @@
 
 [English](./README.md) | 한국어
 
-Spring WebFlux + Kotlin Coroutines 환경에서 Exposed DSL/DAO를 논블로킹 방식으로 사용하는 REST API 모듈입니다. 영화(Movie)와 배우(Actor) 도메인을 통해
-`newSuspendedTransaction` 기반 suspend 트랜잭션 처리 방법을 학습합니다.
+Spring WebFlux suspend handler에서 Exposed DSL/DAO를 사용하는 REST API 모듈입니다. HTTP 계층은 coroutine 기반으로 유지하고, blocking JDBC 작업은 명시적인 `newSuspendedTransaction` 블록 안에 둡니다.
 
 ## 학습 목표
 
 - `newSuspendedTransaction`을 사용하여 WebFlux suspend 핸들러 안에서 Exposed 트랜잭션을 관리하는 방법을 익힌다.
-- Netty 이벤트 루프와 Exposed JDBC 트랜잭션을 `Dispatchers.IO`로 분리하는 패턴을 이해한다.
+- Netty 요청 처리 경계와 Exposed JDBC repository 작업 경계를 구분한다.
 - DAO 방식(`ActorEntity.new`, `MovieEntity.findById`)과 DSL 방식(`selectAll`, `andWhere`)을 suspend 컨텍스트에서 비교한다.
 - Netty ConnectionProvider, LoopResources 튜닝을 통해 Reactive 서버 성능을 조정하는 방법을 확인한다.
 
 ## 선수 지식
 
 - [`00-shared/exposed-shared-tests`](../../00-shared/exposed-shared-tests/README.ko.md): 공통 테스트 베이스 클래스와 DB 설정 참고
-- Kotlin Coroutines(`suspend`, `CoroutineScope`, `Dispatchers.IO`) 기본 개념
+- Kotlin Coroutines(`suspend`, 구조화된 coroutine 흐름) 기본 개념
 - Spring WebFlux 기본 개념 (Reactor, `ServerHttpRequest`)
 
 ---
@@ -25,7 +24,7 @@ Spring WebFlux + Kotlin Coroutines 환경에서 Exposed DSL/DAO를 논블로킹 
 | 항목               | spring-mvc-exposed              | spring-webflux-exposed                  |
 |------------------|---------------------------------|-----------------------------------------|
 | 서버               | Tomcat                          | Netty                                   |
-| 동시성 모델           | Virtual Threads (블로킹 허용)        | Kotlin Coroutines + `Dispatchers.IO`    |
+| 동시성 모델           | Virtual Threads (블로킹 허용)        | Kotlin Coroutines + suspend handler     |
 | 트랜잭션 관리          | `@Transactional` (Spring AOP)   | `newSuspendedTransaction { }` (직접 호출)   |
 | 핸들러 함수 형태        | 일반 함수                           | `suspend fun`                           |
 | 요청 객체            | `HttpServletRequest`            | `ServerHttpRequest`                     |
@@ -217,7 +216,7 @@ Spring Profile로 데이터베이스를 전환합니다:
 
 ```bash
 # PostgreSQL 프로파일로 실행
-./gradlew :01-spring-boot:spring-webflux-exposed:bootRun --args='--spring.profiles.active=postgres'
+./gradlew :spring-webflux-exposed:bootRun --args='--spring.profiles.active=postgres'
 ```
 
 ---
@@ -245,10 +244,10 @@ Spring Profile로 데이터베이스를 전환합니다:
 
 ```bash
 # 애플리케이션 기동 (기본: H2 프로파일)
-./gradlew :01-spring-boot:spring-webflux-exposed:bootRun
+./gradlew :spring-webflux-exposed:bootRun
 
 # 테스트 실행
-./gradlew :01-spring-boot:spring-webflux-exposed:test
+./gradlew :spring-webflux-exposed:test
 
 # Swagger UI 접속
 open http://localhost:8080/swagger-ui.html
@@ -260,7 +259,7 @@ open http://localhost:8080/swagger-ui.html
 
 - `GET /actors`, `GET /movies` 응답을 Swagger UI 또는 curl로 확인한다.
 - `POST /actors` → `GET /actors/{id}` → `DELETE /actors/{id}` 전체 CRUD 흐름을 검증한다.
-- `GET /movie-actors/{movieId}`에서 DAO eager loading이 생성하는 SQL 2개를 로그로 확인한다.
+- `GET /movie-actors/{movieId}`에서 DAO eager loading이 생성하는 SQL을 로그로 확인한다.
 - `GET /movie-actors/acting-producers`에서 조건부 JOIN SQL을 로그로 확인한다.
 - `spring.profiles.active=postgres`로 전환하여 PostgreSQL에서 동일 API가 동작하는지 확인한다.
 

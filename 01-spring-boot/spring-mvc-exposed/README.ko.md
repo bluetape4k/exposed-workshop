@@ -161,7 +161,7 @@ Spring Profile로 데이터베이스를 전환합니다:
 
 ```bash
 # PostgreSQL 프로파일로 실행
-./gradlew :01-spring-boot:spring-mvc-exposed:bootRun --args='--spring.profiles.active=postgres'
+./gradlew :spring-mvc-exposed:bootRun --args='--spring.profiles.active=postgres'
 ```
 
 ---
@@ -189,10 +189,10 @@ Spring Profile로 데이터베이스를 전환합니다:
 
 ```bash
 # 애플리케이션 기동 (기본: H2 프로파일)
-./gradlew :01-spring-boot:spring-mvc-exposed:bootRun
+./gradlew :spring-mvc-exposed:bootRun
 
 # 테스트 실행
-./gradlew :01-spring-boot:spring-mvc-exposed:test
+./gradlew :spring-mvc-exposed:test
 
 # Swagger UI 접속
 open http://localhost:8080/swagger-ui.html
