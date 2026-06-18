@@ -101,16 +101,16 @@ Measured method:
 
 ```bash
 # Fast smoke run (CI / quick trend check)
-./gradlew :11-high-performance:04-benchmark:smokeBenchmark
+./gradlew :04-benchmark:smokeBenchmark
 
 # Default profile run (precise measurement)
-./gradlew :11-high-performance:04-benchmark:benchmark
+./gradlew :04-benchmark:benchmark
 
 # Generate Markdown report (main profile)
-./gradlew :11-high-performance:04-benchmark:benchmarkMarkdown
+./gradlew :04-benchmark:benchmarkMarkdown
 
 # Save smoke results as Markdown
-./gradlew :11-high-performance:04-benchmark:benchmarkMarkdown -PbenchmarkProfile=smoke
+./gradlew :04-benchmark:benchmarkMarkdown -PbenchmarkProfile=smoke
 ```
 
 ---

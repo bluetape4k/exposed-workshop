@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-This module demonstrates explicit read/write datasource routing with Ktor request handling and Exposed JDBC. `RoutingDataSourcePlugin` selects `READ` for `GET` requests and `WRITE` for mutating requests, while `X-Data-Source` can override representative requests for tests and diagnostics.
+This module demonstrates explicit read/write datasource routing with Ktor request handling and Exposed JDBC. `RoutingDataSourcePlugin` selects `READ` for `GET` requests and `WRITE` for mutating requests, while `X-Data-Source` can override representative requests for tests and diagnostics. `RoutingContextElement` carries the selected role through coroutine execution before `RoutingInventoryRepository` chooses the matching `Database`.
 
 ## Architecture Diagram
 
@@ -24,4 +24,4 @@ Use `X-Data-Source: write` to force a read route onto the write datasource when 
 ./gradlew :07-routing-datasource-ktor:test
 ```
 
-Use this example when a Ktor service needs datasource selection without Spring transaction routing.
+The tests verify default GET/PUT routing, header override, invalid header rejection, and `/routing/stats` counters. Use this example when a Ktor service needs datasource selection without Spring transaction routing.

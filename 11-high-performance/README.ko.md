@@ -2,13 +2,14 @@
 
 [English](./README.md) | 한국어
 
-고부하/실전 환경에서 Exposed 기반 애플리케이션의 처리량과 응답성을 높이기 위한 캐시·라우팅 전략을 정리합니다.
+이 챕터는 소스 트리에 있는 고성능 예제를 따라갑니다. Spring MVC와 WebFlux용 Redisson cache repository, registry 기반 read/write `DataSource` router, JMH benchmark, 그리고 같은 캐시·라우팅 결정을 명시적으로 보여 주는 Ktor 변형을 다룹니다. 핵심은 어느 지점에서 latency를 줄이고, 어떤 consistency trade-off를 감수하며, 그 선택을 테스트로 어떻게 검증하는지 확인하는 것입니다.
 
 ## 챕터 목표
 
-- Read Through/Write Through/Write Behind 캐시 전략을 비교한다.
-- Coroutines/WebFlux/Virtual Thread 환경의 비동기 캐시 패턴을 적용한다.
-- 확장 가능한 DataSource 라우팅 구조를 설계한다.
+- Read-through, write-through, read-only, write-behind 캐시 동작을 실제 repository 구현과 함께 비교한다.
+- Spring MVC + Virtual Threads, WebFlux + Coroutines, Ktor request handler에서 캐시 접근 패턴을 적용한다.
+- 테스트 가능하고 운영에서 추적 가능한 read/write `DataSource` routing 구조를 설계한다.
+- 정밀 JMH 측정 전에 smoke benchmark로 성능 추세를 빠르게 확인한다.
 
 ## 선수 지식
 
@@ -83,16 +84,17 @@
 
 ```bash
 # 개별 모듈 테스트
-./gradlew :11-high-performance:01-cache-strategies:test
-./gradlew :11-high-performance:02-cache-strategies-coroutines:test
-./gradlew :11-high-performance:03-routing-datasource:test
+./gradlew :01-cache-strategies:test
+./gradlew :02-cache-strategies-coroutines:test
+./gradlew :03-routing-datasource:test
+./gradlew :04-benchmark:test
 ./gradlew :05-cache-strategies-ktor:test
 ./gradlew :06-cache-strategies-coroutines-ktor:test
 ./gradlew :07-routing-datasource-ktor:test
 
 # 벤치마크 (smoke: 빠른 추세, main: 정밀 측정)
-./gradlew :11-high-performance:04-benchmark:smokeBenchmark
-./gradlew :11-high-performance:04-benchmark:benchmarkMarkdown -PbenchmarkProfile=smoke
+./gradlew :04-benchmark:smokeBenchmark
+./gradlew :04-benchmark:benchmarkMarkdown -PbenchmarkProfile=smoke
 ```
 
 ---
@@ -103,7 +105,7 @@
 - Write-Behind 지연 반영 시 정합성 보장 시나리오를 점검한다.
 - 장애 시 폴백 경로(캐시 실패 → DB)가 정상 동작하는지 확인한다.
 - Ktor 모듈은 route response에서 cache source 또는 selected datasource role이 드러나는지 확인한다.
-- Ktor 예제는 H2-only라 container-backed nightly coverage가 필요하지 않다.
+- Ktor 예제는 H2-only라 Redis나 replica database 컨테이너 없이 cache/routing behavior 자체를 검증한다.
 
 ---
 

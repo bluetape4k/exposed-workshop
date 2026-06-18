@@ -12,7 +12,7 @@ Spring MVC + Virtual Threads 환경에서 Redisson + Exposed로 캐시 전략을
 
 ## 선수 지식
 
-- [`../09-spring/README.md`](../09-spring/README.md)
+- [`../09-spring/README.md`](../../09-spring/README.md)
 
 ---
 
@@ -110,10 +110,10 @@ spring:
 
 ```bash
 # 단위/통합 테스트 실행 (Testcontainers가 Redis를 자동 시작)
-./gradlew :11-high-performance:01-cache-strategies:test
+./gradlew :01-cache-strategies:test
 
 # 애플리케이션 실행
-./gradlew :11-high-performance:01-cache-strategies:bootRun
+./gradlew :01-cache-strategies:bootRun
 ```
 
 ### API 엔드포인트

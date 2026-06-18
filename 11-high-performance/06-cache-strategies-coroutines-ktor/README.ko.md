@@ -2,7 +2,7 @@
 
 [English](./README.md) | 한국어
 
-이 모듈은 suspending route handler, `Dispatchers.IO`로 격리한 Exposed JDBC transaction, key별 load coalescing, write-through update, 명시적 invalidation으로 coroutine-safe Ktor cache access를 보여줍니다.
+이 모듈은 suspending route handler, `Dispatchers.IO`로 격리한 Exposed JDBC transaction, key별 load coalescing, write-through update, 명시적 invalidation으로 coroutine-safe Ktor cache access를 보여줍니다. `CoroutineCachedProductService`는 SKU별 `Mutex`를 사용해 동시에 들어온 read-through miss가 database load 하나를 공유하도록 합니다.
 
 ## 아키텍처 다이어그램
 
@@ -21,4 +21,4 @@
 ./gradlew :06-cache-strategies-coroutines-ktor:test
 ```
 
-Concurrent suspending request handler에서도 안전한 cache behavior가 필요한 Ktor 서비스 예제로 사용합니다.
+테스트는 두 번째 조회의 cache hit, concurrent load coalescing, write-through cache refresh, invalidation, cancellation-friendly error handling을 검증합니다. Concurrent suspending request handler에서도 안전한 cache behavior가 필요한 Ktor 서비스 예제로 사용합니다.

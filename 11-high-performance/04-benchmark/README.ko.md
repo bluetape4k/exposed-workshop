@@ -102,16 +102,16 @@
 
 ```bash
 # 빠른 smoke 실행 (CI/빠른 추세 확인)
-./gradlew :11-high-performance:04-benchmark:smokeBenchmark
+./gradlew :04-benchmark:smokeBenchmark
 
 # 기본 프로파일 실행 (정밀 측정)
-./gradlew :11-high-performance:04-benchmark:benchmark
+./gradlew :04-benchmark:benchmark
 
 # Markdown 리포트 생성 (main 프로파일)
-./gradlew :11-high-performance:04-benchmark:benchmarkMarkdown
+./gradlew :04-benchmark:benchmarkMarkdown
 
 # smoke 결과를 Markdown으로 저장
-./gradlew :11-high-performance:04-benchmark:benchmarkMarkdown -PbenchmarkProfile=smoke
+./gradlew :04-benchmark:benchmarkMarkdown -PbenchmarkProfile=smoke
 ```
 
 ---

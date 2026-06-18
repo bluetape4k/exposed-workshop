@@ -14,7 +14,7 @@ Combines `tenant + transaction readOnly` information to form a `<tenant>:<rw|ro>
 
 ## Prerequisites
 
-- [`../10-multi-tenant/README.md`](../10-multi-tenant/README.md)
+- [`../10-multi-tenant/README.md`](../../10-multi-tenant/README.md)
 
 ---
 
@@ -120,10 +120,10 @@ curl -X PATCH \
 
 ```bash
 # Unit/integration tests
-./gradlew :11-high-performance:03-routing-datasource:test
+./gradlew :03-routing-datasource:test
 
 # Run application
-./gradlew :11-high-performance:03-routing-datasource:bootRun
+./gradlew :03-routing-datasource:bootRun
 ```
 
 ---

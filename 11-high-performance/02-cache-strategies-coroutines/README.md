@@ -12,7 +12,7 @@ The coroutines/non-blocking version of `01-cache-strategies`. Practises `suspend
 
 ## Prerequisites
 
-- [`../08-coroutines/README.md`](../08-coroutines/README.md)
+- [`../08-coroutines/README.md`](../../08-coroutines/README.md)
 - [`../01-cache-strategies/README.md`](../01-cache-strategies/README.md)
 
 ---
@@ -103,10 +103,10 @@ spring:
 
 ```bash
 # Unit/integration tests (Testcontainers auto-starts Redis)
-./gradlew :11-high-performance:02-cache-strategies-coroutines:test
+./gradlew :02-cache-strategies-coroutines:test
 
 # Run application
-./gradlew :11-high-performance:02-cache-strategies-coroutines:bootRun
+./gradlew :02-cache-strategies-coroutines:bootRun
 ```
 
 ### API Endpoints (WebFlux / suspend)
