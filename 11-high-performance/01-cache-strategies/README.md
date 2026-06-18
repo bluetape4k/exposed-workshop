@@ -12,7 +12,7 @@ A module for hands-on practice with cache strategies using Redisson + Exposed in
 
 ## Prerequisites
 
-- [`../09-spring/README.md`](../09-spring/README.md)
+- [`../09-spring/README.md`](../../09-spring/README.md)
 
 ---
 
@@ -110,10 +110,10 @@ spring:
 
 ```bash
 # Unit/integration tests (Testcontainers auto-starts Redis)
-./gradlew :11-high-performance:01-cache-strategies:test
+./gradlew :01-cache-strategies:test
 
 # Run application
-./gradlew :11-high-performance:01-cache-strategies:bootRun
+./gradlew :01-cache-strategies:bootRun
 ```
 
 ### API Endpoints

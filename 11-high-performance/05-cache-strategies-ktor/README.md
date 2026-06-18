@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-This module demonstrates cache-aside, read-through, write-through, and explicit invalidation flows with Ktor routes, Exposed JDBC persistence, and an in-memory cache.
+This module demonstrates cache-aside, read-through, write-through, and explicit invalidation flows with Ktor routes, Exposed JDBC persistence, and an in-memory cache. `CachedUserService` records hit, miss, database-read, and cache-size counters so the tests can verify behavior without relying on Spring Cache abstractions.
 
 ## Architecture Diagram
 
@@ -24,4 +24,4 @@ This module demonstrates cache-aside, read-through, write-through, and explicit 
 ./gradlew :05-cache-strategies-ktor:test
 ```
 
-Use this example when a Ktor service needs explicit, testable cache behavior without Spring Cache abstractions.
+The tests cover first-read database fallback, cache reuse, write-through updates, invalidation, and `/cache/stats` observability. Use this example when a Ktor service needs explicit, testable cache behavior without Spring Cache abstractions.

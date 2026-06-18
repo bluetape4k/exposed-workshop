@@ -2,13 +2,14 @@
 
 English | [한국어](./README.ko.md)
 
-Covers cache and routing strategies for improving throughput and responsiveness of Exposed-based applications under high load and production environments.
+This chapter follows the high-performance examples in the source tree: Redisson-backed cache repositories for Spring MVC and WebFlux, a registry-driven read/write `DataSource` router, JMH benchmarks, and compact Ktor variants that keep the same cache and routing decisions explicit. The examples focus on where latency is removed, where consistency is intentionally traded, and how each optimization is verified by tests.
 
 ## Chapter Goals
 
-- Compare Read Through/Write Through/Write Behind cache strategies.
-- Apply asynchronous cache patterns in Coroutines/WebFlux/Virtual Thread environments.
-- Design a scalable DataSource routing structure.
+- Compare read-through, write-through, read-only, and write-behind cache behavior against concrete repository implementations.
+- Apply cache access patterns in Spring MVC + Virtual Threads, WebFlux + Coroutines, and Ktor request handlers.
+- Design read/write `DataSource` routing that is explicit enough to test and safe enough to operate.
+- Use smoke benchmarks for quick trend checks before running precise JMH measurements.
 
 ## Prerequisites
 
@@ -83,16 +84,17 @@ Covers cache and routing strategies for improving throughput and responsiveness 
 
 ```bash
 # Individual module tests
-./gradlew :11-high-performance:01-cache-strategies:test
-./gradlew :11-high-performance:02-cache-strategies-coroutines:test
-./gradlew :11-high-performance:03-routing-datasource:test
+./gradlew :01-cache-strategies:test
+./gradlew :02-cache-strategies-coroutines:test
+./gradlew :03-routing-datasource:test
+./gradlew :04-benchmark:test
 ./gradlew :05-cache-strategies-ktor:test
 ./gradlew :06-cache-strategies-coroutines-ktor:test
 ./gradlew :07-routing-datasource-ktor:test
 
 # Benchmark (smoke: fast trend check, main: precise measurement)
-./gradlew :11-high-performance:04-benchmark:smokeBenchmark
-./gradlew :11-high-performance:04-benchmark:benchmarkMarkdown -PbenchmarkProfile=smoke
+./gradlew :04-benchmark:smokeBenchmark
+./gradlew :04-benchmark:benchmarkMarkdown -PbenchmarkProfile=smoke
 ```
 
 ---
@@ -103,7 +105,7 @@ Covers cache and routing strategies for improving throughput and responsiveness 
 - Check consistency guarantee scenarios during Write-Behind delayed propagation.
 - Confirm fallback path (cache failure → DB) operates correctly on failure.
 - For Ktor modules, confirm route responses expose cache source or selected datasource role.
-- Ktor examples are H2-only and do not require container-backed nightly coverage.
+- Ktor examples are H2-only, so they exercise cache/routing behavior without container-backed Redis or replica databases.
 
 ---
 

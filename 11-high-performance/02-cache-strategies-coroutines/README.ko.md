@@ -12,7 +12,7 @@
 
 ## 선수 지식
 
-- [`../08-coroutines/README.md`](../08-coroutines/README.md)
+- [`../08-coroutines/README.md`](../../08-coroutines/README.md)
 - [`../01-cache-strategies/README.md`](../01-cache-strategies/README.md)
 
 ---
@@ -104,10 +104,10 @@ spring:
 
 ```bash
 # 단위/통합 테스트 실행 (Testcontainers가 Redis를 자동 시작)
-./gradlew :11-high-performance:02-cache-strategies-coroutines:test
+./gradlew :02-cache-strategies-coroutines:test
 
 # 애플리케이션 실행
-./gradlew :11-high-performance:02-cache-strategies-coroutines:bootRun
+./gradlew :02-cache-strategies-coroutines:bootRun
 ```
 
 ### API 엔드포인트 (WebFlux / suspend)

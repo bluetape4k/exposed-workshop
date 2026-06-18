@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-This module demonstrates coroutine-safe Ktor cache access with suspending route handlers, Exposed JDBC transactions isolated on `Dispatchers.IO`, per-key load coalescing, write-through updates, and explicit invalidation.
+This module demonstrates coroutine-safe Ktor cache access with suspending route handlers, Exposed JDBC transactions isolated on `Dispatchers.IO`, per-key load coalescing, write-through updates, and explicit invalidation. `CoroutineCachedProductService` uses a per-SKU `Mutex` so concurrent read-through misses share one database load.
 
 ## Architecture Diagram
 
@@ -21,4 +21,4 @@ This module demonstrates coroutine-safe Ktor cache access with suspending route 
 ./gradlew :06-cache-strategies-coroutines-ktor:test
 ```
 
-Use this example when a Ktor service needs cache behavior that remains safe under concurrent suspending request handlers.
+The tests verify cached second reads, coalesced concurrent loads, write-through cache refresh, invalidation, and cancellation-friendly error handling. Use this example when a Ktor service needs cache behavior that remains safe under concurrent suspending request handlers.

@@ -15,7 +15,7 @@
 
 ## 선수 지식
 
-- [`../10-multi-tenant/README.md`](../10-multi-tenant/README.md)
+- [`../10-multi-tenant/README.md`](../../10-multi-tenant/README.md)
 
 ---
 
@@ -123,10 +123,10 @@ curl -X PATCH \
 
 ```bash
 # 단위/통합 테스트 실행
-./gradlew :11-high-performance:03-routing-datasource:test
+./gradlew :03-routing-datasource:test
 
 # 애플리케이션 실행
-./gradlew :11-high-performance:03-routing-datasource:bootRun
+./gradlew :03-routing-datasource:bootRun
 ```
 
 ---
