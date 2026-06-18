@@ -1,7 +1,7 @@
 # Exposed Workshop (Kotlin Exposed Tutorial)
 
 [![CI](https://github.com/bluetape4k/exposed-workshop/actions/workflows/ci.yml/badge.svg)](https://github.com/bluetape4k/exposed-workshop/actions/workflows/ci.yml)
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.3-7F52FF?logo=kotlin)](https://kotlinlang.org)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.4-7F52FF?logo=kotlin)](https://kotlinlang.org)
 [![JVM](https://img.shields.io/badge/JVM-21-ED8B00?logo=openjdk)](https://openjdk.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -9,81 +9,75 @@ English | [한국어](./README.ko.md)
 
 ![Exposed workshop workbench](./docs/assets/exposed-workshop-workbench.png)
 
-A hands-on workshop collection for learning the Kotlin Exposed SQL framework step by step. Designed for beginners through advanced users to practice and master the various features of Exposed.
+A source-backed workshop for learning Kotlin Exposed through runnable Gradle modules, paired English/Korean documentation, and database tests that move from SQL basics to production-style service patterns.
 
 ## Project Purpose
 
-`exposed-workshop` teaches Kotlin Exposed through runnable, test-backed modules
-that progress from Spring Boot entrypoints and SQL DSL basics to multi-tenancy,
-caching, routing data sources, and high-performance patterns.
+`exposed-workshop` teaches Kotlin Exposed as a sequence of small, executable examples. The repository starts with shared database fixtures and Spring Boot entrypoints, then expands into SQL DSL, DAO, DDL/DML, advanced column types, JPA migration, coroutines, virtual threads, multi-tenancy, cache/routing, and production integration with Spring Boot and Ktor.
 
 ## What It Provides
 
-- **Step-by-step learning path** from basics to production-style patterns.
-- **DSL and DAO examples** with transaction and coroutine variants.
-- **Multi-database tests** for H2, PostgreSQL, MySQL, and MariaDB.
-- **Spring integration examples** for transactions, cache, repository, and WebFlux/MVC styles.
+- **Source-ordered learning path** matching `settings.gradle.kts` and the chapter directory layout.
+- **DSL, DAO, DDL, and DML examples** that make transaction boundaries and dialect behavior visible.
+- **Runtime comparisons** across blocking JDBC, coroutines, virtual threads, Spring MVC/WebFlux, and Ktor.
+- **Multi-database verification** with H2 fast paths and Testcontainers-backed PostgreSQL, MySQL, and MariaDB options.
 
 ## What is Kotlin Exposed?
 
-Kotlin Exposed is a Kotlin-specific SQL framework developed by JetBrains. It leverages Kotlin's powerful type system to guarantee SQL query safety at compile time and supports both DSL (Domain Specific Language) and DAO (Data Access Object) styles.
+Kotlin Exposed is JetBrains' Kotlin-first SQL framework. It lets you model tables and queries with a type-safe DSL, or work with rows through DAO/Entity classes when an object-oriented style is a better fit. This workshop keeps both styles close to real application code so the trade-offs are visible in tests.
 
 ### Key Features
 
-| Feature              | Description                                          |
-|----------------------|------------------------------------------------------|
-| **Type Safety**      | Catches SQL errors at compile time                   |
-| **DSL & DAO**        | Supports both SQL-style and ORM-style access         |
-| **Coroutines**       | Full async programming support                       |
-| **Lightweight**      | Lower memory footprint compared to JPA               |
-| **Multi-DB Support** | H2, MySQL, PostgreSQL, MariaDB, Oracle, SQL Server   |
+| Feature | How this repository demonstrates it |
+|---------|-------------------------------------|
+| **Type-safe SQL DSL** | Tables, joins, predicates, CTEs, functions, and batch DML examples. |
+| **DAO and Entity API** | EntityClass, relationship mapping, lifecycle hooks, and cache behavior. |
+| **Explicit transactions** | Blocking, coroutine, Spring `TransactionTemplate`, and `@Transactional` variants. |
+| **Runtime choices** | Spring MVC/WebFlux, Ktor, coroutines, virtual threads, and benchmark modules. |
+| **Database coverage** | H2 for fast feedback plus PostgreSQL, MySQL, and MariaDB through Testcontainers. |
 
-![Kotlin Exposed feature map](docs/assets/readme-diagrams/exposed-workshop-mindmap-01.png)
+![Kotlin Exposed feature map](docs/images/readme-diagrams/exposed-workshop-mindmap-01.png)
 
 ### Exposed API Structure
 
-![Exposed API Structure diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-01.png)
+![Exposed API Structure diagram](docs/images/readme-diagrams/exposed-workshop-architecture-01.png)
 
 <!-- README_VISUAL_OVERVIEW:START -->
 ## Overview Diagram
 
-![Exposed Workshop overview diagram](docs/assets/readme-diagrams/root-readme-overview-01.png)
+![Exposed Workshop overview diagram](docs/images/readme-diagrams/root-readme-overview-01.png)
 
 ## Module Composition Chart
 
-![Exposed Workshop module composition chart](docs/assets/readme-charts/root-readme-module-chart-01.png)
+![Exposed Workshop module composition chart](docs/images/readme-charts/root-readme-module-chart-01.png)
 <!-- README_VISUAL_OVERVIEW:END -->
 
 ## Tech Stack
 
-| Technology           | Version |
-|----------------------|---------|
-| Kotlin               | 2.3.20  |
-| Java                 | 21      |
-| Exposed              | 1.1.1   |
-| Spring Boot          | 3.5.11  |
-| Kotlinx Coroutines   | 1.10.2  |
-| Bluetape4k           | 1.6.0   |
-| Gradle Wrapper       | 9.4.1   |
+| Technology | Version / setting |
+|------------|-------------------|
+| Kotlin plugin | 2.4.0 |
+| Kotlin language/API level | 2.3 |
+| Java toolchain | 21 |
+| Exposed | 1.3.0 |
+| Spring Boot | 4.0.6 |
+| Kotlinx Coroutines | 1.11.0 |
+| Bluetape4k dependencies BOM | 1.2.0 |
+| Gradle Wrapper | 9.5.0 |
 
 ## Learning Guide
 
-The recommended learning order for this workshop:
+Read the repository in source-tree order. Start with shared fixtures, then work through Exposed concepts, runtime wrappers, and production-style application patterns:
 
-1. **Basics**: Spring Boot + Exposed integration
-2. **Alternatives**: Comparing JPA alternatives
-3. **Exposed Basics**: DSL and DAO patterns
-4. **DDL/DML**: Schema definition and data manipulation
-5. **Advanced**: Encryption, JSON, custom types
-6. **JPA Migration**: Converting JPA code to Exposed
-7. **Async**: Coroutines, Virtual Threads
-8. **Spring Integration**: Transactions, cache, repository patterns
-9. **Multi-Tenancy**: Multi-tenant architecture
-10. **High Performance**: Cache strategies, routing datasource
+1. **Shared and entrypoints**: common test fixtures, Spring MVC/WebFlux, and reactive alternatives.
+2. **Exposed core**: SQL DSL, DAO, schema definition, DML, functions, transactions, and entities.
+3. **Extensions and migration**: JSON, money, encryption, custom columns/entities, Jackson/Fastjson/Tink, and JPA migration.
+4. **Runtime models**: coroutines and Java 21 virtual threads.
+5. **Operational patterns**: Spring transactions, repositories, cache, multi-tenancy, routing data sources, benchmarks, Ktor, outbox, auth/session, realtime, and observability.
 
 ### Learning Path
 
-![Learning Path diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-02.png)
+![Learning Path diagram](docs/images/readme-diagrams/exposed-workshop-architecture-02.png)
 
 ## Detailed Documentation
 
@@ -93,7 +87,7 @@ Full explanations for all examples are available at [Kotlin Exposed Book](https:
 
 ## Module Structure
 
-![Module Structure diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-03.png)
+![Module Structure diagram](docs/images/readme-diagrams/exposed-workshop-architecture-03.png)
 
 ## Module List
 
@@ -404,7 +398,7 @@ No new follow-up issues are needed as of 2026-05-24 because the remaining differ
 ### Prerequisites
 
 - JDK 21 or higher (for Virtual Threads and Preview features)
-- Gradle Wrapper 9.4.1 included (use `./gradlew`)
+- Gradle Wrapper 9.5.0 included (use `./gradlew`)
 - Docker (for Testcontainers)
 
 ### Quick Start

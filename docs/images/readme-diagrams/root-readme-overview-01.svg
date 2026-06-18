@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Exposed Workshop Source-backed Overview</title>
+  <desc id="desc">The repository teaches Exposed through Gradle-included runnable modules, shared database fixtures, Spring/Ktor integrations, and Testcontainers-backed verification.</desc>
+  <defs>
+    <filter id="softShadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="7" stdDeviation="6" flood-color="#1e293b" flood-opacity="0.11"/></filter>
+    <marker id="arrowBlue" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 13 6.5 L 0 13 Z" fill="#2563eb"/></marker>
+    <marker id="arrowGreen" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 13 6.5 L 0 13 Z" fill="#059669"/></marker>
+    <marker id="arrowAmber" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 13 6.5 L 0 13 Z" fill="#d97706"/></marker>
+    <marker id="arrowPurple" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 13 6.5 L 0 13 Z" fill="#7c3aed"/></marker>
+    <style>
+      svg{font-family:"Architects Daughter","Comic Mono",ui-sans-serif,system-ui,sans-serif}.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#90a9cf;stroke-width:3;filter:url(#softShadow)}.title{font-family:"Architects Daughter";font-size:50px;fill:#263a57}.subtitle,.body,.routeText,.footerText{font-family:"Comic Mono";fill:#526276}.subtitle{font-size:17px}.bandTitle,.cardTitle,.chipTitle{font-family:"Architects Daughter";fill:#263a57}.bandTitle{font-size:28px}.cardTitle{font-size:23px}.chipTitle{font-size:18px}.body{font-size:13px}.small{font-family:"Comic Mono";font-size:12px;fill:#64748b}.band{stroke-width:2.5}.card,.chip{fill:#fff;stroke-width:2.2;filter:url(#softShadow)}.route{fill:none;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}.routeSoft{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:8 7}.routeText{font-size:13px}.pill{fill:#fff;stroke:#d4e0ec;stroke-width:1.5}.footer{fill:#f8fafc;stroke:#d4e0ec;stroke-width:2}
+    </style>
+  </defs>
+  <rect class="canvas" width="1500" height="1000"/>
+  <rect class="frame" x="48" y="38" width="1404" height="924" rx="28"/>
+  <text class="title" x="750" y="105" text-anchor="middle">Exposed Workshop Source Map</text>
+  <text class="subtitle" x="750" y="142" text-anchor="middle">Gradle includes runnable Kotlin modules that move from Exposed basics to Spring, Ktor, tenancy, cache, and production-style verification.</text>
+
+  <g id="entry-band">
+    <rect class="band" x="92" y="184" width="1316" height="122" rx="22" fill="#eff6ff" stroke="#93b4e6"/>
+    <text class="bandTitle" x="132" y="225">Learning entry</text>
+    <text class="body" x="132" y="255">Root README and paired chapter README files guide the learning order.</text>
+    <rect class="chip" x="1010" y="216" width="132" height="48" rx="14" stroke="#60a5fa"/><text class="chipTitle" x="1076" y="246" text-anchor="middle">76 topics</text>
+    <rect class="chip" x="1164" y="216" width="160" height="48" rx="14" stroke="#60a5fa"/><text class="chipTitle" x="1244" y="246" text-anchor="middle">EN / KO docs</text>
+  </g>
+
+  <g id="core-band">
+    <rect class="band" x="92" y="354" width="1316" height="186" rx="22" fill="#ecfdf5" stroke="#8ed1bb"/>
+    <text class="bandTitle" x="132" y="397">Exposed learning core</text>
+    <text class="body" x="132" y="426">Examples share database fixtures and then branch into the Exposed access style being practiced.</text>
+    <rect class="card" x="154" y="458" width="244" height="60" rx="15" stroke="#059669"/><text class="cardTitle" x="276" y="486" text-anchor="middle">SQL DSL</text><text class="small" x="276" y="508" text-anchor="middle">Table, query, DDL, DML</text>
+    <rect class="card" x="430" y="458" width="244" height="60" rx="15" stroke="#059669"/><text class="cardTitle" x="552" y="486" text-anchor="middle">DAO / Entity</text><text class="small" x="552" y="508" text-anchor="middle">EntityClass and relations</text>
+    <rect class="card" x="706" y="458" width="244" height="60" rx="15" stroke="#059669"/><text class="cardTitle" x="828" y="486" text-anchor="middle">Advanced columns</text><text class="small" x="828" y="508" text-anchor="middle">JSON, money, crypt, Tink</text>
+    <rect class="card" x="982" y="458" width="244" height="60" rx="15" stroke="#059669"/><text class="cardTitle" x="1104" y="486" text-anchor="middle">Migration</text><text class="small" x="1104" y="508" text-anchor="middle">JPA patterns to Exposed</text>
+  </g>
+
+  <g id="integration-band">
+    <rect class="band" x="92" y="592" width="1316" height="172" rx="22" fill="#fff7ed" stroke="#e8c47b"/>
+    <text class="bandTitle" x="132" y="634">Runtime integration chapters</text>
+    <text class="body" x="132" y="663">Spring MVC/WebFlux, Ktor, coroutines, virtual threads, tenant routing, cache, and outbox examples wrap the same Exposed persistence ideas.</text>
+    <rect class="card" x="154" y="696" width="200" height="50" rx="14" stroke="#d97706"/><text class="cardTitle" x="254" y="727" text-anchor="middle">Spring Boot</text>
+    <rect class="card" x="386" y="696" width="200" height="50" rx="14" stroke="#d97706"/><text class="cardTitle" x="486" y="727" text-anchor="middle">Ktor</text>
+    <rect class="card" x="618" y="696" width="200" height="50" rx="14" stroke="#d97706"/><text class="cardTitle" x="718" y="727" text-anchor="middle">Coroutines</text>
+    <rect class="card" x="850" y="696" width="200" height="50" rx="14" stroke="#d97706"/><text class="cardTitle" x="950" y="727" text-anchor="middle">Tenancy</text>
+    <rect class="card" x="1082" y="696" width="200" height="50" rx="14" stroke="#d97706"/><text class="cardTitle" x="1182" y="727" text-anchor="middle">Cache / Outbox</text>
+  </g>
+
+  <g id="verification-band">
+    <rect class="band" x="92" y="814" width="1316" height="96" rx="22" fill="#f5f3ff" stroke="#b59ce8"/>
+    <text class="bandTitle" x="132" y="854">Verification boundary</text>
+    <text class="body" x="132" y="877">Shared fixtures keep fast H2 feedback separate from container-backed DB checks.</text>
+    <text class="body" x="132" y="899">Use Gradle properties to choose H2, PostgreSQL, MySQL, or MariaDB.</text>
+    <rect class="pill" x="945" y="842" width="108" height="38" rx="12"/><text class="small" x="999" y="865" text-anchor="middle">H2</text>
+    <rect class="pill" x="1071" y="842" width="108" height="38" rx="12"/><text class="small" x="1125" y="865" text-anchor="middle">PostgreSQL</text>
+    <rect class="pill" x="1197" y="842" width="88" height="38" rx="12"/><text class="small" x="1241" y="865" text-anchor="middle">MySQL</text>
+    <rect class="pill" x="1303" y="842" width="88" height="38" rx="12"/><text class="small" x="1347" y="865" text-anchor="middle">MariaDB</text>
+  </g>
+
+  <path class="route" d="M750 306 L750 354" stroke="#2563eb" marker-end="url(#arrowBlue)"/><text class="routeText" x="780" y="334">choose Exposed surface</text>
+  <path class="route" d="M750 540 L750 592" stroke="#059669" marker-end="url(#arrowGreen)"/><text class="routeText" x="780" y="570">wrap in runtime</text>
+  <path class="route" d="M750 764 L750 814" stroke="#d97706" marker-end="url(#arrowAmber)"/><text class="routeText" x="780" y="793">prove with tests</text>
+  <path class="routeSoft" d="M276 518 L276 592" stroke="#7c3aed" marker-end="url(#arrowPurple)"/>
+  <path class="routeSoft" d="M1104 518 L1104 592" stroke="#7c3aed" marker-end="url(#arrowPurple)"/>
+
+  <rect class="footer" x="148" y="920" width="1204" height="42" rx="18"/>
+  <text class="footerText" x="750" y="947" text-anchor="middle">Read a chapter, run its tests, then compare the same persistence idea across blocking, coroutine, virtual-thread, Spring, and Ktor modules.</text>
+</svg>
