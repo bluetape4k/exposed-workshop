@@ -2,11 +2,11 @@
 
 English | [한국어](./README.ko.md)
 
-A chapter for comparing and practising JPA alternative technologies in Spring-based applications, validating various ORM and Reactive clients.
+A chapter for comparing JPA alternatives through focused examples: Hibernate Reactive for Team/Member relations, Spring Data R2DBC for Post/Comment/Customer access, and Vert.x SQL Client for direct SQL mapping.
 
 ## Overview
 
-Hands-on exploration of database access technologies beyond JPA, so you can understand the design philosophy and trade-offs of each. Reactive stacks (Hibernate Reactive, R2DBC, Vert.x SQL Client) and Exposed are placed side-by-side, helping you derive the criteria for migrating legacy JPA projects.
+Hands-on exploration of database access technologies beyond classic blocking JPA. Each module uses the domain that best exposes its trade-offs, then compares transaction boundaries, result types, mapping cost, and operational constraints against the Exposed mental model.
 
 ## Learning Goals
 
@@ -56,20 +56,20 @@ Hands-on exploration of database access technologies beyond JPA, so you can unde
 
 ```bash
 # Full chapter tests
-./gradlew :02-alternatives-to-jpa:hibernate-reactive-example:test
-./gradlew :02-alternatives-to-jpa:r2dbc-example:test
-./gradlew :02-alternatives-to-jpa:vertx-sqlclient-example:test
+./gradlew :hibernate-reactive-example:test
+./gradlew :r2dbc-example:test
+./gradlew :vertx-sqlclient-example:test
 
 # Run app server (Hibernate Reactive)
-./gradlew :02-alternatives-to-jpa:hibernate-reactive-example:bootRun
+./gradlew :hibernate-reactive-example:bootRun
 
 # Run app server (R2DBC)
-./gradlew :02-alternatives-to-jpa:r2dbc-example:bootRun
+./gradlew :r2dbc-example:bootRun
 ```
 
 ## Test Points
 
-- Verify that the same domain results are consistent across each client.
+- Verify that each client returns the expected domain results through its own repository and controller tests.
 - Check exception/timeout/rollback behaviour in Reactive/Async paths.
 - Measure the thread/connection model differences quantitatively.
 

@@ -24,17 +24,17 @@
 <rect width="1420" height="760" class="canvas"/>
 <rect x="20" y="20" width="1380" height="720" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Alternatives To JPA Architecture Flow</text>
-<text x="48" y="80" class="subtitle">Three asynchronous data-access styles compared against the same Team/Member learning target</text>
+<text x="48" y="80" class="subtitle">Three asynchronous data-access styles compared through their own focused learning domains</text>
 <rect x="58" y="118" width="276" height="410" rx="12" class="panel"/><text x="196" y="110" class="panelTitle" text-anchor="middle">LEARNING TARGET</text>
 <rect x="86" y="150" width="220" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="196" y="174" class="label" text-anchor="middle">Team / Member domain</text>
-<text x="196" y="194" class="detail" text-anchor="middle">same scenario</text>
+<text x="196" y="174" class="label" text-anchor="middle">Focused domains</text>
+<text x="196" y="194" class="detail" text-anchor="middle">Team, Post, Customer</text>
 <rect x="86" y="252" width="220" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
 <text x="196" y="276" class="label" text-anchor="middle">Controller tests</text>
-<text x="196" y="296" class="detail" text-anchor="middle">CRUD + search</text>
+<text x="196" y="296" class="detail" text-anchor="middle">CRUD, search, mapping</text>
 <rect x="86" y="354" width="220" height="58" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="196" y="378" class="label" text-anchor="middle">Mapping comparison</text>
-<text x="196" y="398" class="detail" text-anchor="middle">entity to DTO</text>
+<text x="196" y="378" class="label" text-anchor="middle">Comparison target</text>
+<text x="196" y="398" class="detail" text-anchor="middle">tx + mapping style</text>
 <rect x="392" y="118" width="276" height="410" rx="12" class="panel"/><text x="530" y="110" class="panelTitle" text-anchor="middle">HIBERNATE REACTIVE</text>
 <rect x="420" y="150" width="220" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
 <text x="530" y="174" class="label" text-anchor="middle">JPA Entity model</text>
@@ -83,5 +83,5 @@
 <path d="M862,528 L862,546 L710,546 L710,588" class="softArrow"/>
 <path d="M1194,528 L1194,546 L1028,546 L1028,588" class="softArrow"/>
 <rect x="142" y="690" width="1136" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="710" y="720" class="detail" text-anchor="middle">The chapter compares persistence style, transaction boundary, async result type, and relationship loading across the same domain.</text>
+<text x="710" y="720" class="detail" text-anchor="middle">The chapter compares persistence style, transaction boundary, async result type, and mapping cost across focused example domains.</text>
 </svg>

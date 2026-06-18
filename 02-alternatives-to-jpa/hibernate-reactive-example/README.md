@@ -113,13 +113,13 @@ class TeamSessionRepository(sf: SessionFactory): AbstractMutinySessionRepository
 
 ```bash
 # Run tests
-./gradlew :02-alternatives-to-jpa:hibernate-reactive-example:test
+./gradlew :hibernate-reactive-example:test
 
 # Run app server (requires PostgreSQL)
-./gradlew :02-alternatives-to-jpa:hibernate-reactive-example:bootRun
+./gradlew :hibernate-reactive-example:bootRun
 
 # Run a specific test class
-./gradlew :02-alternatives-to-jpa:hibernate-reactive-example:test \
+./gradlew :hibernate-reactive-example:test \
     --tests "alternative.hibernate.reactive.example.domain.repository.TeamSessionRepositoryTest"
 ```
 
