@@ -2,8 +2,7 @@
 
 [English](./README.md) | 한국어
 
-`@Transactional` 중심 선언적 트랜잭션 통합 모듈입니다. Exposed의 `SpringTransactionManager`를 `annotationDrivenTransactionManager()`로 등록해
-`@Transactional` 어노테이션과 Exposed DAO가 같은 커넥션을 공유하는 구조를 학습합니다.
+이 모듈은 Exposed `SpringTransactionManager`를 기반으로 선언적 Spring 트랜잭션을 다룹니다. 소스는 order/customer 도메인, `TransactionManagementConfigurer`, 중첩 트랜잭션 설정, 코루틴 연동 테스트, 단일 커넥션 동작, 여러 컨테이너를 사용하는 트랜잭션 매니저 시나리오까지 포함합니다.
 
 ## 학습 목표
 
@@ -121,10 +120,10 @@ object OrderSchema {
 ## 실행 방법
 
 ```bash
-./gradlew :09-spring:03-spring-transaction:test
+./gradlew :03-spring-transaction:test
 
 # 테스트 로그 요약
-./bin/repo-test-summary -- ./gradlew :09-spring:03-spring-transaction:test
+./bin/repo-test-summary -- ./gradlew :03-spring-transaction:test
 ```
 
 ## 실습 체크리스트

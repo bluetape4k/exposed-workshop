@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A module for programmatic transaction control based on `TransactionTemplate`. It injects Exposed's `SpringTransactionManager` into `TransactionTemplate` to learn the pattern of controlling transaction boundaries at the code level without declarative `@Transactional`.
+This module uses a small book/author domain to compare programmatic transaction boundaries. `BookService` exercises Exposed-backed `TransactionTemplate`, plain Exposed `transaction { }`, `TransactionOperations.withoutTransaction()`, and the behavior of that no-transaction operation inside an outer `@Transactional` method.
 
 ## Learning Goals
 
@@ -110,10 +110,10 @@ object BookSchema {
 ## How to Run
 
 ```bash
-./gradlew :09-spring:02-transactiontemplate:test
+./gradlew :02-transactiontemplate:test
 
 # Test log summary
-./bin/repo-test-summary -- ./gradlew :09-spring:02-transactiontemplate:test
+./bin/repo-test-summary -- ./gradlew :02-transactiontemplate:test
 ```
 
 ## Practice Checklist

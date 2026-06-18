@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-This chapter covers integration patterns for running Exposed reliably in a Spring Boot environment. It provides step-by-step examples from auto-configuration-based connections to declarative transactions, Repository patterns (synchronous/coroutines), and Spring Cache integration.
+This chapter follows the actual Spring examples in this repository: Spring Boot auto-configuration tests, `TransactionTemplate`, declarative transaction management, MVC/WebFlux repository applications, and Redis-backed cache modules. The examples are intentionally test-heavy so each transaction, repository, and cache boundary can be verified against running Spring contexts.
 
 ## Chapter Goals
 
@@ -20,13 +20,13 @@ This chapter covers integration patterns for running Exposed reliably in a Sprin
 
 | Module                                                                           | Description                              | Key Technologies                                  |
 |----------------------------------------------------------------------------------|-----------------------------------------|---------------------------------------------------|
-| [`01-springboot-autoconfigure`](01-springboot-autoconfigure/README.md)           | Exposed integration via Spring Boot auto-configuration | `ExposedAutoConfiguration`, `DatabaseInitializer` |
-| [`02-transactiontemplate`](02-transactiontemplate/README.md)                     | Programmatic transactions with `TransactionTemplate` | `TransactionTemplate`, `TransactionOperations`    |
-| [`03-spring-transaction`](03-spring-transaction/README.md)                       | Declarative transactions with `@Transactional` | `SpringTransactionManager`, `@Transactional`      |
-| [`04-exposed-repository`](04-exposed-repository/README.md)                       | Synchronous Repository pattern (Spring MVC) | `JdbcRepository`, DSL/DAO hybrid                  |
-| [`05-exposed-repository-coroutines`](05-exposed-repository-coroutines/README.md) | Coroutine Repository pattern (Spring WebFlux) | `newSuspendedTransaction`, suspend fun            |
-| [`06-spring-cache`](06-spring-cache/README.md)                                   | Spring Cache + Redis synchronous cache   | `@Cacheable`, `@CacheEvict`, `RedisCacheManager`  |
-| [`07-spring-suspended-cache`](07-spring-suspended-cache/README.md)               | Coroutine-based Redis cache              | `LettuceSuspendedCache`, Decorator pattern        |
+| [`01-springboot-autoconfigure`](01-springboot-autoconfigure/README.md)           | Spring Boot auto-configuration and DDL initialization tests | `ExposedAutoConfiguration`, `DatabaseInitializer`, `AsyncExposedService` |
+| [`02-transactiontemplate`](02-transactiontemplate/README.md)                     | Programmatic transaction boundaries around the book domain | `TransactionTemplate`, `TransactionOperations`    |
+| [`03-spring-transaction`](03-spring-transaction/README.md)                       | Declarative transactions, nested transaction behavior, and transaction manager tests | `SpringTransactionManager`, `@Transactional`      |
+| [`04-exposed-repository`](04-exposed-repository/README.md)                       | Synchronous Spring MVC repository and controller layer for movies and actors | `JdbcRepository`, DSL/DAO hybrid                  |
+| [`05-exposed-repository-coroutines`](05-exposed-repository-coroutines/README.md) | Spring WebFlux coroutine repository and controller layer for the same movie domain | `newSuspendedTransaction`, `suspend fun`          |
+| [`06-spring-cache`](06-spring-cache/README.md)                                   | Spring Cache abstraction over Redis for country lookups | `@Cacheable`, `@CacheEvict`, `RedisCacheManager`  |
+| [`07-spring-suspended-cache`](07-spring-suspended-cache/README.md)               | Coroutine-native Redis cache decorator for suspended repositories | `LettuceSuspendedCache`, Decorator pattern        |
 
 ## Overall Architecture Flow
 
@@ -99,19 +99,20 @@ class CachedCountrySuspendedRepository(
 
 ```bash
 # Full chapter tests
-./gradlew :09-spring:01-springboot-autoconfigure:test \
-          :09-spring:02-transactiontemplate:test \
-          :09-spring:03-spring-transaction:test \
-          :09-spring:04-exposed-repository:test \
-          :09-spring:05-exposed-repository-coroutines:test \
-          :09-spring:06-spring-cache:test \
-          :09-spring:07-spring-suspended-cache:test
+./gradlew :01-springboot-autoconfigure:test \
+          :02-transactiontemplate:test \
+          :03-spring-transaction:test \
+          :04-exposed-repository:test \
+          :05-exposed-repository-coroutines:test \
+          :06-spring-cache:test \
+          :07-spring-suspended-cache:test \
+          --no-parallel
 
 # Individual module test
-./gradlew :09-spring:04-exposed-repository:test
+./gradlew :04-exposed-repository:test
 
 # Test log summary
-./bin/repo-test-summary -- ./gradlew :09-spring:04-exposed-repository:test
+./bin/repo-test-summary -- ./gradlew :04-exposed-repository:test
 ```
 
 ## Test Points

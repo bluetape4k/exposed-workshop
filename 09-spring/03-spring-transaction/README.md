@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A declarative transaction integration module centered on `@Transactional`. It registers Exposed's `SpringTransactionManager` via `annotationDrivenTransactionManager()` to learn the structure where `@Transactional` annotations and Exposed DAO share the same connection.
+This module focuses on declarative Spring transactions backed by Exposed's `SpringTransactionManager`. The source covers the order/customer domain, `TransactionManagementConfigurer`, nested transaction settings, coroutine interaction tests, single-connection behavior, and multi-container transaction manager scenarios.
 
 ## Learning Goals
 
@@ -120,10 +120,10 @@ object OrderSchema {
 ## How to Run
 
 ```bash
-./gradlew :09-spring:03-spring-transaction:test
+./gradlew :03-spring-transaction:test
 
 # Test log summary
-./bin/repo-test-summary -- ./gradlew :09-spring:03-spring-transaction:test
+./bin/repo-test-summary -- ./gradlew :03-spring-transaction:test
 ```
 
 ## Practice Checklist

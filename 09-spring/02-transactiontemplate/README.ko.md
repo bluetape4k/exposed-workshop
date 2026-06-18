@@ -2,8 +2,7 @@
 
 [English](./README.md) | 한국어
 
-`TransactionTemplate` 기반 프로그래밍 트랜잭션 제어 모듈입니다. Exposed의 `SpringTransactionManager`를 `TransactionTemplate`에 주입해 선언적
-`@Transactional` 없이 트랜잭션 경계를 코드 수준에서 제어하는 패턴을 학습합니다.
+이 모듈은 작은 book/author 도메인으로 프로그래밍 방식 트랜잭션 경계를 비교합니다. `BookService`는 Exposed `SpringTransactionManager`를 사용하는 `TransactionTemplate`, 순수 Exposed `transaction { }`, `TransactionOperations.withoutTransaction()`, 그리고 그 no-transaction operation이 바깥 `@Transactional` 안에서 호출될 때의 동작을 검증합니다.
 
 ## 학습 목표
 
@@ -111,10 +110,10 @@ object BookSchema {
 ## 실행 방법
 
 ```bash
-./gradlew :09-spring:02-transactiontemplate:test
+./gradlew :02-transactiontemplate:test
 
 # 테스트 로그 요약
-./bin/repo-test-summary -- ./gradlew :09-spring:02-transactiontemplate:test
+./bin/repo-test-summary -- ./gradlew :02-transactiontemplate:test
 ```
 
 ## 실습 체크리스트

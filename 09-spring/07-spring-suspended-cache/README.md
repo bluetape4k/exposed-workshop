@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A module for applying Redis caching in a non-blocking manner from coroutine `suspend` functions. To work around the limitation that Spring Cache annotations (`@Cacheable`) cannot be applied directly to `suspend` functions, this module implements `LettuceSuspendedCache` / `LettuceSuspendedCacheManager` that control the cache directly through the Lettuce coroutine API (`RedisCoroutinesCommands`), and demonstrates how to add a cache layer to a Repository using the decorator pattern.
+This module implements the coroutine-native cache alternative used by the source. Instead of Spring Cache annotations, suspended repositories use `LettuceSuspendedCache` and `LettuceSuspendedCacheManager` over Lettuce coroutine commands, then wrap `DefaultCountrySuspendedRepository` with `CachedCountrySuspendedRepository` so cache hits avoid opening a DB transaction.
 
 ## Learning Goals
 
@@ -162,10 +162,10 @@ class SuspendedRepositoryConfig {
 
 ```bash
 # Redis Testcontainer starts automatically
-./gradlew :09-spring:07-spring-suspended-cache:test
+./gradlew :07-spring-suspended-cache:test
 
 # Test log summary
-./bin/repo-test-summary -- ./gradlew :09-spring:07-spring-suspended-cache:test
+./bin/repo-test-summary -- ./gradlew :07-spring-suspended-cache:test
 ```
 
 ## Practice Checklist

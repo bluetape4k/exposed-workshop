@@ -2,7 +2,7 @@
 
 [English](./README.md) | 한국어
 
-Spring Boot 환경에서 Exposed를 안정적으로 운영하기 위한 통합 패턴을 다루는 챕터입니다. 자동 설정 기반 연결부터 선언적 트랜잭션, Repository 패턴(동기/코루틴), Spring Cache 통합까지 단계적으로 학습할 수 있는 예제를 제공합니다.
+이 챕터는 이 저장소의 실제 Spring 예제를 따라갑니다. Spring Boot 자동 설정 테스트, `TransactionTemplate`, 선언적 트랜잭션, MVC/WebFlux Repository 애플리케이션, Redis 기반 캐시 모듈을 순서대로 다룹니다. 각 예제는 실행 가능한 Spring 컨텍스트와 테스트를 중심으로 구성되어 있어 트랜잭션, Repository, 캐시 경계를 코드와 검증 결과로 확인할 수 있습니다.
 
 ## 챕터 목표
 
@@ -20,13 +20,13 @@ Spring Boot 환경에서 Exposed를 안정적으로 운영하기 위한 통합 �
 
 | 모듈                                                                               | 설명                                 | 핵심 기술                                             |
 |----------------------------------------------------------------------------------|------------------------------------|---------------------------------------------------|
-| [`01-springboot-autoconfigure`](01-springboot-autoconfigure/README.ko.md)           | Spring Boot 자동 설정 기반 Exposed 통합    | `ExposedAutoConfiguration`, `DatabaseInitializer` |
-| [`02-transactiontemplate`](02-transactiontemplate/README.ko.md)                     | `TransactionTemplate` 프로그래밍 트랜잭션   | `TransactionTemplate`, `TransactionOperations`    |
-| [`03-spring-transaction`](03-spring-transaction/README.ko.md)                       | `@Transactional` 선언적 트랜잭션          | `SpringTransactionManager`, `@Transactional`      |
-| [`04-exposed-repository`](04-exposed-repository/README.ko.md)                       | 동기 Repository 패턴 (Spring MVC)      | `JdbcRepository`, DSL/DAO 혼용                      |
-| [`05-exposed-repository-coroutines`](05-exposed-repository-coroutines/README.ko.md) | 코루틴 Repository 패턴 (Spring WebFlux) | `newSuspendedTransaction`, suspend fun            |
-| [`06-spring-cache`](06-spring-cache/README.ko.md)                                   | Spring Cache + Redis 동기 캐시         | `@Cacheable`, `@CacheEvict`, `RedisCacheManager`  |
-| [`07-spring-suspended-cache`](07-spring-suspended-cache/README.ko.md)               | 코루틴 기반 Redis 캐시                    | `LettuceSuspendedCache`, 데코레이터 패턴                 |
+| [`01-springboot-autoconfigure`](01-springboot-autoconfigure/README.ko.md)           | Spring Boot 자동 설정과 DDL 초기화 테스트 | `ExposedAutoConfiguration`, `DatabaseInitializer`, `AsyncExposedService` |
+| [`02-transactiontemplate`](02-transactiontemplate/README.ko.md)                     | Book 도메인에서 프로그래밍 방식 트랜잭션 경계 검증 | `TransactionTemplate`, `TransactionOperations` |
+| [`03-spring-transaction`](03-spring-transaction/README.ko.md)                       | 선언적 트랜잭션, 중첩 트랜잭션, 트랜잭션 매니저 테스트 | `SpringTransactionManager`, `@Transactional` |
+| [`04-exposed-repository`](04-exposed-repository/README.ko.md)                       | 영화/배우 도메인의 동기 Spring MVC Repository와 Controller | `JdbcRepository`, DSL/DAO 혼용 |
+| [`05-exposed-repository-coroutines`](05-exposed-repository-coroutines/README.ko.md) | 같은 영화 도메인을 WebFlux coroutine 방식으로 구현 | `newSuspendedTransaction`, `suspend fun` |
+| [`06-spring-cache`](06-spring-cache/README.ko.md)                                   | 국가 조회에 Redis 기반 Spring Cache 적용 | `@Cacheable`, `@CacheEvict`, `RedisCacheManager` |
+| [`07-spring-suspended-cache`](07-spring-suspended-cache/README.ko.md)               | suspended repository를 위한 코루틴 네이티브 Redis cache decorator | `LettuceSuspendedCache`, 데코레이터 패턴 |
 
 ## 전체 아키텍처 흐름
 
@@ -99,19 +99,20 @@ class CachedCountrySuspendedRepository(
 
 ```bash
 # 전체 챕터 테스트
-./gradlew :09-spring:01-springboot-autoconfigure:test \
-          :09-spring:02-transactiontemplate:test \
-          :09-spring:03-spring-transaction:test \
-          :09-spring:04-exposed-repository:test \
-          :09-spring:05-exposed-repository-coroutines:test \
-          :09-spring:06-spring-cache:test \
-          :09-spring:07-spring-suspended-cache:test
+./gradlew :01-springboot-autoconfigure:test \
+          :02-transactiontemplate:test \
+          :03-spring-transaction:test \
+          :04-exposed-repository:test \
+          :05-exposed-repository-coroutines:test \
+          :06-spring-cache:test \
+          :07-spring-suspended-cache:test \
+          --no-parallel
 
 # 개별 모듈 테스트
-./gradlew :09-spring:04-exposed-repository:test
+./gradlew :04-exposed-repository:test
 
 # 테스트 로그 요약
-./bin/repo-test-summary -- ./gradlew :09-spring:04-exposed-repository:test
+./bin/repo-test-summary -- ./gradlew :04-exposed-repository:test
 ```
 
 ## 테스트 포인트
