@@ -2,18 +2,17 @@
 
 [English](./README.md) | 한국어
 
-Exposed SQL DSL의 기본 사용법을 학습하는 모듈입니다. 테이블 정의, CRUD, 조인, 집계, 코루틴 기반 비동기 쿼리까지 실습합니다.
+Exposed SQL DSL을 테스트로 익히는 모듈입니다. 테이블 정의, 샘플 데이터 준비, update/delete, 조인, 집계, 코루틴 트랜잭션 안에서의 동일 DSL 실행을 다룹니다.
 
 ## 개요
 
-Exposed DSL은 SQL 쿼리를 Kotlin 타입 안전 함수 체인으로 표현합니다. `Table` 객체를 정의하고 `transaction { }` 블록 안에서 `insert`, `selectAll`,
-`update`, `deleteWhere` 등을 조합하여 쿼리를 구성합니다. 동일한 쿼리를 코루틴 환경에서는 `newSuspendedTransaction { }` 으로 실행합니다.
+Exposed DSL은 SQL 쿼리를 Kotlin 타입 안전 함수 체인으로 표현합니다. `Schema.kt`는 `cities`, `users`를 일반 `Table` 객체로 정의하고 도시 3개, 사용자 5개를 샘플로 넣습니다. 각 테스트는 공용 트랜잭션 헬퍼 안에서 `update`, `deleteWhere`, `innerJoin`, `leftJoin`, `groupBy`, `select`를 조합합니다. `ExposedSQLSuspendedExample`은 같은 케이스를 `newSuspendedTransaction { }` 기반 suspending 헬퍼로 반복합니다.
 
 ## 학습 목표
 
-- Exposed DSL로 타입 안전한 쿼리를 작성한다.
-- CRUD/조인/집계를 DSL 스타일로 구현한다.
-- 동기/코루틴 접근 방식의 차이를 이해한다.
+- Exposed SQL DSL로 타입 안전한 update, delete, join, aggregation 쿼리를 작성한다.
+- nullable foreign key가 조인 결과에 어떤 영향을 주는지 확인한다.
+- 동기 헬퍼와 같은 DSL 본문을 코루틴 트랜잭션에서 실행하는 suspending 헬퍼를 비교한다.
 
 ## 선수 지식
 
@@ -118,9 +117,9 @@ suspend fun withSuspendedCityUsers(testDB: TestDB, statement: suspend JdbcTransa
 
 | 파일                              | 설명                          |
 |---------------------------------|-----------------------------|
-| `Schema.kt`                     | 테이블 정의 + 샘플 데이터 삽입 헬퍼       |
-| `ExposedSQLExample.kt`          | 동기 DSL CRUD/조인/집계 예제        |
-| `ExposedSQLSuspendedExample.kt` | 코루틴 DSL 예제 (동일 시나리오 비동기 실행) |
+| `Schema.kt`                     | `CityTable`, `UserTable`, 샘플 행, 동기/suspending 트랜잭션 헬퍼 |
+| `ExposedSQLExample.kt`          | 동기 DSL update, delete, join, aggregation 테스트 |
+| `ExposedSQLSuspendedExample.kt` | `withSuspendedCityUsers`로 같은 시나리오를 반복하는 코루틴 DSL 테스트 |
 
 ## 테스트 실행 방법
 
@@ -167,7 +166,7 @@ UserTable
 
 ## 실습 체크리스트
 
-- 동일 시나리오를 동기/코루틴 경로로 각각 실행해 결과를 비교한다.
+- 같은 DSL 시나리오를 동기/코루틴 경로로 각각 실행해 결과를 비교한다.
 - 조인 + 집계 쿼리를 직접 확장해본다.
 - 복잡한 DSL 체인은 중간 표현식을 분리해 가독성을 유지한다.
 

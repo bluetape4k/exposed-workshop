@@ -2,25 +2,24 @@
 
 [English](./README.md) | 한국어
 
-Exposed를 처음 만나보는 학습 적응 장치로, DSL과 DAO를 나란히 비교하며 공통 조회/저장 흐름을 테스트 기반으로 익히는 챕터입니다.
+Exposed를 처음 배우는 독자를 위한 입문 챕터입니다. SQL DSL과 DAO를 같은 `City`/`User` 도메인 위에서 비교하고, 모든 개념을 실행 가능한 테스트로 확인합니다.
 
 ## 개요
 
-Exposed는 두 가지 데이터 접근 패턴을 제공합니다. **DSL(SQL DSL)** 패턴은 SQL을 Kotlin 타입 안전 함수 체인으로 표현하며, **DAO** 패턴은 `Entity`/
-`EntityClass`를 통해 ORM 스타일로 동작합니다. 두 패턴을 동일한 도메인(`City`/`User`)으로 나란히 실습하여 차이를 직접 확인합니다.
+Exposed는 두 가지 데이터 접근 패턴을 제공합니다. **DSL(SQL DSL)** 패턴은 `Table` 객체 위에서 SQL을 Kotlin 타입 안전 쿼리 체인으로 표현하고, **DAO** 패턴은 `IntIdTable`의 행을 `IntEntity` 객체로 매핑합니다. 이 챕터는 두 모듈 모두 같은 `City`/`User` 형태를 사용해 스키마 정의, 트랜잭션 경계, 관계 처리, 결과 타입의 차이를 쉽게 비교할 수 있게 구성했습니다.
 
 ## 학습 목표
 
-- DSL과 DAO의 역할 차이를 명확히 이해한 후, 공통 CRUD 시나리오를 재현한다.
-- 테스트 코드로 조건/정렬/페이징 결과를 검증해 안정적인 쿼리 작성 경험을 확보한다.
-- 이후 `04-exposed-ddl`, `05-exposed-dml`에서 재사용할 구조(스키마/유틸 클래스)를 정리한다.
+- SQL DSL 쿼리 체인과 DAO 엔티티 객체를 각각 언제 쓰는지 이해한다.
+- update, delete, join, group-by, 관계 로딩, 코루틴 트랜잭션 동작을 테스트로 확인한다.
+- 이후 DDL/DML 챕터로 확장되는 스키마/헬퍼/테스트 구조를 익힌다.
 
 ## 포함 모듈
 
 | 모듈                    | 설명                                                      |
 |-----------------------|---------------------------------------------------------|
-| `exposed-sql-example` | DSL 중심으로 SELECT/INSERT/UPDATE/DELETE 기본 흐름을 확인하는 테스트 예제 |
-| `exposed-dao-example` | DAO(Entity) 모델링, 관계 매핑, 코루틴 트랜잭션 사례를 담은 예제              |
+| `exposed-sql-example` | SQL DSL의 update, delete, join, aggregation, 코루틴 트랜잭션을 확인하는 테스트 예제 |
+| `exposed-dao-example` | DAO 엔티티 조회, optional 관계, eager loading, update/delete, 코루틴 트랜잭션을 확인하는 테스트 예제 |
 
 ## DSL vs DAO 패턴 비교
 
@@ -113,10 +112,10 @@ class User(id: EntityID<Int>) : IntEntity(id) {
 
 ## 테스트 포인트
 
-- DSL/DAO 각각에서 동일 비즈니스 시나리오를 재현할 수 있는지 검증
-- 조회 조건, 정렬, 페이징 결과가 기대값과 일치하는지 확인
-- N+1 가능성이 있는 조회 패턴을 조기에 식별
-- 트랜잭션 경계 밖에서 Entity 지연 접근이 발생하지 않도록 테스트로 고정
+- 같은 `City`/`User` 모델이 SQL DSL 테이블과 DAO 엔티티로 어떻게 표현되는지 확인
+- 조건 조회, 조인, 집계, update, delete 결과가 기대값과 일치하는지 검증
+- DAO 관계 조회에서 N+1이 생길 수 있는 접근 패턴을 식별
+- 관계 중심 테스트에서는 트랜잭션 안에서 엔티티를 탐색하고 eager loading을 우선 사용
 
 ## 다음 챕터
 

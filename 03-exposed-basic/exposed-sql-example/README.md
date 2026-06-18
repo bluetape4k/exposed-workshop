@@ -2,17 +2,17 @@
 
 English | [한국어](./README.ko.md)
 
-A module for learning the basic usage of Exposed SQL DSL. Covers table definition, CRUD, joins, aggregation, and coroutine-based async queries.
+A module for learning Exposed SQL DSL through tests. It covers table definition, seeded sample data, update/delete operations, joins, aggregation, and the same DSL scenarios inside coroutine transactions.
 
 ## Overview
 
-Exposed DSL expresses SQL queries as Kotlin type-safe function chains. You define a `Table` object and compose queries inside a `transaction { }` block using `insert`, `selectAll`, `update`, `deleteWhere`, and more. The same queries run in a coroutine environment via `newSuspendedTransaction { }`.
+Exposed DSL expresses SQL queries as Kotlin type-safe function chains. `Schema.kt` defines plain `Table` objects for `cities` and `users`, seeds three cities and five users, then each test composes `update`, `deleteWhere`, `innerJoin`, `leftJoin`, `groupBy`, and `select` calls inside a shared transaction helper. `ExposedSQLSuspendedExample` repeats the same cases through the suspending helper backed by `newSuspendedTransaction { }`.
 
 ## Learning Goals
 
-- Write type-safe queries with Exposed DSL.
-- Implement CRUD/joins/aggregation in DSL style.
-- Understand the differences between synchronous and coroutine approaches.
+- Write type-safe update, delete, join, and aggregation queries with Exposed SQL DSL.
+- Understand how nullable foreign keys affect join results.
+- Compare the synchronous helper with the suspending helper that runs the same DSL bodies in a coroutine transaction.
 
 ## Prerequisites
 
@@ -117,9 +117,9 @@ suspend fun withSuspendedCityUsers(testDB: TestDB, statement: suspend JdbcTransa
 
 | File                              | Description                                         |
 |---------------------------------|-----------------------------------------------------|
-| `Schema.kt`                     | Table definitions + sample data insertion helper    |
-| `ExposedSQLExample.kt`          | Synchronous DSL CRUD/join/aggregation examples      |
-| `ExposedSQLSuspendedExample.kt` | Coroutine DSL example (same scenarios async)        |
+| `Schema.kt`                     | `CityTable`, `UserTable`, sample rows, and sync/suspending transaction helpers |
+| `ExposedSQLExample.kt`          | Synchronous DSL update, delete, join, and aggregation tests |
+| `ExposedSQLSuspendedExample.kt` | Coroutine DSL tests that repeat the same scenarios through `withSuspendedCityUsers` |
 
 ## Running Tests
 
@@ -166,7 +166,7 @@ Related test: `ExposedSQLExample` — `manual inner join`
 
 ## Practice Checklist
 
-- Run the same scenario on both synchronous and coroutine paths and compare results.
+- Run the same DSL scenarios on both synchronous and coroutine paths and compare results.
 - Extend the join + aggregation query on your own.
 - For complex DSL chains, separate intermediate expressions to maintain readability.
 
