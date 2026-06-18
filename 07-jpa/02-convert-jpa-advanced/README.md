@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A module for migrating advanced JPA features to Exposed, including complex relationships, inheritance/auditing, and locking strategies. Covers the most common performance and consistency risks encountered during migration.
+A migration module for JPA features that usually hide the most risk: joins, subqueries, inheritance tables, recursive trees, audit timestamps, CTEs, and optimistic locking. The tests show the Exposed schema and query shape directly so each replacement can be reviewed without relying on JPA runtime behavior.
 
 ## Learning Objectives
 
@@ -148,39 +148,12 @@ Source location: `src/test/kotlin/exposed/examples/jpa`
 | `ex06_cte`         | `Ex01_CTE.kt`                                                                                              | CTE (Common Table Expression)   |
 | `ex07_version`     | `Ex01_Version.kt`                                                                                          | Optimistic locking (@Version)   |
 
-## JPA Entity Mapping Diagrams
-
-### Single Table Inheritance
-
-![Single Table Inheritance](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance_ERD.png)
-
-Example code: [
-`ex03_inheritance/Ex01_SingleTable_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance.kt)
-
-### Joined Table Inheritance
-
-![Joined Table Inheritance](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance_ERD.png)
-
-Example code: [
-`ex03_inheritance/Ex02_Joined_Table_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance.kt)
-
-### Table Per Class Inheritance
-
-![Table Per Class Inheritance](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance_ERD.png)
-
-Example code: [
-`ex03_inheritance/Ex03_TablePerClass_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance.kt)
-
-### Tree (Self-Reference)
-
-![Tree Node Schema](src/test/kotlin/exposed/examples/jpa/ex04_tree/TreeNodeSchema.png)
-
-Example code: [`ex04_tree/Ex01_TreeNode.kt`](src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt)
+The diagrams above replace the older source-tree ERD screenshots. Use them with the example map to jump from each JPA feature to the matching Exposed test.
 
 ## Running Tests
 
 ```bash
-./gradlew :07-jpa:02-convert-jpa-advanced:test
+./gradlew :02-convert-jpa-advanced:test
 ```
 
 ## Practice Checklist

@@ -2,7 +2,7 @@
 
 [English](./README.md) | 한국어
 
-JPA 기본 CRUD/연관관계 코드를 Exposed로 전환하는 입문 모듈입니다. 기능 동등성을 유지하면서 의존성을 줄이는 전환 패턴을 다룹니다.
+JPA 스타일 CRUD, 엔티티 식별자, 복합 키, 연관관계 매핑을 Exposed DSL/DAO 테스트로 다시 작성하는 입문 모듈입니다. 예제를 작게 유지해 JPA 개념과 Exposed 테이블/엔티티 코드를 바로 비교하고, 전환 과정의 회귀 검증을 가까이 둘 수 있게 구성했습니다.
 
 ## 학습 목표
 
@@ -131,53 +131,12 @@ transaction {
 | `ex04_compositeId` | `Ex01_CompositeId.kt`, `Ex02_IdClass.kt`                | 복합 PK (`@EmbeddedId`, `@IdClass`) |
 | `ex05_relations`   | One-to-One, One-to-Many, Many-to-One, Many-to-Many 각 예제 | 관계 매핑 전환                          |
 
-## JPA 엔티티 매핑 다이어그램
-
-### Blog (One-to-One / One-to-Many / Many-to-Many)
-
-![Blog ERD](src/test/kotlin/exposed/examples/jpa/ex02_entities/BlogSchema_ERD.png)
-
-예제 코드: [`ex02_entities/Ex01_Blog.kt`](src/test/kotlin/exposed/examples/jpa/ex02_entities/Ex01_Blog.kt), [
-`ex02_entities/BlogSchema.kt`](src/test/kotlin/exposed/examples/jpa/ex02_entities/BlogSchema.kt)
-
-### Person-Address (Many-to-One)
-
-![Person ERD](src/test/kotlin/exposed/examples/jpa/ex02_entities/PersonSchema.png)
-
-예제 코드: [`ex02_entities/Ex02_Person.kt`](src/test/kotlin/exposed/examples/jpa/ex02_entities/Ex02_Person.kt)
-
-### One-to-One
-
-![One-to-One](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/one-to-one.png)
-
-예제 코드: [
-`ex05_relations/ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt`](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt)
-
-### One-to-Many
-
-![Family/Order/Batch/Restaurant](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/schema/FamilySchema.png)
-
-예제 코드: [
-`ex05_relations/ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt`](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt)
-
-### Many-to-One
-
-![Many-to-One](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex03_many_to_one/ManyToOneSchema.png)
-
-예제 코드: [
-`ex05_relations/ex03_many_to_one/Ex01_ManyToOne.kt`](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex03_many_to_one/Ex01_ManyToOne.kt)
-
-### Many-to-Many
-
-![Bank Many-to-Many](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex04_many_to_many/BankSchema.png)
-
-예제 코드: [
-`ex05_relations/ex04_many_to_many/Ex01_ManyToMany_Bank.kt`](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex04_many_to_many/Ex01_ManyToMany_Bank.kt)
+위 다이어그램은 예전 소스 트리 ERD 스크린샷을 대체합니다. 어떤 스키마나 연관관계 테스트를 먼저 볼지 정할 때 예제 지도와 함께 사용하세요.
 
 ## 실행 방법
 
 ```bash
-./gradlew :07-jpa:01-convert-jpa-basic:test
+./gradlew :01-convert-jpa-basic:test
 ```
 
 ## 실습 체크리스트

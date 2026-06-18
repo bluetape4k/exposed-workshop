@@ -2,7 +2,7 @@
 
 [English](./README.md) | 한국어
 
-복잡한 연관관계, 상속/감사, 잠금 전략 등 고급 JPA 기능을 Exposed로 전환하는 모듈입니다. 전환 과정에서 가장 자주 발생하는 성능/정합성 리스크를 다룹니다.
+조인, 서브쿼리, 상속 테이블, 재귀 트리, 감사 타임스탬프, CTE, 낙관적 잠금처럼 전환 리스크가 큰 JPA 기능을 Exposed로 옮기는 모듈입니다. 테스트는 Exposed 스키마와 쿼리 모양을 직접 보여 주므로, JPA 런타임 동작에 기대지 않고 각 대체 방식을 검토할 수 있습니다.
 
 ## 학습 목표
 
@@ -148,39 +148,12 @@ CreditCardTable.selectAll()
 | `ex06_cte`         | `Ex01_CTE.kt`                                                                                              | CTE (Common Table Expression)   |
 | `ex07_version`     | `Ex01_Version.kt`                                                                                          | 낙관적 잠금 (@Version)               |
 
-## JPA 엔티티 매핑 다이어그램
-
-### Single Table Inheritance
-
-![Single Table Inheritance](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance_ERD.png)
-
-예제 코드: [
-`ex03_inheritance/Ex01_SingleTable_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex01_SingleTable_Inheritance.kt)
-
-### Joined Table Inheritance
-
-![Joined Table Inheritance](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance_ERD.png)
-
-예제 코드: [
-`ex03_inheritance/Ex02_Joined_Table_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex02_Joined_Table_Inheritance.kt)
-
-### Table Per Class Inheritance
-
-![Table Per Class Inheritance](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance_ERD.png)
-
-예제 코드: [
-`ex03_inheritance/Ex03_TablePerClass_Inheritance.kt`](src/test/kotlin/exposed/examples/jpa/ex03_inheritance/Ex03_TablePerClass_Inheritance.kt)
-
-### Tree (Self-Reference)
-
-![Tree Node Schema](src/test/kotlin/exposed/examples/jpa/ex04_tree/TreeNodeSchema.png)
-
-예제 코드: [`ex04_tree/Ex01_TreeNode.kt`](src/test/kotlin/exposed/examples/jpa/ex04_tree/Ex01_TreeNode.kt)
+위 다이어그램은 예전 소스 트리 ERD 스크린샷을 대체합니다. 각 JPA 기능에서 대응하는 Exposed 테스트로 이동할 때 예제 지도와 함께 사용하세요.
 
 ## 실행 방법
 
 ```bash
-./gradlew :07-jpa:02-convert-jpa-advanced:test
+./gradlew :02-convert-jpa-advanced:test
 ```
 
 ## 실습 체크리스트

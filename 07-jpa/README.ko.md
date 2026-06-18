@@ -2,12 +2,12 @@
 
 [English](./README.md) | 한국어
 
-기존 JPA 중심 코드베이스를 Exposed로 전환할 때 필요한 전략을 단계적으로 정리하는 챕터입니다.
+기존 JPA/Hibernate 예제를 Exposed로 옮길 때 동작을 잃지 않기 위한 전환 챕터입니다. 테스트 소스는 JPA에서 신경 쓰던 CRUD, 연관관계, 상속, 감사 필드, 낙관적 잠금 문제를 그대로 드러내고, 이를 Exposed 테이블/DAO/쿼리/트랜잭션 코드로 어떻게 바꾸는지 실행 가능한 예제로 보여줍니다.
 
 ## 챕터 목표
 
 - JPA와 Exposed의 개념/동작 차이를 비교하고, 전환 리스크를 줄이는 패턴을 이해한다.
-- 기본 CRUD부터 복잡한 관계/트랜잭션까지 점진적으로 전환할 수 있는 전략을 수립한다.
+- 기본 CRUD와 연관관계 매핑부터 상속, 재귀 쿼리, 감사 필드, 낙관적 잠금까지 점진적으로 전환하는 전략을 수립한다.
 - 테스트 중심의 회귀 방지 절차를 정립한다.
 
 ## 선수 지식
@@ -58,11 +58,11 @@
 
 ```bash
 # 서브모듈 단독 실행
-./gradlew :07-jpa:01-convert-jpa-basic:test
-./gradlew :07-jpa:02-convert-jpa-advanced:test
+./gradlew :01-convert-jpa-basic:test
+./gradlew :02-convert-jpa-advanced:test
 
 # 전체 챕터 실행
-./gradlew :07-jpa:test
+./gradlew :01-convert-jpa-basic:test :02-convert-jpa-advanced:test --no-parallel
 ```
 
 ## 테스트 포인트

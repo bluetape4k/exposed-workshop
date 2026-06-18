@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-An introductory module for migrating basic JPA CRUD and relationship code to Exposed. Covers migration patterns that preserve functional equivalence while reducing dependencies.
+An introductory migration module that rewrites JPA-style CRUD, entity identity, composite keys, and relationship mappings as Exposed DSL/DAO tests. Each example is intentionally small so the reader can compare the JPA concept with the Exposed table/entity code and keep regression checks close to the migration.
 
 ## Learning Objectives
 
@@ -131,53 +131,12 @@ Source location: `src/test/kotlin/exposed/examples/jpa`
 | `ex04_compositeId` | `Ex01_CompositeId.kt`, `Ex02_IdClass.kt`                  | Composite PK (`@EmbeddedId`, `@IdClass`) |
 | `ex05_relations`   | One-to-One, One-to-Many, Many-to-One, Many-to-Many examples | Relationship mapping migration     |
 
-## JPA Entity Mapping Diagrams
-
-### Blog (One-to-One / One-to-Many / Many-to-Many)
-
-![Blog ERD](src/test/kotlin/exposed/examples/jpa/ex02_entities/BlogSchema_ERD.png)
-
-Example code: [`ex02_entities/Ex01_Blog.kt`](src/test/kotlin/exposed/examples/jpa/ex02_entities/Ex01_Blog.kt), [
-`ex02_entities/BlogSchema.kt`](src/test/kotlin/exposed/examples/jpa/ex02_entities/BlogSchema.kt)
-
-### Person-Address (Many-to-One)
-
-![Person ERD](src/test/kotlin/exposed/examples/jpa/ex02_entities/PersonSchema.png)
-
-Example code: [`ex02_entities/Ex02_Person.kt`](src/test/kotlin/exposed/examples/jpa/ex02_entities/Ex02_Person.kt)
-
-### One-to-One
-
-![One-to-One](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/one-to-one.png)
-
-Example code: [
-`ex05_relations/ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt`](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex01_one_to_one/Ex01_OneToOne_Unidirectional.kt)
-
-### One-to-Many
-
-![Family/Order/Batch/Restaurant](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/schema/FamilySchema.png)
-
-Example code: [
-`ex05_relations/ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt`](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex02_one_to_many/Ex01_OneToMany_Bidirectional_Batch.kt)
-
-### Many-to-One
-
-![Many-to-One](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex03_many_to_one/ManyToOneSchema.png)
-
-Example code: [
-`ex05_relations/ex03_many_to_one/Ex01_ManyToOne.kt`](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex03_many_to_one/Ex01_ManyToOne.kt)
-
-### Many-to-Many
-
-![Bank Many-to-Many](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex04_many_to_many/BankSchema.png)
-
-Example code: [
-`ex05_relations/ex04_many_to_many/Ex01_ManyToMany_Bank.kt`](src/test/kotlin/exposed/examples/jpa/ex05_relations/ex04_many_to_many/Ex01_ManyToMany_Bank.kt)
+The diagrams above replace the older source-tree ERD screenshots. Use them with the example map when deciding which schema or relationship test to inspect first.
 
 ## Running Tests
 
 ```bash
-./gradlew :07-jpa:01-convert-jpa-basic:test
+./gradlew :01-convert-jpa-basic:test
 ```
 
 ## Practice Checklist
