@@ -54,8 +54,8 @@
 <text x="1069" y="176" class="label" text-anchor="middle">Netty EventLoop</text>
 <text x="1069" y="210" class="detail" text-anchor="middle">kept off JDBC blocking work</text>
 <rect x="714" y="260" width="210" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="819" y="284" class="label" text-anchor="middle">Dispatchers.IO bridge</text>
-<text x="819" y="318" class="detail" text-anchor="middle">moves JDBC work</text>
+<text x="819" y="284" class="label" text-anchor="middle">Suspended tx bridge</text>
+<text x="819" y="318" class="detail" text-anchor="middle">wraps JDBC work</text>
 <rect x="964" y="260" width="210" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
 <text x="1069" y="284" class="label" text-anchor="middle">new Suspended</text>
 <text x="1069" y="302" class="label" text-anchor="middle">Transaction</text>

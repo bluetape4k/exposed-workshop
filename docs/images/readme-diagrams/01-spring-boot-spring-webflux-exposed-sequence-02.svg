@@ -1,78 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 780" width="1320" height="780" role="img" aria-label="Spring WebFlux Request Processing Flow">
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="920" viewBox="0 0 1500 920">
 <defs>
-<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<style>
-.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-.subtitle,.detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-.softArrow{fill:none;stroke:#94a3b8;stroke-width:1.35;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-.movieMap{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.actorMap{fill:none;stroke:#7c3aed;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
-.lifeline{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
-.inherit{fill:none;stroke:#475569;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
-</style>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#94a3b8" flood-opacity=".16"/></filter>
+  <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M2,2 L12,7 L2,12 Z" fill="#475569"/></marker>
+  <marker id="arrowSoft" markerWidth="14" markerHeight="14" refX="3" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M12,2 L2,7 L12,12 Z" fill="#64748b"/></marker>
+  <style><![CDATA[
+    svg{font-family:"Architects Daughter","Comic Mono",ui-sans-serif,system-ui,sans-serif}.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#c7d8eb;stroke-width:2;filter:url(#shadow)}.title{font-family:"Architects Daughter";font-size:38px;fill:#263a57}.subtitle,.label,.footer,.altText{font-family:"Comic Mono";fill:#526276}.subtitle{font-size:15px}.head{fill:#ffffff;stroke-width:2;filter:url(#shadow)}.headText{font-family:"Architects Daughter";font-size:17px;fill:#263a57}.life{fill:none;stroke:#9fb2ca;stroke-width:2;stroke-dasharray:7 7}.msg{fill:none;stroke:#475569;stroke-width:2.5;stroke-linecap:round}.return{fill:none;stroke:#64748b;stroke-width:2.2;stroke-dasharray:7 7;stroke-linecap:round}.labelBox{fill:#f8fafc;stroke:#d4e0ec;stroke-width:1.1}.label{font-size:11px}.alt{fill:#60a5fa;fill-opacity:.055;stroke:#60a5fa;stroke-opacity:.34;stroke-width:1.5;stroke-dasharray:8 8}.altDivider{stroke:#60a5fa;stroke-opacity:.28;stroke-width:1.2;stroke-dasharray:7 7}.altText{font-size:12px}.note{fill:#ecfdf5;stroke:#34d399;stroke-width:1.6}
+  ]]></style>
 </defs>
-<rect width="1320" height="780" class="canvas"/>
-<rect x="20" y="20" width="1280" height="740" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Spring WebFlux Request Processing Flow</text>
-<text x="48" y="80" class="subtitle">Actor API request through suspend controller, suspended transaction, repository, and DTO mapping</text>
-<rect x="50" y="122" width="136" height="52" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="118" y="154" class="label" text-anchor="middle">Client</text>
-<path d="M118,184 L118,704" class="lifeline"/>
-<rect x="242" y="122" width="136" height="52" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="310" y="144" class="label" text-anchor="middle">Suspend</text>
-<text x="310" y="162" class="label" text-anchor="middle">Controller</text>
-<path d="M310,184 L310,704" class="lifeline"/>
-<rect x="452" y="122" width="136" height="52" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="520" y="144" class="label" text-anchor="middle">newSuspended</text>
-<text x="520" y="162" class="label" text-anchor="middle">Transaction</text>
-<path d="M520,184 L520,704" class="lifeline"/>
-<rect x="662" y="122" width="136" height="52" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="730" y="144" class="label" text-anchor="middle">Actor</text>
-<text x="730" y="162" class="label" text-anchor="middle">Repository</text>
-<path d="M730,184 L730,704" class="lifeline"/>
-<rect x="872" y="122" width="136" height="52" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="940" y="154" class="label" text-anchor="middle">Actor Table</text>
-<path d="M940,184 L940,704" class="lifeline"/>
-<rect x="1062" y="122" width="136" height="52" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1130" y="154" class="label" text-anchor="middle">Actor Record</text>
-<path d="M1130,184 L1130,704" class="lifeline"/>
-<rect x="150" y="196" width="128" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="214" y="213" class="tiny" text-anchor="middle">1. GET /actors/{id}</text>
-<path d="M134,224 L294,224" class="arrow"/>
-<rect x="342" y="258" width="146" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="415" y="275" class="tiny" text-anchor="middle">2. enter readOnly suspend transaction</text>
-<path d="M326,286 L504,286" class="arrow"/>
-<rect x="552" y="320" width="146" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="625" y="337" class="tiny" text-anchor="middle">3. call repository inside transaction</text>
-<path d="M536,348 L714,348" class="arrow"/>
-<rect x="762" y="382" width="146" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="835" y="399" class="tiny" text-anchor="middle">4. select ActorTable by id</text>
-<path d="M746,410 L924,410" class="arrow"/>
-<rect x="972" y="444" width="126" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="1035" y="461" class="tiny" text-anchor="middle">5. map row to ActorRecord</text>
-<path d="M956,472 L1114,472" class="arrow"/>
-<rect x="762" y="506" width="336" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="930" y="523" class="tiny" text-anchor="middle">6. nullable DTO</text>
-<path d="M1114,534 L746,534" class="softArrow"/>
-<rect x="552" y="568" width="146" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="625" y="585" class="tiny" text-anchor="middle">7. transaction returns DTO</text>
-<path d="M714,596 L536,596" class="softArrow"/>
-<rect x="342" y="630" width="146" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="415" y="647" class="tiny" text-anchor="middle">8. resume suspend handler</text>
-<path d="M504,658 L326,658" class="softArrow"/>
-<rect x="150" y="676" width="128" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="214" y="693" class="tiny" text-anchor="middle">9. 200 OK or 404 Not Found</text>
-<path d="M294,704 L134,704" class="softArrow"/>
-<rect x="76" y="714" width="1168" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="660" y="744" class="detail" text-anchor="middle">Search/create/delete use the same shape: suspend controller opens a suspended transaction, then repositories compose Exposed DSL or DAO work.</text>
+<rect class="canvas" width="1500" height="920"/><rect class="frame" x="28" y="26" width="1444" height="860" rx="24"/>
+<text class="title" x="60" y="76">Spring WebFlux Request Processing Flow</text>
+<text class="subtitle" x="60" y="102">Actor API request through suspend handler, newSuspendedTransaction, repository work, and DTO mapping.</text>
+<rect class="head" x="54" y="165" width="152" height="54" rx="12" stroke="#2563eb"/><text class="headText" x="130" y="198" text-anchor="middle">Client</text><path class="life" d="M130 230 V800"/><rect class="head" x="254" y="165" width="152" height="54" rx="12" stroke="#7c3aed"/><text class="headText" x="330" y="198" text-anchor="middle">Suspend Handler</text><path class="life" d="M330 230 V800"/><rect class="head" x="459" y="165" width="152" height="54" rx="12" stroke="#059669"/><text class="headText" x="535" y="198" text-anchor="middle">Suspended Tx</text><path class="life" d="M535 230 V800"/><rect class="head" x="669" y="165" width="152" height="54" rx="12" stroke="#f97316"/><text class="headText" x="745" y="198" text-anchor="middle">ActorRepository</text><path class="life" d="M745 230 V800"/><rect class="head" x="879" y="165" width="152" height="54" rx="12" stroke="#db2777"/><text class="headText" x="955" y="198" text-anchor="middle">ActorTable</text><path class="life" d="M955 230 V800"/><rect class="head" x="1089" y="165" width="152" height="54" rx="12" stroke="#0f766e"/><text class="headText" x="1165" y="198" text-anchor="middle">ActorRecord</text><path class="life" d="M1165 230 V800"/>
+<rect class="alt" x="86" y="585" width="1258" height="132" rx="16"/>
+<text class="altText" x="104" y="610">alt matching actor row</text>
+<path class="altDivider" d="M86 654 H1344"/>
+<text class="altText" x="104" y="680">else no row: transaction returns null; suspend handler resumes without explicit notFound response</text>
+<path class="msg" d="M148 255 H312" marker-end="url(#arrow)"/><rect class="labelBox" x="118.0" y="237" width="224" height="28" rx="10"/><text class="label" x="230.0" y="256" text-anchor="middle">1. GET /actors/{id}</text><path class="msg" d="M348 330 H517" marker-end="url(#arrow)"/><rect class="labelBox" x="320.5" y="312" width="224" height="28" rx="10"/><text class="label" x="432.5" y="331" text-anchor="middle">2. open readOnly transaction</text><path class="msg" d="M553 405 H727" marker-end="url(#arrow)"/><rect class="labelBox" x="528.0" y="387" width="224" height="28" rx="10"/><text class="label" x="640.0" y="406" text-anchor="middle">3. call repository inside tx</text><path class="msg" d="M763 480 H937" marker-end="url(#arrow)"/><rect class="labelBox" x="738.0" y="462" width="224" height="28" rx="10"/><text class="label" x="850.0" y="481" text-anchor="middle">4. select ActorTable by id</text><path class="msg" d="M973 545 H1147" marker-end="url(#arrow)"/><rect class="labelBox" x="948.0" y="527" width="224" height="28" rx="10"/><text class="label" x="1060.0" y="546" text-anchor="middle">5. map row to DTO</text><path class="return" d="M1147 630 H553" marker-end="url(#arrowSoft)"/><rect class="labelBox" x="738.0" y="612" width="224" height="28" rx="10"/><text class="label" x="850.0" y="631" text-anchor="middle">6. ActorRecord?</text><path class="return" d="M517 705 H348" marker-end="url(#arrowSoft)"/><rect class="labelBox" x="320.5" y="687" width="224" height="28" rx="10"/><text class="label" x="432.5" y="706" text-anchor="middle">7. resume handler</text><path class="return" d="M312 760 H148" marker-end="url(#arrowSoft)"/><rect class="labelBox" x="118.0" y="742" width="224" height="28" rx="10"/><text class="label" x="230.0" y="761" text-anchor="middle">8. Spring serializes response</text>
+<rect class="note" x="90" y="820" width="1320" height="44" rx="14"/>
+<text class="footer" x="750" y="848" text-anchor="middle">Search branches choose findAll or filtered search; create/delete open write suspended transactions around repository calls.</text>
 </svg>

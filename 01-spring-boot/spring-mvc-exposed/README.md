@@ -161,7 +161,7 @@ Switch databases using Spring Profiles:
 
 ```bash
 # Run with PostgreSQL profile
-./gradlew :01-spring-boot:spring-mvc-exposed:bootRun --args='--spring.profiles.active=postgres'
+./gradlew :spring-mvc-exposed:bootRun --args='--spring.profiles.active=postgres'
 ```
 
 ---
@@ -189,10 +189,10 @@ Switch databases using Spring Profiles:
 
 ```bash
 # Start application (default: H2 profile)
-./gradlew :01-spring-boot:spring-mvc-exposed:bootRun
+./gradlew :spring-mvc-exposed:bootRun
 
 # Run tests
-./gradlew :01-spring-boot:spring-mvc-exposed:test
+./gradlew :spring-mvc-exposed:test
 
 # Access Swagger UI
 open http://localhost:8080/swagger-ui.html
