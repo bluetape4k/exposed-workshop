@@ -140,7 +140,7 @@ Source location: `src/test/kotlin/exposed/examples/entities`
 ## Running Tests
 
 ```bash
-./gradlew :05-exposed-dml:05-entities:test
+./gradlew :05-entities:test
 ```
 
 ## Practice Checklist

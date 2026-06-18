@@ -95,7 +95,7 @@ object KotlinUUIDTable: Table("kotlin_uuid_demo") {
 ## 실행 방법
 
 ```bash
-./gradlew :05-exposed-dml:02-types:test
+./gradlew :02-types:test
 ```
 
 ## 실습 체크리스트

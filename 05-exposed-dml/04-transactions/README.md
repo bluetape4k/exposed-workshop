@@ -119,7 +119,7 @@ Source location: `src/test/kotlin/exposed/examples/transactions`
 ## Running Tests
 
 ```bash
-./gradlew :05-exposed-dml:04-transactions:test
+./gradlew :04-transactions:test
 ```
 
 ## Practice Checklist

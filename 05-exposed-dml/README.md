@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A chapter covering the full read/write flow in Exposed 1.1.1, from SELECT/INSERT/UPDATE/DELETE/UPSERT, types, functions, and transactions to the Entity API, organized around tests.
+A chapter covering the full read/write flow in the current Exposed 1.3.0 workshop baseline. The examples move from SELECT/INSERT/UPDATE/DELETE/UPSERT through column types, SQL functions, transactions, and the Entity API, with each topic captured as executable tests.
 
 ## Chapter Goals
 
@@ -41,14 +41,14 @@ A chapter covering the full read/write flow in Exposed 1.1.1, from SELECT/INSERT
 
 ```bash
 # Run each module individually
-./gradlew :05-exposed-dml:01-dml:test
-./gradlew :05-exposed-dml:02-types:test
-./gradlew :05-exposed-dml:03-functions:test
-./gradlew :05-exposed-dml:04-transactions:test
-./gradlew :05-exposed-dml:05-entities:test
+./gradlew :01-dml:test
+./gradlew :02-types:test
+./gradlew :03-functions:test
+./gradlew :04-transactions:test
+./gradlew :05-entities:test
 
 # Run the entire chapter
-./gradlew :05-exposed-dml:test
+./gradlew :01-dml:test :02-types:test :03-functions:test :04-transactions:test :05-entities:test
 ```
 
 ## Test Points

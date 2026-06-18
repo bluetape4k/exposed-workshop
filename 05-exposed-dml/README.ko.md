@@ -2,7 +2,7 @@
 
 [English](./README.md) | 한국어
 
-Exposed 1.1.1 기준으로 SELECT/INSERT/UPDATE/DELETE/UPSERT, 타입, 함수, 트랜잭션, Entity API까지의 조회·변경 흐름을 테스트 중심으로 정리하는 챕터입니다.
+현재 워크숍 기준인 Exposed 1.3.0에서 SELECT/INSERT/UPDATE/DELETE/UPSERT부터 컬럼 타입, SQL 함수, 트랜잭션, Entity API까지의 조회·변경 흐름을 실행 가능한 테스트로 정리하는 챕터입니다.
 
 ## 챕터 목표
 
@@ -41,14 +41,14 @@ Exposed 1.1.1 기준으로 SELECT/INSERT/UPDATE/DELETE/UPSERT, 타입, 함수, �
 
 ```bash
 # 모듈별 개별 실행
-./gradlew :05-exposed-dml:01-dml:test
-./gradlew :05-exposed-dml:02-types:test
-./gradlew :05-exposed-dml:03-functions:test
-./gradlew :05-exposed-dml:04-transactions:test
-./gradlew :05-exposed-dml:05-entities:test
+./gradlew :01-dml:test
+./gradlew :02-types:test
+./gradlew :03-functions:test
+./gradlew :04-transactions:test
+./gradlew :05-entities:test
 
 # 챕터 전체 실행
-./gradlew :05-exposed-dml:test
+./gradlew :01-dml:test :02-types:test :03-functions:test :04-transactions:test :05-entities:test
 ```
 
 ## 테스트 포인트

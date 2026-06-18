@@ -2,7 +2,7 @@
 
 [English](./README.md) | 한국어
 
-Exposed 1.1.1 DSL로 DML 핵심 문법(조회/삽입/수정/삭제/집계/조인)을 학습하는 모듈입니다. 모든 예제는 테스트 코드로 제공되어 DB Dialect 차이를 함께 검증할 수 있습니다.
+현재 Exposed DSL의 DML 핵심 문법을 학습하는 모듈입니다. SELECT, INSERT, UPDATE, DELETE, UPSERT, 집계, 조인, CTE, DB별 확장 기능을 테스트 코드로 다루므로, 같은 시나리오에서 Dialect별 차이도 함께 확인할 수 있습니다.
 
 ## 학습 목표
 
@@ -131,13 +131,13 @@ Cities.deleteWhere { Cities.id eq targetId }
 ## 실행 방법
 
 ```bash
-./gradlew :05-exposed-dml:01-dml:test
+./gradlew :01-dml:test
 ```
 
-환경 변수로 빠른 테스트 실행(H2만):
+빠른 테스트 실행(H2만):
 
 ```bash
-USE_FAST_DB=true ./gradlew :05-exposed-dml:01-dml:test
+./gradlew :01-dml:test -PuseFastDB=true
 ```
 
 ## 실습 체크리스트
