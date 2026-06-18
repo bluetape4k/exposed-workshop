@@ -173,13 +173,13 @@ entities.asFlow()
 
 ```bash
 # Run all tests
-./gradlew :06-advanced:07-custom-entities:test
+./gradlew :07-custom-entities:test
 
 # Fast test targeting H2 only
-./gradlew :06-advanced:07-custom-entities:test -PuseFastDB=true
+./gradlew :07-custom-entities:test -PuseFastDB=true
 
 # Run a specific test class
-./gradlew :06-advanced:07-custom-entities:test \
+./gradlew :07-custom-entities:test \
     --tests "exposed.examples.custom.entities.SnowflakeIdTableTest"
 ```
 

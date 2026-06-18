@@ -199,13 +199,13 @@ E1.find { T1.secret eq "홍길동" }.single()
 
 ```bash
 # 전체 테스트
-./gradlew :06-advanced:12-exposed-tink:test
+./gradlew :12-exposed-tink:test
 
 # H2만 대상으로 빠른 테스트
-./gradlew :06-advanced:12-exposed-tink:test -PuseFastDB=true
+./gradlew :12-exposed-tink:test -PuseFastDB=true
 
 # 특정 테스트 클래스만 실행
-./gradlew :06-advanced:12-exposed-tink:test \
+./gradlew :12-exposed-tink:test \
     --tests "exposed.examples.tink.TinkColumnTypeTest"
 ```
 

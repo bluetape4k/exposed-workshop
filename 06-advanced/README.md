@@ -56,14 +56,14 @@ This chapter covers extension scenarios frequently encountered in production bey
 
 ```bash
 # Individual module tests
-./gradlew :06-advanced:01-exposed-crypt:test
-./gradlew :06-advanced:04-exposed-json:test
-./gradlew :06-advanced:06-custom-columns:test
-./gradlew :06-advanced:07-custom-entities:test
-./gradlew :06-advanced:12-exposed-tink:test
+./gradlew :01-exposed-crypt:test
+./gradlew :04-exposed-json:test
+./gradlew :06-custom-columns:test
+./gradlew :07-custom-entities:test
+./gradlew :12-exposed-tink:test
 
 # Quick test targeting H2 only
-./gradlew :06-advanced:01-exposed-crypt:test -PuseFastDB=true
+./gradlew :01-exposed-crypt:test -PuseFastDB=true
 ```
 
 ## Test Points

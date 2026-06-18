@@ -82,7 +82,7 @@ KotlinDateTimeTable.selectAll()
 ## 실행 방법
 
 ```bash
-./gradlew :06-advanced:03-exposed-kotlin-datetime:test
+./gradlew :03-exposed-kotlin-datetime:test
 ```
 
 ## 복잡한 시나리오

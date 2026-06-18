@@ -82,7 +82,7 @@ Choose `kotlinx.datetime` when considering KMP environments. For JVM-only projec
 ## How to Run
 
 ```bash
-./gradlew :06-advanced:03-exposed-kotlin-datetime:test
+./gradlew :03-exposed-kotlin-datetime:test
 ```
 
 ## Advanced Scenarios

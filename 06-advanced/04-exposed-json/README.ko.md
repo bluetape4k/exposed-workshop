@@ -26,7 +26,7 @@ JSON/JSONB 컬럼에 Kotlin 객체를 저장/조회하는 모듈입니다. 문�
 
 ## 테이블 ERD
 
-![04 exposed json Entity Relationship 2 diagram](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-erd-02.png)
+![04 exposed json Class Structure diagram](../../docs/images/readme-diagrams/06-advanced-04-exposed-json-class-03.png)
 
 ## 도메인 모델
 
@@ -188,13 +188,13 @@ CREATE INDEX idx_jsonb_gin ON j_b_table USING gin(j_b_column);
 
 ```bash
 # 전체 테스트
-./gradlew :06-advanced:04-exposed-json:test
+./gradlew :04-exposed-json:test
 
 # H2만 대상으로 빠른 테스트 (JSONB 기능 제한)
-./gradlew :06-advanced:04-exposed-json:test -PuseFastDB=true
+./gradlew :04-exposed-json:test -PuseFastDB=true
 
 # 특정 테스트 클래스만 실행
-./gradlew :06-advanced:04-exposed-json:test \
+./gradlew :04-exposed-json:test \
     --tests "exposed.examples.json.Ex02_JsonBColumn"
 ```
 

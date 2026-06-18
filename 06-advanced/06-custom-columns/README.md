@@ -184,17 +184,17 @@ object T1: IntIdTable() {
 
 ```bash
 # Full test
-./gradlew :06-advanced:06-custom-columns:test
+./gradlew :06-custom-columns:test
 
 # Quick test targeting H2 only
-./gradlew :06-advanced:06-custom-columns:test -PuseFastDB=true
+./gradlew :06-custom-columns:test -PuseFastDB=true
 
 # Run serialization tests only
-./gradlew :06-advanced:06-custom-columns:test \
+./gradlew :06-custom-columns:test \
     --tests "exposed.examples.custom.columns.serialization.*"
 
 # Run compression tests only
-./gradlew :06-advanced:06-custom-columns:test \
+./gradlew :06-custom-columns:test \
     --tests "exposed.examples.custom.columns.compress.*"
 ```
 

@@ -12,7 +12,7 @@
 
 ## 선수 지식
 
-- [`../05-exposed-dml/02-types/README.ko.md`](../05-exposed-dml/02-types/README.ko.md)
+- [`05-exposed-dml/02-types`](../../05-exposed-dml/02-types/README.ko.md)
 
 ## Java Time 타입 매핑
 
@@ -126,7 +126,7 @@ MySQL/MariaDB에서 `timestampWithTimeZone`은 지원되지 않으며, 해당 �
 ## 실행 방법
 
 ```bash
-./gradlew :06-advanced:02-exposed-javatime:test
+./gradlew :02-exposed-javatime:test
 ```
 
 ## 복잡한 시나리오

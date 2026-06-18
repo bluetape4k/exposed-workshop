@@ -159,13 +159,13 @@ insertLog.shouldContainNone(listOf("testName"))  // Verify plaintext not exposed
 
 ```bash
 # Full test
-./gradlew :06-advanced:01-exposed-crypt:test
+./gradlew :01-exposed-crypt:test
 
 # Quick test targeting H2 only
-./gradlew :06-advanced:01-exposed-crypt:test -PuseFastDB=true
+./gradlew :01-exposed-crypt:test -PuseFastDB=true
 
 # Run specific test class only
-./gradlew :06-advanced:01-exposed-crypt:test \
+./gradlew :01-exposed-crypt:test \
     --tests "exposed.examples.crypt.Ex01_EncryptedColumn"
 ```
 

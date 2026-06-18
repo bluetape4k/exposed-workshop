@@ -199,13 +199,13 @@ E1.find { T1.secret eq "John Doe" }.single()
 
 ```bash
 # Run all tests
-./gradlew :06-advanced:12-exposed-tink:test
+./gradlew :12-exposed-tink:test
 
 # Fast test targeting H2 only
-./gradlew :06-advanced:12-exposed-tink:test -PuseFastDB=true
+./gradlew :12-exposed-tink:test -PuseFastDB=true
 
 # Run a specific test class
-./gradlew :06-advanced:12-exposed-tink:test \
+./gradlew :12-exposed-tink:test \
     --tests "exposed.examples.tink.TinkColumnTypeTest"
 ```
 

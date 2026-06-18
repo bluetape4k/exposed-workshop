@@ -187,13 +187,13 @@ CREATE INDEX idx_jsonb_gin ON j_b_table USING gin(j_b_column);
 
 ```bash
 # Full test
-./gradlew :06-advanced:04-exposed-json:test
+./gradlew :04-exposed-json:test
 
 # Quick test targeting H2 only (JSONB features limited)
-./gradlew :06-advanced:04-exposed-json:test -PuseFastDB=true
+./gradlew :04-exposed-json:test -PuseFastDB=true
 
 # Run specific test class only
-./gradlew :06-advanced:04-exposed-json:test \
+./gradlew :04-exposed-json:test \
     --tests "exposed.examples.json.Ex02_JsonBColumn"
 ```
 

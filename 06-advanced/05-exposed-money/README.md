@@ -12,7 +12,7 @@ A module for handling JavaMoney-based currency values as Exposed columns. Provid
 
 ## Prerequisites
 
-- [`../05-exposed-dml/02-types/README.md`](../05-exposed-dml/02-types/README.md)
+- [`05-exposed-dml/02-types`](../../05-exposed-dml/02-types/README.md)
 
 ## AccountTable ERD
 
@@ -199,7 +199,7 @@ val id = AccountTable.insertAndGetId {
 ## How to Run
 
 ```bash
-./gradlew :06-advanced:05-exposed-money:test
+./gradlew :05-exposed-money:test
 ```
 
 ## Advanced Scenarios
