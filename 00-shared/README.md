@@ -1,42 +1,38 @@
-# 00-shared — Shared Test Utilities
+# 00-shared — Shared Test Infrastructure
 
 English | [한국어](./README.ko.md)
 
-A test infrastructure module that all workshop modules depend on.
-Provides database connections, table/schema creation and deletion, and Faker-based test data generation.
+`00-shared` contains the reusable test infrastructure used by the Exposed workshop chapters.
+Instead of repeating database selection, transaction setup, schema/table cleanup, and sample data fixtures in every chapter, the workshop keeps those concerns in one shared module.
 
-## Module Dependency Structure
+## What This Chapter Provides
 
-![Module Dependency Structure diagram](../docs/images/readme-diagrams/00-shared-architecture-01.png)
+![00-shared test fixture architecture](../docs/images/readme-diagrams/00-shared-architecture-01.png)
 
-## Included Modules
+- `TestDB` selects the database dialects used by parameterized tests.
+- `AbstractExposedTest` provides the common JUnit entrypoint, UTC timezone setup, Faker, and dialect helpers.
+- `withDb` and `withDbSuspending` open Exposed transactions for blocking and coroutine tests.
+- `withTables` and `withSchemas` create and clean up test tables and schemas around each test block.
+- Sample tables, DAO entities, records, and repositories provide realistic fixtures for downstream examples.
 
-| Module | Description |
-|--------|-------------|
-| `exposed-shared-tests` | Shared test utilities and helper classes |
+## Included Module
 
----
+| Module | Purpose |
+|--------|---------|
+| `exposed-shared-tests` | Shared JUnit, Exposed, Testcontainers, and sample repository fixtures |
 
-## Key Classes
+## Source Layout
+
+![Shared test source layout](../docs/images/readme-diagrams/00-shared-directory-structure-02.png)
+
+The public fixture APIs live under `src/main/kotlin/exposed/shared/tests`.
+Sample domain objects are grouped under `repository/model` and `repository/repository`, while `src/test` verifies the helpers against real Exposed tables and configured dialects.
+
+## Core Types
 
 ### `AbstractExposedTest`
 
-The base class for all Exposed test classes.
-
-```kotlin
-abstract class AbstractExposedTest {
-    companion object : KLogging() {
-        val faker = Fakers.faker
-
-        // Used with JUnit 5 @MethodSource: returns enabled DB list
-        fun enableDialects() = TestDB.enabledDialects()
-
-        const val ENABLE_DIALECTS_METHOD = "enableDialects"
-    }
-}
-```
-
-Test classes inherit from it as follows:
+`AbstractExposedTest` is the base class for workshop tests. It exposes `ENABLE_DIALECTS_METHOD`, delegates dialect selection to `TestDB.enabledDialects()`, sets the default timezone to UTC, and keeps shared helper functions such as `prepareSchemaForTest()`.
 
 ```kotlin
 @TestMethodOrder(MethodOrderer.MethodName::class)
@@ -52,105 +48,42 @@ class MyExposedTest : AbstractExposedTest() {
 }
 ```
 
----
+### `TestDB`
 
-### `TestDB` Enum
+`TestDB` enumerates the database targets supported by the shared tests.
 
-Enumerates the target databases for testing.
+| Value | Notes |
+|-------|-------|
+| `H2`, `H2_V1`, `H2_MYSQL`, `H2_MARIADB`, `H2_PSQL` | H2 in-memory modes for fast feedback and compatibility checks |
+| `MARIADB`, `MYSQL_V5`, `MYSQL_V8` | MySQL-family targets through Testcontainers or local fallback |
+| `POSTGRESQL`, `POSTGRESQLNG` | PostgreSQL targets |
+| `COCKROACH` | CockroachDB target |
+| `ORACLE`, `SQLSERVER` | Enterprise database targets when explicitly selected and available |
 
-| Value | Description |
-|-------|-------------|
-| `H2` | H2 v2 in-memory (default) |
-| `H2_V1` | H2 v1 in-memory |
-| `H2_MYSQL` | H2 MySQL compatibility mode |
-| `H2_MARIADB` | H2 MariaDB compatibility mode |
-| `H2_PSQL` | H2 PostgreSQL compatibility mode |
-| `MARIADB` | MariaDB (Testcontainers or local) |
-| `MYSQL_V8` | MySQL 8 (Testcontainers or local) |
-| `POSTGRESQL` | PostgreSQL (Testcontainers or local) |
-| `POSTGRESQLNG` | PostgreSQL NG driver |
-| `COCKROACH` | CockroachDB (Testcontainers) |
+Default enabled dialects are `H2`, `POSTGRESQL`, and `MYSQL_V8`.
 
-Default enabled DBs: `H2, POSTGRESQL, MYSQL_V8, MARIADB`
+## Database Selection
 
----
-
-### `withDb` / `withDBSuspending`
-
-Connects to the specified `TestDB` and executes a transaction block.
-
-```kotlin
-// JDBC (synchronous)
-withDb(testDB) { db ->
-    // inside transaction block
-}
-
-// Coroutine (asynchronous)
-withDBSuspending(testDB) { db ->
-    // inside suspendedTransaction block
-}
-```
-
----
-
-### `withTables` / `withTablesSuspending`
-
-Creates tables before the test and automatically drops them after.
-
-```kotlin
-// JDBC
-withTables(testDB, Users, Posts) { db ->
-    // runs with tables created
-}
-
-// Coroutine
-withTablesSuspending(testDB, Users) { db ->
-    // runs inside suspendedTransaction
-}
-```
-
-You can skip table deletion with `dropTables = false`.
-
----
-
-### `withSchemas` / `withSchemasSuspending`
-
-Creates schemas before executing the block, and drops them upon completion.
-
-```kotlin
-withSchemas(testDB, Schema("hr"), Schema("sales")) {
-    // runs with schemas available
-}
-```
-
----
-
-## Environment Variables / System Properties
-
-| Setting | Default | Description |
-|---------|---------|-------------|
-| `USE_TESTCONTAINERS` (constant) | `true` | Whether to use Testcontainers. If `false`, connects to local DB servers directly |
-| `-PuseFastDB=true` (Gradle) | `false` | Use only H2 in-memory DB for faster testing |
-
-```bash
-# Fast test with H2 only
-./gradlew :exposed-shared-tests:test -PuseFastDB=true
-```
-
----
-
-## Directory Structure
-
-![Shared test source layout diagram](../docs/images/readme-diagrams/00-shared-directory-structure-02.png)
-
----
-
-## How to Run
+| Gradle property | Effect |
+|-----------------|--------|
+| `-PuseDB=<name,...>` | Runs only the comma-separated `TestDB` values. This has the highest priority. |
+| `-PuseFastDB=true` | Runs only `H2` for quick local feedback. |
+| none | Runs the default matrix: `H2`, `POSTGRESQL`, `MYSQL_V8`. |
 
 ```bash
 # Test shared module only
 ./gradlew :exposed-shared-tests:test
 
-# H2 only (fast CI)
+# H2 only
 ./gradlew :exposed-shared-tests:test -PuseFastDB=true
+
+# Explicit dialect list
+./gradlew :exposed-shared-tests:test -PuseDB=H2,POSTGRESQL
 ```
+
+`USE_TESTCONTAINERS` is currently a source constant in `TestDB.kt` and defaults to `true`.
+When enabled, container-backed databases are started by the shared test infrastructure.
+
+## Next Step
+
+Open [`exposed-shared-tests`](./exposed-shared-tests/README.md) for the detailed fixture API map and examples.

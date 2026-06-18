@@ -1,147 +1,106 @@
-# 00 Shared: Exposed Shared Tests
+# exposed-shared-tests — Shared Exposed Test Fixtures
 
 English | [한국어](./README.ko.md)
 
-Provides a shared foundation of common schemas, utilities, and test base classes used across all Exposed examples.
+`exposed-shared-tests` is the fixture module used by the workshop examples.
+It gives chapter tests one consistent way to choose database dialects, open Exposed transactions, create/drop tables and schemas, and load sample data for repository assertions.
 
-## Chapter Goals
+## Goals
 
-- Centralize test patterns and DB configuration to reduce duplication.
-- Ensure a unified schema/data creation flow across various DB dialects.
-- Establish reusable patterns for Testcontainers, transaction helpers, and SchemaUtils.
+- Keep database selection and Testcontainers setup out of individual chapter tests.
+- Provide the same blocking and suspending transaction patterns for every example.
+- Make table, schema, DAO entity, and repository fixtures reusable across chapters.
+- Verify the fixture helpers with real Exposed tables before downstream modules depend on them.
 
-## Prerequisites
+## Fixture Class Map
 
-- Basic Kotlin/Java syntax
-- Relational database and JDBC concepts
-
-## Included Modules
-
-| Module                  | Description                                                              |
-|-------------------------|--------------------------------------------------------------------------|
-| `exposed-shared-tests`  | Shared test base classes with DB configuration, `WithTables` helpers, and ERD documentation |
-
-## Recommended Learning Order
-
-1. `exposed-shared-tests`
+![exposed-shared-tests class map](../../docs/images/readme-diagrams/00-shared-exposed-shared-tests-class-01.png)
 
 ## How to Run
 
 ```bash
-# Run with defaults (H2 + PostgreSQL + MySQL V8)
+# Default matrix: H2 + PostgreSQL + MySQL V8
 ./gradlew :exposed-shared-tests:test
 
-# Test with H2 only (fast local development)
+# Fast local feedback with H2 only
 ./gradlew :exposed-shared-tests:test -PuseFastDB=true
 
-# Specify target DBs
+# Explicit dialect list
 ./gradlew :exposed-shared-tests:test -PuseDB=H2,POSTGRESQL
 ```
 
-### DB Selection Options for Testing
+### Database Selection
 
-| Gradle Property            | Description                                       |
-|----------------------------|---------------------------------------------------|
-| `-PuseFastDB=true`         | Test with H2 in-memory DB only (fast feedback)    |
-| `-PuseDB=<name,...>`       | Specify DBs to test, comma-separated              |
+| Gradle property | Description |
+|-----------------|-------------|
+| `-PuseDB=<name,...>` | Runs only the comma-separated `TestDB` values. |
+| `-PuseFastDB=true` | Runs only `H2`. Ignored when `useDB` is present. |
+| none | Runs `H2`, `POSTGRESQL`, and `MYSQL_V8`. |
 
-Available values for `-PuseDB`:
+Available `TestDB` values include:
 
-| Value           | Description                    |
-|-----------------|--------------------------------|
-| `H2`            | H2 (in-memory, default mode)   |
-| `H2_MYSQL`      | H2 (MySQL compatibility mode)  |
-| `H2_MARIADB`    | H2 (MariaDB compatibility mode)|
-| `H2_PSQL`       | H2 (PostgreSQL compatibility mode) |
-| `MARIADB`       | MariaDB (Testcontainers)       |
-| `MYSQL_V5`      | MySQL 5.x (Testcontainers)     |
-| `MYSQL_V8`      | MySQL 8.x (Testcontainers)     |
-| `POSTGRESQL`    | PostgreSQL (Testcontainers)    |
-| `POSTGRESQLNG`  | PostgreSQL NG driver           |
+| Value | Description |
+|-------|-------------|
+| `H2`, `H2_V1` | H2 in-memory targets |
+| `H2_MYSQL`, `H2_MARIADB`, `H2_PSQL` | H2 compatibility modes |
+| `MARIADB`, `MYSQL_V5`, `MYSQL_V8` | MySQL-family targets |
+| `POSTGRESQL`, `POSTGRESQLNG` | PostgreSQL targets |
+| `COCKROACH` | CockroachDB target |
+| `ORACLE`, `SQLSERVER` | Enterprise DB targets when selected and available |
 
-> [!NOTE]
-> Priority: `-PuseDB` > `-PuseFastDB` > default (H2, POSTGRESQL, MYSQL_V8)
-
-## Test Points
-
-- Verify that common schema/data is created identically across each dialect.
-- Validate that connection/rollback is stable in Testcontainers-based DB isolation environments.
-
-## Performance & Stability Checkpoints
-
-- Verify that schema creation/deletion per dialect works independently between tests.
-- Confirm that connection reuse and rollback are performed consistently in Testcontainers environments.
-
-## Test Infrastructure Class Structure
-
-![Test Infrastructure Class Structure diagram](../../docs/images/readme-diagrams/00-shared-exposed-shared-tests-class-01.png)
+Priority is `-PuseDB` first, then `-PuseFastDB`, then the default matrix.
 
 ## Core Usage Patterns
 
-### WithTables / WithTablesSuspending Pattern
+### `withDb` and `withDbSuspending`
 
-The `withTables(testDB, vararg tables)` helper automatically creates specified tables before the test starts
-and drops them after the test block completes, ensuring DB state independence between tests.
+Use `withDb(testDB) { ... }` for blocking Exposed transactions and `withDbSuspending(testDB) { ... }` for coroutine tests.
+Both helpers use a per-dialect semaphore, connect the selected database lazily, and expose `currentTestDB` inside the transaction scope.
 
 ```kotlin
-// JDBC approach
-withTables(testDB, ActorTable) {
-    ActorTable.insert { it[name] = "test" }
-    ActorTable.selectAll().count() // verify
+withDb(testDB) {
+    // blocking transaction
 }
 
-// Coroutine (suspend) approach
-withTablesSuspending(testDB, ActorTable) {
-    ActorTable.insert { it[name] = "test" }
-    ActorTable.selectAll().count() // verify
+withDbSuspending(testDB) {
+    // coroutine transaction through newSuspendedTransaction
+}
+```
+
+### `withTables` and `withTablesSuspending`
+
+`withTables(testDB, vararg tables)` drops and creates the requested tables before the block, runs the test, commits the work, and cleans up afterward.
+The suspending variant follows the same lifecycle inside a coroutine transaction.
+
+```kotlin
+withTables(testDB, ActorTable) {
+    ActorTable.insert { it[firstName] = "Ryu" }
+    ActorTable.selectAll().count()
 }
 ```
 
 Related test: [`src/test/kotlin/exposed/shared/tests/WithTablesTest.kt`](src/test/kotlin/exposed/shared/tests/WithTablesTest.kt)
 
-### TestDB Enum Usage
+### `withSchemas` and `withSchemasSuspending`
 
-The `TestDB` enum defines the list of supported DB dialects, and the `enableDialects()` method
-filters the target DBs for testing. When used with `@MethodSource(ENABLE_DIALECTS_METHOD)`,
-parameterized tests are automatically executed for each enabled dialect.
+Schema helpers create and drop schemas only when the active dialect reports schema support.
+That keeps chapter tests portable across H2, PostgreSQL, MySQL-family databases, and selected container-backed targets.
 
-```kotlin
-class MyTest: AbstractExposedTest() {
-    @ParameterizedTest
-    @MethodSource(ENABLE_DIALECTS_METHOD)
-    fun `my test`(testDB: TestDB) {
-        withTables(testDB, MyTable) {
-            // runs on each dialect
-        }
-    }
-}
-```
+Related test: [`src/test/kotlin/exposed/shared/tests/WithSchemasTest.kt`](src/test/kotlin/exposed/shared/tests/WithSchemasTest.kt)
 
-### TestContainers Configuration
+### Sample Repository Fixtures
 
-When `USE_TESTCONTAINERS=true` (default), PostgreSQL, MySQL, MariaDB, etc. are automatically
-started via Testcontainers. For fast feedback during local development, use H2 in-memory DB only.
-
-```bash
-# H2 only (fast feedback)
-./gradlew :exposed-shared-tests:test -PuseFastDB=true
-
-# Specify target DBs
-./gradlew :exposed-shared-tests:test -PuseDB=H2,POSTGRESQL
-```
-
-### ActorRepository Common Operations Verification
-
-Use the `withMovieAndActors(testDB)` helper to set up sample movie and actor data,
-then verify the repository's CRUD, count, existence check, and conditional deletion operations.
+`MovieSchema` defines movie/actor tables, a many-to-many join table, DAO entities, and fixture helpers such as `withMovieAndActors`.
+`ActorRepository` demonstrates a small `JdbcRepository<Long, ActorRecord>` implementation with lookup, save, count, and conditional query examples.
 
 Related test: [`src/test/kotlin/exposed/shared/repository/ActorRepositoryTest.kt`](src/test/kotlin/exposed/shared/repository/ActorRepositoryTest.kt)
 
-## References
+## Notes for Chapter Authors
 
-- The inheritance structure of helpers like `AbstractExposedTest` and `WithTables` can be referenced for reuse in actual examples.
-- Various ERD documents and Faker-based sample data are included.
+- Extend `AbstractExposedTest` and use `@MethodSource(ENABLE_DIALECTS_METHOD)` for dialect-parameterized tests.
+- Prefer the shared fixture helpers over ad hoc `Database.connect()` and `SchemaUtils` calls.
+- Use `-PuseFastDB=true` while iterating locally, then run the default matrix before relying on behavior across dialects.
 
 ## Next Chapter
 
-- [01-spring-boot](../01-spring-boot/README.md): Learn Exposed usage patterns in Spring Boot-based MVC/WebFlux examples.
+- [01-spring-boot](../../01-spring-boot/README.md): Exposed usage patterns in Spring Boot MVC and WebFlux examples.
