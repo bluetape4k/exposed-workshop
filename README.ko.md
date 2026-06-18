@@ -1,7 +1,7 @@
 # Exposed Workshop (Kotlin Exposed 학습 자료)
 
 [![CI](https://github.com/bluetape4k/exposed-workshop/actions/workflows/ci.yml/badge.svg)](https://github.com/bluetape4k/exposed-workshop/actions/workflows/ci.yml)
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.3-7F52FF?logo=kotlin)](https://kotlinlang.org)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.4-7F52FF?logo=kotlin)](https://kotlinlang.org)
 [![JVM](https://img.shields.io/badge/JVM-21-ED8B00?logo=openjdk)](https://openjdk.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -9,80 +9,75 @@
 
 ![Exposed workshop 작업대 일러스트](./docs/assets/exposed-workshop-workbench.png)
 
-이 저장소는 Kotlin Exposed 프레임워크의 사용법을 단계별로 학습할 수 있는 예제와 워크샵 모음입니다. 초보자부터 고급 사용자까지 Exposed의 다양한 기능을 실습하며 익힐 수 있도록 구성되어 있습니다.
+이 저장소는 Kotlin Exposed를 실행 가능한 Gradle 모듈로 익히는 워크숍입니다. 영어/한국어 README, 소스 기반 다이어그램, 데이터베이스 테스트를 함께 제공해 SQL 기초부터 운영형 서비스 패턴까지 순서대로 따라갈 수 있습니다.
 
 ## 프로젝트 목적
 
-`exposed-workshop`은 Spring Boot 진입점과 SQL DSL 기초부터 멀티테넌시, 캐시,
-routing datasource, 고성능 패턴까지 테스트 가능한 모듈로 Kotlin Exposed를 학습하도록 구성된 워크숍입니다.
+`exposed-workshop`은 Kotlin Exposed를 작은 실행 예제로 나눠 설명합니다. 공통 데이터베이스 fixture와 Spring Boot 진입점에서 시작해 SQL DSL, DAO, DDL/DML, 고급 컬럼 타입, JPA 마이그레이션, 코루틴, 가상 스레드, 멀티테넌시, 캐시/라우팅, Spring Boot와 Ktor 기반 운영 통합 예제로 확장됩니다.
 
 ## 제공 기능
 
-- **단계별 학습 경로** — 기초부터 운영형 패턴까지 순차 학습
-- **DSL/DAO 예제** — transaction 및 coroutine variant 포함
-- **Multi-database 테스트** — H2, PostgreSQL, MySQL, MariaDB 검증
-- **Spring 통합 예제** — transaction, cache, repository, WebFlux/MVC 스타일
+- **소스 순서와 같은 학습 경로** — `settings.gradle.kts`와 챕터 디렉터리 구조를 그대로 따릅니다.
+- **DSL, DAO, DDL, DML 예제** — 트랜잭션 경계와 dialect 차이를 테스트에서 확인합니다.
+- **런타임 비교** — blocking JDBC, 코루틴, 가상 스레드, Spring MVC/WebFlux, Ktor를 같은 관점에서 비교합니다.
+- **다중 데이터베이스 검증** — 빠른 H2 경로와 Testcontainers 기반 PostgreSQL, MySQL, MariaDB 옵션을 제공합니다.
 
 ## Kotlin Exposed 란?
 
-Kotlin Exposed는 JetBrains에서 개발한 Kotlin 언어 전용 SQL 프레임워크입니다. Kotlin의 강력한 타입 시스템을 활용하여 컴파일 타임에 SQL 쿼리의 안전성을 보장하며, DSL(Domain Specific Language)과 DAO(Data Access Object) 두 가지 스타일을 모두 지원합니다.
+Kotlin Exposed는 JetBrains가 만든 Kotlin 우선 SQL 프레임워크입니다. 테이블과 쿼리를 타입 안전한 DSL로 작성할 수도 있고, DAO/Entity 클래스로 행을 객체처럼 다룰 수도 있습니다. 이 워크숍은 두 방식을 실제 애플리케이션 코드와 테스트 가까이에 배치해, 어떤 상황에서 어떤 선택이 자연스러운지 비교할 수 있게 합니다.
 
 ### Exposed의 주요 특징
 
-| 특징            | 설명                                                   |
-|---------------|------------------------------------------------------|
-| **타입 안전성**    | 컴파일 타임에 SQL 오류 감지                                    |
-| **DSL & DAO** | SQL 스타일과 ORM 스타일 모두 지원                               |
-| **코루틴 지원**    | 비동기 프로그래밍 완벽 지원                                      |
-| **경량화**       | JPA 대비 적은 메모리 사용량                                    |
-| **다양한 DB 지원** | H2, MySQL, PostgreSQL, MariaDB, Oracle, SQL Server 등 |
+| 특징 | 이 저장소에서 확인하는 방식 |
+|------|---------------------------|
+| **타입 안전한 SQL DSL** | Table, join, predicate, CTE, function, batch DML 예제로 확인합니다. |
+| **DAO와 Entity API** | EntityClass, 관계 매핑, lifecycle hook, cache 동작을 다룹니다. |
+| **명시적인 트랜잭션** | blocking, coroutine, Spring `TransactionTemplate`, `@Transactional` 변형을 비교합니다. |
+| **런타임 선택지** | Spring MVC/WebFlux, Ktor, 코루틴, 가상 스레드, benchmark 모듈을 제공합니다. |
+| **데이터베이스 검증** | 빠른 H2 검증과 Testcontainers 기반 PostgreSQL, MySQL, MariaDB 검증을 함께 둡니다. |
 
-![Kotlin Exposed feature map](docs/assets/readme-diagrams/exposed-workshop-mindmap-01.png)
+![Kotlin Exposed feature map](docs/images/readme-diagrams/exposed-workshop-mindmap-01.png)
 
 ### Exposed API 구조
 
-![Exposed API diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-01.png)
+![Exposed API diagram](docs/images/readme-diagrams/exposed-workshop-architecture-01.png)
 
 <!-- README_VISUAL_OVERVIEW:START -->
 ## Overview Diagram
 
-![Exposed Workshop overview diagram](docs/assets/readme-diagrams/root-readme-overview-01.png)
+![Exposed Workshop overview diagram](docs/images/readme-diagrams/root-readme-overview-01.png)
 
 ## Module Composition Chart
 
-![Exposed Workshop module composition chart](docs/assets/readme-charts/root-readme-module-chart-01.png)
+![Exposed Workshop module composition chart](docs/images/readme-charts/root-readme-module-chart-01.png)
 <!-- README_VISUAL_OVERVIEW:END -->
 
 ## 기술 스택
 
-| 기술                 | 버전     |
-|--------------------|--------|
-| Kotlin             | 2.3.20 |
-| Java               | 21     |
-| Exposed            | 1.1.1  |
-| Spring Boot        | 3.5.11 |
-| Kotlinx Coroutines | 1.10.2 |
-| Bluetape4k         | 1.6.0  |
-| Gradle Wrapper     | 9.4.1  |
+| 기술 | 버전 / 설정 |
+|------|-----------|
+| Kotlin plugin | 2.4.0 |
+| Kotlin language/API level | 2.3 |
+| Java toolchain | 21 |
+| Exposed | 1.3.0 |
+| Spring Boot | 4.0.6 |
+| Kotlinx Coroutines | 1.11.0 |
+| Bluetape4k dependencies BOM | 1.2.0 |
+| Gradle Wrapper | 9.5.0 |
 
 ## 학습 가이드
 
-이 워크샵은 다음과 같은 순서로 학습하는 것을 권장합니다:
+저장소의 소스 트리 순서대로 읽는 것이 가장 자연스럽습니다. 공통 fixture에서 시작해 Exposed 핵심 기능, 런타임 래퍼, 운영형 애플리케이션 패턴으로 넘어갑니다.
 
-1. **기본**: Spring Boot + Exposed 기본 통합
-2. **대안 기술**: JPA 대안 기술들 비교
-3. **Exposed 기본**: DSL과 DAO 패턴 익히기
-4. **DDL/DML**: 스키마 정의와 데이터 조작
-5. **고급 기능**: 암호화, JSON, 커스텀 타입 등
-6. **JPA 마이그레이션**: JPA 코드를 Exposed로 변환
-7. **비동기 처리**: Coroutines, Virtual Threads
-8. **Spring 통합**: 트랜잭션, 캐시, 리포지토리 패턴
-9. **멀티테넌시**: 다중 테넌트 아키텍처
-10. **고성능**: 캐시 전략, 라우팅 데이터소스
+1. **공통 기반과 진입점**: 테스트 fixture, Spring MVC/WebFlux, reactive 대안 기술을 먼저 봅니다.
+2. **Exposed 핵심**: SQL DSL, DAO, 스키마 정의, DML, 함수, 트랜잭션, Entity를 학습합니다.
+3. **확장과 마이그레이션**: JSON, money, 암호화, 커스텀 컬럼/Entity, Jackson/Fastjson/Tink, JPA 마이그레이션을 다룹니다.
+4. **런타임 모델**: 코루틴과 Java 21 가상 스레드에서 Exposed 사용 방식을 비교합니다.
+5. **운영 패턴**: Spring 트랜잭션, 리포지토리, 캐시, 멀티테넌시, routing datasource, benchmark, Ktor, outbox, 인증/세션, realtime, observability 예제로 확장합니다.
 
 ### 학습 경로
 
-![exposed workshop Architecture 2 diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-02.png)
+![exposed workshop Architecture 2 diagram](docs/images/readme-diagrams/exposed-workshop-architecture-02.png)
 
 ## 상세 문서
 
@@ -92,7 +87,7 @@ Kotlin Exposed는 JetBrains에서 개발한 Kotlin 언어 전용 SQL 프레임�
 
 ## 모듈 구조
 
-![exposed workshop Architecture 3 diagram](docs/assets/readme-diagrams/exposed-workshop-architecture-03.png)
+![exposed workshop Architecture 3 diagram](docs/images/readme-diagrams/exposed-workshop-architecture-03.png)
 
 ## 모듈 목록
 
@@ -405,7 +400,7 @@ R2DBC 쪽 대응 추적 이슈는
 ### 사전 요구사항
 
 - JDK 21 이상 (Virtual Threads 및 Preview 기능 사용)
-- Gradle Wrapper 9.4.1 포함 (`./gradlew` 사용 권장)
+- Gradle Wrapper 9.5.0 포함 (`./gradlew` 사용 권장)
 - Docker (Testcontainers 사용 시)
 
 ### 빠른 시작

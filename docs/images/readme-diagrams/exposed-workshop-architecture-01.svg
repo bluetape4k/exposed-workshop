@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000">
+ <defs>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#94a3b8" flood-opacity=".18"/></filter>
+  <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M2,2 L12,7 L2,12 Z" fill="#2563eb"/></marker>
+  <marker id="arrowSoft" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M2,2 L12,7 L2,12 Z" fill="#7c3aed"/></marker>
+  <style><![CDATA[
+svg{font-family:"Architects Daughter","Comic Mono",ui-sans-serif,system-ui,sans-serif}.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#8aa6cf;stroke-width:3;filter:url(#shadow)}.title{font-family:"Architects Daughter";font-size:48px;fill:#263a57}.subtitle,.body,.small,.footer{font-family:"Comic Mono";fill:#526276}.subtitle{font-size:17px}.body{font-size:14px}.small{font-size:12px}.laneTitle,.cardTitle{font-family:"Architects Daughter";fill:#263a57}.laneTitle{font-size:28px}.cardTitle{font-size:24px}.lane{stroke-width:2.5}.card{fill:#fff;stroke-width:2.2;filter:url(#shadow)}.arrow{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}.soft{fill:none;stroke-width:3;stroke-linecap:round;stroke-dasharray:8 7;marker-end:url(#arrowSoft)}.pill{fill:#fff;stroke:#d4e0ec;stroke-width:1.6}.footerBox{fill:#f8fafc;stroke:#d4e0ec;stroke-width:2}
+]]></style>
+ </defs>
+ <rect class="canvas" width="1500" height="1000"/>
+ <rect class="frame" x="48" y="40" width="1404" height="900" rx="34"/>
+ <text class="title" x="750" y="108" text-anchor="middle">Exposed API Structure</text>
+ <text class="subtitle" x="750" y="148" text-anchor="middle">Examples enter through Kotlin application code, choose DSL or DAO, then run inside an Exposed transaction against a JDBC database.</text>
+
+ <rect class="lane" x="105" y="205" width="1290" height="120" rx="28" fill="#e0f2fe" stroke="#60a5fa"/>
+ <text class="laneTitle" x="135" y="250">Application entrypoints</text>
+ <text class="body" x="135" y="282">Spring MVC/WebFlux, Ktor, repository, coroutine, virtual-thread, and benchmark modules call Exposed from Kotlin code.</text>
+ <rect class="pill" x="1080" y="266" width="230" height="42" rx="21"/><text class="body" x="1195" y="293" text-anchor="middle">runnable modules</text>
+
+ <rect class="lane" x="105" y="390" width="1290" height="185" rx="28" fill="#ecfdf5" stroke="#34d399"/>
+ <text class="laneTitle" x="135" y="435">Exposed programming surface</text>
+ <rect class="card" x="185" y="465" width="300" height="78" rx="18" stroke="#059669"/>
+ <text class="cardTitle" x="335" y="498" text-anchor="middle">SQL DSL</text>
+ <text class="small" x="335" y="524" text-anchor="middle">tables, joins, conditions, CTEs</text>
+ <rect class="card" x="600" y="465" width="300" height="78" rx="18" stroke="#059669"/>
+ <text class="cardTitle" x="750" y="498" text-anchor="middle">DAO / Entity</text>
+ <text class="small" x="750" y="524" text-anchor="middle">EntityClass, relations, hooks</text>
+ <rect class="card" x="1015" y="465" width="300" height="78" rx="18" stroke="#059669"/>
+ <text class="cardTitle" x="1165" y="498" text-anchor="middle">Column extensions</text>
+ <text class="small" x="1165" y="524" text-anchor="middle">JSON, money, crypt, custom types</text>
+
+ <rect class="lane" x="105" y="640" width="1290" height="118" rx="28" fill="#fff7ed" stroke="#fb923c"/>
+ <text class="laneTitle" x="135" y="685">Transaction and dialect boundary</text>
+ <text class="body" x="135" y="718">Transactions, shared fixtures, dialect selection, and Gradle test properties make database behavior explicit.</text>
+ <rect class="pill" x="1010" y="705" width="120" height="40" rx="20"/><text class="body" x="1070" y="731" text-anchor="middle">H2</text>
+ <rect class="pill" x="1145" y="705" width="120" height="40" rx="20"/><text class="body" x="1205" y="731" text-anchor="middle">PostgreSQL</text>
+ <rect class="pill" x="1280" y="705" width="85" height="40" rx="20"/><text class="body" x="1322" y="731" text-anchor="middle">MySQL</text>
+
+ <path class="arrow" d="M750 325 V390"/>
+ <path class="arrow" d="M750 575 V640"/>
+ <path class="soft" d="M335 543 C335 600, 560 600, 560 640" stroke="#7c3aed"/>
+ <path class="soft" d="M1165 543 C1165 600, 930 600, 930 640" stroke="#7c3aed"/>
+
+ <rect class="footerBox" x="160" y="825" width="1180" height="52" rx="24"/>
+ <text class="footer" x="750" y="857" text-anchor="middle">Read DSL and DAO examples first, then compare the same transaction boundary inside Spring, Ktor, coroutine, and virtual-thread modules.</text>
+</svg>
