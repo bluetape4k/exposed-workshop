@@ -1,6 +1,6 @@
 # Spring Boot 4 리얼타임 아웃박스
 
-[English](README.md) | [한국어](README.ko.md)
+[English](README.md) | 한국어
 
 이 예제는 Spring Boot 4, Spring WebFlux, Exposed로 데이터베이스 기반
 리얼타임 알림 흐름을 구성합니다. 알림 요청은 도메인 row와 outbox row를 먼저

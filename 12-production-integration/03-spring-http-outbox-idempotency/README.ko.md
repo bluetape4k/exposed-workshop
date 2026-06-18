@@ -1,6 +1,6 @@
 # Spring HTTP 아웃박스와 멱등성
 
-[English](README.md) | [한국어](README.ko.md)
+[English](README.md) | 한국어
 
 이 모듈은 chapter 12 HTTP 클라이언트 아웃박스/멱등성 주제의 Spring Boot 4
 구현입니다. 외부 HTTP 서비스를 호출하기 전에 발신 결제 의도를 먼저

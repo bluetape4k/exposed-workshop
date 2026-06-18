@@ -1,6 +1,6 @@
 # Ktor HTTP Outbox and Idempotency
 
-[English](README.md) | [한국어](README.ko.md)
+English | [한국어](README.ko.md)
 
 This module is the Ktor pair for the chapter 12 HTTP client
 outbox/idempotency topic. It mirrors the Spring Boot 4 sample while keeping

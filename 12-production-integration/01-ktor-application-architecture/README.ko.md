@@ -1,6 +1,6 @@
 # Ktor 애플리케이션 아키텍처
 
-[English](./README.md) | 한국어
+[English](README.md) | 한국어
 
 이 모듈은 12장의 첫 Ktor 예제입니다. 범위는 작게 유지합니다. Ktor route,
 JSON, 오류 매핑, service 경계, H2 기반 Exposed JDBC repository만 다룹니다.

@@ -1,6 +1,6 @@
 # Ktor WebSocket Realtime Outbox
 
-[English](README.md) | [한국어](README.ko.md)
+English | [한국어](README.ko.md)
 
 This example shows a database-backed realtime notification flow with Ktor
 WebSockets and Exposed. A notification request writes the domain row and the

@@ -1,6 +1,6 @@
 # Spring Observability Readiness
 
-English | [한국어](./README.ko.md)
+English | [한국어](README.ko.md)
 
 This module shows a Spring Boot 4 production diagnostics slice for an
 Exposed-backed HTTP service. It focuses on readiness, request correlation,

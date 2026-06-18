@@ -1,22 +1,30 @@
 # Chapter 12 - Production Integration
 
-This chapter compares production-grade database-backed service patterns across
-Spring Boot 4 and Ktor. Each topic keeps the example small enough to inspect
-while preserving the boundary that matters in production: HTTP layer, service
-use cases, Exposed persistence, tests, and operational documentation.
+English | [한국어](README.ko.md)
+
+This chapter compares production-style service patterns across Spring Boot 4
+and Ktor using the examples in this source tree. Each pair keeps the code small
+enough to inspect while preserving the boundaries that matter in production:
+HTTP entrypoints, service use cases, Exposed persistence, tests, security,
+outbox delivery, and operational diagnostics.
+
+## Chapter Goals
+
+- Compare the same service patterns in Spring Boot 4 and Ktor instead of
+  treating either framework as the default.
+- Keep Exposed persistence behind repository boundaries that are easy to test.
+- Show where authentication, idempotency, realtime delivery, readiness, and
+  request correlation belong in a small service.
+- Keep external systems out of the workshop path by using H2, fake gateways,
+  in-process hubs, and focused tests.
 
 ## Architecture Diagram
 
 ![Chapter 12 production integration architecture](../docs/images/readme-diagrams/12-production-integration-architecture-01.png)
 
-Foundation examples 01-04 cover the paired Spring/Ktor application architecture
-and HTTP outbox/idempotency baseline. Use-case examples 05-10 layer
-auth/session, realtime outbox, and observability/readiness patterns on top.
-
-Every completed example README in this chapter must include a committed PNG
-Architecture Diagram under `docs/images/readme-diagrams/`. Mermaid may be used
-as an intermediate source, but the final README should embed PNG diagrams so the
-rendered documentation is stable across GitHub, IDEs, and offline readers.
+Foundation examples 01-04 cover application architecture and HTTP
+outbox/idempotency. Examples 05-10 layer authentication/session metadata,
+realtime outbox delivery, and observability/readiness behavior on top.
 
 ## Modules
 
@@ -43,9 +51,9 @@ rendered documentation is stable across GitHub, IDEs, and offline readers.
 ./gradlew :10-ktor-observability-readiness:test
 ```
 
-Completed topics should keep the same shape: paired Spring/Ktor coverage,
-focused tests, PNG Architecture Diagram assets, explicit README tradeoffs, and
-no real external service dependency in examples.
+Each example follows the same shape: paired Spring/Ktor coverage where useful,
+focused tests, generated PNG/SVG architecture assets, explicit tradeoffs, and
+no real external service dependency in the default workshop path.
 
 ## Verification Scope
 

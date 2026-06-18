@@ -1,6 +1,6 @@
 # Ktor Application Architecture
 
-English | [한국어](./README.ko.md)
+English | [한국어](README.ko.md)
 
 This module is the first Ktor example for chapter 12. It keeps the surface small:
 Ktor routes, JSON, error mapping, a service boundary, and an Exposed JDBC

@@ -1,6 +1,6 @@
 # Ktor Observability Readiness
 
-[English](./README.md) | 한국어
+[English](README.md) | 한국어
 
 이 모듈은 Exposed 기반 HTTP 서비스의 Ktor 3 운영 진단 예제입니다. Spring Boot
 4 모듈과 짝을 이루며 readiness, request correlation, structured error,

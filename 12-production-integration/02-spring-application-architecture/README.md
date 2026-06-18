@@ -1,6 +1,6 @@
 # Spring Boot Application Architecture
 
-[English](README.md) | [한국어](README.ko.md)
+English | [한국어](README.ko.md)
 
 This module is the Spring Boot 4 pair for the chapter 12 application
 architecture topic. It mirrors the Ktor module with a thin controller layer, a

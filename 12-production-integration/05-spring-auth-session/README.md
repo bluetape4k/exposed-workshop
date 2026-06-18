@@ -1,6 +1,6 @@
 # Spring Boot Auth Session
 
-[English](README.md) | [한국어](README.ko.md)
+English | [한국어](README.ko.md)
 
 This module is the Spring Boot 4 half of the chapter 12 authentication/session
 example. It uses Spring Security HTTP Basic, database-backed user lookup,
