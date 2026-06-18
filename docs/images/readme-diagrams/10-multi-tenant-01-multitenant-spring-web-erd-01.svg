@@ -13,9 +13,9 @@
 .card,.uml,.tableBox,.dbBody{stroke-width:1.7;filter:url(#shadow)}
 .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
 .call,.runtime,.storage,.map,.fk,.ret{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.call{stroke:#2563eb;marker-end:url(#arrowBlue)}.runtime{stroke:#7c3aed;marker-end:url(#arrowPurple)}
-.storage{stroke:#ea580c;marker-end:url(#arrowOrange)}.map{stroke:#16a34a;marker-end:url(#arrowGreen)}
-.fk{stroke:#0f766e;marker-end:url(#arrowTeal)}.ret{stroke:#64748b;stroke-dasharray:7 5;marker-end:url(#arrowGray)}
+.call{stroke:#2563eb}.runtime{stroke:#7c3aed}
+.storage{stroke:#ea580c}.map{stroke:#16a34a}
+.fk{stroke:#0f766e}.ret{stroke:#64748b;stroke-dasharray:7 5}
 .inherit{fill:none;stroke:#334155;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .inheritTriangle{fill:#fff;stroke:#334155;stroke-width:1.8}
 .lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}

@@ -135,10 +135,10 @@ Uses the same servlet filter interface as module `01`, but internally `TenantCon
 
 ```bash
 # Run module tests
-./gradlew :10-multi-tenant:02-multitenant-spring-web-virtualthread:test
+./gradlew :02-multitenant-spring-web-virtualthread:test
 
 # Start application
-./gradlew :10-multi-tenant:02-multitenant-spring-web-virtualthread:bootRun
+./gradlew :02-multitenant-spring-web-virtualthread:bootRun
 ```
 
 ### API Practice

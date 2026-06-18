@@ -13,7 +13,7 @@ A non-blocking multi-tenant example based on WebFlux + Coroutines. Propagates te
 
 ## Prerequisites
 
-- [`../08-coroutines/README.md`](../08-coroutines/README.md)
+- [`../08-coroutines/README.md`](../../08-coroutines/README.md)
 - [`../01-multitenant-spring-web/README.md`](../01-multitenant-spring-web/README.md)
 - Reactor Context / Kotlin Coroutines basics
 
@@ -160,10 +160,10 @@ Queries the coroutine context tenant via `runBlocking { currentTenant() }` from 
 
 ```bash
 # Run module tests
-./gradlew :10-multi-tenant:03-multitenant-spring-webflux:test
+./gradlew :03-multitenant-spring-webflux:test
 
 # Start application
-./gradlew :10-multi-tenant:03-multitenant-spring-webflux:bootRun
+./gradlew :03-multitenant-spring-webflux:bootRun
 ```
 
 ### API Practice

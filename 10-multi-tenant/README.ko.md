@@ -2,7 +2,7 @@
 
 [English](./README.md) | 한국어
 
-실전 멀티테넌트 아키텍처를 Exposed + Spring으로 구현하며 Schema 기반 테넌트 분리, database-per-tenant 라우팅, 동적 라우팅, 컨텍스트 전파 흐름을 학습하는 챕터입니다. Spring MVC, Virtual Thread, WebFlux, 명시적 schema-per-tenant transaction boundary, 전용 tenant database에서 동일한 멀티테넌시 요구사항을 각각 어떻게 구현하는지 비교합니다.
+이 챕터는 소스 트리에 있는 멀티테넌트 구현을 따라갑니다. Spring MVC schema routing, Tomcat Virtual Thread tenant propagation, WebFlux/Reactor context bridge, 명시적 schema-per-tenant/database-per-tenant transaction helper, Spring Security tenant authorization, Ktor 변형, tenant onboarding을 순서대로 다룹니다. 핵심은 tenant identity를 어디서 받아들이고, 어떻게 전파하며, 어느 지점에서 database isolation을 강제하는지 확인하는 것입니다.
 
 ## 챕터 목표
 
@@ -94,10 +94,11 @@
 ./gradlew :04-schema-per-tenant-spring-web:test
 ./gradlew :05-database-per-tenant-spring-web:test
 ./gradlew :06-spring-security-tenant-authorization-spring-web:test
+./gradlew :07-multitenant-ktor:test
 ./gradlew :08-tenant-onboarding-spring-web:test
 
 # 전체 챕터 빌드
-./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build :06-spring-security-tenant-authorization-spring-web:build :08-tenant-onboarding-spring-web:build
+./gradlew :01-multitenant-spring-web:build :02-multitenant-spring-web-virtualthread:build :03-multitenant-spring-webflux:build :04-schema-per-tenant-spring-web:build :05-database-per-tenant-spring-web:build :06-spring-security-tenant-authorization-spring-web:build :07-multitenant-ktor:build :08-tenant-onboarding-spring-web:build --no-parallel
 ```
 
 ---

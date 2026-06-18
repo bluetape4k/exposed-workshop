@@ -13,7 +13,7 @@ A production example implementing Exposed-based schema multi-tenancy in a Spring
 
 ## Prerequisites
 
-- [`../09-spring/README.md`](../09-spring/README.md)
+- [`../09-spring/README.md`](../../09-spring/README.md)
 - Spring MVC filter/AOP basics
 
 ---
@@ -139,10 +139,10 @@ On receiving `ApplicationReadyEvent`, iterates over all tenants to create schema
 
 ```bash
 # Run module tests
-./gradlew :10-multi-tenant:01-multitenant-spring-web:test
+./gradlew :01-multitenant-spring-web:test
 
 # Start application (H2 profile by default)
-./gradlew :10-multi-tenant:01-multitenant-spring-web:bootRun
+./gradlew :01-multitenant-spring-web:bootRun
 ```
 
 ### API Practice

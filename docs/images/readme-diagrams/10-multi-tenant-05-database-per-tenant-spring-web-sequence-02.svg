@@ -21,14 +21,16 @@
   .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
   .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
   .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5;marker-end:url(#arrow)}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inherit)}
+  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
+  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
   .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
+.altRegion{fill:#f8fafc;fill-opacity:.055;stroke:#94a3b8;stroke-opacity:.28;stroke-width:1.2;stroke-dasharray:8 7}
 </style>
   </defs>
   <rect width="1240" height="740" class="canvas"/>
   <rect x="20" y="20" width="1200" height="700" rx="16" class="frame"/>
+<rect x="90" y="250" width="1020" height="370" rx="14" class="altRegion"/>
 <text x="48" y="58" class="title">Database-per-Tenant Spring Web (05)</text>
   <text x="48" y="80" class="subtitle">Source-derived sequence · request path through implementation roles</text>
 <rect x="12" y="118" width="156" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>

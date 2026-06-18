@@ -14,7 +14,7 @@ WebFlux + Coroutines 기반의 논블로킹 멀티테넌트 예제입니다. Rea
 
 ## 선수 지식
 
-- [`../08-coroutines/README.md`](../08-coroutines/README.md)
+- [`../08-coroutines/README.md`](../../08-coroutines/README.md)
 - [`../01-multitenant-spring-web/README.md`](../01-multitenant-spring-web/README.md)
 - Reactor Context / Kotlin Coroutines 기초
 
@@ -167,10 +167,10 @@ suspend fun getAllActors(): List<ActorRecord> = newSuspendedTransactionWithCurre
 
 ```bash
 # 모듈 테스트 실행
-./gradlew :10-multi-tenant:03-multitenant-spring-webflux:test
+./gradlew :03-multitenant-spring-webflux:test
 
 # 애플리케이션 기동
-./gradlew :10-multi-tenant:03-multitenant-spring-webflux:bootRun
+./gradlew :03-multitenant-spring-webflux:bootRun
 ```
 
 ### API 실습
