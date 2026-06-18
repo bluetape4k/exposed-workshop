@@ -2,9 +2,7 @@
 
 [English](./README.md) | 한국어
 
-코루틴 suspend 함수에서 Redis 캐시를 논블로킹으로 적용하는 모듈입니다. Spring Cache 어노테이션(
-`@Cacheable`)이 suspend 함수에 직접 적용되지 않는 제약을 해결하기 위해 Lettuce 코루틴 API(`RedisCoroutinesCommands`)로 직접 캐시를 제어하는
-`LettuceSuspendedCache` / `LettuceSuspendedCacheManager`를 구현하고, 데코레이터 패턴으로 Repository에 캐시 계층을 추가하는 방법을 학습합니다.
+이 모듈은 소스가 사용하는 coroutine-native cache 대안을 구현합니다. Spring Cache 애노테이션 대신 suspended repository가 Lettuce coroutine command 기반의 `LettuceSuspendedCache`, `LettuceSuspendedCacheManager`를 직접 사용합니다. 이후 `DefaultCountrySuspendedRepository`를 `CachedCountrySuspendedRepository`로 감싸 캐시 hit 시 DB 트랜잭션을 열지 않도록 구성합니다.
 
 ## 학습 목표
 
@@ -164,10 +162,10 @@ class SuspendedRepositoryConfig {
 
 ```bash
 # Redis Testcontainer를 자동으로 기동합니다
-./gradlew :09-spring:07-spring-suspended-cache:test
+./gradlew :07-spring-suspended-cache:test
 
 # 테스트 로그 요약
-./bin/repo-test-summary -- ./gradlew :09-spring:07-spring-suspended-cache:test
+./bin/repo-test-summary -- ./gradlew :07-spring-suspended-cache:test
 ```
 
 ## 실습 체크리스트

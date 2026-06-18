@@ -2,8 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A module that encapsulates Exposed DSL/DAO into a Repository pattern in a synchronous Spring MVC environment.
-It implements the `JdbcRepository` interface to learn a structure where the service layer does not directly depend on Exposed.
+This module builds a synchronous Spring MVC application around the movie/actor domain. Controllers call `JdbcRepository` implementations that mix Exposed DSL joins, DAO eager loading, record mappers, and transaction annotations while tests cover both repositories and MVC endpoints.
 
 ## Learning Goals
 
@@ -121,10 +120,10 @@ fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
 ## How to Run
 
 ```bash
-./gradlew :09-spring:04-exposed-repository:test
+./gradlew :04-exposed-repository:test
 
 # Test log summary
-./bin/repo-test-summary -- ./gradlew :09-spring:04-exposed-repository:test
+./bin/repo-test-summary -- ./gradlew :04-exposed-repository:test
 ```
 
 ## Practice Checklist

@@ -2,8 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A module that uses Exposed as an asynchronous Repository pattern in a Spring WebFlux + Coroutines environment.
-It executes Exposed queries within suspend functions using `newSuspendedTransaction`, and learns about the limitation where `@Transactional` does not apply to coroutine suspend functions and how to work around it.
+This module implements the same movie/actor repository shape with Spring WebFlux and coroutine controllers. The source wraps blocking Exposed JDBC work in `newSuspendedTransaction`, compares `Mono.fromCallable` service behavior with `suspend` functions, and keeps MVC/WebFlux parity visible through matching repository tests.
 
 ## Learning Goals
 
@@ -138,10 +137,10 @@ class ExposedDbConfig {
 ## How to Run
 
 ```bash
-./gradlew :09-spring:05-exposed-repository-coroutines:test
+./gradlew :05-exposed-repository-coroutines:test
 
 # Test log summary
-./bin/repo-test-summary -- ./gradlew :09-spring:05-exposed-repository-coroutines:test
+./bin/repo-test-summary -- ./gradlew :05-exposed-repository-coroutines:test
 ```
 
 ## Practice Checklist

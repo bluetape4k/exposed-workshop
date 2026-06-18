@@ -2,9 +2,7 @@
 
 [English](./README.md) | 한국어
 
-Spring Boot 자동 설정으로 Exposed를 최소 구성으로 통합하는 모듈입니다.
-`spring-boot-autoconfigure` 가 제공하는 `SpringTransactionManager`, `DatabaseInitializer` 빈을 활용해
-`application.yml` 한 파일로 DataSource와 트랜잭션을 연결하는 패턴을 학습합니다.
+이 모듈은 실제 Spring 테스트 컨텍스트에서 Exposed 자동 설정을 검증합니다. 테스트는 `SpringTransactionManager`, `DatabaseInitializer`, `spring.exposed.*` 속성, 스캔에서 제외되는 테이블, AOT 등록, virtual thread로 테이블 데이터를 읽는 `AsyncExposedService` 경로까지 확인합니다.
 
 ## 학습 목표
 
@@ -88,10 +86,10 @@ class TestEntity(id: EntityID<Int>): IntEntity(id) {
 
 ```bash
 # 전체 모듈 테스트
-./gradlew :09-spring:01-springboot-autoconfigure:test
+./gradlew :01-springboot-autoconfigure:test
 
 # 테스트 로그 요약
-./bin/repo-test-summary -- ./gradlew :09-spring:01-springboot-autoconfigure:test
+./bin/repo-test-summary -- ./gradlew :01-springboot-autoconfigure:test
 ```
 
 ## 실습 체크리스트

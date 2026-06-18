@@ -2,9 +2,7 @@
 
 [English](./README.md) | 한국어
 
-Spring WebFlux + 코루틴 환경에서 Exposed를 비동기 Repository 패턴으로 사용하는 모듈입니다.
-`newSuspendedTransaction`으로 Exposed 쿼리를 suspend 함수 안에서 실행하고,
-`@Transactional`이 코루틴 suspend 함수에 적용되지 않는 제약과 우회 방법을 학습합니다.
+이 모듈은 같은 영화/배우 Repository 구조를 Spring WebFlux와 coroutine controller로 구현합니다. 소스는 블로킹 Exposed JDBC 작업을 `newSuspendedTransaction`으로 감싸고, `Mono.fromCallable` 기반 service와 `suspend` 함수의 트랜잭션 차이를 비교하며, 동기 MVC 모듈과 같은 Repository 테스트 흐름을 유지합니다.
 
 ## 학습 목표
 
@@ -139,10 +137,10 @@ class ExposedDbConfig {
 ## 실행 방법
 
 ```bash
-./gradlew :09-spring:05-exposed-repository-coroutines:test
+./gradlew :05-exposed-repository-coroutines:test
 
 # 테스트 로그 요약
-./bin/repo-test-summary -- ./gradlew :09-spring:05-exposed-repository-coroutines:test
+./bin/repo-test-summary -- ./gradlew :05-exposed-repository-coroutines:test
 ```
 
 ## 실습 체크리스트

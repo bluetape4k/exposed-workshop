@@ -2,8 +2,7 @@
 
 [English](./README.md) | 한국어
 
-Spring Cache 추상화와 Exposed를 통합하는 모듈입니다.
-`@Cacheable`, `@CacheEvict` 어노테이션으로 Redis 기반 캐시를 선언적으로 적용하고, 캐시 히트/미스/무효화 흐름과 DB 정합성 관리 전략을 학습합니다.
+이 모듈은 Exposed 기반 국가 조회 Repository에 Spring Cache를 더합니다. Redis는 `RedisCacheManager`로 연결하고, 값 직렬화에는 LZ4+Fory를 사용하며, 조회와 무효화는 `@Cacheable`, `@CacheEvict`로 선언합니다. 테스트는 캐시 hit/miss, 무효화, transaction-aware cache update 동작을 검증합니다.
 
 ## 학습 목표
 
@@ -123,10 +122,10 @@ data class CountryRecord(
 
 ```bash
 # Redis Testcontainer를 자동으로 기동합니다
-./gradlew :09-spring:06-spring-cache:test
+./gradlew :06-spring-cache:test
 
 # 테스트 로그 요약
-./bin/repo-test-summary -- ./gradlew :09-spring:06-spring-cache:test
+./bin/repo-test-summary -- ./gradlew :06-spring-cache:test
 ```
 
 ## 실습 체크리스트

@@ -2,9 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A module that integrates Exposed with minimal configuration using Spring Boot auto-configuration.
-It uses the `SpringTransactionManager` and `DatabaseInitializer` beans provided by `spring-boot-autoconfigure`
-to learn the pattern of connecting DataSource and transactions with a single `application.yml` file.
+This module verifies Spring Boot auto-configuration for Exposed with real Spring test contexts. The tests check `SpringTransactionManager`, `DatabaseInitializer`, `spring.exposed.*` properties, ignored table scanning, AOT registration, and an `AsyncExposedService` path that reads table data through virtual threads.
 
 ## Learning Goals
 
@@ -88,10 +86,10 @@ When `spring.exposed.generate-ddl=true` is set, `DatabaseInitializer` automatica
 
 ```bash
 # Full module test
-./gradlew :09-spring:01-springboot-autoconfigure:test
+./gradlew :01-springboot-autoconfigure:test
 
 # Test log summary
-./bin/repo-test-summary -- ./gradlew :09-spring:01-springboot-autoconfigure:test
+./bin/repo-test-summary -- ./gradlew :01-springboot-autoconfigure:test
 ```
 
 ## Practice Checklist

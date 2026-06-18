@@ -2,8 +2,7 @@
 
 [English](./README.md) | 한국어
 
-동기식 Spring MVC 환경에서 Exposed DSL/DAO를 Repository 패턴으로 캡슐화하는 모듈입니다.
-`JdbcRepository` 인터페이스를 구현해 서비스 계층이 Exposed에 직접 의존하지 않는 구조를 학습합니다.
+이 모듈은 영화/배우 도메인을 중심으로 동기 Spring MVC 애플리케이션을 구성합니다. Controller는 `JdbcRepository` 구현체를 호출하고, Repository는 Exposed DSL join, DAO eager loading, record mapper, 트랜잭션 애노테이션을 함께 사용합니다. 테스트는 Repository와 MVC endpoint를 모두 검증합니다.
 
 ## 학습 목표
 
@@ -121,10 +120,10 @@ fun findMoviesWithActingProducers(): List<MovieWithProducingActorRecord> {
 ## 실행 방법
 
 ```bash
-./gradlew :09-spring:04-exposed-repository:test
+./gradlew :04-exposed-repository:test
 
 # 테스트 로그 요약
-./bin/repo-test-summary -- ./gradlew :09-spring:04-exposed-repository:test
+./bin/repo-test-summary -- ./gradlew :04-exposed-repository:test
 ```
 
 ## 실습 체크리스트

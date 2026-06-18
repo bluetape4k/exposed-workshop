@@ -2,8 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A module that integrates Spring Cache abstraction with Exposed.
-It applies Redis-based caching declaratively using `@Cacheable` and `@CacheEvict` annotations, and learns cache hit/miss/invalidation flows and DB consistency management strategies.
+This module adds Spring Cache to a country lookup repository backed by Exposed. It uses Redis through `RedisCacheManager`, LZ4+Fory serialization, `@Cacheable`, and `@CacheEvict`; the tests check cache hit/miss behavior, invalidation, and transaction-aware cache updates.
 
 ## Learning Goals
 
@@ -123,10 +122,10 @@ data class CountryRecord(
 
 ```bash
 # Redis Testcontainer starts automatically
-./gradlew :09-spring:06-spring-cache:test
+./gradlew :06-spring-cache:test
 
 # Test log summary
-./bin/repo-test-summary -- ./gradlew :09-spring:06-spring-cache:test
+./bin/repo-test-summary -- ./gradlew :06-spring-cache:test
 ```
 
 ## Practice Checklist
