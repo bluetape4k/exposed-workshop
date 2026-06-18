@@ -133,13 +133,13 @@ interface CustomerRepository: CoroutineCrudRepository<Customer, Long> {
 
 ```bash
 # Full module tests
-./gradlew :02-alternatives-to-jpa:r2dbc-example:test
+./gradlew :r2dbc-example:test
 
 # Run app server (H2 by default)
-./gradlew :02-alternatives-to-jpa:r2dbc-example:bootRun
+./gradlew :r2dbc-example:bootRun
 
 # Run a specific test class
-./gradlew :02-alternatives-to-jpa:r2dbc-example:test \
+./gradlew :r2dbc-example:test \
     --tests "alternative.r2dbc.example.domain.repository.PostRepositoryTest"
 ```
 

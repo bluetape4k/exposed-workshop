@@ -118,10 +118,10 @@ pool.withSuspendTransaction { conn ->
 
 ```bash
 # Full module tests (H2-based — no PostgreSQL required)
-./gradlew :02-alternatives-to-jpa:vertx-sqlclient-example:test
+./gradlew :vertx-sqlclient-example:test
 
 # Run a specific test class
-./gradlew :02-alternatives-to-jpa:vertx-sqlclient-example:test \
+./gradlew :vertx-sqlclient-example:test \
     --tests "alternative.vertx.sqlclient.example.JDBCPoolExamples"
 ```
 

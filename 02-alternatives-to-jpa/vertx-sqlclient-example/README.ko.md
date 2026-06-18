@@ -119,10 +119,10 @@ pool.withSuspendTransaction { conn ->
 
 ```bash
 # 전체 모듈 테스트 (H2 기반 — PostgreSQL 불필요)
-./gradlew :02-alternatives-to-jpa:vertx-sqlclient-example:test
+./gradlew :vertx-sqlclient-example:test
 
 # 특정 테스트 클래스만 실행
-./gradlew :02-alternatives-to-jpa:vertx-sqlclient-example:test \
+./gradlew :vertx-sqlclient-example:test \
     --tests "alternative.vertx.sqlclient.example.JDBCPoolExamples"
 ```
 

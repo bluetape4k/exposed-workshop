@@ -2,11 +2,11 @@
 
 [English](./README.md) | 한국어
 
-Spring 기반 애플리케이션에서 JPA 대안 기술들을 비교/실습하며, 다양한 ORM/Reactive 클라이언트를 검증하는 챕터입니다.
+JPA 대안 기술을 각 기술에 맞는 예제로 비교하는 챕터입니다. Hibernate Reactive는 Team/Member 관계, Spring Data R2DBC는 Post/Comment/Customer 접근, Vert.x SQL Client는 직접 SQL mapping을 중심으로 다룹니다.
 
 ## 개요
 
-JPA 외의 데이터베이스 접근 기술을 직접 실습하여 각각의 설계 철학과 트레이드오프를 이해합니다. Reactive 스택(Hibernate Reactive, R2DBC, Vert.x SQL Client)과 Exposed를 나란히 비교하여, 레거시 JPA 프로젝트를 전환할 때의 기준을 도출합니다.
+전통적인 blocking JPA 밖의 데이터베이스 접근 방식을 직접 실습합니다. 각 모듈은 자기 기술의 장단점이 잘 드러나는 도메인을 사용하고, 트랜잭션 경계, 결과 타입, mapping 비용, 운영 제약을 Exposed의 사고방식과 비교합니다.
 
 ## 학습 목표
 
@@ -56,20 +56,20 @@ JPA 외의 데이터베이스 접근 기술을 직접 실습하여 각각의 설
 
 ```bash
 # 전체 챕터 테스트
-./gradlew :02-alternatives-to-jpa:hibernate-reactive-example:test
-./gradlew :02-alternatives-to-jpa:r2dbc-example:test
-./gradlew :02-alternatives-to-jpa:vertx-sqlclient-example:test
+./gradlew :hibernate-reactive-example:test
+./gradlew :r2dbc-example:test
+./gradlew :vertx-sqlclient-example:test
 
 # 앱 서버 실행 (Hibernate Reactive)
-./gradlew :02-alternatives-to-jpa:hibernate-reactive-example:bootRun
+./gradlew :hibernate-reactive-example:bootRun
 
 # 앱 서버 실행 (R2DBC)
-./gradlew :02-alternatives-to-jpa:r2dbc-example:bootRun
+./gradlew :r2dbc-example:bootRun
 ```
 
 ## 테스트 포인트
 
-- 각 클라이언트에서 동일 도메인 결과가 일관된지 확인한다.
+- 각 클라이언트가 자기 repository/controller 테스트에서 기대한 도메인 결과를 반환하는지 확인한다.
 - Reactive/Async 경로에서 예외/타임아웃/롤백 동작을 점검한다.
 - Thread/Connection 모델 차이를 계량적으로 측정한다.
 

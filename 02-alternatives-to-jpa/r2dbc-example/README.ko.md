@@ -23,7 +23,7 @@ Spring Data R2DBC는 완전 Non-blocking R2DBC 드라이버 위에서 Spring Dat
 
 ## ERD
 
-![r2dbc example Entity Relationship 2 diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-erd-02.png)
+![r2dbc example Class diagram](../../docs/images/readme-diagrams/02-alternatives-to-jpa-r2dbc-example-class-03.png)
 
 ## 도메인 모델
 
@@ -135,13 +135,13 @@ interface CustomerRepository: CoroutineCrudRepository<Customer, Long> {
 
 ```bash
 # 전체 모듈 테스트
-./gradlew :02-alternatives-to-jpa:r2dbc-example:test
+./gradlew :r2dbc-example:test
 
 # 앱 서버 실행 (H2 기본)
-./gradlew :02-alternatives-to-jpa:r2dbc-example:bootRun
+./gradlew :r2dbc-example:bootRun
 
 # 특정 테스트 클래스만 실행
-./gradlew :02-alternatives-to-jpa:r2dbc-example:test \
+./gradlew :r2dbc-example:test \
     --tests "alternative.r2dbc.example.domain.repository.PostRepositoryTest"
 ```
 
