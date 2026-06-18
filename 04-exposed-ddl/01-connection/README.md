@@ -2,18 +2,18 @@
 
 English | [한국어](./README.ko.md)
 
-A module covering Exposed database connection setup and connection reliability verification. Covers connection exceptions, timeouts, H2 connection pool, and multi-DB connection scenarios.
+A module covering Exposed database connection setup and connection reliability verification. It focuses on metadata inspection, transaction retry attempts, H2 HikariCP pool reuse, and H2 multi-database transaction scenarios.
 
 ## Overview
 
-`Database.connect()` is the entry point for Exposed. It accepts a URL string or a `DataSource` and initializes the internal `TransactionManager`. Beyond normal connections, this module validates retry on exception, timeout precedence, HikariCP pool exhaustion recovery, and nested multi-DB transactions.
+`Database.connect()` is the entry point for Exposed. It accepts a URL string or a `DataSource` and registers a `Database` handle with `TransactionManager`. Beyond normal connections, this module validates column/constraint metadata lookup, retry counts after rollback/commit/getConnection failures, HikariCP connection reuse under more tasks than the pool size, and nested H2 multi-database transactions.
 
 ## Learning Objectives
 
 - Understand `Database.connect` configuration modes (URL / DataSource).
-- Learn connection exception/timeout handling patterns and `maxAttempts` retry configuration.
-- Verify connection reuse behavior after HikariCP pool exhaustion.
-- Understand transaction isolation strategies for multi-DB connections.
+- Learn transaction retry behavior through `maxAttempts` and `DatabaseConfig.defaultMaxAttempts`.
+- Verify HikariCP connection reuse when coroutine transactions exceed `maximumPoolSize`.
+- Understand explicit DB handles, default database selection, and nested multi-DB transactions.
 
 ## Prerequisites
 
@@ -47,25 +47,27 @@ val db = Database.connect(HikariDataSource(hikariConfig))
 ### Connection Exception Retry
 
 ```kotlin
-// Force exception on commit/rollback/close via ConnectionSpy
-// With maxAttempts = 5, exactly 5 retries before exception propagation
-val db = Database.connect(
-    datasource = ConnectionSpy(dataSource) { throw SQLException("forced") },
-    databaseConfig = DatabaseConfig { maxAttempts = 5 }
-)
+// Force commit/rollback/close failures via ConnectionSpy, then set retry count
+// on the transaction block. The tests assert exactly 5 wrapped connections.
+val db = Database.connect(datasource = wrappingDataSource)
+
+transaction(db = db) {
+    maxAttempts = 5
+    exec("SELECT 1;")
+}
 ```
 
 ### Timeout Precedence
 
 ```kotlin
-// Transaction block setting takes priority over DatabaseConfig default
+// DatabaseConfig supplies the default, while the transaction block may override it
 val db = Database.connect(
     datasource = dataSource,
     databaseConfig = DatabaseConfig { defaultMaxAttempts = 3 }
 )
 
 transaction(db) {
-    maxAttempts = 1  // This value takes precedence (defaultMaxAttempts = 3 is ignored)
+    maxAttempts = 5  // This value takes precedence over defaultMaxAttempts = 3
     // ...
 }
 ```
@@ -103,8 +105,8 @@ transaction(db1) {
 | File                           | Description                                                  |
 |--------------------------------|--------------------------------------------------------------|
 | `Ex01_Connection.kt`           | Basic URL/DataSource-based connections                       |
-| `Ex02_ConnectionException.kt`  | Force exceptions via `ConnectionSpy` + `maxAttempts` retry   |
-| `Ex03_ConnectionTimeout.kt`    | `defaultMaxAttempts` vs transaction-level `maxAttempts` precedence |
+| `Ex02_ConnectionException.kt`  | Force commit/rollback/close failures via `ConnectionSpy` + transaction-level `maxAttempts` |
+| `Ex03_ConnectionTimeout.kt`    | `getConnection()` failure retry count and `defaultMaxAttempts` vs transaction-level `maxAttempts` precedence |
 | `DataSourceStub.kt`            | DataSource stub for testing                                  |
 | `h2/Ex01_H2_ConnectionPool.kt` | HikariCP pool exhaustion + reuse scenarios (H2 only)         |
 | `h2/Ex02_H2_MultiDatabase.kt`  | Multi-DB nested transaction isolation verification (H2 only) |
@@ -121,14 +123,14 @@ Files in the `h2/` directory are **H2 in-memory DB only**.
 
 ```bash
 # Run all module tests
-./gradlew :04-exposed-ddl:01-connection:test
+./gradlew :01-connection:test
 
 # Run a specific test class
-./gradlew :04-exposed-ddl:01-connection:test \
+./gradlew :01-connection:test \
     --tests "exposed.examples.connection.Ex01_Connection"
 
 # Run H2-only tests
-./gradlew :04-exposed-ddl:01-connection:test \
+./gradlew :01-connection:test \
     --tests "exposed.examples.connection.h2.*"
 ```
 
@@ -148,11 +150,11 @@ Verifies that each DB's isolation level is correctly maintained via a 3-level ne
 
 ### Connection Exception Retry (`Ex02_ConnectionException.kt`)
 
-Wraps the actual connection with `ConnectionSpy` to force exceptions on commit/rollback/close. Verifies that the exception propagates after exactly 5 retries when `maxAttempts = 5`.
+Wraps actual connections with `ConnectionSpy` to force exceptions on commit, rollback, or close. Verifies that the exception propagates after exactly 5 retry attempts when the transaction block sets `maxAttempts = 5`.
 
 ### Timeout Precedence (`Ex03_ConnectionTimeout.kt`)
 
-Verifies which value takes precedence between `DatabaseConfig.defaultMaxAttempts` and `maxAttempts` inside a transaction block. The transaction block setting always wins.
+Uses a `DataSource` whose `getConnection()` always fails. The first test sets `maxAttempts = 3` directly on the transaction; the second verifies that `DatabaseConfig.defaultMaxAttempts = 3` applies when the block is silent and that block-level `maxAttempts = 5` overrides it.
 
 ## Practice Checklist
 

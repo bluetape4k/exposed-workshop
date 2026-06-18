@@ -2,19 +2,17 @@
 
 English | [한국어](./README.ko.md)
 
-A module for defining tables, columns, indexes, sequences, and custom enums using the Exposed DDL API. Covers DDL execution and migration patterns via `SchemaUtils`.
+A module for defining tables, columns, indexes, sequences, and custom enums using the Exposed DDL API. It covers DDL execution through `SchemaUtils` and schema drift handling through `MigrationUtils`.
 
 ## Overview
 
-Schema definition in Exposed is done through `object` declarations. You extend `Table`, `IntIdTable`,
-`UUIDTable`, etc. to declare columns and constraints, then execute DDL via `SchemaUtils.create()`. For migration, use
-`MigrationUtils.statementsRequiredForDatabaseMigration()` to generate and apply the required DDL statements. DB Dialect differences (PostgreSQL, MySQL, H2) are validated with parameterized tests.
+Schema definition in Exposed is done through `object` declarations. You extend `Table`, `IdTable`, `IntIdTable`, `LongIdTable`, or `UUIDTable` to declare columns and constraints, then execute DDL via `SchemaUtils.create()` and related helpers. For migration-style checks, `MigrationUtils.statementsRequiredForDatabaseMigration()` generates the required DDL statements and the tests apply them with `exec()`. PostgreSQL, MySQL, and H2 dialect differences are captured with assumptions and parameterized tests.
 
 ## Learning Objectives
 
 - Learn to define tables, columns, and constraints.
 - Understand composite PKs, composite FKs, conditional/functional indexes, and sequences.
-- Manage schema creation, migration, and deletion with `SchemaUtils`.
+- Manage schema creation/deletion with `SchemaUtils` and migration statements with `MigrationUtils`.
 - Identify per-DB DDL differences (enum types, INVISIBLE columns, partial indexes).
 
 ## Prerequisites
@@ -227,14 +225,14 @@ transaction {
 
 ```bash
 # Run all module tests
-./gradlew :04-exposed-ddl:02-ddl:test
+./gradlew :02-ddl:test
 
 # Fast tests targeting H2 only
-./gradlew :04-exposed-ddl:02-ddl:test -PuseFastDB=true
+./gradlew :02-ddl:test -PuseFastDB=true
 
 # Run a specific test class
-./gradlew :04-exposed-ddl:02-ddl:test --tests "exposed.examples.ddl.Ex02_CreateTable"
-./gradlew :04-exposed-ddl:02-ddl:test --tests "exposed.examples.ddl.Ex10_DDL_Examples"
+./gradlew :02-ddl:test --tests "exposed.examples.ddl.Ex02_CreateTable"
+./gradlew :02-ddl:test --tests "exposed.examples.ddl.Ex10_DDL_Examples"
 ```
 
 ## Complex Scenarios
