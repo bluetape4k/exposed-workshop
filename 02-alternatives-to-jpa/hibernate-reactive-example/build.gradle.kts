@@ -44,6 +44,20 @@ configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
 
+dependencyManagement {
+    dependencies {
+        val vertxVersion = libs.versions.vertx.get()
+        dependency("io.vertx:vertx-core:$vertxVersion")
+        dependency("io.vertx:vertx-core-logging:$vertxVersion")
+        dependency("io.vertx:vertx-lang-kotlin:$vertxVersion")
+        dependency("io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion")
+        dependency("io.vertx:vertx-sql-client:$vertxVersion")
+        dependency("io.vertx:vertx-sql-client-templates:$vertxVersion")
+        dependency("io.vertx:vertx-mysql-client:$vertxVersion")
+        dependency("io.vertx:vertx-pg-client:$vertxVersion")
+    }
+}
+
 dependencies {
     implementation(libs.bluetape4k.testcontainers)
 

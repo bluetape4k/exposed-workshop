@@ -11,8 +11,8 @@ kotlinx-atomicfu = "0.32.1"
 kotlinx-benchmark = "0.4.15"
 ktor = "3.5.0"
 
-spring-boot = "4.0.6"
-reactor-bom = "2025.0.5"
+spring-boot = "4.1.0"
+reactor-bom = "2025.0.6"
 
 exposed = "1.3.0"
 
@@ -35,29 +35,29 @@ r2dbc-h2 = "1.1.0.RELEASE"
 r2dbc-pool = "1.0.2.RELEASE"
 r2dbc-postgresql = "1.1.1.RELEASE"
 
-lettuce = "6.8.2.RELEASE"
-redisson = "4.4.0"
+lettuce = "7.6.0.RELEASE"
+redisson = "4.6.1"
 
-hibernate = "7.3.3.Final"
-hibernate-reactive = "4.3.3.Final"
+hibernate = "7.4.2.Final"
+hibernate-reactive = "4.5.0.Final"
 hibernate-validator = "9.1.0.Final"
 
 micrometer = "1.16.1"
 netty = "4.2.15.Final"
 
-jackson = "2.21.4"
-jackson-annotations = "2.21"
-jackson3 = "3.1.4"
+jackson = "2.22.0"
+jackson-annotations = "2.22"
+jackson3 = "3.2.0"
 
 caffeine = "3.2.3"
 
-vertx = "5.0.12"
+vertx = "5.1.3"
 
 springdoc-openapi = "3.0.3"
 
-gatling = "3.15.0"
+gatling = "3.15.1"
 
-agroal = "3.1.2"
+agroal = "3.2"
 
 jmh = "1.37"
 datafaker = "2.5.4"
@@ -69,12 +69,12 @@ mybatis-dynamic-sql = "2.0.0"
 
 snappy-java = "1.1.10.8"
 lz4-java = "1.8.0"
-zstd-jni = "1.5.7-9"
+zstd-jni = "1.5.7-11"
 
 findbugs = "3.0.2"
 guava = "33.6.0-jre"
 kryo = "5.6.2"
-fory-kotlin = "1.0.0"
+fory-kotlin = "1.3.0"
 
 javassist = "3.30.2-GA"
 javamoney-moneta = "1.4.5"
@@ -106,7 +106,7 @@ dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 test-logger = { id = "com.adarshr.test-logger", version.ref = "test-logger" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 graalvm-native = { id = "org.graalvm.buildtools.native", version.ref = "graalvm-native" }
-gatling = { id = "io.gatling.gradle", version = "3.15.0" }
+gatling = { id = "io.gatling.gradle", version = "3.15.1" }
 exposed = { id = "org.jetbrains.exposed.plugin", version.ref = "exposed" }
 
 [libraries]
@@ -374,7 +374,7 @@ commons-csv = { module = "org.apache.commons:commons-csv", version = "1.14.1" }
 commons-exec = { module = "org.apache.commons:commons-exec", version = "1.6.0" }
 commons-io = { module = "commons-io:commons-io", version = "2.22.0" }
 commons-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.20.0" }
-commons-logging = { module = "commons-logging:commons-logging", version = "1.3.6" }
+commons-logging = { module = "commons-logging:commons-logging", version = "1.4.0" }
 commons-math3 = { module = "org.apache.commons:commons-math3", version = "3.6.1" }
 commons-pool2 = { module = "org.apache.commons:commons-pool2", version = "2.13.1" }
 commons-text = { module = "org.apache.commons:commons-text", version = "1.13.1" }
