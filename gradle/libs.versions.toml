@@ -350,7 +350,7 @@ javax-money-api = { module = "javax.money:money-api", version.ref = "javax-money
 mybatis-dynamic-sql = { module = "org.mybatis.dynamic-sql:mybatis-dynamic-sql", version.ref = "mybatis-dynamic-sql" }
 
 # Jakarta
-jakarta-activation-api = { module = "jakarta.activation:jakarta.activation-api", version = "2.1.3" }
+jakarta-activation-api = { module = "jakarta.activation:jakarta.activation-api", version = "2.1.4" }
 jakarta-annotation-api = { module = "jakarta.annotation:jakarta.annotation-api", version = "3.0.0" }
 jakarta-el-api = { module = "jakarta.el:jakarta.el-api", version = "6.0.1" }
 jakarta-inject-api = { module = "jakarta.inject:jakarta.inject-api", version = "2.0.1" }
