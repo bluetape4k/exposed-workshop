@@ -154,12 +154,12 @@ class TinkColumnTypeTest: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `nullable 암호화 컬럼은 null 값을 저장하고 조회할 수 있다`(testDB: TestDB) {
         val nullableTable = object: IntIdTable("tink_nullable_table") {
-            val aeadSecret = tinkAeadVarChar("aead_secret", 512).nullable()
-            val daeadSecret = tinkDaeadVarChar("daead_secret", 512).nullable()
-            val aeadData = tinkAeadBinary("aead_data", 512).nullable()
-            val daeadData = tinkDaeadBinary("daead_data", 512).nullable()
-            val aeadBlob = tinkAeadBlob("aead_blob").nullable()
-            val daeadBlob = tinkDaeadBlob("daead_blob").nullable()
+            val aeadSecret = tinkAeadVarChar("aead_secret", 512, TinkAeads.AES256_GCM).nullable()
+            val daeadSecret = tinkDaeadVarChar("daead_secret", 512, TinkDaeads.AES256_SIV).nullable()
+            val aeadData = tinkAeadBinary("aead_data", 512, TinkAeads.AES256_GCM).nullable()
+            val daeadData = tinkDaeadBinary("daead_data", 512, TinkDaeads.AES256_SIV).nullable()
+            val aeadBlob = tinkAeadBlob("aead_blob", TinkAeads.AES256_GCM).nullable()
+            val daeadBlob = tinkDaeadBlob("daead_blob", TinkDaeads.AES256_SIV).nullable()
         }
 
         withTables(testDB, nullableTable) {
@@ -187,25 +187,25 @@ class TinkColumnTypeTest: AbstractExposedTest() {
     fun `컬럼 길이는 0보다 커야 한다`(testDB: TestDB) {
         assertFailsWith<IllegalArgumentException> {
             object: IntIdTable("invalid_aead_varchar_$testDB") {
-                val invalid = tinkAeadVarChar("invalid", 0)
+                val invalid = tinkAeadVarChar("invalid", 0, TinkAeads.AES256_GCM)
             }
         }
 
         assertFailsWith<IllegalArgumentException> {
             object: IntIdTable("invalid_aead_binary_$testDB") {
-                val invalid = tinkAeadBinary("invalid", 0)
+                val invalid = tinkAeadBinary("invalid", 0, TinkAeads.AES256_GCM)
             }
         }
 
         assertFailsWith<IllegalArgumentException> {
             object: IntIdTable("invalid_daead_varchar_$testDB") {
-                val invalid = tinkDaeadVarChar("invalid", 0)
+                val invalid = tinkDaeadVarChar("invalid", 0, TinkDaeads.AES256_SIV)
             }
         }
 
         assertFailsWith<IllegalArgumentException> {
             object: IntIdTable("invalid_daead_binary_$testDB") {
-                val invalid = tinkDaeadBinary("invalid", 0)
+                val invalid = tinkDaeadBinary("invalid", 0, TinkDaeads.AES256_SIV)
             }
         }
     }

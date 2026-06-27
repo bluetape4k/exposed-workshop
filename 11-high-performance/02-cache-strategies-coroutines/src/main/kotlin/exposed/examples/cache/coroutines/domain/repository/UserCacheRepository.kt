@@ -25,7 +25,8 @@ class UserCacheRepository(redissonClient: RedissonClient):
         redissonClient = redissonClient,
         config = RedissonCacheConfig.READ_WRITE_THROUGH_WITH_NEAR_CACHE.copy(
             name = "exposed:coroutines:users"
-        )
+        ),
+        trustedBinaryCache = true,
     ) {
     companion object: KLoggingChannel()
 

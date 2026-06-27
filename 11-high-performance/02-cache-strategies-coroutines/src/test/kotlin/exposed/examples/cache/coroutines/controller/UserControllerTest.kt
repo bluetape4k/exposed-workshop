@@ -89,7 +89,7 @@ class UserControllerTest(
                     .responseBody
                     .shouldNotBeNull()
 
-            users shouldHaveSize idsInDB.size
+            users shouldHaveSize idSize
         }
 
     @Test
