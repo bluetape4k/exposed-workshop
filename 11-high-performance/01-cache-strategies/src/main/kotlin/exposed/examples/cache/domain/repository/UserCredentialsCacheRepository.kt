@@ -24,6 +24,7 @@ class UserCredentialsCacheRepository(
 ): AbstractJdbcRedissonRepository<String, UserCredentialsRecord>(
     redissonClient = redissonClient,
     config = RedissonCacheConfig.READ_ONLY_WITH_NEAR_CACHE.copy(name = "exposed:user-credentials"),
+    trustedBinaryCache = true,
 ) {
 
     companion object: KLoggingChannel()
