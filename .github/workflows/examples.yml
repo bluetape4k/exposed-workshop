@@ -11,6 +11,7 @@ on:
       - '10-multi-tenant/06-spring-security-tenant-authorization-spring-web/**'
       - '11-high-performance/03-routing-datasource/**'
       - '12-production-integration/**'
+      - '13-ecosystem-integrations/**'
       - 'buildSrc/**'
       - 'gradle/**'
       - '*.gradle.kts'
@@ -24,6 +25,7 @@ on:
       - '10-multi-tenant/06-spring-security-tenant-authorization-spring-web/**'
       - '11-high-performance/03-routing-datasource/**'
       - '12-production-integration/**'
+      - '13-ecosystem-integrations/**'
       - 'buildSrc/**'
       - 'gradle/**'
       - '*.gradle.kts'
@@ -76,6 +78,8 @@ jobs:
           # - multi-tenant Spring examples
           # - routing datasource example
           # - production-integration Spring/Ktor examples
+          # Chapter 13 is a README-only foundation until child modules exist.
+          # Add runnable chapter 13 Gradle tasks here in the child module PRs.
           #
           # Keep Testcontainers-backed modules in one Gradle invocation so shared
           # test infrastructure can serialize container usage.

@@ -41,6 +41,8 @@ for example:
 | `09-spring` | Spring transactions, cache, repositories |
 | `10-multi-tenant` | Schema-based multi-tenancy |
 | `11-high-performance` | Cache strategies, routing datasource, benchmarks |
+| `12-production-integration` | Production-grade Spring Boot and Ktor service patterns |
+| `13-ecosystem-integrations` | Planned Exposed 1.11 ecosystem, platform, DDD, and Modulith integrations |
 
 Every example README must include an Architecture Diagram rendered as a PNG
 image with the editable SVG source stored next to it under
