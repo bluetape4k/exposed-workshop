@@ -1,150 +1,139 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" width="1280" height="760" role="img" aria-labelledby="title desc">
-  <title id="title">BigQuery Dry-Run Query Validation</title>
-  <desc id="desc">Sequence diagram showing a credential-free Exposed query dry-run path through a mocked BigQuery REST client.</desc>
-  <style>
-    text {
-      font-family: "Architects Daughter", "Comic Mono", Arial, sans-serif;
-      fill: #111827;
-    }
-    .title {
-      font-size: 31px;
-      font-weight: 700;
-    }
-    .subtitle {
-      font-size: 15px;
-      fill: #4b5563;
-    }
-    .participant-title {
-      font-size: 17px;
-      font-weight: 700;
-    }
-    .participant-subtitle {
-      font-family: "Comic Mono", "Architects Daughter", Arial, sans-serif;
-      font-size: 12px;
-      fill: #4b5563;
-    }
-    .message-label {
-      font-family: "Comic Mono", "Architects Daughter", Arial, sans-serif;
-      font-size: 14px;
-      fill: #1f2937;
-    }
-    .small-note {
-      font-family: "Comic Mono", "Architects Daughter", Arial, sans-serif;
-      font-size: 13px;
-      fill: #374151;
-    }
-    .lifeline {
-      stroke: #94a3b8;
-      stroke-width: 2;
-      stroke-dasharray: 8 8;
-      stroke-linecap: round;
-    }
-    .message {
-      stroke: #2563eb;
-      stroke-width: 3.4;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-      marker-end: url(#seqArrowBlue);
-    }
-    .return-message {
-      stroke: #2563eb;
-      stroke-width: 3.4;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-      marker-end: url(#seqArrowBlue);
-    }
-  </style>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1080" viewBox="0 0 1600 1080" role="img" aria-labelledby="title desc">
+  <title id="title">BigQuery dry-run query validation sequence</title>
+  <desc id="desc">Source-backed sequence for the credential-free Exposed BigQuery dry-run workshop path with a mocked BigQuery REST client.</desc>
   <defs>
-    <marker id="seqArrowBlue" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="0.5" stroke-dasharray="none" style="stroke-dasharray:none"/>
+    <style>
+      text { letter-spacing: 0; }
+      .title { font-family: "Architects Daughter"; font-size: 40px; font-weight: 400; fill: #263238; }
+      .subtitle, .msg, .note, .footer, .role { font-family: "Comic Mono"; fill: #36464f; }
+      .subtitle { font-size: 18px; }
+      .participant { font-family: "Architects Daughter"; font-size: 19px; font-weight: 400; fill: #1f3138; }
+      .role { font-size: 13px; fill: #546a73; }
+      .msg { font-size: 14px; }
+      .note { font-size: 13px; }
+      .footer { font-size: 14px; fill: #60727d; }
+      .frame { fill: #fbfcf8; stroke: #41545d; stroke-width: 3; }
+      .header { fill: #ffffff; stroke: #546e7a; stroke-width: 2; }
+      .lifeline { stroke: #9aaab1; stroke-width: 2; stroke-dasharray: 7 8; }
+      .activation { fill: #f3ecdf; stroke: #8f784e; stroke-width: 1.5; }
+      .call { fill: none; stroke: #3f7d9c; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowCall); }
+      .sql { fill: none; stroke: #a2743d; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowSql); }
+      .state { fill: none; stroke: #6e8f4f; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowState); }
+      .return { fill: none; stroke: #9b7d54; stroke-width: 2.5; stroke-dasharray: 8 6; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowReturn); }
+      .alt { fill: none; stroke: #78909c; stroke-width: 3; stroke-dasharray: 12 7; }
+      .label { fill: #ffffff; stroke: #d7e0e4; stroke-width: 1.5; }
+      .label.callLabel { stroke: #9cc2d1; }
+      .label.sqlLabel { stroke: #d0b078; }
+      .label.stateLabel { stroke: #b6c9a4; }
+      .label.returnLabel { stroke: #c8b38f; }
+      .badge { stroke-width: 1.8; }
+      .badge.callBadge { fill: #eaf4f8; stroke: #3f7d9c; }
+      .badge.sqlBadge { fill: #fff4df; stroke: #a2743d; }
+      .badge.stateBadge { fill: #eef7f0; stroke: #6e8f4f; }
+      .badge.returnBadge { fill: #fff7e8; stroke: #9b7d54; }
+      .badgeText { font-family: "Comic Mono"; font-size: 12px; font-weight: 700; }
+      .msg.callText, .badgeText.callText { fill: #2f6f8e; }
+      .msg.sqlText, .badgeText.sqlText { fill: #855a29; }
+      .msg.stateText, .badgeText.stateText { fill: #55783f; }
+      .msg.returnText, .badgeText.returnText { fill: #7f6038; }
+    </style>
+    <marker id="arrowCall" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c" stroke="#3f7d9c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowSql" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowState" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowReturn" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b7d54" stroke="#9b7d54" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="1280" height="760" fill="#f8fafc"/>
-  <rect x="34" y="28" width="1212" height="704" rx="22" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
-
-  <text x="640" y="74" class="title" text-anchor="middle">BigQuery Dry-Run Query Validation</text>
-  <text x="640" y="104" class="subtitle" text-anchor="middle">Exposed SQL is validated through a mocked BigQuery REST call before any billable execution path exists.</text>
+  <rect x="24" y="24" width="1552" height="1032" rx="20" class="frame"/>
+  <text x="800" y="78" text-anchor="middle" class="title">BigQuery Dry-Run Query Validation</text>
+  <text x="800" y="108" text-anchor="middle" class="subtitle">Exposed SQL is generated locally, mapped to dryRun=true, and verified through a mocked BigQuery REST client.</text>
 
   <g id="participants">
-    <g transform="translate(42 128)">
-      <rect x="0" y="0" width="156" height="70" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
-      <text x="78" y="28" class="participant-title" text-anchor="middle">Workshop Test</text>
-      <text x="78" y="51" class="participant-subtitle" text-anchor="middle">JUnit + MockK</text>
-    </g>
-    <g transform="translate(232 128)">
-      <rect x="0" y="0" width="176" height="70" rx="8" fill="#f0fdfa" stroke="#5eead4" stroke-width="2"/>
-      <text x="88" y="28" class="participant-title" text-anchor="middle">Exposed Query</text>
-      <text x="88" y="51" class="participant-subtitle" text-anchor="middle">read-model DSL</text>
-    </g>
-    <g transform="translate(434 128)">
-      <rect x="0" y="0" width="172" height="70" rx="8" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
-      <text x="86" y="28" class="participant-title" text-anchor="middle">H2 Dialect</text>
-      <text x="86" y="51" class="participant-subtitle" text-anchor="middle">SQL generation</text>
-    </g>
-    <g transform="translate(624 128)">
-      <rect x="0" y="0" width="192" height="70" rx="8" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="2"/>
-      <text x="96" y="28" class="participant-title" text-anchor="middle">BigQueryContext</text>
-      <text x="96" y="51" class="participant-subtitle" text-anchor="middle">dry-run adapter</text>
-    </g>
-    <g transform="translate(832 128)">
-      <rect x="0" y="0" width="176" height="70" rx="8" fill="#fefce8" stroke="#fde047" stroke-width="2"/>
-      <text x="88" y="28" class="participant-title" text-anchor="middle">Mocked REST</text>
-      <text x="88" y="51" class="participant-subtitle" text-anchor="middle">Bigquery.Jobs</text>
-    </g>
-    <g transform="translate(1050 128)">
-      <rect x="0" y="0" width="180" height="70" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
-      <text x="90" y="28" class="participant-title" text-anchor="middle">Assertions</text>
-      <text x="90" y="51" class="participant-subtitle" text-anchor="middle">request + errors</text>
-    </g>
+    <rect x="60" y="150" width="170" height="68" rx="10" class="header"/>
+    <text x="145" y="179" text-anchor="middle" class="participant">Workshop Test</text>
+    <text x="145" y="201" text-anchor="middle" class="role">JUnit + MockK</text>
+
+    <rect x="300" y="150" width="190" height="68" rx="10" class="header"/>
+    <text x="395" y="179" text-anchor="middle" class="participant">Exposed Query</text>
+    <text x="395" y="201" text-anchor="middle" class="role">read-model DSL</text>
+
+    <rect x="560" y="150" width="170" height="68" rx="10" class="header"/>
+    <text x="645" y="179" text-anchor="middle" class="participant">H2 Dialect</text>
+    <text x="645" y="201" text-anchor="middle" class="role">SQL generation</text>
+
+    <rect x="810" y="150" width="230" height="68" rx="10" class="header"/>
+    <text x="925" y="179" text-anchor="middle" class="participant">BigQueryContext</text>
+    <text x="925" y="201" text-anchor="middle" class="role">dry-run adapter</text>
+
+    <rect x="1090" y="150" width="200" height="68" rx="10" class="header"/>
+    <text x="1190" y="179" text-anchor="middle" class="participant">Mocked REST</text>
+    <text x="1190" y="201" text-anchor="middle" class="role">Bigquery.Jobs</text>
+
+    <rect x="1370" y="150" width="170" height="68" rx="10" class="header"/>
+    <text x="1455" y="179" text-anchor="middle" class="participant">Assertions</text>
+    <text x="1455" y="201" text-anchor="middle" class="role">request + errors</text>
   </g>
 
-  <g id="lifelines">
-    <line x1="120" y1="204" x2="120" y2="646" class="lifeline"/>
-    <line x1="320" y1="204" x2="320" y2="646" class="lifeline"/>
-    <line x1="520" y1="204" x2="520" y2="646" class="lifeline"/>
-    <line x1="720" y1="204" x2="720" y2="646" class="lifeline"/>
-    <line x1="920" y1="204" x2="920" y2="646" class="lifeline"/>
-    <line x1="1140" y1="204" x2="1140" y2="646" class="lifeline"/>
-  </g>
+  <line x1="145" y1="218" x2="145" y2="928" class="lifeline"/>
+  <line x1="395" y1="218" x2="395" y2="928" class="lifeline"/>
+  <line x1="645" y1="218" x2="645" y2="928" class="lifeline"/>
+  <line x1="925" y1="218" x2="925" y2="928" class="lifeline"/>
+  <line x1="1190" y1="218" x2="1190" y2="928" class="lifeline"/>
+  <line x1="1455" y1="218" x2="1455" y2="928" class="lifeline"/>
 
-  <g id="messages">
-    <line x1="120" y1="248" x2="320" y2="248" class="message"/>
-    <rect x="114" y="218" width="212" height="24" rx="5" fill="#ffffff" opacity="0.96"/>
-    <text x="220" y="235" class="message-label" text-anchor="middle">buildRegionalRevenueQuery()</text>
+  <rect x="388" y="318" width="14" height="88" rx="6" class="activation"/>
+  <rect x="918" y="382" width="14" height="528" rx="6" class="activation"/>
+  <rect x="638" y="482" width="14" height="96" rx="6" class="activation"/>
+  <rect x="1183" y="662" width="14" height="150" rx="6" class="activation"/>
+  <rect x="1448" y="900" width="14" height="42" rx="6" class="activation"/>
 
-    <line x1="320" y1="308" x2="720" y2="308" class="message"/>
-    <rect x="408" y="278" width="224" height="24" rx="5" fill="#ffffff" opacity="0.96"/>
-    <text x="520" y="295" class="message-label" text-anchor="middle">validateQuery(query, options)</text>
+  <rect x="72" y="260" width="430" height="34" rx="17" class="label callLabel"/>
+  <circle cx="96" cy="277" r="13" class="badge callBadge"/><text x="96" y="282" text-anchor="middle" class="badgeText callText">1</text>
+  <text x="120" y="282" class="msg callText">buildRegionalRevenueQuery()</text>
+  <path d="M 145 318 L 395 318" class="call"/>
 
-    <line x1="720" y1="368" x2="520" y2="368" class="message"/>
-    <rect x="510" y="338" width="220" height="24" rx="5" fill="#ffffff" opacity="0.96"/>
-    <text x="620" y="355" class="message-label" text-anchor="middle">prepare SQL from Query</text>
+  <rect x="354" y="326" width="430" height="34" rx="17" class="label callLabel"/>
+  <circle cx="378" cy="343" r="13" class="badge callBadge"/><text x="378" y="348" text-anchor="middle" class="badgeText callText">2</text>
+  <text x="402" y="348" class="msg callText">validateQuery(query, options)</text>
+  <path d="M 395 382 L 925 382" class="call"/>
 
-    <line x1="520" y1="428" x2="720" y2="428" class="return-message"/>
-    <rect x="535" y="398" width="170" height="24" rx="5" fill="#ffffff" opacity="0.96"/>
-    <text x="620" y="415" class="message-label" text-anchor="middle">standard SQL only</text>
+  <rect x="662" y="426" width="372" height="34" rx="17" class="label sqlLabel"/>
+  <circle cx="686" cy="443" r="13" class="badge sqlBadge"/><text x="686" y="448" text-anchor="middle" class="badgeText sqlText">3</text>
+  <text x="710" y="448" class="msg sqlText">prepare SQL from Exposed Query</text>
+  <path d="M 925 482 L 645 482" class="sql"/>
 
-    <line x1="720" y1="488" x2="920" y2="488" class="message"/>
-    <rect x="720" y="458" width="200" height="24" rx="5" fill="#ffffff" opacity="0.96"/>
-    <text x="820" y="475" class="message-label" text-anchor="middle">jobs.query(dryRun=true)</text>
+  <rect x="584" y="520" width="318" height="34" rx="17" class="label returnLabel"/>
+  <circle cx="608" cy="537" r="13" class="badge returnBadge"/><text x="608" y="542" text-anchor="middle" class="badgeText returnText">4</text>
+  <text x="632" y="542" class="msg returnText">standard SQL only</text>
+  <path d="M 645 578 L 925 578" class="return"/>
 
-    <rect x="674" y="528" width="488" height="122" rx="10" fill="#fff7ed" fill-opacity="0.78" stroke="#fdba74" stroke-width="1.6" stroke-dasharray="7 5"/>
-    <text x="696" y="548" class="small-note">alt dry-run outcome</text>
+  <rect x="872" y="600" width="420" height="34" rx="17" class="label stateLabel"/>
+  <circle cx="896" cy="617" r="13" class="badge stateBadge"/><text x="896" y="622" text-anchor="middle" class="badgeText stateText">5</text>
+  <text x="920" y="622" class="msg stateText">jobs.query(dryRun=true, options)</text>
+  <path d="M 925 662 L 1190 662" class="state"/>
 
-    <line x1="920" y1="584" x2="720" y2="584" class="return-message"/>
-    <rect x="710" y="558" width="220" height="24" rx="5" fill="#fff7ed" opacity="0.98"/>
-    <text x="820" y="575" class="message-label" text-anchor="middle">mocked success or errors</text>
+  <rect x="790" y="690" width="728" height="248" rx="14" class="alt"/>
+  <rect x="820" y="708" width="248" height="30" rx="15" fill="#f8f1e6" stroke="#a2743d" stroke-width="1.8"/>
+  <text x="842" y="728" class="note">alt mocked dry-run result</text>
 
-    <line x1="720" y1="632" x2="1140" y2="632" class="message"/>
-    <rect x="828" y="606" width="204" height="24" rx="5" fill="#fff7ed" opacity="0.98"/>
-    <text x="930" y="623" class="message-label" text-anchor="middle">response or exception</text>
-  </g>
+  <rect x="958" y="754" width="388" height="34" rx="17" class="label returnLabel"/>
+  <circle cx="982" cy="771" r="13" class="badge returnBadge"/><text x="982" y="776" text-anchor="middle" class="badgeText returnText">6</text>
+  <text x="1006" y="776" class="msg returnText">success response or errors</text>
+  <path d="M 1190 812 L 925 812" class="return"/>
 
-  <g id="local-only-note">
-    <rect x="102" y="670" width="1076" height="38" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.4"/>
-    <text x="640" y="694" class="small-note" text-anchor="middle">Default path stays local: no ADC, service-account files, tokens, endpoint overrides, network calls, or billable BigQuery execution.</text>
-  </g>
+  <rect x="952" y="846" width="456" height="34" rx="17" class="label stateLabel"/>
+  <circle cx="976" cy="863" r="13" class="badge stateBadge"/><text x="976" y="868" text-anchor="middle" class="badgeText stateText">7</text>
+  <text x="1000" y="868" class="msg stateText">assert request mapping and exception path</text>
+  <path d="M 925 900 L 1455 900" class="state"/>
+
+  <rect x="98" y="972" width="1404" height="44" rx="12" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
+  <text x="118" y="1000" class="note">Default path stays local: no ADC, service-account files, tokens, endpoint overrides, network calls, or billable BigQuery execution.</text>
+  <text x="800" y="1032" text-anchor="middle" class="footer">github.com/bluetape4k/exposed-workshop - 13-ecosystem-integrations/01-bigquery-dry-run</text>
 </svg>
