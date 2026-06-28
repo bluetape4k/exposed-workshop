@@ -1,68 +1,150 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" role="img" aria-labelledby="title desc">
-  <title id="title">BigQuery dry-run validation flow</title>
-  <desc id="desc">Exposed builds a query, H2 generates SQL, BigQueryContext creates a dry-run request, and mocked BigQuery REST response drives assertions.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" width="1280" height="760" role="img" aria-labelledby="title desc">
+  <title id="title">BigQuery Dry-Run Query Validation</title>
+  <desc id="desc">Sequence diagram showing a credential-free Exposed query dry-run path through a mocked BigQuery REST client.</desc>
+  <style>
+    text {
+      font-family: "Architects Daughter", "Comic Mono", Arial, sans-serif;
+      fill: #111827;
+    }
+    .title {
+      font-size: 31px;
+      font-weight: 700;
+    }
+    .subtitle {
+      font-size: 15px;
+      fill: #4b5563;
+    }
+    .participant-title {
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .participant-subtitle {
+      font-family: "Comic Mono", "Architects Daughter", Arial, sans-serif;
+      font-size: 12px;
+      fill: #4b5563;
+    }
+    .message-label {
+      font-family: "Comic Mono", "Architects Daughter", Arial, sans-serif;
+      font-size: 14px;
+      fill: #1f2937;
+    }
+    .small-note {
+      font-family: "Comic Mono", "Architects Daughter", Arial, sans-serif;
+      font-size: 13px;
+      fill: #374151;
+    }
+    .lifeline {
+      stroke: #94a3b8;
+      stroke-width: 2;
+      stroke-dasharray: 8 8;
+      stroke-linecap: round;
+    }
+    .message {
+      stroke: #2563eb;
+      stroke-width: 3.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      marker-end: url(#seqArrowBlue);
+    }
+    .return-message {
+      stroke: #2563eb;
+      stroke-width: 3.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      marker-end: url(#seqArrowBlue);
+    }
+  </style>
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    <marker id="seqArrowBlue" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="0.5" stroke-dasharray="none" style="stroke-dasharray:none"/>
     </marker>
-    <style>
-      .bg { fill: #f8fafc; }
-      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 8; }
-      .local { fill: #ecfeff; stroke: #0891b2; stroke-width: 2; rx: 8; }
-      .dry { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 8; }
-      .mock { fill: #f0fdf4; stroke: #16a34a; stroke-width: 2; rx: 8; }
-      .assert { fill: #fff7ed; stroke: #ea580c; stroke-width: 2; rx: 8; }
-      .title { font: 700 26px Arial, sans-serif; fill: #0f172a; }
-      .label { font: 700 18px Arial, sans-serif; fill: #0f172a; }
-      .body { font: 14px Arial, sans-serif; fill: #334155; }
-      .note { font: 700 14px Arial, sans-serif; fill: #b45309; }
-      .arrow { stroke: #2563eb; stroke-width: 3; fill: none; marker-end: url(#arrow); }
-    </style>
   </defs>
 
-  <rect class="bg" x="0" y="0" width="1120" height="620"/>
-  <text class="title" x="56" y="58">BigQuery Dry-Run Query Validation</text>
-  <text class="body" x="56" y="86">Default path is local, credential-free, network-free, and cost-free.</text>
+  <rect x="0" y="0" width="1280" height="760" fill="#f8fafc"/>
+  <rect x="34" y="28" width="1212" height="704" rx="22" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
 
-  <rect class="panel" x="42" y="112" width="1036" height="386"/>
+  <text x="640" y="74" class="title" text-anchor="middle">BigQuery Dry-Run Query Validation</text>
+  <text x="640" y="104" class="subtitle" text-anchor="middle">Exposed SQL is validated through a mocked BigQuery REST call before any billable execution path exists.</text>
 
-  <rect class="local" x="78" y="178" width="180" height="150"/>
-  <text class="label" x="102" y="218">Exposed Query</text>
-  <text class="body" x="102" y="250">events table</text>
-  <text class="body" x="102" y="274">group by region</text>
-  <text class="body" x="102" y="298">minimum revenue</text>
+  <g id="participants">
+    <g transform="translate(42 128)">
+      <rect x="0" y="0" width="156" height="70" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+      <text x="78" y="28" class="participant-title" text-anchor="middle">Workshop Test</text>
+      <text x="78" y="51" class="participant-subtitle" text-anchor="middle">JUnit + MockK</text>
+    </g>
+    <g transform="translate(232 128)">
+      <rect x="0" y="0" width="176" height="70" rx="8" fill="#f0fdfa" stroke="#5eead4" stroke-width="2"/>
+      <text x="88" y="28" class="participant-title" text-anchor="middle">Exposed Query</text>
+      <text x="88" y="51" class="participant-subtitle" text-anchor="middle">read-model DSL</text>
+    </g>
+    <g transform="translate(434 128)">
+      <rect x="0" y="0" width="172" height="70" rx="8" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+      <text x="86" y="28" class="participant-title" text-anchor="middle">H2 Dialect</text>
+      <text x="86" y="51" class="participant-subtitle" text-anchor="middle">SQL generation</text>
+    </g>
+    <g transform="translate(624 128)">
+      <rect x="0" y="0" width="192" height="70" rx="8" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="2"/>
+      <text x="96" y="28" class="participant-title" text-anchor="middle">BigQueryContext</text>
+      <text x="96" y="51" class="participant-subtitle" text-anchor="middle">dry-run adapter</text>
+    </g>
+    <g transform="translate(832 128)">
+      <rect x="0" y="0" width="176" height="70" rx="8" fill="#fefce8" stroke="#fde047" stroke-width="2"/>
+      <text x="88" y="28" class="participant-title" text-anchor="middle">Mocked REST</text>
+      <text x="88" y="51" class="participant-subtitle" text-anchor="middle">Bigquery.Jobs</text>
+    </g>
+    <g transform="translate(1050 128)">
+      <rect x="0" y="0" width="180" height="70" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+      <text x="90" y="28" class="participant-title" text-anchor="middle">Assertions</text>
+      <text x="90" y="51" class="participant-subtitle" text-anchor="middle">request + errors</text>
+    </g>
+  </g>
 
-  <path class="arrow" d="M 258 253 L 345 253"/>
+  <g id="lifelines">
+    <line x1="120" y1="204" x2="120" y2="646" class="lifeline"/>
+    <line x1="320" y1="204" x2="320" y2="646" class="lifeline"/>
+    <line x1="520" y1="204" x2="520" y2="646" class="lifeline"/>
+    <line x1="720" y1="204" x2="720" y2="646" class="lifeline"/>
+    <line x1="920" y1="204" x2="920" y2="646" class="lifeline"/>
+    <line x1="1140" y1="204" x2="1140" y2="646" class="lifeline"/>
+  </g>
 
-  <rect class="local" x="346" y="178" width="180" height="150"/>
-  <text class="label" x="373" y="218">H2 SQL DB</text>
-  <text class="body" x="373" y="250">PostgreSQL mode</text>
-  <text class="body" x="373" y="274">SQL generation only</text>
-  <text class="body" x="373" y="298">no warehouse data</text>
+  <g id="messages">
+    <line x1="120" y1="248" x2="320" y2="248" class="message"/>
+    <rect x="114" y="218" width="212" height="24" rx="5" fill="#ffffff" opacity="0.96"/>
+    <text x="220" y="235" class="message-label" text-anchor="middle">buildRegionalRevenueQuery()</text>
 
-  <path class="arrow" d="M 526 253 L 613 253"/>
+    <line x1="320" y1="308" x2="720" y2="308" class="message"/>
+    <rect x="408" y="278" width="224" height="24" rx="5" fill="#ffffff" opacity="0.96"/>
+    <text x="520" y="295" class="message-label" text-anchor="middle">validateQuery(query, options)</text>
 
-  <rect class="dry" x="614" y="178" width="180" height="150"/>
-  <text class="label" x="640" y="218">Dry-Run Request</text>
-  <text class="body" x="640" y="250">dryRun = true</text>
-  <text class="body" x="640" y="274">legacy SQL = false</text>
-  <text class="body" x="640" y="298">labels and limits</text>
+    <line x1="720" y1="368" x2="520" y2="368" class="message"/>
+    <rect x="510" y="338" width="220" height="24" rx="5" fill="#ffffff" opacity="0.96"/>
+    <text x="620" y="355" class="message-label" text-anchor="middle">prepare SQL from Query</text>
 
-  <path class="arrow" d="M 794 253 L 881 253"/>
+    <line x1="520" y1="428" x2="720" y2="428" class="return-message"/>
+    <rect x="535" y="398" width="170" height="24" rx="5" fill="#ffffff" opacity="0.96"/>
+    <text x="620" y="415" class="message-label" text-anchor="middle">standard SQL only</text>
 
-  <rect class="mock" x="882" y="178" width="156" height="150"/>
-  <text class="label" x="907" y="218">Mocked REST</text>
-  <text class="body" x="907" y="250">Bigquery.Jobs</text>
-  <text class="body" x="907" y="274">captured request</text>
-  <text class="body" x="907" y="298">success or errors</text>
+    <line x1="720" y1="488" x2="920" y2="488" class="message"/>
+    <rect x="720" y="458" width="200" height="24" rx="5" fill="#ffffff" opacity="0.96"/>
+    <text x="820" y="475" class="message-label" text-anchor="middle">jobs.query(dryRun=true)</text>
 
-  <path class="arrow" d="M 960 328 L 960 398 L 606 398"/>
+    <rect x="674" y="528" width="488" height="122" rx="10" fill="#fff7ed" fill-opacity="0.78" stroke="#fdba74" stroke-width="1.6" stroke-dasharray="7 5"/>
+    <text x="696" y="548" class="small-note">alt dry-run outcome</text>
 
-  <rect class="assert" x="350" y="350" width="256" height="96"/>
-  <text class="label" x="380" y="386">Workshop Assertions</text>
-  <text class="body" x="380" y="414">SQL fragments, options, errors</text>
+    <line x1="920" y1="584" x2="720" y2="584" class="return-message"/>
+    <rect x="710" y="558" width="220" height="24" rx="5" fill="#fff7ed" opacity="0.98"/>
+    <text x="820" y="575" class="message-label" text-anchor="middle">mocked success or errors</text>
 
-  <rect class="panel" x="78" y="522" width="960" height="56"/>
-  <text class="note" x="102" y="556">No ADC, service-account files, tokens, endpoint overrides, network calls, or billable BigQuery execution.</text>
+    <line x1="720" y1="632" x2="1140" y2="632" class="message"/>
+    <rect x="828" y="606" width="204" height="24" rx="5" fill="#fff7ed" opacity="0.98"/>
+    <text x="930" y="623" class="message-label" text-anchor="middle">response or exception</text>
+  </g>
+
+  <g id="local-only-note">
+    <rect x="102" y="670" width="1076" height="38" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.4"/>
+    <text x="640" y="694" class="small-note" text-anchor="middle">Default path stays local: no ADC, service-account files, tokens, endpoint overrides, network calls, or billable BigQuery execution.</text>
+  </g>
 </svg>

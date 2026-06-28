@@ -23,6 +23,12 @@ execution and make the no-credential default explicit.
 
 - For cloud-adjacent examples, name the real API boundary being mocked instead
   of inventing a wrapper in the plan.
+- For README diagrams that show ordered calls or request/response behavior,
+  apply `$bluetape4k-diagram` as a gate before claiming completion and prefer a
+  sequence diagram over a generic flowchart.
+- Do not report diagram checklist success from SVG/XML plus visual inspection
+  alone. Run geometry audit, endpoint audit, marker/font checks, CairoSVG CLI
+  rendering, and full-size PNG inspection before recording PASS evidence.
 - Add the runnable Gradle task to `.github/workflows/examples.yml` in the same
   PR that introduces a child module.
 - Record explicit N/A evidence for CI, Nightly, summary `needs`, and coverage

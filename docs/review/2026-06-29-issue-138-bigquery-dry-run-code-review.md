@@ -38,10 +38,21 @@
   `project ':01-bigquery-dry-run' - /13-ecosystem-integrations/01-bigquery-dry-run`.
 - `actionlint .github/workflows/examples.yml`: PASS.
 - README local-link Ruby check: PASS.
+- `$bluetape4k-diagram` correction: the first generic flowchart did not fully
+  satisfy the current README visual checklist, so the asset was redrawn as a
+  sequence diagram for the source-backed ordered validation flow.
 - `xmllint --noout docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.svg`: PASS.
+- `python3 /Users/debop/.codex/skills/bluetape4k-diagram/references/diagram-geometry-audit.py docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.svg`: PASS,
+  `geometry_failures=0`.
+- `python3 /Users/debop/.codex/skills/bluetape4k-diagram/references/diagram-endpoint-audit.py docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.svg`: PASS,
+  `endpoint_failures=0`.
+- Marker/font audit: PASS; the SVG uses `Architects Daughter`, `Comic Mono`,
+  fixed `markerUnits="userSpaceOnUse"`, explicit `#2563eb` marker color, and no
+  `context-stroke` or implicit stroke-width marker.
 - CairoSVG render to
   `docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.png`: PASS.
-- Rendered PNG visual QA: PASS; text is legible and boxes/arrows do not overlap.
+- Rendered PNG visual QA: PASS; sequence labels, lifelines, arrowheads, alt
+  region, and local-only note are legible and do not overlap.
 - `git diff --check`: PASS.
 
 ## Credential And Real-Client Scan
