@@ -135,6 +135,7 @@ exposed-dao = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-dao" }
 exposed-fastjson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-fastjson2" }
 exposed-jackson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson2" }
 exposed-jackson3 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson3" }
+exposed-bigquery = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-bigquery" }
 exposed-jdbc = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc" }
 exposed-jdbc-redisson = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-redisson" }
 exposed-tink = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-tink" }

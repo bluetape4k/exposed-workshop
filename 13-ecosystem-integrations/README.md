@@ -5,8 +5,7 @@ English | [한국어](README.ko.md)
 This chapter is the foundation for issue
 [#137](https://github.com/bluetape4k/exposed-workshop/issues/137): Exposed 1.11
 and adjacent ecosystem examples that do not belong in the production-service
-chapter. It is intentionally README-only until the child issues add runnable
-modules.
+chapter. Child modules become runnable as their issues are implemented.
 
 ![Chapter 13 ecosystem integrations architecture](../docs/images/readme-diagrams/13-ecosystem-integrations-architecture-01.png)
 
@@ -23,7 +22,7 @@ modules.
 
 | Issue | Status | Planned directory | Gradle task | README title | Lane |
 |---|---|---|---|---|---|
-| [#138](https://github.com/bluetape4k/exposed-workshop/issues/138) | Planned | `13-ecosystem-integrations/01-bigquery-dry-run` | `:01-bigquery-dry-run:build` | BigQuery Dry-Run Query Validation | Database platform adapters |
+| [#138](https://github.com/bluetape4k/exposed-workshop/issues/138) | Ready | [`13-ecosystem-integrations/01-bigquery-dry-run`](01-bigquery-dry-run/README.md) | `:01-bigquery-dry-run:build` | [BigQuery Dry-Run Query Validation](01-bigquery-dry-run/README.md) | Database platform adapters |
 | [#139](https://github.com/bluetape4k/exposed-workshop/issues/139) | Planned | `13-ecosystem-integrations/02-trino-session-options` | `:02-trino-session-options:build` | Trino Session Options and Pushdown Verification | Database platform adapters |
 | [#140](https://github.com/bluetape4k/exposed-workshop/issues/140) | Planned | `13-ecosystem-integrations/03-cockroachdb-retry` | `:03-cockroachdb-retry:build` | CockroachDB Serializable Retry | Database platform adapters |
 | [#141](https://github.com/bluetape4k/exposed-workshop/issues/141) | Planned | `13-ecosystem-integrations/04-starrocks-olap-local` | `:04-starrocks-olap-local:build` | StarRocks Local-First OLAP | Database platform adapters |

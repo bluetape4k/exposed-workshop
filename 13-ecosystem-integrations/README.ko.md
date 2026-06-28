@@ -5,8 +5,7 @@
 이 장은 이슈
 [#137](https://github.com/bluetape4k/exposed-workshop/issues/137)의 기반입니다.
 Exposed 1.11과 인접 ecosystem 예제를 다루되, 운영형 서비스 패턴을 다루는 12장과는
-경계를 분리합니다. 자식 이슈가 실행 가능한 모듈을 추가하기 전까지는 의도적으로
-README-only foundation으로 유지합니다.
+경계를 분리합니다. 자식 이슈가 구현되면 해당 모듈은 실행 가능한 예제로 전환됩니다.
 
 ![Chapter 13 ecosystem integrations architecture](../docs/images/readme-diagrams/13-ecosystem-integrations-architecture-01.png)
 
@@ -21,7 +20,7 @@ README-only foundation으로 유지합니다.
 
 | Issue | Status | Planned directory | Gradle task | README title | Lane |
 |---|---|---|---|---|---|
-| [#138](https://github.com/bluetape4k/exposed-workshop/issues/138) | Planned | `13-ecosystem-integrations/01-bigquery-dry-run` | `:01-bigquery-dry-run:build` | BigQuery Dry-Run Query Validation | Database platform adapters |
+| [#138](https://github.com/bluetape4k/exposed-workshop/issues/138) | Ready | [`13-ecosystem-integrations/01-bigquery-dry-run`](01-bigquery-dry-run/README.ko.md) | `:01-bigquery-dry-run:build` | [BigQuery Dry-Run Query Validation](01-bigquery-dry-run/README.ko.md) | Database platform adapters |
 | [#139](https://github.com/bluetape4k/exposed-workshop/issues/139) | Planned | `13-ecosystem-integrations/02-trino-session-options` | `:02-trino-session-options:build` | Trino Session Options and Pushdown Verification | Database platform adapters |
 | [#140](https://github.com/bluetape4k/exposed-workshop/issues/140) | Planned | `13-ecosystem-integrations/03-cockroachdb-retry` | `:03-cockroachdb-retry:build` | CockroachDB Serializable Retry | Database platform adapters |
 | [#141](https://github.com/bluetape4k/exposed-workshop/issues/141) | Planned | `13-ecosystem-integrations/04-starrocks-olap-local` | `:04-starrocks-olap-local:build` | StarRocks Local-First OLAP | Database platform adapters |

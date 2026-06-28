@@ -78,8 +78,7 @@ jobs:
           # - multi-tenant Spring examples
           # - routing datasource example
           # - production-integration Spring/Ktor examples
-          # Chapter 13 is a README-only foundation until child modules exist.
-          # Add runnable chapter 13 Gradle tasks here in the child module PRs.
+          # Chapter 13 ecosystem integrations are added as child modules become runnable.
           #
           # Keep Testcontainers-backed modules in one Gradle invocation so shared
           # test infrastructure can serialize container usage.
@@ -99,6 +98,7 @@ jobs:
             :08-ktor-outbox-realtime:build \
             :09-spring-observability-readiness:build \
             :10-ktor-observability-readiness:build \
+            :01-bigquery-dry-run:build \
             --no-daemon --no-configuration-cache --continue
         env:
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false"

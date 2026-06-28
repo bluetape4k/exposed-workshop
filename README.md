@@ -379,8 +379,12 @@ Implement the Ktor pair with explicit `/readyz`, sanitized `X-Request-ID`, struc
 
 Track planned Exposed 1.11 ecosystem examples for database platforms, Ktor,
 Spring Modulith, and DDD under issue
-[#137](https://github.com/bluetape4k/exposed-workshop/issues/137). Child module
-README links will be added only after runnable modules exist.
+[#137](https://github.com/bluetape4k/exposed-workshop/issues/137).
+
+#### [BigQuery Dry-Run Query Validation](13-ecosystem-integrations/01-bigquery-dry-run/README.md)
+
+Validate an Exposed-generated analytical query through BigQuery dry-run request
+mapping with H2 SQL generation and a mocked BigQuery REST response.
 
 ---
 
