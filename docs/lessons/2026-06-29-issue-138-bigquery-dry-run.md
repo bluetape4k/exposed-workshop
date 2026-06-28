@@ -26,6 +26,10 @@ execution and make the no-credential default explicit.
 - For README diagrams that show ordered calls or request/response behavior,
   apply `$bluetape4k-diagram` as a gate before claiming completion and prefer a
   sequence diagram over a generic flowchart.
+- Compare sequence diagrams against the local best-practices sequence family
+  before accepting style parity. For this module, `leader-redis-lettuce-sequence-02`
+  was the reference for frame/header/lifeline/activation, numbered pill labels,
+  semantic line colors, and fixed solid markers.
 - Do not report diagram checklist success from SVG/XML plus visual inspection
   alone. Run geometry audit, endpoint audit, marker/font checks, CairoSVG CLI
   rendering, and full-size PNG inspection before recording PASS evidence.
