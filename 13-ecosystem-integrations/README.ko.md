@@ -1,0 +1,56 @@
+# Chapter 13 - Ecosystem Integrations
+
+[English](README.md) | 한국어
+
+이 장은 이슈
+[#137](https://github.com/bluetape4k/exposed-workshop/issues/137)의 기반입니다.
+Exposed 1.11과 인접 ecosystem 예제를 다루되, 운영형 서비스 패턴을 다루는 12장과는
+경계를 분리합니다. 자식 이슈가 실행 가능한 모듈을 추가하기 전까지는 의도적으로
+README-only foundation으로 유지합니다.
+
+![Chapter 13 ecosystem integrations architecture](../docs/images/readme-diagrams/13-ecosystem-integrations-architecture-01.png)
+
+## 학습 목표
+
+- 데이터베이스 플랫폼 어댑터를 12장의 서비스 패턴과 분리합니다.
+- Ktor, Spring Modulith, DDD, dialect 중심 예제를 위한 지속 가능한 장 경계를 둡니다.
+- 구현 전에 자식 모듈 순서와 검증 기대치를 명확히 합니다.
+- 모든 외부 서비스 예제는 기본값을 local, fake, 또는 명시적 opt-in으로 둡니다.
+
+## 예정 예제
+
+| Issue | Status | Planned directory | Gradle task | README title | Lane |
+|---|---|---|---|---|---|
+| [#138](https://github.com/bluetape4k/exposed-workshop/issues/138) | Planned | `13-ecosystem-integrations/01-bigquery-dry-run` | `:01-bigquery-dry-run:build` | BigQuery Dry-Run Query Validation | Database platform adapters |
+| [#139](https://github.com/bluetape4k/exposed-workshop/issues/139) | Planned | `13-ecosystem-integrations/02-trino-session-options` | `:02-trino-session-options:build` | Trino Session Options and Pushdown Verification | Database platform adapters |
+| [#140](https://github.com/bluetape4k/exposed-workshop/issues/140) | Planned | `13-ecosystem-integrations/03-cockroachdb-retry` | `:03-cockroachdb-retry:build` | CockroachDB Serializable Retry | Database platform adapters |
+| [#141](https://github.com/bluetape4k/exposed-workshop/issues/141) | Planned | `13-ecosystem-integrations/04-starrocks-olap-local` | `:04-starrocks-olap-local:build` | StarRocks Local-First OLAP | Database platform adapters |
+| [#142](https://github.com/bluetape4k/exposed-workshop/issues/142) | Planned | `13-ecosystem-integrations/05-ktor-exposed-integration` | `:05-ktor-exposed-integration:build` | Explicit Ktor Exposed Integration | Runtime and framework integration |
+| [#143](https://github.com/bluetape4k/exposed-workshop/issues/143) | Planned | `13-ecosystem-integrations/06-spring-modulith-publications` | `:06-spring-modulith-publications:build` | Spring Modulith Publication Store with Exposed | Runtime and framework integration |
+| [#144](https://github.com/bluetape4k/exposed-workshop/issues/144) | Planned | `13-ecosystem-integrations/07-ddd-aggregate-repository` | `:07-ddd-aggregate-repository:build` | DDD Aggregate Lifecycle with Exposed Repository | Domain architecture |
+| [#145](https://github.com/bluetape4k/exposed-workshop/issues/145) | Planned | `13-ecosystem-integrations/08-ddd-modulith-boundaries` | `:08-ddd-modulith-boundaries:build` | DDD Bounded Context and Modulith Boundary Verification | Domain architecture |
+
+## 외부 서비스와 credential 정책
+
+향후 자식 모듈은 다음 기본값을 지켜야 합니다.
+
+- No checked-in credentials, tokens, service-account files, project IDs, or endpoint secrets.
+- No default ADC or local credential file use.
+- Fake, local, Testcontainers, or emulator-style defaults.
+- Real-service execution is explicit opt-in and skipped by default in CI.
+- README warnings for cost, network, and credentials before any real-service command.
+
+## 자식 모듈 인계 기준
+
+각 자식 이슈는 먼저 모듈 디렉터리와 `build.gradle.kts`를 만들고 Gradle project
+discovery를 검증한 뒤, 실제 파일이 존재할 때만 chapter/root README 링크를 추가합니다.
+모듈이 자동 검증 가능한 상태가 되면 같은 PR에서 Examples 또는 Nightly workflow의
+실행 task도 함께 추가해야 합니다.
+
+자식 PR을 열기 전에 다음 lane 결정을 기록합니다.
+
+| Field | Required decision |
+|---|---|
+| Default path | Local, fake, Testcontainers, emulator, or documentation-only |
+| Real-service opt-in | Environment variable, Gradle property, test tag, or not applicable |
+| Workflow lane | Weekly Examples, full Nightly, or manual opt-in |

@@ -373,6 +373,17 @@ Implement the Ktor pair with explicit `/readyz`, sanitized `X-Request-ID`, struc
 
 ---
 
+### Ecosystem Integrations
+
+#### [Chapter 13 Overview](13-ecosystem-integrations/README.md)
+
+Track planned Exposed 1.11 ecosystem examples for database platforms, Ktor,
+Spring Modulith, and DDD under issue
+[#137](https://github.com/bluetape4k/exposed-workshop/issues/137). Child module
+README links will be added only after runnable modules exist.
+
+---
+
 ## Example parity with exposed-r2dbc-workshop
 
 Issue [#99](https://github.com/bluetape4k/exposed-workshop/issues/99) tracks concept-level parity with

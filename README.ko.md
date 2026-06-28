@@ -374,6 +374,16 @@ Spring Boot 4 서비스의 Actuator readiness, request correlation, structured e
 
 ---
 
+### Ecosystem Integrations
+
+#### [Chapter 13 개요](13-ecosystem-integrations/README.ko.md)
+
+이슈 [#137](https://github.com/bluetape4k/exposed-workshop/issues/137) 아래에서 데이터베이스
+플랫폼, Ktor, Spring Modulith, DDD 중심의 Exposed 1.11 ecosystem 예제를 추적합니다.
+실행 가능한 모듈이 생긴 뒤에만 자식 모듈 README 링크를 추가합니다.
+
+---
+
 ## exposed-r2dbc-workshop 예제 parity
 
 이슈 [#99](https://github.com/bluetape4k/exposed-workshop/issues/99)는
