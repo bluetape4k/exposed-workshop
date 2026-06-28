@@ -1,0 +1,29 @@
+# Issue #138 BigQuery Dry-Run Workshop Lesson
+
+## Context
+
+Issue #138 is the first runnable child module under chapter 13. It demonstrates
+`bluetape4k-exposed` BigQuery dry-run validation from an Exposed-generated query
+without using cloud credentials or network calls.
+
+## Decision
+
+Keep the default workshop path mock-only. Build a small production helper that
+constructs the Exposed read-model query and delegates to
+`BigQueryContext.validateQuery`, while tests MockK-capture the actual Google
+API `QueryRequest` sent through `Bigquery.Jobs.query`.
+
+## Outcome
+
+The module verifies generated SQL fragments, dry-run request mapping, success
+responses, and BigQuery error conversion. README files explain dry-run versus
+execution and make the no-credential default explicit.
+
+## Future Guidance
+
+- For cloud-adjacent examples, name the real API boundary being mocked instead
+  of inventing a wrapper in the plan.
+- Add the runnable Gradle task to `.github/workflows/examples.yml` in the same
+  PR that introduces a child module.
+- Record explicit N/A evidence for CI, Nightly, summary `needs`, and coverage
+  artifacts when a new module does not require those surfaces.

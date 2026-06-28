@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" role="img" aria-labelledby="title desc">
+  <title id="title">BigQuery dry-run validation flow</title>
+  <desc id="desc">Exposed builds a query, H2 generates SQL, BigQueryContext creates a dry-run request, and mocked BigQuery REST response drives assertions.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 8; }
+      .local { fill: #ecfeff; stroke: #0891b2; stroke-width: 2; rx: 8; }
+      .dry { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 8; }
+      .mock { fill: #f0fdf4; stroke: #16a34a; stroke-width: 2; rx: 8; }
+      .assert { fill: #fff7ed; stroke: #ea580c; stroke-width: 2; rx: 8; }
+      .title { font: 700 26px Arial, sans-serif; fill: #0f172a; }
+      .label { font: 700 18px Arial, sans-serif; fill: #0f172a; }
+      .body { font: 14px Arial, sans-serif; fill: #334155; }
+      .note { font: 700 14px Arial, sans-serif; fill: #b45309; }
+      .arrow { stroke: #2563eb; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1120" height="620"/>
+  <text class="title" x="56" y="58">BigQuery Dry-Run Query Validation</text>
+  <text class="body" x="56" y="86">Default path is local, credential-free, network-free, and cost-free.</text>
+
+  <rect class="panel" x="42" y="112" width="1036" height="386"/>
+
+  <rect class="local" x="78" y="178" width="180" height="150"/>
+  <text class="label" x="102" y="218">Exposed Query</text>
+  <text class="body" x="102" y="250">events table</text>
+  <text class="body" x="102" y="274">group by region</text>
+  <text class="body" x="102" y="298">minimum revenue</text>
+
+  <path class="arrow" d="M 258 253 L 345 253"/>
+
+  <rect class="local" x="346" y="178" width="180" height="150"/>
+  <text class="label" x="373" y="218">H2 SQL DB</text>
+  <text class="body" x="373" y="250">PostgreSQL mode</text>
+  <text class="body" x="373" y="274">SQL generation only</text>
+  <text class="body" x="373" y="298">no warehouse data</text>
+
+  <path class="arrow" d="M 526 253 L 613 253"/>
+
+  <rect class="dry" x="614" y="178" width="180" height="150"/>
+  <text class="label" x="640" y="218">Dry-Run Request</text>
+  <text class="body" x="640" y="250">dryRun = true</text>
+  <text class="body" x="640" y="274">legacy SQL = false</text>
+  <text class="body" x="640" y="298">labels and limits</text>
+
+  <path class="arrow" d="M 794 253 L 881 253"/>
+
+  <rect class="mock" x="882" y="178" width="156" height="150"/>
+  <text class="label" x="907" y="218">Mocked REST</text>
+  <text class="body" x="907" y="250">Bigquery.Jobs</text>
+  <text class="body" x="907" y="274">captured request</text>
+  <text class="body" x="907" y="298">success or errors</text>
+
+  <path class="arrow" d="M 960 328 L 960 398 L 606 398"/>
+
+  <rect class="assert" x="350" y="350" width="256" height="96"/>
+  <text class="label" x="380" y="386">Workshop Assertions</text>
+  <text class="body" x="380" y="414">SQL fragments, options, errors</text>
+
+  <rect class="panel" x="78" y="522" width="960" height="56"/>
+  <text class="note" x="102" y="556">No ADC, service-account files, tokens, endpoint overrides, network calls, or billable BigQuery execution.</text>
+</svg>

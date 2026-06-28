@@ -380,7 +380,11 @@ Spring Boot 4 서비스의 Actuator readiness, request correlation, structured e
 
 이슈 [#137](https://github.com/bluetape4k/exposed-workshop/issues/137) 아래에서 데이터베이스
 플랫폼, Ktor, Spring Modulith, DDD 중심의 Exposed 1.11 ecosystem 예제를 추적합니다.
-실행 가능한 모듈이 생긴 뒤에만 자식 모듈 README 링크를 추가합니다.
+
+#### [BigQuery Dry-Run Query Validation](13-ecosystem-integrations/01-bigquery-dry-run/README.ko.md)
+
+H2 SQL generation과 mocked BigQuery REST response를 사용해 Exposed가 생성한 분석용
+query의 BigQuery dry-run request mapping을 검증합니다.
 
 ---
 
