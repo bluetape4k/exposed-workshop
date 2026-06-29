@@ -80,7 +80,7 @@
 <path data-connector="identity-to-entityid" d="M304,589 L386,589 Q398,589 398,577 L398,472 Q398,460 410,460 L470,460" class="arrow"/>
 <path data-connector="dsl-to-ddl" d="M698,208 L874,208" class="mapLine"/>
 <path data-connector="dsl-to-encrypted" d="M698,226 L786,226 Q798,226 798,238 L798,322 Q798,334 810,334 L874,334" class="codecLine"/>
-<path data-connector="columntype-to-roundtrip" d="M698,334 L760,334 Q772,334 772,346 L772,472 Q772,484 784,484 L874,484" class="mapLine"/>
+<path data-connector="columntype-to-roundtrip" d="M584,366 L584,392 Q584,404 596,404 L940,404 Q952,404 952,416 L952,428" class="mapLine"/>
 <path data-connector="entityid-to-roundtrip" d="M698,452 L874,452" class="mapLine"/>
 <path data-connector="predicates-to-paths" d="M698,586 L874,586" class="codecLine"/>
 <path data-connector="ddl-to-database" d="M1108,208 L1196,208 Q1208,208 1208,220 L1208,344 Q1208,356 1220,356 L1288,356" class="dbUse"/>
