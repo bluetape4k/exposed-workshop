@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: spring-modulith-publications-workshop
+  datasource:
+    url: jdbc:h2:mem:spring-modulith-publications;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  modulith:
+    events:
+      republish-outstanding-events-on-restart: false
+  task:
+    execution:
+      shutdown:
+        await-termination: true
+        await-termination-period: 2s
+
+bluetape4k:
+  spring:
+    modulith:
+      exposed:
+        initialize-schema: true
+        completion-mode: UPDATE

@@ -103,6 +103,7 @@ jobs:
             :03-cockroachdb-retry:build \
             :04-starrocks-olap-local:build \
             :05-ktor-exposed-integration:build \
+            :06-spring-modulith-publications:build \
             --no-daemon --no-configuration-cache --continue
         env:
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false"
