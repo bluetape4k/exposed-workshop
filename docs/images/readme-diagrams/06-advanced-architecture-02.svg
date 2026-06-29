@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 780" width="1560" height="780" role="img" aria-label="Advanced Module Classification">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#16a34a" stroke="#16a34a" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#db2777" stroke="#db2777" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ea580c" stroke="#ea580c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -61,15 +61,12 @@
 <desc>DAO + DSL fixtures</desc><rect x="1132" y="438" width="230" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
 <text x="1247" y="463" class="label" text-anchor="middle">DAO + DSL fixtures</text>
 <text x="1247" y="496" class="detail" text-anchor="middle">source-backed tests</text>
-<path d="M322,217 L360,217 L360,160 L820,160 L820,206 L852,206" class="codecLine"/>
-<path d="M322,361 L360,361 L360,278 L820,278 L820,246 L852,246" class="mapLine"/>
-<path d="M322,505 L360,505 L360,420 L820,420 L820,390 L852,390" class="arrow"/>
-<path d="M634,217 L750,217 L750,226 L852,226" class="mapLine"/>
-<path d="M634,361 L744,361 L744,298 L1132,298" class="arrow"/>
-<path d="M634,505 L744,505 L744,474 L1132,474" class="runtimeUse"/>
-<path d="M1082,226 L1104,226 L1104,474 L1132,474" class="runtimeUse"/>
-<path d="M1082,370 L1104,370 L1104,474 L1132,474" class="runtimeUse"/>
-<path d="M1082,514 L1104,514 L1104,474 L1132,474" class="runtimeUse"/>
+<path data-connector="protect-data-to-encryption" d="M322,217 L348,217 Q360,217 360,229 L360,574 Q360,586 372,586 L812,586 Q824,586 824,574 L824,526 Q824,514 836,514 L852,514" class="codecLine"/>
+<path data-connector="represent-values-to-columntype" d="M322,361 L348,361 Q360,361 360,349 L360,298 Q360,286 372,286 L828,286 Q840,286 840,274 L840,250 Q840,238 852,238" class="mapLine"/>
+<path data-connector="store-json-to-json-operators" d="M322,505 L348,505 Q360,505 360,517 L360,610 Q360,622 372,622 L728,622 Q740,622 740,610 L740,370 Q740,358 752,358 L852,358" class="arrow"/>
+<path data-connector="extend-columns-to-columntype" d="M634,217 L744,217 Q756,217 756,214 L852,214" class="mapLine"/>
+<path data-connector="extend-ids-to-entityid" d="M634,361 L744,361 Q756,361 756,349 L756,310 Q756,298 768,298 L1132,298" class="dbUse"/>
+<path data-connector="validate-behavior-to-fixtures" d="M634,505 L744,505 Q756,505 756,493 L756,474 Q756,462 768,462 L1132,462" class="runtimeUse"/>
 <rect x="142" y="690" width="1200" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="742" y="721" class="detail" text-anchor="middle">Classification rule: group by current source directories and tested extension mechanisms, not by stale or missing chapter rows.</text>
 </svg>
