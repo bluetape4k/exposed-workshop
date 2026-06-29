@@ -7,7 +7,9 @@ checks, but the rendered PNG still showed resource connectors crossing the
 local-resource lane title/note text and later still looked like a large
 connector frame around the whole resource lane. A later review also caught a
 more serious miss: the `testApplication` to `/healthz + /readyz` connector
-passed directly through the `/api/notes` card.
+passed directly through the `/api/notes` card. Another review caught helper
+connectors that mixed a rounded first bend with a sharp second bend in the same
+path.
 
 ## Decision
 
@@ -23,7 +25,8 @@ are necessary but not sufficient for README diagrams.
 datasource and dispatcher into one caller-owned resource card and keeps the
 resource connectors short, distinct, and away from lane text. The health-route
 HTTP connector now uses an upper bypass path instead of crossing the
-`/api/notes` card.
+`/api/notes` card. The helper connector paths now use matching two-corner
+rounded S-bends instead of a rounded-then-sharp mix.
 
 ## Verification
 
@@ -35,6 +38,8 @@ HTTP connector now uses an upper bypass path instead of crossing the
   the touched SVG.
 - Card-intrusion sampling audit for connector paths against rendered card
   rectangles in the touched SVG.
+- Mixed-corner audit that rejects connector paths where a `Q` bend is followed
+  by an immediate orthogonal `L` turn without a second rounded corner.
 - Full-size rendered PNG inspection plus a six-diagram contact sheet.
 
 ## Future Work
@@ -47,3 +52,6 @@ grouping and ports before trying another path-only patch.
 If a connector visually crosses a card body, do not rely on endpoint or corner
 audits; run a path-vs-card interior sampling check and inspect the full-size
 PNG before pushing.
+If a path contains one rounded corner, audit the rest of that same path and its
+same-class siblings; a `Q` command in one bend does not make adjacent `L` turns
+acceptable.
