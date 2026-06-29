@@ -125,10 +125,10 @@
   <path id="flow-health-helper" d="M 1004 330 L 1004 416 Q 1004 446 1044 446 L 1044 506" class="flowHelper"/>
   <path id="flow-failure-status" d="M 1363 330 L 1363 506" class="flowError"/>
 
-  <path id="flow-helper-jdbc" d="M 653 600 L 653 776 Q 653 812 307 812 L 307 846" class="flowResource"/>
-  <path id="flow-helper-dispatcher" d="M 653 600 L 653 776 Q 653 812 1241 812 L 1241 846" class="flowResource"/>
-  <path id="flow-ready-jdbc" d="M 1044 600 L 1044 776 Q 1044 812 380 812 L 380 846" class="flowResource"/>
-  <path id="flow-ready-r2dbc" d="M 1044 600 L 1044 776 Q 1044 812 774 812 L 774 846" class="flowResource"/>
+  <path id="flow-helper-jdbc" d="M 610 600 L 610 646 Q 610 666 590 666 L 76 666 Q 52 666 52 690 L 52 870 Q 52 888 70 888 L 156 888" class="flowResource"/>
+  <path id="flow-ready-jdbc" d="M 1004 600 L 1004 640 Q 1004 660 984 660 L 88 660 Q 64 660 64 684 L 64 812 Q 64 832 84 832 L 340 832 Q 360 832 360 846" class="flowResource"/>
+  <path id="flow-ready-r2dbc" d="M 1044 600 L 1044 648 Q 1044 668 1064 668 L 1518 668 Q 1542 668 1542 692 L 1542 812 Q 1542 832 1522 832 L 794 832 Q 774 832 774 846" class="flowResource"/>
+  <path id="flow-helper-dispatcher" d="M 696 600 L 696 654 Q 696 674 716 674 L 1532 674 Q 1556 674 1556 698 L 1556 806 Q 1556 826 1536 826 L 1261 826 Q 1241 826 1241 846" class="flowResource"/>
 
   <text x="444" y="273" class="label">CRUD JSON</text>
   <text x="666" y="430" class="label">blocking tx</text>
