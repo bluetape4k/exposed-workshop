@@ -416,6 +416,12 @@ Persist Spring Modulith module event publications through the Exposed-backed
 bluetape4k repository, then verify completion, retry, and unloadable publication
 handling with deterministic H2 tests.
 
+#### [DDD Aggregate Lifecycle with Exposed Repository](13-ecosystem-integrations/07-ddd-aggregate-repository/README.md)
+
+Keep business invariants and domain events inside a `PurchaseOrder` aggregate,
+map it through an Exposed repository boundary, and verify persistence, rollback,
+and event capture order with deterministic H2 tests.
+
 ---
 
 ## Example parity with exposed-r2dbc-workshop
