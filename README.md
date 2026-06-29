@@ -392,6 +392,12 @@ Map validated Trino session settings to `TrinoConnectionOptions`, generate a
 warehouse query locally, and prepare an `EXPLAIN` request shape for later
 connector-specific pushdown inspection.
 
+#### [CockroachDB Serializable Retry](13-ecosystem-integrations/03-cockroachdb-retry/README.md)
+
+Connect through `CockroachDatabase`, wrap an inventory reservation in
+`withCockroachTransaction`, and verify whole-transaction retry behavior with
+CockroachDB Testcontainers.
+
 ---
 
 ## Example parity with exposed-r2dbc-workshop
