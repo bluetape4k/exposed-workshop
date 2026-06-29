@@ -33,3 +33,9 @@ The new `03-cockroachdb-retry` module demonstrates:
 For CockroachDB retry examples, keep the default workshop path deterministic.
 Use live concurrent conflicts only in a separate opt-in lane if the example's
 goal is contention behavior rather than helper API usage.
+
+For sequence diagrams, keep pill labels above their own message lines instead
+of letting the line run through the label. If endpoints attach to activation
+bars, attach to the left or right edge with a horizontal terminal segment so
+the endpoint audit does not treat activation-bar top/bottom hits as card-corner
+attachments.
