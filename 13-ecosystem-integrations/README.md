@@ -23,7 +23,7 @@ chapter. Child modules become runnable as their issues are implemented.
 | Issue | Status | Planned directory | Gradle task | README title | Lane |
 |---|---|---|---|---|---|
 | [#138](https://github.com/bluetape4k/exposed-workshop/issues/138) | Ready | [`13-ecosystem-integrations/01-bigquery-dry-run`](01-bigquery-dry-run/README.md) | `:01-bigquery-dry-run:build` | [BigQuery Dry-Run Query Validation](01-bigquery-dry-run/README.md) | Database platform adapters |
-| [#139](https://github.com/bluetape4k/exposed-workshop/issues/139) | Planned | `13-ecosystem-integrations/02-trino-session-options` | `:02-trino-session-options:build` | Trino Session Options and Pushdown Verification | Database platform adapters |
+| [#139](https://github.com/bluetape4k/exposed-workshop/issues/139) | Ready | [`13-ecosystem-integrations/02-trino-session-options`](02-trino-session-options/README.md) | `:02-trino-session-options:build` | [Trino Session Options and Pushdown Verification](02-trino-session-options/README.md) | Database platform adapters |
 | [#140](https://github.com/bluetape4k/exposed-workshop/issues/140) | Planned | `13-ecosystem-integrations/03-cockroachdb-retry` | `:03-cockroachdb-retry:build` | CockroachDB Serializable Retry | Database platform adapters |
 | [#141](https://github.com/bluetape4k/exposed-workshop/issues/141) | Planned | `13-ecosystem-integrations/04-starrocks-olap-local` | `:04-starrocks-olap-local:build` | StarRocks Local-First OLAP | Database platform adapters |
 | [#142](https://github.com/bluetape4k/exposed-workshop/issues/142) | Planned | `13-ecosystem-integrations/05-ktor-exposed-integration` | `:05-ktor-exposed-integration:build` | Explicit Ktor Exposed Integration | Runtime and framework integration |

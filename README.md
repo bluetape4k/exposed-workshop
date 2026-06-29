@@ -386,6 +386,12 @@ Spring Modulith, and DDD under issue
 Validate an Exposed-generated analytical query through BigQuery dry-run request
 mapping with H2 SQL generation and a mocked BigQuery REST response.
 
+#### [Trino Session Options and Pushdown Verification](13-ecosystem-integrations/02-trino-session-options/README.md)
+
+Map validated Trino session settings to `TrinoConnectionOptions`, generate a
+warehouse query locally, and prepare an `EXPLAIN` request shape for later
+connector-specific pushdown inspection.
+
 ---
 
 ## Example parity with exposed-r2dbc-workshop

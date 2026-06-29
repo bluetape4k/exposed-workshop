@@ -138,6 +138,7 @@ exposed-jackson3 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-j
 exposed-bigquery = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-bigquery" }
 exposed-jdbc = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc" }
 exposed-jdbc-redisson = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-redisson" }
+exposed-trino = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-trino" }
 exposed-tink = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-tink" }
 
 # bluetape4k hibernate

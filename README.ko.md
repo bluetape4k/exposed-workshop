@@ -386,6 +386,12 @@ Spring Boot 4 서비스의 Actuator readiness, request correlation, structured e
 H2 SQL generation과 mocked BigQuery REST response를 사용해 Exposed가 생성한 분석용
 query의 BigQuery dry-run request mapping을 검증합니다.
 
+#### [Trino Session Options and Pushdown Verification](13-ecosystem-integrations/02-trino-session-options/README.ko.md)
+
+검증된 Trino session 설정을 `TrinoConnectionOptions`로 매핑하고, warehouse query를
+로컬에서 생성한 뒤 이후 connector-specific pushdown 점검에 사용할 `EXPLAIN` request
+shape를 준비합니다.
+
 ---
 
 ## exposed-r2dbc-workshop 예제 parity
