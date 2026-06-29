@@ -163,7 +163,7 @@ jobs:
         if: matrix.collect-coverage && !cancelled()
         env:
           USE_DB: ${{ matrix.db }}
-        run: ./gradlew koverXmlReport "-PuseDB=$USE_DB" --continue
+        run: ./gradlew koverXmlReport "-PuseDB=$USE_DB" --continue -x test
         continue-on-error: true
 
       - name: Upload test results
