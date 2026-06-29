@@ -53,12 +53,12 @@
 <text x="584" y="579" class="label" text-anchor="middle">Query predicates</text>
 <text x="584" y="604" class="detail" text-anchor="middle">extract/contains/exists</text>
 <rect x="828" y="130" width="326" height="620" rx="12" class="panel"/><text x="991" y="122" class="panelTitle" text-anchor="middle">TESTED PERSISTENCE</text>
-<desc>Encrypted rows</desc><rect x="874" y="176" width="234" height="64" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="991" y="201" class="label" text-anchor="middle">Encrypted rows</text>
-<text x="991" y="226" class="detail" text-anchor="middle">search constraints</text>
-<desc>DDL columns</desc><rect x="874" y="302" width="234" height="64" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="991" y="327" class="label" text-anchor="middle">DDL columns</text>
-<text x="991" y="352" class="detail" text-anchor="middle">varchar/jsonb/binary</text>
+<desc>DDL columns</desc><rect x="874" y="176" width="234" height="64" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="991" y="201" class="label" text-anchor="middle">DDL columns</text>
+<text x="991" y="226" class="detail" text-anchor="middle">varchar/jsonb/binary</text>
+<desc>Encrypted rows</desc><rect x="874" y="302" width="234" height="64" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="991" y="327" class="label" text-anchor="middle">Encrypted rows</text>
+<text x="991" y="352" class="detail" text-anchor="middle">search constraints</text>
 <desc>Round-trip values</desc><rect x="874" y="428" width="234" height="64" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
 <text x="991" y="453" class="label" text-anchor="middle">Round-trip values</text>
 <text x="991" y="478" class="detail" text-anchor="middle">DAO + DSL tests</text>
@@ -78,13 +78,13 @@
 <path data-connector="json-to-columntype" d="M304,337 L470,337" class="arrow"/>
 <path data-connector="values-to-columntype" d="M304,463 L386,463 Q398,463 398,451 L398,358 Q398,346 410,346 L470,346" class="arrow"/>
 <path data-connector="identity-to-entityid" d="M304,589 L386,589 Q398,589 398,577 L398,472 Q398,460 410,460 L470,460" class="arrow"/>
-<path data-connector="dsl-to-encrypted" d="M698,208 L874,208" class="codecLine"/>
-<path data-connector="dsl-to-ddl" d="M698,226 L786,226 Q798,226 798,238 L798,322 Q798,334 810,334 L874,334" class="mapLine"/>
+<path data-connector="dsl-to-ddl" d="M698,208 L874,208" class="mapLine"/>
+<path data-connector="dsl-to-encrypted" d="M698,226 L786,226 Q798,226 798,238 L798,322 Q798,334 810,334 L874,334" class="codecLine"/>
 <path data-connector="columntype-to-roundtrip" d="M698,334 L760,334 Q772,334 772,346 L772,472 Q772,484 784,484 L874,484" class="mapLine"/>
 <path data-connector="entityid-to-roundtrip" d="M698,452 L874,452" class="mapLine"/>
 <path data-connector="predicates-to-paths" d="M698,586 L874,586" class="codecLine"/>
-<path data-connector="encrypted-to-database" d="M1108,208 L1196,208 Q1208,208 1208,220 L1208,344 Q1208,356 1220,356 L1288,356" class="dbUse"/>
-<path data-connector="ddl-to-database" d="M1108,334 L1196,334 Q1208,334 1208,346 L1208,382 Q1208,394 1220,394 L1288,394" class="dbUse"/>
+<path data-connector="ddl-to-database" d="M1108,208 L1196,208 Q1208,208 1208,220 L1208,344 Q1208,356 1220,356 L1288,356" class="dbUse"/>
+<path data-connector="encrypted-to-database" d="M1108,334 L1196,334 Q1208,334 1208,346 L1208,382 Q1208,394 1220,394 L1288,394" class="dbUse"/>
 <path data-connector="roundtrip-to-database" d="M1108,460 L1196,460 Q1208,460 1208,448 L1208,444 Q1208,432 1220,432 L1288,432" class="dbUse"/>
 <path data-connector="paths-to-database" d="M1108,586 L1196,586 Q1208,586 1208,574 L1208,482 Q1208,470 1220,470 L1288,470" class="dbUse"/>
 <rect x="126" y="824" width="1208" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>

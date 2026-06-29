@@ -63,7 +63,7 @@
 <text x="1247" y="496" class="detail" text-anchor="middle">source-backed tests</text>
 <path data-connector="protect-data-to-encryption" d="M322,217 L348,217 Q360,217 360,229 L360,574 Q360,586 372,586 L812,586 Q824,586 824,574 L824,526 Q824,514 836,514 L852,514" class="codecLine"/>
 <path data-connector="represent-values-to-columntype" d="M322,361 L348,361 Q360,361 360,349 L360,298 Q360,286 372,286 L828,286 Q840,286 840,274 L840,250 Q840,238 852,238" class="mapLine"/>
-<path data-connector="store-json-to-json-operators" d="M322,505 L348,505 Q360,505 360,517 L360,610 Q360,622 372,622 L728,622 Q740,622 740,610 L740,370 Q740,358 752,358 L852,358" class="arrow"/>
+<path data-connector="store-json-to-json-operators" d="M322,505 L348,505 Q360,505 360,517 L360,610 Q360,622 372,622 L728,622 Q740,622 740,610 L740,402 Q740,390 752,390 L852,390" class="arrow"/>
 <path data-connector="extend-columns-to-columntype" d="M634,217 L744,217 Q756,217 756,214 L852,214" class="mapLine"/>
 <path data-connector="extend-ids-to-entityid" d="M634,361 L744,361 Q756,361 756,349 L756,310 Q756,298 768,298 L1132,298" class="dbUse"/>
 <path data-connector="validate-behavior-to-fixtures" d="M634,505 L744,505 Q756,505 756,493 L756,474 Q756,462 768,462 L1132,462" class="runtimeUse"/>
