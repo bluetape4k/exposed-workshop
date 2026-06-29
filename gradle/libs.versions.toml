@@ -139,6 +139,7 @@ exposed-bigquery = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-b
 exposed-cockroachdb = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-cockroachdb" }
 exposed-jdbc = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc" }
 exposed-jdbc-redisson = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-redisson" }
+exposed-starrocks = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-starrocks" }
 exposed-trino = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-trino" }
 exposed-tink = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-tink" }
 

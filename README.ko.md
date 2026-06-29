@@ -397,6 +397,12 @@ shape를 준비합니다.
 `CockroachDatabase`로 연결하고, inventory reservation을 `withCockroachTransaction`으로
 감싼 뒤, CockroachDB Testcontainers로 전체 transaction retry 동작을 검증합니다.
 
+#### [StarRocks Local-First OLAP](13-ecosystem-integrations/04-starrocks-olap-local/README.ko.md)
+
+`StarRocksTable`로 StarRocks OLAP rollup DDL을 모델링하고, projection SQL과
+aggregation 테스트는 H2로 local deterministic하게 유지하며, 실제 StarRocks validation
+경계를 문서화합니다.
+
 ---
 
 ## exposed-r2dbc-workshop 예제 parity
