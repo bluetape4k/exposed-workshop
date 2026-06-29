@@ -415,6 +415,12 @@ Spring Modulith 모듈 이벤트 publication을 Exposed 기반 bluetape4k reposi
 저장하고, deterministic H2 테스트로 completion, retry, unloadable publication 처리를
 검증합니다.
 
+#### [DDD Aggregate Lifecycle with Exposed Repository](13-ecosystem-integrations/07-ddd-aggregate-repository/README.ko.md)
+
+Business invariant와 domain event를 `PurchaseOrder` aggregate 안에 두고, Exposed
+repository boundary에서 row로 매핑하며, deterministic H2 테스트로 persistence,
+rollback, event capture order를 검증합니다.
+
 ---
 
 ## exposed-r2dbc-workshop 예제 parity
