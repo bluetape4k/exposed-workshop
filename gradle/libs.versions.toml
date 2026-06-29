@@ -128,6 +128,8 @@ bluetape4k-vertx = { module = "io.github.bluetape4k:bluetape4k-vertx" }
 bluetape4k-grpc = { module = "io.github.bluetape4k:bluetape4k-grpc" }
 bluetape4k-jackson2 = { module = "io.github.bluetape4k:bluetape4k-jackson2" }
 bluetape4k-jackson3 = { module = "io.github.bluetape4k:bluetape4k-jackson3" }
+bluetape4k-ktor-core = { module = "io.github.bluetape4k:bluetape4k-ktor-core" }
+bluetape4k-ktor-testing = { module = "io.github.bluetape4k:bluetape4k-ktor-testing" }
 
 # exposed
 exposed-core = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-core" }
@@ -139,6 +141,7 @@ exposed-bigquery = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-b
 exposed-cockroachdb = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-cockroachdb" }
 exposed-jdbc = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc" }
 exposed-jdbc-redisson = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-redisson" }
+exposed-ktor = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-ktor" }
 exposed-starrocks = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-starrocks" }
 exposed-trino = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-trino" }
 exposed-tink = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-tink" }
@@ -247,6 +250,7 @@ jetbrains-exposed-json = { module = "org.jetbrains.exposed:exposed-json", versio
 jetbrains-exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
 jetbrains-exposed-migration-jdbc = { module = "org.jetbrains.exposed:exposed-migration-jdbc", version.ref = "exposed" }
 jetbrains-exposed-money = { module = "org.jetbrains.exposed:exposed-money", version.ref = "exposed" }
+jetbrains-exposed-r2dbc = { module = "org.jetbrains.exposed:exposed-r2dbc", version.ref = "exposed" }
 jetbrains-exposed-spring-boot-starter = { module = "org.jetbrains.exposed:exposed-spring-boot-starter", version.ref = "exposed" }
 
 # Micrometer

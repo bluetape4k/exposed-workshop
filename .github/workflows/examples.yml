@@ -102,6 +102,7 @@ jobs:
             :02-trino-session-options:build \
             :03-cockroachdb-retry:build \
             :04-starrocks-olap-local:build \
+            :05-ktor-exposed-integration:build \
             --no-daemon --no-configuration-cache --continue
         env:
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false"
