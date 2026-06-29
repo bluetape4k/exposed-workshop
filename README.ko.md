@@ -403,6 +403,12 @@ shape를 준비합니다.
 aggregation 테스트는 H2로 local deterministic하게 유지하며, 실제 StarRocks validation
 경계를 문서화합니다.
 
+#### [Explicit Ktor Exposed Integration](13-ecosystem-integrations/05-ktor-exposed-integration/README.ko.md)
+
+Ktor 애플리케이션에 `bluetape4k-exposed-ktor`를 설치하고, CRUD route는 helper-backed
+JDBC transaction으로 실행하며, helper readiness와 sanitized database error를 local H2
+JDBC/R2DBC 리소스로 검증합니다.
+
 ---
 
 ## exposed-r2dbc-workshop 예제 parity

@@ -404,6 +404,12 @@ Model StarRocks OLAP rollup DDL through `StarRocksTable`, keep projection SQL an
 aggregation tests local with H2, and document the real StarRocks validation
 boundary.
 
+#### [Explicit Ktor Exposed Integration](13-ecosystem-integrations/05-ktor-exposed-integration/README.md)
+
+Install `bluetape4k-exposed-ktor` in a Ktor application, run CRUD routes through
+helper-backed JDBC transactions, and verify helper readiness and sanitized
+database errors with local H2 JDBC/R2DBC resources.
+
 ---
 
 ## Example parity with exposed-r2dbc-workshop
