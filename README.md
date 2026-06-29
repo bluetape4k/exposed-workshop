@@ -410,6 +410,12 @@ Install `bluetape4k-exposed-ktor` in a Ktor application, run CRUD routes through
 helper-backed JDBC transactions, and verify helper readiness and sanitized
 database errors with local H2 JDBC/R2DBC resources.
 
+#### [Spring Modulith Publication Store with Exposed](13-ecosystem-integrations/06-spring-modulith-publications/README.md)
+
+Persist Spring Modulith module event publications through the Exposed-backed
+bluetape4k repository, then verify completion, retry, and unloadable publication
+handling with deterministic H2 tests.
+
 ---
 
 ## Example parity with exposed-r2dbc-workshop

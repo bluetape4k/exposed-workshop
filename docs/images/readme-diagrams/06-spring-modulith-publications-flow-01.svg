@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1720" height="1040" viewBox="0 0 1720 1040" role="img" aria-labelledby="title desc">
+  <title id="title">Spring Modulith publication store with Exposed</title>
+  <desc id="desc">A local Spring Modulith order event is captured by the publication registry, stored through the Exposed event publication repository in H2, completed by the fulfillment listener, and retried through incomplete publication resubmission when the listener fails.</desc>
+  <defs>
+    <style>
+      text { letter-spacing: 0; }
+      .title { font-family: "Architects Daughter"; font-size: 42px; fill: #23323a; }
+      .subtitle, .laneNote, .cardText, .label, .footer { font-family: "Comic Mono"; fill: #324750; }
+      .subtitle { font-size: 18px; }
+      .laneTitle { font-family: "Architects Daughter"; font-size: 26px; fill: #23323a; }
+      .laneNote { font-size: 14px; fill: #5b6d75; }
+      .cardTitle { font-family: "Architects Daughter"; font-size: 22px; fill: #20323b; }
+      .cardText { font-size: 14px; }
+      .label { font-size: 13px; font-weight: 700; }
+      .footer { font-size: 14px; fill: #60717a; }
+      .canvas { fill: #fbfcf8; stroke: #3f515a; stroke-width: 3; }
+      .laneApp { fill: #eef7f5; stroke: #6fa098; stroke-width: 2.2; }
+      .laneStore { fill: #fff7e8; stroke: #b98e50; stroke-width: 2.2; }
+      .laneRecovery { fill: #f2f0fb; stroke: #897bc2; stroke-width: 2.2; }
+      .card { stroke-width: 2.3; }
+      .appCard { fill: #ffffff; stroke: #5d948b; }
+      .storeCard { fill: #ffffff; stroke: #ac7a34; }
+      .recoveryCard { fill: #ffffff; stroke: #7b6bb4; }
+      .warnCard { fill: #fffdf6; stroke: #69777e; }
+      .flowApp { fill: none; stroke: #3f8e84; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowApp); }
+      .flowStore { fill: none; stroke: #a2743d; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowStore); }
+      .flowRecovery { fill: none; stroke: #7667b1; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowRecovery); }
+      .flowWarn { fill: none; stroke: #69777e; stroke-width: 3.8; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowWarn); }
+    </style>
+    <marker id="arrowApp" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f8e84" stroke="#3f8e84" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowStore" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowRecovery" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#7667b1" stroke="#7667b1" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowWarn" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#69777e" stroke="#69777e" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
+
+  <rect x="24" y="24" width="1672" height="992" rx="20" class="canvas"/>
+  <text x="860" y="78" text-anchor="middle" class="title">Spring Modulith Publication Store with Exposed</text>
+  <text x="860" y="110" text-anchor="middle" class="subtitle">Order approval publishes a durable Modulith event; Exposed owns the publication table and retry state.</text>
+
+  <rect x="70" y="148" width="1580" height="242" rx="18" class="laneApp"/>
+  <text x="106" y="190" class="laneTitle">Application module event path</text>
+  <text x="106" y="216" class="laneNote">Orders and fulfillment stay separate modules; Spring Modulith captures the transactional listener publication.</text>
+
+  <rect x="70" y="430" width="1580" height="236" rx="18" class="laneStore"/>
+  <text x="106" y="472" class="laneTitle">Exposed-backed publication store</text>
+  <text x="106" y="498" class="laneNote">SPI-backed local store; no broker or external database.</text>
+
+  <rect x="70" y="706" width="1580" height="232" rx="18" class="laneRecovery"/>
+  <text x="106" y="748" class="laneTitle">Recovery and migration safety</text>
+  <text x="106" y="774" class="laneNote">Failed publications stay visible and resubmittable.</text>
+
+  <rect id="orders" x="114" y="258" width="258" height="88" rx="12" class="card appCard"/>
+  <text x="243" y="292" text-anchor="middle" class="cardTitle">Orders module</text>
+  <text x="142" y="320" class="cardText">approves order in transaction</text>
+
+  <rect id="publisher" x="456" y="258" width="282" height="88" rx="12" class="card appCard"/>
+  <text x="597" y="292" text-anchor="middle" class="cardTitle">ApplicationEventPublisher</text>
+  <text x="484" y="320" class="cardText">emits OrderApprovedEvent</text>
+
+  <rect id="registry" x="822" y="258" width="282" height="88" rx="12" class="card storeCard"/>
+  <text x="963" y="292" text-anchor="middle" class="cardTitle">Publication registry</text>
+  <text x="850" y="320" class="cardText">stores target listener row</text>
+
+  <rect id="listener" x="1188" y="258" width="300" height="88" rx="12" class="card appCard"/>
+  <text x="1338" y="292" text-anchor="middle" class="cardTitle">Fulfillment listener</text>
+  <text x="1216" y="320" class="cardText">reserves stock after commit</text>
+
+  <rect id="repository" x="338" y="536" width="326" height="94" rx="12" class="card storeCard"/>
+  <text x="501" y="570" text-anchor="middle" class="cardTitle">Exposed publication repository</text>
+  <text x="366" y="598" class="cardText">create, markCompleted, markFailed</text>
+  <text x="366" y="620" class="cardText">uses SpringTransactionManager</text>
+
+  <rect id="publicationTable" x="764" y="536" width="332" height="94" rx="12" class="card storeCard"/>
+  <image href="../readme-icons/h2.svg" x="792" y="562" width="42" height="42"/>
+  <text x="936" y="570" text-anchor="middle" class="cardTitle">EVENT_PUBLICATION</text>
+  <text x="850" y="598" class="cardText">status + attempts + listener id</text>
+  <text x="850" y="620" class="cardText">local H2, no external service</text>
+
+  <rect id="reservationTable" x="1196" y="536" width="292" height="94" rx="12" class="card storeCard"/>
+  <image href="../readme-icons/h2.svg" x="1224" y="562" width="42" height="42"/>
+  <text x="1342" y="570" text-anchor="middle" class="cardTitle">Reservations table</text>
+  <text x="1282" y="598" class="cardText">listener side effect</text>
+  <text x="1282" y="620" class="cardText">asserted by tests</text>
+
+  <rect id="failedPublication" x="198" y="812" width="288" height="82" rx="12" class="card recoveryCard"/>
+  <text x="342" y="846" text-anchor="middle" class="cardTitle">FAILED publication</text>
+  <text x="226" y="874" class="cardText">listener failure keeps row</text>
+
+  <rect id="resubmitApi" x="586" y="812" width="316" height="82" rx="12" class="card recoveryCard"/>
+  <text x="744" y="846" text-anchor="middle" class="cardTitle">IncompleteEventPublications</text>
+  <text x="614" y="874" class="cardText">resubmitIncompletePublications()</text>
+
+  <rect id="unloadable" x="1002" y="812" width="348" height="82" rx="12" class="card warnCard"/>
+  <text x="1176" y="846" text-anchor="middle" class="cardTitle">Unloadable event type</text>
+  <text x="1030" y="874" class="cardText">visible row, exception on event access</text>
+
+  <path id="flow-approve" data-connector="flow-approve" d="M 372 302 L 456 302" class="flowApp"/>
+  <path id="flow-capture" data-connector="flow-capture" d="M 738 302 L 822 302" class="flowApp"/>
+  <path id="flow-listener" data-connector="flow-listener" d="M 1104 302 L 1188 302" class="flowApp"/>
+
+  <path id="flow-registry-repo" data-connector="flow-registry-repo" d="M 963 346 L 963 456 Q 963 476 943 476 L 521 476 Q 501 476 501 496 L 501 536" class="flowStore"/>
+  <path id="flow-repo-table" data-connector="flow-repo-table" d="M 664 583 L 764 583" class="flowStore"/>
+  <path id="flow-listener-reservation" data-connector="flow-listener-reservation" d="M 1338 346 L 1338 536" class="flowStore"/>
+
+  <path id="flow-failed" data-connector="flow-failed" d="M 501 630 L 501 658 Q 501 678 521 678 L 630 678 Q 650 678 650 698 L 650 772 Q 650 792 630 792 L 362 792 Q 342 792 342 812" class="flowRecovery"/>
+  <path id="flow-resubmit" data-connector="flow-resubmit" d="M 486 878 L 586 878" class="flowRecovery"/>
+  <path id="flow-retry-listener" data-connector="flow-retry-listener" d="M 902 853 L 950 853 Q 970 853 970 873 L 970 906 Q 970 926 990 926 L 1510 926 Q 1530 926 1530 906 L 1530 690 Q 1530 670 1510 670 L 1358 670 Q 1338 670 1338 650 L 1338 630" class="flowRecovery"/>
+  <path id="flow-unloadable" data-connector="flow-unloadable" d="M 936 630 L 936 658 Q 936 678 956 678 L 1156 678 Q 1176 678 1176 698 L 1176 812" class="flowWarn"/>
+
+  <text x="414" y="286" text-anchor="middle" class="label">publish</text>
+  <text x="780" y="286" text-anchor="middle" class="label">capture</text>
+  <text x="1146" y="286" text-anchor="middle" class="label">after commit</text>
+  <text x="714" y="462" text-anchor="middle" class="label">SPI call</text>
+  <text x="714" y="566" text-anchor="middle" class="label">write row</text>
+  <text x="596" y="664" text-anchor="middle" class="label">markFailed</text>
+  <text x="536" y="862" text-anchor="middle" class="label">filter</text>
+  <text x="1240" y="914" text-anchor="middle" class="label">retry listener</text>
+  <text x="1072" y="704" text-anchor="middle" class="label">migration guard</text>
+
+  <text x="860" y="974" text-anchor="middle" class="footer">Default path is fully local: Spring Boot, Spring Modulith, Exposed, and in-memory H2.</text>
+</svg>
