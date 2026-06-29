@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1080" viewBox="0 0 1600 1080" role="img" aria-labelledby="title desc">
+  <title id="title">StarRocks local-first OLAP boundary</title>
+  <desc id="desc">Architecture boundary for the StarRocks OLAP workshop: local H2 projection tests validate SQL and aggregation, StarRocks helper APIs own JDBC options and OLAP table DDL, and real StarRocks validation remains explicit opt-in.</desc>
+  <defs>
+    <style>
+      text { letter-spacing: 0; }
+      .title { font-family: "Architects Daughter"; font-size: 40px; font-weight: 400; fill: #263238; }
+      .subtitle, .cardText, .label, .footer, .note { font-family: "Comic Mono"; fill: #34454d; }
+      .subtitle { font-size: 18px; }
+      .laneTitle { font-family: "Architects Daughter"; font-size: 25px; font-weight: 400; fill: #263238; }
+      .laneNote { font-family: "Comic Mono"; font-size: 14px; fill: #596b73; }
+      .cardTitle { font-family: "Architects Daughter"; font-size: 22px; font-weight: 400; fill: #203238; }
+      .cardText { font-size: 14px; }
+      .note { font-size: 13px; }
+      .footer { font-size: 14px; fill: #60727d; }
+      .canvas { fill: #fbfcf8; stroke: #41545d; stroke-width: 3; }
+      .laneLocal { fill: #eef7f5; stroke: #6f9f96; stroke-width: 2.2; }
+      .laneHelper { fill: #fff7e7; stroke: #b99356; stroke-width: 2.2; }
+      .laneReal { fill: #f2f0fa; stroke: #8c7cc4; stroke-width: 2.2; }
+      .card { stroke-width: 2.2; }
+      .localCard { fill: #ffffff; stroke: #5d948b; }
+      .helperCard { fill: #ffffff; stroke: #b4833d; }
+      .realCard { fill: #ffffff; stroke: #7d6bb8; }
+      .boundaryCard { fill: #fffdf6; stroke: #69777e; stroke-width: 2.2; }
+      .flowLocal { fill: none; stroke: #3f8e84; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowLocal); }
+      .flowHelper { fill: none; stroke: #a2743d; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowHelper); }
+      .flowReal { fill: none; stroke: #7667b1; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowReal); }
+      .guard { fill: none; stroke: #69777e; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 10 7; marker-end: url(#arrowGuard); }
+      .label { font-size: 13px; font-weight: 700; }
+    </style>
+    <marker id="arrowLocal" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f8e84" stroke="#3f8e84" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowHelper" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowReal" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#7667b1" stroke="#7667b1" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowGuard" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#69777e" stroke="#69777e" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
+
+  <rect x="24" y="24" width="1552" height="1032" rx="20" class="canvas"/>
+  <text x="800" y="78" text-anchor="middle" class="title">StarRocks Local-First OLAP</text>
+  <text x="800" y="108" text-anchor="middle" class="subtitle">Default tests prove projection shape locally; real StarRocks checks stay explicit opt-in.</text>
+
+  <rect x="70" y="150" width="1460" height="258" rx="18" class="laneLocal"/>
+  <text x="104" y="190" class="laneTitle">Local deterministic validation</text>
+  <text x="104" y="216" class="laneNote">H2 provides a transaction context and fixture rows; no Docker, network, or StarRocks backend is required.</text>
+
+  <rect x="70" y="438" width="1460" height="250" rx="18" class="laneHelper"/>
+  <text x="104" y="478" class="laneTitle">bluetape4k-exposed-starrocks helper surface</text>
+  <text x="104" y="504" class="laneNote">The workshop depends on public helper APIs instead of copying driver or dialect rules into example code.</text>
+
+  <rect x="70" y="718" width="1460" height="230" rx="18" class="laneReal"/>
+  <text x="104" y="758" class="laneTitle">Real StarRocks validation boundary</text>
+  <text x="104" y="784" class="laneNote">Distribution, partitioning, storage, and StarRocks Cloud behavior need a separate opt-in lane.</text>
+
+  <g id="local-cards">
+    <rect x="118" y="248" width="280" height="106" rx="12" class="card localCard"/>
+    <text x="258" y="282" text-anchor="middle" class="cardTitle">LocalOrderEvents</text>
+    <text x="146" y="310" class="cardText">H2 fixture table</text>
+    <text x="146" y="332" class="cardText">order_id, region, date, revenue</text>
+
+    <rect x="480" y="248" width="286" height="106" rx="12" class="card localCard"/>
+    <text x="623" y="282" text-anchor="middle" class="cardTitle">Projection Query</text>
+    <text x="508" y="310" class="cardText">SUM(revenue), COUNT(order_id)</text>
+    <text x="508" y="332" class="cardText">GROUP BY region, event_date</text>
+
+    <rect x="854" y="248" width="282" height="106" rx="12" class="card localCard"/>
+    <text x="995" y="282" text-anchor="middle" class="cardTitle">RegionalRevenueRollup</text>
+    <text x="882" y="310" class="cardText">deterministic output records</text>
+    <text x="882" y="332" class="cardText">used as real validation contract</text>
+
+    <rect x="1216" y="248" width="270" height="106" rx="12" class="card localCard"/>
+    <text x="1351" y="282" text-anchor="middle" class="cardTitle">Rendered SQL</text>
+    <text x="1244" y="310" class="cardText">prepareSQL(false)</text>
+    <text x="1244" y="332" class="cardText">reader-visible query shape</text>
+  </g>
+
+  <g id="helper-cards">
+    <rect x="118" y="536" width="294" height="104" rx="12" class="card helperCard"/>
+    <text x="265" y="570" text-anchor="middle" class="cardTitle">StarRocksAnalyticsProfile</text>
+    <text x="146" y="598" class="cardText">validates host, port, catalog</text>
+    <text x="146" y="620" class="cardText">renders jdbc:starrocks URL</text>
+
+    <rect x="500" y="536" width="292" height="104" rx="12" class="card helperCard"/>
+    <text x="646" y="570" text-anchor="middle" class="cardTitle">StarRocksTable</text>
+    <text x="528" y="598" class="cardText">removes generic primary keys</text>
+    <text x="528" y="620" class="cardText">adds ENGINE=OLAP properties</text>
+
+    <rect x="880" y="536" width="300" height="104" rx="12" class="card helperCard"/>
+    <text x="1030" y="570" text-anchor="middle" class="cardTitle">Rollup DDL Shape</text>
+    <text x="908" y="598" class="cardText">starrocks_regional_sales_rollups</text>
+    <text x="908" y="620" class="cardText">replication_num = 1</text>
+
+    <rect x="1268" y="536" width="218" height="104" rx="12" class="card helperCard"/>
+    <text x="1377" y="570" text-anchor="middle" class="cardTitle">ConnectionOptions</text>
+    <text x="1296" y="598" class="cardText">extra driver properties</text>
+    <text x="1296" y="620" class="cardText">kept typed in caller code</text>
+  </g>
+
+  <g id="real-cards">
+    <rect x="146" y="816" width="274" height="88" rx="12" class="card realCard"/>
+    <text x="283" y="850" text-anchor="middle" class="cardTitle">StarRocksDatabase</text>
+    <text x="174" y="878" class="cardText">real Connector/J connection</text>
+
+    <rect x="520" y="816" width="256" height="88" rx="12" class="card realCard"/>
+    <text x="648" y="850" text-anchor="middle" class="cardTitle">StarRocks FE</text>
+    <text x="548" y="878" class="cardText">query port 9030</text>
+
+    <rect x="876" y="816" width="286" height="88" rx="12" class="card realCard"/>
+    <text x="1019" y="850" text-anchor="middle" class="cardTitle">Analytical Backend</text>
+    <text x="904" y="878" class="cardText">distribution and storage behavior</text>
+
+    <rect x="1260" y="816" width="226" height="88" rx="12" class="boundaryCard"/>
+    <text x="1373" y="850" text-anchor="middle" class="cardTitle">Manual Opt-In</text>
+    <text x="1288" y="878" class="cardText">not default CI feedback</text>
+  </g>
+
+  <path d="M 398 301 L 480 301" class="flowLocal"/>
+  <path d="M 766 301 L 854 301" class="flowLocal"/>
+  <path d="M 1136 301 L 1216 301" class="flowLocal"/>
+
+  <path d="M 412 588 L 500 588" class="flowHelper"/>
+  <path d="M 792 588 L 880 588" class="flowHelper"/>
+  <path d="M 1180 588 L 1268 588" class="flowHelper"/>
+
+  <path d="M 420 860 L 520 860" class="flowReal"/>
+  <path d="M 776 860 L 876 860" class="flowReal"/>
+  <path d="M 1162 860 L 1260 860" class="guard"/>
+
+  <rect x="112" y="972" width="1376" height="44" rx="12" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
+  <text x="132" y="1000" class="note">Default CI proves typed boundaries, DDL shape, SQL rendering, and aggregation; real StarRocks behavior is tested only when a backend is deliberately provided.</text>
+  <text x="800" y="1032" text-anchor="middle" class="footer">github.com/bluetape4k/exposed-workshop - 13-ecosystem-integrations/04-starrocks-olap-local</text>
+</svg>

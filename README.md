@@ -398,6 +398,12 @@ Connect through `CockroachDatabase`, wrap an inventory reservation in
 `withCockroachTransaction`, and verify whole-transaction retry behavior with
 CockroachDB Testcontainers.
 
+#### [StarRocks Local-First OLAP](13-ecosystem-integrations/04-starrocks-olap-local/README.md)
+
+Model StarRocks OLAP rollup DDL through `StarRocksTable`, keep projection SQL and
+aggregation tests local with H2, and document the real StarRocks validation
+boundary.
+
 ---
 
 ## Example parity with exposed-r2dbc-workshop
