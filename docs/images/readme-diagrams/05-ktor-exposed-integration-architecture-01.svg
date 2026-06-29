@@ -57,7 +57,7 @@
 
   <rect x="70" y="688" width="1460" height="290" rx="18" class="laneResource"/>
   <text x="104" y="728" class="laneTitle">Caller-owned local resources</text>
-  <text x="104" y="754" class="laneNote">The application still creates, passes, and closes HikariCP, H2 JDBC, H2 R2DBC, and the blocking dispatcher.</text>
+  <text x="104" y="754" class="laneNote">Caller owns pools, dispatcher, and cleanup.</text>
 
   <g id="http-cards">
     <rect id="testApplication" x="118" y="246" width="270" height="84" rx="12" class="card httpCard"/>
@@ -100,23 +100,19 @@
   </g>
 
   <g id="resource-cards">
-    <rect id="jdbcDb" x="156" y="846" width="302" height="84" rx="12" class="card resourceCard"/>
-    <ellipse cx="188" cy="872" rx="19" ry="8" class="iconStroke"/>
-    <path d="M169 872 L169 900 Q188 912 207 900 L207 872" class="iconStroke"/>
-    <ellipse cx="188" cy="900" rx="19" ry="8" class="iconStroke"/>
-    <text x="307" y="880" text-anchor="middle" class="cardTitle">H2 JDBC + HikariCP</text>
-    <text x="226" y="908" class="cardText">caller-owned datasource</text>
+    <rect id="jdbcDb" x="500" y="846" width="364" height="84" rx="12" class="card resourceCard"/>
+    <ellipse cx="532" cy="872" rx="19" ry="8" class="iconStroke"/>
+    <path d="M513 872 L513 900 Q532 912 551 900 L551 872" class="iconStroke"/>
+    <ellipse cx="532" cy="900" rx="19" ry="8" class="iconStroke"/>
+    <text x="682" y="880" text-anchor="middle" class="cardTitle">H2 JDBC + HikariCP</text>
+    <text x="570" y="908" class="cardText">caller-owned dispatcher boundary</text>
 
-    <rect id="r2dbcDb" x="628" y="846" width="292" height="84" rx="12" class="card resourceCard"/>
-    <ellipse cx="660" cy="872" rx="19" ry="8" class="iconStroke"/>
-    <path d="M641 872 L641 900 Q660 912 679 900 L679 872" class="iconStroke"/>
-    <ellipse cx="660" cy="900" rx="19" ry="8" class="iconStroke"/>
-    <text x="774" y="880" text-anchor="middle" class="cardTitle">H2 R2DBC Pool</text>
-    <text x="698" y="908" class="cardText">readiness probe backend</text>
-
-    <rect id="dispatcher" x="1092" y="846" width="298" height="84" rx="12" class="card resourceCard"/>
-    <text x="1241" y="880" text-anchor="middle" class="cardTitle">JDBC Dispatcher</text>
-    <text x="1120" y="908" class="cardText">explicit blocking boundary</text>
+    <rect id="r2dbcDb" x="980" y="846" width="292" height="84" rx="12" class="card resourceCard"/>
+    <ellipse cx="1012" cy="872" rx="19" ry="8" class="iconStroke"/>
+    <path d="M993 872 L993 900 Q1012 912 1031 900 L1031 872" class="iconStroke"/>
+    <ellipse cx="1012" cy="900" rx="19" ry="8" class="iconStroke"/>
+    <text x="1126" y="880" text-anchor="middle" class="cardTitle">H2 R2DBC Pool</text>
+    <text x="1050" y="908" class="cardText">readiness probe backend</text>
   </g>
 
   <path id="flow-test-notes" d="M 388 288 L 486 288" class="flowHttp"/>
@@ -125,10 +121,9 @@
   <path id="flow-health-helper" d="M 1004 330 L 1004 416 Q 1004 446 1044 446 L 1044 506" class="flowHelper"/>
   <path id="flow-failure-status" d="M 1363 330 L 1363 506" class="flowError"/>
 
-  <path id="flow-helper-jdbc" d="M 610 600 L 610 646 Q 610 666 590 666 L 76 666 Q 52 666 52 690 L 52 870 Q 52 888 70 888 L 156 888" class="flowResource"/>
-  <path id="flow-ready-jdbc" d="M 1004 600 L 1004 640 Q 1004 660 984 660 L 88 660 Q 64 660 64 684 L 64 812 Q 64 832 84 832 L 340 832 Q 360 832 360 846" class="flowResource"/>
-  <path id="flow-ready-r2dbc" d="M 1044 600 L 1044 648 Q 1044 668 1064 668 L 1518 668 Q 1542 668 1542 692 L 1542 812 Q 1542 832 1522 832 L 794 832 Q 774 832 774 846" class="flowResource"/>
-  <path id="flow-helper-dispatcher" d="M 696 600 L 696 654 Q 696 674 716 674 L 1532 674 Q 1556 674 1556 698 L 1556 806 Q 1556 826 1536 826 L 1261 826 Q 1241 826 1241 846" class="flowResource"/>
+  <path id="flow-helper-jdbc" d="M 610 600 L 610 846" class="flowResource"/>
+  <path id="flow-ready-jdbc" d="M 1004 600 L 1004 780 Q 1004 800 984 800 L 754 800 Q 734 800 734 820 L 734 846" class="flowResource"/>
+  <path id="flow-ready-r2dbc" d="M 1044 600 L 1044 782 Q 1044 802 1064 802 L 1126 802 Q 1146 802 1146 822 L 1146 846" class="flowResource"/>
 
   <text x="444" y="273" class="label">CRUD JSON</text>
   <text x="666" y="430" class="label">blocking tx</text>
