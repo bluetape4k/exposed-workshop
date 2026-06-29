@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1080" viewBox="0 0 1600 1080" role="img" aria-labelledby="title desc">
+  <title id="title">CockroachDB serializable retry sequence</title>
+  <desc id="desc">Sequence for the Exposed CockroachDB workshop path that connects through CockroachDatabase, wraps inventory reservation in withCockroachTransaction, and retries only CockroachDB serializable retry errors.</desc>
+  <defs>
+    <style>
+      text { letter-spacing: 0; }
+      .title { font-family: "Architects Daughter"; font-size: 40px; font-weight: 400; fill: #263238; }
+      .subtitle, .msg, .note, .footer, .role { font-family: "Comic Mono"; fill: #36464f; }
+      .subtitle { font-size: 18px; }
+      .participant { font-family: "Architects Daughter"; font-size: 19px; font-weight: 400; fill: #1f3138; }
+      .role { font-size: 13px; fill: #546a73; }
+      .msg { font-size: 14px; }
+      .note { font-size: 13px; }
+      .footer { font-size: 14px; fill: #60727d; }
+      .frame { fill: #fbfcf8; stroke: #41545d; stroke-width: 3; }
+      .header { fill: #ffffff; stroke: #546e7a; stroke-width: 2; }
+      .lifeline { stroke: #9aaab1; stroke-width: 2; stroke-dasharray: 7 8; }
+      .activation { fill: #f3ecdf; stroke: #8f784e; stroke-width: 1.5; }
+      .call { fill: none; stroke: #3f7d9c; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowCall); }
+      .sql { fill: none; stroke: #a2743d; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowSql); }
+      .state { fill: none; stroke: #6e8f4f; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowState); }
+      .return { fill: none; stroke: #9b7d54; stroke-width: 2.5; stroke-dasharray: 8 6; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowReturn); }
+      .error { fill: none; stroke: #b45b5b; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowError); }
+      .alt { fill: none; stroke: #78909c; stroke-width: 3; stroke-dasharray: 12 7; }
+      .label { fill: #ffffff; stroke: #d7e0e4; stroke-width: 1.5; }
+      .label.callLabel { stroke: #9cc2d1; }
+      .label.sqlLabel { stroke: #d0b078; }
+      .label.stateLabel { stroke: #b6c9a4; }
+      .label.returnLabel { stroke: #c8b38f; }
+      .label.errorLabel { stroke: #d7a2a2; }
+      .badge { stroke-width: 1.8; }
+      .badge.callBadge { fill: #eaf4f8; stroke: #3f7d9c; }
+      .badge.sqlBadge { fill: #fff4df; stroke: #a2743d; }
+      .badge.stateBadge { fill: #eef7f0; stroke: #6e8f4f; }
+      .badge.returnBadge { fill: #fff7e8; stroke: #9b7d54; }
+      .badge.errorBadge { fill: #fff0f0; stroke: #b45b5b; }
+      .badgeText { font-family: "Comic Mono"; font-size: 12px; font-weight: 700; }
+      .msg.callText, .badgeText.callText { fill: #2f6f8e; }
+      .msg.sqlText, .badgeText.sqlText { fill: #855a29; }
+      .msg.stateText, .badgeText.stateText { fill: #55783f; }
+      .msg.returnText, .badgeText.returnText { fill: #7f6038; }
+      .msg.errorText, .badgeText.errorText { fill: #934545; }
+    </style>
+    <marker id="arrowCall" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c" stroke="#3f7d9c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowSql" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowState" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowReturn" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b7d54" stroke="#9b7d54" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowError" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#b45b5b" stroke="#b45b5b" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
+
+  <rect x="24" y="24" width="1552" height="1032" rx="20" class="frame"/>
+  <text x="800" y="78" text-anchor="middle" class="title">CockroachDB Serializable Retry</text>
+  <text x="800" y="108" text-anchor="middle" class="subtitle">Whole inventory reservation transactions are retried only for CockroachDB restart-transaction errors.</text>
+
+  <g id="participants">
+    <rect x="60" y="150" width="170" height="68" rx="10" class="header"/>
+    <text x="145" y="179" text-anchor="middle" class="participant">Workshop Test</text>
+    <text x="145" y="201" text-anchor="middle" class="role">JUnit + container</text>
+
+    <rect x="292" y="150" width="216" height="68" rx="10" class="header"/>
+    <text x="400" y="179" text-anchor="middle" class="participant">CockroachDatabase</text>
+    <text x="400" y="201" text-anchor="middle" class="role">PostgreSQL wire</text>
+
+    <rect x="578" y="150" width="222" height="68" rx="10" class="header"/>
+    <text x="689" y="179" text-anchor="middle" class="participant">Inventory Service</text>
+    <text x="689" y="201" text-anchor="middle" class="role">application boundary</text>
+
+    <rect x="870" y="150" width="210" height="68" rx="10" class="header"/>
+    <text x="975" y="179" text-anchor="middle" class="participant">Retry Helper</text>
+    <text x="975" y="201" text-anchor="middle" class="role">withCockroachTransaction</text>
+
+    <rect x="1150" y="150" width="170" height="68" rx="10" class="header"/>
+    <text x="1235" y="179" text-anchor="middle" class="participant">Exposed JDBC</text>
+    <text x="1235" y="201" text-anchor="middle" class="role">one attempt</text>
+
+    <rect x="1380" y="150" width="160" height="68" rx="10" class="header"/>
+    <text x="1460" y="179" text-anchor="middle" class="participant">CockroachDB</text>
+    <text x="1460" y="201" text-anchor="middle" class="role">serializable</text>
+  </g>
+
+  <line x1="145" y1="218" x2="145" y2="928" class="lifeline"/>
+  <line x1="400" y1="218" x2="400" y2="928" class="lifeline"/>
+  <line x1="689" y1="218" x2="689" y2="928" class="lifeline"/>
+  <line x1="975" y1="218" x2="975" y2="928" class="lifeline"/>
+  <line x1="1235" y1="218" x2="1235" y2="928" class="lifeline"/>
+  <line x1="1460" y1="218" x2="1460" y2="928" class="lifeline"/>
+
+  <rect x="393" y="300" width="14" height="76" rx="6" class="activation"/>
+  <rect x="682" y="398" width="14" height="408" rx="6" class="activation"/>
+  <rect x="968" y="438" width="14" height="318" rx="6" class="activation"/>
+  <rect x="1228" y="492" width="14" height="208" rx="6" class="activation"/>
+  <rect x="1453" y="538" width="14" height="128" rx="6" class="activation"/>
+
+  <rect x="72" y="262" width="482" height="34" rx="17" class="label callLabel"/>
+  <circle cx="96" cy="279" r="13" class="badge callBadge"/><text x="96" y="284" text-anchor="middle" class="badgeText callText">1</text>
+  <text x="120" y="284" class="msg callText">CockroachDatabase.connect(cockroach.url)</text>
+  <path d="M 145 300 L 400 300" class="call"/>
+
+  <rect x="202" y="330" width="430" height="34" rx="17" class="label returnLabel"/>
+  <circle cx="226" cy="347" r="13" class="badge returnBadge"/><text x="226" y="352" text-anchor="middle" class="badgeText returnText">2</text>
+  <text x="250" y="352" class="msg returnText">Database backed by PostgreSQL JDBC</text>
+  <path d="M 400 376 L 145 376" class="return"/>
+
+  <rect x="80" y="394" width="462" height="34" rx="17" class="label stateLabel"/>
+  <circle cx="104" cy="411" r="13" class="badge stateBadge"/><text x="104" y="416" text-anchor="middle" class="badgeText stateText">3</text>
+  <text x="128" y="416" class="msg stateText">bootstrap inventory and ledger schema</text>
+  <path d="M 145 398 L 689 398" class="state"/>
+
+  <rect x="736" y="430" width="440" height="34" rx="17" class="label callLabel"/>
+  <circle cx="760" cy="447" r="13" class="badge callBadge"/><text x="760" y="452" text-anchor="middle" class="badgeText callText">4</text>
+  <text x="784" y="452" class="msg callText">withCockroachTransaction(options)</text>
+  <path d="M 689 438 L 975 438" class="call"/>
+
+  <rect x="1034" y="484" width="402" height="34" rx="17" class="label sqlLabel"/>
+  <circle cx="1058" cy="501" r="13" class="badge sqlBadge"/><text x="1058" y="506" text-anchor="middle" class="badgeText sqlText">5</text>
+  <text x="1082" y="506" class="msg sqlText">begin SERIALIZABLE attempt, maxAttempts=1</text>
+  <path d="M 975 492 L 1235 492" class="sql"/>
+
+  <rect x="1090" y="530" width="408" height="34" rx="17" class="label sqlLabel"/>
+  <circle cx="1114" cy="547" r="13" class="badge sqlBadge"/><text x="1114" y="552" text-anchor="middle" class="badgeText sqlText">6</text>
+  <text x="1138" y="552" class="msg sqlText">read inventory, update stock, insert ledger</text>
+  <path d="M 1235 538 L 1460 538" class="sql"/>
+
+  <rect x="910" y="590" width="588" height="88" rx="14" class="alt"/>
+  <rect x="936" y="608" width="268" height="30" rx="15" fill="#fff0f0" stroke="#b45b5b" stroke-width="1.8"/>
+  <text x="960" y="628" class="note">retryable conflict path</text>
+
+  <rect x="1014" y="632" width="420" height="34" rx="17" class="label errorLabel"/>
+  <circle cx="1038" cy="649" r="13" class="badge errorBadge"/><text x="1038" y="654" text-anchor="middle" class="badgeText errorText">7</text>
+  <text x="1062" y="654" class="msg errorText">SQLSTATE 40001 restart transaction</text>
+  <path d="M 1460 666 L 975 666" class="error"/>
+
+  <rect x="724" y="712" width="510" height="34" rx="17" class="label stateLabel"/>
+  <circle cx="748" cy="729" r="13" class="badge stateBadge"/><text x="748" y="734" text-anchor="middle" class="badgeText stateText">8</text>
+  <text x="772" y="734" class="msg stateText">helper classifies CockroachDB retry signature</text>
+  <path d="M 975 700 L 975 756" class="state"/>
+
+  <rect x="790" y="780" width="456" height="34" rx="17" class="label callLabel"/>
+  <circle cx="814" cy="797" r="13" class="badge callBadge"/><text x="814" y="802" text-anchor="middle" class="badgeText callText">9</text>
+  <text x="838" y="802" class="msg callText">rerun the whole reservation transaction</text>
+  <path d="M 975 756 L 1235 756" class="call"/>
+
+  <rect x="742" y="844" width="502" height="34" rx="17" class="label returnLabel"/>
+  <circle cx="766" cy="861" r="13" class="badge returnBadge"/><text x="766" y="866" text-anchor="middle" class="badgeText returnText">10</text>
+  <text x="790" y="866" class="msg returnText">InventorySnapshot plus one committed ledger row</text>
+  <path d="M 975 806 L 689 806" class="return"/>
+  <path d="M 689 880 L 145 880" class="return"/>
+
+  <rect x="98" y="972" width="1404" height="44" rx="12" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
+  <text x="118" y="1000" class="note">Non-retryable SQLSTATE values, cancellation, and interruption stay outside the retry boundary and are rethrown.</text>
+  <text x="800" y="1032" text-anchor="middle" class="footer">github.com/bluetape4k/exposed-workshop - 13-ecosystem-integrations/03-cockroachdb-retry</text>
+</svg>

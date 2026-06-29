@@ -392,6 +392,11 @@ query의 BigQuery dry-run request mapping을 검증합니다.
 로컬에서 생성한 뒤 이후 connector-specific pushdown 점검에 사용할 `EXPLAIN` request
 shape를 준비합니다.
 
+#### [CockroachDB Serializable Retry](13-ecosystem-integrations/03-cockroachdb-retry/README.ko.md)
+
+`CockroachDatabase`로 연결하고, inventory reservation을 `withCockroachTransaction`으로
+감싼 뒤, CockroachDB Testcontainers로 전체 transaction retry 동작을 검증합니다.
+
 ---
 
 ## exposed-r2dbc-workshop 예제 parity

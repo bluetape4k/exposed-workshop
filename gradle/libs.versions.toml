@@ -136,6 +136,7 @@ exposed-fastjson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-
 exposed-jackson2 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson2" }
 exposed-jackson3 = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jackson3" }
 exposed-bigquery = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-bigquery" }
+exposed-cockroachdb = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-cockroachdb" }
 exposed-jdbc = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc" }
 exposed-jdbc-redisson = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-redisson" }
 exposed-trino = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-trino" }
