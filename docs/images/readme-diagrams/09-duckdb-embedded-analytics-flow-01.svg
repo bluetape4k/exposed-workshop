@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2300" height="820" viewBox="0 0 2300 820" role="img" aria-labelledby="title desc">
+  <title id="title">DuckDB embedded analytics example flow</title>
+  <desc id="desc">Example flow from deterministic order events through Exposed batch insert, DuckDB aggregate query, rendered SQL, and DailyCategorySales rows.</desc>
+  <defs>
+    <style>
+      text { letter-spacing: 0; }
+      .title { font-family: "Architects Daughter"; font-size: 42px; font-weight: 400; fill: #263238; }
+      .subtitle, .label, .note, .footer { font-family: "Comic Mono"; fill: #34454d; }
+      .subtitle { font-size: 18px; }
+      .cardTitle { font-family: "Architects Daughter"; font-size: 23px; fill: #223238; }
+      .cardText { font-family: "Comic Mono"; font-size: 15px; fill: #3b4d55; }
+      .label { font-size: 13px; font-weight: 700; }
+      .note { font-size: 14px; fill: #5a6b72; }
+      .footer { font-size: 14px; fill: #60727d; }
+      .frame { fill: #fbfcf8; stroke: #40545d; stroke-width: 3; }
+      .band { fill: #fff7e7; stroke: #b99356; stroke-width: 2.2; }
+      .card { fill: #ffffff; stroke: #6c8ca0; stroke-width: 2.3; }
+      .eventCard { stroke: #4f86c6; }
+      .dbCard { stroke: #6c9f96; }
+      .queryCard { stroke: #a2743d; }
+      .resultCard { stroke: #5b8e51; }
+      .flow { fill: none; stroke: #4f86c6; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowBlue); }
+      .duckFlow { fill: none; stroke: #6c9f96; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowDuck); }
+      .sqlFlow { fill: none; stroke: #a2743d; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowAmber); }
+      .resultFlow { fill: none; stroke: #5b8e51; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowGreen); }
+    </style>
+    <marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowDuck" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6c9f96" stroke="#6c9f96" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowAmber" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#5b8e51" stroke="#5b8e51" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
+
+  <rect x="24" y="24" width="2252" height="772" rx="22" class="frame"/>
+  <text x="1150" y="82" text-anchor="middle" class="title">DuckDB Example Flow</text>
+  <text x="1150" y="114" text-anchor="middle" class="subtitle">Input events become grouped analytical rows; rendered SQL remains inspectable before execution.</text>
+
+  <rect x="78" y="174" width="2144" height="330" rx="20" class="band"/>
+
+  <g id="event-card">
+    <rect x="116" y="286" width="260" height="128" rx="14" class="card eventCard"/>
+    <text x="246" y="326" text-anchor="middle" class="cardTitle">DuckDbOrderEvent</text>
+    <text x="146" y="358" class="cardText">orderId, region</text>
+    <text x="146" y="382" class="cardText">category, eventDate</text>
+    <text x="146" y="406" class="cardText">amount</text>
+  </g>
+
+  <g id="insert-card">
+    <rect x="570" y="286" width="320" height="128" rx="14" class="card"/>
+    <text x="730" y="326" text-anchor="middle" class="cardTitle">seedDuckDbOrderEvents</text>
+    <text x="600" y="358" class="cardText">validate non-empty input</text>
+    <text x="600" y="382" class="cardText">create table if missing</text>
+    <text x="600" y="406" class="cardText">batchInsert rows</text>
+  </g>
+
+  <g id="duckdb-table-card">
+    <rect x="1080" y="286" width="280" height="128" rx="14" class="card dbCard"/>
+    <text x="1220" y="326" text-anchor="middle" class="cardTitle">DuckDB Table</text>
+    <text x="1110" y="358" class="cardText">duckdb_order_events</text>
+    <text x="1110" y="382" class="cardText">file-backed persistence</text>
+    <text x="1110" y="406" class="cardText">separate transactions</text>
+  </g>
+
+  <g id="query-card">
+    <rect x="1550" y="286" width="280" height="128" rx="14" class="card queryCard"/>
+    <text x="1690" y="326" text-anchor="middle" class="cardTitle">Aggregate Query</text>
+    <text x="1580" y="358" class="cardText">COUNT(order_id)</text>
+    <text x="1580" y="382" class="cardText">SUM(amount)</text>
+    <text x="1580" y="406" class="cardText">GROUP BY dimensions</text>
+  </g>
+
+  <g id="result-card">
+    <rect x="2020" y="286" width="208" height="128" rx="14" class="card resultCard"/>
+    <text x="2124" y="326" text-anchor="middle" class="cardTitle">Output</text>
+    <text x="2046" y="358" class="cardText">DailyCategorySales</text>
+    <text x="2046" y="382" class="cardText">List or Flow</text>
+    <text x="2046" y="406" class="cardText">SQL contract</text>
+  </g>
+
+  <path data-connector="events-to-seed" d="M 376 350 L 570 350" class="flow"/>
+  <text x="473" y="328" text-anchor="middle" class="label">input list</text>
+  <path data-connector="seed-to-table" d="M 890 350 L 1080 350" class="duckFlow"/>
+  <text x="985" y="328" text-anchor="middle" class="label">batch insert</text>
+  <path data-connector="table-to-query" d="M 1360 350 L 1550 350" class="sqlFlow"/>
+  <text x="1455" y="328" text-anchor="middle" class="label">scan and group</text>
+  <path data-connector="query-to-result" d="M 1830 350 L 2020 350" class="resultFlow"/>
+  <text x="1925" y="328" text-anchor="middle" class="label">map rows</text>
+
+  <rect x="122" y="578" width="2106" height="58" rx="14" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
+  <text x="150" y="614" class="note">The same aggregate query can be executed, rendered as SQL, or exposed through queryFlow after transaction-safe materialization.</text>
+  <text x="1150" y="708" text-anchor="middle" class="footer">github.com/bluetape4k/exposed-workshop - DuckDB embedded analytics example flow</text>
+</svg>

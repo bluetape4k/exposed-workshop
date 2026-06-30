@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1180" viewBox="0 0 1900 1180" role="img" aria-labelledby="title desc">
+  <title id="title">DuckDB embedded analytics sequence</title>
+  <desc id="desc">Sequence showing file-backed DuckDB setup, Exposed transaction execution, queryFlow materialization, and Flow emission after the transaction-safe boundary.</desc>
+  <defs>
+    <style>
+      text { letter-spacing: 0; }
+      .frame { fill: #fbfcf8; stroke: #40545d; stroke-width: 3; }
+      .title { font-family: "Architects Daughter"; font-size: 42px; font-weight: 400; fill: #263238; }
+      .subtitle, .participant, .role, .labelText, .detail, .footer { font-family: "Comic Mono"; fill: #34454d; }
+      .subtitle { font-size: 18px; }
+      .participant { font-family: "Architects Daughter"; font-size: 24px; fill: #223238; }
+      .role { font-size: 13px; fill: #53666e; }
+      .header { fill: #ffffff; stroke: #617985; stroke-width: 2.2; }
+      .lifeline { stroke: #9cafb7; stroke-width: 2.4; stroke-dasharray: 8 10; }
+      .activation { fill: #fff7df; stroke: #b58a42; stroke-width: 2; }
+      .callBlue { fill: none; stroke: #4f86c6; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#seqArrowBlue); }
+      .callAmber { fill: none; stroke: #a2743d; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#seqArrowAmber); }
+      .callGreen { fill: none; stroke: #5b8e51; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#seqArrowGreen); }
+      .callOlive { fill: none; stroke: #7a8445; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#seqArrowOlive); }
+      .callTeal { fill: none; stroke: #2b8f88; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#seqArrowTeal); }
+      .return { fill: none; stroke: #2b8f88; stroke-width: 3.4; stroke-dasharray: 10 7; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#seqArrowTeal); }
+      .label { fill: #ffffff; stroke-width: 1.8; }
+      .blueLabel { stroke: #b6d3ec; }
+      .amberLabel { stroke: #dfc291; }
+      .greenLabel { stroke: #bdd6b4; }
+      .oliveLabel { stroke: #cbd1a2; }
+      .tealLabel { stroke: #add7d3; }
+      .num { font-family: "Comic Mono"; font-size: 16px; font-weight: 700; }
+      .numCircle { fill: #ffffff; stroke-width: 1.7; }
+      .labelText { font-size: 14px; font-weight: 700; }
+      .detail { font-size: 13px; }
+      .alt { fill: none; stroke: #8298a3; stroke-width: 3; stroke-dasharray: 10 8; }
+      .branchDivider { stroke: #8298a3; stroke-width: 2.4; stroke-dasharray: 10 8; }
+      .branchPill { fill: #fffdf6; stroke: #b58a42; stroke-width: 1.8; }
+      .footer { font-size: 14px; fill: #60727d; }
+    </style>
+    <marker id="seqArrowBlue" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="seqArrowAmber" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="seqArrowGreen" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#5b8e51" stroke="#5b8e51" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="seqArrowOlive" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#7a8445" stroke="#7a8445" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="seqArrowTeal" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2b8f88" stroke="#2b8f88" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
+
+  <rect x="24" y="24" width="1852" height="1132" rx="22" class="frame"/>
+  <text x="950" y="82" text-anchor="middle" class="title">DuckDB Embedded Analytics Sequence</text>
+  <text x="950" y="114" text-anchor="middle" class="subtitle">Rows are materialized inside the Exposed transaction before Flow emission starts.</text>
+
+  <g id="participants">
+    <rect x="92" y="164" width="230" height="86" rx="12" class="header"/>
+    <text x="207" y="198" text-anchor="middle" class="participant">Caller</text>
+    <text x="207" y="224" text-anchor="middle" class="role">test or service</text>
+
+    <rect x="454" y="164" width="260" height="86" rx="12" class="header"/>
+    <text x="584" y="198" text-anchor="middle" class="participant">Workshop API</text>
+    <text x="584" y="224" text-anchor="middle" class="role">schema, seed, project</text>
+
+    <rect x="846" y="164" width="260" height="86" rx="12" class="header"/>
+    <text x="976" y="198" text-anchor="middle" class="participant">Exposed Tx</text>
+    <text x="976" y="224" text-anchor="middle" class="role">transaction boundary</text>
+
+    <rect x="1244" y="164" width="260" height="86" rx="12" class="header"/>
+    <text x="1374" y="198" text-anchor="middle" class="participant">DuckDB File</text>
+    <text x="1374" y="224" text-anchor="middle" class="role">embedded JDBC engine</text>
+
+    <rect x="1610" y="164" width="210" height="86" rx="12" class="header"/>
+    <text x="1715" y="198" text-anchor="middle" class="participant">Flow Consumer</text>
+    <text x="1715" y="224" text-anchor="middle" class="role">collect rows</text>
+  </g>
+
+  <path d="M 207 250 L 207 1060" class="lifeline"/>
+  <path d="M 584 250 L 584 1060" class="lifeline"/>
+  <path d="M 976 250 L 976 1060" class="lifeline"/>
+  <path d="M 1374 250 L 1374 1060" class="lifeline"/>
+  <path d="M 1715 250 L 1715 1060" class="lifeline"/>
+
+  <rect x="574" y="316" width="18" height="560" rx="6" class="activation"/>
+  <rect x="966" y="428" width="18" height="334" rx="6" class="activation"/>
+  <rect x="1364" y="522" width="18" height="118" rx="6" class="activation"/>
+  <rect x="1706" y="840" width="18" height="78" rx="6" class="activation"/>
+
+  <rect x="286" y="290" width="340" height="36" rx="18" class="label blueLabel"/>
+  <circle cx="312" cy="308" r="15" class="numCircle blueLabel"/>
+  <text x="312" y="314" text-anchor="middle" class="num">1</text>
+  <text x="348" y="314" class="labelText">openDuckDbAnalyticsSession(path)</text>
+  <path data-connector="seq-1" d="M 207 344 L 584 344" class="callBlue"/>
+
+  <rect x="644" y="402" width="296" height="36" rx="18" class="label amberLabel"/>
+  <circle cx="670" cy="420" r="15" class="numCircle amberLabel"/>
+  <text x="670" y="426" text-anchor="middle" class="num">2</text>
+  <text x="706" y="426" class="labelText">suspendTransaction(db)</text>
+  <path data-connector="seq-2" d="M 584 456 L 976 456" class="callAmber"/>
+
+  <rect x="1030" y="496" width="314" height="36" rx="18" class="label greenLabel"/>
+  <circle cx="1056" cy="514" r="15" class="numCircle greenLabel"/>
+  <text x="1056" y="520" text-anchor="middle" class="num">3</text>
+  <text x="1092" y="520" class="labelText">create table and batchInsert events</text>
+  <path data-connector="seq-3" d="M 976 550 L 1374 550" class="callGreen"/>
+
+  <rect x="1042" y="614" width="292" height="36" rx="18" class="label tealLabel"/>
+  <circle cx="1068" cy="632" r="15" class="numCircle tealLabel"/>
+  <text x="1068" y="638" text-anchor="middle" class="num">4</text>
+  <text x="1104" y="638" class="labelText">aggregate rows returned to Tx</text>
+  <path data-connector="seq-4" d="M 1374 666 L 976 666" class="return"/>
+
+  <rect x="418" y="710" width="1126" height="230" rx="20" class="alt"/>
+  <rect x="444" y="692" width="274" height="36" rx="18" class="branchPill"/>
+  <text x="470" y="716" class="detail">alt queryFlow consumption boundary</text>
+
+  <rect x="656" y="758" width="330" height="36" rx="18" class="label oliveLabel"/>
+  <circle cx="682" cy="776" r="15" class="numCircle oliveLabel"/>
+  <text x="682" y="782" text-anchor="middle" class="num">5</text>
+  <text x="718" y="782" class="labelText">materialize query rows inside Tx</text>
+  <path data-connector="seq-5" d="M 584 812 L 976 812" class="callOlive"/>
+
+  <rect x="1138" y="758" width="310" height="36" rx="18" class="label greenLabel"/>
+  <circle cx="1164" cy="776" r="15" class="numCircle greenLabel"/>
+  <text x="1164" y="782" text-anchor="middle" class="num">6</text>
+  <text x="1200" y="782" class="labelText">scan grouped DuckDB result set</text>
+  <path data-connector="seq-6" d="M 976 812 L 1374 812" class="callGreen"/>
+
+  <rect x="1160" y="856" width="350" height="36" rx="18" class="label tealLabel"/>
+  <circle cx="1186" cy="874" r="15" class="numCircle tealLabel"/>
+  <text x="1186" y="880" text-anchor="middle" class="num">7</text>
+  <text x="1222" y="880" class="labelText">emit DailyCategorySales after Tx</text>
+  <path data-connector="seq-7" d="M 584 910 L 1715 910" class="callTeal"/>
+
+  <rect x="298" y="976" width="268" height="36" rx="18" class="label blueLabel"/>
+  <circle cx="324" cy="994" r="15" class="numCircle blueLabel"/>
+  <text x="324" y="1000" text-anchor="middle" class="num">8</text>
+  <text x="360" y="1000" class="labelText">list or collected Flow rows</text>
+  <path data-connector="seq-8" d="M 584 1030 L 207 1030" class="return"/>
+
+  <rect x="130" y="1090" width="1640" height="42" rx="12" fill="#ffffff" stroke="#d6e1e5" stroke-width="2"/>
+  <text x="950" y="1117" text-anchor="middle" class="footer">queryFlow is a coroutine-friendly boundary after transaction-safe materialization, not raw JDBC streaming outside the transaction.</text>
+</svg>

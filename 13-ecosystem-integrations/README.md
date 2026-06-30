@@ -30,6 +30,7 @@ chapter. Child modules become runnable as their issues are implemented.
 | [#143](https://github.com/bluetape4k/exposed-workshop/issues/143) | Ready | [`13-ecosystem-integrations/06-spring-modulith-publications`](06-spring-modulith-publications/README.md) | `:06-spring-modulith-publications:build` | [Spring Modulith Publication Store with Exposed](06-spring-modulith-publications/README.md) | Runtime and framework integration |
 | [#144](https://github.com/bluetape4k/exposed-workshop/issues/144) | Ready | [`13-ecosystem-integrations/07-ddd-aggregate-repository`](07-ddd-aggregate-repository/README.md) | `:07-ddd-aggregate-repository:build` | [DDD Aggregate Lifecycle with Exposed Repository](07-ddd-aggregate-repository/README.md) | Domain architecture |
 | [#145](https://github.com/bluetape4k/exposed-workshop/issues/145) | Ready | [`13-ecosystem-integrations/08-ddd-modulith-boundaries`](08-ddd-modulith-boundaries/README.md) | `:08-ddd-modulith-boundaries:build` | [DDD Bounded Context and Modulith Boundary Verification](08-ddd-modulith-boundaries/README.md) | Domain architecture |
+| TBD | Ready | [`13-ecosystem-integrations/09-duckdb-embedded-analytics`](09-duckdb-embedded-analytics/README.md) | `:09-duckdb-embedded-analytics:build` | [DuckDB Embedded Analytics with Exposed](09-duckdb-embedded-analytics/README.md) | Database platform adapters |
 
 ## External Service And Credential Policy
 
