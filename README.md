@@ -422,6 +422,12 @@ Keep business invariants and domain events inside a `PurchaseOrder` aggregate,
 map it through an Exposed repository boundary, and verify persistence, rollback,
 and event capture order with deterministic H2 tests.
 
+#### [DDD Bounded Context and Modulith Boundary Verification](13-ecosystem-integrations/08-ddd-modulith-boundaries/README.md)
+
+Split orders and shipping into Spring Modulith bounded contexts, expose only an
+order event named interface, and verify valid and forbidden dependencies with
+deterministic H2-backed Exposed tests.
+
 ---
 
 ## Example parity with exposed-r2dbc-workshop
