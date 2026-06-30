@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="900" viewBox="0 0 1900 900" role="img" aria-labelledby="title desc">
+  <title id="title">DuckDB embedded analytics architecture</title>
+  <desc id="desc">Architecture boundary for the DuckDB embedded analytics workshop: application code uses Exposed DSL and a kept-open DuckDB session, then DuckDB executes analytical SQL in a local file.</desc>
+  <defs>
+    <style>
+      text { letter-spacing: 0; }
+      .title { font-family: "Architects Daughter"; font-size: 42px; font-weight: 400; fill: #263238; }
+      .subtitle, .label, .note, .footer { font-family: "Comic Mono"; fill: #34454d; }
+      .subtitle { font-size: 18px; }
+      .sectionTitle { font-family: "Architects Daughter"; font-size: 27px; fill: #263238; }
+      .cardTitle { font-family: "Architects Daughter"; font-size: 24px; fill: #223238; }
+      .cardText { font-family: "Comic Mono"; font-size: 15px; fill: #3b4d55; }
+      .label { font-size: 13px; font-weight: 700; }
+      .note { font-size: 14px; fill: #5a6b72; }
+      .footer { font-size: 14px; fill: #60727d; }
+      .frame { fill: #fbfcf8; stroke: #40545d; stroke-width: 3; }
+      .panel { fill: #eef7f5; stroke: #6c9f96; stroke-width: 2.2; }
+      .card { fill: #ffffff; stroke-width: 2.3; }
+      .appCard { stroke: #4f86c6; }
+      .helperCard { stroke: #a2743d; }
+      .duckCard { stroke: #6c9f96; }
+      .resultCard { stroke: #5b8e51; }
+      .flow { fill: none; stroke: #4f86c6; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowBlue); }
+      .helperFlow { fill: none; stroke: #a2743d; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowAmber); }
+      .dataFlow { fill: none; stroke: #5b8e51; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowGreen); }
+    </style>
+    <marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowAmber" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#5b8e51" stroke="#5b8e51" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
+
+  <rect x="24" y="24" width="1852" height="852" rx="22" class="frame"/>
+  <text x="950" y="82" text-anchor="middle" class="title">DuckDB Embedded Analytics</text>
+  <text x="950" y="114" text-anchor="middle" class="subtitle">A kept-open DuckDB session gives Exposed duplicated connections for local analytical transactions.</text>
+
+  <rect x="72" y="164" width="1756" height="520" rx="20" class="panel"/>
+  <text x="112" y="212" class="sectionTitle">Runtime ownership boundary</text>
+  <text x="112" y="240" class="note">No warehouse endpoint, container, credential, or network hop sits on the default path.</text>
+
+  <g id="application-card">
+    <rect x="112" y="330" width="300" height="150" rx="14" class="card appCard"/>
+    <text x="262" y="372" text-anchor="middle" class="cardTitle">Application Code</text>
+    <text x="142" y="406" class="cardText">DuckDbOrderEvent fixture</text>
+    <text x="142" y="430" class="cardText">Exposed table and query DSL</text>
+    <text x="142" y="454" class="cardText">suspend functions for callers</text>
+  </g>
+
+  <g id="helper-card">
+    <rect x="550" y="330" width="330" height="150" rx="14" class="card helperCard"/>
+    <text x="715" y="372" text-anchor="middle" class="cardTitle">DuckDB Session</text>
+    <text x="580" y="406" class="cardText">openDuckDbAnalyticsSession</text>
+    <text x="580" y="430" class="cardText">duplicate tx connections</text>
+    <text x="580" y="454" class="cardText">queryFlow materialization</text>
+  </g>
+
+  <g id="duckdb-card">
+    <rect x="1020" y="330" width="340" height="150" rx="14" class="card duckCard"/>
+    <g data-bluetape4k-icon="testcontainers/database/duckdb" transform="translate(1052 365) scale(1.9)">
+      <path fill="#1A1A1A" d="M11 22C4.92347 22 0 17.0766 0 11C0 4.92339 4.92347 0 11 0C17.0764 0.000193323 21.999 4.92351 21.999 11C22.0434 17.0765 17.1207 21.9998 11 22ZM8.73633 15.5244C11.2643 15.5242 13.3046 13.4841 13.3047 10.9561C13.3047 8.42794 11.2644 6.38788 8.73633 6.38769C6.20814 6.38769 4.16797 8.47218 4.16797 10.9561C4.16807 13.4842 6.2082 15.5244 8.73633 15.5244ZM16.8975 12.5967C17.7845 12.5967 18.5391 11.8422 18.5391 10.9551C18.5388 10.0682 17.8287 9.31445 16.8975 9.31445L14.7246 9.31445L14.7246 12.5967L16.8975 12.5967Z"/>
+    </g>
+    <text x="1190" y="372" text-anchor="middle" class="cardTitle">DuckDB File</text>
+    <text x="1130" y="406" class="cardText">embedded JDBC engine</text>
+    <text x="1130" y="430" class="cardText">duckdb_order_events table</text>
+    <text x="1130" y="454" class="cardText">local analytical execution</text>
+  </g>
+
+  <g id="result-card">
+    <rect x="1500" y="330" width="248" height="150" rx="14" class="card resultCard"/>
+    <text x="1624" y="372" text-anchor="middle" class="cardTitle">Analytics Result</text>
+    <text x="1530" y="406" class="cardText">DailyCategorySales rows</text>
+    <text x="1530" y="430" class="cardText">rendered SQL contract</text>
+    <text x="1530" y="454" class="cardText">Flow consumption boundary</text>
+  </g>
+
+  <path data-connector="app-to-helper" d="M 412 405 L 550 405" class="flow"/>
+  <text x="481" y="384" text-anchor="middle" class="label">open session</text>
+  <path data-connector="helper-to-duckdb" d="M 880 405 L 1020 405" class="helperFlow"/>
+  <text x="950" y="384" text-anchor="middle" class="label">duplicate tx</text>
+  <path data-connector="duckdb-to-result" d="M 1360 405 L 1500 405" class="dataFlow"/>
+  <text x="1430" y="384" text-anchor="middle" class="label">aggregate rows</text>
+
+  <rect x="112" y="726" width="1636" height="58" rx="14" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
+  <text x="140" y="762" class="note">Default validation stays local: the file-backed DuckDB session preserves state across Exposed transactions without remote-service setup.</text>
+  <text x="950" y="830" text-anchor="middle" class="footer">github.com/bluetape4k/exposed-workshop - 13-ecosystem-integrations/09-duckdb-embedded-analytics</text>
+</svg>

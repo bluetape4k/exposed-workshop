@@ -106,6 +106,7 @@ jobs:
             :06-spring-modulith-publications:build \
             :07-ddd-aggregate-repository:build \
             :08-ddd-modulith-boundaries:build \
+            :09-duckdb-embedded-analytics:build \
             --no-daemon --no-configuration-cache --continue
         env:
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false"
