@@ -105,6 +105,7 @@ jobs:
             :05-ktor-exposed-integration:build \
             :06-spring-modulith-publications:build \
             :07-ddd-aggregate-repository:build \
+            :08-ddd-modulith-boundaries:build \
             --no-daemon --no-configuration-cache --continue
         env:
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false"

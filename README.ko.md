@@ -421,6 +421,12 @@ Business invariant와 domain event를 `PurchaseOrder` aggregate 안에 두고, E
 repository boundary에서 row로 매핑하며, deterministic H2 테스트로 persistence,
 rollback, event capture order를 검증합니다.
 
+#### [DDD Bounded Context and Modulith Boundary Verification](13-ecosystem-integrations/08-ddd-modulith-boundaries/README.ko.md)
+
+Orders와 shipping을 Spring Modulith bounded context로 나누고, order event named
+interface만 공개하며, deterministic H2 기반 Exposed 테스트로 정상 의존성과 금지된
+의존성을 함께 검증합니다.
+
 ---
 
 ## exposed-r2dbc-workshop 예제 parity
