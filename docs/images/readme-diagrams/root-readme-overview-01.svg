@@ -2,11 +2,12 @@
   <title id="title">Exposed Workshop Source-backed Overview</title>
   <desc id="desc">The repository teaches Exposed through Gradle-included runnable modules, shared database fixtures, Spring/Ktor integrations, and Testcontainers-backed verification.</desc>
   <defs>
+
     <filter id="softShadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="7" stdDeviation="6" flood-color="#1e293b" flood-opacity="0.11"/></filter>
-    <marker id="arrowBlue" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 13 6.5 L 0 13 Z" fill="#2563eb"/></marker>
-    <marker id="arrowGreen" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 13 6.5 L 0 13 Z" fill="#059669"/></marker>
-    <marker id="arrowAmber" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 13 6.5 L 0 13 Z" fill="#d97706"/></marker>
-    <marker id="arrowPurple" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 13 6.5 L 0 13 Z" fill="#7c3aed"/></marker>
+    <marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+    <marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#059669"/></marker>
+    <marker id="arrowAmber" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#d97706"/></marker>
+    <marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
     <style>
       svg{font-family:"Architects Daughter","Comic Mono",ui-sans-serif,system-ui,sans-serif}.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#90a9cf;stroke-width:3;filter:url(#softShadow)}.title{font-family:"Architects Daughter";font-size:50px;fill:#263a57}.subtitle,.body,.routeText,.footerText{font-family:"Comic Mono";fill:#526276}.subtitle{font-size:17px}.bandTitle,.cardTitle,.chipTitle{font-family:"Architects Daughter";fill:#263a57}.bandTitle{font-size:28px}.cardTitle{font-size:23px}.chipTitle{font-size:18px}.body{font-size:13px}.small{font-family:"Comic Mono";font-size:12px;fill:#64748b}.band{stroke-width:2.5}.card,.chip{fill:#fff;stroke-width:2.2;filter:url(#softShadow)}.route{fill:none;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}.routeSoft{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:8 7}.routeText{font-size:13px}.pill{fill:#fff;stroke:#d4e0ec;stroke-width:1.5}.footer{fill:#f8fafc;stroke:#d4e0ec;stroke-width:2}
     </style>

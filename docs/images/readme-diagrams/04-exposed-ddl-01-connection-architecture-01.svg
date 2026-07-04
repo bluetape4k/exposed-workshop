@@ -1,12 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1540 920" width="1540" height="920" role="img" aria-label="Exposed DDL Connection Management Flow">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -44,7 +45,7 @@
 <text x="1125" y="242" class="detail" text-anchor="middle">columns, constraints</text>
 <path d="M1284,190 C1284,170 1426,170 1426,190 L1426,262 C1426,282 1284,282 1284,262 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1355" cy="190" rx="71" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1284,262 C1284,282 1426,282 1426,262" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1284,262 Q1355,262 1426,262" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1355" y="218" class="label" text-anchor="middle">H2 DB</text>
 <text x="1302" y="244" class="tiny">People</text>
 <text x="1302" y="261" class="tiny">parent</text>
@@ -60,7 +61,7 @@
 <text x="813" y="388" class="detail" text-anchor="middle">2x pool + 1 tasks</text>
 <path d="M1262,334 C1262,314 1448,314 1448,334 L1448,414 C1448,434 1262,434 1262,414 Z" fill="#fff" stroke="#16a34a" stroke-width="1.7" class="card"/>
 <ellipse cx="1355" cy="334" rx="93" ry="16" fill="#dcfce7" stroke="#16a34a" stroke-width="1.7"/>
-<path d="M1262,414 C1262,434 1448,434 1448,414" fill="none" stroke="#16a34a" stroke-width="1.7"/>
+<path d="M1262,414 Q1355,414 1448,414" fill="none" stroke="#16a34a" stroke-width="1.7"/>
 <text x="1355" y="362" class="label" text-anchor="middle">HIKARI_TESTER</text>
 <text x="1280" y="388" class="tiny">TestEntity rows</text>
 <text x="1280" y="405" class="tiny">connection reuse</text>
@@ -93,7 +94,7 @@
 <text x="1125" y="680" class="detail" text-anchor="middle">return to tr1</text>
 <path d="M1272,620 C1272,600 1438,600 1438,620 L1438,704 C1438,724 1272,724 1272,704 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1355" cy="620" rx="83" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1272,704 C1272,724 1438,724 1438,704" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1272,704 Q1355,704 1438,704" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1355" y="648" class="label" text-anchor="middle">H2 db1/db2</text>
 <text x="1290" y="674" class="tiny">separate Cities</text>
 <text x="1290" y="691" class="tiny">default DB checks</text>

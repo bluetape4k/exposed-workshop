@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 940" width="1500" height="940" role="img" aria-label="TransactionTemplate Execution Flow">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker viewBox="0 0 10 10" id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker viewBox="0 0 10 10" id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
+<marker viewBox="0 0 10 10" id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker viewBox="0 0 10 10" id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker viewBox="0 0 10 10" id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -21,6 +22,7 @@
 .runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round}
 .returnLine{fill:none;stroke:#64748b;stroke-width:1.7;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round}
 .inherit{fill:none;stroke:#334155;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.activation{fill:#e0f2fe;stroke:#93c5fd;stroke-width:1;opacity:.7}
 .lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
 .altRegion{fill:#f8fafc;fill-opacity:.055;stroke:#94a3b8;stroke-opacity:.28;stroke-width:1.2;stroke-dasharray:8 7}
 </style>
@@ -31,51 +33,55 @@
 <text x="48" y="58" class="title">TransactionTemplate Execution Flow</text>
 <text x="48" y="80" class="subtitle">TransactionTemplateTest exercises Spring TransactionTemplate, Exposed transaction blocks, no-Spring-transaction operations, and @Transactional inheritance</text>
 <desc>Test</desc><rect x="29" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="105" y="163" class="label" text-anchor="middle">Test</text>
+<text x="105" y="163" class="label participant" text-anchor="middle">Test</text>
 <line x1="105" y1="184" x2="105" y2="846" class="lifeline"/>
+<rect x="99" y="214" width="12" height="120" rx="4" class="activation"/>
 <desc>BookService</desc><rect x="244" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="320" y="163" class="label" text-anchor="middle">BookService</text>
+<text x="320" y="163" class="label participant" text-anchor="middle">BookService</text>
 <line x1="320" y1="184" x2="320" y2="846" class="lifeline"/>
+<rect x="314" y="214" width="12" height="120" rx="4" class="activation"/>
 <desc>TxTemplate</desc><rect x="464" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="540" y="163" class="label" text-anchor="middle">TxTemplate</text>
+<text x="540" y="163" class="label participant" text-anchor="middle">TxTemplate</text>
 <line x1="540" y1="184" x2="540" y2="846" class="lifeline"/>
+<rect x="534" y="214" width="12" height="120" rx="4" class="activation"/>
 <desc>Spring TM</desc><rect x="684" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="760" y="163" class="label" text-anchor="middle">Spring TM</text>
+<text x="760" y="163" class="label participant" text-anchor="middle">Spring TM</text>
 <line x1="760" y1="184" x2="760" y2="846" class="lifeline"/>
+<rect x="754" y="214" width="12" height="120" rx="4" class="activation"/>
 <desc>Exposed tx</desc><rect x="904" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="980" y="163" class="label" text-anchor="middle">Exposed tx</text>
+<text x="980" y="163" class="label participant" text-anchor="middle">Exposed tx</text>
 <line x1="980" y1="184" x2="980" y2="846" class="lifeline"/>
 <desc>BookSchema</desc><rect x="1134" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1210" y="163" class="label" text-anchor="middle">BookSchema</text>
+<text x="1210" y="163" class="label participant" text-anchor="middle">BookSchema</text>
 <line x1="1210" y1="184" x2="1210" y2="846" class="lifeline"/>
 <desc>JdbcTemplate</desc><rect x="1314" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1390" y="163" class="label" text-anchor="middle">JdbcTemplate</text>
+<text x="1390" y="163" class="label participant" text-anchor="middle">JdbcTemplate</text>
 <line x1="1390" y1="184" x2="1390" y2="846" class="lifeline"/>
-<rect x="82" y="222" width="274" height="46" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<rect x="82" y="222" width="274" height="46" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card pill"/>
 <circle cx="105" cy="245" r="14" fill="#fff" stroke="#7c3aed" stroke-width="1.4"/>
-<text x="105" y="250" class="detail" text-anchor="middle">1</text>
+<text x="105" y="250" class="detail num" text-anchor="middle">1</text>
 <text x="130" y="251" class="detail">executeSpringTransaction()</text>
 <path d="M105,276 L320,276" class="arrow"/>
 <path d="M320,304 L540,304" class="arrow"/>
 <path d="M540,332 L760,332" class="arrow"/>
 <path d="M760,360 L1210,360" class="dbUse"/>
-<rect x="296" y="410" width="300" height="46" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<rect x="296" y="410" width="300" height="46" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card pill"/>
 <circle cx="319" cy="433" r="14" fill="#fff" stroke="#0f766e" stroke-width="1.4"/>
-<text x="319" y="438" class="detail" text-anchor="middle">2</text>
+<text x="319" y="438" class="detail num" text-anchor="middle">2</text>
 <text x="344" y="439" class="detail">execWithExposedTransaction()</text>
 <path d="M105,464 L320,464" class="arrow"/>
 <path d="M320,492 L980,492" class="runtimeUse"/>
 <path d="M980,520 L1210,520" class="dbUse"/>
-<rect x="296" y="570" width="340" height="46" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<rect x="296" y="570" width="340" height="46" rx="10" fill="#e2e8f0" stroke="#64748b" class="card pill"/>
 <circle cx="319" cy="593" r="14" fill="#fff" stroke="#64748b" stroke-width="1.4"/>
-<text x="319" y="598" class="detail" text-anchor="middle">3</text>
+<text x="319" y="598" class="detail num" text-anchor="middle">3</text>
 <text x="344" y="599" class="detail">withoutTransactionOperations + transaction{}</text>
 <path d="M105,624 L320,624" class="arrow"/>
 <path d="M320,652 L980,652" class="runtimeUse"/>
 <path d="M980,680 L1210,680" class="dbUse"/>
-<rect x="298" y="724" width="338" height="46" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<rect x="298" y="724" width="338" height="46" rx="10" fill="#fce7f3" stroke="#db2777" class="card pill"/>
 <circle cx="321" cy="747" r="14" fill="#fff" stroke="#db2777" stroke-width="1.4"/>
-<text x="321" y="752" class="detail" text-anchor="middle">4</text>
+<text x="321" y="752" class="detail num" text-anchor="middle">4</text>
 <text x="346" y="753" class="detail">@Transactional inherits outer boundary</text>
 <path d="M105,792 L320,792" class="arrow"/>
 <path d="M320,816 L760,816" class="arrow"/>

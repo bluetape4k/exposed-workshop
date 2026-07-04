@@ -1,12 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1460 860" width="1460" height="860" role="img" aria-label="Vert.x SQL Client Architecture Flow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1460 920" width="1460" height="920" role="img" aria-label="Vert.x SQL Client Architecture Flow">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -15,6 +16,7 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+.iconFrame{fill:#fffaf2;stroke:#28485a;stroke-width:2.2}.iconDb{fill:#fff0d8;stroke:#8c6f33;stroke-width:2.2}.iconLine{fill:none;stroke:#8c6f33;stroke-width:1.9;stroke-linecap:round}.legendText{font-family:"Comic Mono","Comic Sans MS","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
 .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
 .queryUse{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
 .mapUse{fill:none;stroke:#16a34a;stroke-width:1.8;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
@@ -26,8 +28,8 @@
 .inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
 </style>
 </defs>
-<rect width="1460" height="860" class="canvas"/>
-<rect x="20" y="20" width="1420" height="820" rx="16" class="frame"/>
+<rect width="1460" height="920" class="canvas"/>
+<rect x="20" y="20" width="1420" height="880" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Vert.x SQL Client Architecture Flow</text>
 <text x="48" y="80" class="subtitle">JDBC Pool and SqlTemplate examples execute direct SQL on coroutine-aware Vert.x pools</text>
 <rect x="48" y="126" width="298" height="596" rx="12" class="panel"/><text x="197" y="118" class="panelTitle" text-anchor="middle">TEST ENTRY POINTS</text>
@@ -73,21 +75,19 @@
 <text x="1091" y="537" class="label" text-anchor="middle">PgPool</text>
 <text x="1091" y="570" class="detail" text-anchor="middle">Postgres</text>
 <rect x="1230" y="126" width="182" height="596" rx="12" class="panel"/><text x="1321" y="118" class="panelTitle" text-anchor="middle">DATABASE TARGETS</text>
-<path d="M1254,394 C1254,376 1386,376 1386,394 L1386,498 C1386,516 1254,516 1254,498 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
-<ellipse cx="1320" cy="394" rx="66" ry="14" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1254,498 C1254,516 1386,516 1386,498" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1320" y="403" class="label" text-anchor="middle">H2 DB</text>
-<text x="1272" y="436" class="tiny">test</text>
-<text x="1272" y="453" class="tiny">id PK</text>
-<text x="1272" y="470" class="tiny">name</text>
-<path d="M1254,562 C1254,544 1386,544 1386,562 L1386,688 C1386,706 1254,706 1254,688 Z" fill="#fff" stroke="#0f766e" stroke-width="1.7" class="card"/>
-<ellipse cx="1320" cy="562" rx="66" ry="14" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.7"/>
-<path d="M1254,688 C1254,706 1386,706 1386,688" fill="none" stroke="#0f766e" stroke-width="1.7"/>
-<text x="1320" y="571" class="label" text-anchor="middle">PostgreSQL</text>
-<text x="1272" y="604" class="tiny">customers</text>
-<text x="1272" y="621" class="tiny">id PK</text>
-<text x="1272" y="638" class="tiny">first_name</text>
-<text x="1272" y="655" class="tiny">last_name</text>
+<rect x="1254" y="380" width="132" height="126" rx="12" fill="#fff" stroke="#ea580c" class="card"/>
+<g transform="translate(1268 392) scale(0.34)" aria-label="Database server icon"><rect x="10" y="8" width="108" height="112" rx="18" class="iconFrame"/><ellipse cx="64" cy="36" rx="34" ry="13" class="iconDb"/><path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" class="iconDb" stroke-linejoin="round"/><ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="1.9"/><path d="M30 58c0 8 15 14 34 14s34-6 34-14" class="iconLine"/><path d="M30 80c0 8 15 14 34 14s34-6 34-14" class="iconLine"/></g>
+<text x="1334" y="414" class="label" text-anchor="middle">H2 DB</text>
+<text x="1334" y="438" class="tiny" text-anchor="middle">test</text>
+<text x="1334" y="455" class="tiny" text-anchor="middle">id PK</text>
+<text x="1334" y="472" class="tiny" text-anchor="middle">name</text>
+<rect x="1254" y="548" width="132" height="150" rx="12" fill="#fff" stroke="#0f766e" class="card"/>
+<g transform="translate(1260 562) scale(0.28)" aria-label="Database server icon"><rect x="10" y="8" width="108" height="112" rx="18" class="iconFrame"/><ellipse cx="64" cy="36" rx="34" ry="13" class="iconDb"/><path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" class="iconDb" stroke-linejoin="round"/><ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="1.9"/><path d="M30 58c0 8 15 14 34 14s34-6 34-14" class="iconLine"/><path d="M30 80c0 8 15 14 34 14s34-6 34-14" class="iconLine"/></g>
+<text x="1348" y="580" class="label" text-anchor="middle">PostgreSQL</text>
+<text x="1348" y="606" class="tiny" text-anchor="middle">customers</text>
+<text x="1348" y="623" class="tiny" text-anchor="middle">id PK</text>
+<text x="1348" y="640" class="tiny" text-anchor="middle">first_name</text>
+<text x="1348" y="657" class="tiny" text-anchor="middle">last_name</text>
 <path d="M316,213 L376,213 L376,198 L436,198" class="runtimeUse"/>
 <path d="M316,410 L376,410 L376,214 L436,214" class="runtimeUse"/>
 <path d="M316,635 L386,635 L386,658 L436,658" class="runtimeUse"/>
@@ -96,12 +96,13 @@
 <path d="M692,336 L958,336 L958,548 L1032,548" class="dbUse"/>
 <path d="M692,658 L718,658 L718,492 L968,492 L968,440 L1032,440" class="runtimeUse"/>
 <path d="M692,670 L708,670 L708,610 L968,610 L968,548 L1032,548" class="runtimeUse"/>
-<path d="M924,440 L1032,440" class="queryUse"/>
-<path d="M924,548 L1032,548" class="queryUse"/>
+<path d="M924,440 L1032,440" class="queryUse connector" data-connector="Pool query to JDBCPool"/>
+<path d="M924,548 L1032,548" class="queryUse connector" data-connector="SqlTemplate to PgPool"/>
 <path d="M1150,422 L1210,422 L1210,446 L1254,446" class="dbUse"/>
 <path d="M1150,566 L1210,566 L1210,625 L1254,625" class="dbUse"/>
-<path d="M809,584 L809,632" class="mapUse"/>
-<path d="M895,584 L895,632" class="mapUse"/>
-<rect x="102" y="738" width="1248" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="726" y="768" class="detail" text-anchor="middle">Source check: H2 tests use Pool.query/preparedQuery against table test; PostgreSQL tests use SqlTemplate with CustomerRowMapper and tupleMapperOfRecord.</text>
+<path d="M809,584 L809,632" class="mapUse connector" data-connector="SqlTemplate to RowMapper"/>
+<path d="M895,584 L895,632" class="mapUse connector" data-connector="SqlTemplate to TupleMapper"/>
+<path d="M1110,742 L1160,742" class="queryUse connector" data-connector="Legend query"/><text x="1170" y="746" class="legendText">direct SQL call</text><path d="M1110,764 L1160,764" class="runtimeUse connector" data-connector="Legend runtime"/><text x="1170" y="768" class="legendText">runtime/helper dependency</text>
+<rect x="102" y="798" width="1248" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="726" y="828" class="detail" text-anchor="middle">Source check: H2 tests use Pool.query/preparedQuery against table test; PostgreSQL tests use SqlTemplate with CustomerRowMapper and tupleMapperOfRecord.</text>
 </svg>

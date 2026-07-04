@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 880" width="1500" height="880" role="img" aria-label="Exposed DML Test Operation Sequence">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker viewBox="0 0 10 10" id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker viewBox="0 0 10 10" id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker viewBox="0 0 10 10" id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker viewBox="0 0 10 10" id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker viewBox="0 0 10 10" id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -19,6 +20,7 @@
 .dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
 .fkArrow{fill:none;stroke:#0f766e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}
 .returnLine{fill:none;stroke:#64748b;stroke-width:1.8;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.activation{fill:#e0f2fe;stroke:#93c5fd;stroke-width:1;opacity:.7}
 .lifeline{stroke:#cbd5e1;stroke-width:1.5;stroke-dasharray:5 6}
 .inherit{fill:none;stroke:#475569;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
 .inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
@@ -29,47 +31,59 @@
 <text x="48" y="58" class="title">Exposed DML Test Operation Sequence</text>
 <text x="48" y="80" class="subtitle">CRUD and advanced query tests share schema setup, sample data, DSL execution, and assertion phases</text>
 <rect x="22" y="128" width="164" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="104" y="161" class="label" text-anchor="middle">Test method</text>
+<text x="104" y="161" class="label participant" text-anchor="middle">Test method</text>
 <path d="M104,182 L104,732" class="lifeline"/>
+<rect x="98" y="212" width="12" height="120" rx="4" class="activation"/>
 <rect x="244" y="128" width="164" height="54" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="326" y="161" class="label" text-anchor="middle">withTables</text>
+<text x="326" y="161" class="label participant" text-anchor="middle">withTables</text>
 <path d="M326,182 L326,732" class="lifeline"/>
+<rect x="320" y="212" width="12" height="120" rx="4" class="activation"/>
 <rect x="478" y="128" width="164" height="54" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="560" y="161" class="label" text-anchor="middle">DMLTestData</text>
+<text x="560" y="161" class="label participant" text-anchor="middle">DMLTestData</text>
 <path d="M560,182 L560,732" class="lifeline"/>
+<rect x="554" y="212" width="12" height="120" rx="4" class="activation"/>
 <rect x="720" y="128" width="164" height="54" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="802" y="161" class="label" text-anchor="middle">Exposed DSL</text>
+<text x="802" y="161" class="label participant" text-anchor="middle">Exposed DSL</text>
 <path d="M802,182 L802,732" class="lifeline"/>
+<rect x="796" y="212" width="12" height="120" rx="4" class="activation"/>
 <rect x="958" y="128" width="164" height="54" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="1040" y="161" class="label" text-anchor="middle">Dialect DB</text>
+<text x="1040" y="161" class="label participant" text-anchor="middle">Dialect DB</text>
 <path d="M1040,182 L1040,732" class="lifeline"/>
 <rect x="1198" y="128" width="164" height="54" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1280" y="161" class="label" text-anchor="middle">Assertions</text>
+<text x="1280" y="161" class="label participant" text-anchor="middle">Assertions</text>
 <path d="M1280,182 L1280,732" class="lifeline"/>
 <path d="M104,230 L326,230" class="arrow"/>
-<rect x="123" y="202" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="215" y="217" class="tiny" text-anchor="middle">1. start dialect test</text>
+<rect x="123" y="202" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe" class="pill"/>
+<text x="139" y="217" class="num" text-anchor="middle">1</text>
+<text x="215" y="217" class="tiny labelText" text-anchor="middle">start dialect test</text>
 <path d="M326,292 L560,292" class="arrow"/>
-<rect x="351" y="264" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="443" y="279" class="tiny" text-anchor="middle">2. create shared tables</text>
+<rect x="351" y="264" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe" class="pill"/>
+<text x="367" y="279" class="num" text-anchor="middle">2</text>
+<text x="443" y="279" class="tiny labelText" text-anchor="middle">create shared tables</text>
 <path d="M560,354 L1040,354" class="arrow"/>
-<rect x="708" y="326" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="800" y="341" class="tiny" text-anchor="middle">3. seed Cities/Users/Sales</text>
+<rect x="708" y="326" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe" class="pill"/>
+<text x="724" y="341" class="num" text-anchor="middle">3</text>
+<text x="800" y="341" class="tiny labelText" text-anchor="middle">seed Cities/Users/Sales</text>
 <path d="M104,428 L802,428" class="arrow"/>
-<rect x="361" y="400" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="453" y="415" class="tiny" text-anchor="middle">4. build DSL statement</text>
+<rect x="361" y="400" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe" class="pill"/>
+<text x="377" y="415" class="num" text-anchor="middle">4</text>
+<text x="453" y="415" class="tiny labelText" text-anchor="middle">build DSL statement</text>
 <path d="M802,490 L1040,490" class="arrow"/>
-<rect x="829" y="462" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="921" y="477" class="tiny" text-anchor="middle">5. execute generated SQL</text>
+<rect x="829" y="462" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe" class="pill"/>
+<text x="845" y="477" class="num" text-anchor="middle">5</text>
+<text x="921" y="477" class="tiny labelText" text-anchor="middle">execute generated SQL</text>
 <path d="M1040,552 L802,552" class="returnLine"/>
-<rect x="829" y="524" width="184" height="22" rx="7" fill="#fff" stroke="#cbd5e1"/>
-<text x="921" y="539" class="tiny" text-anchor="middle">6. ResultRow / update count</text>
+<rect x="829" y="524" width="184" height="22" rx="7" fill="#fff" stroke="#cbd5e1" class="pill"/>
+<text x="845" y="539" class="num" text-anchor="middle">6</text>
+<text x="921" y="539" class="tiny labelText" text-anchor="middle">ResultRow / update count</text>
 <path d="M802,614 L1280,614" class="arrow"/>
-<rect x="949" y="586" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="1041" y="601" class="tiny" text-anchor="middle">7. verify expected shape</text>
+<rect x="949" y="586" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe" class="pill"/>
+<text x="965" y="601" class="num" text-anchor="middle">7</text>
+<text x="1041" y="601" class="tiny labelText" text-anchor="middle">verify expected shape</text>
 <path d="M326,688 L104,688" class="returnLine"/>
-<rect x="123" y="660" width="184" height="22" rx="7" fill="#fff" stroke="#cbd5e1"/>
-<text x="215" y="675" class="tiny" text-anchor="middle">8. drop tables / rollback</text>
+<rect x="123" y="660" width="184" height="22" rx="7" fill="#fff" stroke="#cbd5e1" class="pill"/>
+<text x="139" y="675" class="num" text-anchor="middle">8</text>
+<text x="215" y="675" class="tiny labelText" text-anchor="middle">drop tables / rollback</text>
 <rect x="118" y="776" width="1264" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="807" class="detail" text-anchor="middle">Sequence check: returns are dashed; CRUD, join/group, upsert/merge, returning, and CTE tests follow the same setup-execute-assert lifecycle.</text>
 </svg>

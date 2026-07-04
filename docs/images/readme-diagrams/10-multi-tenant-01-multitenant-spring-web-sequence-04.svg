@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1080" width="1500" height="1080" role="img" aria-label="Spring MVC Tenant Request Flow">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker><marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker><marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker><marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker><marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker><marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker viewBox="0 0 10 10" id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker><marker viewBox="0 0 10 10" id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker><marker viewBox="0 0 10 10" id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker><marker viewBox="0 0 10 10" id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker><marker viewBox="0 0 10 10" id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e"/></marker><marker viewBox="0 0 10 10" id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -18,6 +19,7 @@
 .fk{stroke:#0f766e}.ret{stroke:#64748b;stroke-dasharray:7 5}
 .inherit{fill:none;stroke:#334155;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .inheritTriangle{fill:#fff;stroke:#334155;stroke-width:1.8}
+.activation{fill:#e0f2fe;stroke:#93c5fd;stroke-width:1;opacity:.7}
 .lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
 .altRegion{fill:#f8fafc;fill-opacity:.055;stroke:#94a3b8;stroke-opacity:.28;stroke-width:1.2;stroke-dasharray:8 7}
 </style>
@@ -29,92 +31,96 @@
 <text x="48" y="80" class="subtitle">Calls are solid, returns are dashed; ThreadLocal cleanup happens after the controller/repository path returns</text>
 <g data-id="client" data-label="Client">
 <rect x="106.8" y="128" width="80.2" height="35.2" rx="10" fill="#dbeafe" stroke="#2563eb" class="card"/>
-<text x="146.9" y="150.6" class="label" text-anchor="middle">Client</text>
+<text x="146.9" y="150.6" class="label participant" text-anchor="middle">Client</text>
 </g>
 <g data-id="tenantFilter" data-label="Tenant Filter">
 <rect x="244.4" y="128" width="91.1" height="42.5" rx="10" fill="#dbeafe" stroke="#2563eb" class="card"/>
-<text x="289.9" y="146.3" class="label" text-anchor="middle">Tenant</text>
-<text x="289.9" y="164.3" class="label" text-anchor="middle">Filter</text>
+<text x="289.9" y="146.3" class="label participant" text-anchor="middle">Tenant</text>
+<text x="289.9" y="164.3" class="label participant" text-anchor="middle">Filter</text>
 </g>
 <g data-id="tenants" data-label="Tenants">
 <rect x="392.9" y="128" width="80.2" height="35.2" rx="10" fill="#dbeafe" stroke="#2563eb" class="card"/>
-<text x="433" y="150.6" class="label" text-anchor="middle">Tenants</text>
+<text x="433" y="150.6" class="label participant" text-anchor="middle">Tenants</text>
 </g>
 <g data-id="tenantContext" data-label="Tenant Context">
 <rect x="530.4" y="128" width="96" height="42.5" rx="10" fill="#dbeafe" stroke="#2563eb" class="card"/>
-<text x="578.4" y="146.3" class="label" text-anchor="middle">Tenant</text>
-<text x="578.4" y="164.3" class="label" text-anchor="middle">Context</text>
+<text x="578.4" y="146.3" class="label participant" text-anchor="middle">Tenant</text>
+<text x="578.4" y="164.3" class="label participant" text-anchor="middle">Context</text>
 </g>
 <g data-id="actorController" data-label="Actor Controller">
 <rect x="683.8" y="128" width="96" height="42.5" rx="10" fill="#dbeafe" stroke="#2563eb" class="card"/>
-<text x="731.8" y="146.3" class="label" text-anchor="middle">Actor</text>
-<text x="731.8" y="164.3" class="label" text-anchor="middle">Controller</text>
+<text x="731.8" y="146.3" class="label participant" text-anchor="middle">Actor</text>
+<text x="731.8" y="164.3" class="label participant" text-anchor="middle">Controller</text>
 </g>
 <g data-id="tenantSchemaAspect" data-label="Schema Aspect">
 <rect x="837.1" y="128" width="111.8" height="45" rx="10" fill="#dbeafe" stroke="#2563eb" class="card"/>
-<text x="893" y="147.5" class="label" text-anchor="middle">Schema</text>
-<text x="893" y="165.5" class="label" text-anchor="middle">Aspect</text>
+<text x="893" y="147.5" class="label participant" text-anchor="middle">Schema</text>
+<text x="893" y="165.5" class="label participant" text-anchor="middle">Aspect</text>
 </g>
 <g data-id="dataSourceUtils" data-label="DataSource Utils">
 <rect x="1006.3" y="128" width="96" height="45" rx="10" fill="#dbeafe" stroke="#2563eb" class="card"/>
-<text x="1054.3" y="147.5" class="label" text-anchor="middle">DataSource</text>
-<text x="1054.3" y="165.5" class="label" text-anchor="middle">Utils</text>
+<text x="1054.3" y="147.5" class="label participant" text-anchor="middle">DataSource</text>
+<text x="1054.3" y="165.5" class="label participant" text-anchor="middle">Utils</text>
 </g>
 <g data-id="actorRepository" data-label="Actor Repository">
 <rect x="1159.6" y="128" width="96" height="42.5" rx="10" fill="#dbeafe" stroke="#2563eb" class="card"/>
-<text x="1207.6" y="146.3" class="label" text-anchor="middle">Actor</text>
-<text x="1207.6" y="164.3" class="label" text-anchor="middle">Repository</text>
+<text x="1207.6" y="146.3" class="label participant" text-anchor="middle">Actor</text>
+<text x="1207.6" y="164.3" class="label participant" text-anchor="middle">Repository</text>
 </g>
 <g data-id="sharedDb" data-label="Shared DB">
 <rect x="1313" y="128" width="80.2" height="35.2" rx="10" fill="#dbeafe" stroke="#2563eb" class="card"/>
-<text x="1353.1" y="150.6" class="label" text-anchor="middle">Shared DB</text>
+<text x="1353.1" y="150.6" class="label participant" text-anchor="middle">Shared DB</text>
 </g>
 <line x1="146.9" y1="196" x2="146.9" y2="930" class="lifeline"/>
+<rect x="141" y="226" width="12" height="120" rx="4" class="activation"/>
 <line x1="289.9" y1="196" x2="289.9" y2="930" class="lifeline"/>
+<rect x="284" y="226" width="12" height="120" rx="4" class="activation"/>
 <line x1="433" y1="196" x2="433" y2="930" class="lifeline"/>
+<rect x="427" y="226" width="12" height="120" rx="4" class="activation"/>
 <line x1="578.4" y1="196" x2="578.4" y2="930" class="lifeline"/>
+<rect x="572" y="226" width="12" height="120" rx="4" class="activation"/>
 <line x1="731.8" y1="196" x2="731.8" y2="930" class="lifeline"/>
 <line x1="893" y1="196" x2="893" y2="930" class="lifeline"/>
 <line x1="1054.3" y1="196" x2="1054.3" y2="930" class="lifeline"/>
 <line x1="1207.6" y1="196" x2="1207.6" y2="930" class="lifeline"/>
 <line x1="1353.1" y1="196" x2="1353.1" y2="930" class="lifeline"/>
-<rect x="66" y="224" width="390" height="58" rx="12" fill="#dbeafe" stroke="#2563eb" opacity="0.58"/>
+<rect x="66" y="224" width="390" height="58" rx="12" fill="#dbeafe" stroke="#2563eb" opacity="0.58" class="pill"/>
 <circle cx="94" cy="253" r="16" fill="#fff" stroke="#2563eb" stroke-width="1.5"/>
-<text x="94" y="258" class="label" text-anchor="middle">1</text>
+<text x="94" y="258" class="label num" text-anchor="middle">1</text>
 <text x="122" y="247" class="label">Resolve header</text>
 <text x="122" y="267" class="detail">X-TENANT-ID or default korean</text>
 <path d="M146.9,294 L289.9,294" class="call"/>
 <path d="M289.9,322 L433,322" class="call"/>
-<rect x="250" y="348" width="430" height="58" rx="12" fill="#ede9fe" stroke="#7c3aed" opacity="0.58"/>
+<rect x="250" y="348" width="430" height="58" rx="12" fill="#ede9fe" stroke="#7c3aed" opacity="0.58" class="pill"/>
 <circle cx="278" cy="377" r="16" fill="#fff" stroke="#7c3aed" stroke-width="1.5"/>
-<text x="278" y="382" class="label" text-anchor="middle">2</text>
+<text x="278" y="382" class="label num" text-anchor="middle">2</text>
 <text x="306" y="371" class="label">Bind ThreadLocal</text>
 <text x="306" y="391" class="detail">TenantContext.withTenant wraps the filter chain</text>
 <path d="M433,430 L578.4,430" class="runtime"/>
-<rect x="570" y="462" width="500" height="58" rx="12" fill="#dcfce7" stroke="#16a34a" opacity="0.58"/>
+<rect x="570" y="462" width="500" height="58" rx="12" fill="#dcfce7" stroke="#16a34a" opacity="0.58" class="pill"/>
 <circle cx="598" cy="491" r="16" fill="#fff" stroke="#16a34a" stroke-width="1.5"/>
-<text x="598" y="496" class="label" text-anchor="middle">3</text>
+<text x="598" y="496" class="label num" text-anchor="middle">3</text>
 <text x="626" y="485" class="label">Controller call</text>
 <text x="626" y="505" class="detail">Controller delegates to ActorRepository</text>
 <path d="M578.4,544 L731.8,544" class="call"/>
-<rect x="760" y="578" width="540" height="58" rx="12" fill="#fef3c7" stroke="#d97706" opacity="0.58"/>
+<rect x="760" y="578" width="540" height="58" rx="12" fill="#fef3c7" stroke="#d97706" opacity="0.58" class="pill"/>
 <circle cx="788" cy="607" r="16" fill="#fff" stroke="#d97706" stroke-width="1.5"/>
-<text x="788" y="612" class="label" text-anchor="middle">4</text>
+<text x="788" y="612" class="label num" text-anchor="middle">4</text>
 <text x="816" y="601" class="label">Switch schema</text>
 <text x="816" y="621" class="detail">Aspect sets schema on the transaction connection</text>
 <path d="M731.8,660 L893,660" class="call"/>
 <path d="M893,690 L1054.3,690" class="call"/>
 <path d="M1054.3,720 L1353.1,720" class="storage"/>
-<rect x="1016" y="746" width="430" height="58" rx="12" fill="#ccfbf1" stroke="#0f766e" opacity="0.58"/>
+<rect x="1016" y="746" width="430" height="58" rx="12" fill="#ccfbf1" stroke="#0f766e" opacity="0.58" class="pill"/>
 <circle cx="1044" cy="775" r="16" fill="#fff" stroke="#0f766e" stroke-width="1.5"/>
-<text x="1044" y="780" class="label" text-anchor="middle">5</text>
+<text x="1044" y="780" class="label num" text-anchor="middle">5</text>
 <text x="1072" y="769" class="label">Query tenant data</text>
 <text x="1072" y="789" class="detail">Repository reads ActorTable in selected schema</text>
 <path d="M731.8,828 L1207.6,828" class="map"/>
 <path d="M1207.6,858 L1353.1,858" class="storage"/>
-<rect x="990" y="884" width="390" height="58" rx="12" fill="#e2e8f0" stroke="#64748b" opacity="0.58"/>
+<rect x="990" y="884" width="390" height="58" rx="12" fill="#e2e8f0" stroke="#64748b" opacity="0.58" class="pill"/>
 <circle cx="1018" cy="913" r="16" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-<text x="1018" y="918" class="label" text-anchor="middle">6</text>
+<text x="1018" y="918" class="label num" text-anchor="middle">6</text>
 <text x="1046" y="907" class="label">Return and cleanup</text>
 <text x="1046" y="927" class="detail">Dashed responses; finally clears ThreadLocal</text>
 <path d="M1353.1,966 L1207.6,966" class="ret"/>

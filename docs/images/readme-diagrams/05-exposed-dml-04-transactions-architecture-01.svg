@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Exposed Nested Transaction Savepoint Flow">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -55,7 +56,7 @@
 <rect x="1088" y="130" width="330" height="610" rx="12" class="panel"/><text x="1253" y="122" class="panelTitle" text-anchor="middle">OBSERVED RESULT</text>
 <path d="M1170,222 C1170,202 1310,202 1310,222 L1310,366 C1310,386 1170,386 1170,366 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1240" cy="222" rx="70" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1170,366 C1170,386 1310,386 1310,366" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1170,366 Q1240,366 1310,366" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1240" y="250" class="label" text-anchor="middle">H2 DB</text>
 <text x="1186" y="276" class="tiny">Cities</text>
 <text x="1186" y="293" class="tiny">city1 only</text>
@@ -63,15 +64,15 @@
 <rect x="1136" y="500" width="206" height="70" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
 <text x="1239" y="525" class="label" text-anchor="middle">Assertion</text>
 <text x="1239" y="556" class="detail" text-anchor="middle">names == [city1]</text>
-<path d="M336,231 L446,231 L446,219 L550,219" class="arrow"/>
-<path d="M336,551 L430,551 L430,219 L550,219" class="runtimeUse"/>
+<path d="M336,231 L550,219" class="arrow"/>
+<path d="M336,551 L412,551 Q430,551 430,533 L430,237 Q430,219 448,219 L550,219" class="runtimeUse"/>
 <path d="M657,254 L657,344" class="arrow"/>
 <path d="M657,414 L657,504" class="arrow"/>
 <path d="M764,379 L816,379" class="savepoint"/>
 <path d="M764,539 L816,539" class="arrow"/>
 <path d="M958,379 L1060,379 L1060,294 L1170,294" class="savepoint"/>
-<path d="M958,539 L1044,539 L1044,535 L1136,535" class="arrow"/>
-<path d="M1310,294 L1378,294 L1378,535 L1342,535" class="returnLine"/>
+<path d="M958,539 L1136,535" class="arrow"/>
+<path d="M1310,294 L1360,294 Q1378,294 1378,312 L1378,520.6 Q1378,535 1363.6,535 L1342,535" class="returnLine"/>
 <rect x="126" y="796" width="1244" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="748" y="827" class="detail" text-anchor="middle">Source check: Ex05_NestedTransactions inserts city1, city2, city3; rolling back nested tx 1 removes nested work and leaves the outer city1 row.</text>
 </svg>

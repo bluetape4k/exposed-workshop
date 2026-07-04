@@ -1,12 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Virtual Thread Transaction Flow">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -67,21 +68,21 @@
 <rect x="1260" y="130" width="180" height="590" rx="12" class="panel"/><text x="1350" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
 <path d="M1292,309 C1292,288 1404,288 1404,309 L1404,485 C1404,506 1292,506 1292,485 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1348" cy="309" rx="56" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1292,485 C1292,506 1404,506 1404,485" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1292,485 Q1348,485 1404,485" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1348" y="344" class="label" text-anchor="middle">DB</text>
 <text x="1306" y="378" class="tiny">H2</text>
 <text x="1306" y="396" class="tiny">Postgres</text>
 <text x="1306" y="414" class="tiny">MySQL</text>
-<path d="M318,209 L410,209 L410,208 L506,208" class="arrow"/>
-<path d="M318,329 L410,329 L410,208 L506,208" class="arrow"/>
-<path d="M318,449 L410,449 L410,586 L506,586" class="runtimeUse"/>
-<path d="M742,208 L836,208 L836,218 L922,218" class="mapLine"/>
-<path d="M742,334 L818,334 L818,238 L922,238" class="arrow"/>
-<path d="M742,460 L802,460 L802,258 L922,258" class="arrow"/>
-<path d="M742,586 L836,586 L836,605 L922,605" class="runtimeUse"/>
-<path d="M1144,233 L1220,233 L1220,360 L1292,360" class="dbUse"/>
-<path d="M1144,419 L1220,419 L1220,420 L1292,420" class="dbUse"/>
-<path d="M1144,605 L1220,605 L1220,480 L1292,480" class="dbUse"/>
+<path d="M318,209 L506,208" class="arrow"/>
+<path d="M318,329 L392,329 Q410,329 410,311 L410,226 Q410,208 428,208 L506,208" class="arrow"/>
+<path d="M318,449 L392,449 Q410,449 410,467 L410,568 Q410,586 428,586 L506,586" class="runtimeUse"/>
+<path d="M742,208 L832,208 Q836,208 836,212 L836,214 Q836,218 840,218 L922,218" class="mapLine"/>
+<path d="M742,334 L800,334 Q818,334 818,316 L818,256 Q818,238 836,238 L922,238" class="arrow"/>
+<path d="M742,460 L784,460 Q802,460 802,442 L802,276 Q802,258 820,258 L922,258" class="arrow"/>
+<path d="M742,586 L829.7,586 Q836,586 836,592.3 L836,598.7 Q836,605 842.3,605 L922,605" class="runtimeUse"/>
+<path d="M1144,233 L1202,233 Q1220,233 1220,251 L1220,342 Q1220,360 1238,360 L1292,360" class="dbUse"/>
+<path d="M1144,419 L1219.7,419 Q1220,419 1220,419.3 L1220,419.7 Q1220,420 1220.3,420 L1292,420" class="dbUse"/>
+<path d="M1144,605 L1202,605 Q1220,605 1220,587 L1220,498 Q1220,480 1238,480 L1292,480" class="dbUse"/>
 <rect x="132" y="780" width="1236" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="811" class="detail" text-anchor="middle">Source check: Ex01_VirtualThreads verifies Java 21 virtual-thread transactions, async fan-out, regular transaction mixing, and inner connection cleanup after duplicate ID failure.</text>
 </svg>

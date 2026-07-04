@@ -1,18 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Hibernate Reactive Class Model">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-.subtitle,.detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
@@ -29,6 +30,7 @@
 .inherit{fill:none;stroke:#475569;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
 .assoc{fill:none;stroke:#0f766e;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.legendText{font-family:"Comic Mono","Comic Sans MS","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
 </style>
 </defs>
 <rect width="1500" height="900" class="canvas"/>
@@ -84,7 +86,7 @@
 <path d="M178,242 L166,258 L190,258 Z" class="inheritHead"/>
 <path d="M366,370 L366,304 L252,304 L252,258" class="inherit"/>
 <path d="M252,242 L240,258 L264,258 Z" class="inheritHead"/>
-<path d="M268,430 L286,430" class="assoc"/>
+<path d="M268,430 L286,430" class="assoc connector" data-connector="Team Member association"/>
 <text x="277" y="420" class="tiny" text-anchor="middle">1:N</text>
 <text x="124" y="514" class="tiny">@OneToMany</text>
 <text x="326" y="514" class="tiny">@ManyToOne</text>
@@ -140,13 +142,17 @@
 <text x="1250" y="542" class="label" text-anchor="middle">Database</text>
 <text x="1250" y="559" class="label" text-anchor="middle">Initializer</text>
 <path d="M1160,566 H1340" stroke="#16a34a" stroke-width="1.1"/>
-<path d="M849,242 L849,300 L1046,300 L1046,370" class="sessionUse"/>
-<path d="M849,242 L849,292 L1250,292 L1250,370" class="sessionUse"/>
+<path d="M849,242 L849,292 Q849,300 857,300 L1038,300 Q1046,300 1046,308 L1046,370" class="sessionUse"/>
+<path d="M849,242 L849,284 Q849,292 857,292 L1242,292 Q1250,292 1250,300 L1250,370" class="sessionUse"/>
 <path d="M956,422 L866,422" class="repoUse"/>
-<path d="M1250,370 L1250,312 L790,312 L790,370" class="repoUse"/>
-<path d="M956,546 L918,546 L918,306 L834,306 L834,242" class="sessionUse"/>
+<path d="M1250,370 L1250,320 Q1250,312 1242,312 L798,312 Q790,312 790,320 L790,370" class="repoUse"/>
+<path d="M956,546 L926,546 Q918,546 918,538 L918,314 Q918,306 910,306 L842,306 Q834,306 834,298 L834,242" class="sessionUse"/>
 <path d="M1340,550 L1426,550 L1426,258 L1162,258" class="inherit"/>
 <path d="M1150,242 L1138,258 L1162,258 Z" class="inheritHead"/>
+<path d="M1098,630 L1142,630" class="assoc connector" data-connector="Legend association"/>
+<text x="1150" y="634" class="legendText">solid association/inheritance</text>
+<path d="M1098,650 L1142,650" class="mapArrow connector" data-connector="Legend dashed mapping"/>
+<text x="1150" y="654" class="legendText">dashed use/mapping</text>
 <rect x="88" y="672" width="1260" height="146" rx="12" class="panel"/><text x="718" y="664" class="panelTitle" text-anchor="middle">DTO RECORDS AND QUERY CONDITIONS</text>
 <rect x="124" y="704" width="180" height="104" rx="4" fill="#fff" stroke="#db2777" class="card"/>
 <path d="M124,750 L124,708 Q124,704 128,704 L300,704 Q304,704 304,708 L304,750 Z" fill="#fce7f3"/>
@@ -187,10 +193,10 @@
 <text x="1092" y="768" class="tiny">memberName</text>
 <text x="1092" y="783" class="tiny">teamName</text>
 <text x="1092" y="798" class="tiny">age range</text>
-<path d="M178,488 L178,704" class="mapArrow"/>
-<path d="M366,488 L366,704" class="mapArrow"/>
-<path d="M218,488 L218,648 L668,648 L668,704" class="mapArrow"/>
-<path d="M366,488 L366,632 L934,632 L934,704" class="mapArrow"/>
+<path d="M178,488 L178,704" class="mapArrow connector" data-connector="Team to TeamRecord"/>
+<path d="M366,488 L366,704" class="mapArrow connector" data-connector="Member to MemberRecord"/>
+<path d="M218,488 L218,640 Q218,648 226,648 L660,648 Q668,648 668,656 L668,704" class="mapArrow"/>
+<path d="M366,488 L366,624 Q366,632 374,632 L926,632 Q934,632 934,640 L934,704" class="mapArrow"/>
 <rect x="112" y="838" width="1180" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="702" y="868" class="detail" text-anchor="middle">Source check: Team.members is mappedBy member.team; repositories receive Mutiny Session objects from controller SessionFactory boundaries.</text>
 </svg>

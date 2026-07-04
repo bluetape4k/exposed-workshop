@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 900" width="1560" height="900" role="img" aria-label="Exposed SQL Function Classification">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -71,24 +72,24 @@
 <rect x="1348" y="130" width="140" height="610" rx="12" class="panel"/><text x="1418" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
 <path d="M1370,314 C1370,294 1466,294 1466,314 L1466,512 C1466,532 1370,532 1370,512 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1418" cy="314" rx="48" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1370,512 C1370,532 1466,532 1466,512" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1370,512 Q1418,512 1466,512" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1418" y="342" class="label" text-anchor="middle">DB</text>
 <text x="1386" y="368" class="tiny">H2</text>
 <text x="1386" y="385" class="tiny">Postgres</text>
 <text x="1386" y="402" class="tiny">MySQL</text>
 <text x="1386" y="419" class="tiny">MariaDB</text>
-<path d="M386,209 L488,209 L488,239 L590,239" class="arrow"/>
-<path d="M386,317 L504,317 L504,239 L590,239" class="arrow"/>
-<path d="M386,425 L488,425 L488,527 L590,527" class="arrow"/>
-<path d="M386,533 L504,533 L504,527 L590,527" class="arrow"/>
-<path d="M386,641 L472,641 L472,239 L590,239" class="runtimeUse"/>
-<path d="M814,239 L904,239 L904,224 L990,224" class="arrow"/>
-<path d="M814,527 L904,527 L904,364 L990,364" class="arrow"/>
-<path d="M814,527 L920,527 L920,504 L990,504" class="arrow"/>
-<path d="M814,665 L920,665 L920,644 L990,644" class="returnLine"/>
-<path d="M1222,224 L1310,224 L1310,356 L1370,356" class="dbUse"/>
-<path d="M1222,364 L1310,364 L1310,396 L1370,396" class="dbUse"/>
-<path d="M1222,504 L1310,504 L1310,436 L1370,436" class="dbUse"/>
+<path d="M386,209 L478,209 Q488,209 488,219 L488,229 Q488,239 498,239 L590,239" class="arrow"/>
+<path d="M386,317 L486,317 Q504,317 504,299 L504,257 Q504,239 522,239 L590,239" class="arrow"/>
+<path d="M386,425 L470,425 Q488,425 488,443 L488,509 Q488,527 506,527 L590,527" class="arrow"/>
+<path d="M386,533 L590,527" class="arrow"/>
+<path d="M386,641 L454,641 Q472,641 472,623 L472,257 Q472,239 490,239 L590,239" class="runtimeUse"/>
+<path d="M814,239 L990,224" class="arrow"/>
+<path d="M814,527 L886,527 Q904,527 904,509 L904,382 Q904,364 922,364 L990,364" class="arrow"/>
+<path d="M814,527 L990,504" class="arrow"/>
+<path d="M814,665 L911.6,665 Q920,665 920,656.6 L920,652.4 Q920,644 928.4,644 L990,644" class="returnLine"/>
+<path d="M1222,224 L1292,224 Q1310,224 1310,242 L1310,338 Q1310,356 1328,356 L1370,356" class="dbUse"/>
+<path d="M1222,364 L1299.3,364 Q1310,364 1310,374.7 L1310,385.3 Q1310,396 1320.7,396 L1370,396" class="dbUse"/>
+<path d="M1222,504 L1292,504 Q1310,504 1310,486 L1310,454 Q1310,436 1328,436 L1370,436" class="dbUse"/>
 <rect x="126" y="796" width="1308" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="780" y="827" class="detail" text-anchor="middle">Source check: Ex01..Ex05 cover string/conditional, math, statistics, trigonometric, and window functions through typed Exposed Function&lt;T&gt; expressions.</text>
 </svg>

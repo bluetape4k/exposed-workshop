@@ -1,12 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Exposed DDL Schema Execution Flow">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -71,25 +72,25 @@
 <rect x="1370" y="130" width="150" height="608" rx="12" class="panel"/><text x="1445" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
 <path d="M1390,280 C1390,260 1500,260 1500,280 L1500,548 C1500,568 1390,568 1390,548 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1445" cy="280" rx="55" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1390,548 C1390,568 1500,568 1500,548" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1390,548 Q1445,548 1500,548" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1445" y="308" class="label" text-anchor="middle">DB</text>
 <text x="1408" y="334" class="tiny">H2</text>
 <text x="1408" y="351" class="tiny">Postgres</text>
 <text x="1408" y="368" class="tiny">MySQL</text>
-<path d="M382,213 L510,213 L510,277 L608,277" class="arrow"/>
-<path d="M382,325 L510,325 L510,277 L608,277" class="arrow"/>
-<path d="M382,437 L510,437 L510,277 L608,277" class="arrow"/>
-<path d="M382,549 L510,549 L510,277 L608,277" class="arrow"/>
-<path d="M382,661 L510,661 L510,277 L608,277" class="arrow"/>
-<path d="M382,325 L520,325 L520,507 L608,507" class="migration"/>
-<path d="M850,277 L940,277 L940,213 L1034,213" class="arrow"/>
-<path d="M850,507 L940,507 L940,325 L1034,325" class="migration"/>
-<path d="M850,277 L958,277 L958,437 L1034,437" class="arrow"/>
-<path d="M850,277 L976,277 L976,549 L1034,549" class="arrow"/>
-<path d="M1272,213 L1338,213 L1338,314 L1390,314" class="dbUse"/>
-<path d="M1272,325 L1338,325 L1338,354 L1390,354" class="dbUse"/>
-<path d="M1272,437 L1338,437 L1338,394 L1390,394" class="dbUse"/>
-<path d="M1272,549 L1338,549 L1338,434 L1390,434" class="dbUse"/>
+<path d="M382,213 L492,213 Q510,213 510,231 L510,259 Q510,277 528,277 L608,277" class="arrow"/>
+<path d="M382,325 L494,325 Q510,325 510,309 L510,293 Q510,277 526,277 L608,277" class="arrow"/>
+<path d="M382,437 L492,437 Q510,437 510,419 L510,295 Q510,277 528,277 L608,277" class="arrow"/>
+<path d="M382,549 L492,549 Q510,549 510,531 L510,295 Q510,277 528,277 L608,277" class="arrow"/>
+<path d="M382,661 L492,661 Q510,661 510,643 L510,295 Q510,277 528,277 L608,277" class="arrow"/>
+<path d="M382,325 L502,325 Q520,325 520,343 L520,489 Q520,507 538,507 L608,507" class="migration"/>
+<path d="M850,277 L922,277 Q940,277 940,259 L940,231 Q940,213 958,213 L1034,213" class="arrow"/>
+<path d="M850,507 L922,507 Q940,507 940,489 L940,343 Q940,325 958,325 L1034,325" class="migration"/>
+<path d="M850,277 L940,277 Q958,277 958,295 L958,419 Q958,437 976,437 L1034,437" class="arrow"/>
+<path d="M850,277 L958,277 Q976,277 976,295 L976,531 Q976,549 994,549 L1034,549" class="arrow"/>
+<path d="M1272,213 L1320,213 Q1338,213 1338,231 L1338,296.7 Q1338,314 1355.3,314 L1390,314" class="dbUse"/>
+<path d="M1272,325 L1328.3,325 Q1338,325 1338,334.7 L1338,344.3 Q1338,354 1347.7,354 L1390,354" class="dbUse"/>
+<path d="M1272,437 L1323.7,437 Q1338,437 1338,422.7 L1338,408.3 Q1338,394 1352.3,394 L1390,394" class="dbUse"/>
+<path d="M1272,549 L1320,549 Q1338,549 1338,531 L1338,451.3 Q1338,434 1355.3,434 L1390,434" class="dbUse"/>
 <rect x="122" y="794" width="1356" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="800" y="825" class="detail" text-anchor="middle">Source check: Ex02 creates tables and composite FKs; Ex03 runs MigrationUtils; Ex05 creates index variants; Ex06 creates sequences; Ex07 maps custom enum SQL types and references.</text>
 </svg>

@@ -41,21 +41,11 @@
       .msg.returnText, .badgeText.returnText { fill: #7f6038; }
       .msg.errorText, .badgeText.errorText { fill: #934545; }
     </style>
-    <marker id="arrowCall" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c" stroke="#3f7d9c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowSql" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowState" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowReturn" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b7d54" stroke="#9b7d54" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowError" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#b45b5b" stroke="#b45b5b" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
+    <marker id="arrowCall" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c"/></marker>
+    <marker id="arrowSql" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d"/></marker>
+    <marker id="arrowState" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f"/></marker>
+    <marker id="arrowReturn" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b7d54"/></marker>
+    <marker id="arrowError" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#b45b5b"/></marker>
   </defs>
 
   <rect x="24" y="24" width="1552" height="1312" rx="20" class="frame"/>
@@ -101,33 +91,33 @@
   <rect x="1228" y="596" width="14" height="432" rx="6" class="activation"/>
   <rect x="1453" y="672" width="14" height="148" rx="6" class="activation"/>
 
-  <rect x="72" y="258" width="482" height="34" rx="17" class="label callLabel"/>
-  <circle cx="96" cy="275" r="13" class="badge callBadge"/><text x="96" y="280" text-anchor="middle" class="badgeText callText">1</text>
+  <rect x="72" y="258" width="482" height="34" rx="17" class="label callLabel pill"/>
+  <circle cx="96" cy="275" r="13" class="badge callBadge"/><text x="96" y="280" text-anchor="middle" class="badgeText callText num">1</text>
   <text x="120" y="280" class="msg callText">CockroachDatabase.connect(cockroach.url)</text>
   <path d="M 145 300 L 393 300" class="call" data-connector="connector"/>
 
-  <rect x="202" y="330" width="430" height="34" rx="17" class="label returnLabel"/>
-  <circle cx="226" cy="347" r="13" class="badge returnBadge"/><text x="226" y="352" text-anchor="middle" class="badgeText returnText">2</text>
+  <rect x="202" y="330" width="430" height="34" rx="17" class="label returnLabel pill"/>
+  <circle cx="226" cy="347" r="13" class="badge returnBadge"/><text x="226" y="352" text-anchor="middle" class="badgeText returnText num">2</text>
   <text x="250" y="352" class="msg returnText">Database backed by PostgreSQL JDBC</text>
   <path d="M 393 372 L 145 372" class="return" data-connector="connector"/>
 
-  <rect x="80" y="406" width="462" height="34" rx="17" class="label stateLabel"/>
-  <circle cx="104" cy="423" r="13" class="badge stateBadge"/><text x="104" y="428" text-anchor="middle" class="badgeText stateText">3</text>
+  <rect x="80" y="406" width="462" height="34" rx="17" class="label stateLabel pill"/>
+  <circle cx="104" cy="423" r="13" class="badge stateBadge"/><text x="104" y="428" text-anchor="middle" class="badgeText stateText num">3</text>
   <text x="128" y="428" class="msg stateText">bootstrap inventory and ledger schema</text>
   <path d="M 145 448 L 682 448" class="state" data-connector="connector"/>
 
-  <rect x="736" y="478" width="440" height="34" rx="17" class="label callLabel"/>
-  <circle cx="760" cy="495" r="13" class="badge callBadge"/><text x="760" y="500" text-anchor="middle" class="badgeText callText">4</text>
+  <rect x="736" y="478" width="440" height="34" rx="17" class="label callLabel pill"/>
+  <circle cx="760" cy="495" r="13" class="badge callBadge"/><text x="760" y="500" text-anchor="middle" class="badgeText callText num">4</text>
   <text x="784" y="500" class="msg callText">withCockroachTransaction(options)</text>
   <path d="M 696 520 L 968 520" class="call" data-connector="connector"/>
 
-  <rect x="1034" y="562" width="402" height="34" rx="17" class="label sqlLabel"/>
-  <circle cx="1058" cy="579" r="13" class="badge sqlBadge"/><text x="1058" y="584" text-anchor="middle" class="badgeText sqlText">5</text>
+  <rect x="1034" y="562" width="402" height="34" rx="17" class="label sqlLabel pill"/>
+  <circle cx="1058" cy="579" r="13" class="badge sqlBadge"/><text x="1058" y="584" text-anchor="middle" class="badgeText sqlText num">5</text>
   <text x="1082" y="584" class="msg sqlText">begin SERIALIZABLE attempt, maxAttempts=1</text>
   <path d="M 982 604 L 1228 604" class="sql" data-connector="connector"/>
 
-  <rect x="1090" y="638" width="408" height="34" rx="17" class="label sqlLabel"/>
-  <circle cx="1114" cy="655" r="13" class="badge sqlBadge"/><text x="1114" y="660" text-anchor="middle" class="badgeText sqlText">6</text>
+  <rect x="1090" y="638" width="408" height="34" rx="17" class="label sqlLabel pill"/>
+  <circle cx="1114" cy="655" r="13" class="badge sqlBadge"/><text x="1114" y="660" text-anchor="middle" class="badgeText sqlText num">6</text>
   <text x="1138" y="660" class="msg sqlText">read inventory, update stock, insert ledger</text>
   <path d="M 1242 680 L 1453 680" class="sql" data-connector="connector"/>
 
@@ -135,23 +125,23 @@
   <rect x="936" y="724" width="268" height="30" rx="15" fill="#fff0f0" stroke="#b45b5b" stroke-width="1.8"/>
   <text x="960" y="744" class="note">retryable conflict path</text>
 
-  <rect x="1014" y="770" width="420" height="34" rx="17" class="label errorLabel"/>
-  <circle cx="1038" cy="787" r="13" class="badge errorBadge"/><text x="1038" y="792" text-anchor="middle" class="badgeText errorText">7</text>
+  <rect x="1014" y="770" width="420" height="34" rx="17" class="label errorLabel pill"/>
+  <circle cx="1038" cy="787" r="13" class="badge errorBadge"/><text x="1038" y="792" text-anchor="middle" class="badgeText errorText num">7</text>
   <text x="1062" y="792" class="msg errorText">SQLSTATE 40001 restart transaction</text>
   <path d="M 1453 812 L 982 812" class="error" data-connector="connector"/>
 
-  <rect x="724" y="870" width="510" height="34" rx="17" class="label stateLabel"/>
-  <circle cx="748" cy="887" r="13" class="badge stateBadge"/><text x="748" y="892" text-anchor="middle" class="badgeText stateText">8</text>
+  <rect x="724" y="870" width="510" height="34" rx="17" class="label stateLabel pill"/>
+  <circle cx="748" cy="887" r="13" class="badge stateBadge"/><text x="748" y="892" text-anchor="middle" class="badgeText stateText num">8</text>
   <text x="772" y="892" class="msg stateText">helper classifies CockroachDB retry signature</text>
   <path d="M 982 916 L 1100 916 Q 1112 916 1112 928 L 1112 946 Q 1112 958 1100 958 L 982 958" class="state" data-connector="connector"/>
 
-  <rect x="790" y="978" width="456" height="34" rx="17" class="label callLabel"/>
-  <circle cx="814" cy="995" r="13" class="badge callBadge"/><text x="814" y="1000" text-anchor="middle" class="badgeText callText">9</text>
+  <rect x="790" y="978" width="456" height="34" rx="17" class="label callLabel pill"/>
+  <circle cx="814" cy="995" r="13" class="badge callBadge"/><text x="814" y="1000" text-anchor="middle" class="badgeText callText num">9</text>
   <text x="838" y="1000" class="msg callText">rerun the whole reservation transaction</text>
   <path d="M 982 1020 L 1228 1020" class="call" data-connector="connector"/>
 
-  <rect x="742" y="1050" width="502" height="34" rx="17" class="label returnLabel"/>
-  <circle cx="766" cy="1067" r="13" class="badge returnBadge"/><text x="766" y="1072" text-anchor="middle" class="badgeText returnText">10</text>
+  <rect x="742" y="1050" width="502" height="34" rx="17" class="label returnLabel pill"/>
+  <circle cx="766" cy="1067" r="13" class="badge returnBadge"/><text x="766" y="1072" text-anchor="middle" class="badgeText returnText num">10</text>
   <text x="790" y="1072" class="msg returnText">InventorySnapshot plus one committed ledger row</text>
   <path d="M 968 1092 L 696 1092" class="return" data-connector="connector"/>
   <path d="M 682 1162 L 145 1162" class="return" data-connector="connector"/>

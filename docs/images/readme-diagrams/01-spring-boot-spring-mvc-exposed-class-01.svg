@@ -1,20 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 720" width="1320" height="720" role="img" aria-label="Spring MVC With Exposed Architecture">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto"><path d="M1,1 L12,6 L1,11 Z" fill="#fff" stroke="#475569" stroke-width="1.8"/></marker>
+<marker id="arrow" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker id="arrowSoft" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#94a3b8"/></marker>
+<marker id="arrowGreen" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
+<marker id="arrowPurple" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="inherit" viewBox="0 0 18 16" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-.subtitle,.detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
 .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-.softArrow{fill:none;stroke:#94a3b8;stroke-width:1.35;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.softArrow{fill:none;stroke:#94a3b8;stroke-width:1.35;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowSoft)}
 .movieMap{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
 .actorMap{fill:none;stroke:#7c3aed;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .lifeline{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
@@ -74,20 +76,25 @@
 <text x="1184" y="312" class="label" text-anchor="middle">HikariCP</text>
 <text x="1184" y="332" class="detail" text-anchor="middle">connection pool</text>
 <path d="M1112,428 C1112,412 1256,412 1256,428 L1256,474 C1256,490 1112,490 1112,474 Z" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<path d="M1112,428 C1112,444 1256,444 1256,428" fill="none" stroke="#ea580c" stroke-width="1.5"/>
+<path d="M1112,428 Q1184,428 1256,428" fill="none" stroke="#ea580c" stroke-width="1.5"/>
+<rect x="1137" y="435" width="94" height="24" rx="6" fill="#ffedd5"/>
 <text x="1184" y="449" class="label" text-anchor="middle">Database</text>
 <text x="1184" y="468" class="detail" text-anchor="middle">H2 / MySQL / PostgreSQL</text>
-<path d="M270,249 L314,249 L314,171 L292,171" class="softArrow"/>
-<path d="M292,331 L360,331 L360,291 L420,291" class="arrow"/>
-<path d="M292,401 L360,401 L360,431 L420,431" class="arrow"/>
-<path d="M292,471 L360,471 L360,431 L420,431" class="arrow"/>
-<path d="M650,291 L720,291 L720,281 L796,281" class="arrow"/>
-<path d="M650,431 L720,431 L720,371 L796,371" class="arrow"/>
-<path d="M650,431 L720,431 L720,461 L796,461" class="arrow"/>
-<path d="M994,281 L1054,281 L1054,317 L1108,317" class="softArrow"/>
-<path d="M994,371 L1054,371 L1054,317 L1108,317" class="softArrow"/>
-<path d="M994,461 L1054,461 L1054,317 L1108,317" class="softArrow"/>
-<path d="M1184,346 L1184,414" class="arrow"/>
+<path d="M270 249 H304 Q314 249 314 239 V181 Q314 171 304 171 H292" class="softArrow"/>
+<path d="M292 331 H350 Q360 331 360 321 V301 Q360 291 370 291 H420" class="arrow"/>
+<path d="M292 401 H350 Q360 401 360 411 V421 Q360 431 370 431 H420" class="arrow"/>
+<path d="M292 471 H350 Q360 471 360 461 V441 Q360 431 370 431 H420" class="arrow"/>
+<path d="M650 291 H796" class="arrow"/>
+<path d="M650 431 H710 Q720 431 720 421 V381 Q720 371 730 371 H796" class="arrow"/>
+<path d="M650 431 H710 Q720 431 720 441 V451 Q720 461 730 461 H796" class="arrow"/>
+<path d="M994 281 H1044 Q1054 281 1054 291 V307 Q1054 317 1064 317 H1108" class="softArrow"/>
+<path d="M994 371 H1044 Q1054 371 1054 361 V327 Q1054 317 1064 317 H1108" class="softArrow"/>
+<path d="M994 461 H1044 Q1054 461 1054 451 V327 Q1054 317 1064 317 H1108" class="softArrow"/>
+<path d="M1184 346 V414" class="arrow"/>
 <rect x="92" y="582" width="1136" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="660" y="612" class="detail" text-anchor="middle">The MVC layer stays synchronous; Spring owns transaction demarcation while Exposed repositories own SQL and DAO mapping.</text>
+<path d="M424 660 H492" class="arrow"/>
+<text x="508" y="664" class="tiny">solid: request delegation and resource access</text>
+<path d="M750 660 H818" class="softArrow"/>
+<text x="834" y="664" class="tiny">dashed: generated docs and runtime dependency</text>
 </svg>

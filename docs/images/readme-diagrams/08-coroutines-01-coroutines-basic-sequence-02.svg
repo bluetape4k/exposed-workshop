@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="newSuspendedTransaction Processing Sequence">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker viewBox="0 0 10 10" id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker viewBox="0 0 10 10" id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
+<marker viewBox="0 0 10 10" id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker viewBox="0 0 10 10" id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker viewBox="0 0 10 10" id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -21,6 +22,7 @@
 .runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .returnLine{fill:none;stroke:#64748b;stroke-width:1.7;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGray)}
 .altRegion{fill:#f8fafc;fill-opacity:.055;stroke:#94a3b8;stroke-opacity:.28;stroke-width:1.2;stroke-dasharray:8 7}
+.activation{fill:#e0f2fe;stroke:#93c5fd;stroke-width:1;opacity:.7}
 .lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
 </style>
 </defs>
@@ -29,54 +31,58 @@
 <text x="48" y="58" class="title">newSuspendedTransaction Processing Sequence</text>
 <text x="48" y="80" class="subtitle">Ex01_Coroutines coordinates withTablesSuspending, initial insert, async insert/update jobs, await, and final ordered assertions</text>
 <desc>Test</desc><rect x="38" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="110" y="163" class="label" text-anchor="middle">Test</text>
+<text x="110" y="163" class="label participant" text-anchor="middle">Test</text>
 <line x1="110" y1="184" x2="110" y2="750" class="lifeline"/>
+<rect x="104" y="214" width="12" height="120" rx="4" class="activation"/>
 <desc>Fixture</desc><rect x="243" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="315" y="163" class="label" text-anchor="middle">Fixture</text>
+<text x="315" y="163" class="label participant" text-anchor="middle">Fixture</text>
 <line x1="315" y1="184" x2="315" y2="750" class="lifeline"/>
+<rect x="309" y="214" width="12" height="120" rx="4" class="activation"/>
 <desc>Coroutine API</desc><rect x="463" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="535" y="163" class="label" text-anchor="middle">Coroutine API</text>
+<text x="535" y="163" class="label participant" text-anchor="middle">Coroutine API</text>
 <line x1="535" y1="184" x2="535" y2="750" class="lifeline"/>
+<rect x="529" y="214" width="12" height="120" rx="4" class="activation"/>
 <desc>Insert job</desc><rect x="688" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="760" y="163" class="label" text-anchor="middle">Insert job</text>
+<text x="760" y="163" class="label participant" text-anchor="middle">Insert job</text>
 <line x1="760" y1="184" x2="760" y2="750" class="lifeline"/>
+<rect x="754" y="214" width="12" height="120" rx="4" class="activation"/>
 <desc>Update job</desc><rect x="908" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="980" y="163" class="label" text-anchor="middle">Update job</text>
+<text x="980" y="163" class="label participant" text-anchor="middle">Update job</text>
 <line x1="980" y1="184" x2="980" y2="750" class="lifeline"/>
 <desc>TesterUnique</desc><rect x="1128" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1200" y="163" class="label" text-anchor="middle">TesterUnique</text>
+<text x="1200" y="163" class="label participant" text-anchor="middle">TesterUnique</text>
 <line x1="1200" y1="184" x2="1200" y2="750" class="lifeline"/>
 <desc>Assertions</desc><rect x="1318" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1390" y="163" class="label" text-anchor="middle">Assertions</text>
+<text x="1390" y="163" class="label participant" text-anchor="middle">Assertions</text>
 <line x1="1390" y1="184" x2="1390" y2="750" class="lifeline"/>
 <rect x="580" y="400" width="850" height="310" rx="14" class="altRegion"/>
 <text x="602" y="425" class="panelTitle">ALT: insert retry / update branch</text>
-<rect x="86" y="222" width="246" height="46" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<rect x="86" y="222" width="246" height="46" rx="10" fill="#dcfce7" stroke="#16a34a" class="card pill"/>
 <circle cx="109" cy="245" r="14" fill="#fff" stroke="#16a34a" stroke-width="1.4"/>
-<text x="109" y="250" class="detail" text-anchor="middle">1</text>
+<text x="109" y="250" class="detail num" text-anchor="middle">1</text>
 <text x="134" y="251" class="detail">withTablesSuspending creates unique table</text>
 <path d="M110,276 L315,276" class="arrow"/>
-<rect x="300" y="300" width="300" height="46" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<rect x="300" y="300" width="300" height="46" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card pill"/>
 <circle cx="323" cy="323" r="14" fill="#fff" stroke="#7c3aed" stroke-width="1.4"/>
-<text x="323" y="328" class="detail" text-anchor="middle">2</text>
+<text x="323" y="328" class="detail num" text-anchor="middle">2</text>
 <text x="348" y="329" class="detail">newSuspendedTransaction inserts origin id=1</text>
 <path d="M315,354 L535,354" class="arrow"/>
 <path d="M535,382 L1200,382" class="dbUse"/>
-<rect x="612" y="418" width="300" height="46" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<rect x="612" y="418" width="300" height="46" rx="10" fill="#fef3c7" stroke="#d97706" class="card pill"/>
 <circle cx="635" cy="441" r="14" fill="#fff" stroke="#d97706" stroke-width="1.4"/>
-<text x="635" y="446" class="detail" text-anchor="middle">3</text>
+<text x="635" y="446" class="detail num" text-anchor="middle">3</text>
 <text x="660" y="447" class="detail">insertJob retries id=1 after update</text>
 <path d="M535,472 L760,472" class="arrow"/>
 <path d="M760,500 L1200,500" class="dbUse"/>
-<rect x="842" y="534" width="312" height="46" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<rect x="842" y="534" width="312" height="46" rx="10" fill="#e2e8f0" stroke="#64748b" class="card pill"/>
 <circle cx="865" cy="557" r="14" fill="#fff" stroke="#64748b" stroke-width="1.4"/>
-<text x="865" y="562" class="detail" text-anchor="middle">4</text>
+<text x="865" y="562" class="detail num" text-anchor="middle">4</text>
 <text x="890" y="563" class="detail">updateJob moves id 1 to 99</text>
 <path d="M535,588 L980,588" class="arrow"/>
 <path d="M980,616 L1200,616" class="dbUse"/>
-<rect x="1126" y="654" width="286" height="46" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<rect x="1126" y="654" width="286" height="46" rx="10" fill="#fce7f3" stroke="#db2777" class="card pill"/>
 <circle cx="1149" cy="677" r="14" fill="#fff" stroke="#db2777" stroke-width="1.4"/>
-<text x="1149" y="682" class="detail" text-anchor="middle">5</text>
+<text x="1149" y="682" class="detail num" text-anchor="middle">5</text>
 <text x="1174" y="683" class="detail">await jobs; assert ids [1, 99]</text>
 <path d="M1200,708 L1390,708" class="returnLine"/>
 <rect x="126" y="808" width="1248" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>

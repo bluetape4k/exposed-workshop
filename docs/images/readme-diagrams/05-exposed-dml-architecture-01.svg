@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Exposed DML Chapter Architecture">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -63,7 +64,7 @@
 <text x="1149" y="252" class="detail" text-anchor="middle">DML and DDL fragments</text>
 <path d="M1058,360 C1058,340 1240,340 1240,360 L1240,518 C1240,538 1058,538 1058,518 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1149" cy="360" rx="91" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1058,518 C1058,538 1240,538 1240,518" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1058,518 Q1149,518 1240,518" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1149" y="388" class="label" text-anchor="middle">Dialect DBs</text>
 <text x="1076" y="414" class="tiny">H2</text>
 <text x="1076" y="431" class="tiny">PostgreSQL</text>
@@ -71,14 +72,14 @@
 <rect x="1028" y="614" width="242" height="70" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
 <text x="1149" y="639" class="label" text-anchor="middle">Behavior matrix</text>
 <text x="1149" y="670" class="detail" text-anchor="middle">RETURNING, MERGE, arrays</text>
-<path d="M336,213 L436,213 L436,229 L536,229" class="arrow"/>
-<path d="M336,325 L436,325 L436,369 L536,369" class="arrow"/>
-<path d="M336,437 L436,437 L436,369 L536,369" class="arrow"/>
-<path d="M336,549 L448,549 L448,649 L536,649" class="runtimeUse"/>
-<path d="M336,661 L420,661 L420,229 L536,229" class="runtimeUse"/>
-<path d="M822,369 L944,369 L944,231 L1028,231" class="arrow"/>
-<path d="M1270,231 L1310,231 L1310,439 L1240,439" class="dbUse"/>
-<path d="M1240,439 L1310,439 L1310,649 L1270,649" class="returnLine"/>
+<path d="M336,213 L536,229" class="arrow"/>
+<path d="M336,325 L421.3,325 Q436,325 436,339.7 L436,354.3 Q436,369 450.7,369 L536,369" class="arrow"/>
+<path d="M336,437 L418,437 Q436,437 436,419 L436,387 Q436,369 454,369 L536,369" class="arrow"/>
+<path d="M336,549 L430,549 Q448,549 448,567 L448,631 Q448,649 466,649 L536,649" class="runtimeUse"/>
+<path d="M336,661 L402,661 Q420,661 420,643 L420,247 Q420,229 438,229 L536,229" class="runtimeUse"/>
+<path d="M822,369 L926,369 Q944,369 944,351 L944,249 Q944,231 962,231 L1028,231" class="arrow"/>
+<path d="M1270,231 L1296.7,231 Q1310,231 1310,244.3 L1310,421 Q1310,439 1292,439 L1240,439" class="dbUse"/>
+<path d="M1240,439 L1292,439 Q1310,439 1310,457 L1310,633 Q1310,649 1294,649 L1270,649" class="returnLine"/>
 <rect x="132" y="798" width="1236" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="829" class="detail" text-anchor="middle">Source check: chapter README orders modules from DML and types through functions, transactions, and DAO entities; examples verify dialect-specific behavior with tests.</text>
 </svg>

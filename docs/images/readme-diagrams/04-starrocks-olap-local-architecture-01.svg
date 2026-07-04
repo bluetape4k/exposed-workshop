@@ -2,6 +2,10 @@
   <title id="title">StarRocks local-first OLAP boundary</title>
   <desc id="desc">Architecture boundary for the StarRocks OLAP workshop: local H2 projection tests validate SQL and aggregation, StarRocks helper APIs own JDBC options and OLAP table DDL, and real StarRocks validation remains explicit opt-in.</desc>
   <defs>
+<marker id="arrowGuard" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#69777e"/></marker>
+<marker id="arrowHelper" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d"/></marker>
+<marker id="arrowLocal" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f8e84"/></marker>
+<marker id="arrowReal" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7667b1"/></marker>
     <style>
       text { letter-spacing: 0; }
       .title { font-family: "Architects Daughter"; font-size: 40px; font-weight: 400; fill: #263238; }
@@ -28,18 +32,10 @@
       .guard { fill: none; stroke: #69777e; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 10 7; marker-end: url(#arrowGuard); }
       .label { font-size: 13px; font-weight: 700; }
     </style>
-    <marker id="arrowLocal" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f8e84" stroke="#3f8e84" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowHelper" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowReal" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#7667b1" stroke="#7667b1" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowGuard" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#69777e" stroke="#69777e" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
+
+
+
+
   </defs>
 
   <rect x="24" y="24" width="1552" height="1032" rx="20" class="canvas"/>
@@ -120,17 +116,17 @@
     <text x="1288" y="878" class="cardText">not default CI feedback</text>
   </g>
 
-  <path d="M 398 301 L 480 301" class="flowLocal"/>
-  <path d="M 766 301 L 854 301" class="flowLocal"/>
-  <path d="M 1136 301 L 1216 301" class="flowLocal"/>
+  <path d="M 398 301 L 480 301" class="flowLocal" data-connector="local-1"/>
+  <path d="M 766 301 L 854 301" class="flowLocal" data-connector="local-2"/>
+  <path d="M 1136 301 L 1216 301" class="flowLocal" data-connector="local-3"/>
 
-  <path d="M 412 588 L 500 588" class="flowHelper"/>
-  <path d="M 792 588 L 880 588" class="flowHelper"/>
-  <path d="M 1180 588 L 1268 588" class="flowHelper"/>
+  <path d="M 412 588 L 500 588" class="flowHelper" data-connector="helper-1"/>
+  <path d="M 792 588 L 880 588" class="flowHelper" data-connector="helper-2"/>
+  <path d="M 1180 588 L 1268 588" class="flowHelper" data-connector="helper-3"/>
 
-  <path d="M 420 860 L 520 860" class="flowReal"/>
-  <path d="M 776 860 L 876 860" class="flowReal"/>
-  <path d="M 1162 860 L 1260 860" class="guard"/>
+  <path d="M 420 860 L 520 860" class="flowReal" data-connector="real-1"/>
+  <path d="M 776 860 L 876 860" class="flowReal" data-connector="real-2"/>
+  <path d="M 1162 860 L 1260 860" class="guard" data-connector="guard-1"/>
 
   <rect x="112" y="972" width="1376" height="44" rx="12" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
   <text x="132" y="1000" class="note">Default CI proves typed boundaries, DDL shape, SQL rendering, and aggregation; real StarRocks behavior is tested only when a backend is deliberately provided.</text>

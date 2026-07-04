@@ -1,87 +1,61 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 780" width="1320" height="780" role="img" aria-label="R2DBC Comment Request Flow">
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="980" viewBox="0 0 1500 980" role="img" aria-label="R2DBC Request Flow">
 <defs>
-<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
-<style>
-.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-.subtitle,.detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-.softArrow{fill:none;stroke:#94a3b8;stroke-width:1.35;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-.fkArrow{fill:none;stroke:#0f766e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}
-.mapArrow{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.sessionUse{fill:none;stroke:#7c3aed;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
-.repoUse{fill:none;stroke:#2563eb;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.opsUse{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.clientUse{fill:none;stroke:#ea580c;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.converterUse{fill:none;stroke:#db2777;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.lifeline{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
-.inherit{fill:none;stroke:#475569;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
-.assoc{fill:none;stroke:#0f766e;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-</style>
+
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#94a3b8" flood-opacity=".14"/></filter>
+  <marker id="seqArrowBlue" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6"/></marker>
+  <marker id="seqArrowGreen" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6f8f4e"/></marker>
+  <marker id="seqArrowAmber" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#a06a3b"/></marker>
+  <marker id="seqArrowTeal" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f8f8a"/></marker>
+  <marker id="seqArrowRed" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#b45a5a"/></marker>
+  <style><![CDATA[
+    svg{font-family:"Architects Daughter","Comic Mono",ui-sans-serif,system-ui,sans-serif}.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#c7d8eb;stroke-width:2;filter:url(#shadow)}.title{font-family:"Architects Daughter";font-size:38px;fill:#263a57}.subtitle,.role,.labelText,.footer,.branchText{font-family:"Comic Mono";fill:#526276}.subtitle{font-size:15px}.header{fill:#fff;stroke-width:2.4;filter:url(#shadow)}.participant{font-family:"Architects Daughter";font-size:16px;fill:#263a57}.role{font-size:10px;fill:#6b7a90}.lifeline{fill:none;stroke:#a8bad0;stroke-width:2;stroke-dasharray:7 7}.activation{fill:#f8fbff;stroke:#d4e0ec;stroke-width:1.2;rx:6}.call{fill:none;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}.return{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:7 7}.pill{fill:#f8fafc;stroke-width:1.2}.numCircle{fill:#fff}.num{font-family:"Comic Mono";font-size:10px;font-weight:700}.labelText{font-size:11px}.alt{fill:none;stroke:#9bbce3;stroke-width:1.6;stroke-dasharray:8 8}.branchDivider{stroke:#9bbce3;stroke-opacity:.55;stroke-width:1.2;stroke-dasharray:7 7}.branchText{font-size:12px}.branchBadge{fill:#fff;stroke-width:1.2}.note{fill:#ecfdf5;stroke:#34a879;stroke-width:1.6}
+  ]]></style>
 </defs>
-<rect width="1320" height="780" class="canvas"/>
-<rect x="20" y="20" width="1280" height="740" rx="16" class="frame"/>
-<text x="48" y="58" class="title">R2DBC Comment Request Flow</text>
-<text x="48" y="80" class="subtitle">PostController returns a Flow by delegating Criteria queries to R2dbcEntityOperations</text>
-<rect x="40" y="122" width="144" height="52" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="112" y="154" class="label" text-anchor="middle">Client</text>
-<path d="M112,184 L112,704" class="lifeline"/>
-<rect x="236" y="122" width="144" height="52" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="308" y="154" class="label" text-anchor="middle">PostController</text>
-<path d="M308,184 L308,704" class="lifeline"/>
-<rect x="452" y="122" width="144" height="52" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="524" y="144" class="label" text-anchor="middle">Comment</text>
-<text x="524" y="162" class="label" text-anchor="middle">Repository</text>
-<path d="M524,184 L524,704" class="lifeline"/>
-<rect x="676" y="122" width="144" height="52" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="748" y="144" class="label" text-anchor="middle">R2dbcEntity</text>
-<text x="748" y="162" class="label" text-anchor="middle">Operations</text>
-<path d="M748,184 L748,704" class="lifeline"/>
-<rect x="894" y="122" width="144" height="52" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="966" y="154" class="label" text-anchor="middle">Criteria Query</text>
-<path d="M966,184 L966,704" class="lifeline"/>
-<rect x="1088" y="122" width="144" height="52" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1160" y="154" class="label" text-anchor="middle">comments Table</text>
-<path d="M1160,184 L1160,704" class="lifeline"/>
-<rect x="142" y="196" width="136" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="210" y="213" class="tiny" text-anchor="middle">1. GET /posts/{postId}/comments</text>
-<path d="M128,224 L292,224" class="arrow"/>
-<rect x="338" y="258" width="156" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="416" y="275" class="tiny" text-anchor="middle">2. findAllByPostId(postId)</text>
-<path d="M324,286 L508,286" class="arrow"/>
-<rect x="554" y="320" width="382" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="745" y="337" class="tiny" text-anchor="middle">3. Criteria.where(postId).isEqual</text>
-<path d="M540,348 L950,348" class="arrow"/>
-<rect x="554" y="382" width="164" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="636" y="399" class="tiny" text-anchor="middle">4. selectSuspending&lt;Comment&gt;(query)</text>
-<path d="M540,410 L732,410" class="arrow"/>
-<rect x="778" y="444" width="352" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="954" y="461" class="tiny" text-anchor="middle">5. SELECT comments WHERE post_id</text>
-<path d="M764,472 L1144,472" class="arrow"/>
-<rect x="778" y="506" width="352" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="954" y="523" class="tiny" text-anchor="middle">6. matching rows</text>
-<path d="M1144,534 L764,534" class="softArrow"/>
-<rect x="554" y="568" width="164" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="636" y="585" class="tiny" text-anchor="middle">7. Flow&lt;Comment&gt;</text>
-<path d="M732,596 L540,596" class="softArrow"/>
-<rect x="338" y="630" width="156" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="416" y="647" class="tiny" text-anchor="middle">8. stream comments</text>
-<path d="M508,658 L324,658" class="softArrow"/>
-<rect x="142" y="676" width="136" height="24" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="210" y="693" class="tiny" text-anchor="middle">9. HTTP response body</text>
-<path d="M292,704 L128,704" class="softArrow"/>
-<rect x="78" y="714" width="1164" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="660" y="744" class="detail" text-anchor="middle">PostController.saveComment writes the same table through insertSuspending; the read path shown here is the Criteria based Flow query.</text>
+<rect class="canvas" width="1500" height="980"/><rect class="frame" x="28" y="26" width="1444" height="920" rx="24"/>
+<text class="title" x="60" y="76">R2DBC Comment Request Flow</text>
+<text class="subtitle" x="60" y="102">WebFlux controller streams comments through Spring Data R2DBC repository and entity operations.</text>
+
+<rect class="header" x="70" y="158" width="150" height="66" rx="14" stroke="#4f86c6"/><text class="participant" x="145" y="188" text-anchor="middle">Client</text><text class="role" x="145" y="207" text-anchor="middle">HTTP caller</text><path class="lifeline" d="M145 238 V846"/>
+<rect class="header" x="285" y="158" width="170" height="66" rx="14" stroke="#4f86c6"/><text class="participant" x="370" y="188" text-anchor="middle">PostController</text><text class="role" x="370" y="207" text-anchor="middle">WebFlux handler</text><path class="lifeline" d="M370 238 V846"/>
+<rect class="header" x="520" y="158" width="185" height="66" rx="14" stroke="#6f8f4e"/><text class="participant" x="612" y="188" text-anchor="middle">PostRepository</text><text class="role" x="612" y="207" text-anchor="middle">post lookup</text><path class="lifeline" d="M612 238 V846"/>
+<rect class="header" x="770" y="158" width="205" height="66" rx="14" stroke="#a06a3b"/><text class="participant" x="872" y="188" text-anchor="middle">CommentRepository</text><text class="role" x="872" y="207" text-anchor="middle">criteria by postId</text><path class="lifeline" d="M872 238 V846"/>
+<rect class="header" x="1040" y="158" width="180" height="66" rx="14" stroke="#a06a3b"/><text class="participant" x="1130" y="188" text-anchor="middle">R2dbcOperations</text><text class="role" x="1130" y="207" text-anchor="middle">select/count</text><path class="lifeline" d="M1130 238 V846"/>
+<rect class="header" x="1280" y="158" width="150" height="66" rx="14" stroke="#3f8f8a"/><text class="participant" x="1355" y="188" text-anchor="middle">Flow&lt;Comment&gt;</text><text class="role" x="1355" y="207" text-anchor="middle">stream result</text><path class="lifeline" d="M1355 238 V846"/>
+
+<rect class="activation" x="364" y="270" width="12" height="540"/>
+<rect class="activation" x="606" y="350" width="12" height="145"/>
+<rect class="activation" x="866" y="430" width="12" height="285"/>
+<rect class="activation" x="1124" y="510" width="12" height="115"/>
+
+<rect class="alt" x="84" y="632" width="1298" height="150" rx="16"/>
+<rect class="branchBadge" x="104" y="614" width="218" height="30" rx="10" stroke="#3f8f8a"/><text class="branchText" x="213" y="634" text-anchor="middle">alt comments endpoint</text>
+<path class="branchDivider" d="M84 704 H1382"/>
+<rect class="branchBadge" x="104" y="690" width="350" height="30" rx="10" stroke="#b45a5a"/><text class="branchText" x="279" y="710" text-anchor="middle">else missing post throws 404</text>
+
+<path class="call callBlue" d="M154 282 H360" stroke="#4f86c6" marker-end="url(#seqArrowBlue)"/>
+<rect class="pill" x="180" y="239" width="292" height="28" rx="10" stroke="#4f86c6"/><circle class="numCircle" cx="200" cy="253" r="11" stroke="#4f86c6"/><text class="num" x="200" y="257" text-anchor="middle" fill="#4f86c6">1</text><text class="labelText" x="220" y="258">GET /posts/{postId}/comments</text>
+
+<path class="call callBlue" d="M379 362 H602" stroke="#4f86c6" marker-end="url(#seqArrowBlue)"/>
+<rect class="pill" x="410" y="319" width="260" height="28" rx="10" stroke="#4f86c6"/><circle class="numCircle" cx="430" cy="333" r="11" stroke="#4f86c6"/><text class="num" x="430" y="337" text-anchor="middle" fill="#4f86c6">2</text><text class="labelText" x="450" y="338">findByIdOrNull(postId)</text>
+
+<path class="return seqReturn" d="M603 472 H379" stroke="#3f8f8a" marker-end="url(#seqArrowTeal)"/>
+<rect class="pill" x="420" y="435" width="218" height="28" rx="10" stroke="#3f8f8a"/><circle class="numCircle" cx="440" cy="449" r="11" stroke="#3f8f8a"/><text class="num" x="440" y="453" text-anchor="middle" fill="#3f8f8a">3</text><text class="labelText" x="460" y="454">post exists?</text>
+
+<path class="call callGreen" d="M379 522 H862" stroke="#6f8f4e" marker-end="url(#seqArrowGreen)"/>
+<rect class="pill" x="558" y="479" width="288" height="28" rx="10" stroke="#6f8f4e"/><circle class="numCircle" cx="578" cy="493" r="11" stroke="#6f8f4e"/><text class="num" x="578" y="497" text-anchor="middle" fill="#6f8f4e">4</text><text class="labelText" x="598" y="498">findAllByPostId(postId)</text>
+
+<path class="call callAmber" d="M881 602 H1120" stroke="#a06a3b" marker-end="url(#seqArrowAmber)"/>
+<rect class="pill" x="910" y="559" width="330" height="28" rx="10" stroke="#a06a3b"/><circle class="numCircle" cx="930" cy="573" r="11" stroke="#a06a3b"/><text class="num" x="930" y="577" text-anchor="middle" fill="#a06a3b">5</text><text class="labelText" x="950" y="578">select where postId equals path var</text>
+
+<path class="call callAmber" d="M1139 672 H1345" stroke="#a06a3b" marker-end="url(#seqArrowAmber)"/>
+<rect class="pill" x="1168" y="635" width="246" height="28" rx="10" stroke="#a06a3b"/><circle class="numCircle" cx="1188" cy="649" r="11" stroke="#a06a3b"/><text class="num" x="1188" y="653" text-anchor="middle" fill="#a06a3b">6</text><text class="labelText" x="1208" y="654">stream Comment rows</text>
+
+<path class="return error" d="M862 746 H379" stroke="#b45a5a" marker-end="url(#seqArrowRed)"/>
+<rect class="pill" x="500" y="711" width="290" height="28" rx="10" stroke="#b45a5a"/><circle class="numCircle" cx="520" cy="725" r="11" stroke="#b45a5a"/><text class="num" x="520" y="729" text-anchor="middle" fill="#b45a5a">7</text><text class="labelText" x="540" y="730">PostNotFoundException</text>
+
+<path class="return seqReturn" d="M361 822 H154" stroke="#3f8f8a" marker-end="url(#seqArrowTeal)"/>
+<rect class="pill" x="169" y="785" width="292" height="28" rx="10" stroke="#3f8f8a"/><circle class="numCircle" cx="189" cy="799" r="11" stroke="#3f8f8a"/><text class="num" x="189" y="803" text-anchor="middle" fill="#3f8f8a">8</text><text class="labelText" x="209" y="804">WebFlux writes Flow response</text>
+
+<rect class="note" x="90" y="878" width="1320" height="44" rx="14"/>
+<text class="footer" x="750" y="906" text-anchor="middle">Controller methods return Flow for read streams and use suspend functions for single-row lookups and counts.</text>
 </svg>

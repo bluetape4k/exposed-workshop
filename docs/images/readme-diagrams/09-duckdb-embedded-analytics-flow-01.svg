@@ -24,18 +24,10 @@
       .sqlFlow { fill: none; stroke: #a2743d; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowAmber); }
       .resultFlow { fill: none; stroke: #5b8e51; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowGreen); }
     </style>
-    <marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowDuck" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6c9f96" stroke="#6c9f96" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowAmber" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#5b8e51" stroke="#5b8e51" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6"/></marker>
+    <marker id="arrowDuck" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6c9f96"/></marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d"/></marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#5b8e51"/></marker>
   </defs>
 
   <rect x="24" y="24" width="2252" height="772" rx="22" class="frame"/>

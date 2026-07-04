@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1540 900" width="1540" height="900" role="img" aria-label="Exposed Window Function Structure">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -66,22 +67,22 @@
 <rect x="1350" y="130" width="130" height="610" rx="12" class="panel"/><text x="1415" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
 <path d="M1372,324 C1372,304 1458,304 1458,324 L1458,500 C1458,520 1372,520 1372,500 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1415" cy="324" rx="43" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1372,500 C1372,520 1458,520 1458,500" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1372,500 Q1415,500 1458,500" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1415" y="352" class="label" text-anchor="middle">DB</text>
 <text x="1388" y="378" class="tiny">H2</text>
 <text x="1388" y="395" class="tiny">Postgres</text>
 <text x="1388" y="412" class="tiny">MySQL</text>
-<path d="M342,219 L444,219 L444,225 L548,225" class="arrow"/>
-<path d="M342,335 L458,335 L458,225 L548,225" class="arrow"/>
-<path d="M342,451 L472,451 L472,225 L548,225" class="arrow"/>
-<path d="M342,567 L486,567 L486,225 L548,225" class="arrow"/>
+<path d="M342,219 L548,225" class="arrow"/>
+<path d="M342,335 L440,335 Q458,335 458,317 L458,243 Q458,225 476,225 L548,225" class="arrow"/>
+<path d="M342,451 L454,451 Q472,451 472,433 L472,243 Q472,225 490,225 L548,225" class="arrow"/>
+<path d="M342,567 L468,567 Q486,567 486,549 L486,243 Q486,225 504,225 L548,225" class="arrow"/>
 <path d="M672,260 L672,332" class="arrow"/>
 <path d="M672,402 L672,474" class="arrow"/>
 <path d="M672,544 L672,616" class="runtimeUse"/>
-<path d="M796,367 L920,367 L920,301 L1010,301" class="arrow"/>
-<path d="M796,509 L920,509 L920,521 L1010,521" class="arrow"/>
-<path d="M1236,301 L1310,301 L1310,368 L1372,368" class="dbUse"/>
-<path d="M1236,521 L1310,521 L1310,456 L1372,456" class="dbUse"/>
+<path d="M796,367 L902,367 Q920,367 920,349 L920,319 Q920,301 938,301 L1010,301" class="arrow"/>
+<path d="M796,509 L1010,521" class="arrow"/>
+<path d="M1236,301 L1292,301 Q1310,301 1310,319 L1310,350 Q1310,368 1328,368 L1372,368" class="dbUse"/>
+<path d="M1236,521 L1292,521 Q1310,521 1310,503 L1310,474 Q1310,456 1328,456 L1372,456" class="dbUse"/>
 <rect x="132" y="796" width="1276" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="770" y="827" class="detail" text-anchor="middle">Source check: Ex05_WindowFunction composes function.over().partitionBy(sales.year, sales.product).orderBy(sales.amount) and asserts expected ranked values.</text>
 </svg>

@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 980" width="1500" height="980" role="img" aria-label="Spring Boot Auto-Configuration Class Structure">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -113,9 +114,9 @@
 <path d="M1324,304 L1324,238" class="inherit"/>
 <path d="M1324,222 L1314,238 L1334,238 Z" fill="#fff" stroke="#334155" stroke-width="1.8"/>
 <path d="M370,241 L552,241" class="arrow"/>
-<path d="M370,453 L500,453 L500,286 L552,286" class="mapLine"/>
-<path d="M370,666 L454,666 L454,449 L552,449" class="arrow"/>
-<path d="M852,640 L934,640 L934,379 L1018,379" class="mapLine"/>
+<path d="M370,453 L482,453 Q500,453 500,435 L500,304 Q500,286 518,286 L552,286" class="mapLine"/>
+<path d="M370,666 L436,666 Q454,666 454,648 L454,467 Q454,449 472,449 L552,449" class="arrow"/>
+<path d="M852,640 L916,640 Q934,640 934,622 L934,397 Q934,379 952,379 L1018,379" class="mapLine"/>
 <path d="M1236,398 L1194,398" class="mapLine"/>
 <path d="M1324,586 L1324,454" class="runtimeUse"/>
 <rect x="168" y="900" width="1164" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>

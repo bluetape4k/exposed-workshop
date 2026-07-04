@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1580 900" width="1580" height="900" role="img" aria-label="Exposed DML DSL Execution Flow">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -76,27 +77,27 @@
 <rect x="1332" y="130" width="170" height="610" rx="12" class="panel"/><text x="1417" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
 <path d="M1360,298 C1360,278 1472,278 1472,298 L1472,516 C1472,536 1360,536 1360,516 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1416" cy="298" rx="56" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1360,516 C1360,536 1472,536 1472,516" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1360,516 Q1416,516 1472,516" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1416" y="326" class="label" text-anchor="middle">DB</text>
 <text x="1378" y="352" class="tiny">H2</text>
 <text x="1378" y="369" class="tiny">Postgres</text>
 <text x="1378" y="386" class="tiny">MySQL</text>
 <text x="1378" y="403" class="tiny">MariaDB</text>
-<path d="M382,208 L480,208 L480,232 L578,232" class="arrow"/>
-<path d="M382,318 L496,318 L496,232 L578,232" class="arrow"/>
-<path d="M382,428 L480,428 L480,374 L578,374" class="arrow"/>
-<path d="M382,538 L496,538 L496,516 L578,516" class="runtimeUse"/>
-<path d="M382,648 L480,648 L480,658 L578,658" class="runtimeUse"/>
-<path d="M802,232 L902,232 L902,208 L984,208" class="arrow"/>
-<path d="M802,374 L902,374 L902,318 L984,318" class="arrow"/>
-<path d="M802,374 L884,374 L884,428 L984,428" class="arrow"/>
-<path d="M802,516 L902,516 L902,538 L984,538" class="runtimeUse"/>
-<path d="M802,658 L902,658 L902,648 L984,648" class="returnLine"/>
-<path d="M1214,208 L1294,208 L1294,344 L1360,344" class="dbUse"/>
-<path d="M1214,318 L1294,318 L1294,384 L1360,384" class="dbUse"/>
-<path d="M1214,428 L1294,428 L1294,424 L1360,424" class="dbUse"/>
-<path d="M1214,538 L1294,538 L1294,464 L1360,464" class="dbUse"/>
-<path d="M1214,648 L1294,648 L1294,504 L1360,504" class="dbUse"/>
+<path d="M382,208 L472,208 Q480,208 480,216 L480,224 Q480,232 488,232 L578,232" class="arrow"/>
+<path d="M382,318 L478,318 Q496,318 496,300 L496,250 Q496,232 514,232 L578,232" class="arrow"/>
+<path d="M382,428 L462,428 Q480,428 480,410 L480,392 Q480,374 498,374 L578,374" class="arrow"/>
+<path d="M382,538 L488.7,538 Q496,538 496,530.7 L496,523.3 Q496,516 503.3,516 L578,516" class="runtimeUse"/>
+<path d="M382,648 L476.7,648 Q480,648 480,651.3 L480,654.7 Q480,658 483.3,658 L578,658" class="runtimeUse"/>
+<path d="M802,232 L894,232 Q902,232 902,224 L902,216 Q902,208 910,208 L984,208" class="arrow"/>
+<path d="M802,374 L884,374 Q902,374 902,356 L902,336 Q902,318 920,318 L984,318" class="arrow"/>
+<path d="M802,374 L866,374 Q884,374 884,392 L884,410 Q884,428 902,428 L984,428" class="arrow"/>
+<path d="M802,516 L894.7,516 Q902,516 902,523.3 L902,530.7 Q902,538 909.3,538 L984,538" class="runtimeUse"/>
+<path d="M802,658 L984,648" class="returnLine"/>
+<path d="M1214,208 L1276,208 Q1294,208 1294,226 L1294,326 Q1294,344 1312,344 L1360,344" class="dbUse"/>
+<path d="M1214,318 L1276,318 Q1294,318 1294,336 L1294,366 Q1294,384 1312,384 L1360,384" class="dbUse"/>
+<path d="M1214,428 L1292.7,428 Q1294,428 1294,426.7 L1294,425.3 Q1294,424 1295.3,424 L1360,424" class="dbUse"/>
+<path d="M1214,538 L1276,538 Q1294,538 1294,520 L1294,482 Q1294,464 1312,464 L1360,464" class="dbUse"/>
+<path d="M1214,648 L1276,648 Q1294,648 1294,630 L1294,522 Q1294,504 1312,504 L1360,504" class="dbUse"/>
 <rect x="126" y="798" width="1328" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="790" y="829" class="detail" text-anchor="middle">Source check: 01-dml tests cover Ex01..Ex05 basic DML, Ex06..Ex11 advanced SELECT, Ex12..Ex17 advanced DML, and CTE/EXPLAIN/query adjustment examples.</text>
 </svg>

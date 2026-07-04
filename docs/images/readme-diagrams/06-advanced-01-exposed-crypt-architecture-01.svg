@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 900" width="1560" height="900" role="img" aria-label="Exposed Crypt Column Flow">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -79,19 +80,19 @@
 <text x="1288" y="542" class="tiny">encryptedBinary</text>
 <path d="M1288,621 C1288,600 1414,600 1414,621 L1414,705 C1414,726 1288,726 1288,705 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1351" cy="621" rx="63" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1288,705 C1288,726 1414,726 1414,705" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1288,705 Q1351,705 1414,705" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1351" y="652" class="label" text-anchor="middle">DB</text>
 <text x="1302" y="682" class="tiny">H2</text>
 <text x="1302" y="700" class="tiny">Postgres</text>
-<path d="M320,229 L400,229 L400,233 L482,233" class="arrow"/>
-<path d="M320,367 L400,367 L400,387 L482,387" class="arrow"/>
-<path d="M320,505 L396,505 L396,233 L482,233" class="runtimeUse"/>
-<path d="M722,233 L802,233 L802,216 L884,216" class="cryptoLine"/>
-<path d="M722,387 L802,387 L802,330 L884,330" class="cryptoLine"/>
-<path d="M722,541 L796,541 L796,680 L1210,680 L1210,288 L1272,288" class="mapLine"/>
-<path d="M1126,216 L1198,216 L1198,288 L1272,288" class="dbUse"/>
-<path d="M1126,330 L1198,330 L1198,510 L1272,510" class="dbUse"/>
-<path d="M1430,288 L1450,288 L1450,664 L1414,664" class="dbUse"/>
+<path d="M320,229 L482,233" class="arrow"/>
+<path d="M320,367 L482,387" class="arrow"/>
+<path d="M320,505 L378,505 Q396,505 396,487 L396,251 Q396,233 414,233 L482,233" class="runtimeUse"/>
+<path d="M722,233 L795.2,233 Q802,233 802,226.2 L802,222.8 Q802,216 808.8,216 L884,216" class="cryptoLine"/>
+<path d="M722,387 L784,387 Q802,387 802,369 L802,348 Q802,330 820,330 L884,330" class="cryptoLine"/>
+<path d="M722,541 L778,541 Q796,541 796,559 L796,662 Q796,680 814,680 L1192,680 Q1210,680 1210,662 L1210,306 Q1210,288 1228,288 L1272,288" class="mapLine"/>
+<path d="M1126,216 L1180,216 Q1198,216 1198,234 L1198,270 Q1198,288 1216,288 L1272,288" class="dbUse"/>
+<path d="M1126,330 L1180,330 Q1198,330 1198,348 L1198,492 Q1198,510 1216,510 L1272,510" class="dbUse"/>
+<path d="M1430,288 L1443.3,288 Q1450,288 1450,294.7 L1450,652 Q1450,664 1438,664 L1414,664" class="dbUse"/>
 <path d="M1351,580 L1351,604" class="dbUse"/>
 <rect x="118" y="796" width="1264" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="827" class="detail" text-anchor="middle">Source check: Ex01 uses encryptedVarchar/encryptedBinary with AES/GCM, AES/CBC, Blowfish, Triple DES; Ex02 maps encrypted columns through IntEntity.</text>

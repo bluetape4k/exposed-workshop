@@ -2,6 +2,7 @@
   <title id="title">Chapter 13 Ecosystem Integrations</title>
   <desc id="desc">Planned Exposed ecosystem examples grouped into database platform adapters, runtime and framework integration, and domain architecture.</desc>
   <defs>
+
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
       <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#334155" flood-opacity="0.12"/>
     </filter>

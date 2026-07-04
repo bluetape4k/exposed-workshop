@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 880" width="1480" height="880" role="img" aria-label="Exposed DDL Chapter Architecture">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -70,7 +71,7 @@
 <text x="934" y="564" class="detail" text-anchor="middle">dialect-specific DDL</text>
 <path d="M1136,514 C1136,496 1316,496 1316,514 L1316,602 C1316,620 1136,620 1136,602 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1226" cy="514" rx="90" ry="14" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1136,602 C1136,620 1316,620 1316,602" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1136,602 Q1226,602 1316,602" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1226" y="524" class="label" text-anchor="middle">Dialect DBs</text>
 <text x="1154" y="556" class="tiny">H2</text>
 <text x="1154" y="573" class="tiny">Postgres</text>
@@ -79,7 +80,7 @@
 <path d="M934,248 L934,318" class="runtimeUse"/>
 <path d="M1048,353 L1114,353" class="arrow"/>
 <path d="M934,388 L934,508" class="runtimeUse"/>
-<path d="M1114,213 L1084,213 L1084,558 L1136,558" class="dbUse"/>
+<path d="M1114,213 L1094,213 Q1084,213 1084,223 L1084,540.7 Q1084,558 1101.3,558 L1136,558" class="dbUse"/>
 <path d="M1228,388 L1228,500" class="dbUse"/>
 <rect x="152" y="798" width="1176" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="740" y="828" class="detail" text-anchor="middle">Source check: connection tests exercise Database.connect, metadata, HikariCP, and multi-DB transactions; DDL tests use SchemaUtils with tables, constraints, indexes, sequences, and enums.</text>

@@ -19,36 +19,33 @@
       .call { fill: none; stroke: #3f7d9c; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowCall); }
       .sql { fill: none; stroke: #a2743d; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowSql); }
       .state { fill: none; stroke: #6e8f4f; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowState); }
+      .error { fill: none; stroke: #b45f5f; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowError); }
       .return { fill: none; stroke: #9b7d54; stroke-width: 2.5; stroke-dasharray: 8 6; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowReturn); }
       .alt { fill: none; stroke: #78909c; stroke-width: 3; stroke-dasharray: 12 7; }
       .label { fill: #ffffff; stroke: #d7e0e4; stroke-width: 1.5; }
       .label.callLabel { stroke: #9cc2d1; }
       .label.sqlLabel { stroke: #d0b078; }
       .label.stateLabel { stroke: #b6c9a4; }
+      .label.errorLabel { stroke: #d8a3a3; }
       .label.returnLabel { stroke: #c8b38f; }
       .badge { stroke-width: 1.8; }
       .badge.callBadge { fill: #eaf4f8; stroke: #3f7d9c; }
       .badge.sqlBadge { fill: #fff4df; stroke: #a2743d; }
       .badge.stateBadge { fill: #eef7f0; stroke: #6e8f4f; }
+      .badge.errorBadge { fill: #fff0f0; stroke: #b45f5f; }
       .badge.returnBadge { fill: #fff7e8; stroke: #9b7d54; }
       .badgeText { font-family: "Comic Mono"; font-size: 12px; font-weight: 700; }
       .msg.callText, .badgeText.callText { fill: #2f6f8e; }
       .msg.sqlText, .badgeText.sqlText { fill: #855a29; }
       .msg.stateText, .badgeText.stateText { fill: #55783f; }
+      .msg.errorText, .badgeText.errorText { fill: #934a4a; }
       .msg.returnText, .badgeText.returnText { fill: #7f6038; }
     </style>
-    <marker id="arrowCall" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c" stroke="#3f7d9c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowSql" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowState" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowReturn" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b7d54" stroke="#9b7d54" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
+    <marker id="arrowCall" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c"/></marker>
+    <marker id="arrowSql" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d"/></marker>
+    <marker id="arrowState" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f"/></marker>
+    <marker id="arrowError" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#b45f5f"/></marker>
+    <marker id="arrowReturn" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b7d54"/></marker>
   </defs>
 
   <rect x="24" y="24" width="1552" height="1032" rx="20" class="frame"/>
@@ -94,28 +91,28 @@
   <rect x="1183" y="662" width="14" height="150" rx="6" class="activation"/>
   <rect x="1448" y="900" width="14" height="42" rx="6" class="activation"/>
 
-  <rect x="72" y="260" width="430" height="34" rx="17" class="label callLabel"/>
-  <circle cx="96" cy="277" r="13" class="badge callBadge"/><text x="96" y="282" text-anchor="middle" class="badgeText callText">1</text>
+  <rect x="72" y="260" width="430" height="34" rx="17" class="label callLabel pill"/>
+  <circle cx="96" cy="277" r="13" class="badge callBadge"/><text x="96" y="282" text-anchor="middle" class="badgeText callText num">1</text>
   <text x="120" y="282" class="msg callText">buildRegionalRevenueQuery()</text>
   <path d="M 145 318 L 395 318" class="call"/>
 
-  <rect x="354" y="326" width="430" height="34" rx="17" class="label callLabel"/>
-  <circle cx="378" cy="343" r="13" class="badge callBadge"/><text x="378" y="348" text-anchor="middle" class="badgeText callText">2</text>
+  <rect x="354" y="326" width="430" height="34" rx="17" class="label callLabel pill"/>
+  <circle cx="378" cy="343" r="13" class="badge callBadge"/><text x="378" y="348" text-anchor="middle" class="badgeText callText num">2</text>
   <text x="402" y="348" class="msg callText">validateQuery(query, options)</text>
   <path d="M 395 382 L 925 382" class="call"/>
 
-  <rect x="662" y="426" width="372" height="34" rx="17" class="label sqlLabel"/>
-  <circle cx="686" cy="443" r="13" class="badge sqlBadge"/><text x="686" y="448" text-anchor="middle" class="badgeText sqlText">3</text>
+  <rect x="662" y="426" width="372" height="34" rx="17" class="label sqlLabel pill"/>
+  <circle cx="686" cy="443" r="13" class="badge sqlBadge"/><text x="686" y="448" text-anchor="middle" class="badgeText sqlText num">3</text>
   <text x="710" y="448" class="msg sqlText">prepare SQL from Exposed Query</text>
   <path d="M 925 482 L 645 482" class="sql"/>
 
-  <rect x="584" y="520" width="318" height="34" rx="17" class="label returnLabel"/>
-  <circle cx="608" cy="537" r="13" class="badge returnBadge"/><text x="608" y="542" text-anchor="middle" class="badgeText returnText">4</text>
+  <rect x="584" y="520" width="318" height="34" rx="17" class="label returnLabel pill"/>
+  <circle cx="608" cy="537" r="13" class="badge returnBadge"/><text x="608" y="542" text-anchor="middle" class="badgeText returnText num">4</text>
   <text x="632" y="542" class="msg returnText">standard SQL only</text>
   <path d="M 645 578 L 925 578" class="return"/>
 
-  <rect x="872" y="600" width="420" height="34" rx="17" class="label stateLabel"/>
-  <circle cx="896" cy="617" r="13" class="badge stateBadge"/><text x="896" y="622" text-anchor="middle" class="badgeText stateText">5</text>
+  <rect x="872" y="600" width="420" height="34" rx="17" class="label stateLabel pill"/>
+  <circle cx="896" cy="617" r="13" class="badge stateBadge"/><text x="896" y="622" text-anchor="middle" class="badgeText stateText num">5</text>
   <text x="920" y="622" class="msg stateText">jobs.query(dryRun=true, options)</text>
   <path d="M 925 662 L 1190 662" class="state"/>
 
@@ -123,15 +120,15 @@
   <rect x="820" y="708" width="248" height="30" rx="15" fill="#f8f1e6" stroke="#a2743d" stroke-width="1.8"/>
   <text x="842" y="728" class="note">alt mocked dry-run result</text>
 
-  <rect x="958" y="754" width="388" height="34" rx="17" class="label returnLabel"/>
-  <circle cx="982" cy="771" r="13" class="badge returnBadge"/><text x="982" y="776" text-anchor="middle" class="badgeText returnText">6</text>
+  <rect x="958" y="754" width="388" height="34" rx="17" class="label returnLabel pill"/>
+  <circle cx="982" cy="771" r="13" class="badge returnBadge"/><text x="982" y="776" text-anchor="middle" class="badgeText returnText num">6</text>
   <text x="1006" y="776" class="msg returnText">success response or errors</text>
   <path d="M 1190 812 L 925 812" class="return"/>
 
-  <rect x="952" y="846" width="456" height="34" rx="17" class="label stateLabel"/>
-  <circle cx="976" cy="863" r="13" class="badge stateBadge"/><text x="976" y="868" text-anchor="middle" class="badgeText stateText">7</text>
-  <text x="1000" y="868" class="msg stateText">assert request mapping and exception path</text>
-  <path d="M 925 900 L 1455 900" class="state"/>
+  <rect x="952" y="846" width="456" height="34" rx="17" class="label errorLabel pill"/>
+  <circle cx="976" cy="863" r="13" class="badge errorBadge"/><text x="976" y="868" text-anchor="middle" class="badgeText errorText num">7</text>
+  <text x="1000" y="868" class="msg errorText">assert request mapping and exception path</text>
+  <path d="M 925 900 L 1455 900" class="error"/>
 
   <rect x="98" y="972" width="1404" height="44" rx="12" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
   <text x="118" y="1000" class="note">Default path stays local: no ADC, service-account files, tokens, endpoint overrides, network calls, or billable BigQuery execution.</text>

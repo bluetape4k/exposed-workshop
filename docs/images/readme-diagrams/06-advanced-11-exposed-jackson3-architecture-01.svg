@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 940" width="1560" height="940" role="img" aria-label="Jackson 3 JSON Query Flow">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -81,25 +82,25 @@
 <text x="1296" y="612" class="detail" text-anchor="middle">path exists</text>
 <path d="M1428,365 C1428,344 1532,344 1532,365 L1532,549 C1532,570 1428,570 1428,549 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1480" cy="365" rx="52" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1428,549 C1428,570 1532,570 1532,549" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1428,549 Q1480,549 1532,549" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1480" y="400" class="label" text-anchor="middle">DB</text>
 <text x="1442" y="434" class="tiny">Postgres</text>
 <text x="1442" y="452" class="tiny">MySQL V8</text>
 <text x="1442" y="470" class="tiny">H2 JSON</text>
-<path d="M320,219 L398,219 L398,227 L474,227" class="arrow"/>
-<path d="M320,387 L398,387 L398,365 L474,365" class="arrow"/>
-<path d="M320,555 L398,555 L398,641 L474,641" class="runtimeUse"/>
-<path d="M704,227 L784,227 L784,239 L864,239" class="mapLine"/>
-<path d="M704,365 L784,365 L784,409 L864,409" class="mapLine"/>
-<path d="M704,503 L784,503 L784,602 L864,602" class="mapLine"/>
-<path d="M1084,239 L1160,239 L1160,213 L1224,213" class="arrow"/>
-<path d="M1084,409 L1160,409 L1160,341 L1224,341" class="arrow"/>
-<path d="M1084,409 L1160,409 L1160,469 L1224,469" class="codecLine"/>
-<path d="M1084,602 L1160,602 L1160,597 L1224,597" class="runtimeUse"/>
-<path d="M1368,213 L1404,213 L1404,414 L1428,414" class="dbUse"/>
-<path d="M1368,341 L1404,341 L1404,448 L1428,448" class="dbUse"/>
-<path d="M1368,469 L1404,469 L1404,482 L1428,482" class="dbUse"/>
-<path d="M1368,597 L1404,597 L1404,604 L1480,604 L1480,566" class="dbUse"/>
+<path d="M320,219 L474,227" class="arrow"/>
+<path d="M320,387 L474,365" class="arrow"/>
+<path d="M320,555 L380,555 Q398,555 398,573 L398,623 Q398,641 416,641 L474,641" class="runtimeUse"/>
+<path d="M704,227 L779.2,227 Q784,227 784,231.8 L784,234.2 Q784,239 788.8,239 L864,239" class="mapLine"/>
+<path d="M704,365 L766.4,365 Q784,365 784,382.6 L784,391.4 Q784,409 801.6,409 L864,409" class="mapLine"/>
+<path d="M704,503 L766,503 Q784,503 784,521 L784,584 Q784,602 802,602 L864,602" class="mapLine"/>
+<path d="M1084,239 L1151.3,239 Q1160,239 1160,230.3 L1160,221.7 Q1160,213 1168.7,213 L1224,213" class="arrow"/>
+<path d="M1084,409 L1142,409 Q1160,409 1160,391 L1160,359 Q1160,341 1178,341 L1224,341" class="arrow"/>
+<path d="M1084,409 L1142,409 Q1160,409 1160,427 L1160,451 Q1160,469 1178,469 L1224,469" class="codecLine"/>
+<path d="M1084,602 L1158.3,602 Q1160,602 1160,600.3 L1160,598.7 Q1160,597 1161.7,597 L1224,597" class="runtimeUse"/>
+<path d="M1368,213 L1392,213 Q1404,213 1404,225 L1404,406 Q1404,414 1412,414 L1428,414" class="dbUse"/>
+<path d="M1368,341 L1392,341 Q1404,341 1404,353 L1404,440 Q1404,448 1412,448 L1428,448" class="dbUse"/>
+<path d="M1368,469 L1399.7,469 Q1404,469 1404,473.3 L1404,477.7 Q1404,482 1408.3,482 L1428,482" class="dbUse"/>
+<path d="M1368,597 L1401.7,597 Q1404,597 1404,599.3 L1404,601.7 Q1404,604 1406.3,604 L1467.3,604 Q1480,604 1480,591.3 L1480,566" class="dbUse"/>
 <rect x="128" y="838" width="1196" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="726" y="869" class="detail" text-anchor="middle">Source check: Jackson 3 tests cover insert/update, extract, contains, exists, arrays, upsert, defaults, and DAO JSONB usage.</text>
 </svg>

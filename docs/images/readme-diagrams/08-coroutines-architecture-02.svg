@@ -1,12 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 820" width="1500" height="820" role="img" aria-label="Thread Model Structure Comparison">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -43,7 +44,7 @@
 <text x="1115" y="240" class="detail" text-anchor="middle">Exposed JDBC</text>
 <path d="M1300,177 C1300,156 1404,156 1404,177 L1404,293 C1404,314 1300,314 1300,293 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1352" cy="177" rx="52" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1300,293 C1300,314 1404,314 1404,293" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1300,293 Q1352,293 1404,293" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1352" y="212" class="label" text-anchor="middle">DB</text>
 <text x="1314" y="246" class="tiny">Tester</text>
 <text x="1314" y="264" class="tiny">unique</text>
@@ -62,18 +63,18 @@
 <text x="1115" y="550" class="detail" text-anchor="middle">blocking I/O</text>
 <path d="M1300,487 C1300,466 1404,466 1404,487 L1404,603 C1404,624 1300,624 1300,603 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1352" cy="487" rx="52" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1300,603 C1300,624 1404,624 1404,603" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1300,603 Q1352,603 1404,603" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1352" y="522" class="label" text-anchor="middle">DB</text>
 <text x="1314" y="556" class="tiny">VTester</text>
 <text x="1314" y="574" class="tiny">unique</text>
 <path d="M306,222 L384,222" class="arrow"/>
 <path d="M614,222 L692,222" class="arrow"/>
 <path d="M922,222 L1000,222" class="mapLine"/>
-<path d="M1230,222 L1262,222 L1262,235 L1300,235" class="dbUse"/>
+<path d="M1230,222 L1257.7,222 Q1262,222 1262,226.3 L1262,230.7 Q1262,235 1266.3,235 L1300,235" class="dbUse"/>
 <path d="M306,532 L384,532" class="arrow"/>
 <path d="M614,532 L692,532" class="arrow"/>
 <path d="M922,532 L1000,532" class="mapLine"/>
-<path d="M1230,532 L1262,532 L1262,545 L1300,545" class="dbUse"/>
+<path d="M1230,532 L1257.7,532 Q1262,532 1262,536.3 L1262,540.7 Q1262,545 1266.3,545 L1300,545" class="dbUse"/>
 <rect x="150" y="738" width="1200" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="769" class="detail" text-anchor="middle">Model rule: coroutines require suspend-aware transaction boundaries; virtual threads preserve blocking-style transaction code but still share the same JDBC connection bottleneck.</text>
 </svg>

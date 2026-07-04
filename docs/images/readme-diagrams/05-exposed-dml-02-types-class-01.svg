@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1520 900" width="1520" height="900" role="img" aria-label="Exposed DML Column Type Test Model">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -99,7 +100,7 @@
 <text x="1262" y="428" class="detail" text-anchor="middle">array/blob/uuid/unsigned</text>
 <path d="M1068,564 C1068,544 1208,544 1208,564 L1208,674 C1208,694 1068,694 1068,674 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1138" cy="564" rx="70" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1068,674 C1068,694 1208,694 1208,674" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1068,674 Q1138,674 1208,674" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1138" y="592" class="label" text-anchor="middle">DB Dialects</text>
 <text x="1086" y="618" class="tiny">H2</text>
 <text x="1086" y="635" class="tiny">Postgres</text>
@@ -108,9 +109,9 @@
 <path d="M1090,238 L1160,238" class="arrow"/>
 <path d="M985,294 L985,370" class="arrow"/>
 <path d="M1265,294 L1265,370" class="arrow"/>
-<path d="M990,442 L1038,442 L1038,606 L1068,606" class="dbUse"/>
-<path d="M1262,442 L1232,442 L1232,606 L1208,606" class="dbUse"/>
-<path d="M642,623 L790,623 L790,406 L878,406" class="runtimeUse"/>
+<path d="M990,442 L1022,442 Q1038,442 1038,458 L1038,596 Q1038,606 1048,606 L1068,606" class="dbUse"/>
+<path d="M1262,442 L1242,442 Q1232,442 1232,452 L1232,598 Q1232,606 1224,606 L1208,606" class="dbUse"/>
+<path d="M642,623 L772,623 Q790,623 790,605 L790,424 Q790,406 808,406 L878,406" class="runtimeUse"/>
 <rect x="128" y="804" width="1260" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="758" y="835" class="detail" text-anchor="middle">Source check: 02-types examples validate bool/char/numeric/double, arrays, multi-arrays, unsigned values, blobs, Java UUID, and Kotlin UUID across DB dialects.</text>
 </svg>

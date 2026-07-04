@@ -37,18 +37,10 @@
       .msg.stateText, .badgeText.stateText { fill: #55783f; }
       .msg.returnText, .badgeText.returnText { fill: #7f6038; }
     </style>
-    <marker id="arrowCall" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c" stroke="#3f7d9c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowSql" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowState" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="arrowReturn" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b7d54" stroke="#9b7d54" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
+    <marker id="arrowCall" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c"/></marker>
+    <marker id="arrowSql" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d"/></marker>
+    <marker id="arrowState" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f"/></marker>
+    <marker id="arrowReturn" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b7d54"/></marker>
   </defs>
 
   <rect x="24" y="24" width="1552" height="1032" rx="20" class="frame"/>
@@ -94,38 +86,38 @@
   <rect x="1213" y="706" width="14" height="96" rx="6" class="activation"/>
   <rect x="1453" y="846" width="14" height="70" rx="6" class="activation"/>
 
-  <rect x="72" y="260" width="430" height="34" rx="17" class="label callLabel"/>
-  <circle cx="96" cy="277" r="13" class="badge callBadge"/><text x="96" y="282" text-anchor="middle" class="badgeText callText">1</text>
+  <rect x="72" y="260" width="430" height="34" rx="17" class="label callLabel pill"/>
+  <circle cx="96" cy="277" r="13" class="badge callBadge"/><text x="96" y="282" text-anchor="middle" class="badgeText callText num">1</text>
   <text x="120" y="282" class="msg callText">defaultTrinoAnalyticsProfile()</text>
   <path d="M 145 318 L 405 318" class="call"/>
 
-  <rect x="178" y="360" width="530" height="34" rx="17" class="label stateLabel"/>
-  <circle cx="202" cy="377" r="13" class="badge stateBadge"/><text x="202" y="382" text-anchor="middle" class="badgeText stateText">2</text>
+  <rect x="178" y="360" width="530" height="34" rx="17" class="label stateLabel pill"/>
+  <circle cx="202" cy="377" r="13" class="badge stateBadge"/><text x="202" y="382" text-anchor="middle" class="badgeText stateText num">2</text>
   <text x="226" y="382" class="msg stateText">validate catalog, schema, source, tags, session properties</text>
   <path d="M 405 414 L 405 460" class="state"/>
 
-  <rect x="430" y="434" width="470" height="34" rx="17" class="label callLabel"/>
-  <circle cx="454" cy="451" r="13" class="badge callBadge"/><text x="454" y="456" text-anchor="middle" class="badgeText callText">3</text>
+  <rect x="430" y="434" width="470" height="34" rx="17" class="label callLabel pill"/>
+  <circle cx="454" cy="451" r="13" class="badge callBadge"/><text x="454" y="456" text-anchor="middle" class="badgeText callText num">3</text>
   <text x="478" y="456" class="msg callText">toConnectionOptions()</text>
   <path d="M 405 470 L 690 470" class="call"/>
 
-  <rect x="442" y="508" width="520" height="34" rx="17" class="label returnLabel"/>
-  <circle cx="466" cy="525" r="13" class="badge returnBadge"/><text x="466" y="530" text-anchor="middle" class="badgeText returnText">4</text>
+  <rect x="442" y="508" width="520" height="34" rx="17" class="label returnLabel pill"/>
+  <circle cx="466" cy="525" r="13" class="badge returnBadge"/><text x="466" y="530" text-anchor="middle" class="badgeText returnText num">4</text>
   <text x="490" y="530" class="msg returnText">explicitPrepare=false, source, tags, sessionProperties</text>
   <path d="M 690 558 L 145 558" class="return"/>
 
-  <rect x="138" y="594" width="470" height="34" rx="17" class="label callLabel"/>
-  <circle cx="162" cy="611" r="13" class="badge callBadge"/><text x="162" y="616" text-anchor="middle" class="badgeText callText">5</text>
+  <rect x="138" y="594" width="470" height="34" rx="17" class="label callLabel pill"/>
+  <circle cx="162" cy="611" r="13" class="badge callBadge"/><text x="162" y="616" text-anchor="middle" class="badgeText callText num">5</text>
   <text x="186" y="616" class="msg callText">buildRegionalTopOrdersQuery()</text>
   <path d="M 145 604 L 965 604" class="call"/>
 
-  <rect x="784" y="646" width="472" height="34" rx="17" class="label sqlLabel"/>
-  <circle cx="808" cy="663" r="13" class="badge sqlBadge"/><text x="808" y="668" text-anchor="middle" class="badgeText sqlText">6</text>
+  <rect x="784" y="646" width="472" height="34" rx="17" class="label sqlLabel pill"/>
+  <circle cx="808" cy="663" r="13" class="badge sqlBadge"/><text x="808" y="668" text-anchor="middle" class="badgeText sqlText num">6</text>
   <text x="832" y="668" class="msg sqlText">prepareSQL in local H2 transaction</text>
   <path d="M 965 706 L 1220 706" class="sql"/>
 
-  <rect x="918" y="746" width="392" height="34" rx="17" class="label returnLabel"/>
-  <circle cx="942" cy="763" r="13" class="badge returnBadge"/><text x="942" y="768" text-anchor="middle" class="badgeText returnText">7</text>
+  <rect x="918" y="746" width="392" height="34" rx="17" class="label returnLabel pill"/>
+  <circle cx="942" cy="763" r="13" class="badge returnBadge"/><text x="942" y="768" text-anchor="middle" class="badgeText returnText num">7</text>
   <text x="966" y="768" class="msg returnText">SELECT with predicate, order, top-N</text>
   <path d="M 1220 802 L 965 802" class="return"/>
 
@@ -133,8 +125,8 @@
   <rect x="884" y="842" width="236" height="30" rx="15" fill="#f8f1e6" stroke="#a2743d" stroke-width="1.8"/>
   <text x="906" y="862" class="note">request-shape only</text>
 
-  <rect x="1006" y="860" width="398" height="34" rx="17" class="label stateLabel"/>
-  <circle cx="1030" cy="877" r="13" class="badge stateBadge"/><text x="1030" y="882" text-anchor="middle" class="badgeText stateText">8</text>
+  <rect x="1006" y="860" width="398" height="34" rx="17" class="label stateLabel pill"/>
+  <circle cx="1030" cy="877" r="13" class="badge stateBadge"/><text x="1030" y="882" text-anchor="middle" class="badgeText stateText num">8</text>
   <text x="1054" y="882" class="msg stateText">buildExplainRequest(sql)</text>
   <path d="M 965 846 L 1460 846" class="state"/>
 

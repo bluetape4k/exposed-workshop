@@ -1,11 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 980" width="1560" height="980" role="img" aria-label="Tink Column Test and DAO Model">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,11 +10,11 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
@@ -115,7 +111,7 @@
 <path d="M1395,574 L1395,586" class="inheritStem"/>
 <path d="M1395,586 L1395,586" class="inheritStem"/>
 <path d="M1395,586 L1395,616" class="inheritStem"/>
-<path d="M1460,392 L1512,392 L1512,668 L1460,668" class="mapLine"/>
+<path d="M1460,392 L1494,392 Q1512,392 1512,410 L1512,650 Q1512,668 1494,668 L1460,668" class="mapLine"/>
 <rect x="108" y="842" width="1290" height="76" rx="12" class="panel"/><text x="753" y="834" class="panelTitle" text-anchor="middle">COLUMN EXTENSION FUNCTIONS</text>
 <desc>tinkAeadVarChar</desc><rect x="142" y="862" width="184" height="38" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
 <text x="234" y="887" class="label" text-anchor="middle">tinkAeadVarChar</text>
@@ -129,6 +125,6 @@
 <text x="1078" y="887" class="label" text-anchor="middle">tinkDaeadBinary</text>
 <desc>tinkDaeadBlob</desc><rect x="1190" y="862" width="184" height="38" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
 <text x="1282" y="887" class="label" text-anchor="middle">tinkDaeadBlob</text>
-<path d="M227,510 L227,800 L945,800 L945,448" class="runtimeUse"/>
-<path d="M549,510 L549,780 L1280,780 L1280,668 L1330,668" class="runtimeUse"/>
+<path d="M227,510 L227,782 Q227,800 245,800 L927,800 Q945,800 945,782 L945,448" class="runtimeUse"/>
+<path d="M549,510 L549,762 Q549,780 567,780 L1262,780 Q1280,780 1280,762 L1280,684.7 Q1280,668 1296.7,668 L1330,668" class="runtimeUse"/>
 </svg>

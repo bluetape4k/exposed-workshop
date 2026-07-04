@@ -1,11 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 940" width="1560" height="940" role="img" aria-label="Migration Approach Comparison">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -67,23 +68,23 @@
 <text x="1211" y="654" class="detail" text-anchor="middle">version policy</text>
 <path d="M1418,337 C1418,316 1522,316 1522,337 L1522,523 C1522,544 1418,544 1418,523 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
 <ellipse cx="1470" cy="337" rx="52" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1418,523 C1418,544 1522,544 1522,523" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<path d="M1418,523 Q1470,523 1522,523" fill="none" stroke="#ea580c" stroke-width="1.7"/>
 <text x="1470" y="372" class="label" text-anchor="middle">DB</text>
 <text x="1432" y="406" class="tiny">fixtures</text>
 <text x="1432" y="424" class="tiny">indexes</text>
 <text x="1432" y="442" class="tiny">constraints</text>
-<path d="M412,217 L500,217 L500,196 L610,196" class="arrow"/>
-<path d="M412,379 L500,379 L500,308 L610,308" class="mapLine"/>
-<path d="M412,541 L530,541 L530,196 L610,196" class="arrow"/>
-<path d="M902,196 L996,196 L996,228 L1090,228" class="mapLine"/>
-<path d="M902,308 L996,308 L996,364 L1090,364" class="mapLine"/>
-<path d="M902,420 L996,420 L996,364 L1090,364" class="mapLine"/>
-<path d="M902,532 L996,532 L996,500 L1090,500" class="runtimeUse"/>
-<path d="M902,644 L996,644 L996,636 L1090,636" class="codecLine"/>
-<path d="M1332,228 L1380,228 L1380,392 L1418,392" class="dbUse"/>
-<path d="M1332,364 L1380,364 L1380,428 L1418,428" class="dbUse"/>
-<path d="M1332,500 L1380,500 L1380,464 L1418,464" class="dbUse"/>
-<path d="M1332,636 L1380,636 L1380,568 L1470,568 L1470,540" class="dbUse"/>
+<path d="M412,217 L610,196" class="arrow"/>
+<path d="M412,379 L482,379 Q500,379 500,361 L500,326 Q500,308 518,308 L610,308" class="mapLine"/>
+<path d="M412,541 L512,541 Q530,541 530,523 L530,214 Q530,196 548,196 L610,196" class="arrow"/>
+<path d="M902,196 L983.2,196 Q996,196 996,208.8 L996,215.2 Q996,228 1008.8,228 L1090,228" class="mapLine"/>
+<path d="M902,308 L978,308 Q996,308 996,326 L996,346 Q996,364 1014,364 L1090,364" class="mapLine"/>
+<path d="M902,420 L978,420 Q996,420 996,402 L996,382 Q996,364 1014,364 L1090,364" class="mapLine"/>
+<path d="M902,532 L985.3,532 Q996,532 996,521.3 L996,510.7 Q996,500 1006.7,500 L1090,500" class="runtimeUse"/>
+<path d="M902,644 L992.8,644 Q996,644 996,640.8 L996,639.2 Q996,636 999.2,636 L1090,636" class="codecLine"/>
+<path d="M1332,228 L1364,228 Q1380,228 1380,244 L1380,379.3 Q1380,392 1392.7,392 L1418,392" class="dbUse"/>
+<path d="M1332,364 L1364,364 Q1380,364 1380,380 L1380,415.3 Q1380,428 1392.7,428 L1418,428" class="dbUse"/>
+<path d="M1332,500 L1368,500 Q1380,500 1380,488 L1380,476 Q1380,464 1392,464 L1418,464" class="dbUse"/>
+<path d="M1332,636 L1364,636 Q1380,636 1380,620 L1380,586 Q1380,568 1398,568 L1460.7,568 Q1470,568 1470,558.7 L1470,540" class="dbUse"/>
 <rect x="128" y="838" width="1194" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="725" y="869" class="detail" text-anchor="middle">Recommended route: keep JPA-facing behavior stable, migrate one feature slice at a time, and lock each slice with equivalence tests.</text>
 </svg>

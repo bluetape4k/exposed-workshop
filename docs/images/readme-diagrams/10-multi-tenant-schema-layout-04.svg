@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Per-Tenant Schema Layout">
 <defs>
+
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker><marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker><marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker><marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker><marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker><marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -102,11 +102,11 @@
 <path d="M189,248 L189,352 L390,352" class="context"/>
 <path d="M189,496 L189,544 L610,544" class="context"/>
 <path d="M470,386 L470,418" class="mapLine"/>
-<path d="M465,386 L465,402 L652,402 L652,418" class="mapLine"/>
-<path d="M515,386 L515,402 L804,402 L804,418" class="mapLine"/>
-<path d="M650,578 L650,596 L484,596 L484,612" class="mapLine"/>
-<path d="M685,578 L685,600 L652,600 L652,612" class="mapLine"/>
-<path d="M725,578 L725,596 L806,596 L806,612" class="mapLine"/>
+<path d="M465,386 L465,395.6 Q465,402 471.4,402 L645.6,402 Q652,402 652,408.4 L652,418" class="mapLine"/>
+<path d="M515,386 L515,395.6 Q515,402 521.4,402 L797.6,402 Q804,402 804,408.4 L804,418" class="mapLine"/>
+<path d="M650,578 L650,588.8 Q650,596 642.8,596 L490.4,596 Q484,596 484,602.4 L484,612" class="mapLine"/>
+<path d="M685,578 L685,591.2 Q685,600 676.2,600 L656.8,600 Q652,600 652,604.8 L652,612" class="mapLine"/>
+<path d="M725,578 L725,588.8 Q725,596 732.2,596 L799.6,596 Q806,596 806,602.4 L806,612" class="mapLine"/>
 <path d="M572,458 L522,458" class="fk"/>
 <path d="M692,458 L744,458" class="fk"/>
 <path d="M572,652 L522,652" class="fk"/>

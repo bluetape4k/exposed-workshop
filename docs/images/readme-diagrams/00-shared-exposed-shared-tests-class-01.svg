@@ -1,8 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120">
 <defs>
+
   <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#94a3b8" flood-opacity=".16"/></filter>
-  <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M2,2 L12,7 L2,12 Z" fill="#2563eb"/></marker>
-  <marker id="softArrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M2,2 L12,7 L2,12 Z" fill="#7c3aed"/></marker>
+  <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
+  <marker id="softArrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
   <style><![CDATA[
     svg{font-family:"Architects Daughter","Comic Mono",ui-sans-serif,system-ui,sans-serif}.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#8aa6cf;stroke-width:3;filter:url(#shadow)}.title{font-family:"Architects Daughter";font-size:46px;fill:#263a57}.subtitle,.body,.small,.mono,.footer{font-family:"Comic Mono";fill:#526276}.subtitle{font-size:17px}.body{font-size:15px}.small{font-size:13px}.mono{font-size:12.5px}.sectionTitle,.boxTitle{font-family:"Architects Daughter";fill:#263a57}.sectionTitle{font-size:29px}.boxTitle{font-size:24px}.zone{stroke-width:2.5}.classBox{fill:#fff;stroke-width:2.2;filter:url(#shadow)}.slot{fill:#f8fafc;stroke:#d4e0ec;stroke-width:1.2}.arrow{fill:none;stroke:#2563eb;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}.soft{fill:none;stroke:#7c3aed;stroke-width:2.6;stroke-linecap:round;stroke-dasharray:7 7;marker-end:url(#softArrow)}.note{fill:#f8fafc;stroke:#d4e0ec;stroke-width:2}
   ]]></style>
@@ -11,6 +12,13 @@
 <text class="title" x="800" y="108" text-anchor="middle">exposed-shared-tests Class Map</text>
 <text class="subtitle" x="800" y="148" text-anchor="middle">Core fixtures choose dialects, open Exposed transactions, manage schema/table lifecycle, and provide reusable sample repositories.</text>
 
+
+<g aria-label="Connector legend">
+  <line x1="455" y1="180" x2="525" y2="180" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/>
+  <text class="small" x="540" y="185">solid: dialect/test base drives fixture helpers</text>
+  <line x1="875" y1="180" x2="945" y2="180" stroke="#7c3aed" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="7 7"/>
+  <text class="small" x="960" y="185">dashed: fixtures reuse sample model/repository</text>
+</g>
 <rect class="zone" x="95" y="205" width="430" height="720" rx="28" fill="#eff6ff" stroke="#60a5fa"/>
 <text class="sectionTitle" x="130" y="255">dialect and test base</text>
 <g transform="translate(130 290)">
@@ -70,11 +78,12 @@
   <rect class="slot" x="24" y="142" width="312" height="34" rx="10"/><text class="mono" x="180" y="164" text-anchor="middle">save + birthday/name queries</text>
 </g>
 
-<path class="arrow" d="M490 405 C540 405, 540 385, 620 385"/>
-<path class="arrow" d="M490 710 C540 710, 540 790, 620 790"/>
-<path class="soft" d="M980 384 C1035 384, 1035 384, 1110 384"/>
-<path class="soft" d="M980 790 C1035 790, 1035 690, 1110 690"/>
+<path class="arrow" d="M490 405 H620"/>
+<path class="arrow" d="M490 730 H620"/>
+<path class="soft" d="M980 384 H1110"/>
+<path class="soft" d="M980 790 H1035 Q1055 790 1055 770 V710 Q1055 690 1075 690 H1110"/>
 <path class="soft" d="M1290 536 V590"/>
-<rect class="note" x="185" y="960" width="1230" height="58" rx="26"/>
-<text class="footer" x="800" y="995" text-anchor="middle">The API surface stays small: chapter tests select dialects, run withDb helpers, then reuse sample tables and repositories for assertions.</text>
+<rect class="note" x="210" y="952" width="1180" height="74" rx="26"/>
+<text class="footer" x="800" y="982" text-anchor="middle">The API surface stays small: chapter tests select dialects, run withDb helpers,</text>
+<text class="footer" x="800" y="1006" text-anchor="middle">then reuse sample tables and repositories for assertions.</text>
 </svg>
