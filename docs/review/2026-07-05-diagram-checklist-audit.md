@@ -44,6 +44,12 @@ User-reported asset: `docs/images/readme-diagrams/05-exposed-dml-04-transactions
 - Fix: replaced the two diagonal connector paths with horizontal perpendicular routes (`M336,231 H550`, `M958,539 H1136`) and rerendered PNG.
 - Recheck evidence after fix: `xmllint --noout` PASS; connector audit PASS `markers=5 connectors=5 cards=9 intrusions=0 crossings=0`; geometry PASS `geometry_failures=0`; endpoint PASS `files=1`; mixed-corner PASS `paths=7 q_bends=3 failures=0`; CairoSVG PASS; PNG `3000 x 1800` RGB; full-size PNG opened and connector entries visually confirmed perpendicular with SVG/PNG arrowheads matching path direction.
 
+
+Additional user-reported assets rechecked after rendered-PNG comparison against `origin/develop`:
+
+- `docs/images/readme-diagrams/05-exposed-dml-04-transactions-sequence-02.svg/png`: mechanical audits passed, but the rendered PNG had weak visual label styling because numeric badges inherited default browser text styling. Fixed `.num` to use `Comic Mono` 10px bold styling, rerendered PNG, then re-ran XML, connector, geometry, endpoint, mixed-corner, and sequence-style audits.
+- `docs/images/readme-diagrams/06-advanced-04-exposed-json-erd-02.svg/png`: current rounded routes had lost the old version's visible payload-shape arrowheads, making the diagram less clear and causing `connectors=0` to be misleading for visible relationship paths. Restored explicit `userSpaceOnUse` green/purple markers and per-path marker attributes while preserving rounded routes; fixed one tight rounded corner; rerendered PNG and re-ran XML, connector, geometry, endpoint, and mixed-corner audits.
+
 ## Full Inventory Batch Gate
 
 After the first 29 manually recorded rows, the remaining changed SVG/PNG assets were normalized and verified with the same checklist gates as a complete inventory batch. Contact sheets under `docs/review/contact-sheets/` preserve the rendered visual scan; high-risk sequence diagrams were also opened at original size during review.

@@ -2,6 +2,8 @@
 <defs>
 
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker viewBox="0 0 10 10" id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
+<marker viewBox="0 0 10 10" id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -11,10 +13,10 @@
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
 .arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
 .codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
 .dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
@@ -67,12 +69,12 @@
 <line x1="1060" y1="602" x2="1310" y2="602" stroke="#7c3aed" stroke-width="1.2"/>
 <text x="1185" y="588" class="label" text-anchor="middle">UserGroup</text>
 <text x="1076" y="632" class="tiny">users: List&lt;User&gt;</text>
-<path d="M406,262 L448,262 Q466,262 466,244 L466,172 Q466,154 484,154 L928,154 Q946,154 946,172 L946,226 Q946,244 964,244 L1060,244" class="mapLine"/>
-<path d="M820,262 L940.4,262 Q946,262 946,267.6 L946,270.4 Q946,276 951.6,276 L1060,276" class="mapLine"/>
-<path d="M406,552 L448,552 Q466,552 466,570 L466,672 Q466,690 484,690 L928,690 Q946,690 946,672 L946,626 Q946,608 964,608 L1060,608" class="mapLine"/>
-<path d="M820,552 L928,552 Q946,552 946,570 L946,614 Q946,632 964,632 L1060,632" class="mapLine"/>
-<path d="M1185,322 L1185,394" class="runtimeUse"/>
-<path d="M1185,562 L1185,486" class="runtimeUse"/>
+<path d="M406,262 L448,262 Q466,262 466,244 L466,172 Q466,154 484,154 L928,154 Q946,154 946,172 L946,226 Q946,244 964,244 L1060,244" class="mapLine" marker-end="url(#arrowGreen)"/>
+<path d="M820,262 H1060" class="mapLine" marker-end="url(#arrowGreen)"/>
+<path d="M406,552 L448,552 Q466,552 466,570 L466,672 Q466,690 484,690 L928,690 Q946,690 946,672 L946,626 Q946,608 964,608 L1060,608" class="mapLine" marker-end="url(#arrowGreen)"/>
+<path d="M820,552 L928,552 Q946,552 946,570 L946,614 Q946,632 964,632 L1060,632" class="mapLine" marker-end="url(#arrowGreen)"/>
+<path d="M1185,322 L1185,394" class="runtimeUse" marker-end="url(#arrowPurple)"/>
+<path d="M1185,562 L1185,486" class="runtimeUse" marker-end="url(#arrowPurple)"/>
 <rect x="126" y="794" width="1188" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="720" y="825" class="detail" text-anchor="middle">No FK lines are drawn: the relationships are JSON payload shape references, not relational constraints.</text>
 </svg>
