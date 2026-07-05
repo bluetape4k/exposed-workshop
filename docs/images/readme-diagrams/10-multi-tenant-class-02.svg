@@ -13,12 +13,12 @@
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card,.uml,.tableBox,.dbBody{stroke-width:1.7;filter:url(#shadow)}
 .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
 .context{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .storage{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
 .fk{fill:none;stroke:#0f766e;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.returnLine{fill:none;stroke:#64748b;stroke-width:1.7;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round}
+.returnLine{fill:none;stroke:#64748b;stroke-width:1.7;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGray)}
 .lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
 </style>
 </defs>
@@ -118,19 +118,19 @@
 <text x="929.5" y="754" class="detail" text-anchor="middle">Database.connect</text>
 <text x="929.5" y="769" class="detail" text-anchor="middle">TenantBootstrap</text>
 <path d="M317,202 L442,202" class="context"/>
-<path d="M687,202 L812,202" class="arrow"/>
+<path d="M687,202 L812,202" class="arrow connector"/>
 <path d="M1047,202 L1140,202 L1140,206 L1220,206" class="storage"/>
 <path d="M317,310 L442,310" class="context"/>
-<path d="M687,310 L812,310" class="arrow"/>
+<path d="M687,310 L812,310" class="arrow connector"/>
 <path d="M317,418 L442,418" class="context"/>
-<path d="M687,418 L812,418" class="arrow"/>
+<path d="M687,418 L812,418" class="arrow connector"/>
 <path d="M317,526 L442,526" class="context"/>
-<path d="M687,526 L812,526" class="arrow"/>
+<path d="M687,526 L812,526" class="arrow connector"/>
 <path d="M1047,526 L1120,526 L1120,206 L1220,206" class="storage"/>
 <path d="M317,634 L442,634" class="context"/>
 <path d="M687,634 L730,634 L730,688 L1140,688 L1140,631 L1220,631" class="storage"/>
 <path d="M317,742 L442,742" class="context"/>
-<path d="M687,742 L812,742" class="arrow"/>
+<path d="M687,742 L812,742" class="arrow connector"/>
 <path d="M1047,742 L1100,742 L1100,206 L1220,206" class="storage"/>
 <rect x="98" y="890" width="1290" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec" stroke-width="1.2"/>
 <text x="116" y="917" class="detail">Source check: MovieExposedRepository reads MovieTable, ActorInMovieTable, and ActorTable; InventoryRepository goes through TenantTransaction; registry creates tenant-specific Database objects.</text>

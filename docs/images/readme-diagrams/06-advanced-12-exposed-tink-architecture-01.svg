@@ -88,7 +88,7 @@
 <text x="1438" y="436" class="tiny">encrypted</text>
 <text x="1438" y="454" class="tiny">ciphertext</text>
 <text x="1438" y="472" class="tiny">indexed DAEAD</text>
-<path d="M320,225 L474,214" class="arrow"/>
+<path d="M320,225 H474" class="arrow"/>
 <path d="M320,401 L381.7,401 Q398,401 398,384.7 L398,368.3 Q398,352 414.3,352 L474,352" class="arrow"/>
 <path d="M320,577 L380,577 Q398,577 398,559 L398,508 Q398,490 416,490 L474,490" class="runtimeUse"/>
 <path d="M706,214 L782.4,214 Q784,214 784,212.4 L784,211.6 Q784,210 785.6,210 L864,210" class="codecLine"/>

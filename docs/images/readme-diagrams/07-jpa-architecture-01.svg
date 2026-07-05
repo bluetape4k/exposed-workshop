@@ -81,7 +81,7 @@
 <desc>Assertions</desc><rect x="1260" y="588" width="160" height="60" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
 <text x="1340" y="613" class="label" text-anchor="middle">Assertions</text>
 <text x="1340" y="634" class="detail" text-anchor="middle">same behavior</text>
-<path d="M312,205 L474,211" class="arrow"/>
+<path d="M312,205 H474" class="arrow"/>
 <path d="M312,315 L384,315 Q392,315 392,323 L392,331 Q392,339 400,339 L474,339" class="arrow"/>
 <path d="M312,425 L378,425 Q392,425 392,439 L392,453 Q392,467 406,467 L474,467" class="arrow"/>
 <path d="M312,535 L368,535 Q386,535 386,553 L386,577 Q386,595 404,595 L474,595" class="runtimeUse"/>

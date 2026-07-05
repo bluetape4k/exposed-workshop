@@ -75,10 +75,10 @@
 <text x="765" y="564" class="label" text-anchor="middle">Swagger verified APIs</text>
 <rect x="910" y="536" width="190" height="44" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
 <text x="1005" y="564" class="label" text-anchor="middle">Profile switching</text>
-<path d="M576 284 H684" class="arrow"/>
+<path d="M576 284 H684" class="arrow connector"/>
 <path d="M290 450 V510" class="softArrow"/>
 <path d="M970 450 V510" class="softArrow"/>
-<path d="M410 632 H482" class="arrow"/>
+<path d="M410 632 H482" class="arrow connector"/>
 <text x="498" y="636" class="tiny">solid: MVC vs WebFlux module contrast</text>
 <path d="M720 632 H792" class="softArrow"/>
 <text x="808" y="636" class="tiny">dashed: shared learning target</text>

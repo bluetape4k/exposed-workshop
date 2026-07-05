@@ -81,19 +81,19 @@
 <text x="1184" y="449" class="label" text-anchor="middle">Database</text>
 <text x="1184" y="468" class="detail" text-anchor="middle">H2 / MySQL / PostgreSQL</text>
 <path d="M270 249 H304 Q314 249 314 239 V181 Q314 171 304 171 H292" class="softArrow"/>
-<path d="M292 331 H350 Q360 331 360 321 V301 Q360 291 370 291 H420" class="arrow"/>
-<path d="M292 401 H350 Q360 401 360 411 V421 Q360 431 370 431 H420" class="arrow"/>
-<path d="M292 471 H350 Q360 471 360 461 V441 Q360 431 370 431 H420" class="arrow"/>
-<path d="M650 291 H796" class="arrow"/>
-<path d="M650 431 H710 Q720 431 720 421 V381 Q720 371 730 371 H796" class="arrow"/>
-<path d="M650 431 H710 Q720 431 720 441 V451 Q720 461 730 461 H796" class="arrow"/>
+<path d="M292 331 H350 Q360 331 360 321 V301 Q360 291 370 291 H420" class="arrow connector"/>
+<path d="M292 401 H350 Q360 401 360 411 V421 Q360 431 370 431 H420" class="arrow connector"/>
+<path d="M292 471 H350 Q360 471 360 461 V441 Q360 431 370 431 H420" class="arrow connector"/>
+<path d="M650 291 H796" class="arrow connector"/>
+<path d="M650 431 H710 Q720 431 720 421 V381 Q720 371 730 371 H796" class="arrow connector"/>
+<path d="M650 431 H710 Q720 431 720 441 V451 Q720 461 730 461 H796" class="arrow connector"/>
 <path d="M994 281 H1044 Q1054 281 1054 291 V307 Q1054 317 1064 317 H1108" class="softArrow"/>
 <path d="M994 371 H1044 Q1054 371 1054 361 V327 Q1054 317 1064 317 H1108" class="softArrow"/>
 <path d="M994 461 H1044 Q1054 461 1054 451 V327 Q1054 317 1064 317 H1108" class="softArrow"/>
-<path d="M1184 346 V414" class="arrow"/>
+<path d="M1184 346 V414" class="arrow connector"/>
 <rect x="92" y="582" width="1136" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="660" y="612" class="detail" text-anchor="middle">The MVC layer stays synchronous; Spring owns transaction demarcation while Exposed repositories own SQL and DAO mapping.</text>
-<path d="M424 660 H492" class="arrow"/>
+<path d="M424 660 H492" class="arrow connector"/>
 <text x="508" y="664" class="tiny">solid: request delegation and resource access</text>
 <path d="M750 660 H818" class="softArrow"/>
 <text x="834" y="664" class="tiny">dashed: generated docs and runtime dependency</text>

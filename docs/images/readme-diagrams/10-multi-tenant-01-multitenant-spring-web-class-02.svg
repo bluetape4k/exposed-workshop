@@ -14,8 +14,8 @@
 .card,.uml,.tableBox,.dbBody{stroke-width:1.7;filter:url(#shadow)}
 .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
 .call,.runtime,.storage,.map,.fk,.ret{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.call{stroke:#2563eb}.runtime{stroke:#7c3aed}
-.storage{stroke:#ea580c}.map{stroke:#16a34a}
+.call{stroke:#2563eb;marker-end:url(#arrowBlue)}.runtime{stroke:#7c3aed;marker-end:url(#arrowPurple)}
+.storage{stroke:#ea580c}.map{stroke:#16a34a;marker-end:url(#arrowGreen)}
 .fk{stroke:#0f766e}.ret{stroke:#64748b;stroke-dasharray:7 5}
 .inherit{fill:none;stroke:#334155;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .inheritTriangle{fill:#fff;stroke:#334155;stroke-width:1.8}
@@ -34,24 +34,24 @@
 <text x="1362.5" y="120" class="panelTitle" text-anchor="middle">EXPOSED ACCESS</text>
 <rect x="1605" y="75" width="535" height="455" rx="12" class="panel"/>
 <text x="1872.5" y="95" class="panelTitle" text-anchor="middle">SCHEMA STORAGE</text>
-<path d="M285,330 L315,330" class="call"/>
-<path d="M410,365 L410,393 L410,430 L690,430 L690,487 L690,515" class="runtime"/>
-<path d="M812.5,550 L837.5,550" class="runtime"/>
-<path d="M965,515 L1245,436" class="call"/>
-<path d="M1355,400 L1780,400" class="map"/>
+<path d="M285,330 L315,330" class="call connector"/>
+<path d="M410,365 L410,393 L410,430 L690,430 L690,487 L690,515" class="runtime connector"/>
+<path d="M812.5,550 L837.5,550" class="runtime connector"/>
+<path d="M965,515 V475 Q965,457 983,457 H1227 Q1245,457 1245,439 V436" class="call connector"/>
+<path d="M1355,400 L1780,400" class="map connector"/>
 <path d="M1950,400 L1975,400" class="storage"/>
-<path d="M690,585 L690,613 L690,610 L965,610 L965,602 L965,630" class="runtime"/>
-<path d="M1100,665 L1122.5,665" class="call"/>
+<path d="M690,585 L690,613 L690,610 L965,610 L965,602 L965,630" class="runtime connector"/>
+<path d="M1100,665 L1122.5,665" class="call connector"/>
 <path d="M1367.5,665 L1395.5,665 L1970,665 L1970,495 L2055,495 L2055,493 L2055,465" class="storage"/>
-<path d="M1355,330 L1380,330" class="call"/>
+<path d="M1355,330 L1380,330" class="call connector"/>
 <path d="M1600,330 L1635,330" class="storage"/>
 <path d="M1765,330 L1793,330 L1920,330 L1947,330 L1947,365 L1975,365" class="storage"/>
 <path d="M1490,294 L1490,266 L1490,205 L1680,205 L1680,199 L1680,171" class="storage"/>
 <path d="M1750,140 L1778,140 L1760,140 L1760,150 L1760,220 L1742,220 L1770,220" class="storage"/>
-<path d="M1355,220 L1383,220 L1660,220 L1660,195 L1742,195 L1770,195" class="map"/>
-<path d="M1245,256 L1245,284 L1245,295 L1775,295 L1775,370 L1752,370 L1780,370" class="map"/>
+<path d="M1355,220 L1383,220 L1660,220 L1660,195 L1742,195 L1770,195" class="map connector"/>
+<path d="M1245,256 L1245,284 L1245,295 L1775,295 L1775,370 L1752,370 L1780,370" class="map connector"/>
 <path d="M1960,220 L1988,220 L1970,220 L1970,310 L2055,310 L2055,307 L2055,335" class="storage"/>
-<path d="M542.5,550 L567.5,550" class="runtime"/>
+<path d="M542.5,550 L567.5,550" class="runtime connector"/>
 <g data-id="httpClient" data-label="HTTP Client">
 <path d="M113,291 H277 Q285,291 285,299 V361 Q285,369 277,369 H113 L95,330 Z" fill="#dbeafe" stroke="#2563eb" class="card"/>
 <text x="194" y="321" class="label" text-anchor="middle">HTTP Client</text>

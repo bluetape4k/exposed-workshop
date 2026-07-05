@@ -14,8 +14,8 @@
 .card,.uml,.tableBox,.dbBody{stroke-width:1.7;filter:url(#shadow)}
 .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
 .call,.runtime,.storage,.map,.fk,.ret{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.call{stroke:#2563eb}.runtime{stroke:#7c3aed}
-.storage{stroke:#ea580c}.map{stroke:#16a34a}
+.call{stroke:#2563eb;marker-end:url(#arrowBlue)}.runtime{stroke:#7c3aed;marker-end:url(#arrowPurple)}
+.storage{stroke:#ea580c}.map{stroke:#16a34a;marker-end:url(#arrowGreen)}
 .fk{stroke:#0f766e}.ret{stroke:#64748b;stroke-dasharray:7 5}
 .inherit{fill:none;stroke:#334155;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .inheritTriangle{fill:#fff;stroke:#334155;stroke-width:1.8}
@@ -32,14 +32,14 @@
 <path d="M1039.6,206.5 L1055.6,206.5 L1047.6,190.5 Z" class="inheritTriangle"/>
 <path d="M374.4,278.8 L374.4,206.5" class="inherit"/>
 <path d="M366.4,206.5 L382.4,206.5 L374.4,190.5 Z" class="inheritTriangle"/>
-<path d="M1213.4,418.7 L1213.4,730.7" class="runtime"/>
-<path d="M1036,418.7 L1036,503.3" class="runtime"/>
-<path d="M1145.9,646 L1145.9,730.7" class="runtime"/>
-<path d="M992.7,646 L992.7,713.9 L992.7,804.1 L950.8,804.1" class="map"/>
-<path d="M1357.2,415.9 L1357.2,460.6 L1357.2,509.3 L1212.1,509.3 L1240.1,509.3 L1240.1,511.3 L1212.1,511.3" class="runtime"/>
-<path d="M1503.2,415.9 L1503.2,516.3" class="call"/>
-<path d="M367.4,414.1 L367.4,502.4" class="call"/>
-<path d="M487.5,647 L487.5,699.1 L487.5,759 L686.6,759 L658.6,759 L658.6,761.8 L686.6,761.8" class="map"/>
+<path d="M1213.4,418.7 L1213.4,730.7" class="runtime connector"/>
+<path d="M1036,418.7 L1036,503.3" class="runtime connector"/>
+<path d="M1145.9,646 L1145.9,730.7" class="runtime connector"/>
+<path d="M992.7,646 L992.7,713.9 L992.7,804.1 L950.8,804.1" class="map connector"/>
+<path d="M1357.2,415.9 L1357.2,460.6 L1357.2,509.3 L1212.1,509.3 L1240.1,509.3 L1240.1,511.3 L1212.1,511.3" class="runtime connector"/>
+<path d="M1503.2,415.9 L1503.2,516.3" class="call connector"/>
+<path d="M367.4,414.1 L367.4,502.4" class="call connector"/>
+<path d="M487.5,647 L487.5,699.1 L487.5,759 L686.6,759 L658.6,759 L658.6,761.8 L686.6,761.8" class="map connector"/>
 <path d="M341.5,647 L341.5,763.1" class="storage"/>
 <g data-id="Tenants" data-label="Tenants">
 <rect x="1013.6" y="730.7" width="264.2" height="122.3" rx="4" fill="#fff" stroke="#7c3aed" class="uml"/>

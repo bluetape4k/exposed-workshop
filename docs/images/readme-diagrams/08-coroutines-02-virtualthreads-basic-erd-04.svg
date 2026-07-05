@@ -38,4 +38,6 @@
 <text x="671" y="151" class="smallLabel" text-anchor="middle">VTester Unique</text>
 <text x="546" y="188" class="tiny">id PK</text>
 <text x="490" y="110" class="panelTitle" text-anchor="middle">TABLES AND RELATIONSHIPS</text>
+
+<text x="490" y="434" class="tiny" text-anchor="middle">No FK relationship: tables are independent examples for this module.</text>
 </svg>

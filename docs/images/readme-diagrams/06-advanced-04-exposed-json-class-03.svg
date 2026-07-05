@@ -10,14 +10,34 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
-.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;}
+.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-arrow-df018f);}
+.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-mapLine-483388);}
+.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-codecLine-3fafbd);}
+.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-dbUse-4b232d);}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-runtimeUse-63ea90);}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
-</defs>
+
+    <marker id="arrow-arrow-df018f" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+
+    <marker id="arrow-mapLine-483388" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+
+    <marker id="arrow-codecLine-3fafbd" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777" stroke="#db2777" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+
+    <marker id="arrow-dbUse-4b232d" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+
+    <marker id="arrow-runtimeUse-63ea90" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
 <rect width="1560" height="940" class="canvas"/>
 <rect x="20" y="20" width="1520" height="900" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Exposed JSON Class and Payload Model</text>
@@ -84,8 +104,8 @@
 <path d="M1027,306 L1193,306" class="inheritStem"/>
 <path d="M1027,306 L1027,372" class="inheritStem"/>
 <path d="M1193,306 L1193,372" class="inheritStem"/>
-<path d="M856,436 L899.2,436 Q906,436 906,429.2 L906,425.8 Q906,419 912.8,419 L950,419" class="mapLine"/>
-<path d="M572,494 L572,509.6 Q572,520 582.4,520 L1092,520 Q1110,520 1110,502 L1110,421.4 Q1110,419 1112.4,419 L1116,419" class="mapLine"/>
+<path d="M856,436 L899.2,436 Q906,436 906,429.2 L906,425.8 Q906,419 912.8,419 L950,419" class="mapLine connector"/>
+<path d="M572,494 L572,509.6 Q572,520 582.4,520 L1092,520 Q1110,520 1110,502 L1110,421.4 Q1110,419 1112.4,419 L1116,419" class="mapLine connector"/>
 <rect x="1300" y="130" width="224" height="520" rx="12" class="panel"/><text x="1412" y="122" class="panelTitle" text-anchor="middle">PAYLOAD MODEL</text>
 <rect x="1320" y="178" width="180" height="132" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
 <path d="M1320,218 L1320,182 Q1320,178 1324,178 L1496,178 Q1500,178 1500,182 L1500,218 Z" fill="#dcfce7"/>
@@ -106,10 +126,10 @@
 <line x1="1320" y1="588" x2="1500" y2="588" stroke="#7c3aed" stroke-width="1.2"/>
 <text x="1410" y="574" class="label" text-anchor="middle">UserGroup</text>
 <text x="1336" y="618" class="tiny">users: List&lt;User&gt;</text>
-<path d="M1500,244 L1509.3,244 Q1514,244 1514,248.7 L1514,421.3 Q1514,426 1509.3,426 L1500,426" class="runtimeUse"/>
-<path d="M1410,548 L1410,472" class="runtimeUse"/>
-<path d="M1104,419 L1262,419 Q1280,419 1280,401 L1280,260 Q1280,244 1296,244 L1320,244" class="mapLine"/>
-<path d="M1270,419 L1282,419 Q1290,419 1290,411 L1290,288 Q1290,276 1302,276 L1320,276" class="mapLine"/>
+<path d="M1500,244 L1509.3,244 Q1514,244 1514,248.7 L1514,421.3 Q1514,426 1509.3,426 L1500,426" class="runtimeUse connector"/>
+<path d="M1410,548 L1410,472" class="runtimeUse connector"/>
+<path d="M1104,419 L1262,419 Q1280,419 1280,401 L1280,260 Q1280,244 1296,244 L1320,244" class="mapLine connector"/>
+<path d="M1270,419 L1282,419 Q1290,419 1290,411 L1290,288 Q1290,276 1302,276 L1320,276" class="mapLine connector"/>
 <rect x="150" y="808" width="1230" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="765" y="839" class="detail" text-anchor="middle">Source check: JsonTestData has four IntIdTable objects, two IntEntity DAO classes, and three serializable payload data classes.</text>
 </svg>

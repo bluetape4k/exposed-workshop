@@ -72,7 +72,7 @@
 <text x="1388" y="378" class="tiny">H2</text>
 <text x="1388" y="395" class="tiny">Postgres</text>
 <text x="1388" y="412" class="tiny">MySQL</text>
-<path d="M342,219 L548,225" class="arrow"/>
+<path d="M342,219 H548" class="arrow"/>
 <path d="M342,335 L440,335 Q458,335 458,317 L458,243 Q458,225 476,225 L548,225" class="arrow"/>
 <path d="M342,451 L454,451 Q472,451 472,433 L472,243 Q472,225 490,225 L548,225" class="arrow"/>
 <path d="M342,567 L468,567 Q486,567 486,549 L486,243 Q486,225 504,225 L548,225" class="arrow"/>
@@ -80,7 +80,7 @@
 <path d="M672,402 L672,474" class="arrow"/>
 <path d="M672,544 L672,616" class="runtimeUse"/>
 <path d="M796,367 L902,367 Q920,367 920,349 L920,319 Q920,301 938,301 L1010,301" class="arrow"/>
-<path d="M796,509 L1010,521" class="arrow"/>
+<path d="M796,509 H1010" class="arrow"/>
 <path d="M1236,301 L1292,301 Q1310,301 1310,319 L1310,350 Q1310,368 1328,368 L1372,368" class="dbUse"/>
 <path d="M1236,521 L1292,521 Q1310,521 1310,503 L1310,474 Q1310,456 1328,456 L1372,456" class="dbUse"/>
 <rect x="132" y="796" width="1276" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>

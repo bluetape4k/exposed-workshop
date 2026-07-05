@@ -90,8 +90,8 @@
 <text x="1306" y="644" class="tiny">Postgres JSONB</text>
 <text x="1306" y="662" class="tiny">H2 JSON</text>
 <path d="M340,238 L416,238 Q420,238 420,234 L420,232 Q420,228 424,228 L500,228" class="mapLine"/>
-<path d="M742,228 L902,217" class="arrow"/>
-<path d="M742,368 L902,349" class="arrow"/>
+<path d="M742,228 H902" class="arrow"/>
+<path d="M742,368 H902" class="arrow"/>
 <path d="M742,508 L813,508 Q822,508 822,499 L822,490 Q822,481 831,481 L902,481" class="arrow"/>
 <path d="M1134,217 L1196,217 Q1206,217 1206,227 L1206,237 Q1206,247 1216,247 L1276,247" class="dbUse"/>
 <path d="M1134,349 L1188,349 Q1206,349 1206,367 L1206,401 Q1206,419 1224,419 L1276,419" class="dbUse"/>

@@ -86,8 +86,8 @@
 <text x="1442" y="428" class="tiny">Postgres</text>
 <text x="1442" y="446" class="tiny">MySQL V8</text>
 <text x="1442" y="464" class="tiny">H2 JSON</text>
-<path d="M320,219 L474,227" class="arrow"/>
-<path d="M320,387 L474,365" class="arrow"/>
+<path d="M320,219 H474" class="arrow"/>
+<path d="M320,387 H474" class="arrow"/>
 <path d="M704,227 L779.2,227 Q784,227 784,231.8 L784,234.2 Q784,239 788.8,239 L864,239" class="mapLine"/>
 <path d="M704,365 L766.4,365 Q784,365 784,382.6 L784,391.4 Q784,409 801.6,409 L864,409" class="mapLine"/>
 <path d="M704,503 L766,503 Q784,503 784,521 L784,584 Q784,602 802,602 L864,602" class="mapLine"/>

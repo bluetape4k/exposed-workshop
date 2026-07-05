@@ -63,4 +63,6 @@
 <path d="M416,502 L504,502 Q522,502 522,520 L522,554 Q522,572 540,572 L792,572" class="runtimeUse"/>
 <rect x="126" y="794" width="1188" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="720" y="825" class="detail" text-anchor="middle">ERD shows physical columns. compositeMoney is not a separate table; it expands into amount and currency columns.</text>
+
+<text x="750" y="876" class="tiny" text-anchor="middle">No FK relationship: tables are independent examples for this module.</text>
 </svg>

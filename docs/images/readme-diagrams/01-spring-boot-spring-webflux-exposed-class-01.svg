@@ -94,19 +94,19 @@
 <text x="1407" y="399" class="detail" text-anchor="middle">H2 / MySQL</text>
 <text x="1407" y="415" class="detail" text-anchor="middle">Postgres</text>
 <path d="M270,249 H302 Q314,249 314,237 V183 Q314,171 302,171 H292" class="softArrow"/>
-<path d="M292,331 H346 Q358,331 358,319 V311 Q358,299 370,299 H410" class="arrow"/>
-<path d="M292,401 H346 Q358,401 358,389 V311 Q358,299 370,299 H410" class="arrow"/>
-<path d="M292,471 H346 Q358,471 358,459 V311 Q358,299 370,299 H410" class="arrow"/>
-<path d="M602,299 H642 Q654,299 654,287 V185 Q654,173 666,173 H722" class="arrow"/>
+<path d="M292,331 H346 Q358,331 358,319 V311 Q358,299 370,299 H410" class="arrow connector"/>
+<path d="M292,401 H346 Q358,401 358,389 V311 Q358,299 370,299 H410" class="arrow connector"/>
+<path d="M292,471 H346 Q358,471 358,459 V311 Q358,299 370,299 H410" class="arrow connector"/>
+<path d="M602,299 H642 Q654,299 654,287 V185 Q654,173 666,173 H722" class="arrow connector"/>
 <path d="M958,173 H1074" class="softArrow"/>
-<path d="M958,291 H1074" class="arrow"/>
-<path d="M958,431 H1006 Q1018,431 1018,419 V383 Q1018,371 1030,371 H1074" class="arrow"/>
-<path d="M958,431 H1022 Q1034,431 1034,443 V449 Q1034,461 1046,461 H1074" class="arrow"/>
+<path d="M958,291 H1074" class="arrow connector"/>
+<path d="M958,431 H1006 Q1018,431 1018,419 V383 Q1018,371 1030,371 H1074" class="arrow connector"/>
+<path d="M958,431 H1022 Q1034,431 1034,443 V449 Q1034,461 1046,461 H1074" class="arrow connector"/>
 <path d="M958,431 H1022 Q1034,431 1034,419 V293 Q1034,281 1046,281 H1074" class="softArrow"/>
 <path d="M1246,281 H1276 Q1288,281 1288,269 V219 Q1288,207 1300,207 H1320" class="softArrow"/>
 <path d="M1246,371 H1276 Q1288,371 1288,359 V219 Q1288,207 1300,207 H1320" class="softArrow"/>
 <path d="M1246,461 H1276 Q1288,461 1288,449 V219 Q1288,207 1300,207 H1320" class="softArrow"/>
-<path d="M1385,236 V338" class="arrow"/>
+<path d="M1385,236 V338" class="arrow connector"/>
 <path d="M104,558 H160" class="legendLine" stroke="#64748b" marker-end="url(#arrow)"/>
 <text x="170" y="562" class="tiny">solid: runtime/controller-to-SQL call path</text>
 <path d="M424,558 H480" class="legendLine" stroke="#94a3b8" stroke-dasharray="5 5" marker-end="url(#arrow)"/>

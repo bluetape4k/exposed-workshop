@@ -72,7 +72,7 @@
 <rect x="1028" y="614" width="242" height="70" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
 <text x="1149" y="639" class="label" text-anchor="middle">Behavior matrix</text>
 <text x="1149" y="670" class="detail" text-anchor="middle">RETURNING, MERGE, arrays</text>
-<path d="M336,213 L536,229" class="arrow"/>
+<path d="M336,213 H536" class="arrow"/>
 <path d="M336,325 L421.3,325 Q436,325 436,339.7 L436,354.3 Q436,369 450.7,369 L536,369" class="arrow"/>
 <path d="M336,437 L418,437 Q436,437 436,419 L436,387 Q436,369 454,369 L536,369" class="arrow"/>
 <path d="M336,549 L430,549 Q448,549 448,567 L448,631 Q448,649 466,649 L536,649" class="runtimeUse"/>

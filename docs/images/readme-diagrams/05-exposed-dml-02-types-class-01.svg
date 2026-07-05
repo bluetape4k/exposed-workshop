@@ -75,7 +75,7 @@
 <path d="M397,248 L385,264 L409,264 Z" class="inheritHead"/>
 <path d="M205,560 L205,520 L397,520 L397,264" class="inherit"/>
 <path d="M397,248 L385,264 L409,264 Z" class="inheritHead"/>
-<path d="M310,623 L432,623" class="runtimeUse"/>
+<path d="M310,623 L432,623" class="runtimeUse connector"/>
 <rect x="822" y="128" width="614" height="622" rx="12" class="panel"/><text x="1129" y="120" class="panelTitle" text-anchor="middle">COLUMN FACTORIES AND DIALECT BEHAVIOR</text>
 <rect x="880" y="182" width="210" height="112" rx="4" fill="#fff" stroke="#64748b" class="card"/>
 <path d="M880,230 L880,186 Q880,182 884,182 L1086,182 Q1090,182 1090,186 L1090,230 Z" fill="#e2e8f0"/>
@@ -106,12 +106,12 @@
 <text x="1086" y="635" class="tiny">Postgres</text>
 <text x="1086" y="652" class="tiny">MySQL</text>
 <text x="1086" y="669" class="tiny">MariaDB</text>
-<path d="M1090,238 L1160,238" class="arrow"/>
-<path d="M985,294 L985,370" class="arrow"/>
-<path d="M1265,294 L1265,370" class="arrow"/>
-<path d="M990,442 L1022,442 Q1038,442 1038,458 L1038,596 Q1038,606 1048,606 L1068,606" class="dbUse"/>
-<path d="M1262,442 L1242,442 Q1232,442 1232,452 L1232,598 Q1232,606 1224,606 L1208,606" class="dbUse"/>
-<path d="M642,623 L772,623 Q790,623 790,605 L790,424 Q790,406 808,406 L878,406" class="runtimeUse"/>
+<path d="M1090,238 L1160,238" class="arrow connector"/>
+<path d="M985,294 L985,370" class="arrow connector"/>
+<path d="M1265,294 L1265,370" class="arrow connector"/>
+<path d="M990,442 L1022,442 Q1038,442 1038,458 L1038,596 Q1038,606 1048,606 L1068,606" class="dbUse connector"/>
+<path d="M1262,442 L1242,442 Q1232,442 1232,452 L1232,598 Q1232,606 1224,606 L1208,606" class="dbUse connector"/>
+<path d="M642,623 L772,623 Q790,623 790,605 L790,424 Q790,406 808,406 L878,406" class="runtimeUse connector"/>
 <rect x="128" y="804" width="1260" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="758" y="835" class="detail" text-anchor="middle">Source check: 02-types examples validate bool/char/numeric/double, arrays, multi-arrays, unsigned values, blobs, Java UUID, and Kotlin UUID across DB dialects.</text>
 </svg>

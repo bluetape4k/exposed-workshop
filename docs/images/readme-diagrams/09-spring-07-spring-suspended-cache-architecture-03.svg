@@ -79,8 +79,8 @@
 <rect x="1138" y="360" width="186" height="56" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
 <text x="1231" y="389" class="smallLabel" text-anchor="middle">Suspended...</text>
 <text x="1231" y="400" class="detail" text-anchor="middle">persistence</text>
-<path d="M286,176 Q353,176 420,174" class="arrow"/>
-<path d="M720,288 Q792,288 864,236" class="arrow"/>
+<path d="M286,176 H420" class="arrow"/>
+<path d="M720,288 H792 Q810,288 810,270 V254 Q810,236 828,236 H864" class="arrow"/>
 <path d="M720,400 Q929,400 1138,404" class="softArrow"/>
 <path d="M1070,240 Q1104,240 1138,240" class="softArrow"/>
 <rect x="36" y="510" width="1306" height="58" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>

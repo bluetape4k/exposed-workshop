@@ -84,8 +84,8 @@
 <text x="1351" y="652" class="label" text-anchor="middle">DB</text>
 <text x="1302" y="682" class="tiny">H2</text>
 <text x="1302" y="700" class="tiny">Postgres</text>
-<path d="M320,229 L482,233" class="arrow"/>
-<path d="M320,367 L482,387" class="arrow"/>
+<path d="M320,229 H482" class="arrow"/>
+<path d="M320,367 H482" class="arrow"/>
 <path d="M320,505 L378,505 Q396,505 396,487 L396,251 Q396,233 414,233 L482,233" class="runtimeUse"/>
 <path d="M722,233 L795.2,233 Q802,233 802,226.2 L802,222.8 Q802,216 808.8,216 L884,216" class="cryptoLine"/>
 <path d="M722,387 L784,387 Q802,387 802,369 L802,348 Q802,330 820,330 L884,330" class="cryptoLine"/>

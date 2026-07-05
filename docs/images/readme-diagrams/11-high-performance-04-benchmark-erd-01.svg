@@ -61,6 +61,7 @@
 <text x="546" y="445" class="tiny">email varchar</text>
 <text x="546" y="460" class="tiny">phone varchar</text>
 <text x="546" y="475" class="tiny">position varchar</text>
-<path d="M814,415 L814,415 L166,415 L166,415" class="softArrow"/>
 <text x="490" y="110" class="panelTitle" text-anchor="middle">TABLES AND RELATIONSHIPS</text>
+
+<text x="490" y="646" class="tiny" text-anchor="middle">No FK relationship: tables are independent benchmark examples for this module.</text>
 </svg>

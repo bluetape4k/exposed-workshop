@@ -73,7 +73,7 @@
 <text x="1432" y="406" class="tiny">fixtures</text>
 <text x="1432" y="424" class="tiny">indexes</text>
 <text x="1432" y="442" class="tiny">constraints</text>
-<path d="M412,217 L610,196" class="arrow"/>
+<path d="M412,217 H610" class="arrow"/>
 <path d="M412,379 L482,379 Q500,379 500,361 L500,326 Q500,308 518,308 L610,308" class="mapLine"/>
 <path d="M412,541 L512,541 Q530,541 530,523 L530,214 Q530,196 548,196 L610,196" class="arrow"/>
 <path d="M902,196 L983.2,196 Q996,196 996,208.8 L996,215.2 Q996,228 1008.8,228 L1090,228" class="mapLine"/>

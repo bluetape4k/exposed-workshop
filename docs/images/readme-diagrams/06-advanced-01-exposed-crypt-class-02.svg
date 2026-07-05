@@ -10,14 +10,30 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-arrow-df018f);}
+.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-mapLine-483388);}
 .cryptoLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;}
+.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-dbUse-4b232d);}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-runtimeUse-63ea90);}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
-</defs>
+
+    <marker id="arrow-arrow-df018f" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+
+    <marker id="arrow-mapLine-483388" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+
+    <marker id="arrow-dbUse-4b232d" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+
+    <marker id="arrow-runtimeUse-63ea90" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
 <rect width="1500" height="900" class="canvas"/>
 <rect x="20" y="20" width="1460" height="860" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Exposed Crypt Class and Table Model</text>
@@ -88,8 +104,8 @@
 <polygon points="1263,272 1254,288 1272,288" fill="#fff" stroke="#475569" stroke-width="1.8"/>
 <path d="M1263,328 L1263,328" class="inheritStem"/>
 <path d="M1263,328 L1263,386" class="inheritStem"/>
-<path d="M1090,451 L1148,451" class="mapLine"/>
-<path d="M690,440 L756.3,440 Q760,440 760,443.7 L760,447.3 Q760,451 763.7,451 L860,451" class="runtimeUse"/>
+<path d="M1090,451 L1148,451" class="mapLine connector"/>
+<path d="M690,440 L756.3,440 Q760,440 760,443.7 L760,447.3 Q760,451 763.7,451 L860,451" class="runtimeUse connector"/>
 <rect x="1020" y="534" width="122" height="24" rx="8" fill="#fff" stroke="#cbd5e1"/><text x="1081" y="550" class="tiny" text-anchor="middle">delegated columns</text>
 <rect x="136" y="796" width="1228" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="827" class="detail" text-anchor="middle">UML rule: superclasses stay above concrete examples; entity-to-table mapping is a dependency line, not inheritance.</text>

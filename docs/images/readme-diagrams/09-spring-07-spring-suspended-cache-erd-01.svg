@@ -36,4 +36,6 @@
 <text x="184" y="218" class="tiny">name varchar</text>
 <text x="184" y="233" class="tiny">description text</text>
 <text x="490" y="110" class="panelTitle" text-anchor="middle">TABLES AND RELATIONSHIPS</text>
+
+<text x="490" y="434" class="tiny" text-anchor="middle">No FK relationship: tables are independent examples for this module.</text>
 </svg>

@@ -257,3 +257,23 @@ Changed SVG inventory (`PASS`):
 - `docs/images/readme-diagrams/exposed-workshop-architecture-03.svg`
 - `docs/images/readme-diagrams/exposed-workshop-mindmap-01.svg`
 - `docs/images/readme-diagrams/root-readme-overview-01.svg`
+
+## 2026-07-05 full re-audit after reviewer geometry report
+
+Scope: all `docs/images/readme-diagrams/*.svg` assets, with the class/sequence special cases audited by the diagram-skill-specific gates instead of the generic card-endpoint validator where that validator treats UML class dependencies or sequence activation bars as card endpoints.
+
+| Gate | Evidence | Result |
+| --- | --- | --- |
+| XML parse | `find docs/images/readme-diagrams -name '*.svg' -print0 | xargs -0 -n1 xmllint --noout` | PASS, 187 SVGs |
+| Architecture / non-class connector geometry | `/tmp/run_diagram_audit_adjusted.sh .../exposed-workshop/.worktrees/docs-diagram-checklist-audit` | PASS, `adjusted_audit total=187 failures=0` |
+| Sequence best-practices style | `diagram-sequence-style-audit.py` over `*sequence*.svg` and `*flow*.svg` | PASS, `sequence_files=32` |
+| ERD relationship information | `/tmp/erd_relationship_audit.py .../exposed-workshop/.worktrees/docs-diagram-checklist-audit` | PASS, `total=32 fail=0`; independent-table ERDs now state `No FK relationship` explicitly |
+| Class arrowheads | `/tmp/class_arrow_audit.py .../exposed-workshop/.worktrees/docs-diagram-checklist-audit` | PASS, no markerless directional class paths |
+| Rendered PNG spot inspection | Full-size PNGs opened for reported/high-risk samples: `03-exposed-basic-class-01.png`, `05-exposed-dml-02-types-class-01.png`, `07-jpa-class-02.png`, `11-high-performance-04-benchmark-erd-01.png` | PASS after removing the benchmark ERD dashed line that crossed lower cards |
+
+Fixes applied in this pass:
+
+- Added explicit class relationship arrow markers to directional UML/class relationship styles and rendered the paired PNGs.
+- Added reader-facing `No FK relationship` notes to independent-table ERDs so ERDs express relationship state even when there is no FK edge.
+- Removed the `11-high-performance-04-benchmark-erd-01.svg` decorative dashed line because it crossed table cards and confused the relationship reading.
+- Rerouted architecture connectors found by the broad endpoint/geometry pass so connector endpoints are orthogonal and avoid card interiors.

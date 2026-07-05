@@ -81,14 +81,14 @@
 <text x="1112" y="662" class="tiny">H2</text>
 <text x="1112" y="680" class="tiny">Postgres</text>
 <text x="1112" y="698" class="tiny">MySQL</text>
-<path d="M384,254 L540,254" class="mapLine"/>
-<path d="M384,497 L454.4,497 Q462,497 462,504.6 L462,508.4 Q462,516 469.6,516 L540,516" class="mapLine"/>
+<path d="M384,254 L540,254" class="mapLine connector"/>
+<path d="M384,497 L454.4,497 Q462,497 462,504.6 L462,508.4 Q462,516 469.6,516 L540,516" class="mapLine connector"/>
 <path d="M238,420 L238,320" class="fkLine"/>
-<path d="M870,254 L936.7,254 Q948,254 948,242.7 L948,231.3 Q948,220 959.3,220 L1040,220" class="arrow"/>
-<path d="M870,516 L932,516 Q950,516 950,498 L950,238 Q950,220 968,220 L1040,220" class="arrow"/>
-<path d="M1170,256 L1170,314" class="runtimeUse"/>
-<path d="M1170,386 L1170,444" class="runtimeUse"/>
-<path d="M1170,516 L1170,584" class="dbUse"/>
+<path d="M870,254 L936.7,254 Q948,254 948,242.7 L948,231.3 Q948,220 959.3,220 L1040,220" class="arrow connector"/>
+<path d="M870,516 L932,516 Q950,516 950,498 L950,238 Q950,220 968,220 L1040,220" class="arrow connector"/>
+<path d="M1170,256 L1170,314" class="runtimeUse connector"/>
+<path d="M1170,386 L1170,444" class="runtimeUse connector"/>
+<path d="M1170,516 L1170,584" class="dbUse connector"/>
 <rect x="118" y="796" width="1264" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="827" class="detail" text-anchor="middle">Source check: EntityTestData defines YTable/XTable, XEntity/YEntity mappings; Ex02 tracks EntityHook changes and Ex03 verifies EntityCache sizing.</text>
 </svg>

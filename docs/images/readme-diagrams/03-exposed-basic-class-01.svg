@@ -10,17 +10,37 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-arrow-18046f);}
 .queryUse{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .mapUse{fill:none;stroke:#16a34a;stroke-width:1.8;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.8;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.fkArrow{fill:none;stroke:#0f766e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.assoc{fill:none;stroke:#0f766e;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.8;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-runtimeUse-63ea90);}
+.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-dbUse-4b232d);}
+.fkArrow{fill:none;stroke:#0f766e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-fkArrow-6dd2fe);}
+.assoc{fill:none;stroke:#0f766e;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-assoc-6dd2fe);}
 .inherit{fill:none;stroke:#475569;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
 .inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
 </style>
-</defs>
+
+    <marker id="arrow-arrow-18046f" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+
+    <marker id="arrow-runtimeUse-63ea90" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+
+    <marker id="arrow-dbUse-4b232d" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+
+    <marker id="arrow-fkArrow-6dd2fe" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+
+    <marker id="arrow-assoc-6dd2fe" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
 <rect width="1500" height="900" class="canvas"/>
 <rect x="20" y="20" width="1460" height="860" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Exposed Basic User Cities Domain</text>
@@ -79,13 +99,13 @@
 <path d="M204,254 L192,270 L216,270 Z" class="inheritHead"/>
 <path d="M500,326 L500,286 L204,286 L204,270" class="inherit"/>
 <path d="M204,254 L192,270 L216,270 Z" class="inheritHead"/>
-<path d="M388,400 L316,400" class="fkArrow"/>
+<path d="M388,400 L316,400" class="fkArrow connector"/>
 <rect x="328" y="382" width="48" height="24" rx="8" fill="#fff" stroke="#99f6e4"/>
 <text x="352" y="399" class="tiny" text-anchor="middle">FK</text>
 <path d="M204,458 L204,584" class="queryUse"/>
 <path d="M500,474 L500,584" class="queryUse"/>
-<path d="M426,210 L360,210 L360,649 L340,649" class="runtimeUse"/>
-<path d="M536,254 L536,300 L674,300 L674,550 L512,550 L512,584" class="runtimeUse"/>
+<path d="M426,210 L360,210 L360,649 L340,649" class="runtimeUse connector"/>
+<path d="M536,254 L536,300 L674,300 L674,550 L512,550 L512,584" class="runtimeUse connector"/>
 <rect x="792" y="124" width="660" height="674" rx="12" class="panel"/><text x="1122" y="116" class="panelTitle" text-anchor="middle">DAO ENTITY PATH</text>
 <rect x="832" y="164" width="210" height="90" rx="4" fill="#fff" stroke="#64748b" class="card"/>
 <path d="M832,212 L832,168 Q832,164 836,164 L1038,164 Q1042,164 1042,168 L1042,212 Z" fill="#e2e8f0"/>
@@ -139,10 +159,10 @@
 <path d="M936,548 L936,516 L1342,516 L1342,286 L1225,286 L1225,270" class="inherit"/>
 <path d="M1205,548 L1205,528 L1358,528 L1358,302 L1225,302 L1225,270" class="inherit"/>
 <path d="M1225,254 L1213,270 L1237,270 Z" class="inheritHead"/>
-<path d="M1100,400 L1042,400" class="fkArrow"/>
-<path d="M1042,614 L1100,614" class="assoc"/>
+<path d="M1100,400 L1042,400" class="fkArrow connector"/>
+<path d="M1042,614 L1100,614" class="assoc connector"/>
 <text x="1072" y="602" class="tiny" text-anchor="middle">City.users / User.city</text>
-<path d="M1100,636 L1042,636" class="assoc"/>
+<path d="M1100,636 L1042,636" class="assoc connector"/>
 <rect x="166" y="826" width="1168" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="856" class="detail" text-anchor="middle">Root chapter diagram intentionally compares modeling paths; table-to-entity mapping lines are omitted because DAO names already pair them.</text>
 </svg>

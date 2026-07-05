@@ -94,9 +94,9 @@
 <text x="1432" y="410" class="tiny">BINARY</text>
 <text x="1432" y="428" class="tiny">BLOB</text>
 <text x="1432" y="446" class="tiny">generated ids</text>
-<path d="M294,223 L460,204" class="arrow"/>
+<path d="M294,223 H460" class="arrow"/>
 <path d="M294,421 L361.7,421 Q370,421 370,412.7 L370,404.3 Q370,396 378.3,396 L460,396" class="arrow"/>
-<path d="M294,619 L460,616" class="arrow"/>
+<path d="M294,619 H460" class="arrow"/>
 <path d="M696,204 L770,204 Q782,204 782,216 L782,222 Q782,234 794,234 L866,234" class="codecLine"/>
 <path d="M696,282 L764,282 Q782,282 782,264 L782,252 Q782,234 800,234 L866,234" class="codecLine"/>
 <path d="M696,396 L767.6,396 Q782,396 782,410.4 L782,417.6 Q782,432 796.4,432 L866,432" class="codecLine"/>

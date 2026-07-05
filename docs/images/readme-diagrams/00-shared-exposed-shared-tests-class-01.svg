@@ -78,8 +78,8 @@
   <rect class="slot" x="24" y="142" width="312" height="34" rx="10"/><text class="mono" x="180" y="164" text-anchor="middle">save + birthday/name queries</text>
 </g>
 
-<path class="arrow" d="M490 405 H620"/>
-<path class="arrow" d="M490 730 H620"/>
+<path class="arrow connector" d="M490 405 H620"/>
+<path class="arrow connector" d="M490 730 H620"/>
 <path class="soft" d="M980 384 H1110"/>
 <path class="soft" d="M980 790 H1035 Q1055 790 1055 770 V710 Q1055 690 1075 690 H1110"/>
 <path class="soft" d="M1290 536 V590"/>

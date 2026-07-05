@@ -73,7 +73,7 @@
 <text x="1306" y="378" class="tiny">H2</text>
 <text x="1306" y="396" class="tiny">Postgres</text>
 <text x="1306" y="414" class="tiny">MySQL</text>
-<path d="M318,209 L506,208" class="arrow"/>
+<path d="M318,209 H506" class="arrow"/>
 <path d="M318,329 L392,329 Q410,329 410,311 L410,226 Q410,208 428,208 L506,208" class="arrow"/>
 <path d="M318,449 L392,449 Q410,449 410,431 L410,352 Q410,334 428,334 L506,334" class="runtimeUse"/>
 <path d="M742,208 L832,208 Q836,208 836,212 L836,214 Q836,218 840,218 L922,218" class="mapLine"/>

@@ -37,35 +37,35 @@
 <rect x="506" y="178" width="250" height="62" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
 <text x="631" y="203" class="label" text-anchor="middle">date(&quot;date&quot;)</text>
 <text x="631" y="226" class="detail" text-anchor="middle">DATE</text>
-<path d="M336,209 L506,209" class="mapLine"/>
+<path d="M336,209 L506,209" class="mapLine connector"/>
 <rect x="96" y="274" width="240" height="62" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
 <text x="216" y="299" class="label" text-anchor="middle">LocalTime</text>
 <text x="216" y="322" class="detail" text-anchor="middle">Kotlin datetime</text>
 <rect x="506" y="274" width="250" height="62" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
 <text x="631" y="299" class="label" text-anchor="middle">time(&quot;time&quot;)</text>
 <text x="631" y="322" class="detail" text-anchor="middle">TIME</text>
-<path d="M336,305 L506,305" class="mapLine"/>
+<path d="M336,305 L506,305" class="mapLine connector"/>
 <rect x="96" y="370" width="240" height="62" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
 <text x="216" y="395" class="label" text-anchor="middle">LocalDateTime</text>
 <text x="216" y="418" class="detail" text-anchor="middle">Kotlin datetime</text>
 <rect x="506" y="370" width="250" height="62" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
 <text x="631" y="395" class="label" text-anchor="middle">datetime(&quot;datetime&quot;)</text>
 <text x="631" y="418" class="detail" text-anchor="middle">DATETIME</text>
-<path d="M336,401 L506,401" class="mapLine"/>
+<path d="M336,401 L506,401" class="mapLine connector"/>
 <rect x="96" y="466" width="240" height="62" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
 <text x="216" y="491" class="label" text-anchor="middle">Instant</text>
 <text x="216" y="514" class="detail" text-anchor="middle">Kotlin datetime</text>
 <rect x="506" y="466" width="250" height="62" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
 <text x="631" y="491" class="label" text-anchor="middle">timestamp(&quot;ts&quot;)</text>
 <text x="631" y="514" class="detail" text-anchor="middle">TIMESTAMP</text>
-<path d="M336,497 L506,497" class="mapLine"/>
+<path d="M336,497 L506,497" class="mapLine connector"/>
 <rect x="96" y="562" width="240" height="62" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
 <text x="216" y="587" class="label" text-anchor="middle">Instant + zone</text>
 <text x="216" y="610" class="detail" text-anchor="middle">Kotlin datetime</text>
 <rect x="506" y="562" width="250" height="62" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
 <text x="631" y="587" class="label" text-anchor="middle">timestampWithTimeZone</text>
 <text x="631" y="610" class="detail" text-anchor="middle">TIMESTAMPTZ</text>
-<path d="M336,593 L506,593" class="mapLine"/>
+<path d="M336,593 L506,593" class="mapLine connector"/>
 <rect x="918" y="184" width="226" height="128" rx="10" fill="#fff" stroke="#64748b" class="card"/>
 <path d="M918,226 L918,194 Q918,184 928,184 L1134,184 Q1144,184 1144,194 L1144,226 Z" fill="#e2e8f0"/>
 <text x="1031" y="212" class="label" text-anchor="middle">Misc / test tables</text>
@@ -86,12 +86,12 @@
 <text x="1306" y="372" class="tiny">H2</text>
 <text x="1306" y="390" class="tiny">Postgres</text>
 <text x="1306" y="408" class="tiny">dialect checks</text>
-<path d="M756,209 L823,209 Q836,209 836,222 L836,235 Q836,248 849,248 L918,248" class="arrow"/>
-<path d="M756,305 L818,305 Q836,305 836,287 L836,266 Q836,248 854,248 L918,248" class="arrow"/>
-<path d="M756,401 L818,401 Q836,401 836,419 L836,444 Q836,462 854,462 L918,462" class="arrow"/>
-<path d="M756,497 L824.3,497 Q836,497 836,485.3 L836,473.7 Q836,462 847.7,462 L918,462" class="arrow"/>
-<path d="M1144,248 L1200,248 Q1218,248 1218,266 L1218,360 Q1218,378 1236,378 L1292,378" class="dbUse"/>
-<path d="M1144,462 L1204,462 Q1218,462 1218,448 L1218,434 Q1218,420 1232,420 L1292,420" class="dbUse"/>
+<path d="M756,209 L823,209 Q836,209 836,222 L836,235 Q836,248 849,248 L918,248" class="arrow connector"/>
+<path d="M756,305 L818,305 Q836,305 836,287 L836,266 Q836,248 854,248 L918,248" class="arrow connector"/>
+<path d="M756,401 L818,401 Q836,401 836,419 L836,444 Q836,462 854,462 L918,462" class="arrow connector"/>
+<path d="M756,497 L824.3,497 Q836,497 836,485.3 L836,473.7 Q836,462 847.7,462 L918,462" class="arrow connector"/>
+<path d="M1144,248 L1200,248 Q1218,248 1218,266 L1218,360 Q1218,378 1236,378 L1292,378" class="dbUse connector"/>
+<path d="M1144,462 L1204,462 Q1218,462 1218,448 L1218,434 Q1218,420 1232,420 L1292,420" class="dbUse connector"/>
 <rect x="118" y="796" width="1264" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="827" class="detail" text-anchor="middle">Source check: Ex01_KotlinDateTime, Ex02_Defaults, Ex03_DateTimeLiteral, KotlinDateTimeSupports, and KotlinTimeAssertions mirror the Java Time test surface.</text>
 </svg>
