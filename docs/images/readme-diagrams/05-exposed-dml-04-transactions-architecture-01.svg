@@ -64,14 +64,14 @@
 <rect x="1136" y="500" width="206" height="70" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
 <text x="1239" y="525" class="label" text-anchor="middle">Assertion</text>
 <text x="1239" y="556" class="detail" text-anchor="middle">names == [city1]</text>
-<path d="M336,231 L550,219" class="arrow"/>
+<path d="M336,231 H550" class="arrow"/>
 <path d="M336,551 L412,551 Q430,551 430,533 L430,237 Q430,219 448,219 L550,219" class="runtimeUse"/>
 <path d="M657,254 L657,344" class="arrow"/>
 <path d="M657,414 L657,504" class="arrow"/>
 <path d="M764,379 L816,379" class="savepoint"/>
 <path d="M764,539 L816,539" class="arrow"/>
 <path d="M958,379 L1060,379 L1060,294 L1170,294" class="savepoint"/>
-<path d="M958,539 L1136,535" class="arrow"/>
+<path d="M958,539 H1136" class="arrow"/>
 <path d="M1310,294 L1360,294 Q1378,294 1378,312 L1378,520.6 Q1378,535 1363.6,535 L1342,535" class="returnLine"/>
 <rect x="126" y="796" width="1244" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="748" y="827" class="detail" text-anchor="middle">Source check: Ex05_NestedTransactions inserts city1, city2, city3; rolling back nested tx 1 removes nested work and leaves the outer city1 row.</text>

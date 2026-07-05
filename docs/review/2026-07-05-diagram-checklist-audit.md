@@ -35,6 +35,15 @@ Scope: exposed-workshop README diagram/chart assets, checked one asset at a time
 | 29 | `docs/images/readme-diagrams/02-alternatives-to-jpa-vertx-sqlclient-example-erd-02.svg/png` | 2 (`02-alternatives-to-jpa/README.md`, `README.ko.md`) | Source confirms H2 `test(id,name)` setup in `JDBCPoolExamples.beforeAll` and PostgreSQL `customers` setup in `SqlClientTemplatePostgresExamples`; no source FK between the independent example schemas | `xmllint --noout` PASS; connector audit PASS `markers=0 connectors=0 cards=4 intrusions=0 crossings=0` with documented no-connector ERD exception; geometry PASS `geometry_failures=0`; endpoint PASS; mixed-corner PASS `paths=0 q_bends=0 failures=0` | CairoSVG PASS; PNG `2320 x 1440` RGB | Original-size PNG opened: H2 and PostgreSQL panels, table fields, setup cards, separate-schema pill, and relationship-rule note readable; SVG has no connector paths and PNG shows no arrowheads, so SVG/PNG arrow direction parity is not applicable by explicit no-FK exception | Removed unused marker definitions and connector classes from a no-relationship ERD, kept source-backed no-FK explanation, rerendered PNG | PASS |
 
 
+
+## Targeted Endpoint Re-audit Correction
+
+User-reported asset: `docs/images/readme-diagrams/05-exposed-dml-04-transactions-architecture-01.svg/png`.
+
+- Initial targeted rerun found the endpoint/perpendicular gate was **not** satisfied: `diagram-endpoint-audit.py` reported four failures on two diagonal card-to-card connectors (`DatabaseConfig` -> `Outer transaction`, `commit` -> `Assertion`).
+- Fix: replaced the two diagonal connector paths with horizontal perpendicular routes (`M336,231 H550`, `M958,539 H1136`) and rerendered PNG.
+- Recheck evidence after fix: `xmllint --noout` PASS; connector audit PASS `markers=5 connectors=5 cards=9 intrusions=0 crossings=0`; geometry PASS `geometry_failures=0`; endpoint PASS `files=1`; mixed-corner PASS `paths=7 q_bends=3 failures=0`; CairoSVG PASS; PNG `3000 x 1800` RGB; full-size PNG opened and connector entries visually confirmed perpendicular with SVG/PNG arrowheads matching path direction.
+
 ## Full Inventory Batch Gate
 
 After the first 29 manually recorded rows, the remaining changed SVG/PNG assets were normalized and verified with the same checklist gates as a complete inventory batch. Contact sheets under `docs/review/contact-sheets/` preserve the rendered visual scan; high-risk sequence diagrams were also opened at original size during review.
