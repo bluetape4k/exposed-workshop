@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-label="XEntity and YEntity Table ERD">
 <defs>
 
-<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12" /></filter>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -16,36 +16,43 @@
 .runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;}
 .dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+  .cardinalityBox{fill:#ffffff;stroke:#94a3b8;stroke-width:1;rx:7;opacity:.94}
+  .cardinalityLabel{font-family:"Comic Mono", "SFMono-Regular", monospace;font-size:14px;font-weight:700;fill:#334155}
 </style>
 </defs>
-<rect width="1200" height="720" class="canvas"/>
-<rect x="20" y="20" width="1160" height="680" rx="16" class="frame"/>
+<rect width="1200" height="720" class="canvas" />
+<rect x="20" y="20" width="1160" height="680" rx="16" class="frame" />
 <text x="48" y="58" class="title">XEntity and YEntity Table ERD</text>
 <text x="48" y="80" class="subtitle">EntityTestData.XTable stores an optional y1 foreign key to EntityTestData.YTable.uuid</text>
-<rect x="86" y="134" width="1028" height="430" rx="12" class="panel"/><text x="600" y="126" class="panelTitle" text-anchor="middle">ENTITYTESTDATA TABLES</text>
-<rect x="172" y="190" width="330" height="166" rx="10" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M172,232 L172,200 Q172,190 182,190 L492,190 Q502,190 502,200 L502,232 Z" fill="#dbeafe"/>
+<rect x="86" y="134" width="1028" height="430" rx="12" class="panel" /><text x="600" y="126" class="panelTitle" text-anchor="middle">ENTITYTESTDATA TABLES</text>
+<rect x="172" y="190" width="330" height="166" rx="10" fill="#fff" stroke="#3b82f6" class="card" />
+<path d="M172,232 L172,200 Q172,190 182,190 L492,190 Q502,190 502,200 L502,232 Z" fill="#dbeafe" />
 <text x="337" y="218" class="label" text-anchor="middle">YTable</text>
 <text x="190" y="260" class="tiny">uuid PK varchar(24)</text>
 <text x="190" y="278" class="tiny">x bool default true</text>
 <text x="190" y="296" class="tiny">primaryKey(uuid)</text>
-<rect x="690" y="342" width="330" height="184" rx="10" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M690,384 L690,352 Q690,342 700,342 L1010,342 Q1020,342 1020,352 L1020,384 Z" fill="#ede9fe"/>
+<rect x="690" y="342" width="330" height="184" rx="10" fill="#fff" stroke="#7c3aed" class="card" />
+<path d="M690,384 L690,352 Q690,342 700,342 L1010,342 Q1020,342 1020,352 L1020,384 Z" fill="#ede9fe" />
 <text x="855" y="370" class="label" text-anchor="middle">XTable</text>
 <text x="708" y="412" class="tiny">id PK serial</text>
 <text x="708" y="430" class="tiny">b1 bool default true</text>
 <text x="708" y="448" class="tiny">b2 bool default false</text>
 <text x="708" y="466" class="tiny">y1 FK nullable -&gt; YTable.uuid</text>
-<path d="M690,434 L614,434 Q596,434 596,416 L596,296 Q596,278 578,278 L502,278" class="fkLine"/>
-<rect x="552" y="392" width="142" height="24" rx="8" fill="#fff" stroke="#cbd5e1"/><text x="623" y="408" class="tiny" text-anchor="middle">optional FK y1 -&gt; uuid</text>
-<rect x="172" y="426" width="330" height="70" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<path d="M690,434 L614,434 Q596,434 596,416 L596,296 Q596,278 578,278 L502,278" class="fkLine" />
+<rect x="552" y="392" width="142" height="24" rx="8" fill="#fff" stroke="#cbd5e1" /><text x="623" y="408" class="tiny" text-anchor="middle">optional FK y1 -&gt; uuid</text>
+<rect x="172" y="426" width="330" height="70" rx="10" fill="#dcfce7" stroke="#16a34a" class="card" />
 <text x="337" y="451" class="label" text-anchor="middle">YEntity</text>
 <text x="337" y="482" class="detail" text-anchor="middle">EntityID&lt;String&gt;</text>
-<rect x="690" y="218" width="330" height="70" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<rect x="690" y="218" width="330" height="70" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card" />
 <text x="855" y="243" class="label" text-anchor="middle">XEntity</text>
 <text x="855" y="274" class="detail" text-anchor="middle">IntEntity</text>
-<path d="M337,356 L337,426" class="mapLine"/>
-<path d="M855,342 L855,288" class="mapLine"/>
-<rect x="112" y="610" width="976" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<path d="M337,356 L337,426" class="mapLine" />
+<path d="M855,342 L855,288" class="mapLine" />
+<rect x="112" y="610" width="976" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3" />
 <text x="600" y="641" class="detail" text-anchor="middle">ERD rule: FK direction is child table to parent table. Entity mapping lines stay local and do not cross the FK relationship lane.</text>
+
+<g class="cardinality" data-cardinality="0..1 : N"><rect class="cardinalityBox" x="559.0" y="324.0" width="74" height="22" /><text class="cardinalityLabel" x="596.0" y="340.0" text-anchor="middle">0..1 : N</text></g>
+<g class="cardinality" data-cardinality="0..1 : N"><rect class="cardinalityBox" x="300.0" y="359.0" width="74" height="22" /><text class="cardinalityLabel" x="337.0" y="375.0" text-anchor="middle">0..1 : N</text></g>
+<g class="cardinality" data-cardinality="0..1 : N"><rect class="cardinalityBox" x="818.0" y="319.0" width="74" height="22" /><text class="cardinalityLabel" x="855.0" y="335.0" text-anchor="middle">0..1 : N</text></g>
 </svg>

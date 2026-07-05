@@ -1,132 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 940" width="1600" height="940" role="img" aria-label="Exposed Entity and Table Base Hierarchy">
-<defs>
-
-<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<style>
-.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
-.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-arrow-df018f);}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-mapLine-483388);}
-.fkLine{fill:none;stroke:#0f766e;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-runtimeUse-63ea90);}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-dbUse-4b232d);}
-.inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-</style>
-
-    <marker id="arrow-arrow-df018f" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-
-    <marker id="arrow-mapLine-483388" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-
-    <marker id="arrow-runtimeUse-63ea90" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-
-    <marker id="arrow-dbUse-4b232d" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-  </defs>
-<rect width="1600" height="940" class="canvas"/>
-<rect x="20" y="20" width="1560" height="900" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Exposed Entity and Table Base Hierarchy</text>
-<text x="48" y="80" class="subtitle">Source examples use superclass-first DAO and table bases for Int, Long, UUID, manual, and composite key strategies</text>
-<rect x="58" y="130" width="708" height="690" rx="12" class="panel"/><text x="412" y="122" class="panelTitle" text-anchor="middle">DAO ENTITY BASES</text>
-<rect x="310" y="174" width="210" height="90" rx="4" fill="#fff" stroke="#64748b" class="card"/>
-<path d="M310,214 L310,178 Q310,174 314,174 L516,174 Q520,174 520,178 L520,214 Z" fill="#e2e8f0"/>
-<line x1="310" y1="214" x2="520" y2="214" stroke="#64748b" stroke-width="1.2"/>
-<text x="415" y="200" class="label" text-anchor="middle">Entity&lt;ID&gt;</text>
-<line x1="310" y1="248" x2="520" y2="248" stroke="#64748b" stroke-width="1.2"/>
-<text x="326" y="235" class="tiny">id: EntityID&lt;ID&gt;</text>
-<text x="326" y="260" class="tiny">base DAO entity</text>
-<rect x="88" y="338" width="154" height="86" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M88,378 L88,342 Q88,338 92,338 L238,338 Q242,338 242,342 L242,378 Z" fill="#dbeafe"/>
-<line x1="88" y1="378" x2="242" y2="378" stroke="#3b82f6" stroke-width="1.2"/>
-<text x="165" y="364" class="label" text-anchor="middle">IntEntity</text>
-<text x="104" y="405" class="tiny">EntityID&lt;Int&gt;</text>
-<rect x="258" y="338" width="154" height="86" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M258,378 L258,342 Q258,338 262,338 L408,338 Q412,338 412,342 L412,378 Z" fill="#dcfce7"/>
-<line x1="258" y1="378" x2="412" y2="378" stroke="#16a34a" stroke-width="1.2"/>
-<text x="335" y="364" class="label" text-anchor="middle">LongEntity</text>
-<text x="274" y="405" class="tiny">EntityID&lt;Long&gt;</text>
-<rect x="428" y="338" width="154" height="86" rx="4" fill="#fff" stroke="#db2777" class="card"/>
-<path d="M428,378 L428,342 Q428,338 432,338 L578,338 Q582,338 582,342 L582,378 Z" fill="#fce7f3"/>
-<line x1="428" y1="378" x2="582" y2="378" stroke="#db2777" stroke-width="1.2"/>
-<text x="505" y="364" class="label" text-anchor="middle">UUIDEntity</text>
-<text x="444" y="405" class="tiny">EntityID&lt;UUID&gt;</text>
-<rect x="598" y="338" width="154" height="86" rx="4" fill="#fff" stroke="#d97706" class="card"/>
-<path d="M598,378 L598,342 Q598,338 602,338 L748,338 Q752,338 752,342 L752,378 Z" fill="#fef3c7"/>
-<line x1="598" y1="378" x2="752" y2="378" stroke="#d97706" stroke-width="1.2"/>
-<text x="675" y="364" class="label" text-anchor="middle">CompositeEntity</text>
-<text x="614" y="405" class="tiny">CompositeID</text>
-<rect x="92" y="674" width="190" height="66" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="187" y="699" class="label" text-anchor="middle">XEntity/TestEntity</text>
-<text x="187" y="726" class="detail" text-anchor="middle">Int examples</text>
-<rect x="304" y="674" width="190" height="66" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="399" y="699" class="label" text-anchor="middle">City/Person</text>
-<text x="399" y="726" class="detail" text-anchor="middle">Long examples</text>
-<rect x="516" y="674" width="190" height="66" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="611" y="699" class="label" text-anchor="middle">UUID Person</text>
-<text x="611" y="726" class="detail" text-anchor="middle">UUID example</text>
-<rect x="834" y="130" width="708" height="690" rx="12" class="panel"/><text x="1188" y="122" class="panelTitle" text-anchor="middle">TABLE BASES</text>
-<rect x="1084" y="174" width="210" height="116" rx="4" fill="#fff" stroke="#64748b" class="card"/>
-<path d="M1084,214 L1084,178 Q1084,174 1088,174 L1290,174 Q1294,174 1294,178 L1294,214 Z" fill="#e2e8f0"/>
-<line x1="1084" y1="214" x2="1294" y2="214" stroke="#64748b" stroke-width="1.2"/>
-<text x="1189" y="200" class="label" text-anchor="middle">Table</text>
-<text x="1100" y="238" class="tiny">columns</text>
-<text x="1100" y="256" class="tiny">primaryKey</text>
-<text x="1100" y="274" class="tiny">foreign keys / indexes</text>
-<rect x="900" y="348" width="210" height="90" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M900,388 L900,352 Q900,348 904,348 L1106,348 Q1110,348 1110,352 L1110,388 Z" fill="#ede9fe"/>
-<line x1="900" y1="388" x2="1110" y2="388" stroke="#7c3aed" stroke-width="1.2"/>
-<text x="1005" y="374" class="label" text-anchor="middle">IdTable&lt;ID&gt;</text>
-<text x="916" y="417" class="tiny">id: Column&lt;EntityID&lt;ID&gt;&gt;</text>
-<rect x="1220" y="348" width="238" height="90" rx="4" fill="#fff" stroke="#d97706" class="card"/>
-<path d="M1220,388 L1220,352 Q1220,348 1224,348 L1454,348 Q1458,348 1458,352 L1458,388 Z" fill="#fef3c7"/>
-<line x1="1220" y1="388" x2="1458" y2="388" stroke="#d97706" stroke-width="1.2"/>
-<text x="1339" y="374" class="label" text-anchor="middle">CompositeIdTable</text>
-<text x="1236" y="408" class="tiny">addIdColumn</text>
-<text x="1236" y="426" class="tiny">entityId</text>
-<rect x="866" y="560" width="178" height="86" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M866,600 L866,564 Q866,560 870,560 L1040,560 Q1044,560 1044,564 L1044,600 Z" fill="#dbeafe"/>
-<line x1="866" y1="600" x2="1044" y2="600" stroke="#3b82f6" stroke-width="1.2"/>
-<text x="955" y="586" class="label" text-anchor="middle">IntIdTable</text>
-<text x="882" y="627" class="tiny">serial id</text>
-<rect x="1062" y="560" width="178" height="86" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M1062,600 L1062,564 Q1062,560 1066,560 L1236,560 Q1240,560 1240,564 L1240,600 Z" fill="#dcfce7"/>
-<line x1="1062" y1="600" x2="1240" y2="600" stroke="#16a34a" stroke-width="1.2"/>
-<text x="1151" y="586" class="label" text-anchor="middle">LongIdTable</text>
-<text x="1078" y="627" class="tiny">long id</text>
-<rect x="1258" y="560" width="178" height="86" rx="4" fill="#fff" stroke="#db2777" class="card"/>
-<path d="M1258,600 L1258,564 Q1258,560 1262,560 L1432,560 Q1436,560 1436,564 L1436,600 Z" fill="#fce7f3"/>
-<line x1="1258" y1="600" x2="1436" y2="600" stroke="#db2777" stroke-width="1.2"/>
-<text x="1347" y="586" class="label" text-anchor="middle">UUIDTable</text>
-<text x="1274" y="627" class="tiny">uuid id</text>
-<path d="M415,280 L415,304" class="inheritStem"/>
-<polygon points="415,264 406,280 424,280" fill="#fff" stroke="#475569" stroke-width="1.8"/>
-<path d="M165,304 L675,304" class="inheritStem"/>
-<path d="M165,304 L165,338" class="inheritStem"/>
-<path d="M335,304 L335,338" class="inheritStem"/>
-<path d="M505,304 L505,338" class="inheritStem"/>
-<path d="M675,304 L675,338" class="inheritStem"/>
-<path d="M1128,306 L1128,322" class="inheritStem"/>
-<polygon points="1128,290 1119,306 1137,306" fill="#fff" stroke="#475569" stroke-width="1.8"/>
-<path d="M1005,322 L1339,322" class="inheritStem"/>
-<path d="M1005,322 L1005,348" class="inheritStem"/>
-<path d="M1339,322 L1339,348" class="inheritStem"/>
-<path d="M1005,454 L1005,500" class="inheritStem"/>
-<polygon points="1005,438 996,454 1014,454" fill="#fff" stroke="#475569" stroke-width="1.8"/>
-<path d="M956,500 L1347,500" class="inheritStem"/>
-<path d="M956,500 L956,560" class="inheritStem"/>
-<path d="M1151,500 L1151,560" class="inheritStem"/>
-<path d="M1347,500 L1347,560" class="inheritStem"/>
-<rect x="156" y="854" width="1288" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="800" y="885" class="detail" text-anchor="middle">UML rule: superclass boxes are above concrete examples, and hollow generalization triangles point upward to the parent boundary with vertical stems.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 940" width="1440" height="940" role="img" aria-label="Exposed Entity and Table Base Hierarchy class diagram">
+<defs><filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12" /></filter><style>.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}.lane{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}.card{stroke-width:1.8;filter:url(#shadow)}.header{opacity:.96}.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:33px;fill:#1e293b}.subtitle{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:13px;fill:#536476}.laneTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;letter-spacing:.08em;fill:#8ca2b4}.cardTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}.detail{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:11px;fill:#64748b}.note{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:12px;font-weight:700;fill:#475569}.noteBox{fill:#ecfdf5;stroke:#86efac;stroke-width:1.2}</style></defs>
+<rect width="1440" height="820" class="canvas"/><rect x="20" y="20" width="1400" height="900" rx="18" class="frame"/>
+<text x="56" y="68" class="title">Exposed Entity and Table Base Hierarchy</text><text x="56" y="94" class="subtitle">Rebuilt from source-derived cards as grouped class catalog; old grid layout and card-through connectors removed.</text>
+<rect x="70" y="130" width="400" height="660" rx="18" class="lane"/><text x="270.0" y="158" text-anchor="middle" class="laneTitle">Contracts / APIs</text>
+<g data-card="Entity&lt;ID&gt;"><rect x="105" y="188" width="330" height="82" rx="14" fill="#fff" stroke="#4f86c6" class="card"/><path class="header" d="M105,222 L105,202 Q105,188 119,188 L421,188 Q435,188 435,202 L435,222 Z" fill="#eef5fa"/><text x="270.0" y="211" text-anchor="middle" class="cardTitle">Entity&lt;ID&gt;</text>
+<text x="125" y="242" class="detail">id: EntityID&lt;ID&gt;</text>
+<text x="125" y="257" class="detail">base DAO entity</text>
+</g>
+<g data-card="UUIDEntity"><rect x="131" y="300" width="330" height="82" rx="14" fill="#fff" stroke="#8a6f55" class="card"/><path class="header" d="M131,334 L131,314 Q131,300 145,300 L447,300 Q461,300 461,314 L461,334 Z" fill="#f3eee8"/><text x="296.0" y="323" text-anchor="middle" class="cardTitle">UUIDEntity</text>
+<text x="151" y="354" class="detail">EntityID&lt;UUID&gt;</text>
+</g>
+<g data-card="City/Person"><rect x="105" y="412" width="330" height="82" rx="14" fill="#fff" stroke="#6f8f52" class="card"/><path class="header" d="M105,446 L105,426 Q105,412 119,412 L421,412 Q435,412 435,426 L435,446 Z" fill="#f1f6ec"/><text x="270.0" y="435" text-anchor="middle" class="cardTitle">City/Person</text>
+<text x="125" y="466" class="detail">Long examples</text>
+</g>
+<g data-card="IdTable&lt;ID&gt;"><rect x="131" y="524" width="330" height="82" rx="14" fill="#fff" stroke="#a66a3f" class="card"/><path class="header" d="M131,558 L131,538 Q131,524 145,524 L447,524 Q461,524 461,538 L461,558 Z" fill="#f5eee4"/><text x="296.0" y="547" text-anchor="middle" class="cardTitle">IdTable&lt;ID&gt;</text>
+<text x="151" y="578" class="detail">id: Column&lt;EntityID&lt;ID&gt;&gt;</text>
+</g>
+<g data-card="LongIdTable"><rect x="105" y="636" width="330" height="82" rx="14" fill="#fff" stroke="#4f8f8b" class="card"/><path class="header" d="M105,670 L105,650 Q105,636 119,636 L421,636 Q435,636 435,650 L435,670 Z" fill="#eef7f6"/><text x="270.0" y="659" text-anchor="middle" class="cardTitle">LongIdTable</text>
+<text x="125" y="690" class="detail">long id</text>
+</g>
+<rect x="520" y="130" width="400" height="660" rx="18" class="lane"/><text x="720.0" y="158" text-anchor="middle" class="laneTitle">Implementations</text>
+<g data-card="IntEntity"><rect x="555" y="206" width="330" height="82" rx="14" fill="#fff" stroke="#8a6f55" class="card"/><path class="header" d="M555,240 L555,220 Q555,206 569,206 L871,206 Q885,206 885,220 L885,240 Z" fill="#f3eee8"/><text x="720.0" y="229" text-anchor="middle" class="cardTitle">IntEntity</text>
+<text x="575" y="260" class="detail">EntityID&lt;Int&gt;</text>
+</g>
+<g data-card="CompositeEntity"><rect x="581" y="318" width="330" height="82" rx="14" fill="#fff" stroke="#6f8f52" class="card"/><path class="header" d="M581,352 L581,332 Q581,318 595,318 L897,318 Q911,318 911,332 L911,352 Z" fill="#f1f6ec"/><text x="746.0" y="341" text-anchor="middle" class="cardTitle">CompositeEntity</text>
+<text x="601" y="372" class="detail">CompositeID</text>
+</g>
+<g data-card="UUID Person"><rect x="555" y="430" width="330" height="82" rx="14" fill="#fff" stroke="#a66a3f" class="card"/><path class="header" d="M555,464 L555,444 Q555,430 569,430 L871,430 Q885,430 885,444 L885,464 Z" fill="#f5eee4"/><text x="720.0" y="453" text-anchor="middle" class="cardTitle">UUID Person</text>
+<text x="575" y="484" class="detail">UUID example</text>
+</g>
+<g data-card="CompositeIdTable"><rect x="581" y="542" width="330" height="82" rx="14" fill="#fff" stroke="#4f8f8b" class="card"/><path class="header" d="M581,576 L581,556 Q581,542 595,542 L897,542 Q911,542 911,556 L911,576 Z" fill="#eef7f6"/><text x="746.0" y="565" text-anchor="middle" class="cardTitle">CompositeIdTable</text>
+<text x="601" y="596" class="detail">addIdColumn</text>
+<text x="601" y="611" class="detail">entityId</text>
+</g>
+<g data-card="UUIDTable"><rect x="555" y="654" width="330" height="82" rx="14" fill="#fff" stroke="#a85f7f" class="card"/><path class="header" d="M555,688 L555,668 Q555,654 569,654 L871,654 Q885,654 885,668 L885,688 Z" fill="#f5eef2"/><text x="720.0" y="677" text-anchor="middle" class="cardTitle">UUIDTable</text>
+<text x="575" y="708" class="detail">uuid id</text>
+</g>
+<rect x="970" y="130" width="400" height="660" rx="18" class="lane"/><text x="1170.0" y="158" text-anchor="middle" class="laneTitle">Support / Tests</text>
+<g data-card="LongEntity"><rect x="1005" y="188" width="330" height="82" rx="14" fill="#fff" stroke="#6f8f52" class="card"/><path class="header" d="M1005,222 L1005,202 Q1005,188 1019,188 L1321,188 Q1335,188 1335,202 L1335,222 Z" fill="#f1f6ec"/><text x="1170.0" y="211" text-anchor="middle" class="cardTitle">LongEntity</text>
+<text x="1025" y="242" class="detail">EntityID&lt;Long&gt;</text>
+</g>
+<g data-card="XEntity/TestEntity"><rect x="1031" y="300" width="330" height="82" rx="14" fill="#fff" stroke="#a66a3f" class="card"/><path class="header" d="M1031,334 L1031,314 Q1031,300 1045,300 L1347,300 Q1361,300 1361,314 L1361,334 Z" fill="#f5eee4"/><text x="1196.0" y="323" text-anchor="middle" class="cardTitle">XEntity/TestEntity</text>
+<text x="1051" y="354" class="detail">Int examples</text>
+</g>
+<g data-card="Table"><rect x="1005" y="412" width="330" height="82" rx="14" fill="#fff" stroke="#4f8f8b" class="card"/><path class="header" d="M1005,446 L1005,426 Q1005,412 1019,412 L1321,412 Q1335,412 1335,426 L1335,446 Z" fill="#eef7f6"/><text x="1170.0" y="435" text-anchor="middle" class="cardTitle">Table</text>
+<text x="1025" y="466" class="detail">columns</text>
+<text x="1025" y="481" class="detail">primaryKey</text>
+</g>
+<g data-card="IntIdTable"><rect x="1031" y="524" width="330" height="82" rx="14" fill="#fff" stroke="#a85f7f" class="card"/><path class="header" d="M1031,558 L1031,538 Q1031,524 1045,524 L1347,524 Q1361,524 1361,538 L1361,558 Z" fill="#f5eef2"/><text x="1196.0" y="547" text-anchor="middle" class="cardTitle">IntIdTable</text>
+<text x="1051" y="578" class="detail">serial id</text>
+</g>
+<rect x="140" y="825" width="1160" height="38" rx="12" class="noteBox"/><text x="720" y="850" text-anchor="middle" class="note">Grouped class view: no hidden grid wiring; relation-bearing schema detail is shown in the paired ERD/sequence diagrams.</text>
 </svg>

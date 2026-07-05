@@ -18,6 +18,9 @@
 .lifeline{stroke:#cbd5e1;stroke-width:1.5;stroke-dasharray:5 6}
 .inherit{fill:none;stroke:#475569;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
 .inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
+
+  .cardinalityBox{fill:#ffffff;stroke:#94a3b8;stroke-width:1;rx:7;opacity:.94}
+  .cardinalityLabel{font-family:"Comic Mono", "SFMono-Regular", monospace;font-size:14px;font-weight:700;fill:#334155}
 </style>
 </defs>
 <rect width="1260" height="820" class="canvas"/>
@@ -65,4 +68,7 @@
 <text x="1035" y="436" class="tiny" text-anchor="middle">groupBy / sum / avg examples</text>
 <rect x="120" y="744" width="1028" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="634" y="775" class="detail" text-anchor="middle">ERD check: FK arrows point from child tables to parent tables; Sales and SomeAmounts are standalone aggregation fixtures.</text>
+
+<g class="cardinality" data-cardinality="1 : N"><rect class="cardinalityBox" x="236.0" y="330.0" width="74" height="22"/><text class="cardinalityLabel" x="273.0" y="346.0" text-anchor="middle">1 : N</text></g>
+<g class="cardinality" data-cardinality="1 : N"><rect class="cardinalityBox" x="435.0" y="447.0" width="74" height="22"/><text class="cardinalityLabel" x="472.0" y="463.0" text-anchor="middle">1 : N</text></g>
 </svg>

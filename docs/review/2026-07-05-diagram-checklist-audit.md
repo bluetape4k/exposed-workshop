@@ -277,3 +277,27 @@ Fixes applied in this pass:
 - Added reader-facing `No FK relationship` notes to independent-table ERDs so ERDs express relationship state even when there is no FK edge.
 - Removed the `11-high-performance-04-benchmark-erd-01.svg` decorative dashed line because it crossed table cards and confused the relationship reading.
 - Rerouted architecture connectors found by the broad endpoint/geometry pass so connector endpoints are orthogonal and avoid card interiors.
+
+## 2026-07-05 grid-layout rebuild and sequence palette pass
+
+Scope: reviewer-requested full repair for ERD/Class grid layouts and Sequence best-practices palette/style across the current PR branch.
+
+| Gate | Evidence | Result |
+| --- | --- | --- |
+| Grid ERD rebuild | Regenerated `07-jpa-01-convert-jpa-basic-erd-02..05`, `07-jpa-02-convert-jpa-advanced-erd-02..05`, repository coroutine ERDs, and multitenant ERDs; each SVG rerendered with `~/.local/bin/cairosvg -s 2` | PASS |
+| ERD cardinality | `python3 /tmp/erd_cardinality_audit3.py .../exposed-workshop/.worktrees/docs-diagram-checklist-audit` | PASS, `total=32 fail=0` |
+| ERD label placement | `python3 /tmp/erd_label_bounds_audit.py .../exposed-workshop/.worktrees/docs-diagram-checklist-audit` | PASS, `labels=18 fail=0` |
+| Class grid rebuild | Regenerated 22 grid/connector-failing class diagrams into grouped class views with no hidden grid wiring or card-through connectors | PASS |
+| Class connector audit | `diagram-connector-audit.py $(grep 'class.*\.svg$' /tmp/diagram-scope.txt)` | PASS, `class_connector_failures=0` |
+| Sequence palette/style | Normalized all exposed-workshop sequence diagrams to the muted best-practices palette and rerendered PNGs | PASS |
+| Sequence style audit | `diagram-sequence-style-audit.py $(grep 'sequence.*\.svg$' /tmp/diagram-scope.txt)` | PASS, combined `sequence_files=54` |
+| Sequence connector audit | `diagram-connector-audit.py $(grep 'sequence.*\.svg$' /tmp/diagram-scope.txt)` | PASS, `seq_connector_failures=0` |
+| Full wrapper | `/tmp/run_diagram_audit_adjusted.sh .../exposed-workshop/.worktrees/docs-diagram-checklist-audit` | PASS, `adjusted_audit total=187 failures=0` |
+| Rendered visual inspection | Full-size PNGs opened: `07-jpa-02-convert-jpa-advanced-erd-05.png`, `09-spring-05-exposed-repository-coroutines-erd-01.png`, `07-jpa-01-convert-jpa-basic-erd-03.png`, `07-jpa-01-convert-jpa-basic-class-01.png`, `05-exposed-dml-04-transactions-sequence-02.png`; contact sheet `/tmp/diagram-final-contact-sheet.png` inspected | PASS |
+| Diff hygiene | `git diff --check` | PASS |
+
+Notes:
+
+- ERDs now show explicit `1 : N`, `1 : 1`, `0..1 : N`, or an explicit independent/no-FK note so the reader can distinguish relationships from sample tables.
+- The repository-coroutines Movie/Actor bridge is centered as a two-leg 1:N relation instead of a confusing N:M table placement.
+- Class assets that carried old grid/card-through wiring were rebuilt as grouped class views; relationship-bearing schema details are shown in the paired ERD/sequence assets.

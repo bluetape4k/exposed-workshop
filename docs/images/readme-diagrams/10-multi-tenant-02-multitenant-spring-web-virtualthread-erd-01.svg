@@ -1,53 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 670" width="980" height="670" role="img" aria-label="Exposed + Spring Web + Virtual Threads + Multi-Tenant (02)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 820" width="1320" height="820" role="img" aria-label="10-multi-tenant-02-multitenant-spring-web-virtualthread-erd-01">
   <defs>
-
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-
-
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12" /></filter>
+    <marker id="relArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
     <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
-</style>
+      .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}.panelSoft{fill:#fbfdff;stroke:#d7e2ec;stroke-width:1.2}.card{stroke-width:1.8;filter:url(#shadow)}.header{opacity:.96}
+      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:34px;fill:#1e293b}.subtitle{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:13px;fill:#536476}.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;letter-spacing:.08em;fill:#94a3b8}.smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}.tiny{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:11px;fill:#64748b}.noteText{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:12px;font-weight:700;fill:#475569}
+      .connector{fill:none;stroke:#64748b;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#relArrow)}.optional{fill:none;stroke:#64748b;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:7 6;marker-end:url(#relArrow)}.badgeBox{fill:#ffffff;stroke:#94a3b8;stroke-width:1.2;opacity:.97}.badgeText{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:14px;font-weight:800;fill:#334155}.noteBox{fill:#ecfdf5;stroke:#86efac;stroke-width:1.2}
+    </style>
   </defs>
-  <rect width="980" height="670" class="canvas"/>
-  <rect x="20" y="20" width="940" height="630" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Exposed + Spring Web + Virtual Threads + Multi-Tenant (02)</text>
-  <text x="48" y="80" class="subtitle">Source-derived ERD · Exposed table objects and column builders</text>
-<rect x="166" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M166,164 L166,138 Q166,126 178,126 L440,126 Q452,126 452,138 L452,164 Z" fill="#dbeafe"/>
-<text x="309" y="151" class="smallLabel" text-anchor="middle">Movie Table</text>
-<text x="184" y="188" class="tiny">id PK</text>
-<text x="184" y="203" class="tiny">name varchar</text>
-<text x="184" y="218" class="tiny">producer_name varchar</text>
-<text x="184" y="233" class="tiny">release_date date</text>
-<rect x="528" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M528,164 L528,138 Q528,126 540,126 L802,126 Q814,126 814,138 L814,164 Z" fill="#ede9fe"/>
-<text x="671" y="151" class="smallLabel" text-anchor="middle">Actor Table</text>
-<text x="546" y="188" class="tiny">id PK</text>
-<text x="546" y="203" class="tiny">first_name varchar</text>
-<text x="546" y="218" class="tiny">last_name varchar</text>
-<text x="546" y="233" class="tiny">birthday date</text>
-<rect x="166" y="338" width="286" height="154" rx="12" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M166,376 L166,350 Q166,338 178,338 L440,338 Q452,338 452,350 L452,376 Z" fill="#dcfce7"/>
-<text x="309" y="363" class="smallLabel" text-anchor="middle">Actor In Movie Table</text>
-<text x="184" y="400" class="tiny">movie_id FK</text>
-<text x="184" y="415" class="tiny">actor_id FK</text>
-<path d="M309,338 L309,309 L309,309 L309,280" class="softArrow"/>
-<path d="M309,338 L309,320.6 Q309,309 320.6,309 L659.4,309 Q671,309 671,297.4 L671,280" class="softArrow"/>
-<text x="490" y="110" class="panelTitle" text-anchor="middle">TABLES AND RELATIONSHIPS</text>
+<rect width="1320" height="820" class="canvas"/>
+<rect x="20" y="20" width="1280" height="780" rx="18" class="frame"/>
+<text x="56" y="68" class="title">10-multi-tenant-02-multitenant-spring-web-virtualthread-erd-01</text>
+<text x="56" y="94" class="subtitle">N:M relationship uses a centered bridge table; each FK leg is labeled 1:N.</text>
+<rect x="70" y="130" width="1180" height="520" rx="18" class="panel"/>
+<text x="660" y="158" class="panelTitle" text-anchor="middle">MOVIE / ACTOR N:M RELATIONSHIP</text>
+<path class="connector" d="M382 334 V420" data-connector="Movie to ActorInMovie movie_id"/>
+<g class="cardinality" data-cardinality="1 : N"><rect class="badgeBox" x="391" y="368" width="78" height="24" rx="8"/><text class="badgeText" x="430" y="386" text-anchor="middle">1 : N</text></g>
+<path class="connector" d="M938 334 V420" data-connector="Actor to ActorInMovie actor_id"/>
+<g class="cardinality" data-cardinality="1 : N"><rect class="badgeBox" x="851" y="368" width="78" height="24" rx="8"/><text class="badgeText" x="890" y="386" text-anchor="middle">1 : N</text></g>
+<g data-card="Movie Table">
+<rect x="190" y="190" width="360" height="144" rx="14" fill="#fff" stroke="#3b82f6" class="card"/>
+<path class="header" d="M190,234 L190,204 Q190,190 204,190 L536,190 Q550,190 550,204 L550,234 Z" fill="#dbeafe"/>
+<text x="370.0" y="219" class="smallLabel" text-anchor="middle">Movie Table</text>
+<text x="212" y="258" class="tiny">id PK</text>
+<text x="212" y="275" class="tiny">name varchar</text>
+<text x="212" y="292" class="tiny">producer_name varchar</text>
+<text x="212" y="309" class="tiny">release_date date</text>
+</g>
+<g data-card="Actor Table">
+<rect x="770" y="190" width="360" height="144" rx="14" fill="#fff" stroke="#7c3aed" class="card"/>
+<path class="header" d="M770,234 L770,204 Q770,190 784,190 L1116,190 Q1130,190 1130,204 L1130,234 Z" fill="#ede9fe"/>
+<text x="950.0" y="219" class="smallLabel" text-anchor="middle">Actor Table</text>
+<text x="792" y="258" class="tiny">id PK</text>
+<text x="792" y="275" class="tiny">first_name varchar</text>
+<text x="792" y="292" class="tiny">last_name varchar</text>
+<text x="792" y="309" class="tiny">birthday date</text>
+</g>
+<g data-card="Actor In Movie Table">
+<rect x="430" y="420" width="460" height="150" rx="14" fill="#fff" stroke="#16a34a" class="card"/>
+<path class="header" d="M430,464 L430,434 Q430,420 444,420 L876,420 Q890,420 890,434 L890,464 Z" fill="#dcfce7"/>
+<text x="660.0" y="449" class="smallLabel" text-anchor="middle">Actor In Movie Table</text>
+<text x="452" y="488" class="tiny">movie_id FK → Movie.id</text>
+<text x="452" y="505" class="tiny">actor_id FK → Actor.id</text>
+<text x="452" y="522" class="tiny">composite PK(movie_id, actor_id)</text>
+</g>
+<rect x="170" y="690" width="980" height="42" rx="12" class="noteBox"/><text x="660" y="716" class="noteText" text-anchor="middle">Movie and Actor are many-to-many through ActorInMovie; the bridge owns two independent 1:N FK legs.</text>
 </svg>

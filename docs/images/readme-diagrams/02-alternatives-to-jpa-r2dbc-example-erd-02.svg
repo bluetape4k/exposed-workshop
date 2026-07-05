@@ -2,13 +2,6 @@
 <defs>
 
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
-<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
-<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
-<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
@@ -17,19 +10,23 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-.softArrow{fill:none;stroke:#94a3b8;stroke-width:1.35;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-.fkArrow{fill:none;stroke:#0f766e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}
-.mapArrow{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.sessionUse{fill:none;stroke:#7c3aed;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
-.repoUse{fill:none;stroke:#2563eb;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.opsUse{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.clientUse{fill:none;stroke:#ea580c;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.converterUse{fill:none;stroke:#db2777;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
+.arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.softArrow{fill:none;stroke:#94a3b8;stroke-width:1.35;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
+.fkArrow{fill:none;stroke:#0f766e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mapArrow{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
+.sessionUse{fill:none;stroke:#7c3aed;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
+.repoUse{fill:none;stroke:#2563eb;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
+.opsUse{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
+.clientUse{fill:none;stroke:#ea580c;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
+.converterUse{fill:none;stroke:#db2777;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
 .lifeline{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
 .inherit{fill:none;stroke:#475569;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
 .assoc{fill:none;stroke:#0f766e;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+
+  .cardinalityBox{fill:#ffffff;stroke:#94a3b8;stroke-width:1;rx:7;opacity:.94}
+  .cardinalityLabel{font-family:"Comic Mono", "SFMono-Regular", monospace;font-size:14px;font-weight:700;fill:#334155}
+.erdRelation{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:7 6}
 </style>
 </defs>
 <rect width="1180" height="760" class="canvas"/>
@@ -50,7 +47,7 @@
 <text x="708" y="416" class="tiny">id SERIAL PK</text>
 <text x="708" y="433" class="tiny">content VARCHAR(255)</text>
 <text x="708" y="450" class="tiny">post_id BIGINT FK</text>
-<path d="M690,424 L604,424 Q596,424 596,416 L596,254 Q596,246 588,246 L490,246" class="fkArrow connector" data-connector="Comment postId to Post id"/>
+<path d="M690,424 L604,424 Q596,424 596,416 L596,254 Q596,246 588,246 L490,246" class="fkArrow erdRelation"/>
 <rect x="534" y="406" width="126" height="24" rx="8" fill="#fff" stroke="#99f6e4"/>
 <text x="597" y="423" class="tiny" text-anchor="middle">fk_post_id</text>
 <text x="502" y="238" class="tiny">1</text>
@@ -68,4 +65,6 @@
 <text x="799" y="654" class="label" text-anchor="middle">comments.post_id -&gt; posts.id</text>
 <rect x="132" y="694" width="910" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="587" y="724" class="detail" text-anchor="middle">The H2 schema mirrors posts/comments tables for tests; the PostgreSQL schema explicitly declares the foreign key.</text>
+
+<g class="cardinality" data-cardinality="1 : N"><rect class="cardinalityBox" x="559.0" y="297.0" width="74" height="22"/><text class="cardinalityLabel" x="596.0" y="313.0" text-anchor="middle">1 : N</text></g>
 </svg>

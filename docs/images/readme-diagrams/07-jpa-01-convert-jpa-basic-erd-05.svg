@@ -1,119 +1,78 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1102 960" width="1102" height="960" role="img" aria-label="07 JPA Migration: Basic Migration (01-convert-JPA-basic)">
-  <defs>
-
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-
-
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
-</style>
-  </defs>
-  <rect width="1102" height="960" class="canvas"/>
-  <rect x="20" y="20" width="1062" height="920" rx="16" class="frame"/>
-<text x="48" y="58" class="title">07 JPA Migration: Basic Migration (01-convert-JPA-basic)</text>
-  <text x="48" y="80" class="subtitle">Source-derived ERD · Exposed table objects and column builders</text>
-<rect x="46" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M46,164 L46,138 Q46,126 58,126 L320,126 Q332,126 332,138 L332,164 Z" fill="#dbeafe"/>
-<text x="189" y="151" class="smallLabel" text-anchor="middle">Simple Table</text>
-<text x="64" y="188" class="tiny">id PK</text>
-<text x="64" y="203" class="tiny">name varchar</text>
-<text x="64" y="218" class="tiny">description text</text>
-<rect x="408" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M408,164 L408,138 Q408,126 420,126 L682,126 Q694,126 694,138 L694,164 Z" fill="#ede9fe"/>
-<text x="551" y="151" class="smallLabel" text-anchor="middle">Post Table</text>
-<text x="426" y="188" class="tiny">id PK</text>
-<text x="426" y="203" class="tiny">title varchar</text>
-<rect x="770" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M770,164 L770,138 Q770,126 782,126 L1044,126 Q1056,126 1056,138 L1056,164 Z" fill="#dcfce7"/>
-<text x="913" y="151" class="smallLabel" text-anchor="middle">Post Detail Table</text>
-<text x="788" y="188" class="tiny">id PK</text>
-<text x="788" y="203" class="tiny">id FK</text>
-<text x="788" y="218" class="tiny">created_on date</text>
-<text x="788" y="233" class="tiny">created_by varchar</text>
-<rect x="46" y="338" width="286" height="154" rx="12" fill="#fff" stroke="#ea580c" class="card"/>
-<path d="M46,376 L46,350 Q46,338 58,338 L320,338 Q332,338 332,350 L332,376 Z" fill="#ffedd5"/>
-<text x="189" y="363" class="smallLabel" text-anchor="middle">Post Comment Table</text>
-<text x="64" y="400" class="tiny">id PK</text>
-<text x="64" y="415" class="tiny">post_id FK</text>
-<text x="64" y="430" class="tiny">review varchar</text>
-<rect x="408" y="338" width="286" height="154" rx="12" fill="#fff" stroke="#db2777" class="card"/>
-<path d="M408,376 L408,350 Q408,338 420,338 L682,338 Q694,338 694,350 L694,376 Z" fill="#fce7f3"/>
-<text x="551" y="363" class="smallLabel" text-anchor="middle">Tag Table</text>
-<text x="426" y="400" class="tiny">id PK</text>
-<text x="426" y="415" class="tiny">name varchar</text>
-<rect x="770" y="338" width="286" height="154" rx="12" fill="#fff" stroke="#0f766e" class="card"/>
-<path d="M770,376 L770,350 Q770,338 782,338 L1044,338 Q1056,338 1056,350 L1056,376 Z" fill="#ccfbf1"/>
-<text x="913" y="363" class="smallLabel" text-anchor="middle">Post Tag Table</text>
-<text x="788" y="400" class="tiny">id PK</text>
-<text x="788" y="415" class="tiny">post_id FK</text>
-<text x="788" y="430" class="tiny">tag_id FK</text>
-<rect x="46" y="550" width="286" height="154" rx="12" fill="#fff" stroke="#d97706" class="card"/>
-<path d="M46,588 L46,562 Q46,550 58,550 L320,550 Q332,550 332,562 L332,588 Z" fill="#fef3c7"/>
-<text x="189" y="575" class="smallLabel" text-anchor="middle">Task Table</text>
-<text x="64" y="612" class="tiny">id PK</text>
-<text x="64" y="627" class="tiny">status enumerationByName</text>
-<text x="64" y="642" class="tiny">changed_on date</text>
-<text x="64" y="657" class="tiny">changed_by varchar</text>
-<rect x="408" y="550" width="286" height="154" rx="12" fill="#fff" stroke="#64748b" class="card"/>
-<path d="M408,588 L408,562 Q408,550 420,550 L682,550 Q694,550 694,562 L694,588 Z" fill="#e2e8f0"/>
-<text x="551" y="575" class="smallLabel" text-anchor="middle">Address Table</text>
-<text x="426" y="612" class="tiny">id PK</text>
-<text x="426" y="627" class="tiny">street varchar</text>
-<text x="426" y="642" class="tiny">city varchar</text>
-<text x="426" y="657" class="tiny">state varchar</text>
-<text x="426" y="672" class="tiny">zip varchar</text>
-<rect x="770" y="550" width="286" height="154" rx="12" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M770,588 L770,562 Q770,550 782,550 L1044,550 Q1056,550 1056,562 L1056,588 Z" fill="#dbeafe"/>
-<text x="913" y="575" class="smallLabel" text-anchor="middle">Person Table</text>
-<text x="788" y="612" class="tiny">id PK</text>
-<text x="788" y="627" class="tiny">first_name varchar</text>
-<text x="788" y="642" class="tiny">last_name varchar</text>
-<text x="788" y="657" class="tiny">birth_date date</text>
-<text x="788" y="672" class="tiny">employed bool</text>
-<text x="788" y="687" class="tiny">occupation varchar</text>
-<rect x="46" y="762" width="286" height="154" rx="12" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M46,800 L46,774 Q46,762 58,762 L320,762 Q332,762 332,774 L332,800 Z" fill="#ede9fe"/>
-<text x="189" y="787" class="smallLabel" text-anchor="middle">Person Table DML</text>
-<text x="64" y="824" class="tiny">id PK</text>
-<text x="64" y="839" class="tiny">first_name varchar</text>
-<text x="64" y="854" class="tiny">last_name varchar</text>
-<text x="64" y="869" class="tiny">birth_date date</text>
-<text x="64" y="884" class="tiny">employed bool</text>
-<text x="64" y="899" class="tiny">occupation varchar</text>
-<rect x="408" y="762" width="286" height="154" rx="12" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M408,800 L408,774 Q408,762 420,762 L682,762 Q694,762 694,774 L694,800 Z" fill="#dcfce7"/>
-<text x="551" y="787" class="smallLabel" text-anchor="middle">Custom Id Table</text>
-<text x="426" y="824" class="tiny">id PK</text>
-<text x="426" y="839" class="tiny">email_id PK</text>
-<text x="426" y="854" class="tiny">name varchar</text>
-<text x="426" y="869" class="tiny">ssn ssn</text>
-<rect x="770" y="762" width="286" height="154" rx="12" fill="#fff" stroke="#ea580c" class="card"/>
-<path d="M770,800 L770,774 Q770,762 782,762 L1044,762 Q1056,762 1056,774 L1056,800 Z" fill="#ffedd5"/>
-<text x="913" y="787" class="smallLabel" text-anchor="middle">Publishers</text>
-<text x="788" y="824" class="tiny">id PK</text>
-<text x="788" y="839" class="tiny">pub_id PK</text>
-<text x="788" y="854" class="tiny">isbn_code javaUUID</text>
-<text x="788" y="869" class="tiny">publisher_name varchar</text>
-<path d="M1056,203 L1056,203 L408,203 L408,203" class="softArrow"/>
-<path d="M189,338 L189,320.6 Q189,309 200.6,309 L539.4,309 Q551,309 551,297.4 L551,280" class="softArrow"/>
-<path d="M913,338 L913,320.6 Q913,309 901.4,309 L562.6,309 Q551,309 551,297.4 L551,280" class="softArrow"/>
-<path d="M1056,415 L1056,415 L408,415 L408,415" class="softArrow"/>
-<path d="M1056,627 L1056,627 L408,627 L408,627" class="softArrow"/>
-<text x="551" y="110" class="panelTitle" text-anchor="middle">TABLES AND RELATIONSHIPS</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1240" width="1440" height="1240" role="img" aria-label="07 Jpa 01 Convert Jpa Basic Erd 05">
+<defs><filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12" /></filter><marker id="relArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><style>.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}.card{stroke-width:1.8;filter:url(#shadow)}.header{opacity:.96}.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:34px;fill:#1e293b}.subtitle{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:13px;fill:#536476}.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;letter-spacing:.08em;fill:#94a3b8}.smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}.tiny{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:11px;fill:#64748b}.connector{fill:none;stroke:#64748b;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#relArrow)}.badgeBox{fill:#fff;stroke:#94a3b8;stroke-width:1.2;opacity:.97}.badgeText{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:14px;font-weight:800;fill:#334155}.noteBox{fill:#ecfdf5;stroke:#86efac;stroke-width:1.2}.note{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:12px;font-weight:700;fill:#475569}</style></defs>
+<rect width="1440" height="1100" class="canvas"/><rect x="20" y="20" width="1400" height="1200" rx="18" class="frame"/>
+<text x="56" y="68" class="title">07 Jpa 01 Convert Jpa Basic Erd 05</text><text x="56" y="94" class="subtitle">Relationship tables are grouped by domain; unrelated demo tables are separated from FK relationships.</text>
+<rect x="56" y="130" width="1328" height="680" rx="18" class="panel"/><text x="720" y="160" class="panelTitle" text-anchor="middle">BLOG AND PERSON RELATIONSHIPS</text>
+<path class="connector" d="M650 250 H740"/>
+<g class="cardinality" data-cardinality="1 : 1"><rect class="badgeBox" x="656" y="216" width="78" height="24" rx="8"/><text class="badgeText" x="695" y="234" text-anchor="middle">1 : 1</text></g>
+<path class="connector" d="M450 320 V380 Q450 392 438 392 H230 Q218 392 218 404 V420"/>
+<g class="cardinality" data-cardinality="1 : N"><rect class="badgeBox" x="341" y="356" width="78" height="24" rx="8"/><text class="badgeText" x="380" y="374" text-anchor="middle">1 : N</text></g>
+<path class="connector" d="M540 320 V420"/>
+<g class="cardinality" data-cardinality="1 : N"><rect class="badgeBox" x="549" y="356" width="78" height="24" rx="8"/><text class="badgeText" x="588" y="374" text-anchor="middle">1 : N</text></g>
+<path class="connector" d="M1040 500 H820"/>
+<g class="cardinality" data-cardinality="1 : N"><rect class="badgeBox" x="891" y="466" width="78" height="24" rx="8"/><text class="badgeText" x="930" y="484" text-anchor="middle">1 : N</text></g>
+<path class="connector" d="M338 652 H432"/>
+<g class="cardinality" data-cardinality="1 : N"><rect class="badgeBox" x="346" y="618" width="78" height="24" rx="8"/><text class="badgeText" x="385" y="626" text-anchor="middle">1 : N</text></g>
+<g data-card="Post Table"><rect x="370" y="200" width="280" height="120" rx="14" fill="#fff" stroke="#8a6f55" class="card"/><path class="header" d="M370,244 L370,214 Q370,200 384,200 L636,200 Q650,200 650,214 L650,244 Z" fill="#f3eee8"/><text x="510.0" y="229" text-anchor="middle" class="smallLabel">Post Table</text>
+<text x="392" y="268" class="tiny">id PK</text>
+<text x="392" y="285" class="tiny">title varchar</text>
+</g>
+<g data-card="Post Detail Table"><rect x="740" y="200" width="280" height="120" rx="14" fill="#fff" stroke="#6f8f52" class="card"/><path class="header" d="M740,244 L740,214 Q740,200 754,200 L1006,200 Q1020,200 1020,214 L1020,244 Z" fill="#f1f6ec"/><text x="880.0" y="229" text-anchor="middle" class="smallLabel">Post Detail Table</text>
+<text x="762" y="268" class="tiny">id PK/FK → Post.id</text>
+<text x="762" y="285" class="tiny">created_on date</text>
+<text x="762" y="302" class="tiny">created_by varchar</text>
+</g>
+<g data-card="Post Comment Table"><rect x="90" y="420" width="280" height="136" rx="14" fill="#fff" stroke="#a66a3f" class="card"/><path class="header" d="M90,464 L90,434 Q90,420 104,420 L356,420 Q370,420 370,434 L370,464 Z" fill="#f5eee4"/><text x="230.0" y="449" text-anchor="middle" class="smallLabel">Post Comment Table</text>
+<text x="112" y="488" class="tiny">id PK</text>
+<text x="112" y="505" class="tiny">post_id FK → Post.id</text>
+<text x="112" y="522" class="tiny">review varchar</text>
+</g>
+<g data-card="Post Tag Table"><rect x="450" y="420" width="280" height="136" rx="14" fill="#fff" stroke="#4f8f8b" class="card"/><path class="header" d="M450,464 L450,434 Q450,420 464,420 L716,420 Q730,420 730,434 L730,464 Z" fill="#eef7f6"/><text x="590.0" y="449" text-anchor="middle" class="smallLabel">Post Tag Table</text>
+<text x="472" y="488" class="tiny">id PK</text>
+<text x="472" y="505" class="tiny">post_id FK → Post.id</text>
+<text x="472" y="522" class="tiny">tag_id FK → Tag.id</text>
+</g>
+<g data-card="Tag Table"><rect x="1040" y="420" width="260" height="120" rx="14" fill="#fff" stroke="#a85f7f" class="card"/><path class="header" d="M1040,464 L1040,434 Q1040,420 1054,420 L1286,420 Q1300,420 1300,434 L1300,464 Z" fill="#f5eef2"/><text x="1170.0" y="449" text-anchor="middle" class="smallLabel">Tag Table</text>
+<text x="1062" y="488" class="tiny">id PK</text>
+<text x="1062" y="505" class="tiny">name varchar</text>
+</g>
+<g data-card="Address Table"><rect x="88" y="600" width="250" height="150" rx="14" fill="#fff" stroke="#64748b" class="card"/><path class="header" d="M88,644 L88,614 Q88,600 102,600 L324,600 Q338,600 338,614 L338,644 Z" fill="#f8fafc"/><text x="213.0" y="629" text-anchor="middle" class="smallLabel">Address Table</text>
+<text x="110" y="668" class="tiny">id PK</text>
+<text x="110" y="685" class="tiny">street varchar</text>
+<text x="110" y="702" class="tiny">city varchar</text>
+<text x="110" y="719" class="tiny">state varchar</text>
+<text x="110" y="736" class="tiny">zip varchar</text>
+</g>
+<g data-card="Person Table"><rect x="432" y="600" width="280" height="150" rx="14" fill="#fff" stroke="#4f86c6" class="card"/><path class="header" d="M432,644 L432,614 Q432,600 446,600 L698,600 Q712,600 712,614 L712,644 Z" fill="#eef5fa"/><text x="572.0" y="629" text-anchor="middle" class="smallLabel">Person Table</text>
+<text x="454" y="668" class="tiny">id PK</text>
+<text x="454" y="685" class="tiny">first_name varchar</text>
+<text x="454" y="702" class="tiny">last_name varchar</text>
+<text x="454" y="719" class="tiny">birth_date date</text>
+<text x="454" y="736" class="tiny">address_id FK</text>
+</g>
+<rect x="56" y="840" width="1328" height="250" rx="18" class="panel"/>
+<g data-card="Simple Table"><rect x="110" y="910" width="250" height="150" rx="14" fill="#fff" stroke="#4f86c6" class="card"/><path class="header" d="M110,874 L110,844 Q110,830 124,830 L346,830 Q360,830 360,844 L360,874 Z" fill="#eef5fa"/><text x="235.0" y="859" text-anchor="middle" class="smallLabel">Simple Table</text>
+<text x="132" y="978" class="tiny">id PK</text>
+<text x="132" y="995" class="tiny">name varchar</text>
+<text x="132" y="1012" class="tiny">description text</text>
+</g>
+<g data-card="Task Table"><rect x="420" y="910" width="250" height="150" rx="14" fill="#fff" stroke="#a66a3f" class="card"/><path class="header" d="M420,874 L420,844 Q420,830 434,830 L656,830 Q670,830 670,844 L670,874 Z" fill="#f5eee4"/><text x="545.0" y="859" text-anchor="middle" class="smallLabel">Task Table</text>
+<text x="442" y="978" class="tiny">id PK</text>
+<text x="442" y="995" class="tiny">status enum</text>
+<text x="442" y="1012" class="tiny">changed_on date</text>
+<text x="442" y="1029" class="tiny">changed_by varchar</text>
+</g>
+<g data-card="Custom Id Table"><rect x="730" y="910" width="250" height="150" rx="14" fill="#fff" stroke="#6f8f52" class="card"/><path class="header" d="M730,874 L730,844 Q730,830 744,830 L966,830 Q980,830 980,844 L980,874 Z" fill="#f1f6ec"/><text x="855.0" y="859" text-anchor="middle" class="smallLabel">Custom Id Table</text>
+<text x="752" y="978" class="tiny">id PK</text>
+<text x="752" y="995" class="tiny">email_id PK</text>
+<text x="752" y="1012" class="tiny">name varchar</text>
+<text x="752" y="1029" class="tiny">ssn ssn</text>
+</g>
+<g data-card="Publishers"><rect x="1040" y="910" width="250" height="150" rx="14" fill="#fff" stroke="#a66a3f" class="card"/><path class="header" d="M1040,874 L1040,844 Q1040,830 1054,830 L1276,830 Q1290,830 1290,844 L1290,874 Z" fill="#f5eee4"/><text x="1165.0" y="859" text-anchor="middle" class="smallLabel">Publishers</text>
+<text x="1062" y="978" class="tiny">id PK</text>
+<text x="1062" y="995" class="tiny">pub_id PK</text>
+<text x="1062" y="1012" class="tiny">isbn_code javaUUID</text>
+<text x="1062" y="1029" class="tiny">publisher_name varchar</text>
+</g>
+<rect x="160" y="1140" width="1120" height="36" rx="12" class="noteBox"/><text x="720" y="1163" text-anchor="middle" class="note">PostTag makes Post↔Tag N:M explicit as two 1:N FK legs; lower cards are independent examples, not hidden relations.</text>
 </svg>

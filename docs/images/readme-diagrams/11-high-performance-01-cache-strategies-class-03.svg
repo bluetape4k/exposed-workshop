@@ -1,86 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 890" width="1220" height="890" role="img" aria-label="Cache Strategies (01-cache-strategies)">
-  <defs>
-
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-
-
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow-arrow-18046f);}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
-</style>
-
-    <marker id="arrow-arrow-18046f" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-  </defs>
-  <rect width="1220" height="890" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="850" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Cache Strategies (01-cache-strategies)</text>
-  <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="120" width="1128" height="130" rx="12" class="panel"/>
-  <text x="610" y="114" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="74" y="146" width="357" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="252.5" y="175" class="smallLabel" text-anchor="middle">Long Id Table</text>
-<text x="252.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="459" y="146" width="357" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="637.5" y="175" class="smallLabel" text-anchor="middle">Entity ID</text>
-<text x="637.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="844" y="146" width="357" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="1022.5" y="175" class="smallLabel" text-anchor="middle">Timebased UUIDBase62Table</text>
-<text x="1022.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="46" y="302" width="1128" height="474" rx="12" class="panel"/>
-  <text x="610" y="296" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="74" y="328" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="234" y="357" class="smallLabel" text-anchor="middle">User Table</text>
-<text x="234" y="396" class="detail" text-anchor="middle">table/model</text>
-<rect x="440" y="328" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="600" y="357" class="smallLabel" text-anchor="middle">User Event Table</text>
-<text x="600" y="396" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="328" width="320" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="966" y="357" class="smallLabel" text-anchor="middle">User Entity</text>
-<text x="966" y="396" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="436" width="320" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="234" y="465" class="smallLabel" text-anchor="middle">User Credentials Entity</text>
-<text x="234" y="504" class="detail" text-anchor="middle">table/model</text>
-<rect x="440" y="436" width="320" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="600" y="465" class="smallLabel" text-anchor="middle">User Event Entity</text>
-<text x="600" y="504" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="436" width="320" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="966" y="465" class="smallLabel" text-anchor="middle">User Credentials Table</text>
-<text x="966" y="504" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="544" width="320" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="234" y="573" class="smallLabel" text-anchor="middle">Cache Strategy Application</text>
-<text x="234" y="612" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="440" y="544" width="320" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="600" y="573" class="smallLabel" text-anchor="middle">Exposed Config</text>
-<text x="600" y="612" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="806" y="544" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="966" y="573" class="smallLabel" text-anchor="middle">Redisson Config</text>
-<text x="966" y="612" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="74" y="652" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="234" y="681" class="smallLabel" text-anchor="middle">Tomcat Virtual Thread Config</text>
-<text x="234" y="720" class="detail" text-anchor="middle">infrastructure</text>
-<path d="M234,328 L234,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M966,328 L966,282 L637.5,282 L637.5,224" class="inherit"/>
-<path d="M966,436 L966,282 L1022.5,282 L1022.5,224" class="inherit"/>
-<path d="M234,436 L234,282 L637.5,282 L637.5,224" class="inherit"/>
-<path d="M600,328 L600,282 L252.5,282 L252.5,224" class="inherit"/>
-<path d="M600,436 L600,282 L637.5,282 L637.5,224" class="inherit"/>
-<rect x="46" y="816" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="610" y="843" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 940" width="1440" height="940" role="img" aria-label="Cache Strategies (01-cache-strategies) class diagram">
+<defs><filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12" /></filter><style>.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}.lane{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}.card{stroke-width:1.8;filter:url(#shadow)}.header{opacity:.96}.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:33px;fill:#1e293b}.subtitle{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:13px;fill:#536476}.laneTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;letter-spacing:.08em;fill:#8ca2b4}.cardTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}.detail{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:11px;fill:#64748b}.note{font-family:"Comic Mono","SFMono-Regular",monospace;font-size:12px;font-weight:700;fill:#475569}.noteBox{fill:#ecfdf5;stroke:#86efac;stroke-width:1.2}</style></defs>
+<rect width="1440" height="820" class="canvas"/><rect x="20" y="20" width="1400" height="900" rx="18" class="frame"/>
+<text x="56" y="68" class="title">Cache Strategies (01-cache-strategies)</text><text x="56" y="94" class="subtitle">Rebuilt from source-derived cards as grouped class catalog; old grid layout and card-through connectors removed.</text>
+<rect x="70" y="130" width="400" height="660" rx="18" class="lane"/><text x="270.0" y="158" text-anchor="middle" class="laneTitle">Contracts / APIs</text>
+<g data-card="Long Id Table"><rect x="105" y="188" width="330" height="82" rx="14" fill="#fff" stroke="#4f86c6" class="card"/><path class="header" d="M105,222 L105,202 Q105,188 119,188 L421,188 Q435,188 435,202 L435,222 Z" fill="#eef5fa"/><text x="270.0" y="211" text-anchor="middle" class="cardTitle">Long Id Table</text>
+<text x="125" y="242" class="detail">table/model</text>
+</g>
+<g data-card="User Table"><rect x="131" y="300" width="330" height="82" rx="14" fill="#fff" stroke="#8a6f55" class="card"/><path class="header" d="M131,334 L131,314 Q131,300 145,300 L447,300 Q461,300 461,314 L461,334 Z" fill="#f3eee8"/><text x="296.0" y="323" text-anchor="middle" class="cardTitle">User Table</text>
+<text x="151" y="354" class="detail">table/model</text>
+</g>
+<g data-card="User Credentials Entity"><rect x="105" y="412" width="330" height="82" rx="14" fill="#fff" stroke="#6f8f52" class="card"/><path class="header" d="M105,446 L105,426 Q105,412 119,412 L421,412 Q435,412 435,426 L435,446 Z" fill="#f1f6ec"/><text x="270.0" y="435" text-anchor="middle" class="cardTitle">User Credentials Entity</text>
+<text x="125" y="466" class="detail">table/model</text>
+</g>
+<g data-card="Cache Strategy Application"><rect x="131" y="524" width="330" height="82" rx="14" fill="#fff" stroke="#a66a3f" class="card"/><path class="header" d="M131,558 L131,538 Q131,524 145,524 L447,524 Q461,524 461,538 L461,558 Z" fill="#f5eee4"/><text x="296.0" y="547" text-anchor="middle" class="cardTitle">Cache Strategy Application</text>
+<text x="151" y="578" class="detail">infrastructure</text>
+</g>
+<g data-card="Tomcat Virtual Thread Config"><rect x="105" y="636" width="330" height="82" rx="14" fill="#fff" stroke="#4f8f8b" class="card"/><path class="header" d="M105,670 L105,650 Q105,636 119,636 L421,636 Q435,636 435,650 L435,670 Z" fill="#eef7f6"/><text x="270.0" y="659" text-anchor="middle" class="cardTitle">Tomcat Virtual Thread Config</text>
+<text x="125" y="690" class="detail">infrastructure</text>
+</g>
+<rect x="520" y="130" width="400" height="660" rx="18" class="lane"/><text x="720.0" y="158" text-anchor="middle" class="laneTitle">Implementations</text>
+<g data-card="Entity ID"><rect x="555" y="206" width="330" height="82" rx="14" fill="#fff" stroke="#8a6f55" class="card"/><path class="header" d="M555,240 L555,220 Q555,206 569,206 L871,206 Q885,206 885,220 L885,240 Z" fill="#f3eee8"/><text x="720.0" y="229" text-anchor="middle" class="cardTitle">Entity ID</text>
+<text x="575" y="260" class="detail">table/model</text>
+</g>
+<g data-card="User Event Table"><rect x="581" y="318" width="330" height="82" rx="14" fill="#fff" stroke="#6f8f52" class="card"/><path class="header" d="M581,352 L581,332 Q581,318 595,318 L897,318 Q911,318 911,332 L911,352 Z" fill="#f1f6ec"/><text x="746.0" y="341" text-anchor="middle" class="cardTitle">User Event Table</text>
+<text x="601" y="372" class="detail">table/model</text>
+</g>
+<g data-card="User Event Entity"><rect x="555" y="430" width="330" height="82" rx="14" fill="#fff" stroke="#a66a3f" class="card"/><path class="header" d="M555,464 L555,444 Q555,430 569,430 L871,430 Q885,430 885,444 L885,464 Z" fill="#f5eee4"/><text x="720.0" y="453" text-anchor="middle" class="cardTitle">User Event Entity</text>
+<text x="575" y="484" class="detail">table/model</text>
+</g>
+<g data-card="Exposed Config"><rect x="581" y="542" width="330" height="82" rx="14" fill="#fff" stroke="#4f8f8b" class="card"/><path class="header" d="M581,576 L581,556 Q581,542 595,542 L897,542 Q911,542 911,556 L911,576 Z" fill="#eef7f6"/><text x="746.0" y="565" text-anchor="middle" class="cardTitle">Exposed Config</text>
+<text x="601" y="596" class="detail">infrastructure</text>
+</g>
+<rect x="970" y="130" width="400" height="660" rx="18" class="lane"/><text x="1170.0" y="158" text-anchor="middle" class="laneTitle">Support / Tests</text>
+<g data-card="Timebased UUIDBase62Table"><rect x="1005" y="188" width="330" height="82" rx="14" fill="#fff" stroke="#6f8f52" class="card"/><path class="header" d="M1005,222 L1005,202 Q1005,188 1019,188 L1321,188 Q1335,188 1335,202 L1335,222 Z" fill="#f1f6ec"/><text x="1170.0" y="211" text-anchor="middle" class="cardTitle">Timebased UUIDBase62Table</text>
+<text x="1025" y="242" class="detail">table/model</text>
+</g>
+<g data-card="User Entity"><rect x="1031" y="300" width="330" height="82" rx="14" fill="#fff" stroke="#a66a3f" class="card"/><path class="header" d="M1031,334 L1031,314 Q1031,300 1045,300 L1347,300 Q1361,300 1361,314 L1361,334 Z" fill="#f5eee4"/><text x="1196.0" y="323" text-anchor="middle" class="cardTitle">User Entity</text>
+<text x="1051" y="354" class="detail">table/model</text>
+</g>
+<g data-card="User Credentials Table"><rect x="1005" y="412" width="330" height="82" rx="14" fill="#fff" stroke="#4f8f8b" class="card"/><path class="header" d="M1005,446 L1005,426 Q1005,412 1019,412 L1321,412 Q1335,412 1335,426 L1335,446 Z" fill="#eef7f6"/><text x="1170.0" y="435" text-anchor="middle" class="cardTitle">User Credentials Table</text>
+<text x="1025" y="466" class="detail">table/model</text>
+</g>
+<g data-card="Redisson Config"><rect x="1031" y="524" width="330" height="82" rx="14" fill="#fff" stroke="#a85f7f" class="card"/><path class="header" d="M1031,558 L1031,538 Q1031,524 1045,524 L1347,524 Q1361,524 1361,538 L1361,558 Z" fill="#f5eef2"/><text x="1196.0" y="547" text-anchor="middle" class="cardTitle">Redisson Config</text>
+<text x="1051" y="578" class="detail">infrastructure</text>
+</g>
+<rect x="140" y="825" width="1160" height="38" rx="12" class="noteBox"/><text x="720" y="850" text-anchor="middle" class="note">Grouped class view: no hidden grid wiring; relation-bearing schema detail is shown in the paired ERD/sequence diagrams.</text>
 </svg>

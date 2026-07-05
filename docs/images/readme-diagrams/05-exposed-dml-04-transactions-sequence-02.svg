@@ -3,10 +3,10 @@
 
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
 <marker viewBox="0 0 10 10" id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b"/></marker>
-<marker viewBox="0 0 10 10" id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb"/></marker>
-<marker viewBox="0 0 10 10" id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed"/></marker>
-<marker viewBox="0 0 10 10" id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c"/></marker>
-<marker viewBox="0 0 10 10" id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777"/></marker>
+<marker viewBox="0 0 10 10" id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6"/></marker>
+<marker viewBox="0 0 10 10" id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#8a6f55"/></marker>
+<marker viewBox="0 0 10 10" id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b5f38"/></marker>
+<marker viewBox="0 0 10 10" id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#a85f7f"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,14 +14,14 @@
 .subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .num{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;font-weight:700;fill:#334155}
-.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#8ca2b4}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.savepoint{fill:none;stroke:#db2777;stroke-width:1.9;stroke-dasharray:7 4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
+.arrow{fill:none;stroke:#4f86c6;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.runtimeUse{fill:none;stroke:#8a6f55;stroke-width:1.9;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.dbUse{fill:none;stroke:#9b5f38;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.savepoint{fill:none;stroke:#a85f7f;stroke-width:1.9;stroke-dasharray:7 4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
 .returnLine{fill:none;stroke:#64748b;stroke-width:1.8;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-.activation{fill:#e0f2fe;stroke:#93c5fd;stroke-width:1;opacity:.7}
+.activation{fill:#e0f2fe;stroke:#bdd4e8;stroke-width:1;opacity:.7}
 .lifeline{stroke:#cbd5e1;stroke-width:1.5;stroke-dasharray:5 6}
 </style>
 </defs>
@@ -29,26 +29,26 @@
 <rect x="20" y="20" width="1460" height="840" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Exposed Coroutine Transaction Flow</text>
 <text x="48" y="80" class="subtitle">Coroutine tests choose current savepoint or new suspended transaction, then return to the outer transaction context</text>
-<rect x="26" y="128" width="164" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<rect x="26" y="128" width="164" height="54" rx="10" fill="#eef5fa" stroke="#4f86c6" class="card"/>
 <text x="108" y="161" class="label participant" text-anchor="middle">Test</text>
 <path d="M108,182 L108,730" class="lifeline"/>
 <rect x="102" y="212" width="12" height="120" rx="4" class="activation"/>
-<rect x="242" y="128" width="164" height="54" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<rect x="242" y="128" width="164" height="54" rx="10" fill="#f3eee8" stroke="#8a6f55" class="card"/>
 <text x="324" y="161" class="label participant" text-anchor="middle">withTablesSuspending</text>
 <path d="M324,182 L324,730" class="lifeline"/>
 <rect x="318" y="212" width="12" height="120" rx="4" class="activation"/>
-<rect x="466" y="128" width="164" height="54" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<rect x="466" y="128" width="164" height="54" rx="10" fill="#f1f6ec" stroke="#5f7f3f" class="card"/>
 <text x="548" y="161" class="label participant" text-anchor="middle">TransactionManager</text>
 <path d="M548,182 L548,730" class="lifeline"/>
 <rect x="542" y="212" width="12" height="120" rx="4" class="activation"/>
-<rect x="704" y="128" width="164" height="54" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<rect x="704" y="128" width="164" height="54" rx="10" fill="#f5eee4" stroke="#9b5f38" class="card"/>
 <text x="786" y="161" class="label participant" text-anchor="middle">Savepoint helper</text>
 <path d="M786,182 L786,730" class="lifeline"/>
 <rect x="780" y="212" width="12" height="120" rx="4" class="activation"/>
-<rect x="946" y="128" width="164" height="54" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<rect x="946" y="128" width="164" height="54" rx="10" fill="#f5eef2" stroke="#a85f7f" class="card"/>
 <text x="1028" y="161" class="label participant" text-anchor="middle">H2 Cities</text>
 <path d="M1028,182 L1028,730" class="lifeline"/>
-<rect x="1184" y="128" width="164" height="54" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<rect x="1184" y="128" width="164" height="54" rx="10" fill="#eef7f6" stroke="#4f8f8b" class="card"/>
 <text x="1266" y="161" class="label participant" text-anchor="middle">Assertions</text>
 <path d="M1266,182 L1266,730" class="lifeline"/>
 <path d="M108,230 L324,230" class="arrow"/>
@@ -86,6 +86,6 @@
 <path d="M548,704 L108,704" class="returnLine"/>
 <rect x="224" y="676" width="208" height="22" rx="7" fill="#fff" stroke="#cbd5e1"/>
 <text x="328" y="691" class="tiny" text-anchor="middle">fallback: newSuspendedTransaction</text>
-<rect x="116" y="774" width="1268" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<rect x="116" y="774" width="1268" height="52" rx="10" fill="#ecfdf5" stroke="#b7cf9e" stroke-width="1.3"/>
 <text x="750" y="805" class="detail" text-anchor="middle">Sequence check: return paths are dashed; helper chooses runWithSavepoint when a TransactionManager context exists, otherwise starts newSuspendedTransaction.</text>
 </svg>
