@@ -81,10 +81,10 @@
 <g data-bluetape4k-icon="generic/database-server" transform="translate(1313 632) scale(.24)">
   <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
   <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
-  <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M30 36 L30 80 Q30 94 64 94 Q98 94 98 80 L98 36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
   <ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="5"/>
-  <path d="M30 58c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
-  <path d="M30 80c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 58 Q30 72 64 72 Q98 72 98 58" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 80 Q30 94 64 94 Q98 94 98 80" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
 </g>
 <text x="1351" y="694" class="label" text-anchor="middle">Test DB</text>
 <text x="1351" y="714" class="tiny" text-anchor="middle">H2 / PostgreSQL</text>
@@ -96,7 +96,7 @@
 <path data-connector="column-to-db" d="M722,541 L790,541 Q802,541 802,553 L802,680 Q802,692 814,692 L1288,692" class="mapLine"/>
 <path data-connector="gcm-to-stringtable" d="M1126,216 L1198,216 Q1210,216 1210,228 L1210,288 Q1210,300 1222,300 L1272,300" class="dbUse"/>
 <path data-connector="cbc-to-testtable" d="M1126,330 L1198,330 Q1210,330 1210,342 L1210,510 Q1210,522 1222,522 L1272,522" class="dbUse"/>
-<path data-connector="stringtable-to-db" d="M1430,288 L1450,288 L1450,664 L1414,664" class="dbUse"/>
+<path data-connector="stringtable-to-db" d="M1430,288 L1438,288 Q1450,288 1450,300 L1450,652 Q1450,664 1438,664 L1414,664" class="dbUse"/>
 <path data-connector="testtable-to-db" d="M1351,580 L1351,620" class="dbUse"/>
 <rect x="210" y="752" width="1120" height="42" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
 <path d="M246,768 L308,768" class="arrow"/><text x="322" y="773" class="tiny">test path to encrypted column</text>
