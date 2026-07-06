@@ -87,24 +87,24 @@
 <line x1="1258" y1="600" x2="1436" y2="600" stroke="#db2777" stroke-width="1.2"/>
 <text x="1347" y="586" class="label" text-anchor="middle">UUIDTable</text>
 <text x="1274" y="627" class="tiny">uuid id</text>
-<path d="M415,280 L415,304" class="inheritStem"/>
+<path data-connector="entity-root-stem" d="M415,280 L415,296" class="inheritStem connector"/>
 <polygon points="415,264 406,280 424,280" fill="#fff" stroke="#475569" stroke-width="1.8"/>
-<path d="M165,304 L675,304" class="inheritStem"/>
-<path d="M165,304 L165,338" class="inheritStem"/>
-<path d="M335,304 L335,338" class="inheritStem"/>
-<path d="M505,304 L505,338" class="inheritStem"/>
-<path d="M675,304 L675,338" class="inheritStem"/>
-<path d="M1128,306 L1128,322" class="inheritStem"/>
+<path data-connector="entity-branch-left" d="M415,296 Q415,304 407,304 L173,304" class="inheritStem connector"/>
+<path data-connector="entity-branch-right" d="M415,296 Q415,304 423,304 L667,304" class="inheritStem connector"/>
+<path data-connector="entity-int-drop" d="M173,304 Q165,304 165,312 L165,338" class="inheritStem connector"/>
+<path data-connector="entity-long-drop" d="M327,304 Q335,304 335,312 L335,338" class="inheritStem connector"/>
+<path data-connector="entity-uuid-drop" d="M497,304 Q505,304 505,312 L505,338" class="inheritStem connector"/>
+<path data-connector="entity-composite-drop" d="M667,304 Q675,304 675,312 L675,338" class="inheritStem connector"/>
+<path data-connector="table-root-stem" d="M1128,306 L1128,314" class="inheritStem connector"/>
 <polygon points="1128,290 1119,306 1137,306" fill="#fff" stroke="#475569" stroke-width="1.8"/>
-<path d="M1005,322 L1339,322" class="inheritStem"/>
-<path d="M1005,322 L1005,348" class="inheritStem"/>
-<path d="M1339,322 L1339,348" class="inheritStem"/>
-<path d="M1005,454 L1005,500" class="inheritStem"/>
+<path data-connector="table-idtable-branch" d="M1128,314 Q1128,322 1120,322 L1013,322 Q1005,322 1005,330 L1005,348" class="inheritStem connector"/>
+<path data-connector="table-composite-branch" d="M1128,314 Q1128,322 1136,322 L1331,322 Q1339,322 1339,330 L1339,348" class="inheritStem connector"/>
+<path data-connector="idtable-root-stem" d="M1005,454 L1005,492" class="inheritStem connector"/>
 <polygon points="1005,438 996,454 1014,454" fill="#fff" stroke="#475569" stroke-width="1.8"/>
-<path d="M956,500 L1347,500" class="inheritStem"/>
-<path d="M956,500 L956,560" class="inheritStem"/>
-<path d="M1151,500 L1151,560" class="inheritStem"/>
-<path d="M1347,500 L1347,560" class="inheritStem"/>
+<path data-connector="idtable-branch-left" d="M1005,492 Q1005,500 997,500 L964,500 Q956,500 956,508 L956,560" class="inheritStem connector"/>
+<path data-connector="idtable-branch-right" d="M1005,492 Q1005,500 1013,500 L1339,500" class="inheritStem connector"/>
+<path data-connector="idtable-long-drop" d="M1143,500 Q1151,500 1151,508 L1151,560" class="inheritStem connector"/>
+<path data-connector="idtable-uuid-drop" d="M1339,500 Q1347,500 1347,508 L1347,560" class="inheritStem connector"/>
 <rect x="156" y="854" width="1288" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="800" y="885" class="detail" text-anchor="middle">UML rule: superclass boxes are above concrete examples, and hollow generalization triangles point upward to the parent boundary with vertical stems.</text>
 </svg>
