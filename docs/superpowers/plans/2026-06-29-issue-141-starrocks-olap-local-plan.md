@@ -26,8 +26,8 @@ Type A new workshop module under `13-ecosystem-integrations`.
 - `./gradlew :04-starrocks-olap-local:build --no-daemon --no-configuration-cache`
 - `./gradlew projects --quiet --no-daemon --no-configuration-cache`
 - `actionlint .github/workflows/examples.yml`
-- `xmllint --noout docs/images/readme-diagrams/04-starrocks-olap-local-architecture-01.svg`
-- `python3 /Users/debop/.codex/skills/bluetape4k-diagram/references/diagram-geometry-audit.py docs/images/readme-diagrams/04-starrocks-olap-local-architecture-01.svg`
-- `python3 /Users/debop/.codex/skills/bluetape4k-diagram/references/diagram-endpoint-audit.py docs/images/readme-diagrams/04-starrocks-olap-local-architecture-01.svg`
-- `~/.local/bin/cairosvg docs/images/readme-diagrams/04-starrocks-olap-local-architecture-01.svg -o docs/images/readme-diagrams/04-starrocks-olap-local-architecture-01.png -s 2`
+- `xmllint --noout docs/images/readme-diagrams/13-starrocks-olap-local-architecture-01.svg`
+- `python3 /Users/debop/.codex/skills/bluetape4k-diagram/references/diagram-geometry-audit.py docs/images/readme-diagrams/13-starrocks-olap-local-architecture-01.svg`
+- `python3 /Users/debop/.codex/skills/bluetape4k-diagram/references/diagram-endpoint-audit.py docs/images/readme-diagrams/13-starrocks-olap-local-architecture-01.svg`
+- `~/.local/bin/cairosvg docs/images/readme-diagrams/13-starrocks-olap-local-architecture-01.svg -o docs/images/readme-diagrams/13-starrocks-olap-local-architecture-01.png -s 2`
 - `git diff --check`

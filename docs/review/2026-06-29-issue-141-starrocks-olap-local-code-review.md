@@ -5,7 +5,7 @@
 - New module `13-ecosystem-integrations/04-starrocks-olap-local`
 - StarRocks alias in `gradle/libs.versions.toml`
 - README locale pair, root/chapter indexes, Examples workflow
-- Diagram asset `04-starrocks-olap-local-architecture-01.svg/png`
+- Diagram asset `13-starrocks-olap-local-architecture-01.svg/png`
 
 ## Findings
 
