@@ -82,7 +82,7 @@
 <path data-connector="lifecycle-to-inheritance-tests" d="M328,674 L386,674 Q398,674 398,686 L398,699 Q398,711 410,711 L468,711" class="runtimeUse"/>
 <path data-connector="simple-schema-to-table-dao" d="M664,261 L748,261 Q760,261 760,249 L760,222 Q760,210 772,210 L920,210" class="mapLine"/>
 <path data-connector="simple-schema-to-column-delegates" d="M664,281 L748,281 Q760,281 760,293 L760,314 Q760,326 772,326 L920,326" class="mapLine"/>
-<path data-connector="book-schema-to-idtable-variants" d="M664,601 L1198,601 Q1210,601 1210,589 L1210,454 Q1210,442 1198,442 L1180,442" class="mapLine"/>
+<path data-connector="book-schema-to-idtable-variants" d="M664,601 L1198,601 Q1210,601 1210,589 L1210,390 Q1210,378 1198,378 L1062,378 Q1050,378 1050,390 L1050,410" class="mapLine"/>
 <path data-connector="blog-schema-to-reference-apis" d="M664,381 L736,381 Q748,381 748,393 L748,528 Q748,540 760,540 L920,540" class="mapLine"/>
 <path data-connector="person-schema-to-reference-apis" d="M566,518 L566,558 Q566,570 578,570 L920,570" class="mapLine"/>
 <path data-connector="inheritance-tests-to-explicit-tests" d="M664,711 L748,711 Q760,711 760,699 L760,686 Q760,674 772,674 L920,674" class="runtimeUse"/>
