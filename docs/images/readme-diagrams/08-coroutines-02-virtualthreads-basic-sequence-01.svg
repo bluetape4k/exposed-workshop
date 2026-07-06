@@ -4,46 +4,46 @@
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
     </filter>
     <marker id="seqArrow-blue" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7fa7" stroke="#3f7fa7" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c" stroke="#3f7d9c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none"/>
     </marker>
     <marker id="seqArrow-green" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6f8f50" stroke="#6f8f50" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none"/>
     </marker>
     <marker id="seqArrow-amber" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#9a6b3e" stroke="#9a6b3e" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none"/>
     </marker>
     <marker id="seqArrow-red" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a95d6a" stroke="#a95d6a" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a65a66" stroke="#a65a66" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none"/>
     </marker>
     <style>
-      .canvas{fill:#f6f9fc}
-      .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
-      .subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-      .subtitle{font-size:13px}.detail{font-size:12px}
-      .participant{fill:#ffffff;stroke:#546977;stroke-width:1.7;filter:url(#shadow)}
-      .participant-title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
-      .participant-sub{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:11px;fill:#5b6d77}
-      .lifeline{stroke:#9babb4;stroke-width:1.4;stroke-dasharray:5 6}
-      .activation{fill:#f7efd9;stroke:#9a7b4f;stroke-width:1.4}
-      .callBlue{fill:none;stroke:#3f7fa7;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-blue)}
-      .callGreen{fill:none;stroke:#6f8f50;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-green)}
-      .callAmber{fill:none;stroke:#9a6b3e;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-amber)}
-      .callRed{fill:none;stroke:#a95d6a;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-red)}
-      .altRegion{fill:none;stroke:#8aa0ad;stroke-width:1.4;stroke-dasharray:8 7}
-      .altHeader{fill:#f8fafc;stroke:#8aa0ad;stroke-width:1.1}
-      .altText{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:13px;fill:#60758d}
+      .canvas{fill:#fbfcf8}
+      .frame{fill:#fbfcf8;stroke:#41545d;stroke-width:3}
+      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;font-weight:400;fill:#263238}
+      .subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#36464f}
+      .subtitle{font-size:14px}.detail{font-size:12px}
+      .participant{fill:#ffffff;stroke:#546e7a;stroke-width:2}
+      .participant-title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1f3138}
+      .participant-sub{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:11px;fill:#546a73}
+      .lifeline{stroke:#9aaab1;stroke-width:2;stroke-dasharray:7 8}
+      .activation{fill:#f3ecdf;stroke:#8f784e;stroke-width:1.5}
+      .callBlue{fill:none;stroke:#3f7d9c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-blue)}
+      .callGreen{fill:none;stroke:#6e8f4f;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-green)}
+      .callAmber{fill:none;stroke:#a2743d;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-amber)}
+      .callRed{fill:none;stroke:#a65a66;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-red)}
+      .altRegion{fill:none;stroke:#9aaab1;stroke-width:1.5;stroke-dasharray:8 7}
+      .altHeader{fill:#ffffff;stroke:#ccd7da;stroke-width:1.5}
+      .altText{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:13px;fill:#60727d}
       .pill{stroke-width:1.5}
-      .labelText{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#344653}
+      .labelText{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#36464f}
       .num{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:700}
-      .footer{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+      .footer{fill:#ffffff;stroke:#ccd7da;stroke-width:1.5}
     </style>
   </defs>
 
   <rect width="1500" height="940" class="canvas"/>
-  <rect x="20" y="20" width="1460" height="900" rx="16" class="frame"/>
-  <text x="48" y="58" class="title">Virtual Thread Transaction Sequence</text>
-  <text x="48" y="80" class="subtitle">Java 21-gated tests keep blocking Exposed code while moving work onto Virtual Threads.</text>
+  <rect x="20" y="20" width="1460" height="900" rx="20" class="frame"/>
+  <text x="750" y="62" text-anchor="middle" class="title">Virtual Thread Transaction Sequence</text>
+  <text x="750" y="88" text-anchor="middle" class="subtitle">Java 21-gated tests keep blocking Exposed code while moving work onto Virtual Threads.</text>
 
   <g id="participants">
     <rect x="52" y="130" width="136" height="58" rx="10" class="participant"/>
@@ -90,33 +90,33 @@
   <rect x="1394" y="790" width="12" height="52" rx="6" class="activation"/>
 
   <g id="m1" data-message="1">
-    <rect class="pill" x="82" y="214" width="336" height="38" rx="19" fill="#eef5e8" stroke="#6f8f50"/>
-    <circle cx="108" cy="233" r="16" fill="#ffffff" stroke="#6f8f50" stroke-width="1.5"/>
-    <text x="108" y="238" class="num" fill="#58753d" text-anchor="middle">1</text>
+    <rect class="pill" x="82" y="214" width="336" height="38" rx="19" fill="#ffffff" stroke="#6e8f4f"/>
+    <circle cx="108" cy="233" r="13" fill="#eef7f0" stroke="#6e8f4f" stroke-width="1.5"/>
+    <text x="108" y="238" class="num" fill="#55783f" text-anchor="middle">1</text>
     <text x="136" y="238" class="labelText">@EnabledForJreRange gates Java 21</text>
     <path d="M120,260 L340,260" class="callGreen" data-connector="m1"/>
   </g>
 
   <g id="m2" data-message="2">
-    <rect class="pill" x="292" y="294" width="364" height="38" rx="19" fill="#eef5e8" stroke="#6f8f50"/>
-    <circle cx="318" cy="313" r="16" fill="#ffffff" stroke="#6f8f50" stroke-width="1.5"/>
-    <text x="318" y="318" class="num" fill="#58753d" text-anchor="middle">2</text>
+    <rect class="pill" x="292" y="294" width="364" height="38" rx="19" fill="#ffffff" stroke="#6e8f4f"/>
+    <circle cx="318" cy="313" r="13" fill="#eef7f0" stroke="#6e8f4f" stroke-width="1.5"/>
+    <text x="318" y="318" class="num" fill="#55783f" text-anchor="middle">2</text>
     <text x="346" y="318" class="labelText">withTables creates VTester fixture</text>
     <path d="M340,340 L560,340" class="callGreen" data-connector="m2"/>
   </g>
 
   <g id="m3" data-message="3">
-    <rect class="pill" x="520" y="374" width="424" height="38" rx="19" fill="#eef4f8" stroke="#3f7fa7"/>
-    <circle cx="546" cy="393" r="16" fill="#ffffff" stroke="#3f7fa7" stroke-width="1.5"/>
-    <text x="546" y="398" class="num" fill="#2f6d91" text-anchor="middle">3</text>
+    <rect class="pill" x="520" y="374" width="424" height="38" rx="19" fill="#ffffff" stroke="#3f7d9c"/>
+    <circle cx="546" cy="393" r="13" fill="#eaf4f8" stroke="#3f7d9c" stroke-width="1.5"/>
+    <text x="546" y="398" class="num" fill="#2f6f8e" text-anchor="middle">3</text>
     <text x="574" y="398" class="labelText">newVirtualThreadJdbcTransaction opens tx</text>
     <path d="M560,420 L1000,420" class="callBlue" data-connector="m3"/>
   </g>
 
   <g id="m4" data-message="4">
-    <rect class="pill" x="950" y="450" width="390" height="38" rx="19" fill="#f8efe0" stroke="#9a6b3e"/>
-    <circle cx="976" cy="469" r="16" fill="#ffffff" stroke="#9a6b3e" stroke-width="1.5"/>
-    <text x="976" y="474" class="num" fill="#7b5634" text-anchor="middle">4</text>
+    <rect class="pill" x="950" y="450" width="390" height="38" rx="19" fill="#ffffff" stroke="#a2743d"/>
+    <circle cx="976" cy="469" r="13" fill="#fff4df" stroke="#a2743d" stroke-width="1.5"/>
+    <text x="976" y="474" class="num" fill="#855a29" text-anchor="middle">4</text>
     <text x="1004" y="474" class="labelText">insert/select rows through VTester</text>
     <path d="M1000,496 L1220,496" class="callAmber" data-connector="m4"/>
   </g>
@@ -126,33 +126,33 @@
   <text x="566" y="525" class="altText">ALT: fan-out / regular tx / exception cleanup</text>
 
   <g id="m5" data-message="5">
-    <rect class="pill" x="522" y="540" width="420" height="38" rx="19" fill="#eef4f8" stroke="#3f7fa7"/>
-    <circle cx="548" cy="559" r="16" fill="#ffffff" stroke="#3f7fa7" stroke-width="1.5"/>
-    <text x="548" y="564" class="num" fill="#2f6d91" text-anchor="middle">5</text>
+    <rect class="pill" x="522" y="540" width="420" height="38" rx="19" fill="#ffffff" stroke="#3f7d9c"/>
+    <circle cx="548" cy="559" r="13" fill="#eaf4f8" stroke="#3f7d9c" stroke-width="1.5"/>
+    <text x="548" y="564" class="num" fill="#2f6f8e" text-anchor="middle">5</text>
     <text x="576" y="564" class="labelText">virtualThreadJdbcTransactionAsync fan-out</text>
     <path d="M560,586 L780,586" class="callBlue" data-connector="m5"/>
   </g>
 
   <g id="m6" data-message="6">
-    <rect class="pill" x="750" y="616" width="362" height="38" rx="19" fill="#f8efe0" stroke="#9a6b3e"/>
-    <circle cx="776" cy="635" r="16" fill="#ffffff" stroke="#9a6b3e" stroke-width="1.5"/>
-    <text x="776" y="640" class="num" fill="#7b5634" text-anchor="middle">6</text>
+    <rect class="pill" x="750" y="616" width="362" height="38" rx="19" fill="#ffffff" stroke="#a2743d"/>
+    <circle cx="776" cy="635" r="13" fill="#fff4df" stroke="#a2743d" stroke-width="1.5"/>
+    <text x="776" y="640" class="num" fill="#855a29" text-anchor="middle">6</text>
     <text x="804" y="640" class="labelText">awaitAll joins rows and counts</text>
     <path d="M780,662 L1220,662" class="callAmber" data-connector="m6"/>
   </g>
 
   <g id="m7" data-message="7">
-    <rect class="pill" x="900" y="692" width="392" height="38" rx="19" fill="#eef4f8" stroke="#3f7fa7"/>
-    <circle cx="926" cy="711" r="16" fill="#ffffff" stroke="#3f7fa7" stroke-width="1.5"/>
-    <text x="926" y="716" class="num" fill="#2f6d91" text-anchor="middle">7</text>
+    <rect class="pill" x="900" y="692" width="392" height="38" rx="19" fill="#ffffff" stroke="#3f7d9c"/>
+    <circle cx="926" cy="711" r="13" fill="#eaf4f8" stroke="#3f7d9c" stroke-width="1.5"/>
+    <text x="926" y="716" class="num" fill="#2f6f8e" text-anchor="middle">7</text>
     <text x="954" y="716" class="labelText">regular transaction selects same table</text>
     <path d="M1000,738 L1220,738" class="callBlue" data-connector="m7"/>
   </g>
 
   <g id="m8" data-message="8">
-    <rect class="pill" x="908" y="766" width="476" height="38" rx="19" fill="#f7e9eb" stroke="#a95d6a"/>
-    <circle cx="934" cy="785" r="16" fill="#ffffff" stroke="#a95d6a" stroke-width="1.5"/>
-    <text x="934" y="790" class="num" fill="#8b4d58" text-anchor="middle">8</text>
+    <rect class="pill" x="908" y="766" width="476" height="38" rx="19" fill="#ffffff" stroke="#a65a66"/>
+    <circle cx="934" cy="785" r="13" fill="#fff0f2" stroke="#a65a66" stroke-width="1.5"/>
+    <text x="934" y="790" class="num" fill="#8c4b56" text-anchor="middle">8</text>
     <text x="962" y="790" class="labelText">duplicate id closes inner connection and wraps SQL error</text>
     <path d="M1220,812 L1400,812" class="callRed" data-connector="m8"/>
   </g>
