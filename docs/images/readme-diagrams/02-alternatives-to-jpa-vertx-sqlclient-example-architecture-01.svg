@@ -79,16 +79,14 @@
 <text x="1091" y="537" class="label" text-anchor="middle">PgPool</text>
 <text x="1091" y="570" class="detail" text-anchor="middle">Postgres</text>
 <rect x="1230" y="126" width="182" height="596" rx="12" class="panel"/><text x="1321" y="118" class="panelTitle" text-anchor="middle">DATABASE TARGETS</text>
-<path d="M1254,300 C1254,282 1386,282 1386,300 L1386,404 C1386,422 1254,422 1254,404 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
-<ellipse cx="1320" cy="300" rx="66" ry="14" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1254,404 C1254,422 1386,422 1386,404" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<rect x="1254" y="282" width="132" height="140" rx="10" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
+<line x1="1268" y1="320" x2="1372" y2="320" stroke="#ea580c" stroke-width="1.7" stroke-linecap="round"/>
 <text x="1320" y="309" class="label" text-anchor="middle">H2 DB</text>
 <text x="1272" y="342" class="tiny">test</text>
 <text x="1272" y="359" class="tiny">id PK</text>
 <text x="1272" y="376" class="tiny">name</text>
-<path d="M1254,512 C1254,494 1386,494 1386,512 L1386,638 C1386,656 1254,656 1254,638 Z" fill="#fff" stroke="#0f766e" stroke-width="1.7" class="card"/>
-<ellipse cx="1320" cy="512" rx="66" ry="14" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.7"/>
-<path d="M1254,638 C1254,656 1386,656 1386,638" fill="none" stroke="#0f766e" stroke-width="1.7"/>
+<rect x="1254" y="494" width="132" height="162" rx="10" fill="#fff" stroke="#0f766e" stroke-width="1.7" class="card"/>
+<line x1="1268" y1="532" x2="1372" y2="532" stroke="#0f766e" stroke-width="1.7" stroke-linecap="round"/>
 <text x="1320" y="521" class="label" text-anchor="middle">PostgreSQL</text>
 <text x="1272" y="554" class="tiny">customers</text>
 <text x="1272" y="571" class="tiny">id PK</text>
