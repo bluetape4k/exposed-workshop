@@ -71,7 +71,7 @@
 <text x="289" y="640" class="label" text-anchor="middle">DAO mapping</text>
 <text x="289" y="668" class="detail" text-anchor="middle">Person.address is referencedOn PersonTable.addressId.</text>
 <path data-connector="dao-person-address-reference" d="M482,657 L598,657 Q610,657 610,645 L610,533 Q610,520 622,520 L704,520" class="arrow"/>
-<path data-connector="person-table-dml-shares-persons" d="M926,610 L926,570 Q926,558 926,552" class="runtimeUse"/>
+<path data-connector="person-table-dml-shares-persons" d="M926,610 L926,552" class="runtimeUse"/>
 
 <rect x="126" y="744" width="968" height="38" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.3"/>
 <path d="M168,764 L228,764" class="relLine"/><text x="248" y="768" class="tiny">green = FK relation (1:N)</text>
