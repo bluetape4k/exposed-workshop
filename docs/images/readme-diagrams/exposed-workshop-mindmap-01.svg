@@ -14,49 +14,51 @@
   <text class="hubTitle" x="750" y="464" text-anchor="middle">Kotlin Exposed</text>
   <text class="body" x="750" y="500" text-anchor="middle">type-safe SQL for Kotlin</text>
   <text class="tag" x="750" y="528" text-anchor="middle">shared test fixtures + runnable modules</text>
-  <path class="route" d="M 585 420 C 305.0 420, 305.0 420, 305.0 395"/>
+  <path class="route" d="M 585 420 H 323 Q 305 420 305 412 V 395"/>
   <rect class="card" x="140" y="250" width="330" height="145" rx="22" fill="#e0f2fe" stroke="#0284c7"/>
   <text class="cardTitle" x="168" y="296">SQL DSL</text>
   <text class="body" x="168" y="328">Typed tables, joins, conditions</text>
   <text class="body" x="168" y="350">CTEs and aggregate queries</text>
   <rect class="pill" x="168" y="361" width="274" height="30" rx="15"/>
   <text class="tag" x="305.0" y="381" text-anchor="middle">03 basics / 05 DML</text>
-  <path class="route" d="M 750 420 C 750.0 420, 750.0 420, 750.0 395"/>
+  <path class="route" d="M 750 420 V 395"/>
   <rect class="card" x="585" y="250" width="330" height="145" rx="22" fill="#dcfce7" stroke="#059669"/>
   <text class="cardTitle" x="613" y="296">DAO / Entity</text>
   <text class="body" x="613" y="328">EntityClass, relationships</text>
   <text class="body" x="613" y="350">lifecycle hooks and caching</text>
   <rect class="pill" x="613" y="361" width="274" height="30" rx="15"/>
   <text class="tag" x="750.0" y="381" text-anchor="middle">03 DAO / 05 entities</text>
-  <path class="route" d="M 915 420 C 1195.0 420, 1195.0 420, 1195.0 395"/>
+  <path class="route" d="M 915 420 H 1177 Q 1195 420 1195 412 V 395"/>
   <rect class="card" x="1030" y="250" width="330" height="145" rx="22" fill="#fef3c7" stroke="#d97706"/>
   <text class="cardTitle" x="1058" y="296">Schema Work</text>
   <text class="body" x="1058" y="328">Connections, tables, indexes</text>
   <text class="body" x="1058" y="350">sequences and dialect checks</text>
   <rect class="pill" x="1058" y="361" width="274" height="30" rx="15"/>
   <text class="tag" x="1195.0" y="381" text-anchor="middle">04 DDL</text>
-  <path class="route" d="M 585 550 C 305.0 550, 305.0 550, 305.0 560"/>
-  <rect class="card" x="140" y="560" width="330" height="145" rx="22" fill="#fae8ff" stroke="#a855f7"/>
-  <text class="cardTitle" x="168" y="606">Advanced Columns</text>
-  <text class="body" x="168" y="638">JSON, money, crypt, Tink</text>
-  <text class="body" x="168" y="660">custom codecs and transforms</text>
-  <rect class="pill" x="168" y="671" width="274" height="30" rx="15"/>
-  <text class="tag" x="305.0" y="691" text-anchor="middle">06 advanced</text>
-  <path class="route" d="M 750 550 C 750.0 550, 750.0 550, 750.0 560"/>
-  <rect class="card" x="585" y="560" width="330" height="145" rx="22" fill="#ede9fe" stroke="#7c3aed"/>
-  <text class="cardTitle" x="613" y="606">Runtime Models</text>
-  <text class="body" x="613" y="638">Blocking, coroutines</text>
-  <text class="body" x="613" y="660">virtual threads</text>
-  <rect class="pill" x="613" y="671" width="274" height="30" rx="15"/>
-  <text class="tag" x="750.0" y="691" text-anchor="middle">08 coroutines</text>
-  <path class="route" d="M 915 550 C 1195.0 550, 1195.0 550, 1195.0 560"/>
-  <rect class="card" x="1030" y="560" width="330" height="145" rx="22" fill="#ffedd5" stroke="#ea580c"/>
-  <text class="cardTitle" x="1058" y="606">Application Patterns</text>
-  <text class="body" x="1058" y="638">Spring, Ktor, tenancy</text>
-  <text class="body" x="1058" y="660">cache, routing, outbox</text>
-  <rect class="pill" x="1058" y="671" width="274" height="30" rx="15"/>
-  <text class="tag" x="1195.0" y="691" text-anchor="middle">09-12 integration</text>
+  <path class="route" d="M 585 550 H 323 Q 305 550 305 570 V 590"/>
+  <rect class="card" x="140" y="590" width="330" height="145" rx="22" fill="#fae8ff" stroke="#a855f7"/>
+  <text class="cardTitle" x="168" y="636">Advanced Columns</text>
+  <text class="body" x="168" y="668">JSON, money, crypt, Tink</text>
+  <text class="body" x="168" y="690">custom codecs and transforms</text>
+  <rect class="pill" x="168" y="701" width="274" height="30" rx="15"/>
+  <text class="tag" x="305.0" y="721" text-anchor="middle">06 advanced</text>
+  <path class="route" d="M 750 550 V 590"/>
+  <rect class="card" x="585" y="590" width="330" height="145" rx="22" fill="#ede9fe" stroke="#7c3aed"/>
+  <text class="cardTitle" x="613" y="636">Runtime Models</text>
+  <text class="body" x="613" y="668">Blocking, coroutines</text>
+  <text class="body" x="613" y="690">virtual threads</text>
+  <rect class="pill" x="613" y="701" width="274" height="30" rx="15"/>
+  <text class="tag" x="750.0" y="721" text-anchor="middle">08 coroutines</text>
+  <path class="route" d="M 915 550 H 1177 Q 1195 550 1195 570 V 590"/>
+  <rect class="card" x="1030" y="590" width="330" height="145" rx="22" fill="#ffedd5" stroke="#ea580c"/>
+  <text class="cardTitle" x="1058" y="636">Application Patterns</text>
+  <text class="body" x="1058" y="668">Spring, Ktor, tenancy</text>
+  <text class="body" x="1058" y="690">cache, routing, outbox</text>
+  <rect class="pill" x="1058" y="701" width="274" height="30" rx="15"/>
+  <text class="tag" x="1195.0" y="721" text-anchor="middle">09-12 integration</text>
 
+  <rect class="footerBox" x="368" y="778" width="764" height="32" rx="16"/>
+  <text class="tag" x="750" y="799" text-anchor="middle">Legend: dashed connectors show topic links from the central Exposed learning hub.</text>
   <rect class="footerBox" x="150" y="835" width="1200" height="46" rx="21"/>
   <text class="footer" x="750" y="864" text-anchor="middle">Use the map to choose a topic first, then open the matching chapter README and run that module's tests.</text>
 </svg>

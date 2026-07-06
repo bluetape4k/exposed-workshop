@@ -1,69 +1,90 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
-  <title id="title">Chapter 13 Ecosystem Integrations</title>
-  <desc id="desc">Planned Exposed ecosystem examples grouped into database platform adapters, runtime and framework integration, and domain architecture.</desc>
+  <title id="title">Chapter 13 ecosystem integrations architecture</title>
+  <desc id="desc">Issue-backed Exposed ecosystem examples grouped into database platform adapters, runtime and framework integration, and domain architecture lanes with local-first execution policy.</desc>
   <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#334155" flood-opacity="0.12"/>
-    </filter>
     <style>
-      svg { font-family: "Architects Daughter", "Comic Mono", ui-sans-serif, system-ui, sans-serif; }
-      .canvas { fill: #f7fafc; }
-      .frame { fill: #ffffff; stroke: #8aa6cf; stroke-width: 3; filter: url(#shadow); }
-      .title { font-family: "Architects Daughter"; font-size: 52px; fill: #233854; }
-      .subtitle, .body, .small { font-family: "Comic Mono"; fill: #526276; }
-      .subtitle { font-size: 18px; }
-      .laneTitle { font-family: "Architects Daughter"; font-size: 28px; fill: #233854; }
-      .cardTitle { font-family: "Architects Daughter"; font-size: 23px; fill: #263a57; }
-      .body { font-size: 15px; }
-      .small { font-size: 12px; }
-      .lane { stroke-width: 2.5; }
-      .card { fill: #ffffff; stroke-width: 2.2; filter: url(#shadow); }
-      .pill { fill: #f8fafc; stroke: #d4e0ec; stroke-width: 1.5; }
+      text { letter-spacing: 0; }
+      .title { font-family: "Architects Daughter", "Comic Sans MS", cursive; font-size: 42px; fill: #23323a; }
+      .subtitle, .laneNote, .cardText, .footer { font-family: "Comic Mono", "Comic Sans MS", Arial, sans-serif; fill: #324750; }
+      .subtitle { font-size: 17px; }
+      .laneTitle { font-family: "Architects Daughter", "Comic Sans MS", cursive; font-size: 25px; fill: #23323a; }
+      .laneNote { font-size: 14px; fill: #5b6d75; }
+      .cardTitle { font-family: "Architects Daughter", "Comic Sans MS", cursive; font-size: 21px; fill: #20323b; }
+      .cardText { font-size: 13px; }
+      .footer { font-size: 14px; fill: #60717a; }
+      .canvas { fill: #fbfcf8; stroke: #3f515a; stroke-width: 3; }
+      .lane { stroke-width: 2.1; }
+      .laneDatabase { fill: #fff7e8; stroke: #b98e50; }
+      .laneRuntime { fill: #f2f0fb; stroke: #897bc2; }
+      .laneDomain { fill: #eef7f5; stroke: #6fa098; }
+      .policy { fill: #f4f6f5; stroke: #8a9aa0; stroke-width: 2.1; }
+      .card { fill: #ffffff; stroke-width: 2.2; }
+      .databaseCard { stroke: #ac7a34; }
+      .runtimeCard { stroke: #7b6bb4; }
+      .domainCard { stroke: #5d948b; }
+      .policyCard { stroke: #69777e; }
     </style>
   </defs>
-  <rect class="canvas" width="1600" height="980"/>
-  <rect class="frame" x="50" y="42" width="1500" height="896" rx="30"/>
-  <text class="title" x="800" y="112" text-anchor="middle">Chapter 13: Ecosystem Integrations</text>
-  <text class="subtitle" x="800" y="150" text-anchor="middle">Issue-backed Exposed examples for platform adapters, framework integration, and DDD/Modulith boundaries.</text>
 
-  <g id="database-lane">
-    <rect class="lane" x="100" y="205" width="1400" height="210" rx="24" fill="#eff6ff" stroke="#93b4e6"/>
-    <text class="laneTitle" x="140" y="250">Database platform adapters</text>
-    <text class="body" x="140" y="280">Dialect and platform behavior stays local-first until real services are explicitly enabled.</text>
-    <rect class="card" x="140" y="318" width="300" height="62" rx="16" stroke="#2563eb"/>
-    <text class="cardTitle" x="290" y="346" text-anchor="middle">BigQuery dry-run</text>
-    <text class="small" x="290" y="368" text-anchor="middle">#138 query validation</text>
-    <rect class="card" x="475" y="318" width="300" height="62" rx="16" stroke="#2563eb"/>
-    <text class="cardTitle" x="625" y="346" text-anchor="middle">Trino sessions</text>
-    <text class="small" x="625" y="368" text-anchor="middle">#139 pushdown checks</text>
-    <rect class="card" x="810" y="318" width="300" height="62" rx="16" stroke="#2563eb"/>
-    <text class="cardTitle" x="960" y="346" text-anchor="middle">CockroachDB retry</text>
-    <text class="small" x="960" y="368" text-anchor="middle">#140 serializable conflicts</text>
-    <rect class="card" x="1145" y="318" width="300" height="62" rx="16" stroke="#2563eb"/>
-    <text class="cardTitle" x="1295" y="346" text-anchor="middle">StarRocks OLAP</text>
-    <text class="small" x="1295" y="368" text-anchor="middle">#141 local-first analytics</text>
-  </g>
+  <rect x="24" y="24" width="1552" height="932" rx="20" class="canvas"/>
+  <text x="800" y="78" text-anchor="middle" class="title">Chapter 13: Ecosystem Integrations</text>
+  <text x="800" y="110" text-anchor="middle" class="subtitle">Issue-backed Exposed examples that sit outside chapter 12 production-service patterns.</text>
 
-  <g id="runtime-lane">
-    <rect class="lane" x="100" y="460" width="1400" height="190" rx="24" fill="#fff7ed" stroke="#e8c47b"/>
-    <text class="laneTitle" x="140" y="505">Runtime and framework integration</text>
-    <text class="body" x="140" y="535">Framework examples show explicit boundaries instead of hidden global wiring.</text>
-    <rect class="card" x="245" y="570" width="460" height="56" rx="16" stroke="#d97706"/>
-    <text class="cardTitle" x="475" y="604" text-anchor="middle">Ktor Exposed integration #142</text>
-    <rect class="card" x="895" y="570" width="460" height="56" rx="16" stroke="#d97706"/>
-    <text class="cardTitle" x="1125" y="604" text-anchor="middle">Spring Modulith publications #143</text>
-  </g>
+  <rect x="70" y="150" width="1460" height="330" rx="18" class="lane laneDatabase"/>
+  <text x="104" y="190" class="laneTitle">Database platform adapters</text>
+  <text x="104" y="218" class="laneNote">Dialect and platform behavior stays local-first unless real services are explicitly enabled.</text>
 
-  <g id="domain-lane">
-    <rect class="lane" x="100" y="695" width="1400" height="170" rx="24" fill="#ecfdf5" stroke="#8ed1bb"/>
-    <text class="laneTitle" x="140" y="740">Domain architecture</text>
-    <text class="body" x="140" y="770">DDD examples keep aggregate lifecycle and module boundaries visible in code and tests.</text>
-    <rect class="card" x="245" y="800" width="460" height="42" rx="15" stroke="#059669"/>
-    <text class="cardTitle" x="475" y="828" text-anchor="middle">DDD aggregate repository #144</text>
-    <rect class="card" x="895" y="800" width="460" height="42" rx="15" stroke="#059669"/>
-    <text class="cardTitle" x="1125" y="828" text-anchor="middle">DDD Modulith boundaries #145</text>
-  </g>
+  <rect x="120" y="255" width="250" height="86" rx="12" class="card databaseCard"/>
+  <text x="245" y="288" text-anchor="middle" class="cardTitle">BigQuery dry-run</text>
+  <text x="245" y="314" text-anchor="middle" class="cardText">#138 query validation</text>
 
-  <rect class="pill" x="245" y="885" width="1110" height="34" rx="17"/>
-  <text class="small" x="800" y="907" text-anchor="middle">Foundation PR: chapter docs and workflow triggers only. Child PRs create runnable modules and add their Gradle tasks.</text>
+  <rect x="405" y="255" width="250" height="86" rx="12" class="card databaseCard"/>
+  <text x="530" y="288" text-anchor="middle" class="cardTitle">Trino sessions</text>
+  <text x="530" y="314" text-anchor="middle" class="cardText">#139 pushdown checks</text>
+
+  <rect x="690" y="255" width="250" height="86" rx="12" class="card databaseCard"/>
+  <text x="815" y="288" text-anchor="middle" class="cardTitle">CockroachDB retry</text>
+  <text x="815" y="314" text-anchor="middle" class="cardText">#140 serializable conflicts</text>
+
+  <rect x="975" y="255" width="250" height="86" rx="12" class="card databaseCard"/>
+  <text x="1100" y="288" text-anchor="middle" class="cardTitle">StarRocks OLAP</text>
+  <text x="1100" y="314" text-anchor="middle" class="cardText">#141 local-first analytics</text>
+
+  <rect x="1260" y="255" width="220" height="86" rx="12" class="card databaseCard"/>
+  <text x="1370" y="288" text-anchor="middle" class="cardTitle">DuckDB analytics</text>
+  <text x="1370" y="314" text-anchor="middle" class="cardText">TBD embedded local</text>
+
+  <rect x="240" y="370" width="330" height="66" rx="12" class="card policyCard"/>
+  <text x="405" y="398" text-anchor="middle" class="cardTitle">Default path</text>
+  <text x="405" y="420" text-anchor="middle" class="cardText">fake, local, Testcontainers, or emulator</text>
+
+  <rect x="630" y="370" width="330" height="66" rx="12" class="card policyCard"/>
+  <text x="795" y="398" text-anchor="middle" class="cardTitle">Real service opt-in</text>
+  <text x="795" y="420" text-anchor="middle" class="cardText">credentials and network are never default</text>
+
+  <rect x="1020" y="370" width="330" height="66" rx="12" class="card policyCard"/>
+  <text x="1185" y="398" text-anchor="middle" class="cardTitle">Workflow lane</text>
+  <text x="1185" y="420" text-anchor="middle" class="cardText">Examples, Nightly, or manual opt-in</text>
+
+  <rect x="70" y="525" width="1460" height="175" rx="18" class="lane laneRuntime"/>
+  <text x="104" y="565" class="laneTitle">Runtime and framework integration</text>
+  <text x="104" y="593" class="laneNote">Framework examples show explicit boundaries instead of hidden global wiring.</text>
+
+  <rect x="260" y="620" width="440" height="52" rx="12" class="card runtimeCard"/>
+  <text x="480" y="654" text-anchor="middle" class="cardTitle">Ktor Exposed integration #142</text>
+
+  <rect x="900" y="620" width="440" height="52" rx="12" class="card runtimeCard"/>
+  <text x="1120" y="654" text-anchor="middle" class="cardTitle">Spring Modulith publications #143</text>
+
+  <rect x="70" y="745" width="1460" height="170" rx="18" class="lane laneDomain"/>
+  <text x="104" y="785" class="laneTitle">Domain architecture</text>
+  <text x="104" y="813" class="laneNote">DDD examples keep aggregate lifecycle and module boundaries visible in code and tests.</text>
+
+  <rect x="260" y="837" width="440" height="52" rx="12" class="card domainCard"/>
+  <text x="480" y="871" text-anchor="middle" class="cardTitle">DDD aggregate repository #144</text>
+
+  <rect x="900" y="837" width="440" height="52" rx="12" class="card domainCard"/>
+  <text x="1120" y="871" text-anchor="middle" class="cardTitle">DDD Modulith boundaries #145</text>
+
+  <text x="800" y="940" text-anchor="middle" class="footer">Chapter 13 is a boundary map; child PRs add runnable modules and workflow tasks after each implementation exists.</text>
 </svg>

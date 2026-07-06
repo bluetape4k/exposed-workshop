@@ -1,69 +1,89 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 670" width="980" height="670" role="img" aria-label="Benchmark (04-benchmark)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 760" width="1080" height="760" role="img" aria-label="Benchmark tables and relationships">
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
     </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
+    <marker id="relHead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1,1 L9,5 L1,9 Z" fill="#64748b" stroke="#64748b" stroke-width="1"/>
     </marker>
     <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
-</style>
+      .canvas{fill:#f6f9fc}
+      .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+      .card{stroke-width:1.7;filter:url(#shadow)}
+      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
+      .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
+      .section{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+      .tableTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
+      .tableName{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:11px;fill:#64748b}
+      .column{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
+      .columnStrong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#1e293b;font-weight:700}
+      .note{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:11px;fill:#64748b}
+      .cardDivider{stroke:#d7e2ec;stroke-width:1.1}
+      .relationship{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#relHead)}
+      .cardinality{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
+    </style>
   </defs>
-  <rect width="980" height="670" class="canvas"/>
-  <rect x="20" y="20" width="940" height="630" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Benchmark (04-benchmark)</text>
-  <text x="48" y="80" class="subtitle">Source-derived ERD · Exposed table objects and column builders</text>
-<rect x="166" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M166,164 L166,138 Q166,126 178,126 L440,126 Q452,126 452,138 L452,164 Z" fill="#dbeafe"/>
-<text x="309" y="151" class="smallLabel" text-anchor="middle">Payload Table</text>
-<text x="184" y="188" class="tiny">id PK</text>
-<text x="184" y="203" class="tiny">payload text</text>
-<text x="184" y="218" class="tiny">updated_at timestamp</text>
-<rect x="528" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M528,164 L528,138 Q528,126 540,126 L802,126 Q814,126 814,138 L814,164 Z" fill="#ede9fe"/>
-<text x="671" y="151" class="smallLabel" text-anchor="middle">Person Table</text>
-<text x="546" y="188" class="tiny">id PK</text>
-<text x="546" y="203" class="tiny">first_name varchar</text>
-<text x="546" y="218" class="tiny">last_name varchar</text>
-<text x="546" y="233" class="tiny">email varchar</text>
-<text x="546" y="248" class="tiny">phone varchar</text>
-<text x="546" y="263" class="tiny">age integer</text>
-<rect x="166" y="338" width="286" height="154" rx="12" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M166,376 L166,350 Q166,338 178,338 L440,338 Q452,338 452,350 L452,376 Z" fill="#dcfce7"/>
-<text x="309" y="363" class="smallLabel" text-anchor="middle">Department Table</text>
-<text x="184" y="400" class="tiny">id PK</text>
-<text x="184" y="415" class="tiny">name varchar</text>
-<text x="184" y="430" class="tiny">code varchar</text>
-<text x="184" y="445" class="tiny">description text</text>
-<text x="184" y="460" class="tiny">budget decimal</text>
-<text x="184" y="475" class="tiny">head_count integer</text>
-<rect x="528" y="338" width="286" height="154" rx="12" fill="#fff" stroke="#ea580c" class="card"/>
-<path d="M528,376 L528,350 Q528,338 540,338 L802,338 Q814,338 814,350 L814,376 Z" fill="#ffedd5"/>
-<text x="671" y="363" class="smallLabel" text-anchor="middle">Employee Table</text>
-<text x="546" y="400" class="tiny">id PK</text>
-<text x="546" y="415" class="tiny">first_name varchar</text>
-<text x="546" y="430" class="tiny">last_name varchar</text>
-<text x="546" y="445" class="tiny">email varchar</text>
-<text x="546" y="460" class="tiny">phone varchar</text>
-<text x="546" y="475" class="tiny">position varchar</text>
-<path d="M814,415 L814,415 L166,415 L166,415" class="softArrow"/>
-<text x="490" y="110" class="panelTitle" text-anchor="middle">TABLES AND RELATIONSHIPS</text>
+
+  <rect width="1080" height="760" class="canvas"/>
+  <rect x="24" y="22" width="1032" height="716" rx="16" class="frame"/>
+
+  <text x="56" y="62" class="title">Benchmark tables</text>
+  <text x="56" y="86" class="subtitle">Source-derived ERD for Exposed and JPA benchmark fixtures</text>
+  <text x="540" y="118" class="section" text-anchor="middle">INDEPENDENT FIXTURES AND ONE-TO-MANY BENCHMARK MODEL</text>
+
+  <g id="cache-payload">
+    <rect x="88" y="150" width="390" height="214" rx="12" fill="#fff" stroke="#3b82f6" class="card"/>
+    <path d="M88,190 L88,162 Q88,150 100,150 L466,150 Q478,150 478,162 L478,190 Z" fill="#dbeafe"/>
+    <text x="283" y="176" class="tableTitle" text-anchor="middle">PayloadTable</text>
+    <text x="106" y="211" class="tableName">cache_payload</text>
+    <path d="M106,226 H460" class="cardDivider"/>
+    <text x="110" y="250" class="columnStrong">id PK</text>
+    <text x="110" y="272" class="column">payload text</text>
+    <text x="110" y="294" class="column">updated_at timestamp default CurrentTimestamp</text>
+    <text x="110" y="330" class="note">Cache strategy benchmark seed table</text>
+  </g>
+
+  <g id="persons">
+    <rect x="602" y="150" width="390" height="214" rx="12" fill="#fff" stroke="#7c3aed" class="card"/>
+    <path d="M602,190 L602,162 Q602,150 614,150 L980,150 Q992,150 992,162 L992,190 Z" fill="#ede9fe"/>
+    <text x="797" y="176" class="tableTitle" text-anchor="middle">PersonTable</text>
+    <text x="620" y="211" class="tableName">persons</text>
+    <path d="M620,226 H974" class="cardDivider"/>
+    <text x="624" y="250" class="columnStrong">id PK</text>
+    <text x="624" y="272" class="column">first_name, last_name</text>
+    <text x="624" y="294" class="column">email unique, phone nullable, age</text>
+    <text x="624" y="316" class="column">address, zipcode, bio, picture</text>
+    <text x="624" y="338" class="column">created_at, updated_at</text>
+  </g>
+
+  <g id="departments">
+    <rect x="88" y="456" width="390" height="224" rx="12" fill="#fff" stroke="#0f766e" class="card"/>
+    <path d="M88,496 L88,468 Q88,456 100,456 L466,456 Q478,456 478,468 L478,496 Z" fill="#ccfbf1"/>
+    <text x="283" y="482" class="tableTitle" text-anchor="middle">DepartmentTable</text>
+    <text x="106" y="517" class="tableName">departments</text>
+    <path d="M106,532 H460" class="cardDivider"/>
+    <text x="110" y="556" class="columnStrong">id PK</text>
+    <text x="110" y="578" class="column">name unique, code unique</text>
+    <text x="110" y="600" class="column">description, budget, head_count</text>
+    <text x="110" y="622" class="column">is_active, created_at, updated_at</text>
+    <text x="110" y="652" class="note">DAO: employees referrersOn EmployeeTable.departmentId</text>
+  </g>
+
+  <g id="employees">
+    <rect x="602" y="456" width="390" height="224" rx="12" fill="#fff" stroke="#d97706" class="card"/>
+    <path d="M602,496 L602,468 Q602,456 614,456 L980,456 Q992,456 992,468 L992,496 Z" fill="#fef3c7"/>
+    <text x="797" y="482" class="tableTitle" text-anchor="middle">EmployeeTable</text>
+    <text x="620" y="517" class="tableName">employees</text>
+    <path d="M620,532 H974" class="cardDivider"/>
+    <text x="624" y="556" class="columnStrong">id PK</text>
+    <text x="624" y="578" class="column">first_name, last_name, email unique</text>
+    <text x="624" y="600" class="column">position, salary, hire_date, is_active</text>
+    <text x="624" y="622" class="column">department_id FK indexed cascade</text>
+    <text x="624" y="644" class="column">bio, picture, created_at, updated_at</text>
+  </g>
+
+  <path data-connector="department-to-employees" d="M478,584 H602" class="relationship"/>
+  <text x="501" y="566" class="cardinality" text-anchor="middle">1</text>
+  <text x="579" y="566" class="cardinality" text-anchor="middle">N</text>
+  <text x="540" y="615" class="note" text-anchor="middle">department_id</text>
 </svg>

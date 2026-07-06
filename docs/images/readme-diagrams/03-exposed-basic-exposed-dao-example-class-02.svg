@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 880" width="1480" height="880" role="img" aria-label="Exposed DAO Domain Model">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -54,13 +54,13 @@
 <text x="388" y="475" class="tiny">name varchar(50)</text>
 <text x="388" y="490" class="tiny">age integer</text>
 <text x="388" y="505" class="tiny">cityId optReference</text>
-<path d="M226,394 L226,326 L364,326 L364,272" class="inherit"/>
-<path d="M364,256 L352,272 L376,272 Z" class="inheritHead"/>
-<path d="M484,394 L484,326 L364,326 L364,272" class="inherit"/>
-<path d="M364,256 L352,272 L376,272 Z" class="inheritHead"/>
-<path d="M374,468 L336,468" class="fkArrow"/>
-<rect x="338" y="450" width="36" height="24" rx="8" fill="#fff" stroke="#99f6e4"/>
-<text x="356" y="467" class="tiny" text-anchor="middle">FK</text>
+<path d="M226,394 L226,334 Q226,326 234,326 L356,326 Q364,326 364,318 L364,272" class="inherit edge"/>
+<path d="M364,256 L355,270 L373,270 Z" class="inheritHead"/>
+<path d="M484,394 L484,334 Q484,326 476,326 L372,326 Q364,326 364,318 L364,272" class="inherit edge"/>
+<path d="M364,256 L355,270 L373,270 Z" class="inheritHead"/>
+<path d="M374,468 L336,468" class="fkArrow edge"/>
+<rect x="338" y="480" width="36" height="24" rx="8" fill="#fff" stroke="#99f6e4"/>
+<text x="356" y="497" class="tiny" text-anchor="middle">FK</text>
 <rect x="758" y="126" width="600" height="522" rx="12" class="panel"/><text x="1058" y="118" class="panelTitle" text-anchor="middle">ENTITIES</text>
 <rect x="806" y="164" width="232" height="92" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
 <path d="M806,212 L806,168 Q806,164 810,164 L1034,164 Q1038,164 1038,168 L1038,212 Z" fill="#ede9fe"/>
@@ -93,14 +93,14 @@
 <text x="1078" y="475" class="tiny">var name</text>
 <text x="1078" y="490" class="tiny">var age</text>
 <text x="1078" y="505" class="tiny">city: City?</text>
-<path d="M916,394 L916,326 L922,326 L922,272" class="inherit"/>
-<path d="M922,256 L910,272 L934,272 Z" class="inheritHead"/>
-<path d="M1174,394 L1174,326 L922,326 L922,272" class="inherit"/>
-<path d="M922,256 L910,272 L934,272 Z" class="inheritHead"/>
-<path d="M916,394 L916,344 L1194,344 L1194,256" class="mapUse"/>
-<path d="M1174,394 L1174,256" class="mapUse"/>
-<path d="M1026,470 L1064,470" class="assoc"/>
-<path d="M1064,492 L1026,492" class="assoc"/>
+<path d="M922,394 L922,272" class="inherit edge"/>
+<path d="M922,256 L913,270 L931,270 Z" class="inheritHead"/>
+<path d="M1174,394 L1174,334 Q1174,326 1166,326 L930,326 Q922,326 922,318 L922,272" class="inherit edge"/>
+<path d="M922,256 L913,270 L931,270 Z" class="inheritHead"/>
+<path d="M806,470 L760,470 Q752,470 752,462 L752,140 Q752,132 760,132 L1186,132 Q1194,132 1194,140 L1194,164" class="mapUse edge"/>
+<path d="M1174,394 L1174,256" class="mapUse edge"/>
+<path d="M1026,470 L1064,470" class="assoc edge"/>
+<path d="M1064,492 L1026,492" class="assoc edge"/>
 <text x="1045" y="458" class="tiny" text-anchor="middle">1:N</text>
 <text x="1045" y="510" class="tiny" text-anchor="middle">N:0..1</text>
 <rect x="104" y="694" width="1220" height="82" rx="12" class="panel"/><text x="714" y="686" class="panelTitle" text-anchor="middle">TEST HARNESS AND SCENARIOS</text>
@@ -112,9 +112,9 @@
 <text x="839" y="741" class="label" text-anchor="middle">DAO coroutine tests</text>
 <rect x="1024" y="714" width="246" height="42" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
 <text x="1147" y="741" class="label" text-anchor="middle">Sample data helper</text>
-<path d="M360,735 L430,735" class="runtimeUse"/>
-<path d="M248,714 L248,674 L839,674 L839,714" class="runtimeUse"/>
-<path d="M916,544 L916,672 L1147,672 L1147,714" class="queryUse"/>
+<path d="M360,735 L430,735" class="runtimeUse edge"/>
+<path d="M248,714 L248,682 Q248,674 256,674 L831,674 Q839,674 839,682 L839,714" class="runtimeUse edge"/>
+<path d="M916,544 L916,664 Q916,672 924,672 L1139,672 Q1147,672 1147,680 L1147,714" class="queryUse edge"/>
 <rect x="142" y="804" width="1190" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="737" y="834" class="detail" text-anchor="middle">UML check: hollow generalization triangles are explicit and the stems meet their bases from below at 90 degrees.</text>
 </svg>

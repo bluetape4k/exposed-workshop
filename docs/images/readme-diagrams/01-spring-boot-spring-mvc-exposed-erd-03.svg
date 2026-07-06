@@ -1,25 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1460 860" width="1460" height="860" role="img" aria-label="Spring MVC Domain Model">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="inherit" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto"><path d="M1,1 L12,6 L1,11 Z" fill="#fff" stroke="#475569" stroke-width="1.8"/></marker>
+<marker id="arrow" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowSoft" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#94a3b8" stroke="#94a3b8" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowGreen" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowPurple" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="inherit" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="17" refY="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M 1 1 L 17 8 L 1 15 Z" fill="#fff" stroke="#475569" stroke-width="1.5" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
 .subtitle,.detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
 .subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+.cardinality{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:700;fill:#334155}
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
 .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-.softArrow{fill:none;stroke:#94a3b8;stroke-width:1.35;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.softArrow{fill:none;stroke:#94a3b8;stroke-width:1.35;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowSoft)}
 .movieMap{fill:none;stroke:#16a34a;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
 .actorMap{fill:none;stroke:#7c3aed;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .lifeline{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
-.inherit{fill:none;stroke:#475569;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
+.inherit{fill:none;stroke:#475569;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.4;stroke-linejoin:round;stroke-dasharray:none}
 </style>
 </defs>
 <rect width="1460" height="860" class="canvas"/>
@@ -47,33 +49,33 @@
 <text x="258" y="456" class="tiny">movieId FK</text>
 <text x="258" y="473" class="tiny">actorId FK</text>
 <text x="258" y="490" class="tiny">composite PK</text>
-<rect x="720" y="120" width="660" height="250" rx="12" class="panel"/><text x="1050" y="112" class="panelTitle" text-anchor="middle">DAO ENTITIES</text>
+<rect x="720" y="120" width="660" height="390" rx="12" class="panel"/><text x="1050" y="112" class="panelTitle" text-anchor="middle">DAO ENTITIES</text>
 <rect x="934" y="146" width="230" height="90" rx="4" fill="#fff" stroke="#64748b" class="card"/>
 <path d="M934,192 L934,150 Q934,146 938,146 L1160,146 Q1164,146 1164,150 L1164,192 Z" fill="#e2e8f0"/>
 <text x="1049" y="164" class="tiny" text-anchor="middle">&lt;&lt;superclass&gt;&gt;</text>
 <text x="1049" y="182" class="label" text-anchor="middle">LongEntity</text>
 <path d="M934,192 H1164" stroke="#64748b" stroke-width="1.1"/>
 <text x="948" y="210" class="tiny">id: EntityID&lt;Long&gt;</text>
-<rect x="780" y="280" width="240" height="90" rx="4" fill="#fff" stroke="#ea580c" class="card"/>
-<path d="M780,326 L780,284 Q780,280 784,280 L1016,280 Q1020,280 1020,284 L1020,326 Z" fill="#ffedd5"/>
-<text x="900" y="298" class="tiny" text-anchor="middle">&lt;&lt;DAO&gt;&gt;</text>
-<text x="900" y="316" class="label" text-anchor="middle">MovieEntity</text>
-<path d="M780,326 H1020" stroke="#ea580c" stroke-width="1.1"/>
-<text x="794" y="344" class="tiny">name</text>
-<text x="794" y="359" class="tiny">producerName</text>
-<text x="794" y="374" class="tiny">actors</text>
-<rect x="1080" y="280" width="240" height="90" rx="4" fill="#fff" stroke="#db2777" class="card"/>
-<path d="M1080,326 L1080,284 Q1080,280 1084,280 L1316,280 Q1320,280 1320,284 L1320,326 Z" fill="#fce7f3"/>
-<text x="1200" y="298" class="tiny" text-anchor="middle">&lt;&lt;DAO&gt;&gt;</text>
-<text x="1200" y="316" class="label" text-anchor="middle">ActorEntity</text>
-<path d="M1080,326 H1320" stroke="#db2777" stroke-width="1.1"/>
-<text x="1094" y="344" class="tiny">firstName</text>
-<text x="1094" y="359" class="tiny">lastName</text>
-<text x="1094" y="374" class="tiny">movies</text>
-<path d="M900,280 L900,264 L1000,264 L1000,252" class="inherit"/>
-<path d="M1000,236 L988,252 L1012,252 Z" class="inheritHead"/>
-<path d="M1200,280 L1200,264 L1100,264 L1100,252" class="inherit"/>
-<path d="M1100,236 L1088,252 L1112,252 Z" class="inheritHead"/>
+<rect x="780" y="330" width="240" height="120" rx="4" fill="#fff" stroke="#ea580c" class="card"/>
+<path d="M780,376 L780,334 Q780,330 784,330 L1016,330 Q1020,330 1020,334 L1020,376 Z" fill="#ffedd5"/>
+<text x="900" y="348" class="tiny" text-anchor="middle">&lt;&lt;DAO&gt;&gt;</text>
+<text x="900" y="366" class="label" text-anchor="middle">MovieEntity</text>
+<path d="M780,376 H1020" stroke="#ea580c" stroke-width="1.1"/>
+<text x="794" y="397" class="tiny">name</text>
+<text x="794" y="414" class="tiny">producerName</text>
+<text x="794" y="431" class="tiny">actors</text>
+<rect x="1080" y="330" width="240" height="120" rx="4" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M1080,376 L1080,334 Q1080,330 1084,330 L1316,330 Q1320,330 1320,334 L1320,376 Z" fill="#fce7f3"/>
+<text x="1200" y="348" class="tiny" text-anchor="middle">&lt;&lt;DAO&gt;&gt;</text>
+<text x="1200" y="366" class="label" text-anchor="middle">ActorEntity</text>
+<path d="M1080,376 H1320" stroke="#db2777" stroke-width="1.1"/>
+<text x="1094" y="397" class="tiny">firstName</text>
+<text x="1094" y="414" class="tiny">lastName</text>
+<text x="1094" y="431" class="tiny">movies</text>
+<path d="M900,330 L900,304 Q900,296 908,296 L992,296 Q1000,296 1000,288 L1000,248" class="inherit"/>
+<path d="M1000,236 L994,248 L1006,248 Z" class="inheritHead" stroke-dasharray="none" style="stroke-dasharray:none"/>
+<path d="M1200,330 L1200,304 Q1200,296 1192,296 L1108,296 Q1100,296 1100,288 L1100,248" class="inherit"/>
+<path d="M1100,236 L1094,248 L1106,248 Z" class="inheritHead" stroke-dasharray="none" style="stroke-dasharray:none"/>
 <rect x="90" y="550" width="1280" height="160" rx="12" class="panel"/><text x="730" y="542" class="panelTitle" text-anchor="middle">DTO RECORDS</text>
 <rect x="130" y="580" width="190" height="108" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
 <path d="M130,626 L130,584 Q130,580 134,580 L316,580 Q320,580 320,584 L320,626 Z" fill="#dbeafe"/>
@@ -113,14 +115,16 @@
 <text x="1164" y="644" class="tiny">id</text>
 <text x="1164" y="659" class="tiny">firstName</text>
 <text x="1164" y="674" class="tiny">lastName</text>
-<path d="M365,390 L365,340 L201,340 L201,290" class="softArrow"/>
-<rect x="229" y="326" width="108" height="21" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="283" y="341" class="tiny" text-anchor="middle">movieId</text>
-<path d="M365,390 L365,340 L485,340 L485,290" class="softArrow"/>
-<rect x="371" y="326" width="108" height="21" rx="8" fill="#fff" stroke="#d7e2ec"/>
-<text x="425" y="341" class="tiny" text-anchor="middle">actorId</text>
-<path d="M900,370 L900,532 L990,532 L990,580" class="movieMap"/>
-<path d="M1200,370 L1200,532 L1245,532 L1245,580" class="actorMap"/>
+<path d="M330,390 L330,350 Q330,342 322,342 L209,342 Q201,342 201,334 L201,290" class="softArrow edge"/>
+<text x="188" y="318" class="cardinality" text-anchor="middle">1</text>
+<text x="318" y="378" class="cardinality" text-anchor="middle">N</text>
+<text x="266" y="360" class="tiny" text-anchor="middle">movieId</text>
+<path d="M400,390 L400,350 Q400,342 408,342 L477,342 Q485,342 485,334 L485,290" class="softArrow edge"/>
+<text x="502" y="318" class="cardinality" text-anchor="middle">1</text>
+<text x="412" y="378" class="cardinality" text-anchor="middle">N</text>
+<text x="444" y="360" class="tiny" text-anchor="middle">actorId</text>
+<path d="M900,450 L900,524 Q900,532 908,532 L982,532 Q990,532 990,540 L990,580" class="movieMap edge"/>
+<path d="M1200,450 L1200,524 Q1200,532 1208,532 L1237,532 Q1245,532 1245,540 L1245,580" class="actorMap edge"/>
 <rect x="180" y="760" width="1100" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="730" y="790" class="detail" text-anchor="middle">DAO entities model relationships for eager loading; controllers return immutable record DTOs, not Exposed entities.</text>
 </svg>

@@ -1,122 +1,116 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1102 960" width="1102" height="960" role="img" aria-label="07 JPA Migration: Basic Migration (01-convert-JPA-basic)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1102 860" width="1102" height="860" role="img" aria-label="BookSchema ERD for composite primary keys">
   <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+    <filter id="shadow" x="-12%" y="-12%" width="124%" height="136%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
     </filter>
-    <marker id="arrow" viewBox="0 0 9 9" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" viewBox="0 0 11 10" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
+    <marker id="fkArrow" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#60758d" stroke="#60758d" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
     </marker>
     <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
-</style>
+      .canvas{fill:#f6f9fc}
+      .frame{fill:#ffffff;stroke:#d7e2ec;stroke-width:1.5}
+      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
+      .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
+      .tableBox{fill:#ffffff;stroke-width:1.8;filter:url(#shadow)}
+      .tableHead{stroke-width:0}
+      .tableTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:19px;fill:#1e293b}
+      .tableMeta{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:11px;fill:#64748b}
+      .field{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
+      .pk{fill:#1e3a8a;font-weight:700}
+      .fk{fill:#8a4f0a;font-weight:700}
+      .relation{fill:none;stroke:#60758d;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#fkArrow)}
+      .cardinality{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:20px;fill:#334155}
+      .legendText{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
+      .legendBox{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+    </style>
   </defs>
-  <rect width="1102" height="960" class="canvas"/>
-  <rect x="20" y="20" width="1062" height="920" rx="16" class="frame"/>
-<text x="48" y="58" class="title">07 JPA Migration: Basic Migration (01-convert-JPA-basic)</text>
-  <text x="48" y="80" class="subtitle">Source-derived ERD · Exposed table objects and column builders</text>
-<rect x="46" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M46,164 L46,138 Q46,126 58,126 L320,126 Q332,126 332,138 L332,164 Z" fill="#dbeafe"/>
-<text x="189" y="151" class="smallLabel" text-anchor="middle">Simple Table</text>
-<text x="64" y="188" class="tiny">id PK</text>
-<text x="64" y="203" class="tiny">name varchar</text>
-<text x="64" y="218" class="tiny">description text</text>
-<rect x="408" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M408,164 L408,138 Q408,126 420,126 L682,126 Q694,126 694,138 L694,164 Z" fill="#ede9fe"/>
-<text x="551" y="151" class="smallLabel" text-anchor="middle">Post Table</text>
-<text x="426" y="188" class="tiny">id PK</text>
-<text x="426" y="203" class="tiny">title varchar</text>
-<rect x="770" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M770,164 L770,138 Q770,126 782,126 L1044,126 Q1056,126 1056,138 L1056,164 Z" fill="#dcfce7"/>
-<text x="913" y="151" class="smallLabel" text-anchor="middle">Post Detail Table</text>
-<text x="788" y="188" class="tiny">id PK</text>
-<text x="788" y="203" class="tiny">id FK</text>
-<text x="788" y="218" class="tiny">created_on date</text>
-<text x="788" y="233" class="tiny">created_by varchar</text>
-<rect x="46" y="338" width="286" height="154" rx="12" fill="#fff" stroke="#ea580c" class="card"/>
-<path d="M46,376 L46,350 Q46,338 58,338 L320,338 Q332,338 332,350 L332,376 Z" fill="#ffedd5"/>
-<text x="189" y="363" class="smallLabel" text-anchor="middle">Post Comment Table</text>
-<text x="64" y="400" class="tiny">id PK</text>
-<text x="64" y="415" class="tiny">post_id FK</text>
-<text x="64" y="430" class="tiny">review varchar</text>
-<rect x="408" y="338" width="286" height="154" rx="12" fill="#fff" stroke="#db2777" class="card"/>
-<path d="M408,376 L408,350 Q408,338 420,338 L682,338 Q694,338 694,350 L694,376 Z" fill="#fce7f3"/>
-<text x="551" y="363" class="smallLabel" text-anchor="middle">Tag Table</text>
-<text x="426" y="400" class="tiny">id PK</text>
-<text x="426" y="415" class="tiny">name varchar</text>
-<rect x="770" y="338" width="286" height="154" rx="12" fill="#fff" stroke="#0f766e" class="card"/>
-<path d="M770,376 L770,350 Q770,338 782,338 L1044,338 Q1056,338 1056,350 L1056,376 Z" fill="#ccfbf1"/>
-<text x="913" y="363" class="smallLabel" text-anchor="middle">Post Tag Table</text>
-<text x="788" y="400" class="tiny">id PK</text>
-<text x="788" y="415" class="tiny">post_id FK</text>
-<text x="788" y="430" class="tiny">tag_id FK</text>
-<rect x="46" y="550" width="286" height="154" rx="12" fill="#fff" stroke="#d97706" class="card"/>
-<path d="M46,588 L46,562 Q46,550 58,550 L320,550 Q332,550 332,562 L332,588 Z" fill="#fef3c7"/>
-<text x="189" y="575" class="smallLabel" text-anchor="middle">Task Table</text>
-<text x="64" y="612" class="tiny">id PK</text>
-<text x="64" y="627" class="tiny">status enumerationByName</text>
-<text x="64" y="642" class="tiny">changed_on date</text>
-<text x="64" y="657" class="tiny">changed_by varchar</text>
-<rect x="408" y="550" width="286" height="154" rx="12" fill="#fff" stroke="#64748b" class="card"/>
-<path d="M408,588 L408,562 Q408,550 420,550 L682,550 Q694,550 694,562 L694,588 Z" fill="#e2e8f0"/>
-<text x="551" y="575" class="smallLabel" text-anchor="middle">Address Table</text>
-<text x="426" y="612" class="tiny">id PK</text>
-<text x="426" y="627" class="tiny">street varchar</text>
-<text x="426" y="642" class="tiny">city varchar</text>
-<text x="426" y="657" class="tiny">state varchar</text>
-<text x="426" y="672" class="tiny">zip varchar</text>
-<rect x="770" y="550" width="286" height="154" rx="12" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M770,588 L770,562 Q770,550 782,550 L1044,550 Q1056,550 1056,562 L1056,588 Z" fill="#dbeafe"/>
-<text x="913" y="575" class="smallLabel" text-anchor="middle">Person Table</text>
-<text x="788" y="612" class="tiny">id PK</text>
-<text x="788" y="627" class="tiny">first_name varchar</text>
-<text x="788" y="642" class="tiny">last_name varchar</text>
-<text x="788" y="657" class="tiny">birth_date date</text>
-<text x="788" y="672" class="tiny">employed bool</text>
-<text x="788" y="687" class="tiny">occupation varchar</text>
-<rect x="46" y="762" width="286" height="154" rx="12" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M46,800 L46,774 Q46,762 58,762 L320,762 Q332,762 332,774 L332,800 Z" fill="#ede9fe"/>
-<text x="189" y="787" class="smallLabel" text-anchor="middle">Person Table DML</text>
-<text x="64" y="824" class="tiny">id PK</text>
-<text x="64" y="839" class="tiny">first_name varchar</text>
-<text x="64" y="854" class="tiny">last_name varchar</text>
-<text x="64" y="869" class="tiny">birth_date date</text>
-<text x="64" y="884" class="tiny">employed bool</text>
-<text x="64" y="899" class="tiny">occupation varchar</text>
-<rect x="408" y="762" width="286" height="154" rx="12" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M408,800 L408,774 Q408,762 420,762 L682,762 Q694,762 694,774 L694,800 Z" fill="#dcfce7"/>
-<text x="551" y="787" class="smallLabel" text-anchor="middle">Custom Id Table</text>
-<text x="426" y="824" class="tiny">id PK</text>
-<text x="426" y="839" class="tiny">email_id PK</text>
-<text x="426" y="854" class="tiny">name varchar</text>
-<text x="426" y="869" class="tiny">ssn ssn</text>
-<rect x="770" y="762" width="286" height="154" rx="12" fill="#fff" stroke="#ea580c" class="card"/>
-<path d="M770,800 L770,774 Q770,762 782,762 L1044,762 Q1056,762 1056,774 L1056,800 Z" fill="#ffedd5"/>
-<text x="913" y="787" class="smallLabel" text-anchor="middle">Publishers</text>
-<text x="788" y="824" class="tiny">id PK</text>
-<text x="788" y="839" class="tiny">pub_id PK</text>
-<text x="788" y="854" class="tiny">isbn_code javaUUID</text>
-<text x="788" y="869" class="tiny">publisher_name varchar</text>
-<path d="M1056,203 L1056,203 L408,203 L408,203" class="softArrow"/>
-<path d="M189,338 L189,309 L551,309 L551,280" class="softArrow"/>
-<path d="M913,338 L913,309 L551,309 L551,280" class="softArrow"/>
-<path d="M1056,415 L1056,415 L408,415 L408,415" class="softArrow"/>
-<path d="M1056,627 L1056,627 L408,627 L408,627" class="softArrow"/>
-<text x="551" y="110" class="panelTitle" text-anchor="middle">TABLES AND RELATIONSHIPS</text>
+
+  <rect width="1102" height="860" class="canvas"/>
+  <rect x="20" y="20" width="1062" height="820" rx="16" class="frame"/>
+
+  <text x="48" y="60" class="title">BookSchema ERD (Composite PK)</text>
+  <text x="48" y="83" class="subtitle">Exposed CompositeIdTable schema for @EmbeddedId/@IdClass migration examples</text>
+  <g id="publishers" data-node="publishers">
+    <rect x="58" y="318" width="294" height="214" rx="12" class="tableBox" stroke="#ea580c"/>
+    <path d="M58,356 L58,330 Q58,318 70,318 L340,318 Q352,318 352,330 L352,356 Z" class="tableHead" fill="#ffedd5"/>
+    <text x="205" y="344" class="tableTitle" text-anchor="middle">Publishers</text>
+    <text x="78" y="382" class="field pk">pub_id int PK auto</text>
+    <text x="78" y="402" class="field pk">isbn_code uuid PK auto</text>
+    <text x="78" y="422" class="field">publisher_name varchar(32)</text>
+    <text x="78" y="456" class="tableMeta">CompositeIdTable("publishers")</text>
+    <text x="78" y="476" class="tableMeta">PrimaryKey(pub_id, isbn_code)</text>
+    <text x="78" y="496" class="tableMeta">Publisher : CompositeEntity</text>
+  </g>
+
+  <g id="authors" data-node="authors">
+    <rect x="432" y="150" width="294" height="214" rx="12" class="tableBox" stroke="#3b82f6"/>
+    <path d="M432,188 L432,162 Q432,150 444,150 L714,150 Q726,150 726,162 L726,188 Z" class="tableHead" fill="#dbeafe"/>
+    <text x="579" y="176" class="tableTitle" text-anchor="middle">Authors</text>
+    <text x="452" y="214" class="field pk">id int PK</text>
+    <text x="452" y="234" class="field fk">publisher_id int FK</text>
+    <text x="452" y="254" class="field fk">publisher_isbn uuid FK</text>
+    <text x="452" y="274" class="field">pen_name varchar(32)</text>
+    <text x="452" y="308" class="tableMeta">IntIdTable("authors")</text>
+    <text x="452" y="328" class="tableMeta">foreignKey(..., Publishers.primaryKey)</text>
+  </g>
+
+  <g id="books" data-node="books">
+    <rect x="794" y="150" width="250" height="214" rx="12" class="tableBox" stroke="#16a34a"/>
+    <path d="M794,188 L794,162 Q794,150 806,150 L1032,150 Q1044,150 1044,162 L1044,188 Z" class="tableHead" fill="#dcfce7"/>
+    <text x="919" y="176" class="tableTitle" text-anchor="middle">Books</text>
+    <text x="814" y="214" class="field pk">book_id int PK auto</text>
+    <text x="814" y="234" class="field">title varchar(32)</text>
+    <text x="814" y="254" class="field fk">author_id int? FK</text>
+    <text x="814" y="288" class="tableMeta">CompositeIdTable("books")</text>
+    <text x="814" y="308" class="tableMeta">PrimaryKey(book_id)</text>
+    <text x="814" y="328" class="tableMeta">Book : CompositeEntity</text>
+  </g>
+
+  <g id="offices" data-node="offices">
+    <rect x="432" y="528" width="294" height="244" rx="12" class="tableBox" stroke="#8b5cf6"/>
+    <path d="M432,566 L432,540 Q432,528 444,528 L714,528 Q726,528 726,540 L726,566 Z" class="tableHead" fill="#ede9fe"/>
+    <text x="579" y="554" class="tableTitle" text-anchor="middle">Offices</text>
+    <text x="452" y="592" class="field pk">zip_code varchar(8) PK</text>
+    <text x="452" y="612" class="field pk">name varchar(64) PK</text>
+    <text x="452" y="632" class="field pk">area_code int PK</text>
+    <text x="452" y="652" class="field">staff bigint?</text>
+    <text x="452" y="672" class="field fk">publisher_id int? FK</text>
+    <text x="452" y="692" class="field fk">publisher_isbn uuid? FK</text>
+    <text x="452" y="726" class="tableMeta">CompositeIdTable("offices")</text>
+    <text x="452" y="746" class="tableMeta">PrimaryKey(zip_code, name, area_code)</text>
+  </g>
+
+  <g id="reviews" data-node="reviews">
+    <rect x="794" y="528" width="250" height="214" rx="12" class="tableBox" stroke="#0f766e"/>
+    <path d="M794,566 L794,540 Q794,528 806,528 L1032,528 Q1044,528 1044,540 L1044,566 Z" class="tableHead" fill="#ccfbf1"/>
+    <text x="919" y="554" class="tableTitle" text-anchor="middle">Reviews</text>
+    <text x="814" y="592" class="field pk">code varchar(8) PK</text>
+    <text x="814" y="612" class="field pk">rank bigint PK</text>
+    <text x="814" y="632" class="field fk">book_id int FK</text>
+    <text x="814" y="666" class="tableMeta">CompositeIdTable("reviews")</text>
+    <text x="814" y="686" class="tableMeta">PrimaryKey(code, rank)</text>
+    <text x="814" y="706" class="tableMeta">Review : CompositeEntity</text>
+  </g>
+
+  <path id="publishers-authors" class="relation" data-connector="publishers-authors" d="M352,382 L388,382 Q400,382 400,370 L400,262 Q400,250 412,250 L432,250"/>
+  <text x="365" y="375" class="cardinality">1</text>
+  <text x="414" y="242" class="cardinality">N</text>
+
+  <path id="authors-books" class="relation" data-connector="authors-books" d="M726,250 L794,250"/>
+  <text x="736" y="242" class="cardinality">1</text>
+  <text x="778" y="278" class="cardinality">N</text>
+
+  <path id="books-reviews" class="relation" data-connector="books-reviews" d="M919,364 L919,528"/>
+  <text x="928" y="386" class="cardinality">1</text>
+  <text x="928" y="516" class="cardinality">N</text>
+
+  <path id="publishers-offices" class="relation" data-connector="publishers-offices" d="M352,468 L388,468 Q400,468 400,480 L400,636 Q400,648 412,648 L432,648"/>
+  <text x="365" y="461" class="cardinality">1</text>
+  <text x="414" y="640" class="cardinality">N</text>
+
+  <rect x="58" y="700" width="294" height="86" rx="10" class="legendBox"/>
+  <text x="76" y="724" class="legendText"><tspan class="pk">PK</tspan> columns are Exposed entityId() parts.</text>
+  <text x="76" y="746" class="legendText"><tspan class="fk">FK</tspan> lines point from parent table</text>
+  <text x="76" y="766" class="legendText">to child FK table.</text>
+  <text x="48" y="812" class="subtitle">Relations: Publisher 1:N Author, Author 1:N Book, Book 1:N Review, Publisher 1:N Office.</text>
 </svg>

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 800" width="2200" height="800" role="img" aria-label="Spring MVC Schema-Tenant Architecture">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 730" width="2200" height="730" role="img" aria-label="Spring MVC Schema-Tenant Architecture">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker><marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker><marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker><marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker><marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker><marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -13,16 +13,16 @@
 .card,.uml,.tableBox,.dbBody{stroke-width:1.7;filter:url(#shadow)}
 .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
 .call,.runtime,.storage,.map,.fk,.ret{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.call{stroke:#2563eb}.runtime{stroke:#7c3aed}
-.storage{stroke:#ea580c}.map{stroke:#16a34a}
-.fk{stroke:#0f766e}.ret{stroke:#64748b;stroke-dasharray:7 5}
+.call{stroke:#2563eb;marker-end:url(#arrowBlue)}.runtime{stroke:#7c3aed;marker-end:url(#arrowPurple)}
+.storage{stroke:#ea580c;marker-end:url(#arrowOrange)}.map{stroke:#16a34a;marker-end:url(#arrowGreen)}
+.fk{stroke:#0f766e;marker-end:url(#arrowTeal)}.ret{stroke:#64748b;stroke-dasharray:7 5;marker-end:url(#arrowGray)}
 .inherit{fill:none;stroke:#334155;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .inheritTriangle{fill:#fff;stroke:#334155;stroke-width:1.8}
 .lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
 </style>
 </defs>
-<rect width="2200" height="800" class="canvas"/>
-<rect x="20" y="20" width="2160" height="760" rx="16" class="frame"/>
+<rect width="2200" height="730" class="canvas"/>
+<rect x="20" y="20" width="2160" height="690" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Spring MVC Schema-Tenant Architecture</text>
 <text x="48" y="80" class="subtitle">TenantFilter binds ThreadLocal context; AOP switches the Spring transaction connection before Exposed queries run</text>
 <rect x="66" y="238" width="500" height="145" rx="12" class="panel"/>
@@ -34,22 +34,22 @@
 <rect x="1605" y="75" width="535" height="455" rx="12" class="panel"/>
 <text x="1872.5" y="95" class="panelTitle" text-anchor="middle">SCHEMA STORAGE</text>
 <path d="M285,330 L315,330" class="call"/>
-<path d="M410,365 L410,393 L410,430 L690,430 L690,487 L690,515" class="runtime"/>
+<path d="M410,365 V422 Q410,430 418,430 H682 Q690,430 690,438 V515" class="runtime"/>
 <path d="M812.5,550 L837.5,550" class="runtime"/>
-<path d="M965,515 L965,487 L965,480 L1245,480 L1245,464 L1245,436" class="call"/>
+<path d="M965,515 V496 Q965,488 973,488 H1237 Q1245,488 1245,480 V436" class="call"/>
 <path d="M1355,400 L1780,400" class="map"/>
 <path d="M1950,400 L1975,400" class="storage"/>
-<path d="M690,585 L690,613 L690,610 L965,610 L965,602 L965,630" class="runtime"/>
+<path d="M690,585 V602 Q690,610 698,610 H957 Q965,610 965,618 V630" class="runtime"/>
 <path d="M1100,665 L1122.5,665" class="call"/>
-<path d="M1367.5,665 L1395.5,665 L1970,665 L1970,495 L2055,495 L2055,493 L2055,465" class="storage"/>
+<path d="M1367.5,665 H1962 Q1970,665 1970,657 V503 Q1970,495 1978,495 H2047 Q2055,495 2055,487 V465" class="storage"/>
 <path d="M1355,330 L1380,330" class="call"/>
 <path d="M1600,330 L1635,330" class="storage"/>
-<path d="M1765,330 L1793,330 L1920,330 L1947,330 L1947,365 L1975,365" class="storage"/>
-<path d="M1490,294 L1490,266 L1490,205 L1680,205 L1680,199 L1680,171" class="storage"/>
-<path d="M1750,140 L1778,140 L1760,140 L1760,150 L1760,220 L1742,220 L1770,220" class="storage"/>
-<path d="M1355,220 L1383,220 L1660,220 L1660,195 L1742,195 L1770,195" class="map"/>
-<path d="M1245,256 L1245,284 L1245,295 L1775,295 L1775,370 L1752,370 L1780,370" class="map"/>
-<path d="M1960,220 L1988,220 L1970,220 L1970,310 L2055,310 L2055,307 L2055,335" class="storage"/>
+<path d="M1765,330 H1939 Q1947,330 1947,338 V357 Q1947,365 1955,365 H1975" class="storage"/>
+<path d="M1490,294 V270 Q1490,262 1482,262 H1328 Q1320,262 1320,254 V148 Q1320,140 1328,140 H1610" class="storage"/>
+<path d="M1750,140 H1857 Q1865,140 1865,148 V158" class="storage"/>
+<path d="M1355,220 H1652 Q1660,220 1660,212 V203 Q1660,195 1668,195 H1770" class="map"/>
+<path d="M1245,256 V287 Q1245,295 1253,295 H1767 Q1775,295 1775,303 V362 Q1775,370 1783,370 H1780" class="map"/>
+<path d="M1960,220 H1970 Q1978,220 1978,228 V302 Q1978,310 1986,310 H2047 Q2055,310 2055,318 V335" class="storage"/>
 <path d="M542.5,550 L567.5,550" class="runtime"/>
 <g data-id="httpClient" data-label="HTTP Client">
 <path d="M113,291 H277 Q285,291 285,299 V361 Q285,369 277,369 H113 L95,330 Z" fill="#dbeafe" stroke="#2563eb" class="card"/>
@@ -142,6 +142,4 @@
 <text x="2055" y="418.2" class="detail" text-anchor="middle">schemas</text>
 <text x="2055" y="435.2" class="detail" text-anchor="middle">korean / english</text>
 </g>
-<rect x="96" y="718" width="1990" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec" stroke-width="1.2"/>
-<text x="114" y="745" class="detail">Source check: Primary dataSource uses shared DB/separate schema; TenantAwareDataSource is the database-per-tenant alternative, not the primary path.</text>
 </svg>

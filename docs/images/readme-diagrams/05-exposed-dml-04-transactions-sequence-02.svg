@@ -1,76 +1,131 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 880" width="1500" height="880" role="img" aria-label="Exposed Coroutine Transaction Flow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 880" width="1500" height="880" role="img" aria-labelledby="title desc">
+<title id="title">Exposed coroutine nested transaction sequence</title>
+<desc id="desc">Coroutine transaction tests reuse the active transaction when present, create savepoints for nested work, roll back savepoint1, and assert that only city1 remains.</desc>
 <defs>
-<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
 <style>
-.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
-.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.savepoint{fill:none;stroke:#db2777;stroke-width:1.9;stroke-dasharray:7 4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.returnLine{fill:none;stroke:#64748b;stroke-width:1.8;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-.lifeline{stroke:#cbd5e1;stroke-width:1.5;stroke-dasharray:5 6}
+text{letter-spacing:0}
+.frame{fill:#fbfcf8;stroke:#41545d;stroke-width:3}
+.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:38px;font-weight:400;fill:#263238}
+.subtitle,.msg,.note,.footer,.role{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#36464f}
+.subtitle{font-size:17px}.participant{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;font-weight:400;fill:#1f3138}.role{font-size:12px;fill:#546a73}
+.msg{font-size:13px}.note{font-size:13px}.footer{font-size:13px;fill:#60727d}
+.header{fill:#ffffff;stroke:#546e7a;stroke-width:2}.lifeline{stroke:#9aaab1;stroke-width:2;stroke-dasharray:7 8}
+.activation{fill:#f3ecdf;stroke:#8f784e;stroke-width:1.5}
+.altFrame{fill:none;stroke:#7d939e;stroke-width:2.5;stroke-dasharray:10 7}
+.branchLabel{fill:#ffffff;stroke:#c8b38f;stroke-width:1.4}
+.call{fill:none;stroke:#3f7d9c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowCall)}
+.sql{fill:none;stroke:#a2743d;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowSql)}
+.state{fill:none;stroke:#6e8f4f;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowState)}
+.return{fill:none;stroke:#9b7d54;stroke-width:2.5;stroke-dasharray:8 6;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowReturn)}
+.error{fill:none;stroke:#b65b5b;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowError)}
+.label{fill:#ffffff;stroke:#d7e0e4;stroke-width:1.5}.label.callLabel{stroke:#9cc2d1}.label.sqlLabel{stroke:#d0b078}.label.stateLabel{stroke:#b6c9a4}.label.returnLabel{stroke:#c8b38f}.label.errorLabel{stroke:#d79595}
+.badge{stroke-width:1.8}.badge.callBadge{fill:#eaf4f8;stroke:#3f7d9c}.badge.sqlBadge{fill:#fff4df;stroke:#a2743d}.badge.stateBadge{fill:#eef7f0;stroke:#6e8f4f}.badge.returnBadge{fill:#fff7e8;stroke:#9b7d54}.badge.errorBadge{fill:#fff1f1;stroke:#b65b5b}
+.badgeText{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:700}
+.msg.callText,.badgeText.callText{fill:#2f6f8e}.msg.sqlText,.badgeText.sqlText{fill:#855a29}.msg.stateText,.badgeText.stateText{fill:#55783f}.msg.returnText,.badgeText.returnText{fill:#7f6038}.msg.errorText,.badgeText.errorText{fill:#9b4545}
 </style>
+<marker id="arrowCall" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+<path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c" stroke="#3f7d9c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+</marker>
+<marker id="arrowSql" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+<path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+</marker>
+<marker id="arrowState" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+<path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+</marker>
+<marker id="arrowReturn" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+<path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b7d54" stroke="#9b7d54" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+</marker>
+<marker id="arrowError" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+<path d="M 0 0 L 10 5 L 0 10 Z" fill="#b65b5b" stroke="#b65b5b" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+</marker>
 </defs>
-<rect width="1500" height="880" class="canvas"/>
-<rect x="20" y="20" width="1460" height="840" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Exposed Coroutine Transaction Flow</text>
-<text x="48" y="80" class="subtitle">Coroutine tests choose current savepoint or new suspended transaction, then return to the outer transaction context</text>
-<rect x="26" y="128" width="164" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="108" y="161" class="label" text-anchor="middle">Test</text>
-<path d="M108,182 L108,730" class="lifeline"/>
-<rect x="242" y="128" width="164" height="54" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="324" y="161" class="label" text-anchor="middle">withTablesSuspending</text>
-<path d="M324,182 L324,730" class="lifeline"/>
-<rect x="466" y="128" width="164" height="54" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="548" y="161" class="label" text-anchor="middle">TransactionManager</text>
-<path d="M548,182 L548,730" class="lifeline"/>
-<rect x="704" y="128" width="164" height="54" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="786" y="161" class="label" text-anchor="middle">Savepoint helper</text>
-<path d="M786,182 L786,730" class="lifeline"/>
-<rect x="946" y="128" width="164" height="54" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="1028" y="161" class="label" text-anchor="middle">H2 Cities</text>
-<path d="M1028,182 L1028,730" class="lifeline"/>
-<rect x="1184" y="128" width="164" height="54" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1266" y="161" class="label" text-anchor="middle">Assertions</text>
-<path d="M1266,182 L1266,730" class="lifeline"/>
-<path d="M108,230 L324,230" class="arrow"/>
-<rect x="124" y="202" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="216" y="217" class="tiny" text-anchor="middle">1. runSuspendIO</text>
-<path d="M324,292 L548,292" class="arrow"/>
-<rect x="344" y="264" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="436" y="279" class="tiny" text-anchor="middle">2. currentOrNull()</text>
-<path d="M548,354 L786,354" class="arrow"/>
-<rect x="575" y="326" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="667" y="341" class="tiny" text-anchor="middle">3. current tx exists</text>
-<path d="M786,416 L1028,416" class="arrow"/>
-<rect x="815" y="388" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="907" y="403" class="tiny" text-anchor="middle">4. setSavepoint</text>
-<path d="M786,478 L1028,478" class="arrow"/>
-<rect x="815" y="450" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="907" y="465" class="tiny" text-anchor="middle">5. insert city2/city3</text>
-<path d="M1028,540 L786,540" class="returnLine"/>
-<rect x="803" y="512" width="208" height="22" rx="7" fill="#fff" stroke="#cbd5e1"/>
-<text x="907" y="527" class="tiny" text-anchor="middle">6. rollback savepoint1</text>
-<path d="M108,602 L1028,602" class="arrow"/>
-<rect x="476" y="574" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="568" y="589" class="tiny" text-anchor="middle">7. select remaining rows</text>
-<path d="M108,646 L1266,646" class="arrow"/>
-<rect x="595" y="618" width="184" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="687" y="633" class="tiny" text-anchor="middle">8. assert [city1]</text>
-<path d="M548,704 L108,704" class="returnLine"/>
-<rect x="224" y="676" width="208" height="22" rx="7" fill="#fff" stroke="#cbd5e1"/>
-<text x="328" y="691" class="tiny" text-anchor="middle">fallback: newSuspendedTransaction</text>
-<rect x="116" y="774" width="1268" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="750" y="805" class="detail" text-anchor="middle">Sequence check: return paths are dashed; helper chooses runWithSavepoint when a TransactionManager context exists, otherwise starts newSuspendedTransaction.</text>
+<rect x="24" y="24" width="1452" height="832" rx="20" class="frame"/>
+<text x="750" y="72" text-anchor="middle" class="title">Coroutine Nested Transaction Savepoint Flow</text>
+<text x="750" y="102" text-anchor="middle" class="subtitle">The helper reuses an active transaction, rolls back savepoint1, and leaves the outer city1 row intact.</text>
+
+<g id="participants">
+<rect x="46" y="142" width="140" height="64" rx="10" class="header"/>
+<text x="116" y="169" text-anchor="middle" class="participant">Test</text>
+<text x="116" y="190" text-anchor="middle" class="role">runSuspendIO</text>
+<rect x="242" y="142" width="176" height="64" rx="10" class="header"/>
+<text x="330" y="169" text-anchor="middle" class="participant">withTables</text>
+<text x="330" y="190" text-anchor="middle" class="role">suspending fixture</text>
+<rect x="494" y="142" width="178" height="64" rx="10" class="header"/>
+<text x="583" y="169" text-anchor="middle" class="participant">TxManager</text>
+<text x="583" y="190" text-anchor="middle" class="role">currentOrNull</text>
+<rect x="746" y="142" width="188" height="64" rx="10" class="header"/>
+<text x="840" y="169" text-anchor="middle" class="participant">Savepoint</text>
+<text x="840" y="190" text-anchor="middle" class="role">helper</text>
+<rect x="1010" y="142" width="164" height="64" rx="10" class="header"/>
+<text x="1092" y="169" text-anchor="middle" class="participant">Cities</text>
+<text x="1092" y="190" text-anchor="middle" class="role">H2 rows</text>
+<rect x="1258" y="142" width="166" height="64" rx="10" class="header"/>
+<text x="1341" y="169" text-anchor="middle" class="participant">Assertions</text>
+<text x="1341" y="190" text-anchor="middle" class="role">city names</text>
+</g>
+
+<line x1="116" y1="206" x2="116" y2="770" class="lifeline"/>
+<line x1="330" y1="206" x2="330" y2="770" class="lifeline"/>
+<line x1="583" y1="206" x2="583" y2="770" class="lifeline"/>
+<line x1="840" y1="206" x2="840" y2="770" class="lifeline"/>
+<line x1="1092" y1="206" x2="1092" y2="770" class="lifeline"/>
+<line x1="1341" y1="206" x2="1341" y2="770" class="lifeline"/>
+
+<rect x="323" y="262" width="14" height="472" rx="6" class="activation"/>
+<rect x="576" y="324" width="14" height="98" rx="6" class="activation"/>
+<rect x="576" y="704" width="14" height="58" rx="6" class="activation"/>
+<rect x="833" y="386" width="14" height="366" rx="6" class="activation"/>
+<rect x="1085" y="448" width="14" height="182" rx="6" class="activation"/>
+<rect x="1334" y="646" width="14" height="82" rx="6" class="activation"/>
+
+<rect x="70" y="224" width="352" height="34" rx="17" class="label callLabel"/>
+<circle cx="94" cy="241" r="13" class="badge callBadge"/><text x="94" y="246" text-anchor="middle" class="badgeText callText">1</text>
+<text x="118" y="246" class="msg callText">withTablesSuspending(testDB, Cities)</text>
+<path d="M 116 276 L 323 276" class="call"/>
+
+<rect x="288" y="286" width="338" height="34" rx="17" class="label callLabel"/>
+<circle cx="312" cy="303" r="13" class="badge callBadge"/><text x="312" y="308" text-anchor="middle" class="badgeText callText">2</text>
+<text x="336" y="308" class="msg callText">TransactionManager.currentOrNull()</text>
+<path d="M 337 338 L 576 338" class="call"/>
+
+<rect x="70" y="358" width="1360" height="402" rx="14" class="alt altFrame"/>
+<rect x="96" y="378" width="256" height="30" rx="15" class="branchLabel"/>
+<text x="116" y="398" class="msg returnText">alt current transaction exists</text>
+<line x1="70" y1="604" x2="1430" y2="604" class="branchDivider altFrame"/>
+<rect x="96" y="620" width="300" height="30" rx="15" class="branchLabel"/>
+<text x="116" y="640" class="msg returnText">else no active transaction context</text>
+
+<rect x="544" y="354" width="326" height="34" rx="17" class="label stateLabel"/>
+<circle cx="568" cy="371" r="13" class="badge stateBadge"/><text x="568" y="376" text-anchor="middle" class="badgeText stateText">3</text>
+<text x="592" y="376" class="msg stateText">runWithSavepoint(savepoint1)</text>
+<path d="M 590 402 L 833 402" class="state"/>
+
+<rect x="774" y="416" width="382" height="34" rx="17" class="label sqlLabel"/>
+<circle cx="798" cy="433" r="13" class="badge sqlBadge"/><text x="798" y="438" text-anchor="middle" class="badgeText sqlText">4</text>
+<text x="822" y="438" class="msg sqlText">setSavepoint + insert city2/city3</text>
+<path d="M 847 464 L 1085 464" class="sql"/>
+
+<rect x="772" y="478" width="330" height="34" rx="17" class="label errorLabel"/>
+<circle cx="796" cy="495" r="13" class="badge errorBadge"/><text x="796" y="500" text-anchor="middle" class="badgeText errorText">5</text>
+<text x="820" y="500" class="msg errorText">rollback(savepoint1)</text>
+<path d="M 1085 526 L 847 526" class="error"/>
+
+<rect x="692" y="540" width="386" height="34" rx="17" class="label returnLabel"/>
+<circle cx="716" cy="557" r="13" class="badge returnBadge"/><text x="716" y="562" text-anchor="middle" class="badgeText returnText">6</text>
+<text x="740" y="562" class="msg returnText">cityNames() returns [city1]</text>
+<path d="M 1085 588 L 337 588" class="return"/>
+
+<rect x="1030" y="614" width="332" height="34" rx="17" class="label stateLabel"/>
+<circle cx="1054" cy="631" r="13" class="badge stateBadge"/><text x="1054" y="636" text-anchor="middle" class="badgeText stateText">7</text>
+<text x="1078" y="636" class="msg stateText">assert names == [city1]</text>
+<path d="M 337 664 L 1334 664" class="state"/>
+
+<rect x="542" y="692" width="384" height="34" rx="17" class="label callLabel"/>
+<circle cx="566" cy="709" r="13" class="badge callBadge"/><text x="566" y="714" text-anchor="middle" class="badgeText callText">8</text>
+<text x="590" y="714" class="msg callText">newSuspendedTransaction fallback</text>
+<path d="M 833 734 L 590 734" class="call"/>
+
+<rect x="98" y="790" width="1304" height="42" rx="12" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
+<text x="118" y="816" class="note">runWithSavepointOrNewTransaction uses the current TransactionManager context when present; fallback starts a new suspended transaction.</text>
+<text x="750" y="850" text-anchor="middle" class="footer">github.com/bluetape4k/exposed-workshop - 05-exposed-dml/04-transactions</text>
 </svg>

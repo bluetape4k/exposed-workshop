@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 820" width="1500" height="820" role="img" aria-label="Thread Model Structure Comparison">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowGreen" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowPink" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777" stroke="#db2777" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowOrange" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowPurple" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowGray" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -66,14 +66,14 @@
 <text x="1352" y="522" class="label" text-anchor="middle">DB</text>
 <text x="1314" y="556" class="tiny">VTester</text>
 <text x="1314" y="574" class="tiny">unique</text>
-<path d="M306,222 L384,222" class="arrow"/>
-<path d="M614,222 L692,222" class="arrow"/>
-<path d="M922,222 L1000,222" class="mapLine"/>
-<path d="M1230,222 L1262,222 L1262,235 L1300,235" class="dbUse"/>
-<path d="M306,532 L384,532" class="arrow"/>
-<path d="M614,532 L692,532" class="arrow"/>
-<path d="M922,532 L1000,532" class="mapLine"/>
-<path d="M1230,532 L1262,532 L1262,545 L1300,545" class="dbUse"/>
+<path d="M306,222 L384,222" class="arrow" data-connector="suspend-to-jobs"/>
+<path d="M614,222 L692,222" class="arrow" data-connector="jobs-to-dispatcher"/>
+<path d="M922,222 L1000,222" class="mapLine" data-connector="dispatcher-to-pool"/>
+<path d="M1230,222 L1300,222" class="dbUse" data-connector="pool-to-coroutine-db"/>
+<path d="M306,532 L384,532" class="arrow" data-connector="blocking-to-future"/>
+<path d="M614,532 L692,532" class="arrow" data-connector="future-to-virtual-thread"/>
+<path d="M922,532 L1000,532" class="mapLine" data-connector="virtual-thread-to-jdbc"/>
+<path d="M1230,532 L1300,532" class="dbUse" data-connector="jdbc-to-vt-db"/>
 <rect x="150" y="738" width="1200" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="769" class="detail" text-anchor="middle">Model rule: coroutines require suspend-aware transaction boundaries; virtual threads preserve blocking-style transaction code but still share the same JDBC connection bottleneck.</text>
 </svg>

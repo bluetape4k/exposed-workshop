@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Coroutine Transaction Flow">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowGreen" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowPink" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777" stroke="#db2777" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowOrange" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowPurple" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowGray" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -72,16 +72,16 @@
 <text x="1306" y="378" class="tiny">H2</text>
 <text x="1306" y="396" class="tiny">Postgres</text>
 <text x="1306" y="414" class="tiny">MySQL</text>
-<path d="M318,209 L410,209 L410,208 L506,208" class="arrow"/>
-<path d="M318,329 L410,329 L410,208 L506,208" class="arrow"/>
-<path d="M318,449 L410,449 L410,334 L506,334" class="runtimeUse"/>
-<path d="M742,208 L836,208 L836,218 L922,218" class="mapLine"/>
-<path d="M742,334 L852,334 L852,238 L922,238" class="mapLine"/>
-<path d="M742,460 L812,460 L812,258 L922,258" class="arrow"/>
-<path d="M742,586 L836,586 L836,605 L922,605" class="runtimeUse"/>
-<path d="M1144,233 L1220,233 L1220,360 L1292,360" class="dbUse"/>
-<path d="M1144,419 L1220,419 L1220,420 L1292,420" class="dbUse"/>
-<path d="M1144,605 L1220,605 L1220,480 L1292,480" class="dbUse"/>
+<path d="M318,209 L506,209" class="arrow" data-connector="run-to-new-suspended"/>
+<path d="M318,329 L506,329" class="arrow" data-connector="fixture-to-with-suspend"/>
+<path d="M318,449 L506,449" class="runtimeUse" data-connector="dispatcher-to-async"/>
+<path d="M742,208 L922,208" class="mapLine" data-connector="new-suspended-to-tester"/>
+<path d="M742,334 L822,334 Q842,334 842,314 L842,258 Q842,238 862,238 L922,238" class="mapLine" data-connector="with-suspend-to-tester"/>
+<path d="M742,460 L842,460 Q862,460 862,440 L862,419 Q862,399 882,399 L922,399" class="arrow" data-connector="async-to-unique"/>
+<path d="M742,586 L922,586" class="runtimeUse" data-connector="await-to-entity"/>
+<path d="M1144,233 L1200,233 Q1220,233 1220,253 L1220,340 Q1220,360 1240,360 L1292,360" class="dbUse" data-connector="tester-to-db"/>
+<path d="M1144,419 L1292,419" class="dbUse" data-connector="unique-to-db"/>
+<path d="M1144,605 L1200,605 Q1220,605 1220,585 L1220,500 Q1220,480 1240,480 L1292,480" class="dbUse" data-connector="entity-to-db"/>
 <rect x="132" y="780" width="1236" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="750" y="811" class="detail" text-anchor="middle">Source check: Ex01_Coroutines inserts/selects Tester rows, uses TesterUnique for duplicate-key failures, and confirms nested connection cleanup after ExposedSQLException.</text>
+<text x="750" y="811" class="detail" text-anchor="middle">Ex01_Coroutines inserts/selects Tester rows, uses TesterUnique for duplicate-key failures, and confirms nested connection cleanup.</text>
 </svg>

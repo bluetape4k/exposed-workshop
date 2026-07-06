@@ -1,86 +1,117 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 940" width="1500" height="940" role="img" aria-label="TransactionTemplate Execution Flow">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowGreen" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6f8f58" stroke="#6f8f58" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowOrange" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowPurple" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7a8445" stroke="#7a8445" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowGray" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6f8792" stroke="#6f8792" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
-.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+.canvas{fill:none}.frame{fill:#fbfcf8;stroke:#40545d;stroke-width:3}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
 .subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
-.className{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-.card,.uml{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round}
-.returnLine{fill:none;stroke:#64748b;stroke-width:1.7;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round}
-.inherit{fill:none;stroke:#334155;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
-.altRegion{fill:#f8fafc;fill-opacity:.055;stroke:#94a3b8;stroke-opacity:.28;stroke-width:1.2;stroke-dasharray:8 7}
+.subtitle{font-size:13px}.detail{font-size:12px}.role{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10.5px;fill:#60727d}
+.participant{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
+.card{stroke-width:1.7;filter:url(#shadow)}
+.header{fill:#ffffff;stroke:#b6d3ec;stroke-width:1.7;filter:url(#shadow)}
+.lifeline{stroke:#9cafb7;stroke-width:1.4;stroke-dasharray:5 6}
+.activation{fill:#f3ecdf;stroke:#8f784e;stroke-width:1.5}
+.call{fill:none;stroke:#4f86c6;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.state{fill:none;stroke:#6f8f58;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.db{fill:none;stroke:#a2743d;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.spring{fill:none;stroke:#7a8445;stroke-width:2.3;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.returnLine{fill:none;stroke:#6f8792;stroke-width:2.2;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGray)}
+.loopRegion{fill:none;stroke:#8298a3;stroke-opacity:.55;stroke-width:1.5;stroke-dasharray:8 7}
+.pill{stroke-width:1.6;filter:url(#shadow)}
+.badge{fill:#fff;stroke-width:1.4}
 </style>
 </defs>
 <rect width="1500" height="940" class="canvas"/>
 <rect x="20" y="20" width="1460" height="900" rx="16" class="frame"/>
-<rect x="90" y="250" width="1280" height="570" rx="14" class="altRegion"/>
 <text x="48" y="58" class="title">TransactionTemplate Execution Flow</text>
-<text x="48" y="80" class="subtitle">TransactionTemplateTest exercises Spring TransactionTemplate, Exposed transaction blocks, no-Spring-transaction operations, and @Transactional inheritance</text>
-<desc>Test</desc><rect x="29" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="105" y="163" class="label" text-anchor="middle">Test</text>
-<line x1="105" y1="184" x2="105" y2="846" class="lifeline"/>
-<desc>BookService</desc><rect x="244" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="320" y="163" class="label" text-anchor="middle">BookService</text>
-<line x1="320" y1="184" x2="320" y2="846" class="lifeline"/>
-<desc>TxTemplate</desc><rect x="464" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="540" y="163" class="label" text-anchor="middle">TxTemplate</text>
-<line x1="540" y1="184" x2="540" y2="846" class="lifeline"/>
-<desc>Spring TM</desc><rect x="684" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="760" y="163" class="label" text-anchor="middle">Spring TM</text>
-<line x1="760" y1="184" x2="760" y2="846" class="lifeline"/>
-<desc>Exposed tx</desc><rect x="904" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="980" y="163" class="label" text-anchor="middle">Exposed tx</text>
-<line x1="980" y1="184" x2="980" y2="846" class="lifeline"/>
-<desc>BookSchema</desc><rect x="1134" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1210" y="163" class="label" text-anchor="middle">BookSchema</text>
-<line x1="1210" y1="184" x2="1210" y2="846" class="lifeline"/>
-<desc>JdbcTemplate</desc><rect x="1314" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1390" y="163" class="label" text-anchor="middle">JdbcTemplate</text>
-<line x1="1390" y1="184" x2="1390" y2="846" class="lifeline"/>
-<rect x="82" y="222" width="274" height="46" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<circle cx="105" cy="245" r="14" fill="#fff" stroke="#7c3aed" stroke-width="1.4"/>
-<text x="105" y="250" class="detail" text-anchor="middle">1</text>
-<text x="130" y="251" class="detail">executeSpringTransaction()</text>
-<path d="M105,276 L320,276" class="arrow"/>
-<path d="M320,304 L540,304" class="arrow"/>
-<path d="M540,332 L760,332" class="arrow"/>
-<path d="M760,360 L1210,360" class="dbUse"/>
-<rect x="296" y="410" width="300" height="46" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<circle cx="319" cy="433" r="14" fill="#fff" stroke="#0f766e" stroke-width="1.4"/>
-<text x="319" y="438" class="detail" text-anchor="middle">2</text>
-<text x="344" y="439" class="detail">execWithExposedTransaction()</text>
-<path d="M105,464 L320,464" class="arrow"/>
-<path d="M320,492 L980,492" class="runtimeUse"/>
-<path d="M980,520 L1210,520" class="dbUse"/>
-<rect x="296" y="570" width="340" height="46" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<circle cx="319" cy="593" r="14" fill="#fff" stroke="#64748b" stroke-width="1.4"/>
-<text x="319" y="598" class="detail" text-anchor="middle">3</text>
-<text x="344" y="599" class="detail">withoutTransactionOperations + transaction{}</text>
-<path d="M105,624 L320,624" class="arrow"/>
-<path d="M320,652 L980,652" class="runtimeUse"/>
-<path d="M980,680 L1210,680" class="dbUse"/>
-<rect x="298" y="724" width="338" height="46" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<circle cx="321" cy="747" r="14" fill="#fff" stroke="#db2777" stroke-width="1.4"/>
-<text x="321" y="752" class="detail" text-anchor="middle">4</text>
-<text x="346" y="753" class="detail">@Transactional inherits outer boundary</text>
-<path d="M105,792 L320,792" class="arrow"/>
-<path d="M320,816 L760,816" class="arrow"/>
-<path d="M760,840 L1210,840" class="dbUse"/>
-<path d="M1390,858 L1210,858" class="returnLine"/>
-<rect x="126" y="876" width="1248" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="750" y="907" class="detail" text-anchor="middle">Source check: tests repeat five execution modes and verify author count increments through JdbcTemplate SELECT COUNT(*) FROM AUTHORS.</text>
+<text x="48" y="80" class="subtitle">TransactionTemplateTest exercises no-Spring, Spring TransactionTemplate, Exposed transaction, mixed, and @Transactional boundaries</text>
+
+<desc>TransactionTemplateTest</desc><rect x="34" y="130" width="168" height="62" rx="10" class="header card"/>
+<text x="118" y="158" class="participant" text-anchor="middle">TxTemplateTest</text>
+<text x="118" y="178" class="role" text-anchor="middle">JUnit repeated modes</text>
+<line x1="118" y1="192" x2="118" y2="812" class="lifeline"/>
+
+<desc>BookService</desc><rect x="260" y="130" width="168" height="62" rx="10" class="header card"/>
+<text x="344" y="158" class="participant" text-anchor="middle">BookService</text>
+<text x="344" y="178" class="role" text-anchor="middle">transaction boundary API</text>
+<line x1="344" y1="192" x2="344" y2="812" class="lifeline"/>
+
+<desc>NoTxOperations</desc><rect x="486" y="130" width="168" height="62" rx="10" class="header card"/>
+<text x="570" y="158" class="participant" text-anchor="middle">NoTxOperations</text>
+<text x="570" y="178" class="role" text-anchor="middle">withoutTransaction()</text>
+<line x1="570" y1="192" x2="570" y2="812" class="lifeline"/>
+
+<desc>TxTemplate</desc><rect x="708" y="130" width="168" height="62" rx="10" class="header card"/>
+<text x="792" y="158" class="participant" text-anchor="middle">TxTemplate</text>
+<text x="792" y="178" class="role" text-anchor="middle">Spring template bean</text>
+<line x1="792" y1="192" x2="792" y2="812" class="lifeline"/>
+
+<desc>SpringTransactionManager</desc><rect x="926" y="130" width="178" height="62" rx="10" class="header card"/>
+<text x="1015" y="158" class="participant" text-anchor="middle">Spring TM</text>
+<text x="1015" y="178" class="role" text-anchor="middle">Exposed-backed manager</text>
+<line x1="1015" y1="192" x2="1015" y2="812" class="lifeline"/>
+
+<desc>Exposed transaction</desc><rect x="1160" y="130" width="168" height="62" rx="10" class="header card"/>
+<text x="1244" y="158" class="participant" text-anchor="middle">Exposed tx</text>
+<text x="1244" y="178" class="role" text-anchor="middle">transaction {}</text>
+<line x1="1244" y1="192" x2="1244" y2="812" class="lifeline"/>
+
+<desc>JdbcTemplate</desc><rect x="1348" y="130" width="118" height="62" rx="10" class="header card"/>
+<text x="1407" y="158" class="participant" text-anchor="middle">Jdbc</text>
+<text x="1407" y="178" class="role" text-anchor="middle">author count</text>
+<line x1="1407" y1="192" x2="1407" y2="812" class="lifeline"/>
+
+<rect x="111" y="284" width="14" height="388" rx="6" class="activation"/>
+<rect x="337" y="306" width="14" height="388" rx="6" class="activation"/>
+<rect x="563" y="360" width="14" height="86" rx="6" class="activation"/>
+<rect x="785" y="470" width="14" height="86" rx="6" class="activation"/>
+<rect x="1008" y="500" width="14" height="128" rx="6" class="activation"/>
+<rect x="1237" y="388" width="14" height="222" rx="6" class="activation"/>
+<rect x="1400" y="732" width="14" height="48" rx="6" class="activation"/>
+
+<rect x="74" y="222" width="404" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+<circle cx="98" cy="245" r="14" class="badge" stroke="#4f86c6"/>
+<text x="98" y="250" class="detail" text-anchor="middle">1</text>
+<text x="123" y="251" class="detail">repeat five transaction-boundary modes</text>
+<path data-connector="test-calls-service" d="M118,286 H344" class="call"/>
+
+<rect x="312" y="324" width="390" height="46" rx="18" fill="#e2e8f0" stroke="#6f8792" class="pill card"/>
+<circle cx="336" cy="347" r="14" class="badge" stroke="#6f8792"/>
+<text x="336" y="352" class="detail" text-anchor="middle">2</text>
+<text x="361" y="353" class="detail">withoutTransactionOperations.execute</text>
+<path data-connector="service-to-no-tx-ops" d="M344,388 H570" class="returnLine"/>
+
+<rect x="516" y="416" width="476" height="46" rx="18" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
+<circle cx="540" cy="439" r="14" class="badge" stroke="#6f8f58"/>
+<text x="540" y="444" class="detail" text-anchor="middle">3</text>
+<text x="565" y="445" class="detail">transaction { create Author or Book row }</text>
+<path data-connector="no-tx-or-service-to-exposed" d="M570,480 H1244" class="state"/>
+
+<rect x="536" y="508" width="476" height="46" rx="18" fill="#ffffff" stroke="#7a8445" class="pill card"/>
+<circle cx="560" cy="531" r="14" class="badge" stroke="#7a8445"/>
+<text x="560" y="536" class="detail" text-anchor="middle">4</text>
+<text x="585" y="537" class="detail">exposedTransactionTemplate.execute</text>
+<path data-connector="service-to-transaction-template" d="M344,572 H792" class="call"/>
+<path data-connector="template-to-spring-tm" d="M792,602 H1015" class="spring"/>
+<path data-connector="spring-tm-to-exposed" d="M1015,632 H1244" class="db"/>
+
+<rect x="278" y="638" width="478" height="46" rx="18" fill="#ffffff" stroke="#d8aaa7" class="pill card"/>
+<circle cx="302" cy="661" r="14" class="badge" stroke="#d8aaa7"/>
+<text x="302" y="666" class="detail" text-anchor="middle">5</text>
+<text x="327" y="667" class="detail">@Transactional delegates to no-tx callback</text>
+<path data-connector="transactional-to-no-tx" d="M344,702 H570" class="spring"/>
+
+<rect x="886" y="714" width="444" height="46" rx="18" fill="#ffffff" stroke="#a2743d" class="pill card"/>
+<circle cx="910" cy="737" r="14" class="badge" stroke="#a2743d"/>
+<text x="910" y="742" class="detail" text-anchor="middle">6</text>
+<text x="935" y="743" class="detail">SELECT COUNT(*) FROM AUTHORS</text>
+<path data-connector="test-counts-authors" d="M118,780 H1407" class="db"/>
+
+<rect x="82" y="840" width="1336" height="52" rx="10" fill="#ffffff" stroke="#d6e1e5" stroke-width="1.3"/>
+<text x="750" y="871" class="detail" text-anchor="middle">Repeated tests cover no Spring transaction, Spring TransactionTemplate, direct Exposed transaction, mixed execution, and @Transactional inheritance.</text>
 </svg>

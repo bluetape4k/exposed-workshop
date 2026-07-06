@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 740" width="1160" height="740" role="img" aria-label="Exposed SQL DSL User Cities ERD">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path stroke-dasharray="none" style="stroke-dasharray:none!important" d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-width="0"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path stroke-dasharray="none" style="stroke-dasharray:none!important" d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="0"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path stroke-dasharray="none" style="stroke-dasharray:none!important" d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path stroke-dasharray="none" style="stroke-dasharray:none!important" d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-width="0"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path stroke-dasharray="none" style="stroke-dasharray:none!important" d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-width="0"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -41,7 +41,7 @@
 <text x="688" y="258" class="tiny">id VARCHAR(10) PK</text>
 <text x="688" y="275" class="tiny">name VARCHAR(50) NOT NULL</text>
 <text x="688" y="292" class="tiny">city_id INT NULL FK</text>
-<path d="M670,276 L446,276" class="fkArrow"/>
+<path d="M670,276 L446,276" class="fkArrow edge"/>
 <rect x="506" y="258" width="112" height="24" rx="8" fill="#fff" stroke="#99f6e4"/>
 <text x="562" y="275" class="tiny" text-anchor="middle">users.city_id</text>
 <text x="458" y="268" class="tiny">1</text>
@@ -57,5 +57,5 @@
 <text x="879" y="577" class="label" text-anchor="middle">2 null city refs</text>
 <text x="879" y="596" class="detail" text-anchor="middle">alex smth</text>
 <rect x="142" y="660" width="876" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="580" y="690" class="detail" text-anchor="middle">Source check: UserTable.cityId is optReference(&quot;city_id&quot;, CityTable.id); insertSampleData inserts alex and smth with null cityId.</text>
+<text x="580" y="690" class="detail" text-anchor="middle">Nullable city ownership is explicit: sample users can exist with or without a City row.</text>
 </svg>

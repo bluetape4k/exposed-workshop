@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 960" width="1560" height="960" role="img" aria-label="Tink Encrypted Column Flow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" width="1600" height="960" role="img" aria-label="Tink Encrypted Column Flow">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#b65386" stroke="#b65386" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#b8793c" stroke="#b8793c" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,16 +14,16 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.arrow{fill:none;stroke:#4f86c6;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.mapLine{fill:none;stroke:#6e8f4f;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.codecLine{fill:none;stroke:#b65386;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
+.dbUse{fill:none;stroke:#b8793c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.runtimeUse{fill:none;stroke:#7d61b3;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
-<rect width="1560" height="960" class="canvas"/>
-<rect x="20" y="20" width="1520" height="920" rx="16" class="frame"/>
+<rect width="1600" height="960" class="canvas"/>
+<rect x="20" y="20" width="1560" height="920" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Tink Encrypted Column Flow</text>
 <text x="48" y="80" class="subtitle">AEAD columns encrypt/decrypt transparently; DAEAD columns use deterministic ciphertext for indexed WHERE searches</text>
 <rect x="58" y="130" width="300" height="660" rx="12" class="panel"/><text x="208" y="122" class="panelTitle" text-anchor="middle">TESTS</text>
@@ -80,26 +80,36 @@
 <text x="1298" y="576" class="label" text-anchor="middle">DAO T1</text>
 <text x="1244" y="616" class="tiny">secret index</text>
 <text x="1244" y="634" class="tiny">data</text>
-<path d="M1424,367 C1424,346 1532,346 1532,367 L1532,563 C1532,584 1424,584 1424,563 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
-<ellipse cx="1478" cy="367" rx="54" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1424,563 C1424,584 1532,584 1532,563" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1478" y="402" class="label" text-anchor="middle">DB</text>
-<text x="1438" y="436" class="tiny">encrypted</text>
-<text x="1438" y="454" class="tiny">ciphertext</text>
-<text x="1438" y="472" class="tiny">indexed DAEAD</text>
-<path d="M320,225 L398,225 L398,214 L474,214" class="arrow"/>
-<path d="M320,401 L398,401 L398,352 L474,352" class="arrow"/>
-<path d="M320,577 L398,577 L398,490 L474,490" class="runtimeUse"/>
-<path d="M706,214 L784,214 L784,210 L864,210" class="codecLine"/>
-<path d="M706,352 L784,352 L784,322 L864,322" class="codecLine"/>
-<path d="M706,490 L784,490 L784,434 L864,434" class="runtimeUse"/>
-<path d="M706,628 L784,628 L784,434 L864,434" class="runtimeUse"/>
-<path d="M1096,210 L1168,210 L1168,233 L1228,233" class="mapLine"/>
-<path d="M1096,322 L1168,322 L1168,422 L1228,422" class="mapLine"/>
-<path d="M1096,584 L1168,584 L1168,603 L1228,603" class="runtimeUse"/>
-<path d="M1368,233 L1402,233 L1402,430 L1424,430" class="dbUse"/>
-<path d="M1368,422 L1402,422 L1402,464 L1424,464" class="dbUse"/>
-<path d="M1368,603 L1402,603 L1402,624 L1478,624 L1478,580" class="dbUse"/>
-<rect x="124" y="850" width="1206" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="727" y="881" class="detail" text-anchor="middle">Source check: AEAD uses AES-GCM/ChaCha20 for transparent CRUD; DAEAD uses AES-SIV so indexed equality searches remain possible.</text>
+<rect x="1428" y="360" width="112" height="224" rx="10" fill="#fff7ed" stroke="#b8793c" class="card"/>
+<g data-bluetape4k-icon="generic/database-server" transform="translate(1458 382) scale(.25)">
+  <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
+  <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="5"/>
+  <path d="M30 58c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 80c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="1484" y="460" class="label" text-anchor="middle">DB</text>
+<text x="1484" y="492" class="tiny" text-anchor="middle">encrypted</text>
+<text x="1484" y="510" class="tiny" text-anchor="middle">ciphertext</text>
+<text x="1484" y="528" class="tiny" text-anchor="middle">indexed DAEAD</text>
+<path data-connector="column-test-to-aead-columns" d="M320,225 L474,225" class="arrow"/>
+<path data-connector="dao-test-to-daead-columns" d="M320,401 L386,401 Q398,401 398,389 L398,364 Q398,352 410,352 L474,352" class="arrow"/>
+<path data-connector="fixture-to-nullable-update" d="M320,577 L386,577 Q398,577 398,565 L398,502 Q398,490 410,490 L474,490" class="runtimeUse"/>
+<path data-connector="aead-columns-to-aes-gcm" d="M706,210 L864,210" class="codecLine"/>
+<path data-connector="daead-columns-to-aes-siv" d="M706,352 L772,352 Q784,352 784,340 L784,334 Q784,322 796,322 L864,322" class="codecLine"/>
+<path data-connector="nullable-update-to-chacha20" d="M706,490 L760,490 Q772,490 772,478 L772,434 Q772,422 784,422 L864,422" class="runtimeUse"/>
+<path data-connector="multi-algorithm-to-chacha20" d="M706,628 L800,628 Q812,628 812,616 L812,458 Q812,446 824,446 L864,446" class="runtimeUse"/>
+<path data-connector="aes-gcm-to-aead-tables" d="M1096,210 L1168,210 Q1180,210 1180,222 L1180,233 L1228,233" class="mapLine"/>
+<path data-connector="aes-siv-to-daead-tables" d="M1096,322 L1168,322 Q1180,322 1180,334 L1180,410 Q1180,422 1192,422 L1228,422" class="mapLine"/>
+<path data-connector="plaintext-eq-to-dao-t1" d="M1096,584 L1168,584 Q1180,584 1180,596 L1180,603 L1228,603" class="runtimeUse"/>
+<path data-connector="aead-tables-to-db" d="M1368,233 L1392,233 Q1404,233 1404,245 L1404,418 Q1404,430 1416,430 L1428,430" class="dbUse"/>
+<path data-connector="daead-tables-to-db" d="M1368,422 L1392,422 Q1404,422 1404,434 L1404,452 Q1404,464 1416,464 L1428,464" class="dbUse"/>
+<path data-connector="dao-t1-to-db" d="M1368,603 L1392,603 Q1404,603 1404,591 L1404,556 Q1404,544 1416,544 L1428,544" class="dbUse"/>
+<rect x="197" y="832" width="1206" height="88" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.3"/>
+<path d="M247,858 L307,858" class="arrow"/><text x="327" y="862" class="tiny">tests declare encrypted columns</text>
+<path d="M581,858 L641,858" class="codecLine"/><text x="661" y="862" class="tiny">column family selects Tink encryption mode</text>
+<path d="M955,858 L1015,858" class="mapLine"/><text x="1035" y="862" class="tiny">ciphertext is stored in Exposed tables</text>
+<path d="M247,890 L307,890" class="runtimeUse"/><text x="327" y="894" class="tiny">DAEAD/fixtures support indexed search paths</text>
+<path d="M581,890 L641,890" class="dbUse"/><text x="661" y="894" class="tiny">DB keeps encrypted values; DAEAD equality remains searchable</text>
 </svg>

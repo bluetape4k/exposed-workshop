@@ -67,6 +67,12 @@
 <path data-connector="store-json-to-json-operators" d="M845,290 L845,388 Q845,400 833,400 L812,400 Q800,400 800,412 L800,512" class="arrow"/>
 <path data-connector="extend-ids-to-entityid" d="M1065,290 L1065,512" class="dbUse"/>
 <path data-connector="validate-behavior-to-fixtures" d="M1285,290 L1285,388 Q1285,400 1297,400 L1318,400 Q1330,400 1330,412 L1330,512" class="runtimeUse"/>
-<rect x="142" y="690" width="1200" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="742" y="721" class="detail" text-anchor="middle">Classification rule: group by current source directories and tested extension mechanisms, not by stale or missing chapter rows.</text>
+<rect x="220" y="650" width="1120" height="44" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+<path d="M256,666 L318,666" class="codecLine"/><text x="332" y="671" class="tiny">encryption wrappers</text>
+<path d="M520,666 L582,666" class="mapLine"/><text x="596" y="671" class="tiny">ColumnType conversion</text>
+<path d="M812,666 L874,666" class="arrow"/><text x="888" y="671" class="tiny">JSON operator path</text>
+<path d="M256,684 L318,684" class="dbUse"/><text x="332" y="689" class="tiny">custom EntityID base</text>
+<path d="M520,684 L582,684" class="runtimeUse"/><text x="596" y="689" class="tiny">test fixture validation</text>
+<rect x="142" y="712" width="1200" height="40" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="742" y="737" class="detail" text-anchor="middle">Use the top row to choose the problem domain, then map it to the implementation mechanism and module tests.</text>
 </svg>

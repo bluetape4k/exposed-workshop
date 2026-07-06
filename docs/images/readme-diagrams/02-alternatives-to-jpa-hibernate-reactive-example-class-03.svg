@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Hibernate Reactive Class Model">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 940" width="1500" height="940" role="img" aria-label="Hibernate Reactive Class Model">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path stroke-dasharray="none" style="stroke-dasharray:none!important" d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-width="0"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path stroke-dasharray="none" style="stroke-dasharray:none!important" d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="0"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path stroke-dasharray="none" style="stroke-dasharray:none!important" d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-width="0"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path stroke-dasharray="none" style="stroke-dasharray:none!important" d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-width="0"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path stroke-dasharray="none" style="stroke-dasharray:none!important" d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777" stroke="#db2777" stroke-width="0"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path stroke-dasharray="none" style="stroke-dasharray:none!important" d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path stroke-dasharray="none" style="stroke-dasharray:none!important" d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-width="0"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
@@ -27,12 +27,12 @@
 .converterUse{fill:none;stroke:#db2777;stroke-width:1.7;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
 .lifeline{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
 .inherit{fill:none;stroke:#475569;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
+.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.4;stroke-dasharray:none;style:stroke-dasharray:none!important;stroke-linejoin:round}
 .assoc{fill:none;stroke:#0f766e;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
-<rect width="1500" height="900" class="canvas"/>
-<rect x="20" y="20" width="1460" height="860" rx="16" class="frame"/>
+<rect width="1500" height="940" class="canvas"/>
+<rect x="20" y="20" width="1460" height="900" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Hibernate Reactive Class Model</text>
 <text x="48" y="80" class="subtitle">JPA entities extend AbstractValueObject; repositories extend the Mutiny session base</text>
 <rect x="46" y="120" width="1408" height="160" rx="12" class="panel"/><text x="750" y="112" class="panelTitle" text-anchor="middle">SUPERTYPES AND FRAMEWORK SERVICES</text>
@@ -80,10 +80,10 @@
 <text x="300" y="434" class="tiny">id: Long</text>
 <text x="300" y="449" class="tiny">name: String</text>
 <text x="300" y="464" class="tiny">team: Team?</text>
-<path d="M178,370 L178,304 L178,304 L178,258" class="inherit"/>
-<path d="M178,242 L166,258 L190,258 Z" class="inheritHead"/>
-<path d="M366,370 L366,304 L252,304 L252,258" class="inherit"/>
-<path d="M252,242 L240,258 L264,258 Z" class="inheritHead"/>
+<path d="M178,370 L178,254" class="inherit"/>
+<path d="M178,242 L172,254 L184,254 Z" class="inheritHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+<path d="M366,370 L366,312 Q366,304 358,304 L260,304 Q252,304 252,296 L252,254" class="inherit"/>
+<path d="M252,242 L246,254 L258,254 Z" class="inheritHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
 <path d="M268,430 L286,430" class="assoc"/>
 <text x="277" y="420" class="tiny" text-anchor="middle">1:N</text>
 <text x="124" y="514" class="tiny">@OneToMany</text>
@@ -107,11 +107,11 @@
 <text x="730" y="448" class="tiny">findAllByName()</text>
 <text x="730" y="463" class="tiny">findById()</text>
 <text x="730" y="478" class="tiny">deleteById()</text>
-<path d="M624,370 L624,304 L504,304 L504,258" class="inherit"/>
-<path d="M504,242 L492,258 L516,258 Z" class="inheritHead"/>
-<path d="M790,370 L790,304 L558,304 L558,258" class="inherit"/>
-<path d="M558,242 L546,258 L570,258 Z" class="inheritHead"/>
-<rect x="928" y="330" width="478" height="270" rx="12" class="panel"/><text x="1167" y="322" class="panelTitle" text-anchor="middle">ENTRY AND INFRASTRUCTURE</text>
+<path d="M624,370 L624,312 Q624,304 616,304 L512,304 Q504,304 504,296 L504,254" class="inherit"/>
+<path d="M504,242 L498,254 L510,254 Z" class="inheritHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+<path d="M790,370 L790,312 Q790,304 782,304 L566,304 Q558,304 558,296 L558,254" class="inherit"/>
+<path d="M558,242 L552,254 L564,254 Z" class="inheritHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+<rect x="928" y="330" width="478" height="294" rx="12" class="panel"/><text x="1167" y="322" class="panelTitle" text-anchor="middle">ENTRY AND INFRASTRUCTURE</text>
 <rect x="956" y="370" width="180" height="104" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
 <path d="M956,416 L956,374 Q956,370 960,370 L1132,370 Q1136,370 1136,374 L1136,416 Z" fill="#dbeafe"/>
 <text x="1046" y="388" class="tiny" text-anchor="middle">&lt;&lt;rest controller&gt;&gt;</text>
@@ -128,25 +128,25 @@
 <text x="1174" y="434" class="tiny">GET /members</text>
 <text x="1174" y="449" class="tiny">stateless/session</text>
 <text x="1174" y="464" class="tiny">map records</text>
-<rect x="956" y="506" width="180" height="86" rx="4" fill="#fff" stroke="#64748b" class="card"/>
-<path d="M956,566 L956,510 Q956,506 960,506 L1132,506 Q1136,506 1136,510 L1136,566 Z" fill="#e2e8f0"/>
-<text x="1046" y="524" class="tiny" text-anchor="middle">&lt;&lt;configuration&gt;&gt;</text>
-<text x="1046" y="542" class="label" text-anchor="middle">HibernateReactive</text>
-<text x="1046" y="559" class="label" text-anchor="middle">Config</text>
-<path d="M956,566 H1136" stroke="#64748b" stroke-width="1.1"/>
-<rect x="1160" y="506" width="180" height="86" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M1160,566 L1160,510 Q1160,506 1164,506 L1336,506 Q1340,506 1340,510 L1340,566 Z" fill="#dcfce7"/>
-<text x="1250" y="524" class="tiny" text-anchor="middle">&lt;&lt;runner&gt;&gt;</text>
-<text x="1250" y="542" class="label" text-anchor="middle">Database</text>
-<text x="1250" y="559" class="label" text-anchor="middle">Initializer</text>
-<path d="M1160,566 H1340" stroke="#16a34a" stroke-width="1.1"/>
-<path d="M849,242 L849,300 L1046,300 L1046,370" class="sessionUse"/>
-<path d="M849,242 L849,292 L1250,292 L1250,370" class="sessionUse"/>
-<path d="M956,422 L866,422" class="repoUse"/>
-<path d="M1250,370 L1250,312 L790,312 L790,370" class="repoUse"/>
-<path d="M956,546 L918,546 L918,306 L834,306 L834,242" class="sessionUse"/>
-<path d="M1340,550 L1426,550 L1426,258 L1162,258" class="inherit"/>
-<path d="M1150,242 L1138,258 L1162,258 Z" class="inheritHead"/>
+<rect x="956" y="530" width="180" height="86" rx="4" fill="#fff" stroke="#64748b" class="card"/>
+<path d="M956,590 L956,534 Q956,530 960,530 L1132,530 Q1136,530 1136,534 L1136,590 Z" fill="#e2e8f0"/>
+<text x="1046" y="548" class="tiny" text-anchor="middle">&lt;&lt;configuration&gt;&gt;</text>
+<text x="1046" y="566" class="label" text-anchor="middle">HibernateReactive</text>
+<text x="1046" y="583" class="label" text-anchor="middle">Config</text>
+<path d="M956,590 H1136" stroke="#64748b" stroke-width="1.1"/>
+<rect x="1160" y="530" width="180" height="86" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M1160,590 L1160,534 Q1160,530 1164,530 L1336,530 Q1340,530 1340,534 L1340,590 Z" fill="#dcfce7"/>
+<text x="1250" y="548" class="tiny" text-anchor="middle">&lt;&lt;runner&gt;&gt;</text>
+<text x="1250" y="566" class="label" text-anchor="middle">Database</text>
+<text x="1250" y="583" class="label" text-anchor="middle">Initializer</text>
+<path d="M1160,590 H1340" stroke="#16a34a" stroke-width="1.1"/>
+<path d="M849,242 L849,292 Q849,300 857,300 L1038,300 Q1046,300 1046,308 L1046,370" class="sessionUse edge"/>
+<path d="M849,242 L849,284 Q849,292 857,292 L1242,292 Q1250,292 1250,300 L1250,370" class="sessionUse edge"/>
+<path d="M956,422 L866,422" class="repoUse edge"/>
+<path d="M1250,474 L1250,498 Q1250,506 1242,506 L890,506 Q882,506 882,498 L882,452 Q882,444 874,444 L866,444" class="repoUse edge"/>
+<path d="M956,570 L714,570 Q706,570 706,562 L706,266 Q706,258 714,258 L841,258 Q849,258 849,250 L849,242" class="sessionUse edge"/>
+<path d="M1340,572 L1364,572 Q1372,572 1372,564 L1372,274 Q1372,266 1364,266 L1158,266 Q1150,266 1150,258 L1150,254" class="inherit"/>
+<path d="M1150,242 L1144,254 L1156,254 Z" class="inheritHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
 <rect x="88" y="672" width="1260" height="146" rx="12" class="panel"/><text x="718" y="664" class="panelTitle" text-anchor="middle">DTO RECORDS AND QUERY CONDITIONS</text>
 <rect x="124" y="704" width="180" height="104" rx="4" fill="#fff" stroke="#db2777" class="card"/>
 <path d="M124,750 L124,708 Q124,704 128,704 L300,704 Q304,704 304,708 L304,750 Z" fill="#fce7f3"/>
@@ -187,10 +187,10 @@
 <text x="1092" y="768" class="tiny">memberName</text>
 <text x="1092" y="783" class="tiny">teamName</text>
 <text x="1092" y="798" class="tiny">age range</text>
-<path d="M178,488 L178,704" class="mapArrow"/>
-<path d="M366,488 L366,704" class="mapArrow"/>
-<path d="M218,488 L218,648 L668,648 L668,704" class="mapArrow"/>
-<path d="M366,488 L366,632 L934,632 L934,704" class="mapArrow"/>
-<rect x="112" y="838" width="1180" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="702" y="868" class="detail" text-anchor="middle">Source check: Team.members is mappedBy member.team; repositories receive Mutiny Session objects from controller SessionFactory boundaries.</text>
+<path d="M178,488 L178,704" class="mapArrow edge"/>
+<path d="M366,488 L366,704" class="mapArrow edge"/>
+<path d="M124,488 L124,620 Q124,628 116,628 L108,628 Q100,628 100,636 L100,842 Q100,850 108,850 L660,850 Q668,850 668,842 L668,808" class="mapArrow edge"/>
+<path d="M366,488 L366,624 Q366,632 374,632 L926,632 Q934,632 934,640 L934,704" class="mapArrow edge"/>
+<rect x="112" y="872" width="1180" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="702" y="902" class="detail" text-anchor="middle">Hibernate Reactive keeps SessionFactory boundaries explicit while repositories model entity and record mapping.</text>
 </svg>

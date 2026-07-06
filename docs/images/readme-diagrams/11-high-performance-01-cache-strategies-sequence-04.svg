@@ -1,89 +1,123 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 740" width="1240" height="740" role="img" aria-label="Cache Strategies (01-cache-strategies)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 980" width="1600" height="980" role="img" aria-label="Write-behind bulk event sequence">
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
     </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
+    <marker id="seqArrow" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
     </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
+
+    <marker id="seqArrowAmber" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="seqArrowTeal" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2b8f88" stroke="#2b8f88" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
     </marker>
     <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
-.altRegion{fill:#f8fafc;fill-opacity:.055;stroke:#94a3b8;stroke-opacity:.28;stroke-width:1.2;stroke-dasharray:8 7}
-</style>
+      text { letter-spacing: 0; }
+      .canvas { fill: #fbfcf8; stroke: #40545d; stroke-width: 3; }
+      .title { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 36px; fill: #23323a; }
+      .subtitle,.participant-sub,.msg,.detail { font-family: "Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif; fill: #324750; }
+      .subtitle { font-size: 15px; }
+      .header { fill: #fff; stroke-width: 2.1; filter: url(#shadow); }
+      .actor { stroke: #617985; }
+      .service { stroke: #617985; }
+      .cache { stroke: #617985; }
+      .store { stroke: #617985; }
+      .participant { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 18px; fill: #20323b; }
+      .participant-sub { font-size: 11px; fill: #60717a; }
+      .lifeline { fill: none; stroke: #c7d5d1; stroke-width: 1.8; stroke-dasharray: 8 8; }
+      .activation { fill: #ffffff; stroke: #7a8445; stroke-width: 1.7; rx: 5; }
+      .call,.async,.return { fill: none; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+      .call { stroke: #4f86c6; marker-end: url(#seqArrow); }
+      .async { stroke: #a2743d; stroke-dasharray: 8 6; marker-end: url(#seqArrowAmber); }
+      .return { stroke: #2b8f88; stroke-dasharray: 7 6; marker-end: url(#seqArrowTeal); }
+      .pill { fill: #ffffff; stroke: #7a8445; stroke-width: 1.4; }
+      .num { font-family: "Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif; font-size: 11px; font-weight: 700; fill: #7a8445; }
+      .msg { font-size: 12px; font-weight: 700; }
+      .detail { font-size: 12px; fill: #60717a; }
+      .asyncBand { fill: none; stroke: #8298a3; stroke-width: 1.4; stroke-dasharray: 9 8; }
+    </style>
   </defs>
-  <rect width="1240" height="740" class="canvas"/>
-  <rect x="20" y="20" width="1200" height="700" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Cache Strategies (01-cache-strategies)</text>
-  <text x="48" y="80" class="subtitle">Source-derived sequence · request path through implementation roles</text>
-<rect x="12" y="118" width="156" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="90" y="151" class="smallLabel" text-anchor="middle">Client</text>
 
-<path d="M90,182 L90,676" class="softArrow"/>
-<rect x="224" y="118" width="156" height="54" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="302" y="141" class="smallLabel" text-anchor="middle">Index</text>
-<text x="302" y="159" class="smallLabel" text-anchor="middle">Controller</text>
+  <rect x="24" y="24" width="1552" height="932" rx="20" class="canvas frame"/>
+  <text x="800" y="76" text-anchor="middle" class="title">Write-Behind Bulk Event Loading</text>
+  <text x="800" y="106" text-anchor="middle" class="subtitle">UserEventController returns after cache write; Redisson write-behind later flushes UserEventTable and Awaitility verifies the final count.</text>
 
-<path d="M302,182 L302,676" class="softArrow"/>
-<rect x="436" y="118" width="156" height="54" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="514" y="141" class="smallLabel" text-anchor="middle">Cache</text>
-<text x="514" y="159" class="smallLabel" text-anchor="middle">Strategies...</text>
+  <rect x="50" y="138" width="160" height="62" rx="12" class="header actor"/>
+  <text x="130" y="165" text-anchor="middle" class="participant">Caller / Test</text>
+  <text x="130" y="184" text-anchor="middle" class="participant-sub">HTTP or repository test</text>
 
-<path d="M514,182 L514,676" class="softArrow"/>
-<rect x="648" y="118" width="156" height="54" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="726" y="141" class="smallLabel" text-anchor="middle">Service</text>
-<text x="726" y="159" class="smallLabel" text-anchor="middle">Boundary</text>
+  <rect x="290" y="138" width="180" height="62" rx="12" class="header service"/>
+  <text x="380" y="165" text-anchor="middle" class="participant">UserEventController</text>
+  <text x="380" y="184" text-anchor="middle" class="participant-sub">POST /user-events/bulk</text>
 
-<path d="M726,182 L726,676" class="softArrow"/>
-<rect x="860" y="118" width="156" height="54" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="938" y="141" class="smallLabel" text-anchor="middle">User Cache</text>
-<text x="938" y="159" class="smallLabel" text-anchor="middle">Repository</text>
+  <rect x="545" y="138" width="190" height="62" rx="12" class="header service"/>
+  <text x="640" y="165" text-anchor="middle" class="participant">UserEventRepository</text>
+  <text x="640" y="184" text-anchor="middle" class="participant-sub">write-behind strategy</text>
 
-<path d="M938,182 L938,676" class="softArrow"/>
-<rect x="1072" y="118" width="156" height="54" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1150" y="141" class="smallLabel" text-anchor="middle">User</text>
-<text x="1150" y="159" class="smallLabel" text-anchor="middle">Credentials...</text>
+  <rect x="800" y="138" width="180" height="62" rx="12" class="header cache"/>
+  <text x="890" y="165" text-anchor="middle" class="participant">Redisson cache</text>
+  <text x="890" y="184" text-anchor="middle" class="participant-sub">near cache + Redis</text>
 
-<path d="M1150,182 L1150,676" class="softArrow"/>
-<path d="M108,220 L284,220" class="arrow"/>
-<rect x="54" y="190" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="196" y="207" class="tiny" text-anchor="middle">index()</text>
-<path d="M320,274 L496,274" class="arrow"/>
-<rect x="266" y="244" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="408" y="261" class="tiny" text-anchor="middle">validate input and resolve context</text>
-<path d="M532,328 L708,328" class="arrow"/>
-<rect x="478" y="298" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="620" y="315" class="tiny" text-anchor="middle">call Cache Strategies (01-cache-strategies)</text>
-<path d="M744,382 L920,382" class="arrow"/>
-<rect x="690" y="352" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="832" y="369" class="tiny" text-anchor="middle">execute use case boundary</text>
-<path d="M956,436 L1132,436" class="arrow"/>
-<rect x="902" y="406" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="1044" y="423" class="tiny" text-anchor="middle">delegate to UserCacheRepository</text>
-<path d="M956,490 L1132,490" class="arrow"/>
-<rect x="902" y="460" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="1044" y="477" class="tiny" text-anchor="middle">run Exposed transaction</text>
-<path d="M956,544 L1132,544" class="arrow"/>
-<rect x="902" y="514" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="1044" y="531" class="tiny" text-anchor="middle">map rows to response model</text>
-<path d="M956,598 L1132,598" class="arrow"/>
-<rect x="902" y="568" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="1044" y="585" class="tiny" text-anchor="middle">return HTTP response</text>
-<rect class="altRegion" x="224" y="352" width="1056" height="204" rx="18"/><text class="small" x="246" y="381">alt: asynchronous write-behind propagation</text>
+  <rect x="1040" y="138" width="180" height="62" rx="12" class="header cache"/>
+  <text x="1130" y="165" text-anchor="middle" class="participant">Write-behind worker</text>
+  <text x="1130" y="184" text-anchor="middle" class="participant-sub">async batch flush</text>
+
+  <rect x="1295" y="138" width="190" height="62" rx="12" class="header store"/>
+  <text x="1390" y="165" text-anchor="middle" class="participant">UserEventTable</text>
+  <text x="1390" y="184" text-anchor="middle" class="participant-sub">user_action rows</text>
+
+  <path class="lifeline" d="M 130 206 L 130 868"/>
+  <path class="lifeline" d="M 380 206 L 380 868"/>
+  <path class="lifeline" d="M 640 206 L 640 868"/>
+  <path class="lifeline" d="M 890 206 L 890 868"/>
+  <path class="lifeline" d="M 1130 206 L 1130 868"/>
+  <path class="lifeline" d="M 1390 206 L 1390 868"/>
+
+  <rect x="372" y="232" width="16" height="332" rx="5" class="activation"/>
+  <rect x="632" y="312" width="16" height="252" rx="5" class="activation"/>
+  <rect x="882" y="392" width="16" height="88" rx="5" class="activation"/>
+  <rect x="1122" y="472" width="16" height="220" rx="5" class="activation"/>
+  <rect x="1382" y="632" width="16" height="152" rx="5" class="activation"/>
+
+  <rect x="1010" y="448" width="430" height="270" rx="16" class="asyncBand"/>
+  <text x="1225" y="474" text-anchor="middle" class="detail">asynchronous write-behind propagation</text>
+
+  <path id="m1" data-connector="m1" class="call" d="M 130 252 L 372 252"/>
+  <rect x="170" y="218" width="168" height="22" rx="11" class="pill" style="stroke:#b6d3ec"/>
+  <text x="188" y="233" text-anchor="middle" class="num" style="fill:#4f86c6">1</text>
+  <text x="262" y="232" text-anchor="middle" class="msg">POST bulk events</text>
+
+  <path id="m2" data-connector="m2" class="call" d="M 388 332 L 632 332"/>
+  <rect x="428" y="298" width="182" height="22" rx="11" class="pill" style="stroke:#b6d3ec"/>
+  <text x="446" y="313" text-anchor="middle" class="num" style="fill:#4f86c6">2</text>
+  <text x="520" y="312" text-anchor="middle" class="msg">putAll(events by id)</text>
+
+  <path id="m3" data-connector="m3" class="call" d="M 648 412 L 882 412"/>
+  <rect x="685" y="378" width="173" height="22" rx="11" class="pill" style="stroke:#b6d3ec"/>
+  <text x="704" y="393" text-anchor="middle" class="num" style="fill:#4f86c6">3</text>
+  <text x="772" y="392" text-anchor="middle" class="msg">write cache entries</text>
+
+  <path id="m4" data-connector="m4" class="async" d="M 898 492 L 1122 492"/>
+  <rect x="932" y="458" width="162" height="22" rx="11" class="pill" style="stroke:#dfc291"/>
+  <text x="950" y="473" text-anchor="middle" class="num" style="fill:#a2743d">4</text>
+  <text x="1018" y="472" text-anchor="middle" class="msg">enqueue DB flush</text>
+
+  <path id="m5" data-connector="m5" class="return" d="M 632 572 L 388 572"/>
+  <rect x="428" y="538" width="179" height="22" rx="11" class="pill" style="stroke:#add7d3"/>
+  <text x="446" y="553" text-anchor="middle" class="num" style="fill:#2b8f88">5</text>
+  <text x="520" y="552" text-anchor="middle" class="msg">return true quickly</text>
+
+  <path id="m6" data-connector="m6" class="async" d="M 1138 652 L 1382 652"/>
+  <rect x="1178" y="618" width="175" height="22" rx="11" class="pill" style="stroke:#dfc291"/>
+  <text x="1196" y="633" text-anchor="middle" class="num" style="fill:#a2743d">6</text>
+  <text x="1274" y="632" text-anchor="middle" class="msg">batch insert rows</text>
+
+  <path id="m7" data-connector="m7" class="call" d="M 130 772 L 1382 772"/>
+  <rect x="534" y="738" width="491" height="22" rx="11" class="pill" style="stroke:#b6d3ec"/>
+  <text x="552" y="753" text-anchor="middle" class="num" style="fill:#4f86c6">7</text>
+  <text x="830" y="752" text-anchor="middle" class="msg">Awaitility polls until saved count reaches total</text>
+
+  <text x="800" y="912" text-anchor="middle" class="detail">The API response is decoupled from final DB persistence; the test waits until UserEventTable.selectAll().count() reaches the requested total.</text>
 </svg>

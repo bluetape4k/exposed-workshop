@@ -1,112 +1,109 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 986" width="1220" height="986" role="img" aria-label="07 JPA Migration: Advanced Migration (02-convert-JPA-advanced)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 760" width="1220" height="760" role="img" aria-label="Inheritance strategy migration map">
   <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+    <filter id="shadow" x="-12%" y="-12%" width="124%" height="136%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
     </filter>
-    <marker id="arrow" viewBox="0 0 9 9" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" viewBox="0 0 11 10" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
+    <marker id="flowArrow" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#60758d" stroke="#60758d" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
     </marker>
     <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
-</style>
+      .canvas{fill:#f6f9fc}
+      .frame{fill:#ffffff;stroke:#d7e2ec;stroke-width:1.5}
+      .lane{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+      .card{fill:#ffffff;stroke-width:1.8;filter:url(#shadow)}
+      .head{stroke-width:0}
+      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
+      .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
+      .laneTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+      .cardTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:19px;fill:#1e293b}
+      .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
+      .strong{font-weight:700;fill:#1e3a8a}
+      .warn{font-weight:700;fill:#8a4f0a}
+      .flow{fill:none;stroke:#60758d;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#flowArrow)}
+      .legendBox{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+      .legendText{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
+    </style>
   </defs>
-  <rect width="1220" height="986" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="946" rx="16" class="frame"/>
-<text x="48" y="58" class="title">07 JPA Migration: Advanced Migration (02-convert-JPA-advanced)</text>
-  <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="120" width="1128" height="226" rx="12" class="panel"/>
-  <text x="610" y="114" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="74" y="146" width="203" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="175.5" y="178" class="smallLabel" text-anchor="middle">Abstract Exposed</text>
-<text x="175.5" y="196" class="smallLabel" text-anchor="middle">Test</text>
 
-<rect x="305" y="146" width="203" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="406.5" y="175" class="smallLabel" text-anchor="middle">Int Id Table</text>
-<text x="406.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="536" y="146" width="203" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="637.5" y="188" class="smallLabel" text-anchor="middle">Billing</text>
+  <rect width="1220" height="760" class="canvas"/>
+  <rect x="20" y="20" width="1180" height="720" rx="16" class="frame"/>
+  <text x="48" y="60" class="title">Inheritance Strategy Migration Map</text>
+  <text x="48" y="83" class="subtitle">JPA inheritance annotations become explicit Exposed table shapes, entity wrappers, and regression queries.</text>
 
-<rect x="767" y="146" width="203" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="868.5" y="175" class="smallLabel" text-anchor="middle">Id Table</text>
-<text x="868.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="998" y="146" width="203" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="1099.5" y="188" class="smallLabel" text-anchor="middle">Person</text>
+  <rect x="54" y="120" width="1112" height="94" rx="12" class="lane"/>
+  <text x="610" y="113" class="laneTitle" text-anchor="middle">JPA STRATEGY</text>
+  <rect x="72" y="140" width="320" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+  <text x="232" y="173" class="cardTitle" text-anchor="middle">@Inheritance(SINGLE_TABLE)</text>
+  <rect x="450" y="140" width="320" height="54" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+  <text x="610" y="173" class="cardTitle" text-anchor="middle">@Inheritance(JOINED)</text>
+  <rect x="828" y="140" width="320" height="54" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+  <text x="988" y="173" class="cardTitle" text-anchor="middle">@Inheritance(TABLE_PER_CLASS)</text>
 
-<rect x="74" y="242" width="203" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="175.5" y="271" class="smallLabel" text-anchor="middle">Entity ID</text>
-<text x="175.5" y="298" class="detail" text-anchor="middle">table/model</text>
-<rect x="305" y="242" width="203" height="72" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="406.5" y="271" class="smallLabel" text-anchor="middle">Abstract Billing</text>
-<text x="406.5" y="289" class="smallLabel" text-anchor="middle">Table</text>
-<text x="406.5" y="298" class="detail" text-anchor="middle">table/model</text>
-<rect x="536" y="242" width="203" height="72" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="637.5" y="271" class="smallLabel" text-anchor="middle">Abstract Billing</text>
-<text x="637.5" y="289" class="smallLabel" text-anchor="middle">Entity</text>
-<text x="637.5" y="298" class="detail" text-anchor="middle">table/model</text>
-<rect x="767" y="242" width="203" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="868.5" y="284" class="smallLabel" text-anchor="middle">KLogging</text>
+  <rect x="54" y="270" width="1112" height="198" rx="12" class="lane"/>
+  <text x="610" y="263" class="laneTitle" text-anchor="middle">EXPOSED SCHEMA SHAPE</text>
 
-<rect x="46" y="398" width="1128" height="474" rx="12" class="panel"/>
-  <text x="610" y="392" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="74" y="424" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="234" y="472" class="smallLabel" text-anchor="middle">Ex01_ Simple_ Join</text>
+  <g id="single-schema" data-node="single-schema">
+    <rect x="72" y="292" width="320" height="146" rx="10" class="card" stroke="#3b82f6"/>
+    <path d="M72,328 L72,304 Q72,292 84,292 L380,292 Q392,292 392,304 L392,328 Z" class="head" fill="#dbeafe"/>
+    <text x="232" y="319" class="cardTitle" text-anchor="middle">One BillingTable</text>
+    <text x="96" y="354" class="small strong">IntIdTable("billing")</text>
+    <text x="96" y="374" class="small">dtype: BillingType discriminator</text>
+    <text x="96" y="394" class="small">CreditCard columns nullable</text>
+    <text x="96" y="414" class="small">BankAccount columns nullable</text>
+  </g>
 
-<rect x="440" y="424" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="600" y="472" class="smallLabel" text-anchor="middle">Ex02_ Full_ Join</text>
+  <g id="joined-schema" data-node="joined-schema">
+    <rect x="450" y="292" width="320" height="146" rx="10" class="card" stroke="#16a34a"/>
+    <path d="M450,328 L450,304 Q450,292 462,292 L758,292 Q770,292 770,304 L770,328 Z" class="head" fill="#dcfce7"/>
+    <text x="610" y="319" class="cardTitle" text-anchor="middle">Parent + Child Tables</text>
+    <text x="474" y="354" class="small strong">PersonTable : joined_person</text>
+    <text x="474" y="374" class="small">EmployeeTable FK = PK to Person</text>
+    <text x="474" y="394" class="small">CustomerTable FK = PK to Person</text>
+    <text x="474" y="414" class="small">joins/load() restore object view</text>
+  </g>
 
-<rect x="806" y="424" width="320" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="966" y="472" class="smallLabel" text-anchor="middle">Ex03_ Left_ Join</text>
+  <g id="table-per-class-schema" data-node="table-per-class-schema">
+    <rect x="828" y="292" width="320" height="146" rx="10" class="card" stroke="#ea580c"/>
+    <path d="M828,328 L828,304 Q828,292 840,292 L1136,292 Q1148,292 1148,304 L1148,328 Z" class="head" fill="#ffedd5"/>
+    <text x="988" y="319" class="cardTitle" text-anchor="middle">Independent Subtype Tables</text>
+    <text x="852" y="354" class="small strong">AbstractBillingTable</text>
+    <text x="852" y="374" class="small">TimebasedUUIDTable shared base</text>
+    <text x="852" y="394" class="small">CreditCardTable / BankAccountTable</text>
+    <text x="852" y="414" class="small">common columns repeated per table</text>
+  </g>
 
-<rect x="74" y="532" width="320" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="234" y="580" class="smallLabel" text-anchor="middle">Ex04_ Right_ Join</text>
+  <rect x="54" y="520" width="1112" height="122" rx="12" class="lane"/>
+  <text x="610" y="513" class="laneTitle" text-anchor="middle">ENTITY AND TEST CONTRACT</text>
 
-<rect x="440" y="532" width="320" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="600" y="580" class="smallLabel" text-anchor="middle">Ex05_ Self_ Join</text>
+  <g id="single-contract" data-node="single-contract">
+    <rect x="72" y="540" width="320" height="78" rx="10" class="card" stroke="#3b82f6"/>
+    <text x="96" y="568" class="small strong">Billing -> CreditCard / BankAccount</text>
+    <text x="96" y="588" class="small">findById filters dtype by subtype</text>
+    <text x="96" y="608" class="small warn">fast query, nullable column bloat</text>
+  </g>
 
-<rect x="806" y="532" width="320" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="966" y="580" class="smallLabel" text-anchor="middle">Ex06_ Covering_ Index</text>
+  <g id="joined-contract" data-node="joined-contract">
+    <rect x="450" y="540" width="320" height="78" rx="10" class="card" stroke="#16a34a"/>
+    <text x="474" y="568" class="small strong">Person + Employee / Customer</text>
+    <text x="474" y="588" class="small">create() writes parent then child</text>
+    <text x="474" y="608" class="small warn">delete() removes child and parent</text>
+  </g>
 
-<rect x="74" y="640" width="320" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="234" y="688" class="smallLabel" text-anchor="middle">Ex07_ Misc_ Join</text>
+  <g id="table-per-class-contract" data-node="table-per-class-contract">
+    <rect x="828" y="540" width="320" height="78" rx="10" class="card" stroke="#ea580c"/>
+    <text x="852" y="568" class="small strong">AbstractBillingEntity subtypes</text>
+    <text x="852" y="588" class="small">UUID ids stay unique across tables</text>
+    <text x="852" y="608" class="small warn">cross-type query needs union logic</text>
+  </g>
 
-<rect x="440" y="640" width="320" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="600" y="688" class="smallLabel" text-anchor="middle">Ex01_ Sub Query</text>
+  <path id="single-strategy-schema" class="flow" data-connector="single-strategy-schema" d="M232,194 L232,292"/>
+  <path id="single-schema-contract" class="flow" data-connector="single-schema-contract" d="M232,438 L232,540"/>
+  <path id="joined-strategy-schema" class="flow" data-connector="joined-strategy-schema" d="M610,194 L610,292"/>
+  <path id="joined-schema-contract" class="flow" data-connector="joined-schema-contract" d="M610,438 L610,540"/>
+  <path id="tpc-strategy-schema" class="flow" data-connector="tpc-strategy-schema" d="M988,194 L988,292"/>
+  <path id="tpc-schema-contract" class="flow" data-connector="tpc-schema-contract" d="M988,438 L988,540"/>
 
-<rect x="806" y="640" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="966" y="669" class="smallLabel" text-anchor="middle">Ex01_ Single Table_</text>
-<text x="966" y="687" class="smallLabel" text-anchor="middle">Inheritance</text>
-<text x="966" y="708" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="748" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="234" y="777" class="smallLabel" text-anchor="middle">Ex02_ Joined_ Table_</text>
-<text x="234" y="795" class="smallLabel" text-anchor="middle">Inheritance</text>
-<text x="234" y="816" class="detail" text-anchor="middle">table/model</text>
-<path d="M234,424 L234,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M600,424 L600,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M966,424 L966,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M234,532 L234,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M600,532 L600,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M966,532 L966,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M234,640 L234,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M600,640 L600,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M966,640 L966,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M234,748 L234,378 L175.5,378 L175.5,224" class="inherit"/>
-<rect x="46" y="912" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="610" y="939" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+  <rect x="72" y="670" width="900" height="42" rx="10" class="legendBox"/>
+  <line x1="96" y1="691" x2="146" y2="691" class="flow"/>
+  <text x="162" y="695" class="legendText">solid arrow = migration choice to concrete Exposed shape and test contract</text>
 </svg>

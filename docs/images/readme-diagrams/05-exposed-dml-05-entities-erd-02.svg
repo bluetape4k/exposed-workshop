@@ -1,11 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-label="XEntity and YEntity Table ERD">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#4f8f8a" stroke="#4f8f8a" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,42 +12,62 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.fkLine{fill:none;stroke:#0f766e;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.edge{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.fkLine{stroke:#4f8f8a;stroke-width:2.2;marker-end:url(#arrowTeal)}
+.mapLine{stroke:#6e8f4f;stroke-width:2;marker-end:url(#arrowGreen)}
+.entityLine{stroke:#4f86c6;stroke-width:2;stroke-dasharray:6 5;marker-end:url(#arrowBlue)}
+.cardinality{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:700;fill:#1e293b}
 </style>
 </defs>
 <rect width="1200" height="720" class="canvas"/>
 <rect x="20" y="20" width="1160" height="680" rx="16" class="frame"/>
 <text x="48" y="58" class="title">XEntity and YEntity Table ERD</text>
-<text x="48" y="80" class="subtitle">EntityTestData.XTable stores an optional y1 foreign key to EntityTestData.YTable.uuid</text>
-<rect x="86" y="134" width="1028" height="430" rx="12" class="panel"/><text x="600" y="126" class="panelTitle" text-anchor="middle">ENTITYTESTDATA TABLES</text>
-<rect x="172" y="190" width="330" height="166" rx="10" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M172,232 L172,200 Q172,190 182,190 L492,190 Q502,190 502,200 L502,232 Z" fill="#dbeafe"/>
-<text x="337" y="218" class="label" text-anchor="middle">YTable</text>
-<text x="190" y="260" class="tiny">uuid PK varchar(24)</text>
-<text x="190" y="278" class="tiny">x bool default true</text>
-<text x="190" y="296" class="tiny">primaryKey(uuid)</text>
-<rect x="690" y="342" width="330" height="184" rx="10" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M690,384 L690,352 Q690,342 700,342 L1010,342 Q1020,342 1020,352 L1020,384 Z" fill="#ede9fe"/>
-<text x="855" y="370" class="label" text-anchor="middle">XTable</text>
-<text x="708" y="412" class="tiny">id PK serial</text>
-<text x="708" y="430" class="tiny">b1 bool default true</text>
-<text x="708" y="448" class="tiny">b2 bool default false</text>
-<text x="708" y="466" class="tiny">y1 FK nullable -&gt; YTable.uuid</text>
-<path d="M690,434 L596,434 L596,278 L502,278" class="fkLine"/>
-<rect x="552" y="392" width="142" height="24" rx="8" fill="#fff" stroke="#cbd5e1"/><text x="623" y="408" class="tiny" text-anchor="middle">optional FK y1 -&gt; uuid</text>
-<rect x="172" y="426" width="330" height="70" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="337" y="451" class="label" text-anchor="middle">YEntity</text>
-<text x="337" y="482" class="detail" text-anchor="middle">EntityID&lt;String&gt;</text>
-<rect x="690" y="218" width="330" height="70" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="855" y="243" class="label" text-anchor="middle">XEntity</text>
-<text x="855" y="274" class="detail" text-anchor="middle">IntEntity</text>
-<path d="M337,356 L337,426" class="mapLine"/>
-<path d="M855,342 L855,288" class="mapLine"/>
-<rect x="112" y="610" width="976" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="600" y="641" class="detail" text-anchor="middle">ERD rule: FK direction is child table to parent table. Entity mapping lines stay local and do not cross the FK relationship lane.</text>
+<text x="48" y="80" class="subtitle">XTable.y1 is a nullable FK to YTable.uuid; DAO examples map BEntity.y and YEntity.b over that key.</text>
+
+<rect x="70" y="126" width="1060" height="456" rx="12" class="panel"/>
+<text x="600" y="118" class="panelTitle" text-anchor="middle">ENTITYTESTDATA TABLES AND DAO RELATION</text>
+
+<rect x="110" y="186" width="360" height="210" rx="10" fill="#fff" stroke="#4f86c6" class="card"/>
+<path d="M110,228 L110,196 Q110,186 120,186 L460,186 Q470,186 470,196 L470,228 Z" fill="#d9e8f5"/>
+<text x="290" y="214" class="label" text-anchor="middle">YTable</text>
+<text x="130" y="256" class="tiny">uuid PK varchar(24)</text>
+<text x="130" y="276" class="tiny">x bool default true</text>
+<text x="130" y="296" class="tiny">primaryKey(uuid)</text>
+<text x="130" y="334" class="tiny">Referenced by XTable.y1</text>
+
+<rect x="730" y="186" width="360" height="230" rx="10" fill="#fff" stroke="#4f8f8a" class="card"/>
+<path d="M730,228 L730,196 Q730,186 740,186 L1080,186 Q1090,186 1090,196 L1090,228 Z" fill="#d7efec"/>
+<text x="910" y="214" class="label" text-anchor="middle">XTable</text>
+<text x="750" y="256" class="tiny">id PK serial</text>
+<text x="750" y="276" class="tiny">b1 bool default true</text>
+<text x="750" y="296" class="tiny">b2 bool default false</text>
+<text x="750" y="316" class="tiny">y1 FK nullable -&gt; YTable.uuid</text>
+<text x="750" y="354" class="tiny">Nullable child rows may omit y1.</text>
+
+<path data-connector="xtable-y1-to-ytable-uuid" d="M730,306 L470,306" class="fkLine edge"/>
+<text x="496" y="291" class="cardinality">1</text>
+<text x="688" y="291" class="cardinality">0..N</text>
+<text x="600" y="286" class="tiny" text-anchor="middle">optional FK y1 -&gt; uuid</text>
+
+<rect x="150" y="470" width="280" height="76" rx="10" fill="#dfead5" stroke="#6e8f4f" class="card"/>
+<text x="290" y="496" class="label" text-anchor="middle">YEntity</text>
+<text x="290" y="526" class="detail" text-anchor="middle">EntityID&lt;String&gt;, b backReferencedOn</text>
+<rect x="770" y="470" width="280" height="76" rx="10" fill="#e6edf6" stroke="#4f86c6" class="card"/>
+<text x="910" y="496" class="label" text-anchor="middle">BEntity</text>
+<text x="910" y="526" class="detail" text-anchor="middle">y optionalReferencedOn XTable.y1</text>
+
+<path data-connector="ytable-to-yentity" d="M290,396 L290,470" class="mapLine edge"/>
+<path data-connector="xtable-to-bentity" d="M910,416 L910,470" class="mapLine edge"/>
+<path data-connector="bentity-to-yentity" d="M770,518 L430,518" class="entityLine edge"/>
+<text x="452" y="503" class="cardinality">0..1</text>
+<text x="728" y="503" class="cardinality">0..1</text>
+<text x="600" y="502" class="tiny" text-anchor="middle">DAO optional one-to-one example</text>
+
+<rect x="130" y="604" width="940" height="44" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+<path d="M166,620 L228,620" class="fkLine edge"/><text x="242" y="625" class="tiny">nullable table FK, child XTable to parent YTable</text>
+<path d="M556,620 L618,620" class="mapLine edge"/><text x="632" y="625" class="tiny">table-to-entity mapping</text>
+<path d="M166,640 L228,640" class="entityLine edge"/><text x="242" y="645" class="tiny">DAO optional reference/back-reference</text>
+
+<rect x="112" y="668" width="976" height="34" rx="10" fill="#ecfdf5" stroke="#9dbb7c" stroke-width="1.3"/>
+<text x="600" y="690" class="detail" text-anchor="middle">The database FK allows nullable child rows; the examples use one BEntity per YEntity back-reference in transaction tests.</text>
 </svg>

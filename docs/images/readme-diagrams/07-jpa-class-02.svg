@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 980" width="1320" height="980" role="img" aria-label="JPA and Exposed Concept Mapping">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#b65386" stroke="#b65386" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#b8793c" stroke="#b8793c" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,11 +14,11 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.arrow{fill:none;stroke:#4f86c6;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.mapLine{fill:none;stroke:#6e8f4f;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.codecLine{fill:none;stroke:#b65386;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
+.dbUse{fill:none;stroke:#b8793c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.runtimeUse{fill:none;stroke:#7d61b3;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
@@ -74,18 +74,21 @@
 <desc>Inheritance tests</desc><rect x="468" y="684" width="196" height="54" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
 <text x="566" y="709" class="label" text-anchor="middle">Inheritance tests</text>
 <text x="566" y="724" class="detail" text-anchor="middle">3 strategies</text>
-<path d="M328,210 L398,210 L398,271 L468,271" class="arrow"/>
-<path d="M328,326 L398,326 L398,381 L468,381" class="arrow"/>
-<path d="M328,442 L398,442 L398,601 L468,601" class="arrow"/>
-<path d="M328,558 L398,558 L398,381 L468,381" class="arrow"/>
-<path d="M328,548 L418,548 L418,491 L468,491" class="mapLine"/>
-<path d="M328,674 L398,674 L398,711 L468,711" class="runtimeUse"/>
-<path d="M664,271 L780,271 L780,210 L920,210" class="mapLine"/>
-<path d="M664,271 L760,271 L760,326 L920,326" class="mapLine"/>
-<path d="M664,601 L760,601 L760,442 L920,442" class="mapLine"/>
-<path d="M664,381 L760,381 L760,558 L920,558" class="mapLine"/>
-<path d="M664,491 L790,491 L790,558 L920,558" class="mapLine"/>
-<path d="M664,711 L760,711 L760,674 L920,674" class="runtimeUse"/>
-<rect x="128" y="884" width="1064" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="660" y="915" class="detail" text-anchor="middle">Concept rule: Exposed splits mapping into explicit table definitions, DAO classes, query DSL, and transaction-scoped verification.</text>
+<path data-connector="entity-class-to-simple-schema" d="M328,210 L386,210 Q398,210 398,222 L398,259 Q398,271 410,271 L468,271" class="arrow"/>
+<path data-connector="column-fields-to-blog-schema" d="M328,326 L386,326 Q398,326 398,338 L398,358 Q398,370 410,370 L468,370" class="arrow"/>
+<path data-connector="id-to-book-schema" d="M98,442 L80,442 Q68,442 68,454 L68,589 Q68,601 80,601 L468,601" class="arrow"/>
+<path data-connector="relationships-to-blog-schema" d="M328,548 L410,548 Q422,548 422,536 L422,404 Q422,392 434,392 L468,392" class="arrow"/>
+<path data-connector="relationships-to-person-schema" d="M328,568 L436,568 Q448,568 448,556 L448,503 Q448,491 460,491 L468,491" class="mapLine"/>
+<path data-connector="lifecycle-to-inheritance-tests" d="M328,674 L386,674 Q398,674 398,686 L398,699 Q398,711 410,711 L468,711" class="runtimeUse"/>
+<path data-connector="simple-schema-to-table-dao" d="M664,261 L748,261 Q760,261 760,249 L760,222 Q760,210 772,210 L920,210" class="mapLine"/>
+<path data-connector="simple-schema-to-column-delegates" d="M664,281 L748,281 Q760,281 760,293 L760,314 Q760,326 772,326 L920,326" class="mapLine"/>
+<path data-connector="book-schema-to-idtable-variants" d="M664,601 L1198,601 Q1210,601 1210,589 L1210,454 Q1210,442 1198,442 L1180,442" class="mapLine"/>
+<path data-connector="blog-schema-to-reference-apis" d="M664,381 L736,381 Q748,381 748,393 L748,528 Q748,540 760,540 L920,540" class="mapLine"/>
+<path data-connector="person-schema-to-reference-apis" d="M566,518 L566,558 Q566,570 578,570 L920,570" class="mapLine"/>
+<path data-connector="inheritance-tests-to-explicit-tests" d="M664,711 L748,711 Q760,711 760,699 L760,686 Q760,674 772,674 L920,674" class="runtimeUse"/>
+<rect x="128" y="868" width="1064" height="72" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.3"/>
+<path d="M176,894 L236,894" class="arrow"/><text x="256" y="898" class="tiny">blue = JPA concept to source example</text>
+<path d="M520,894 L580,894" class="mapLine"/><text x="600" y="898" class="tiny">green = source example to Exposed counterpart</text>
+<path d="M176,924 L236,924" class="runtimeUse"/><text x="256" y="928" class="tiny">dashed purple = lifecycle / transaction-scoped checks</text>
+<text x="762" y="928" class="tiny">Concept rule: mapping is split into tables, DAO classes, query DSL, and tests.</text>
 </svg>

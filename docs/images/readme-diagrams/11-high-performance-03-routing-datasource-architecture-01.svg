@@ -1,91 +1,99 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1378 650" width="1378" height="650" role="img" aria-label="RoutingDataSource Example (03-routing-datasource)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Routing datasource key resolution flow">
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
+      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.13"/>
     </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
+    <marker id="flowArrow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#5f7f89" stroke="#5f7f89" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
     </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
+    <marker id="softArrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#8fa1aa" stroke="#8fa1aa" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
     </marker>
     <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
-</style>
+      text { letter-spacing: 0; }
+      .canvas { fill: #fbfcf8; stroke: #3f515a; stroke-width: 3; }
+      .title { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 36px; fill: #23323a; }
+      .subtitle,.lane,.detail,.note,.key { font-family: "Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif; fill: #516670; }
+      .subtitle { font-size: 15px; }
+      .lane { font-size: 12px; font-weight: 700; fill: #687b83; }
+      .card { fill: #ffffff; stroke-width: 2.1; filter: url(#shadow); }
+      .entry { stroke: #5d948b; }
+      .service { stroke: #ac7a34; }
+      .route { stroke: #7b6bb4; }
+      .store { stroke: #8fa1aa; }
+      .label { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 20px; fill: #20323b; }
+      .detail { font-size: 12px; }
+      .note { font-size: 13px; }
+      .key { font-size: 13px; font-weight: 700; fill: #6d5fa8; }
+      .flow { fill: none; stroke: #5f7f89; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#flowArrow); }
+      .soft { fill: none; stroke: #8fa1aa; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 8 7; marker-end: url(#softArrow); }
+      .band { fill: #f7faf6; stroke: #d9e2dc; stroke-width: 1.5; }
+    </style>
   </defs>
-  <rect width="1378" height="650" class="canvas"/>
-  <rect x="20" y="20" width="1338" height="610" rx="16" class="frame"/>
-<text x="48" y="58" class="title">RoutingDataSource Example (03-routing-datasource)</text>
-  <text x="48" y="80" class="subtitle">Source-derived component flow · README plus Kotlin implementation</text>
-<rect x="36" y="112" width="270" height="350" rx="12" class="panel"/>
-  <text x="171" y="106" class="panelTitle" text-anchor="middle">ENTRY POINTS</text>
-<rect x="56" y="132" width="230" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="171" y="161" class="smallLabel" text-anchor="middle">Routing Marker...</text>
-<text x="171" y="174" class="detail" text-anchor="middle">entry</text>
-<rect x="56" y="208" width="230" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="171" y="233" class="smallLabel" text-anchor="middle">Routing Marker</text>
-<text x="171" y="251" class="smallLabel" text-anchor="middle">Response</text>
 
-<rect x="56" y="284" width="230" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="171" y="309" class="smallLabel" text-anchor="middle">Update Marker</text>
-<text x="171" y="327" class="smallLabel" text-anchor="middle">Request</text>
+  <rect x="24" y="24" width="1552" height="852" rx="20" class="canvas frame"/>
+  <text x="800" y="76" text-anchor="middle" class="title">RoutingDataSource Key Resolution Flow</text>
+  <text x="800" y="106" text-anchor="middle" class="subtitle">TenantContext and transaction readOnly state form a routing key, then DynamicRoutingDataSource delegates to a registered DataSource.</text>
 
-<rect x="56" y="360" width="230" height="58" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="171" y="389" class="smallLabel" text-anchor="middle">Tenant Header Filter</text>
-<text x="171" y="402" class="detail" text-anchor="middle">cross-cutting</text>
-<rect x="390" y="112" width="360" height="350" rx="12" class="panel"/>
-  <text x="570" y="106" class="panelTitle" text-anchor="middle">APPLICATION / DOMAIN</text>
-<rect x="420" y="136" width="300" height="76" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="570" y="165" class="smallLabel" text-anchor="middle">Routing Data Source Example</text>
-<text x="570" y="183" class="smallLabel" text-anchor="middle">(03- routing- datasource)</text>
-<text x="570" y="196" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="420" y="248" width="300" height="76" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="570" y="277" class="smallLabel" text-anchor="middle">Service Boundary</text>
-<text x="570" y="308" class="detail" text-anchor="middle">use case</text>
-<rect x="420" y="360" width="300" height="76" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="570" y="404" class="smallLabel" text-anchor="middle">Use Case Flow</text>
+  <text x="90" y="164" class="lane">HTTP CONTEXT</text>
+  <text x="430" y="164" class="lane">ROUTING KEY</text>
+  <text x="820" y="164" class="lane">DATASOURCE ROUTER</text>
+  <text x="1190" y="164" class="lane">DATABASE ACCESS</text>
 
-<rect x="842" y="112" width="250" height="350" rx="12" class="panel"/>
-  <text x="967" y="106" class="panelTitle" text-anchor="middle">PERSISTENCE</text>
-<rect x="864" y="138" width="206" height="56" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="967" y="167" class="smallLabel" text-anchor="middle">Marker Table</text>
-<text x="967" y="178" class="detail" text-anchor="middle">table/model</text>
-<rect x="864" y="212" width="206" height="56" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="967" y="241" class="smallLabel" text-anchor="middle">Routing Marker...</text>
-<text x="967" y="252" class="detail" text-anchor="middle">persistence</text>
-<rect x="1120" y="112" width="222" height="350" rx="12" class="panel"/>
-  <text x="1231" y="106" class="panelTitle" text-anchor="middle">RUNTIME / INFRASTRUCTURE</text>
-<rect x="1138" y="138" width="186" height="56" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1231" y="167" class="smallLabel" text-anchor="middle">Routing Data...</text>
-<text x="1231" y="178" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="1138" y="212" width="186" height="56" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="1231" y="241" class="smallLabel" text-anchor="middle">Routing Data...</text>
-<text x="1231" y="252" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="1138" y="286" width="186" height="56" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="1231" y="315" class="smallLabel" text-anchor="middle">Routing Data...</text>
-<text x="1231" y="326" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="1138" y="360" width="186" height="56" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1231" y="389" class="smallLabel" text-anchor="middle">Tenant Data...</text>
-<text x="1231" y="400" class="detail" text-anchor="middle">cross-cutting</text>
-<path d="M286,176 C330,176 366,174 420,174" class="arrow"/>
-<path d="M720,288 C774,288 812,236 864,236" class="arrow"/>
-<path d="M720,400 C790,400 1050,404 1138,404" class="softArrow"/>
-<path d="M1070,240 C1098,240 1108,240 1138,240" class="softArrow"/>
-<rect x="36" y="510" width="1306" height="58" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="689" y="535" class="smallLabel" text-anchor="middle">Tenant context is resolved before service, repository, and Exposed table access.</text>
-<text x="689" y="554" class="detail" text-anchor="middle">Source packages decide the panels; arrows show only the important runtime or dependency flow.</text>
+  <rect x="70" y="196" width="250" height="82" rx="12" class="card entry"/>
+  <text x="195" y="230" text-anchor="middle" class="label">X-Tenant-Id header</text>
+  <text x="195" y="252" text-anchor="middle" class="detail">acme, default, or blank</text>
+
+  <rect x="70" y="334" width="250" height="82" rx="12" class="card entry"/>
+  <text x="195" y="368" text-anchor="middle" class="label">TenantHeaderFilter</text>
+  <text x="195" y="390" text-anchor="middle" class="detail">binds TenantContext ThreadLocal</text>
+
+  <rect x="70" y="472" width="250" height="82" rx="12" class="card service"/>
+  <text x="195" y="506" text-anchor="middle" class="label">RoutingMarkerController</text>
+  <text x="195" y="528" text-anchor="middle" class="detail">read-only query or write update</text>
+
+  <rect x="430" y="266" width="286" height="104" rx="12" class="card route"/>
+  <text x="573" y="302" text-anchor="middle" class="label">ContextAware</text>
+  <text x="573" y="326" text-anchor="middle" class="label">RoutingKeyResolver</text>
+  <text x="573" y="350" text-anchor="middle" class="detail">tenant + Transaction readOnly</text>
+
+  <rect x="430" y="486" width="286" height="82" rx="12" class="card route"/>
+  <text x="573" y="520" text-anchor="middle" class="label">Resolved key</text>
+  <text x="573" y="542" text-anchor="middle" class="key">tenant:rw or tenant:ro</text>
+
+  <rect x="818" y="196" width="286" height="82" rx="12" class="card route"/>
+  <text x="961" y="230" text-anchor="middle" class="label">DataSourceRegistry</text>
+  <text x="961" y="252" text-anchor="middle" class="detail">registered Hikari pools by key</text>
+
+  <rect x="818" y="374" width="286" height="104" rx="12" class="card route"/>
+  <text x="961" y="410" text-anchor="middle" class="label">DynamicRouting</text>
+  <text x="961" y="434" text-anchor="middle" class="label">DataSource</text>
+  <text x="961" y="458" text-anchor="middle" class="detail">delegates getConnection()</text>
+
+  <rect x="1190" y="196" width="270" height="82" rx="12" class="card store"/>
+  <text x="1325" y="230" text-anchor="middle" class="label">tenant rw pool</text>
+  <text x="1325" y="252" text-anchor="middle" class="detail">default:rw / acme:rw</text>
+
+  <rect x="1190" y="334" width="270" height="82" rx="12" class="card store"/>
+  <text x="1325" y="368" text-anchor="middle" class="label">tenant ro pool</text>
+  <text x="1325" y="390" text-anchor="middle" class="detail">default:ro / acme:ro</text>
+
+  <rect x="1190" y="520" width="270" height="82" rx="12" class="card store"/>
+  <text x="1325" y="554" text-anchor="middle" class="label">MarkerTable</text>
+  <text x="1325" y="576" text-anchor="middle" class="detail">routing marker row per database</text>
+
+  <path id="f1" data-connector="f1" class="flow" d="M 195 278 L 195 334"/>
+  <path id="f2" data-connector="f2" class="flow" d="M 320 375 L 378 375 Q 398 375 398 355 L 398 318 Q 398 298 418 298 L 430 298"/>
+  <path id="f3" data-connector="f3" class="flow" d="M 320 513 L 430 513"/>
+  <path id="f4" data-connector="f4" class="flow" d="M 573 370 L 573 486"/>
+  <path id="f5" data-connector="f5" class="flow" d="M 716 527 L 778 527 Q 798 527 798 507 L 798 446 Q 798 426 810 426 L 818 426"/>
+  <path id="f6" data-connector="f6" class="flow" d="M 1104 426 L 1160 426 Q 1180 426 1180 406 L 1180 257 Q 1180 237 1188 237 L 1190 237"/>
+  <path id="f7" data-connector="f7" class="flow" d="M 1104 426 L 1160 426 Q 1180 426 1180 415 Q 1180 395 1188 395 L 1190 395"/>
+  <path id="f8" data-connector="f8" class="flow" d="M 1325 416 L 1325 520"/>
+
+  <path id="s1" data-connector="s1" class="soft" d="M 961 278 L 961 374"/>
+  <path id="s2" data-connector="s2" class="soft" d="M 195 472 L 195 444 Q 195 424 215 424 L 430 424 Q 450 424 450 404 L 450 370"/>
+  <rect x="390" y="706" width="820" height="72" rx="14" class="band"/>
+  <text x="800" y="736" text-anchor="middle" class="note">Missing ro configuration reuses rw; an unregistered resolved key fails fast instead of silently choosing the wrong tenant.</text>
+  <text x="800" y="760" text-anchor="middle" class="detail">TenantHeaderFilter clears TenantContext after the request so the next request cannot inherit a stale tenant.</text>
 </svg>

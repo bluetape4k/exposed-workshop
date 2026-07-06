@@ -1,18 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1040" viewBox="0 0 1500 1040" role="img" aria-labelledby="title desc">
   <title id="title">Exposed Workshop Source-backed Overview</title>
   <desc id="desc">The repository teaches Exposed through Gradle-included runnable modules, shared database fixtures, Spring/Ktor integrations, and Testcontainers-backed verification.</desc>
   <defs>
     <filter id="softShadow" x="-8%" y="-8%" width="116%" height="116%"><feDropShadow dx="0" dy="7" stdDeviation="6" flood-color="#1e293b" flood-opacity="0.11"/></filter>
-    <marker id="arrowBlue" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 13 6.5 L 0 13 Z" fill="#2563eb"/></marker>
-    <marker id="arrowGreen" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 13 6.5 L 0 13 Z" fill="#059669"/></marker>
-    <marker id="arrowAmber" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 13 6.5 L 0 13 Z" fill="#d97706"/></marker>
-    <marker id="arrowPurple" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 13 6.5 L 0 13 Z" fill="#7c3aed"/></marker>
+    <marker id="arrowBlue" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+    <marker id="arrowGreen" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6f8f58" stroke="#6f8f58" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+    <marker id="arrowAmber" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#b8793c" stroke="#b8793c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+    <marker id="arrowPurple" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7f68a7" stroke="#7f68a7" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
     <style>
-      svg{font-family:"Architects Daughter","Comic Mono",ui-sans-serif,system-ui,sans-serif}.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#90a9cf;stroke-width:3;filter:url(#softShadow)}.title{font-family:"Architects Daughter";font-size:50px;fill:#263a57}.subtitle,.body,.routeText,.footerText{font-family:"Comic Mono";fill:#526276}.subtitle{font-size:17px}.bandTitle,.cardTitle,.chipTitle{font-family:"Architects Daughter";fill:#263a57}.bandTitle{font-size:28px}.cardTitle{font-size:23px}.chipTitle{font-size:18px}.body{font-size:13px}.small{font-family:"Comic Mono";font-size:12px;fill:#64748b}.band{stroke-width:2.5}.card,.chip{fill:#fff;stroke-width:2.2;filter:url(#softShadow)}.route{fill:none;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}.routeSoft{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:8 7}.routeText{font-size:13px}.pill{fill:#fff;stroke:#d4e0ec;stroke-width:1.5}.footer{fill:#f8fafc;stroke:#d4e0ec;stroke-width:2}
+      svg{font-family:"Architects Daughter","Comic Mono",ui-sans-serif,system-ui,sans-serif}.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#90a9cf;stroke-width:3;filter:url(#softShadow)}.title{font-family:"Architects Daughter";font-size:50px;fill:#263a57}.subtitle,.body,.routeText,.footerText{font-family:"Comic Mono";fill:#526276}.subtitle{font-size:17px}.bandTitle,.cardTitle,.chipTitle{font-family:"Architects Daughter";fill:#263a57}.bandTitle{font-size:28px}.cardTitle{font-size:23px}.chipTitle{font-size:18px}.body{font-size:13px}.small{font-family:"Comic Mono";font-size:12px;fill:#64748b}.band{stroke-width:2.5}.card,.chip{fill:#fff;stroke-width:2.2;filter:url(#softShadow)}.route{fill:none;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}.routeSoft{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:8 7}.routeText{font-size:13px}.pill{fill:#fff;stroke:#d4e0ec;stroke-width:1.5}.footer,.legendBox{fill:#f8fafc;stroke:#d4e0ec;stroke-width:2}
     </style>
   </defs>
-  <rect class="canvas" width="1500" height="1000"/>
-  <rect class="frame" x="48" y="38" width="1404" height="924" rx="28"/>
+  <rect class="canvas" width="1500" height="1040"/>
+  <rect class="frame" x="48" y="38" width="1404" height="964" rx="28"/>
   <text class="title" x="750" y="105" text-anchor="middle">Exposed Workshop Source Map</text>
   <text class="subtitle" x="750" y="142" text-anchor="middle">Gradle includes runnable Kotlin modules that move from Exposed basics to Spring, Ktor, tenancy, cache, and production-style verification.</text>
 
@@ -56,12 +56,14 @@
     <rect class="pill" x="1303" y="842" width="88" height="38" rx="12"/><text class="small" x="1347" y="865" text-anchor="middle">MariaDB</text>
   </g>
 
-  <path class="route" d="M750 306 L750 354" stroke="#2563eb" marker-end="url(#arrowBlue)"/><text class="routeText" x="780" y="334">choose Exposed surface</text>
-  <path class="route" d="M750 540 L750 592" stroke="#059669" marker-end="url(#arrowGreen)"/><text class="routeText" x="780" y="570">wrap in runtime</text>
-  <path class="route" d="M750 764 L750 814" stroke="#d97706" marker-end="url(#arrowAmber)"/><text class="routeText" x="780" y="793">prove with tests</text>
-  <path class="routeSoft" d="M276 518 L276 592" stroke="#7c3aed" marker-end="url(#arrowPurple)"/>
-  <path class="routeSoft" d="M1104 518 L1104 592" stroke="#7c3aed" marker-end="url(#arrowPurple)"/>
+  <path class="route" d="M750 306 L750 354" stroke="#4f86c6" marker-end="url(#arrowBlue)"/><text class="routeText" x="780" y="334">choose Exposed surface</text>
+  <path class="route" d="M750 540 L750 592" stroke="#6f8f58" marker-end="url(#arrowGreen)"/><text class="routeText" x="780" y="570">wrap in runtime</text>
+  <path class="route" d="M750 764 L750 814" stroke="#b8793c" marker-end="url(#arrowAmber)"/><text class="routeText" x="780" y="793">prove with tests</text>
+  <path class="routeSoft" d="M276 518 L276 592" stroke="#7f68a7" marker-end="url(#arrowPurple)"/>
+  <path class="routeSoft" d="M1104 518 L1104 592" stroke="#7f68a7" marker-end="url(#arrowPurple)"/>
 
-  <rect class="footer" x="148" y="920" width="1204" height="42" rx="18"/>
-  <text class="footerText" x="750" y="947" text-anchor="middle">Read a chapter, run its tests, then compare the same persistence idea across blocking, coroutine, virtual-thread, Spring, and Ktor modules.</text>
+  <rect class="legendBox" x="944" y="776" width="390" height="30" rx="15"/>
+  <text class="small" x="1139" y="796" text-anchor="middle">Legend: solid = main path; dashed = supporting paths</text>
+  <rect class="footer" x="148" y="934" width="1204" height="42" rx="18"/>
+  <text class="footerText" x="750" y="961" text-anchor="middle">Read a chapter, run its tests, then compare the same persistence idea across blocking, coroutine, virtual-thread, Spring, and Ktor modules.</text>
 </svg>

@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 900" width="1560" height="900" role="img" aria-label="Exposed SQL Function Classification">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777" stroke="#db2777" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -19,6 +19,7 @@
 .dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
 .savepoint{fill:none;stroke:#db2777;stroke-width:1.9;stroke-dasharray:7 4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
 .returnLine{fill:none;stroke:#64748b;stroke-width:1.8;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.edge{fill:none}
 .lifeline{stroke:#cbd5e1;stroke-width:1.5;stroke-dasharray:5 6}
 </style>
 </defs>
@@ -69,26 +70,36 @@
 <text x="1106" y="635" class="label" text-anchor="middle">Dialect support</text>
 <text x="1106" y="664" class="detail" text-anchor="middle">feature assumptions</text>
 <rect x="1348" y="130" width="140" height="610" rx="12" class="panel"/><text x="1418" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
-<path d="M1370,314 C1370,294 1466,294 1466,314 L1466,512 C1466,532 1370,532 1370,512 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
-<ellipse cx="1418" cy="314" rx="48" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1370,512 C1370,532 1466,532 1466,512" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1418" y="342" class="label" text-anchor="middle">DB</text>
-<text x="1386" y="368" class="tiny">H2</text>
-<text x="1386" y="385" class="tiny">Postgres</text>
-<text x="1386" y="402" class="tiny">MySQL</text>
-<text x="1386" y="419" class="tiny">MariaDB</text>
-<path d="M386,209 L488,209 L488,239 L590,239" class="arrow"/>
-<path d="M386,317 L504,317 L504,239 L590,239" class="arrow"/>
-<path d="M386,425 L488,425 L488,527 L590,527" class="arrow"/>
-<path d="M386,533 L504,533 L504,527 L590,527" class="arrow"/>
-<path d="M386,641 L472,641 L472,239 L590,239" class="runtimeUse"/>
-<path d="M814,239 L904,239 L904,224 L990,224" class="arrow"/>
-<path d="M814,527 L904,527 L904,364 L990,364" class="arrow"/>
-<path d="M814,527 L920,527 L920,504 L990,504" class="arrow"/>
-<path d="M814,665 L920,665 L920,644 L990,644" class="returnLine"/>
-<path d="M1222,224 L1310,224 L1310,356 L1370,356" class="dbUse"/>
-<path d="M1222,364 L1310,364 L1310,396 L1370,396" class="dbUse"/>
-<path d="M1222,504 L1310,504 L1310,436 L1370,436" class="dbUse"/>
-<rect x="126" y="796" width="1308" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="780" y="827" class="detail" text-anchor="middle">Source check: Ex01..Ex05 cover string/conditional, math, statistics, trigonometric, and window functions through typed Exposed Function&lt;T&gt; expressions.</text>
+<rect x="1358" y="290" width="120" height="260" rx="10" fill="#fff7ed" stroke="#ea580c" class="card"/>
+<g data-bluetape4k-icon="generic/database-server" transform="translate(1374 314) scale(.30)">
+  <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
+  <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="5"/>
+  <path d="M30 58c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 80c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="1418" y="402" class="label" text-anchor="middle">DB Dialects</text>
+<text x="1418" y="434" class="tiny" text-anchor="middle">H2</text>
+<text x="1418" y="452" class="tiny" text-anchor="middle">Postgres</text>
+<text x="1418" y="470" class="tiny" text-anchor="middle">MySQL</text>
+<text x="1418" y="488" class="tiny" text-anchor="middle">MariaDB</text>
+<path data-connector="string-conditional-to-sql-function" d="M386,209 L478,209 Q488,209 488,219 L488,229 Q488,239 498,239 L590,239" class="arrow edge"/>
+<path data-connector="math-trig-to-sql-function" d="M386,317 L504,317 Q514,317 514,307 L514,249 Q514,239 524,239 L590,239" class="arrow edge"/>
+<path data-connector="aggregate-statistics-to-sales" d="M386,425 L480,425 Q490,425 490,435 L490,517 Q490,527 500,527 L590,527" class="arrow edge"/>
+<path data-connector="window-to-sales" d="M386,533 L590,533" class="arrow edge"/>
+<path data-connector="bitwise-regex-to-assertions" d="M386,641 L510,641 Q520,641 520,651 L520,665 Q520,675 530,675 L590,675" class="runtimeUse edge"/>
+<path data-connector="sql-function-to-select-expression" d="M814,239 L990,239" class="arrow edge"/>
+<path data-connector="sales-to-group-by-having" d="M814,527 L894,527 Q904,527 904,517 L904,374 Q904,364 914,364 L990,364" class="arrow edge"/>
+<path data-connector="sales-to-over-clause" d="M814,527 L990,527" class="arrow edge"/>
+<path data-connector="assertions-to-dialect-support" d="M814,665 L900,665 Q910,665 910,655 L910,654 Q910,644 920,644 L990,644" class="returnLine edge"/>
+<path data-connector="select-expression-to-db" d="M1222,224 L1300,224 Q1310,224 1310,234 L1310,346 Q1310,356 1320,356 L1358,356" class="dbUse edge"/>
+<path data-connector="group-by-to-db" d="M1222,364 L1300,364 Q1310,364 1310,374 L1310,386 Q1310,396 1320,396 L1358,396" class="dbUse edge"/>
+<path data-connector="over-clause-to-db" d="M1222,504 L1300,504 Q1310,504 1310,494 L1310,446 Q1310,436 1320,436 L1358,436" class="dbUse edge"/>
+<rect x="236" y="756" width="1088" height="32" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+<path d="M270,772 L332,772" class="arrow"/><text x="348" y="777" class="tiny">categories to expressions</text>
+<path d="M620,772 L682,772" class="runtimeUse"/><text x="696" y="777" class="tiny">edge cases to assertions</text>
+<path d="M958,772 L1020,772" class="dbUse"/><text x="1034" y="777" class="tiny">SQL verified per dialect</text>
+<rect x="126" y="812" width="1308" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="780" y="843" class="detail" text-anchor="middle">03-functions groups scalar, aggregate, statistical, and window expressions before validating generated SQL per dialect.</text>
 </svg>
