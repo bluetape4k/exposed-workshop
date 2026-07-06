@@ -1,73 +1,147 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 782" width="1280" height="782" role="img" aria-label="09 Spring: Spring Cache (06)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1030" width="1500" height="1030" role="img" aria-label="09 Spring: Spring Cache (06) class relationships">
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
     </filter>
-    <marker id="umlInheritanceArrow" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="17" refY="8" orient="auto">
-      <path d="M1,1 L17,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.8" stroke-dasharray="none" style="stroke-dasharray:none"/>
+    <marker id="umlHead" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="17" refY="8" orient="auto">
+      <path d="M1,1 L17,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.8" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="depHead" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#64748b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="wireHead" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#8a6f3e" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
     </marker>
     <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
-</style>
+      .canvas{fill:#f6f9fc}
+      .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+      .card{stroke-width:1.7;filter:url(#shadow)}
+      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
+      .subtitle,.detail,.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+      .subtitle{font-size:13px}
+      .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
+      .detail{font-size:11.5px}
+      .tiny{font-size:10px;fill:#64748b}
+      .legend{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
+      .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#umlHead)}
+      .depend{fill:none;stroke:#64748b;stroke-width:1.6;stroke-dasharray:6 6;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#depHead)}
+      .wire{fill:none;stroke:#8a6f3e;stroke-width:1.55;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#wireHead)}
+    </style>
   </defs>
-  <rect width="1280" height="782" class="canvas"/>
-  <rect x="20" y="20" width="1240" height="742" rx="16" class="frame"/>
-<text x="48" y="58" class="title">09 Spring: Spring Cache (06)</text>
-  <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="120" width="1188" height="130" rx="12" class="panel"/>
-  <text x="640" y="114" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="74" y="146" width="357" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="252.5" y="175" class="smallLabel" text-anchor="middle">Int Id Table</text>
-<text x="252.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="459" y="146" width="357" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="637.5" y="175" class="smallLabel" text-anchor="middle">Entity ID</text>
-<text x="637.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="844" y="146" width="357" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="1022.5" y="188" class="smallLabel" text-anchor="middle">Application Listener</text>
 
-<rect x="46" y="302" width="1188" height="366" rx="12" class="panel"/>
-  <text x="640" y="296" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="92.5" y="328" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="252.5" y="357" class="smallLabel" text-anchor="middle">Country Table</text>
-<text x="252.5" y="396" class="detail" text-anchor="middle">table/model</text>
-<rect x="477.5" y="328" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="637.5" y="376" class="smallLabel" text-anchor="middle">Country</text>
+  <rect width="1500" height="1030" class="canvas"/>
+  <rect x="20" y="20" width="1460" height="990" rx="16" class="frame"/>
 
-<rect x="862.5" y="328" width="320" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1022.5" y="376" class="smallLabel" text-anchor="middle">Data Populator</text>
+  <text x="48" y="58" class="title">09 Spring: Spring Cache (06)</text>
+  <text x="48" y="80" class="subtitle">Source-derived class relationships for Spring Cache, RedisCacheManager, and Exposed-backed country lookup</text>
 
-<rect x="74" y="436" width="320" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="234" y="465" class="smallLabel" text-anchor="middle">Spring Cache Application</text>
-<text x="234" y="504" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="440" y="436" width="320" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="600" y="465" class="smallLabel" text-anchor="middle">Exposed Config</text>
-<text x="600" y="504" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="806" y="436" width="320" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="966" y="465" class="smallLabel" text-anchor="middle">Lettuce Cache Config</text>
-<text x="966" y="504" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="74" y="544" width="320" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="234" y="573" class="smallLabel" text-anchor="middle">Country Repository</text>
-<text x="234" y="612" class="detail" text-anchor="middle">persistence</text>
-<rect x="440" y="544" width="320" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="600" y="592" class="smallLabel" text-anchor="middle">Country Record</text>
+  <rect x="70" y="132" width="250" height="76" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+  <text x="195" y="164" text-anchor="middle" class="label">Serializable</text>
+  <text x="195" y="190" text-anchor="middle" class="detail">Redis value contract</text>
 
-<path data-connector="country-table-inherits-int-id-table" d="M252.5,328 V218" class="inherit" marker-end="url(#umlInheritanceArrow)"/>
-<path data-connector="country-inherits-entity-id" d="M637.5,328 V318 Q637.5,308 627.5,308 H410 Q400,308 400,298 V272 Q400,262 410,262 H627.5 Q637.5,262 637.5,252 V218" class="inherit" marker-end="url(#umlInheritanceArrow)"/>
-<path data-connector="data-populator-inherits-application-listener" d="M1022.5,328 V218" class="inherit" marker-end="url(#umlInheritanceArrow)"/>
-<rect x="46" y="708" width="1188" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="640" y="735" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+  <rect x="370" y="132" width="250" height="76" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+  <text x="495" y="164" text-anchor="middle" class="label">IntIdTable</text>
+  <text x="495" y="190" text-anchor="middle" class="detail">Exposed table base</text>
+
+  <rect x="670" y="132" width="250" height="76" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+  <text x="795" y="164" text-anchor="middle" class="label">IntEntity</text>
+  <text x="795" y="190" text-anchor="middle" class="detail">optional DAO base</text>
+
+  <rect x="970" y="132" width="350" height="76" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+  <text x="1145" y="164" text-anchor="middle" class="label">ApplicationListener</text>
+  <text x="1145" y="190" text-anchor="middle" class="detail">ApplicationReadyEvent hook</text>
+
+  <rect x="70" y="280" width="250" height="92" rx="10" fill="#fdf2f8" stroke="#db2777" class="card"/>
+  <text x="195" y="313" text-anchor="middle" class="label">CountryRecord</text>
+  <text x="195" y="339" text-anchor="middle" class="detail">code, name, description</text>
+  <text x="195" y="358" text-anchor="middle" class="tiny">DTO returned by repository</text>
+
+  <rect x="370" y="280" width="250" height="112" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+  <text x="495" y="313" text-anchor="middle" class="label">CountryTable</text>
+  <text x="495" y="339" text-anchor="middle" class="detail">countries table schema</text>
+  <text x="495" y="358" text-anchor="middle" class="tiny">code unique, name, description</text>
+  <text x="495" y="377" text-anchor="middle" class="tiny">used by select/update/batchInsert</text>
+
+  <rect x="670" y="280" width="250" height="92" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+  <text x="795" y="313" text-anchor="middle" class="label">Country</text>
+  <text x="795" y="339" text-anchor="middle" class="detail">DAO entity for CountryTable</text>
+  <text x="795" y="358" text-anchor="middle" class="tiny">present but repository maps rows</text>
+
+  <rect x="970" y="280" width="350" height="92" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+  <text x="1145" y="313" text-anchor="middle" class="label">DataPopulator</text>
+  <text x="1145" y="339" text-anchor="middle" class="detail">loads ISO country rows on ready</text>
+  <text x="1145" y="358" text-anchor="middle" class="tiny">transaction { CountryTable.batchInsert(...) }</text>
+
+  <rect x="340" y="470" width="470" height="150" rx="10" fill="#fff7ed" stroke="#ea580c" class="card"/>
+  <text x="575" y="504" text-anchor="middle" class="label">CountryRepository</text>
+  <text x="575" y="531" text-anchor="middle" class="detail">@CacheConfig(cache:code:country)</text>
+  <text x="575" y="553" text-anchor="middle" class="tiny">@Cacheable findByCode(code) reads transaction {} on miss</text>
+  <text x="575" y="572" text-anchor="middle" class="tiny">update(record) evicts country:{code} through CacheManager</text>
+  <text x="575" y="591" text-anchor="middle" class="tiny">evictCacheAll() invalidates the named cache</text>
+
+  <rect x="870" y="480" width="240" height="110" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+  <text x="990" y="515" text-anchor="middle" class="label">CacheManager</text>
+  <text x="990" y="542" text-anchor="middle" class="detail">Spring Cache API</text>
+  <text x="990" y="562" text-anchor="middle" class="tiny">getCache(...).evict / invalidate</text>
+
+  <rect x="1165" y="470" width="260" height="110" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+  <text x="1295" y="504" text-anchor="middle" class="label">LettuceCacheConfig</text>
+  <text x="1295" y="531" text-anchor="middle" class="detail">@EnableCaching</text>
+  <text x="1295" y="553" text-anchor="middle" class="tiny">LZ4Fory serializer, TTL 10 min</text>
+
+  <rect x="70" y="690" width="250" height="94" rx="10" fill="#e0f2fe" stroke="#0284c7" class="card"/>
+  <text x="195" y="724" text-anchor="middle" class="label">ExposedConfig</text>
+  <text x="195" y="751" text-anchor="middle" class="detail">@EnableTransactionManagement</text>
+  <text x="195" y="770" text-anchor="middle" class="tiny">connects DataSource to Exposed</text>
+
+  <rect x="370" y="690" width="250" height="94" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+  <text x="495" y="724" text-anchor="middle" class="label">DatabaseConfig</text>
+  <text x="495" y="751" text-anchor="middle" class="detail">max entity cache = 500</text>
+  <text x="495" y="770" text-anchor="middle" class="tiny">passed into Database.connect</text>
+
+  <rect x="640" y="690" width="230" height="94" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+  <text x="755" y="724" text-anchor="middle" class="label">Database</text>
+  <text x="755" y="751" text-anchor="middle" class="detail">Exposed JDBC handle</text>
+  <text x="755" y="770" text-anchor="middle" class="tiny">used by transaction { ... }</text>
+
+  <rect x="900" y="690" width="240" height="94" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+  <text x="1020" y="724" text-anchor="middle" class="label">RedisCacheManager</text>
+  <text x="1020" y="751" text-anchor="middle" class="detail">transactionAware()</text>
+  <text x="1020" y="770" text-anchor="middle" class="tiny">concrete CacheManager bean</text>
+
+  <rect x="1165" y="690" width="260" height="94" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+  <text x="1295" y="724" text-anchor="middle" class="label">RedisCacheConfiguration</text>
+  <text x="1295" y="751" text-anchor="middle" class="detail">serializeValuesWith(LZ4Fory)</text>
+  <text x="1295" y="770" text-anchor="middle" class="tiny">entryTtl(Duration.ofMinutes(10))</text>
+
+  <rect x="70" y="835" width="320" height="82" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+  <text x="230" y="867" text-anchor="middle" class="label">SpringCacheApplication</text>
+  <text x="230" y="894" text-anchor="middle" class="detail">Spring Boot entry point</text>
+
+  <rect x="440" y="835" width="320" height="82" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+  <text x="600" y="867" text-anchor="middle" class="label">RedisServer.Launcher.redis</text>
+  <text x="600" y="894" text-anchor="middle" class="detail">Testcontainer Redis endpoint</text>
+
+  <path data-connector="country-record-implements-serializable" d="M195,280 V208" class="inherit"/>
+  <path data-connector="country-table-inherits-int-id-table" d="M495,280 V208" class="inherit"/>
+  <path data-connector="country-inherits-int-entity" d="M795,280 V208" class="inherit"/>
+  <path data-connector="data-populator-implements-application-listener" d="M1145,280 V208" class="inherit"/>
+  <path data-connector="redis-cache-manager-implements-cache-manager" d="M1020,690 V590" class="inherit"/>
+
+  <path data-connector="country-uses-country-table" d="M670,326 H620" class="depend"/>
+  <path data-connector="data-populator-batch-inserts-country-table" d="M1145,372 V420 Q1145,432 1133,432 H507 Q495,432 495,420 V392" class="depend"/>
+  <path data-connector="country-repository-queries-country-table" d="M460,470 V392" class="depend"/>
+  <path data-connector="country-repository-returns-country-record" d="M340,545 H225 Q213,545 213,533 V372" class="depend"/>
+  <path data-connector="country-repository-injects-cache-manager" d="M810,535 H870" class="depend"/>
+
+  <path data-connector="lettuce-cache-config-creates-cache-manager-bean" d="M1165,525 H1110" class="wire"/>
+  <path data-connector="lettuce-cache-config-creates-redis-cache-configuration" d="M1295,580 V690" class="wire"/>
+  <path data-connector="lettuce-cache-config-builds-redis-cache-manager" d="M1295,580 V638 Q1295,650 1283,650 H1112 Q1100,650 1100,662 V690" class="wire"/>
+  <path data-connector="redis-cache-configuration-feeds-redis-cache-manager" d="M1165,737 H1140" class="wire"/>
+  <path data-connector="exposed-config-creates-database-config" d="M320,737 H370" class="wire"/>
+  <path data-connector="database-config-feeds-database" d="M620,737 H640" class="wire"/>
+  <path data-connector="spring-application-starts-redis-testcontainer" d="M390,876 H440" class="wire"/>
+
+  <rect x="70" y="953" width="1355" height="42" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
+  <text x="747.5" y="979" text-anchor="middle" class="legend">Solid hollow triangle = implements/extends; dashed gray = uses/injects; dashed brown = creates/configures bean.</text>
 </svg>
