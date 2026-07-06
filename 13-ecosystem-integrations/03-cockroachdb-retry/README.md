@@ -6,7 +6,7 @@ This example shows how to connect Exposed to CockroachDB through the
 `bluetape4k-exposed-cockroachdb` helper surface and how to wrap a small
 inventory reservation in a CockroachDB-specific serializable retry boundary.
 
-![CockroachDB serializable retry sequence](../../docs/images/readme-diagrams/03-cockroachdb-retry-sequence-01.png)
+![CockroachDB serializable retry sequence](../../docs/images/readme-diagrams/13-cockroachdb-retry-sequence-01.png)
 
 The diagram shows the important boundary: application code calls
 `withCockroachTransaction`, the helper owns retry classification, Exposed runs

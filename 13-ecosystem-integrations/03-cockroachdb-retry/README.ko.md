@@ -6,7 +6,7 @@
 CockroachDB에 연결하고, 작은 inventory reservation을 CockroachDB 전용 serializable
 retry 경계로 감싸는 방법을 보여줍니다.
 
-![CockroachDB serializable retry sequence](../../docs/images/readme-diagrams/03-cockroachdb-retry-sequence-01.png)
+![CockroachDB serializable retry sequence](../../docs/images/readme-diagrams/13-cockroachdb-retry-sequence-01.png)
 
 다이어그램의 핵심은 retry 경계입니다. application code는
 `withCockroachTransaction`을 호출하고, helper가 retry classification을 소유합니다.
