@@ -6,7 +6,7 @@
 관리하고, live Trino cluster에 연결하지 않은 채 Exposed가 생성한 분석 query를 Trino
 `EXPLAIN` 검사용 request 형태로 준비하는 방법을 보여줍니다.
 
-![Trino session options and EXPLAIN pushdown inspection sequence](../../docs/images/readme-diagrams/02-trino-session-options-sequence-01.png)
+![Trino session options and EXPLAIN pushdown inspection sequence](../../docs/images/readme-diagrams/13-trino-session-options-sequence-01.png)
 
 다이어그램은 local-only 경로를 보여줍니다. 검증된 workshop profile을
 `TrinoConnectionOptions`로 매핑하고, Exposed가 warehouse query를 구성하며, H2는 SQL

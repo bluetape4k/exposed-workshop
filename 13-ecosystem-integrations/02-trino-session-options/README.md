@@ -6,7 +6,7 @@ This example shows how to keep Trino JDBC session configuration typed in
 application code and how to prepare an Exposed-generated analytical query for
 Trino `EXPLAIN` inspection without contacting a live Trino cluster.
 
-![Trino session options and EXPLAIN pushdown inspection sequence](../../docs/images/readme-diagrams/02-trino-session-options-sequence-01.png)
+![Trino session options and EXPLAIN pushdown inspection sequence](../../docs/images/readme-diagrams/13-trino-session-options-sequence-01.png)
 
 The diagram shows the local-only path: a validated workshop profile maps to
 `TrinoConnectionOptions`, Exposed builds a warehouse query, H2 provides only a
