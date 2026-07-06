@@ -22,12 +22,12 @@
   <rect x="20" y="20" width="940" height="418" rx="16" class="frame"/>
 <text x="48" y="58" class="title">09 Spring: Suspended Cache (07)</text>
   <text x="48" y="80" class="subtitle">Source-derived ERD · Exposed table objects and column builders</text>
-<rect x="166" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M166,164 L166,138 Q166,126 178,126 L440,126 Q452,126 452,138 L452,164 Z" fill="#dbeafe"/>
-<text x="309" y="151" class="smallLabel" text-anchor="middle">Country Table</text>
-<text x="184" y="188" class="tiny">id PK</text>
-<text x="184" y="203" class="tiny">code char</text>
-<text x="184" y="218" class="tiny">name varchar</text>
-<text x="184" y="233" class="tiny">description text</text>
+<rect x="347" y="126" width="286" height="154" rx="12" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M347,164 L347,138 Q347,126 359,126 L621,126 Q633,126 633,138 L633,164 Z" fill="#dbeafe"/>
+<text x="490" y="151" class="smallLabel" text-anchor="middle">Country Table</text>
+<text x="365" y="188" class="tiny">id PK</text>
+<text x="365" y="203" class="tiny">code char</text>
+<text x="365" y="218" class="tiny">name varchar</text>
+<text x="365" y="233" class="tiny">description text</text>
 <text x="490" y="110" class="panelTitle" text-anchor="middle">TABLES AND RELATIONSHIPS</text>
 </svg>

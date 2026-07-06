@@ -65,13 +65,13 @@
 <rect x="930" y="500" width="240" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
 <text x="1050" y="529" class="smallLabel" text-anchor="middle">Order Service</text>
 <text x="1050" y="568" class="detail" text-anchor="middle">@Transactional facade</text>
-<path data-connector="customer-table-to-uuidtable" d="M210,328 V292 Q210,282 220,282 H240 Q250,282 250,272 V234" class="inherit"/>
+<path data-connector="customer-table-to-uuidtable" d="M210,328 V320 Q210,310 220,310 H240 Q250,310 250,300 V234" class="inherit"/>
 <path d="M250,218 L241,234 L259,234 Z" fill="#fff" stroke="#64748b" stroke-width="1.8" stroke-dasharray="none" style="stroke-dasharray:none"/>
-<path data-connector="order-table-to-uuidtable" d="M490,328 V292 Q490,282 480,282 H276 Q266,282 266,272 V234" class="inherit"/>
+<path data-connector="order-table-to-uuidtable" d="M490,328 V320 Q490,310 480,310 H276 Q266,310 266,300 V234" class="inherit"/>
 <path d="M266,218 L257,234 L275,234 Z" fill="#fff" stroke="#64748b" stroke-width="1.8" stroke-dasharray="none" style="stroke-dasharray:none"/>
-<path data-connector="customer-entity-to-entity-id" d="M815,328 V292 Q815,282 825,282 H894 Q904,282 904,272 V234" class="inherit"/>
+<path data-connector="customer-entity-to-entity-id" d="M815,328 V320 Q815,310 825,310 H894 Q904,310 904,300 V234" class="inherit"/>
 <path d="M904,218 L895,234 L913,234 Z" fill="#fff" stroke="#64748b" stroke-width="1.8" stroke-dasharray="none" style="stroke-dasharray:none"/>
-<path data-connector="order-entity-to-entity-id" d="M1055,328 V292 Q1055,282 1045,282 H950 Q940,282 940,272 V234" class="inherit"/>
+<path data-connector="order-entity-to-entity-id" d="M1055,328 V320 Q1055,310 1045,310 H950 Q940,310 940,300 V234" class="inherit"/>
 <path d="M940,218 L931,234 L949,234 Z" fill="#fff" stroke="#64748b" stroke-width="1.8" stroke-dasharray="none" style="stroke-dasharray:none"/>
 <rect x="46" y="708" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
 <text x="610" y="735" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
