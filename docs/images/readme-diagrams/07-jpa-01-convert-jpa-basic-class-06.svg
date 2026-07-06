@@ -123,10 +123,10 @@
     </text>
   </g>
 
-  <path id="table-inherits" class="inherit" data-connector="table-inherits" d="M200,378 L200,284"/>
-  <path id="identifier-inherits" class="inherit" data-connector="identifier-inherits" d="M474,378 L474,284"/>
-  <path id="entity-inherits" class="inherit" data-connector="entity-inherits" d="M748,378 L748,284"/>
-  <path id="companion-inherits" class="inherit" data-connector="companion-inherits" d="M1022,378 L1022,284"/>
+  <path id="table-inherits" class="inherit" data-connector="table-inherits" d="M200,378 L200,266"/>
+  <path id="identifier-inherits" class="inherit" data-connector="identifier-inherits" d="M474,378 L474,266"/>
+  <path id="entity-inherits" class="inherit" data-connector="entity-inherits" d="M748,378 L748,266"/>
+  <path id="companion-inherits" class="inherit" data-connector="companion-inherits" d="M1022,378 L1022,266"/>
 
   <path id="entity-identifier-dependency" class="depends" data-connector="entity-identifier-dependency" d="M630,506 L592,506"/>
   <path id="companion-creates-entity" class="depends" data-connector="companion-creates-entity" d="M904,458 L884,458 Q872,458 872,470 L872,492 Q872,504 866,504"/>
