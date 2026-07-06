@@ -112,9 +112,9 @@
 <text x="530" y="579" class="tiny">countByPostId()</text>
 <text x="530" y="594" class="tiny">save()</text>
 <path d="M520,242 L520,292 Q520,300 528,300 L602,300 Q610,300 610,308 L610,356" class="opsUse edge"/>
-<path d="M444,242 L444,482 Q444,490 452,490 L628,490 Q636,490 636,498 L636,500" class="opsUse edge"/>
+<path d="M444,242 L444,464 Q444,472 452,472 L628,472 Q636,472 636,480 L636,500" class="opsUse edge"/>
 <path d="M776,242 L776,294 Q776,302 768,302 L756,302 Q748,302 748,310 L748,356" class="clientUse edge"/>
-<path d="M1004,242 L1004,302 Q1004,310 996,310 L840,310 Q832,310 832,318 L832,400 Q832,408 824,408 L816,408" class="converterUse edge"/>
+<path d="M1004,242 L1004,302 Q1004,310 996,310 L852,310 Q844,310 844,318 L844,400 Q844,408 836,408 L816,408" class="converterUse edge"/>
 <rect x="920" y="326" width="438" height="300" rx="12" class="panel"/><text x="1139" y="318" class="panelTitle" text-anchor="middle">ENTRY AND REPOSITORY INTERFACE</text>
 <rect x="958" y="356" width="284" height="104" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
 <path d="M958,402 L958,360 Q958,356 962,356 L1238,356 Q1242,356 1242,360 L1242,402 Z" fill="#ccfbf1"/>

@@ -143,8 +143,8 @@
 <path d="M849,242 L849,292 Q849,300 857,300 L1038,300 Q1046,300 1046,308 L1046,370" class="sessionUse edge"/>
 <path d="M849,242 L849,284 Q849,292 857,292 L1242,292 Q1250,292 1250,300 L1250,370" class="sessionUse edge"/>
 <path d="M956,422 L866,422" class="repoUse edge"/>
-<path d="M1250,474 L1250,498 Q1250,506 1242,506 L890,506 Q882,506 882,498 L882,452 Q882,444 874,444 L866,444" class="repoUse edge"/>
-<path d="M956,570 L714,570 Q706,570 706,562 L706,266 Q706,258 714,258 L841,258 Q849,258 849,250 L849,242" class="sessionUse edge"/>
+<path d="M1250,474 L1250,498 Q1250,506 1242,506 L902,506 Q894,506 894,498 L894,452 Q894,444 886,444 L866,444" class="repoUse edge"/>
+<path d="M956,570 L714,570 Q706,570 706,562 L706,278 Q706,270 714,270 L841,270 Q849,270 849,262 L849,242" class="sessionUse edge"/>
 <path d="M1340,572 L1364,572 Q1372,572 1372,564 L1372,274 Q1372,266 1364,266 L1158,266 Q1150,266 1150,258 L1150,254" class="inherit"/>
 <path d="M1150,242 L1144,254 L1156,254 Z" class="inheritHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
 <rect x="88" y="672" width="1260" height="146" rx="12" class="panel"/><text x="718" y="664" class="panelTitle" text-anchor="middle">DTO RECORDS AND QUERY CONDITIONS</text>
