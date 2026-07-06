@@ -53,8 +53,8 @@
 **Files:**
 - Create: `13-ecosystem-integrations/02-trino-session-options/README.md`
 - Create: `13-ecosystem-integrations/02-trino-session-options/README.ko.md`
-- Create: `docs/images/readme-diagrams/02-trino-session-options-sequence-01.svg`
-- Create: `docs/images/readme-diagrams/02-trino-session-options-sequence-01.png`
+- Create: `docs/images/readme-diagrams/13-trino-session-options-sequence-01.svg`
+- Create: `docs/images/readme-diagrams/13-trino-session-options-sequence-01.png`
 - Modify: `13-ecosystem-integrations/README.md`
 - Modify: `13-ecosystem-integrations/README.ko.md`
 - Modify: `README.md`
