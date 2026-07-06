@@ -1,11 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 940" width="1560" height="940" role="img" aria-label="Custom ID Generation Flow">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#b8793c" stroke="#b8793c" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,11 +13,10 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.arrow{fill:none;stroke:#4f86c6;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.mapLine{fill:none;stroke:#6e8f4f;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.dbUse{fill:none;stroke:#b8793c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.runtimeUse{fill:none;stroke:#7d61b3;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
@@ -83,25 +81,34 @@
 <line x1="1226" y1="540" x2="1366" y2="540" stroke="#64748b" stroke-width="1.2"/>
 <text x="1296" y="526" class="label" text-anchor="middle">EntityClass</text>
 <text x="1242" y="582" class="tiny">matching table</text>
-<path d="M1420,377 C1420,356 1524,356 1524,377 L1524,533 C1524,554 1420,554 1420,533 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
-<ellipse cx="1472" cy="377" rx="52" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1420,533 C1420,554 1524,554 1524,533" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1472" y="408" class="label" text-anchor="middle">DB</text>
-<text x="1434" y="440" class="tiny">custom PK</text>
-<text x="1434" y="458" class="tiny">name</text>
-<text x="1434" y="476" class="tiny">age</text>
-<path d="M320,209 L404,209 L404,211 L492,211" class="arrow"/>
-<path d="M320,307 L404,307 L404,211 L492,211" class="arrow"/>
-<path d="M320,405 L404,405 L404,211 L492,211" class="arrow"/>
-<path d="M320,503 L404,503 L404,211 L492,211" class="arrow"/>
-<path d="M320,601 L404,601 L404,211 L492,211" class="arrow"/>
-<path d="M702,211 L782,211 L782,255 L862,255" class="mapLine"/>
-<path d="M702,339 L782,339 L782,255 L862,255" class="mapLine"/>
-<path d="M702,467 L782,467 L782,530 L862,530" class="mapLine"/>
-<path d="M1094,255 L1160,255 L1160,288 L1226,288" class="mapLine"/>
-<path d="M1094,530 L1160,530 L1160,558 L1226,558" class="runtimeUse"/>
-<path d="M1366,288 L1394,288 L1394,420 L1420,420" class="dbUse"/>
-<path d="M1366,558 L1394,558 L1394,586 L1472,586 L1472,550" class="dbUse"/>
-<rect x="128" y="838" width="1196" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="726" y="869" class="detail" text-anchor="middle">Source check: five custom ID table tests share DSL, DAO, batch, and concurrent creation paths over T1/E1 records.</text>
+<rect x="1408" y="356" width="128" height="206" rx="10" fill="#fff7ed" stroke="#b8793c" class="card"/>
+<g data-bluetape4k-icon="generic/database-server" transform="translate(1434 378) scale(.30)">
+  <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
+  <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="5"/>
+  <path d="M30 58c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 80c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="1472" y="460" class="label" text-anchor="middle">Test DBs</text>
+<text x="1472" y="490" class="tiny" text-anchor="middle">custom PK</text>
+<text x="1472" y="508" class="tiny" text-anchor="middle">name</text>
+<text x="1472" y="526" class="tiny" text-anchor="middle">age</text>
+<path data-connector="timebased-strategy-to-tests" d="M320,209 L480,209 L492,209" class="arrow"/>
+<path data-connector="base62-strategy-to-tests" d="M320,307 L392,307 Q404,307 404,295 L404,235 Q404,223 416,223 L492,223" class="arrow"/>
+<path data-connector="snowflake-strategy-to-tests" d="M320,405 L392,405 Q404,405 404,393 L404,243 Q404,231 416,231 L492,231" class="arrow"/>
+<path data-connector="ksuid-strategy-to-tests" d="M320,503 L392,503 Q404,503 404,491 L404,221 Q404,211 416,211 L492,211" class="arrow"/>
+<path data-connector="ksuid-millis-strategy-to-tests" d="M320,601 L392,601 Q404,601 404,589 L404,248 Q404,236 416,236 L492,236" class="arrow"/>
+<path data-connector="dsl-tests-to-t1" d="M702,211 L770,211 Q782,211 782,223 L782,243 Q782,255 794,255 L862,255" class="mapLine"/>
+<path data-connector="dao-tests-to-t1" d="M702,339 L770,339 Q782,339 782,327 L782,267 Q782,255 794,255 L862,255" class="mapLine"/>
+<path data-connector="batch-tests-to-record" d="M702,467 L770,467 Q782,467 782,479 L782,518 Q782,530 794,530 L862,530" class="mapLine"/>
+<path data-connector="t1-to-e1" d="M1094,255 L1148,255 Q1160,255 1160,267 L1160,276 Q1160,288 1172,288 L1226,288" class="mapLine"/>
+<path data-connector="record-to-entity-class" d="M1094,530 L1148,530 Q1160,530 1160,542 L1160,546 Q1160,558 1172,558 L1226,558" class="runtimeUse"/>
+<path data-connector="e1-to-database" d="M1366,288 L1384,288 Q1396,288 1396,300 L1396,408 Q1396,420 1408,420" class="dbUse"/>
+<path data-connector="entity-class-to-database" d="M1366,558 L1384,558 Q1396,558 1396,546 L1396,526 Q1396,514 1408,514" class="dbUse"/>
+<rect x="148" y="826" width="1264" height="64" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.3"/>
+<path d="M198,850 L258,850" class="arrow"/><text x="278" y="854" class="tiny">ID strategy chooses shared tests</text>
+<path d="M536,850 L596,850" class="mapLine"/><text x="616" y="854" class="tiny">tests populate T1/E1 records</text>
+<path d="M862,850 L922,850" class="runtimeUse"/><text x="942" y="854" class="tiny">record metadata matches entity class</text>
+<path d="M536,874 L596,874" class="dbUse"/><text x="616" y="878" class="tiny">custom primary keys persist to the test database</text>
 </svg>

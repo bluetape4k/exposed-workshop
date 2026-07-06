@@ -1,11 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 940" width="1560" height="940" role="img" aria-label="Exposed JSON Class and Payload Model">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,11 +11,8 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.mapLine{fill:none;stroke:#6e8f4f;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.runtimeUse{fill:none;stroke:#7d61b3;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
@@ -88,8 +82,8 @@
 <path d="M1027,306 L1193,306" class="inheritStem"/>
 <path d="M1027,306 L1027,372" class="inheritStem"/>
 <path d="M1193,306 L1193,372" class="inheritStem"/>
-<path d="M856,436 L906,436 L906,419 L950,419" class="mapLine"/>
-<path d="M572,494 L572,520 L1110,520 L1110,419 L1116,419" class="mapLine"/>
+<path data-connector="json-table-to-json-entity" d="M856,436 L950,436" class="mapLine"/>
+<path data-connector="jsonb-table-to-jsonb-entity" d="M572,494 L572,508 Q572,520 584,520 L1092,520 Q1104,520 1104,508 L1104,431 Q1104,419 1116,419" class="mapLine"/>
 <rect x="1300" y="130" width="224" height="520" rx="12" class="panel"/><text x="1412" y="122" class="panelTitle" text-anchor="middle">PAYLOAD MODEL</text>
 <rect x="1320" y="178" width="180" height="132" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
 <path d="M1320,218 L1320,182 Q1320,178 1324,178 L1496,178 Q1500,178 1500,182 L1500,218 Z" fill="#dcfce7"/>
@@ -110,10 +104,13 @@
 <line x1="1320" y1="588" x2="1500" y2="588" stroke="#7c3aed" stroke-width="1.2"/>
 <text x="1410" y="574" class="label" text-anchor="middle">UserGroup</text>
 <text x="1336" y="618" class="tiny">users: List&lt;User&gt;</text>
-<path d="M1500,244 L1514,244 L1514,426 L1500,426" class="runtimeUse"/>
-<path d="M1410,548 L1410,472" class="runtimeUse"/>
-<path d="M1104,419 L1280,419 L1280,244 L1320,244" class="mapLine"/>
-<path d="M1270,419 L1290,419 L1290,276 L1320,276" class="mapLine"/>
-<rect x="150" y="808" width="1230" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="765" y="839" class="detail" text-anchor="middle">Source check: JsonTestData has four IntIdTable objects, two IntEntity DAO classes, and three serializable payload data classes.</text>
+<path data-connector="dataholder-to-user" d="M1500,244 L1508,244 Q1520,244 1520,256 L1520,414 Q1520,426 1508,426 L1500,426" class="runtimeUse"/>
+<path data-connector="usergroup-to-user" d="M1410,548 L1410,472" class="runtimeUse"/>
+<path data-connector="json-entity-to-dataholder" d="M1027,372 L1027,332 Q1027,320 1039,320 L1292,320 Q1304,320 1304,308 L1304,256 Q1304,244 1316,244 L1320,244" class="mapLine"/>
+<path data-connector="jsonb-entity-to-dataholder" d="M1270,443 L1302,443 Q1314,443 1314,431 L1314,342 Q1314,330 1326,330 L1398,330 Q1410,330 1410,318 L1410,310" class="mapLine"/>
+<rect x="390" y="812" width="780" height="42" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+<path d="M430,833 L498,833" class="mapLine"/>
+<text x="520" y="837" class="detail">table/entity stores JSON payload type</text>
+<path d="M858,833 L926,833" class="runtimeUse"/>
+<text x="948" y="837" class="detail">payload object contains nested type</text>
 </svg>

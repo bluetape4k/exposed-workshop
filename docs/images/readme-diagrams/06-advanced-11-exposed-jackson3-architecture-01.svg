@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 940" width="1560" height="940" role="img" aria-label="Jackson 3 JSON Query Flow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 940" width="1600" height="940" role="img" aria-label="Jackson 3 JSON Query Flow">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#b65386" stroke="#b65386" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#b8793c" stroke="#b8793c" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,16 +14,16 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.arrow{fill:none;stroke:#4f86c6;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.mapLine{fill:none;stroke:#6e8f4f;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.codecLine{fill:none;stroke:#b65386;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
+.dbUse{fill:none;stroke:#b8793c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.runtimeUse{fill:none;stroke:#7d61b3;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
-<rect width="1560" height="940" class="canvas"/>
-<rect x="20" y="20" width="1520" height="900" rx="16" class="frame"/>
+<rect width="1600" height="940" class="canvas"/>
+<rect x="20" y="20" width="1560" height="900" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Jackson 3 JSON Query Flow</text>
 <text x="48" y="80" class="subtitle">JacksonColumnTest and JacksonBColumnTest use Jackson 3 serializers over JSON/JSONB tables and array payloads</text>
 <rect x="58" y="130" width="300" height="640" rx="12" class="panel"/><text x="208" y="122" class="panelTitle" text-anchor="middle">TESTS</text>
@@ -41,9 +41,9 @@
 <text x="589" y="219" class="label" text-anchor="middle">DataHolder</text>
 <text x="589" y="246" class="detail" text-anchor="middle">User + state</text>
 <desc>DefaultJacksonSerializer</desc><rect x="474" y="332" width="230" height="66" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="589" y="357" class="label" text-anchor="middle">DefaultJackson</text>
-<text x="589" y="375" class="label" text-anchor="middle">Serializer</text>
-<text x="589" y="384" class="detail" text-anchor="middle">Jackson 3 codec</text>
+<text x="589" y="352" class="label" text-anchor="middle">DefaultJackson</text>
+<text x="589" y="371" class="label" text-anchor="middle">Serializer</text>
+<text x="589" y="391" class="detail" text-anchor="middle">Jackson 3 codec</text>
 <desc>jackson / jacksonb</desc><rect x="474" y="470" width="230" height="66" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
 <text x="589" y="495" class="label" text-anchor="middle">jackson / jacksonb</text>
 <text x="589" y="522" class="detail" text-anchor="middle">ColumnType builders</text>
@@ -79,27 +79,37 @@
 <desc>exists</desc><rect x="1224" y="568" width="144" height="58" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
 <text x="1296" y="593" class="label" text-anchor="middle">exists</text>
 <text x="1296" y="612" class="detail" text-anchor="middle">path exists</text>
-<path d="M1428,365 C1428,344 1532,344 1532,365 L1532,549 C1532,570 1428,570 1428,549 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
-<ellipse cx="1480" cy="365" rx="52" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1428,549 C1428,570 1532,570 1532,549" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1480" y="400" class="label" text-anchor="middle">DB</text>
-<text x="1442" y="434" class="tiny">Postgres</text>
-<text x="1442" y="452" class="tiny">MySQL V8</text>
-<text x="1442" y="470" class="tiny">H2 JSON</text>
-<path d="M320,219 L398,219 L398,227 L474,227" class="arrow"/>
-<path d="M320,387 L398,387 L398,365 L474,365" class="arrow"/>
-<path d="M320,555 L398,555 L398,641 L474,641" class="runtimeUse"/>
-<path d="M704,227 L784,227 L784,239 L864,239" class="mapLine"/>
-<path d="M704,365 L784,365 L784,409 L864,409" class="mapLine"/>
-<path d="M704,503 L784,503 L784,602 L864,602" class="mapLine"/>
-<path d="M1084,239 L1160,239 L1160,213 L1224,213" class="arrow"/>
-<path d="M1084,409 L1160,409 L1160,341 L1224,341" class="arrow"/>
-<path d="M1084,409 L1160,409 L1160,469 L1224,469" class="codecLine"/>
-<path d="M1084,602 L1160,602 L1160,597 L1224,597" class="runtimeUse"/>
-<path d="M1368,213 L1404,213 L1404,414 L1428,414" class="dbUse"/>
-<path d="M1368,341 L1404,341 L1404,448 L1428,448" class="dbUse"/>
-<path d="M1368,469 L1404,469 L1404,482 L1428,482" class="dbUse"/>
-<path d="M1368,597 L1404,597 L1404,604 L1480,604 L1480,566" class="dbUse"/>
-<rect x="128" y="838" width="1196" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="726" y="869" class="detail" text-anchor="middle">Source check: Jackson 3 tests cover insert/update, extract, contains, exists, arrays, upsert, defaults, and DAO JSONB usage.</text>
+<rect x="1428" y="356" width="112" height="206" rx="10" fill="#fff7ed" stroke="#b8793c" class="card"/>
+<g data-bluetape4k-icon="generic/database-server" transform="translate(1458 378) scale(.25)">
+  <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
+  <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="5"/>
+  <path d="M30 58c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 80c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="1484" y="456" class="label" text-anchor="middle">DB</text>
+<text x="1484" y="486" class="tiny" text-anchor="middle">Postgres</text>
+<text x="1484" y="504" class="tiny" text-anchor="middle">MySQL V8</text>
+<text x="1484" y="522" class="tiny" text-anchor="middle">H2 JSON</text>
+<path data-connector="jackson3-column-test-to-data-holder" d="M320,219 L474,219" class="arrow"/>
+<path data-connector="jackson3b-column-test-to-serializer" d="M320,365 L474,365" class="arrow"/>
+<path data-connector="jackson3-schema-to-transform-default" d="M320,555 L386,555 Q398,555 398,567 L398,629 Q398,641 410,641 L474,641" class="runtimeUse"/>
+<path data-connector="data-holder-to-jackson3-table" d="M704,239 L864,239" class="mapLine"/>
+<path data-connector="serializer-to-jackson3b-table" d="M704,365 L772,365 Q784,365 784,377 L784,397 Q784,409 796,409 L864,409" class="mapLine"/>
+<path data-connector="column-builders-to-jackson3-arrays" d="M704,503 L772,503 Q784,503 784,515 L784,590 Q784,602 796,602 L864,602" class="mapLine"/>
+<path data-connector="jackson3-table-to-insert-update" d="M1084,239 L1148,239 Q1160,239 1160,227 L1160,225 Q1160,213 1172,213 L1224,213" class="arrow"/>
+<path data-connector="jackson3b-table-to-extract" d="M1084,409 L1148,409 Q1160,409 1160,397 L1160,353 Q1160,341 1172,341 L1224,341" class="arrow"/>
+<path data-connector="jackson3b-table-to-contains" d="M1084,409 L1148,409 Q1160,409 1160,421 L1160,457 Q1160,469 1172,469 L1224,469" class="codecLine"/>
+<path data-connector="jackson3-arrays-to-exists" d="M1084,597 L1224,597" class="runtimeUse"/>
+<path data-connector="insert-update-to-db" d="M1368,213 L1392,213 Q1404,213 1404,225 L1404,402 Q1404,414 1416,414 L1428,414" class="dbUse"/>
+<path data-connector="extract-to-db" d="M1368,341 L1392,341 Q1404,341 1404,353 L1404,436 Q1404,448 1416,448 L1428,448" class="dbUse"/>
+<path data-connector="contains-to-db" d="M1368,469 L1392,469 Q1404,469 1404,481 L1404,482 L1428,482" class="dbUse"/>
+<path data-connector="exists-to-db" d="M1368,597 L1392,597 Q1404,597 1404,585 L1404,526 Q1404,514 1416,514 L1428,514" class="dbUse"/>
+<rect x="202" y="812" width="1196" height="82" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.3"/>
+<path d="M248,838 L308,838" class="arrow"/><text x="328" y="842" class="tiny">tests drive Jackson 3 serialization/query calls</text>
+<path d="M634,838 L694,838" class="mapLine"/><text x="714" y="842" class="tiny">models map into JSON table columns</text>
+<path d="M968,838 L1028,838" class="codecLine"/><text x="1048" y="842" class="tiny">contains predicates compare JSON fragments</text>
+<path d="M248,868 L308,868" class="runtimeUse"/><text x="328" y="872" class="tiny">fixtures, defaults, and array/path checks</text>
+<path d="M634,868 L694,868" class="dbUse"/><text x="714" y="872" class="tiny">query DSL executes against test databases</text>
 </svg>

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Multi-Tenant Isolation Architecture">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 790" width="1500" height="790" role="img" aria-label="Multi-Tenant Isolation Architecture">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker><marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker><marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker><marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker><marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker><marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -12,17 +12,17 @@
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card,.uml,.tableBox,.dbBody{stroke-width:1.7;filter:url(#shadow)}
 .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.context{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.storage{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.context{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.storage{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
 .mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .fk{fill:none;stroke:#0f766e;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .returnLine{fill:none;stroke:#64748b;stroke-width:1.7;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round}
 .lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
 </style>
 </defs>
-<rect width="1500" height="900" class="canvas"/>
-<rect x="20" y="20" width="1460" height="860" rx="16" class="frame"/>
+<rect width="1500" height="790" class="canvas"/>
+<rect x="20" y="20" width="1460" height="750" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Multi-Tenant Isolation Architecture</text>
 <text x="48" y="80" class="subtitle">Tenant identity is resolved at the edge, propagated through the runtime context, then applied as schema switching or database routing</text>
 <rect x="60" y="130" width="260" height="610" rx="12" class="panel"/>
@@ -87,20 +87,18 @@
 <text x="1313" y="588" class="detail" text-anchor="middle">korean pool</text>
 <text x="1313" y="605" class="detail" text-anchor="middle">english pool</text>
 <path d="M188,270 L188,372" class="arrow"/>
-<path d="M274,407 L348,407 L348,205 L432,205" class="context"/>
-<path d="M274,407 L362,407 L362,309 L432,309" class="context"/>
-<path d="M274,407 L350,407 L350,413 L432,413" class="context"/>
-<path d="M274,407 L362,407 L362,517 L432,517" class="context"/>
-<path d="M274,407 L348,407 L348,621 L432,621" class="context"/>
+<path d="M274,407 H340 Q348,407 348,399 V213 Q348,205 356,205 H432" class="context"/>
+<path d="M274,407 H354 Q362,407 362,399 V317 Q362,309 370,309 H432" class="context"/>
+<path d="M274,407 H432" class="context"/>
+<path d="M274,407 H354 Q362,407 362,415 V509 Q362,517 370,517 H432" class="context"/>
+<path d="M274,407 H340 Q348,407 348,415 V613 Q348,621 356,621 H432" class="context"/>
 <path d="M702,205 L862,205" class="arrow"/>
 <path d="M702,309 L862,309" class="arrow"/>
 <path d="M702,413 L862,413" class="arrow"/>
 <path d="M702,517 L862,517" class="arrow"/>
 <path d="M702,621 L862,621" class="arrow"/>
-<path d="M1080,309 L1160,309 L1160,297 L1238,297" class="storage"/>
-<path d="M1080,413 L1164,413 L1164,297 L1238,297" class="storage"/>
-<path d="M1080,517 L1172,517 L1172,297 L1238,297" class="storage"/>
-<path d="M1080,621 L1168,621 L1168,579 L1238,579" class="storage"/>
-<rect x="96" y="784" width="1290" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec" stroke-width="1.2"/>
-<text x="114" y="811" class="detail">Source check: MVC uses DataSourceUtils before @Transactional work; WebFlux switches inside newSuspendedTransactionWithTenant; database-per-tenant modules route through TenantDatabaseRegistry.</text>
+<path d="M1080,309 H1156 Q1164,309 1164,301 V284 Q1164,276 1172,276 H1238" class="storage"/>
+<path d="M1080,413 H1156 Q1164,413 1164,405 V317 Q1164,309 1172,309 H1238" class="storage"/>
+<path d="M1080,517 H1164 Q1172,517 1172,509 V350 Q1172,342 1180,342 H1238" class="storage"/>
+<path d="M1080,621 H1238" class="storage"/>
 </svg>

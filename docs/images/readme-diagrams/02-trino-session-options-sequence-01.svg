@@ -88,16 +88,16 @@
   <line x1="1220" y1="218" x2="1220" y2="928" class="lifeline"/>
   <line x1="1460" y1="218" x2="1460" y2="928" class="lifeline"/>
 
-  <rect x="398" y="318" width="14" height="142" rx="6" class="activation"/>
-  <rect x="683" y="470" width="14" height="88" rx="6" class="activation"/>
-  <rect x="958" y="604" width="14" height="136" rx="6" class="activation"/>
-  <rect x="1213" y="706" width="14" height="96" rx="6" class="activation"/>
-  <rect x="1453" y="846" width="14" height="70" rx="6" class="activation"/>
+  <rect x="398" y="300" width="14" height="178" rx="6" class="activation"/>
+  <rect x="683" y="450" width="14" height="116" rx="6" class="activation"/>
+  <rect x="958" y="584" width="14" height="328" rx="6" class="activation"/>
+  <rect x="1213" y="686" width="14" height="124" rx="6" class="activation"/>
+  <rect x="1453" y="884" width="14" height="70" rx="6" class="activation"/>
 
   <rect x="72" y="260" width="430" height="34" rx="17" class="label callLabel"/>
   <circle cx="96" cy="277" r="13" class="badge callBadge"/><text x="96" y="282" text-anchor="middle" class="badgeText callText">1</text>
   <text x="120" y="282" class="msg callText">defaultTrinoAnalyticsProfile()</text>
-  <path d="M 145 318 L 405 318" class="call"/>
+  <path d="M 145 318 L 398 318" class="call"/>
 
   <rect x="178" y="360" width="530" height="34" rx="17" class="label stateLabel"/>
   <circle cx="202" cy="377" r="13" class="badge stateBadge"/><text x="202" y="382" text-anchor="middle" class="badgeText stateText">2</text>
@@ -107,36 +107,36 @@
   <rect x="430" y="434" width="470" height="34" rx="17" class="label callLabel"/>
   <circle cx="454" cy="451" r="13" class="badge callBadge"/><text x="454" y="456" text-anchor="middle" class="badgeText callText">3</text>
   <text x="478" y="456" class="msg callText">toConnectionOptions()</text>
-  <path d="M 405 470 L 690 470" class="call"/>
+  <path d="M 412 470 L 683 470" class="call"/>
 
   <rect x="442" y="508" width="520" height="34" rx="17" class="label returnLabel"/>
   <circle cx="466" cy="525" r="13" class="badge returnBadge"/><text x="466" y="530" text-anchor="middle" class="badgeText returnText">4</text>
   <text x="490" y="530" class="msg returnText">explicitPrepare=false, source, tags, sessionProperties</text>
-  <path d="M 690 558 L 145 558" class="return"/>
+  <path d="M 683 558 L 145 558" class="return"/>
 
-  <rect x="138" y="594" width="470" height="34" rx="17" class="label callLabel"/>
-  <circle cx="162" cy="611" r="13" class="badge callBadge"/><text x="162" y="616" text-anchor="middle" class="badgeText callText">5</text>
-  <text x="186" y="616" class="msg callText">buildRegionalTopOrdersQuery()</text>
-  <path d="M 145 604 L 965 604" class="call"/>
+  <rect x="138" y="564" width="470" height="34" rx="17" class="label callLabel"/>
+  <circle cx="162" cy="581" r="13" class="badge callBadge"/><text x="162" y="586" text-anchor="middle" class="badgeText callText">5</text>
+  <text x="186" y="586" class="msg callText">buildRegionalTopOrdersQuery()</text>
+  <path d="M 145 604 L 958 604" class="call"/>
 
   <rect x="784" y="646" width="472" height="34" rx="17" class="label sqlLabel"/>
   <circle cx="808" cy="663" r="13" class="badge sqlBadge"/><text x="808" y="668" text-anchor="middle" class="badgeText sqlText">6</text>
   <text x="832" y="668" class="msg sqlText">prepareSQL in local H2 transaction</text>
-  <path d="M 965 706 L 1220 706" class="sql"/>
+  <path d="M 972 706 L 1213 706" class="sql"/>
 
   <rect x="918" y="746" width="392" height="34" rx="17" class="label returnLabel"/>
   <circle cx="942" cy="763" r="13" class="badge returnBadge"/><text x="942" y="768" text-anchor="middle" class="badgeText returnText">7</text>
   <text x="966" y="768" class="msg returnText">SELECT with predicate, order, top-N</text>
-  <path d="M 1220 802 L 965 802" class="return"/>
+  <path d="M 1213 802 L 972 802" class="return"/>
 
-  <rect x="852" y="824" width="674" height="92" rx="14" class="alt"/>
-  <rect x="884" y="842" width="236" height="30" rx="15" fill="#f8f1e6" stroke="#a2743d" stroke-width="1.8"/>
-  <text x="906" y="862" class="note">request-shape only</text>
+  <rect x="852" y="830" width="674" height="116" rx="14" class="alt"/>
+  <rect x="884" y="848" width="236" height="30" rx="15" fill="#f8f1e6" stroke="#a2743d" stroke-width="1.8"/>
+  <text x="906" y="868" class="note">request-shape only</text>
 
-  <rect x="1006" y="860" width="398" height="34" rx="17" class="label stateLabel"/>
-  <circle cx="1030" cy="877" r="13" class="badge stateBadge"/><text x="1030" y="882" text-anchor="middle" class="badgeText stateText">8</text>
-  <text x="1054" y="882" class="msg stateText">buildExplainRequest(sql)</text>
-  <path d="M 965 846 L 1460 846" class="state"/>
+  <rect x="1006" y="882" width="398" height="34" rx="17" class="label stateLabel"/>
+  <circle cx="1030" cy="899" r="13" class="badge stateBadge"/><text x="1030" y="904" text-anchor="middle" class="badgeText stateText">8</text>
+  <text x="1054" y="904" class="msg stateText">buildExplainRequest(sql)</text>
+  <path d="M 972 928 L 1453 928" class="state"/>
 
   <rect x="98" y="972" width="1404" height="44" rx="12" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
   <text x="118" y="1000" class="note">Default path stays local: no Trino endpoint, credentials, network calls, live connector, or pushdown result assertion.</text>

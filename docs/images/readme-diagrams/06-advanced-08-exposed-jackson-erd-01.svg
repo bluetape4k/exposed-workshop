@@ -1,11 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Jackson JSON Table Storage Model">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,11 +11,8 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.mapLine{fill:none;stroke:#6e8f4f;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.runtimeUse{fill:none;stroke:#7d61b3;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
@@ -74,12 +68,14 @@
 <line x1="1060" y1="602" x2="1310" y2="602" stroke="#7c3aed" stroke-width="1.2"/>
 <text x="1185" y="588" class="label" text-anchor="middle">UserGroup</text>
 <text x="1076" y="632" class="tiny">users: List&lt;User&gt;</text>
-<path d="M406,262 L466,262 L466,154 L946,154 L946,244 L1060,244" class="mapLine"/>
-<path d="M820,262 L946,262 L946,276 L1060,276" class="mapLine"/>
-<path d="M406,552 L466,552 L466,690 L946,690 L946,608 L1060,608" class="mapLine"/>
-<path d="M820,552 L946,552 L946,632 L1060,632" class="mapLine"/>
-<path d="M1185,322 L1185,394" class="runtimeUse"/>
-<path d="M1185,562 L1185,486" class="runtimeUse"/>
-<rect x="126" y="794" width="1188" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="720" y="825" class="detail" text-anchor="middle">No FK lines are drawn: Jackson tables store object graphs as JSON/JSONB payloads, not relational rows.</text>
+<path data-connector="jackson-table-to-data-holder" d="M406,262 L454,262 Q466,262 466,250 L466,166 Q466,154 478,154 L934,154 Q946,154 946,166 L946,232 Q946,244 958,244 L1060,244" class="mapLine"/>
+<path data-connector="jacksonb-table-to-data-holder" d="M820,262 L934,262 Q946,262 946,274 L946,276 L1060,276" class="mapLine"/>
+<path data-connector="jackson-array-table-to-user-group" d="M406,552 L454,552 Q466,552 466,564 L466,678 Q466,690 478,690 L934,690 Q946,690 946,678 L946,620 Q946,608 958,608 L1060,608" class="mapLine"/>
+<path data-connector="jacksonb-array-table-to-user-group" d="M820,552 L934,552 Q946,552 946,564 L946,620 Q946,632 958,632 L1060,632" class="mapLine"/>
+<path data-connector="data-holder-embeds-user" d="M1185,322 L1185,394" class="runtimeUse"/>
+<path data-connector="user-group-embeds-user" d="M1185,562 L1185,486" class="runtimeUse"/>
+<rect x="126" y="780" width="1188" height="72" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.3"/>
+<path d="M176,806 L236,806" class="mapLine"/><text x="256" y="810" class="tiny">JSON/JSONB column stores the payload type</text>
+<path d="M560,806 L620,806" class="runtimeUse"/><text x="640" y="810" class="tiny">payload model embeds another payload model</text>
+<text x="720" y="836" class="detail" text-anchor="middle">No FK lines are drawn: Jackson tables store object graphs as JSON/JSONB payloads, not relational rows.</text>
 </svg>

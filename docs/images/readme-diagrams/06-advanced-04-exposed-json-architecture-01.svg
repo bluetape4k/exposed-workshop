@@ -1,11 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 900" width="1560" height="900" role="img" aria-label="Exposed JSON Column Query Flow">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,11 +12,9 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.cryptoLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.arrow{fill:none;stroke:#4f86c6;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.mapLine{fill:none;stroke:#6e8f4f;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.dbUse{fill:none;stroke:#a2743d;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
@@ -82,22 +78,36 @@
 <text x="1354" y="388" class="label" text-anchor="middle">JsonBTable</text>
 <text x="1292" y="430" class="tiny">id PK</text>
 <text x="1292" y="447" class="tiny">j_b_column JSONB</text>
-<path d="M1292,583 C1292,562 1418,562 1418,583 L1418,677 C1418,698 1292,698 1292,677 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
-<ellipse cx="1355" cy="583" rx="63" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1292,677 C1292,698 1418,698 1418,677" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1355" y="614" class="label" text-anchor="middle">DB</text>
-<text x="1306" y="644" class="tiny">Postgres JSONB</text>
-<text x="1306" y="662" class="tiny">H2 JSON</text>
-<path d="M340,238 L420,238 L420,228 L500,228" class="mapLine"/>
-<path d="M742,228 L822,228 L822,217 L902,217" class="arrow"/>
-<path d="M742,368 L822,368 L822,349 L902,349" class="arrow"/>
-<path d="M742,508 L822,508 L822,481 L902,481" class="arrow"/>
-<path d="M1134,217 L1206,217 L1206,247 L1276,247" class="dbUse"/>
-<path d="M1134,349 L1206,349 L1206,419 L1276,419" class="dbUse"/>
-<path d="M1134,481 L1206,481 L1206,419 L1276,419" class="dbUse"/>
-<path d="M1134,613 L1206,613 L1206,640 L1292,640" class="dbUse"/>
-<path d="M1432,247 L1452,247 L1452,630 L1418,630" class="dbUse"/>
-<path d="M1354,478 L1354,566" class="dbUse"/>
+<rect x="1276" y="560" width="156" height="138" rx="10" fill="#fff7ed" stroke="#a2743d" stroke-width="1.7" class="card"/>
+<g data-bluetape4k-icon="generic/database-server" transform="translate(1317 574) scale(.22)">
+  <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
+  <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="5"/>
+  <path d="M30 58c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 80c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="1354" y="640" class="label" text-anchor="middle">Test DB</text>
+<text x="1354" y="666" class="tiny" text-anchor="middle">PostgreSQL JSONB</text>
+<text x="1354" y="684" class="tiny" text-anchor="middle">H2 JSON</text>
+<path data-connector="dataholder-to-json-format" d="M340,238 L500,238" class="mapLine"/>
+<path data-connector="format-to-insert-update" d="M742,228 L902,228" class="arrow"/>
+<path data-connector="json-column-to-extract" d="M742,368 L902,368" class="arrow"/>
+<path data-connector="jsonb-column-to-contains" d="M742,508 L826,508 Q836,508 836,498 L836,491 Q836,481 846,481 L902,481" class="arrow"/>
+<path data-connector="array-column-to-exists" d="M742,641 L826,641 Q836,641 836,631 L836,623 Q836,613 846,613 L902,613" class="arrow"/>
+<path data-connector="insert-to-json-table" d="M1134,217 L1276,217" class="dbUse"/>
+<path data-connector="extract-to-jsonb-table" d="M1134,349 L1200,349 Q1216,349 1216,365 L1216,403 Q1216,419 1232,419 L1276,419" class="dbUse"/>
+<path data-connector="contains-to-jsonb-table" d="M1134,481 L1200,481 Q1216,481 1216,465 L1216,447 Q1216,447 1232,447 L1276,447" class="dbUse"/>
+<path data-connector="exists-to-db" d="M1134,613 L1276,613" class="dbUse"/>
+<path data-connector="json-table-to-db" d="M1432,247 L1460,247 Q1476,247 1476,263 L1476,628 Q1476,644 1460,644 L1432,644" class="dbUse"/>
+<path data-connector="jsonb-table-to-db" d="M1354,478 L1354,560" class="dbUse"/>
+<rect x="352" y="752" width="856" height="34" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.2"/>
+<path d="M382,769 L432,769" class="mapLine"/>
+<text x="448" y="773" class="tiny">serializable object to JSON format</text>
+<path d="M680,769 L730,769" class="arrow"/>
+<text x="746" y="773" class="tiny">column builder to query DSL</text>
+<path d="M974,769 L1024,769" class="dbUse"/>
+<text x="1040" y="773" class="tiny">query/table verified by database</text>
 <rect x="118" y="796" width="1264" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="750" y="827" class="detail" text-anchor="middle">Source check: JsonTestData defines DataHolder/User/UserGroup plus JsonTable, JsonBTable, JsonArrayTable, and JsonBArrayTable; tests call extract, contains, and exists.</text>
+<text x="750" y="827" class="detail" text-anchor="middle">JSON columns store serializable objects directly; JSONB adds containment and path-existence query contracts for PostgreSQL-focused searches.</text>
 </svg>

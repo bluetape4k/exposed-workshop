@@ -1,11 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 980" width="1600" height="980" role="img" aria-label="Custom ID Entity Strategy Model">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,11 +10,7 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.runtimeUse{fill:none;stroke:#7d61b3;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
@@ -41,7 +33,6 @@
 <text x="132" y="369" class="tiny">GET_TESTDB_AND_ENTITY_COUNT</text>
 <polygon points="236,242 227,258 245,258" fill="#fff" stroke="#475569" stroke-width="1.8"/>
 <path d="M236,258 L236,272" class="inheritStem"/>
-<path d="M236,272 L236,272" class="inheritStem"/>
 <path d="M236,272 L236,304" class="inheritStem"/>
 <desc>TimebasedUUIDTable</desc>
 <rect x="386" y="156" width="204" height="108" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
@@ -61,7 +52,6 @@
 <text x="402" y="430" class="tiny">age</text>
 <polygon points="488,264 479,280 497,280" fill="#fff" stroke="#475569" stroke-width="1.8"/>
 <path d="M488,280 L488,300" class="inheritStem"/>
-<path d="M488,300 L488,300" class="inheritStem"/>
 <path d="M488,300 L488,336" class="inheritStem"/>
 <desc>TimebasedUUIDEntity</desc>
 <rect x="386" y="514" width="204" height="110" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
@@ -80,7 +70,6 @@
 <text x="402" y="770" class="tiny">age</text>
 <polygon points="488,624 479,640 497,640" fill="#fff" stroke="#475569" stroke-width="1.8"/>
 <path d="M488,640 L488,660" class="inheritStem"/>
-<path d="M488,660 L488,660" class="inheritStem"/>
 <path d="M488,660 L488,690" class="inheritStem"/>
 <desc>TimebasedUUIDBase62Table</desc>
 <rect x="610" y="156" width="204" height="108" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
@@ -101,7 +90,6 @@
 <text x="626" y="430" class="tiny">age</text>
 <polygon points="712,264 703,280 721,280" fill="#fff" stroke="#475569" stroke-width="1.8"/>
 <path d="M712,280 L712,300" class="inheritStem"/>
-<path d="M712,300 L712,300" class="inheritStem"/>
 <path d="M712,300 L712,336" class="inheritStem"/>
 <desc>TimebasedUUIDBase62Entity</desc>
 <rect x="610" y="514" width="204" height="110" rx="4" fill="#fff" stroke="#d97706" class="card"/>
@@ -121,7 +109,6 @@
 <text x="626" y="770" class="tiny">age</text>
 <polygon points="712,624 703,640 721,640" fill="#fff" stroke="#475569" stroke-width="1.8"/>
 <path d="M712,640 L712,660" class="inheritStem"/>
-<path d="M712,660 L712,660" class="inheritStem"/>
 <path d="M712,660 L712,690" class="inheritStem"/>
 <desc>SnowflakeIdTable</desc>
 <rect x="834" y="156" width="204" height="108" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
@@ -141,7 +128,6 @@
 <text x="850" y="430" class="tiny">age</text>
 <polygon points="936,264 927,280 945,280" fill="#fff" stroke="#475569" stroke-width="1.8"/>
 <path d="M936,280 L936,300" class="inheritStem"/>
-<path d="M936,300 L936,300" class="inheritStem"/>
 <path d="M936,300 L936,336" class="inheritStem"/>
 <desc>SnowflakeIdEntity</desc>
 <rect x="834" y="514" width="204" height="110" rx="4" fill="#fff" stroke="#64748b" class="card"/>
@@ -160,7 +146,6 @@
 <text x="850" y="770" class="tiny">age</text>
 <polygon points="936,624 927,640 945,640" fill="#fff" stroke="#475569" stroke-width="1.8"/>
 <path d="M936,640 L936,660" class="inheritStem"/>
-<path d="M936,660 L936,660" class="inheritStem"/>
 <path d="M936,660 L936,690" class="inheritStem"/>
 <desc>KsuidTable</desc>
 <rect x="1058" y="156" width="204" height="108" rx="4" fill="#fff" stroke="#ea580c" class="card"/>
@@ -180,7 +165,6 @@
 <text x="1074" y="430" class="tiny">age</text>
 <polygon points="1160,264 1151,280 1169,280" fill="#fff" stroke="#475569" stroke-width="1.8"/>
 <path d="M1160,280 L1160,300" class="inheritStem"/>
-<path d="M1160,300 L1160,300" class="inheritStem"/>
 <path d="M1160,300 L1160,336" class="inheritStem"/>
 <desc>KsuidEntity</desc>
 <rect x="1058" y="514" width="204" height="110" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
@@ -199,7 +183,6 @@
 <text x="1074" y="770" class="tiny">age</text>
 <polygon points="1160,624 1151,640 1169,640" fill="#fff" stroke="#475569" stroke-width="1.8"/>
 <path d="M1160,640 L1160,660" class="inheritStem"/>
-<path d="M1160,660 L1160,660" class="inheritStem"/>
 <path d="M1160,660 L1160,690" class="inheritStem"/>
 <desc>KsuidMillisTable</desc>
 <rect x="1282" y="156" width="204" height="108" rx="4" fill="#fff" stroke="#db2777" class="card"/>
@@ -219,7 +202,6 @@
 <text x="1298" y="430" class="tiny">age</text>
 <polygon points="1384,264 1375,280 1393,280" fill="#fff" stroke="#475569" stroke-width="1.8"/>
 <path d="M1384,280 L1384,300" class="inheritStem"/>
-<path d="M1384,300 L1384,300" class="inheritStem"/>
 <path d="M1384,300 L1384,336" class="inheritStem"/>
 <desc>KsuidMillisEntity</desc>
 <rect x="1282" y="514" width="204" height="110" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
@@ -238,7 +220,6 @@
 <text x="1298" y="770" class="tiny">age</text>
 <polygon points="1384,624 1375,640 1393,640" fill="#fff" stroke="#475569" stroke-width="1.8"/>
 <path d="M1384,640 L1384,660" class="inheritStem"/>
-<path d="M1384,660 L1384,660" class="inheritStem"/>
 <path d="M1384,660 L1384,690" class="inheritStem"/>
 <desc>Test methods</desc>
 <rect x="116" y="498" width="240" height="126" rx="4" fill="#fff" stroke="#d97706" class="card"/>
@@ -249,7 +230,7 @@
 <text x="132" y="576" class="tiny">DAO new/find</text>
 <text x="132" y="594" class="tiny">batch insert</text>
 <text x="132" y="612" class="tiny">concurrent DAO</text>
-<path d="M356,561 L370,561 L370,388 L386,388" class="runtimeUse"/>
+<path data-connector="test-methods-to-strategy-table" d="M356,561 L362,561 Q374,561 374,549 L374,400 Q374,388 386,388" class="runtimeUse"/>
 <rect x="148" y="860" width="1260" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="778" y="891" class="detail" text-anchor="middle">Every strategy has the same local source shape: test class -&gt; T1 custom ID table -&gt; E1 custom ID entity -&gt; Record(name, age).</text>
+<text x="778" y="891" class="detail" text-anchor="middle">Dashed call path represents shared test methods; every strategy repeats test class -&gt; T1 custom ID table -&gt; E1 custom ID entity -&gt; Record(name, age).</text>
 </svg>

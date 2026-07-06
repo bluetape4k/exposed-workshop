@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1520 900" width="1520" height="900" role="img" aria-label="Exposed DML Column Type Test Model">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#2563eb" stroke="#2563eb" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ea580c" stroke="#ea580c" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#0f766e" stroke="#0f766e" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -19,6 +19,7 @@
 .dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
 .fkArrow{fill:none;stroke:#0f766e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}
 .returnLine{fill:none;stroke:#64748b;stroke-width:1.8;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.edge{fill:none}
 .lifeline{stroke:#cbd5e1;stroke-width:1.5;stroke-dasharray:5 6}
 .inherit{fill:none;stroke:#475569;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
 .inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
@@ -68,13 +69,13 @@
 <text x="446" y="626" class="tiny">anonymous Table(&quot;tester&quot;)</text>
 <text x="446" y="641" class="tiny">IntIdTable(&quot;double_table&quot;)</text>
 <text x="446" y="656" class="tiny">UUID tables</text>
-<path d="M205,330 L205,292 L397,292 L397,264" class="inherit"/>
-<path d="M397,248 L385,264 L409,264 Z" class="inheritHead"/>
-<path d="M537,330 L537,292 L397,292 L397,264" class="inherit"/>
-<path d="M397,248 L385,264 L409,264 Z" class="inheritHead"/>
-<path d="M205,560 L205,520 L397,520 L397,264" class="inherit"/>
-<path d="M397,248 L385,264 L409,264 Z" class="inheritHead"/>
-<path d="M310,623 L432,623" class="runtimeUse"/>
+<path data-connector="basic-types-inherit-test-base" d="M205,330 L205,302 Q205,292 215,292 L387,292 Q397,292 397,282 L397,264" class="inherit edge"/>
+<path d="M397,248 L388,262 L406,262 Z" class="inheritHead"/>
+<path data-connector="array-types-inherit-test-base" d="M537,330 L537,302 Q537,292 527,292 L407,292 Q397,292 397,282 L397,264" class="inherit edge"/>
+<path d="M397,248 L388,262 L406,262 Z" class="inheritHead"/>
+<path data-connector="extended-types-inherit-test-base" d="M205,560 L205,530 Q205,520 215,520 L377,520 Q397,520 397,500 L397,264" class="inherit edge"/>
+<path d="M397,248 L388,262 L406,262 Z" class="inheritHead"/>
+<path data-connector="extended-tests-use-table-models" d="M310,623 L432,623" class="runtimeUse edge"/>
 <rect x="822" y="128" width="614" height="622" rx="12" class="panel"/><text x="1129" y="120" class="panelTitle" text-anchor="middle">COLUMN FACTORIES AND DIALECT BEHAVIOR</text>
 <rect x="880" y="182" width="210" height="112" rx="4" fill="#fff" stroke="#64748b" class="card"/>
 <path d="M880,230 L880,186 Q880,182 884,182 L1086,182 Q1090,182 1090,186 L1090,230 Z" fill="#e2e8f0"/>
@@ -97,20 +98,30 @@
 <rect x="1150" y="370" width="224" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
 <text x="1262" y="395" class="label" text-anchor="middle">Special columns</text>
 <text x="1262" y="428" class="detail" text-anchor="middle">array/blob/uuid/unsigned</text>
-<path d="M1068,564 C1068,544 1208,544 1208,564 L1208,674 C1208,694 1068,694 1068,674 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
-<ellipse cx="1138" cy="564" rx="70" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1068,674 C1068,694 1208,694 1208,674" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1138" y="592" class="label" text-anchor="middle">DB Dialects</text>
-<text x="1086" y="618" class="tiny">H2</text>
-<text x="1086" y="635" class="tiny">Postgres</text>
-<text x="1086" y="652" class="tiny">MySQL</text>
-<text x="1086" y="669" class="tiny">MariaDB</text>
-<path d="M1090,238 L1160,238" class="arrow"/>
-<path d="M985,294 L985,370" class="arrow"/>
-<path d="M1265,294 L1265,370" class="arrow"/>
-<path d="M990,442 L1038,442 L1038,606 L1068,606" class="dbUse"/>
-<path d="M1262,442 L1232,442 L1232,606 L1208,606" class="dbUse"/>
-<path d="M642,623 L790,623 L790,406 L878,406" class="runtimeUse"/>
+<rect x="1058" y="544" width="194" height="144" rx="10" fill="#fff7ed" stroke="#ea580c" class="card"/>
+<g data-bluetape4k-icon="generic/database-server" transform="translate(1082 584) scale(.34)">
+  <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
+  <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="5"/>
+  <path d="M30 58c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 80c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="1188" y="586" class="label" text-anchor="middle">DB Dialects</text>
+<text x="1188" y="616" class="tiny" text-anchor="middle">H2</text>
+<text x="1188" y="633" class="tiny" text-anchor="middle">Postgres</text>
+<text x="1188" y="650" class="tiny" text-anchor="middle">MySQL</text>
+<text x="1188" y="667" class="tiny" text-anchor="middle">MariaDB</text>
+<path data-connector="table-to-column" d="M1090,238 L1160,238" class="arrow edge"/>
+<path data-connector="table-to-basic-columns" d="M985,294 L985,370" class="arrow edge"/>
+<path data-connector="column-to-special-columns" d="M1265,294 L1265,370" class="arrow edge"/>
+<path data-connector="basic-columns-to-dialects" d="M990,442 L990,492 Q990,502 1000,502 L1088,502 Q1098,502 1098,512 L1098,544" class="dbUse edge"/>
+<path data-connector="special-columns-to-dialects" d="M1262,442 L1262,492 Q1262,502 1252,502 L1222,502 Q1212,502 1212,512 L1212,544" class="dbUse edge"/>
+<path data-connector="table-models-to-basic-columns" d="M642,623 L790,623 Q800,623 800,613 L800,416 Q800,406 810,406 L878,406" class="runtimeUse edge"/>
+<rect x="220" y="760" width="1080" height="28" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+<path d="M252,774 L314,774" class="inherit"/><polygon points="314,774 300,766 300,782" class="inheritHead"/><text x="330" y="779" class="tiny">test classes inherit AbstractExposedTest</text>
+<path d="M570,774 L632,774" class="runtimeUse"/><text x="646" y="779" class="tiny">tests use table models and dialect gates</text>
+<path d="M928,774 L990,774" class="dbUse"/><text x="1004" y="779" class="tiny">column factories are verified against DB dialects</text>
 <rect x="128" y="804" width="1260" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="758" y="835" class="detail" text-anchor="middle">Source check: 02-types examples validate bool/char/numeric/double, arrays, multi-arrays, unsigned values, blobs, Java UUID, and Kotlin UUID across DB dialects.</text>
+<text x="758" y="835" class="detail" text-anchor="middle">02-types validates basic columns, arrays, unsigned values, blobs, Java UUID, and Kotlin UUID across DB dialects.</text>
 </svg>

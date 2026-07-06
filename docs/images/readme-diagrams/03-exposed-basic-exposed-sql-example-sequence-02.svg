@@ -1,78 +1,143 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 820" width="1440" height="820" role="img" aria-label="Exposed SQL DSL Query Flow">
-<defs>
-<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
-<style>
-.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
-.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-.card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.8;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.fkArrow{fill:none;stroke:#0f766e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}
-.returnLine{fill:none;stroke:#64748b;stroke-width:1.8;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
-.lifeline{stroke:#cbd5e1;stroke-width:1.5;stroke-dasharray:5 6}
-.inherit{fill:none;stroke:#475569;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
-.inheritHead{fill:#fff;stroke:#475569;stroke-width:1.8;stroke-linejoin:round}
-</style>
-</defs>
-<rect width="1440" height="820" class="canvas"/>
-<rect x="20" y="20" width="1400" height="780" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Exposed SQL DSL Query Flow</text>
-<text x="48" y="80" class="subtitle">Sync and coroutine examples share the same schema helper, sample data, and type-safe DSL operations</text>
-<rect x="28" y="128" width="164" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="110" y="161" class="label" text-anchor="middle">Test class</text>
-<path d="M110,182 L110,704" class="lifeline"/>
-<rect x="258" y="128" width="164" height="54" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="340" y="161" class="label" text-anchor="middle">Schema helper</text>
-<path d="M340,182 L340,704" class="lifeline"/>
-<rect x="508" y="128" width="164" height="54" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="590" y="161" class="label" text-anchor="middle">Transaction</text>
-<path d="M590,182 L590,704" class="lifeline"/>
-<rect x="768" y="128" width="164" height="54" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="850" y="161" class="label" text-anchor="middle">City/User tables</text>
-<path d="M850,182 L850,704" class="lifeline"/>
-<rect x="1028" y="128" width="164" height="54" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="1110" y="161" class="label" text-anchor="middle">DSL operation</text>
-<path d="M1110,182 L1110,704" class="lifeline"/>
-<rect x="1228" y="128" width="164" height="54" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1310" y="161" class="label" text-anchor="middle">Assertion</text>
-<path d="M1310,182 L1310,704" class="lifeline"/>
-<path d="M110,230 L340,230" class="arrow"/>
-<rect x="130" y="202" width="190" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="225" y="217" class="tiny" text-anchor="middle">sync withCityUsers()</text>
-<path d="M110,286 L340,286" class="arrow"/>
-<rect x="130" y="258" width="190" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="225" y="273" class="tiny" text-anchor="middle">suspend withCityUsers()</text>
-<path d="M340,346 L590,346" class="arrow"/>
-<rect x="370" y="318" width="190" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="465" y="333" class="tiny" text-anchor="middle">withTables / suspending</text>
-<path d="M590,402 L850,402" class="arrow"/>
-<rect x="625" y="374" width="190" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="720" y="389" class="tiny" text-anchor="middle">create tables and seed rows</text>
-<path d="M850,458 L340,458" class="returnLine"/>
-<rect x="511" y="430" width="168" height="22" rx="7" fill="#fff" stroke="#cbd5e1"/>
-<text x="595" y="445" class="tiny" text-anchor="middle">commit seeded rows</text>
-<path d="M340,520 L1110,520" class="arrow"/>
-<rect x="630" y="492" width="190" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="725" y="507" class="tiny" text-anchor="middle">run update/delete/join/groupBy body</text>
-<path d="M1110,576 L850,576" class="arrow"/>
-<rect x="885" y="548" width="190" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="980" y="563" class="tiny" text-anchor="middle">select/update/delete via DSL</text>
-<path d="M850,632 L1110,632" class="returnLine"/>
-<rect x="896" y="604" width="168" height="22" rx="7" fill="#fff" stroke="#cbd5e1"/>
-<text x="980" y="619" class="tiny" text-anchor="middle">ResultRow / affected count</text>
-<path d="M1110,688 L1310,688" class="arrow"/>
-<rect x="1115" y="660" width="190" height="22" rx="7" fill="#fff" stroke="#bfdbfe"/>
-<text x="1210" y="675" class="tiny" text-anchor="middle">assert result shape</text>
-<rect x="100" y="742" width="1228" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="714" y="772" class="detail" text-anchor="middle">Sequence check: return messages use dashed arrows; both sync and coroutine examples execute the same DSL scenarios against the same CityTable/UserTable schema.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">Exposed SQL DSL query sequence</title>
+  <desc id="desc">Sequence for the Exposed SQL DSL workshop tests that share schema helpers, seed City/User rows, execute update/delete/join/groupBy DSL bodies, and assert result rows or affected counts.</desc>
+  <defs>
+    <style>
+      text { letter-spacing: 0; }
+      .title { font-family: "Architects Daughter"; font-size: 40px; font-weight: 400; fill: #263238; }
+      .subtitle, .msg, .note, .footer, .role { font-family: "Comic Mono"; fill: #36464f; }
+      .subtitle { font-size: 18px; }
+      .participant { font-family: "Architects Daughter"; font-size: 19px; font-weight: 400; fill: #1f3138; }
+      .role { font-size: 13px; fill: #546a73; }
+      .msg { font-size: 14px; }
+      .note { font-size: 13px; }
+      .footer { font-size: 14px; fill: #60727d; }
+      .frame { fill: #fbfcf8; stroke: #41545d; stroke-width: 3; }
+      .header { fill: #ffffff; stroke: #546e7a; stroke-width: 2; }
+      .lifeline { stroke: #9aaab1; stroke-width: 2; stroke-dasharray: 7 8; }
+      .activation { fill: #f3ecdf; stroke: #8f784e; stroke-width: 1.5; }
+      .call { fill: none; stroke: #3f7d9c; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowCall); }
+      .sql { fill: none; stroke: #a2743d; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowSql); }
+      .state { fill: none; stroke: #6e8f4f; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowState); }
+      .return { fill: none; stroke: #9b7d54; stroke-width: 2.5; stroke-dasharray: 8 6; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowReturn); }
+      .label { fill: #ffffff; stroke: #d7e0e4; stroke-width: 1.5; }
+      .label.callLabel { stroke: #9cc2d1; }
+      .label.sqlLabel { stroke: #d0b078; }
+      .label.stateLabel { stroke: #b6c9a4; }
+      .label.returnLabel { stroke: #c8b38f; }
+      .badge { stroke-width: 1.8; }
+      .badge.callBadge { fill: #eaf4f8; stroke: #3f7d9c; }
+      .badge.sqlBadge { fill: #fff4df; stroke: #a2743d; }
+      .badge.stateBadge { fill: #eef7f0; stroke: #6e8f4f; }
+      .badge.returnBadge { fill: #fff7e8; stroke: #9b7d54; }
+      .badgeText { font-family: "Comic Mono"; font-size: 12px; font-weight: 700; }
+      .msg.callText, .badgeText.callText { fill: #2f6f8e; }
+      .msg.sqlText, .badgeText.sqlText { fill: #855a29; }
+      .msg.stateText, .badgeText.stateText { fill: #55783f; }
+      .msg.returnText, .badgeText.returnText { fill: #7f6038; }
+    </style>
+    <marker id="arrowCall" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c" stroke="#3f7d9c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowSql" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowState" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowReturn" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b7d54" stroke="#9b7d54" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
+
+  <rect x="24" y="24" width="1552" height="1072" rx="20" class="frame"/>
+  <text x="800" y="78" text-anchor="middle" class="title">Exposed SQL DSL Query Flow</text>
+  <text x="800" y="108" text-anchor="middle" class="subtitle">Sync and coroutine tests share City/User schema helpers, seed rows, DSL operations, and assertions.</text>
+
+  <g id="participants">
+    <rect x="60" y="150" width="170" height="68" rx="10" class="header"/>
+    <text x="145" y="179" text-anchor="middle" class="participant">SQL Test</text>
+    <text x="145" y="201" text-anchor="middle" class="role">sync + coroutine</text>
+
+    <rect x="292" y="150" width="216" height="68" rx="10" class="header"/>
+    <text x="400" y="179" text-anchor="middle" class="participant">Schema Helper</text>
+    <text x="400" y="201" text-anchor="middle" class="role">withCityUsers</text>
+
+    <rect x="578" y="150" width="222" height="68" rx="10" class="header"/>
+    <text x="689" y="179" text-anchor="middle" class="participant">Transaction</text>
+    <text x="689" y="201" text-anchor="middle" class="role">withTables</text>
+
+    <rect x="870" y="150" width="210" height="68" rx="10" class="header"/>
+    <text x="975" y="179" text-anchor="middle" class="participant">City/User Tables</text>
+    <text x="975" y="201" text-anchor="middle" class="role">seeded schema</text>
+
+    <rect x="1150" y="150" width="170" height="68" rx="10" class="header"/>
+    <text x="1235" y="179" text-anchor="middle" class="participant">DSL Body</text>
+    <text x="1235" y="201" text-anchor="middle" class="role">query/update</text>
+
+    <rect x="1380" y="150" width="160" height="68" rx="10" class="header"/>
+    <text x="1460" y="179" text-anchor="middle" class="participant">Assertion</text>
+    <text x="1460" y="201" text-anchor="middle" class="role">Kluent checks</text>
+  </g>
+
+  <line x1="145" y1="218" x2="145" y2="972" class="lifeline"/>
+  <line x1="400" y1="218" x2="400" y2="972" class="lifeline"/>
+  <line x1="689" y1="218" x2="689" y2="972" class="lifeline"/>
+  <line x1="975" y1="218" x2="975" y2="972" class="lifeline"/>
+  <line x1="1235" y1="218" x2="1235" y2="972" class="lifeline"/>
+  <line x1="1460" y1="218" x2="1460" y2="972" class="lifeline"/>
+
+  <rect x="393" y="292" width="14" height="116" rx="6" class="activation"/>
+  <rect x="682" y="420" width="14" height="480" rx="6" class="activation"/>
+  <rect x="968" y="488" width="14" height="324" rx="6" class="activation"/>
+  <rect x="1228" y="676" width="14" height="152" rx="6" class="activation"/>
+
+  <rect x="72" y="258" width="392" height="34" rx="17" class="label callLabel"/>
+  <circle cx="96" cy="275" r="13" class="badge callBadge"/><text x="96" y="280" text-anchor="middle" class="badgeText callText">1</text>
+  <text x="120" y="280" class="msg callText">withCityUsers() or withSuspendedCityUsers()</text>
+  <path d="M 145 300 L 393 300" class="call" data-connector="connector"/>
+
+  <rect x="424" y="330" width="436" height="34" rx="17" class="label stateLabel"/>
+  <circle cx="448" cy="347" r="13" class="badge stateBadge"/><text x="448" y="352" text-anchor="middle" class="badgeText stateText">2</text>
+  <text x="472" y="352" class="msg stateText">open table scope with CityTable and UserTable</text>
+  <path d="M 407 372 L 682 372" class="state" data-connector="connector"/>
+
+  <rect x="668" y="418" width="442" height="34" rx="17" class="label sqlLabel"/>
+  <circle cx="692" cy="435" r="13" class="badge sqlBadge"/><text x="692" y="440" text-anchor="middle" class="badgeText sqlText">3</text>
+  <text x="716" y="440" class="msg sqlText">create cities/users and seed five rows</text>
+  <path d="M 696 460 L 968 460" class="sql" data-connector="connector"/>
+
+  <rect x="452" y="492" width="438" height="34" rx="17" class="label returnLabel"/>
+  <circle cx="476" cy="509" r="13" class="badge returnBadge"/><text x="476" y="514" text-anchor="middle" class="badgeText returnText">4</text>
+  <text x="500" y="514" class="msg returnText">commit seeded rows before assertions</text>
+  <path d="M 968 534 L 407 534" class="return" data-connector="connector"/>
+
+  <rect x="452" y="594" width="546" height="34" rx="17" class="label callLabel"/>
+  <circle cx="476" cy="611" r="13" class="badge callBadge"/><text x="476" y="616" text-anchor="middle" class="badgeText callText">5</text>
+  <text x="500" y="616" class="msg callText">run update/delete/join/groupBy test body</text>
+  <path d="M 407 636 L 1228 636" class="call" data-connector="connector"/>
+
+  <rect x="1044" y="664" width="408" height="34" rx="17" class="label sqlLabel"/>
+  <circle cx="1068" cy="681" r="13" class="badge sqlBadge"/><text x="1068" y="686" text-anchor="middle" class="badgeText sqlText">6</text>
+  <text x="1092" y="686" class="msg sqlText">select/update/delete through DSL chain</text>
+  <path d="M 1242 706 L 982 706" class="sql" data-connector="connector"/>
+
+  <rect x="920" y="746" width="366" height="34" rx="17" class="label returnLabel"/>
+  <circle cx="944" cy="763" r="13" class="badge returnBadge"/><text x="944" y="768" text-anchor="middle" class="badgeText returnText">7</text>
+  <text x="968" y="768" class="msg returnText">ResultRow or affected count</text>
+  <path d="M 982 788 L 1242 788" class="return" data-connector="connector"/>
+
+  <rect x="1156" y="846" width="340" height="34" rx="17" class="label callLabel"/>
+  <circle cx="1180" cy="863" r="13" class="badge callBadge"/><text x="1180" y="868" text-anchor="middle" class="badgeText callText">8</text>
+  <text x="1204" y="868" class="msg callText">assert rows, counts, and city names</text>
+  <path d="M 1242 900 L 1453 900" class="call" data-connector="connector"/>
+
+  <rect x="264" y="930" width="472" height="34" rx="17" class="label returnLabel"/>
+  <circle cx="288" cy="947" r="13" class="badge returnBadge"/><text x="288" y="952" text-anchor="middle" class="badgeText returnText">9</text>
+  <text x="312" y="952" class="msg returnText">same scenarios pass in sync and coroutine paths</text>
+  <path d="M 682 980 L 145 980" class="return" data-connector="connector"/>
+
+  <rect x="98" y="1018" width="1404" height="44" rx="12" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
+  <text x="118" y="1046" class="note">The sample data path exercises city/user setup, update, delete, joins, groupBy, and coroutine reuse in one scenario.</text>
+  <text x="800" y="1078" text-anchor="middle" class="footer">github.com/bluetape4k/exposed-workshop - 03-exposed-basic/exposed-sql-example</text>
 </svg>

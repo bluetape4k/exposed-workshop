@@ -1,89 +1,162 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 940" width="1500" height="940" role="img" aria-label="Virtual Thread Transaction Sequence">
-<defs>
-<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<style>
-.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
-.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
-.tableName{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-.card,.tableBox{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
-.returnLine{fill:none;stroke:#64748b;stroke-width:1.7;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGray)}
-.altRegion{fill:#f8fafc;fill-opacity:.055;stroke:#94a3b8;stroke-opacity:.28;stroke-width:1.2;stroke-dasharray:8 7}
-.lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
-</style>
-</defs>
-<rect width="1500" height="940" class="canvas"/>
-<rect x="20" y="20" width="1460" height="900" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Virtual Thread Transaction Sequence</text>
-<text x="48" y="80" class="subtitle">Ex01_VirtualThreads uses Java 21 gated tests, newVirtualThreadJdbcTransaction, async fan-out, regular transaction comparison, and exception cleanup</text>
-<desc>Java 21 Test</desc><rect x="29" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="105" y="163" class="label" text-anchor="middle">Java 21 Test</text>
-<line x1="105" y1="184" x2="105" y2="790" class="lifeline"/>
-<desc>Fixture</desc><rect x="239" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="315" y="163" class="label" text-anchor="middle">Fixture</text>
-<line x1="315" y1="184" x2="315" y2="790" class="lifeline"/>
-<desc>VT API</desc><rect x="469" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="545" y="163" class="label" text-anchor="middle">VT API</text>
-<line x1="545" y1="184" x2="545" y2="790" class="lifeline"/>
-<desc>JdbcTransaction</desc><rect x="699" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="775" y="163" class="label" text-anchor="middle">JdbcTransaction</text>
-<line x1="775" y1="184" x2="775" y2="790" class="lifeline"/>
-<desc>VTester</desc><rect x="934" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1010" y="163" class="label" text-anchor="middle">VTester</text>
-<line x1="1010" y1="184" x2="1010" y2="790" class="lifeline"/>
-<desc>Regular Tx</desc><rect x="1139" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1215" y="163" class="label" text-anchor="middle">Regular Tx</text>
-<line x1="1215" y1="184" x2="1215" y2="790" class="lifeline"/>
-<desc>Assertions</desc><rect x="1314" y="130" width="152" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1390" y="163" class="label" text-anchor="middle">Assertions</text>
-<line x1="1390" y1="184" x2="1390" y2="790" class="lifeline"/>
-<rect x="500" y="490" width="900" height="300" rx="14" class="altRegion"/>
-<text x="522" y="515" class="panelTitle">ALT: async fan-out / regular tx / exception path</text>
-<rect x="82" y="222" width="248" height="46" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<circle cx="105" cy="245" r="14" fill="#fff" stroke="#64748b" stroke-width="1.4"/>
-<text x="105" y="250" class="detail" text-anchor="middle">1</text>
-<text x="130" y="251" class="detail">@EnabledForJreRange gates Java 21</text>
-<path d="M105,276 L315,276" class="arrow"/>
-<rect x="292" y="304" width="300" height="46" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<circle cx="315" cy="327" r="14" fill="#fff" stroke="#16a34a" stroke-width="1.4"/>
-<text x="315" y="332" class="detail" text-anchor="middle">2</text>
-<text x="340" y="333" class="detail">withTables creates VTester fixture</text>
-<path d="M315,358 L545,358" class="arrow"/>
-<rect x="520" y="386" width="304" height="46" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<circle cx="543" cy="409" r="14" fill="#fff" stroke="#7c3aed" stroke-width="1.4"/>
-<text x="543" y="414" class="detail" text-anchor="middle">3</text>
-<text x="568" y="415" class="detail">newVirtualThread Tx inserts and commits</text>
-<path d="M545,440 L775,440" class="arrow"/>
-<path d="M775,468 L1010,468" class="dbUse"/>
-<rect x="520" y="502" width="330" height="46" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<circle cx="543" cy="525" r="14" fill="#fff" stroke="#d97706" stroke-width="1.4"/>
-<text x="543" y="530" class="detail" text-anchor="middle">4</text>
-<text x="568" y="531" class="detail">VT async fan-out inserts/selects</text>
-<path d="M545,556 L775,556" class="arrow"/>
-<path d="M775,584 L1010,584" class="dbUse"/>
-<rect x="1030" y="618" width="280" height="46" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<circle cx="1053" cy="641" r="14" fill="#fff" stroke="#64748b" stroke-width="1.4"/>
-<text x="1053" y="646" class="detail" text-anchor="middle">5</text>
-<text x="1078" y="647" class="detail">regular transaction also selects</text>
-<path d="M1215,672 L1010,672" class="dbUse"/>
-<rect x="1112" y="730" width="278" height="46" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<circle cx="1135" cy="753" r="14" fill="#fff" stroke="#db2777" stroke-width="1.4"/>
-<text x="1135" y="758" class="detail" text-anchor="middle">6</text>
-<text x="1160" y="759" class="detail">duplicate id wraps ExposedSQLException</text>
-<path d="M775,702 L1390,702" class="returnLine"/>
-<path d="M1010,812 L1390,812" class="returnLine"/>
-<rect x="126" y="850" width="1248" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="750" y="881" class="detail" text-anchor="middle">Sequence rule: Virtual Thread calls are solid; verification/exception results return as dashed arrows. The regular transaction comparison is source-backed and uses the same VTester table.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 940" width="1500" height="940" role="img" aria-label="Virtual Thread transaction sequence">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
+    </filter>
+    <marker id="seqArrow-blue" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7fa7" stroke="#3f7fa7" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
+    </marker>
+    <marker id="seqArrow-green" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6f8f50" stroke="#6f8f50" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
+    </marker>
+    <marker id="seqArrow-amber" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#9a6b3e" stroke="#9a6b3e" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
+    </marker>
+    <marker id="seqArrow-red" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a95d6a" stroke="#a95d6a" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
+    </marker>
+    <style>
+      .canvas{fill:#f6f9fc}
+      .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
+      .subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+      .subtitle{font-size:13px}.detail{font-size:12px}
+      .participant{fill:#ffffff;stroke:#546977;stroke-width:1.7;filter:url(#shadow)}
+      .participant-title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
+      .participant-sub{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:11px;fill:#5b6d77}
+      .lifeline{stroke:#9babb4;stroke-width:1.4;stroke-dasharray:5 6}
+      .activation{fill:#f7efd9;stroke:#9a7b4f;stroke-width:1.4}
+      .callBlue{fill:none;stroke:#3f7fa7;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-blue)}
+      .callGreen{fill:none;stroke:#6f8f50;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-green)}
+      .callAmber{fill:none;stroke:#9a6b3e;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-amber)}
+      .callRed{fill:none;stroke:#a95d6a;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-red)}
+      .altRegion{fill:none;stroke:#8aa0ad;stroke-width:1.4;stroke-dasharray:8 7}
+      .altHeader{fill:#f8fafc;stroke:#8aa0ad;stroke-width:1.1}
+      .altText{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:13px;fill:#60758d}
+      .pill{stroke-width:1.5}
+      .labelText{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#344653}
+      .num{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:700}
+      .footer{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+    </style>
+  </defs>
+
+  <rect width="1500" height="940" class="canvas"/>
+  <rect x="20" y="20" width="1460" height="900" rx="16" class="frame"/>
+  <text x="48" y="58" class="title">Virtual Thread Transaction Sequence</text>
+  <text x="48" y="80" class="subtitle">Java 21-gated tests keep blocking Exposed code while moving work onto Virtual Threads.</text>
+
+  <g id="participants">
+    <rect x="52" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="120" y="157" class="participant-title" text-anchor="middle">Test</text>
+    <text x="120" y="174" class="participant-sub" text-anchor="middle">Java 21 gate</text>
+    <line x1="120" y1="188" x2="120" y2="858" class="lifeline"/>
+
+    <rect x="272" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="340" y="157" class="participant-title" text-anchor="middle">Fixture</text>
+    <text x="340" y="174" class="participant-sub" text-anchor="middle">withTables</text>
+    <line x1="340" y1="188" x2="340" y2="858" class="lifeline"/>
+
+    <rect x="492" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="560" y="157" class="participant-title" text-anchor="middle">VT API</text>
+    <text x="560" y="174" class="participant-sub" text-anchor="middle">jdbc helpers</text>
+    <line x1="560" y1="188" x2="560" y2="858" class="lifeline"/>
+
+    <rect x="712" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="780" y="157" class="participant-title" text-anchor="middle">VirtualFuture</text>
+    <text x="780" y="174" class="participant-sub" text-anchor="middle">awaitAll</text>
+    <line x1="780" y1="188" x2="780" y2="858" class="lifeline"/>
+
+    <rect x="932" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="1000" y="157" class="participant-title" text-anchor="middle">Jdbc Tx</text>
+    <text x="1000" y="174" class="participant-sub" text-anchor="middle">blocking style</text>
+    <line x1="1000" y1="188" x2="1000" y2="858" class="lifeline"/>
+
+    <rect x="1152" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="1220" y="157" class="participant-title" text-anchor="middle">VTester</text>
+    <text x="1220" y="174" class="participant-sub" text-anchor="middle">table + DAO</text>
+    <line x1="1220" y1="188" x2="1220" y2="858" class="lifeline"/>
+
+    <rect x="1332" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="1400" y="157" class="participant-title" text-anchor="middle">Assertions</text>
+    <text x="1400" y="174" class="participant-sub" text-anchor="middle">results</text>
+    <line x1="1400" y1="188" x2="1400" y2="858" class="lifeline"/>
+  </g>
+
+  <rect x="334" y="244" width="12" height="70" rx="6" class="activation"/>
+  <rect x="554" y="326" width="12" height="494" rx="6" class="activation"/>
+  <rect x="774" y="548" width="12" height="124" rx="6" class="activation"/>
+  <rect x="994" y="408" width="12" height="244" rx="6" class="activation"/>
+  <rect x="1214" y="480" width="12" height="326" rx="6" class="activation"/>
+  <rect x="1394" y="790" width="12" height="52" rx="6" class="activation"/>
+
+  <g id="m1" data-message="1">
+    <rect class="pill" x="82" y="214" width="336" height="38" rx="19" fill="#eef5e8" stroke="#6f8f50"/>
+    <circle cx="108" cy="233" r="16" fill="#ffffff" stroke="#6f8f50" stroke-width="1.5"/>
+    <text x="108" y="238" class="num" fill="#58753d" text-anchor="middle">1</text>
+    <text x="136" y="238" class="labelText">@EnabledForJreRange gates Java 21</text>
+    <path d="M120,260 L340,260" class="callGreen" data-connector="m1"/>
+  </g>
+
+  <g id="m2" data-message="2">
+    <rect class="pill" x="292" y="294" width="364" height="38" rx="19" fill="#eef5e8" stroke="#6f8f50"/>
+    <circle cx="318" cy="313" r="16" fill="#ffffff" stroke="#6f8f50" stroke-width="1.5"/>
+    <text x="318" y="318" class="num" fill="#58753d" text-anchor="middle">2</text>
+    <text x="346" y="318" class="labelText">withTables creates VTester fixture</text>
+    <path d="M340,340 L560,340" class="callGreen" data-connector="m2"/>
+  </g>
+
+  <g id="m3" data-message="3">
+    <rect class="pill" x="520" y="374" width="424" height="38" rx="19" fill="#eef4f8" stroke="#3f7fa7"/>
+    <circle cx="546" cy="393" r="16" fill="#ffffff" stroke="#3f7fa7" stroke-width="1.5"/>
+    <text x="546" y="398" class="num" fill="#2f6d91" text-anchor="middle">3</text>
+    <text x="574" y="398" class="labelText">newVirtualThreadJdbcTransaction opens tx</text>
+    <path d="M560,420 L1000,420" class="callBlue" data-connector="m3"/>
+  </g>
+
+  <g id="m4" data-message="4">
+    <rect class="pill" x="950" y="450" width="390" height="38" rx="19" fill="#f8efe0" stroke="#9a6b3e"/>
+    <circle cx="976" cy="469" r="16" fill="#ffffff" stroke="#9a6b3e" stroke-width="1.5"/>
+    <text x="976" y="474" class="num" fill="#7b5634" text-anchor="middle">4</text>
+    <text x="1004" y="474" class="labelText">insert/select rows through VTester</text>
+    <path d="M1000,496 L1220,496" class="callAmber" data-connector="m4"/>
+  </g>
+
+  <rect x="520" y="520" width="900" height="326" rx="14" class="altRegion"/>
+  <rect x="548" y="504" width="358" height="32" rx="8" class="altHeader"/>
+  <text x="566" y="525" class="altText">ALT: fan-out / regular tx / exception cleanup</text>
+
+  <g id="m5" data-message="5">
+    <rect class="pill" x="522" y="540" width="420" height="38" rx="19" fill="#eef4f8" stroke="#3f7fa7"/>
+    <circle cx="548" cy="559" r="16" fill="#ffffff" stroke="#3f7fa7" stroke-width="1.5"/>
+    <text x="548" y="564" class="num" fill="#2f6d91" text-anchor="middle">5</text>
+    <text x="576" y="564" class="labelText">virtualThreadJdbcTransactionAsync fan-out</text>
+    <path d="M560,586 L780,586" class="callBlue" data-connector="m5"/>
+  </g>
+
+  <g id="m6" data-message="6">
+    <rect class="pill" x="750" y="616" width="362" height="38" rx="19" fill="#f8efe0" stroke="#9a6b3e"/>
+    <circle cx="776" cy="635" r="16" fill="#ffffff" stroke="#9a6b3e" stroke-width="1.5"/>
+    <text x="776" y="640" class="num" fill="#7b5634" text-anchor="middle">6</text>
+    <text x="804" y="640" class="labelText">awaitAll joins rows and counts</text>
+    <path d="M780,662 L1220,662" class="callAmber" data-connector="m6"/>
+  </g>
+
+  <g id="m7" data-message="7">
+    <rect class="pill" x="900" y="692" width="392" height="38" rx="19" fill="#eef4f8" stroke="#3f7fa7"/>
+    <circle cx="926" cy="711" r="16" fill="#ffffff" stroke="#3f7fa7" stroke-width="1.5"/>
+    <text x="926" y="716" class="num" fill="#2f6d91" text-anchor="middle">7</text>
+    <text x="954" y="716" class="labelText">regular transaction selects same table</text>
+    <path d="M1000,738 L1220,738" class="callBlue" data-connector="m7"/>
+  </g>
+
+  <g id="m8" data-message="8">
+    <rect class="pill" x="908" y="766" width="476" height="38" rx="19" fill="#f7e9eb" stroke="#a95d6a"/>
+    <circle cx="934" cy="785" r="16" fill="#ffffff" stroke="#a95d6a" stroke-width="1.5"/>
+    <text x="934" y="790" class="num" fill="#8b4d58" text-anchor="middle">8</text>
+    <text x="962" y="790" class="labelText">duplicate id closes inner connection and wraps SQL error</text>
+    <path d="M1220,812 L1400,812" class="callRed" data-connector="m8"/>
+  </g>
+
+  <rect x="150" y="874" width="1200" height="34" rx="10" class="footer"/>
+  <text x="750" y="896" class="detail" text-anchor="middle">The source keeps blocking Exposed calls; Java 21 Virtual Threads provide the concurrency boundary.</text>
 </svg>

@@ -1,84 +1,162 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="newSuspendedTransaction Processing Sequence">
-<defs>
-<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<style>
-.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
-.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
-.tableName{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-.card,.tableBox{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
-.returnLine{fill:none;stroke:#64748b;stroke-width:1.7;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGray)}
-.altRegion{fill:#f8fafc;fill-opacity:.055;stroke:#94a3b8;stroke-opacity:.28;stroke-width:1.2;stroke-dasharray:8 7}
-.lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
-</style>
-</defs>
-<rect width="1500" height="900" class="canvas"/>
-<rect x="20" y="20" width="1460" height="860" rx="16" class="frame"/>
-<text x="48" y="58" class="title">newSuspendedTransaction Processing Sequence</text>
-<text x="48" y="80" class="subtitle">Ex01_Coroutines coordinates withTablesSuspending, initial insert, async insert/update jobs, await, and final ordered assertions</text>
-<desc>Test</desc><rect x="38" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="110" y="163" class="label" text-anchor="middle">Test</text>
-<line x1="110" y1="184" x2="110" y2="750" class="lifeline"/>
-<desc>Fixture</desc><rect x="243" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="315" y="163" class="label" text-anchor="middle">Fixture</text>
-<line x1="315" y1="184" x2="315" y2="750" class="lifeline"/>
-<desc>Coroutine API</desc><rect x="463" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="535" y="163" class="label" text-anchor="middle">Coroutine API</text>
-<line x1="535" y1="184" x2="535" y2="750" class="lifeline"/>
-<desc>Insert job</desc><rect x="688" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="760" y="163" class="label" text-anchor="middle">Insert job</text>
-<line x1="760" y1="184" x2="760" y2="750" class="lifeline"/>
-<desc>Update job</desc><rect x="908" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="980" y="163" class="label" text-anchor="middle">Update job</text>
-<line x1="980" y1="184" x2="980" y2="750" class="lifeline"/>
-<desc>TesterUnique</desc><rect x="1128" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1200" y="163" class="label" text-anchor="middle">TesterUnique</text>
-<line x1="1200" y1="184" x2="1200" y2="750" class="lifeline"/>
-<desc>Assertions</desc><rect x="1318" y="130" width="144" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1390" y="163" class="label" text-anchor="middle">Assertions</text>
-<line x1="1390" y1="184" x2="1390" y2="750" class="lifeline"/>
-<rect x="580" y="400" width="850" height="310" rx="14" class="altRegion"/>
-<text x="602" y="425" class="panelTitle">ALT: insert retry / update branch</text>
-<rect x="86" y="222" width="246" height="46" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<circle cx="109" cy="245" r="14" fill="#fff" stroke="#16a34a" stroke-width="1.4"/>
-<text x="109" y="250" class="detail" text-anchor="middle">1</text>
-<text x="134" y="251" class="detail">withTablesSuspending creates unique table</text>
-<path d="M110,276 L315,276" class="arrow"/>
-<rect x="300" y="300" width="300" height="46" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<circle cx="323" cy="323" r="14" fill="#fff" stroke="#7c3aed" stroke-width="1.4"/>
-<text x="323" y="328" class="detail" text-anchor="middle">2</text>
-<text x="348" y="329" class="detail">newSuspendedTransaction inserts origin id=1</text>
-<path d="M315,354 L535,354" class="arrow"/>
-<path d="M535,382 L1200,382" class="dbUse"/>
-<rect x="612" y="418" width="300" height="46" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<circle cx="635" cy="441" r="14" fill="#fff" stroke="#d97706" stroke-width="1.4"/>
-<text x="635" y="446" class="detail" text-anchor="middle">3</text>
-<text x="660" y="447" class="detail">insertJob retries id=1 after update</text>
-<path d="M535,472 L760,472" class="arrow"/>
-<path d="M760,500 L1200,500" class="dbUse"/>
-<rect x="842" y="534" width="312" height="46" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<circle cx="865" cy="557" r="14" fill="#fff" stroke="#64748b" stroke-width="1.4"/>
-<text x="865" y="562" class="detail" text-anchor="middle">4</text>
-<text x="890" y="563" class="detail">updateJob moves id 1 to 99</text>
-<path d="M535,588 L980,588" class="arrow"/>
-<path d="M980,616 L1200,616" class="dbUse"/>
-<rect x="1126" y="654" width="286" height="46" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<circle cx="1149" cy="677" r="14" fill="#fff" stroke="#db2777" stroke-width="1.4"/>
-<text x="1149" y="682" class="detail" text-anchor="middle">5</text>
-<text x="1174" y="683" class="detail">await jobs; assert ids [1, 99]</text>
-<path d="M1200,708 L1390,708" class="returnLine"/>
-<rect x="126" y="808" width="1248" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="750" y="839" class="detail" text-anchor="middle">Source check: TesterUnique has id INT primary key + unique index; insert/update jobs use maxAttempts=20 and final ordered ids are [1, 99].</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="newSuspendedTransaction processing sequence">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
+    </filter>
+    <marker id="seqArrow-blue" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7fa7" stroke="#3f7fa7" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
+    </marker>
+    <marker id="seqArrow-green" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6f8f50" stroke="#6f8f50" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
+    </marker>
+    <marker id="seqArrow-amber" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#9a6b3e" stroke="#9a6b3e" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
+    </marker>
+    <marker id="seqArrow-red" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a95d6a" stroke="#a95d6a" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/>
+    </marker>
+    <style>
+      .canvas{fill:#f6f9fc}
+      .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
+      .subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+      .subtitle{font-size:13px}.detail{font-size:12px}
+      .participant{fill:#ffffff;stroke:#546977;stroke-width:1.7;filter:url(#shadow)}
+      .participant-title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
+      .participant-sub{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:11px;fill:#5b6d77}
+      .lifeline{stroke:#9babb4;stroke-width:1.4;stroke-dasharray:5 6}
+      .activation{fill:#f7efd9;stroke:#9a7b4f;stroke-width:1.4}
+      .callBlue{fill:none;stroke:#3f7fa7;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-blue)}
+      .callGreen{fill:none;stroke:#6f8f50;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-green)}
+      .callAmber{fill:none;stroke:#9a6b3e;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-amber)}
+      .callRed{fill:none;stroke:#a95d6a;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-red)}
+      .altRegion{fill:none;stroke:#8aa0ad;stroke-width:1.4;stroke-dasharray:8 7}
+      .altHeader{fill:#f8fafc;stroke:#8aa0ad;stroke-width:1.1}
+      .altText{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:13px;fill:#60758d}
+      .pill{stroke-width:1.5}
+      .labelText{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#344653}
+      .num{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:700}
+      .footer{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+    </style>
+  </defs>
+
+  <rect width="1500" height="900" class="canvas"/>
+  <rect x="20" y="20" width="1460" height="860" rx="16" class="frame"/>
+  <text x="48" y="58" class="title">newSuspendedTransaction Processing Sequence</text>
+  <text x="48" y="80" class="subtitle">Initial suspended insert is followed by parallel insert/update jobs and final ordered-id assertions.</text>
+
+  <g id="participants">
+    <rect x="52" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="120" y="157" class="participant-title" text-anchor="middle">Test</text>
+    <text x="120" y="174" class="participant-sub" text-anchor="middle">runSuspendIO</text>
+    <line x1="120" y1="188" x2="120" y2="842" class="lifeline"/>
+
+    <rect x="272" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="340" y="157" class="participant-title" text-anchor="middle">Fixture</text>
+    <text x="340" y="174" class="participant-sub" text-anchor="middle">unique table</text>
+    <line x1="340" y1="188" x2="340" y2="842" class="lifeline"/>
+
+    <rect x="492" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="560" y="157" class="participant-title" text-anchor="middle">Coroutine API</text>
+    <text x="560" y="174" class="participant-sub" text-anchor="middle">tx builders</text>
+    <line x1="560" y1="188" x2="560" y2="842" class="lifeline"/>
+
+    <rect x="712" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="780" y="157" class="participant-title" text-anchor="middle">Insert Job</text>
+    <text x="780" y="174" class="participant-sub" text-anchor="middle">Dispatchers.IO</text>
+    <line x1="780" y1="188" x2="780" y2="842" class="lifeline"/>
+
+    <rect x="932" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="1000" y="157" class="participant-title" text-anchor="middle">Update Job</text>
+    <text x="1000" y="174" class="participant-sub" text-anchor="middle">Default</text>
+    <line x1="1000" y1="188" x2="1000" y2="842" class="lifeline"/>
+
+    <rect x="1152" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="1220" y="157" class="participant-title" text-anchor="middle">TesterUnique</text>
+    <text x="1220" y="174" class="participant-sub" text-anchor="middle">id unique</text>
+    <line x1="1220" y1="188" x2="1220" y2="842" class="lifeline"/>
+
+    <rect x="1332" y="130" width="136" height="58" rx="10" class="participant"/>
+    <text x="1400" y="157" class="participant-title" text-anchor="middle">Assertions</text>
+    <text x="1400" y="174" class="participant-sub" text-anchor="middle">ordered ids</text>
+    <line x1="1400" y1="188" x2="1400" y2="842" class="lifeline"/>
+  </g>
+
+  <rect x="334" y="244" width="12" height="78" rx="6" class="activation"/>
+  <rect x="554" y="326" width="12" height="118" rx="6" class="activation"/>
+  <rect x="1214" y="406" width="12" height="374" rx="6" class="activation"/>
+  <rect x="774" y="536" width="12" height="178" rx="6" class="activation"/>
+  <rect x="994" y="608" width="12" height="174" rx="6" class="activation"/>
+  <rect x="1394" y="804" width="12" height="38" rx="6" class="activation"/>
+
+  <g id="m1" data-message="1">
+    <rect class="pill" x="82" y="214" width="370" height="38" rx="19" fill="#eef5e8" stroke="#6f8f50"/>
+    <circle cx="108" cy="233" r="16" fill="#ffffff" stroke="#6f8f50" stroke-width="1.5"/>
+    <text x="108" y="238" class="num" fill="#58753d" text-anchor="middle">1</text>
+    <text x="136" y="238" class="labelText">withTablesSuspending creates unique table</text>
+    <path d="M120,260 L340,260" class="callGreen" data-connector="m1"/>
+  </g>
+
+  <g id="m2" data-message="2">
+    <rect class="pill" x="304" y="294" width="402" height="38" rx="19" fill="#eef4f8" stroke="#3f7fa7"/>
+    <circle cx="330" cy="313" r="16" fill="#ffffff" stroke="#3f7fa7" stroke-width="1.5"/>
+    <text x="330" y="318" class="num" fill="#2f6d91" text-anchor="middle">2</text>
+    <text x="358" y="318" class="labelText">newSuspendedTransaction inserts origin id=1</text>
+    <path d="M340,340 L560,340" class="callBlue" data-connector="m2"/>
+  </g>
+
+  <g id="m3" data-message="3">
+    <rect class="pill" x="548" y="374" width="376" height="38" rx="19" fill="#f8efe0" stroke="#9a6b3e"/>
+    <circle cx="574" cy="393" r="16" fill="#ffffff" stroke="#9a6b3e" stroke-width="1.5"/>
+    <text x="574" y="398" class="num" fill="#7b5634" text-anchor="middle">3</text>
+    <text x="602" y="398" class="labelText">TesterUnique.insert(id = 1)</text>
+    <path d="M560,420 L1220,420" class="callAmber" data-connector="m3"/>
+  </g>
+
+  <rect x="548" y="492" width="852" height="282" rx="14" class="altRegion"/>
+  <rect x="574" y="476" width="260" height="32" rx="8" class="altHeader"/>
+  <text x="592" y="497" class="altText">ALT: insert retry / update branch</text>
+
+  <g id="m4" data-message="4">
+    <rect class="pill" x="532" y="506" width="412" height="38" rx="19" fill="#eef4f8" stroke="#3f7fa7"/>
+    <circle cx="558" cy="525" r="16" fill="#ffffff" stroke="#3f7fa7" stroke-width="1.5"/>
+    <text x="558" y="530" class="num" fill="#2f6d91" text-anchor="middle">4</text>
+    <text x="586" y="530" class="labelText">suspendedTransactionAsync starts insertJob</text>
+    <path d="M560,552 L780,552" class="callBlue" data-connector="m4"/>
+  </g>
+
+  <g id="m5" data-message="5">
+    <rect class="pill" x="752" y="578" width="420" height="38" rx="19" fill="#eef4f8" stroke="#3f7fa7"/>
+    <circle cx="778" cy="597" r="16" fill="#ffffff" stroke="#3f7fa7" stroke-width="1.5"/>
+    <text x="778" y="602" class="num" fill="#2f6d91" text-anchor="middle">5</text>
+    <text x="806" y="602" class="labelText">suspendedTransactionAsync starts updateJob</text>
+    <path d="M560,624 L1000,624" class="callBlue" data-connector="m5"/>
+  </g>
+
+  <g id="m6" data-message="6">
+    <rect class="pill" x="762" y="650" width="386" height="38" rx="19" fill="#f8efe0" stroke="#9a6b3e"/>
+    <circle cx="788" cy="669" r="16" fill="#ffffff" stroke="#9a6b3e" stroke-width="1.5"/>
+    <text x="788" y="674" class="num" fill="#7b5634" text-anchor="middle">6</text>
+    <text x="816" y="674" class="labelText">insert id=1 retries with maxAttempts=20</text>
+    <path d="M780,696 L1220,696" class="callAmber" data-connector="m6"/>
+  </g>
+
+  <g id="m7" data-message="7">
+    <rect class="pill" x="952" y="716" width="372" height="38" rx="19" fill="#f8efe0" stroke="#9a6b3e"/>
+    <circle cx="978" cy="735" r="16" fill="#ffffff" stroke="#9a6b3e" stroke-width="1.5"/>
+    <text x="978" y="740" class="num" fill="#7b5634" text-anchor="middle">7</text>
+    <text x="1006" y="740" class="labelText">update id 1 to 99 before retry succeeds</text>
+    <path d="M1000,762 L1220,762" class="callAmber" data-connector="m7"/>
+  </g>
+
+  <g id="m8" data-message="8">
+    <rect class="pill" x="1178" y="790" width="278" height="38" rx="19" fill="#f7e9eb" stroke="#a95d6a"/>
+    <circle cx="1204" cy="809" r="16" fill="#ffffff" stroke="#a95d6a" stroke-width="1.5"/>
+    <text x="1204" y="814" class="num" fill="#8b4d58" text-anchor="middle">8</text>
+    <text x="1232" y="814" class="labelText">await jobs; assert ids [1, 99]</text>
+    <path d="M1220,836 L1400,836" class="callRed" data-connector="m8"/>
+  </g>
+
+  <rect x="126" y="850" width="1248" height="30" rx="10" class="footer"/>
+  <text x="750" y="870" class="detail" text-anchor="middle">TesterUnique has a unique id column; insert/update jobs use maxAttempts=20 before final ordered-id verification.</text>
 </svg>

@@ -1,11 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1540 900" width="1540" height="900" role="img" aria-label="Java Time Column Type Mapping">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#a2743d" stroke="#a2743d" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,11 +12,9 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.cryptoLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.arrow{fill:none;stroke:#4f86c6;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+.mapLine{fill:none;stroke:#6e8f4f;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.dbUse{fill:none;stroke:#a2743d;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
@@ -78,20 +74,33 @@
 <text x="934" y="467" class="tiny">CurrentDateTime</text>
 <text x="934" y="484" class="tiny">CurrentTimestamp</text>
 <text x="934" y="501" class="tiny">clientDefault { now }</text>
-<path d="M1292,311 C1292,290 1418,290 1418,311 L1418,527 C1418,548 1292,548 1292,527 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
-<ellipse cx="1355" cy="311" rx="63" ry="17" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1292,527 C1292,548 1418,548 1418,527" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1355" y="342" class="label" text-anchor="middle">DB</text>
-<text x="1306" y="372" class="tiny">H2</text>
-<text x="1306" y="390" class="tiny">Postgres</text>
-<text x="1306" y="408" class="tiny">MySQL caveat</text>
-<text x="1306" y="426" class="tiny">MariaDB caveat</text>
-<path d="M756,209 L836,209 L836,248 L918,248" class="arrow"/>
-<path d="M756,305 L836,305 L836,248 L918,248" class="arrow"/>
-<path d="M756,401 L836,401 L836,462 L918,462" class="arrow"/>
-<path d="M756,497 L836,497 L836,462 L918,462" class="arrow"/>
-<path d="M1144,248 L1218,248 L1218,378 L1292,378" class="dbUse"/>
-<path d="M1144,462 L1218,462 L1218,420 L1292,420" class="dbUse"/>
+<rect x="1292" y="308" width="126" height="192" rx="10" fill="#fff7ed" stroke="#a2743d" stroke-width="1.7" class="card"/>
+<g data-bluetape4k-icon="generic/database-server" transform="translate(1317 322) scale(.24)">
+  <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
+  <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="5"/>
+  <path d="M30 58c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 80c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="1355" y="392" class="label" text-anchor="middle">Test DB</text>
+<text x="1355" y="418" class="tiny" text-anchor="middle">H2 / PostgreSQL</text>
+<text x="1355" y="438" class="tiny" text-anchor="middle">MySQL caveat</text>
+<text x="1355" y="456" class="tiny" text-anchor="middle">MariaDB caveat</text>
+<path data-connector="date-builder-to-misc" d="M756,209 L820,209 Q836,209 836,225 L836,226 Q836,238 848,238 L918,238" class="arrow"/>
+<path data-connector="time-builder-to-misc" d="M756,305 L820,305 Q836,305 836,289 L836,274 Q836,258 852,258 L918,258" class="arrow"/>
+<path data-connector="datetime-builder-to-defaults" d="M756,401 L820,401 Q836,401 836,417 L836,426 Q836,442 852,442 L918,442" class="arrow"/>
+<path data-connector="timestamp-builder-to-defaults" d="M756,497 L918,497" class="arrow"/>
+<path data-connector="timestamp-with-zone-builder-to-defaults" d="M756,593 L812,593 Q828,593 828,577 L828,538 Q828,522 844,522 L918,522" class="arrow"/>
+<path data-connector="misc-to-db" d="M1144,248 L1202,248 Q1218,248 1218,264 L1218,362 Q1218,378 1234,378 L1292,378" class="dbUse"/>
+<path data-connector="defaults-to-db" d="M1144,462 L1202,462 Q1218,462 1218,446 L1218,436 Q1218,420 1234,420 L1292,420" class="dbUse"/>
+<rect x="344" y="752" width="852" height="34" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.2"/>
+<path d="M374,769 L424,769" class="mapLine"/>
+<text x="440" y="773" class="tiny">Java type to Exposed builder</text>
+<path d="M646,769 L696,769" class="arrow"/>
+<text x="712" y="773" class="tiny">builder used by example tables</text>
+<path d="M970,769 L1020,769" class="dbUse"/>
+<text x="1036" y="773" class="tiny">table values verified by test DB</text>
 <rect x="118" y="796" width="1264" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="750" y="827" class="detail" text-anchor="middle">Source check: Ex01_JavaTime, Ex02_Defaults, Ex03_DateTimeLiteral, and Ex04_MiscTable cover Java Time columns, defaults, literals, and nullable variants.</text>
+<text x="750" y="827" class="detail" text-anchor="middle">Java Time columns keep typed values in Kotlin while defaults, literals, and precision behavior are verified per database.</text>
 </svg>

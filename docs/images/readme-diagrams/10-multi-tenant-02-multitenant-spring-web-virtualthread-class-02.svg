@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 986" width="1220" height="986" role="img" aria-label="Exposed + Spring Web + Virtual Threads + Multi-Tenant (02)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 820" width="1220" height="820" role="img" aria-label="Exposed + Spring Web + Virtual Threads + Multi-Tenant (02)">
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
     </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
+    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
     </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
+    <marker id="inheritHead" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="16" refY="8" orient="auto">
+      <path d="M1,1 L16,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.6" stroke-dasharray="none" style="stroke-dasharray:none"/>
     </marker>
     <style>
   .canvas{fill:#f6f9fc}
@@ -27,73 +27,77 @@
   .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
 </style>
   </defs>
-  <rect width="1220" height="986" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="946" rx="16" class="frame"/>
+  <rect width="1220" height="820" class="canvas"/>
+  <rect x="20" y="20" width="1180" height="780" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Exposed + Spring Web + Virtual Threads + Multi-Tenant (02)</text>
   <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="120" width="1128" height="226" rx="12" class="panel"/>
-  <text x="610" y="114" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="74" y="146" width="203" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="175.5" y="175" class="smallLabel" text-anchor="middle">Long Id Table</text>
-<text x="175.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="305" y="146" width="203" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="406.5" y="175" class="smallLabel" text-anchor="middle">Table</text>
-<text x="406.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="536" y="146" width="203" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="637.5" y="175" class="smallLabel" text-anchor="middle">Entity ID</text>
-<text x="637.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="767" y="146" width="203" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="868.5" y="175" class="smallLabel" text-anchor="middle">Jdbc Repository</text>
-<text x="868.5" y="202" class="detail" text-anchor="middle">persistence</text>
-<rect x="998" y="146" width="203" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="1099.5" y="175" class="smallLabel" text-anchor="middle">Abstract Routing</text>
-<text x="1099.5" y="193" class="smallLabel" text-anchor="middle">Data Source</text>
-<text x="1099.5" y="202" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="74" y="242" width="203" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="175.5" y="271" class="smallLabel" text-anchor="middle">Filter</text>
-<text x="175.5" y="298" class="detail" text-anchor="middle">cross-cutting</text>
-<rect x="46" y="398" width="1128" height="474" rx="12" class="panel"/>
-  <text x="610" y="392" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="74" y="424" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="234" y="453" class="smallLabel" text-anchor="middle">Movie Table</text>
-<text x="234" y="492" class="detail" text-anchor="middle">table/model</text>
-<rect x="440" y="424" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="600" y="453" class="smallLabel" text-anchor="middle">Actor Table</text>
-<text x="600" y="492" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="424" width="320" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="966" y="453" class="smallLabel" text-anchor="middle">Actor Exposed Repository</text>
-<text x="966" y="492" class="detail" text-anchor="middle">persistence</text>
-<rect x="74" y="532" width="320" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="234" y="561" class="smallLabel" text-anchor="middle">Movie Exposed Repository</text>
-<text x="234" y="600" class="detail" text-anchor="middle">persistence</text>
-<rect x="440" y="532" width="320" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="600" y="561" class="smallLabel" text-anchor="middle">Actor In Movie Table</text>
-<text x="600" y="600" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="532" width="320" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="966" y="561" class="smallLabel" text-anchor="middle">Tenant Aware Data Source</text>
-<text x="966" y="600" class="detail" text-anchor="middle">cross-cutting</text>
-<rect x="74" y="640" width="320" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="234" y="669" class="smallLabel" text-anchor="middle">Movie Entity</text>
-<text x="234" y="708" class="detail" text-anchor="middle">table/model</text>
-<rect x="440" y="640" width="320" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="600" y="669" class="smallLabel" text-anchor="middle">Actor Entity</text>
-<text x="600" y="708" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="640" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="966" y="669" class="smallLabel" text-anchor="middle">Tenant Filter</text>
-<text x="966" y="708" class="detail" text-anchor="middle">cross-cutting</text>
-<rect x="74" y="748" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="234" y="777" class="smallLabel" text-anchor="middle">Exposed Multitenant</text>
-<text x="234" y="795" class="smallLabel" text-anchor="middle">Application</text>
-<text x="234" y="816" class="detail" text-anchor="middle">cross-cutting</text>
-<path d="M234,424 L234,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M600,424 L600,378 L175.5,378 L175.5,224" class="inherit"/>
-<path d="M600,532 L600,378 L406.5,378 L406.5,224" class="inherit"/>
-<path d="M234,640 L234,378 L637.5,378 L637.5,224" class="inherit"/>
-<path d="M600,640 L600,378 L637.5,378 L637.5,224" class="inherit"/>
-<path d="M966,424 L966,378 L868.5,378 L868.5,224" class="inherit"/>
-<path d="M234,532 L234,378 L868.5,378 L868.5,224" class="inherit"/>
-<path d="M966,532 L966,378 L1099.5,378 L1099.5,224" class="inherit"/>
-<path d="M966,640 L966,378 L175.5,378 L175.5,320" class="inherit"/>
-<rect x="46" y="912" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="610" y="939" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+<rect x="46" y="116" width="1128" height="142" rx="12" class="panel"/>
+  <text x="610" y="110" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
+<rect x="55" y="146" width="170" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="140" y="175" class="smallLabel" text-anchor="middle">Long Id Table</text>
+<text x="140" y="202" class="detail" text-anchor="middle">table/model</text>
+<rect x="235" y="146" width="170" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="320" y="175" class="smallLabel" text-anchor="middle">Table</text>
+<text x="320" y="202" class="detail" text-anchor="middle">table/model</text>
+<rect x="415" y="146" width="170" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="500" y="175" class="smallLabel" text-anchor="middle">Entity ID</text>
+<text x="500" y="202" class="detail" text-anchor="middle">constructor id</text>
+<rect x="615" y="146" width="170" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="700" y="175" class="smallLabel" text-anchor="middle">Jdbc Repository</text>
+<text x="700" y="202" class="detail" text-anchor="middle">persistence</text>
+<rect x="815" y="146" width="170" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="900" y="173" class="smallLabel" text-anchor="middle">Abstract Routing</text>
+<text x="900" y="191" class="smallLabel" text-anchor="middle">Data Source</text>
+<text x="900" y="207" class="detail" text-anchor="middle">infrastructure</text>
+<rect x="995" y="146" width="170" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="1080" y="175" class="smallLabel" text-anchor="middle">Filter</text>
+<text x="1080" y="202" class="detail" text-anchor="middle">cross-cutting</text>
+
+<rect x="46" y="316" width="1128" height="430" rx="12" class="panel"/>
+  <text x="610" y="310" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
+<rect x="55" y="350" width="170" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="140" y="379" class="smallLabel" text-anchor="middle">Movie Table</text>
+<text x="140" y="406" class="detail" text-anchor="middle">table/model</text>
+<rect x="235" y="350" width="170" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="320" y="379" class="smallLabel" text-anchor="middle">Actor Table</text>
+<text x="320" y="406" class="detail" text-anchor="middle">table/model</text>
+<rect x="235" y="462" width="170" height="72" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="320" y="491" class="smallLabel" text-anchor="middle">Actor In Movie</text>
+<text x="320" y="509" class="smallLabel" text-anchor="middle">Table</text>
+<text x="320" y="526" class="detail" text-anchor="middle">table/model</text>
+<rect x="415" y="350" width="170" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="500" y="379" class="smallLabel" text-anchor="middle">Movie Entity</text>
+<text x="500" y="406" class="detail" text-anchor="middle">table/model</text>
+<rect x="415" y="462" width="170" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="500" y="491" class="smallLabel" text-anchor="middle">Actor Entity</text>
+<text x="500" y="518" class="detail" text-anchor="middle">table/model</text>
+<rect x="615" y="350" width="170" height="72" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="700" y="379" class="smallLabel" text-anchor="middle">Movie Exposed</text>
+<text x="700" y="397" class="smallLabel" text-anchor="middle">Repository</text>
+<text x="700" y="414" class="detail" text-anchor="middle">persistence</text>
+<rect x="615" y="462" width="170" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="700" y="491" class="smallLabel" text-anchor="middle">Actor Exposed</text>
+<text x="700" y="509" class="smallLabel" text-anchor="middle">Repository</text>
+<text x="700" y="526" class="detail" text-anchor="middle">persistence</text>
+<rect x="815" y="350" width="170" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="900" y="379" class="smallLabel" text-anchor="middle">Tenant Aware</text>
+<text x="900" y="397" class="smallLabel" text-anchor="middle">Data Source</text>
+<text x="900" y="414" class="detail" text-anchor="middle">cross-cutting</text>
+<rect x="995" y="350" width="170" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<text x="1080" y="379" class="smallLabel" text-anchor="middle">Tenant Filter</text>
+<text x="1080" y="406" class="detail" text-anchor="middle">cross-cutting</text>
+<rect x="55" y="594" width="230" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="170" y="623" class="smallLabel" text-anchor="middle">Exposed Multitenant</text>
+<text x="170" y="641" class="smallLabel" text-anchor="middle">Application</text>
+<text x="170" y="658" class="detail" text-anchor="middle">Spring Boot entrypoint</text>
+
+<path d="M140,350 V218" class="inherit" marker-end="url(#inheritHead)"/>
+<path d="M320,350 V302 Q320,294 312,294 H148 Q140,294 140,286 V218" class="inherit" marker-end="url(#inheritHead)"/>
+<path d="M320,462 V438 Q320,430 312,430 H238 Q230,430 230,422 V238 Q230,230 238,230 H312 Q320,230 320,222 V218" class="inherit" marker-end="url(#inheritHead)"/>
+<path d="M500,350 V218" class="inherit" marker-end="url(#inheritHead)"/>
+<path d="M585,498 H600 Q608,498 608,490 V238 Q608,230 600,230 H508 Q500,230 500,222 V218" class="inherit" marker-end="url(#inheritHead)"/>
+<path d="M700,350 V218" class="inherit" marker-end="url(#inheritHead)"/>
+<path d="M615,498 H592 Q584,498 584,490 V238 Q584,230 592,230 H692 Q700,230 700,222 V218" class="inherit" marker-end="url(#inheritHead)"/>
+<path d="M900,350 V218" class="inherit" marker-end="url(#inheritHead)"/>
+<path d="M1080,350 V218" class="inherit" marker-end="url(#inheritHead)"/>
 </svg>

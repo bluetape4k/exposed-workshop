@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 980" width="2200" height="980" role="img" aria-label="Tenant Context Support Classes">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 890" width="2200" height="890" role="img" aria-label="Tenant Context Support Classes">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker><marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker><marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker><marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker><marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker><marker id="arrowGray" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -13,32 +13,32 @@
 .card,.uml,.tableBox,.dbBody{stroke-width:1.7;filter:url(#shadow)}
 .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
 .call,.runtime,.storage,.map,.fk,.ret{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.call{stroke:#2563eb}.runtime{stroke:#7c3aed}
-.storage{stroke:#ea580c}.map{stroke:#16a34a}
-.fk{stroke:#0f766e}.ret{stroke:#64748b;stroke-dasharray:7 5}
+.call{stroke:#2563eb;marker-end:url(#arrowBlue)}.runtime{stroke:#7c3aed;marker-end:url(#arrowPurple)}
+.storage{stroke:#ea580c;marker-end:url(#arrowOrange)}.map{stroke:#16a34a;marker-end:url(#arrowGreen)}
+.fk{stroke:#0f766e;marker-end:url(#arrowTeal)}.ret{stroke:#64748b;stroke-dasharray:7 5;marker-end:url(#arrowGray)}
 .inherit{fill:none;stroke:#334155;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .inheritTriangle{fill:#fff;stroke:#334155;stroke-width:1.8}
 .lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
 </style>
 </defs>
-<rect width="2200" height="980" class="canvas"/>
-<rect x="20" y="20" width="2160" height="940" rx="16" class="frame"/>
+<rect width="2200" height="890" class="canvas"/>
+<rect x="20" y="20" width="2160" height="850" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Tenant Context Support Classes</text>
 <text x="48" y="80" class="subtitle">Current source has no TenantResolver class; support is split across context, filter, aspect, initializer, and routing DataSource types</text>
 <path d="M1736.8,289.9 L1736.8,206.5" class="inherit"/>
-<path d="M1728.8,206.5 L1744.8,206.5 L1736.8,190.5 Z" class="inheritTriangle"/>
+<path d="M1727.8,206.5 L1745.8,206.5 L1736.8,190.5 Z" class="inheritTriangle"/>
 <path d="M1047.6,274.1 L1047.6,206.5" class="inherit"/>
-<path d="M1039.6,206.5 L1055.6,206.5 L1047.6,190.5 Z" class="inheritTriangle"/>
+<path d="M1038.6,206.5 L1056.6,206.5 L1047.6,190.5 Z" class="inheritTriangle"/>
 <path d="M374.4,278.8 L374.4,206.5" class="inherit"/>
-<path d="M366.4,206.5 L382.4,206.5 L374.4,190.5 Z" class="inheritTriangle"/>
+<path d="M365.4,206.5 L383.4,206.5 L374.4,190.5 Z" class="inheritTriangle"/>
 <path d="M1213.4,418.7 L1213.4,730.7" class="runtime"/>
 <path d="M1036,418.7 L1036,503.3" class="runtime"/>
 <path d="M1145.9,646 L1145.9,730.7" class="runtime"/>
-<path d="M992.7,646 L992.7,713.9 L992.7,804.1 L950.8,804.1" class="map"/>
-<path d="M1357.2,415.9 L1357.2,460.6 L1357.2,509.3 L1212.1,509.3 L1240.1,509.3 L1240.1,511.3 L1212.1,511.3" class="runtime"/>
+<path d="M992.7,646 V796 Q992.7,804.1 984.7,804.1 H950.8" class="map"/>
+<path d="M1357.2,415.9 V501.3 Q1357.2,509.3 1349.2,509.3 H1212.1" class="runtime"/>
 <path d="M1503.2,415.9 L1503.2,516.3" class="call"/>
 <path d="M367.4,414.1 L367.4,502.4" class="call"/>
-<path d="M487.5,647 L487.5,699.1 L487.5,759 L686.6,759 L658.6,759 L658.6,761.8 L686.6,761.8" class="map"/>
+<path d="M487.5,647 V751 Q487.5,759 495.5,759 H686.6" class="map"/>
 <path d="M341.5,647 L341.5,763.1" class="storage"/>
 <g data-id="Tenants" data-label="Tenants">
 <rect x="1013.6" y="730.7" width="264.2" height="122.3" rx="4" fill="#fff" stroke="#7c3aed" class="uml"/>
@@ -160,6 +160,4 @@
 <line x1="268.5" y1="797.1" x2="560.5" y2="797.1" stroke="#2563eb" stroke-width="1.1"/>
 <text x="280.5" y="818.1" class="detail">ActorTable / MovieTable / ActorInMovieTable</text>
 </g>
-<rect x="96" y="898" width="1990" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec" stroke-width="1.2"/>
-<text x="114" y="925" class="detail">Source check: README no longer says TenantResolver because the source has no TenantResolver type.</text>
 </svg>

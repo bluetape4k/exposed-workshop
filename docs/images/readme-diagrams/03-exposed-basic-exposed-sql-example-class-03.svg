@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 860" width="1480" height="860" role="img" aria-label="Exposed SQL DSL Domain Model">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -60,15 +60,15 @@
 <path d="M238,610 H460" stroke="#d97706" stroke-width="1.1"/>
 <text x="252" y="628" class="tiny">withCityUsers()</text>
 <text x="252" y="643" class="tiny">withSuspendedCityUsers()</text>
-<path d="M215,356 L215,308 L355,308 L355,264" class="inherit"/>
-<path d="M355,248 L343,264 L367,264 Z" class="inheritHead"/>
-<path d="M519,356 L519,308 L355,308 L355,264" class="inherit"/>
-<path d="M355,248 L343,264 L367,264 Z" class="inheritHead"/>
-<path d="M404,430 L330,430" class="fkArrow"/>
+<path d="M215,356 L215,316 Q215,308 223,308 L347,308 Q355,308 355,300 L355,264" class="inherit edge"/>
+<path d="M355,248 L346,262 L364,262 Z" class="inheritHead"/>
+<path d="M519,356 L519,316 Q519,308 511,308 L363,308 Q355,308 355,300 L355,264" class="inherit edge"/>
+<path d="M355,248 L346,262 L364,262 Z" class="inheritHead"/>
+<path d="M404,430 L330,430" class="fkArrow edge"/>
 <rect x="342" y="412" width="48" height="24" rx="8" fill="#fff" stroke="#99f6e4"/>
 <text x="366" y="429" class="tiny" text-anchor="middle">FK</text>
-<path d="M300,562 L300,526 L215,526 L215,488" class="runtimeUse"/>
-<path d="M400,562 L400,526 L519,526 L519,504" class="runtimeUse"/>
+<path d="M300,562 L300,534 Q300,526 292,526 L223,526 Q215,526 215,518 L215,488" class="runtimeUse edge"/>
+<path d="M400,562 L400,534 Q400,526 408,526 L511,526 Q519,526 519,518 L519,504" class="runtimeUse edge"/>
 <rect x="782" y="126" width="650" height="554" rx="12" class="panel"/><text x="1107" y="118" class="panelTitle" text-anchor="middle">TEST CLASSES</text>
 <rect x="988" y="166" width="250" height="82" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
 <path d="M988,214 L988,170 Q988,166 992,166 L1234,166 Q1238,166 1238,170 L1238,214 Z" fill="#dbeafe"/>
@@ -94,12 +94,12 @@
 <text x="1150" y="436" class="tiny">same DSL scenarios</text>
 <text x="1150" y="451" class="tiny">runSuspendIO</text>
 <text x="1150" y="466" class="tiny">withTablesSuspending</text>
-<path d="M965,356 L965,312 L1113,312 L1113,264" class="inherit"/>
-<path d="M1113,248 L1101,264 L1125,264 Z" class="inheritHead"/>
-<path d="M1259,356 L1259,312 L1113,312 L1113,264" class="inherit"/>
-<path d="M1113,248 L1101,264 L1125,264 Z" class="inheritHead"/>
-<path d="M842,430 L736,430 L736,610 L460,610" class="runtimeUse"/>
-<path d="M1136,430 L1112,430 L1112,704 L348,704 L348,658" class="runtimeUse"/>
+<path d="M965,356 L965,320 Q965,312 973,312 L1105,312 Q1113,312 1113,304 L1113,264" class="inherit edge"/>
+<path d="M1113,248 L1104,262 L1122,262 Z" class="inheritHead"/>
+<path d="M1259,356 L1259,320 Q1259,312 1251,312 L1121,312 Q1113,312 1113,304 L1113,264" class="inherit edge"/>
+<path d="M1113,248 L1104,262 L1122,262 Z" class="inheritHead"/>
+<path d="M842,430 L744,430 Q736,430 736,438 L736,602 Q736,610 728,610 L460,610" class="runtimeUse edge"/>
+<path d="M1136,430 L1120,430 Q1112,430 1112,438 L1112,696 Q1112,704 1104,704 L356,704 Q348,704 348,696 L348,658" class="runtimeUse edge"/>
 <rect x="142" y="738" width="1190" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="737" y="768" class="detail" text-anchor="middle">UML check: Table and AbstractExposedTest supertypes stay above concrete children; FK uses a separate child-to-parent arrow.</text>
 </svg>

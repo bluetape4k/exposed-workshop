@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Exposed Basic User Cities Domain">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowTeal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#0f766e"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -80,17 +80,17 @@
 <text x="402" y="664" class="tiny">same DSL scenarios</text>
 <text x="402" y="679" class="tiny">runSuspendIO</text>
 <text x="402" y="694" class="tiny">suspended helper</text>
-<path d="M204,326 L204,286 L204,286 L204,270" class="inherit"/>
-<path d="M204,254 L192,270 L216,270 Z" class="inheritHead"/>
-<path d="M500,326 L500,286 L204,286 L204,270" class="inherit"/>
-<path d="M204,254 L192,270 L216,270 Z" class="inheritHead"/>
-<path d="M388,400 L316,400" class="fkArrow"/>
+<path d="M204,326 L204,270" class="inherit edge"/>
+<path d="M204,254 L195,268 L213,268 Z" class="inheritHead"/>
+<path d="M500,326 L500,294 Q500,286 492,286 L212,286 Q204,286 204,278 L204,270" class="inherit edge"/>
+<path d="M204,254 L195,268 L213,268 Z" class="inheritHead"/>
+<path d="M388,400 L316,400" class="fkArrow edge"/>
 <rect x="328" y="382" width="48" height="24" rx="8" fill="#fff" stroke="#99f6e4"/>
 <text x="352" y="399" class="tiny" text-anchor="middle">FK</text>
-<path d="M204,458 L204,584" class="queryUse"/>
-<path d="M500,474 L500,584" class="queryUse"/>
-<path d="M426,210 L360,210 L360,649 L340,649" class="runtimeUse"/>
-<path d="M536,254 L536,300 L674,300 L674,550 L512,550 L512,584" class="runtimeUse"/>
+<path d="M204,458 L204,584" class="queryUse edge"/>
+<path d="M500,474 L500,584" class="queryUse edge"/>
+<path d="M536,164 L536,140 Q536,132 528,132 L80,132 Q72,132 72,140 L72,633 Q72,641 80,641 L92,641" class="runtimeUse edge"/>
+<path d="M536,254 L536,292 Q536,300 544,300 L666,300 Q674,300 674,308 L674,542 Q674,550 666,550 L520,550 Q512,550 512,558 L512,584" class="runtimeUse edge"/>
 <rect x="792" y="124" width="660" height="674" rx="12" class="panel"/><text x="1122" y="116" class="panelTitle" text-anchor="middle">DAO ENTITY PATH</text>
 <rect x="832" y="164" width="210" height="90" rx="4" fill="#fff" stroke="#64748b" class="card"/>
 <path d="M832,212 L832,168 Q832,164 836,164 L1038,164 Q1042,164 1042,168 L1042,212 Z" fill="#e2e8f0"/>
@@ -137,17 +137,17 @@
 <text x="1114" y="614" class="tiny">var name</text>
 <text x="1114" y="629" class="tiny">var age</text>
 <text x="1114" y="644" class="tiny">city optionalReferencedOn</text>
-<path d="M936,326 L936,286 L936,286 L936,270" class="inherit"/>
-<path d="M936,254 L924,270 L948,270 Z" class="inheritHead"/>
-<path d="M1205,326 L1205,286 L936,286 L936,270" class="inherit"/>
-<path d="M936,254 L924,270 L948,270 Z" class="inheritHead"/>
-<path d="M936,548 L936,516 L1342,516 L1342,286 L1225,286 L1225,270" class="inherit"/>
-<path d="M1205,548 L1205,528 L1358,528 L1358,302 L1225,302 L1225,270" class="inherit"/>
-<path d="M1225,254 L1213,270 L1237,270 Z" class="inheritHead"/>
-<path d="M1100,400 L1042,400" class="fkArrow"/>
-<path d="M1042,614 L1100,614" class="assoc"/>
+<path d="M936,326 L936,270" class="inherit edge"/>
+<path d="M936,254 L927,268 L945,268 Z" class="inheritHead"/>
+<path d="M1205,326 L1205,294 Q1205,286 1197,286 L944,286 Q936,286 936,278 L936,270" class="inherit edge"/>
+<path d="M936,254 L927,268 L945,268 Z" class="inheritHead"/>
+<path d="M936,548 L936,524 Q936,516 944,516 L1334,516 Q1342,516 1342,508 L1342,294 Q1342,286 1334,286 L1233,286 Q1225,286 1225,278 L1225,270" class="inherit edge"/>
+<path d="M1205,548 L1205,536 Q1205,528 1213,528 L1350,528 Q1358,528 1358,520 L1358,310 Q1358,302 1350,302 L1233,302 Q1225,302 1225,294 L1225,270" class="inherit edge"/>
+<path d="M1225,254 L1216,268 L1234,268 Z" class="inheritHead"/>
+<path d="M1100,400 L1042,400" class="fkArrow edge"/>
+<path d="M1042,614 L1100,614" class="assoc edge"/>
 <text x="1072" y="602" class="tiny" text-anchor="middle">City.users / User.city</text>
-<path d="M1100,636 L1042,636" class="assoc"/>
+<path d="M1100,636 L1042,636" class="assoc edge"/>
 <rect x="166" y="826" width="1168" height="48" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="856" class="detail" text-anchor="middle">Root chapter diagram intentionally compares modeling paths; table-to-entity mapping lines are omitted because DAO names already pair them.</text>
 </svg>

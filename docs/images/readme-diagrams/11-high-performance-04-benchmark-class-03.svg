@@ -1,90 +1,140 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 890" width="1220" height="890" role="img" aria-label="Benchmark (04-benchmark)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" width="1600" height="1100" role="img" aria-label="Benchmark class structure">
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
     </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
+    <marker id="inheritHead" markerWidth="18" markerHeight="16" refX="17" refY="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1,1 L17,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.6"/>
     </marker>
     <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
-</style>
+      .canvas{fill:#f6f9fc}
+      .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+      .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
+      .card{stroke-width:1.7;filter:url(#shadow)}
+      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:34px;fill:#1e293b}
+      .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
+      .section{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+      .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
+      .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
+      .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
+      .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10.5px;fill:#64748b}
+      .inherit{fill:none;stroke:#64748b;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inheritHead)}
+      .assoc{fill:none;stroke:#94a3b8;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:7 5}
+    </style>
   </defs>
-  <rect width="1220" height="890" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="850" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Benchmark (04-benchmark)</text>
-  <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="120" width="1128" height="130" rx="12" class="panel"/>
-  <text x="610" y="114" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="74" y="146" width="261" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="204.5" y="175" class="smallLabel" text-anchor="middle">Long Id Table</text>
-<text x="204.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="363" y="146" width="261" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="493.5" y="188" class="smallLabel" text-anchor="middle">KLogging</text>
 
-<rect x="652" y="146" width="261" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="782.5" y="175" class="smallLabel" text-anchor="middle">Cache Strategy</text>
-<text x="782.5" y="202" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="941" y="146" width="261" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="1071.5" y="175" class="smallLabel" text-anchor="middle">Entity ID</text>
-<text x="1071.5" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="46" y="302" width="1128" height="474" rx="12" class="panel"/>
-  <text x="610" y="296" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="74" y="328" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="234" y="357" class="smallLabel" text-anchor="middle">Payload Table</text>
-<text x="234" y="396" class="detail" text-anchor="middle">table/model</text>
-<rect x="440" y="328" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="600" y="357" class="smallLabel" text-anchor="middle">Person Table</text>
-<text x="600" y="396" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="328" width="320" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="966" y="357" class="smallLabel" text-anchor="middle">Department Table</text>
-<text x="966" y="396" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="436" width="320" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="234" y="465" class="smallLabel" text-anchor="middle">Employee Table</text>
-<text x="234" y="504" class="detail" text-anchor="middle">table/model</text>
-<rect x="440" y="436" width="320" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="600" y="465" class="smallLabel" text-anchor="middle">Person Entity</text>
-<text x="600" y="504" class="detail" text-anchor="middle">table/model</text>
-<rect x="806" y="436" width="320" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="966" y="465" class="smallLabel" text-anchor="middle">Department Entity</text>
-<text x="966" y="504" class="detail" text-anchor="middle">table/model</text>
-<rect x="74" y="544" width="320" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="234" y="573" class="smallLabel" text-anchor="middle">Employee Entity</text>
-<text x="234" y="612" class="detail" text-anchor="middle">table/model</text>
-<rect x="440" y="544" width="320" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="600" y="573" class="smallLabel" text-anchor="middle">Cache Benchmark Setup</text>
-<text x="600" y="612" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="806" y="544" width="320" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="966" y="573" class="smallLabel" text-anchor="middle">Cache Payload</text>
-<text x="966" y="612" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="74" y="652" width="320" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="234" y="681" class="smallLabel" text-anchor="middle">No Cache Strategy</text>
-<text x="234" y="720" class="detail" text-anchor="middle">infrastructure</text>
-<path d="M234,328 L234,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M600,544 L600,282 L493.5,282 L493.5,224" class="inherit"/>
-<path d="M600,328 L600,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M966,328 L966,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M234,436 L234,282 L204.5,282 L204.5,224" class="inherit"/>
-<path d="M600,436 L600,282 L1071.5,282 L1071.5,224" class="inherit"/>
-<path d="M966,436 L966,282 L1071.5,282 L1071.5,224" class="inherit"/>
-<path d="M234,544 L234,282 L1071.5,282 L1071.5,224" class="inherit"/>
-<rect x="46" y="816" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="610" y="843" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+  <rect width="1600" height="1100" class="canvas"/>
+  <rect x="28" y="24" width="1544" height="1052" rx="16" class="frame"/>
+
+  <text x="64" y="70" class="title">Benchmark class structure</text>
+  <text x="64" y="96" class="subtitle">Source-derived class groups: JMH benchmarks, Exposed/JPA models, and cache strategy contracts</text>
+
+  <rect x="64" y="132" width="1472" height="176" rx="12" class="panel"/>
+  <text x="800" y="126" class="section" text-anchor="middle">JMH BENCHMARK ENTRY CLASSES</text>
+
+  <rect x="92" y="164" width="420" height="100" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+  <text x="302" y="197" class="label" text-anchor="middle">CRUD benchmark classes</text>
+  <text x="302" y="222" class="detail" text-anchor="middle">SingleEntityCrudBenchmark</text>
+  <text x="302" y="242" class="detail" text-anchor="middle">OneToManyCrudBenchmark / ConcurrentCrudBenchmark</text>
+
+  <rect x="590" y="164" width="420" height="100" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+  <text x="800" y="197" class="label" text-anchor="middle">Cache benchmark classes</text>
+  <text x="800" y="222" class="detail" text-anchor="middle">ReadThroughCacheBenchmark</text>
+  <text x="800" y="242" class="detail" text-anchor="middle">CacheStrategyComparisonBenchmark</text>
+
+  <rect x="1088" y="164" width="420" height="100" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+  <text x="1298" y="197" class="label" text-anchor="middle">Routing benchmark class</text>
+  <text x="1298" y="222" class="detail" text-anchor="middle">RoutingKeyResolverBenchmark</text>
+  <text x="1298" y="242" class="detail" text-anchor="middle">@Param tenant + readOnly inputs</text>
+
+  <rect x="64" y="360" width="700" height="286" rx="12" class="panel"/>
+  <text x="414" y="354" class="section" text-anchor="middle">EXPOSED TABLE HIERARCHY</text>
+  <rect x="142" y="392" width="544" height="64" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+  <text x="414" y="430" class="label" text-anchor="middle">LongIdTable</text>
+
+  <rect x="92" y="518" width="146" height="78" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+  <text x="165" y="550" class="smallLabel" text-anchor="middle">PayloadTable</text>
+  <text x="165" y="572" class="tiny" text-anchor="middle">cache_payload</text>
+
+  <rect x="266" y="518" width="146" height="78" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+  <text x="339" y="550" class="smallLabel" text-anchor="middle">PersonTable</text>
+  <text x="339" y="572" class="tiny" text-anchor="middle">persons</text>
+
+  <rect x="440" y="518" width="146" height="78" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+  <text x="513" y="550" class="smallLabel" text-anchor="middle">DepartmentTable</text>
+  <text x="513" y="572" class="tiny" text-anchor="middle">departments</text>
+
+  <rect x="614" y="518" width="146" height="78" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+  <text x="687" y="550" class="smallLabel" text-anchor="middle">EmployeeTable</text>
+  <text x="687" y="572" class="tiny" text-anchor="middle">department_id FK</text>
+
+  <path data-connector="payload-table-inherits-long-id-table" d="M165,518 V456" class="inherit"/>
+  <path data-connector="person-table-inherits-long-id-table" d="M339,518 V456" class="inherit"/>
+  <path data-connector="department-table-inherits-long-id-table" d="M513,518 V456" class="inherit"/>
+  <path data-connector="employee-table-inherits-long-id-table" d="M687,518 V456" class="inherit"/>
+
+  <rect x="836" y="360" width="700" height="286" rx="12" class="panel"/>
+  <text x="1186" y="354" class="section" text-anchor="middle">DAO ENTITY HIERARCHY AND JPA ENTITIES</text>
+  <rect x="872" y="392" width="420" height="64" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+  <text x="1082" y="430" class="label" text-anchor="middle">LongEntity</text>
+
+  <rect x="1330" y="392" width="178" height="64" rx="10" fill="#f8fafc" stroke="#94a3b8" class="card"/>
+  <text x="1419" y="421" class="label" text-anchor="middle">@Entity</text>
+  <text x="1419" y="442" class="tiny" text-anchor="middle">annotation model</text>
+
+  <rect x="872" y="518" width="146" height="78" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+  <text x="945" y="550" class="smallLabel" text-anchor="middle">PersonEntity</text>
+  <text x="945" y="572" class="tiny" text-anchor="middle">PersonTable</text>
+
+  <rect x="1044" y="518" width="146" height="78" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+  <text x="1117" y="550" class="smallLabel" text-anchor="middle">DepartmentEntity</text>
+  <text x="1117" y="572" class="tiny" text-anchor="middle">employees referrersOn</text>
+
+  <rect x="1216" y="518" width="146" height="78" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+  <text x="1289" y="550" class="smallLabel" text-anchor="middle">EmployeeEntity</text>
+  <text x="1289" y="572" class="tiny" text-anchor="middle">department referencedOn</text>
+
+  <rect x="1388" y="518" width="120" height="78" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+  <text x="1448" y="548" class="smallLabel" text-anchor="middle">JPA model</text>
+  <text x="1448" y="570" class="tiny" text-anchor="middle">Person/Dept/Emp</text>
+
+  <path data-connector="person-entity-inherits-long-entity" d="M945,518 V456" class="inherit"/>
+  <path data-connector="department-entity-inherits-long-entity" d="M1117,518 V456" class="inherit"/>
+  <path data-connector="employee-entity-inherits-long-entity" d="M1289,518 V456" class="inherit"/>
+
+  <rect x="64" y="708" width="1472" height="286" rx="12" class="panel"/>
+  <text x="800" y="702" class="section" text-anchor="middle">CACHE STRATEGY CONTRACT AND SUPPORT TYPES</text>
+
+  <rect x="180" y="742" width="752" height="64" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+  <text x="556" y="780" class="label" text-anchor="middle">CacheStrategy</text>
+
+  <rect x="180" y="870" width="220" height="78" rx="10" fill="#f8fafc" stroke="#64748b" class="card"/>
+  <text x="290" y="902" class="smallLabel" text-anchor="middle">NoCacheStrategy</text>
+  <text x="290" y="924" class="tiny" text-anchor="middle">direct DB read/write</text>
+
+  <rect x="446" y="870" width="220" height="78" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+  <text x="556" y="902" class="smallLabel" text-anchor="middle">ReadThroughStrategy</text>
+  <text x="556" y="924" class="tiny" text-anchor="middle">cache hit/miss + invalidate</text>
+
+  <rect x="712" y="870" width="220" height="78" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+  <text x="822" y="902" class="smallLabel" text-anchor="middle">WriteThroughStrategy</text>
+  <text x="822" y="924" class="tiny" text-anchor="middle">cache put + DB write</text>
+
+  <rect x="1016" y="748" width="220" height="82" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+  <text x="1126" y="780" class="smallLabel" text-anchor="middle">CachePayload</text>
+  <text x="1126" y="803" class="tiny" text-anchor="middle">Serializable data class</text>
+
+  <rect x="1270" y="748" width="220" height="82" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+  <text x="1380" y="780" class="smallLabel" text-anchor="middle">CacheBenchmarkSetup</text>
+  <text x="1380" y="803" class="tiny" text-anchor="middle">PostgreSQL + seed data</text>
+
+  <path data-connector="no-cache-implements-cache-strategy" d="M290,870 V806" class="inherit"/>
+  <path data-connector="read-through-implements-cache-strategy" d="M556,870 V806" class="inherit"/>
+  <path data-connector="write-through-implements-cache-strategy" d="M822,870 V806" class="inherit"/>
+
+  <path data-connector="strategies-use-cache-payload" d="M932,909 H974 Q986,909 986,897 V801 Q986,789 1016,789" class="assoc"/>
+  <path data-connector="strategies-use-cache-benchmark-setup" d="M932,930 H1240 Q1252,930 1252,918 V801 Q1252,789 1270,789" class="assoc"/>
+
+  <rect x="64" y="1020" width="1472" height="36" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
+  <text x="800" y="1043" class="detail" text-anchor="middle">Only actual inheritance and interface implementation use hollow heads; benchmark-to-fixture usage is grouped by section to avoid false hierarchy.</text>
 </svg>

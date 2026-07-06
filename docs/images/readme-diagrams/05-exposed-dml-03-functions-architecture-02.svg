@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1540 900" width="1540" height="900" role="img" aria-label="Exposed Window Function Structure">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/></marker>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
+<marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowPink" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777" stroke="#db2777" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -19,6 +19,7 @@
 .dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
 .savepoint{fill:none;stroke:#db2777;stroke-width:1.9;stroke-dasharray:7 4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
 .returnLine{fill:none;stroke:#64748b;stroke-width:1.8;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}
+.edge{fill:none}
 .lifeline{stroke:#cbd5e1;stroke-width:1.5;stroke-dasharray:5 6}
 </style>
 </defs>
@@ -64,24 +65,35 @@
 <text x="1123" y="511" class="label" text-anchor="middle">select(windowFn)</text>
 <text x="1123" y="542" class="detail" text-anchor="middle">expected list</text>
 <rect x="1350" y="130" width="130" height="610" rx="12" class="panel"/><text x="1415" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
-<path d="M1372,324 C1372,304 1458,304 1458,324 L1458,500 C1458,520 1372,520 1372,500 Z" fill="#fff" stroke="#ea580c" stroke-width="1.7" class="card"/>
-<ellipse cx="1415" cy="324" rx="43" ry="16" fill="#ffedd5" stroke="#ea580c" stroke-width="1.7"/>
-<path d="M1372,500 C1372,520 1458,520 1458,500" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1415" y="352" class="label" text-anchor="middle">DB</text>
-<text x="1388" y="378" class="tiny">H2</text>
-<text x="1388" y="395" class="tiny">Postgres</text>
-<text x="1388" y="412" class="tiny">MySQL</text>
-<path d="M342,219 L444,219 L444,225 L548,225" class="arrow"/>
-<path d="M342,335 L458,335 L458,225 L548,225" class="arrow"/>
-<path d="M342,451 L472,451 L472,225 L548,225" class="arrow"/>
-<path d="M342,567 L486,567 L486,225 L548,225" class="arrow"/>
-<path d="M672,260 L672,332" class="arrow"/>
-<path d="M672,402 L672,474" class="arrow"/>
-<path d="M672,544 L672,616" class="runtimeUse"/>
-<path d="M796,367 L920,367 L920,301 L1010,301" class="arrow"/>
-<path d="M796,509 L920,509 L920,521 L1010,521" class="arrow"/>
-<path d="M1236,301 L1310,301 L1310,368 L1372,368" class="dbUse"/>
-<path d="M1236,521 L1310,521 L1310,456 L1372,456" class="dbUse"/>
-<rect x="132" y="796" width="1276" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="770" y="827" class="detail" text-anchor="middle">Source check: Ex05_WindowFunction composes function.over().partitionBy(sales.year, sales.product).orderBy(sales.amount) and asserts expected ranked values.</text>
+<rect x="1360" y="300" width="110" height="230" rx="10" fill="#fff7ed" stroke="#ea580c" class="card"/>
+<g data-bluetape4k-icon="generic/database-server" transform="translate(1371 318) scale(.30)">
+  <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
+  <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="5"/>
+  <path d="M30 58c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 80c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="1415" y="400" class="label" text-anchor="middle">DB Dialects</text>
+<text x="1415" y="432" class="tiny" text-anchor="middle">H2</text>
+<text x="1415" y="450" class="tiny" text-anchor="middle">Postgres</text>
+<text x="1415" y="468" class="tiny" text-anchor="middle">MySQL</text>
+<text x="1415" y="486" class="tiny" text-anchor="middle">MariaDB</text>
+<path data-connector="ranking-to-over" d="M342,219 L548,219" class="arrow edge"/>
+<path data-connector="navigation-to-over" d="M342,335 L450,335 Q460,335 460,325 L460,242 Q460,232 470,232 L548,232" class="arrow edge"/>
+<path data-connector="distribution-to-over" d="M342,451 L468,451 Q478,451 478,441 L478,254 Q478,244 488,244 L548,244" class="arrow edge"/>
+<path data-connector="aggregate-window-to-over" d="M342,567 L486,567 Q496,567 496,557 L496,260 Q496,250 506,250 L548,250" class="arrow edge"/>
+<path data-connector="over-to-partition-by" d="M672,260 L672,332" class="arrow edge"/>
+<path data-connector="partition-by-to-order-by" d="M672,402 L672,474" class="arrow edge"/>
+<path data-connector="order-by-to-frame-options" d="M672,544 L672,616" class="runtimeUse edge"/>
+<path data-connector="partition-by-to-sales" d="M796,367 L910,367 Q920,367 920,357 L920,311 Q920,301 930,301 L1010,301" class="arrow edge"/>
+<path data-connector="order-by-to-select-window" d="M796,509 L1010,509" class="arrow edge"/>
+<path data-connector="sales-to-db" d="M1236,301 L1300,301 Q1310,301 1310,311 L1310,358 Q1310,368 1320,368 L1360,368" class="dbUse edge"/>
+<path data-connector="select-window-to-db" d="M1236,521 L1300,521 Q1310,521 1310,511 L1310,466 Q1310,456 1320,456 L1360,456" class="dbUse edge"/>
+<rect x="236" y="756" width="1068" height="32" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+<path d="M270,772 L332,772" class="arrow"/><text x="348" y="777" class="tiny">function call composes OVER</text>
+<path d="M606,772 L668,772" class="runtimeUse"/><text x="682" y="777" class="tiny">frame support is dialect-gated</text>
+<path d="M958,772 L1020,772" class="dbUse"/><text x="1034" y="777" class="tiny">query result verified per DB</text>
+<rect x="132" y="812" width="1276" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="770" y="843" class="detail" text-anchor="middle">Ex05 composes window functions with PARTITION BY, ORDER BY, optional frames, and dialect-specific result assertions.</text>
 </svg>

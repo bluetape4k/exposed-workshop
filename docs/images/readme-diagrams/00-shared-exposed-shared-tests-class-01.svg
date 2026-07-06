@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120">
 <defs>
   <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#94a3b8" flood-opacity=".16"/></filter>
-  <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M2,2 L12,7 L2,12 Z" fill="#2563eb"/></marker>
-  <marker id="softArrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M2,2 L12,7 L2,12 Z" fill="#7c3aed"/></marker>
+  <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+  <marker id="softArrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
   <style><![CDATA[
     svg{font-family:"Architects Daughter","Comic Mono",ui-sans-serif,system-ui,sans-serif}.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#8aa6cf;stroke-width:3;filter:url(#shadow)}.title{font-family:"Architects Daughter";font-size:46px;fill:#263a57}.subtitle,.body,.small,.mono,.footer{font-family:"Comic Mono";fill:#526276}.subtitle{font-size:17px}.body{font-size:15px}.small{font-size:13px}.mono{font-size:12.5px}.sectionTitle,.boxTitle{font-family:"Architects Daughter";fill:#263a57}.sectionTitle{font-size:29px}.boxTitle{font-size:24px}.zone{stroke-width:2.5}.classBox{fill:#fff;stroke-width:2.2;filter:url(#shadow)}.slot{fill:#f8fafc;stroke:#d4e0ec;stroke-width:1.2}.arrow{fill:none;stroke:#2563eb;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}.soft{fill:none;stroke:#7c3aed;stroke-width:2.6;stroke-linecap:round;stroke-dasharray:7 7;marker-end:url(#softArrow)}.note{fill:#f8fafc;stroke:#d4e0ec;stroke-width:2}
   ]]></style>
@@ -14,7 +14,7 @@
 <rect class="zone" x="95" y="205" width="430" height="720" rx="28" fill="#eff6ff" stroke="#60a5fa"/>
 <text class="sectionTitle" x="130" y="255">dialect and test base</text>
 <g transform="translate(130 290)">
-  <rect class="classBox" x="0" y="0" width="360" height="230" rx="18" stroke="#0284c7"/>
+  <rect class="classBox card" x="0" y="0" width="360" height="230" rx="18" stroke="#0284c7"/>
   <text class="boxTitle" x="180" y="38" text-anchor="middle">TestDB enum</text>
   <rect class="slot" x="24" y="58" width="312" height="36" rx="10"/><text class="mono" x="180" y="81" text-anchor="middle">H2, PostgreSQL, MySQL V8</text>
   <rect class="slot" x="24" y="104" width="312" height="36" rx="10"/><text class="mono" x="180" y="127" text-anchor="middle">MariaDB, Oracle, SQL Server, etc.</text>
@@ -22,7 +22,7 @@
   <text class="small" x="180" y="207" text-anchor="middle">reads useDB / useFastDB Gradle properties</text>
 </g>
 <g transform="translate(130 575)">
-  <rect class="classBox" x="0" y="0" width="360" height="250" rx="18" stroke="#0284c7"/>
+  <rect class="classBox card" x="0" y="0" width="360" height="250" rx="18" stroke="#0284c7"/>
   <text class="boxTitle" x="180" y="38" text-anchor="middle">AbstractExposedTest</text>
   <rect class="slot" x="24" y="58" width="312" height="34" rx="10"/><text class="mono" x="180" y="80" text-anchor="middle">timezone = UTC</text>
   <rect class="slot" x="24" y="100" width="312" height="34" rx="10"/><text class="mono" x="180" y="122" text-anchor="middle">faker + enableDialects()</text>
@@ -33,20 +33,20 @@
 <rect class="zone" x="585" y="205" width="430" height="720" rx="28" fill="#ecfdf5" stroke="#34d399"/>
 <text class="sectionTitle" x="620" y="255">transaction fixtures</text>
 <g transform="translate(620 290)">
-  <rect class="classBox" x="0" y="0" width="360" height="196" rx="18" stroke="#059669"/>
+  <rect class="classBox card" x="0" y="0" width="360" height="196" rx="18" stroke="#059669"/>
   <text class="boxTitle" x="180" y="38" text-anchor="middle">withDb</text>
   <rect class="slot" x="24" y="58" width="312" height="34" rx="10"/><text class="mono" x="180" y="80" text-anchor="middle">per-dialect semaphore</text>
   <rect class="slot" x="24" y="100" width="312" height="34" rx="10"/><text class="mono" x="180" y="122" text-anchor="middle">Database.connect() + shutdown hook</text>
   <rect class="slot" x="24" y="142" width="312" height="34" rx="10"/><text class="mono" x="180" y="164" text-anchor="middle">currentTestDB in transaction scope</text>
 </g>
 <g transform="translate(620 522)">
-  <rect class="classBox" x="0" y="0" width="360" height="154" rx="18" stroke="#059669"/>
+  <rect class="classBox card" x="0" y="0" width="360" height="154" rx="18" stroke="#059669"/>
   <text class="boxTitle" x="180" y="38" text-anchor="middle">withDbSuspending</text>
   <rect class="slot" x="24" y="58" width="312" height="34" rx="10"/><text class="mono" x="180" y="80" text-anchor="middle">newSuspendedTransaction</text>
   <rect class="slot" x="24" y="100" width="312" height="34" rx="10"/><text class="mono" x="180" y="122" text-anchor="middle">Dispatchers.IO</text>
 </g>
 <g transform="translate(620 710)">
-  <rect class="classBox" x="0" y="0" width="360" height="150" rx="18" stroke="#059669"/>
+  <rect class="classBox card" x="0" y="0" width="360" height="150" rx="18" stroke="#059669"/>
   <text class="boxTitle" x="180" y="38" text-anchor="middle">withTables / withSchemas</text>
   <rect class="slot" x="24" y="58" width="312" height="34" rx="10"/><text class="mono" x="180" y="80" text-anchor="middle">drop/create, run block, cleanup</text>
   <rect class="slot" x="24" y="100" width="312" height="34" rx="10"/><text class="mono" x="180" y="122" text-anchor="middle">schema guard by dialect capability</text>
@@ -55,7 +55,7 @@
 <rect class="zone" x="1075" y="205" width="430" height="720" rx="28" fill="#fff7ed" stroke="#fb923c"/>
 <text class="sectionTitle" x="1110" y="255">sample model and repository</text>
 <g transform="translate(1110 290)">
-  <rect class="classBox" x="0" y="0" width="360" height="246" rx="18" stroke="#f97316"/>
+  <rect class="classBox card" x="0" y="0" width="360" height="246" rx="18" stroke="#f97316"/>
   <text class="boxTitle" x="180" y="38" text-anchor="middle">MovieSchema</text>
   <rect class="slot" x="24" y="58" width="312" height="34" rx="10"/><text class="mono" x="180" y="80" text-anchor="middle">MovieTable, ActorTable</text>
   <rect class="slot" x="24" y="100" width="312" height="34" rx="10"/><text class="mono" x="180" y="122" text-anchor="middle">ActorInMovieTable join</text>
@@ -63,17 +63,17 @@
   <rect class="slot" x="24" y="184" width="312" height="34" rx="10"/><text class="mono" x="180" y="206" text-anchor="middle">withMovieAndActors fixture</text>
 </g>
 <g transform="translate(1110 590)">
-  <rect class="classBox" x="0" y="0" width="360" height="204" rx="18" stroke="#f97316"/>
+  <rect class="classBox card" x="0" y="0" width="360" height="204" rx="18" stroke="#f97316"/>
   <text class="boxTitle" x="180" y="38" text-anchor="middle">ActorRepository</text>
   <rect class="slot" x="24" y="58" width="312" height="34" rx="10"/><text class="mono" x="180" y="80" text-anchor="middle">JdbcRepository&lt;Long, ActorRecord&gt;</text>
   <rect class="slot" x="24" y="100" width="312" height="34" rx="10"/><text class="mono" x="180" y="122" text-anchor="middle">findById / findAll</text>
   <rect class="slot" x="24" y="142" width="312" height="34" rx="10"/><text class="mono" x="180" y="164" text-anchor="middle">save + birthday/name queries</text>
 </g>
 
-<path class="arrow" d="M490 405 C540 405, 540 385, 620 385"/>
-<path class="arrow" d="M490 710 C540 710, 540 790, 620 790"/>
-<path class="soft" d="M980 384 C1035 384, 1035 384, 1110 384"/>
-<path class="soft" d="M980 790 C1035 790, 1035 690, 1110 690"/>
+<path class="arrow" d="M490 405 L548 405 Q560 405 560 393 L560 397 Q560 385 572 385 L620 385"/>
+<path class="arrow" d="M490 710 L548 710 Q560 710 560 722 L560 778 Q560 790 572 790 L620 790"/>
+<path class="soft" d="M980 384 L1110 384"/>
+<path class="soft" d="M980 790 L1038 790 Q1050 790 1050 778 L1050 702 Q1050 690 1062 690 L1110 690"/>
 <path class="soft" d="M1290 536 V590"/>
 <rect class="note" x="185" y="960" width="1230" height="58" rx="26"/>
 <text class="footer" x="800" y="995" text-anchor="middle">The API surface stays small: chapter tests select dialects, run withDb helpers, then reuse sample tables and repositories for assertions.</text>

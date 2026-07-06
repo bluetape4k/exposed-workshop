@@ -1,87 +1,126 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 740" width="1240" height="740" role="img" aria-label="09 Spring: Spring Cache (06)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Spring Cache hit miss sequence">
   <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
-      <path d="M1,1 L8,4.5 L1,8 Z" fill="#64748b"/>
-    </marker>
-    <marker id="inherit" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto">
-      <path d="M0.5,1 L9.5,5 L0.5,9 Z" fill="#fff" stroke="#64748b" stroke-width="1.5"/>
-    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+    <marker id="arrowBlue" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+    <marker id="arrowGreen" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6f8f58" stroke="#6f8f58" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+    <marker id="arrowOrange" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+    <marker id="arrowPurple" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7a8445" stroke="#7a8445" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+    <marker id="arrowGray" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6f8792" stroke="#6f8792" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
     <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
-.altRegion{fill:#f8fafc;fill-opacity:.055;stroke:#94a3b8;stroke-opacity:.28;stroke-width:1.2;stroke-dasharray:8 7}
-</style>
+      .canvas{fill:none}.frame{fill:#fbfcf8;stroke:#40545d;stroke-width:3}
+      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
+      .subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+      .subtitle{font-size:13px}.detail{font-size:12px}.role{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10.5px;fill:#60727d}
+      .participant{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
+      .card{stroke-width:1.7;filter:url(#shadow)}
+      .header{fill:#ffffff;stroke:#b6d3ec;stroke-width:1.7;filter:url(#shadow)}
+      .lifeline{stroke:#9cafb7;stroke-width:1.4;stroke-dasharray:5 6}
+      .activation{fill:#f3ecdf;stroke:#8f784e;stroke-width:1.5}
+      .call{fill:none;stroke:#4f86c6;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
+      .cache{fill:none;stroke:#6f8f58;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+      .db{fill:none;stroke:#a2743d;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+      .spring{fill:none;stroke:#7a8445;stroke-width:2.3;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+      .returnLine{fill:none;stroke:#6f8792;stroke-width:2.2;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGray)}
+      .pill{stroke-width:1.6;filter:url(#shadow)}
+      .badge{fill:#fff;stroke-width:1.4}
+    </style>
   </defs>
-  <rect width="1240" height="740" class="canvas"/>
-  <rect x="20" y="20" width="1200" height="700" rx="16" class="frame"/>
-<rect x="90" y="250" width="1020" height="370" rx="14" class="altRegion"/>
-<text x="48" y="58" class="title">09 Spring: Spring Cache (06)</text>
-  <text x="48" y="80" class="subtitle">Source-derived sequence · request path through implementation roles</text>
-<rect x="12" y="118" width="156" height="54" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="90" y="151" class="smallLabel" text-anchor="middle">Client</text>
+  <rect width="1500" height="900" class="canvas"/>
+  <rect x="20" y="20" width="1460" height="860" rx="16" class="frame"/>
+  <text x="48" y="58" class="title">Spring Cache Hit/Miss Sequence</text>
+  <text x="48" y="80" class="subtitle">@Cacheable avoids DB transactions on cache hit; update explicitly evicts the changed country key</text>
 
-<path d="M90,182 L90,676" class="softArrow"/>
-<rect x="224" y="118" width="156" height="54" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="302" y="151" class="smallLabel" text-anchor="middle">README User</text>
+  <desc>Caller</desc><rect x="34" y="130" width="168" height="62" rx="10" class="header card"/>
+  <text x="118" y="158" class="participant" text-anchor="middle">Caller</text>
+  <text x="118" y="178" class="role" text-anchor="middle">test or service</text>
+  <line x1="118" y1="192" x2="118" y2="786" class="lifeline"/>
 
-<path d="M302,182 L302,676" class="softArrow"/>
-<rect x="436" y="118" width="156" height="54" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="514" y="141" class="smallLabel" text-anchor="middle">09 Spring:</text>
-<text x="514" y="159" class="smallLabel" text-anchor="middle">Spring Cache...</text>
+  <desc>SpringCacheAOP</desc><rect x="248" y="130" width="172" height="62" rx="10" class="header card"/>
+  <text x="334" y="158" class="participant" text-anchor="middle">Cache AOP</text>
+  <text x="334" y="178" class="role" text-anchor="middle">@Cacheable</text>
+  <line x1="334" y1="192" x2="334" y2="786" class="lifeline"/>
 
-<path d="M514,182 L514,676" class="softArrow"/>
-<rect x="648" y="118" width="156" height="54" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="726" y="141" class="smallLabel" text-anchor="middle">Service</text>
-<text x="726" y="159" class="smallLabel" text-anchor="middle">Boundary</text>
+  <desc>RedisCacheManager</desc><rect x="466" y="130" width="184" height="62" rx="10" class="header card"/>
+  <text x="558" y="158" class="participant" text-anchor="middle">RedisCacheMgr</text>
+  <text x="558" y="178" class="role" text-anchor="middle">TTL + serializer</text>
+  <line x1="558" y1="192" x2="558" y2="786" class="lifeline"/>
 
-<path d="M726,182 L726,676" class="softArrow"/>
-<rect x="860" y="118" width="156" height="54" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="938" y="141" class="smallLabel" text-anchor="middle">Country</text>
-<text x="938" y="159" class="smallLabel" text-anchor="middle">Repository</text>
+  <desc>Redis</desc><rect x="704" y="130" width="136" height="62" rx="10" class="header card"/>
+  <text x="772" y="158" class="participant" text-anchor="middle">Redis</text>
+  <text x="772" y="178" class="role" text-anchor="middle">country key</text>
+  <line x1="772" y1="192" x2="772" y2="786" class="lifeline"/>
 
-<path d="M938,182 L938,676" class="softArrow"/>
-<rect x="1072" y="118" width="156" height="54" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1150" y="151" class="smallLabel" text-anchor="middle">Country Table</text>
+  <desc>CountryRepository</desc><rect x="894" y="130" width="190" height="62" rx="10" class="header card"/>
+  <text x="989" y="158" class="participant" text-anchor="middle">CountryRepo</text>
+  <text x="989" y="178" class="role" text-anchor="middle">transaction {}</text>
+  <line x1="989" y1="192" x2="989" y2="786" class="lifeline"/>
 
-<path d="M1150,182 L1150,676" class="softArrow"/>
-<path d="M108,220 L284,220" class="arrow"/>
-<rect x="54" y="190" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="196" y="207" class="tiny" text-anchor="middle">handle request()</text>
-<path d="M320,274 L496,274" class="arrow"/>
-<rect x="266" y="244" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="408" y="261" class="tiny" text-anchor="middle">validate input and resolve context</text>
-<path d="M532,328 L708,328" class="arrow"/>
-<rect x="478" y="298" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="620" y="315" class="tiny" text-anchor="middle">call 09 Spring: Spring Cache (06)</text>
-<path d="M744,382 L920,382" class="arrow"/>
-<rect x="690" y="352" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="832" y="369" class="tiny" text-anchor="middle">execute use case boundary</text>
-<path d="M956,436 L1132,436" class="arrow"/>
-<rect x="902" y="406" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="1044" y="423" class="tiny" text-anchor="middle">delegate to CountryRepository</text>
-<path d="M956,490 L1132,490" class="arrow"/>
-<rect x="902" y="460" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="1044" y="477" class="tiny" text-anchor="middle">run Exposed transaction</text>
-<path d="M956,544 L1132,544" class="arrow"/>
-<rect x="902" y="514" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="1044" y="531" class="tiny" text-anchor="middle">map rows to response model</text>
-<path d="M956,598 L1132,598" class="arrow"/>
-<rect x="902" y="568" width="284" height="24" rx="8" fill="#fff" stroke="#d7e2ec" class="messageBand"/>
-<text x="1044" y="585" class="tiny" text-anchor="middle">return HTTP response</text>
+  <desc>ExposedTransaction</desc><rect x="1132" y="130" width="178" height="62" rx="10" class="header card"/>
+  <text x="1221" y="158" class="participant" text-anchor="middle">Exposed Tx</text>
+  <text x="1221" y="178" class="role" text-anchor="middle">select/update</text>
+  <line x1="1221" y1="192" x2="1221" y2="786" class="lifeline"/>
+
+  <desc>Database</desc><rect x="1346" y="130" width="124" height="62" rx="10" class="header card"/>
+  <text x="1408" y="158" class="participant" text-anchor="middle">H2</text>
+  <text x="1408" y="178" class="role" text-anchor="middle">countries</text>
+  <line x1="1408" y1="192" x2="1408" y2="786" class="lifeline"/>
+
+  <rect x="111" y="280" width="14" height="68" rx="6" class="activation"/>
+  <rect x="327" y="306" width="14" height="444" rx="6" class="activation"/>
+  <rect x="551" y="350" width="14" height="356" rx="6" class="activation"/>
+  <rect x="765" y="374" width="14" height="350" rx="6" class="activation"/>
+  <rect x="982" y="448" width="14" height="236" rx="6" class="activation"/>
+  <rect x="1214" y="520" width="14" height="164" rx="6" class="activation"/>
+  <rect x="1401" y="552" width="14" height="80" rx="6" class="activation"/>
+
+  <rect x="74" y="222" width="316" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+  <circle cx="98" cy="245" r="14" class="badge" stroke="#4f86c6"/>
+  <text x="98" y="250" class="detail" text-anchor="middle">1</text>
+  <text x="123" y="251" class="detail">findByCode("KR") call</text>
+  <path data-connector="caller-invokes-cacheable-method" d="M118,286 H334" class="call"/>
+
+  <rect x="292" y="318" width="336" height="46" rx="18" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
+  <circle cx="316" cy="341" r="14" class="badge" stroke="#6f8f58"/>
+  <text x="316" y="346" class="detail" text-anchor="middle">2</text>
+  <text x="341" y="347" class="detail">read key country:KR</text>
+  <path data-connector="cache-aop-reads-manager" d="M334,382 H558" class="cache"/>
+  <path data-connector="cache-manager-reads-redis" d="M558,410 H772" class="cache"/>
+
+  <rect x="710" y="430" width="348" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+  <circle cx="734" cy="453" r="14" class="badge" stroke="#4f86c6"/>
+  <text x="734" y="458" class="detail" text-anchor="middle">3</text>
+  <text x="759" y="459" class="detail">cache miss invokes repository body</text>
+  <path data-connector="cache-miss-invokes-repository" d="M334,494 H989" class="call"/>
+
+  <rect x="930" y="504" width="394" height="46" rx="18" fill="#ffffff" stroke="#a2743d" class="pill card"/>
+  <circle cx="954" cy="527" r="14" class="badge" stroke="#a2743d"/>
+  <text x="954" y="532" class="detail" text-anchor="middle">4</text>
+  <text x="979" y="533" class="detail">transaction { CountryTable.selectAll() }</text>
+  <path data-connector="repository-opens-exposed-transaction" d="M989,568 H1221" class="db"/>
+  <path data-connector="transaction-selects-country-table" d="M1221,608 H1408" class="db"/>
+
+  <rect x="478" y="638" width="430" height="46" rx="18" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
+  <circle cx="502" cy="661" r="14" class="badge" stroke="#6f8f58"/>
+  <text x="502" y="666" class="detail" text-anchor="middle">5</text>
+  <text x="527" y="667" class="detail">store CountryRecord, serializer, TTL 10 min</text>
+  <path data-connector="cache-manager-stores-miss-result" d="M989,706 H558" class="cache"/>
+  <path data-connector="cache-manager-writes-redis" d="M558,724 H772" class="cache"/>
+
+  <rect x="78" y="716" width="364" height="46" rx="18" fill="#f8fafc" stroke="#6f8792" class="pill card"/>
+  <circle cx="102" cy="739" r="14" class="badge" stroke="#6f8792"/>
+  <text x="102" y="744" class="detail" text-anchor="middle">6</text>
+  <text x="127" y="745" class="detail">second lookup returns from Redis only</text>
+  <path data-connector="cache-hit-returns-without-transaction" d="M772,768 H118" class="returnLine"/>
+
+  <rect x="846" y="722" width="392" height="46" rx="18" fill="#ffffff" stroke="#7a8445" class="pill card"/>
+  <circle cx="870" cy="745" r="14" class="badge" stroke="#7a8445"/>
+  <text x="870" y="750" class="detail" text-anchor="middle">7</text>
+  <text x="895" y="751" class="detail">update(countryRecord) changes DB row</text>
+  <path data-connector="repository-updates-country" d="M989,790 H1221" class="spring"/>
+
+  <rect x="1064" y="804" width="358" height="46" rx="18" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
+  <circle cx="1088" cy="827" r="14" class="badge" stroke="#6f8f58"/>
+  <text x="1088" y="832" class="detail" text-anchor="middle">8</text>
+  <text x="1113" y="833" class="detail">evictIfPresent("country:KR")</text>
+  <path data-connector="repository-evicts-cache-key" d="M989,858 H772" class="cache"/>
 </svg>

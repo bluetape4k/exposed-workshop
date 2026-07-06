@@ -1,11 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Exposed Crypt Class and Table Model">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,11 +11,8 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.cryptoLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.mapLine{fill:none;stroke:#6e8f4f;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.runtimeUse{fill:none;stroke:#7d61b3;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
@@ -86,15 +80,18 @@
 <path d="M550,328 L550,386" class="inheritStem"/>
 <path d="M975,288 L975,328" class="inheritStem"/>
 <polygon points="975,272 966,288 984,288" fill="#fff" stroke="#475569" stroke-width="1.8"/>
-<path d="M975,328 L975,328" class="inheritStem"/>
 <path d="M975,328 L975,386" class="inheritStem"/>
 <path d="M1263,288 L1263,328" class="inheritStem"/>
 <polygon points="1263,272 1254,288 1272,288" fill="#fff" stroke="#475569" stroke-width="1.8"/>
-<path d="M1263,328 L1263,328" class="inheritStem"/>
 <path d="M1263,328 L1263,386" class="inheritStem"/>
-<path d="M1090,451 L1148,451" class="mapLine"/>
-<path d="M690,440 L760,440 L760,451 L860,451" class="runtimeUse"/>
-<rect x="1020" y="534" width="122" height="24" rx="8" fill="#fff" stroke="#cbd5e1"/><text x="1081" y="550" class="tiny" text-anchor="middle">delegated columns</text>
+<path data-connector="etest-to-testtable-delegates" d="M1148,451 L1090,451" class="mapLine"/>
+<path data-connector="ex02-to-testtable-runtime" d="M690,440 L748,440 Q760,440 760,452 L860,452" class="runtimeUse"/>
+<rect x="1018" y="418" width="126" height="24" rx="8" fill="#fff" stroke="#cbd5e1"/><text x="1081" y="434" class="tiny" text-anchor="middle">delegated columns</text>
+<rect x="430" y="752" width="640" height="34" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.2"/>
+<path d="M456,769 L506,769" class="mapLine"/>
+<text x="522" y="773" class="tiny">DAO property delegates to table columns</text>
+<path d="M764,769 L814,769" class="runtimeUse"/>
+<text x="830" y="773" class="tiny">test runtime creates and reads encrypted rows</text>
 <rect x="136" y="796" width="1228" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
 <text x="750" y="827" class="detail" text-anchor="middle">UML rule: superclasses stay above concrete examples; entity-to-table mapping is a dependency line, not inheritance.</text>
 </svg>

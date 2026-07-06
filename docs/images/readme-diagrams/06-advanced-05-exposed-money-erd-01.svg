@@ -1,11 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Exposed Money Composite Column ERD">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#2563eb"/></marker>
-<marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#16a34a"/></marker>
-<marker id="arrowPink" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#db2777"/></marker>
-<marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#ea580c"/></marker>
-<marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8 Z" fill="#7c3aed"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -14,11 +11,8 @@
 .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
 .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.codecLine{fill:none;stroke:#db2777;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPink)}
-.dbUse{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.runtimeUse{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
+.mapLine{fill:none;stroke:#6e8f4f;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
+.runtimeUse{fill:none;stroke:#7d61b3;stroke-width:1.9;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
@@ -30,14 +24,14 @@
 <rect x="116" y="190" width="300" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
 <text x="266" y="215" class="label" text-anchor="middle">MonetaryAmount</text>
 <text x="266" y="248" class="detail" text-anchor="middle">javax.money</text>
-<rect x="116" y="328" width="300" height="72" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="266" y="353" class="label" text-anchor="middle">BigDecimal amount</text>
-<text x="266" y="386" class="detail" text-anchor="middle">DECIMAL scale</text>
-<rect x="116" y="466" width="300" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="266" y="491" class="label" text-anchor="middle">CurrencyUnit</text>
-<text x="266" y="524" class="detail" text-anchor="middle">VARCHAR(3)</text>
-<path d="M266,262 L266,328" class="mapLine"/>
-<path d="M266,400 L266,466" class="mapLine"/>
+<rect x="86" y="360" width="170" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="171" y="385" class="label" text-anchor="middle">CurrencyUnit</text>
+<text x="171" y="418" class="detail" text-anchor="middle">currency VARCHAR(3)</text>
+<rect x="276" y="360" width="170" height="72" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="361" y="385" class="label" text-anchor="middle">BigDecimal</text>
+<text x="361" y="418" class="detail" text-anchor="middle">amount DECIMAL</text>
+<path data-connector="money-to-currency-component" d="M266,262 L266,306 Q266,318 254,318 L183,318 Q171,318 171,330 L171,360" class="mapLine"/>
+<path data-connector="money-to-amount-component" d="M266,262 L266,306 Q266,318 278,318 L349,318 Q361,318 361,330 L361,360" class="mapLine"/>
 <rect x="548" y="130" width="820" height="600" rx="12" class="panel"/><text x="958" y="122" class="panelTitle" text-anchor="middle">TABLES</text>
 <rect x="600" y="184" width="300" height="180" rx="10" fill="#fff" stroke="#7c3aed" class="card"/>
 <path d="M600,226 L600,194 Q600,184 610,184 L890,184 Q900,184 900,194 L900,226 Z" fill="#ede9fe"/>
@@ -61,10 +55,14 @@
 <text x="808" y="566" class="tiny">currency VARCHAR(3)</text>
 <text x="808" y="584" class="tiny">nullable_amount DECIMAL(8,5)</text>
 <text x="808" y="602" class="tiny">nullable_currency VARCHAR(3)</text>
-<path d="M416,364 L512,364 L512,274 L600,274" class="mapLine"/>
-<path d="M416,502 L520,502 L520,306 L600,306" class="mapLine"/>
-<path d="M416,364 L516,364 L516,420 L970,420 L970,282 L1010,282" class="runtimeUse"/>
-<path d="M416,502 L522,502 L522,572 L792,572" class="runtimeUse"/>
-<rect x="126" y="794" width="1188" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="720" y="825" class="detail" text-anchor="middle">ERD shows physical columns. compositeMoney is not a separate table; it expands into amount and currency columns.</text>
+<path data-connector="amount-component-to-account-table" d="M446,384 L530,384 Q542,384 542,372 L542,282 Q542,270 554,270 L600,270" class="mapLine"/>
+<path data-connector="currency-component-to-account-table" d="M171,432 L171,458 Q171,470 183,470 L558,470 Q570,470 570,458 L570,300 Q570,288 582,288 L600,288" class="mapLine"/>
+<path data-connector="money-to-db-default-table" d="M416,215 L520,215 Q532,215 532,203 L532,168 Q532,156 544,156 L976,156 Q988,156 988,168 L988,270 Q988,282 1000,282 L1010,282" class="runtimeUse"/>
+<rect x="380" y="752" width="740" height="42" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+<path d="M424,773 L492,773" class="mapLine"/>
+<text x="514" y="777" class="detail">primary table stores amount and currency columns</text>
+<path d="M824,773 L892,773" class="runtimeUse"/>
+<text x="914" y="777" class="detail">same expansion in DB default table</text>
+<rect x="126" y="812" width="1188" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="720" y="843" class="detail" text-anchor="middle">ERD shows physical columns. compositeMoney is not a separate table; it expands into amount and currency columns.</text>
 </svg>
