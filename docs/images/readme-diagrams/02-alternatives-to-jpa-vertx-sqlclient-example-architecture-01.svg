@@ -97,7 +97,7 @@
 <path d="M316,635 L436,635" class="runtimeUse edge"/>
 <path d="M564,232 L564,282" class="runtimeUse edge"/>
 <path d="M650,282 L650,272 Q650,264 658,264 L1083,264 Q1091,264 1091,272 L1091,300" class="dbUse edge"/>
-<path d="M692,336 L742,336 Q750,336 750,344 L750,492 Q750,500 758,500 L1076,500 Q1084,500 1084,508 L1084,512" class="dbUse edge"/>
+<path d="M692,336 L742,336 Q750,336 750,344 L750,476 Q750,484 758,484 L1076,484 Q1084,484 1084,492 L1084,512" class="dbUse edge"/>
 <path d="M924,336 L1032,336" class="queryUse edge"/>
 <path d="M924,548 L1032,548" class="queryUse edge"/>
 <path d="M1150,336 L1254,336" class="dbUse edge"/>
