@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 940" width="1560" height="940" role="img" aria-label="Custom ID Generation Flow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 940" width="1700" height="940" role="img" aria-label="Custom ID Generation Flow">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
 <marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
@@ -20,8 +20,8 @@
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
-<rect width="1560" height="940" class="canvas"/>
-<rect x="20" y="20" width="1520" height="900" rx="16" class="frame"/>
+<rect width="1700" height="940" class="canvas"/>
+<rect x="20" y="20" width="1660" height="900" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Custom ID Generation Flow</text>
 <text x="48" y="80" class="subtitle">Custom entity tests exercise Timebased UUID, Base62, Snowflake, KSUID, and KSUID millis IDs through DSL and DAO paths</text>
 <rect x="58" y="130" width="310" height="640" rx="12" class="panel"/><text x="213" y="122" class="panelTitle" text-anchor="middle">ID STRATEGY</text>
@@ -81,20 +81,20 @@
 <line x1="1226" y1="540" x2="1366" y2="540" stroke="#64748b" stroke-width="1.2"/>
 <text x="1296" y="526" class="label" text-anchor="middle">EntityClass</text>
 <text x="1242" y="582" class="tiny">matching table</text>
-<rect x="1408" y="356" width="128" height="206" rx="10" fill="#fff7ed" stroke="#b8793c" class="card"/>
-<g data-bluetape4k-icon="generic/database-server" transform="translate(1434 378) scale(.30)">
+<rect x="1488" y="356" width="128" height="206" rx="10" fill="#fff7ed" stroke="#b8793c" class="card"/>
+<g data-bluetape4k-icon="generic/database-server" transform="translate(1514 378) scale(.30)">
   <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
   <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
-  <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M30 36 L30 80 Q30 94 64 94 Q98 94 98 80 L98 36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
   <ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="5"/>
-  <path d="M30 58c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
-  <path d="M30 80c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 58 Q30 72 64 72 Q98 72 98 58" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 80 Q30 94 64 94 Q98 94 98 80" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
 </g>
-<text x="1472" y="460" class="label" text-anchor="middle">Test DBs</text>
-<text x="1472" y="490" class="tiny" text-anchor="middle">custom PK</text>
-<text x="1472" y="508" class="tiny" text-anchor="middle">name</text>
-<text x="1472" y="526" class="tiny" text-anchor="middle">age</text>
-<path data-connector="timebased-strategy-to-tests" d="M320,209 L480,209 L492,209" class="arrow"/>
+<text x="1552" y="460" class="label" text-anchor="middle">Test DBs</text>
+<text x="1552" y="490" class="tiny" text-anchor="middle">custom PK</text>
+<text x="1552" y="508" class="tiny" text-anchor="middle">name</text>
+<text x="1552" y="526" class="tiny" text-anchor="middle">age</text>
+<path data-connector="timebased-strategy-to-tests" d="M320,209 L492,209" class="arrow"/>
 <path data-connector="base62-strategy-to-tests" d="M320,307 L392,307 Q404,307 404,295 L404,235 Q404,223 416,223 L492,223" class="arrow"/>
 <path data-connector="snowflake-strategy-to-tests" d="M320,405 L392,405 Q404,405 404,393 L404,243 Q404,231 416,231 L492,231" class="arrow"/>
 <path data-connector="ksuid-strategy-to-tests" d="M320,503 L392,503 Q404,503 404,491 L404,221 Q404,211 416,211 L492,211" class="arrow"/>
@@ -104,11 +104,11 @@
 <path data-connector="batch-tests-to-record" d="M702,467 L770,467 Q782,467 782,479 L782,518 Q782,530 794,530 L862,530" class="mapLine"/>
 <path data-connector="t1-to-e1" d="M1094,255 L1148,255 Q1160,255 1160,267 L1160,276 Q1160,288 1172,288 L1226,288" class="mapLine"/>
 <path data-connector="record-to-entity-class" d="M1094,530 L1148,530 Q1160,530 1160,542 L1160,546 Q1160,558 1172,558 L1226,558" class="runtimeUse"/>
-<path data-connector="e1-to-database" d="M1366,288 L1384,288 Q1396,288 1396,300 L1396,408 Q1396,420 1408,420" class="dbUse"/>
-<path data-connector="entity-class-to-database" d="M1366,558 L1384,558 Q1396,558 1396,546 L1396,526 Q1396,514 1408,514" class="dbUse"/>
-<rect x="148" y="826" width="1264" height="64" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.3"/>
-<path d="M198,850 L258,850" class="arrow"/><text x="278" y="854" class="tiny">ID strategy chooses shared tests</text>
-<path d="M536,850 L596,850" class="mapLine"/><text x="616" y="854" class="tiny">tests populate T1/E1 records</text>
-<path d="M862,850 L922,850" class="runtimeUse"/><text x="942" y="854" class="tiny">record metadata matches entity class</text>
-<path d="M536,874 L596,874" class="dbUse"/><text x="616" y="878" class="tiny">custom primary keys persist to the test database</text>
+<path data-connector="e1-to-database" d="M1366,288 L1452,288 Q1464,288 1464,300 L1464,408 Q1464,420 1476,420 L1488,420" class="dbUse"/>
+<path data-connector="entity-class-to-database" d="M1366,558 L1452,558 Q1464,558 1464,546 L1464,526 Q1464,514 1476,514 L1488,514" class="dbUse"/>
+<rect x="218" y="826" width="1264" height="64" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.3"/>
+<path d="M268,850 L328,850" class="arrow"/><text x="348" y="854" class="tiny">ID strategy chooses shared tests</text>
+<path d="M606,850 L666,850" class="mapLine"/><text x="686" y="854" class="tiny">tests populate T1/E1 records</text>
+<path d="M932,850 L992,850" class="runtimeUse"/><text x="1012" y="854" class="tiny">record metadata matches entity class</text>
+<path d="M606,874 L666,874" class="dbUse"/><text x="686" y="878" class="tiny">custom primary keys persist to the test database</text>
 </svg>
