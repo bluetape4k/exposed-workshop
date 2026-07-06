@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1000" width="1500" height="1000" role="img" aria-label="Basic JPA relationship mapping conversion">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
-<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
-<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
@@ -102,8 +102,8 @@
 <text x="750" y="846" class="label" text-anchor="middle">Regression contract</text>
 <text x="750" y="866" class="detail" text-anchor="middle">Each mapping stays inside withTables/transaction tests.</text>
 <text x="750" y="882" class="detail" text-anchor="middle">Stable fixtures compare behavior before and after conversion.</text>
-<path data-connector="source-tests-to-regression-contract" d="M1230,730 L1230,804 Q1230,820 1214,820 L1052,820" class="runtimeUse"/>
-<path data-connector="exposed-api-to-regression-contract" d="M711,730 L711,804 Q711,820 727,820" class="runtimeUse"/>
+<path data-connector="source-tests-to-regression-contract" d="M1230,730 L1230,837 Q1230,853 1214,853 L1052,853" class="runtimeUse"/>
+<path data-connector="exposed-api-to-regression-contract" d="M711,730 L711,820" class="runtimeUse"/>
 
 <rect x="172" y="914" width="1156" height="54" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.3"/>
 <path d="M212,938 L272,938" class="arrow"/><text x="292" y="942" class="tiny">blue = JPA relationship concept to explicit Exposed API</text>
