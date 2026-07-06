@@ -74,8 +74,8 @@
 <rect x="1108" y="288" width="152" height="58" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
 <text x="1184" y="312" class="label" text-anchor="middle">HikariCP</text>
 <text x="1184" y="332" class="detail" text-anchor="middle">connection pool</text>
-<path d="M1112,428 C1112,412 1256,412 1256,428 L1256,474 C1256,490 1112,490 1112,474 Z" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<path d="M1112,428 C1112,444 1256,444 1256,428" fill="none" stroke="#ea580c" stroke-width="1.5"/>
+<rect x="1112" y="414" width="144" height="76" rx="14" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<line x1="1126" y1="436" x2="1242" y2="436" stroke="#ea580c" stroke-width="1.5" stroke-linecap="round"/>
 <text x="1184" y="449" class="label" text-anchor="middle">Database</text>
 <text x="1184" y="468" class="detail" text-anchor="middle">H2 / MySQL / PostgreSQL</text>
 <path d="M270,249 L306,249 Q314,249 314,241 L314,179 Q314,171 306,171 L292,171" class="softArrow edge"/>
