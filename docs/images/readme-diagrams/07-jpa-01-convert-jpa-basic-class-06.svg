@@ -4,7 +4,7 @@
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
     </filter>
     <marker id="dependencyArrow" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="#8a6f4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="none" style="stroke-dasharray:none"/>
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#8a6f4d" stroke="#8a6f4d" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="none" style="stroke-dasharray:none"/>
     </marker>
     <marker id="inheritArrow" viewBox="0 0 18 16" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" refX="17" refY="8" orient="auto">
       <path d="M 1 1 L 17 8 L 1 15 Z" fill="#ffffff" stroke="#60758d" stroke-width="2" stroke-linejoin="round" stroke-dasharray="none" style="stroke-dasharray:none"/>
@@ -135,5 +135,5 @@
   <line x1="102" y1="758" x2="150" y2="758" class="inherit"/>
   <text x="164" y="762" class="legendText">solid hollow arrow = inherits / extends</text>
   <line x1="492" y1="758" x2="540" y2="758" class="depends"/>
-  <text x="554" y="762" class="legendText">dashed open arrow = uses</text>
+  <text x="554" y="762" class="legendText">dashed arrow = uses</text>
 </svg>
