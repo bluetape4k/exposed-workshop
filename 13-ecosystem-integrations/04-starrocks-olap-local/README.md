@@ -7,7 +7,7 @@ without starting a StarRocks cluster by default. It uses the
 `bluetape4k-exposed-starrocks` helper surface for the StarRocks JDBC boundary and
 table DDL shape, while local tests verify SQL generation and aggregation with H2.
 
-![StarRocks local-first OLAP boundary](../../docs/images/readme-diagrams/04-starrocks-olap-local-architecture-01.png)
+![StarRocks local-first OLAP boundary](../../docs/images/readme-diagrams/13-starrocks-olap-local-architecture-01.png)
 
 The diagram separates three concerns:
 

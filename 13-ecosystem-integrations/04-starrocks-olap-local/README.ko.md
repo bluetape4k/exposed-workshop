@@ -7,7 +7,7 @@
 StarRocks JDBC 경계와 table DDL 형태를 드러내고, 기본 테스트는 H2로 SQL 생성과
 aggregation을 검증합니다.
 
-![StarRocks local-first OLAP boundary](../../docs/images/readme-diagrams/04-starrocks-olap-local-architecture-01.png)
+![StarRocks local-first OLAP boundary](../../docs/images/readme-diagrams/13-starrocks-olap-local-architecture-01.png)
 
 다이어그램은 세 가지 경계를 분리합니다.
 
