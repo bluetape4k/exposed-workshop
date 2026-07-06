@@ -8,7 +8,7 @@ warehouse를 호출하는 경계가 아닙니다. 파일 기반 DuckDB database�
 저장한 뒤 집계 query를 실행해서, 결과를 materialized list 또는 coroutine `Flow`로
 넘깁니다.
 
-![DuckDB embedded analytics architecture](../../docs/images/readme-diagrams/09-duckdb-embedded-analytics-architecture-01.png)
+![DuckDB embedded analytics architecture](../../docs/images/readme-diagrams/13-duckdb-embedded-analytics-architecture-01.png)
 
 아키텍처 다이어그램은 세 가지 책임을 분리합니다.
 
@@ -35,7 +35,7 @@ DuckDB는 개발, CI, data preparation, 작은 offline job처럼 애플리케이
 
 ## 예제 흐름
 
-![DuckDB embedded analytics example flow](../../docs/images/readme-diagrams/09-duckdb-embedded-analytics-flow-01.png)
+![DuckDB embedded analytics example flow](../../docs/images/readme-diagrams/13-duckdb-embedded-analytics-flow-01.png)
 
 흐름은 고정된 `DuckDbOrderEvent` row에서 시작합니다. 이 row를 file-backed DuckDB
 table에 저장하고 `DailyCategorySales` row로 projection합니다. 같은 query는 실행하지
@@ -60,7 +60,7 @@ openDuckDbAnalyticsSession(Path.of("/tmp/orders.duckdb")).use { session ->
 
 ## Sequence
 
-![DuckDB embedded analytics sequence](../../docs/images/readme-diagrams/09-duckdb-embedded-analytics-sequence-01.png)
+![DuckDB embedded analytics sequence](../../docs/images/readme-diagrams/13-duckdb-embedded-analytics-sequence-01.png)
 
 Sequence diagram은 헷갈리기 쉬운 지점을 강조합니다. `queryFlow`는 `Flow`를 반환하지만,
 DuckDB JDBC row는 transaction 안에서 먼저 materialize됩니다. 즉 이 Flow는 coroutine에

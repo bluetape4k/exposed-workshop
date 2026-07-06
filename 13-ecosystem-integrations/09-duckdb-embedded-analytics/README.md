@@ -8,7 +8,7 @@ examples, DuckDB is not a remote warehouse boundary here. The workshop opens a
 file-backed DuckDB database, stores local event rows, runs an aggregate query,
 and exposes the result as either a materialized list or a coroutine `Flow`.
 
-![DuckDB embedded analytics architecture](../../docs/images/readme-diagrams/09-duckdb-embedded-analytics-architecture-01.png)
+![DuckDB embedded analytics architecture](../../docs/images/readme-diagrams/13-duckdb-embedded-analytics-architecture-01.png)
 
 The architecture diagram separates three responsibilities:
 
@@ -35,7 +35,7 @@ This module demonstrates:
 
 ## Example Flow
 
-![DuckDB embedded analytics example flow](../../docs/images/readme-diagrams/09-duckdb-embedded-analytics-flow-01.png)
+![DuckDB embedded analytics example flow](../../docs/images/readme-diagrams/13-duckdb-embedded-analytics-flow-01.png)
 
 The flow starts with deterministic `DuckDbOrderEvent` rows, persists them into a
 file-backed DuckDB table, and projects `DailyCategorySales` rows. The same query
@@ -60,7 +60,7 @@ openDuckDbAnalyticsSession(Path.of("/tmp/orders.duckdb")).use { session ->
 
 ## Sequence
 
-![DuckDB embedded analytics sequence](../../docs/images/readme-diagrams/09-duckdb-embedded-analytics-sequence-01.png)
+![DuckDB embedded analytics sequence](../../docs/images/readme-diagrams/13-duckdb-embedded-analytics-sequence-01.png)
 
 The sequence diagram highlights the part that usually causes confusion:
 `queryFlow` returns a `Flow`, but DuckDB JDBC rows are materialized inside the

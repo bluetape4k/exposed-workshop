@@ -6,9 +6,9 @@
 - DuckDB alias in `gradle/libs.versions.toml`
 - README locale pair, chapter index rows, Examples workflow registration
 - Diagram assets:
-  - `09-duckdb-embedded-analytics-architecture-01.svg/png`
-  - `09-duckdb-embedded-analytics-flow-01.svg/png`
-  - `09-duckdb-embedded-analytics-sequence-01.svg/png`
+  - `13-duckdb-embedded-analytics-architecture-01.svg/png`
+  - `13-duckdb-embedded-analytics-flow-01.svg/png`
+  - `13-duckdb-embedded-analytics-sequence-01.svg/png`
 
 ## Findings
 
