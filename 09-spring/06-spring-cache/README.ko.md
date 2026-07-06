@@ -2,13 +2,13 @@
 
 [English](./README.md) | 한국어
 
-이 모듈은 Exposed 기반 국가 조회 Repository에 Spring Cache를 더합니다. Redis는 `RedisCacheManager`로 연결하고, 값 직렬화에는 LZ4+Fory를 사용하며, 조회와 무효화는 `@Cacheable`, `@CacheEvict`로 선언합니다. 테스트는 캐시 hit/miss, 무효화, transaction-aware cache update 동작을 검증합니다.
+이 모듈은 Exposed 기반 국가 조회 Repository에 Spring Cache를 더합니다. Redis는 `RedisCacheManager`로 연결하고, 값 직렬화에는 LZ4+Fory를 사용하며, 조회는 `@Cacheable`, 무효화는 `CacheManager` 직접 호출로 처리합니다. 테스트는 캐시 hit/miss, 무효화, transaction-aware cache update 동작을 검증합니다.
 
 ## 학습 목표
 
 - `@EnableCaching` + `RedisCacheManager` 구성으로 Spring Cache를 Redis에 연결한다.
 - `@Cacheable(key = "'country:' + #code")` 로 캐시 키를 명시적으로 설계한다.
-- `@CacheEvict` 로 변경 시 캐시를 즉시 무효화해 stale 데이터를 방지한다.
+- `CacheManager` 로 단건 키와 전체 캐시를 명시적으로 무효화해 stale 데이터를 방지한다.
 - `transaction { }` 블록과 `@Cacheable` 을 조합할 때 캐시 히트 시 트랜잭션을 열지 않는 이점을 이해한다.
 
 ## 선수 지식
@@ -49,7 +49,7 @@ class LettuceCacheConfig {
 }
 ```
 
-### Repository 캐시 선언
+### Repository 캐시 선언과 직접 무효화
 
 ```kotlin
 @Component
@@ -73,16 +73,19 @@ class CountryRepository(private val cacheManager: CacheManager) {
 
     // DB 갱신 후 해당 캐시 엔트리 즉시 무효화
     @Transactional
-    @CacheEvict(key = "'country:' + #countryRecord.code")
-    fun update(countryRecord: CountryRecord): Int =
-        CountryTable.update({ CountryTable.code eq countryRecord.code }) {
+    fun update(countryRecord: CountryRecord): Int {
+        return CountryTable.update({ CountryTable.code eq countryRecord.code }) {
             it[name] = countryRecord.name
             it[description] = countryRecord.description
+        }.also {
+            cacheManager.getCache(COUNTRY_CACHE_NAME)?.evictIfPresent("country:${countryRecord.code}")
         }
+    }
 
     // 전체 캐시 비우기
-    @CacheEvict(cacheNames = [COUNTRY_CACHE_NAME], allEntries = true)
-    fun evictCacheAll() { /* Spring AOP가 처리 */ }
+    fun evictCacheAll() {
+        cacheManager.getCache(COUNTRY_CACHE_NAME)?.invalidate()
+    }
 }
 ```
 

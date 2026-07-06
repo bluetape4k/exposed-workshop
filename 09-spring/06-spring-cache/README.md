@@ -2,13 +2,13 @@
 
 English | [한국어](./README.ko.md)
 
-This module adds Spring Cache to a country lookup repository backed by Exposed. It uses Redis through `RedisCacheManager`, LZ4+Fory serialization, `@Cacheable`, and `@CacheEvict`; the tests check cache hit/miss behavior, invalidation, and transaction-aware cache updates.
+This module adds Spring Cache to a country lookup repository backed by Exposed. It uses Redis through `RedisCacheManager`, LZ4+Fory serialization, `@Cacheable`, and direct `CacheManager` eviction; the tests check cache hit/miss behavior, invalidation, and transaction-aware cache updates.
 
 ## Learning Goals
 
 - Connect Spring Cache to Redis with `@EnableCaching` + `RedisCacheManager` configuration.
 - Design cache keys explicitly with `@Cacheable(key = "'country:' + #code")`.
-- Prevent stale data by immediately invalidating cache on changes with `@CacheEvict`.
+- Prevent stale data by evicting individual keys and invalidating the named cache through `CacheManager`.
 - Understand the benefit of not opening a transaction on cache hits when combining `transaction { }` blocks with `@Cacheable`.
 
 ## Prerequisites
@@ -49,7 +49,7 @@ class LettuceCacheConfig {
 }
 ```
 
-### Repository Cache Declaration
+### Repository Cache Declaration and Manual Eviction
 
 ```kotlin
 @Component
@@ -73,16 +73,19 @@ class CountryRepository(private val cacheManager: CacheManager) {
 
     // Immediately invalidate cache entry after DB update
     @Transactional
-    @CacheEvict(key = "'country:' + #countryRecord.code")
-    fun update(countryRecord: CountryRecord): Int =
-        CountryTable.update({ CountryTable.code eq countryRecord.code }) {
+    fun update(countryRecord: CountryRecord): Int {
+        return CountryTable.update({ CountryTable.code eq countryRecord.code }) {
             it[name] = countryRecord.name
             it[description] = countryRecord.description
+        }.also {
+            cacheManager.getCache(COUNTRY_CACHE_NAME)?.evictIfPresent("country:${countryRecord.code}")
         }
+    }
 
     // Clear all cache entries
-    @CacheEvict(cacheNames = [COUNTRY_CACHE_NAME], allEntries = true)
-    fun evictCacheAll() { /* Handled by Spring AOP */ }
+    fun evictCacheAll() {
+        cacheManager.getCache(COUNTRY_CACHE_NAME)?.invalidate()
+    }
 }
 ```
 
