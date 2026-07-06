@@ -45,8 +45,8 @@
 <path data-connector="movie-to-actor-in-movie" d="M309,280 V308 Q309,320 297,320 H272 Q260,320 260,332 V338" class="relationship"/>
 <path data-connector="actor-to-actor-in-movie" d="M671,280 V308 Q671,320 659,320 H372 Q360,320 360,332 V338" class="relationship"/>
 <text x="322" y="302" class="smallLabel">1</text>
-<text x="272" y="330" class="smallLabel">N</text>
+<text x="244" y="326" class="smallLabel">N</text>
 <text x="684" y="302" class="smallLabel">1</text>
-<text x="372" y="330" class="smallLabel">N</text>
+<text x="344" y="326" class="smallLabel">N</text>
 <text x="490" y="110" class="panelTitle" text-anchor="middle">TABLES AND RELATIONSHIPS</text>
 </svg>
