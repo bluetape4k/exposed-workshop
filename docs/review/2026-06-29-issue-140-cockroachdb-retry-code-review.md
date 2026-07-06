@@ -35,8 +35,8 @@ P1: none.
 - `./gradlew :03-cockroachdb-retry:build --no-daemon --no-configuration-cache`: PASS.
 - `./gradlew projects --quiet --no-daemon --no-configuration-cache | grep ':03-cockroachdb-retry'`: PASS.
 - `actionlint .github/workflows/examples.yml`: PASS.
-- `xmllint --noout docs/images/readme-diagrams/03-cockroachdb-retry-sequence-01.svg`: PASS.
-- `cairosvg docs/images/readme-diagrams/03-cockroachdb-retry-sequence-01.svg -o docs/images/readme-diagrams/03-cockroachdb-retry-sequence-01.png -s 2`: PASS.
+- `xmllint --noout docs/images/readme-diagrams/13-cockroachdb-retry-sequence-01.svg`: PASS.
+- `cairosvg docs/images/readme-diagrams/13-cockroachdb-retry-sequence-01.svg -o docs/images/readme-diagrams/13-cockroachdb-retry-sequence-01.png -s 2`: PASS.
 - Diagram rendered PNG inspected visually: PASS.
 - `git diff --check`: PASS.
 
