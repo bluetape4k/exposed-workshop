@@ -150,7 +150,7 @@
 <path d="M1115,632 L1115,664" class="inheritStem"/>
 <path d="M1355,632 L1355,664" class="inheritStem"/>
 <path data-connector="compression-table-to-e1" d="M875,438 L845,438 Q833,438 833,450 L833,664" class="mapLine"/>
-<path data-connector="serialized-table-to-e1" d="M1115,438 L1115,468 Q1115,480 1103,480 L1002,480 Q990,480 990,492 L990,695 Q990,707 1002,707 L1010,707" class="mapLine"/>
+<path data-connector="serialized-table-to-e1" d="M1115,438 L1115,468 Q1115,480 1103,480 L872,480 Q860,480 860,492 L860,638 Q860,650 872,650 L983,650 Q995,650 995,662 L995,719 Q995,731 1007,731 L1010,731" class="mapLine"/>
 <path data-connector="client-generated-table-to-entity" d="M1355,438 L1385,438 Q1397,438 1397,450 L1397,664" class="mapLine"/>
 <desc>Embeddable</desc>
 <rect x="800" y="786" width="260" height="64" rx="4" fill="#fff" stroke="#d97706" class="card"/>
