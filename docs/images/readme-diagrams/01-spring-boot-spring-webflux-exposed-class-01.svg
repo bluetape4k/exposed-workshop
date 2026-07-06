@@ -80,8 +80,8 @@
 <rect x="1318" y="178" width="134" height="58" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
 <text x="1385" y="202" class="label" text-anchor="middle">HikariCP</text>
 <text x="1385" y="222" class="detail" text-anchor="middle">connection pool</text>
-<path d="M1310,356 C1310,340 1460,340 1460,356 L1460,432 C1460,448 1310,448 1310,432 Z" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<path d="M1310,356 C1310,372 1460,372 1460,356" fill="none" stroke="#ea580c" stroke-width="1.5"/>
+<rect x="1310" y="340" width="150" height="108" rx="14" fill="#ffedd5" stroke="#ea580c" class="card"/>
+<line x1="1324" y1="364" x2="1446" y2="364" stroke="#ea580c" stroke-width="1.5" stroke-linecap="round"/>
 <text x="1385" y="384" class="label" text-anchor="middle">Database</text>
 <text x="1385" y="404" class="detail" text-anchor="middle">H2 / MySQL /</text>
 <text x="1385" y="418" class="detail" text-anchor="middle">Postgres</text>
