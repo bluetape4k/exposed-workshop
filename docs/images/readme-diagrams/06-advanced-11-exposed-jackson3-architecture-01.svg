@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 940" width="1600" height="940" role="img" aria-label="Jackson 3 JSON Query Flow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1720 940" width="1720" height="940" role="img" aria-label="Jackson 3 JSON Query Flow">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
 <marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
@@ -22,8 +22,8 @@
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
-<rect width="1600" height="940" class="canvas"/>
-<rect x="20" y="20" width="1560" height="900" rx="16" class="frame"/>
+<rect width="1720" height="940" class="canvas"/>
+<rect x="20" y="20" width="1680" height="900" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Jackson 3 JSON Query Flow</text>
 <text x="48" y="80" class="subtitle">JacksonColumnTest and JacksonBColumnTest use Jackson 3 serializers over JSON/JSONB tables and array payloads</text>
 <rect x="58" y="130" width="300" height="640" rx="12" class="panel"/><text x="208" y="122" class="panelTitle" text-anchor="middle">TESTS</text>
@@ -79,19 +79,19 @@
 <desc>exists</desc><rect x="1224" y="568" width="144" height="58" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
 <text x="1296" y="593" class="label" text-anchor="middle">exists</text>
 <text x="1296" y="612" class="detail" text-anchor="middle">path exists</text>
-<rect x="1428" y="356" width="112" height="206" rx="10" fill="#fff7ed" stroke="#b8793c" class="card"/>
-<g data-bluetape4k-icon="generic/database-server" transform="translate(1458 378) scale(.25)">
+<rect x="1508" y="356" width="112" height="206" rx="10" fill="#fff7ed" stroke="#b8793c" class="card"/>
+<g data-bluetape4k-icon="generic/database-server" transform="translate(1538 378) scale(.25)">
   <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
   <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
-  <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M30 36 L30 80 Q30 94 64 94 Q98 94 98 80 L98 36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
   <ellipse cx="64" cy="36" rx="34" ry="13" fill="none" stroke="#8c6f33" stroke-width="5"/>
-  <path d="M30 58c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
-  <path d="M30 80c0 8 15 14 34 14s34-6 34-14" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 58 Q30 72 64 72 Q98 72 98 58" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 80 Q30 94 64 94 Q98 94 98 80" fill="none" stroke="#8c6f33" stroke-width="5" stroke-linecap="round"/>
 </g>
-<text x="1484" y="456" class="label" text-anchor="middle">DB</text>
-<text x="1484" y="486" class="tiny" text-anchor="middle">Postgres</text>
-<text x="1484" y="504" class="tiny" text-anchor="middle">MySQL V8</text>
-<text x="1484" y="522" class="tiny" text-anchor="middle">H2 JSON</text>
+<text x="1564" y="456" class="label" text-anchor="middle">DB</text>
+<text x="1564" y="486" class="tiny" text-anchor="middle">Postgres</text>
+<text x="1564" y="504" class="tiny" text-anchor="middle">MySQL V8</text>
+<text x="1564" y="522" class="tiny" text-anchor="middle">H2 JSON</text>
 <path data-connector="jackson3-column-test-to-data-holder" d="M320,219 L474,219" class="arrow"/>
 <path data-connector="jackson3b-column-test-to-serializer" d="M320,365 L474,365" class="arrow"/>
 <path data-connector="jackson3-schema-to-transform-default" d="M320,555 L386,555 Q398,555 398,567 L398,629 Q398,641 410,641 L474,641" class="runtimeUse"/>
@@ -102,14 +102,14 @@
 <path data-connector="jackson3b-table-to-extract" d="M1084,409 L1148,409 Q1160,409 1160,397 L1160,353 Q1160,341 1172,341 L1224,341" class="arrow"/>
 <path data-connector="jackson3b-table-to-contains" d="M1084,409 L1148,409 Q1160,409 1160,421 L1160,457 Q1160,469 1172,469 L1224,469" class="codecLine"/>
 <path data-connector="jackson3-arrays-to-exists" d="M1084,597 L1224,597" class="runtimeUse"/>
-<path data-connector="insert-update-to-db" d="M1368,213 L1392,213 Q1404,213 1404,225 L1404,402 Q1404,414 1416,414 L1428,414" class="dbUse"/>
-<path data-connector="extract-to-db" d="M1368,341 L1392,341 Q1404,341 1404,353 L1404,436 Q1404,448 1416,448 L1428,448" class="dbUse"/>
-<path data-connector="contains-to-db" d="M1368,469 L1392,469 Q1404,469 1404,481 L1404,482 L1428,482" class="dbUse"/>
-<path data-connector="exists-to-db" d="M1368,597 L1392,597 Q1404,597 1404,585 L1404,526 Q1404,514 1416,514 L1428,514" class="dbUse"/>
-<rect x="202" y="812" width="1196" height="82" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.3"/>
-<path d="M248,838 L308,838" class="arrow"/><text x="328" y="842" class="tiny">tests drive Jackson 3 serialization/query calls</text>
-<path d="M634,838 L694,838" class="mapLine"/><text x="714" y="842" class="tiny">models map into JSON table columns</text>
-<path d="M968,838 L1028,838" class="codecLine"/><text x="1048" y="842" class="tiny">contains predicates compare JSON fragments</text>
-<path d="M248,868 L308,868" class="runtimeUse"/><text x="328" y="872" class="tiny">fixtures, defaults, and array/path checks</text>
-<path d="M634,868 L694,868" class="dbUse"/><text x="714" y="872" class="tiny">query DSL executes against test databases</text>
+<path data-connector="insert-update-to-db" d="M1368,213 L1472,213 Q1484,213 1484,225 L1484,402 Q1484,414 1496,414 L1508,414" class="dbUse"/>
+<path data-connector="extract-to-db" d="M1368,341 L1472,341 Q1484,341 1484,353 L1484,436 Q1484,448 1496,448 L1508,448" class="dbUse"/>
+<path data-connector="contains-to-db" d="M1368,469 L1472,469 Q1484,469 1484,481 L1484,482 Q1484,494 1496,494 L1508,494" class="dbUse"/>
+<path data-connector="exists-to-db" d="M1368,597 L1472,597 Q1484,597 1484,585 L1484,526 Q1484,514 1496,514 L1508,514" class="dbUse"/>
+<rect x="262" y="812" width="1196" height="82" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.3"/>
+<path d="M308,838 L368,838" class="arrow"/><text x="388" y="842" class="tiny">tests drive Jackson 3 serialization/query calls</text>
+<path d="M694,838 L754,838" class="mapLine"/><text x="774" y="842" class="tiny">models map into JSON table columns</text>
+<path d="M1028,838 L1088,838" class="codecLine"/><text x="1108" y="842" class="tiny">contains predicates compare JSON fragments</text>
+<path d="M308,868 L368,868" class="runtimeUse"/><text x="388" y="872" class="tiny">fixtures, defaults, and array/path checks</text>
+<path d="M694,868 L754,868" class="dbUse"/><text x="774" y="872" class="tiny">query DSL executes against test databases</text>
 </svg>
