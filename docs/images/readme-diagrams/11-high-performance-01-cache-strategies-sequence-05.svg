@@ -136,7 +136,7 @@
   <text x="812" y="852" text-anchor="middle" class="msg">refresh cache entry</text>
 
   <path id="m11" data-connector="m11" class="call" d="M 1456 852 L 1204 852"/>
-  <rect x="1180" y="818" width="255" height="22" rx="11" class="pill" style="stroke:#b6d3ec"/>
-  <text x="1421" y="833" text-anchor="middle" class="num" style="fill:#4f86c6">11</text>
-  <text x="1308" y="832" text-anchor="middle" class="msg">findByIdFromDb verifies update</text>
+  <rect x="1180" y="818" width="270" height="22" rx="11" class="pill" style="stroke:#b6d3ec"/>
+  <text x="1202" y="833" text-anchor="middle" class="num" style="fill:#4f86c6">11</text>
+  <text x="1324" y="832" text-anchor="middle" class="msg">findByIdFromDb verifies update</text>
 </svg>

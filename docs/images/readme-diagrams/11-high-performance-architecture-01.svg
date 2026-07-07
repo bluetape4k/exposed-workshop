@@ -110,7 +110,6 @@
 
   <text x="770" y="306" text-anchor="middle" class="label">measure latency</text>
   <text x="1004" y="474" text-anchor="middle" class="label">route evidence</text>
-  <text x="590" y="518" text-anchor="middle" class="label">behavior tests</text>
   <text x="1004" y="642" text-anchor="middle" class="label">Ktor route role</text>
   <text x="1222" y="616" text-anchor="middle" class="label">stability</text>
 
