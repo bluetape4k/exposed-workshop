@@ -73,43 +73,43 @@
   <rect x="1417" y="570" width="14" height="84" rx="6" class="activation"/>
   <rect x="568" y="666" width="14" height="96" rx="6" class="activation"/>
 
-  <rect x="74" y="222" width="330" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+  <rect x="74" y="228" width="330" height="34" rx="17" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
   <circle cx="98" cy="245" r="14" class="badge" stroke="#4f86c6"/>
   <text x="98" y="250" class="detail" text-anchor="middle">1</text>
   <text x="123" y="251" class="detail">POST /movies or query /movies</text>
   <path data-connector="client-calls-controller" d="M118,286 H340" class="call"/>
 
-  <rect x="300" y="318" width="430" height="46" rx="18" fill="#ffffff" stroke="#7a8445" class="pill card"/>
+  <rect x="300" y="324" width="430" height="34" rx="17" fill="#ffffff" stroke="#7a8445" class="pill card"/>
   <circle cx="324" cy="341" r="14" class="badge" stroke="#7a8445"/>
   <text x="324" y="346" class="detail" text-anchor="middle">2</text>
   <text x="349" y="347" class="detail">open newSuspendedTransaction(readOnly?)</text>
   <path data-connector="controller-opens-suspended-transaction" d="M340,382 H816" class="spring"/>
 
-  <rect x="760" y="414" width="424" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+  <rect x="760" y="420" width="424" height="34" rx="17" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
   <circle cx="784" cy="437" r="14" class="badge" stroke="#4f86c6"/>
   <text x="784" y="442" class="detail" text-anchor="middle">3</text>
   <text x="809" y="443" class="detail">invoke repository create/search/delete</text>
   <path data-connector="transaction-invokes-repository" d="M816,478 H1055" class="call"/>
 
-  <rect x="1010" y="492" width="410" height="46" rx="18" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
+  <rect x="1010" y="498" width="410" height="34" rx="17" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
   <circle cx="1034" cy="515" r="14" class="badge" stroke="#6f8f58"/>
   <text x="1034" y="520" class="detail" text-anchor="middle">4</text>
   <text x="1059" y="521" class="detail">insertAndGetId, selectAll, join, load()</text>
   <path data-connector="repository-runs-exposed-dsl" d="M1055,556 H1272" class="state"/>
 
-  <rect x="1190" y="590" width="276" height="46" rx="18" fill="#ffffff" stroke="#a2743d" class="pill card"/>
+  <rect x="1190" y="596" width="276" height="34" rx="17" fill="#ffffff" stroke="#a2743d" class="pill card"/>
   <circle cx="1214" cy="613" r="14" class="badge" stroke="#a2743d"/>
   <text x="1214" y="618" class="detail" text-anchor="middle">5</text>
   <text x="1239" y="619" class="detail">blocking JDBC on IO dispatcher</text>
   <path data-connector="exposed-executes-jdbc" d="M1272,654 H1424" class="db"/>
 
-  <rect x="292" y="638" width="412" height="46" rx="18" fill="#ffffff" stroke="#d8aaa7" class="pill card"/>
+  <rect x="292" y="644" width="412" height="34" rx="17" fill="#ffffff" stroke="#d8aaa7" class="pill card"/>
   <circle cx="316" cy="661" r="14" class="badge" stroke="#d8aaa7"/>
   <text x="316" y="666" class="detail" text-anchor="middle">6</text>
   <text x="341" y="667" class="detail">monoSave(): @Transactional + Mono.fromCallable</text>
   <path data-connector="controller-compares-mono-save" d="M340,702 H575" class="spring"/>
 
-  <rect x="530" y="724" width="452" height="46" rx="18" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
+  <rect x="530" y="730" width="452" height="34" rx="17" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
   <circle cx="554" cy="747" r="14" class="badge" stroke="#6f8f58"/>
   <text x="554" y="752" class="detail" text-anchor="middle">7</text>
   <text x="579" y="753" class="detail">suspendedSave(): delegate, keep explicit tx boundary</text>

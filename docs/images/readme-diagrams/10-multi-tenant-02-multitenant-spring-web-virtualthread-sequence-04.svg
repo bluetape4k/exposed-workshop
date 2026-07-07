@@ -77,19 +77,19 @@
   <rect x="1219" y="672" width="14" height="76" rx="6" class="activation"/>
   <rect x="1403" y="590" width="14" height="184" rx="6" class="activation"/>
 
-  <rect x="76" y="220" width="392" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+  <rect x="76" y="226" width="392" height="34" rx="17" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
   <circle cx="100" cy="243" r="14" class="badge" stroke="#4f86c6"/>
   <text x="100" y="248" class="detail" text-anchor="middle">1</text>
   <text x="125" y="249" class="detail">GET /actors with X-TENANT-ID</text>
   <path data-connector="request-enters-tenant-filter" d="M121,282 H320" class="call"/>
 
-  <rect x="220" y="318" width="416" height="46" rx="18" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
+  <rect x="220" y="324" width="416" height="34" rx="17" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
   <circle cx="244" cy="341" r="14" class="badge" stroke="#6f8f58"/>
   <text x="244" y="346" class="detail" text-anchor="middle">2</text>
   <text x="269" y="347" class="detail">extract tenant and bind ScopedValue</text>
   <path data-connector="filter-binds-scoped-value" d="M320,382 H541" class="contextCall"/>
 
-  <rect x="230" y="410" width="426" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+  <rect x="230" y="416" width="426" height="34" rx="17" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
   <circle cx="254" cy="433" r="14" class="badge" stroke="#4f86c6"/>
   <text x="254" y="438" class="detail" text-anchor="middle">3</text>
   <text x="279" y="439" class="detail">chain.doFilter inside ScopedValue scope</text>
@@ -99,31 +99,31 @@
   <rect x="494" y="478" width="250" height="34" rx="16" class="scopeTitle"/>
   <text x="619" y="500" class="detail" text-anchor="middle">transactional schema boundary</text>
 
-  <rect x="696" y="526" width="420" height="46" rx="18" fill="#ffffff" stroke="#a2743d" class="pill card"/>
+  <rect x="696" y="532" width="420" height="34" rx="17" fill="#ffffff" stroke="#a2743d" class="pill card"/>
   <circle cx="720" cy="549" r="14" class="badge" stroke="#a2743d"/>
   <text x="720" y="554" class="detail" text-anchor="middle">4</text>
   <text x="745" y="555" class="detail">before @Transactional controller method</text>
   <path data-connector="controller-enters-schema-aspect" d="M759,584 H991" class="schemaCall"/>
 
-  <rect x="760" y="608" width="420" height="46" rx="18" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
+  <rect x="760" y="614" width="420" height="34" rx="17" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
   <circle cx="784" cy="631" r="14" class="badge" stroke="#6f8f58"/>
   <text x="784" y="636" class="detail" text-anchor="middle">5</text>
   <text x="809" y="637" class="detail">read current tenant schema</text>
   <path data-connector="aspect-reads-context" d="M991,666 H541" class="contextCall"/>
 
-  <rect x="982" y="690" width="430" height="46" rx="18" fill="#ffffff" stroke="#2f9a94" class="pill card"/>
+  <rect x="982" y="696" width="430" height="34" rx="17" fill="#ffffff" stroke="#2f9a94" class="pill card"/>
   <circle cx="1006" cy="713" r="14" class="badge" stroke="#2f9a94"/>
   <text x="1006" y="718" class="detail" text-anchor="middle">6</text>
   <text x="1031" y="719" class="detail">createSchema and setSchema</text>
   <path data-connector="aspect-switches-database-schema" d="M991,748 H1410" class="sqlCall"/>
 
-  <rect x="540" y="742" width="410" height="46" rx="18" fill="#ffffff" stroke="#7a8445" class="pill card"/>
+  <rect x="540" y="748" width="410" height="34" rx="17" fill="#ffffff" stroke="#7a8445" class="pill card"/>
   <circle cx="564" cy="765" r="14" class="badge" stroke="#7a8445"/>
   <text x="564" y="770" class="detail" text-anchor="middle">7</text>
   <text x="589" y="771" class="detail">actorRepository.findAll()</text>
   <path data-connector="controller-calls-actor-repository" d="M759,800 H1226" class="repoCall"/>
 
-  <rect x="1086" y="800" width="336" height="46" rx="18" fill="#ffffff" stroke="#2f9a94" class="pill card"/>
+  <rect x="1086" y="806" width="336" height="34" rx="17" fill="#ffffff" stroke="#2f9a94" class="pill card"/>
   <circle cx="1110" cy="823" r="14" class="badge" stroke="#2f9a94"/>
   <text x="1110" y="828" class="detail" text-anchor="middle">8</text>
   <text x="1135" y="829" class="detail">select ActorTable rows</text>
