@@ -68,7 +68,7 @@
 <path data-connector="transactional-to-policy" d="M330,520 H500" class="runtimeUse"/>
 <path data-connector="sync-repo-to-spring-cache" d="M788,220 H860 Q870,220 870,230 V242 Q870,252 880,252 H958" class="mapLine"/>
 <path data-connector="coroutine-repo-to-suspended-cache" d="M788,370 H860 Q870,370 870,380 V442 Q870,452 880,452 H958" class="mapLine"/>
-<path data-connector="policy-to-db" d="M788,520 H1240 Q1250,520 1250,510 V450 Q1250,440 1260,440 H1310" class="dbUse"/>
+<path data-connector="policy-to-db" d="M788,520 H1228 Q1238,520 1238,530 V548 Q1238,558 1248,558 H1355 Q1365,558 1365,548 V493" class="dbUse"/>
 <path data-connector="spring-cache-to-db" d="M1170,252 H1230 Q1240,252 1240,262 V350 Q1240,360 1250,360 H1310" class="dbUse"/>
 <path data-connector="suspended-cache-to-db" d="M1170,452 H1230 Q1240,452 1240,462 V470 Q1240,480 1250,480 H1310" class="dbUse"/>
 <rect x="140" y="760" width="1220" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
