@@ -1,118 +1,100 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 820" width="1500" height="820" role="img" aria-label="Per-Tenant Schema Layout">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="inheritHead" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="16" refY="8" orient="auto"><path d="M1,1 L16,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="useArrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#6f8f58" stroke="#6f8f58" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowAmber" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#b8894a" stroke="#b8894a" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2f9a94" stroke="#2f9a94" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#d45b21" stroke="#d45b21" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
-.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}
-.subtitle,.detail,.tiny{font-family:"Comic Mono";fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter";font-size:16px;fill:#1e293b}
-.className{font-family:"Architects Daughter";font-size:17px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-.card,.uml,.tableBox,.dbBody{stroke-width:1.7;filter:url(#shadow)}
-.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.context{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
-.storage{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}
-.fk{fill:none;stroke:#0f766e;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}
-.returnLine{fill:none;stroke:#64748b;stroke-width:1.7;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round}
-.lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}.group{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}.lane{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}.card{stroke-width:1.7;filter:url(#shadow)}
+.title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}.subtitle,.detail,.tiny{font-family:"Comic Mono";fill:#536476}.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-size:10.5px;fill:#64748b}.label{font-family:"Architects Daughter";font-size:17px;fill:#1e293b}.smallLabel{font-family:"Architects Daughter";font-size:15px;fill:#1e293b}.panelTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#64748b}
+.inherit{fill:none;stroke:#64748b;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inheritHead)}.use{fill:none;stroke:#64748b;stroke-width:1.6;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#useArrow)}.flowBlue{fill:none;stroke:#4f86c6;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}.flowGreen{fill:none;stroke:#6f8f58;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}.flowAmber{fill:none;stroke:#b8894a;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowAmber)}.flowTeal{fill:none;stroke:#2f9a94;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}.storage{fill:none;stroke:#d45b21;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.tableBox{stroke-width:1.7;filter:url(#shadow)}
 </style>
 </defs>
 <rect width="1500" height="820" class="canvas"/>
 <rect x="20" y="20" width="1460" height="780" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Per-Tenant Schema Layout</text>
-<text x="48" y="80" class="subtitle">Shared database uses korean/english schemas; database-per-tenant modules replace schema routing with tenant-owned pools and Database objects</text>
-<rect x="60" y="130" width="900" height="640" rx="12" class="panel"/>
-<text x="510" y="122" class="panelTitle" text-anchor="middle">SHARED DATABASE / SEPARATE SCHEMA</text>
-<rect x="104" y="190" width="170" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="189" y="215" class="label" text-anchor="middle">Tenant korean</text>
-<text x="189" y="234" class="detail" text-anchor="middle">X-TENANT-ID</text>
-<rect x="104" y="438" width="170" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="189" y="463" class="label" text-anchor="middle">Tenant english</text>
-<text x="189" y="482" class="detail" text-anchor="middle">X-TENANT-ID</text>
-<path d="M340,272 C340,244 840,244 840,272 V664 C840,692 340,692 340,664 Z" fill="#ffedd5" stroke="#ea580c" class="dbBody"/>
-<ellipse cx="590" cy="272" rx="250" ry="14" fill="#fff7ed" stroke="#ea580c" stroke-width="1.7"/>
-<ellipse cx="590" cy="664" rx="250" ry="14" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="590" y="308" class="label" text-anchor="middle">Shared DB instance</text>
-<rect x="390" y="312" width="150" height="74" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="465" y="344" class="label" text-anchor="middle">korean schema</text>
-<text x="465" y="364" class="detail" text-anchor="middle">Movie domain tables</text>
-<rect x="610" y="504" width="150" height="74" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="685" y="536" class="label" text-anchor="middle">english schema</text>
-<text x="685" y="556" class="detail" text-anchor="middle">same table set</text>
-<rect x="402" y="418" width="120" height="82" rx="4" fill="#fff" stroke="#3b82f6" class="tableBox"/>
-<rect x="402" y="418" width="120" height="26" rx="4" fill="#dbeafe" stroke="#3b82f6" class="tableBox"/>
-<text x="462" y="436" class="className" text-anchor="middle">movies</text>
-<text x="412" y="460" class="detail">id PK</text>
-<text x="412" y="474" class="detail">name</text>
-<text x="412" y="488" class="detail">producer_name</text>
-<rect x="572" y="418" width="120" height="82" rx="4" fill="#fff" stroke="#d97706" class="tableBox"/>
-<rect x="572" y="418" width="120" height="26" rx="4" fill="#fef3c7" stroke="#d97706" class="tableBox"/>
-<text x="632" y="436" class="className" text-anchor="middle">actors_in_movies</text>
-<text x="582" y="460" class="detail">movie_id FK</text>
-<text x="582" y="474" class="detail">actor_id FK</text>
-<rect x="744" y="418" width="120" height="82" rx="4" fill="#fff" stroke="#db2777" class="tableBox"/>
-<rect x="744" y="418" width="120" height="26" rx="4" fill="#fce7f3" stroke="#db2777" class="tableBox"/>
-<text x="804" y="436" class="className" text-anchor="middle">actors</text>
-<text x="754" y="460" class="detail">id PK</text>
-<text x="754" y="474" class="detail">first_name</text>
-<text x="754" y="488" class="detail">last_name</text>
-<rect x="402" y="612" width="120" height="82" rx="4" fill="#fff" stroke="#3b82f6" class="tableBox"/>
-<rect x="402" y="612" width="120" height="26" rx="4" fill="#dbeafe" stroke="#3b82f6" class="tableBox"/>
-<text x="462" y="630" class="className" text-anchor="middle">movies</text>
-<text x="412" y="654" class="detail">id PK</text>
-<text x="412" y="668" class="detail">name</text>
-<text x="412" y="682" class="detail">release_date</text>
-<rect x="572" y="612" width="120" height="82" rx="4" fill="#fff" stroke="#d97706" class="tableBox"/>
-<rect x="572" y="612" width="120" height="26" rx="4" fill="#fef3c7" stroke="#d97706" class="tableBox"/>
-<text x="632" y="630" class="className" text-anchor="middle">actors_in_movies</text>
-<text x="582" y="654" class="detail">movie_id FK</text>
-<text x="582" y="668" class="detail">actor_id FK</text>
-<rect x="744" y="612" width="120" height="82" rx="4" fill="#fff" stroke="#db2777" class="tableBox"/>
-<rect x="744" y="612" width="120" height="26" rx="4" fill="#fce7f3" stroke="#db2777" class="tableBox"/>
-<text x="804" y="630" class="className" text-anchor="middle">actors</text>
-<text x="754" y="654" class="detail">id PK</text>
-<text x="754" y="668" class="detail">birthday</text>
-<rect x="1020" y="130" width="420" height="640" rx="12" class="panel"/>
-<text x="1230" y="122" class="panelTitle" text-anchor="middle">DATABASE PER TENANT CONTRAST</text>
-<rect x="1068" y="202" width="160" height="58" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="1148" y="227" class="label" text-anchor="middle">TenantRegistry</text>
-<text x="1148" y="246" class="detail" text-anchor="middle">validates config</text>
-<rect x="1070" y="338" width="160" height="58" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="1150" y="363" class="label" text-anchor="middle">korean pool</text>
-<text x="1150" y="382" class="detail" text-anchor="middle">HikariDataSource</text>
-<rect x="1070" y="510" width="160" height="58" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="1150" y="535" class="label" text-anchor="middle">english pool</text>
-<text x="1150" y="554" class="detail" text-anchor="middle">HikariDataSource</text>
-<path d="M1280,306 C1280,278 1398,278 1398,306 V428 C1398,456 1280,456 1280,428 Z" fill="#dbeafe" stroke="#3b82f6" class="dbBody"/>
-<ellipse cx="1339" cy="306" rx="59" ry="14" fill="#fff7ed" stroke="#3b82f6" stroke-width="1.7"/>
-<ellipse cx="1339" cy="428" rx="59" ry="14" fill="none" stroke="#3b82f6" stroke-width="1.7"/>
-<text x="1339" y="348" class="label" text-anchor="middle">korean DB</text>
-<text x="1339" y="376" class="detail" text-anchor="middle">Exposed</text>
-<text x="1339" y="393" class="detail" text-anchor="middle">Database</text>
-<path d="M1280,490 C1280,462 1398,462 1398,490 V612 C1398,640 1280,640 1280,612 Z" fill="#ede9fe" stroke="#7c3aed" class="dbBody"/>
-<ellipse cx="1339" cy="490" rx="59" ry="14" fill="#fff7ed" stroke="#7c3aed" stroke-width="1.7"/>
-<ellipse cx="1339" cy="612" rx="59" ry="14" fill="none" stroke="#7c3aed" stroke-width="1.7"/>
-<text x="1339" y="532" class="label" text-anchor="middle">english DB</text>
-<text x="1339" y="560" class="detail" text-anchor="middle">Exposed</text>
-<text x="1339" y="577" class="detail" text-anchor="middle">Database</text>
-<path d="M189,248 V344 Q189,352 197,352 H390" class="context" marker-end="url(#arrowPurple)"/>
-<path d="M189,496 V536 Q189,544 197,544 H610" class="context" marker-end="url(#arrowPurple)"/>
-<path d="M470,386 V418" class="mapLine" marker-end="url(#arrowGreen)"/>
-<path d="M465,386 V394 Q465,402 473,402 H644 Q652,402 652,410 V418" class="mapLine" marker-end="url(#arrowGreen)"/>
-<path d="M515,386 V394 Q515,402 523,402 H796 Q804,402 804,410 V418" class="mapLine" marker-end="url(#arrowGreen)"/>
-<path d="M650,578 V588 Q650,596 642,596 H492 Q484,596 484,604 V612" class="mapLine" marker-end="url(#arrowGreen)"/>
-<path d="M685,578 V588 Q685,596 677,596 H660 Q652,596 652,604 V612" class="mapLine" marker-end="url(#arrowGreen)"/>
-<path d="M725,578 V588 Q725,596 733,596 H798 Q806,596 806,604 V612" class="mapLine" marker-end="url(#arrowGreen)"/>
-<path d="M572,458 H522" class="fk" marker-end="url(#arrowTeal)"/>
-<path d="M692,458 H744" class="fk" marker-end="url(#arrowTeal)"/>
-<path d="M572,652 H522" class="fk" marker-end="url(#arrowTeal)"/>
-<path d="M692,652 H744" class="fk" marker-end="url(#arrowTeal)"/>
-<path d="M1148,260 V338" class="context" marker-end="url(#arrowPurple)"/>
-<path d="M1148,260 V278 Q1148,286 1140,286 H1056 Q1048,286 1048,294 V531 Q1048,539 1056,539 H1070" class="context" marker-end="url(#arrowPurple)"/>
-<path d="M1230,367 H1280" class="storage" marker-end="url(#arrowOrange)"/>
-<path d="M1230,539 H1280" class="storage" marker-end="url(#arrowOrange)"/>
+<text x="48" y="80" class="subtitle">Shared database uses tenant schemas; database-per-tenant modules replace schema routing with tenant-owned pools and Database objects.</text>
+<rect x="62" y="128" width="920" height="650" rx="12" class="group"/>
+<text x="522" y="156" class="panelTitle" text-anchor="middle">SHARED DATABASE / SEPARATE SCHEMA</text>
+<rect x="106" y="206" width="820" height="540" rx="18" fill="#fff7ed" stroke="#d45b21" stroke-width="2"/>
+<text x="516" y="238" class="label" text-anchor="middle">Shared DB Instance</text>
+<rect x="116" y="300" width="158" height="58" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="195.0" y="327" class="label" text-anchor="middle">Tenant korean</text>
+<text x="195.0" y="336" class="detail" text-anchor="middle">X-TENANT-ID</text>
+<rect x="116" y="534" width="158" height="58" rx="9" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="195.0" y="561" class="label" text-anchor="middle">Tenant english</text>
+<text x="195.0" y="570" class="detail" text-anchor="middle">X-TENANT-ID</text>
+<rect x="340" y="282" width="210" height="68" rx="9" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="445.0" y="309" class="label" text-anchor="middle">korean schema</text>
+<text x="445.0" y="328" class="detail" text-anchor="middle">Movie domain tables</text>
+<rect x="340" y="518" width="210" height="68" rx="9" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+<text x="445.0" y="545" class="label" text-anchor="middle">english schema</text>
+<text x="445.0" y="564" class="detail" text-anchor="middle">same table set</text>
+<rect x="326" y="390" width="146" height="104" rx="9" fill="#fff" stroke="#4f86c6" class="tableBox"/>
+<text x="399.0" y="417" class="label" text-anchor="middle">movies</text>
+<text x="399.0" y="456" class="detail" text-anchor="middle">id PK</text>
+<text x="399.0" y="472" class="detail" text-anchor="middle">name</text>
+<text x="399.0" y="488" class="detail" text-anchor="middle">producer_name</text>
+<rect x="506" y="390" width="170" height="104" rx="9" fill="#fff" stroke="#d97706" class="tableBox"/>
+<text x="591.0" y="417" class="label" text-anchor="middle">actors_in_movies</text>
+<text x="591.0" y="456" class="detail" text-anchor="middle">movie_id FK</text>
+<text x="591.0" y="472" class="detail" text-anchor="middle">actor_id FK</text>
+<rect x="710" y="390" width="146" height="104" rx="9" fill="#fff" stroke="#db2777" class="tableBox"/>
+<text x="783.0" y="417" class="label" text-anchor="middle">actors</text>
+<text x="783.0" y="456" class="detail" text-anchor="middle">id PK</text>
+<text x="783.0" y="472" class="detail" text-anchor="middle">first_name</text>
+<text x="783.0" y="488" class="detail" text-anchor="middle">last_name</text>
+<rect x="326" y="612" width="146" height="104" rx="9" fill="#fff" stroke="#4f86c6" class="tableBox"/>
+<text x="399.0" y="653" class="label" text-anchor="middle">movies</text>
+<text x="399.0" y="676" class="detail" text-anchor="middle">id PK</text>
+<text x="399.0" y="692" class="detail" text-anchor="middle">name</text>
+<text x="399.0" y="708" class="detail" text-anchor="middle">release_date</text>
+<rect x="506" y="612" width="170" height="104" rx="9" fill="#fff" stroke="#d97706" class="tableBox"/>
+<text x="591.0" y="653" class="label" text-anchor="middle">actors_in_movies</text>
+<text x="591.0" y="692" class="detail" text-anchor="middle">movie_id FK</text>
+<text x="591.0" y="708" class="detail" text-anchor="middle">actor_id FK</text>
+<rect x="710" y="612" width="146" height="104" rx="9" fill="#fff" stroke="#db2777" class="tableBox"/>
+<text x="783.0" y="653" class="label" text-anchor="middle">actors</text>
+<text x="783.0" y="692" class="detail" text-anchor="middle">id PK</text>
+<text x="783.0" y="708" class="detail" text-anchor="middle">birthday</text>
+<path d="M274,329 H340" class="flowGreen connector"/>
+<path d="M274,563 H340" class="flowGreen connector"/>
+<path d="M445,350 V390" class="flowGreen connector"/>
+<path d="M445,586 V612" class="flowGreen connector"/>
+<path d="M520,350 V390" class="flowGreen connector"/>
+<path d="M520,586 V612" class="flowGreen connector"/>
+<path d="M795,350 V390" class="flowGreen connector"/>
+<path d="M795,586 V612" class="flowGreen connector"/>
+<path d="M506,434 H472" class="flowTeal connector"/>
+<path d="M676,434 H710" class="flowTeal connector"/>
+<path d="M506,666 H472" class="flowTeal connector"/>
+<path d="M676,666 H710" class="flowTeal connector"/>
+<rect x="1030" y="128" width="410" height="650" rx="12" class="group"/>
+<text x="1235" y="156" class="panelTitle" text-anchor="middle">DATABASE PER TENANT CONTRAST</text>
+<rect x="1110" y="218" width="210" height="62" rx="9" fill="#fef3c7" stroke="#d97706" class="card"/>
+<text x="1215.0" y="245" class="label" text-anchor="middle">TenantRegistry</text>
+<text x="1215.0" y="258" class="detail" text-anchor="middle">validates config</text>
+<rect x="1092" y="344" width="190" height="62" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="1187.0" y="371" class="label" text-anchor="middle">korean pool</text>
+<text x="1187.0" y="384" class="detail" text-anchor="middle">HikariDataSource</text>
+<rect x="1092" y="520" width="190" height="62" rx="9" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="1187.0" y="547" class="label" text-anchor="middle">english pool</text>
+<text x="1187.0" y="560" class="detail" text-anchor="middle">HikariDataSource</text>
+<rect x="1308" y="326" width="100" height="92" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="1358.0" y="353" class="label" text-anchor="middle">korean DB</text>
+<text x="1358.0" y="396" class="detail" text-anchor="middle">Exposed</text>
+<text x="1358.0" y="412" class="detail" text-anchor="middle">Database</text>
+<rect x="1308" y="502" width="100" height="92" rx="9" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="1358.0" y="529" class="label" text-anchor="middle">english DB</text>
+<text x="1358.0" y="572" class="detail" text-anchor="middle">Exposed</text>
+<text x="1358.0" y="588" class="detail" text-anchor="middle">Database</text>
+<path d="M1215,280 V344" class="flowBlue connector"/>
+<path d="M1215,280 V304 Q1215,316 1203,316 H1064 Q1052,316 1052,328 V551 Q1052,563 1064,563 H1092" class="flowGreen connector"/>
+<path d="M1282,375 H1308" class="storage connector"/>
+<path d="M1282,551 H1308" class="storage connector"/>
 </svg>

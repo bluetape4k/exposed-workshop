@@ -1,134 +1,82 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 880" width="1500" height="880" role="img" aria-label="Multi-Tenant Module Implementation Comparison">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 840" width="1500" height="840" role="img" aria-label="Multi-Tenant Module Implementation Comparison">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="inheritHead" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="16" refY="8" orient="auto"><path d="M1,1 L16,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="useArrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#6f8f58" stroke="#6f8f58" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowAmber" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#b8894a" stroke="#b8894a" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2f9a94" stroke="#2f9a94" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#d45b21" stroke="#d45b21" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
-.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}
-.subtitle,.detail,.tiny{font-family:"Comic Mono";fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter";font-size:16px;fill:#1e293b}
-.className{font-family:"Architects Daughter";font-size:17px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-.card,.uml,.tableBox,.dbBody{stroke-width:1.7;filter:url(#shadow)}
-.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.arrow{fill:none;stroke:#2563eb;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}
-.context{fill:none;stroke:#7c3aed;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPurple)}
-.storage{fill:none;stroke:#ea580c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
-.mapLine{fill:none;stroke:#16a34a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.fk{fill:none;stroke:#0f766e;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.returnLine{fill:none;stroke:#64748b;stroke-width:1.7;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round}
-.lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}.group{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}.lane{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}.card{stroke-width:1.7;filter:url(#shadow)}
+.title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}.subtitle,.detail,.tiny{font-family:"Comic Mono";fill:#536476}.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-size:10.5px;fill:#64748b}.label{font-family:"Architects Daughter";font-size:17px;fill:#1e293b}.smallLabel{font-family:"Architects Daughter";font-size:15px;fill:#1e293b}.panelTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#64748b}
+.inherit{fill:none;stroke:#64748b;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inheritHead)}.use{fill:none;stroke:#64748b;stroke-width:1.6;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#useArrow)}.flowBlue{fill:none;stroke:#4f86c6;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}.flowGreen{fill:none;stroke:#6f8f58;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}.flowAmber{fill:none;stroke:#b8894a;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowAmber)}.flowTeal{fill:none;stroke:#2f9a94;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}.storage{fill:none;stroke:#d45b21;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.tableBox{stroke-width:1.7;filter:url(#shadow)}
 </style>
 </defs>
-<rect width="1500" height="880" class="canvas"/>
-<rect x="20" y="20" width="1460" height="840" rx="16" class="frame"/>
+<rect width="1500" height="840" class="canvas"/>
+<rect x="20" y="20" width="1460" height="800" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Multi-Tenant Module Implementation Comparison</text>
-<text x="48" y="80" class="subtitle">Current source shows three context propagation styles, explicit transaction boundaries, database-per-tenant routing, and security-gated routing</text>
-<rect x="55" y="126" width="300" height="720" rx="12" class="panel"/>
-<text x="205" y="118" class="panelTitle" text-anchor="middle">RUNTIME / MODULE</text>
-<rect x="405" y="126" width="320" height="720" rx="12" class="panel"/>
-<text x="565" y="118" class="panelTitle" text-anchor="middle">TENANT BOUNDARY</text>
-<rect x="775" y="126" width="310" height="720" rx="12" class="panel"/>
-<text x="930" y="118" class="panelTitle" text-anchor="middle">REPOSITORY</text>
-<rect x="1160" y="126" width="280" height="720" rx="12" class="panel"/>
-<text x="1300" y="118" class="panelTitle" text-anchor="middle">STORAGE</text>
-<rect x="92" y="166" width="225" height="72" rx="8" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="204.5" y="194" class="label" text-anchor="middle">01 Spring MVC</text>
-<text x="204.5" y="214" class="detail" text-anchor="middle">TenantFilter</text>
-<text x="204.5" y="229" class="detail" text-anchor="middle">ThreadLocal</text>
-<rect x="442" y="166" width="245" height="72" rx="8" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="564.5" y="194" class="label" text-anchor="middle">TenantSchemaAspect</text>
-<text x="564.5" y="214" class="detail" text-anchor="middle">DataSourceUtils</text>
-<text x="564.5" y="229" class="detail" text-anchor="middle">SET SCHEMA</text>
-<rect x="812" y="166" width="235" height="72" rx="8" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="929.5" y="194" class="label" text-anchor="middle">MovieExposedRepository</text>
-<text x="929.5" y="214" class="detail" text-anchor="middle">MovieTable</text>
-<text x="929.5" y="229" class="detail" text-anchor="middle">Actor join</text>
-<path d="M1220,162 C1220,134 1370,134 1370,162 V260 C1370,288 1220,288 1220,260 Z" fill="#ffedd5" stroke="#ea580c" class="dbBody"/>
-<ellipse cx="1295" cy="162" rx="75" ry="14" fill="#fff7ed" stroke="#ea580c" stroke-width="1.7"/>
-<ellipse cx="1295" cy="260" rx="75" ry="14" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1295" y="204" class="label" text-anchor="middle">Shared DB</text>
-<text x="1295" y="232" class="detail" text-anchor="middle">tenant schemas</text>
-<rect x="92" y="274" width="225" height="72" rx="8" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="204.5" y="302" class="label" text-anchor="middle">02 Virtual Threads</text>
-<text x="204.5" y="322" class="detail" text-anchor="middle">Tomcat VT</text>
-<text x="204.5" y="337" class="detail" text-anchor="middle">ScopedValue</text>
-<rect x="442" y="274" width="245" height="72" rx="8" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="564.5" y="302" class="label" text-anchor="middle">TransactionSchemaAspect</text>
-<text x="564.5" y="322" class="detail" text-anchor="middle">transaction { }</text>
-<text x="564.5" y="337" class="detail" text-anchor="middle">SchemaUtils</text>
-<rect x="812" y="274" width="235" height="72" rx="8" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="929.5" y="302" class="label" text-anchor="middle">MovieExposedRepository</text>
-<text x="929.5" y="322" class="detail" text-anchor="middle">same movie schema</text>
-<text x="929.5" y="337" class="detail" text-anchor="middle">@Transactional</text>
-<rect x="92" y="382" width="225" height="72" rx="8" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="204.5" y="410" class="label" text-anchor="middle">03 WebFlux</text>
-<text x="204.5" y="430" class="detail" text-anchor="middle">WebFilter</text>
-<text x="204.5" y="445" class="detail" text-anchor="middle">Reactor Context</text>
-<rect x="442" y="382" width="245" height="72" rx="8" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="564.5" y="410" class="label" text-anchor="middle">Suspended transaction</text>
-<text x="564.5" y="430" class="detail" text-anchor="middle">TenantId element</text>
-<text x="564.5" y="445" class="detail" text-anchor="middle">set schema in IO</text>
-<rect x="812" y="382" width="235" height="72" rx="8" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="929.5" y="410" class="label" text-anchor="middle">Coroutine Repository</text>
-<text x="929.5" y="430" class="detail" text-anchor="middle">newSuspendedTransaction</text>
-<text x="929.5" y="445" class="detail" text-anchor="middle">Movie records</text>
-<rect x="92" y="490" width="225" height="72" rx="8" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="204.5" y="518" class="label" text-anchor="middle">04 Schema Tenant</text>
-<text x="204.5" y="538" class="detail" text-anchor="middle">Header whitelist</text>
-<text x="204.5" y="553" class="detail" text-anchor="middle">ThreadLocal</text>
-<rect x="442" y="490" width="245" height="72" rx="8" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="564.5" y="518" class="label" text-anchor="middle">TenantTransaction</text>
-<text x="564.5" y="538" class="detail" text-anchor="middle">set tenant schema</text>
-<text x="564.5" y="553" class="detail" text-anchor="middle">reset PUBLIC/evict</text>
-<rect x="812" y="490" width="235" height="72" rx="8" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="929.5" y="518" class="label" text-anchor="middle">ExposedInventoryRepository</text>
-<text x="929.5" y="538" class="detail" text-anchor="middle">InventoryItems</text>
-<text x="929.5" y="553" class="detail" text-anchor="middle">execute { }</text>
-<rect x="92" y="598" width="225" height="72" rx="8" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="204.5" y="626" class="label" text-anchor="middle">05/06 DB Tenant</text>
-<text x="204.5" y="646" class="detail" text-anchor="middle">TenantAuthorizationFilter</text>
-<text x="204.5" y="661" class="detail" text-anchor="middle">no fallback DB</text>
-<rect x="442" y="598" width="245" height="72" rx="8" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="564.5" y="626" class="label" text-anchor="middle">TenantDatabaseRegistry</text>
-<text x="564.5" y="646" class="detail" text-anchor="middle">Hikari per tenant</text>
-<text x="564.5" y="661" class="detail" text-anchor="middle">Database.connect</text>
-<rect x="812" y="598" width="235" height="72" rx="8" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="929.5" y="626" class="label" text-anchor="middle">Inventory Repository</text>
-<text x="929.5" y="646" class="detail" text-anchor="middle">databaseFor(tenant)</text>
-<text x="929.5" y="661" class="detail" text-anchor="middle">TenantContext</text>
-<path d="M1220,574 C1220,546 1370,546 1370,574 V696 C1370,724 1220,724 1220,696 Z" fill="#fce7f3" stroke="#db2777" class="dbBody"/>
-<ellipse cx="1295" cy="574" rx="75" ry="14" fill="#fff7ed" stroke="#db2777" stroke-width="1.7"/>
-<ellipse cx="1295" cy="696" rx="75" ry="14" fill="none" stroke="#db2777" stroke-width="1.7"/>
-<text x="1295" y="616" class="label" text-anchor="middle">Tenant DBs</text>
-<text x="1295" y="644" class="detail" text-anchor="middle">korean pool</text>
-<text x="1295" y="661" class="detail" text-anchor="middle">english pool</text>
-<rect x="92" y="706" width="225" height="72" rx="8" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="204.5" y="734" class="label" text-anchor="middle">07 Ktor</text>
-<text x="204.5" y="754" class="detail" text-anchor="middle">TenantPlugin</text>
-<text x="204.5" y="769" class="detail" text-anchor="middle">call attribute</text>
-<rect x="442" y="706" width="245" height="72" rx="8" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="564.5" y="734" class="label" text-anchor="middle">ThreadContextElement</text>
-<text x="564.5" y="754" class="detail" text-anchor="middle">bind ThreadLocal</text>
-<text x="564.5" y="769" class="detail" text-anchor="middle">restore old state</text>
-<rect x="812" y="706" width="235" height="72" rx="8" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="929.5" y="734" class="label" text-anchor="middle">KtorMovieRepository</text>
-<text x="929.5" y="754" class="detail" text-anchor="middle">Database.connect</text>
-<text x="929.5" y="769" class="detail" text-anchor="middle">TenantBootstrap</text>
-<path d="M317,202 H442" class="context"/>
-<path d="M687,202 H812" class="arrow"/>
-<path d="M1047,202 H1220" class="storage"/>
-<path d="M317,310 H442" class="context"/>
-<path d="M687,310 H812" class="arrow"/>
-<path d="M317,418 H442" class="context"/>
-<path d="M687,418 H812" class="arrow"/>
-<path d="M317,526 H442" class="context"/>
-<path d="M687,526 H812" class="arrow"/>
-<path d="M1047,526 H1112 Q1120,526 1120,518 V240 Q1120,232 1128,232 H1220" class="storage"/>
-<path d="M317,634 H442" class="context"/>
-<path d="M687,634 H722 Q730,634 730,642 V680 Q730,688 738,688 H1132 Q1140,688 1140,680 V639 Q1140,631 1148,631 H1220" class="storage"/>
-<path d="M317,742 H442" class="context"/>
-<path d="M687,742 H812" class="arrow"/>
-<path d="M1047,742 H1450 Q1458,742 1458,734 V202 Q1458,194 1450,194 H1370" class="storage"/>
+<text x="48" y="80" class="subtitle">Chapter 10 strategies grouped by tenant-state carrier, transaction boundary, and storage ownership.</text>
+<rect x="58" y="126" width="640" height="650" rx="12" class="group"/>
+<text x="378" y="154" class="panelTitle" text-anchor="middle">SHARED DATABASE STRATEGIES</text>
+<rect x="760" y="126" width="680" height="650" rx="12" class="group"/>
+<text x="1100" y="154" class="panelTitle" text-anchor="middle">DATABASE / SERVER STRATEGIES</text>
+<rect x="96" y="198" width="190" height="64" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="191.0" y="225" class="label" text-anchor="middle">01 Spring MVC</text>
+<text x="191.0" y="240" class="detail" text-anchor="middle">ThreadLocal</text>
+<rect x="352" y="198" width="230" height="64" rx="9" fill="#fef3c7" stroke="#b8894a" class="card"/>
+<text x="467.0" y="225" class="label" text-anchor="middle">TenantSchemaAspect</text>
+<text x="467.0" y="240" class="detail" text-anchor="middle">SET SCHEMA</text>
+<path d="M286,230 H352" class="flowGreen connector"/>
+<rect x="96" y="318" width="190" height="64" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="191.0" y="345" class="label" text-anchor="middle">02 Virtual Threads</text>
+<text x="191.0" y="360" class="detail" text-anchor="middle">ScopedValue</text>
+<rect x="352" y="318" width="230" height="64" rx="9" fill="#fef3c7" stroke="#b8894a" class="card"/>
+<text x="467.0" y="345" class="label" text-anchor="middle">TransactionSchemaAspect</text>
+<text x="467.0" y="360" class="detail" text-anchor="middle">SchemaUtils</text>
+<path d="M286,350 H352" class="flowGreen connector"/>
+<rect x="96" y="438" width="190" height="64" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="191.0" y="465" class="label" text-anchor="middle">03 WebFlux</text>
+<text x="191.0" y="480" class="detail" text-anchor="middle">Reactor Context</text>
+<rect x="352" y="438" width="230" height="64" rx="9" fill="#fef3c7" stroke="#b8894a" class="card"/>
+<text x="467.0" y="465" class="label" text-anchor="middle">Suspended transaction</text>
+<text x="467.0" y="480" class="detail" text-anchor="middle">currentReactorTenant</text>
+<path d="M286,470 H352" class="flowGreen connector"/>
+<rect x="96" y="558" width="190" height="64" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="191.0" y="585" class="label" text-anchor="middle">04 Schema Tenant</text>
+<text x="191.0" y="600" class="detail" text-anchor="middle">Header whitelist</text>
+<rect x="352" y="558" width="230" height="64" rx="9" fill="#fef3c7" stroke="#b8894a" class="card"/>
+<text x="467.0" y="585" class="label" text-anchor="middle">TenantTransaction</text>
+<text x="467.0" y="600" class="detail" text-anchor="middle">reset PUBLIC</text>
+<path d="M286,590 H352" class="flowGreen connector"/>
+<rect x="352" y="680" width="230" height="60" rx="9" fill="#ffedd5" stroke="#d45b21" class="card"/>
+<text x="467.0" y="707" class="label" text-anchor="middle">Shared DB</text>
+<text x="467.0" y="718" class="detail" text-anchor="middle">tenant schemas</text>
+<path d="M467,622 V680" class="storage connector"/>
+<rect x="814" y="214" width="210" height="66" rx="9" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="919.0" y="241" class="label" text-anchor="middle">05/06 DB Tenant</text>
+<text x="919.0" y="258" class="detail" text-anchor="middle">authorized tenant id</text>
+<rect x="1092" y="214" width="230" height="66" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="1207.0" y="241" class="label" text-anchor="middle">TenantDatabaseRegistry</text>
+<text x="1207.0" y="258" class="detail" text-anchor="middle">Hikari + Database.connect</text>
+<rect x="1092" y="334" width="230" height="66" rx="9" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="1207.0" y="361" class="label" text-anchor="middle">Tenant DBs</text>
+<text x="1207.0" y="378" class="detail" text-anchor="middle">korean / english pools</text>
+<path d="M1024,247 H1092" class="flowGreen connector"/>
+<path d="M1207,280 V334" class="storage connector"/>
+<rect x="814" y="486" width="210" height="66" rx="9" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="919.0" y="513" class="label" text-anchor="middle">07 Ktor</text>
+<text x="919.0" y="530" class="detail" text-anchor="middle">call attribute</text>
+<rect x="1092" y="486" width="230" height="66" rx="9" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="1207.0" y="513" class="label" text-anchor="middle">ThreadContextElement</text>
+<text x="1207.0" y="530" class="detail" text-anchor="middle">bind / restore tenant</text>
+<rect x="1092" y="606" width="230" height="66" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="1207.0" y="633" class="label" text-anchor="middle">KtorMovieRepository</text>
+<text x="1207.0" y="650" class="detail" text-anchor="middle">Database.connect + bootstrap</text>
+<path d="M1024,519 H1092" class="flowGreen connector"/>
+<path d="M1207,552 V606" class="flowBlue connector"/>
+<rect x="210" y="790" width="1080" height="34" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
+<text x="750" y="812" class="tiny" text-anchor="middle">Cards are grouped by relationship, not equal grid columns; arrows show the carrier-to-boundary-to-storage dependency.</text>
 </svg>
