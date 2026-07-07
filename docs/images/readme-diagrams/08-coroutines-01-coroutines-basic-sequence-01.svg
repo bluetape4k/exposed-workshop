@@ -88,7 +88,7 @@
   <rect x="1284" y="704" width="12" height="54" rx="6" class="activation"/>
 
   <g id="m1" data-message="1">
-    <rect class="pill" x="82" y="214" width="352" height="38" rx="19" fill="#ffffff" stroke="#6e8f4f" stroke-width="1.5"/>
+    <rect class="pill" x="82" y="216" width="352" height="34" rx="17" fill="#ffffff" stroke="#6e8f4f" stroke-width="1.5"/>
     <circle cx="108" cy="233" r="13" fill="#eef7f0" stroke="#6e8f4f" stroke-width="1.5"/>
     <text x="108" y="238" class="numText num" fill="#55783f" text-anchor="middle">1</text>
     <text x="136" y="238" class="pillText labelText">withTablesSuspending creates tables</text>
@@ -96,7 +96,7 @@
   </g>
 
   <g id="m2" data-message="2">
-    <rect class="pill" x="304" y="294" width="398" height="38" rx="19" fill="#ffffff" stroke="#3f7d9c" stroke-width="1.5"/>
+    <rect class="pill" x="304" y="296" width="398" height="34" rx="17" fill="#ffffff" stroke="#3f7d9c" stroke-width="1.5"/>
     <circle cx="330" cy="313" r="13" fill="#eaf4f8" stroke="#3f7d9c" stroke-width="1.5"/>
     <text x="330" y="318" class="numText num" fill="#2f6f8e" text-anchor="middle">2</text>
     <text x="358" y="318" class="pillText labelText">newSuspendedTransaction opens boundary</text>
@@ -104,7 +104,7 @@
   </g>
 
   <g id="m3" data-message="3">
-    <rect class="pill" x="534" y="374" width="366" height="38" rx="19" fill="#ffffff" stroke="#527f79" stroke-width="1.5"/>
+    <rect class="pill" x="534" y="376" width="366" height="34" rx="17" fill="#ffffff" stroke="#527f79" stroke-width="1.5"/>
     <circle cx="560" cy="393" r="13" fill="#edf6f3" stroke="#527f79" stroke-width="1.5"/>
     <text x="560" y="398" class="numText num" fill="#416a65" text-anchor="middle">3</text>
     <text x="588" y="398" class="pillText labelText">insert/select runs in JdbcTransaction</text>
@@ -112,7 +112,7 @@
   </g>
 
   <g id="m4" data-message="4">
-    <rect class="pill" x="784" y="454" width="330" height="38" rx="19" fill="#ffffff" stroke="#a2743d" stroke-width="1.5"/>
+    <rect class="pill" x="784" y="456" width="330" height="34" rx="17" fill="#ffffff" stroke="#a2743d" stroke-width="1.5"/>
     <circle cx="810" cy="473" r="13" fill="#fff4df" stroke="#a2743d" stroke-width="1.5"/>
     <text x="810" y="478" class="numText num" fill="#855a29" text-anchor="middle">4</text>
     <text x="838" y="478" class="pillText labelText">Tester insert/select touches table</text>
@@ -124,7 +124,7 @@
   <text x="562" y="557" class="altText">ALT: nested lookup / exception cleanup</text>
 
   <g id="m5" data-message="5">
-    <rect class="pill" x="532" y="574" width="452" height="38" rx="19" fill="#ffffff" stroke="#3f7d9c" stroke-width="1.5"/>
+    <rect class="pill" x="532" y="576" width="452" height="34" rx="17" fill="#ffffff" stroke="#3f7d9c" stroke-width="1.5"/>
     <circle cx="558" cy="593" r="13" fill="#eaf4f8" stroke="#3f7d9c" stroke-width="1.5"/>
     <text x="558" y="598" class="numText num" fill="#2f6f8e" text-anchor="middle">5</text>
     <text x="586" y="598" class="pillText labelText">withSuspendTransaction nested lookup</text>
@@ -132,7 +132,7 @@
   </g>
 
   <g id="m6" data-message="6">
-    <rect class="pill" x="784" y="636" width="356" height="38" rx="19" fill="#ffffff" stroke="#a2743d" stroke-width="1.5"/>
+    <rect class="pill" x="784" y="638" width="356" height="34" rx="17" fill="#ffffff" stroke="#a2743d" stroke-width="1.5"/>
     <circle cx="810" cy="655" r="13" fill="#fff4df" stroke="#a2743d" stroke-width="1.5"/>
     <text x="810" y="660" class="numText num" fill="#855a29" text-anchor="middle">6</text>
     <text x="838" y="660" class="pillText labelText">select row, count, or duplicate-key check</text>
@@ -140,7 +140,7 @@
   </g>
 
   <g id="m7" data-message="7">
-    <rect class="pill" x="1016" y="700" width="336" height="38" rx="19" fill="#ffffff" stroke="#a65a66" stroke-width="1.5"/>
+    <rect class="pill" x="1016" y="702" width="336" height="34" rx="17" fill="#ffffff" stroke="#a65a66" stroke-width="1.5"/>
     <circle cx="1042" cy="719" r="13" fill="#fff0f2" stroke="#a65a66" stroke-width="1.5"/>
     <text x="1042" y="724" class="numText num" fill="#8c4b56" text-anchor="middle">7</text>
     <text x="1070" y="724" class="pillText labelText">assert null/id/count and cleanup</text>

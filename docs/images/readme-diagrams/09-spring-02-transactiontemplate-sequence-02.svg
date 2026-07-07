@@ -74,25 +74,25 @@
 <rect x="1237" y="388" width="14" height="222" rx="6" class="activation"/>
 <rect x="1400" y="732" width="14" height="48" rx="6" class="activation"/>
 
-<rect x="74" y="222" width="404" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+<rect x="74" y="228" width="404" height="34" rx="17" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
 <circle cx="98" cy="245" r="14" class="badge" stroke="#4f86c6"/>
 <text x="98" y="250" class="detail" text-anchor="middle">1</text>
 <text x="123" y="251" class="detail">repeat five transaction-boundary modes</text>
 <path data-connector="test-calls-service" d="M118,286 H344" class="call"/>
 
-<rect x="312" y="324" width="390" height="46" rx="18" fill="#e2e8f0" stroke="#6f8792" class="pill card"/>
+<rect x="312" y="330" width="390" height="34" rx="17" fill="#e2e8f0" stroke="#6f8792" class="pill card"/>
 <circle cx="336" cy="347" r="14" class="badge" stroke="#6f8792"/>
 <text x="336" y="352" class="detail" text-anchor="middle">2</text>
 <text x="361" y="353" class="detail">withoutTransactionOperations.execute</text>
 <path data-connector="service-to-no-tx-ops" d="M344,388 H570" class="returnLine"/>
 
-<rect x="516" y="416" width="476" height="46" rx="18" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
+<rect x="516" y="422" width="476" height="34" rx="17" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
 <circle cx="540" cy="439" r="14" class="badge" stroke="#6f8f58"/>
 <text x="540" y="444" class="detail" text-anchor="middle">3</text>
 <text x="565" y="445" class="detail">transaction { create Author or Book row }</text>
 <path data-connector="no-tx-or-service-to-exposed" d="M570,480 H1244" class="state"/>
 
-<rect x="536" y="508" width="476" height="46" rx="18" fill="#ffffff" stroke="#7a8445" class="pill card"/>
+<rect x="536" y="514" width="476" height="34" rx="17" fill="#ffffff" stroke="#7a8445" class="pill card"/>
 <circle cx="560" cy="531" r="14" class="badge" stroke="#7a8445"/>
 <text x="560" y="536" class="detail" text-anchor="middle">4</text>
 <text x="585" y="537" class="detail">exposedTransactionTemplate.execute</text>
@@ -100,13 +100,13 @@
 <path data-connector="template-to-spring-tm" d="M792,602 H1015" class="spring"/>
 <path data-connector="spring-tm-to-exposed" d="M1015,632 H1244" class="db"/>
 
-<rect x="278" y="638" width="478" height="46" rx="18" fill="#ffffff" stroke="#d8aaa7" class="pill card"/>
+<rect x="278" y="644" width="478" height="34" rx="17" fill="#ffffff" stroke="#d8aaa7" class="pill card"/>
 <circle cx="302" cy="661" r="14" class="badge" stroke="#d8aaa7"/>
 <text x="302" y="666" class="detail" text-anchor="middle">5</text>
 <text x="327" y="667" class="detail">@Transactional delegates to no-tx callback</text>
 <path data-connector="transactional-to-no-tx" d="M344,702 H570" class="spring"/>
 
-<rect x="886" y="714" width="444" height="46" rx="18" fill="#ffffff" stroke="#a2743d" class="pill card"/>
+<rect x="886" y="720" width="444" height="34" rx="17" fill="#ffffff" stroke="#a2743d" class="pill card"/>
 <circle cx="910" cy="737" r="14" class="badge" stroke="#a2743d"/>
 <text x="910" y="742" class="detail" text-anchor="middle">6</text>
 <text x="935" y="743" class="detail">SELECT COUNT(*) FROM AUTHORS</text>

@@ -85,31 +85,31 @@
   <rect x="1287" y="690" width="14" height="218" rx="6" class="activation"/>
   <rect x="1475" y="758" width="14" height="196" rx="6" class="activation"/>
 
-  <rect x="54" y="226" width="382" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+  <rect x="54" y="232" width="382" height="34" rx="17" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
   <circle cx="78" cy="249" r="14" class="badge" stroke="#4f86c6"/>
   <text x="78" y="254" class="detail" text-anchor="middle">1</text>
   <text x="103" y="255" class="detail">GET /inventory/{sku} with X-Tenant-ID</text>
   <path data-connector="client-enters-tenant-filter" d="M106,286 H285" class="call"/>
 
-  <rect x="182" y="318" width="374" height="46" rx="18" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
+  <rect x="182" y="324" width="374" height="34" rx="17" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
   <circle cx="206" cy="341" r="14" class="badge" stroke="#6f8f58"/>
   <text x="206" y="346" class="detail" text-anchor="middle">2</text>
   <text x="231" y="347" class="detail">resolve whitelist and set TenantId</text>
   <path data-connector="filter-sets-tenant-context" d="M285,376 H480" class="contextCall"/>
 
-  <rect x="232" y="408" width="414" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+  <rect x="232" y="414" width="414" height="34" rx="17" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
   <circle cx="256" cy="431" r="14" class="badge" stroke="#4f86c6"/>
   <text x="256" y="436" class="detail" text-anchor="middle">3</text>
   <text x="281" y="437" class="detail">filterChain.doFilter enters controller</text>
   <path data-connector="filter-dispatches-controller" d="M285,466 H680" class="call"/>
 
-  <rect x="584" y="492" width="342" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+  <rect x="584" y="498" width="342" height="34" rx="17" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
   <circle cx="608" cy="515" r="14" class="badge" stroke="#4f86c6"/>
   <text x="608" y="520" class="detail" text-anchor="middle">4</text>
   <text x="633" y="521" class="detail">inventoryService.findBySku(sku)</text>
   <path data-connector="controller-calls-inventory-service" d="M680,552 H880" class="call"/>
 
-  <rect x="766" y="572" width="360" height="46" rx="18" fill="#ffffff" stroke="#7a8445" class="pill card"/>
+  <rect x="766" y="578" width="360" height="34" rx="17" fill="#ffffff" stroke="#7a8445" class="pill card"/>
   <circle cx="790" cy="595" r="14" class="badge" stroke="#7a8445"/>
   <text x="790" y="600" class="detail" text-anchor="middle">5</text>
   <text x="815" y="601" class="detail">repository.findBySku(sku)</text>
@@ -119,31 +119,31 @@
   <rect x="1020" y="630" width="352" height="34" rx="16" class="scopeTitle"/>
   <text x="1196" y="652" class="detail" text-anchor="middle">TenantTransaction.execute { ... } and finally reset</text>
 
-  <rect x="1006" y="672" width="426" height="46" rx="18" fill="#ffffff" stroke="#a2743d" class="pill card"/>
+  <rect x="1006" y="678" width="426" height="34" rx="17" fill="#ffffff" stroke="#a2743d" class="pill card"/>
   <circle cx="1030" cy="695" r="14" class="badge" stroke="#a2743d"/>
   <text x="1030" y="700" class="detail" text-anchor="middle">6</text>
   <text x="1055" y="701" class="detail">execute("inventory.findBySku")</text>
   <path data-connector="repository-enters-tenant-transaction" d="M1085,732 H1294" class="schemaCall"/>
 
-  <rect x="1120" y="740" width="392" height="46" rx="18" fill="#ffffff" stroke="#2f9a94" class="pill card"/>
+  <rect x="1120" y="746" width="392" height="34" rx="17" fill="#ffffff" stroke="#2f9a94" class="pill card"/>
   <circle cx="1144" cy="763" r="14" class="badge" stroke="#2f9a94"/>
   <text x="1144" y="768" class="detail" text-anchor="middle">7</text>
   <text x="1169" y="769" class="detail">SchemaUtils.setSchema(tenant.schema)</text>
   <path data-connector="tenant-transaction-switches-schema" d="M1294,800 H1482" class="sqlCall"/>
 
-  <rect x="1054" y="810" width="426" height="46" rx="18" fill="#ffffff" stroke="#2f9a94" class="pill card"/>
+  <rect x="1054" y="816" width="426" height="34" rx="17" fill="#ffffff" stroke="#2f9a94" class="pill card"/>
   <circle cx="1078" cy="833" r="14" class="badge" stroke="#2f9a94"/>
   <text x="1078" y="838" class="detail" text-anchor="middle">8</text>
   <text x="1103" y="839" class="detail">select inventory_items in active schema</text>
   <path data-connector="tenant-block-selects-inventory-items" d="M1294,870 H1482" class="sqlCall"/>
 
-  <rect x="1110" y="880" width="388" height="46" rx="18" fill="#ffffff" stroke="#a2743d" class="pill card"/>
+  <rect x="1110" y="886" width="388" height="34" rx="17" fill="#ffffff" stroke="#a2743d" class="pill card"/>
   <circle cx="1134" cy="903" r="14" class="badge" stroke="#a2743d"/>
   <text x="1134" y="908" class="detail" text-anchor="middle">9</text>
   <text x="1159" y="909" class="detail">finally resetToPublic()</text>
   <path data-connector="tenant-transaction-resets-public" d="M1294,940 H1482" class="schemaCall"/>
 
-  <rect x="226" y="886" width="346" height="46" rx="18" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
+  <rect x="226" y="892" width="346" height="34" rx="17" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
   <circle cx="250" cy="909" r="14" class="badge" stroke="#6f8f58"/>
   <text x="250" y="914" class="detail" text-anchor="middle">10</text>
   <text x="278" y="915" class="detail">finally TenantContext.clear()</text>

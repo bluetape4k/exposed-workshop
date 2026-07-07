@@ -73,38 +73,38 @@
 <rect x="1237" y="560" width="14" height="168" rx="6" class="activation"/>
 <rect x="1404" y="686" width="14" height="58" rx="6" class="activation"/>
 
-<rect x="74" y="222" width="368" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+<rect x="74" y="228" width="368" height="34" rx="17" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
 <circle cx="98" cy="245" r="14" class="badge" stroke="#4f86c6"/>
 <text x="98" y="250" class="detail" text-anchor="middle">1</text>
 <text x="123" y="251" class="detail">load SpringTransactionApp context</text>
 <path data-connector="load-context" d="M118,286 H334" class="call"/>
 
-<rect x="304" y="318" width="396" height="46" rx="18" fill="#ffffff" stroke="#7a8445" class="pill card"/>
+<rect x="304" y="324" width="396" height="34" rx="17" fill="#ffffff" stroke="#7a8445" class="pill card"/>
 <circle cx="328" cy="341" r="14" class="badge" stroke="#7a8445"/>
 <text x="328" y="346" class="detail" text-anchor="middle">2</text>
 <text x="353" y="347" class="detail">register SpringTransactionManager</text>
 <path data-connector="register-transaction-manager" d="M334,382 H563" class="spring"/>
 
-<rect x="522" y="414" width="414" height="46" rx="18" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
+<rect x="522" y="420" width="414" height="34" rx="17" fill="#ffffff" stroke="#4f86c6" class="pill card"/>
 <circle cx="546" cy="437" r="14" class="badge" stroke="#4f86c6"/>
 <text x="546" y="442" class="detail" text-anchor="middle">3</text>
 <text x="571" y="443" class="detail">call OrderService.doBoth()</text>
 <path data-connector="test-calls-service" d="M118,478 H800" class="call"/>
 
-<rect x="676" y="496" width="432" height="46" rx="18" fill="#ffffff" stroke="#d8aaa7" class="pill card"/>
+<rect x="676" y="502" width="432" height="34" rx="17" fill="#ffffff" stroke="#d8aaa7" class="pill card"/>
 <circle cx="700" cy="519" r="14" class="badge" stroke="#d8aaa7"/>
 <text x="700" y="524" class="detail" text-anchor="middle">4</text>
 <text x="725" y="525" class="detail">@Transactional opens REQUIRED boundary</text>
 <path data-connector="transactional-boundary" d="M800,560 H563" class="spring"/>
 
-<rect x="768" y="584" width="416" height="46" rx="18" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
+<rect x="768" y="590" width="416" height="34" rx="17" fill="#ffffff" stroke="#6f8f58" class="pill card"/>
 <circle cx="792" cy="607" r="14" class="badge" stroke="#6f8f58"/>
 <text x="792" y="612" class="detail" text-anchor="middle">5</text>
 <text x="817" y="613" class="detail">CustomerEntity.new + OrderEntity.new</text>
 <path data-connector="service-to-schema" d="M800,650 H1020" class="state"/>
 <path data-connector="schema-writes-tables" d="M1020,676 H1244" class="db"/>
 
-<rect x="1078" y="712" width="348" height="46" rx="18" fill="#ffffff" stroke="#a2743d" class="pill card"/>
+<rect x="1078" y="718" width="348" height="34" rx="17" fill="#ffffff" stroke="#a2743d" class="pill card"/>
 <circle cx="1102" cy="735" r="14" class="badge" stroke="#a2743d"/>
 <text x="1102" y="740" class="detail" text-anchor="middle">6</text>
 <text x="1127" y="741" class="detail">execute { TransactionTemplate }</text>

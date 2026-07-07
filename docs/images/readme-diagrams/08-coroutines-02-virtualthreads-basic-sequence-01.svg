@@ -90,7 +90,7 @@
   <rect x="1394" y="790" width="12" height="52" rx="6" class="activation"/>
 
   <g id="m1" data-message="1">
-    <rect class="pill" x="82" y="214" width="336" height="38" rx="19" fill="#ffffff" stroke="#6e8f4f"/>
+    <rect class="pill" x="82" y="216" width="336" height="34" rx="17" fill="#ffffff" stroke="#6e8f4f"/>
     <circle cx="108" cy="233" r="13" fill="#eef7f0" stroke="#6e8f4f" stroke-width="1.5"/>
     <text x="108" y="238" class="num" fill="#55783f" text-anchor="middle">1</text>
     <text x="136" y="238" class="labelText">@EnabledForJreRange gates Java 21</text>
@@ -98,7 +98,7 @@
   </g>
 
   <g id="m2" data-message="2">
-    <rect class="pill" x="292" y="294" width="364" height="38" rx="19" fill="#ffffff" stroke="#6e8f4f"/>
+    <rect class="pill" x="292" y="296" width="364" height="34" rx="17" fill="#ffffff" stroke="#6e8f4f"/>
     <circle cx="318" cy="313" r="13" fill="#eef7f0" stroke="#6e8f4f" stroke-width="1.5"/>
     <text x="318" y="318" class="num" fill="#55783f" text-anchor="middle">2</text>
     <text x="346" y="318" class="labelText">withTables creates VTester fixture</text>
@@ -106,7 +106,7 @@
   </g>
 
   <g id="m3" data-message="3">
-    <rect class="pill" x="520" y="374" width="424" height="38" rx="19" fill="#ffffff" stroke="#3f7d9c"/>
+    <rect class="pill" x="520" y="376" width="424" height="34" rx="17" fill="#ffffff" stroke="#3f7d9c"/>
     <circle cx="546" cy="393" r="13" fill="#eaf4f8" stroke="#3f7d9c" stroke-width="1.5"/>
     <text x="546" y="398" class="num" fill="#2f6f8e" text-anchor="middle">3</text>
     <text x="574" y="398" class="labelText">newVirtualThreadJdbcTransaction opens tx</text>
@@ -114,7 +114,7 @@
   </g>
 
   <g id="m4" data-message="4">
-    <rect class="pill" x="950" y="450" width="390" height="38" rx="19" fill="#ffffff" stroke="#a2743d"/>
+    <rect class="pill" x="950" y="452" width="390" height="34" rx="17" fill="#ffffff" stroke="#a2743d"/>
     <circle cx="976" cy="469" r="13" fill="#fff4df" stroke="#a2743d" stroke-width="1.5"/>
     <text x="976" y="474" class="num" fill="#855a29" text-anchor="middle">4</text>
     <text x="1004" y="474" class="labelText">insert/select rows through VTester</text>
@@ -126,7 +126,7 @@
   <text x="566" y="525" class="altText">ALT: fan-out / regular tx / exception cleanup</text>
 
   <g id="m5" data-message="5">
-    <rect class="pill" x="522" y="540" width="420" height="38" rx="19" fill="#ffffff" stroke="#3f7d9c"/>
+    <rect class="pill" x="522" y="542" width="420" height="34" rx="17" fill="#ffffff" stroke="#3f7d9c"/>
     <circle cx="548" cy="559" r="13" fill="#eaf4f8" stroke="#3f7d9c" stroke-width="1.5"/>
     <text x="548" y="564" class="num" fill="#2f6f8e" text-anchor="middle">5</text>
     <text x="576" y="564" class="labelText">virtualThreadJdbcTransactionAsync fan-out</text>
@@ -134,7 +134,7 @@
   </g>
 
   <g id="m6" data-message="6">
-    <rect class="pill" x="750" y="616" width="362" height="38" rx="19" fill="#ffffff" stroke="#a2743d"/>
+    <rect class="pill" x="750" y="618" width="362" height="34" rx="17" fill="#ffffff" stroke="#a2743d"/>
     <circle cx="776" cy="635" r="13" fill="#fff4df" stroke="#a2743d" stroke-width="1.5"/>
     <text x="776" y="640" class="num" fill="#855a29" text-anchor="middle">6</text>
     <text x="804" y="640" class="labelText">awaitAll joins rows and counts</text>
@@ -142,7 +142,7 @@
   </g>
 
   <g id="m7" data-message="7">
-    <rect class="pill" x="900" y="692" width="392" height="38" rx="19" fill="#ffffff" stroke="#3f7d9c"/>
+    <rect class="pill" x="900" y="694" width="392" height="34" rx="17" fill="#ffffff" stroke="#3f7d9c"/>
     <circle cx="926" cy="711" r="13" fill="#eaf4f8" stroke="#3f7d9c" stroke-width="1.5"/>
     <text x="926" y="716" class="num" fill="#2f6f8e" text-anchor="middle">7</text>
     <text x="954" y="716" class="labelText">regular transaction selects same table</text>
@@ -150,7 +150,7 @@
   </g>
 
   <g id="m8" data-message="8">
-    <rect class="pill" x="908" y="766" width="476" height="38" rx="19" fill="#ffffff" stroke="#a65a66"/>
+    <rect class="pill" x="908" y="768" width="476" height="34" rx="17" fill="#ffffff" stroke="#a65a66"/>
     <circle cx="934" cy="785" r="13" fill="#fff0f2" stroke="#a65a66" stroke-width="1.5"/>
     <text x="934" y="790" class="num" fill="#8c4b56" text-anchor="middle">8</text>
     <text x="962" y="790" class="labelText">duplicate id closes inner connection and wraps SQL error</text>

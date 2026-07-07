@@ -32,63 +32,63 @@
 <text x="48" y="80" class="subtitle">Spring Boot creates Exposed transaction beans, conditionally runs DatabaseInitializer, and verifies TestTable through sync, async, and coroutine paths</text>
 <desc>SpringBootTest</desc><rect x="29" y="130" width="152" height="54" rx="10" fill="#ffffff" stroke="#617985" class="card"/>
 <text x="105" y="163" class="participant label" text-anchor="middle">SpringBootTest</text>
-<line x1="105" y1="184" x2="105" y2="760" class="lifeline"/>
+<line x1="105" y1="184" x2="105" y2="812" class="lifeline"/>
 <desc>Application</desc><rect x="239" y="130" width="152" height="54" rx="10" fill="#ffffff" stroke="#617985" class="card"/>
 <text x="315" y="163" class="participant label" text-anchor="middle">Application</text>
-<line x1="315" y1="184" x2="315" y2="760" class="lifeline"/>
+<line x1="315" y1="184" x2="315" y2="812" class="lifeline"/>
 <desc>AutoConfig</desc><rect x="469" y="130" width="152" height="54" rx="10" fill="#ffffff" stroke="#617985" class="card"/>
 <text x="545" y="163" class="participant label" text-anchor="middle">AutoConfig</text>
-<line x1="545" y1="184" x2="545" y2="760" class="lifeline"/>
+<line x1="545" y1="184" x2="545" y2="812" class="lifeline"/>
 <desc>Tx Manager</desc><rect x="699" y="130" width="152" height="54" rx="10" fill="#ffffff" stroke="#617985" class="card"/>
 <text x="775" y="163" class="participant label" text-anchor="middle">Tx Manager</text>
-<line x1="775" y1="184" x2="775" y2="760" class="lifeline"/>
+<line x1="775" y1="184" x2="775" y2="812" class="lifeline"/>
 <desc>Initializer</desc><rect x="929" y="130" width="152" height="54" rx="10" fill="#ffffff" stroke="#617985" class="card"/>
 <text x="1005" y="163" class="participant label" text-anchor="middle">Initializer</text>
-<line x1="1005" y1="184" x2="1005" y2="760" class="lifeline"/>
+<line x1="1005" y1="184" x2="1005" y2="812" class="lifeline"/>
 <desc>TestTable</desc><rect x="1139" y="130" width="152" height="54" rx="10" fill="#ffffff" stroke="#617985" class="card"/>
 <text x="1215" y="163" class="participant label" text-anchor="middle">TestTable</text>
-<line x1="1215" y1="184" x2="1215" y2="760" class="lifeline"/>
+<line x1="1215" y1="184" x2="1215" y2="812" class="lifeline"/>
 <desc>Assertions</desc><rect x="1314" y="130" width="152" height="54" rx="10" fill="#ffffff" stroke="#617985" class="card"/>
 <text x="1390" y="163" class="participant label" text-anchor="middle">Assertions</text>
-<line x1="1390" y1="184" x2="1390" y2="760" class="lifeline"/>
+<line x1="1390" y1="184" x2="1390" y2="812" class="lifeline"/>
 <rect x="98" y="220" width="14" height="74" rx="6" class="activation"/>
 <rect x="308" y="274" width="14" height="94" rx="6" class="activation"/>
 <rect x="538" y="356" width="14" height="192" rx="6" class="activation"/>
 <rect x="768" y="438" width="14" height="238" rx="6" class="activation"/>
 <rect x="998" y="520" width="14" height="48" rx="6" class="activation"/>
-<rect x="1208" y="548" width="14" height="160" rx="6" class="activation"/>
-<rect x="1383" y="688" width="14" height="78" rx="6" class="activation"/>
-<rect x="82" y="222" width="254" height="46" rx="10" fill="#ffffff" stroke="#b6d3ec" class="pill card"/>
+<rect x="1208" y="548" width="14" height="250" rx="6" class="activation"/>
+<rect x="1383" y="688" width="14" height="110" rx="6" class="activation"/>
+<rect x="82" y="228" width="254" height="34" rx="17" fill="#ffffff" stroke="#b6d3ec" class="pill card"/>
 <circle cx="105" cy="245" r="14" fill="#fff" stroke="#b6d3ec" stroke-width="1.4"/>
 <text x="105" y="250" class="detail" text-anchor="middle">1</text>
 <text x="130" y="251" class="detail">load Application with H2 properties</text>
 <path data-connector="load-application" d="M105,276 H315" class="arrow"/>
-<rect x="292" y="304" width="304" height="46" rx="10" fill="#ffffff" stroke="#cbd1a2" class="pill card"/>
+<rect x="292" y="310" width="304" height="34" rx="17" fill="#ffffff" stroke="#cbd1a2" class="pill card"/>
 <circle cx="315" cy="327" r="14" fill="#fff" stroke="#cbd1a2" stroke-width="1.4"/>
 <text x="315" y="332" class="detail" text-anchor="middle">2</text>
 <text x="340" y="333" class="detail">ExposedAutoConfiguration creates beans</text>
 <path data-connector="create-autoconfig-beans" d="M315,358 H545" class="arrow"/>
-<rect x="520" y="386" width="312" height="46" rx="10" fill="#ffffff" stroke="#add7d3" class="pill card"/>
+<rect x="520" y="392" width="312" height="34" rx="17" fill="#ffffff" stroke="#add7d3" class="pill card"/>
 <circle cx="543" cy="409" r="14" fill="#fff" stroke="#add7d3" stroke-width="1.4"/>
 <text x="543" y="414" class="detail" text-anchor="middle">3</text>
 <text x="568" y="415" class="detail">SpringTransactionManager is registered</text>
 <path data-connector="register-transaction-manager" d="M545,440 H775" class="arrow"/>
-<rect x="740" y="468" width="318" height="46" rx="10" fill="#ffffff" stroke="#d8aaa7" class="pill card"/>
+<rect x="740" y="474" width="318" height="34" rx="17" fill="#ffffff" stroke="#d8aaa7" class="pill card"/>
 <circle cx="763" cy="491" r="14" fill="#fff" stroke="#d8aaa7" stroke-width="1.4"/>
 <text x="763" y="496" class="detail" text-anchor="middle">4</text>
 <text x="788" y="497" class="detail">generate-ddl=true runs initializer</text>
 <path data-connector="conditional-initializer" d="M545,522 H1005" class="runtimeUse"/>
 <path data-connector="initializer-creates-table" d="M1005,550 H1215" class="dbUse"/>
-<rect x="982" y="604" width="284" height="46" rx="10" fill="#ffffff" stroke="#a2743d" class="pill card"/>
+<rect x="982" y="610" width="284" height="34" rx="17" fill="#ffffff" stroke="#a2743d" class="pill card"/>
 <circle cx="1005" cy="627" r="14" fill="#fff" stroke="#bdd6b4" stroke-width="1.4"/>
 <text x="1005" y="632" class="detail" text-anchor="middle">5</text>
 <text x="1030" y="633" class="detail">sync/async/coroutine queries table</text>
 <path data-connector="query-test-table" d="M775,658 H1215" class="dbUse"/>
-<rect x="1134" y="718" width="316" height="46" rx="10" fill="#ffffff" stroke="#dfc291" class="pill card"/>
+<rect x="1134" y="724" width="316" height="34" rx="17" fill="#ffffff" stroke="#dfc291" class="pill card"/>
 <circle cx="1189" cy="741" r="14" fill="#fff" stroke="#dfc291" stroke-width="1.4"/>
 <text x="1189" y="746" class="detail" text-anchor="middle">6</text>
 <text x="1214" y="747" class="detail">assert empty rows and missing name</text>
-<path data-connector="assert-results" d="M1215,690 H1390" class="returnLine"/>
+<path data-connector="assert-results" d="M1215,780 H1390" class="returnLine"/>
 <rect x="126" y="830" width="1248" height="52" rx="10" fill="#ffffff" stroke="#d6e1e5" stroke-width="1.3"/>
 <text x="750" y="861" class="detail" text-anchor="middle">Sequence rule: bean creation and table verification are solid calls; result checks return dashed. DatabaseInitializer is conditional on spring.exposed.generate-ddl=true.</text>
 </svg>

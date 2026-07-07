@@ -90,7 +90,7 @@
   <rect x="1394" y="804" width="12" height="38" rx="6" class="activation"/>
 
   <g id="m1" data-message="1">
-    <rect class="pill" x="82" y="214" width="370" height="38" rx="19" fill="#ffffff" stroke="#6e8f4f"/>
+    <rect class="pill" x="82" y="216" width="370" height="34" rx="17" fill="#ffffff" stroke="#6e8f4f"/>
     <circle cx="108" cy="233" r="13" fill="#eef7f0" stroke="#6e8f4f" stroke-width="1.5"/>
     <text x="108" y="238" class="num" fill="#55783f" text-anchor="middle">1</text>
     <text x="136" y="238" class="labelText">withTablesSuspending creates unique table</text>
@@ -98,7 +98,7 @@
   </g>
 
   <g id="m2" data-message="2">
-    <rect class="pill" x="304" y="294" width="402" height="38" rx="19" fill="#ffffff" stroke="#3f7d9c"/>
+    <rect class="pill" x="304" y="296" width="402" height="34" rx="17" fill="#ffffff" stroke="#3f7d9c"/>
     <circle cx="330" cy="313" r="13" fill="#eaf4f8" stroke="#3f7d9c" stroke-width="1.5"/>
     <text x="330" y="318" class="num" fill="#2f6f8e" text-anchor="middle">2</text>
     <text x="358" y="318" class="labelText">newSuspendedTransaction inserts origin id=1</text>
@@ -106,7 +106,7 @@
   </g>
 
   <g id="m3" data-message="3">
-    <rect class="pill" x="548" y="374" width="376" height="38" rx="19" fill="#ffffff" stroke="#a2743d"/>
+    <rect class="pill" x="548" y="376" width="376" height="34" rx="17" fill="#ffffff" stroke="#a2743d"/>
     <circle cx="574" cy="393" r="13" fill="#fff4df" stroke="#a2743d" stroke-width="1.5"/>
     <text x="574" y="398" class="num" fill="#855a29" text-anchor="middle">3</text>
     <text x="602" y="398" class="labelText">TesterUnique.insert(id = 1)</text>
@@ -118,7 +118,7 @@
   <text x="592" y="497" class="altText">ALT: insert retry / update branch</text>
 
   <g id="m4" data-message="4">
-    <rect class="pill" x="532" y="506" width="412" height="38" rx="19" fill="#ffffff" stroke="#3f7d9c"/>
+    <rect class="pill" x="532" y="508" width="412" height="34" rx="17" fill="#ffffff" stroke="#3f7d9c"/>
     <circle cx="558" cy="525" r="13" fill="#eaf4f8" stroke="#3f7d9c" stroke-width="1.5"/>
     <text x="558" y="530" class="num" fill="#2f6f8e" text-anchor="middle">4</text>
     <text x="586" y="530" class="labelText">suspendedTransactionAsync starts insertJob</text>
@@ -126,7 +126,7 @@
   </g>
 
   <g id="m5" data-message="5">
-    <rect class="pill" x="752" y="578" width="420" height="38" rx="19" fill="#ffffff" stroke="#3f7d9c"/>
+    <rect class="pill" x="752" y="580" width="420" height="34" rx="17" fill="#ffffff" stroke="#3f7d9c"/>
     <circle cx="778" cy="597" r="13" fill="#eaf4f8" stroke="#3f7d9c" stroke-width="1.5"/>
     <text x="778" y="602" class="num" fill="#2f6f8e" text-anchor="middle">5</text>
     <text x="806" y="602" class="labelText">suspendedTransactionAsync starts updateJob</text>
@@ -134,7 +134,7 @@
   </g>
 
   <g id="m6" data-message="6">
-    <rect class="pill" x="762" y="650" width="386" height="38" rx="19" fill="#ffffff" stroke="#a2743d"/>
+    <rect class="pill" x="762" y="652" width="386" height="34" rx="17" fill="#ffffff" stroke="#a2743d"/>
     <circle cx="788" cy="669" r="13" fill="#fff4df" stroke="#a2743d" stroke-width="1.5"/>
     <text x="788" y="674" class="num" fill="#855a29" text-anchor="middle">6</text>
     <text x="816" y="674" class="labelText">insert id=1 retries with maxAttempts=20</text>
@@ -142,7 +142,7 @@
   </g>
 
   <g id="m7" data-message="7">
-    <rect class="pill" x="952" y="716" width="372" height="38" rx="19" fill="#ffffff" stroke="#a2743d"/>
+    <rect class="pill" x="952" y="718" width="372" height="34" rx="17" fill="#ffffff" stroke="#a2743d"/>
     <circle cx="978" cy="735" r="13" fill="#fff4df" stroke="#a2743d" stroke-width="1.5"/>
     <text x="978" y="740" class="num" fill="#855a29" text-anchor="middle">7</text>
     <text x="1006" y="740" class="labelText">update id 1 to 99 before retry succeeds</text>
@@ -150,7 +150,7 @@
   </g>
 
   <g id="m8" data-message="8">
-    <rect class="pill" x="1178" y="790" width="278" height="38" rx="19" fill="#ffffff" stroke="#a65a66"/>
+    <rect class="pill" x="1178" y="792" width="278" height="34" rx="17" fill="#ffffff" stroke="#a65a66"/>
     <circle cx="1204" cy="809" r="13" fill="#fff0f2" stroke="#a65a66" stroke-width="1.5"/>
     <text x="1204" y="814" class="num" fill="#8c4b56" text-anchor="middle">8</text>
     <text x="1232" y="814" class="labelText">await jobs; assert ids [1, 99]</text>
