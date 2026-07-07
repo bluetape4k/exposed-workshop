@@ -6,17 +6,17 @@
 <marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
-.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+.title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Mono";fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono";font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter";font-size:16px;fill:#1e293b}
+.panelTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#94a3b8}
 .card{stroke-width:1.7;filter:url(#shadow)}.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
 .edge{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .fkLine{stroke:#4f8f8a;stroke-width:2.2;marker-end:url(#arrowTeal)}
 .mapLine{stroke:#6e8f4f;stroke-width:2;marker-end:url(#arrowGreen)}
 .entityLine{stroke:#4f86c6;stroke-width:2;stroke-dasharray:6 5;marker-end:url(#arrowBlue)}
-.cardinality{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;font-weight:700;fill:#1e293b}
+.cardinality{font-family:"Comic Mono";font-size:13px;font-weight:700;fill:#1e293b}
 </style>
 </defs>
 <rect width="1200" height="720" class="canvas"/>

@@ -4,12 +4,12 @@
   <defs>
     <style>
       text { letter-spacing: 0; }
-      .title { font-family: "Architects Daughter", "Comic Sans MS", cursive; font-size: 42px; fill: #23323a; }
-      .subtitle, .colTitle, .cardText, .legendText, .footer { font-family: "Comic Mono", "Comic Sans MS", Arial, sans-serif; fill: #324750; }
+      .title { font-family: "Architects Daughter"; font-size: 42px; fill: #23323a; }
+      .subtitle, .colTitle, .cardText, .legendText, .footer { font-family: "Comic Mono"; fill: #324750; }
       .subtitle { font-size: 18px; }
       .colTitle { font-size: 14px; font-weight: 700; fill: #60717a; }
-      .rowTitle { font-family: "Architects Daughter", "Comic Sans MS", cursive; font-size: 22px; fill: #20323b; }
-      .cardTitle { font-family: "Architects Daughter", "Comic Sans MS", cursive; font-size: 20px; fill: #20323b; }
+      .rowTitle { font-family: "Architects Daughter"; font-size: 22px; fill: #20323b; }
+      .cardTitle { font-family: "Architects Daughter"; font-size: 20px; fill: #20323b; }
       .cardText { font-size: 13px; }
       .legendText { font-size: 13px; }
       .footer { font-size: 14px; fill: #60717a; }

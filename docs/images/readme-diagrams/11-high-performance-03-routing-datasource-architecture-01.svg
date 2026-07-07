@@ -12,8 +12,8 @@
     <style>
       text { letter-spacing: 0; }
       .canvas { fill: #fbfcf8; stroke: #3f515a; stroke-width: 3; }
-      .title { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 36px; fill: #23323a; }
-      .subtitle,.lane,.detail,.note,.key { font-family: "Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif; fill: #516670; }
+      .title { font-family: "Architects Daughter"; font-size: 36px; fill: #23323a; }
+      .subtitle,.lane,.detail,.note,.key { font-family: "Comic Mono"; fill: #516670; }
       .subtitle { font-size: 15px; }
       .lane { font-size: 12px; font-weight: 700; fill: #687b83; }
       .card { fill: #ffffff; stroke-width: 2.1; filter: url(#shadow); }
@@ -21,7 +21,7 @@
       .service { stroke: #ac7a34; }
       .route { stroke: #7b6bb4; }
       .store { stroke: #8fa1aa; }
-      .label { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 20px; fill: #20323b; }
+      .label { font-family: "Architects Daughter"; font-size: 20px; fill: #20323b; }
       .detail { font-size: 12px; }
       .note { font-size: 13px; }
       .key { font-size: 13px; font-weight: 700; fill: #6d5fa8; }

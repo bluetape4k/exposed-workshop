@@ -15,19 +15,19 @@
       .lane{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
       .card{fill:#ffffff;stroke-width:1.8;filter:url(#shadow)}
       .head{stroke-width:0}
-      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-      .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-      .laneTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-      .classTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-      .stereo{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:11px;fill:#64748b}
-      .member{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
+      .title{font-family:"Architects Daughter";font-size:32px;fill:#1e293b}
+      .subtitle{font-family:"Comic Mono";font-size:13px;fill:#536476}
+      .laneTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+      .classTitle{font-family:"Architects Daughter";font-size:18px;fill:#1e293b}
+      .stereo{font-family:"Comic Mono";font-size:11px;fill:#64748b}
+      .member{font-family:"Comic Mono";font-size:12px;fill:#475569}
       .emph{fill:#1e3a8a;font-weight:700}
       .factory{fill:#7c4a03;font-weight:700}
       .inherit{fill:none;stroke:#60758d;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inheritArrow)}
       .depends{fill:none;stroke:#8a6f4d;stroke-width:1.8;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:7 6;marker-end:url(#dependencyArrow)}
       .flow{fill:none;stroke:#5f8f86;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#dependencyArrow)}
       .legendBox{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-      .legendText{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
+      .legendText{font-family:"Comic Mono";font-size:12px;fill:#475569}
     </style>
   </defs>
 

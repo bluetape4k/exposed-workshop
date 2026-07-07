@@ -24,12 +24,12 @@
     <style>
       .canvas{fill:#f6f9fc}
       .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
-      .subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+      .title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}
+      .subtitle,.detail{font-family:"Comic Mono";fill:#536476}
       .subtitle{font-size:13px}
       .detail{font-size:12px}
-      .role{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10.5px;fill:#60727d}
-      .participant{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15.5px;fill:#1e293b}
+      .role{font-family:"Comic Mono";font-size:10.5px;fill:#60727d}
+      .participant{font-family:"Architects Daughter";font-size:15.5px;fill:#1e293b}
       .card{stroke-width:1.7;filter:url(#shadow)}
       .header{fill:#ffffff;stroke:#b6d3ec;stroke-width:1.7;filter:url(#shadow)}
       .lifeline{stroke:#9cafb7;stroke-width:1.4;stroke-dasharray:5 6}

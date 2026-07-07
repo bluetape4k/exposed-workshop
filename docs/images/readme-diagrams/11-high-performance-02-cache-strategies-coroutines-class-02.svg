@@ -12,15 +12,15 @@
     <style>
       text { letter-spacing: 0; }
       .canvas { fill: #fbfcf8; stroke: #3f515a; stroke-width: 3; }
-      .title { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 36px; fill: #23323a; }
-      .subtitle,.small,.detail,.tag { font-family: "Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif; fill: #516670; }
+      .title { font-family: "Architects Daughter"; font-size: 36px; fill: #23323a; }
+      .subtitle,.small,.detail,.tag { font-family: "Comic Mono"; fill: #516670; }
       .subtitle { font-size: 15px; }
       .card { fill: #ffffff; stroke-width: 2.1; filter: url(#shadow); }
       .base { stroke: #5f7f89; }
       .repo { stroke: #7b6bb4; }
       .model { stroke: #5d948b; }
       .config { stroke: #ac7a34; }
-      .label { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 20px; fill: #20323b; }
+      .label { font-family: "Architects Daughter"; font-size: 20px; fill: #20323b; }
       .small { font-size: 12px; }
       .detail { font-size: 12px; fill: #60717a; }
       .tag { font-size: 11px; font-weight: 700; fill: #7b6bb4; }

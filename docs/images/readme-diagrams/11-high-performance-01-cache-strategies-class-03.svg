@@ -12,8 +12,8 @@
     <style>
       text { letter-spacing: 0; }
       .canvas { fill: #fbfcf8; stroke: #3f515a; stroke-width: 3; }
-      .title { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 36px; fill: #23323a; }
-      .subtitle,.sectionNote,.cardText,.label,.footer { font-family: "Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif; fill: #324750; }
+      .title { font-family: "Architects Daughter"; font-size: 36px; fill: #23323a; }
+      .subtitle,.sectionNote,.cardText,.label,.footer { font-family: "Comic Mono"; fill: #324750; }
       .subtitle { font-size: 15px; }
       .section { fill: #f8fbfa; stroke: #d7e2de; stroke-width: 1.5; }
       .sectionNote { font-size: 12px; fill: #60717a; }
@@ -23,8 +23,8 @@
       .readOnlyCard { stroke: #ac7a34; }
       .writeBehindCard { stroke: #7b6bb4; }
       .configCard { stroke: #8fa1aa; }
-      .cardTitle { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 20px; fill: #20323b; }
-      .cardType { font-family: "Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif; font-size: 12px; fill: #60717a; }
+      .cardTitle { font-family: "Architects Daughter"; font-size: 20px; fill: #20323b; }
+      .cardType { font-family: "Comic Mono"; font-size: 12px; fill: #60717a; }
       .cardText { font-size: 13px; }
       .inheritLine { fill: none; stroke: #3f515a; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#inheritHead); }
       .useLine { fill: none; stroke: #3f8e84; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowUse); }

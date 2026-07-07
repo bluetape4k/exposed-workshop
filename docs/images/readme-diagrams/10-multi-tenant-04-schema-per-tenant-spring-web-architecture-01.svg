@@ -9,11 +9,11 @@
       .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
       .lane{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
       .card{stroke-width:1.7;filter:url(#shadow)}
-      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-      .subtitle,.detail,.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
+      .title{font-family:"Architects Daughter";font-size:32px;fill:#1e293b}
+      .subtitle,.detail,.tiny{font-family:"Comic Mono";fill:#536476}
       .subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-size:10.5px;fill:#64748b}
-      .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:13px;letter-spacing:.08em;fill:#64748b}
-      .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
+      .panelTitle{font-family:"Architects Daughter";font-size:13px;letter-spacing:.08em;fill:#64748b}
+      .label{font-family:"Architects Daughter";font-size:17px;fill:#1e293b}
       .flow{fill:none;stroke:#4f86c6;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
       .contextFlow{fill:none;stroke:#6f8f58;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
       .schemaFlow{fill:none;stroke:#b8894a;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}

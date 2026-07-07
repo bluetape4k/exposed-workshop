@@ -8,17 +8,17 @@
       .frame{fill:#ffffff;stroke:#d7e2ec;stroke-width:1.5}
       .tableBox{fill:#ffffff;stroke-width:1.9;filter:url(#shadow)}
       .head{stroke-width:0}
-      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-      .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-      .tableTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:22px;fill:#1e293b}
-      .section{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#334155}
-      .field{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#475569}
+      .title{font-family:"Architects Daughter";font-size:32px;fill:#1e293b}
+      .subtitle{font-family:"Comic Mono";font-size:13px;fill:#536476}
+      .tableTitle{font-family:"Architects Daughter";font-size:22px;fill:#1e293b}
+      .section{font-family:"Architects Daughter";font-size:16px;fill:#334155}
+      .field{font-family:"Comic Mono";font-size:13px;fill:#475569}
       .pk{fill:#1e3a8a;font-weight:700}
       .unique{fill:#8a4f0a;font-weight:700}
-      .meta{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#64748b}
+      .meta{font-family:"Comic Mono";font-size:12px;fill:#64748b}
       .noteBox{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2;filter:url(#shadow)}
-      .noteTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-      .note{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
+      .noteTitle{font-family:"Architects Daughter";font-size:18px;fill:#1e293b}
+      .note{font-family:"Comic Mono";font-size:12px;fill:#475569}
       .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
     </style>
   </defs>

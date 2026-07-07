@@ -26,12 +26,12 @@
     <style>
       text { letter-spacing: 0; }
       .canvas { fill: #fbfcf8; stroke: #3f515a; stroke-width: 3; }
-      .title { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 38px; fill: #23323a; }
-      .subtitle,.laneNote,.cardText,.label,.legendText,.footer { font-family: "Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif; fill: #324750; }
+      .title { font-family: "Architects Daughter"; font-size: 38px; fill: #23323a; }
+      .subtitle,.laneNote,.cardText,.label,.legendText,.footer { font-family: "Comic Mono"; fill: #324750; }
       .subtitle { font-size: 16px; }
-      .laneTitle { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 24px; fill: #23323a; }
+      .laneTitle { font-family: "Architects Daughter"; font-size: 24px; fill: #23323a; }
       .laneNote { font-size: 13px; fill: #5b6d75; }
-      .cardTitle { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 21px; fill: #20323b; }
+      .cardTitle { font-family: "Architects Daughter"; font-size: 21px; fill: #20323b; }
       .cardText { font-size: 13px; }
       .label { font-size: 12px; font-weight: 700; }
       .legendText { font-size: 12px; fill: #52666f; }
