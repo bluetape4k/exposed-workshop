@@ -8,17 +8,17 @@
       .frame{fill:#ffffff;stroke:#d7e2ec;stroke-width:1.5}
       .card{fill:#ffffff;stroke-width:1.9;filter:url(#shadow)}
       .head{stroke-width:0}
-      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-      .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-      .cardTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:21px;fill:#1e293b}
-      .badge{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:700;fill:#334155}
-      .section{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#334155}
-      .text{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
-      .strong{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:700;fill:#1e3a8a}
-      .tradeoff{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:700;fill:#8a4f0a}
+      .title{font-family:"Architects Daughter";font-size:32px;fill:#1e293b}
+      .subtitle{font-family:"Comic Mono";font-size:13px;fill:#536476}
+      .cardTitle{font-family:"Architects Daughter";font-size:21px;fill:#1e293b}
+      .badge{font-family:"Comic Mono";font-size:12px;font-weight:700;fill:#334155}
+      .section{font-family:"Architects Daughter";font-size:15px;fill:#334155}
+      .text{font-family:"Comic Mono";font-size:12px;fill:#475569}
+      .strong{font-family:"Comic Mono";font-size:12px;font-weight:700;fill:#1e3a8a}
+      .tradeoff{font-family:"Comic Mono";font-size:12px;font-weight:700;fill:#8a4f0a}
       .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
       .noteBox{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-      .note{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
+      .note{font-family:"Comic Mono";font-size:12px;fill:#475569}
     </style>
   </defs>
 

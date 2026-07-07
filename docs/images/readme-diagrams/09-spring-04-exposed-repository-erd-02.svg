@@ -8,13 +8,13 @@
   .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
   .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
   .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
+  .title{font-family:"Architects Daughter";font-size:32px;fill:#1e293b}
+  .subtitle{font-family:"Comic Mono";font-size:13px;fill:#536476}
+  .panelTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+  .label{font-family:"Architects Daughter";font-size:18px;fill:#1e293b}
+  .smallLabel{font-family:"Architects Daughter";font-size:15px;fill:#1e293b}
+  .detail{font-family:"Comic Mono";font-size:12px;fill:#536476}
+  .tiny{font-family:"Comic Mono";font-size:10px;fill:#64748b}
   .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .relationship{fill:none;stroke:#758297;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}

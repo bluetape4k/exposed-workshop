@@ -5,9 +5,9 @@
 <style>
 text{letter-spacing:0}
 .frame{fill:#fbfcf8;stroke:#41545d;stroke-width:3}
-.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:38px;font-weight:400;fill:#263238}
-.subtitle,.msg,.note,.footer,.role{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#36464f}
-.subtitle{font-size:17px}.participant{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:18px;font-weight:400;fill:#1f3138}.role{font-size:12px;fill:#546a73}
+.title{font-family:"Architects Daughter";font-size:38px;font-weight:400;fill:#263238}
+.subtitle,.msg,.note,.footer,.role{font-family:"Comic Mono";fill:#36464f}
+.subtitle{font-size:17px}.participant{font-family:"Architects Daughter";font-size:18px;font-weight:400;fill:#1f3138}.role{font-size:12px;fill:#546a73}
 .msg{font-size:13px}.note{font-size:13px}.footer{font-size:13px;fill:#60727d}
 .header{fill:#ffffff;stroke:#546e7a;stroke-width:2}.lifeline{stroke:#9aaab1;stroke-width:2;stroke-dasharray:7 8}
 .activation{fill:#f3ecdf;stroke:#8f784e;stroke-width:1.5}
@@ -17,7 +17,7 @@ text{letter-spacing:0}
 .return{fill:none;stroke:#9b7d54;stroke-width:2.5;stroke-dasharray:8 6;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowReturn)}
 .label{fill:#ffffff;stroke:#d7e0e4;stroke-width:1.5}.label.callLabel{stroke:#9cc2d1}.label.sqlLabel{stroke:#d0b078}.label.stateLabel{stroke:#b6c9a4}.label.returnLabel{stroke:#c8b38f}
 .badge{stroke-width:1.8}.badge.callBadge{fill:#eaf4f8;stroke:#3f7d9c}.badge.sqlBadge{fill:#fff4df;stroke:#a2743d}.badge.stateBadge{fill:#eef7f0;stroke:#6e8f4f}.badge.returnBadge{fill:#fff7e8;stroke:#9b7d54}
-.badgeText{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:700}
+.badgeText{font-family:"Comic Mono";font-size:12px;font-weight:700}
 .msg.callText,.badgeText.callText{fill:#2f6f8e}.msg.sqlText,.badgeText.sqlText{fill:#855a29}.msg.stateText,.badgeText.stateText{fill:#55783f}.msg.returnText,.badgeText.returnText{fill:#7f6038}
 </style>
 <marker id="arrowCall" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">

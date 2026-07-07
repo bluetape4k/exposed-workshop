@@ -6,8 +6,8 @@
     <style>
       text { letter-spacing: 0; }
       .canvas { fill: #fbfcf8; stroke: #3f515a; stroke-width: 3; }
-      .title { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 34px; fill: #23323a; }
-      .subtitle,.field,.note,.relLabel,.cardinality { font-family: "Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif; fill: #324750; }
+      .title { font-family: "Architects Daughter"; font-size: 34px; fill: #23323a; }
+      .subtitle,.field,.note,.relLabel,.cardinality { font-family: "Comic Mono"; fill: #324750; }
       .subtitle { font-size: 14px; }
       .table { fill: #fff; stroke-width: 2.3; filter: url(#shadow); }
       .userTable { stroke: #5d948b; }
@@ -16,8 +16,8 @@
       .headerUser { fill: #eef7f5; }
       .headerCredentials { fill: #fff7e8; }
       .headerEvent { fill: #f5f3fb; }
-      .tableTitle { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 22px; fill: #20323b; }
-      .tableName { font-family: "Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif; font-size: 12px; fill: #60717a; }
+      .tableTitle { font-family: "Architects Daughter"; font-size: 22px; fill: #20323b; }
+      .tableName { font-family: "Comic Mono"; font-size: 12px; fill: #60717a; }
       .field { font-size: 13px; }
       .fieldStrong { font-weight: 700; }
       .relation { fill: none; stroke: #3f515a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }

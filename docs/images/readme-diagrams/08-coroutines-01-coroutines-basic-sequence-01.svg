@@ -21,12 +21,12 @@
     <style>
       .canvas{fill:#fbfcf8}
       .frame{fill:#fbfcf8;stroke:#41545d;stroke-width:3}
-      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;font-weight:400;fill:#263238}
-      .subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#36464f}
+      .title{font-family:"Architects Daughter";font-size:32px;font-weight:400;fill:#263238}
+      .subtitle,.detail{font-family:"Comic Mono";fill:#36464f}
       .subtitle{font-size:14px}.detail{font-size:12px}
       .participant{fill:#ffffff;stroke:#546e7a;stroke-width:2}
-      .participantTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:16px;fill:#1f3138}
-      .participantRole{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:11px;fill:#546a73}
+      .participantTitle{font-family:"Architects Daughter";font-size:16px;fill:#1f3138}
+      .participantRole{font-family:"Comic Mono";font-size:11px;fill:#546a73}
       .lifeline{stroke:#9aaab1;stroke-width:2;stroke-dasharray:7 8}
       .activation{fill:#f3ecdf;stroke:#8f784e;stroke-width:1.5}
       .msgBlue{fill:none;stroke:#3f7d9c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-blue)}
@@ -36,9 +36,9 @@
       .msgRed{fill:none;stroke:#a65a66;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#seqArrow-red)}
       .altRegion{fill:none;stroke:#9aaab1;stroke-width:1.5;stroke-dasharray:8 7}
       .altHeader{fill:#ffffff;stroke:#ccd7da;stroke-width:1.5}
-      .altText{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:13px;fill:#60727d}
-      .pillText{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#36464f}
-      .numText{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;font-weight:700}
+      .altText{font-family:"Architects Daughter";font-size:13px;fill:#60727d}
+      .pillText{font-family:"Comic Mono";font-size:12px;fill:#36464f}
+      .numText{font-family:"Comic Mono";font-size:12px;font-weight:700}
       .footer{fill:#ffffff;stroke:#ccd7da;stroke-width:1.5}
     </style>
   </defs>

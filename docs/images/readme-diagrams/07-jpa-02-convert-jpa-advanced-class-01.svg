@@ -12,16 +12,16 @@
       .lane{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
       .card{fill:#ffffff;stroke-width:1.8;filter:url(#shadow)}
       .head{stroke-width:0}
-      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-      .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-      .laneTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-      .cardTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:19px;fill:#1e293b}
-      .small{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
+      .title{font-family:"Architects Daughter";font-size:32px;fill:#1e293b}
+      .subtitle{font-family:"Comic Mono";font-size:13px;fill:#536476}
+      .laneTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+      .cardTitle{font-family:"Architects Daughter";font-size:19px;fill:#1e293b}
+      .small{font-family:"Comic Mono";font-size:12px;fill:#475569}
       .strong{font-weight:700;fill:#1e3a8a}
       .warn{font-weight:700;fill:#8a4f0a}
       .flow{fill:none;stroke:#60758d;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#flowArrow)}
       .legendBox{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-      .legendText{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
+      .legendText{font-family:"Comic Mono";font-size:12px;fill:#475569}
     </style>
   </defs>
 

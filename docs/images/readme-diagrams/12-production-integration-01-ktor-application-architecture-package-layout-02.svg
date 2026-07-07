@@ -4,10 +4,10 @@
   <defs>
     <style>
       text { letter-spacing: 0; }
-      .title { font-family: "Architects Daughter", "Comic Sans MS", cursive; font-size: 40px; fill: #23323a; }
-      .subtitle, .pkgText, .label, .footer { font-family: "Comic Mono", "Comic Sans MS", Arial, sans-serif; fill: #324750; }
+      .title { font-family: "Architects Daughter"; font-size: 40px; fill: #23323a; }
+      .subtitle, .pkgText, .label, .footer { font-family: "Comic Mono"; fill: #324750; }
       .subtitle { font-size: 17px; }
-      .pkgTitle { font-family: "Architects Daughter", "Comic Sans MS", cursive; font-size: 23px; fill: #20323b; }
+      .pkgTitle { font-family: "Architects Daughter"; font-size: 23px; fill: #20323b; }
       .pkgText { font-size: 14px; }
       .label { font-size: 13px; font-weight: 700; }
       .footer { font-size: 14px; fill: #60717a; }

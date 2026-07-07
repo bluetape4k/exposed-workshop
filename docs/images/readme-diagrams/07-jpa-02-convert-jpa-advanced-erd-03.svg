@@ -11,17 +11,17 @@
       .frame{fill:#ffffff;stroke:#d7e2ec;stroke-width:1.5}
       .tableBox{fill:#ffffff;stroke-width:1.9;filter:url(#shadow)}
       .head{stroke-width:0}
-      .title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:32px;fill:#1e293b}
-      .subtitle{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:13px;fill:#536476}
-      .tableTitle{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:20px;fill:#1e293b}
-      .field{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
+      .title{font-family:"Architects Daughter";font-size:32px;fill:#1e293b}
+      .subtitle{font-family:"Comic Mono";font-size:13px;fill:#536476}
+      .tableTitle{font-family:"Architects Daughter";font-size:20px;fill:#1e293b}
+      .field{font-family:"Comic Mono";font-size:12px;fill:#475569}
       .pk{fill:#1e3a8a;font-weight:700}
       .fk{fill:#8a4f0a;font-weight:700}
-      .meta{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:11px;fill:#64748b}
+      .meta{font-family:"Comic Mono";font-size:11px;fill:#64748b}
       .relation{fill:none;stroke:#60758d;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#fkArrow)}
-      .cardinality{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:20px;fill:#334155}
+      .cardinality{font-family:"Architects Daughter";font-size:20px;fill:#334155}
       .legendBox{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-      .legendText{font-family:"Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:12px;fill:#475569}
+      .legendText{font-family:"Comic Mono";font-size:12px;fill:#475569}
     </style>
   </defs>
 

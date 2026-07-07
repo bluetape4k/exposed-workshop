@@ -16,15 +16,15 @@
     <style>
       text { letter-spacing: 0; }
       .canvas { fill: #fbfcf8; stroke: #40545d; stroke-width: 3; }
-      .title { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 36px; fill: #23323a; }
-      .subtitle,.participant-sub,.msg,.detail { font-family: "Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif; fill: #324750; }
+      .title { font-family: "Architects Daughter"; font-size: 36px; fill: #23323a; }
+      .subtitle,.participant-sub,.msg,.detail { font-family: "Comic Mono"; fill: #324750; }
       .subtitle { font-size: 15px; }
       .header { fill: #fff; stroke-width: 2.1; filter: url(#shadow); }
       .actor { stroke: #617985; }
       .service { stroke: #617985; }
       .cache { stroke: #617985; }
       .store { stroke: #617985; }
-      .participant { font-family: "Architects Daughter","Comic Sans MS",cursive; font-size: 18px; fill: #20323b; }
+      .participant { font-family: "Architects Daughter"; font-size: 18px; fill: #20323b; }
       .participant-sub { font-size: 11px; fill: #60717a; }
       .lifeline { fill: none; stroke: #c7d5d1; stroke-width: 1.8; stroke-dasharray: 8 8; }
       .activation { fill: #ffffff; stroke: #7a8445; stroke-width: 1.7; rx: 5; }
@@ -33,7 +33,7 @@
       .async { stroke: #a2743d; stroke-dasharray: 8 6; marker-end: url(#seqArrowAmber); }
       .return { stroke: #2b8f88; stroke-dasharray: 7 6; marker-end: url(#seqArrowTeal); }
       .pill { fill: #ffffff; stroke: #7a8445; stroke-width: 1.4; }
-      .num { font-family: "Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif; font-size: 11px; font-weight: 700; fill: #7a8445; }
+      .num { font-family: "Comic Mono"; font-size: 11px; font-weight: 700; fill: #7a8445; }
       .msg { font-size: 12px; font-weight: 700; }
       .detail { font-size: 12px; fill: #60717a; }
       .asyncBand { fill: none; stroke: #8298a3; stroke-width: 1.4; stroke-dasharray: 9 8; }

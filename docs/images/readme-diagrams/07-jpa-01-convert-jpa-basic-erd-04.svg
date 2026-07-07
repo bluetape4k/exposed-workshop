@@ -5,11 +5,11 @@
 <marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:31px;fill:#1e293b}
-.subtitle,.detail{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter","Comic Sans MS",cursive;font-size:17px;fill:#1e293b}
-.cardinality{font-family:"Comic Mono","Comic Sans MS","Comic Sans","Comic Neue",Arial,sans-serif;font-size:16px;font-weight:700;fill:#334155}
+.title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}
+.subtitle,.detail{font-family:"Comic Mono";fill:#536476}
+.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-family:"Comic Mono";font-size:10px;fill:#64748b}
+.label{font-family:"Architects Daughter";font-size:17px;fill:#1e293b}
+.cardinality{font-family:"Comic Mono";font-size:16px;font-weight:700;fill:#334155}
 .tableBox{fill:#fff;stroke-width:1.8;filter:url(#shadow)}.rowLine{stroke:#d7e2ec;stroke-width:1}
 .posts{stroke:#3b82f6}.comments{stroke:#d97706}.details{stroke:#16a34a}.postTags{stroke:#0f766e}.tags{stroke:#db2777}
 .postsHead{fill:#dbeafe}.commentsHead{fill:#fef3c7}.detailsHead{fill:#dcfce7}.postTagsHead{fill:#ccfbf1}.tagsHead{fill:#fce7f3}
