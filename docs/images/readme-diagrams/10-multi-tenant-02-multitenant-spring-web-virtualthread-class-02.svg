@@ -1,103 +1,97 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 820" width="1220" height="820" role="img" aria-label="Exposed + Spring Web + Virtual Threads + Multi-Tenant (02)">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
-    </filter>
-    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
-    </marker>
-    <marker id="inheritHead" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="16" refY="8" orient="auto">
-      <path d="M1,1 L16,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.6" stroke-dasharray="none" style="stroke-dasharray:none"/>
-    </marker>
-    <style>
-  .canvas{fill:#f6f9fc}
-  .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-  .panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-  .card{stroke-width:1.7;filter:url(#shadow)}
-  .title{font-family:"Architects Daughter";font-size:32px;fill:#1e293b}
-  .subtitle{font-family:"Comic Mono";font-size:13px;fill:#536476}
-  .panelTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-  .label{font-family:"Architects Daughter";font-size:18px;fill:#1e293b}
-  .smallLabel{font-family:"Architects Daughter";font-size:15px;fill:#1e293b}
-  .detail{font-family:"Comic Mono";font-size:12px;fill:#536476}
-  .tiny{font-family:"Comic Mono";font-size:10px;fill:#64748b}
-  .arrow{fill:none;stroke:#64748b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .softArrow{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
-  .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
-</style>
-  </defs>
-  <rect width="1220" height="820" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="780" rx="16" class="frame"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 880" width="1220" height="880" role="img" aria-label="Exposed + Spring Web + Virtual Threads + Multi-Tenant (02)">
+<defs><filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="inheritHead" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="16" refY="8" orient="auto"><path d="M1,1 L16,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="useArrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#6f8f58" stroke="#6f8f58" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowAmber" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#b8894a" stroke="#b8894a" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2f9a94" stroke="#2f9a94" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#d45b21" stroke="#d45b21" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}.group{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}.lane{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}.card{stroke-width:1.7;filter:url(#shadow)}
+.title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}.subtitle,.detail,.tiny{font-family:"Comic Mono";fill:#536476}.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-size:10.5px;fill:#64748b}.label{font-family:"Architects Daughter";font-size:16px;fill:#1e293b}.smallLabel{font-family:"Architects Daughter";font-size:14px;fill:#1e293b}.panelTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#64748b}
+.inherit{fill:none;stroke:#64748b;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inheritHead)}.use{fill:none;stroke:#64748b;stroke-width:1.6;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#useArrow)}.flowBlue{fill:none;stroke:#4f86c6;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}.flowGreen{fill:none;stroke:#6f8f58;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}.flowAmber{fill:none;stroke:#b8894a;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowAmber)}.flowTeal{fill:none;stroke:#2f9a94;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}.storage{fill:none;stroke:#d45b21;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.tableBox{stroke-width:1.7;filter:url(#shadow)}
+</style></defs>
+<rect width="1220" height="880" class="canvas"/>
+<rect x="20" y="20" width="1180" height="840" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Exposed + Spring Web + Virtual Threads + Multi-Tenant (02)</text>
-  <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
-<rect x="46" y="116" width="1128" height="142" rx="12" class="panel"/>
-  <text x="610" y="110" class="panelTitle" text-anchor="middle">ABSTRACTIONS / SUPERTYPES</text>
-<rect x="55" y="146" width="170" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="140" y="175" class="smallLabel" text-anchor="middle">Long Id Table</text>
-<text x="140" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="235" y="146" width="170" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="320" y="175" class="smallLabel" text-anchor="middle">Table</text>
-<text x="320" y="202" class="detail" text-anchor="middle">table/model</text>
-<rect x="415" y="146" width="170" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="500" y="175" class="smallLabel" text-anchor="middle">Entity ID</text>
-<text x="500" y="202" class="detail" text-anchor="middle">constructor id</text>
-<rect x="615" y="146" width="170" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="700" y="175" class="smallLabel" text-anchor="middle">Jdbc Repository</text>
-<text x="700" y="202" class="detail" text-anchor="middle">persistence</text>
-<rect x="815" y="146" width="170" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="900" y="173" class="smallLabel" text-anchor="middle">Abstract Routing</text>
-<text x="900" y="191" class="smallLabel" text-anchor="middle">Data Source</text>
-<text x="900" y="207" class="detail" text-anchor="middle">infrastructure</text>
-<rect x="995" y="146" width="170" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1080" y="175" class="smallLabel" text-anchor="middle">Filter</text>
-<text x="1080" y="202" class="detail" text-anchor="middle">cross-cutting</text>
-
-<rect x="46" y="316" width="1128" height="430" rx="12" class="panel"/>
-  <text x="610" y="310" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
-<rect x="55" y="350" width="170" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="140" y="379" class="smallLabel" text-anchor="middle">Movie Table</text>
-<text x="140" y="406" class="detail" text-anchor="middle">table/model</text>
-<rect x="235" y="350" width="170" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="320" y="379" class="smallLabel" text-anchor="middle">Actor Table</text>
-<text x="320" y="406" class="detail" text-anchor="middle">table/model</text>
-<rect x="235" y="462" width="170" height="72" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="320" y="491" class="smallLabel" text-anchor="middle">Actor In Movie</text>
-<text x="320" y="509" class="smallLabel" text-anchor="middle">Table</text>
-<text x="320" y="526" class="detail" text-anchor="middle">table/model</text>
-<rect x="415" y="350" width="170" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="500" y="379" class="smallLabel" text-anchor="middle">Movie Entity</text>
-<text x="500" y="406" class="detail" text-anchor="middle">table/model</text>
-<rect x="415" y="462" width="170" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="500" y="491" class="smallLabel" text-anchor="middle">Actor Entity</text>
-<text x="500" y="518" class="detail" text-anchor="middle">table/model</text>
-<rect x="615" y="350" width="170" height="72" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="700" y="379" class="smallLabel" text-anchor="middle">Movie Exposed</text>
-<text x="700" y="397" class="smallLabel" text-anchor="middle">Repository</text>
-<text x="700" y="414" class="detail" text-anchor="middle">persistence</text>
-<rect x="615" y="462" width="170" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="700" y="491" class="smallLabel" text-anchor="middle">Actor Exposed</text>
-<text x="700" y="509" class="smallLabel" text-anchor="middle">Repository</text>
-<text x="700" y="526" class="detail" text-anchor="middle">persistence</text>
-<rect x="815" y="350" width="170" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="900" y="379" class="smallLabel" text-anchor="middle">Tenant Aware</text>
-<text x="900" y="397" class="smallLabel" text-anchor="middle">Data Source</text>
-<text x="900" y="414" class="detail" text-anchor="middle">cross-cutting</text>
-<rect x="995" y="350" width="170" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="1080" y="379" class="smallLabel" text-anchor="middle">Tenant Filter</text>
-<text x="1080" y="406" class="detail" text-anchor="middle">cross-cutting</text>
-<rect x="55" y="594" width="230" height="72" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="170" y="623" class="smallLabel" text-anchor="middle">Exposed Multitenant</text>
-<text x="170" y="641" class="smallLabel" text-anchor="middle">Application</text>
-<text x="170" y="658" class="detail" text-anchor="middle">Spring Boot entrypoint</text>
-
-<path d="M140,350 V218" class="inherit" marker-end="url(#inheritHead)"/>
-<path d="M320,350 V302 Q320,294 312,294 H148 Q140,294 140,286 V218" class="inherit" marker-end="url(#inheritHead)"/>
-<path d="M320,462 V438 Q320,430 312,430 H238 Q230,430 230,422 V238 Q230,230 238,230 H312 Q320,230 320,222 V218" class="inherit" marker-end="url(#inheritHead)"/>
-<path d="M500,350 V218" class="inherit" marker-end="url(#inheritHead)"/>
-<path d="M585,498 H600 Q608,498 608,490 V238 Q608,230 600,230 H508 Q500,230 500,222 V218" class="inherit" marker-end="url(#inheritHead)"/>
-<path d="M700,350 V218" class="inherit" marker-end="url(#inheritHead)"/>
-<path d="M615,498 H592 Q584,498 584,490 V238 Q584,230 592,230 H692 Q700,230 700,222 V218" class="inherit" marker-end="url(#inheritHead)"/>
-<path d="M900,350 V218" class="inherit" marker-end="url(#inheritHead)"/>
-<path d="M1080,350 V218" class="inherit" marker-end="url(#inheritHead)"/>
+<text x="48" y="80" class="subtitle">Relationship-centered class map: domain model, repositories, and tenant routing are grouped by coupling.</text>
+<rect x="54" y="124" width="560" height="548" rx="12" class="group"/>
+<text x="334" y="152" class="panelTitle" text-anchor="middle">DOMAIN MODEL RELATIONSHIPS</text>
+<rect x="650" y="124" width="516" height="270" rx="12" class="group"/>
+<text x="908" y="152" class="panelTitle" text-anchor="middle">PERSISTENCE CONTRACTS</text>
+<rect x="650" y="432" width="516" height="330" rx="12" class="group"/>
+<text x="908" y="440" class="panelTitle" text-anchor="middle">TENANT / RUNTIME SUPPORT</text>
+<rect x="104" y="186" width="150" height="70" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="179.0" y="214" class="smallLabel" text-anchor="middle">LongIdTable</text>
+<text x="179.0" y="236" class="detail" text-anchor="middle">id column</text>
+<rect x="286" y="186" width="150" height="70" rx="9" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
+<text x="361.0" y="214" class="smallLabel" text-anchor="middle">Table</text>
+<text x="361.0" y="236" class="detail" text-anchor="middle">join table</text>
+<rect x="468" y="186" width="120" height="70" rx="9" fill="#fef3c7" stroke="#b8894a" class="card"/>
+<text x="528.0" y="214" class="smallLabel" text-anchor="middle">LongEntity</text>
+<text x="528.0" y="236" class="detail" text-anchor="middle">DAO base</text>
+<rect x="90" y="318" width="170" height="72" rx="9" fill="#ffedd5" stroke="#d45b21" class="card"/>
+<text x="175.0" y="346" class="smallLabel" text-anchor="middle">MovieTable</text>
+<text x="175.0" y="370" class="detail" text-anchor="middle">movies</text>
+<rect x="286" y="318" width="170" height="72" rx="9" fill="#f8fafc" stroke="#64748b" class="card"/>
+<text x="371.0" y="340" class="smallLabel" text-anchor="middle">ActorInMovie</text>
+<text x="371.0" y="357" class="smallLabel" text-anchor="middle">Table</text>
+<text x="371.0" y="370" class="detail" text-anchor="middle">movie_id + actor_id</text>
+<rect x="462" y="318" width="130" height="72" rx="9" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="527.0" y="346" class="smallLabel" text-anchor="middle">ActorTable</text>
+<text x="527.0" y="370" class="detail" text-anchor="middle">actors</text>
+<rect x="128" y="512" width="170" height="74" rx="9" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="213.0" y="540" class="smallLabel" text-anchor="middle">MovieEntity</text>
+<text x="213.0" y="566" class="detail" text-anchor="middle">actors via join</text>
+<rect x="382" y="512" width="170" height="74" rx="9" fill="#ccfbf1" stroke="#2f9a94" class="card"/>
+<text x="467.0" y="540" class="smallLabel" text-anchor="middle">ActorEntity</text>
+<text x="467.0" y="566" class="detail" text-anchor="middle">movies via join</text>
+<path d="M175,318 V256" class="inherit connector"/>
+<path d="M547,318 V286 Q547,274 535,274 H436 Q424,274 424,286 V318" class="inherit connector"/>
+<path d="M371,318 V256" class="inherit connector"/>
+<path d="M213,512 V390" class="inherit connector"/>
+<path d="M467,512 V452 Q467,440 479,440 H515 Q527,440 527,428 V390" class="inherit connector"/>
+<path d="M298,549 H382" class="use connector"/>
+<path d="M371,390 V448 Q371,460 359,460 H225 Q213,460 213,472 V512" class="use connector"/>
+<path d="M371,390 V448 Q371,460 383,460 H467 Q479,460 479,472 V512" class="use connector"/>
+<rect x="716" y="186" width="178" height="70" rx="9" fill="#ffedd5" stroke="#d45b21" class="card"/>
+<text x="805.0" y="214" class="smallLabel" text-anchor="middle">JdbcRepository</text>
+<text x="805.0" y="236" class="detail" text-anchor="middle">generic contract</text>
+<rect x="956" y="186" width="130" height="70" rx="9" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="1021.0" y="214" class="smallLabel" text-anchor="middle">ResultRow</text>
+<text x="1021.0" y="236" class="detail" text-anchor="middle">mapper input</text>
+<rect x="690" y="306" width="210" height="74" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="795.0" y="328" class="smallLabel" text-anchor="middle">MovieExposed</text>
+<text x="795.0" y="345" class="smallLabel" text-anchor="middle">Repository</text>
+<text x="795.0" y="360" class="detail" text-anchor="middle">MovieRecord CRUD</text>
+<rect x="930" y="306" width="210" height="74" rx="9" fill="#ccfbf1" stroke="#2f9a94" class="card"/>
+<text x="1035.0" y="328" class="smallLabel" text-anchor="middle">ActorExposed</text>
+<text x="1035.0" y="345" class="smallLabel" text-anchor="middle">Repository</text>
+<text x="1035.0" y="360" class="detail" text-anchor="middle">ActorRecord CRUD</text>
+<path d="M795,306 V256" class="inherit connector"/>
+<path d="M1035,306 V282 Q1035,270 1023,270 H805 Q793,270 793,258 V256" class="inherit connector"/>
+<path d="M795,380 V412 Q795,424 783,424 H626 Q614,424 614,436 V530 Q614,542 602,542 H552" class="use connector"/>
+<path d="M1035,380 V412 Q1035,424 1023,424 H626 Q614,424 614,412 V354 Q614,342 602,342 H592" class="use connector"/>
+<rect x="682" y="486" width="154" height="68" rx="9" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="759.0" y="514" class="smallLabel" text-anchor="middle">Filter</text>
+<text x="759.0" y="534" class="detail" text-anchor="middle">servlet API</text>
+<rect x="874" y="486" width="154" height="68" rx="9" fill="#fef3c7" stroke="#b8894a" class="card"/>
+<text x="951.0" y="514" class="smallLabel" text-anchor="middle">TenantFilter</text>
+<text x="951.0" y="534" class="detail" text-anchor="middle">ScopedValue</text>
+<rect x="1040" y="486" width="96" height="68" rx="9" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
+<text x="1088.0" y="514" class="smallLabel" text-anchor="middle">Tenants</text>
+<text x="1088.0" y="534" class="detail" text-anchor="middle">ids</text>
+<rect x="682" y="604" width="154" height="68" rx="9" fill="#fce7f3" stroke="#db2777" class="card"/>
+<text x="759.0" y="626" class="smallLabel" text-anchor="middle">Abstract</text>
+<text x="759.0" y="643" class="smallLabel" text-anchor="middle">RoutingDS</text>
+<text x="759.0" y="652" class="detail" text-anchor="middle">Spring JDBC</text>
+<rect x="874" y="604" width="154" height="68" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="951.0" y="626" class="smallLabel" text-anchor="middle">TenantAware</text>
+<text x="951.0" y="643" class="smallLabel" text-anchor="middle">DataSource</text>
+<text x="951.0" y="652" class="detail" text-anchor="middle">lookup key</text>
+<rect x="1040" y="604" width="96" height="68" rx="9" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="1088.0" y="632" class="smallLabel" text-anchor="middle">Application</text>
+<text x="1088.0" y="652" class="detail" text-anchor="middle">entrypoint</text>
+<path d="M951,486 V468 Q951,456 939,456 H771 Q759,456 759,468 V486" class="inherit connector"/>
+<path d="M1028,520 H1040" class="use connector"/>
+<path d="M951,604 V586 Q951,574 939,574 H771 Q759,574 759,586 V604" class="inherit connector"/>
+<rect x="54" y="816" width="1112" height="42" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
+<text x="610" y="842" class="detail" text-anchor="middle">UML inheritance stays close to each subtype; dashed dependencies show repository/table/runtime use without layer-grid detours.</text>
 </svg>

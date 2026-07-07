@@ -1,67 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1378 650" width="1378" height="650" role="img" aria-label="WebFlux tenant context propagation">
-  <defs>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-    <marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
-    <marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#6f8f58" stroke="#6f8f58" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
-    <marker id="arrowAmber" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#b8894a" stroke="#b8894a" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
-    <style>
-      .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-      .lane{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-      .card{stroke-width:1.7;filter:url(#shadow)}
-      .title{font-family:"Architects Daughter";font-size:32px;fill:#1e293b}
-      .subtitle,.detail,.tiny{font-family:"Comic Mono";fill:#536476}
-      .subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-size:10.5px;fill:#64748b}
-      .panelTitle{font-family:"Architects Daughter";font-size:13px;letter-spacing:.08em;fill:#64748b}
-      .label{font-family:"Architects Daughter";font-size:17px;fill:#1e293b}
-      .flow{fill:none;stroke:#4f86c6;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-      .contextFlow{fill:none;stroke:#6f8f58;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-      .guardFlow{fill:none;stroke:#b8894a;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-    </style>
-  </defs>
-  <rect width="1378" height="650" class="canvas"/>
-  <rect x="20" y="20" width="1338" height="610" rx="16" class="frame"/>
-  <text x="48" y="58" class="title">WebFlux Tenant Context Propagation</text>
-  <text x="48" y="80" class="subtitle">Reactor Context is the request-scoped carrier; coroutine code reads TenantId through ReactorContext</text>
-
-  <rect x="52" y="126" width="1274" height="192" rx="14" class="lane"/>
-  <text x="689" y="154" class="panelTitle" text-anchor="middle">WRITE SIDE</text>
-  <rect x="88" y="198" width="190" height="70" rx="10" fill="#dbeafe" stroke="#4f86c6" class="card"/>
-  <text x="183" y="227" class="label" text-anchor="middle">HTTP Header</text>
-  <text x="183" y="250" class="detail" text-anchor="middle">X-TENANT-ID</text>
-  <rect x="340" y="198" width="220" height="70" rx="10" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
-  <text x="450" y="227" class="label" text-anchor="middle">TenantFilter</text>
-  <text x="450" y="250" class="detail" text-anchor="middle">WebFilter + mono</text>
-  <rect x="622" y="198" width="250" height="70" rx="10" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
-  <text x="747" y="227" class="label" text-anchor="middle">contextWrite</text>
-  <text x="747" y="250" class="detail" text-anchor="middle">put TenantId key</text>
-  <rect x="934" y="198" width="250" height="70" rx="10" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
-  <text x="1059" y="227" class="label" text-anchor="middle">Reactor Context</text>
-  <text x="1059" y="250" class="detail" text-anchor="middle">request-scoped map</text>
-
-  <path d="M278,233 H340" class="flow" marker-end="url(#arrowBlue)"/>
-  <path d="M560,233 H622" class="contextFlow" marker-end="url(#arrowGreen)"/>
-  <path d="M872,233 H934" class="contextFlow" marker-end="url(#arrowGreen)"/>
-
-  <rect x="52" y="366" width="1274" height="160" rx="14" class="lane"/>
-  <text x="689" y="394" class="panelTitle" text-anchor="middle">READ SIDE</text>
-  <rect x="168" y="432" width="248" height="70" rx="10" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
-  <text x="292" y="461" class="label" text-anchor="middle">ReactorContext</text>
-  <text x="292" y="484" class="detail" text-anchor="middle">coroutine bridge</text>
-  <rect x="478" y="432" width="248" height="70" rx="10" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
-  <text x="602" y="461" class="label" text-anchor="middle">currentReactorTenant</text>
-  <text x="602" y="484" class="detail" text-anchor="middle">get TenantId or default</text>
-  <rect x="788" y="432" width="248" height="70" rx="10" fill="#fef3c7" stroke="#b8894a" class="card"/>
-  <text x="912" y="461" class="label" text-anchor="middle">TenantId</text>
-  <text x="912" y="484" class="detail" text-anchor="middle">CoroutineContext.Element</text>
-  <rect x="1098" y="432" width="190" height="70" rx="10" fill="#ffedd5" stroke="#b8894a" class="card"/>
-  <text x="1193" y="461" class="label" text-anchor="middle">Tenant Schema</text>
-  <text x="1193" y="484" class="detail" text-anchor="middle">schema switch</text>
-
-  <path d="M1059,268 V344 Q1059,352 1051,352 H300 Q292,352 292,360 V432" class="contextFlow" marker-end="url(#arrowGreen)"/>
-  <path d="M416,467 H478" class="contextFlow" marker-end="url(#arrowGreen)"/>
-  <path d="M726,467 H788" class="contextFlow" marker-end="url(#arrowGreen)"/>
-  <path d="M1036,467 H1098" class="guardFlow" marker-end="url(#arrowAmber)"/>
-
-  <rect x="190" y="566" width="998" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec" stroke-width="1.2"/>
-  <text x="689" y="593" class="tiny" text-anchor="middle">ThreadLocal and ScopedValue are not request carriers here because WebFlux execution may hop across threads.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" role="img" aria-label="WebFlux tenant context propagation">
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
+<marker id="inheritHead" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="16" refY="8" orient="auto"><path d="M1,1 L16,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="useArrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#6f8f58" stroke="#6f8f58" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowAmber" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#b8894a" stroke="#b8894a" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2f9a94" stroke="#2f9a94" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#d45b21" stroke="#d45b21" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<style>
+.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}.group{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}.lane{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}.card{stroke-width:1.7;filter:url(#shadow)}
+.title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}.subtitle,.detail,.tiny{font-family:"Comic Mono";fill:#536476}.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-size:10.5px;fill:#64748b}.label{font-family:"Architects Daughter";font-size:17px;fill:#1e293b}.smallLabel{font-family:"Architects Daughter";font-size:15px;fill:#1e293b}.panelTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#64748b}
+.inherit{fill:none;stroke:#64748b;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inheritHead)}.use{fill:none;stroke:#64748b;stroke-width:1.6;stroke-dasharray:6 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#useArrow)}.flowBlue{fill:none;stroke:#4f86c6;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowBlue)}.flowGreen{fill:none;stroke:#6f8f58;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowGreen)}.flowAmber{fill:none;stroke:#b8894a;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowAmber)}.flowTeal{fill:none;stroke:#2f9a94;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowTeal)}.storage{fill:none;stroke:#d45b21;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowOrange)}
+.tableBox{stroke-width:1.7;filter:url(#shadow)}
+</style>
+</defs>
+<rect width="1200" height="760" class="canvas"/>
+<rect x="20" y="20" width="1160" height="720" rx="16" class="frame"/>
+<text x="48" y="58" class="title">WebFlux Tenant Context Propagation</text>
+<text x="48" y="80" class="subtitle">TenantId is written into Reactor Context, bridged into coroutine code, then used for schema selection.</text>
+<rect x="56" y="126" width="332" height="500" rx="12" class="lane"/>
+<text x="222" y="154" class="panelTitle" text-anchor="middle">REQUEST FILTER</text>
+<rect x="434" y="126" width="332" height="500" rx="12" class="lane"/>
+<text x="600" y="154" class="panelTitle" text-anchor="middle">REACTOR CARRIER</text>
+<rect x="812" y="126" width="332" height="500" rx="12" class="lane"/>
+<text x="978" y="154" class="panelTitle" text-anchor="middle">COROUTINE READ SIDE</text>
+<rect x="106" y="196" width="232" height="68" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+<text x="222.0" y="223" class="label" text-anchor="middle">HTTP Header</text>
+<text x="222.0" y="242" class="detail" text-anchor="middle">X-TENANT-ID</text>
+<rect x="106" y="326" width="232" height="68" rx="9" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
+<text x="222.0" y="353" class="label" text-anchor="middle">TenantFilter</text>
+<text x="222.0" y="372" class="detail" text-anchor="middle">WebFilter + mono</text>
+<rect x="484" y="196" width="232" height="68" rx="9" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
+<text x="600.0" y="223" class="label" text-anchor="middle">contextWrite</text>
+<text x="600.0" y="242" class="detail" text-anchor="middle">put TenantId key</text>
+<rect x="484" y="326" width="232" height="68" rx="9" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
+<text x="600.0" y="353" class="label" text-anchor="middle">Reactor Context</text>
+<text x="600.0" y="372" class="detail" text-anchor="middle">request-scoped map</text>
+<rect x="862" y="196" width="232" height="68" rx="9" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
+<text x="978.0" y="223" class="label" text-anchor="middle">ReactorContext</text>
+<text x="978.0" y="242" class="detail" text-anchor="middle">coroutine bridge</text>
+<rect x="862" y="326" width="232" height="68" rx="9" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
+<text x="978.0" y="353" class="label" text-anchor="middle">currentReactorTenant</text>
+<text x="978.0" y="372" class="detail" text-anchor="middle">get TenantId or default</text>
+<rect x="862" y="456" width="232" height="68" rx="9" fill="#ffedd5" stroke="#b8894a" class="card"/>
+<text x="978.0" y="483" class="label" text-anchor="middle">Tenant Schema</text>
+<text x="978.0" y="502" class="detail" text-anchor="middle">schema switch</text>
+<path d="M222,264 V326" class="flowBlue connector"/>
+<path d="M338,360 H484" class="flowGreen connector"/>
+<path d="M600,264 V326" class="flowGreen connector"/>
+<path d="M716,360 H862" class="flowGreen connector"/>
+<path d="M978,264 V326" class="flowGreen connector"/>
+<path d="M978,394 V456" class="flowAmber connector"/>
+<rect x="156" y="666" width="888" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
+<text x="600" y="693" class="tiny" text-anchor="middle">ThreadLocal and ScopedValue are not request carriers here because WebFlux execution may hop across threads.</text>
 </svg>
