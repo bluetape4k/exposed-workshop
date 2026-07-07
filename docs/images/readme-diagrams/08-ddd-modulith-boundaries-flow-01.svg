@@ -17,30 +17,31 @@
   </defs>
 
   <rect x="0" y="0" width="1000" height="520" fill="#f8fafc"/>
-  <text x="500" y="46" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700" fill="#0f172a">DDD Bounded Contexts with Modulith Boundary Verification</text>
-  <text x="500" y="74" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="14" fill="#475569">Exposed tables stay inside each context; only domain events cross module boundaries.</text>
+  <text x="500" y="46" text-anchor="middle" font-family="Architects Daughter" font-size="26" font-weight="400" fill="#0f172a">DDD Bounded Contexts with Modulith Boundary Verification</text>
+  <text x="500" y="74" text-anchor="middle" font-family="Comic Mono" font-size="14" fill="#475569">Exposed tables stay inside each context; only domain events cross module boundaries.</text>
 
   <rect class="card" x="70" y="110" width="250" height="160" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
-  <text x="195" y="145" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#1e3a8a">Orders Context</text>
-  <text x="96" y="178" font-family="Inter, Arial, sans-serif" font-size="13" fill="#1e40af">OrderApplicationService</text>
-  <text x="96" y="204" font-family="Inter, Arial, sans-serif" font-size="13" fill="#1e40af">ExposedOrderRepository</text>
-  <text x="96" y="230" font-family="Inter, Arial, sans-serif" font-size="13" fill="#1e40af">ddd_modulith_orders</text>
+  <text x="195" y="145" text-anchor="middle" font-family="Architects Daughter" font-size="18" font-weight="400" fill="#1e3a8a">Orders Context</text>
+  <text x="96" y="178" font-family="Comic Mono" font-size="13" fill="#1e40af">OrderApplicationService</text>
+  <text x="96" y="204" font-family="Comic Mono" font-size="13" fill="#1e40af">ExposedOrderRepository</text>
+  <text x="96" y="230" font-family="Comic Mono" font-size="13" fill="#1e40af">ddd_modulith_orders</text>
 
   <rect class="card" x="390" y="130" width="220" height="120" rx="8" fill="#ecfdf5" stroke="#15803d" stroke-width="2" filter="url(#shadow)"/>
-  <text x="500" y="165" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700" fill="#166534">Named Interface</text>
-  <text x="500" y="195" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#166534">orders :: events</text>
-  <text x="500" y="219" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#166534">OrderAcceptedEvent</text>
+  <text x="500" y="165" text-anchor="middle" font-family="Architects Daughter" font-size="17" font-weight="400" fill="#166534">Named Interface</text>
+  <text x="500" y="195" text-anchor="middle" font-family="Comic Mono" font-size="13" fill="#166534">orders :: events</text>
+  <text x="500" y="219" text-anchor="middle" font-family="Comic Mono" font-size="13" fill="#166534">OrderAcceptedEvent</text>
 
   <rect class="card" x="680" y="110" width="250" height="160" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="2" filter="url(#shadow)"/>
-  <text x="805" y="145" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#9a3412">Shipping Context</text>
-  <text x="706" y="178" font-family="Inter, Arial, sans-serif" font-size="13" fill="#9a3412">ShippingReservationHandler</text>
-  <text x="706" y="204" font-family="Inter, Arial, sans-serif" font-size="13" fill="#9a3412">ExposedShippingRepository</text>
-  <text x="706" y="230" font-family="Inter, Arial, sans-serif" font-size="13" fill="#9a3412">ddd_modulith_shipping_reservations</text>
+  <text x="805" y="145" text-anchor="middle" font-family="Architects Daughter" font-size="18" font-weight="400" fill="#9a3412">Shipping Context</text>
+  <text x="706" y="178" font-family="Comic Mono" font-size="13" fill="#9a3412">ShippingReservationHandler</text>
+  <text x="706" y="204" font-family="Comic Mono" font-size="13" fill="#9a3412">ExposedShippingRepository</text>
+  <text x="706" y="230" font-family="Comic Mono" font-size="13" fill="#9a3412">ddd_modulith_shipping_</text>
+  <text x="706" y="252" font-family="Comic Mono" font-size="13" fill="#9a3412">reservations</text>
 
   <rect class="card" x="70" y="350" width="860" height="110" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="2" filter="url(#shadow)"/>
-  <text x="500" y="388" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#334155">ApplicationModules.verify()</text>
-  <text x="500" y="418" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#475569">Positive test accepts orders -> events -> shipping only.</text>
-  <text x="500" y="440" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#475569">Negative fixture rejects shipping -> orders.internal repository access.</text>
+  <text x="500" y="388" text-anchor="middle" font-family="Architects Daughter" font-size="18" font-weight="400" fill="#334155">ApplicationModules.verify()</text>
+  <text x="500" y="418" text-anchor="middle" font-family="Comic Mono" font-size="13" fill="#475569">Positive test accepts orders -> events -> shipping only.</text>
+  <text x="500" y="440" text-anchor="middle" font-family="Comic Mono" font-size="13" fill="#475569">Negative fixture rejects shipping -> orders.internal repository access.</text>
 
   <path class="connector" d="M 320 190 L 390 190" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-blue)"/>
   <path class="connector" d="M 610 190 L 680 190" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-green)"/>
@@ -48,9 +49,9 @@
   <path class="connector" d="M 500 250 L 500 350" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-slate)"/>
   <path class="connector" d="M 805 270 L 805 350" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-slate)"/>
 
-  <text x="355" y="178" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" fill="#2563eb">publishes</text>
-  <text x="645" y="178" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" fill="#15803d">consumes</text>
-  <text x="195" y="320" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" fill="#475569">module</text>
-  <text x="500" y="320" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" fill="#475569">export</text>
-  <text x="805" y="320" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="12" fill="#475569">module</text>
+  <text x="355" y="178" text-anchor="middle" font-family="Comic Mono" font-size="12" fill="#2563eb">publishes</text>
+  <text x="645" y="178" text-anchor="middle" font-family="Comic Mono" font-size="12" fill="#15803d">consumes</text>
+  <text x="195" y="320" text-anchor="middle" font-family="Comic Mono" font-size="12" fill="#475569">module</text>
+  <text x="500" y="320" text-anchor="middle" font-family="Comic Mono" font-size="12" fill="#475569">export</text>
+  <text x="805" y="320" text-anchor="middle" font-family="Comic Mono" font-size="12" fill="#475569">module</text>
 </svg>
