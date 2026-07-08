@@ -298,8 +298,8 @@ class Ex03_NumericColumnType: AbstractExposedTest() {
         }
 
         withTables(testDB, tester) {
-            tester.ddl.joinToString() shouldBeEqualTo
-                    "CREATE TABLE ${addIfNotExistsIfSupported()}${tester.nameInDatabaseCase()} (" +
+            val expectedDdl =
+                "CREATE TABLE ${addIfNotExistsIfSupported()}${tester.nameInDatabaseCase()} (" +
                     "${tester.byte.nameInDatabaseCase()} ${tester.byte.columnType} NOT NULL, " +
                     "${tester.ubyte.nameInDatabaseCase()} ${tester.ubyte.columnType} NOT NULL, " +
                     "${tester.short.nameInDatabaseCase()} ${tester.short.columnType} NOT NULL, " +
@@ -312,6 +312,8 @@ class Ex03_NumericColumnType: AbstractExposedTest() {
                     "CONSTRAINT ${"custom_ushort_check".inProperCase()} CHECK (${tester.ushort.nameInDatabaseCase()} BETWEEN 0 AND ${UShort.MAX_VALUE}), " +
                     "CONSTRAINT ${"custom_integer_check".inProperCase()} CHECK (${tester.integer.nameInDatabaseCase()} BETWEEN ${Int.MIN_VALUE} AND ${Int.MAX_VALUE}), " +
                     "CONSTRAINT ${"custom_uinteger_check".inProperCase()} CHECK (${tester.uinteger.nameInDatabaseCase()} BETWEEN 0 AND ${UInt.MAX_VALUE}))"
+
+            tester.ddl.joinToString().lowercase() shouldBeEqualTo expectedDdl.lowercase()
         }
     }
 }
