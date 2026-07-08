@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 940" width="1560" height="940" role="img" aria-label="Custom Column Storage Pipelines">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1660 940" width="1660" height="940" role="img" aria-label="Custom Column Storage Pipelines">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
 <marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
@@ -22,8 +22,8 @@
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
-<rect width="1560" height="940" class="canvas"/>
-<rect x="20" y="20" width="1520" height="900" rx="16" class="frame"/>
+<rect width="1660" height="940" class="canvas"/>
+<rect x="20" y="20" width="1620" height="900" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Custom Column Storage Pipelines</text>
 <text x="48" y="80" class="subtitle">Custom column examples route raw bytes, serialized objects, and generated IDs through specific column builders</text>
 <rect x="58" y="130" width="274" height="640" rx="12" class="panel"/><text x="195" y="122" class="panelTitle" text-anchor="middle">TEST GROUPS</text>

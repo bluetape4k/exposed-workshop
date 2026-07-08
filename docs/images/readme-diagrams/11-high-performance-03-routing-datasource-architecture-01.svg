@@ -1,10 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Routing datasource key resolution flow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 760" width="1600" height="760" role="img" aria-label="Routing datasource key resolution flow">
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.13"/>
     </filter>
-    <marker id="flowArrow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#5f7f89" stroke="#5f7f89" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    <marker id="tenantArrow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f8e84" stroke="#3f8e84" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="actionArrow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="keyArrow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#7667b1" stroke="#7667b1" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="dataArrow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2f9a94" stroke="#2f9a94" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
     </marker>
     <marker id="softArrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
       <path d="M 0 0 L 10 5 L 0 10 Z" fill="#8fa1aa" stroke="#8fa1aa" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
@@ -13,7 +22,7 @@
       text { letter-spacing: 0; }
       .canvas { fill: #fbfcf8; stroke: #3f515a; stroke-width: 3; }
       .title { font-family: "Architects Daughter"; font-size: 36px; fill: #23323a; }
-      .subtitle,.lane,.detail,.note,.key { font-family: "Comic Mono"; fill: #516670; }
+      .subtitle,.lane,.detail,.note,.key,.legendText { font-family: "Comic Mono"; fill: #516670; }
       .subtitle { font-size: 15px; }
       .lane { font-size: 12px; font-weight: 700; fill: #687b83; }
       .card { fill: #ffffff; stroke-width: 2.1; filter: url(#shadow); }
@@ -25,13 +34,18 @@
       .detail { font-size: 12px; }
       .note { font-size: 13px; }
       .key { font-size: 13px; font-weight: 700; fill: #6d5fa8; }
-      .flow { fill: none; stroke: #5f7f89; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#flowArrow); }
+      .legendText { font-size: 12px; fill: #52666f; }
+      .tenantFlow { fill: none; stroke: #3f8e84; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#tenantArrow); }
+      .actionFlow { fill: none; stroke: #a2743d; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#actionArrow); }
+      .keyFlow { fill: none; stroke: #7667b1; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#keyArrow); }
+      .dataFlow { fill: none; stroke: #2f9a94; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#dataArrow); }
       .soft { fill: none; stroke: #8fa1aa; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 8 7; marker-end: url(#softArrow); }
+      .legendLine { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
       .band { fill: #f7faf6; stroke: #d9e2dc; stroke-width: 1.5; }
     </style>
   </defs>
 
-  <rect x="24" y="24" width="1552" height="852" rx="20" class="canvas frame"/>
+  <rect x="24" y="24" width="1552" height="712" rx="20" class="canvas frame"/>
   <text x="800" y="76" text-anchor="middle" class="title">RoutingDataSource Key Resolution Flow</text>
   <text x="800" y="106" text-anchor="middle" class="subtitle">TenantContext and transaction readOnly state form a routing key, then DynamicRoutingDataSource delegates to a registered DataSource.</text>
 
@@ -82,18 +96,28 @@
   <text x="1325" y="554" text-anchor="middle" class="label">MarkerTable</text>
   <text x="1325" y="576" text-anchor="middle" class="detail">routing marker row per database</text>
 
-  <path id="f1" data-connector="f1" class="flow" d="M 195 278 L 195 334"/>
-  <path id="f2" data-connector="f2" class="flow" d="M 320 375 L 378 375 Q 398 375 398 355 L 398 318 Q 398 298 418 298 L 430 298"/>
-  <path id="f3" data-connector="f3" class="flow" d="M 320 513 L 430 513"/>
-  <path id="f4" data-connector="f4" class="flow" d="M 573 370 L 573 486"/>
-  <path id="f5" data-connector="f5" class="flow" d="M 716 527 L 778 527 Q 798 527 798 507 L 798 446 Q 798 426 810 426 L 818 426"/>
-  <path id="f6" data-connector="f6" class="flow" d="M 1104 426 L 1160 426 Q 1180 426 1180 406 L 1180 257 Q 1180 237 1188 237 L 1190 237"/>
-  <path id="f7" data-connector="f7" class="flow" d="M 1104 426 L 1160 426 Q 1180 426 1180 415 Q 1180 395 1188 395 L 1190 395"/>
-  <path id="f8" data-connector="f8" class="flow" d="M 1325 416 L 1325 520"/>
+  <path id="f1" data-connector="f1" class="tenantFlow connector" d="M 195 278 L 195 334"/>
+  <path id="f2" data-connector="f2" class="tenantFlow connector" d="M 320 375 L 378 375 Q 398 375 398 355 L 398 318 Q 398 298 408 298 L 430 298"/>
+  <path id="f3" data-connector="f3" class="actionFlow connector" d="M 320 513 L 430 513"/>
+  <path id="f4" data-connector="f4" class="keyFlow connector" d="M 573 370 L 573 486"/>
+  <path id="f5" data-connector="f5" class="keyFlow connector" d="M 716 527 L 758 527 Q 778 527 778 507 L 778 446 Q 778 426 798 426 L 818 426"/>
+  <path id="f6" data-connector="f6" class="dataFlow connector" d="M 1104 426 L 1128 426 Q 1148 426 1148 406 L 1148 257 Q 1148 237 1168 237 L 1190 237"/>
+  <path id="f7" data-connector="f7" class="dataFlow connector" d="M 1104 426 L 1140 426 Q 1152 426 1152 414 L 1152 407 Q 1152 395 1164 395 L 1190 395"/>
+  <path id="f8" data-connector="f8" class="dataFlow connector" d="M 1325 416 L 1325 520"/>
 
-  <path id="s1" data-connector="s1" class="soft" d="M 961 278 L 961 374"/>
-  <path id="s2" data-connector="s2" class="soft" d="M 195 472 L 195 444 Q 195 424 215 424 L 430 424 Q 450 424 450 404 L 450 370"/>
-  <rect x="390" y="706" width="820" height="72" rx="14" class="band"/>
-  <text x="800" y="736" text-anchor="middle" class="note">Missing ro configuration reuses rw; an unregistered resolved key fails fast instead of silently choosing the wrong tenant.</text>
-  <text x="800" y="760" text-anchor="middle" class="detail">TenantHeaderFilter clears TenantContext after the request so the next request cannot inherit a stale tenant.</text>
+  <path id="s1" data-connector="s1" class="soft connector" d="M 961 278 L 961 374"/>
+  <path id="s2" data-connector="s2" class="soft connector" d="M 195 472 L 195 444 Q 195 424 215 424 L 430 424 Q 450 424 450 404 L 450 370"/>
+  <rect x="260" y="632" width="1080" height="86" rx="14" class="band"/>
+  <path d="M 300 654 L 342 654" class="legendLine" stroke="#3f8e84"/>
+  <text x="354" y="658" class="legendText">tenant context</text>
+  <path d="M 492 654 L 534 654" class="legendLine" stroke="#a2743d"/>
+  <text x="546" y="658" class="legendText">request action</text>
+  <path d="M 690 654 L 732 654" class="legendLine" stroke="#7667b1"/>
+  <text x="744" y="658" class="legendText">routing key</text>
+  <path d="M 870 654 L 912 654" class="legendLine" stroke="#2f9a94"/>
+  <text x="924" y="658" class="legendText">datasource</text>
+  <path d="M 1080 654 L 1122 654" class="soft"/>
+  <text x="1134" y="658" class="legendText">supporting lookup</text>
+  <text x="800" y="690" text-anchor="middle" class="note">Missing ro configuration reuses rw; an unregistered resolved key fails fast instead of silently choosing the wrong tenant.</text>
+  <text x="800" y="710" text-anchor="middle" class="detail">TenantHeaderFilter clears TenantContext after the request so the next request cannot inherit a stale tenant.</text>
 </svg>

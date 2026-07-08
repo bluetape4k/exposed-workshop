@@ -73,32 +73,32 @@
 <text x="971" y="636" class="detail" text-anchor="middle">databaseFor(tenant)</text>
 <rect x="1190" y="130" width="250" height="610" rx="12" class="panel"/>
 <text x="1315" y="122" class="panelTitle" text-anchor="middle">STORAGE ISOLATION</text>
-<path d="M1238,236 C1238,208 1388,208 1388,236 V358 C1388,386 1238,386 1238,358 Z" fill="#ffedd5" stroke="#ea580c" class="dbBody"/>
-<ellipse cx="1313" cy="236" rx="75" ry="14" fill="#fff7ed" stroke="#ea580c" stroke-width="1.7"/>
-<ellipse cx="1313" cy="358" rx="75" ry="14" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="1313" y="278" class="label" text-anchor="middle">Shared DB</text>
-<text x="1313" y="306" class="detail" text-anchor="middle">korean</text>
-<text x="1313" y="323" class="detail" text-anchor="middle">english</text>
-<text x="1313" y="340" class="detail" text-anchor="middle">schemas</text>
+<path d="M1238,306 C1238,278 1388,278 1388,306 V428 C1388,456 1238,456 1238,428 Z" fill="#ffedd5" stroke="#ea580c" class="dbBody"/>
+<ellipse cx="1313" cy="306" rx="75" ry="14" fill="#fff7ed" stroke="#ea580c" stroke-width="1.7"/>
+<ellipse cx="1313" cy="428" rx="75" ry="14" fill="none" stroke="#ea580c" stroke-width="1.7"/>
+<text x="1313" y="348" class="label" text-anchor="middle">Shared DB</text>
+<text x="1313" y="376" class="detail" text-anchor="middle">korean</text>
+<text x="1313" y="393" class="detail" text-anchor="middle">english</text>
+<text x="1313" y="410" class="detail" text-anchor="middle">schemas</text>
 <path d="M1238,518 C1238,490 1388,490 1388,518 V640 C1388,668 1238,668 1238,640 Z" fill="#fce7f3" stroke="#db2777" class="dbBody"/>
 <ellipse cx="1313" cy="518" rx="75" ry="14" fill="#fff7ed" stroke="#db2777" stroke-width="1.7"/>
 <ellipse cx="1313" cy="640" rx="75" ry="14" fill="none" stroke="#db2777" stroke-width="1.7"/>
 <text x="1313" y="560" class="label" text-anchor="middle">Tenant DBs</text>
 <text x="1313" y="588" class="detail" text-anchor="middle">korean pool</text>
 <text x="1313" y="605" class="detail" text-anchor="middle">english pool</text>
-<path d="M188,270 L188,372" class="arrow"/>
-<path d="M274,407 H340 Q348,407 348,399 V213 Q348,205 356,205 H432" class="context"/>
-<path d="M274,407 H354 Q362,407 362,399 V317 Q362,309 370,309 H432" class="context"/>
-<path d="M274,407 H432" class="context"/>
-<path d="M274,407 H354 Q362,407 362,415 V509 Q362,517 370,517 H432" class="context"/>
-<path d="M274,407 H340 Q348,407 348,415 V613 Q348,621 356,621 H432" class="context"/>
-<path d="M702,205 L862,205" class="arrow"/>
-<path d="M702,309 L862,309" class="arrow"/>
-<path d="M702,413 L862,413" class="arrow"/>
-<path d="M702,517 L862,517" class="arrow"/>
-<path d="M702,621 L862,621" class="arrow"/>
-<path d="M1080,309 H1156 Q1164,309 1164,301 V284 Q1164,276 1172,276 H1238" class="storage"/>
-<path d="M1080,413 H1156 Q1164,413 1164,405 V317 Q1164,309 1172,309 H1238" class="storage"/>
-<path d="M1080,517 H1164 Q1172,517 1172,509 V350 Q1172,342 1180,342 H1238" class="storage"/>
-<path d="M1080,621 H1238" class="storage"/>
+<path data-connector="client-to-tenant-edge" d="M188,270 L188,372" class="arrow"/>
+<path data-connector="tenant-edge-to-spring-mvc" d="M274,407 H340 Q348,407 348,399 V213 Q348,205 356,205 H432" class="context"/>
+<path data-connector="tenant-edge-to-virtual-threads" d="M274,407 H354 Q362,407 362,399 V317 Q362,309 370,309 H432" class="context"/>
+<path data-connector="tenant-edge-to-webflux" d="M274,407 H432" class="context"/>
+<path data-connector="tenant-edge-to-ktor" d="M274,407 H354 Q362,407 362,415 V509 Q362,517 370,517 H432" class="context"/>
+<path data-connector="tenant-edge-to-security" d="M274,407 H340 Q348,407 348,415 V613 Q348,621 356,621 H432" class="context"/>
+<path data-connector="spring-mvc-to-schema-aspect" d="M702,205 L862,205" class="arrow"/>
+<path data-connector="virtual-threads-to-transaction-aspect" d="M702,309 L862,309" class="arrow"/>
+<path data-connector="webflux-to-suspended-tx" d="M702,413 L862,413" class="arrow"/>
+<path data-connector="ktor-to-tenant-transaction" d="M702,517 L862,517" class="arrow"/>
+<path data-connector="security-to-database-registry" d="M702,621 L862,621" class="arrow"/>
+<path data-connector="transaction-aspect-to-shared-db" d="M1080,309 H1158 Q1170,309 1170,321 V334 Q1170,346 1182,346 H1238" class="storage"/>
+<path data-connector="suspended-tx-to-shared-db" d="M1080,413 H1158 Q1170,413 1170,401 V391 Q1170,379 1182,379 H1238" class="storage"/>
+<path data-connector="tenant-transaction-to-shared-db" d="M1080,517 H1150 Q1162,517 1162,505 V424 Q1162,412 1174,412 H1238" class="storage"/>
+<path data-connector="database-registry-to-tenant-dbs" d="M1080,621 H1238" class="storage"/>
 </svg>

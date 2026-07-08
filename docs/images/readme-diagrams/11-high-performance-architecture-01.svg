@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 940" width="1600" height="940" role="img" aria-label="High performance module relationships">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 896" width="1600" height="896" role="img" aria-label="High performance module relationships">
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
@@ -39,21 +39,21 @@
     </style>
   </defs>
 
-  <rect x="24" y="24" width="1552" height="892" rx="20" class="canvas"/>
+  <rect x="24" y="24" width="1552" height="848" rx="20" class="canvas"/>
   <text x="800" y="76" text-anchor="middle" class="title">High Performance Module Relationships</text>
   <text x="800" y="108" text-anchor="middle" class="subtitle">Chapter 11 compares cache consistency tradeoffs, datasource routing correctness, and benchmark evidence across runtimes.</text>
 
-  <rect x="70" y="150" width="470" height="670" rx="18" class="laneCache"/>
+  <rect x="70" y="150" width="470" height="626" rx="18" class="laneCache"/>
   <text x="106" y="192" class="laneTitle">Cache strategy family</text>
   <text x="106" y="218" class="laneNote">Same repository decisions are shown</text>
   <text x="106" y="238" class="laneNote">across Spring, WebFlux, and Ktor.</text>
 
-  <rect x="590" y="150" width="390" height="670" rx="18" class="laneRoute"/>
+  <rect x="590" y="150" width="390" height="626" rx="18" class="laneRoute"/>
   <text x="626" y="192" class="laneTitle">Routing datasource family</text>
   <text x="626" y="218" class="laneNote">Tenant and read/write role resolve</text>
   <text x="626" y="238" class="laneNote">the selected DataSource.</text>
 
-  <rect x="1030" y="150" width="500" height="670" rx="18" class="laneVerify"/>
+  <rect x="1030" y="150" width="500" height="626" rx="18" class="laneVerify"/>
   <text x="1066" y="192" class="laneTitle">Benchmark and verification family</text>
   <text x="1066" y="218" class="laneNote">Tests and benchmarks prove the chosen</text>
   <text x="1066" y="238" class="laneNote">latency and consistency tradeoffs.</text>
@@ -104,7 +104,7 @@
 
   <path id="flow-cache-benchmark" data-connector="flow-cache-benchmark" d="M 490 326 L 1070 326" class="flowCache"/>
   <path id="flow-route-benchmark" data-connector="flow-route-benchmark" d="M 940 490 L 1070 490" class="flowRoute"/>
-  <path id="flow-cache-tests" data-connector="flow-cache-tests" d="M 490 456 L 520 456 Q 540 456 540 476 L 540 526 Q 540 546 560 546 L 1070 546" class="flowCache"/>
+  <path id="flow-cache-tests" data-connector="flow-cache-tests" d="M 490 456 L 520 456 Q 540 456 540 476 L 540 546 Q 540 566 560 566 L 1070 566" class="flowCache"/>
   <path id="flow-route-tests" data-connector="flow-route-tests" d="M 940 670 L 1070 670" class="flowRoute"/>
   <path id="flow-tests-ops" data-connector="flow-tests-ops" d="M 1275 582 L 1275 640" class="flowVerify"/>
 
@@ -113,13 +113,13 @@
   <text x="1004" y="642" text-anchor="middle" class="label">Ktor route role</text>
   <text x="1222" y="616" text-anchor="middle" class="label">stability</text>
 
-  <rect x="450" y="842" width="700" height="36" rx="18" fill="#ffffff" stroke="#d7e2de" stroke-width="1.4"/>
-  <path d="M 478 860 L 536 860" class="legendLine" stroke="#3f8e84"/>
-  <text x="546" y="864" class="legendText">cache strategy evidence</text>
-  <path d="M 722 860 L 780 860" class="legendLine" stroke="#a2743d"/>
-  <text x="790" y="864" class="legendText">routing evidence</text>
-  <path d="M 938 860 L 996 860" class="legendLine" stroke="#7667b1"/>
-  <text x="1006" y="864" class="legendText">benchmark and operations</text>
+  <rect x="450" y="798" width="700" height="36" rx="18" fill="#ffffff" stroke="#d7e2de" stroke-width="1.4"/>
+  <path d="M 478 816 L 536 816" class="legendLine" stroke="#3f8e84"/>
+  <text x="546" y="820" class="legendText">cache strategy evidence</text>
+  <path d="M 722 816 L 780 816" class="legendLine" stroke="#a2743d"/>
+  <text x="790" y="820" class="legendText">routing evidence</text>
+  <path d="M 938 816 L 996 816" class="legendLine" stroke="#7667b1"/>
+  <text x="1006" y="820" class="legendText">benchmark and operations</text>
 
-  <text x="800" y="904" text-anchor="middle" class="footer">Use smoke checks for quick trends, then precise benchmark profiles and focused tests before treating an optimization as a production pattern.</text>
+  <text x="800" y="860" text-anchor="middle" class="footer">Use smoke checks for quick trends, then precise benchmark profiles and focused tests before treating an optimization as a production pattern.</text>
 </svg>

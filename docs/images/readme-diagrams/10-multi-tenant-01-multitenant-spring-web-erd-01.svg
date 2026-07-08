@@ -1,148 +1,75 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 720" width="2200" height="720" role="img" aria-label="Spring MVC Multi-Tenant Domain Model">
-<defs>
-<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-dasharray="none" style="stroke-dasharray:none"/></marker><marker id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
-<style>
-.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}
-.subtitle,.detail,.tiny{font-family:"Comic Mono";fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter";font-size:16px;fill:#1e293b}
-.className{font-family:"Architects Daughter";font-size:17px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-.card,.uml,.tableBox,.dbBody{stroke-width:1.7;filter:url(#shadow)}
-.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.call,.runtime,.storage,.map,.fk,.ret{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.call{stroke:#2563eb}.runtime{stroke:#7c3aed}
-.storage{stroke:#ea580c}.map{stroke:#16a34a}
-.fk{stroke:#0f766e}.ret{stroke:#64748b;stroke-dasharray:7 5}
-.inherit{fill:none;stroke:#334155;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.inheritTriangle{fill:#fff;stroke:#334155;stroke-width:1.8}
-.lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
-</style>
-</defs>
-<rect width="2200" height="720" class="canvas"/>
-<rect x="20" y="20" width="2160" height="680" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Spring MVC Multi-Tenant Domain Model</text>
-<text x="48" y="80" class="subtitle">MovieSchema tables, DAO entities, DTO records, bridge FKs, and source-derived mapper relations</text>
-<rect x="90.9" y="108" width="835.2" height="555.5" rx="12" class="panel"/>
-<text x="508.5" y="128" class="panelTitle" text-anchor="middle">MOVIESCHEMA TABLES</text>
-<rect x="875.9" y="108" width="593.6" height="347.1" rx="12" class="panel"/>
-<text x="1172.7" y="128" class="panelTitle" text-anchor="middle">DAO ENTITIES</text>
-<rect x="1478.6" y="290.9" width="630.6" height="369.8" rx="12" class="panel"/>
-<text x="1793.8" y="310.9" class="panelTitle" text-anchor="middle">DTO RECORDS</text>
-<path d="M453.2,304.9 L453.2,228.8" class="inherit"/>
-<path d="M445.2,228.8 L461.2,228.8 L453.2,212.8 Z" class="inheritTriangle"/>
-<path d="M299,304.9 L299,228.8" class="inherit"/>
-<path d="M291,228.8 L307,228.8 L299,212.8 Z" class="inheritTriangle"/>
-<path d="M796.7,522.3 L796.7,228.8" class="inherit"/>
-<path d="M788.7,228.8 L804.7,228.8 L796.7,212.8 Z" class="inheritTriangle"/>
-<path d="M1238.7,314 L1238.7,228.8" class="inherit"/>
-<path d="M1230.7,228.8 L1246.7,228.8 L1238.7,212.8 Z" class="inheritTriangle"/>
-<path d="M1123.1,314 L1123.1,228.8" class="inherit"/>
-<path d="M1115.1,228.8 L1131.1,228.8 L1123.1,212.8 Z" class="inheritTriangle"/>
-<path d="M720,522.3 V468 Q720,460 712,460 H533 Q525,460 525,452 V430.2" class="fk" marker-end="url(#arrowTeal)"/>
-<path d="M643.8,576.5 H240.4 Q232.4,576.5 232.4,568.5 V430.2" class="fk" marker-end="url(#arrowTeal)"/>
-<text x="542" y="448" class="tiny">1</text>
-<text x="736" y="512" class="tiny">N</text>
-<text x="248" y="448" class="tiny">1</text>
-<text x="622" y="566" class="tiny">N</text>
-<path d="M1323.4,421.1 V432 Q1323.4,440 1315.4,440 H878 Q870,440 870,448 V522.3" class="map" marker-end="url(#arrowGreen)"/>
-<path d="M903.9,367.1 H881.1 Q873.1,367.1 873.1,375.1 V522.3" class="map" marker-end="url(#arrowGreen)"/>
-<path d="M1441.5,367.1 H1506.6" class="runtime" marker-end="url(#arrowPurple)"/>
-<path d="M1724.9,410.3 V525" class="runtime" marker-end="url(#arrowPurple)"/>
-<path d="M1880.7,410.3 V525" class="runtime" marker-end="url(#arrowPurple)"/>
-<g data-id="LongIdTable" data-label="LongIdTable">
-<rect x="283.3" y="142" width="190.7" height="70.8" rx="4" fill="#fff" stroke="#64748b" class="uml"/>
-<rect x="283.3" y="142" width="190.7" height="34" rx="4" fill="#e2e8f0" stroke="#64748b" class="uml"/>
-<text x="378.7" y="165" class="className" text-anchor="middle">LongIdTable</text>
-<line x1="283.3" y1="176" x2="474.1" y2="176" stroke="#64748b" stroke-width="1.1"/>
-<text x="295.3" y="197" class="detail">Exposed id table</text>
-</g>
-<g data-id="Table" data-label="Table">
-<rect x="693.8" y="142" width="154.4" height="70.8" rx="4" fill="#fff" stroke="#64748b" class="uml"/>
-<rect x="693.8" y="142" width="154.4" height="34" rx="4" fill="#e2e8f0" stroke="#64748b" class="uml"/>
-<text x="771" y="165" class="className" text-anchor="middle">Table</text>
-<line x1="693.8" y1="176" x2="848.1" y2="176" stroke="#64748b" stroke-width="1.1"/>
-<text x="705.8" y="197" class="detail">plain table</text>
-</g>
-<g data-id="MovieTable" data-label="MovieTable">
-<rect x="411.5" y="304.9" width="227" height="125.3" rx="4" fill="#fff" stroke="#2563eb" class="tableBox"/>
-<rect x="411.5" y="304.9" width="227" height="34" rx="4" fill="#dbeafe" stroke="#2563eb" class="tableBox"/>
-<text x="525" y="327.9" class="className" text-anchor="middle">MovieTable</text>
-<line x1="411.5" y1="338.9" x2="638.5" y2="338.9" stroke="#2563eb" stroke-width="1.1"/>
-<text x="423.5" y="359.9" class="detail">id: EntityID&lt;Long&gt; PK</text>
-<text x="423.5" y="376.9" class="detail">name: varchar(255)</text>
-<text x="423.5" y="393.9" class="detail">producerName: varchar(255)</text>
-<text x="423.5" y="410.9" class="detail">releaseDate: date</text>
-</g>
-<g data-id="ActorTable" data-label="ActorTable">
-<rect x="118.9" y="304.9" width="227" height="125.3" rx="4" fill="#fff" stroke="#db2777" class="tableBox"/>
-<rect x="118.9" y="304.9" width="227" height="34" rx="4" fill="#fce7f3" stroke="#db2777" class="tableBox"/>
-<text x="232.4" y="327.9" class="className" text-anchor="middle">ActorTable</text>
-<line x1="118.9" y1="338.9" x2="345.9" y2="338.9" stroke="#db2777" stroke-width="1.1"/>
-<text x="130.9" y="359.9" class="detail">id: EntityID&lt;Long&gt; PK</text>
-<text x="130.9" y="376.9" class="detail">firstName: varchar(255)</text>
-<text x="130.9" y="393.9" class="detail">lastName: varchar(255)</text>
-<text x="130.9" y="410.9" class="detail">birthday: date?</text>
-</g>
-<g data-id="ActorInMovieTable" data-label="ActorInMovieTable">
-<rect x="643.8" y="522.3" width="254.3" height="107.2" rx="4" fill="#fff" stroke="#d97706" class="tableBox"/>
-<rect x="643.8" y="522.3" width="254.3" height="34" rx="4" fill="#fef3c7" stroke="#d97706" class="tableBox"/>
-<text x="771" y="545.3" class="className" text-anchor="middle">ActorInMovieTable</text>
-<line x1="643.8" y1="556.3" x2="898.1" y2="556.3" stroke="#d97706" stroke-width="1.1"/>
-<text x="655.8" y="577.3" class="detail">movieId: FK -&gt; movies</text>
-<text x="655.8" y="594.3" class="detail">actorId: FK -&gt; actors</text>
-<text x="655.8" y="611.3" class="detail">PK(movieId, actorId)</text>
-</g>
-<g data-id="LongEntity" data-label="LongEntity">
-<rect x="1072.1" y="142" width="199.8" height="70.8" rx="4" fill="#fff" stroke="#64748b" class="uml"/>
-<rect x="1072.1" y="142" width="199.8" height="34" rx="4" fill="#e2e8f0" stroke="#64748b" class="uml"/>
-<text x="1172" y="165" class="className" text-anchor="middle">LongEntity</text>
-<line x1="1072.1" y1="176" x2="1271.9" y2="176" stroke="#64748b" stroke-width="1.1"/>
-<text x="1084.1" y="197" class="detail">DAO entity base</text>
-</g>
-<g data-id="MovieEntity" data-label="MovieEntity">
-<rect x="1205.3" y="314" width="236.1" height="107.2" rx="4" fill="#fff" stroke="#2563eb" class="uml"/>
-<rect x="1205.3" y="314" width="236.1" height="34" rx="4" fill="#dbeafe" stroke="#2563eb" class="uml"/>
-<text x="1323.4" y="337" class="className" text-anchor="middle">MovieEntity</text>
-<line x1="1205.3" y1="348" x2="1441.4" y2="348" stroke="#2563eb" stroke-width="1.1"/>
-<text x="1217.3" y="369" class="detail">extends LongEntity</text>
-<text x="1217.3" y="386" class="detail">actors via bridge table</text>
-<line x1="1205.3" y1="398" x2="1441.4" y2="398" stroke="#2563eb" stroke-width="1.1"/>
-<text x="1217.3" y="418" class="detail">toMovieRecord()</text>
-</g>
-<g data-id="ActorEntity" data-label="ActorEntity">
-<rect x="903.9" y="314" width="236.1" height="107.2" rx="4" fill="#fff" stroke="#db2777" class="uml"/>
-<rect x="903.9" y="314" width="236.1" height="34" rx="4" fill="#fce7f3" stroke="#db2777" class="uml"/>
-<text x="1021.9" y="337" class="className" text-anchor="middle">ActorEntity</text>
-<line x1="903.9" y1="348" x2="1140" y2="348" stroke="#db2777" stroke-width="1.1"/>
-<text x="915.9" y="369" class="detail">extends LongEntity</text>
-<text x="915.9" y="386" class="detail">movies via bridge table</text>
-<line x1="903.9" y1="398" x2="1140" y2="398" stroke="#db2777" stroke-width="1.1"/>
-<text x="915.9" y="418" class="detail">toActorRecord()</text>
-</g>
-<g data-id="MovieRecord" data-label="MovieRecord">
-<rect x="1506.6" y="324.9" width="254.3" height="85.4" rx="4" fill="#fff" stroke="#2563eb" class="uml"/>
-<rect x="1506.6" y="324.9" width="254.3" height="34" rx="4" fill="#dbeafe" stroke="#2563eb" class="uml"/>
-<text x="1633.7" y="347.9" class="className" text-anchor="middle">MovieRecord</text>
-<line x1="1506.6" y1="358.9" x2="1760.8" y2="358.9" stroke="#2563eb" stroke-width="1.1"/>
-<text x="1518.6" y="379.9" class="detail">from MovieEntity</text>
-</g>
-<g data-id="ActorRecord" data-label="ActorRecord">
-<rect x="1826.8" y="324.9" width="254.3" height="85.4" rx="4" fill="#fff" stroke="#db2777" class="uml"/>
-<rect x="1826.8" y="324.9" width="254.3" height="34" rx="4" fill="#fce7f3" stroke="#db2777" class="uml"/>
-<text x="1954" y="347.9" class="className" text-anchor="middle">ActorRecord</text>
-<line x1="1826.8" y1="358.9" x2="2081.1" y2="358.9" stroke="#db2777" stroke-width="1.1"/>
-<text x="1838.8" y="379.9" class="detail">from ActorEntity</text>
-</g>
-<g data-id="MovieWithActorRecord" data-label="MovieWithActorRecord">
-<rect x="1653" y="525" width="281.5" height="101.7" rx="4" fill="#fff" stroke="#0f766e" class="uml"/>
-<rect x="1653" y="525" width="281.5" height="34" rx="4" fill="#ccfbf1" stroke="#0f766e" class="uml"/>
-<text x="1793.8" y="548" class="className" text-anchor="middle">MovieWithActorRecord</text>
-<line x1="1653" y1="559" x2="1934.6" y2="559" stroke="#0f766e" stroke-width="1.1"/>
-<text x="1665" y="580" class="detail">MovieRecord + ActorRecord</text>
-<line x1="1653" y1="601" x2="1934.6" y2="601" stroke="#0f766e" stroke-width="1.1"/>
-<text x="1665" y="621" class="detail">used by response DTO</text>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 680" width="1240" height="680" role="img" aria-label="Spring MVC Multi-Tenant Domain Model ERD">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .canvas{fill:#f6f9fc}
+      .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+      .table{fill:#fff;stroke-width:1.8;filter:url(#shadow)}
+      .card{fill:#fff;stroke-width:1.8;filter:url(#shadow)}
+      .header{stroke-width:1.8}
+      .title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}
+      .subtitle,.detail,.footer{font-family:"Comic Mono";fill:#536476}
+      .subtitle{font-size:13px}
+      .footer{font-size:12px}
+      .entity{font-family:"Architects Daughter";font-size:21px;fill:#1e293b}
+      .field{font-family:"Comic Mono";font-size:13px;fill:#475569}
+      .key{font-family:"Comic Mono";font-size:11px;font-weight:700;fill:#1f5f8f}
+      .cardinality{font-family:"Comic Mono";font-size:17px;font-weight:700;fill:#0f766e}
+      .relationship{fill:none;stroke:#0f766e;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+  </defs>
+
+  <rect width="1240" height="680" class="canvas"/>
+  <rect x="20" y="20" width="1200" height="640" rx="18" class="frame"/>
+
+  <text x="52" y="62" class="title">Spring MVC Multi-Tenant Domain Model ERD</text>
+  <text x="52" y="88" class="subtitle">Each tenant schema contains the same movie, actor, and bridge-table shape; schema switching provides isolation.</text>
+
+  <g data-card="MovieTable">
+    <rect x="100" y="150" width="320" height="205" rx="8" stroke="#4f86c6" class="table card"/>
+    <rect x="100" y="150" width="320" height="42" rx="8" fill="#dbeafe" stroke="#4f86c6" class="header"/>
+    <text x="260" y="178" class="entity" text-anchor="middle">movies</text>
+    <line x1="100" y1="192" x2="420" y2="192" stroke="#4f86c6" stroke-width="1.2"/>
+    <text x="118" y="219" class="field">id: EntityID&lt;Long&gt;</text>
+    <text x="292" y="219" class="key">PK</text>
+    <text x="118" y="246" class="field">name: varchar(255)</text>
+    <text x="118" y="273" class="field">producer_name: varchar(255)</text>
+    <text x="118" y="300" class="field">release_date: date</text>
+  </g>
+
+  <g data-card="ActorTable">
+    <rect x="820" y="150" width="320" height="205" rx="8" stroke="#db2777" class="table card"/>
+    <rect x="820" y="150" width="320" height="42" rx="8" fill="#fce7f3" stroke="#db2777" class="header"/>
+    <text x="980" y="178" class="entity" text-anchor="middle">actors</text>
+    <line x1="820" y1="192" x2="1140" y2="192" stroke="#db2777" stroke-width="1.2"/>
+    <text x="838" y="219" class="field">id: EntityID&lt;Long&gt;</text>
+    <text x="1012" y="219" class="key">PK</text>
+    <text x="838" y="246" class="field">first_name: varchar(255)</text>
+    <text x="838" y="273" class="field">last_name: varchar(255)</text>
+    <text x="838" y="300" class="field">birthday: date?</text>
+  </g>
+
+  <g data-card="ActorInMovieTable">
+    <rect x="460" y="410" width="320" height="160" rx="8" stroke="#b8894a" class="table card"/>
+    <rect x="460" y="410" width="320" height="42" rx="8" fill="#fef3c7" stroke="#b8894a" class="header"/>
+    <text x="620" y="438" class="entity" text-anchor="middle">actors_in_movies</text>
+    <line x1="460" y1="452" x2="780" y2="452" stroke="#b8894a" stroke-width="1.2"/>
+    <text x="478" y="479" class="field">movie_id: EntityID&lt;Long&gt;</text>
+    <text x="690" y="479" class="key">FK</text>
+    <text x="478" y="506" class="field">actor_id: EntityID&lt;Long&gt;</text>
+    <text x="690" y="506" class="key">FK</text>
+    <text x="478" y="543" class="field">PrimaryKey(movie_id, actor_id)</text>
+  </g>
+
+  <path data-connector="movie-to-bridge" d="M260,355 V370 Q260,382 272,382 H596 Q608,382 608,394 V410" class="relationship connector"/>
+  <text x="282" y="374" class="cardinality" text-anchor="middle">1</text>
+  <text x="586" y="404" class="cardinality" text-anchor="middle">N</text>
+
+  <path data-connector="actor-to-bridge" d="M980,355 V370 Q980,382 968,382 H724 Q712,382 712,394 V410" class="relationship connector"/>
+  <text x="958" y="374" class="cardinality" text-anchor="middle">1</text>
+  <text x="734" y="404" class="cardinality" text-anchor="middle">N</text>
+
+  <text x="620" y="616" class="footer" text-anchor="middle">ActorInMovieTable owns the composite primary key and the two cascading foreign keys used by MovieEntity.actors and ActorEntity.movies.</text>
 </svg>

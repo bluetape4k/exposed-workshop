@@ -70,8 +70,8 @@
 <text x="1106" y="635" class="label" text-anchor="middle">Dialect support</text>
 <text x="1106" y="664" class="detail" text-anchor="middle">feature assumptions</text>
 <rect x="1348" y="130" width="140" height="610" rx="12" class="panel"/><text x="1418" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
-<rect x="1358" y="290" width="120" height="260" rx="10" fill="#fff7ed" stroke="#ea580c" class="card"/>
-<g data-bluetape4k-icon="generic/database-server" transform="translate(1374 314) scale(.30)">
+<rect x="1358" y="190" width="120" height="488" rx="10" fill="#fff7ed" stroke="#ea580c" class="card"/>
+<g data-bluetape4k-icon="generic/database-server" transform="translate(1374 254) scale(.30)">
   <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
   <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
   <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
@@ -93,9 +93,9 @@
 <path data-connector="sales-to-group-by-having" d="M814,527 L894,527 Q904,527 904,517 L904,374 Q904,364 914,364 L990,364" class="arrow edge"/>
 <path data-connector="sales-to-over-clause" d="M814,527 L990,527" class="arrow edge"/>
 <path data-connector="assertions-to-dialect-support" d="M814,665 L900,665 Q910,665 910,655 L910,654 Q910,644 920,644 L990,644" class="returnLine edge"/>
-<path data-connector="select-expression-to-db" d="M1222,224 L1300,224 Q1310,224 1310,234 L1310,346 Q1310,356 1320,356 L1358,356" class="dbUse edge"/>
-<path data-connector="group-by-to-db" d="M1222,364 L1300,364 Q1310,364 1310,374 L1310,386 Q1310,396 1320,396 L1358,396" class="dbUse edge"/>
-<path data-connector="over-clause-to-db" d="M1222,504 L1300,504 Q1310,504 1310,494 L1310,446 Q1310,436 1320,436 L1358,436" class="dbUse edge"/>
+<path data-connector="select-expression-to-db" d="M1222,224 L1358,224" class="dbUse edge"/>
+<path data-connector="group-by-to-db" d="M1222,364 L1358,364" class="dbUse edge"/>
+<path data-connector="over-clause-to-db" d="M1222,504 L1358,504" class="dbUse edge"/>
 <rect x="236" y="756" width="1088" height="32" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
 <path d="M270,772 L332,772" class="arrow"/><text x="348" y="777" class="tiny">categories to expressions</text>
 <path d="M620,772 L682,772" class="runtimeUse"/><text x="696" y="777" class="tiny">edge cases to assertions</text>

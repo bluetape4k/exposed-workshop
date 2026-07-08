@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1540 900" width="1540" height="900" role="img" aria-label="Java Time Column Type Mapping">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1540 810" width="1540" height="810" role="img" aria-label="Java Time Column Type Mapping">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
 <marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
@@ -18,14 +18,14 @@
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
-<rect width="1540" height="900" class="canvas"/>
-<rect x="20" y="20" width="1500" height="860" rx="16" class="frame"/>
+<rect width="1540" height="810" class="canvas"/>
+<rect x="20" y="20" width="1500" height="770" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Java Time Column Type Mapping</text>
 <text x="48" y="80" class="subtitle">Java Time examples map LocalDate, LocalTime, LocalDateTime, Instant, and OffsetDateTime to Exposed column builders</text>
-<rect x="58" y="130" width="330" height="608" rx="12" class="panel"/><text x="223" y="122" class="panelTitle" text-anchor="middle">JAVA TYPE</text>
-<rect x="454" y="130" width="354" height="608" rx="12" class="panel"/><text x="631" y="122" class="panelTitle" text-anchor="middle">EXPOSED COLUMN BUILDER</text>
-<rect x="874" y="130" width="314" height="608" rx="12" class="panel"/><text x="1031" y="122" class="panelTitle" text-anchor="middle">TABLE COLUMNS AND DEFAULTS</text>
-<rect x="1250" y="130" width="210" height="608" rx="12" class="panel"/><text x="1355" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
+<rect x="58" y="130" width="330" height="520" rx="12" class="panel"/><text x="223" y="122" class="panelTitle" text-anchor="middle">JAVA TYPE</text>
+<rect x="454" y="130" width="354" height="520" rx="12" class="panel"/><text x="631" y="122" class="panelTitle" text-anchor="middle">EXPOSED COLUMN BUILDER</text>
+<rect x="874" y="130" width="314" height="520" rx="12" class="panel"/><text x="1031" y="122" class="panelTitle" text-anchor="middle">TABLE COLUMNS AND DEFAULTS</text>
+<rect x="1250" y="130" width="210" height="520" rx="12" class="panel"/><text x="1355" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
 <rect x="96" y="178" width="240" height="62" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
 <text x="216" y="203" class="label" text-anchor="middle">LocalDate</text>
 <text x="216" y="226" class="detail" text-anchor="middle">Java time</text>
@@ -94,13 +94,13 @@
 <path data-connector="timestamp-with-zone-builder-to-defaults" d="M756,593 L812,593 Q828,593 828,577 L828,538 Q828,522 844,522 L918,522" class="arrow"/>
 <path data-connector="misc-to-db" d="M1144,248 L1202,248 Q1218,248 1218,264 L1218,362 Q1218,378 1234,378 L1292,378" class="dbUse"/>
 <path data-connector="defaults-to-db" d="M1144,462 L1202,462 Q1218,462 1218,446 L1218,436 Q1218,420 1234,420 L1292,420" class="dbUse"/>
-<rect x="344" y="752" width="852" height="34" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.2"/>
-<path d="M374,769 L424,769" class="mapLine"/>
-<text x="440" y="773" class="tiny">Java type to Exposed builder</text>
-<path d="M646,769 L696,769" class="arrow"/>
-<text x="712" y="773" class="tiny">builder used by example tables</text>
-<path d="M970,769 L1020,769" class="dbUse"/>
-<text x="1036" y="773" class="tiny">table values verified by test DB</text>
-<rect x="118" y="796" width="1264" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="750" y="827" class="detail" text-anchor="middle">Java Time columns keep typed values in Kotlin while defaults, literals, and precision behavior are verified per database.</text>
+<rect x="344" y="664" width="852" height="34" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.2"/>
+<path d="M374,681 L424,681" class="mapLine"/>
+<text x="440" y="685" class="tiny">Java type to Exposed builder</text>
+<path d="M646,681 L696,681" class="arrow"/>
+<text x="712" y="685" class="tiny">builder used by example tables</text>
+<path d="M970,681 L1020,681" class="dbUse"/>
+<text x="1036" y="685" class="tiny">table values verified by test DB</text>
+<rect x="118" y="708" width="1264" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="750" y="739" class="detail" text-anchor="middle">Java Time columns keep typed values in Kotlin while defaults, literals, and precision behavior are verified per database.</text>
 </svg>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1040" width="1600" height="1040" role="img" aria-label="Routing datasource class structure">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 896" width="1600" height="896" role="img" aria-label="Routing datasource class structure">
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.13"/>
@@ -31,7 +31,7 @@
     </style>
   </defs>
 
-  <rect x="24" y="24" width="1552" height="992" rx="20" class="canvas frame"/>
+  <rect x="24" y="24" width="1552" height="848" rx="20" class="canvas frame"/>
   <text x="800" y="76" text-anchor="middle" class="title">RoutingDataSource Class Structure</text>
   <text x="800" y="106" text-anchor="middle" class="subtitle">Routing is split into resolver, registry, delegating DataSource, request tenant context, and Exposed marker table contracts.</text>
 
@@ -106,6 +106,6 @@
   <path id="r2" data-connector="r2" class="rel" d="M 191 508 L 191 548 Q 191 568 211 568 L 779 568 Q 799 568 799 548 L 799 508"/>
   <path id="r3" data-connector="r3" class="rel" d="M 1103 508 L 1103 650"/>
 
-  <rect x="320" y="860" width="960" height="54" rx="12" class="band"/>
-  <text x="800" y="893" text-anchor="middle" class="small">DynamicRoutingDataSource never owns target pools directly; the registry owns close semantics and missing-key failure behavior.</text>
+  <rect x="320" y="790" width="960" height="54" rx="12" class="band"/>
+  <text x="800" y="823" text-anchor="middle" class="small">DynamicRoutingDataSource never owns target pools directly; the registry owns close semantics and missing-key failure behavior.</text>
 </svg>
