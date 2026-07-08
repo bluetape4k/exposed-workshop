@@ -24,8 +24,10 @@
       .tiny{font-size:10px;fill:#64748b}
       .legend{font-family:"Comic Mono";font-size:12px;fill:#536476}
       .inherit{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#umlHead)}
-      .depend{fill:none;stroke:#64748b;stroke-width:1.6;stroke-dasharray:6 6;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#depHead)}
-      .wire{fill:none;stroke:#8a6f3e;stroke-width:1.55;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#wireHead)}
+      .depend{fill:none;stroke:#64748b;stroke-width:1.6;stroke-dasharray:6 6;stroke-linecap:round;stroke-linejoin:round}
+      .wire{fill:none;stroke:#8a6f3e;stroke-width:1.55;stroke-dasharray:5 5;stroke-linecap:round;stroke-linejoin:round}
+      .depHead{fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none}
+      .wireHead{fill:none;stroke:#8a6f3e;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none}
     </style>
   </defs>
 
@@ -129,18 +131,30 @@
   <path data-connector="redis-cache-manager-implements-cache-manager" d="M1020,690 V590" class="inherit"/>
 
   <path data-connector="country-uses-country-table" d="M670,326 H620" class="depend"/>
+  <polyline points="629,321 620,326 629,331" class="depHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
   <path data-connector="data-populator-batch-inserts-country-table" d="M1145,372 V420 Q1145,432 1133,432 H507 Q495,432 495,420 V392" class="depend"/>
+  <polyline points="490,401 495,392 500,401" class="depHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
   <path data-connector="country-repository-queries-country-table" d="M460,470 V392" class="depend"/>
+  <polyline points="455,401 460,392 465,401" class="depHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
   <path data-connector="country-repository-returns-country-record" d="M340,545 H225 Q213,545 213,533 V372" class="depend"/>
+  <polyline points="208,381 213,372 218,381" class="depHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
   <path data-connector="country-repository-injects-cache-manager" d="M810,535 H870" class="depend"/>
+  <polyline points="861,530 870,535 861,540" class="depHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
 
   <path data-connector="lettuce-cache-config-creates-cache-manager-bean" d="M1165,525 H1110" class="wire"/>
+  <polyline points="1119,520 1110,525 1119,530" class="wireHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
   <path data-connector="lettuce-cache-config-creates-redis-cache-configuration" d="M1295,580 V690" class="wire"/>
+  <polyline points="1290,681 1295,690 1300,681" class="wireHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
   <path data-connector="lettuce-cache-config-builds-redis-cache-manager" d="M1295,580 V638 Q1295,650 1283,650 H1112 Q1100,650 1100,662 V690" class="wire"/>
+  <polyline points="1095,681 1100,690 1105,681" class="wireHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
   <path data-connector="redis-cache-configuration-feeds-redis-cache-manager" d="M1165,737 H1140" class="wire"/>
+  <polyline points="1149,732 1140,737 1149,742" class="wireHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
   <path data-connector="exposed-config-creates-database-config" d="M320,737 H370" class="wire"/>
+  <polyline points="361,732 370,737 361,742" class="wireHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
   <path data-connector="database-config-feeds-database" d="M620,737 H640" class="wire"/>
+  <polyline points="631,732 640,737 631,742" class="wireHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
   <path data-connector="spring-application-starts-redis-testcontainer" d="M390,876 H440" class="wire"/>
+  <polyline points="431,871 440,876 431,881" class="wireHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
 
   <rect x="70" y="953" width="1355" height="42" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
   <text x="747.5" y="979" text-anchor="middle" class="legend">Solid hollow triangle = implements/extends; dashed gray = uses/injects; dashed brown = creates/configures bean.</text>

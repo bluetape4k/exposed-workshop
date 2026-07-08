@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 960" width="1560" height="960" role="img" aria-label="Custom Column Class and Table Model">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1760 1020" width="1760" height="1020" role="img" aria-label="Custom Column Class and Table Model">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
-<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+<marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
+<marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7d61b3" stroke="#7d61b3" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
 <style>
 .canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
 .title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}
@@ -16,159 +16,159 @@
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
-<rect width="1560" height="960" class="canvas"/>
-<rect x="20" y="20" width="1520" height="920" rx="16" class="frame"/>
+<rect width="1760" height="1020" class="canvas"/>
+<rect x="20" y="20" width="1720" height="980" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Custom Column Class and Table Model</text>
 <text x="48" y="80" class="subtitle">Custom column tests share Exposed test bases, T1 tables, IntEntity DAO classes, codecs, and embeddable payloads</text>
-<rect x="58" y="130" width="618" height="740" rx="12" class="panel"/><text x="367" y="122" class="panelTitle" text-anchor="middle">TEST HIERARCHY</text>
+<rect x="58" y="130" width="704" height="800" rx="12" class="panel"/><text x="410" y="122" class="panelTitle" text-anchor="middle">TEST HIERARCHY</text>
 <desc>AbstractExposedTest</desc>
-<rect x="246" y="156" width="230" height="94" rx="4" fill="#fff" stroke="#64748b" class="card"/>
-<path d="M246,196 L246,160 Q246,156 250,156 L472,156 Q476,156 476,160 L476,196 Z" fill="#e2e8f0"/>
-<line x1="246" y1="196" x2="476" y2="196" stroke="#64748b" stroke-width="1.2"/>
-<text x="361" y="182" class="label" text-anchor="middle">AbstractExposedTest</text>
-<line x1="246" y1="230" x2="476" y2="230" stroke="#64748b" stroke-width="1.2"/>
-<text x="262" y="217" class="tiny">withTables(testDB, ...)</text>
-<text x="262" y="244" class="tiny">fixture base</text>
-<polygon points="361,250 352,266 370,266" fill="#fff" stroke="#475569" stroke-width="1.8"/>
-<path d="M361,266 L361,306" class="inheritStem"/>
-<path d="M68,306 L660,306" class="inheritStem"/>
-<path d="M200,306 L200,360" class="inheritStem"/>
-<path d="M452,306 L452,360" class="inheritStem"/>
-<path d="M68,306 L68,478 Q68,490 80,490 L188,490 Q200,490 200,502 L200,510" class="inheritStem"/>
-<path d="M660,306 L660,478 Q660,490 648,490 L464,490 Q452,490 452,502 L452,510" class="inheritStem"/>
-<path d="M660,306 L660,634 Q660,646 648,646 L338,646 Q326,646 326,658 L326,666" class="inheritStem"/>
+<rect x="294" y="156" width="230" height="94" rx="4" fill="#fff" stroke="#64748b" class="card"/>
+<path d="M294,196 L294,160 Q294,156 298,156 L520,156 Q524,156 524,160 L524,196 Z" fill="#e2e8f0"/>
+<line x1="294" y1="196" x2="524" y2="196" stroke="#64748b" stroke-width="1.2"/>
+<text x="409" y="182" class="label" text-anchor="middle">AbstractExposedTest</text>
+<line x1="294" y1="230" x2="524" y2="230" stroke="#64748b" stroke-width="1.2"/>
+<text x="310" y="217" class="tiny">withTables(testDB, ...)</text>
+<text x="310" y="244" class="tiny">fixture base</text>
+<polygon points="409,250 400,266 418,266" fill="#fff" stroke="#475569" stroke-width="1.8"/>
+<path d="M409,266 L409,306" class="inheritStem"/>
+<path d="M100,306 L720,306" class="inheritStem"/>
+<path d="M212,306 L212,360" class="inheritStem"/>
+<path d="M508,306 L508,360" class="inheritStem"/>
+<path d="M100,306 L100,480 Q100,492 112,492 L200,492 Q212,492 212,504 L212,510" class="inheritStem"/>
+<path d="M720,306 L720,480 Q720,492 708,492 L520,492 Q508,492 508,504 L508,510" class="inheritStem"/>
+<path d="M720,306 L720,632 Q720,644 708,644 L422,644 Q410,644 410,656 L410,666" class="inheritStem"/>
 <desc>CompressedBinaryColumnTypeTest</desc>
-<rect x="80" y="360" width="240" height="96" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M80,416 L80,364 Q80,360 84,360 L316,360 Q320,360 320,364 L320,416 Z" fill="#dbeafe"/>
-<line x1="80" y1="416" x2="320" y2="416" stroke="#3b82f6" stroke-width="1.2"/>
-<text x="200" y="382" class="label" text-anchor="middle">CompressedBinaryColumnType</text>
-<text x="200" y="400" class="label" text-anchor="middle">Test</text>
-<text x="96" y="431" class="tiny">compressedBinary</text>
-<text x="96" y="449" class="tiny">BINARY(4096)</text>
+<rect x="92" y="360" width="240" height="96" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M92,416 L92,364 Q92,360 96,360 L328,360 Q332,360 332,364 L332,416 Z" fill="#dbeafe"/>
+<line x1="92" y1="416" x2="332" y2="416" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="212" y="382" class="label" text-anchor="middle">CompressedBinaryColumnType</text>
+<text x="212" y="400" class="label" text-anchor="middle">Test</text>
+<text x="108" y="431" class="tiny">compressedBinary</text>
+<text x="108" y="449" class="tiny">BINARY(4096)</text>
 <desc>CompressedBlobColumnTypeTest</desc>
-<rect x="332" y="360" width="240" height="96" rx="4" fill="#fff" stroke="#ea580c" class="card"/>
-<path d="M332,416 L332,364 Q332,360 336,360 L568,360 Q572,360 572,364 L572,416 Z" fill="#ffedd5"/>
-<line x1="332" y1="416" x2="572" y2="416" stroke="#ea580c" stroke-width="1.2"/>
-<text x="452" y="382" class="label" text-anchor="middle">CompressedBlobColumnType</text>
-<text x="452" y="400" class="label" text-anchor="middle">Test</text>
-<text x="348" y="431" class="tiny">compressedBlob</text>
-<text x="348" y="449" class="tiny">BLOB</text>
+<rect x="388" y="360" width="240" height="96" rx="4" fill="#fff" stroke="#ea580c" class="card"/>
+<path d="M388,416 L388,364 Q388,360 392,360 L624,360 Q628,360 628,364 L628,416 Z" fill="#ffedd5"/>
+<line x1="388" y1="416" x2="628" y2="416" stroke="#ea580c" stroke-width="1.2"/>
+<text x="508" y="382" class="label" text-anchor="middle">CompressedBlobColumnType</text>
+<text x="508" y="400" class="label" text-anchor="middle">Test</text>
+<text x="404" y="431" class="tiny">compressedBlob</text>
+<text x="404" y="449" class="tiny">BLOB</text>
 <desc>BinarySerializedBinaryTest</desc>
-<rect x="80" y="510" width="240" height="96" rx="4" fill="#fff" stroke="#db2777" class="card"/>
-<path d="M80,550 L80,514 Q80,510 84,510 L316,510 Q320,510 320,514 L320,550 Z" fill="#fce7f3"/>
-<line x1="80" y1="550" x2="320" y2="550" stroke="#db2777" stroke-width="1.2"/>
-<text x="200" y="536" class="label" text-anchor="middle">BinarySerializedBinaryTest</text>
-<text x="96" y="573" class="tiny">binarySerializedBinary</text>
-<text x="96" y="591" class="tiny">LZ4/Zstd serializers</text>
+<rect x="92" y="510" width="240" height="96" rx="4" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M92,550 L92,514 Q92,510 96,510 L328,510 Q332,510 332,514 L332,550 Z" fill="#fce7f3"/>
+<line x1="92" y1="550" x2="332" y2="550" stroke="#db2777" stroke-width="1.2"/>
+<text x="212" y="536" class="label" text-anchor="middle">BinarySerializedBinaryTest</text>
+<text x="108" y="573" class="tiny">binarySerializedBinary</text>
+<text x="108" y="591" class="tiny">LZ4/Zstd serializers</text>
 <desc>BinarySerializedBlobTest</desc>
-<rect x="332" y="510" width="240" height="96" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M332,550 L332,514 Q332,510 336,510 L568,510 Q572,510 572,514 L572,550 Z" fill="#ede9fe"/>
-<line x1="332" y1="550" x2="572" y2="550" stroke="#7c3aed" stroke-width="1.2"/>
-<text x="452" y="536" class="label" text-anchor="middle">BinarySerializedBlobTest</text>
-<text x="348" y="573" class="tiny">binarySerializedBlob</text>
-<text x="348" y="591" class="tiny">Fory/Kryo payloads</text>
+<rect x="388" y="510" width="240" height="96" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
+<path d="M388,550 L388,514 Q388,510 392,510 L624,510 Q628,510 628,514 L628,550 Z" fill="#ede9fe"/>
+<line x1="388" y1="550" x2="628" y2="550" stroke="#7c3aed" stroke-width="1.2"/>
+<text x="508" y="536" class="label" text-anchor="middle">BinarySerializedBlobTest</text>
+<text x="404" y="573" class="tiny">binarySerializedBlob</text>
+<text x="404" y="591" class="tiny">Fory/Kryo payloads</text>
 <desc>CustomClientDefaultTest</desc>
-<rect x="206" y="666" width="240" height="96" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M206,706 L206,670 Q206,666 210,666 L442,666 Q446,666 446,670 L446,706 Z" fill="#dcfce7"/>
-<line x1="206" y1="706" x2="446" y2="706" stroke="#16a34a" stroke-width="1.2"/>
-<text x="326" y="692" class="label" text-anchor="middle">CustomClientDefaultTest</text>
-<text x="222" y="729" class="tiny">timebased / snowflake</text>
-<text x="222" y="747" class="tiny">ksuid / ksuidMillis</text>
-<rect x="744" y="130" width="744" height="740" rx="12" class="panel"/><text x="1116" y="122" class="panelTitle" text-anchor="middle">TABLES, DAO, AND PAYLOADS</text>
+<rect x="290" y="666" width="240" height="96" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M290,706 L290,670 Q290,666 294,666 L526,666 Q530,666 530,670 L530,706 Z" fill="#dcfce7"/>
+<line x1="290" y1="706" x2="530" y2="706" stroke="#16a34a" stroke-width="1.2"/>
+<text x="410" y="692" class="label" text-anchor="middle">CustomClientDefaultTest</text>
+<text x="306" y="729" class="tiny">timebased / snowflake</text>
+<text x="306" y="747" class="tiny">ksuid / ksuidMillis</text>
+<rect x="816" y="130" width="884" height="800" rx="12" class="panel"/><text x="1258" y="122" class="panelTitle" text-anchor="middle">TABLES, DAO, AND PAYLOADS</text>
 <desc>IntIdTable</desc>
-<rect x="844" y="156" width="210" height="94" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
-<path d="M844,196 L844,160 Q844,156 848,156 L1050,156 Q1054,156 1054,160 L1054,196 Z" fill="#ede9fe"/>
-<line x1="844" y1="196" x2="1054" y2="196" stroke="#7c3aed" stroke-width="1.2"/>
-<text x="949" y="182" class="label" text-anchor="middle">IntIdTable</text>
-<line x1="844" y1="230" x2="1054" y2="230" stroke="#7c3aed" stroke-width="1.2"/>
-<text x="860" y="217" class="tiny">id: EntityID&lt;Int&gt;</text>
-<text x="860" y="244" class="tiny">table base</text>
+<rect x="1153" y="156" width="210" height="94" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
+<path d="M1153,196 L1153,160 Q1153,156 1157,156 L1359,156 Q1363,156 1363,160 L1363,196 Z" fill="#ede9fe"/>
+<line x1="1153" y1="196" x2="1363" y2="196" stroke="#7c3aed" stroke-width="1.2"/>
+<text x="1258" y="182" class="label" text-anchor="middle">IntIdTable</text>
+<line x1="1153" y1="230" x2="1363" y2="230" stroke="#7c3aed" stroke-width="1.2"/>
+<text x="1169" y="217" class="tiny">id: EntityID&lt;Int&gt;</text>
+<text x="1169" y="244" class="tiny">table base</text>
 <desc>Compression T1</desc>
-<rect x="770" y="326" width="210" height="112" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
-<path d="M770,366 L770,330 Q770,326 774,326 L976,326 Q980,326 980,330 L980,366 Z" fill="#dbeafe"/>
-<line x1="770" y1="366" x2="980" y2="366" stroke="#3b82f6" stroke-width="1.2"/>
-<text x="875" y="352" class="label" text-anchor="middle">Compression T1</text>
-<text x="786" y="372.5" class="tiny">lz4</text>
-<text x="786" y="390.5" class="tiny">snappy</text>
-<text x="786" y="408.5" class="tiny">zstd</text>
-<text x="786" y="426.5" class="tiny">binary/blob columns</text>
+<rect x="860" y="326" width="210" height="112" rx="4" fill="#fff" stroke="#3b82f6" class="card"/>
+<path d="M860,366 L860,330 Q860,326 864,326 L1066,326 Q1070,326 1070,330 L1070,366 Z" fill="#dbeafe"/>
+<line x1="860" y1="366" x2="1070" y2="366" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="965" y="352" class="label" text-anchor="middle">Compression T1</text>
+<text x="876" y="372.5" class="tiny">lz4</text>
+<text x="876" y="390.5" class="tiny">snappy</text>
+<text x="876" y="408.5" class="tiny">zstd</text>
+<text x="876" y="426.5" class="tiny">binary/blob columns</text>
 <desc>Serialized T1</desc>
-<rect x="1010" y="326" width="210" height="112" rx="4" fill="#fff" stroke="#db2777" class="card"/>
-<path d="M1010,366 L1010,330 Q1010,326 1014,326 L1216,326 Q1220,326 1220,330 L1220,366 Z" fill="#fce7f3"/>
-<line x1="1010" y1="366" x2="1220" y2="366" stroke="#db2777" stroke-width="1.2"/>
-<text x="1115" y="352" class="label" text-anchor="middle">Serialized T1</text>
-<text x="1026" y="388" class="tiny">name</text>
-<text x="1026" y="406" class="tiny">lz4Fory / lz4Kryo</text>
-<text x="1026" y="424" class="tiny">zstdFory / zstdKryo</text>
+<rect x="1153" y="326" width="210" height="112" rx="4" fill="#fff" stroke="#db2777" class="card"/>
+<path d="M1153,366 L1153,330 Q1153,326 1157,326 L1359,326 Q1363,326 1363,330 L1363,366 Z" fill="#fce7f3"/>
+<line x1="1153" y1="366" x2="1363" y2="366" stroke="#db2777" stroke-width="1.2"/>
+<text x="1258" y="352" class="label" text-anchor="middle">Serialized T1</text>
+<text x="1169" y="388" class="tiny">name</text>
+<text x="1169" y="406" class="tiny">lz4Fory / lz4Kryo</text>
+<text x="1169" y="424" class="tiny">zstdFory / zstdKryo</text>
 <desc>ClientGenerated</desc>
-<rect x="1250" y="326" width="210" height="112" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
-<path d="M1250,366 L1250,330 Q1250,326 1254,326 L1456,326 Q1460,326 1460,330 L1460,366 Z" fill="#dcfce7"/>
-<line x1="1250" y1="366" x2="1460" y2="366" stroke="#16a34a" stroke-width="1.2"/>
-<text x="1355" y="352" class="label" text-anchor="middle">ClientGenerated</text>
-<text x="1266" y="388" class="tiny">timebasedUuid</text>
-<text x="1266" y="406" class="tiny">snowflake</text>
-<text x="1266" y="424" class="tiny">ksuid</text>
-<polygon points="949,250 940,266 958,266" fill="#fff" stroke="#475569" stroke-width="1.8"/>
-<path d="M949,266 L949,294" class="inheritStem"/>
-<path d="M875,294 L1355,294" class="inheritStem"/>
-<path d="M875,294 L875,326" class="inheritStem"/>
-<path d="M1115,294 L1115,326" class="inheritStem"/>
-<path d="M1355,294 L1355,326" class="inheritStem"/>
+<rect x="1448" y="326" width="210" height="112" rx="4" fill="#fff" stroke="#16a34a" class="card"/>
+<path d="M1448,366 L1448,330 Q1448,326 1452,326 L1654,326 Q1658,326 1658,330 L1658,366 Z" fill="#dcfce7"/>
+<line x1="1448" y1="366" x2="1658" y2="366" stroke="#16a34a" stroke-width="1.2"/>
+<text x="1553" y="352" class="label" text-anchor="middle">ClientGenerated</text>
+<text x="1464" y="388" class="tiny">timebasedUuid</text>
+<text x="1464" y="406" class="tiny">snowflake</text>
+<text x="1464" y="424" class="tiny">ksuid</text>
+<polygon points="1258,250 1249,266 1267,266" fill="#fff" stroke="#475569" stroke-width="1.8"/>
+<path d="M1258,266 L1258,294" class="inheritStem"/>
+<path d="M965,294 L1553,294" class="inheritStem"/>
+<path d="M965,294 L965,326" class="inheritStem"/>
+<path d="M1258,294 L1258,326" class="inheritStem"/>
+<path d="M1553,294 L1553,326" class="inheritStem"/>
 <desc>IntEntity</desc>
-<rect x="1010" y="510" width="210" height="94" rx="4" fill="#fff" stroke="#64748b" class="card"/>
-<path d="M1010,550 L1010,514 Q1010,510 1014,510 L1216,510 Q1220,510 1220,514 L1220,550 Z" fill="#e2e8f0"/>
-<line x1="1010" y1="550" x2="1220" y2="550" stroke="#64748b" stroke-width="1.2"/>
-<text x="1115" y="536" class="label" text-anchor="middle">IntEntity</text>
-<line x1="1010" y1="584" x2="1220" y2="584" stroke="#64748b" stroke-width="1.2"/>
-<text x="1026" y="571" class="tiny">EntityID&lt;Int&gt;</text>
-<text x="1026" y="598" class="tiny">DAO base</text>
+<rect x="1153" y="510" width="210" height="94" rx="4" fill="#fff" stroke="#64748b" class="card"/>
+<path d="M1153,550 L1153,514 Q1153,510 1157,510 L1359,510 Q1363,510 1363,514 L1363,550 Z" fill="#e2e8f0"/>
+<line x1="1153" y1="550" x2="1363" y2="550" stroke="#64748b" stroke-width="1.2"/>
+<text x="1258" y="536" class="label" text-anchor="middle">IntEntity</text>
+<line x1="1153" y1="584" x2="1363" y2="584" stroke="#64748b" stroke-width="1.2"/>
+<text x="1169" y="571" class="tiny">EntityID&lt;Int&gt;</text>
+<text x="1169" y="598" class="tiny">DAO base</text>
 <desc>E1</desc>
-<rect x="770" y="664" width="210" height="86" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
-<path d="M770,704 L770,668 Q770,664 774,664 L976,664 Q980,664 980,668 L980,704 Z" fill="#ccfbf1"/>
-<line x1="770" y1="704" x2="980" y2="704" stroke="#0f766e" stroke-width="1.2"/>
-<text x="875" y="690" class="label" text-anchor="middle">E1</text>
-<text x="786" y="710" class="tiny">lz4Data</text>
-<text x="786" y="728" class="tiny">snappyData</text>
-<text x="786" y="744" class="tiny">zstdData</text>
+<rect x="860" y="664" width="210" height="86" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
+<path d="M860,704 L860,668 Q860,664 864,664 L1066,664 Q1070,664 1070,668 L1070,704 Z" fill="#ccfbf1"/>
+<line x1="860" y1="704" x2="1070" y2="704" stroke="#0f766e" stroke-width="1.2"/>
+<text x="965" y="690" class="label" text-anchor="middle">E1</text>
+<text x="876" y="710" class="tiny">lz4Data</text>
+<text x="876" y="728" class="tiny">snappyData</text>
+<text x="876" y="744" class="tiny">zstdData</text>
 <desc>E1</desc>
-<rect x="1010" y="664" width="210" height="86" rx="4" fill="#fff" stroke="#d97706" class="card"/>
-<path d="M1010,704 L1010,668 Q1010,664 1014,664 L1216,664 Q1220,664 1220,668 L1220,704 Z" fill="#fef3c7"/>
-<line x1="1010" y1="704" x2="1220" y2="704" stroke="#d97706" stroke-width="1.2"/>
-<text x="1115" y="690" class="label" text-anchor="middle">E1</text>
-<text x="1026" y="722" class="tiny">name</text>
-<text x="1026" y="740" class="tiny">serialized fields</text>
+<rect x="1153" y="664" width="210" height="86" rx="4" fill="#fff" stroke="#d97706" class="card"/>
+<path d="M1153,704 L1153,668 Q1153,664 1157,664 L1359,664 Q1363,664 1363,668 L1363,704 Z" fill="#fef3c7"/>
+<line x1="1153" y1="704" x2="1363" y2="704" stroke="#d97706" stroke-width="1.2"/>
+<text x="1258" y="690" class="label" text-anchor="middle">E1</text>
+<text x="1169" y="722" class="tiny">name</text>
+<text x="1169" y="740" class="tiny">serialized fields</text>
 <desc>ClientGeneratedEntity</desc>
-<rect x="1250" y="664" width="210" height="86" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
-<path d="M1250,704 L1250,668 Q1250,664 1254,664 L1456,664 Q1460,664 1460,668 L1460,704 Z" fill="#ccfbf1"/>
-<line x1="1250" y1="704" x2="1460" y2="704" stroke="#0f766e" stroke-width="1.2"/>
-<text x="1355" y="690" class="label" text-anchor="middle">ClientGeneratedEntity</text>
-<text x="1266" y="731" class="tiny">generated id fields</text>
-<polygon points="1115,604 1106,620 1124,620" fill="#fff" stroke="#475569" stroke-width="1.8"/>
-<path d="M1115,620 L1115,632" class="inheritStem"/>
-<path d="M875,632 L1355,632" class="inheritStem"/>
-<path d="M875,632 L875,664" class="inheritStem"/>
-<path d="M1115,632 L1115,664" class="inheritStem"/>
-<path d="M1355,632 L1355,664" class="inheritStem"/>
-<path data-connector="compression-table-to-e1" d="M875,438 L845,438 Q833,438 833,450 L833,664" class="mapLine"/>
-<path data-connector="serialized-table-to-e1" d="M1115,438 L1115,468 Q1115,480 1103,480 L872,480 Q860,480 860,492 L860,638 Q860,650 872,650 L983,650 Q995,650 995,662 L995,719 Q995,731 1007,731 L1010,731" class="mapLine"/>
-<path data-connector="client-generated-table-to-entity" d="M1355,438 L1385,438 Q1397,438 1397,450 L1397,664" class="mapLine"/>
+<rect x="1448" y="664" width="210" height="86" rx="4" fill="#fff" stroke="#0f766e" class="card"/>
+<path d="M1448,704 L1448,668 Q1448,664 1452,664 L1654,664 Q1658,664 1658,668 L1658,704 Z" fill="#ccfbf1"/>
+<line x1="1448" y1="704" x2="1658" y2="704" stroke="#0f766e" stroke-width="1.2"/>
+<text x="1553" y="690" class="label" text-anchor="middle">ClientGeneratedEntity</text>
+<text x="1464" y="731" class="tiny">generated id fields</text>
+<polygon points="1258,604 1249,620 1267,620" fill="#fff" stroke="#475569" stroke-width="1.8"/>
+<path d="M1258,620 L1258,632" class="inheritStem"/>
+<path d="M965,632 L1553,632" class="inheritStem"/>
+<path d="M965,632 L965,664" class="inheritStem"/>
+<path d="M1258,632 L1258,664" class="inheritStem"/>
+<path d="M1553,632 L1553,664" class="inheritStem"/>
+<path data-connector="compression-table-to-e1" d="M965,438 L965,452 Q965,464 953,464 L844,464 Q832,464 832,476 L832,721 Q832,733 844,733 L860,733" class="mapLine"/>
+<path data-connector="serialized-table-to-e1" d="M1258,438 L1258,472 Q1258,484 1246,484 L1124,484 Q1112,484 1112,496 L1112,721 Q1112,733 1124,733 L1153,733" class="mapLine"/>
+<path data-connector="client-generated-table-to-entity" d="M1553,438 L1553,450 Q1553,462 1565,462 L1670,462 Q1682,462 1682,474 L1682,721 Q1682,733 1674,733 L1658,733" class="mapLine"/>
 <desc>Embeddable</desc>
-<rect x="800" y="786" width="260" height="64" rx="4" fill="#fff" stroke="#d97706" class="card"/>
-<path d="M800,826 L800,790 Q800,786 804,786 L1056,786 Q1060,786 1060,790 L1060,826 Z" fill="#fef3c7"/>
-<line x1="800" y1="826" x2="1060" y2="826" stroke="#d97706" stroke-width="1.2"/>
-<text x="930" y="812" class="label" text-anchor="middle">Embeddable</text>
-<text x="816" y="842" class="tiny">name, age, address</text>
+<rect x="926" y="816" width="260" height="64" rx="4" fill="#fff" stroke="#d97706" class="card"/>
+<path d="M926,856 L926,820 Q926,816 930,816 L1182,816 Q1186,816 1186,820 L1186,856 Z" fill="#fef3c7"/>
+<line x1="926" y1="856" x2="1186" y2="856" stroke="#d97706" stroke-width="1.2"/>
+<text x="1056" y="842" class="label" text-anchor="middle">Embeddable</text>
+<text x="942" y="872" class="tiny">name, age, address</text>
 <desc>Embeddable2</desc>
-<rect x="1130" y="786" width="260" height="64" rx="4" fill="#fff" stroke="#ea580c" class="card"/>
-<path d="M1130,826 L1130,790 Q1130,786 1134,786 L1386,786 Q1390,786 1390,790 L1390,826 Z" fill="#ffedd5"/>
-<line x1="1130" y1="826" x2="1390" y2="826" stroke="#ea580c" stroke-width="1.2"/>
-<text x="1260" y="812" class="label" text-anchor="middle">Embeddable2</text>
-<text x="1146" y="842" class="tiny">name, age, address, zipcode</text>
-<path data-connector="serialized-e1-to-embeddable" d="M1072,750 L1072,762 Q1072,774 1060,774 L942,774 Q930,774 930,786" class="runtimeUse"/>
-<path data-connector="serialized-e1-to-embeddable2" d="M1158,750 L1158,762 Q1158,774 1170,774 L1248,774 Q1260,774 1260,786" class="runtimeUse"/>
-<rect x="434" y="884" width="692" height="52" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.3"/>
-<path d="M486,910 L552,910" class="mapLine"/>
-<text x="574" y="914" class="detail">table column delegates DAO property</text>
-<path d="M828,910 L894,910" class="runtimeUse"/>
-<text x="916" y="914" class="detail">serialized field uses payload type</text>
+<rect x="1260" y="816" width="260" height="64" rx="4" fill="#fff" stroke="#ea580c" class="card"/>
+<path d="M1260,856 L1260,820 Q1260,816 1264,816 L1516,816 Q1520,816 1520,820 L1520,856 Z" fill="#ffedd5"/>
+<line x1="1260" y1="856" x2="1520" y2="856" stroke="#ea580c" stroke-width="1.2"/>
+<text x="1390" y="842" class="label" text-anchor="middle">Embeddable2</text>
+<text x="1276" y="872" class="tiny">name, age, address, zipcode</text>
+<path data-connector="serialized-e1-to-embeddable" d="M1215,750 L1215,772 Q1215,784 1203,784 L1068,784 Q1056,784 1056,796 L1056,816" class="runtimeUse"/>
+<path data-connector="serialized-e1-to-embeddable2" d="M1301,750 L1301,772 Q1301,784 1313,784 L1378,784 Q1390,784 1390,796 L1390,816" class="runtimeUse"/>
+<rect x="534" y="944" width="692" height="52" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.3"/>
+<path d="M586,970 L652,970" class="mapLine"/>
+<text x="674" y="974" class="detail">table column delegates DAO property</text>
+<path d="M928,970 L994,970" class="runtimeUse"/>
+<text x="1016" y="974" class="detail">serialized field uses payload type</text>
 </svg>

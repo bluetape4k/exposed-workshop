@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" height="900" role="img" aria-label="Exposed Crypt Class and Table Model">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 740" width="1500" height="740" role="img" aria-label="Exposed Crypt Class and Table Model">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
 <marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M1,1 L9,5 L1,9 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
@@ -16,11 +16,11 @@
 .inheritStem{fill:none;stroke:#475569;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </defs>
-<rect width="1500" height="900" class="canvas"/>
-<rect x="20" y="20" width="1460" height="860" rx="16" class="frame"/>
+<rect width="1500" height="740" class="canvas"/>
+<rect x="20" y="20" width="1460" height="700" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Exposed Crypt Class and Table Model</text>
 <text x="48" y="80" class="subtitle">Crypt examples combine AbstractExposedTest, IntIdTable, encrypted columns, and an IntEntity mapping</text>
-<rect x="70" y="130" width="642" height="608" rx="12" class="panel"/><text x="391" y="122" class="panelTitle" text-anchor="middle">TEST CLASSES</text>
+<rect x="70" y="130" width="642" height="430" rx="12" class="panel"/><text x="391" y="122" class="panelTitle" text-anchor="middle">TEST CLASSES</text>
 <rect x="286" y="178" width="220" height="96" rx="4" fill="#fff" stroke="#64748b" class="card"/>
 <path d="M286,218 L286,182 Q286,178 290,178 L502,178 Q506,178 506,182 L506,218 Z" fill="#e2e8f0"/>
 <line x1="286" y1="218" x2="506" y2="218" stroke="#64748b" stroke-width="1.2"/>
@@ -42,7 +42,7 @@
 <text x="426" y="446" class="tiny">Ex02_EncryptedColumnWithEntity</text>
 <text x="426" y="464" class="tiny">Entity.new</text>
 <text x="426" y="482" class="tiny">ETest mapping</text>
-<rect x="812" y="130" width="612" height="608" rx="12" class="panel"/><text x="1118" y="122" class="panelTitle" text-anchor="middle">TABLE AND ENTITY MODEL</text>
+<rect x="812" y="130" width="612" height="430" rx="12" class="panel"/><text x="1118" y="122" class="panelTitle" text-anchor="middle">TABLE AND ENTITY MODEL</text>
 <rect x="860" y="178" width="230" height="94" rx="4" fill="#fff" stroke="#7c3aed" class="card"/>
 <path d="M860,218 L860,182 Q860,178 864,178 L1086,178 Q1090,178 1090,182 L1090,218 Z" fill="#ede9fe"/>
 <line x1="860" y1="218" x2="1090" y2="218" stroke="#7c3aed" stroke-width="1.2"/>
@@ -87,11 +87,11 @@
 <path data-connector="etest-to-testtable-delegates" d="M1148,451 L1090,451" class="mapLine"/>
 <path data-connector="ex02-to-testtable-runtime" d="M690,440 L748,440 Q760,440 760,452 L860,452" class="runtimeUse"/>
 <rect x="1018" y="418" width="126" height="24" rx="8" fill="#fff" stroke="#cbd5e1"/><text x="1081" y="434" class="tiny" text-anchor="middle">delegated columns</text>
-<rect x="430" y="752" width="640" height="34" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.2"/>
-<path d="M456,769 L506,769" class="mapLine"/>
-<text x="522" y="773" class="tiny">DAO property delegates to table columns</text>
-<path d="M764,769 L814,769" class="runtimeUse"/>
-<text x="830" y="773" class="tiny">test runtime creates and reads encrypted rows</text>
-<rect x="136" y="796" width="1228" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="750" y="827" class="detail" text-anchor="middle">UML rule: superclasses stay above concrete examples; entity-to-table mapping is a dependency line, not inheritance.</text>
+<rect x="430" y="584" width="640" height="34" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="1.2"/>
+<path d="M456,601 L506,601" class="mapLine"/>
+<text x="522" y="605" class="tiny">DAO property delegates to table columns</text>
+<path d="M764,601 L814,601" class="runtimeUse"/>
+<text x="830" y="605" class="tiny">test runtime creates and reads encrypted rows</text>
+<rect x="136" y="638" width="1228" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="750" y="669" class="detail" text-anchor="middle">UML rule: superclasses stay above concrete examples; entity-to-table mapping is a dependency line, not inheritance.</text>
 </svg>

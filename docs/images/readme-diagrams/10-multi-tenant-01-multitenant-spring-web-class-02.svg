@@ -1,145 +1,203 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 730" width="2200" height="730" role="img" aria-label="Spring MVC Schema-Tenant Architecture">
-<defs>
-<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
-<marker id="arrowBlue" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowPurple" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowOrange" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ea580c" stroke="#ea580c" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowGreen" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#0f766e" stroke="#0f766e" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker><marker id="arrowGray" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#64748b" stroke="#64748b" stroke-dasharray="none" style="stroke-dasharray:none!important" stroke-width="0"/></marker>
-<style>
-.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-.title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}
-.subtitle,.detail,.tiny{font-family:"Comic Mono";fill:#536476}
-.subtitle{font-size:13px}.detail{font-size:12px}.tiny{font-size:10px;fill:#64748b}
-.label{font-family:"Architects Daughter";font-size:16px;fill:#1e293b}
-.className{font-family:"Architects Daughter";font-size:17px;fill:#1e293b}
-.panelTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#94a3b8}
-.card,.uml,.tableBox,.dbBody{stroke-width:1.7;filter:url(#shadow)}
-.panel{fill:#f8fafc;stroke:#d7e2ec;stroke-width:1.2}
-.call,.runtime,.storage,.map,.fk,.ret{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.call{stroke:#2563eb;marker-end:url(#arrowBlue)}.runtime{stroke:#7c3aed;marker-end:url(#arrowPurple)}
-.storage{stroke:#ea580c;marker-end:url(#arrowOrange)}.map{stroke:#16a34a;marker-end:url(#arrowGreen)}
-.fk{stroke:#0f766e;marker-end:url(#arrowTeal)}.ret{stroke:#64748b;stroke-dasharray:7 5;marker-end:url(#arrowGray)}
-.inherit{fill:none;stroke:#334155;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.inheritTriangle{fill:#fff;stroke:#334155;stroke-width:1.8}
-.lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
-</style>
-</defs>
-<rect width="2200" height="730" class="canvas"/>
-<rect x="20" y="20" width="2160" height="690" rx="16" class="frame"/>
-<text x="48" y="58" class="title">Spring MVC Schema-Tenant Architecture</text>
-<text x="48" y="80" class="subtitle">TenantFilter binds ThreadLocal context; AOP switches the Spring transaction connection before Exposed queries run</text>
-<rect x="66" y="238" width="500" height="145" rx="12" class="panel"/>
-<text x="316" y="258" class="panelTitle" text-anchor="middle">REQUEST EDGE</text>
-<rect x="250" y="440" width="1140" height="250" rx="12" class="panel"/>
-<text x="820" y="460" class="panelTitle" text-anchor="middle">SPRING MVC</text>
-<rect x="1100" y="100" width="525" height="350" rx="12" class="panel"/>
-<text x="1362.5" y="120" class="panelTitle" text-anchor="middle">EXPOSED ACCESS</text>
-<rect x="1605" y="75" width="535" height="455" rx="12" class="panel"/>
-<text x="1872.5" y="95" class="panelTitle" text-anchor="middle">SCHEMA STORAGE</text>
-<path d="M285,330 L315,330" class="call"/>
-<path d="M410,365 V422 Q410,430 418,430 H682 Q690,430 690,438 V515" class="runtime"/>
-<path d="M812.5,550 L837.5,550" class="runtime"/>
-<path d="M965,515 V496 Q965,488 973,488 H1237 Q1245,488 1245,480 V436" class="call"/>
-<path d="M1355,400 L1780,400" class="map"/>
-<path d="M1950,400 L1975,400" class="storage"/>
-<path d="M690,585 V602 Q690,610 698,610 H957 Q965,610 965,618 V630" class="runtime"/>
-<path d="M1100,665 L1122.5,665" class="call"/>
-<path d="M1367.5,665 H1962 Q1970,665 1970,657 V503 Q1970,495 1978,495 H2047 Q2055,495 2055,487 V465" class="storage"/>
-<path d="M1355,330 L1380,330" class="call"/>
-<path d="M1600,330 L1635,330" class="storage"/>
-<path d="M1765,330 H1939 Q1947,330 1947,338 V357 Q1947,365 1955,365 H1975" class="storage"/>
-<path d="M1490,294 V270 Q1490,262 1482,262 H1328 Q1320,262 1320,254 V148 Q1320,140 1328,140 H1610" class="storage"/>
-<path d="M1750,140 H1857 Q1865,140 1865,148 V158" class="storage"/>
-<path d="M1355,220 H1652 Q1660,220 1660,212 V203 Q1660,195 1668,195 H1770" class="map"/>
-<path d="M1245,256 V287 Q1245,295 1253,295 H1767 Q1775,295 1775,303 V362 Q1775,370 1783,370 H1780" class="map"/>
-<path d="M1960,220 H1970 Q1978,220 1978,228 V302 Q1978,310 1986,310 H2047 Q2055,310 2055,318 V335" class="storage"/>
-<path d="M542.5,550 L567.5,550" class="runtime"/>
-<g data-id="httpClient" data-label="HTTP Client">
-<path d="M113,291 H277 Q285,291 285,299 V361 Q285,369 277,369 H113 L95,330 Z" fill="#dbeafe" stroke="#2563eb" class="card"/>
-<text x="194" y="321" class="label" text-anchor="middle">HTTP Client</text>
-<text x="194" y="342" class="detail" text-anchor="middle">GET /actors</text>
-<text x="194" y="357" class="detail" text-anchor="middle">X-TENANT-ID</text>
-</g>
-<g data-id="tenantFilter" data-label="TenantFilter">
-<rect x="315" y="295" width="190" height="70" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="410" y="325" class="label" text-anchor="middle">TenantFilter</text>
-<text x="410" y="351" class="detail" text-anchor="middle">withTenant block</text>
-</g>
-<g data-id="tenantContext" data-label="TenantContext">
-<rect x="567.5" y="515" width="245" height="70" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="690" y="545" class="label" text-anchor="middle">TenantContext</text>
-<text x="690" y="571" class="detail" text-anchor="middle">ThreadLocal tenant</text>
-</g>
-<g data-id="actorController" data-label="ActorController">
-<rect x="837.5" y="515" width="255" height="70" rx="10" fill="#dbeafe" stroke="#2563eb" class="card"/>
-<text x="965" y="545" class="label" text-anchor="middle">ActorController</text>
-<text x="965" y="571" class="detail" text-anchor="middle">@Transactional readOnly</text>
-</g>
-<g data-id="tenantSchemaAspect" data-label="TenantSchemaAspect">
-<rect x="830" y="630" width="270" height="70" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="965" y="660" class="label" text-anchor="middle">TenantSchemaAspect</text>
-<text x="965" y="686" class="detail" text-anchor="middle">before transaction</text>
-</g>
-<g data-id="dataSourceUtils" data-label="DataSourceUtils">
-<rect x="1122.5" y="630" width="245" height="70" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="1245" y="660" class="label" text-anchor="middle">DataSourceUtils</text>
-<text x="1245" y="686" class="detail" text-anchor="middle">same connection</text>
-</g>
-<g data-id="tenantAwareDataSource" data-label="TenantAwareDataSource">
-<rect x="277.5" y="519" width="265" height="62" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
-<text x="410" y="545" class="label" text-anchor="middle">TenantAwareDataSource</text>
-<text x="410" y="567" class="detail" text-anchor="middle">DB-per-tenant option</text>
-</g>
-<g data-id="actorRepository" data-label="ActorRepository">
-<rect x="1135" y="364" width="220" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="1245" y="395" class="label" text-anchor="middle">ActorRepository</text>
-<text x="1245" y="422" class="detail" text-anchor="middle">JdbcRepository</text>
-</g>
-<g data-id="movieRepository" data-label="MovieRepository">
-<rect x="1135" y="184" width="220" height="72" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-<text x="1245" y="215" class="label" text-anchor="middle">MovieRepository</text>
-<text x="1245" y="242" class="detail" text-anchor="middle">joins movie tables</text>
-</g>
-<g data-id="tenantInitializer" data-label="TenantInitializer">
-<rect x="1135" y="294" width="220" height="72" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="1245" y="325" class="label" text-anchor="middle">TenantInitializer</text>
-<text x="1245" y="352" class="detail" text-anchor="middle">ApplicationReadyEvent</text>
-</g>
-<g data-id="dataInitializer" data-label="DataInitializer">
-<rect x="1380" y="294" width="220" height="72" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
-<text x="1490" y="325" class="label" text-anchor="middle">DataInitializer</text>
-<text x="1490" y="352" class="detail" text-anchor="middle">schema + samples</text>
-</g>
-<g data-id="actorTable" data-label="ActorTable">
-<rect x="1780" y="330" width="170" height="140" rx="4" fill="#fff" stroke="#db2777" class="tableBox"/>
-<rect x="1780" y="330" width="170" height="34" rx="4" fill="#fce7f3" stroke="#db2777" class="tableBox"/>
-<text x="1865" y="353" class="className" text-anchor="middle">ActorTable</text>
-<line x1="1780" y1="364" x2="1950" y2="364" stroke="#db2777" stroke-width="1.1"/>
-<text x="1792" y="385" class="detail">id PK</text>
-<text x="1792" y="402" class="detail">firstName</text>
-<text x="1792" y="419" class="detail">lastName</text>
-</g>
-<g data-id="movieTables" data-label="Movie tables">
-<rect x="1770" y="158" width="190" height="124" rx="4" fill="#fff" stroke="#2563eb" class="tableBox"/>
-<rect x="1770" y="158" width="190" height="34" rx="4" fill="#dbeafe" stroke="#2563eb" class="tableBox"/>
-<text x="1865" y="181" class="className" text-anchor="middle">Movie tables</text>
-<line x1="1770" y1="192" x2="1960" y2="192" stroke="#2563eb" stroke-width="1.1"/>
-<text x="1782" y="213" class="detail">MovieTable</text>
-<text x="1782" y="230" class="detail">ActorInMovieTable</text>
-</g>
-<g data-id="schemaUtils" data-label="SchemaUtils">
-<rect x="1635" y="299" width="130" height="62" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="1700" y="325" class="label" text-anchor="middle">SchemaUtils</text>
-<text x="1700" y="347" class="detail" text-anchor="middle">create/set</text>
-</g>
-<g data-id="migrationUtils" data-label="MigrationUtils">
-<rect x="1610" y="109" width="140" height="62" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
-<text x="1680" y="135" class="label" text-anchor="middle">MigrationUtils</text>
-<text x="1680" y="157" class="detail" text-anchor="middle">DDL diff</text>
-</g>
-<g data-id="sharedDb" data-label="Shared DB">
-<path d="M1975,350.6 C1975,319.4 2135,319.4 2135,350.6 V449.4 C2135,480.6 1975,480.6 1975,449.4 Z" fill="#ffedd5" stroke="#ea580c" class="dbBody"/>
-<ellipse cx="2055" cy="350.6" rx="80" ry="15.6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.7"/>
-<ellipse cx="2055" cy="449.4" rx="80" ry="15.6" fill="none" stroke="#ea580c" stroke-width="1.7"/>
-<text x="2055" y="394.8" class="label" text-anchor="middle">Shared DB</text>
-<text x="2055" y="418.2" class="detail" text-anchor="middle">schemas</text>
-<text x="2055" y="435.2" class="detail" text-anchor="middle">korean / english</text>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 840" width="1240" height="840" role="img" aria-label="Exposed + Spring MVC + Schema Tenant class relationship diagram">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
+    </filter>
+    <marker id="flowHead" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="schemaHead" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#8a6f3e" stroke="#8a6f3e" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="inheritHead" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="16" refY="8" orient="auto">
+      <path d="M1,1 L16,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.7" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <style>
+      .canvas{fill:#f6f9fc}
+      .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
+      .card{stroke-width:1.8;filter:url(#shadow)}
+      .title{font-family:"Architects Daughter";font-size:31px;fill:#1e293b}
+      .subtitle,.detail,.legend{font-family:"Comic Mono";fill:#536476}
+      .subtitle{font-size:13px}
+      .detail{font-size:12px}
+      .legend{font-size:12px}
+      .label{font-family:"Architects Daughter";font-size:16px;fill:#1e293b}
+      .section{font-family:"Architects Daughter";font-size:13px;letter-spacing:.08em;fill:#64748b}
+      .flow{fill:none;stroke:#4f86c6;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#flowHead)}
+      .schema{fill:none;stroke:#8a6f3e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#schemaHead)}
+      .inherit{fill:none;stroke:#64748b;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#inheritHead)}
+      .repoUse{fill:none;stroke:#2f9a94;stroke-width:1.8;stroke-dasharray:6 6;stroke-linecap:round;stroke-linejoin:round}
+      .initUse{fill:none;stroke:#b8894a;stroke-width:1.8;stroke-dasharray:6 6;stroke-linecap:round;stroke-linejoin:round}
+      .repoHead{fill:none;stroke:#2f9a94;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none}
+      .initHead{fill:none;stroke:#b8894a;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none}
+    </style>
+  </defs>
+
+  <rect width="1240" height="840" class="canvas"/>
+  <rect x="20" y="20" width="1200" height="800" rx="18" class="frame"/>
+  <text x="52" y="64" class="title">Exposed + Spring MVC + Schema Tenant (01)</text>
+  <text x="52" y="90" class="subtitle">TenantFilter binds ThreadLocal context; the transaction aspect switches the Spring-managed connection before Exposed repositories query tenant schemas.</text>
+
+  <text x="418" y="132" class="section" text-anchor="middle">REQUEST AND THREADLOCAL TENANT CONTEXT</text>
+  <text x="812" y="286" class="section" text-anchor="middle">REPOSITORY CONTRACT</text>
+  <text x="1104" y="286" class="section" text-anchor="middle">TENANT SCHEMA STORAGE</text>
+  <text x="340" y="514" class="section" text-anchor="middle">STARTUP SCHEMA INITIALIZATION</text>
+
+  <g data-card="HTTP Client">
+    <path d="M84,171 H206 Q214,171 214,179 V221 Q214,229 206,229 H84 L66,200 Z" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+    <text x="143" y="194" class="label" text-anchor="middle">HTTP Client</text>
+    <text x="143" y="214" class="detail" text-anchor="middle">X-TENANT-ID</text>
+  </g>
+  <g data-card="TenantFilter">
+    <rect x="276" y="165" width="158" height="70" rx="9" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+    <text x="355" y="194" class="label" text-anchor="middle">TenantFilter</text>
+    <text x="355" y="216" class="detail" text-anchor="middle">withTenant block</text>
+  </g>
+  <g data-card="TenantContext">
+    <rect x="500" y="165" width="170" height="70" rx="9" fill="#fef3c7" stroke="#b8894a" class="card"/>
+    <text x="585" y="194" class="label" text-anchor="middle">TenantContext</text>
+    <text x="585" y="216" class="detail" text-anchor="middle">ThreadLocal tenant</text>
+  </g>
+  <g data-card="ActorController">
+    <rect x="736" y="165" width="180" height="70" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+    <text x="826" y="194" class="label" text-anchor="middle">ActorController</text>
+    <text x="826" y="216" class="detail" text-anchor="middle">@Transactional read</text>
+  </g>
+  <g data-card="TenantSchemaAspect">
+    <rect x="984" y="165" width="178" height="70" rx="9" fill="#fff7ed" stroke="#d45b21" class="card"/>
+    <text x="1073" y="194" class="label" text-anchor="middle">TenantSchema</text>
+    <text x="1073" y="213" class="label" text-anchor="middle">Aspect</text>
+    <text x="1073" y="229" class="detail" text-anchor="middle">before transaction</text>
+  </g>
+
+  <g data-card="Filter">
+    <rect x="288" y="300" width="134" height="64" rx="9" fill="#f8fafc" stroke="#64748b" class="card"/>
+    <text x="355" y="326" class="label" text-anchor="middle">Filter</text>
+    <text x="355" y="348" class="detail" text-anchor="middle">servlet API</text>
+  </g>
+  <g data-card="Tenants">
+    <rect x="510" y="300" width="150" height="64" rx="9" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
+    <text x="585" y="326" class="label" text-anchor="middle">Tenants</text>
+    <text x="585" y="348" class="detail" text-anchor="middle">korean / english</text>
+  </g>
+  <g data-card="DataSourceUtils">
+    <rect x="992" y="330" width="162" height="66" rx="9" fill="#e2e8f0" stroke="#64748b" class="card"/>
+    <text x="1073" y="357" class="label" text-anchor="middle">DataSourceUtils</text>
+    <text x="1073" y="379" class="detail" text-anchor="middle">same connection</text>
+  </g>
+
+  <g data-card="JdbcRepository">
+    <rect x="730" y="330" width="172" height="68" rx="9" fill="#ffedd5" stroke="#d45b21" class="card"/>
+    <text x="816" y="358" class="label" text-anchor="middle">JdbcRepository</text>
+    <text x="816" y="380" class="detail" text-anchor="middle">generic contract</text>
+  </g>
+  <g data-card="ActorRepository">
+    <rect x="618" y="448" width="180" height="72" rx="9" fill="#ccfbf1" stroke="#2f9a94" class="card"/>
+    <text x="708" y="477" class="label" text-anchor="middle">ActorRepository</text>
+    <text x="708" y="499" class="detail" text-anchor="middle">ActorRecord CRUD</text>
+  </g>
+  <g data-card="MovieRepository">
+    <rect x="836" y="448" width="180" height="72" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
+    <text x="926" y="477" class="label" text-anchor="middle">MovieRepository</text>
+    <text x="926" y="499" class="detail" text-anchor="middle">joins movie tables</text>
+  </g>
+
+  <g data-card="ActorTable">
+    <rect x="780" y="604" width="128" height="112" rx="6" fill="#fff" stroke="#db2777" class="card"/>
+    <rect x="780" y="604" width="128" height="31" rx="6" fill="#fce7f3" stroke="#db2777" stroke-width="1.4"/>
+    <text x="844" y="626" class="label" text-anchor="middle">ActorTable</text>
+    <line x1="780" y1="635" x2="908" y2="635" stroke="#db2777" stroke-width="1.1"/>
+    <text x="792" y="657" class="detail">id PK</text>
+    <text x="792" y="675" class="detail">firstName</text>
+    <text x="792" y="693" class="detail">lastName</text>
+  </g>
+  <g data-card="Movie tables">
+    <rect x="944" y="604" width="160" height="108" rx="6" fill="#fff" stroke="#4f86c6" class="card"/>
+    <rect x="944" y="604" width="160" height="31" rx="6" fill="#dbeafe" stroke="#4f86c6" stroke-width="1.4"/>
+    <text x="1024" y="626" class="label" text-anchor="middle">Movie tables</text>
+    <line x1="944" y1="635" x2="1104" y2="635" stroke="#4f86c6" stroke-width="1.1"/>
+    <text x="956" y="657" class="detail">MovieTable</text>
+    <text x="956" y="675" class="detail">ActorInMovie</text>
+  </g>
+  <g data-card="Shared DB schemas">
+    <path d="M1034,464 C1034,436 1198,436 1198,464 V549 C1198,577 1034,577 1034,549 Z" fill="#ffedd5" stroke="#d45b21" class="card"/>
+    <ellipse cx="1116" cy="464" rx="82" ry="14" fill="#fff7ed" stroke="#d45b21" stroke-width="1.8"/>
+    <ellipse cx="1116" cy="549" rx="82" ry="14" fill="none" stroke="#d45b21" stroke-width="1.8"/>
+    <text x="1116" y="498" class="label" text-anchor="middle">Shared DB</text>
+    <text x="1116" y="516" class="detail" text-anchor="middle">schemas per tenant</text>
+    <text x="1116" y="534" class="detail" text-anchor="middle">korean / english</text>
+  </g>
+
+  <g data-card="TenantInitializer">
+    <rect x="76" y="540" width="174" height="70" rx="9" fill="#ecfdf5" stroke="#6f8f58" class="card"/>
+    <text x="163" y="568" class="label" text-anchor="middle">TenantInitializer</text>
+    <text x="163" y="590" class="detail" text-anchor="middle">ApplicationReady</text>
+  </g>
+  <g data-card="DataInitializer">
+    <rect x="310" y="540" width="166" height="70" rx="9" fill="#fff7ed" stroke="#d45b21" class="card"/>
+    <text x="393" y="568" class="label" text-anchor="middle">DataInitializer</text>
+    <text x="393" y="590" class="detail" text-anchor="middle">schema + samples</text>
+  </g>
+  <g data-card="SchemaUtils">
+    <rect x="532" y="540" width="150" height="70" rx="9" fill="#fef3c7" stroke="#b8894a" class="card"/>
+    <text x="607" y="568" class="label" text-anchor="middle">SchemaUtils</text>
+    <text x="607" y="590" class="detail" text-anchor="middle">create / set</text>
+  </g>
+  <g data-card="MigrationUtils">
+    <rect x="532" y="666" width="150" height="70" rx="9" fill="#fef3c7" stroke="#b8894a" class="card"/>
+    <text x="607" y="694" class="label" text-anchor="middle">MigrationUtils</text>
+    <text x="607" y="716" class="detail" text-anchor="middle">DDL diff</text>
+  </g>
+  <g data-card="TenantAwareDataSource">
+    <rect x="76" y="666" width="174" height="70" rx="9" fill="#fce7f3" stroke="#db2777" class="card"/>
+    <text x="163" y="694" class="label" text-anchor="middle">TenantAware DS</text>
+    <text x="163" y="716" class="detail" text-anchor="middle">DB-per-tenant option</text>
+  </g>
+  <g data-card="AbstractRoutingDataSource">
+    <rect x="310" y="666" width="166" height="70" rx="9" fill="#f8fafc" stroke="#64748b" class="card"/>
+    <text x="393" y="690" class="label" text-anchor="middle">AbstractRouting</text>
+    <text x="393" y="709" class="label" text-anchor="middle">DataSource</text>
+    <text x="393" y="725" class="detail" text-anchor="middle">Spring JDBC</text>
+  </g>
+
+  <path data-connector="http-client-to-tenant-filter" d="M214,200 H276" class="flow connector"/>
+  <path data-connector="tenant-filter-to-tenant-context" d="M434,200 H500" class="schema connector"/>
+  <path data-connector="tenant-context-to-actor-controller" d="M670,200 H736" class="flow connector"/>
+  <path data-connector="actor-controller-to-schema-aspect" d="M916,200 H984" class="schema connector"/>
+  <path data-connector="schema-aspect-to-data-source-utils" d="M1073,235 V330" class="schema connector"/>
+  <path data-connector="data-source-utils-to-shared-db" d="M1073,396 V430 Q1073,442 1085,442 H1104 Q1116,442 1116,454 V464" class="schema connector"/>
+  <path data-connector="actor-controller-to-actor-repository" d="M826,235 V264 Q826,276 814,276 H720 Q708,276 708,288 V448" class="flow connector"/>
+
+  <path data-connector="tenant-filter-implements-filter" d="M355,300 V235" class="inherit connector"/>
+  <path data-connector="tenant-filter-uses-tenants" d="M355,235 V258 Q355,270 367,270 H478 Q490,270 490,282 V320 Q490,332 502,332 H510" class="initUse connector"/>
+  <polyline points="501,327 510,332 501,337" class="initHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+
+  <path data-connector="actor-repository-extends-jdbc-repository" d="M708,448 V432 Q708,420 720,420 H804 Q816,420 816,408 V398" class="inherit connector"/>
+  <path data-connector="movie-repository-extends-jdbc-repository" d="M926,448 V432 Q926,420 914,420 H828 Q816,420 816,408 V398" class="inherit connector"/>
+  <path data-connector="actor-repository-uses-actor-table" d="M780,520 V552 Q780,564 792,564 H832 Q844,564 844,576 V604" class="repoUse connector"/>
+  <polyline points="839,595 844,604 849,595" class="repoHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+  <path data-connector="movie-repository-uses-movie-tables" d="M926,520 V572 Q926,584 938,584 H1012 Q1024,584 1024,596 V604" class="repoUse connector"/>
+  <polyline points="1019,595 1024,604 1029,595" class="repoHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+
+  <path data-connector="tenant-initializer-to-data-initializer" d="M250,575 H310" class="flow connector"/>
+  <path data-connector="data-initializer-to-schema-utils" d="M476,575 H532" class="flow connector"/>
+  <path data-connector="schema-utils-to-movie-tables" d="M682,575 H720 Q732,575 732,587 V732 Q732,744 744,744 H1012 Q1024,744 1024,732 V712" class="initUse connector"/>
+  <polyline points="1019,721 1024,712 1029,721" class="initHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+  <path data-connector="data-initializer-to-migration-utils" d="M393,610 V630 Q393,642 405,642 H595 Q607,642 607,654 V666" class="initUse connector"/>
+  <polyline points="602,657 607,666 612,657" class="initHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+  <path data-connector="tenant-aware-ds-extends-routing-ds" d="M250,701 H310" class="inherit connector"/>
+
+  <rect x="64" y="776" width="1112" height="28" rx="8" fill="#f8fafc" stroke="#d7e2ec"/>
+  <path d="M94,790 H136" class="flow connector"/>
+  <text x="150" y="794" class="legend">request flow</text>
+  <path d="M272,790 H314" class="schema connector"/>
+  <text x="328" y="794" class="legend">tenant/schema switch</text>
+  <path d="M502,790 H544" class="inherit"/>
+  <text x="558" y="794" class="legend">extends/implements</text>
+  <path d="M760,790 H802" class="repoUse connector"/>
+  <polyline points="793,785 802,790 793,795" class="repoHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+  <text x="816" y="794" class="legend">repository/table use</text>
+  <path d="M1004,790 H1046" class="initUse connector"/>
+  <polyline points="1037,785 1046,790 1037,795" class="initHead" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+  <text x="1060" y="794" class="legend">startup/init use</text>
 </svg>

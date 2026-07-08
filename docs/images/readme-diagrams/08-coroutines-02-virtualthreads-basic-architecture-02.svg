@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 860" width="1500" height="860" role="img" aria-label="Virtual Thread Processing Model">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 760" width="1500" height="760" role="img" aria-label="Virtual Thread Processing Model">
 <defs>
 <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/></filter>
 <marker id="arrowBlue" viewBox="0 0 10 10" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563eb" stroke="#2563eb" stroke-width="1" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
@@ -23,11 +23,11 @@
 .lifeline{stroke:#cbd5e1;stroke-width:1.4;stroke-dasharray:5 6}
 </style>
 </defs>
-<rect width="1500" height="860" class="canvas"/>
-<rect x="20" y="20" width="1460" height="820" rx="16" class="frame"/>
+<rect width="1500" height="760" class="canvas"/>
+<rect x="20" y="20" width="1460" height="720" rx="16" class="frame"/>
 <text x="48" y="58" class="title">Virtual Thread Processing Model</text>
 <text x="48" y="80" class="subtitle">VirtualThread JDBC APIs keep blocking-style code while VirtualFuture work runs through JVM virtual threads into normal Exposed transactions</text>
-<rect x="58" y="130" width="300" height="560" rx="12" class="panel"/><text x="208" y="122" class="panelTitle" text-anchor="middle">TEST ENTRY</text>
+<rect x="58" y="130" width="300" height="440" rx="12" class="panel"/><text x="208" y="122" class="panelTitle" text-anchor="middle">TEST ENTRY</text>
 <desc>Java 21 gate</desc><rect x="96" y="180" width="220" height="62" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
 <text x="206" y="205" class="label" text-anchor="middle">Java 21 gate</text>
 <text x="206" y="228" class="detail" text-anchor="middle">@EnabledForJreRange</text>
@@ -37,7 +37,7 @@
 <desc>test scenarios</desc><rect x="96" y="432" width="220" height="62" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
 <text x="206" y="457" class="label" text-anchor="middle">test scenarios</text>
 <text x="206" y="480" class="detail" text-anchor="middle">insert/select/exception</text>
-<rect x="430" y="130" width="380" height="560" rx="12" class="panel"/><text x="620" y="122" class="panelTitle" text-anchor="middle">VIRTUAL THREAD API</text>
+<rect x="430" y="130" width="380" height="440" rx="12" class="panel"/><text x="620" y="122" class="panelTitle" text-anchor="middle">VIRTUAL THREAD API</text>
 <desc>newVirtualThread Tx</desc><rect x="486" y="178" width="268" height="64" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
 <text x="620" y="203" class="label" text-anchor="middle">newVirtualThread Tx</text>
 <text x="620" y="228" class="detail" text-anchor="middle">awaits VirtualFuture</text>
@@ -47,7 +47,7 @@
 <desc>awaitAll</desc><rect x="486" y="442" width="268" height="64" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
 <text x="620" y="467" class="label" text-anchor="middle">awaitAll</text>
 <text x="620" y="492" class="detail" text-anchor="middle">join 10 tasks</text>
-<rect x="882" y="130" width="300" height="560" rx="12" class="panel"/><text x="1032" y="122" class="panelTitle" text-anchor="middle">EXPOSED JDBC</text>
+<rect x="882" y="130" width="300" height="440" rx="12" class="panel"/><text x="1032" y="122" class="panelTitle" text-anchor="middle">EXPOSED JDBC</text>
 <desc>JVM virtual thread</desc><rect x="928" y="188" width="208" height="64" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
 <text x="1032" y="213" class="label" text-anchor="middle">JVM virtual thread</text>
 <text x="1032" y="238" class="detail" text-anchor="middle">blocking style</text>
@@ -57,7 +57,7 @@
 <desc>cleanup checks</desc><rect x="928" y="472" width="208" height="64" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
 <text x="1032" y="497" class="label" text-anchor="middle">cleanup checks</text>
 <text x="1032" y="522" class="detail" text-anchor="middle">closed inner conn</text>
-<rect x="1254" y="130" width="188" height="560" rx="12" class="panel"/><text x="1348" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
+<rect x="1254" y="130" width="188" height="440" rx="12" class="panel"/><text x="1348" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
 <desc>VTester</desc><rect x="1288" y="202" width="120" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
 <text x="1348" y="227" class="label" text-anchor="middle">VTester</text>
 <text x="1348" y="246" class="detail" text-anchor="middle">id, name</text>
@@ -77,6 +77,6 @@
 <path d="M1136,362 L1190,362 Q1210,362 1210,342 L1210,251 Q1210,231 1230,231 L1288,231" class="mapLine" data-connector="jdbc-to-vtester"/>
 <path d="M1136,504 L1190,504 Q1210,504 1210,484 L1210,450 Q1210,430 1230,430 L1288,430" class="runtimeUse" data-connector="cleanup-to-db"/>
 <path d="M1348,260 L1348,344" class="dbUse" data-connector="table-to-db"/>
-<rect x="130" y="758" width="1240" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
-<text x="750" y="789" class="detail" text-anchor="middle">Virtual Thread helpers keep blocking transaction code while async fan-out returns VirtualFuture values that are joined with awaitAll.</text>
+<rect x="130" y="618" width="1240" height="52" rx="10" fill="#ecfdf5" stroke="#86efac" stroke-width="1.3"/>
+<text x="750" y="649" class="detail" text-anchor="middle">Virtual Thread helpers keep blocking transaction code while async fan-out returns VirtualFuture values that are joined with awaitAll.</text>
 </svg>

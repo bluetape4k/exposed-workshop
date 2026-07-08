@@ -111,10 +111,10 @@
   <text x="523" y="670" class="cardText">CREATE PROVISIONED_MARKER</text>
   <text x="523" y="690" class="cardText">insert catalog only after success</text>
 
-  <rect id="cleanup" x="495" y="790" width="330" height="112" rx="12" class="card cleanupCard"/>
-  <text x="660" y="822" text-anchor="middle" class="cardTitle">Provisioning failure cleanup</text>
-  <text x="523" y="850" class="cardText">TenantProvisioningException</text>
-  <text x="523" y="870" class="cardText">or RuntimeException drops schema</text>
+  <rect id="cleanup" x="495" y="820" width="330" height="112" rx="12" class="card cleanupCard"/>
+  <text x="660" y="852" text-anchor="middle" class="cardTitle">Provisioning failure cleanup</text>
+  <text x="523" y="880" class="cardText">TenantProvisioningException</text>
+  <text x="523" y="900" class="cardText">or RuntimeException drops schema</text>
 
   <rect id="database" x="950" y="260" width="280" height="110" rx="12" class="card catalogCard"/>
   <use data-bluetape4k-icon="generic/database-server.svg" href="#databaseServerIcon" x="980" y="294" width="46" height="46"/>
@@ -154,16 +154,14 @@
   <path id="flow-provision-schema" data-connector="flow-provision-schema" d="M 825 651 L 1320 651" class="flowProvision"/>
   <path id="flow-schema-marker" data-connector="flow-schema-marker" d="M 1465 696 L 1465 730" class="flowProvision"/>
   <path id="flow-marker-active" data-connector="flow-marker-active" d="M 1320 783 L 1230 783" class="flowCatalog"/>
-  <path id="flow-active-result" data-connector="flow-active-result" d="M 950 746 L 850 746 Q 830 746 830 768 L 830 768 Q 830 790 810 790 L 385 790" class="flowApi"/>
-  <path id="flow-provision-cleanup" data-connector="flow-provision-cleanup" d="M 660 712 L 660 790" class="flowCleanup"/>
-  <path id="flow-cleanup-drop" data-connector="flow-cleanup-drop" d="M 825 846 L 940 846 Q 960 846 960 866 L 960 923 Q 960 943 980 943 L 1320 943" class="flowCleanup"/>
+  <path id="flow-active-result" data-connector="flow-active-result" d="M 950 746 H467 Q445 746 445 768 V946 Q445 968 423 968 H267 Q245 968 245 946 V848" class="flowApi"/>
+  <path id="flow-cleanup-drop" data-connector="flow-cleanup-drop" d="M 825 876 H940 Q960 876 960 896 V923 Q960 943 980 943 H1320" class="flowCleanup"/>
 
   <text x="438" y="318" text-anchor="middle" class="label">onboard</text>
   <text x="842" y="456" text-anchor="middle" class="label">duplicate check</text>
   <text x="986" y="634" text-anchor="middle" class="label">provision first</text>
   <text x="1262" y="766" text-anchor="middle" class="label">insert ACTIVE</text>
-  <text x="742" y="768" text-anchor="middle" class="label">return record</text>
-  <text x="660" y="762" text-anchor="middle" class="label">catch</text>
+  <text x="565" y="950" text-anchor="middle" class="label">return record</text>
   <text x="1120" y="926" text-anchor="middle" class="label">cleanup</text>
 
   <rect x="500" y="1012" width="720" height="36" rx="18" fill="#ffffff" stroke="#d7e2de" stroke-width="1.4"/>

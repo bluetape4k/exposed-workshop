@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 782" width="1220" height="782" role="img" aria-label="09 Spring: Declarative Transaction (03)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1220 700" width="1220" height="700" role="img" aria-label="09 Spring: Declarative Transaction (03)">
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
@@ -27,8 +27,8 @@
   .divider{stroke:#cbd5e1;stroke-width:1.2;stroke-dasharray:6 6}
 </style>
   </defs>
-  <rect width="1220" height="782" class="canvas"/>
-  <rect x="20" y="20" width="1180" height="742" rx="16" class="frame"/>
+  <rect width="1220" height="700" class="canvas"/>
+  <rect x="20" y="20" width="1180" height="660" rx="16" class="frame"/>
 <text x="48" y="58" class="title">09 Spring: Declarative Transaction (03)</text>
   <text x="48" y="80" class="subtitle">Source-derived hierarchy · supertypes and abstractions above concrete implementations</text>
 <rect x="46" y="120" width="1128" height="130" rx="12" class="panel"/>
@@ -39,7 +39,7 @@
 <rect x="772" y="146" width="300" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
 <text x="922" y="175" class="smallLabel" text-anchor="middle">Entity ID</text>
 <text x="922" y="202" class="detail" text-anchor="middle">UUID entity base</text>
-<rect x="46" y="302" width="1128" height="366" rx="12" class="panel"/>
+<rect x="46" y="302" width="1128" height="284" rx="12" class="panel"/>
   <text x="610" y="296" class="panelTitle" text-anchor="middle">CONCRETE IMPLEMENTATIONS / DATA TYPES</text>
 <rect x="90" y="328" width="240" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
 <text x="210" y="357" class="smallLabel" text-anchor="middle">Customer Table</text>
@@ -53,18 +53,18 @@
 <rect x="950" y="328" width="210" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
 <text x="1055" y="357" class="smallLabel" text-anchor="middle">Order Entity</text>
 <text x="1055" y="396" class="detail" text-anchor="middle">OrderEntity</text>
-<rect x="90" y="500" width="240" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-<text x="210" y="529" class="smallLabel" text-anchor="middle">Spring Transaction App</text>
-<text x="210" y="568" class="detail" text-anchor="middle">boot entrypoint</text>
-<rect x="370" y="500" width="240" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-<text x="490" y="529" class="smallLabel" text-anchor="middle">Data Source Config</text>
-<text x="490" y="568" class="detail" text-anchor="middle">SpringTransactionManager</text>
-<rect x="650" y="500" width="240" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-<text x="770" y="529" class="smallLabel" text-anchor="middle">Order Schema</text>
-<text x="770" y="568" class="detail" text-anchor="middle">tables and entities</text>
-<rect x="930" y="500" width="240" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
-<text x="1050" y="529" class="smallLabel" text-anchor="middle">Order Service</text>
-<text x="1050" y="568" class="detail" text-anchor="middle">@Transactional facade</text>
+<rect x="90" y="452" width="240" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+<text x="210" y="481" class="smallLabel" text-anchor="middle">Spring Transaction App</text>
+<text x="210" y="520" class="detail" text-anchor="middle">boot entrypoint</text>
+<rect x="370" y="452" width="240" height="84" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+<text x="490" y="481" class="smallLabel" text-anchor="middle">Data Source Config</text>
+<text x="490" y="520" class="detail" text-anchor="middle">SpringTransactionManager</text>
+<rect x="650" y="452" width="240" height="84" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+<text x="770" y="481" class="smallLabel" text-anchor="middle">Order Schema</text>
+<text x="770" y="520" class="detail" text-anchor="middle">tables and entities</text>
+<rect x="930" y="452" width="240" height="84" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+<text x="1050" y="481" class="smallLabel" text-anchor="middle">Order Service</text>
+<text x="1050" y="520" class="detail" text-anchor="middle">@Transactional facade</text>
 <path data-connector="customer-table-to-uuidtable" d="M210,328 V320 Q210,310 220,310 H240 Q250,310 250,300 V234" class="inherit"/>
 <path d="M250,218 L241,234 L259,234 Z" fill="#fff" stroke="#64748b" stroke-width="1.8" stroke-dasharray="none" style="stroke-dasharray:none"/>
 <path data-connector="order-table-to-uuidtable" d="M490,328 V320 Q490,310 480,310 H276 Q266,310 266,300 V234" class="inherit"/>
@@ -73,6 +73,6 @@
 <path d="M904,218 L895,234 L913,234 Z" fill="#fff" stroke="#64748b" stroke-width="1.8" stroke-dasharray="none" style="stroke-dasharray:none"/>
 <path data-connector="order-entity-to-entity-id" d="M1055,328 V320 Q1055,310 1045,310 H950 Q940,310 940,300 V234" class="inherit"/>
 <path d="M940,218 L931,234 L949,234 Z" fill="#fff" stroke="#64748b" stroke-width="1.8" stroke-dasharray="none" style="stroke-dasharray:none"/>
-<rect x="46" y="708" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
-<text x="610" y="735" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
+<rect x="46" y="626" width="1128" height="44" rx="10" fill="#f8fafc" stroke="#d7e2ec"/>
+<text x="610" y="653" class="detail" text-anchor="middle">Interfaces, abstract/open classes, shared contracts, and base tables stay above concrete examples.</text>
 </svg>

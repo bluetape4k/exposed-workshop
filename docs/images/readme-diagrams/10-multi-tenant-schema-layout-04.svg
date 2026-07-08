@@ -25,10 +25,10 @@
 <text x="516" y="238" class="label" text-anchor="middle">Shared DB Instance</text>
 <rect x="116" y="300" width="158" height="58" rx="9" fill="#dbeafe" stroke="#4f86c6" class="card"/>
 <text x="195.0" y="327" class="label" text-anchor="middle">Tenant korean</text>
-<text x="195.0" y="336" class="detail" text-anchor="middle">X-TENANT-ID</text>
+<text x="195.0" y="347" class="detail" text-anchor="middle">X-TENANT-ID</text>
 <rect x="116" y="534" width="158" height="58" rx="9" fill="#ede9fe" stroke="#7c3aed" class="card"/>
 <text x="195.0" y="561" class="label" text-anchor="middle">Tenant english</text>
-<text x="195.0" y="570" class="detail" text-anchor="middle">X-TENANT-ID</text>
+<text x="195.0" y="581" class="detail" text-anchor="middle">X-TENANT-ID</text>
 <rect x="340" y="282" width="210" height="68" rx="9" fill="#dcfce7" stroke="#16a34a" class="card"/>
 <text x="445.0" y="309" class="label" text-anchor="middle">korean schema</text>
 <text x="445.0" y="328" class="detail" text-anchor="middle">Movie domain tables</text>
@@ -68,8 +68,8 @@
 <path d="M445,586 V612" class="flowGreen connector"/>
 <path d="M520,350 V390" class="flowGreen connector"/>
 <path d="M520,586 V612" class="flowGreen connector"/>
-<path d="M795,350 V390" class="flowGreen connector"/>
-<path d="M795,586 V612" class="flowGreen connector"/>
+  <path d="M550,316 H765 Q795,316 795,346 V390" class="flowGreen connector"/>
+  <path d="M550,552 H765 Q795,552 795,582 V612" class="flowGreen connector"/>
 <path d="M506,434 H472" class="flowTeal connector"/>
 <path d="M676,434 H710" class="flowTeal connector"/>
 <path d="M506,666 H472" class="flowTeal connector"/>

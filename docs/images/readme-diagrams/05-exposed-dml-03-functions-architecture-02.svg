@@ -65,8 +65,8 @@
 <text x="1123" y="511" class="label" text-anchor="middle">select(windowFn)</text>
 <text x="1123" y="542" class="detail" text-anchor="middle">expected list</text>
 <rect x="1350" y="130" width="130" height="610" rx="12" class="panel"/><text x="1415" y="122" class="panelTitle" text-anchor="middle">DATABASE</text>
-<rect x="1360" y="300" width="110" height="230" rx="10" fill="#fff7ed" stroke="#ea580c" class="card"/>
-<g data-bluetape4k-icon="generic/database-server" transform="translate(1371 318) scale(.30)">
+<rect x="1360" y="218" width="110" height="370" rx="10" fill="#fff7ed" stroke="#ea580c" class="card"/>
+<g data-bluetape4k-icon="generic/database-server" transform="translate(1371 270) scale(.30)">
   <rect x="10" y="8" width="108" height="112" rx="18" fill="#fffaf2" stroke="#28485a" stroke-width="6"/>
   <ellipse cx="64" cy="36" rx="34" ry="13" fill="#fff0d8" stroke="#8c6f33" stroke-width="6"/>
   <path d="M30 36v44c0 8 15 14 34 14s34-6 34-14V36" fill="#fff0d8" stroke="#8c6f33" stroke-width="6" stroke-linejoin="round"/>
@@ -88,8 +88,8 @@
 <path data-connector="order-by-to-frame-options" d="M672,544 L672,616" class="runtimeUse edge"/>
 <path data-connector="partition-by-to-sales" d="M796,367 L910,367 Q920,367 920,357 L920,311 Q920,301 930,301 L1010,301" class="arrow edge"/>
 <path data-connector="order-by-to-select-window" d="M796,509 L1010,509" class="arrow edge"/>
-<path data-connector="sales-to-db" d="M1236,301 L1300,301 Q1310,301 1310,311 L1310,358 Q1310,368 1320,368 L1360,368" class="dbUse edge"/>
-<path data-connector="select-window-to-db" d="M1236,521 L1300,521 Q1310,521 1310,511 L1310,466 Q1310,456 1320,456 L1360,456" class="dbUse edge"/>
+<path data-connector="sales-to-db" d="M1236,301 L1360,301" class="dbUse edge"/>
+<path data-connector="select-window-to-db" d="M1236,521 L1360,521" class="dbUse edge"/>
 <rect x="236" y="756" width="1068" height="32" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
 <path d="M270,772 L332,772" class="arrow"/><text x="348" y="777" class="tiny">function call composes OVER</text>
 <path d="M606,772 L668,772" class="runtimeUse"/><text x="682" y="777" class="tiny">frame support is dialect-gated</text>
