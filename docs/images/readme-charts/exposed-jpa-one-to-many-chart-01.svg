@@ -1,11 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="620" viewBox="0 0 1280 620">
-<style>
-.title{font-family:'Architects Daughter','Comic Sans MS','Comic Neue',cursive;font-size:34px;font-weight:400;fill:#273043}
-.subtitle,.axis,.legend,.note{font-family:'Comic Sans MS','Comic Neue','Chalkboard SE',cursive;fill:#6b7280;font-weight:400}
-.label{font-family:'Comic Sans MS','Comic Neue','Chalkboard SE',cursive;fill:#273043;font-weight:400}
-.value{font-family:'Comic Sans MS','Comic Neue','Chalkboard SE',cursive;fill:#273043;font-weight:400;font-size:18px}
-.axis{font-size:16px}.legend{font-size:18px}.note{font-size:17px}.label{font-size:18px}
-</style>
-<rect width="1280" height="620" rx="0" fill="#f6f8fb"/>
-<rect x="24" y="24" width="1232" height="572" rx="18" fill="#ffffff" stroke="#d7e3ee" stroke-width="2"/>
-<text class="title" x="56" y="72">One-to-Many CRUD Latency</text><text class="subtitle" x="58" y="104" font-size="18">Department with 20 employees</text><rect x="56" y="116" width="18" height="18" rx="5" fill="#8ecae6"/><text class="legend" x="82" y="131">Exposed</text><rect x="176" y="116" width="18" height="18" rx="5" fill="#ffb3c7"/><text class="legend" x="202" y="131">JPA</text><text class="label" x="56" y="173">create</text><rect x="285" y="142" width="340.13737102215987" height="18" rx="7" fill="#8ecae6"/><text class="value" x="635.1373710221599" y="157" font-size="16">13,489 us</text><rect x="285" y="166" width="541.522476091106" height="18" rx="7" fill="#ffb3c7"/><text class="value" x="836.522476091106" y="181" font-size="16">87,556 us</text><text class="label" x="56" y="247">read</text><rect x="285" y="216" width="361.7855241625464" height="18" rx="7" fill="#8ecae6"/><text class="value" x="656.7855241625464" y="231" font-size="16">16,493 us</text><rect x="285" y="240" width="635.6798307145178" height="18" rx="7" fill="#ffb3c7"/><text class="value" x="930.6798307145178" y="255" font-size="16">209,932 us</text><text class="label" x="56" y="321">update</text><rect x="285" y="290" width="347.53225592528383" height="18" rx="7" fill="#8ecae6"/><text class="value" x="642.5322559252838" y="305" font-size="16">14,448 us</text><rect x="285" y="314" width="662.3848415672923" height="18" rx="7" fill="#ffb3c7"/><text class="value" x="957.3848415672923" y="329" font-size="16">269,027 us</text><text class="label" x="56" y="395">delete</text><rect x="285" y="364" width="352.5410337001308" height="18" rx="7" fill="#8ecae6"/><text class="value" x="647.5410337001308" y="379" font-size="16">15,136 us</text><rect x="285" y="388" width="643.66012025801" height="18" rx="7" fill="#ffb3c7"/><text class="value" x="938.66012025801" y="403" font-size="16">226,083 us</text><text class="label" x="56" y="469">batchCreate</text><rect x="285" y="438" width="589.6287791624418" height="18" rx="7" fill="#8ecae6"/><text class="value" x="884.6287791624418" y="453" font-size="16">136,876 us</text><rect x="285" y="462" width="784.7380191342304" height="18" rx="7" fill="#ffb3c7"/><text class="value" x="1079.7380191342304" y="477" font-size="16">838,145 us</text><text class="label" x="56" y="543">readAll</text><rect x="285" y="512" width="24.02571119483241" height="18" rx="7" fill="#8ecae6"/><text class="value" x="319.0257111948324" y="527" font-size="16">716 us</text><rect x="285" y="536" width="25.073231811099106" height="18" rx="7" fill="#ffb3c7"/><text class="value" x="320.0732318110991" y="551" font-size="16">723 us</text><text class="axis" x="285" y="556">log scale</text><text class="note" x="56" y="580">Lower is better. Log scale keeps readAll and batchCreate in one chart.</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="810" viewBox="0 0 1500 810">
+
+<defs>
+  <filter id="shadow" x="-16%" y="-16%" width="132%" height="132%">
+    <feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#94a3b8" flood-opacity=".16"/>
+  </filter>
+  <style><![CDATA[
+    svg{font-family:'Comic Mono','Comic Sans MS','Comic Neue','Chalkboard SE',cursive}
+    .canvas{fill:#f6f9fc}
+    .frame{fill:#ffffff;stroke:#cddceb;stroke-width:2.5;filter:url(#shadow)}
+    .title{font-family:'Architects Daughter','Comic Mono','Comic Sans MS',cursive;font-size:40px;font-weight:400;fill:#25364f}
+    .subtitle,.legend,.note,.axis{font-family:'Comic Mono','Comic Sans MS','Comic Neue','Chalkboard SE',cursive;fill:#526276;font-weight:400}
+    .subtitle{font-size:18px}
+    .legend{font-size:16px}
+    .note{font-size:17px}
+    .axis{font-size:15px}
+    .label{font-family:'Comic Mono','Comic Sans MS','Comic Neue','Chalkboard SE',cursive;font-size:18px;fill:#25364f;font-weight:400}
+    .value{font-family:'Comic Mono','Comic Sans MS','Comic Neue','Chalkboard SE',cursive;font-size:16px;fill:#25364f;font-weight:600}
+    .bar{shape-rendering:geometricPrecision}
+    .footerBox{fill:#f8fafc;stroke:#dbe6f1;stroke-width:2}
+  ]]></style>
+</defs>
+<rect class="canvas" width="1500" height="810"/>
+<rect class="frame" x="48" y="40" width="1404" height="730" rx="26"/>
+<text class="title" x="82" y="102">One-to-Many CRUD Latency</text>
+<text class="subtitle" x="84" y="134">Department with 20 employees</text>
+<rect x="910" y="154" width="16" height="16" rx="5" fill="#67b7dc"/>
+<text class="legend" x="935" y="167">Exposed</text>
+<rect x="1026" y="154" width="16" height="16" rx="5" fill="#f5a1bf"/>
+<text class="legend" x="1051" y="167">JPA</text>
+<text class="axis" x="365" y="198">us - log scale</text>
+<text class="label" x="84" y="244">create</text>
+<rect class="bar" x="365" y="214" width="353.0" height="20" rx="8" fill="#67b7dc"/>
+<text class="value" x="732.0" y="230">13,489 us</text>
+<rect class="bar" x="365" y="242" width="560.0" height="20" rx="8" fill="#f5a1bf"/>
+<text class="value" x="939.0" y="258">87,556 us</text>
+<text class="label" x="84" y="320">read</text>
+<rect class="bar" x="365" y="290" width="375.2" height="20" rx="8" fill="#67b7dc"/>
+<text class="value" x="754.2" y="306">16,493 us</text>
+<rect class="bar" x="365" y="318" width="656.8" height="20" rx="8" fill="#f5a1bf"/>
+<text class="value" x="1035.8" y="334">209,932 us</text>
+<text class="label" x="84" y="396">update</text>
+<rect class="bar" x="365" y="366" width="360.6" height="20" rx="8" fill="#67b7dc"/>
+<text class="value" x="739.6" y="382">14,448 us</text>
+<rect class="bar" x="365" y="394" width="684.2" height="20" rx="8" fill="#f5a1bf"/>
+<text class="value" x="1063.2" y="410">269,027 us</text>
+<text class="label" x="84" y="472">delete</text>
+<rect class="bar" x="365" y="442" width="365.7" height="20" rx="8" fill="#67b7dc"/>
+<text class="value" x="744.7" y="458">15,136 us</text>
+<rect class="bar" x="365" y="470" width="665.0" height="20" rx="8" fill="#f5a1bf"/>
+<text class="value" x="1044.0" y="486">226,083 us</text>
+<text class="label" x="84" y="548">batchCreate</text>
+<rect class="bar" x="365" y="518" width="609.4" height="20" rx="8" fill="#67b7dc"/>
+<text class="value" x="988.4" y="534">136,876 us</text>
+<rect class="bar" x="365" y="546" width="810.0" height="20" rx="8" fill="#f5a1bf"/>
+<text class="value" x="1189.0" y="562">838,145 us</text>
+<text class="label" x="84" y="624">readAll</text>
+<rect class="bar" x="365" y="594" width="28.0" height="20" rx="8" fill="#67b7dc"/>
+<text class="value" x="407.0" y="610">716 us</text>
+<rect class="bar" x="365" y="622" width="29.1" height="20" rx="8" fill="#f5a1bf"/>
+<text class="value" x="408.1" y="638">723 us</text>
+<rect class="footerBox" x="78" y="704" width="1344" height="42" rx="20"/>
+<text class="note" x="98" y="731">Lower is better. Log scale keeps readAll and batchCreate in one chart.</text>
+</svg>
