@@ -4,6 +4,7 @@ import exposed.shared.tests.AbstractExposedTest
 import exposed.shared.tests.TestDB
 import exposed.shared.tests.assertFailAndRollback
 import exposed.shared.tests.currentDialectTest
+import exposed.shared.tests.inProperCase
 import exposed.shared.tests.withTables
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.assertions.shouldBeEqualTo
@@ -305,12 +306,12 @@ class Ex03_NumericColumnType: AbstractExposedTest() {
                     "${tester.ushort.nameInDatabaseCase()} ${tester.ushort.columnType} NOT NULL, " +
                     "${tester.integer.nameInDatabaseCase()} ${tester.integer.columnType} NOT NULL, " +
                     "${tester.uinteger.nameInDatabaseCase()} ${tester.uinteger.columnType} NOT NULL, " +
-                    "CONSTRAINT custom_byte_check CHECK (${tester.byte.nameInDatabaseCase()} BETWEEN ${Byte.MIN_VALUE} AND ${Byte.MAX_VALUE}), " +
-                    "CONSTRAINT custom_ubyte_check CHECK (${tester.ubyte.nameInDatabaseCase()} BETWEEN 0 AND ${UByte.MAX_VALUE}), " +
-                    "CONSTRAINT custom_short_check CHECK (${tester.short.nameInDatabaseCase()} BETWEEN ${Short.MIN_VALUE} AND ${Short.MAX_VALUE}), " +
-                    "CONSTRAINT custom_ushort_check CHECK (${tester.ushort.nameInDatabaseCase()} BETWEEN 0 AND ${UShort.MAX_VALUE}), " +
-                    "CONSTRAINT custom_integer_check CHECK (${tester.integer.nameInDatabaseCase()} BETWEEN ${Int.MIN_VALUE} AND ${Int.MAX_VALUE}), " +
-                    "CONSTRAINT custom_uinteger_check CHECK (${tester.uinteger.nameInDatabaseCase()} BETWEEN 0 AND ${UInt.MAX_VALUE}))"
+                    "CONSTRAINT ${"custom_byte_check".inProperCase()} CHECK (${tester.byte.nameInDatabaseCase()} BETWEEN ${Byte.MIN_VALUE} AND ${Byte.MAX_VALUE}), " +
+                    "CONSTRAINT ${"custom_ubyte_check".inProperCase()} CHECK (${tester.ubyte.nameInDatabaseCase()} BETWEEN 0 AND ${UByte.MAX_VALUE}), " +
+                    "CONSTRAINT ${"custom_short_check".inProperCase()} CHECK (${tester.short.nameInDatabaseCase()} BETWEEN ${Short.MIN_VALUE} AND ${Short.MAX_VALUE}), " +
+                    "CONSTRAINT ${"custom_ushort_check".inProperCase()} CHECK (${tester.ushort.nameInDatabaseCase()} BETWEEN 0 AND ${UShort.MAX_VALUE}), " +
+                    "CONSTRAINT ${"custom_integer_check".inProperCase()} CHECK (${tester.integer.nameInDatabaseCase()} BETWEEN ${Int.MIN_VALUE} AND ${Int.MAX_VALUE}), " +
+                    "CONSTRAINT ${"custom_uinteger_check".inProperCase()} CHECK (${tester.uinteger.nameInDatabaseCase()} BETWEEN 0 AND ${UInt.MAX_VALUE}))"
         }
     }
 }
