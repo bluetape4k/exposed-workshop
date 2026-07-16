@@ -5,7 +5,8 @@
   <marker id="softArrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#7c3aed" stroke="#7c3aed" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
   <style><![CDATA[
     svg{font-family:"Architects Daughter","Comic Mono",ui-sans-serif,system-ui,sans-serif}.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#8aa6cf;stroke-width:3;filter:url(#shadow)}.title{font-family:"Architects Daughter";font-size:46px;fill:#263a57}.subtitle,.body,.small,.mono,.footer{font-family:"Comic Mono";fill:#526276}.subtitle{font-size:17px}.body{font-size:15px}.small{font-size:13px}.mono{font-size:12.5px}.sectionTitle,.boxTitle{font-family:"Architects Daughter";fill:#263a57}.sectionTitle{font-size:29px}.boxTitle{font-size:24px}.zone{stroke-width:2.5}.classBox{fill:#fff;stroke-width:2.2;filter:url(#shadow)}.slot{fill:#f8fafc;stroke:#d4e0ec;stroke-width:1.2}.arrow{fill:none;stroke:#2563eb;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}.soft{fill:none;stroke:#7c3aed;stroke-width:2.6;stroke-linecap:round;stroke-dasharray:7 7;marker-end:url(#softArrow)}.note{fill:#f8fafc;stroke:#d4e0ec;stroke-width:2}
-  ]]></style>
+  ]]>
+    .syntax-keyword{fill:#7E22CE}.syntax-type{fill:#0F766E}.syntax-function{fill:#1D4ED8}.syntax-string{fill:#B45309}.syntax-number{fill:#C2410C}.syntax-comment{fill:#64748B}.syntax-operator{fill:#BE123C}</style>
 </defs>
 <rect class="canvas" width="1600" height="1120"/><rect class="frame" x="50" y="40" width="1500" height="1040" rx="34"/>
 <text class="title" x="800" y="108" text-anchor="middle">exposed-shared-tests Class Map</text>
@@ -18,16 +19,16 @@
   <text class="boxTitle" x="180" y="38" text-anchor="middle">TestDB enum</text>
   <rect class="slot" x="24" y="58" width="312" height="36" rx="10"/><text class="mono" x="180" y="81" text-anchor="middle">H2, PostgreSQL, MySQL V8</text>
   <rect class="slot" x="24" y="104" width="312" height="36" rx="10"/><text class="mono" x="180" y="127" text-anchor="middle">MariaDB, Oracle, SQL Server, etc.</text>
-  <rect class="slot" x="24" y="150" width="312" height="36" rx="10"/><text class="mono" x="180" y="173" text-anchor="middle">enabledDialects()</text>
+  <rect class="slot" x="24" y="150" width="312" height="36" rx="10"/><text class="mono" x="180" y="173" text-anchor="middle" data-code-snippet="kotlin"><tspan class="syntax-function">enabledDialects</tspan>()</text>
   <text class="small" x="180" y="207" text-anchor="middle">reads useDB / useFastDB Gradle properties</text>
 </g>
 <g transform="translate(130 575)">
   <rect class="classBox card" x="0" y="0" width="360" height="250" rx="18" stroke="#0284c7"/>
   <text class="boxTitle" x="180" y="38" text-anchor="middle">AbstractExposedTest</text>
-  <rect class="slot" x="24" y="58" width="312" height="34" rx="10"/><text class="mono" x="180" y="80" text-anchor="middle">timezone = UTC</text>
-  <rect class="slot" x="24" y="100" width="312" height="34" rx="10"/><text class="mono" x="180" y="122" text-anchor="middle">faker + enableDialects()</text>
-  <rect class="slot" x="24" y="142" width="312" height="34" rx="10"/><text class="mono" x="180" y="164" text-anchor="middle">prepareSchemaForTest()</text>
-  <rect class="slot" x="24" y="184" width="312" height="34" rx="10"/><text class="mono" x="180" y="206" text-anchor="middle">addIfNotExistsIfSupported()</text>
+  <rect class="slot" x="24" y="58" width="312" height="34" rx="10"/><text class="mono" x="180" y="80" text-anchor="middle" data-code-snippet="kotlin">timezone <tspan class="syntax-operator">=</tspan> <tspan class="syntax-type">UTC</tspan></text>
+  <rect class="slot" x="24" y="100" width="312" height="34" rx="10"/><text class="mono" x="180" y="122" text-anchor="middle" data-code-snippet="kotlin">faker <tspan class="syntax-operator">+</tspan> <tspan class="syntax-function">enableDialects</tspan>()</text>
+  <rect class="slot" x="24" y="142" width="312" height="34" rx="10"/><text class="mono" x="180" y="164" text-anchor="middle" data-code-snippet="kotlin"><tspan class="syntax-function">prepareSchemaForTest</tspan>()</text>
+  <rect class="slot" x="24" y="184" width="312" height="34" rx="10"/><text class="mono" x="180" y="206" text-anchor="middle" data-code-snippet="kotlin"><tspan class="syntax-function">addIfNotExistsIfSupported</tspan>()</text>
 </g>
 
 <rect class="zone" x="585" y="205" width="430" height="720" rx="28" fill="#ecfdf5" stroke="#34d399"/>
@@ -36,7 +37,7 @@
   <rect class="classBox card" x="0" y="0" width="360" height="196" rx="18" stroke="#059669"/>
   <text class="boxTitle" x="180" y="38" text-anchor="middle">withDb</text>
   <rect class="slot" x="24" y="58" width="312" height="34" rx="10"/><text class="mono" x="180" y="80" text-anchor="middle">per-dialect semaphore</text>
-  <rect class="slot" x="24" y="100" width="312" height="34" rx="10"/><text class="mono" x="180" y="122" text-anchor="middle">Database.connect() + shutdown hook</text>
+  <rect class="slot" x="24" y="100" width="312" height="34" rx="10"/><text class="mono" x="180" y="122" text-anchor="middle" data-code-snippet="kotlin"><tspan class="syntax-type">Database</tspan>.<tspan class="syntax-function">connect</tspan>() <tspan class="syntax-operator">+</tspan> shutdown hook</text>
   <rect class="slot" x="24" y="142" width="312" height="34" rx="10"/><text class="mono" x="180" y="164" text-anchor="middle">currentTestDB in transaction scope</text>
 </g>
 <g transform="translate(620 522)">
@@ -65,7 +66,7 @@
 <g transform="translate(1110 590)">
   <rect class="classBox card" x="0" y="0" width="360" height="204" rx="18" stroke="#f97316"/>
   <text class="boxTitle" x="180" y="38" text-anchor="middle">ActorRepository</text>
-  <rect class="slot" x="24" y="58" width="312" height="34" rx="10"/><text class="mono" x="180" y="80" text-anchor="middle">JdbcRepository&lt;Long, ActorRecord&gt;</text>
+  <rect class="slot" x="24" y="58" width="312" height="34" rx="10"/><text class="mono" x="180" y="80" text-anchor="middle" data-code-snippet="kotlin"><tspan class="syntax-type">JdbcRepository</tspan><tspan class="syntax-operator">&lt;</tspan><tspan class="syntax-type">Long</tspan>, <tspan class="syntax-type">ActorRecord</tspan><tspan class="syntax-operator">&gt;</tspan></text>
   <rect class="slot" x="24" y="100" width="312" height="34" rx="10"/><text class="mono" x="180" y="122" text-anchor="middle">findById / findAll</text>
   <rect class="slot" x="24" y="142" width="312" height="34" rx="10"/><text class="mono" x="180" y="164" text-anchor="middle">save + birthday/name queries</text>
 </g>
