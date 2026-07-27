@@ -46,11 +46,15 @@ for example:
 
 Every example README must include an Architecture Diagram rendered as a PNG
 image with the editable SVG source stored next to it under
-`docs/images/readme-diagrams/`. Use the same PNG link from `README.md` and
-`README.ko.md`, keep diagram text in English, and do not leave raw Mermaid
-blocks in README files. Add additional UML-style diagrams such as class,
-sequence, or ERD diagrams when they clarify non-trivial type relationships,
-request flows, database schema, or concurrency/lifecycle behavior.
+`docs/images/readme-diagrams/`. Provide source-equivalent `README.md` in English
+and `README.ko.md` in Korean. Write work documents such as specs, plans,
+research notes, lessons, and KDoc in Korean; preserve code, identifiers,
+commands, and API names in their original form. When a diagram contains
+reader-facing prose, provide source-equivalent English and Korean SVG/PNG
+assets; text-free diagrams may be shared. Do not leave raw Mermaid blocks in
+README files. Add additional UML-style diagrams such as class, sequence, or ERD
+diagrams when they clarify non-trivial type relationships, request flows,
+database schema, or concurrency/lifecycle behavior.
 
 ## Exposed Rules
 
