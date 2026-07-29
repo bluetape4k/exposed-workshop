@@ -69,7 +69,7 @@ object Schema {
         var name: String by UserTable.name
         var age: Int by UserTable.age
 
-        // many-to-one
+        // 다대일 관계
         var city: City? by City optionalReferencedOn UserTable.cityId
 
         override fun equals(other: Any?): Boolean = other is User && id._value == other.id._value

@@ -297,7 +297,7 @@ class Ex02_H2_MultiDatabase {
         TransactionManager.defaultDatabase = db1
         newSuspendedTransaction(coroutineDispatcher1) {
             TransactionManager.current().db.name shouldBeEqualTo db1.name
-            // when running all tests together, this one usually fails
+            // 전체 테스트를 함께 실행하면 이 쿼리는 대체로 실패합니다.
             // `Dual.select(intLiteral(1))`
             TransactionManager.current().exec("SELECT 1") { rs ->
                 rs.next().ifTrue { rs.getInt(1) } shouldBeEqualTo 1

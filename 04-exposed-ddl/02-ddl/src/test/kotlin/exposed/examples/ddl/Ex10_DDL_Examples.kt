@@ -137,7 +137,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
                         "$columnName ${tester.name.columnType.sqlType()} NOT NULL)"
             tester.ddl.single() shouldBeEqualTo expectedCreate
 
-            // check that insert and select statement identifiers also match in DB without throwing SQLException
+            // insert/select statement identifier가 SQLException 없이 DB에서도 일치하는지 확인합니다.
             tester.insert { it[name] = "A" }
 
             val expectedSelect = "SELECT $tableName.$columnName FROM $tableName"
@@ -145,7 +145,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
                 it.prepareSQL(this, prepared = false) shouldBeEqualTo expectedSelect
             }
 
-            // check that identifiers match with returned jdbc metadata
+            // 반환된 JDBC metadata와 identifier가 일치하는지 확인합니다.
             val statements = MigrationUtils.statementsRequiredForDatabaseMigration(tester, withLogs = false)
             statements.isEmpty().shouldBeTrue()
 
@@ -214,7 +214,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
 
             keywordTable.ddl.single() shouldBeEqualTo expectedCreate
 
-            // check that insert and select statement identifiers also match in DB without throwing SQLException
+            // insert/select statement identifier가 SQLException 없이 DB에서도 일치하는지 확인합니다.
             keywordTable.insert {
                 it[public] = true
                 it[data] = 999
@@ -227,7 +227,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
                 it.prepareSQL(this, prepared = false) shouldBeEqualTo expectedSelect
             }
 
-            // check that identifiers match with returned jdbc metadata
+            // 반환된 JDBC metadata와 identifier가 일치하는지 확인합니다.
             val statements = MigrationUtils.statementsRequiredForDatabaseMigration(keywordTable, withLogs = false)
             statements.shouldBeEmpty()
 
@@ -380,7 +380,7 @@ class Ex10_DDL_Examples: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `auto increment on unsigned columns`(testDB: TestDB) {
         /**
-         * separate tables are necessary as some db only allow a single column to be auto-incrementing
+         * 일부 DB는 auto-increment column을 하나만 허용하므로 별도 테이블이 필요합니다.
          * ```sql
          * -- Postgres
          * CREATE TABLE IF NOT EXISTS u_int_tester (
