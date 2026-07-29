@@ -1,42 +1,40 @@
-# Issue #142 Plan - Explicit Ktor Exposed Integration
+# Issue #142 계획 - 명시적 Ktor Exposed integration
 
-## Step 1 - Source and Requirement Grounding
+## 단계 1 - Source 및 requirement grounding
 
-- Action: inspect issue #142, chapter 13 README, existing Ktor examples, and
-  `bluetape4k-exposed-ktor` source/demo code.
-- DoD: record the chosen module path, helper APIs, and acceptance evidence in
-  the design artifact.
+- 작업: issue #142, chapter 13 README, existing Ktor example,
+  `bluetape4k-exposed-ktor` source/demo code를 검사한다.
+- DoD: 선택한 module path, helper API, acceptance evidence를 design artifact에 기록한다.
 
-## Step 2 - TDD Contract
+## 단계 2 - TDD Contract
 
-- Action: add the new module skeleton and tests before production code.
+- 작업: Production code보다 먼저 새 module skeleton과 test를 추가한다.
 - DoD: `./gradlew :05-ktor-exposed-integration:test --no-daemon --no-configuration-cache`
-  fails at compile time because the production API is intentionally missing.
+  는 production API가 의도적으로 없기 때문에 compile time에 실패한다.
 
-## Step 3 - Implementation
+## 단계 3 - 구현
 
-- Action: implement the local H2 Ktor example, caller-owned resources, CRUD
-  routes, readiness routes, and sanitized error route.
-- DoD: targeted module tests pass locally.
+- 작업: Local H2 Ktor example, caller-owned resource, CRUD route, readiness route, sanitized
+  error route를 구현한다.
+- DoD: Targeted module test가 local에서 통과한다.
 
-## Step 4 - Documentation and Diagram
+## 단계 4 - 문서와 diagram
 
-- Action: add bilingual module README files and a `$bluetape4k-diagram`
-  compliant SVG/PNG architecture diagram.
-- DoD: SVG geometry and endpoint audits pass, PNG renders successfully, and the
-  README links point to the rendered asset.
+- 작업: Bilingual module README file과 `$bluetape4k-diagram` compliant SVG/PNG architecture
+  diagram을 추가한다.
+- DoD: SVG geometry/endpoint audit가 통과하고 PNG가 성공적으로 render되며 README link가 rendered
+  asset을 가리킨다.
 
-## Step 5 - Registration and Automation
+## 단계 5 - 등록과 자동화
 
-- Action: update chapter/root README links, version catalog aliases, and
-  `.github/workflows/examples.yml`.
-- DoD: Gradle project discovery includes the module and the Examples workflow
-  includes `:05-ktor-exposed-integration:build`.
+- 작업: Chapter/root README link, version catalog alias, `.github/workflows/examples.yml`을
+  갱신한다.
+- DoD: Gradle project discovery가 module을 포함하고 Examples workflow가
+  `:05-ktor-exposed-integration:build`를 포함한다.
 
-## Step 6 - Verification and PR
+## 단계 6 - 검증과 PR
 
-- Action: run targeted tests, `git diff --check`, review local diff, write a
-  review note and lesson, then open a PR linked to issue #142.
-- DoD: PR metadata mirrors issue #142 assignee, labels, and milestone; PR body
-  ends with `## DoD Status`.
-
+- 작업: Targeted test, `git diff --check`를 실행하고 local diff를 review하며 review note와
+  lesson을 작성한 뒤 issue #142에 연결된 PR을 연다.
+- DoD: PR metadata는 issue #142 assignee, label, milestone을 반영하고 PR body는
+  `## DoD Status`로 끝난다.
