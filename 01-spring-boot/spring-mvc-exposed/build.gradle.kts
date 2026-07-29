@@ -34,7 +34,7 @@ configurations {
 dependencies {
     testImplementation(project(":exposed-shared-tests"))
 
-    // Exposed
+    // JetBrains Exposed 의존성
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.jdbc)
     implementation(libs.jetbrains.exposed.dao)
@@ -42,27 +42,27 @@ dependencies {
     implementation(libs.jetbrains.exposed.migration.jdbc)
     implementation(libs.jetbrains.exposed.spring.boot.starter)
 
-    // bluetape4k
+    // bluetape4k 공통 의존성
     implementation(libs.exposed.core)
     implementation(libs.bluetape4k.jackson2)
     implementation(libs.bluetape4k.io)
     implementation(libs.bluetape4k.testcontainers)
 
-    // Database Drivers
+    // 데이터베이스 드라이버
     runtimeOnly(libs.hikaricp)
 
     // H2
     runtimeOnly(libs.h2.v2)
 
-    // MySQL
+    // MySQL 드라이버와 Testcontainers 의존성
     implementation(libs.testcontainers.mysql)
     runtimeOnly(libs.mysql.connector.j)
 
-    // PostgreSQL
+    // PostgreSQL 드라이버와 Testcontainers 의존성
     implementation(libs.testcontainers.postgresql)
     runtimeOnly(libs.postgresql.driver)
 
-    // Spring Boot
+    // Spring Boot 애플리케이션 의존성
     implementation("org.springframework.boot:spring-boot-autoconfigure")
     annotationProcessor("org.springframework.boot:spring-boot-autoconfigure-processor")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
@@ -82,25 +82,25 @@ dependencies {
         exclude(module = "mockito-core")
     }
 
-    // Coroutines
+    // 코루틴 테스트 의존성
     testImplementation(libs.bluetape4k.coroutines)
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.reactor)
     testImplementation(libs.kotlinx.coroutines.test)
 
-    // Reactor
+    // Reactor 테스트 의존성
     testImplementation(libs.reactor.netty)
     testImplementation(libs.reactor.kotlin.extensions)
     testImplementation(libs.reactor.test)
 
-    // Monitoring
+    // 모니터링 의존성
     implementation(libs.micrometer.core)
     implementation(libs.micrometer.registry.prometheus)
 
-    // SpringDoc - OpenAPI 3.0
+    // SpringDoc OpenAPI 3.0 UI 의존성
     implementation(libs.springdoc.openapi.starter.webmvc.ui)
 
-    // Gatling
+    // Gatling 부하 테스트 의존성
     implementation(libs.gatling.app)
     implementation(libs.gatling.core.java)
     implementation(libs.gatling.http.java)
