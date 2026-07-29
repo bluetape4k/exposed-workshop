@@ -14,7 +14,7 @@ dependencies {
     testImplementation(libs.exposed.core)
     testImplementation(libs.exposed.jackson3)
 
-    // Jackson 3
+    // Jackson 3 JSON 컬럼 직렬화 의존성
     testImplementation(libs.bluetape4k.jackson3)
     testImplementation(libs.jackson3.module.kotlin)
     testImplementation(libs.jackson3.module.blackbird)
@@ -33,7 +33,7 @@ dependencies {
     testImplementation(libs.testcontainers.mysql)
     testImplementation(libs.testcontainers.postgresql)
 
-    // Coroutines
+    // 코루틴 기반 트랜잭션 예제 의존성
     testImplementation(libs.bluetape4k.coroutines)
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)

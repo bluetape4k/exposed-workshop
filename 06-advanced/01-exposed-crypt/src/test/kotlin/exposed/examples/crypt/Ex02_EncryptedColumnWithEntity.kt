@@ -123,7 +123,7 @@ class Ex02_EncryptedColumnWithEntity : AbstractExposedTest() {
     }
 
     /**
-     * find by encrypted value
+     * 암호화된 값으로 엔티티를 조회한다.
      *
      * Exposed Encryptor는 매번 다른 값으로 암호화하기 때문에, WHERE 절에 쓸 수는 없습니다.
      * Jasypt 를 사용해서 매번 같은 값으로 암호화를 하도록 하면 가능합니다.

@@ -96,7 +96,7 @@ class Ex01_JavaTime : AbstractExposedTest() {
             val now = LocalDateTime.now()
 
             /**
-             * Insert a city with local time
+             * `LocalTime` 값을 가진 도시 행을 삽입한다.
              * ```sql
              * -- Postgres
              * INSERT INTO citiestime ("name", local_time)
@@ -110,7 +110,7 @@ class Ex01_JavaTime : AbstractExposedTest() {
                 }
 
             /**
-             * Select the city with local time
+             * `LocalTime` 컬럼에서 시간 구성요소를 조회한다.
              *
              * ```sql
              * -- Postgres
@@ -228,14 +228,14 @@ class Ex01_JavaTime : AbstractExposedTest() {
      * )
      * ```
      *
-     * Insert two `LocalDateTime` with nanos
+     * 나노초 정밀도를 포함한 `LocalDateTime` 값 두 개를 삽입한다.
      * ```sql
      * -- Postgres
      * INSERT INTO testlocaldatetime ("time") VALUES ('2025-02-04T09:13:33.000111112')
      * INSERT INTO testlocaldatetime ("time") VALUES ('2025-02-04T09:13:33.000111118')
      * ```
      *
-     * Load the `LocalDateTime` with nanos from the DB
+     * 데이터베이스에서 나노초 정밀도의 `LocalDateTime` 값을 다시 읽어온다.
      * ```
      * -- Postgres, MySQL, H2_PSQL
      * dateTimesFromDB=[2025-02-04T09:24:16.000111, 2025-02-04T09:24:16.000111]
@@ -286,12 +286,12 @@ class Ex01_JavaTime : AbstractExposedTest() {
      *      deleted DATE NOT NULL
      * )
      * ```
-     * Insert [LocalDate] values
+     * [LocalDate] 값을 테스트 테이블에 삽입한다.
      * ```sql
      * INSERT INTO test_table (created, deleted) VALUES ('2024-05-04', '2024-05-04');
      * INSERT INTO test_table (created, deleted) VALUES ('2024-05-04', '2024-05-05');
      * ```
-     * Select [LocalDate] values
+     * [LocalDate] 컬럼을 날짜/월/연도 조건으로 조회한다.
      * ```sql
      * -- Same date
      * SELECT test_table.created, test_table.deleted
@@ -337,7 +337,7 @@ class Ex01_JavaTime : AbstractExposedTest() {
             sameDateResult shouldHaveSize 1
             sameDateResult.single()[testTable.deleted] shouldBeEqualTo mayTheFourth
 
-            // Same Month
+            // 같은 월에 속하는 행만 조회한다.
             val sameMonthResult =
                 testTable
                     .selectAll()
@@ -345,10 +345,10 @@ class Ex01_JavaTime : AbstractExposedTest() {
                     .toList()
             sameMonthResult shouldHaveSize 2
 
-            // Same Year
+            // 같은 연도에 속하는 행만 조회한다.
             val year2024 =
                 if (currentDialect is PostgreSQLDialect) {
-                    // PostgreSQL requires explicit type cast to resolve function date_part
+                    // PostgreSQL은 date_part 함수 오버로드를 해석하려면 명시적 타입 캐스트가 필요하다.
                     dateParam(mayTheFourth).castTo(JavaLocalDateColumnType()).year()
                 } else {
                     dateParam(mayTheFourth).year()
@@ -414,7 +414,7 @@ class Ex01_JavaTime : AbstractExposedTest() {
                     it[modified] = now
                 }
 
-            // these DB take the nanosecond value 871_130_789 and round up to default precision (e.g. in Oracle: 871_131)
+            // 이 데이터베이스들은 나노초 값 871_130_789를 기본 정밀도로 반올림한다(예: Oracle에서는 871_131).
             val requiresExplicitDTCast = setOf(TestDB.H2_PSQL)
             val dateTime =
                 when (testDB) {
@@ -499,12 +499,12 @@ class Ex01_JavaTime : AbstractExposedTest() {
 
             val prefix = if (currentDialectTest is PostgreSQLDialect) "" else "."
 
-            // value extracted in same manner it is stored, a json string
+            // 저장된 방식과 동일하게 JSON 문자열 형태로 값을 추출한다.
             val modifiedAsString = tester.modified.extract<String>("${prefix}timestamp")
             val allModifiedAsString = tester.select(modifiedAsString)
             allModifiedAsString.all { it[modifiedAsString] == dateTimeNow.toString() }.shouldBeTrue()
 
-            // PostgreSQL requires explicit type cast to timestamp for in-DB comparison
+            // PostgreSQL은 데이터베이스 내부 비교에서 timestamp 명시적 타입 캐스트가 필요하다.
             val dateModified =
                 when (currentDialectTest) {
                     is PostgreSQLDialect -> {
@@ -565,7 +565,7 @@ class Ex01_JavaTime : AbstractExposedTest() {
         val systemTimeZone = TimeZone.getDefault()
 
         withTables(testDB, tester) {
-            // Africa/Cairo time zone
+            // Africa/Cairo 시간대 기준으로 값을 삽입하고 조회한다.
             TimeZone.setDefault(TimeZone.getTimeZone("Africa/Cairo"))
             ZoneId.systemDefault().id shouldBeEqualTo "Africa/Cairo"
 
@@ -585,7 +585,7 @@ class Ex01_JavaTime : AbstractExposedTest() {
             // UTC 로 반환
             log.debug { "cairoNowInsertedInCairoTimeZone=$cairoNowInsertedInCairoTimeZone" }
 
-            // UTC time zone
+            // UTC 시간대 기준으로 값을 삽입하고 조회한다.
             TimeZone.setDefault(TimeZone.getTimeZone(ZoneOffset.UTC))
             ZoneId.systemDefault().id shouldBeEqualTo "UTC"
 
@@ -610,7 +610,7 @@ class Ex01_JavaTime : AbstractExposedTest() {
                     .single()[tester.timestampWithTimeZone]
             log.debug { "cairoNowInsertedInUTCTimeZone=$cairoNowInsertedInUTCTimeZone" }
 
-            // Seoul time zone
+            // Seoul 시간대 기준으로 값을 삽입하고 조회한다.
             TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"))
             ZoneId.systemDefault().id shouldBeEqualTo "Asia/Seoul"
 
@@ -632,28 +632,28 @@ class Ex01_JavaTime : AbstractExposedTest() {
                     .single()[tester.timestampWithTimeZone]
             log.debug { "cairoNowInsertedInSeoulTimeZone=$cairoNowInsertedInSeoulTimeZone" }
 
-            // PostgreSQL and MySQL always store the timestamp in UTC, thereby losing the original time zone.
-            // To preserve the original time zone, store the time zone information in a separate column.
+            // PostgreSQL과 MySQL은 timestamp 값을 항상 UTC로 저장하므로 원래 시간대 정보가 사라진다.
+            // 원래 시간대를 보존하려면 시간대 정보를 별도 컬럼에 저장해야 한다.
             val isOriginalTimeZonePreserved = testDB !in (TestDB.ALL_MYSQL + TestDB.ALL_POSTGRES)
             if (isOriginalTimeZonePreserved) {
-                // Assert that time zone is preserved when the same value is inserted in different time zones
+                // 같은 값을 서로 다른 시간대에서 삽입해도 시간대 정보가 보존되는지 검증한다.
                 cairoNowInsertedInCairoTimeZone shouldTemporalEqualTo cairoNow
                 cairoNowInsertedInUTCTimeZone shouldTemporalEqualTo cairoNow
                 cairoNowInsertedInSeoulTimeZone shouldTemporalEqualTo cairoNow
 
-                // Assert that time zone is preserved when the same record is retrieved in different time zones
+                // 같은 레코드를 서로 다른 시간대에서 조회해도 시간대 정보가 보존되는지 검증한다.
                 cairoNowRetrievedInUTCTimeZone shouldTemporalEqualTo cairoNow
                 cairoNowRetrievedInSeoulTimeZone shouldTemporalEqualTo cairoNow
             } else {
-                // Assert equivalence in UTC when the same value is inserted in different time zones
+                // 같은 값을 서로 다른 시간대에서 삽입했을 때 UTC 기준 값이 동등한지 검증한다.
                 cairoNowInsertedInUTCTimeZone shouldTemporalEqualTo cairoNowInsertedInCairoTimeZone
                 cairoNowInsertedInSeoulTimeZone shouldTemporalEqualTo cairoNowInsertedInUTCTimeZone
 
-                // Assert equivalence in UTC when the same record is retrieved in different time zones
+                // 같은 레코드를 서로 다른 시간대에서 조회했을 때 UTC 기준 값이 동등한지 검증한다.
                 cairoNowRetrievedInSeoulTimeZone shouldTemporalEqualTo cairoNowRetrievedInUTCTimeZone
             }
 
-            // Reset to original time zone as set up in DatabaseTestsBase init block
+            // DatabaseTestsBase 초기화 블록에서 설정한 원래 시간대로 복원한다.
             TimeZone.setDefault(systemTimeZone)
             ZoneId.systemDefault().id shouldBeEqualTo systemTimeZone.id
         }
@@ -702,7 +702,7 @@ class Ex01_JavaTime : AbstractExposedTest() {
             }
 
         withTables(testDB, tester) {
-            // UTC time zone
+            // UTC 시간대 기준으로 값을 삽입하고 조회한다.
             TimeZone.setDefault(TimeZone.getTimeZone(ZoneOffset.UTC))
             ZoneId.systemDefault().id shouldBeEqualTo "UTC"
 
@@ -904,7 +904,7 @@ class Ex01_JavaTime : AbstractExposedTest() {
             val localTime = LocalTime.of(13, 5)
             val localTimeLiteral = timeLiteral(localTime)
 
-            // UTC time zone
+            // UTC 시간대 기준으로 값을 삽입하고 조회한다.
             TimeZone.setDefault(TimeZone.getTimeZone(ZoneOffset.UTC))
             ZoneId.systemDefault().id shouldBeEqualTo "UTC"
 
@@ -1021,11 +1021,11 @@ infix fun Int.shouldFractionalPartEqualTo(nano2: Int) {
     val dialect = currentDialectTest
 
     when (dialect) {
-        // accurate to 100 nanoseconds
+        // 100나노초 단위까지 정확도를 검증한다.
         is SQLServerDialect -> {
             nano1.nanoRoundTo100Nanos() shouldBeEqualTo nano2.nanoRoundTo100Nanos()
         }
-        // microsecond
+        // 마이크로초 정밀도를 검증한다.
         is MariaDBDialect -> {
             nano1.nanoFloorToMicro() shouldBeEqualTo nano2.nanoFloorToMicro()
         }
@@ -1040,7 +1040,7 @@ infix fun Int.shouldFractionalPartEqualTo(nano2: Int) {
                 else -> {} // don't compare fractional part
             }
         }
-        // milliseconds
+        // 밀리초 정밀도를 검증한다.
         is OracleDialect -> {
             nano1.nanoRoundToMilli() shouldBeEqualTo nano2.nanoRoundToMilli()
         }

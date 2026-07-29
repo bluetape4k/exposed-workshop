@@ -19,7 +19,7 @@ dependencies {
     // java time 지원 라이브러리
     implementation(libs.jetbrains.exposed.java.time)
 
-    // Kotlin Serialization Json
+    // Kotlin Serialization JSON 컬럼 직렬화 의존성
     implementation(libs.jetbrains.exposed.json)
     implementation(platform(libs.kotlinx.serialization.bom))
     implementation(libs.kotlinx.serialization.json)
@@ -33,14 +33,14 @@ dependencies {
     testImplementation(libs.testcontainers.mysql)
     testImplementation(libs.testcontainers.postgresql)
 
-    // Jdbc Drivers
+    // 테스트 데이터베이스별 JDBC 드라이버 의존성
     testRuntimeOnly(libs.h2.v2)
     testRuntimeOnly(libs.mariadb.java.client)
     testRuntimeOnly(libs.mysql.connector.j)
     testRuntimeOnly(libs.postgresql.driver)
     testRuntimeOnly(libs.pgjdbc.ng)
 
-    // Coroutines
+    // 코루틴 기반 트랜잭션 예제 의존성
     implementation(libs.bluetape4k.coroutines)
     implementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)

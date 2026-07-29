@@ -502,7 +502,7 @@ class Ex02_Defaults: AbstractExposedTest() {
      * 컬럼의 기본값을 Custom Expression 으로 설정하기
      *
      * ```sql
-     * -- Postgres:
+     * -- Postgres 예:
      * CREATE TABLE IF NOT EXISTS tester (
      *      id SERIAL PRIMARY KEY,
      *      "name" TEXT NOT NULL,
@@ -511,7 +511,7 @@ class Ex02_Defaults: AbstractExposedTest() {
      *      "defaultInt" INT DEFAULT (ABS(-100)) NOT NULL
      * );
      *
-     * -- MySQL V8:
+     * -- MySQL V8 예:
      * CREATE TABLE IF NOT EXISTS tester (
      *      id INT AUTO_INCREMENT PRIMARY KEY,
      *      `name` text NOT NULL,
@@ -539,7 +539,7 @@ class Ex02_Defaults: AbstractExposedTest() {
             val defaultInt = integer("defaultInt").defaultExpression(abs(-100))
         }
 
-        // MySql 5 is excluded because it does not support `CURRENT_DATE()` as a default value
+        // MySQL 5는 `CURRENT_DATE()`를 기본값으로 지원하지 않으므로 제외한다.
         Assumptions.assumeTrue { testDB !in setOf(TestDB.MYSQL_V5) }
         withTables(testDB, tester) {
             val id = tester.insertAndGetId {
@@ -671,14 +671,14 @@ class Ex02_Defaults: AbstractExposedTest() {
      * Timestamp 에 Time Zone 을 포함한 컬럼을 사용할 때 (`TIMESTAMP WITH TIME ZONE DEFAULT`)
      *
      * ```sql
-     * -- Postgres:
+     * -- Postgres 예:
      * CREATE TABLE IF NOT EXISTS t (
      *      id SERIAL PRIMARY KEY,
      *      t1 TIMESTAMP WITH TIME ZONE DEFAULT '2024-07-18 13:19:44+00'::timestamp with time zone NOT NULL,
      *      t2 TIMESTAMP WITH TIME ZONE DEFAULT '2024-07-18 13:19:44+00'::timestamp with time zone NOT NULL,
      *      t3 TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
      * );
-     * -- MySQL V8:
+     * -- MySQL V8 예:
      * CREATE TABLE IF NOT EXISTS t (
      *      id INT AUTO_INCREMENT PRIMARY KEY,
      *      t1 TIMESTAMP(6) DEFAULT '2024-07-18 13:19:44.000000' NOT NULL,
@@ -691,7 +691,7 @@ class Ex02_Defaults: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `Timestamp with TimeZone Default`(testDB: TestDB) {
         Assumptions.assumeTrue { testDB !in TestDB.ALL_MARIADB + TestDB.MYSQL_V5 }
-        // UTC time zone
+        // UTC 시간대 기준으로 값을 삽입하고 조회한다.
         java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone(ZoneOffset.UTC))
         ZoneId.systemDefault().id shouldBeEqualTo "UTC"
 
@@ -812,7 +812,7 @@ class Ex02_Defaults: AbstractExposedTest() {
             val dateWithDefault = date("dateWithDefault").default(date)
         }
 
-        // SQLite does not support ALTER TABLE on a column that has a default value
+        // SQLite는 기본값이 있는 컬럼에 대한 ALTER TABLE을 지원하지 않는다.
         withTables(testDB, tester) {
             val statements = SchemaUtils.addMissingColumnsStatements(tester)
             statements.shouldBeEmpty()
@@ -823,13 +823,13 @@ class Ex02_Defaults: AbstractExposedTest() {
      * Timestamp 컬럼에 Default 값을 설정할 때, ALTER TABLE 문이 발생하지 않아야 한다.
      *
      * ```sql
-     * -- Postgres:
+     * -- Postgres 예:
      * CREATE TABLE IF NOT EXISTS tester (
      *      "timestampWithDefault" TIMESTAMP DEFAULT '2023-05-04 05:04:00.7'::timestamp without time zone NOT NULL,
      *      "timestampWithDefaultExpression" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
      * );
      *
-     * -- MYSQL V8:
+     * -- MySQL V8 예:
      * CREATE TABLE IF NOT EXISTS tester (
      *      timestampWithDefault DATETIME(6) DEFAULT '2023-05-04 05:04:00.700000' NOT NULL,
      *      timestampWithDefaultExpression DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6) NOT NULL
@@ -839,7 +839,7 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testTimestampDefaultDoesNotTriggerAlterStatement(testDB: TestDB) {
-        val instant = Instant.parse("2023-05-04T05:04:00.700Z") // In UTC
+        val instant = Instant.parse("2023-05-04T05:04:00.700Z") // UTC 기준 값이다.
 
         val tester = object: Table("tester") {
             val timestampWithDefault = timestamp("timestampWithDefault").default(instant)
@@ -847,7 +847,7 @@ class Ex02_Defaults: AbstractExposedTest() {
                 timestamp("timestampWithDefaultExpression").defaultExpression(CurrentTimestamp)
         }
 
-        // SQLite does not support ALTER TABLE on a column that has a default value
+        // SQLite는 기본값이 있는 컬럼에 대한 ALTER TABLE을 지원하지 않는다.
         withTables(testDB, tester) {
             val statements = SchemaUtils.addMissingColumnsStatements(tester)
             statements.shouldBeEmpty()
@@ -872,7 +872,7 @@ class Ex02_Defaults: AbstractExposedTest() {
                 datetime("datetimeWithDefaultExpression").defaultExpression(CurrentDateTime)
         }
 
-        // SQLite does not support ALTER TABLE on a column that has a default value
+        // SQLite는 기본값이 있는 컬럼에 대한 ALTER TABLE을 지원하지 않는다.
         withTables(testDB, tester) {
             val statements = SchemaUtils.addMissingColumnsStatements(tester)
             statements.shouldBeEmpty()
@@ -898,7 +898,7 @@ class Ex02_Defaults: AbstractExposedTest() {
             val timeWithDefault = time("timeWithDefault").default(time)
         }
 
-        // SQLite does not support ALTER TABLE on a column that has a default value
+        // SQLite는 기본값이 있는 컬럼에 대한 ALTER TABLE을 지원하지 않는다.
         withTables(testDB, tester) {
             val statements = SchemaUtils.addMissingColumnsStatements(tester)
             statements.shouldBeEmpty()
@@ -924,8 +924,8 @@ class Ex02_Defaults: AbstractExposedTest() {
                 timestampWithTimeZone("timestampWithTimeZoneWithDefault").default(offsetDateTime)
         }
 
-        // SQLite does not support ALTER TABLE on a column that has a default value
-        // MariaDB does not support TIMESTAMP WITH TIME ZONE column type
+        // SQLite는 기본값이 있는 컬럼에 대한 ALTER TABLE을 지원하지 않는다.
+        // MariaDB는 TIMESTAMP WITH TIME ZONE 컬럼 타입을 지원하지 않는다.
         val unsupportedDatabases = TestDB.ALL_MARIADB + listOf(TestDB.MYSQL_V5)
         Assumptions.assumeTrue { testDB !in unsupportedDatabases }
         withTables(testDB, tester) {
@@ -986,7 +986,7 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testCustomDefaultTimestampFunctionWithInsertStatement(testDB: TestDB) {
-        // Only Postgres allows to get timestamp values directly from the insert statement due to implicit 'returning *'
+        // Postgres만 암시적 'returning *' 덕분에 insert 문에서 timestamp 값을 직접 얻을 수 있다.
         Assumptions.assumeTrue { testDB in TestDB.ALL_POSTGRES }
 
         withTables(testDB, DefaultTimestampTable) {

@@ -233,7 +233,7 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testDefaultsWithExplicit02(testDB: TestDB) {
-        // MySql 5 is excluded because it does not support `CURRENT_DATE()` as a default value
+        // MySQL 5는 `CURRENT_DATE()`를 기본값으로 지원하지 않으므로 제외한다.
         Assumptions.assumeTrue { testDB != TestDB.MYSQL_V5 }
         withTables(testDB, TableWithDBDefault) {
             val created = listOf(
@@ -502,7 +502,7 @@ class Ex02_Defaults: AbstractExposedTest() {
             val defaultInt = integer("defaultInteger").defaultExpression(abs(-100))
         }
 
-        // MySql 5 is excluded because it does not support `CURRENT_DATE()` as a default value
+        // MySQL 5는 `CURRENT_DATE()`를 기본값으로 지원하지 않으므로 제외한다.
         Assumptions.assumeTrue { testDB !in setOf(TestDB.MYSQL_V5) }
 
         withTables(testDB, tester) {
@@ -642,7 +642,7 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testTimestampWithTimeZoneDefaults(testDB: TestDB) {
-        // UTC time zone
+        // UTC 시간대 기준으로 값을 삽입하고 조회한다.
         java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone(ZoneOffset.UTC))
         ZoneId.systemDefault().id shouldBeEqualTo "UTC"
 
@@ -785,7 +785,7 @@ class Ex02_Defaults: AbstractExposedTest() {
                 .defaultExpression(CurrentDateTime)
         }
 
-        // SQLite does not support ALTER TABLE on a column that has a default value
+        // SQLite는 기본값이 있는 컬럼에 대한 ALTER TABLE을 지원하지 않는다.
         withTables(testDB, tester) {
             val statements = SchemaUtils.addMissingColumnsStatements(tester)
             statements.shouldBeEmpty()
@@ -808,7 +808,7 @@ class Ex02_Defaults: AbstractExposedTest() {
             val dateWithDefault = date("dateWithDefault").default(date)
         }
 
-        // SQLite does not support ALTER TABLE on a column that has a default value
+        // SQLite는 기본값이 있는 컬럼에 대한 ALTER TABLE을 지원하지 않는다.
         withTables(testDB, tester) {
             val statements = SchemaUtils.addMissingColumnsStatements(tester)
             statements.shouldBeEmpty()
@@ -830,7 +830,7 @@ class Ex02_Defaults: AbstractExposedTest() {
             val timeWithDefault = time("timeWithDefault").default(time)
         }
 
-        // SQLite does not support ALTER TABLE on a column that has a default value
+        // SQLite는 기본값이 있는 컬럼에 대한 ALTER TABLE을 지원하지 않는다.
         withTables(testDB, tester) {
             val statements = SchemaUtils.addMissingColumnsStatements(tester)
             statements.shouldBeEmpty()
@@ -840,7 +840,7 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testTimestampDefaultDoesNotTriggerAlterStatement(testDB: TestDB) {
-        val instant = Instant.parse("2023-05-04T05:04:00.700Z") // In UTC
+        val instant = Instant.parse("2023-05-04T05:04:00.700Z") // UTC 기준 값이다.
 
         val tester = object: Table("tester") {
             val timestampWithDefault = timestamp("timestampWithDefault").default(instant)
@@ -848,7 +848,7 @@ class Ex02_Defaults: AbstractExposedTest() {
                 .defaultExpression(CurrentTimestamp)
         }
 
-        // SQLite does not support ALTER TABLE on a column that has a default value
+        // SQLite는 기본값이 있는 컬럼에 대한 ALTER TABLE을 지원하지 않는다.
         withTables(testDB, tester) {
             val statements = SchemaUtils.addMissingColumnsStatements(tester)
             statements.shouldBeEmpty()
@@ -878,8 +878,8 @@ class Ex02_Defaults: AbstractExposedTest() {
                 timestampWithTimeZone("timestampWithTimeZoneWithDefault").default(offsetDateTime)
         }
 
-        // SQLite does not support ALTER TABLE on a column that has a default value
-        // MariaDB does not support TIMESTAMP WITH TIME ZONE column type
+        // SQLite는 기본값이 있는 컬럼에 대한 ALTER TABLE을 지원하지 않는다.
+        // MariaDB는 TIMESTAMP WITH TIME ZONE 컬럼 타입을 지원하지 않는다.
         val unsupportedDatabases = TestDB.ALL_MARIADB + TestDB.MYSQL_V5
         Assumptions.assumeTrue { testDB !in unsupportedDatabases }
         withTables(testDB, tester) {
@@ -921,7 +921,7 @@ class Ex02_Defaults: AbstractExposedTest() {
 
             Thread.sleep(1000)
 
-            // Update the row -> 이 때 `created` 컬럼의 값이 [CurrentDateTime] 값으로 변경되어야 함
+            // 행을 갱신하면 `created` 컬럼 값이 [CurrentDateTime] 값으로 변경되어야 한다.
             tester.update {
                 it[amount] = 111
             }
@@ -985,7 +985,7 @@ class Ex02_Defaults: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun testCustomDefaultTimestampFunctionWithInsertStatement(testDB: TestDB) {
-        // Only Postgres allows to get timestamp values directly from the insert statement due to implicit 'returning *'
+        // Postgres만 암시적 'returning *' 덕분에 insert 문에서 timestamp 값을 직접 얻을 수 있다.
         Assumptions.assumeTrue { testDB in TestDB.ALL_POSTGRES }
 
         withTables(testDB, DefaultTimestampTable) {

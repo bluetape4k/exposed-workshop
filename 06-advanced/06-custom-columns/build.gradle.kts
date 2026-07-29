@@ -13,12 +13,12 @@ dependencies {
 
     implementation(libs.bluetape4k.io)
 
-    // Compression
+    // 압축 컬럼 타입 예제를 위한 압축 의존성
     testRuntimeOnly(libs.lz4.java)
     testRuntimeOnly(libs.snappy.java)
     testRuntimeOnly(libs.zstd.jni)
 
-    // Serialization
+    // 사용자 정의 컬럼 직렬화를 위한 Kotlin Serialization 의존성
     testRuntimeOnly(libs.kryo)
     testRuntimeOnly(libs.fory.kotlin)
 
@@ -34,14 +34,14 @@ dependencies {
     testImplementation(libs.testcontainers.mysql)
     testImplementation(libs.testcontainers.postgresql)
 
-    // Jdbc Drivers
+    // 테스트 데이터베이스별 JDBC 드라이버 의존성
     testRuntimeOnly(libs.h2.v2)
     testRuntimeOnly(libs.mariadb.java.client)
     testRuntimeOnly(libs.mysql.connector.j)
     testRuntimeOnly(libs.postgresql.driver)
     testRuntimeOnly(libs.pgjdbc.ng)
 
-    // Coroutines
+    // 코루틴 기반 트랜잭션 예제 의존성
     testImplementation(libs.bluetape4k.coroutines)
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)
