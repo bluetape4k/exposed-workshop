@@ -24,22 +24,22 @@ dependencies {
     implementation(libs.kotlinx.benchmark.runtime.jvm)
     implementation(libs.jmh.core)
 
-    // Exposed
+    // Exposed ORM 및 DSL 참조 라이브러리
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.jdbc)
     implementation(libs.jetbrains.exposed.dao)
     implementation(libs.jetbrains.exposed.java.time)
 
-    // JPA / Hibernate
+    // JPA/Hibernate 벤치마크 비교 참조 라이브러리
     implementation(libs.jakarta.persistence.api)
     implementation(libs.hibernate.core)
 
-    // Database
+    // 벤치마크 데이터베이스 실행 구성 요소
     implementation(libs.h2.v2)
     implementation(libs.hikaricp)
     implementation(libs.postgresql.driver)
 
-    // Testcontainers
+    // 벤치마크용 컨테이너 실행 구성 요소
     implementation(libs.bluetape4k.testcontainers)
     implementation(libs.testcontainers.postgresql)
 }

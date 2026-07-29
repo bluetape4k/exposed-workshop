@@ -8,7 +8,7 @@ import org.jetbrains.exposed.v1.dao.LongEntityClass
 import org.jetbrains.exposed.v1.javatime.CurrentTimestamp
 import org.jetbrains.exposed.v1.javatime.timestamp
 
-// ── DSL Tables ─────────────────────────────────────────
+// ── DSL 테이블 매핑 ─────────────────────────────────────────
 
 /**
  * Single Entity: Person (10 컬럼)
@@ -72,7 +72,7 @@ object EmployeeTable: LongIdTable("employees") {
     }
 }
 
-// ── DAO Entities ───────────────────────────────────────
+// ── DAO 엔티티 매핑 ───────────────────────────────────────
 
 class PersonEntity(id: EntityID<Long>): LongEntity(id) {
     companion object: LongEntityClass<PersonEntity>(PersonTable)

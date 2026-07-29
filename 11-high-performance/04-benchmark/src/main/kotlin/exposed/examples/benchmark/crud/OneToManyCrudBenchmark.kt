@@ -113,7 +113,7 @@ open class OneToManyCrudBenchmark {
         }
     }
 
-    // ── CREATE (Department + 20 Employees) ─────────────
+    // ── 생성: Department와 Employee 20개를 함께 저장한다 ─────────────
 
     @Benchmark
     fun create(): Long {
@@ -203,7 +203,7 @@ open class OneToManyCrudBenchmark {
         }
     }
 
-    // ── READ (Department + Employees eager) ─────────────
+    // ── 조회: Department와 Employee 컬렉션을 eager loading한다 ─────────────
 
     @Benchmark
     fun read(): Any? {
@@ -242,7 +242,7 @@ open class OneToManyCrudBenchmark {
         }
     }
 
-    // ── UPDATE ──────────────────────────────────────────
+    // ── 갱신 ──────────────────────────────────────────
 
     @Benchmark
     fun update(): Int {
@@ -306,7 +306,7 @@ open class OneToManyCrudBenchmark {
         }
     }
 
-    // ── DELETE (CASCADE) ────────────────────────────────
+    // ── 삭제: cascade delete 경로를 측정한다 ────────────────────────────────
 
     @Benchmark
     fun delete(): Int {
@@ -350,7 +350,7 @@ open class OneToManyCrudBenchmark {
         }
     }
 
-    // ── BATCH CREATE ───────────────────────────────────
+    // ── 배치 생성 ───────────────────────────────────
 
     @Benchmark
     fun batchCreate(): Int {
@@ -455,7 +455,7 @@ open class OneToManyCrudBenchmark {
         }
     }
 
-    // ── READ ALL (DAO eager loading / JOIN FETCH) ──────
+    // ── 전체 조회: DAO eager loading과 JOIN FETCH를 비교한다 ──────
 
     @Benchmark
     fun readAll(): Int {
