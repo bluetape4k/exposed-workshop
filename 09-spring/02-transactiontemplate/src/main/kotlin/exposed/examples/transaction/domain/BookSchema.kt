@@ -14,7 +14,7 @@ import org.jetbrains.exposed.v1.jdbc.SizedIterable
 object BookSchema {
 
     /**
-     * Authors Table
+     * 저자 정보를 저장하는 Authors 테이블 매핑이다.
      *
      * ```sql
      * -- H2
@@ -31,7 +31,7 @@ object BookSchema {
     }
 
     /**
-     * Books Table
+     * 도서 정보를 저장하는 Books 테이블 매핑이다.
      *
      * ```sql
      * -- H2
@@ -48,7 +48,7 @@ object BookSchema {
     }
 
     /**
-     * Book - Author mapping table (many-to-many)
+     * Book과 Author의 다대다 관계를 연결하는 매핑 테이블이다.
      *
      * ```sql
      * -- H2

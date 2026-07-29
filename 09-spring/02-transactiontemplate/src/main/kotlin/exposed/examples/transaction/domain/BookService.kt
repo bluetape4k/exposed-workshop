@@ -64,7 +64,7 @@ class BookService(
     fun execWithoutSpringTransaction() {
         log.info { "Execute without spring transaction" }
         // withoutTransactionOperations 는 Spring Transaction 적용이 안되어 있다.
-        // Exposed DSL insert 는 트랜잭션 컨텍스트가 필요하므로 transaction {} 으로 감싼다.
+        // Exposed DSL insert는 트랜잭션 컨텍스트가 필요하므로 transaction {}으로 감싼다.
         withoutTransactionOperations.execute {
             transaction {
                 createNewAuthor()

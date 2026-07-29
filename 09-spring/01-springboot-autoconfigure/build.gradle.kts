@@ -12,7 +12,7 @@ dependencies {
 
     testImplementation(project(":exposed-shared-tests"))
 
-    // Exposed
+    // Exposed ORM 및 DSL 의존성
     testImplementation(libs.jetbrains.exposed.core)
     testImplementation(libs.jetbrains.exposed.dao)
     testImplementation(libs.jetbrains.exposed.java.time)
@@ -34,14 +34,14 @@ dependencies {
     testImplementation(libs.testcontainers.mysql)
     testImplementation(libs.testcontainers.postgresql)
 
-    // Spring Boot
+    // Spring Boot 통합 및 테스트 의존성
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(module = "mockito-core")
     }
 
-    // Coroutines
+    // 코루틴 기반 트랜잭션 및 비동기 흐름 의존성
     testImplementation(libs.bluetape4k.coroutines)
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)

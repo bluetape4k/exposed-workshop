@@ -23,19 +23,19 @@ dependencies {
 
     testImplementation(project(":exposed-shared-tests"))
 
-    // Exposed
+    // Exposed ORM 및 DSL 의존성
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.dao)
     implementation(libs.jetbrains.exposed.jdbc)
     implementation(libs.jetbrains.exposed.spring.boot.starter)
 
-    // Bluetape4k
+    // Bluetape4k 공통 테스트/유틸리티 의존성
     implementation(libs.exposed.core)
     implementation(libs.bluetape4k.io)
     implementation(libs.bluetape4k.jdbc)
     implementation(libs.bluetape4k.spring.boot.core)
 
-    // Spring Boot
+    // Spring Boot 통합 및 테스트 의존성
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit")
@@ -48,7 +48,7 @@ dependencies {
 
     implementation(libs.datafaker)
 
-    // Coroutines
+    // 코루틴 기반 트랜잭션 및 비동기 흐름 의존성
     implementation(libs.bluetape4k.coroutines)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.reactor)

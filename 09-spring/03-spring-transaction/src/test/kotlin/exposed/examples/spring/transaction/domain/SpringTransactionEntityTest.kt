@@ -46,7 +46,7 @@ class SpringTransactionEntityTest(
         order.shouldNotBeNull()
 
         orderService.transaction {
-            // lazy loading
+            // lazy loading으로 연관 엔티티를 지연 로드한다.
             log.debug { "order's customer=${order.customer}" }
             order.customer.name shouldBeEqualTo "Alice1"
         }
@@ -61,7 +61,7 @@ class SpringTransactionEntityTest(
         order.shouldNotBeNull()
 
         orderService.transaction {
-            // lazy loading
+            // lazy loading으로 연관 엔티티를 지연 로드한다.
             log.debug { "order's customer=${order.customer}" }
             order.customer.name shouldBeEqualTo "Bob"
         }
