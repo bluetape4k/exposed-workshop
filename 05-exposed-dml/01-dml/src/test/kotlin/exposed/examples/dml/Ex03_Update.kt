@@ -360,7 +360,7 @@ class Ex03_Update: AbstractExposedTest() {
 
         withCitiesAndUsers(testDB) { _, users, userData ->
             /**
-             * single join query using join()
+             * `join()`을 사용하는 단일 join query
              *
              * ```sql
              * -- Postgres
@@ -389,11 +389,11 @@ class Ex03_Update: AbstractExposedTest() {
 
             joinWithSubQuery.selectAll().all { it[userData.value] == 123 }.shouldBeTrue()
 
-            // does not support either multi-table joins or update(where)
+            // multi-table join과 update(where)를 모두 지원하지 않습니다.
             Assumptions.assumeTrue { testDB !in TestDB.ALL_H2 }
 
             /**
-             * single join query using join() with update(where)
+             * `join()`을 사용하는 단일 join query with update(where)
              *
              * ```sql
              * -- Postgres
@@ -420,7 +420,7 @@ class Ex03_Update: AbstractExposedTest() {
                 }
 
             /**
-             * multiple join queries using [joinQuery]
+             * [joinQuery]를 사용하는 다중 join query
              *
              * ```sql
              * -- Postgres

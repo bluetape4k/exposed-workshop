@@ -40,7 +40,7 @@ class Ex14_MergeSelect: Ex14_MergeBase() {
         Dest.key eq sourceQuery[Source.key]
 
     /**
-     * [mergeFrom] (`MERGE INFO`) from a select query
+     * Select query에서 [mergeFrom](`MERGE INFO`)을 사용하는 예제
      *
      * 대상 테이블에 없는 소스 테이블의 데이터를 대상 테이블에 추가합니다
      *
@@ -83,7 +83,7 @@ class Ex14_MergeSelect: Ex14_MergeBase() {
     }
 
     /**
-     * Merge into ([mergeFrom]) from a select query with alias
+     * Alias가 있는 select query에서 merge into([mergeFrom])를 수행하는 예제
      *
      * `whenNotMatchedInsert`를 이용하여 대상 테이블에 없는 소스 테이블의 데이터를 대상 테이블에 추가합니다
      *
@@ -124,7 +124,7 @@ class Ex14_MergeSelect: Ex14_MergeBase() {
     }
 
     /**
-     * [mergeFrom] with `whenMatchedUpdate`
+     * `whenMatchedUpdate`를 사용하는 [mergeFrom] 예제
      *
      * `whenMatchedUpdate` 를 이용하여 대상 테이블과 소스 테이블의 데이터가 일치하는 경우 대상 테이블의 데이터를 갱신합니다
      *
@@ -165,7 +165,7 @@ class Ex14_MergeSelect: Ex14_MergeBase() {
     }
 
     /**
-     * [mergeFrom] with `whenMatchedUpdate`
+     * `whenMatchedUpdate`를 사용하는 [mergeFrom] 예제
      *
      * `whenMatchedUpdate` 를 이용하여 대상 테이블과 소스 테이블의 데이터가 일치하는 경우 대상 테이블의 데이터를 갱신합니다
      *
@@ -208,7 +208,7 @@ class Ex14_MergeSelect: Ex14_MergeBase() {
     }
 
     /**
-     * [mergeFrom] with `whenMatchedDelete`
+     * `whenMatchedDelete`를 사용하는 [mergeFrom] 예제
      *
      * `whenMatchedDelete` 를 이용하여 대상 테이블과 소스 테이블의 데이터가 일치하는 경우 대상 테이블의 데이터를 삭제합니다
      *
@@ -245,7 +245,7 @@ class Ex14_MergeSelect: Ex14_MergeBase() {
     }
 
     /**
-     * [mergeFrom] with `whenNotMatchedInsert` and `whenMatchedUpdate`
+     * `whenNotMatchedInsert`와 `whenMatchedUpdate`를 사용하는 [mergeFrom] 예제
      *
      * `whenNotMatchedInsert` 를 이용하여 대상 테이블에 없는 소스 테이블의 데이터를 추가하고,
      * `whenMatchedUpdate` 를 이용하여 대상 테이블과 소스 테이블의 데이터가 일치하는 경우 대상 테이블의 데이터를 갱신합니다.
@@ -298,7 +298,7 @@ class Ex14_MergeSelect: Ex14_MergeBase() {
     }
 
     /**
-     * MergeFrom with whenMatchedDelete and condition
+     * whenMatchedDelete와 condition이 있는 MergeFrom 예제
      *
      * ```sql
      * -- Postgres

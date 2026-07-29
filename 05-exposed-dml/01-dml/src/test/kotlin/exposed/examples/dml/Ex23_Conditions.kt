@@ -100,13 +100,13 @@ class Ex23_Conditions: AbstractExposedTest() {
                 it[number2] = null
             }
 
-            // null == null returns null
+            // null == null은 null을 반환합니다.
             table.selectAll()
                 .where { table.number1 eq table.number2 }
                 .map { it[table.id] } shouldBeEqualTo listOf(sameNumberId)
 
             /**
-             * null == null returns true
+             * null == null은 true를 반환합니다.
              *
              * ```sql
              * SELECT foo.id, foo.number1, foo.number2
@@ -118,13 +118,13 @@ class Ex23_Conditions: AbstractExposedTest() {
                 .where { table.number1 isNotDistinctFrom table.number2 }
                 .map { it[table.id] } shouldBeEqualTo listOf(sameNumberId, bothNullId)
 
-            // null != null return null
+            // null != null은 null을 반환합니다.
             table.selectAll()
                 .where { table.number1 neq table.number2 }
                 .map { it[table.id] } shouldBeEqualTo listOf(differentNumberId)
 
             /**
-             * null != null return false
+             * null != null은 false를 반환합니다.
              *
              * ```sql
              * SELECT foo.id, foo.number1, foo.number2
@@ -137,7 +137,7 @@ class Ex23_Conditions: AbstractExposedTest() {
                 .map { it[table.id] } shouldBeEqualTo listOf(differentNumberId, oneNullId)
 
             /**
-             * (number1 is not null) != (number2 is null) returns true when both are null or neither is null
+             * 두 값이 모두 null이거나 둘 다 null이 아니면 `(number1 is not null) != (number2 is null)`은 true를 반환합니다.
              *
              * ```sql
              * SELECT foo.id, foo.number1, foo.number2
@@ -150,7 +150,7 @@ class Ex23_Conditions: AbstractExposedTest() {
                 .map { it[table.id] } shouldBeEqualTo listOf(sameNumberId, differentNumberId, bothNullId)
 
             /**
-             * (number1 is not null) == (number2 is null) returns true when only 1 is null
+             * 둘 중 하나만 null이면 `(number1 is not null) == (number2 is null)`은 true를 반환합니다.
              *
              * ```sql
              * SELECT foo.id, foo.number1, foo.number2
@@ -217,7 +217,7 @@ class Ex23_Conditions: AbstractExposedTest() {
             selectIdWhere { longTable.id isDistinctFrom longTable.amount } shouldBeEqualTo listOf(id1, id3)
             selectIdWhere { longTable.id isDistinctFrom 2 } shouldBeEqualTo listOf(id1, id3)
 
-            // symmetric operators (EntityID value on right) should not show a warning either
+            // Symmetric operator(EntityID value가 오른쪽에 있는 경우)도 warning을 표시하지 않아야 합니다.
             selectIdWhere { longTable.amount eq longTable.id } shouldBeEqualTo listOf(id2)
             selectIdWhere { longTable.amount neq longTable.id } shouldBeEqualTo listOf(id1, id3)
             selectIdWhere { longTable.amount less longTable.id } shouldBeEqualTo listOf(id3)
@@ -447,7 +447,7 @@ class Ex23_Conditions: AbstractExposedTest() {
             val function1 = Coalesce(caseCondition1, stringLiteral(copy))
             val function2 = Coalesce(caseCondition2, stringLiteral(copy))
 
-            // confirm both formats produce identical SQL
+            // 두 형식이 동일한 SQL을 생성하는지 확인합니다.
             val query1 = cities.select(cities.id, function1).prepareSQL(this, prepared = false)
             val query2 = cities.select(cities.id, function2).prepareSQL(this, prepared = false)
             log.debug { "Query: $query1" }
@@ -468,7 +468,7 @@ class Ex23_Conditions: AbstractExposedTest() {
     }
 
     /**
-     * Nested CaseWhenElse syntax
+     * 중첩 CaseWhenElse syntax
      *
      * ```sql
      * SELECT CITIES."name",

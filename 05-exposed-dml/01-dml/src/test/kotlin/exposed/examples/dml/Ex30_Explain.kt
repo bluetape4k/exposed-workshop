@@ -155,7 +155,7 @@ class Ex30_Explain: AbstractExposedTest() {
             debug = true
             statementCount = 0
 
-            // select statements
+            // select statement
             explainAndIncrement {
                 cities.select(cities.id).where { cities.name like "A%" }
             }
@@ -168,11 +168,11 @@ class Ex30_Explain: AbstractExposedTest() {
                 val query2 = users.selectAll().where { users.id eq "sergey" }
                 query1.union(query2).limit(1)
             }
-            // insert statements
+            // insert statement
             explainAndIncrement { cities.insert { it[name] = cityName } }
             val subquery = userData.select(userData.userId, userData.comment, intParam(42))
             explainAndIncrement { userData.insert(subquery) }
-            // insert or... statements
+            // insert 또는 관련 statement
             if (testDialect !is H2Dialect) {
                 explainAndIncrement { cities.insertIgnore { it[name] = cityName } }
                 explainAndIncrement { userData.insertIgnore(subquery) }

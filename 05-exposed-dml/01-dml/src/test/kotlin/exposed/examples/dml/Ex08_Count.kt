@@ -160,7 +160,7 @@ class Ex08_Count: AbstractExposedTest() {
                 tester.insert { it[amount] = 99 }
             }
 
-            // count alias is generated for any query with distinct/groupBy/limit & throws if schema name included
+            // distinct/groupBy/limit이 있는 query에는 count alias가 생성되며, schema name이 포함되면 예외가 발생합니다.
             tester.select(tester.amount)
                 .withDistinct()
                 .count().toInt() shouldBeEqualTo 1

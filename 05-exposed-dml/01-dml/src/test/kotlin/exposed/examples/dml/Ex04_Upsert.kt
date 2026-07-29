@@ -58,7 +58,7 @@ class Ex04_Upsert: AbstractExposedTest() {
 
     companion object: KLogging()
 
-    // these DB require key columns from ON clause to be included in the derived source table (USING clause)
+    // 이 DB들은 ON clause의 key column이 derived source table(USING clause)에 포함되어야 합니다.
     private val upsertViaMergeDB = TestDB.ALL_H2
 
     /**
@@ -116,7 +116,7 @@ class Ex04_Upsert: AbstractExposedTest() {
 
 
     /**
-     * [upsert] with Composite PK Conflict
+     * Composite PK conflict가 있는 [upsert] 예제
      *
      * ```sql
      * -- Postgres
@@ -272,7 +272,7 @@ class Ex04_Upsert: AbstractExposedTest() {
 
         withTables(testDB, Words) {
             /**
-             * Insert
+             * 삽입
              * ```sql
              * -- Postgres
              * INSERT INTO words ("name", "count") VALUES ('A', 10)
@@ -285,7 +285,7 @@ class Ex04_Upsert: AbstractExposedTest() {
             } get Words.word
 
             /**
-             * Insert - word 가 conflict 되지 않는 경우
+             * 삽입 - word 가 conflict 되지 않는 경우
              * ```sql
              * -- Postgres
              * INSERT INTO words ("name", "count") VALUES ('B', 10)
@@ -323,7 +323,7 @@ class Ex04_Upsert: AbstractExposedTest() {
     }
 
     /**
-     * Upsert with manual conflict keys
+     * Manual conflict key를 사용하는 upsert 예제
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -451,7 +451,7 @@ class Ex04_Upsert: AbstractExposedTest() {
 
         withTables(testDB, tester) {
             /**
-             * Insert
+             * 삽입
              * ```sql
              * -- Postgres
              * INSERT INTO tester (id, title)
@@ -636,9 +636,9 @@ class Ex04_Upsert: AbstractExposedTest() {
                 it[item] = "Item B"
                 it[gains] = 200
                 it[losses] = 0
-                // `amount` must be passed explicitly now due to usage of that column inside the custom onUpdate statement
-                // There is an option to call `tester.amount.defaultValueFun?.let { it() }!!`,
-                // it looks ugly but prevents regression on changes in default value
+                // custom onUpdate statement 안에서 해당 column을 사용하므로 이제 `amount`를 명시적으로 전달해야 합니다.
+                // `tester.amount.defaultValueFun?.let { it() }!!`를 호출하는 선택지도 있지만,
+                // 모양은 좋지 않아도 default value 변경 시 regression을 막습니다.
                 it[amount] = 25
             }
 
@@ -701,7 +701,7 @@ class Ex04_Upsert: AbstractExposedTest() {
         withTables(testDB, tester) {
             val testWord = "Test"
 
-            // insert default expression
+            // 기본 expression을 삽입합니다.
             tester.upsert {
                 it[word] = testWord
             }
@@ -1084,7 +1084,7 @@ class Ex04_Upsert: AbstractExposedTest() {
             } get tester.id
 
             /**
-             * Insert
+             * 삽입
              * ```sql
              * -- Postgres
              * INSERT INTO tester ("name", age) VALUES ('Anna', 50)
@@ -1376,8 +1376,8 @@ class Ex04_Upsert: AbstractExposedTest() {
             Words.batchUpsert(
                 lettersWithDuplicates,
                 onUpdate = { it[Words.count] = Words.count + 1 },
-                // PostgresNG throws IndexOutOfBound if shouldReturnGeneratedValues == true
-                // Related issue in pgjdbc-ng repository: https://github.com/impossibl/pgjdbc-ng/issues/545
+                // shouldReturnGeneratedValues == true이면 PostgresNG가 IndexOutOfBound를 던집니다.
+                // pgjdbc-ng repository의 관련 이슈: https://github.com/impossibl/pgjdbc-ng/issues/545
                 shouldReturnGeneratedValues = false,
                 where = { Words.word inList firstThreeVowels }
             ) { letter ->
@@ -1410,7 +1410,7 @@ class Ex04_Upsert: AbstractExposedTest() {
             var statement: BatchUpsertStatement by Delegates.notNull()
 
             /**
-             * all new rows inserted
+             * 모든 새 row가 삽입됨
              *
              * ```sql
              * -- Postgres

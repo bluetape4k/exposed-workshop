@@ -236,7 +236,7 @@ class Ex10_OrderBy: AbstractExposedTest() {
     /**
      * 정렬 시, NULL 값의 위치를 지정하는 예
      *
-     * OrderBy with
+     * 다음 SortOrder를 사용하는 orderBy 예제
      *  [SortOrder.ASC_NULLS_FIRST],
      *  [SortOrder.ASC_NULLS_LAST],
      *  [SortOrder.DESC_NULLS_FIRST],
@@ -267,11 +267,11 @@ class Ex10_OrderBy: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `orderBy NullsFirst`(testDB: TestDB) {
-        // city IDs null, user IDs sorted ascending
+        // city ID는 null이고 user ID는 오름차순으로 정렬됩니다.
         val usersWithoutCities = listOf("alex", "smth")
-        // city IDs sorted descending, user IDs sorted ascending
+        // city ID는 내림차순, user ID는 오름차순으로 정렬됩니다.
         val otherUsers = listOf("eugene", "sergey", "andrey")
-        // city IDs sorted ascending, user IDs sorted ascending
+        // city ID와 user ID가 모두 오름차순으로 정렬됩니다.
         val otherUsersAsc = listOf("andrey", "eugene", "sergey")
 
         val cases = listOf(

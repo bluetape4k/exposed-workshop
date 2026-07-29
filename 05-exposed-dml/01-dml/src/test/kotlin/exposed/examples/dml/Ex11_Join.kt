@@ -415,7 +415,7 @@ class Ex11_Join: AbstractExposedTest() {
     }
 
     /**
-     * Nested Join
+     * 중첩 join
      *
      * ```sql
      * SELECT COUNT(*)
@@ -493,7 +493,7 @@ class Ex11_Join: AbstractExposedTest() {
 
             data.shouldBeNull()  // left join 이므로, leftTable 정보만 있고, rightTable 정보가 없으므로 null 이어야 한다.
 
-            // Assert no logging took place
+            // logging이 발생하지 않았음을 검증합니다.
             logCaptor.warnLogs.shouldBeEmpty()
             logCaptor.errorLogs.shouldBeEmpty()
         }

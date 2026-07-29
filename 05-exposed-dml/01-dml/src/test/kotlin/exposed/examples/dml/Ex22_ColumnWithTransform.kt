@@ -82,7 +82,7 @@ class Ex22_ColumnWithTransform: AbstractExposedTest() {
         columnType1.unwrapRecursive(Holder(1)) shouldBeEqualTo 1
         columnType1.unwrapRecursive(null).shouldBeNull()
 
-        // Transform null into non-null value
+        // null을 non-null value로 변환합니다.
         val tester2 = object: IntIdTable() {
             val value = integer("value")
                 .nullTransform(HolderNullTransformer())

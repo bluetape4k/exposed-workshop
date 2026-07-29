@@ -24,14 +24,14 @@ dependencies {
 
     testImplementation(libs.hikaricp)
 
-    // Jdbc Drivers
+    // JDBC 드라이버 의존성
     testRuntimeOnly(libs.h2.v2)
     testRuntimeOnly(libs.mariadb.java.client)
     testRuntimeOnly(libs.mysql.connector.j)
     testRuntimeOnly(libs.postgresql.driver)
     testRuntimeOnly(libs.pgjdbc.ng)
 
-    // Coroutines
+    // 코루틴 테스트 의존성
     testImplementation(libs.bluetape4k.coroutines)
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)

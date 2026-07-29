@@ -331,7 +331,7 @@ class Ex01_Select: AbstractExposedTest() {
             result1 shouldBeEqualTo post1.id
 
             /**
-             * `inList` with `EntityID` columns
+             * `EntityID` column에 `inList`를 사용하는 예제
              *
              * ```sql
              * -- Postgres
@@ -346,7 +346,7 @@ class Ex01_Select: AbstractExposedTest() {
             result2 shouldBeEqualTo board1
 
             /**
-             * `notInList` with entityID columns
+             * `EntityID` column에 `notInList`를 사용하는 예제
              *
              * ```sql
              * -- Postgres
@@ -419,7 +419,7 @@ class Ex01_Select: AbstractExposedTest() {
     private val supportingInAnyAllFromTables = TestDB.ALL_POSTGRES + TestDB.H2_PSQL + TestDB.MYSQL_V8
 
     /**
-     * `inTable` example
+     * `inTable` 예제
      *
      * SomeAmount 테이블의 amount 컬럼의 값과 같은 sales 테이블의 amount 컬럼의 갯수를 조회합니다.
      *
@@ -446,7 +446,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `notInTable` example
+     * `notInTable` 예제
      *
      * ```sql
      * -- Postgres
@@ -474,7 +474,7 @@ class Ex01_Select: AbstractExposedTest() {
     private val supportingAnyAndAllFromArrays = TestDB.ALL_POSTGRES + TestDB.ALL_H2
 
     /**
-     * `eq` [anyFrom] with SubQuery
+     * SubQuery와 함께 `eq` [anyFrom]을 사용하는 예제
      *
      * ```sql
      * -- Postgres
@@ -504,7 +504,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `neq` and [anyFrom] with SubQuery
+     * SubQuery와 함께 `neq` 및 [anyFrom]을 사용하는 예제
      *
      * ```sql
      * -- Postgres
@@ -534,7 +534,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `eq` [anyFrom] with Array
+     * Array와 함께 `eq` [anyFrom]을 사용하는 예제
      *
      * 참고: [anyFrom]은 Postgres, H2 만 지원합니다.
      *
@@ -567,7 +567,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `eq` [anyFrom] with List
+     * List와 함께 `eq` [anyFrom]을 사용하는 예제
      *
      * 참고: [anyFrom]은 Postgres, H2 만 지원합니다.
      *
@@ -600,7 +600,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `neq` [anyFrom] with Array
+     * Array와 함께 `neq` [anyFrom]을 사용하는 예제
      *
      * 참고: [anyFrom]은 Postgres, H2 만 지원합니다.
      *
@@ -629,7 +629,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `neq` [anyFrom] with List
+     * List와 함께 `neq` [anyFrom]을 사용하는 예제
      *
      * 참고: [anyFrom]은 Postgres, H2 만 지원합니다.
      *
@@ -658,7 +658,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `greaterEq` [anyFrom] with Array
+     * Array와 함께 `greaterEq` [anyFrom]을 사용하는 예제
      *
      * ```sql
      * -- Postgres
@@ -689,7 +689,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `greaterEq` [anyFrom] List
+     * List와 함께 `greaterEq` [anyFrom]을 사용하는 예제
      *
      * ```sql
      * -- Postgres
@@ -721,7 +721,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `eq` [anyFrom] with Table
+     * Table과 함께 `eq` [anyFrom]을 사용하는 예제
      *
      * ```sql
      * -- Postgres
@@ -747,7 +747,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     *`neq` [anyFrom] with Table
+     * Table과 함께 `neq` [anyFrom]을 사용하는 예제
      *
      * ```sql
      * -- Postgres
@@ -773,7 +773,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `greaterEq` [allFrom] of SubQuery
+     * SubQuery의 [allFrom]과 함께 `greaterEq`를 사용하는 예제
      *
      * Subquery 에서 max() 를 사용하는 게 더 낫지 않나?
      *
@@ -812,7 +812,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `greaterEq` [allFrom] with Array
+     * Array와 함께 `greaterEq` [allFrom]을 사용하는 예제
      *
      * array 의 max() 를 사용하는 게 더 낫지 않나?
      *
@@ -844,7 +844,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `greaterEq` with [allFrom] of List
+     * List의 [allFrom]과 함께 `greaterEq`를 사용하는 예제
      *
      * list 의 max() 를 사용하는 게 더 낫지 않나?
      *
@@ -876,7 +876,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * `greaterEq` with [allFrom] of Table
+     * Table의 [allFrom]과 함께 `greaterEq`를 사용하는 예제
      * table 대신 subquery의 max() 를 사용하는 게 더 낫지 않나?
      *
      * ```sql
@@ -962,7 +962,7 @@ class Ex01_Select: AbstractExposedTest() {
     }
 
     /**
-     * ### Compound Operations
+     * ### 복합 연산
      *
      * * [compoundOr] 함수는 여러 개의 [Op]를 OR 연산자로 결합합니다.
      * * [compoundAnd] 함수는 여러 개의 [Op]를 AND 연산자로 결합합니다.
@@ -1024,7 +1024,7 @@ class Ex01_Select: AbstractExposedTest() {
     /**
      * SELECT with Comment
      *
-     * Prefix Comment
+     * Prefix comment 예제
      *
      * ```sql
      * -- Postgres
@@ -1038,7 +1038,7 @@ class Ex01_Select: AbstractExposedTest() {
      *        ) subquery
      * ```
      *
-     * Suffix Comment
+     * Suffix comment 예제
      *
      * ```sql
      * -- Postgres

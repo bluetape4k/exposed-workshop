@@ -56,7 +56,7 @@ class Ex02_EntityHook_Auditable: AbstractExposedTest() {
                     when (change.changeType) {
                         EntityChangeType.Created -> onCreated(change, entity)
                         EntityChangeType.Updated -> onUpdated(change, entity)
-                        else -> {} // Nothing to do
+                        else -> {} // 수행할 작업이 없습니다.
                     }
                 }
             }
