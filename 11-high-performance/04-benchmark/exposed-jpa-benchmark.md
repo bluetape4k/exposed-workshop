@@ -7,7 +7,7 @@
 
 ---
 
-## 1. Single Entity (Person — 10컬럼) CRUD
+## 1. 단일 Entity (Person - 10컬럼) CRUD
 
 | 연산                     |     Exposed (μs) |         JPA (μs) | Exposed 배율  |
 |------------------------|-----------------:|-----------------:|-------------|
@@ -22,7 +22,7 @@
 
 ---
 
-## 2. One-to-Many (Department → 20 Employees — 8+12컬럼) CRUD
+## 2. One-to-Many (Department → 20 Employees - 8+12컬럼) CRUD
 
 | 연산                               |        Exposed (μs) |         JPA (μs) | Exposed 배율   |
 |----------------------------------|--------------------:|-----------------:|--------------|
@@ -39,7 +39,7 @@
 
 ## 3. 동시성 벤치마크 — Platform Threads vs Virtual Threads
 
-50건 동시 실행 (FixedThreadPool(50) vs VirtualThreadPerTaskExecutor), HikariCP maxPoolSize=100
+50건을 동시에 실행해 FixedThreadPool(50)과 VirtualThreadPerTaskExecutor를 비교했습니다. HikariCP `maxPoolSize=100` 기준입니다.
 
 ### Exposed
 
@@ -76,7 +76,7 @@
 | **VT 효과 미미**     | maxPoolSize=100에서도 VT가 유의미한 향상을 보이지 않음          |
 | **원인 1**         | Docker 로컬 PostgreSQL — 네트워크 지연이 거의 없어 I/O 대기 최소 |
 | **원인 2**         | 50건 동시 < 100 커넥션 — 커넥션 대기 없이 즉시 할당              |
-| **원인 3**         | JMH 단일 fork — OS 스케줄링 오버헤드가 VT 이점을 상쇄           |
+| **원인 3**         | JMH 단일 fork - OS 스케줄링 오버헤드가 VT 이점을 상쇄           |
 | **VT 효과 극대화 조건** | 원격 DB + 높은 네트워크 지연 + 커넥션 풀 < 동시 요청 수            |
 
 ---
@@ -97,7 +97,7 @@
 |----------------------|--------------------------|-------------------------------------------|
 | **단건 CRUD**          | **Exposed 3.9~7.7× 빠름**  | SQL 직접 생성, dirty checking/프록시 없음          |
 | **One-to-Many CRUD** | **Exposed 6.1~18.6× 빠름** | DSL 직접 SQL, JPA는 엔티티 그래프 로드+변경 감지+cascade |
-| **배치 INSERT**        | **Exposed 6.1~8.3× 빠름**  | 단일 트랜잭션 순차 INSERT vs JPA cascade+flush    |
+| **배치 INSERT**        | **Exposed 6.1~8.3× 빠름**  | 단일 트랜잭션 순차 INSERT와 JPA cascade+flush 비교 |
 | **전체 조회 (readAll)**  | **유사**                   | 둘 다 DB→엔티티 매핑, 차이 미미                      |
 | **동시성**              | **Exposed 2.8~4.2× 빠름**  | 경량 트랜잭션 + 적은 오버헤드                         |
 | **Virtual Threads**  | **효과 미미**                | 로컬 Docker DB + 충분한 커넥션 풀에서는 I/O 대기 없음     |
@@ -181,10 +181,10 @@
 ## 벤치마크 실행 방법
 
 ```bash
-# smoke 프로파일 (빠른 검증, ~3분)
+# smoke 프로파일 (빠른 검증, 약 3분)
 ./gradlew :04-benchmark:smokeBenchmark
 
-# main 프로파일 (정밀 측정, ~14분)
+# main 프로파일 (정밀 측정, 약 14분)
 ./gradlew :04-benchmark:benchmark
 
 # Markdown 리포트 생성

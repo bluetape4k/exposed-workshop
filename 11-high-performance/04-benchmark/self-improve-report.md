@@ -3,21 +3,21 @@
 > 실행일: 2026-04-19
 > 브랜치: `improve/cache_strategy_benchmark_improvement`
 > 벤치마크: `./gradlew :04-benchmark:smokeBenchmark`
-> Primary Metric: `readThroughCacheHit_256` (lower is better)
+> 주요 지표: `readThroughCacheHit_256` (낮을수록 좋음)
 
 ## 요약
 
 | 항목             | 값                             |
 |----------------|-------------------------------|
-| 상태             | completed (max_iterations 도달) |
+| 상태             | completed (`max_iterations` 도달) |
 | 총 반복           | 3/3                           |
-| Baseline Score | 0.003 us/op                   |
-| Best Score     | 0.002 us/op                   |
+| 기준 점수          | 0.003 us/op                   |
+| 최고 점수          | 0.002 us/op                   |
 | 개선폭            | 0.001 us/op (33%)             |
 
 ## 라운드별 성과
 
-| Round | 접근 방식              | 주요 변경                                                 | Score (us/op) | 결과                         |
+| 라운드 | 접근 방식              | 주요 변경                                                 | Score (us/op) | 결과                         |
 |-------|--------------------|-------------------------------------------------------|---------------|----------------------------|
 | 1     | pattern_compliance | KLogging, Serializable, runCatching 패턴 적용             | 0.002470      | bluetape4k-patterns 준수     |
 | 2     | benchmark_strategy | CacheStrategyComparisonBenchmark 추가                   | 0.002         | 3전략 × 2워크로드 × 2페이로드 = 12조합 |
@@ -41,12 +41,12 @@
 | ReadThrough  | 477.809                  | 517.396                   | 1.0x (효과 미미)     |
 | WriteThrough | 467.935                  | 493.774                   | 1.0x (효과 미미)     |
 
-### 핵심 인사이트
+### 핵심 해석
 
-1. **READ_HEAVY 환경에서 캐시 효과 극대화**: WriteThrough가 11.5배, ReadThrough가 6.3배 성능 향상
-2. **WRITE_HEAVY 환경에서 캐시 효과 제한적**: 모든 전략이 유사한 성능 (쓰기 비율이 높으면 DB 접근 불가피)
-3. **WriteThrough > ReadThrough**: 쓰기 시 캐시를 즉시 갱신하므로 읽기 시 항상 캐시 히트
-4. **Payload 크기 영향 미미**: 256B vs 4096B 차이가 크지 않음 (캐시는 참조만 저장)
+1. **READ_HEAVY 환경에서 캐시 효과 극대화**: WriteThrough는 11.5배, ReadThrough는 6.3배 성능을 개선했습니다.
+2. **WRITE_HEAVY 환경에서 캐시 효과 제한적**: 쓰기 비율이 높으면 DB 접근이 불가피하므로 모든 전략이 유사한 성능을 보였습니다.
+3. **WriteThrough > ReadThrough**: 쓰기 시 캐시를 즉시 갱신하므로 이후 읽기는 항상 캐시 히트에 가깝습니다.
+4. **Payload 크기 영향 미미**: 256B와 4096B의 차이가 크지 않았습니다. 캐시는 payload 본문보다 참조 관리 비용의 영향을 더 크게 받습니다.
 
 ## ReadThroughCacheBenchmark 결과
 
@@ -82,19 +82,19 @@
 
 ## 변경된 파일 목록
 
-### Round 1 (bluetape4k-patterns 준수)
+### 라운드 1 (`bluetape4k-patterns` 준수)
 
 - `04-benchmark/src/main/kotlin/.../cache/ReadThroughCacheBenchmark.kt` — KLogging, Serializable 추가
 - `04-benchmark/src/main/kotlin/.../routing/RoutingKeyResolverBenchmark.kt` — KLogging 추가
 - `04-benchmark/src/main/kotlin/.../crud/*.kt` — 모든 CRUD 벤치마크에 KLogging 추가
 
-### Round 2 (CacheStrategyComparisonBenchmark)
+### 라운드 2 (`CacheStrategyComparisonBenchmark`)
 
 - `04-benchmark/src/main/kotlin/.../cache/CacheStrategy.kt` — NoCacheStrategy, ReadThroughStrategy, WriteThroughStrategy
 - `04-benchmark/src/main/kotlin/.../cache/CacheBenchmarkSetup.kt` — PostgreSQL + HikariCP + Testcontainers 인프라
 - `04-benchmark/src/main/kotlin/.../cache/CacheStrategyComparisonBenchmark.kt` — 12조합 JMH 벤치마크
 
-### Round 3 (문서화)
+### 라운드 3 (문서화)
 
 - `04-benchmark/README.md` — Benchmarks 테이블, Class Structure 다이어그램, Parameters, Results 추가
 - `04-benchmark/README.ko.md` — 한국어 버전 동기화
