@@ -4,14 +4,14 @@ configurations {
 
 dependencies {
 
-    // Bluetape4k Exposed
+    // Bluetape4k Exposed 의존성
     api(libs.exposed.core)
     api(libs.exposed.dao)
     api(libs.exposed.jdbc)
     implementation(libs.exposed.jackson2)
     implementation(libs.exposed.fastjson2)
 
-    // Exposed
+    // JetBrains Exposed 의존성
     api(libs.jetbrains.exposed.core)
     api(libs.jetbrains.exposed.dao)
     api(libs.jetbrains.exposed.jdbc)
@@ -44,17 +44,17 @@ dependencies {
     implementation(libs.bluetape4k.idgenerators)
     implementation(libs.java.uuid.generator)
 
-    // Coroutines
+    // 코루틴 테스트 의존성
     testImplementation(libs.bluetape4k.coroutines)
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)
 
-    // Java Money
+    // Java Money 테스트 의존성
     testImplementation(libs.bluetape4k.money)
     testImplementation(libs.javax.money.api)
     testImplementation(libs.javamoney.moneta)
 
-    // Logcaptor
+    // Logcaptor 테스트 의존성
     testImplementation(libs.logcaptor)
 
 }
