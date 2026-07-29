@@ -28,7 +28,7 @@ import java.sql.DriverManager
 import java.sql.PreparedStatement
 
 /**
- * Order event copied from an OLTP boundary into an embedded DuckDB analytics file.
+ * OLTP 경계에서 embedded DuckDB 분석 파일로 복사되는 주문 이벤트이다.
  */
 data class DuckDbOrderEvent(
     val orderId: Long,
@@ -50,7 +50,7 @@ data class DuckDbOrderEvent(
 }
 
 /**
- * Aggregated analytical row returned to the application after DuckDB execution.
+ * DuckDB 실행 후 애플리케이션에 반환되는 집계 분석 행이다.
  */
 data class DailyCategorySales(
     val region: String,
@@ -66,7 +66,7 @@ data class DailyCategorySales(
 }
 
 /**
- * File-backed DuckDB table used by this embedded analytics example.
+ * 이 embedded analytics 예제에서 사용하는 파일 기반 DuckDB 테이블이다.
  */
 object DuckDbOrderEvents: org.jetbrains.exposed.v1.core.Table("duckdb_order_events") {
     val orderId = long("order_id")
@@ -79,11 +79,11 @@ object DuckDbOrderEvents: org.jetbrains.exposed.v1.core.Table("duckdb_order_even
 }
 
 /**
- * Owns the root DuckDB connection used by the workshop database.
+ * 워크숍 데이터베이스에서 사용하는 root DuckDB 연결을 소유한다.
  *
- * DuckDB keeps one in-memory catalog per plain `jdbc:duckdb:` connection. This
- * file-backed workshop keeps a root connection open and gives Exposed duplicate
- * connections so separate transactions observe the same local database.
+ * DuckDB는 일반 `jdbc:duckdb:` 연결마다 하나의 인메모리 catalog를 유지한다. 이
+ * 파일 기반 워크숍은 root 연결을 열린 상태로 유지하고 Exposed에 중복
+ * 연결을 제공해서 별도 트랜잭션에서도 같은 로컬 데이터베이스를 보게 한다.
  */
 class DuckDbAnalyticsSession private constructor(
     val db: Database,
@@ -96,8 +96,8 @@ class DuckDbAnalyticsSession private constructor(
 
     companion object {
         /**
-         * Opens a file-backed DuckDB session and shares it through duplicated
-         * transaction connections.
+         * 파일 기반 DuckDB 세션을 열고 중복
+         * 트랜잭션 연결로 공유한다.
          */
         fun file(path: Path): DuckDbAnalyticsSession {
             val databasePath = path.toString().requireNotBlank("path")
@@ -116,13 +116,13 @@ class DuckDbAnalyticsSession private constructor(
 }
 
 /**
- * Opens a file-backed DuckDB analytics session.
+ * 파일 기반 DuckDB 분석 세션을 연다.
  */
 fun openDuckDbAnalyticsSession(path: Path): DuckDbAnalyticsSession =
     DuckDbAnalyticsSession.file(path)
 
 /**
- * Creates the workshop schema in the embedded DuckDB file.
+ * embedded DuckDB 파일에 워크숍 스키마를 생성한다.
  */
 suspend fun createDuckDbAnalyticsSchema(db: Database) {
     suspendTransaction(db) {
@@ -131,7 +131,7 @@ suspend fun createDuckDbAnalyticsSchema(db: Database) {
 }
 
 /**
- * Inserts deterministic fixture events into the embedded DuckDB file.
+ * embedded DuckDB 파일에 결정적인 픽스처 이벤트를 삽입한다.
  */
 suspend fun seedDuckDbOrderEvents(db: Database, events: List<DuckDbOrderEvent>) {
     events.requireNotEmpty("events")
@@ -149,7 +149,7 @@ suspend fun seedDuckDbOrderEvents(db: Database, events: List<DuckDbOrderEvent>) 
 }
 
 /**
- * Builds the daily category sales query that DuckDB executes locally.
+ * DuckDB가 로컬에서 실행할 일별 카테고리 매출 쿼리를 구성한다.
  */
 fun buildDailyCategorySalesQuery(): Query {
     val orderCount = DuckDbOrderEvents.orderId.count()
@@ -176,7 +176,7 @@ fun buildDailyCategorySalesQuery(): Query {
 }
 
 /**
- * Renders the analytical SQL so the README can show the exact query shape.
+ * README가 정확한 쿼리 형태를 보여 줄 수 있도록 분석 SQL을 렌더링한다.
  */
 fun generateDailyCategorySalesSql(db: Database): String =
     transaction(db) {
@@ -184,7 +184,7 @@ fun generateDailyCategorySalesSql(db: Database): String =
     }
 
 /**
- * Executes the aggregate query inside DuckDB and returns materialized rows.
+ * DuckDB 안에서 집계 쿼리를 실행하고 materialized row를 반환한다.
  */
 suspend fun projectDailyCategorySales(db: Database): List<DailyCategorySales> =
     suspendTransaction(db) {
@@ -192,11 +192,11 @@ suspend fun projectDailyCategorySales(db: Database): List<DailyCategorySales> =
     }
 
 /**
- * Exposes DuckDB aggregate results as a coroutine Flow.
+ * DuckDB 집계 결과를 코루틴 Flow로 노출한다.
  *
- * `queryFlow` materializes rows inside the Exposed transaction first. The Flow
- * boundary is useful for application pipelines, not a claim of JDBC row-by-row
- * streaming.
+ * `queryFlow`는 먼저 Exposed 트랜잭션 내부에서 row를 materialize한다. Flow
+ * 경계는 애플리케이션 파이프라인에 유용하지만 JDBC row-by-row
+ * 스트리밍을 보장한다는 뜻은 아니다.
  */
 fun streamDailyCategorySales(
     db: Database,
@@ -207,7 +207,7 @@ fun streamDailyCategorySales(
     }
 
 /**
- * Counts events in a separate Exposed transaction on the same file-backed DuckDB database.
+ * 같은 파일 기반 DuckDB 데이터베이스에서 별도 Exposed 트랜잭션으로 이벤트 수를 계산한다.
  */
 suspend fun countPersistedOrderEvents(db: Database): Long =
     suspendTransaction(db) {

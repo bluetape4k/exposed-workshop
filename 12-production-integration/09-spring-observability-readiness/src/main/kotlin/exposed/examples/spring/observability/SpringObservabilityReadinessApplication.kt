@@ -4,12 +4,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 /**
- * Spring Boot 4 observability and readiness example backed by Exposed JDBC.
+ * Exposed JDBC를 사용하는 Spring Boot 4 관측성 및 readiness 예제이다.
  *
- * ## Contract
- * - Actuator readiness includes a database-backed custom health indicator.
- * - Every HTTP response receives a correlation id in `X-Request-ID`.
- * - Structured error responses never expose raw exception details.
+ * ## 계약
+ * - Actuator readiness는 데이터베이스 기반 custom health indicator를 포함한다.
+ * - 모든 HTTP 응답에는 `X-Request-ID` correlation id를 포함한다.
+ * - 구조화된 오류 응답은 원본 예외 세부 정보를 노출하지 않는다.
  */
 @SpringBootApplication
 class SpringObservabilityReadinessApplication

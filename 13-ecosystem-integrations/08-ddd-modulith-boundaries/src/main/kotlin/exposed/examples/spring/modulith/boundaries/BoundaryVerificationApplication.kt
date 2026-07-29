@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 /**
- * Spring Boot entrypoint for the DDD and Spring Modulith boundary workshop.
+ * DDD 및 Spring Modulith 경계 워크숍의 Spring Boot 진입점이다.
  */
 @SpringBootApplication
 class BoundaryVerificationApplication

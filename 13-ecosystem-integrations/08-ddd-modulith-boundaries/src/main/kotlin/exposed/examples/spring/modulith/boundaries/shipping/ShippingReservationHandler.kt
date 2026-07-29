@@ -9,7 +9,7 @@ import java.io.Serializable
 import java.time.Instant
 
 /**
- * Read model owned by the shipping bounded context.
+ * shipping bounded context가 소유하는 조회 모델이다.
  */
 data class ShippingReservation(
     val id: Long,
@@ -23,7 +23,7 @@ data class ShippingReservation(
 }
 
 /**
- * Consumes order events without depending on order repositories or tables.
+ * order 저장소나 테이블에 의존하지 않고 order event를 소비한다.
  */
 @Service
 class ShippingReservationHandler(

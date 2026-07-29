@@ -6,7 +6,7 @@ import io.bluetape4k.codec.Base58
 import org.jetbrains.exposed.v1.jdbc.Database
 
 /**
- * Owns the Hikari data source and Exposed database handle for the Spring example.
+ * Spring 예제에서 사용하는 Hikari 데이터소스와 Exposed 데이터베이스 핸들을 소유한다.
  */
 internal class CustomerPersistence(
     private val dataSource: HikariDataSource,

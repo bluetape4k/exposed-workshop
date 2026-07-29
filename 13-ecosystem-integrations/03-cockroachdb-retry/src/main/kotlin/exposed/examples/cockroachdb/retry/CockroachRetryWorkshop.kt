@@ -19,7 +19,7 @@ import java.sql.SQLException
 import kotlin.time.Duration.Companion.milliseconds
 
 /**
- * Inventory row returned by the CockroachDB retry workshop.
+ * CockroachDB 재시도 워크숍이 반환하는 재고 행이다.
  */
 data class InventorySnapshot(
     val sku: String,
@@ -33,19 +33,19 @@ data class InventorySnapshot(
 }
 
 /**
- * Testable hook for showing how CockroachDB asks a client to retry a whole
- * serializable transaction.
+ * CockroachDB가 클라이언트에 전체 serializable 트랜잭션 재시도를 요청하는 방식을 보여 주기 위한
+ * 테스트 가능한 hook이다.
  */
 fun interface ReservationAttemptHook {
 
     /**
-     * Runs inside the retryable transaction before the inventory row is updated.
+     * 재고 행을 갱신하기 전에 재시도 가능한 트랜잭션 내부에서 실행된다.
      */
     fun beforeUpdate(attempt: Int)
 }
 
 /**
- * Inventory table used by the CockroachDB retry workshop.
+ * CockroachDB 재시도 워크숍에서 사용하는 재고 테이블이다.
  */
 object CockroachInventory: Table("bt4k_workshop_inventory") {
     val sku = varchar("sku", 64)
@@ -56,7 +56,7 @@ object CockroachInventory: Table("bt4k_workshop_inventory") {
 }
 
 /**
- * Ledger table used by the CockroachDB retry workshop.
+ * CockroachDB 재시도 워크숍에서 사용하는 ledger 테이블이다.
  */
 object CockroachLedger: Table("bt4k_workshop_ledger") {
     val id = long("id").autoIncrement()
@@ -68,11 +68,11 @@ object CockroachLedger: Table("bt4k_workshop_ledger") {
 }
 
 /**
- * Application-facing service that reserves stock inside a CockroachDB
- * serializable transaction.
+ * 애플리케이션에서 호출하는 서비스이며 CockroachDB
+ * serializable 트랜잭션 안에서 재고를 예약한다.
  *
- * The service deliberately delegates retry ownership to
- * [withCockroachTransaction] so non-retryable SQL errors are not replayed.
+ * 이 서비스는 재시도 책임을 의도적으로
+ * [withCockroachTransaction]에 위임해서 재시도 불가능한 SQL 오류를 반복 실행하지 않는다.
  */
 class CockroachInventoryService(
     private val db: Database,
@@ -80,7 +80,7 @@ class CockroachInventoryService(
 ) {
 
     /**
-     * Recreates the workshop tables and seeds a single inventory row.
+     * 워크숍 테이블을 다시 만들고 단일 재고 행을 시드한다.
      */
     fun bootstrapSchema(initialSku: String = "book-1", initialQuantity: Int = 10): InventorySnapshot {
         initialSku.requireNotBlank("initialSku")
@@ -102,8 +102,8 @@ class CockroachInventoryService(
     }
 
     /**
-     * Reserves inventory and writes a matching ledger row in one retryable
-     * CockroachDB transaction.
+     * 하나의 재시도 가능한
+     * CockroachDB 트랜잭션에서 재고를 예약하고 대응되는 ledger 행을 기록한다.
      */
     fun reserve(
         sku: String,
@@ -153,7 +153,7 @@ class CockroachInventoryService(
     }
 
     /**
-     * Reads the current inventory snapshot.
+     * 현재 재고 스냅숏을 읽는다.
      */
     fun inventory(sku: String): InventorySnapshot {
         sku.requireNotBlank("sku")
@@ -168,7 +168,7 @@ class CockroachInventoryService(
     }
 
     /**
-     * Counts ledger entries for the given SKU.
+     * 지정한 SKU의 ledger 항목 수를 계산한다.
      */
     fun ledgerCount(sku: String): Long {
         sku.requireNotBlank("sku")
@@ -183,7 +183,7 @@ class CockroachInventoryService(
 }
 
 /**
- * Returns the retry policy used by the workshop tests and README examples.
+ * 워크숍 테스트와 README 예제에서 사용하는 재시도 정책을 반환한다.
  */
 fun workshopRetryOptions(): CockroachTransactionRetryOptions =
     CockroachTransactionRetryOptions(
@@ -195,7 +195,7 @@ fun workshopRetryOptions(): CockroachTransactionRetryOptions =
     )
 
 /**
- * Creates a deterministic CockroachDB retryable transaction exception.
+ * 결정적인 CockroachDB 재시도 가능 트랜잭션 예외를 생성한다.
  */
 fun cockroachRetryableSerializationFailure(
     message: String = "restart transaction: simulated serializable conflict",

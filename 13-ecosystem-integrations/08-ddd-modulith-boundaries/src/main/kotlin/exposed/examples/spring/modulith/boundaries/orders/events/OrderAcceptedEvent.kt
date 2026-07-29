@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.time.Instant
 
 /**
- * Domain event exported as the only named interface of the order context.
+ * order context의 유일한 named interface로 공개되는 domain event이다.
  */
 data class OrderAcceptedEvent(
     val orderKey: String,

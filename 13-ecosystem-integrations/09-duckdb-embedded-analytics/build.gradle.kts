@@ -3,7 +3,7 @@ configurations {
 }
 
 tasks.test {
-    // DuckDB JDBC loads a native library.
+    // DuckDB JDBC는 네이티브 라이브러리를 로드한다.
     jvmArgs("--enable-native-access=ALL-UNNAMED")
 }
 

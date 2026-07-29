@@ -20,12 +20,12 @@ import io.ktor.server.routing.routing
 private const val DEFAULT_PORT = 8081
 
 /**
- * Starts the Ktor observability and readiness example with in-memory H2.
+ * 인메모리 H2로 Ktor 관측성 및 readiness 예제를 시작한다.
  *
- * ## Contract
- * - `/readyz` performs a database-backed readiness check.
- * - Request correlation uses `X-Request-ID` and structured error responses.
- * - Slow operation diagnostics are persisted through Exposed JDBC.
+ * ## 계약
+ * - `/readyz`는 데이터베이스 기반 readiness 검사를 수행한다.
+ * - 요청 상관관계는 `X-Request-ID`와 구조화된 오류 응답을 사용한다.
+ * - 느린 작업 진단 정보는 Exposed JDBC로 저장한다.
  */
 fun main() {
     embeddedServer(CIO, port = DEFAULT_PORT) {

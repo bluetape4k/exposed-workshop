@@ -8,7 +8,7 @@ import org.jetbrains.exposed.v1.jdbc.Database
 private const val HIKARI_MAX_POOL_SIZE = 4
 
 /**
- * Holds the JDBC resources owned by a Ktor application instance.
+ * Ktor 애플리케이션 인스턴스가 소유하는 JDBC 자원을 보관한다.
  */
 internal class CustomerPersistence private constructor(
     private val dataSource: HikariDataSource,

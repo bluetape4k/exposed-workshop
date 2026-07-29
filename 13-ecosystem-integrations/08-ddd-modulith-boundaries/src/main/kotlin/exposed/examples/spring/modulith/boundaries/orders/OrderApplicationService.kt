@@ -9,7 +9,7 @@ import java.io.Serializable
 import java.time.Instant
 
 /**
- * Command used by the order bounded context to accept a new workshop order.
+ * order bounded context가 새 워크숍 주문을 접수할 때 사용하는 command이다.
  */
 data class AcceptOrderCommand(
     val orderKey: String,
@@ -21,7 +21,7 @@ data class AcceptOrderCommand(
 }
 
 /**
- * Read model returned after the order aggregate is persisted.
+ * order aggregate가 저장된 뒤 반환되는 조회 모델이다.
  */
 data class OrderSummary(
     val id: Long,
@@ -36,7 +36,7 @@ data class OrderSummary(
 }
 
 /**
- * Application service that owns the order transaction and publishes a domain event.
+ * order 트랜잭션을 책임지고 domain event를 발행하는 애플리케이션 서비스이다.
  */
 @Service
 class OrderApplicationService(
