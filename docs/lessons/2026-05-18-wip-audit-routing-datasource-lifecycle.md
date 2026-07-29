@@ -1,24 +1,23 @@
-# WIP Audit Routing Datasource Lifecycle
+# WIP 감사와 Routing Datasource lifecycle
 
-## Context
+## 배경
 
-The 2026-05-18 GNO-backed exposed-workshop audit compared prior README/WIP
-refresh lessons, live GitHub issue state, and current source markers.
+2026-05-18 GNO-backed exposed-workshop audit는 이전 README/WIP refresh lesson,
+live GitHub issue 상태, 현재 source marker를 비교했다.
 
-## Decision or Finding
+## 결정 또는 발견
 
-The chapter 11 routing datasource example registers tenant-owned
-`HikariDataSource` instances but does not give the registry or a Spring lifecycle
-hook ownership of closing them. The existing config contains a TODO for
-`@PreDestroy` cleanup, and the unit test manually closes pools in `finally`,
-which confirms explicit cleanup is required.
+11장 routing datasource 예제는 tenant-owned `HikariDataSource` instance를
+등록하지만, registry나 Spring lifecycle hook에 close ownership을 주지 않았다.
+기존 config에는 `@PreDestroy` cleanup TODO가 있고, unit test가 `finally`에서 pool을
+수동으로 닫고 있어 명시적 cleanup이 필요함을 확인했다.
 
-## Outcome
+## 결과
 
-Registered GitHub issue #70 and refreshed `WIP.md` from 0 assigned issues to
-20 live assigned issues.
+GitHub issue #70을 등록하고 `WIP.md`를 할당 이슈 0건에서 live assigned issue
+20건으로 갱신했다.
 
-## Verification
+## 검증
 
 - `gno query ... --no-rerank -c bluetape4k-docs` surfaced the prior
   exposed-workshop WIP refresh lesson.
@@ -29,8 +28,8 @@ Registered GitHub issue #70 and refreshed `WIP.md` from 0 assigned issues to
 - `./gradlew :03-routing-datasource:test --tests "exposed.examples.routing.config.RoutingDataSourceConfigTest"`
   completed with `BUILD SUCCESSFUL` and `2 passing`.
 
-## Future Guidance
+## 향후 지침
 
-For datasource-routing examples, define resource shutdown ownership in the
-sample itself. Do not rely on tests to close pools manually when production
-Spring context shutdown still lacks deterministic cleanup.
+Datasource-routing 예제에서는 sample 자체에 resource shutdown ownership을 정의한다.
+production Spring context shutdown에 deterministic cleanup이 아직 없다면 test의
+수동 pool close에 기대지 않는다.
