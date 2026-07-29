@@ -1,23 +1,21 @@
-# Issue 141 - StarRocks Local-First OLAP Lesson
+# Issue 141 - StarRocks local-first OLAP lesson
 
-## Context
+## 배경
 
-StarRocks examples can be tempting to treat as Testcontainers-backed integration
-tests, but issue #141 asked for a local-first OLAP boundary.
+StarRocks 예제는 Testcontainers-backed integration test로 다루고 싶어지기 쉽지만, issue #141은
+local-first OLAP boundary를 요구했다.
 
-## Decision
+## 결정
 
-Keep the default workshop test lane local and deterministic. Use H2 for SQL
-rendering and fixture aggregation, while showing StarRocks-specific DDL shape
-through `StarRocksTable`.
+Default workshop test lane은 local 및 deterministic 상태로 유지한다. SQL rendering과 fixture
+aggregation에는 H2를 사용하고, StarRocks-specific DDL shape는 `StarRocksTable`로 보여 준다.
 
-## Outcome
+## 결과
 
-The example proves typed connection settings, OLAP DDL rendering, query shape,
-and aggregation without Docker or network access. README files document the
-separate real StarRocks validation boundary.
+예제는 Docker나 network access 없이 typed connection setting, OLAP DDL rendering, query shape,
+aggregation을 증명한다. README file은 별도의 real StarRocks validation boundary를 문서화한다.
 
-## Future Guard
+## 향후 보호 장치
 
-Do not add StarRocks containers to the default workshop CI path unless a later
-issue explicitly asks for a heavyweight opt-in or nightly lane.
+나중 issue가 heavyweight opt-in 또는 nightly lane을 명시적으로 요구하지 않는 한 default
+workshop CI path에 StarRocks container를 추가하지 않는다.

@@ -1,31 +1,28 @@
-# Issue #142 Lesson - Explicit Ktor Exposed Integration
+# Issue #142 lesson - 명시적 Ktor Exposed integration
 
-## Context
+## 배경
 
-Issue #142 needed a chapter 13 example for the new
-`bluetape4k-exposed-ktor` helper surface without replacing the older chapter 12
-Ktor service examples.
+Issue #142에는 기존 12장 Ktor service example을 대체하지 않으면서 새로운
+`bluetape4k-exposed-ktor` helper surface를 보여 주는 13장 예제가 필요했다.
 
-## Decision
+## 결정
 
-Keep the module small and local-first:
+모듈은 작고 local-first로 유지한다.
 
-- Use H2 JDBC for CRUD through `call.exposedJdbcTransaction`.
-- Use H2 R2DBC only as a readiness probe backend.
-- Compose `bluetape4kErrorResponses()` and `bluetape4kExposedErrors()` in one
-  `StatusPages` block.
-- Keep HikariCP, R2DBC pool, and dispatcher lifecycle caller-owned.
+- `call.exposedJdbcTransaction`을 통한 CRUD에는 H2 JDBC를 사용한다.
+- H2 R2DBC는 readiness probe backend로만 사용한다.
+- 하나의 `StatusPages` block에서 `bluetape4kErrorResponses()`와 `bluetape4kExposedErrors()`를
+  compose한다.
+- HikariCP, R2DBC pool, dispatcher lifecycle은 caller-owned로 유지한다.
 
-## Outcome
+## 결과
 
-The module shows the helper boundary directly and keeps chapter 12 focused on
-production-service structure. The README diagram needed an extra rendered-PNG
-inspection pass: SVG audits passed before the resource-lane connector corridor
-was visually clean.
+모듈은 helper boundary를 직접 보여 주고 12장은 production-service structure에 집중하게 둔다.
+README diagram은 추가 rendered-PNG inspection pass가 필요했다. Resource-lane connector
+corridor가 시각적으로 깨끗해지기 전에 SVG audit은 이미 통과했기 때문이다.
 
-## Future Guidance
+## 향후 지침
 
-For future Ktor/Exposed workshop examples, use the helper when the lesson is
-readiness, sanitized errors, or dispatcher-aware transaction wiring. Keep
-hand-owned transaction examples in chapter 12 when the lesson is layered
-application architecture.
+향후 Ktor/Exposed workshop 예제에서는 lesson이 readiness, sanitized error,
+dispatcher-aware transaction wiring이면 helper를 사용한다. Lesson이 layered application
+architecture이면 hand-owned transaction 예제는 12장에 유지한다.

@@ -1,23 +1,22 @@
-# Issue #145 DDD Modulith Boundaries Lesson
+# Issue #145 DDD Modulith boundary lesson
 
-## Context
+## 배경
 
-The module demonstrates DDD bounded contexts with Spring Modulith verification
-and Exposed persistence.
+모듈은 Spring Modulith verification과 Exposed persistence로 DDD bounded context를 보여 준다.
 
-## Decision
+## 결정
 
-Keep schema initialization inside each module package. A shared root initializer
-that imports `orders.internal` or `shipping.internal` is itself a boundary
-violation and `ApplicationModules.verify()` correctly rejects it.
+Schema initialization은 각 module package 안에 둔다. `orders.internal` 또는
+`shipping.internal`을 import하는 shared root initializer 자체가 boundary violation이며,
+`ApplicationModules.verify()`가 이를 올바르게 거부한다.
 
-## Outcome
+## 결과
 
-The example uses `orders.events` as the single named interface and includes a
-negative test fixture proving that direct `shipping -> orders.internal`
-dependencies fail verification.
+예제는 `orders.events`를 single named interface로 사용하고, direct
+`shipping -> orders.internal` dependency가 verification에 실패함을 증명하는 negative test
+fixture를 포함한다.
 
-## Future Guidance
+## 향후 지침
 
-For Modulith examples, run `ApplicationModules.verify()` before documenting the
-architecture. Treat failures as real design feedback, not only test failures.
+Modulith 예제에서는 architecture를 문서화하기 전에 `ApplicationModules.verify()`를 실행한다.
+Failure는 단순 test failure가 아니라 실제 design feedback으로 취급한다.
