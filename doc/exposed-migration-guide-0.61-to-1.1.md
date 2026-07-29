@@ -13,17 +13,17 @@
 
 ## 목차
 
-1. [패키지 구조 변경 (Breaking Change)](#1-패키지-구조-변경)
+1. [패키지 구조 변경 (호환성 중단 변경)](#1-패키지-구조-변경)
 2. [모듈별 import 매핑표](#2-모듈별-import-매핑표)
 3. [DSL API 변경사항](#3-dsl-api-변경사항)
 4. [DAO API 변경사항](#4-dao-api-변경사항)
 5. [Transaction API 변경사항](#5-transaction-api-변경사항)
-6. [Dialect Metadata 변경](#6-dialect-metadata-변경)
+6. [Dialect 메타데이터 변경](#6-dialect-metadata-변경)
 7. [Spring 통합 변경사항](#7-spring-통합-변경사항)
 8. [Coroutine 지원 변경사항](#8-coroutine-지원-변경사항)
 9. [신규 모듈](#9-신규-모듈)
-10. [Class Diagram](#10-class-diagram)
-11. [Sequence Diagram](#11-sequence-diagram)
+10. [클래스 다이어그램](#10-class-diagram)
+11. [시퀀스 다이어그램](#11-sequence-diagram)
 
 ---
 
@@ -111,7 +111,7 @@ org.jetbrains.exposed.v1.r2dbc.*     ← exposed-r2dbc
 | `org.jetbrains.exposed.sql.batchInsert`         | `org.jetbrains.exposed.v1.jdbc.batchInsert`     |
 | `org.jetbrains.exposed.sql.SizedIterable`       | `org.jetbrains.exposed.v1.jdbc.SizedIterable`   |
 
-### Transactions
+### 트랜잭션
 
 | 0.61.0                                                                          | 1.1.1                                                                               |
 |---------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
@@ -330,7 +330,7 @@ inTopLevelTransaction(
 
 ---
 
-## 6. Dialect Metadata 변경
+## 6. Dialect 메타데이터 변경
 
 테이블 메타데이터 접근 시 `currentDialect` 대신 `currentDialectMetadata`를 사용합니다:
 
@@ -439,7 +439,7 @@ suspend fun findByCode(code: String): CountryRecord? = newSuspendedTransaction {
 
 ---
 
-## 10. Class Diagram
+## 10. 클래스 다이어그램
 
 ### 10.1 Exposed Core Architecture
 
@@ -657,7 +657,7 @@ classDiagram
 
 ---
 
-## 11. Sequence Diagram
+## 11. 시퀀스 다이어그램
 
 ### 11.1 DSL: 테이블 생성 → 데이터 삽입 → 조회
 

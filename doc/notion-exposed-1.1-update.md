@@ -22,7 +22,7 @@
 
 ## 4. 준비 및 환경 설정
 
-### 패키지 구조 변경 (Breaking Change)
+### 패키지 구조 변경 (호환성 중단 변경)
 
 Exposed 1.0.0부터 **전체 패키지 경로에 `v1` 접두사**가 추가되었습니다.
 
@@ -180,7 +180,7 @@ transaction {
 }
 ```
 
-### DSL Class Diagram
+### DSL 클래스 다이어그램
 
 ```mermaid
 classDiagram
@@ -346,7 +346,7 @@ transaction {
 }
 ```
 
-### 테이블 Class Diagram
+### 테이블 클래스 다이어그램
 
 ```mermaid
 classDiagram
@@ -385,7 +385,7 @@ classDiagram
 
 ---
 
-## 7.4 Transactions
+## 7.4 트랜잭션
 
 ### transaction() 시그니처 변경
 
@@ -433,7 +433,7 @@ inTopLevelTransaction(
 ) { /* ... */ }
 ```
 
-### Transaction Sequence Diagram
+### 트랜잭션 시퀀스 다이어그램
 
 ```mermaid
 sequenceDiagram
@@ -629,7 +629,7 @@ flowchart TD
     style C fill:#f3e5f5
 ```
 
-### DAO Sequence Diagram
+### DAO 시퀀스 다이어그램
 
 ```mermaid
 sequenceDiagram
@@ -695,7 +695,7 @@ suspend fun findCountryByCode(code: String): CountryRecord? =
     }
 ```
 
-### Coroutine Sequence Diagram
+### Coroutine 시퀀스 다이어그램
 
 ```mermaid
 sequenceDiagram
@@ -782,7 +782,7 @@ class CountryRepository {
 }
 ```
 
-### Spring Transaction Architecture
+### Spring Transaction 구조
 
 ```mermaid
 classDiagram
@@ -862,7 +862,7 @@ flowchart LR
     style CACHE fill:#f3e5f5
 ```
 
-### Spring Boot + Exposed Sequence Diagram
+### Spring Boot + Exposed 시퀀스 다이어그램
 
 ```mermaid
 sequenceDiagram
