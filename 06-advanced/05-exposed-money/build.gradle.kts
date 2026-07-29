@@ -15,7 +15,7 @@ dependencies {
     testImplementation(libs.jetbrains.exposed.jdbc)
     testImplementation(libs.exposed.core)
 
-    // Money
+    // 금액/통화 타입 예제를 위한 JSR 354 의존성
     testImplementation(libs.jetbrains.exposed.money)
     testImplementation(libs.javax.money.api)
     testImplementation(libs.javamoney.moneta)
@@ -29,14 +29,14 @@ dependencies {
     testImplementation(libs.testcontainers.mysql)
     testImplementation(libs.testcontainers.postgresql)
 
-    // Jdbc Drivers
+    // 테스트 데이터베이스별 JDBC 드라이버 의존성
     testRuntimeOnly(libs.h2.v2)
     testRuntimeOnly(libs.mariadb.java.client)
     testRuntimeOnly(libs.mysql.connector.j)
     testRuntimeOnly(libs.postgresql.driver)
     testRuntimeOnly(libs.pgjdbc.ng)
 
-    // Coroutines
+    // 코루틴 기반 트랜잭션 예제 의존성
     testImplementation(libs.bluetape4k.coroutines)
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)

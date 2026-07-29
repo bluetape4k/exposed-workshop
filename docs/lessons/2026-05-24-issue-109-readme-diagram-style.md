@@ -1,24 +1,23 @@
-# Issue 109 README Diagram Style
+# Issue 109 README diagram style
 
-## Context
+## 배경
 
-README diagram assets included many direct Mermaid-rendered SVG/PNG pairs, and
-several newer diagrams missed the workspace typography contract.
+README diagram asset에는 Mermaid가 직접 rendering한 SVG/PNG pair가 많았고, 일부 newer
+diagram은 workspace typography contract를 지키지 않았다.
 
-## Decision
+## 결정
 
-Regenerate every README diagram asset under `docs/assets/readme-diagrams/` and
-`docs/images/readme-diagrams/` from recovered labels using deterministic
-pastel SVG templates. Keep PNG links in README files and matching SVG sources
-next to the PNG files.
+`docs/assets/readme-diagrams/`와 `docs/images/readme-diagrams/` 아래 모든 README diagram
+asset을 recovered label과 deterministic pastel SVG template로 다시 생성한다. README file의
+PNG link와 PNG 옆 matching SVG source를 유지한다.
 
-## Outcome
+## 결과
 
-Replaced Mermaid-rendered assets with custom architecture, class, sequence, and
-ERD diagrams. Large labels use Architects Daughter, detail text uses a
-Comic-style fallback stack, and connector routing stays in gaps between boxes.
+Mermaid-rendered asset을 custom architecture, class, sequence, ERD diagram으로 교체했다.
+Large label은 Architects Daughter를 사용하고, detail text는 Comic-style fallback stack을
+사용하며, connector routing은 box 사이 gap에 머문다.
 
-## Verification
+## 검증
 
 - README-linked diagram assets: `missing=0`.
 - README local SVG diagram links: `0`.
@@ -27,7 +26,7 @@ Comic-style fallback stack, and connector routing stays in gaps between boxes.
 - README diagram SVGs missing Architects Daughter: `0`.
 - PNG render files missing or tiny: `0`.
 
-## Future Guidance
+## 향후 지침
 
-Keep chart assets out of README diagram regeneration passes. Limit the target
-set to `readme-diagrams/` unless a task explicitly asks to redraw charts.
+README diagram regeneration pass에서는 chart asset을 제외한다. Task가 chart redraw를
+명시적으로 요구하지 않는 한 target set은 `readme-diagrams/`로 제한한다.

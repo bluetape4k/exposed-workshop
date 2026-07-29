@@ -96,8 +96,8 @@ abstract class AbstractExposedJsonTest: AbstractExposedTest() {
              * ```
              */
             val tripleId = tester.insertAndGetId {
-                // User name = "B", "C", "D"
-                // User team = "Team B", "Team C", "Team D"
+                // 생성되는 사용자 이름은 "B", "C", "D"이다.
+                // 생성되는 사용자 팀은 "Team B", "Team C", "Team D"이다.
                 it[tester.groups] = UserGroup(List(3) { i -> User("${'B' + i}", "Team ${'B' + i}") })
                 it[numbers] = intArrayOf(3, 4, 5)
             }

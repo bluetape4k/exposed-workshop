@@ -19,13 +19,13 @@ import io.ktor.server.routing.routing
 private const val DEFAULT_PORT = 8080
 
 /**
- * Starts the Ktor architecture example with an in-memory H2 database.
+ * 인메모리 H2 데이터베이스로 Ktor 아키텍처 예제를 시작한다.
  *
- * ## Contract
- * - The route layer stays thin and delegates to a service.
- * - The repository owns every blocking Exposed JDBC transaction behind
- *   `Dispatchers.IO`.
- * - JSON errors are mapped to sanitized responses through `StatusPages`.
+ * ## 계약
+ * - 경로 계층은 얇게 유지하고 서비스에 처리를 위임한다.
+ * - 저장소는 모든 블로킹 Exposed JDBC 트랜잭션을
+ *   `Dispatchers.IO` 뒤에서 책임진다.
+ * - JSON 오류는 `StatusPages`를 통해 정제된 응답으로 매핑한다.
  */
 fun main() {
     embeddedServer(CIO, port = DEFAULT_PORT) {
@@ -34,10 +34,10 @@ fun main() {
 }
 
 /**
- * Configures the Ktor + Exposed architecture example.
+ * Ktor + Exposed 아키텍처 예제를 구성한다.
  *
- * The default persistence uses an in-memory H2 database for local execution.
- * Tests pass a dedicated persistence instance with a unique JDBC URL per test.
+ * 기본 영속성 구성은 로컬 실행을 위해 인메모리 H2 데이터베이스를 사용한다.
+ * 테스트는 테스트별 고유 JDBC URL을 가진 전용 영속성 인스턴스를 전달한다.
  */
 internal fun Application.ktorArchitectureModule(
     persistence: CustomerPersistence = CustomerPersistence.inMemory(),

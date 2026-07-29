@@ -63,7 +63,7 @@ class Ex02_OneToMany_Unidirectional_Family: AbstractExposedTest() {
             loadedFather.children.count() shouldBeEqualTo 3
 
             /**
-             * one-to-many with ordering
+             * 정렬 조건이 있는 일대다 관계를 검증한다.
              *
              * ```sql
              * -- Postgres
@@ -78,7 +78,7 @@ class Ex02_OneToMany_Unidirectional_Family: AbstractExposedTest() {
             val expectedChildren = Child.all().orderBy(ChildTable.birthday to SortOrder.ASC).toList()
 
             /**
-             * Lazy loading
+             * lazy loading으로 연관 엔티티를 지연 로드한다.
              *
              * ```sql
              * -- Postgres

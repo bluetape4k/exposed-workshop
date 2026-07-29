@@ -27,7 +27,7 @@ class Ex01_Simple_Join: AbstractExposedTest() {
     companion object: KLogging()
 
     /**
-     * Lazy loading by simple join
+     * lazy loading으로 연관 엔티티를 지연 로드한다. by simple join
      *
      * ```sql
      * -- Postgres
@@ -90,7 +90,7 @@ class Ex01_Simple_Join: AbstractExposedTest() {
     }
 
     /**
-     * Eager loading by simple join
+     * eager loading으로 연관 엔티티를 미리 로드한다. by simple join
      *
      * ```sql
      * -- Postgres:
@@ -117,14 +117,14 @@ class Ex01_Simple_Join: AbstractExposedTest() {
 
             orderEntities shouldHaveSize 2
             orderEntities.forEach { order ->
-                // eager loading 했으므로 fetching 하지 않는다.
+                // eager loading으로 연관 엔티티를 미리 로드한다. 했으므로 fetching 하지 않는다.
                 order.details.shouldNotBeEmpty()
             }
         }
     }
 
     /**
-     * Compound Join Conditions
+     * 복합 조인 조건을 검증한다.
      *
      * ```sql
      * -- Postgres:

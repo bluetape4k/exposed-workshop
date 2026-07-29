@@ -34,7 +34,7 @@ class Ex04_Right_Join: AbstractExposedTest() {
     )
 
     /**
-     * Right join with alias
+     * alias를 사용한 right join을 검증한다.
      *
      * ```sql
      * -- Postgres:
@@ -104,7 +104,7 @@ class Ex04_Right_Join: AbstractExposedTest() {
     }
 
     /**
-     * Right join with subqueries
+     * 서브쿼리를 포함한 right join을 검증한다.
      *
      * ```sql
      * -- Postgres
@@ -184,7 +184,7 @@ class Ex04_Right_Join: AbstractExposedTest() {
     }
 
     /**
-     * Right Join example
+     * Right Join 예제를 검증한다.
      *
      * ```sql
      * -- Postgres

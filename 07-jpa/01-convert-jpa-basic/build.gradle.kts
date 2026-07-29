@@ -15,7 +15,7 @@ dependencies {
     implementation(libs.jetbrains.exposed.jdbc)
     implementation(libs.jetbrains.exposed.java.time)
 
-    // Validator
+    // 입력값 검증 예제를 위한 Validator 의존성
     implementation(libs.jakarta.validation.api)
     implementation(libs.hibernate.validator)
 
@@ -35,7 +35,7 @@ dependencies {
     testImplementation(libs.testcontainers.mysql)
     testImplementation(libs.testcontainers.postgresql)
 
-    // Coroutines
+    // 코루틴 기반 트랜잭션 예제를 위한 의존성
     testImplementation(libs.bluetape4k.coroutines)
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)

@@ -26,7 +26,7 @@ private const val MAX_REQUEST_BODY_BYTES = 64 * 1024L
 private const val REQUEST_BODY_BUFFER_BYTES = 8 * 1024
 
 /**
- * Registers customer routes for the architecture example.
+ * 아키텍처 예제의 고객 경로를 등록한다.
  */
 internal fun Route.customerRoutes(service: CustomerService) {
     route("/customers") {

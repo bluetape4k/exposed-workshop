@@ -1,23 +1,20 @@
-# Dependencies 1.1.4 Sync
+# Dependencies 1.1.4 동기화
 
-## Context
+## 배경
 
-`bluetape4k-dependencies` 1.2.0 release preparation requires downstream
-workshops to match the central shared-version source of truth before the BOM
-release CI can pass.
+`bluetape4k-dependencies` 1.2.0 release preparation에서는 BOM release CI가 통과하기 전에
+downstream workshop이 central shared-version source of truth와 일치해야 한다.
 
-## Decision
+## 결정
 
-Align the workshop catalog to the latest published
-`bluetape4k-dependencies:1.1.4` baseline and central shared runtime versions.
-Do not consume `1.2.0` until it is published.
+Workshop catalog를 latest published `bluetape4k-dependencies:1.1.4` baseline 및 central
+shared runtime version과 정렬한다. `1.2.0`은 publish되기 전까지 소비하지 않는다.
 
-## Outcome
+## 결과
 
-The workshop no longer reports shared-version drift in the central release
-preflight.
+Workshop은 더 이상 central release preflight에서 shared-version drift를 보고하지 않는다.
 
-## Verification
+## 검증
 
-Validated from `bluetape4k-dependencies` with `sync-shared-versions.py
---workspace /Users/debop/work/bluetape4k --write --check --summary`.
+`bluetape4k-dependencies`에서 `sync-shared-versions.py --workspace
+/Users/debop/work/bluetape4k --write --check --summary`로 검증했다.

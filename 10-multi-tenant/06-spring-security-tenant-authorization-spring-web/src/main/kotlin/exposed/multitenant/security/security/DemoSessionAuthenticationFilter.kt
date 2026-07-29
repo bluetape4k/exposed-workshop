@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 
 /**
- * Authenticates fixed demo-session headers without creating server sessions.
+ * 서버 세션을 만들지 않고 고정 demo-session 헤더를 인증한다.
  */
 internal class DemoSessionAuthenticationFilter : OncePerRequestFilter() {
 

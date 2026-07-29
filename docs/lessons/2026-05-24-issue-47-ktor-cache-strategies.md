@@ -1,21 +1,25 @@
-# Issue 47 Ktor Cache Strategies
+# Issue 47 Ktor cache strategy
 
-## Context
+## 배경
 
-Issue #47 asked for a Ktor counterpart to the chapter 11 Spring cache strategy example.
+Issue #47은 11장 Spring cache strategy 예제에 대응되는 Ktor counterpart를 요구했다.
 
-## Decision
+## 결정
 
-Keep the example framework-neutral: Ktor routes, an application service with explicit cache strategy methods, Exposed JDBC persistence, and a simple in-memory cache that exposes hit/miss counters in tests.
+예제는 framework-neutral하게 유지한다. Ktor route, 명시적인 cache strategy method를 가진
+application service, Exposed JDBC persistence, test에서 hit/miss counter를 노출하는 simple
+in-memory cache를 사용한다.
 
-## Outcome
+## 결과
 
-Added `11-high-performance/05-cache-strategies-ktor` with cache-aside, read-through, write-through, invalidation, English/Korean README files, and a rendered architecture diagram.
+Cache-aside, read-through, write-through, invalidation, English/Korean README file, rendered
+architecture diagram을 갖춘 `11-high-performance/05-cache-strategies-ktor`를 추가했다.
 
-## Verification
+## 검증
 
-Passed: `repo-test-summary -- ./gradlew :05-cache-strategies-ktor:test` with three passing tests.
+통과: `repo-test-summary -- ./gradlew :05-cache-strategies-ktor:test`, passing test 3개.
 
-## Future Guidance
+## 향후 지침
 
-Prefer observable route responses and counters for workshop cache examples so users can see whether a scenario hit cache, missed cache, or fell back to the database.
+Workshop cache 예제에서는 사용자가 scenario의 cache hit, cache miss, database fallback 여부를
+볼 수 있도록 observable route response와 counter를 선호한다.

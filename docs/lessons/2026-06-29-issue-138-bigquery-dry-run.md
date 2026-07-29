@@ -1,39 +1,35 @@
-# Issue #138 BigQuery Dry-Run Workshop Lesson
+# Issue #138 BigQuery dry-run workshop lesson
 
-## Context
+## 배경
 
-Issue #138 is the first runnable child module under chapter 13. It demonstrates
-`bluetape4k-exposed` BigQuery dry-run validation from an Exposed-generated query
-without using cloud credentials or network calls.
+Issue #138은 13장 아래 첫 runnable child module이다. Cloud credential이나 network call 없이
+Exposed-generated query에서 `bluetape4k-exposed` BigQuery dry-run validation을 보여 준다.
 
-## Decision
+## 결정
 
-Keep the default workshop path mock-only. Build a small production helper that
-constructs the Exposed read-model query and delegates to
-`BigQueryContext.validateQuery`, while tests MockK-capture the actual Google
-API `QueryRequest` sent through `Bigquery.Jobs.query`.
+Default workshop path는 mock-only로 유지한다. Exposed read-model query를 만들고
+`BigQueryContext.validateQuery`에 위임하는 작은 production helper를 구현하며, test는
+`Bigquery.Jobs.query`를 통해 전달되는 실제 Google API `QueryRequest`를 MockK-capture한다.
 
-## Outcome
+## 결과
 
-The module verifies generated SQL fragments, dry-run request mapping, success
-responses, and BigQuery error conversion. README files explain dry-run versus
-execution and make the no-credential default explicit.
+모듈은 generated SQL fragment, dry-run request mapping, success response, BigQuery error
+conversion을 검증한다. README file은 dry-run과 execution의 차이를 설명하고 no-credential
+default를 명시한다.
 
-## Future Guidance
+## 향후 지침
 
-- For cloud-adjacent examples, name the real API boundary being mocked instead
-  of inventing a wrapper in the plan.
-- For README diagrams that show ordered calls or request/response behavior,
-  apply `$bluetape4k-diagram` as a gate before claiming completion and prefer a
-  sequence diagram over a generic flowchart.
-- Compare sequence diagrams against the local best-practices sequence family
-  before accepting style parity. For this module, `leader-redis-lettuce-sequence-02`
-  was the reference for frame/header/lifeline/activation, numbered pill labels,
-  semantic line colors, and fixed solid markers.
-- Do not report diagram checklist success from SVG/XML plus visual inspection
-  alone. Run geometry audit, endpoint audit, marker/font checks, CairoSVG CLI
-  rendering, and full-size PNG inspection before recording PASS evidence.
-- Add the runnable Gradle task to `.github/workflows/examples.yml` in the same
-  PR that introduces a child module.
-- Record explicit N/A evidence for CI, Nightly, summary `needs`, and coverage
-  artifacts when a new module does not require those surfaces.
+- Cloud-adjacent example에서는 plan에서 wrapper를 새로 꾸미지 말고 mock되는 실제 API boundary를
+  이름으로 명시한다.
+- Ordered call이나 request/response behavior를 보여 주는 README diagram은 완료 보고 전에
+  `$bluetape4k-diagram`을 gate로 적용하고, generic flowchart보다 sequence diagram을 선호한다.
+- Style parity를 받아들이기 전에 sequence diagram을 local best-practices sequence family와
+  비교한다. 이 모듈에서는 `leader-redis-lettuce-sequence-02`가 frame/header/lifeline/activation,
+  numbered pill label, semantic line color, fixed solid marker의 기준이었다.
+- SVG/XML과 visual inspection만으로 diagram checklist success를 보고하지 않는다. PASS evidence를
+  기록하기 전에 geometry audit, endpoint audit, marker/font check, CairoSVG CLI rendering,
+  full-size PNG inspection을 실행한다.
+- Child module을 도입하는 같은 PR에서 runnable Gradle task를 `.github/workflows/examples.yml`에
+  추가한다.
+- 새 모듈이 CI, Nightly, summary `needs`, coverage artifact를 요구하지 않으면 명시적인 N/A
+  evidence를 기록한다.

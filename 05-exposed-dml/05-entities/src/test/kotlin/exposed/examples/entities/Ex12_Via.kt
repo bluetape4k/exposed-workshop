@@ -465,7 +465,7 @@ class Ex12_Via: AbstractExposedTest() {
     }
 
     /**
-     * Insert & Refresh 테스트
+     * 삽입 & Refresh 테스트
      *
      * ```sql
      * -- Postgres

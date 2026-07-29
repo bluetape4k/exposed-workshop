@@ -1,38 +1,36 @@
-# Issue 63 Chapter 12 Wiring
+# Issue 63 Chapter 12 wiring
 
-## Context
+## 배경
 
-Issue #63 asked to make chapter 12 production integration examples discoverable
-from root documentation and explicit about verification coverage.
+Issue #63은 12장 production integration 예제를 root documentation에서 찾을 수 있게 하고
+verification coverage를 명시하라고 요구했다.
 
-## Decision
+## 결정
 
-Keep chapter 12 module registration automatic through
-`includeModules("12-production-integration", false, false)`. Wire discoverability
-through the root English/Korean README module map and keep detailed paired
-Spring/Ktor verification commands in the chapter README.
-Add chapter 12 modules 05 through 10 to `.github/workflows/examples.yml` so the
-daily Examples workflow and chapter-change PRs cover the completed examples.
+Chapter 12 module registration은 `includeModules("12-production-integration", false,
+false)`를 통해 automatic으로 유지한다. Root English/Korean README module map으로
+discoverability를 wiring하고, detailed paired Spring/Ktor verification command는 chapter
+README에 둔다. Daily Examples workflow와 chapter-change PR이 완료된 예제를 다루도록
+`.github/workflows/examples.yml`에 12장 모듈 05-10을 추가한다.
 
-## Outcome
+## 결과
 
-The root README production integration section now lists all completed chapter
-12 examples from 01 through 10. The chapter README embeds a committed PNG
-chapter architecture diagram, records local verification, Examples workflow
-coverage, CI DB matrix coverage, and the reason no separate nightly override is
-needed for the current self-contained examples.
+Root README production integration section은 이제 완료된 12장 예제 01-10을 모두 나열한다.
+Chapter README는 committed PNG chapter architecture diagram을 embed하고, local
+verification, Examples workflow coverage, CI DB matrix coverage, 현재 self-contained
+예제에 별도 nightly override가 필요 없는 이유를 기록한다.
 
-## Verification
+## 검증
 
-Run the root README link scan and the chapter 12 README diagram scan after the
-documentation edit. Confirm Gradle project discovery with `./gradlew projects`
-or a settings scan before opening the PR.
+Documentation edit 후 root README link scan과 chapter 12 README diagram scan을 실행한다.
+PR을 열기 전에 `./gradlew projects` 또는 settings scan으로 Gradle project discovery를
+확인한다.
 
-## Future Agents
+## 향후 agent 지침
 
-When adding a new chapter 12 example, update both the chapter README pair and
-the root README pair. Keep Architecture Diagram PNG links committed, and add
-workflow-specific entries only when the new example requires external
-infrastructure or non-default CI coverage. Regenerate
-`docs/images/readme-diagrams/12-production-integration-architecture-01.svg` and
-its PNG when the chapter-level module map changes.
+새 12장 예제를 추가할 때 chapter README pair와 root README pair를 모두 갱신한다.
+Architecture Diagram PNG link는 committed 상태로 유지하고, 새 예제가 external
+infrastructure나 non-default CI coverage를 요구할 때만 workflow-specific entry를 추가한다.
+Chapter-level module map이 바뀌면
+`docs/images/readme-diagrams/12-production-integration-architecture-01.svg`와 그 PNG를
+다시 생성한다.

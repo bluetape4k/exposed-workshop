@@ -1,19 +1,23 @@
-## Context
+## 배경
 
-Adopted the JetBrains Exposed Gradle plugin across Exposed workshop modules that define tables in main sources.
+Main source에서 table을 정의하는 Exposed workshop module 전반에 JetBrains Exposed Gradle
+plugin을 도입했다.
 
-## Decision
+## 결정
 
-The workshop uses a repo-local plugin alias tied to the existing Exposed version alias, not the managed `bt4k` catalog.
+Workshop은 managed `bt4k` catalog가 아니라 기존 Exposed version alias에 묶인 repo-local
+plugin alias를 사용한다.
 
-## Outcome
+## 결과
 
-Spring, multi-tenant, performance, Ktor, and production-integration examples now expose `generateMigrations` with explicit migration settings.
+Spring, multi-tenant, performance, Ktor, production-integration 예제는 이제 명시적인
+migration setting과 함께 `generateMigrations`를 노출한다.
 
-## Verification
+## 검증
 
-Ran `git diff --check`, `./gradlew -q help`, and `:spring-mvc-exposed:tasks --all`.
+`git diff --check`, `./gradlew -q help`, `:spring-mvc-exposed:tasks --all`을 실행했다.
 
-## Future Guard
+## 향후 보호 장치
 
-Keep shared test fixtures out of the migration plugin rollout unless a concrete migration output is needed for those fixtures.
+해당 fixture에 구체적인 migration output이 필요하지 않다면 shared test fixture는 migration
+plugin rollout에서 제외한다.

@@ -9,7 +9,7 @@ import exposed.examples.spring.architecture.model.toResponse
 import exposed.examples.spring.architecture.repository.CustomerRepository
 
 /**
- * Customer use cases and caller input validation.
+ * 고객 유스케이스와 호출자 입력 검증을 담당한다.
  */
 internal class CustomerService(
     private val repository: CustomerRepository,

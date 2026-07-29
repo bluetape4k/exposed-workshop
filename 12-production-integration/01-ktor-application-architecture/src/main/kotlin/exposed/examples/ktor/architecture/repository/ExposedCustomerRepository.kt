@@ -17,7 +17,7 @@ import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * Exposed JDBC implementation that isolates blocking work on `Dispatchers.IO`.
+ * 블로킹 작업을 `Dispatchers.IO`로 격리하는 Exposed JDBC 구현이다.
  */
 internal class ExposedCustomerRepository(
     private val database: Database,

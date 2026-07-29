@@ -103,7 +103,7 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
             }
 
             /**
-             * Time functions
+             * 시간 함수 동작을 검증한다.
              *
              * ```sql
              * -- H2
@@ -314,7 +314,7 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
             sameMonthResult shouldHaveSize 2
 
             val year2023 = if (currentDialectTest is PostgreSQLDialect) {
-                // PostgreSQL requires explicit type cast to resolve function date_part
+                // PostgreSQL은 date_part 함수 오버로드를 해석하려면 명시적 타입 캐스트가 필요하다.
                 dateParam(mayTheFourth).castTo(KotlinLocalDateColumnType()).year()
             } else {
                 dateParam(mayTheFourth).year()
@@ -378,7 +378,7 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
                 it[modified] = nowDT
             }
 
-            // these DB take the nanosecond value 871_130_789 and round up to default precision (e.g. in Oracle: 871_131)
+            // 이 데이터베이스들은 나노초 값 871_130_789를 기본 정밀도로 반올림한다(예: Oracle에서는 871_131).
 //            val requiresExplicitDTCast =
 //                listOf(TestDB.ORACLE, TestDB.H2_V2_ORACLE, TestDB.H2_V2_PSQL, TestDB.H2_V2_SQLSERVER)
             val requiresExplicitDTCast = listOf(TestDB.H2_PSQL)
@@ -553,7 +553,7 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
             val cairoNowInsertedInCairoTimeZone =
                 tester.selectAll().where { tester.id eq cairoId }.single()[tester.timestampWithTimeZone]
 
-            // UTC time zone
+            // UTC 시간대 기준으로 값을 삽입하고 조회한다.
             java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone(ZoneOffset.UTC))
             ZoneId.systemDefault().id shouldBeEqualTo "UTC"
 
@@ -567,7 +567,7 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
             val cairoNowInsertedInUTCTimeZone =
                 tester.selectAll().where { tester.id eq utcID }.single()[tester.timestampWithTimeZone]
 
-            // Seoul time zone
+            // Seoul 시간대 기준으로 값을 삽입하고 조회한다.
             java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone("Asia/Seoul"))
             ZoneId.systemDefault().id shouldBeEqualTo "Asia/Seoul"
 
@@ -581,28 +581,28 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
             val cairoNowInsertedInTokyoTimeZone =
                 tester.selectAll().where { tester.id eq seoulID }.single()[tester.timestampWithTimeZone]
 
-            // PostgreSQL and MySQL always store the timestamp in UTC, thereby losing the original time zone.
-            // To preserve the original time zone, store the time zone information in a separate column.
+            // PostgreSQL과 MySQL은 timestamp 값을 항상 UTC로 저장하므로 원래 시간대 정보가 사라진다.
+            // 원래 시간대를 보존하려면 시간대 정보를 별도 컬럼에 저장해야 한다.
             val isOriginalTimeZonePreserved = testDB !in (TestDB.ALL_MYSQL_MARIADB + TestDB.ALL_POSTGRES)
             if (isOriginalTimeZonePreserved) {
-                // Assert that time zone is preserved when the same value is inserted in different time zones
+                // 같은 값을 서로 다른 시간대에서 삽입해도 시간대 정보가 보존되는지 검증한다.
                 cairoNowInsertedInCairoTimeZone shouldDateTimeEqualTo cairoNow
                 cairoNowInsertedInUTCTimeZone shouldDateTimeEqualTo cairoNow
                 cairoNowInsertedInTokyoTimeZone shouldDateTimeEqualTo cairoNow
 
-                // Assert that time zone is preserved when the same record is retrieved in different time zones
+                // 같은 레코드를 서로 다른 시간대에서 조회해도 시간대 정보가 보존되는지 검증한다.
                 cairoNowRetrievedInUTCTimeZone shouldDateTimeEqualTo cairoNow
                 cairoNowRetrievedInSeoulTimeZone shouldDateTimeEqualTo cairoNow
             } else {
-                // Assert equivalence in UTC when the same value is inserted in different time zones
+                // 같은 값을 서로 다른 시간대에서 삽입했을 때 UTC 기준 값이 동등한지 검증한다.
                 cairoNowInsertedInUTCTimeZone shouldDateTimeEqualTo cairoNowInsertedInCairoTimeZone
                 cairoNowInsertedInTokyoTimeZone shouldDateTimeEqualTo cairoNowInsertedInUTCTimeZone
 
-                // Assert equivalence in UTC when the same record is retrieved in different time zones
+                // 같은 레코드를 서로 다른 시간대에서 조회했을 때 UTC 기준 값이 동등한지 검증한다.
                 cairoNowRetrievedInSeoulTimeZone shouldDateTimeEqualTo cairoNowRetrievedInUTCTimeZone
             }
 
-            // Reset to original time zone as set up in DatabaseTestsBase init block
+            // DatabaseTestsBase 초기화 블록에서 설정한 원래 시간대로 복원한다.
             java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone(ZoneOffset.UTC))
             ZoneId.systemDefault().id shouldBeEqualTo "UTC"
         }
@@ -665,7 +665,7 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
         }
 
         withTables(testDB, tester) {
-            // UTC time zone
+            // UTC 시간대 기준으로 값을 삽입하고 조회한다.
             java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone(ZoneOffset.UTC))
             ZoneId.systemDefault().id shouldBeEqualTo "UTC"
 
@@ -869,7 +869,7 @@ class Ex01_KotlinDateTime: AbstractExposedTest() {
             val localTime = LocalTime(13, 0)
             val localTimeLiteral = timeLiteral(localTime)
 
-            // UTC time zone
+            // UTC 시간대 기준으로 값을 삽입하고 조회한다.
             java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone(ZoneOffset.UTC))
             ZoneId.systemDefault().id shouldBeEqualTo "UTC"
 

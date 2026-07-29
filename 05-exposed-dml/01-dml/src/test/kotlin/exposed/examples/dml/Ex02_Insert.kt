@@ -364,7 +364,7 @@ class Ex02_Insert: AbstractExposedTest() {
     }
 
     /**
-     * Insert 후 생성된 ID를 반환합니다.
+     * 삽입 후 생성된 ID를 반환합니다.
      *
      * ```sql
      * -- Postgres
@@ -407,7 +407,7 @@ class Ex02_Insert: AbstractExposedTest() {
     }
 
     /**
-     * Insert 후 생성된 ID를 반환합니다.
+     * 삽입 후 생성된 ID를 반환합니다.
      *
      * ```sql
      * -- Postgres
@@ -724,7 +724,7 @@ class Ex02_Insert: AbstractExposedTest() {
     /**
      * Subquery 결과 값을 이용하여 INSERT, UPDATE 하기
      *
-     * Insert using subquery in Postgres:
+     * Postgres에서 subquery를 사용한 insert:
      * ```sql
      * INSERT INTO tab1 (id)
      * VALUES ((SELECT tab2.id
@@ -732,7 +732,7 @@ class Ex02_Insert: AbstractExposedTest() {
      *           WHERE tab2.id = 'foo'))
      * ```
      *
-     * Update using subquery in Postgres:
+     * Postgres에서 subquery를 사용한 update:
      * ```sql
      * UPDATE tab1
      *    SET id=(SELECT tab2.id
@@ -752,17 +752,17 @@ class Ex02_Insert: AbstractExposedTest() {
         }
 
         withTables(testDB, tbl1, tbl2) {
-            // Initial data
+            // 초기 데이터
             tbl2.insert { it[id] = "foo" }
             tbl2.insert { it[id] = "bar" }
 
-            // Insert using subquery
+            // subquery를 사용해 삽입합니다.
             tbl1.insert {
                 it[id] = tbl2.select(tbl2.id).where { tbl2.id eq "foo" }
             }
             tbl1.select(tbl1.id).single()[tbl1.id] shouldBeEqualTo "foo"
 
-            // Update using subquery
+            // subquery를 사용해 갱신합니다.
             tbl1.update({ tbl1.id eq "foo" }) {
                 it[id] = tbl2.select(tbl2.id).where { tbl2.id eq "bar" }
             }
@@ -842,7 +842,7 @@ class Ex02_Insert: AbstractExposedTest() {
                 }
                 fail("예외가 발생해서 Rollback 이 수행되어야 합니다.")
             } catch (e: Throwable) {
-                // Nothing to do
+                // 수행할 작업이 없습니다.
             }
 
             withDb(testDB) {
@@ -996,7 +996,7 @@ class Ex02_Insert: AbstractExposedTest() {
                     """.trimIndent()
 
                 when (testDB) {
-                    // MariaDB does not support GENERATED ALWAYS AS with any null constraint definition
+                    // MariaDB는 어떤 null constraint definition에서도 GENERATED ALWAYS AS를 지원하지 않습니다.
                     in TestDB.ALL_MARIADB -> {
                         exec(
                             "${createStatement.trimIndent()} $computedName $computedType GENERATED ALWAYS AS ($computation) STORED)"

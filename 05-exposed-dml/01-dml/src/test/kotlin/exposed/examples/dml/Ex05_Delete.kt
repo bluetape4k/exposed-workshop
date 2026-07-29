@@ -109,7 +109,7 @@ class Ex05_Delete: AbstractExposedTest() {
     }
 
     /**
-     * ### [deleteWhere] with limit
+     * ### limit이 있는 [deleteWhere]
      *
      * [deleteWhere] 함수에 limit 을 적용하면, 삭제 대상 행의 수를 제한할 수 있습니다.
      *
@@ -145,7 +145,7 @@ class Ex05_Delete: AbstractExposedTest() {
 
 
     /**
-     * ### Delete with single join
+     * ### 단일 join을 사용한 delete
      *
      * `Users` 테이블과 `UserData` 테이블을 조인하여, `UserData` 테이블의 일부 행을 삭제합니다.
      *
@@ -184,7 +184,7 @@ class Ex05_Delete: AbstractExposedTest() {
     }
 
     /**
-     * ### Delete with multiple alias joins
+     * ### 여러 alias join을 사용한 delete
      *
      * ```sql
      * -- Postgres
@@ -230,7 +230,7 @@ class Ex05_Delete: AbstractExposedTest() {
     }
 
     /**
-     * ### Delete with join subQuery ([joinQuery])
+     * ### join subQuery([joinQuery])를 사용한 delete
      *
      * ```sql
      * -- Postgres

@@ -71,7 +71,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
      * JSONB 컬럼 생성 및 조회 테스트
      *
      * ```sql
-     * -- Postgres:
+     * -- Postgres 예:
      * INSERT INTO j_b_table (j_b_column)
      * VALUES ({"user":{"name":"Pro","team":"Alpha"},"logins":999,"active":true,"team":"A"});
      *
@@ -95,10 +95,10 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
     }
 
     /**
-     * Update JSONB column
+     * JSONB 컬럼 값을 갱신한다.
      *
      * ```sql
-     * -- Postgres:
+     * -- Postgres 예:
      * UPDATE j_b_table
      *   SET j_b_column={"user":{"name":"Admin","team":null},"logins":10,"active":false,"team":null}
      * ```
@@ -130,7 +130,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
         withJsonBTable(testDB) { tester, user1, data1 ->
             val pathPrefix = if (currentDialectTest is PostgreSQLDialect) "" else "."
-            // SQLServer & Oracle return null if extracted JSON is not scalar
+            // SQLServer와 Oracle은 추출된 JSON 값이 스칼라가 아니면 null을 반환한다.
             val requiresScalar = currentDialectTest is SQLServerDialect || currentDialectTest is OracleDialect
 
             /**
@@ -194,7 +194,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
                 it[JsonBTable.jsonBColumn] = data1.copy(logins = 1000)
             }
 
-            // Postgres requires type casting to compare json field as integer value in DB
+            // Postgres는 json 필드를 DB 내부에서 정수 값으로 비교하려면 타입 캐스팅이 필요하다.
             val logins = when (currentDialectTest) {
                 is PostgreSQLDialect ->
                     JsonBTable.jsonBColumn.extract<Int>("logins").castTo(IntegerColumnType())
@@ -205,12 +205,12 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
             /**
              * ```sql
-             * -- Postgres:
+             * -- Postgres 예:
              * SELECT j_b_table.id
              *   FROM j_b_table
              *  WHERE CAST(JSONB_EXTRACT_PATH_TEXT(j_b_table.j_b_column, 'logins') AS INT) >= 1000;
              *
-             * -- MySQL V8:
+             * -- MySQL V8 예:
              * SELECT j_b_table.id
              *   FROM j_b_table
              *  WHERE JSON_UNQUOTE(JSON_EXTRACT(j_b_table.j_b_column, "$.logins")) >= 1000;
@@ -234,8 +234,8 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
         withDb(testDB) {
             expectException<SerializationException> {
-                // Throws with message: Serializer for class 'Fake' is not found.
-                // Please ensure that class is marked as '@Serializable' and that the serialization compiler plugin is applied.
+                // 다음 메시지로 예외가 발생한다: Serializer for class 'Fake' is not found.
+                // 해당 클래스에 '@Serializable'을 지정하고 serialization compiler plugin이 적용되었는지 확인해야 한다.
                 object: Table("tester") {
                     val jCol = jsonb<Fake>("J_col", Json)
                 }
@@ -256,7 +256,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
         withTables(testDB, dataTable) {
             /**
-             * Insert new entity
+             * 새 엔티티를 삽입한다.
              * ```sql
              * INSERT INTO j_b_table (j_b_column)
              * VALUES ({"user":{"name":"Admin","team":"Alpha"},"logins":10,"active":true,"team":null})
@@ -273,10 +273,10 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
             dataEntity.findById(-1).shouldBeNull()
 
             /**
-             * Update by DSL
+             * DSL 방식으로 값을 갱신한다.
              *
              * ```sql
-             * -- Postgres:
+             * -- Postgres 예:
              * UPDATE j_b_table
              *   SET j_b_column={"user":{"name":"Lead","team":"Beta"},"logins":10,"active":true,"team":null}
              * ```
@@ -288,11 +288,11 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
             dataEntity.all().single().jsonBColumn shouldBeEqualTo updatedJson
 
-            // Json Path
+            // JSON 경로 조건을 검증한다.
             Assumptions.assumeTrue { testDB !in TestDB.ALL_H2 }
 
             /**
-             * Insert new entity
+             * 새 엔티티를 삽입한다.
              *
              * ```sql
              * INSERT INTO j_b_table (j_b_column)
@@ -307,12 +307,12 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
             /**
              * ```sql
-             * -- Postgres:
+             * -- Postgres 예:
              * SELECT j_b_table.id, j_b_table.j_b_column
              *   FROM j_b_table
              *  WHERE JSONB_EXTRACT_PATH_TEXT(j_b_table.j_b_column, 'user', 'team') LIKE 'B%';
              *
-             * -- MySQL V8:
+             * -- MySQL V8 예:
              * SELECT j_b_table.id, j_b_table.j_b_column
              *   FROM j_b_table
              *  WHERE JSON_UNQUOTE(JSON_EXTRACT(j_b_table.j_b_column, "$.user.team")) LIKE 'B%';
@@ -329,7 +329,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
      * JSONB 컬럼의 객체 내부의 속성을 잉용하여 검색하는 테스트
      *
      * ```sql
-     * -- Postgres:
+     * -- Postgres 예:
      * SELECT j_b_table.id, j_b_table.j_b_column
      *   FROM j_b_table
      *  WHERE j_b_table.j_b_column @> '{"active":false}';
@@ -339,7 +339,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
      *  WHERE j_b_table.j_b_column @> '{"user":{"name":"Admin","team":"Alpha"}}';
      * ```
      * ```sql
-     * -- MySQL V8:
+     * -- MySQL V8 예:
      * SELECT j_b_table.id, j_b_table.j_b_column
      *   FROM j_b_table
      *  WHERE JSON_CONTAINS(j_b_table.j_b_column, '{"active":false}');
@@ -372,7 +372,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
             val userIsInAlphaTeam = JsonBTable.jsonBColumn.contains(stringLiteral(alphaTreamUserAsJson))
             tester.selectAll().where { userIsInAlphaTeam }.count() shouldBeEqualTo 1L
 
-            // test target contains candidate at specified path
+            // 지정한 경로의 대상 JSON이 후보 값을 포함하는지 검증한다.
             if (testDB in TestDB.ALL_MYSQL_LIKE) {
                 // Path 를 이용하여 특정 필드를 비교할 수 있습니다.
                 val userIsInAlphaTeam2 = JsonBTable.jsonBColumn.contains("\"Alpha\"", path = ".user.team")
@@ -396,7 +396,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
             /**
              * ```sql
-             * -- Postgres:
+             * -- Postgres 예:
              * INSERT INTO j_b_table (j_b_column)
              * VALUES ({"user":{"name":"Admin","team":"A"},"logins":1000,"active":true,"team":null})
              * ```
@@ -407,19 +407,19 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
             /**
              * ```sql
-             * -- Postgres:
+             * -- Postgres 예:
              * SELECT COUNT(*) FROM j_b_table WHERE JSONB_PATH_EXISTS(j_b_table.j_b_column, '$')
              * ```
              */
             val optional = if (testDB in TestDB.ALL_MYSQL_LIKE) "one" else null
 
-            // test data at path root `$` exists by providing no path arguments
+            // 경로 인자를 전달하지 않아 루트 경로 `$`의 데이터 존재 여부를 검증한다.
             val hasAnyData = JsonBTable.jsonBColumn.exists(optional = optional)
             tester.selectAll().where { hasAnyData }.count() shouldBeEqualTo 2L
 
             /**
              * ```sql
-             * -- Postgres:
+             * -- Postgres 예:
              * SELECT COUNT(*)
              *   FROM j_b_table
              *  WHERE JSONB_PATH_EXISTS(j_b_table.j_b_column, '$.fakeKey')
@@ -430,7 +430,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
             /**
              * ```sql
-             * -- Postgres:
+             * -- Postgres 예:
              * SELECT COUNT(*)
              *   FROM j_b_table
              *  WHERE JSONB_PATH_EXISTS(j_b_table.j_b_column, '$.logins')
@@ -439,12 +439,12 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
             val hasLogins = JsonBTable.jsonBColumn.exists(".logins", optional = optional)
             tester.selectAll().where { hasLogins }.count() shouldBeEqualTo 2L
 
-            // test data at path exists with filter condition & optional arguments
+            // 필터 조건과 선택 인자를 사용해 경로의 데이터 존재 여부를 검증한다.
             val testDialect = currentDialectTest
             if (testDialect is PostgreSQLDialect) {
                 /**
                  * ```sql
-                 * -- Postgres:
+                 * -- Postgres 예:
                  * SELECT j_b_table.id
                  *   FROM j_b_table
                  *  WHERE JSONB_PATH_EXISTS(j_b_table.j_b_column, '$.logins ? (@ == 1000)')
@@ -457,7 +457,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
                 /**
                  * ```sql
-                 * -- Postgres:
+                 * -- Postgres 예:
                  * SELECT j_b_table.id
                  *   FROM j_b_table
                  *  WHERE JSONB_PATH_EXISTS(j_b_table.j_b_column, '$.user.team ? (@ == $team)', '{"team":"A"}')
@@ -476,7 +476,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
      * JSONB 컬럼에 Array 데이터를 저장하고 검색하는 테스트
      *
      * ```sql
-     * -- Postgres:
+     * -- Postgres 예:
      * SELECT j_b_arrays.id, j_b_arrays."groups", j_b_arrays.numbers
      *   FROM j_b_arrays
      *  WHERE JSONB_EXTRACT_PATH_TEXT(j_b_arrays."groups", 'users', '0', 'team') = 'Team A';
@@ -485,7 +485,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
      * ```
      *
      * ```sql
-     * -- Postgres:
+     * -- Postgres 예:
      * SELECT j_b_arrays.id, j_b_arrays.`groups`, j_b_arrays.numbers
      *   FROM j_b_arrays
      *  WHERE JSON_UNQUOTE(JSON_EXTRACT(j_b_arrays.`groups`, "$.users[0].team")) = 'Team A';
@@ -508,7 +508,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
                 .where { firstIsOnTeamA }
                 .single()[tester.id] shouldBeEqualTo singleId
 
-            // older MySQL and MariaDB versions require non-scalar extracted value from JSON Array
+            // 오래된 MySQL 및 MariaDB 버전은 JSON 배열에서 추출한 비스칼라 값 형식이 필요하다.
             val toScala = testDB != TestDB.MYSQL_V5
             val path2 = if (currentDialectTest is PostgreSQLDialect) "0" else "[0]"
             val firstNumber = JsonBArrayTable.numbers.extract<Int>(path2, toScalar = toScala)
@@ -568,12 +568,12 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
             /**
              * ```sql
-             * -- Postgres:
+             * -- Postgres 예:
              * SELECT j_b_arrays.id, j_b_arrays."groups", j_b_arrays.numbers
              *   FROM j_b_arrays
              *  WHERE JSONB_PATH_EXISTS(j_b_arrays."groups", '$.users[1]');
              *
-             * -- MySQL V8:
+             * -- MySQL V8 예:
              * SELECT j_b_arrays.id, j_b_arrays.`groups`, j_b_arrays.numbers
              *   FROM j_b_arrays
              *  WHERE JSON_CONTAINS_PATH(j_b_arrays.`groups`, 'one', '$.users[1]');
@@ -584,12 +584,12 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
 
             /**
              * ```sql
-             * -- Postgres:
+             * -- Postgres 예:
              * SELECT j_b_arrays.id, j_b_arrays."groups", j_b_arrays.numbers
              *   FROM j_b_arrays
              *  WHERE JSONB_PATH_EXISTS(j_b_arrays.numbers, '$[2]');
              *
-             * -- MySQL V8:
+             * -- MySQL V8 예:
              * SELECT j_b_arrays.id, j_b_arrays.`groups`, j_b_arrays.numbers
              *   FROM j_b_arrays
              *  WHERE JSON_CONTAINS_PATH(j_b_arrays.numbers, 'one', '$[2]');
@@ -607,9 +607,9 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
         // MariaDB: JSONB(JSON) 컬럼 default 메타데이터가 declared schema와 round-trip되지 않아 migration diff 발생 → 스킵
         Assumptions.assumeFalse { testDB == TestDB.MARIADB }
         /**
-         * Default value for JSON column
+         * JSON 컬럼 기본값을 검증한다.
          * ```sql
-         * -- Postgres:
+         * -- Postgres 예:
          * CREATE TABLE IF NOT EXISTS default_tester (
          *      user_1 JSONB DEFAULT '{"name":"UNKNOWN","team":"UNASSIGNED"}'::jsonb NOT NULL,
          *      user_2 JSONB NOT NULL
@@ -631,7 +631,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
                 SchemaUtils.create(defaultTester)
                 defaultTester.exists().shouldBeTrue()
 
-                // ensure defaults match returned metadata defaults
+                // 반환된 메타데이터의 기본값과 선언한 기본값이 일치하는지 검증한다.
                 // [deprecated] SchemaUtils.statementsRequiredToActualizeScheme → MigrationUtils.statementsRequiredForDatabaseMigration 로 교체
                 // val alters = SchemaUtils.statementsRequiredToActualizeScheme(defaultTester)
                 val alters = MigrationUtils.statementsRequiredForDatabaseMigration(defaultTester)
@@ -640,7 +640,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
                 /**
                  * Client default 값이므로, Insert 시에는 값이 제공된다.
                  * ```sql
-                 * -- Postgres:
+                 * -- Postgres 예:
                  * INSERT INTO default_tester (user_2)
                  * VALUES ({"name":"UNKNOWN","team":"UNASSIGNED"})
                  */
@@ -681,7 +681,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
         }
 
         withTables(testDB, iterables) {
-            // the logger is left in to test that it does not throw ClassCastException on insertion of iterables
+            // Iterable 값을 삽입할 때 ClassCastException이 발생하지 않는지 검증하려고 logger를 남겨 둔다.
             addLogger(StdOutSqlLogger)
 
             val user1 = User("A", "Team A")
@@ -708,7 +708,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
      * JSONB 컬럼에 대한 NULL 값 테스트
      *
      * ```sql
-     * -- Postgres:
+     * -- Postgres 예:
      * CREATE TABLE IF NOT EXISTS nullable_tester (
      *      id SERIAL PRIMARY KEY,
      *      "user" JSONB NULL
@@ -750,14 +750,14 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
      * JSONB 컬럼에 대한 UPSERT 테스트
      *
      * ```sql
-     * -- Postgres:
+     * -- Postgres 예:
      * INSERT INTO j_b_table (id, j_b_column)
      * VALUES (2, {"user":{"name":"Pro","team":"Alpha"},"logins":999,"active":false,"team":"A"})
      * ON CONFLICT (id) DO UPDATE SET j_b_column=EXCLUDED.j_b_column;
      * ```
      *
      * ```sql
-     * -- MySQL V8:
+     * -- MySQL V8 예:
      * INSERT INTO j_b_table (id, j_b_column)
      * VALUES (2, {"user":{"name":"Pro","team":"Alpha"},"logins":999,"active":false,"team":"A"})
      * AS NEW ON DUPLICATE KEY UPDATE id=NEW.id, j_b_column=NEW.j_b_column;
@@ -833,7 +833,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
             val value = jsonb<User>("value", Json.Default).databaseGenerated()
         }
 
-        // MySQL versions prior to 8.0.13 do not accept default values on JSON columns
+        // MySQL 8.0.13 이전 버전은 JSON 컬럼 기본값을 허용하지 않는다.
         withTables(testDB, tester) {
             testerDatabaseGenerated.insert { }
 
@@ -853,7 +853,7 @@ class Ex02_JsonBColumn: AbstractExposedJsonTest() {
      * **단, Postgres 에서만 사용 가능합니다.**
      *
      * ```sql
-     * -- Postgres:
+     * -- Postgres 예:
      *
      * SELECT j_b_table.id, j_b_table.j_b_column
      *   FROM j_b_table

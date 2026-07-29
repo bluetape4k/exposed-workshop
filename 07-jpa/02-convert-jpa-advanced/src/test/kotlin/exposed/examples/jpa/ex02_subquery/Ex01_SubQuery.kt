@@ -215,7 +215,7 @@ class Ex01_SubQuery: AbstractExposedTest() {
      */
     @Test
     fun `update set to subquery in H2`() {
-        // implement a +/- operator using CustomOperator
+        // CustomOperator로 +/- 연산자를 구현한다.
         // NOTE: EntityID<ID> 는 CustomOperator를 사용할 수 없다
         withPersonsAndAddress(TestDB.H2) { persons, _ ->
             val affectedRows = persons.update({ persons.id eq 3L }) {
@@ -266,7 +266,7 @@ class Ex01_SubQuery: AbstractExposedTest() {
         }
     }
 
-    // implement a +/- operator using CustomOperator
+    // CustomOperator로 +/- 연산자를 구현한다.
     @JvmName("expressionPlusInt")
     infix operator fun Expression<*>.plus(operand: Int): CustomOperator<Int> =
         CustomOperator("+", IntegerColumnType(), this, intLiteral(operand))

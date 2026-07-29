@@ -1,54 +1,54 @@
-# Issue #140 CockroachDB Serializable Retry Workshop Design
+# Issue #140 CockroachDB serializable retry workshop 설계
 
 Date: 2026-06-29
 Issue: https://github.com/bluetape4k/exposed-workshop/issues/140
 Parent epic: https://github.com/bluetape4k/exposed-workshop/issues/137
 
-## Goal
+## 목표
 
-Add a chapter 13 workshop module that teaches how to use the
-`bluetape4k-exposed-cockroachdb` helper surface for CockroachDB connection
-setup and serializable transaction retry.
+CockroachDB connection setup과 serializable transaction retry를 위한
+`bluetape4k-exposed-cockroachdb` helper surface 사용법을 가르치는 13장 workshop module을
+추가한다.
 
-## Current Evidence
+## 현재 근거
 
 - `bluetape4k-exposed` exposes `CockroachDatabase.connect`,
   `CockroachTransactionRetryOptions`, `Throwable.isCockroachRetryableTransactionError()`,
   and `withCockroachTransaction`.
-- The library deliberately keeps CockroachDB as a PostgreSQL-wire helper module,
-  not a custom Exposed dialect.
-- CockroachDB serializable retry handling must restart the whole transaction;
-  Exposed generic `maxAttempts` is too broad because it retries `SQLException`
-  without CockroachDB-specific classification.
-- `exposed-workshop` chapter 13 already reserves
-  `13-ecosystem-integrations/03-cockroachdb-retry` for issue #140.
+- Library는 CockroachDB를 custom Exposed dialect가 아니라 PostgreSQL-wire helper module로
+  의도적으로 유지한다.
+- CockroachDB serializable retry handling은 전체 transaction을 다시 시작해야 한다. Exposed
+  generic `maxAttempts`는 CockroachDB-specific classification 없이 `SQLException`을 retry하므로
+  너무 넓다.
+- `exposed-workshop` 13장은 이미 issue #140을 위해
+  `13-ecosystem-integrations/03-cockroachdb-retry`를 예약했다.
 
-## Scope
+## 범위
 
-- Create `13-ecosystem-integrations/03-cockroachdb-retry`.
-- Demonstrate a small inventory reservation transaction that writes both an
-  inventory row and a ledger row in one retryable transaction.
-- Use `CockroachDatabase.connect` with `CockroachServer.Launcher.cockroach` in
-  tests.
-- Use deterministic SQLSTATE `40001` retry injection instead of timing-sensitive
-  concurrent write races.
-- Add README locale pair and one SVG+PNG sequence diagram under
+- `13-ecosystem-integrations/03-cockroachdb-retry`를 만든다.
+- 하나의 retryable transaction 안에서 inventory row와 ledger row를 모두 쓰는 작은 inventory
+  reservation transaction을 보여 준다.
+- Test에서는 `CockroachServer.Launcher.cockroach`와 함께 `CockroachDatabase.connect`를
+  사용한다.
+- Timing-sensitive concurrent write race 대신 deterministic SQLSTATE `40001` retry injection을
+  사용한다.
+- README locale pair와 하나의 SVG+PNG sequence diagram을 다음 위치에 추가한다.
   `docs/images/readme-diagrams/`.
 
-## Non-Goals
+## 비목표
 
 - Custom CockroachDB dialect support.
 - R2DBC retry support.
 - Savepoint-based advanced retry protocol.
 - Real multi-node CockroachDB cluster testing.
-- Generic retry wrappers outside the public bluetape4k-exposed helper API.
+- Public bluetape4k-exposed helper API 밖의 generic retry wrapper.
 
-## Acceptance Criteria
+## 수용 기준
 
-- Tests cover schema bootstrap, successful transaction, retryable serialization
-  conflict, and non-retryable SQL failure.
-- README.md and README.ko.md explain CockroachDB's serializable default and why
-  whole-transaction retry is a correctness requirement.
-- Diagram follows the bluetape4k diagram style and is validated as SVG and PNG.
-- The Examples workflow includes `:03-cockroachdb-retry:build`.
-- PR body final `##` section is `## DoD Status`.
+- Test는 schema bootstrap, successful transaction, retryable serialization conflict,
+  non-retryable SQL failure를 다룬다.
+- README.md와 README.ko.md는 CockroachDB의 serializable default와 whole-transaction retry가
+  correctness requirement인 이유를 설명한다.
+- Diagram은 bluetape4k diagram style을 따르고 SVG/PNG로 검증된다.
+- Examples workflow는 `:03-cockroachdb-retry:build`를 포함한다.
+- PR body의 마지막 `##` section은 `## DoD Status`다.

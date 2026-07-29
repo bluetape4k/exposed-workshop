@@ -1,21 +1,25 @@
-# Issue 56 Wire Chapter 10 Strategies
+# Issue 56 Chapter 10 strategy wiring
 
-## Context
+## 배경
 
-Issue #56 asked to wire chapter 10 Spring Boot strategy examples into documentation and verification.
+Issue #56은 10장 Spring Boot strategy example을 documentation과 verification에 연결하라고
+요구했다.
 
-## Decision
+## 결정
 
-Add the tenant onboarding module to chapter 10 English/Korean README files with module links, test/build tasks, and a CI/nightly coverage decision.
+Tenant onboarding module을 module link, test/build task, CI/nightly coverage decision과 함께
+10장 English/Korean README file에 추가한다.
 
-## Outcome
+## 결과
 
-Updated `10-multi-tenant/README.md` and `README.ko.md` for `08-tenant-onboarding-spring-web`.
+`08-tenant-onboarding-spring-web`를 위해 `10-multi-tenant/README.md`와 `README.ko.md`를
+갱신했다.
 
-## Verification
+## 검증
 
-Passed: `git diff --check`.
+통과: `git diff --check`.
 
-## Future Guidance
+## 향후 지침
 
-Docs PRs for strategy wiring should list dependent feature PRs and record whether new modules require nightly container coverage.
+Strategy wiring docs PR은 dependent feature PR을 나열하고, 새 module이 nightly container
+coverage를 요구하는지 기록해야 한다.

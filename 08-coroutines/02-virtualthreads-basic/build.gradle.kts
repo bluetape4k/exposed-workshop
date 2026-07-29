@@ -30,7 +30,7 @@ dependencies {
 
     // TODO: Virtual Threads 모듈은 코루틴을 사용하지 않습니다.
     // "코루틴 없이 Virtual Threads만으로 비동기 처리"를 명확히 하려면 아래 의존성을 제거할 수 있습니다.
-    // Coroutines
+    // 코루틴 기반 트랜잭션 예제를 위한 의존성
     testImplementation(libs.bluetape4k.coroutines)
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)

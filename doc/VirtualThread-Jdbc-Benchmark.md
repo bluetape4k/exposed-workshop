@@ -1,4 +1,4 @@
-# Platform Threads vs Virtual Threads JDBC 성능 비교
+# Platform Threads와 Virtual Threads의 JDBC 성능 비교
 
 > 모든 수치는 실측 JMH / 부하테스트 결과입니다. 환경마다 차이가 있으므로 절대값보다 **배율(×)** 위주로 해석하세요.
 
@@ -8,10 +8,10 @@
 
 | 워크로드                            | Virtual Threads 향상 배율        |
 |---------------------------------|------------------------------|
-| 단순 SELECT (indexed)             | **×2.2 – ×2.6**              |
+| 단순 SELECT (인덱스 사용)             | **×2.2 – ×2.6**              |
 | 복잡 쿼리 (UPDATE + 집계)             | **×1.8**                     |
 | I/O 지연 시뮬레이션 (+10ms latency)    | **×2.3**                     |
-| CPU bound 작업                    | ×1.02 – 1.03 (거의 없음)         |
+| CPU-bound 작업                    | ×1.02 – 1.03 (거의 없음)         |
 | `SELECT 1` (MariaDB, 극단적 경량 쿼리) | **×5 – ×9** (MariaDB 공식 블로그) |
 
 ---
@@ -48,11 +48,10 @@
 | VirtualThreadPerTaskExecutor | **5,004** | **×2.27** | 최적            |
 | ForkJoinPool                 |     1,254 |     ×0.57 | 스레드 수 제한으로 역전 |
 
-> **핵심 인사이트**: 지연(I/O) 상황에서 ForkJoinPool은 스레드 수 제한 때문에 성능이 오히려 하락.
-> Virtual Threads만 I/O 대기 시 carrier thread를 반납(parking) → 효율 유지.
+> **핵심 해석**: 지연(I/O) 상황에서 ForkJoinPool은 스레드 수 제한 때문에 성능이 오히려 하락합니다.
+> Virtual Threads는 I/O 대기 중 carrier thread를 반납(parking)하므로 효율을 유지합니다.
 
-**출처
-**: [Benchmark Database Access with Java 21 Virtual Threads - adi.earth (2024)](https://adi.earth/posts/database-virtual-threads-benchmark/)
+**출처**: [Benchmark Database Access with Java 21 Virtual Threads - adi.earth (2024)](https://adi.earth/posts/database-virtual-threads-benchmark/)
 
 ---
 
@@ -71,8 +70,7 @@
 > `pool=4`로 줄이면 성능이 개선되지만 여전히 Virtual Threads가 우세.
 > MySQL Connector는 동일 테스트에서 격차가 훨씬 작음 (MariaDB Connector 최적화 효과).
 
-**출처
-**: [Benchmark JDBC connectors and Java 21 virtual threads - MariaDB (2023)](https://mariadb.com/resources/blog/benchmark-jdbc-connectors-and-java-21-virtual-threads/)
+**출처**: [Benchmark JDBC connectors and Java 21 virtual threads - MariaDB (2023)](https://mariadb.com/resources/blog/benchmark-jdbc-connectors-and-java-21-virtual-threads/)
 
 ---
 
@@ -98,8 +96,7 @@
 
 > 병렬 DB 쿼리에서 Virtual Threads의 효과가 극대화됨.
 
-**출처
-**: [Spring Boot 2025: Parallel Database Queries with Virtual Threads - JavaScript in Plain English](https://javascript.plainenglish.io/spring-boot-2025-parallel-database-queries-with-virtual-threads-benchmarks-code-5140deae9a76)
+**출처**: [Spring Boot 2025: Parallel Database Queries with Virtual Threads - JavaScript in Plain English](https://javascript.plainenglish.io/spring-boot-2025-parallel-database-queries-with-virtual-threads-benchmarks-code-5140deae9a76)
 
 ---
 
@@ -112,7 +109,7 @@
 - Virtual Threads + Hibernate
 - Reactor Core + R2DBC (비교 대상)
 
-결과: ops/s 기준 Virtual Threads + JDBC ≈ Reactor Core + R2DBC (거의 동등)
+결과: ops/s 기준으로 Virtual Threads + JDBC와 Reactor Core + R2DBC는 거의 동등했습니다.
 
 > 즉, 비동기 코드 리팩터링 없이 Virtual Threads만으로 Reactive 수준의 처리량 달성 가능.
 
@@ -125,16 +122,16 @@
 | 상황                 | 추천                              | 이유                                                             |
 |--------------------|---------------------------------|----------------------------------------------------------------|
 | **JDBC 쿼리 집중**     | Virtual Threads                 | I/O 대기 중 carrier 반납 → 효율 ×2~5                                  |
-| **CPU bound 연산**   | Platform Threads (ForkJoinPool) | Virtual 오버헤드 무의미, carrier 수 = CPU 코어 수가 최적                     |
+| **CPU-bound 연산**   | Platform Threads (ForkJoinPool) | Virtual Threads 오버헤드 이점이 거의 없고, carrier 수 = CPU 코어 수가 최적        |
 | **+latency 환경**    | Virtual Threads                 | ForkJoinPool 역전, CachedPool 메모리 위험                             |
 | **대규모 병렬 쿼리**      | Virtual Threads                 | `Thread.startVirtualThread { repo.find() }` 패턴으로 WebFlux 수준 달성 |
-| **Reactive 대체 여부** | Virtual Threads ≈ R2DBC         | ops/s 동등, 코드 복잡도는 Virtual Threads가 훨씬 낮음                       |
+| **Reactive 대체 여부** | Virtual Threads ≈ R2DBC         | ops/s는 유사하고, 코드 복잡도는 Virtual Threads가 훨씬 낮음                    |
 
 ---
 
 ## 6. Pinning 주의사항 (성능 함정)
 
-Virtual Threads가 **platform thread에 고정(pinned)** 되는 경우 → 이점 소멸:
+Virtual Threads가 **platform thread에 고정(pinned)** 되면 이점이 사라집니다.
 
 ```java
 // ❌ Pinning 발생 — synchronized 블록 내 I/O

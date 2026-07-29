@@ -1,77 +1,72 @@
-# Issue 54 Spring Security Tenant Authorization Plan
+# Issue 54 Spring Security tenant authorization 계획
 
-## Scope
+## 범위
 
-Add `10-multi-tenant/06-spring-security-tenant-authorization-spring-web`, a
-Spring MVC + Spring Security + Exposed JDBC workshop module that authorizes a
-tenant before selecting the tenant database.
+Tenant database를 선택하기 전에 tenant를 authorize하는 Spring MVC + Spring Security + Exposed JDBC
+workshop module `10-multi-tenant/06-spring-security-tenant-authorization-spring-web`를 추가한다.
 
-Approved spec draft:
+승인된 spec draft:
 
 - `docs/superpowers/specs/2026-05-23-issue-54-spring-security-tenant-authorization-design.md`
 
-## Implementation Tasks
+## 구현 작업
 
-### 1. Scaffold the module
+### 1. Module scaffold
 
 Complexity: M
 
-- Copy the structure of `10-multi-tenant/05-database-per-tenant-spring-web`.
-- Rename package from `exposed.multitenant.database` to
+- `10-multi-tenant/05-database-per-tenant-spring-web`의 structure를 복사한다.
+- Package를 `exposed.multitenant.database`에서
   `exposed.multitenant.security`.
-- Rename the Spring Boot entrypoint to `TenantSecurityApplication.kt`.
-- Update `springBoot.mainClass`, README titles, and application metadata.
-- Confirm `settings.gradle.kts` auto-registers the module through
-  `includeModules("10-multi-tenant", false, false)` and update it only if
-  discovery fails.
-- Keep inventory domain, service, repository, and seed data comparable with
-  module `05`.
+- Spring Boot entrypoint를 `TenantSecurityApplication.kt`로 rename한다.
+- `springBoot.mainClass`, README title, application metadata를 갱신한다.
+- `settings.gradle.kts`가 `includeModules("10-multi-tenant", false, false)`를 통해 module을
+  auto-register하는지 확인하고, discovery가 실패할 때만 갱신한다.
+- Inventory domain, service, repository, seed data를 module `05`와 비교 가능하게 유지한다.
 
-### 2. Add Spring Security dependencies
+### 2. Spring Security dependency 추가
 
 Complexity: S
 
-- Add module dependencies:
+- Module dependency를 추가한다:
   - `org.springframework.boot:spring-boot-starter-security`
   - `org.springframework.boot:spring-boot-starter-oauth2-resource-server`
   - `org.springframework.security:spring-security-test`
-- Keep H2-only tenant database dependencies from module `05`.
-- Avoid new version catalog entries unless existing repo style requires them;
-  current examples use direct Spring Boot starter coordinates.
-- Do not add Konsist or ArchUnit. Use focused JUnit source-text architecture
-  tests with `java.nio.file.Files.walk` and `readText()` so the example stays
-  dependency-light.
-- Keep Exposed imports under `org.jetbrains.exposed.v1.*`.
+- Module `05`의 H2-only tenant database dependency를 유지한다.
+- 기존 repo style이 요구하지 않는 한 새 version catalog entry를 피한다. Current example은 direct
+  Spring Boot starter coordinate를 사용한다.
+- Konsist나 ArchUnit을 추가하지 않는다. Example이 dependency-light 상태를 유지하도록
+  `java.nio.file.Files.walk`와 `readText()`를 사용하는 focused JUnit source-text architecture test를
+  사용한다.
+- Exposed import는 `org.jetbrains.exposed.v1.*` 아래로 유지한다.
 
-### 3. Implement authentication and tenant authorization
+### 3. Authentication 및 tenant authorization 구현
 
 Complexity: L
 
-- Add `config/SecurityConfiguration.kt`.
-  - Disable CSRF for this stateless JSON workshop API.
-  - Use stateless session management.
-  - Permit `/actuator/health`.
-  - Require authentication for inventory endpoints.
-  - Enable OAuth2 Resource Server JWT with a converter that preserves JWT
-    authentication even when tenant claims are absent.
-  - Instantiate custom security filters directly inside this configuration;
-    do not annotate them with `@Component` and do not expose them as `Filter`
-    beans.
-  - Register `CredentialConflictFilter` before authentication filters to reject
-    requests that include more than one credential source.
-  - Register API-key and demo-session filters inside `SecurityFilterChain`
-    before bearer-token authentication.
-  - Register `TenantAuthorizationFilter` inside `SecurityFilterChain` after
-    `AuthorizationFilter`, so `.anyRequest().authenticated()` has already run
-    and MVC handlers still receive the authorized `TenantContext`.
-  - Disable independent servlet filter auto-registration for all custom
-    security filters if they are exposed as beans.
-- Add `security/AuthenticatedTenant.kt`.
-  - Any `data class` must implement `java.io.Serializable` and define
-    `serialVersionUID`.
-  - Public API/KDoc text must be English.
-- Add `security/DemoJwtDecoder.kt`.
-  - Fixed accepted token strings:
+- `config/SecurityConfiguration.kt`를 추가한다.
+  - 이 stateless JSON workshop API에서는 CSRF를 비활성화한다.
+  - Stateless session management를 사용한다.
+  - `/actuator/health`를 permit한다.
+  - Inventory endpoint에는 authentication을 요구한다.
+  - Tenant claim이 없어도 JWT authentication을 보존하는 converter와 함께 OAuth2 Resource Server
+    JWT를 활성화한다.
+  - Custom security filter는 이 configuration 안에서 직접 instantiate한다. `@Component`를 붙이거나
+    `Filter` bean으로 노출하지 않는다.
+  - Credential source를 둘 이상 포함한 request를 거부하도록 authentication filter 앞에
+    `CredentialConflictFilter`를 등록한다.
+  - Bearer-token authentication 앞의 `SecurityFilterChain` 안에 API-key filter와 demo-session
+    filter를 등록한다.
+  - `.anyRequest().authenticated()`가 이미 실행되고 MVC handler가 authorized `TenantContext`를 받을
+    수 있도록 `AuthorizationFilter` 뒤의 `SecurityFilterChain` 안에 `TenantAuthorizationFilter`를
+    등록한다.
+  - Custom security filter가 bean으로 노출된다면 independent servlet filter auto-registration을
+    비활성화한다.
+- `security/AuthenticatedTenant.kt`를 추가한다.
+  - 모든 `data class`는 `java.io.Serializable`을 구현하고 `serialVersionUID`를 정의해야 한다.
+  - Public API/KDoc text는 English여야 한다.
+- `security/DemoJwtDecoder.kt`를 추가한다.
+  - Fixed accepted token string:
     - `demo-acme-token` -> `tenant_id=acme`
     - `demo-globex-token` -> `tenant_id=globex`
     - `demo-no-tenant-token` -> no `tenant_id`
@@ -79,157 +74,143 @@ Complexity: L
     - `demo-acme-upper-token` -> `tenant_id=ACME`
     - `demo-malformed-tenant-token` -> `tenant_id=acme,globex`
     - `demo-non-string-tenant-token` -> numeric `tenant_id`
-  - Include English KDoc warning that this decoder is fixed-data workshop code,
-    not production token validation.
-- Add `security/CredentialConflictFilter.kt`.
-  - Counts credential source presence only: bearer authorization, API key, demo
-    session.
-  - Treat a header as present only when at least one value is non-blank after
-    trim.
-  - Count `Authorization` only when the scheme is `Bearer` with
-    case-insensitive scheme matching.
-  - Scan all `Authorization` header values; if any non-blank value is bearer,
-    bearer credentials are present.
-  - Ignore non-bearer authorization schemes because the example does not
-    support Basic, Digest, or form login.
-  - Skip `/actuator/health`.
-  - Returns `400 CONFLICTING_CREDENTIALS` when more than one source is present.
-  - Must not log raw secret-bearing header values.
-- Add `security/DemoApiKeyAuthenticationFilter.kt`.
+  - 이 decoder가 production token validation이 아니라 fixed-data workshop code라는 한국어 KDoc
+    warning을 포함한다.
+- `security/CredentialConflictFilter.kt`를 추가한다.
+  - Bearer authorization, API key, demo session의 credential source presence만 count한다.
+  - Trim 후 non-blank value가 최소 하나 있을 때만 header가 present라고 취급한다.
+  - `Authorization`은 case-insensitive scheme matching으로 scheme이 `Bearer`일 때만 count한다.
+  - 모든 `Authorization` header value를 scan한다. Non-blank bearer value가 있으면 bearer
+    credential이 present다.
+  - Example은 Basic, Digest, form login을 지원하지 않으므로 non-bearer authorization scheme은
+    무시한다.
+  - `/actuator/health`는 skip한다.
+  - Source가 둘 이상 present이면 `400 CONFLICTING_CREDENTIALS`를 반환한다.
+  - Raw secret-bearing header value를 log하면 안 된다.
+- `security/DemoApiKeyAuthenticationFilter.kt`를 추가한다.
   - `demo-acme-key` -> `acme`
   - `demo-globex-key` -> `globex`
-  - Invalid provided API keys fail authentication.
-  - Must participate in Spring Security exception translation and must not
-    write directly to the servlet response outside the security chain.
-  - Plain class, not `@Component`, not a `Filter` bean.
-- Add `security/DemoSessionAuthenticationFilter.kt`.
+  - Invalid provided API key는 authentication에 실패한다.
+  - Spring Security exception translation에 참여해야 하며 security chain 밖에서 servlet response에
+    직접 write하면 안 된다.
+  - Plain class이며 `@Component`나 `Filter` bean이 아니다.
+- `security/DemoSessionAuthenticationFilter.kt`를 추가한다.
   - `acme-session` -> `acme`
   - `globex-session` -> `globex`
-  - Invalid provided session headers fail authentication.
-  - Must participate in Spring Security exception translation and must not
-    create a persistent server session.
-  - Plain class, not `@Component`, not a `Filter` bean.
-- Add `security/TenantAuthenticationResolver.kt`.
-  - Reads tenant identity from JWT, API-key, or demo-session authentication.
-  - Distinguishes missing, malformed, unknown, and resolved states.
-  - Normalizes tenant claim values with trim/lowercase, matching
-    `TenantId.fromHeaderOrNull`.
-- Add `security/TenantAuthorizationFilter.kt`.
-  - Skip `/actuator/health`.
-  - Resolve authenticated tenant before validating `X-Tenant-ID`; missing,
-    malformed, or unknown authenticated tenant returns 403.
-  - Validates exactly one `X-Tenant-ID` header.
-  - Compares requested and authenticated tenants.
-  - Sets `TenantContext` only after authorization succeeds.
-  - Clears `TenantContext` in `finally`.
-  - Plain class, not `@Component`, not a `Filter` bean.
-  - Must not log raw `Authorization`, `X-API-Key`, or `X-Demo-Session` values.
-  - Use explicit servlet security anchors:
+  - Invalid provided session header는 authentication에 실패한다.
+  - Spring Security exception translation에 참여해야 하며 persistent server session을 만들면 안 된다.
+  - Plain class이며 `@Component`나 `Filter` bean이 아니다.
+- `security/TenantAuthenticationResolver.kt`를 추가한다.
+  - JWT, API-key, demo-session authentication에서 tenant identity를 읽는다.
+  - Missing, malformed, unknown, resolved state를 구분한다.
+  - `TenantId.fromHeaderOrNull`과 맞게 tenant claim value를 trim/lowercase로 normalize한다.
+- `security/TenantAuthorizationFilter.kt`를 추가한다.
+  - `/actuator/health`는 skip한다.
+  - `X-Tenant-ID`를 validate하기 전에 authenticated tenant를 resolve한다. Missing, malformed,
+    unknown authenticated tenant는 403을 반환한다.
+  - 정확히 하나의 `X-Tenant-ID` header를 validate한다.
+  - Requested tenant와 authenticated tenant를 비교한다.
+  - Authorization이 성공한 뒤에만 `TenantContext`를 설정한다.
+  - `finally`에서 `TenantContext`를 clear한다.
+  - Plain class이며 `@Component`나 `Filter` bean이 아니다.
+  - Raw `Authorization`, `X-API-Key`, `X-Demo-Session` value를 log하면 안 된다.
+  - 명시적 servlet security anchor를 사용한다:
     - `addFilterBefore(credentialConflictFilter, BearerTokenAuthenticationFilter::class.java)`
     - `addFilterBefore(apiKeyAuthenticationFilter, BearerTokenAuthenticationFilter::class.java)`
     - `addFilterBefore(demoSessionAuthenticationFilter, BearerTokenAuthenticationFilter::class.java)`
     - `addFilterAfter(tenantAuthorizationFilter, AuthorizationFilter::class.java)`
 
-### 4. Preserve database-per-tenant routing
+### 4. Database-per-tenant routing 보존
 
 Complexity: M
 
-- Keep `TenantDatabaseRegistry`, `TenantTransaction`, `TenantContext`, and
-  `TenantId` behavior aligned with module `05`.
-- Remove any request-path filter that writes `TenantContext` from a raw header.
-- Keep registry validation and datasource lifecycle tests.
-- Keep repositories datasource-agnostic; repositories call `TenantTransaction`
-  only.
+- `TenantDatabaseRegistry`, `TenantTransaction`, `TenantContext`, `TenantId` behavior를 module
+  `05`와 정렬된 상태로 유지한다.
+- Raw header에서 `TenantContext`를 쓰는 request-path filter는 제거한다.
+- Registry validation과 datasource lifecycle test를 유지한다.
+- Repository는 datasource-agnostic하게 유지한다. Repository는 `TenantTransaction`만 호출한다.
 
-### 5. Add tests
+### 5. Test 추가
 
 Complexity: L
 
-- Security request tests:
-  - valid JWT claim reads matching tenant seed data;
-  - JWT/header mismatch returns 403;
-  - JWT without tenant claim returns 403;
-  - JWT with unknown tenant claim returns 403;
-  - JWT with malformed tenant claim returns 403;
-  - JWT with non-string tenant claim returns 403;
-  - missing authentication returns 401;
-  - API key reads matching tenant seed data;
-  - invalid API key returns 401;
-  - demo session reads matching tenant seed data;
-  - demo session/header mismatch returns 403.
-- Tenant selector tests:
-  - missing header returns 400;
-  - blank, duplicate, comma-containing, and too-long headers return 400;
-  - unknown header returns 404 for authenticated callers.
-  - uppercase tenant selector and uppercase tenant claim normalize to the same
-    known tenant.
-  - leading/trailing whitespace around tenant selector and claim normalizes to
-    the same known tenant.
-  - authenticated JWT without tenant claim plus missing `X-Tenant-ID` returns
-    403 because authenticated tenant validation runs before selector
-    validation.
-- Credential conflict tests:
-  - bearer `acme` plus API key `globex` returns 400
-    `CONFLICTING_CREDENTIALS`;
-  - API key plus demo session returns 400 `CONFLICTING_CREDENTIALS`;
-  - `Authorization: Basic ...` plus API key is not a credential conflict and
-    authenticates through the API key;
-  - multi-credential `/actuator/health` still returns the health response;
-  - conflict responses do not set `TenantContext`.
-- Routing and cleanup tests:
-  - valid `acme` and `globex` requests return tenant-specific rows;
-  - cross-tenant data is not visible;
-  - parallel authorized requests cannot leak `TenantContext`;
-  - direct filter test proves same servlet-thread cleanup after downstream
-    failure.
-- Architecture tests:
-  - implement as JUnit source-text scans using `java.nio.file.Files.walk`; no
-    Konsist or ArchUnit dependency;
-  - only `TenantAuthorizationFilter` calls `TenantContext.set`;
-  - custom security filters are not annotated with `@Component`;
-  - no production code in this module imports from module `05`;
-  - repositories do not call bare `transaction(` except through
-    `TenantTransaction`.
+- Security request test:
+  - Valid JWT claim은 matching tenant seed data를 읽는다.
+  - JWT/header mismatch는 403을 반환한다.
+  - Tenant claim 없는 JWT는 403을 반환한다.
+  - Unknown tenant claim이 있는 JWT는 403을 반환한다.
+  - Malformed tenant claim이 있는 JWT는 403을 반환한다.
+  - Non-string tenant claim이 있는 JWT는 403을 반환한다.
+  - Missing authentication은 401을 반환한다.
+  - API key는 matching tenant seed data를 읽는다.
+  - Invalid API key는 401을 반환한다.
+  - Demo session은 matching tenant seed data를 읽는다.
+  - Demo session/header mismatch는 403을 반환한다.
+- Tenant selector test:
+  - Missing header는 400을 반환한다.
+  - Blank, duplicate, comma-containing, too-long header는 400을 반환한다.
+  - Unknown header는 authenticated caller에 대해 404를 반환한다.
+  - Uppercase tenant selector와 uppercase tenant claim은 같은 known tenant로 normalize된다.
+  - Tenant selector 및 claim 주변 leading/trailing whitespace는 같은 known tenant로 normalize된다.
+  - Tenant claim 없는 authenticated JWT와 missing `X-Tenant-ID` 조합은 403을 반환한다.
+    Authenticated tenant validation이 selector validation보다 먼저 실행되기 때문이다.
+- Credential conflict test:
+  - Bearer `acme`와 API key `globex` 조합은 `400 CONFLICTING_CREDENTIALS`를 반환한다.
+  - API key와 demo session 조합은 `400 CONFLICTING_CREDENTIALS`를 반환한다.
+  - `Authorization: Basic ...`과 API key 조합은 credential conflict가 아니며 API key로
+    authenticate된다.
+  - Multi-credential `/actuator/health`도 health response를 반환한다.
+  - Conflict response는 `TenantContext`를 설정하지 않는다.
+- Routing 및 cleanup test:
+  - Valid `acme`, `globex` request는 tenant-specific row를 반환한다.
+  - Cross-tenant data는 보이지 않는다.
+  - Parallel authorized request는 `TenantContext`를 leak할 수 없다.
+  - Direct filter test는 downstream failure 이후 same servlet-thread cleanup을 증명한다.
+- Architecture test:
+  - Konsist나 ArchUnit dependency 없이 `java.nio.file.Files.walk`를 사용하는 JUnit source-text
+    scan으로 구현한다.
+  - `TenantAuthorizationFilter`만 `TenantContext.set`을 호출한다.
+  - Custom security filter는 `@Component` annotation을 갖지 않는다.
+  - 이 module의 production code는 module `05`에서 import하지 않는다.
+  - Repository는 `TenantTransaction`을 통하지 않는 bare `transaction(`을 호출하지 않는다.
 
-### 6. Update documentation and diagrams
+### 6. Documentation 및 diagram 갱신
 
 Complexity: M
 
-- Add module `README.md` and `README.ko.md`.
-- Explain:
-  - tenant routing vs tenant authorization;
-  - JWT/API-key/demo-session identity sources;
-  - demo session header is not a production session cookie;
-  - CSRF is disabled because this example is stateless JSON;
-  - request and error contract;
-  - when to choose this strategy;
-  - CI coverage and why Nightly remains unchanged.
-  - top-level "Not for production" caveat for `DemoJwtDecoder`, fixed API key
-    maps, and demo session header.
-  - MVC `ThreadLocal` propagation does not transfer unchanged to coroutine,
-    WebFlux, or virtual-thread examples.
-- Add architecture PNG/SVG and sequence PNG/SVG under
-  `docs/images/readme-diagrams/`.
-- Visually inspect PNGs for readable contrast.
-- Update `10-multi-tenant/README.md` and `README.ko.md` to list module `06`.
-- Update root README files only if their module tables enumerate Chapter 10
-  examples directly.
+- Module `README.md`와 `README.ko.md`를 추가한다.
+- 다음을 설명한다:
+  - Tenant routing vs tenant authorization.
+  - JWT/API-key/demo-session identity source.
+  - Demo session header는 production session cookie가 아니다.
+  - 이 example은 stateless JSON이므로 CSRF가 비활성화된다.
+  - Request 및 error contract.
+  - 이 strategy를 선택할 시점.
+  - CI coverage와 Nightly가 unchanged인 이유.
+  - `DemoJwtDecoder`, fixed API key map, demo session header에 대한 top-level
+    "Not for production" caveat.
+  - MVC `ThreadLocal` propagation은 coroutine, WebFlux, virtual-thread example에 그대로
+    이전되지 않는다.
+- `docs/images/readme-diagrams/` 아래 architecture PNG/SVG와 sequence PNG/SVG를 추가한다.
+- Readable contrast를 위해 PNG를 visually inspect한다.
+- Module `06`을 나열하도록 `10-multi-tenant/README.md`와 `README.ko.md`를 갱신한다.
+- Root README file은 module table이 Chapter 10 example을 직접 enumerate할 때만 갱신한다.
 
-### 7. Wire selected Examples CI
+### 7. Selected Examples CI 연결
 
 Complexity: S
 
-- Add `10-multi-tenant/06-spring-security-tenant-authorization-spring-web/**`
-  to both `on.push.paths` and `on.pull_request.paths` in Examples workflow.
-- Add `:06-spring-security-tenant-authorization-spring-web:build` to the
-  selected examples Gradle command.
-- Run `actionlint .github/workflows/examples.yml`.
+- Examples workflow의 `on.push.paths`와 `on.pull_request.paths` 모두에
+  `10-multi-tenant/06-spring-security-tenant-authorization-spring-web/**`를 추가한다.
+- Selected examples Gradle command에 `:06-spring-security-tenant-authorization-spring-web:build`를
+  추가한다.
+- `actionlint .github/workflows/examples.yml`을 실행한다.
 
-### 8. Verify and review
+### 8. 검증 및 review
 
 Complexity: M
 
-Run in order:
+다음 순서로 실행한다:
 
 1. `./gradlew projects --quiet | rg '06-spring-security-tenant-authorization-spring-web'`
 2. `./gradlew :06-spring-security-tenant-authorization-spring-web:compileKotlin --warning-mode all --console=plain`
@@ -237,39 +218,37 @@ Run in order:
 4. `./gradlew :06-spring-security-tenant-authorization-spring-web:build --stacktrace --continue`
 5. `actionlint .github/workflows/examples.yml`
 6. `git diff --check`
-7. README diagram scan for required Architecture Diagram PNG links and no
-   Mermaid blocks.
-8. Visual PNG inspection through image viewer tooling.
-9. IDE diagnostics if available; otherwise record compile/test fallback.
-10. Step 6-R current-session 6-Tier review plus Claude Code CLI review with
-    `P0=0`, `P1=0`.
+7. Required architecture diagram PNG link와 Mermaid block 없음 상태에 대한 README diagram scan.
+8. Image viewer tooling을 통한 visual PNG inspection.
+9. 사용할 수 있으면 IDE diagnostics. 그렇지 않으면 compile/test fallback을 기록한다.
+10. Step 6-R current-session 6-Tier review와 Claude Code CLI review. 결과는 `P0=0`, `P1=0`.
 
-### 9. Publish
+### 9. 게시
 
 Complexity: M
 
-- Add `docs/lessons/2026-05-23-issue-54-spring-security-tenant-authorization.md`.
-- Commit with Lore protocol trailers.
-- Push branch and open a PR against `develop`, assigned to `debop`.
-- Add `examples`, `documentation`, and security-related labels if available.
-- Add Step 7-R PR comment and formal review entry.
-- Watch CI until required checks are `SUCCESS` or `SKIPPED`.
-- Do not merge unless the user requests merge after the DoD report.
+- `docs/lessons/2026-05-23-issue-54-spring-security-tenant-authorization.md`를 추가한다.
+- Lore protocol trailer를 포함해 commit한다.
+- Branch를 push하고 `debop`에게 assign된 `develop` 대상 PR을 연다.
+- 사용할 수 있으면 `examples`, `documentation`, security-related label을 추가한다.
+- Step 7-R PR comment와 formal review entry를 추가한다.
+- Required check가 `SUCCESS` 또는 `SKIPPED`가 될 때까지 CI를 watch한다.
+- DoD report 이후 사용자가 merge를 요청하기 전에는 merge하지 않는다.
 
-## Acceptance Mapping
+## 수용 기준 매핑
 
-- Tenant from authenticated requests:
-  Tasks 2 and 3 implement JWT/API-key/demo-session authentication and tenant
-  authorization before `TenantContext` is set.
-- Focused tests for isolation and error handling:
-  Task 5 covers valid access, missing auth, invalid tenant claims, mismatch,
-  and cross-tenant denial.
-- README strategy guidance:
-  Task 6 updates English/Korean docs and committed PNG diagrams.
-- CI/nightly coverage decision:
-  Task 7 wires Examples CI; the spec records why Nightly is unchanged.
+- Authenticated request에서 tenant 도출:
+  Task 2와 3은 `TenantContext`가 설정되기 전에 JWT/API-key/demo-session authentication 및 tenant
+  authorization을 구현한다.
+- Isolation 및 error handling용 focused test:
+  Task 5는 valid access, missing auth, invalid tenant claim, mismatch, cross-tenant denial을
+  다룬다.
+- README 전략 안내:
+  Task 6은 English/Korean docs와 committed PNG diagram을 갱신한다.
+- CI/nightly coverage 결정:
+  Task 7은 Examples CI를 연결한다. Spec은 Nightly가 unchanged인 이유를 기록한다.
 
-## Review Notes
+## 검토 메모
 
-Step 2-R/3-R advisor review is required before implementation proceeds. The
-gate passes only when the latest normalized table shows `P0=0` and `P1=0`.
+구현을 진행하기 전에 Step 2-R/3-R advisor review가 필요하다. Gate는 최신 normalized table이
+`P0=0` 및 `P1=0`을 보여 줄 때만 통과한다.

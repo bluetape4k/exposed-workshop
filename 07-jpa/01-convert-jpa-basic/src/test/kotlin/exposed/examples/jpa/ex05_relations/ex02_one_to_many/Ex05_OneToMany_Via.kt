@@ -133,7 +133,7 @@ class Ex05_OneToMany_Via: AbstractExposedTest() {
         var kind by CloudTable.kind
         var length by CloudTable.length
 
-        // one-to-many unidirectional association
+        // 단방향 일대다 연관을 매핑한다.
         var producedSnowflakes: SizedIterable<Snowflake> by Snowflake via CloudSnowflakeTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
@@ -181,7 +181,7 @@ class Ex05_OneToMany_Via: AbstractExposedTest() {
             cloud2.producedSnowflakes.count() shouldBeEqualTo 2L
             cloud2.producedSnowflakes.toSet() shouldContainSame setOf(snowflake1, snowflake2)
 
-            // Remove snowflake
+            // snowflake 엔티티를 제거한다.
             val snowflakes: List<Snowflake> = cloud2.producedSnowflakes.toList()
             cloud2.producedSnowflakes = SizedCollection(snowflakes.drop(1))
 
@@ -218,7 +218,7 @@ class Ex05_OneToMany_Via: AbstractExposedTest() {
             cloud2.producedSnowflakes.count() shouldBeEqualTo 2L
             cloud2.producedSnowflakes.toSet() shouldContainSame setOf(snowflake1, snowflake2)
 
-            // Remove first relation
+            // 첫 번째 관계 행을 제거한다.
             CloudSnowflakeTable
                 .deleteWhere {
                     (cloudId eq cloud.id) and (snowflakeId eq snowflake1.id)
@@ -296,7 +296,7 @@ class Ex05_OneToMany_Via: AbstractExposedTest() {
                 it[snowflakeId] = snowflake2.id
             }
 
-            // Duplicated entry
+            // 중복 엔트리 제약 위반을 검증한다.
             assertFailsWith<ExposedSQLException> {
                 CloudSnowflakeTable.insert {
                     it[cloudId] = cloud.id

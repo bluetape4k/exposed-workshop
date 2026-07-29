@@ -53,7 +53,7 @@ class DomainSQLTest: AbstractSpringMvcTest() {
     open inner class VirtualThread {
 
         /**
-         * Retrieves and validates actors within virtual thread
+         * Virtual thread 안에서 배우 목록을 조회하고 결과가 비어 있지 않은지 검증합니다.
          */
         @RepeatedTest(REPEAT_SIZE)
         open fun `get all actors`() {
@@ -66,7 +66,7 @@ class DomainSQLTest: AbstractSpringMvcTest() {
         }
 
         /**
-         * Tests actor retrieval across multiple virtual threads
+         * 여러 virtual thread에서 배우 조회가 동시에 정상 수행되는지 검증합니다.
          */
         @Test
         open fun `get all actors in multiple virtual threads`() {

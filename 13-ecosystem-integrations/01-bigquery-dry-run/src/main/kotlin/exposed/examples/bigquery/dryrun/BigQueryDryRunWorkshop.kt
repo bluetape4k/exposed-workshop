@@ -12,10 +12,10 @@ import org.jetbrains.exposed.v1.jdbc.select
 import java.math.BigDecimal
 
 /**
- * Event table used by the BigQuery dry-run workshop.
+ * BigQuery 드라이런 워크숍에서 사용하는 이벤트 테이블이다.
  *
- * The table models a small analytical event stream. It is used only to let
- * Exposed generate SQL before the SQL is sent to BigQuery as a dry-run request.
+ * 이 테이블은 작은 분석 이벤트 스트림을 모델링한다. 용도는
+ * SQL을 BigQuery 드라이런 요청으로 보내기 전에 Exposed가 SQL을 생성하게 하는 데 한정된다.
  */
 object Events: Table("events") {
     val eventId = long("event_id")
@@ -26,10 +26,10 @@ object Events: Table("events") {
 }
 
 /**
- * Builds the regional revenue read-model query.
+ * 지역별 매출 조회 모델 쿼리를 구성한다.
  *
- * The query groups billable events by region and keeps the generated SQL stable
- * enough for workshop assertions without depending on a live warehouse.
+ * 이 쿼리는 과금 대상 이벤트를 지역별로 그룹화하고 생성 SQL을 안정적으로 유지한다.
+ * 그래서 실제 warehouse에 의존하지 않고도 워크숍 assertion을 수행할 수 있다.
  */
 fun buildRegionalRevenueQuery(
     minimumRevenue: BigDecimal = BigDecimal("10.00"),
@@ -41,11 +41,11 @@ fun buildRegionalRevenueQuery(
         .orderBy(Events.region)
 
 /**
- * Returns the default BigQuery dry-run options used by the workshop.
+ * 워크숍에서 사용하는 기본 BigQuery 드라이런 옵션을 반환한다.
  *
- * The options cap billed bytes, attach a workshop label, use batch priority,
- * and select the US location. `BigQueryContext.validateQuery` turns the request
- * into a dry run before it reaches the REST client.
+ * 이 옵션은 과금 바이트 상한을 설정하고, 워크숍 label을 붙이며, batch priority를 사용하고,
+ * US location을 선택한다. `BigQueryContext.validateQuery`는 요청을
+ * REST client에 도달하기 전에 드라이런으로 전환한다.
  */
 fun defaultDryRunOptions(): BigQueryQueryOptions =
     BigQueryQueryOptions(
@@ -57,11 +57,11 @@ fun defaultDryRunOptions(): BigQueryQueryOptions =
     )
 
 /**
- * Validates the regional revenue query with BigQuery dry-run semantics.
+ * BigQuery 드라이런 의미론으로 지역별 매출 쿼리를 검증한다.
  *
- * The supplied [context] owns the BigQuery REST client. Tests provide a mocked
- * client, so the default workshop command validates request construction
- * without credentials, network access, or billable query execution.
+ * 전달된 [context]가 BigQuery REST client를 소유한다. 테스트는 모의
+ * client를 제공하므로 기본 워크숍 명령은 요청 구성을 검증한다.
+ * 인증 정보, 네트워크 접근, 과금 쿼리 실행 없이 검증이 끝난다.
  */
 fun validateRegionalRevenueDryRun(
     context: BigQueryContext,

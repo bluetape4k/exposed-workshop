@@ -70,7 +70,7 @@ dependencies {
     api(libs.jakarta.persistence.api)
     api(libs.jakarta.transaction.api)
 
-    // Hibernate Reactive
+    // Hibernate Reactive 의존성
     implementation(libs.bluetape4k.hibernate.reactive)
     implementation(libs.hibernate.reactive.core)
     implementation("com.ongres.scram:scram-client:3.2") // vert.x sql client 에서 사용하는데 제외되었다.
@@ -79,17 +79,17 @@ dependencies {
     kapt(libs.hibernate.jpamodelgen)
     kaptTest(libs.hibernate.jpamodelgen)
 
-    // Mutiny & Coroutines
+    // Mutiny 및 코루틴 의존성
     implementation(libs.bluetape4k.coroutines)
     implementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.reactor)
     testImplementation(libs.kotlinx.coroutines.test)
 
-    // Vaidators
+    // Validation 의존성
     implementation(libs.hibernate.validator)
     implementation(libs.jakarta.validation.api)
 
-    // Spring Boot Webflux
+    // Spring Boot WebFlux 애플리케이션 의존성
     implementation("org.springframework.boot:spring-boot-autoconfigure")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -99,7 +99,7 @@ dependencies {
         exclude(module = "mockito-core")
     }
 
-    // Postgres
+    // PostgreSQL reactive client와 Testcontainers 의존성
     implementation(libs.testcontainers.postgresql)
     implementation(libs.vertx.pg.client)
 
@@ -107,10 +107,10 @@ dependencies {
     // reactive 방식에서는 항상 verx-pg-client 를 사용합니다
     runtimeOnly(libs.postgresql.driver)
 
-    // Monitoring
+    // 모니터링 의존성
     implementation(libs.micrometer.core)
     implementation(libs.micrometer.registry.prometheus)
 
-    // SpringDoc - OpenAPI 3.0
+    // SpringDoc OpenAPI 3.0 UI 의존성
     implementation(libs.springdoc.openapi.starter.webflux.ui)
 }

@@ -208,7 +208,7 @@ class Ex02_IdClass : AbstractExposedTest() {
             resultCarYear.value shouldBeEqualTo carYear
 
             /**
-             * Query by [CompositeID]
+             * [CompositeID] 값으로 엔티티를 조회한다.
              *
              * ```sql
              * -- Postgres

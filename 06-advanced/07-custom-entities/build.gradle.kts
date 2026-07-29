@@ -15,10 +15,10 @@ dependencies {
     testImplementation(libs.jetbrains.exposed.dao)
     testImplementation(libs.exposed.core)
 
-    // Id Generators
-    // - Snowflake
-    // - Timebased UUID
-    // - Ksuids
+    // 사용자 정의 엔티티 ID 생성기 의존성
+    // - Snowflake 기반 정렬 가능 ID 생성기
+    // - 시간 기반 UUID 생성기
+    // - KSUID 기반 시간 정렬 ID 생성기
     // Identifier 자동 생성
     testImplementation(libs.bluetape4k.idgenerators)
 
@@ -30,14 +30,14 @@ dependencies {
     testImplementation(libs.testcontainers.mysql)
     testImplementation(libs.testcontainers.postgresql)
 
-    // Jdbc Drivers
+    // 테스트 데이터베이스별 JDBC 드라이버 의존성
     testRuntimeOnly(libs.h2.v2)
     testRuntimeOnly(libs.mariadb.java.client)
     testRuntimeOnly(libs.mysql.connector.j)
     testRuntimeOnly(libs.postgresql.driver)
     testRuntimeOnly(libs.pgjdbc.ng)
 
-    // Coroutines
+    // 코루틴 기반 트랜잭션 예제 의존성
     testImplementation(libs.bluetape4k.coroutines)
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)

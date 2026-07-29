@@ -19,7 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
 /**
- * Left Join
+ * Left Join 예제를 검증한다.
  */
 class Ex03_Left_Join: AbstractExposedTest() {
 
@@ -34,7 +34,7 @@ class Ex03_Left_Join: AbstractExposedTest() {
     )
 
     /**
-     * Join with aliases
+     * alias를 사용한 조인을 검증한다.
      *
      * ```sql
      * -- Postgres
@@ -102,7 +102,7 @@ class Ex03_Left_Join: AbstractExposedTest() {
     }
 
     /**
-     * Left Join with subqueries
+     * Left Join 예제를 검증한다. with subqueries
      *
      * ```sql
      * -- Postgres
@@ -180,7 +180,7 @@ class Ex03_Left_Join: AbstractExposedTest() {
     }
 
     /**
-     * Left Join
+     * Left Join 예제를 검증한다.
      *
      * ```sql
      * -- Postgres

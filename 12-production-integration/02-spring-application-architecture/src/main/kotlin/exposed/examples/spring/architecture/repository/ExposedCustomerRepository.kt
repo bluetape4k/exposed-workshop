@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
 /**
- * Exposed JDBC repository used by the Spring Boot 4 architecture example.
+ * Spring Boot 4 아키텍처 예제에서 사용하는 Exposed JDBC 저장소이다.
  */
 internal class ExposedCustomerRepository(
     private val database: Database,

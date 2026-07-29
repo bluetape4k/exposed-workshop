@@ -95,7 +95,7 @@ open class SingleEntityCrudBenchmark {
         }
     }
 
-    // ── CREATE ──────────────────────────────────────────
+    // ── 생성 ──────────────────────────────────────────
 
     @Benchmark
     fun create(): Long {
@@ -152,7 +152,7 @@ open class SingleEntityCrudBenchmark {
         }
     }
 
-    // ── READ ────────────────────────────────────────────
+    // ── 조회 ────────────────────────────────────────────
 
     @Benchmark
     fun read(): Any? {
@@ -187,7 +187,7 @@ open class SingleEntityCrudBenchmark {
         }
     }
 
-    // ── UPDATE ──────────────────────────────────────────
+    // ── 갱신 ──────────────────────────────────────────
 
     @Benchmark
     fun update(): Int {
@@ -243,7 +243,7 @@ open class SingleEntityCrudBenchmark {
         }
     }
 
-    // ── DELETE ──────────────────────────────────────────
+    // ── 삭제 ──────────────────────────────────────────
 
     @Benchmark
     fun delete(): Int {
@@ -287,7 +287,7 @@ open class SingleEntityCrudBenchmark {
         }
     }
 
-    // ── BATCH CREATE ───────────────────────────────────
+    // ── 배치 생성 ───────────────────────────────────
 
     @Benchmark
     fun batchCreate(): Int {
@@ -357,7 +357,7 @@ open class SingleEntityCrudBenchmark {
         }
     }
 
-    // ── READ ALL (DAO / JPQL) ──────────────────────────
+    // ── 전체 조회: DAO와 JPQL 경로를 비교한다 ──────────────────────────
 
     @Benchmark
     fun readAll(): Int {

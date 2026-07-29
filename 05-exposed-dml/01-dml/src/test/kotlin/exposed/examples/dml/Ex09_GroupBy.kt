@@ -256,7 +256,7 @@ class Ex09_GroupBy : AbstractExposedTest() {
     }
 
     /**
-     * Aggregate function AVG
+     * Aggregate function AVG 예제
      *
      * ```sql
      * -- Postgres

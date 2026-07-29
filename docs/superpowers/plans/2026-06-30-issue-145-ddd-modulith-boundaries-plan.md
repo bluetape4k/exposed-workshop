@@ -1,58 +1,56 @@
-# Issue #145 DDD Modulith Boundary Plan
+# Issue #145 DDD Modulith boundary 계획
 
-## Step 1 - Scaffold Tests First
+## 단계 1 - Test 우선 scaffold
 
-Action:
-- Add `08-ddd-modulith-boundaries` Gradle module skeleton.
-- Add Spring Boot integration tests for positive Modulith verification,
-  negative boundary violation fixture, and event-driven persistence handoff.
-- Run the module test command before adding production code and record the
-  expected failure.
-
-DoD:
-- Tests compile or fail for missing production symbols only.
-- Failure proves the new module is not implemented yet.
-
-## Step 2 - Implement Bounded Contexts
-
-Action:
-- Implement `orders` and `shipping` bounded contexts.
-- Keep Exposed tables and repositories internal to each context.
-- Publish and consume `OrderAcceptedEvent` through the `orders.events` named
-  interface.
+작업:
+- `08-ddd-modulith-boundaries` Gradle module skeleton을 추가한다.
+- Positive Modulith verification, negative boundary violation fixture, event-driven persistence
+  handoff를 위한 Spring Boot integration test를 추가한다.
+- Production code를 추가하기 전에 module test command를 실행하고 expected failure를 기록한다.
 
 DoD:
-- Positive verifier test passes.
-- Event handoff test proves `shipping` writes its own table without direct
-  access to `orders.internal`.
+- Test는 compile되거나 missing production symbol 때문에만 실패한다.
+- Failure는 새 module이 아직 구현되지 않았음을 증명한다.
 
-## Step 3 - Document and Diagram
+## 단계 2 - Bounded context 구현
 
-Action:
-- Add `README.md`, `README.ko.md`, and a generated SVG/PNG diagram.
-- Update Chapter 13 and root README links.
+작업:
+- `orders`와 `shipping` bounded context를 구현한다.
+- Exposed table과 repository를 각 context 내부로 유지한다.
+- `orders.events` named interface를 통해 `OrderAcceptedEvent`를 publish/consume한다.
 
 DoD:
-- Both README files explain the DDD/Modulith/Exposed flow.
-- Diagram passes automated audits and full-size visual inspection.
+- Positive verifier test가 통과한다.
+- Event handoff test는 `shipping`이 `orders.internal` direct access 없이 자체 table에 write함을
+  증명한다.
 
-## Step 4 - Register CI Surface
+## 단계 3 - 문서와 diagram
 
-Action:
-- Add the module build task to `.github/workflows/examples.yml`.
-- Verify module registration with Gradle project listing.
+작업:
+- `README.md`, `README.ko.md`, generated SVG/PNG diagram을 추가한다.
+- Chapter 13 및 root README link를 갱신한다.
+
+DoD:
+- 두 README file은 DDD/Modulith/Exposed flow를 설명한다.
+- Diagram은 automated audit와 full-size visual inspection을 통과한다.
+
+## 단계 4 - Register CI Surface
+
+작업:
+- Module build task를 `.github/workflows/examples.yml`에 추가한다.
+- Gradle project listing으로 module registration을 검증한다.
 
 DoD:
 - `:08-ddd-modulith-boundaries` appears in `./gradlew projects`.
-- Workflow syntax validates with `actionlint`.
+- Workflow syntax는 validate된다 with `actionlint`.
 
-## Step 5 - Review and PR
+## 단계 5 - 검토 및 PR
 
-Action:
-- Run targeted tests/build, diff checks, verifier checklist, and review gates.
-- Commit with Lore trailers and open a PR for issue #145.
+작업:
+- Targeted tests/build, diff check, verifier checklist, review gate를 실행한다.
+- Lore trailer로 commit하고 issue #145용 PR을 연다.
 
 DoD:
-- PR mirrors issue assignee, milestone, and labels.
-- PR body ends with `## DoD Status`.
-- Live PR and issue metadata are verified with `gh`.
+- PR은 issue assignee, milestone, label을 반영한다.
+- PR body는 `## DoD Status`로 끝난다.
+- Live PR 및 issue metadata는 `gh`로 검증된다.

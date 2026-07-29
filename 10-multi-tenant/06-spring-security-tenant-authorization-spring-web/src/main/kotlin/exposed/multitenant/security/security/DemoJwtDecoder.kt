@@ -6,12 +6,12 @@ import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.JwtException
 
 /**
- * Fixed-token JWT decoder for this workshop example.
+ * 이 워크숍 예제에서만 사용하는 고정 토큰 JWT decoder이다.
  *
- * This decoder intentionally emits unsigned `alg=none` tokens and performs no
- * production token validation. Do not copy it into production resource servers.
- * Real services must validate signatures, issuer, audience, expiry, and key
- * rotation through a real authorization server or trusted JWT infrastructure.
+ * 이 decoder는 의도적으로 서명 없는 `alg=none` 토큰을 발급하며,
+ * 운영 환경 수준의 토큰 검증을 수행하지 않는다. 운영 resource server에 복사해서 사용하면 안 된다.
+ * 실제 서비스는 서명, issuer, audience, expiry, key rotation을
+ * 신뢰할 수 있는 authorization server 또는 JWT 인프라를 통해 검증해야 한다.
  */
 internal class DemoJwtDecoder : JwtDecoder {
 

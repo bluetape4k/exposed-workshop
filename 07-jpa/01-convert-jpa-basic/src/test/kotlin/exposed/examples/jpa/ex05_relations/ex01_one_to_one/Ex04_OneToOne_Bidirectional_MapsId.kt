@@ -215,7 +215,7 @@ class Ex04_OneToOne_Bidirectional_MapsId : AbstractExposedTest() {
 
             entityCache.clear()
 
-            // Load by join
+            // 조인으로 연관 데이터를 로드한다.
             val authors =
                 Authors
                     .innerJoin(Pictures)
@@ -233,7 +233,7 @@ class Ex04_OneToOne_Bidirectional_MapsId : AbstractExposedTest() {
             author4.picture shouldBeEqualTo picture
             author4.biography shouldBeEqualTo biography
 
-            // cascade delete (author -> biography, picture)
+            // author 삭제 시 biography와 picture까지 cascade delete 되는지 검증한다.
             author.delete()
             entityCache.clear()
 

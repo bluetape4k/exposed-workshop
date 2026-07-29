@@ -258,7 +258,7 @@ class Ex02_Person: AbstractExposedTest() {
     }
 
     /**
-     * PostgreSQL doesn't support LIMIT in DELETE clause
+     * PostgreSQL은 DELETE 절에서 LIMIT를 지원하지 않는다.
      *
      * ```sql
      * -- MySQL V8
@@ -268,7 +268,7 @@ class Ex02_Person: AbstractExposedTest() {
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `delete by where with limit`(testDB: TestDB) {
-        // PostgreSQL doesn't support LIMIT in DELETE clause
+        // PostgreSQL은 DELETE 절에서 LIMIT를 지원하지 않는다.
         Assumptions.assumeTrue { testDB !in TestDB.ALL_POSTGRES_LIKE }
 
         withPersonAndAddress(testDB) { persons, _ ->

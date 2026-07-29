@@ -106,7 +106,7 @@ class Ex06_OneToMany_Set: AbstractExposedTest() {
 
         var amount: BigDecimal by BidTable.amount
 
-        // many-to-one relation
+        // 다대일 관계를 매핑한다.
         var item: BiddingItem by BiddingItem referencedOn BidTable.itemId
 
         override fun equals(other: Any?): Boolean = idEquals(other)

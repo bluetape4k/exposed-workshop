@@ -115,7 +115,7 @@ class Ex13_Replace : AbstractExposedTest() {
     }
 
     /**
-     * Test for [Table.replace] function with specific columns.
+     * 특정 column을 지정한 [Table.replace] function 테스트.
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -384,8 +384,8 @@ class Ex13_Replace : AbstractExposedTest() {
                     .orderBy(cities.name)
                     .map { it[cities.id] }
 
-            // replace is implemented as delete-then-insert on conflict, which breaks foreign key constraints,
-            // so this test will only work if those related rows are deleted.
+            // replace는 conflict 시 delete 후 insert로 구현되므로 foreign key constraint가 깨질 수 있습니다.
+            // 따라서 관련 row가 삭제된 경우에만 이 테스트가 동작합니다.
             userData.deleteAll()
             users.deleteAll()
 

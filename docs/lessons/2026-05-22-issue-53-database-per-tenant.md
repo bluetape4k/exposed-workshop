@@ -1,37 +1,37 @@
-# Issue 53 Database-per-Tenant Example
+# Issue 53 Database-per-tenant 예제
 
-## Context
+## 배경
 
-Issue #53 required a chapter 10 Spring MVC example that routes each tenant to a
-dedicated datasource/database instead of switching schemas on one shared pool.
+Issue #53은 하나의 shared pool에서 schema를 switching하는 대신 각 tenant를 dedicated
+datasource/database로 routing하는 10장 Spring MVC 예제를 요구했다.
 
-## Decision
+## 결정
 
-Use a closed `TenantId` whitelist, a `TenantDatabaseRegistry` that owns one
-Hikari pool and Exposed `Database` per tenant, and explicit
-`TenantTransaction.execute {}` calls so there is no default datasource fallback.
+Closed `TenantId` whitelist, tenant마다 하나의 Hikari pool과 Exposed `Database`를
+소유하는 `TenantDatabaseRegistry`, 그리고 default datasource fallback이 없도록 명시적인
+`TenantTransaction.execute {}` 호출을 사용한다.
 
-## Outcome
+## 결과
 
-Added `10-multi-tenant/05-database-per-tenant-spring-web` with English/Korean
-READMEs, architecture and sequence PNG diagrams, focused tests for isolation,
-rollback, config rejection, lifecycle close, and servlet-thread context cleanup.
-The selected examples workflow now builds the new module.
+English/Korean README, architecture/sequence PNG diagram, isolation, rollback,
+config rejection, lifecycle close, servlet-thread context cleanup을 검증하는 focused
+test를 갖춘 `10-multi-tenant/05-database-per-tenant-spring-web`를 추가했다. Selected
+examples workflow도 새 모듈을 build한다.
 
-## Verification
+## 검증
 
 - `./gradlew :05-database-per-tenant-spring-web:build --stacktrace --continue`
   passed with 14 tests.
 - `actionlint .github/workflows/examples.yml` passed.
 - `./gradlew projects --quiet` lists `:05-database-per-tenant-spring-web`.
-- README scan confirmed Architecture Diagram PNG links, no Mermaid, and existing
-  PNG files.
+- README scan으로 Architecture Diagram PNG link, Mermaid 없음, 기존 PNG file 존재를
+  확인했다.
 - Claude Step 6-R rerun:
   `.omx/artifacts/claude-issue-53-code-review-rerun-stdin-6min-20260523002013.md`
   reported `P0=0, P1=0, P2=0`.
 
-## Future Agents
+## 향후 agent 지침
 
-ThreadLocal cleanup tests must observe the servlet/filter thread, not the JUnit
-client thread. For tenant datasource examples, close partially-created pools on
-registry initialization failure and wire Spring bean shutdown explicitly.
+ThreadLocal cleanup test는 JUnit client thread가 아니라 servlet/filter thread를 관찰해야
+한다. Tenant datasource 예제에서는 registry initialization failure가 발생하면
+부분적으로 생성된 pool을 닫고 Spring bean shutdown을 명시적으로 wiring한다.

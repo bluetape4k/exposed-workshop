@@ -60,7 +60,7 @@ class Ex01_AuditableEntity: AbstractExposedTest() {
                 val now = java.time.Instant.now()
                 Thread.sleep(100)
 
-                // Task Create
+                // Task 생성 시 감사 필드를 검증한다.
                 val task = TaskEntity.new {
                     title = "Test Task"
                     description = "This is a test task."
@@ -75,7 +75,7 @@ class Ex01_AuditableEntity: AbstractExposedTest() {
                 loaded.updatedAt.shouldBeNull()
                 loaded.updatedBy.shouldBeNull()
 
-                // Task Update
+                // Task 갱신 시 감사 필드를 검증한다.
                 loaded.title = "Test Task - Updated"
                 entityCache.clear()
 

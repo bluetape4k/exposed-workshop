@@ -32,7 +32,7 @@ class Ex05_Self_Join: AbstractExposedTest() {
     }
 
     /**
-     * Inner join for self referenced table
+     * 자기 참조 테이블에 대한 inner join을 검증한다.
      * 자식 엔티티 (id=4)의 부모 엔티티를 조회한다.
      *
      * ```sql
@@ -85,7 +85,7 @@ class Ex05_Self_Join: AbstractExposedTest() {
     }
 
     /**
-     * Inner join for self referenced table with alias
+     * 자기 참조 테이블에 대한 inner join을 검증한다. with alias
      * 자식 엔티티 (id=4)의 부모 엔티티를 조회한다.
      *
      * ```sql

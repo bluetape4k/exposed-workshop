@@ -38,7 +38,7 @@ class Ex03_TablePerClass_Inheritance : AbstractExposedTest() {
     }
 
     /**
-     * CreditCard Table
+     * CreditCard 테이블 매핑 정의이다.
      *
      * ```sql
      * CREATE TABLE IF NOT EXISTS CREDIT_CARD (
@@ -70,7 +70,7 @@ class Ex03_TablePerClass_Inheritance : AbstractExposedTest() {
     }
 
     /**
-     * BankAccount Table
+     * BankAccount 테이블 매핑 정의이다.
      *
      * ```sql
      * CREATE TABLE IF NOT EXISTS BANK_ACCOUNT (
@@ -111,7 +111,7 @@ class Ex03_TablePerClass_Inheritance : AbstractExposedTest() {
     }
 
     /**
-     * CreditCard Entity
+     * CreditCard 엔티티 매핑 정의이다.
      */
     class CreditCard(
         id: EntityID<UUID>,
@@ -143,7 +143,7 @@ class Ex03_TablePerClass_Inheritance : AbstractExposedTest() {
     }
 
     /**
-     * BankAccount Entity
+     * BankAccount 엔티티 매핑 정의이다.
      */
     class BankAccount(
         id: EntityID<UUID>,

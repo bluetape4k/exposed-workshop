@@ -8,10 +8,10 @@ import org.gradle.api.plugins.ExtensionAware
 
 plugins {
     base
-    // jacoco
+    // JaCoCo 테스트 커버리지 리포트 플러그인
     alias(libs.plugins.kotlin.jvm)
 
-    // see: https://kotlinlang.org/docs/reference/compiler-plugins.html
+    // Kotlin compiler plugin 문서: https://kotlinlang.org/docs/reference/compiler-plugins.html
     alias(libs.plugins.kotlin.spring) apply false
     alias(libs.plugins.kotlin.allopen) apply false
     alias(libs.plugins.kotlin.noarg) apply false
@@ -129,7 +129,7 @@ subprojects {
             useJUnitPlatform()
 
             // 테스트 시 아래와 같은 예외 메시지를 제거하기 위해서
-            // OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+            // OpenJDK 경고 원문: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
             jvmArgs(
                 "-Xshare:off",
                 "-Xms2G",
@@ -280,7 +280,7 @@ subprojects {
         implementation(rootLibs.jackson3.module.blackbird)
         implementation(rootLibs.logback)
 
-        // JUnit 5
+        // JUnit 5 테스트 엔진
         testImplementation(rootLibs.bluetape4k.junit5)
         testImplementation(rootLibs.junit.jupiter)
         testRuntimeOnly(rootLibs.junit.platform.engine)
@@ -290,7 +290,7 @@ subprojects {
         testImplementation(rootLibs.mockk)
         testImplementation(rootLibs.awaitility.kotlin)
 
-        // Property based test
+        // 속성 기반 테스트 라이브러리
         testImplementation(rootLibs.datafaker)
         testImplementation(rootLibs.random.beans)
     }

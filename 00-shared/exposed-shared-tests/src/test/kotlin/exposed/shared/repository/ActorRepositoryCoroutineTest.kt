@@ -176,9 +176,9 @@ class ActorRepositoryCoroutineTest: AbstractExposedTest() {
             val savedActor = repository.save(actor)
             savedActor.id.shouldNotBeNull()
 
-            // Delete savedActor
+            // 저장한 배우 레코드를 삭제합니다.
             repository.deleteById(savedActor.id) shouldBeEqualTo 1
-            // Already deleted
+            // 이미 삭제된 레코드는 다시 삭제되지 않습니다.
             repository.deleteById(savedActor.id) shouldBeEqualTo 0
         }
     }
@@ -191,10 +191,10 @@ class ActorRepositoryCoroutineTest: AbstractExposedTest() {
             val savedActor = repository.save(actor)
             savedActor.id.shouldNotBeNull()
 
-            // Delete savedActor
+            // 저장한 배우 레코드를 삭제합니다.
             repository.deleteById(savedActor.id) shouldBeEqualTo 1
 
-            // Already deleted
+            // 이미 삭제된 레코드는 다시 삭제되지 않습니다.
             repository.deleteById(savedActor.id) shouldBeEqualTo 0
         }
     }
@@ -207,7 +207,7 @@ class ActorRepositoryCoroutineTest: AbstractExposedTest() {
 
             repository.deleteAll { ActorTable.lastName eq "Depp" } shouldBeEqualTo 1
 
-            // Delete 1 actor
+            // 조건으로 삭제한 1건을 제외한 배우 레코드를 모두 삭제합니다.
             repository.deleteAll() shouldBeEqualTo count.toInt() - 1
         }
     }
@@ -222,7 +222,7 @@ class ActorRepositoryCoroutineTest: AbstractExposedTest() {
 
             repository.deleteAllIgnore { ActorTable.lastName eq "Depp" } shouldBeEqualTo 1
 
-            // Delete 1 actor
+            // 조건으로 삭제한 1건을 제외한 배우 레코드를 모두 삭제합니다.
             repository.deleteAllIgnore() shouldBeEqualTo count.toInt() - 1
         }
     }

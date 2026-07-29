@@ -49,7 +49,7 @@ object RestaurantSchema {
         // NOTE: RESTRICT 설정으로 Restaurant 삭제 시 Menu가 존재하면 FK constraint 위반 예외 발생.
         // JPA의 cascade = REMOVE와 달리 Exposed는 명시적으로 CASCADE를 설정해야 합니다.
         // CASCADE 삭제를 원하면: reference(..., onDelete = ReferenceOption.CASCADE)
-        // reference to Restaurant
+        // Restaurant 엔티티를 참조한다.
         val restaurantId = reference("restaurant_id", RestaurantTable).index()
     }
 
@@ -58,7 +58,7 @@ object RestaurantSchema {
 
         var name by RestaurantTable.name
 
-        // one-to-many relationship
+        // 일대다 관계를 매핑한다.
         val menus: SizedIterable<Menu> by Menu referrersOn MenuTable.restaurantId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
@@ -74,7 +74,7 @@ object RestaurantSchema {
         var name by MenuTable.name
         var price by MenuTable.price
 
-        // many-to-one relationship
+        // 다대일 관계를 매핑한다.ship
         var restaurant: Restaurant by Restaurant referencedOn MenuTable.restaurantId
 
         override fun equals(other: Any?): Boolean = idEquals(other)

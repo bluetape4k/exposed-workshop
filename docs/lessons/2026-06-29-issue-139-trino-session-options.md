@@ -1,17 +1,22 @@
-# Issue 139 Trino Session Options Lesson
+# Issue 139 Trino session option lesson
 
-## Context
+## 배경
 
-Issue #139 adds a credential-free Trino workshop example under Chapter 13.
+Issue #139는 13장 아래 credential-free Trino workshop 예제를 추가한다.
 
-## Decision
+## 결정
 
-Keep the workshop on public APIs: validate an application-facing profile, convert it to `TrinoConnectionOptions`, and expose only a local JDBC-property preview for README and tests. Do not call internal property conversion helpers from bluetape4k-exposed.
+Workshop은 public API 위에 유지한다. Application-facing profile을 검증하고
+`TrinoConnectionOptions`로 변환하며, README와 test에는 local JDBC-property preview만 노출한다.
+`bluetape4k-exposed`의 internal property conversion helper는 호출하지 않는다.
 
-## Outcome
+## 결과
 
-The example verifies typed options and EXPLAIN request shape locally. It does not require a Trino endpoint or credentials, and it does not assert connector-specific pushdown behavior.
+예제는 typed option과 EXPLAIN request shape를 local에서 검증한다. Trino endpoint나 credential을
+요구하지 않으며 connector-specific pushdown behavior를 assert하지 않는다.
 
-## Future Guidance
+## 향후 지침
 
-For a real Trino lane, use explicit opt-in tests and compare stable EXPLAIN fragments for a known connector. Avoid full-plan snapshots because Trino plans vary by connector, version, and catalog settings.
+Real Trino lane에서는 명시적인 opt-in test를 사용하고 known connector의 stable EXPLAIN
+fragment를 비교한다. Trino plan은 connector, version, catalog setting에 따라 달라지므로
+full-plan snapshot은 피한다.

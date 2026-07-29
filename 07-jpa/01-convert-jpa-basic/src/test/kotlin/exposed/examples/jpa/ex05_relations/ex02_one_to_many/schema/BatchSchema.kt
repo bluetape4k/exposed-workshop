@@ -12,7 +12,7 @@ import org.jetbrains.exposed.v1.dao.IntEntityClass
 import org.jetbrains.exposed.v1.jdbc.SizedIterable
 
 /**
- * One-To-Many bidirectional Relationship
+ * 양방향 일대다 관계 매핑이다.
  */
 object BatchSchema {
 
@@ -45,7 +45,7 @@ object BatchSchema {
     object BatchItemTable: IntIdTable("batch_item") {
         val name: Column<String> = varchar("name", 255)
 
-        // reference to Batch
+        // Batch 엔티티를 참조한다.
         val batchId: Column<EntityID<Int>> =
             reference("batch_id", BatchTable, onDelete = ReferenceOption.CASCADE).index()
     }
@@ -55,7 +55,7 @@ object BatchSchema {
 
         var name: String by BatchTable.name
 
-        // one-to-many relationship
+        // 일대다 관계를 매핑한다.
         val items: SizedIterable<BatchItem> by BatchItem referrersOn BatchItemTable.batchId
 
         override fun equals(other: Any?): Boolean = idEquals(other)
@@ -70,7 +70,7 @@ object BatchSchema {
 
         var name: String by BatchItemTable.name
 
-        // many-to-one relationship
+        // 다대일 관계를 매핑한다.ship
         var batch by Batch referencedOn BatchItemTable.batchId
 
         override fun equals(other: Any?): Boolean = idEquals(other)

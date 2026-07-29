@@ -1,17 +1,20 @@
-# Source-Verified README Diagrams
+# Source-verified README diagram
 
-## Context
+## 배경
 
-High-performance cache strategy class diagrams used the old `entityTable` property name.
+High-performance cache strategy class diagram이 오래된 `entityTable` property name을
+사용했다.
 
-## Decision
+## 결정
 
-Update diagram members to the current `table` override used by JDBC and coroutine cache repositories.
+Diagram member를 JDBC와 coroutine cache repository가 사용하는 현재 `table` override로
+갱신한다.
 
-## Verification
+## 검증
 
-Confirm repository source declarations before rerendering README diagram PNGs.
+README diagram PNG를 다시 rendering하기 전에 repository source declaration을 확인한다.
 
-## Future Guidance
+## 향후 지침
 
-Class diagrams should show current public/override members only. Do not preserve stale member names from historical refactoring plans.
+Class diagram에는 현재 public/override member만 표시한다. 과거 refactoring plan에서 온
+오래된 member name을 보존하지 않는다.

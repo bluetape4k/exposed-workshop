@@ -224,7 +224,7 @@ class Ex17_Union: AbstractExposedTest() {
      *   FROM users
      *  WHERE users.id = 'sergey'
      * ```
-     * intersected users: [andrey, sergey, eugene, alex, smth, sergey]
+     * 교집합 user: [andrey, sergey, eugene, alex, smth, sergey]
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -235,7 +235,7 @@ class Ex17_Union: AbstractExposedTest() {
             val usersQuery = users.selectAll()
             val sergeyQuery = users.selectAll().where { users.id eq "sergey" }
 
-            // expected users id: [andrey, sergey, eugene, alex, smth, sergey]
+            // 예상 user id: [andrey, sergey, eugene, alex, smth, sergey]
             val expectedUsers = usersQuery.map { it[users.id] } + "sergey"
 
             val intersectAppliedFirst = when (currentDialect) {
@@ -392,7 +392,7 @@ class Ex17_Union: AbstractExposedTest() {
     }
 
     /**
-     * ### [union] multiple queries
+     * ### 여러 query의 [union]
      *
      * ```sql
      * SELECT users.id, users."name", users.city_id, users.flags
@@ -433,7 +433,7 @@ class Ex17_Union: AbstractExposedTest() {
     }
 
     /**
-     * ### [union] of sorted queries
+     * ### 정렬된 query의 [union]
      *
      * ```sql
      * (
@@ -478,7 +478,7 @@ class Ex17_Union: AbstractExposedTest() {
     }
 
     /**
-     * ### [union] of limited queries
+     * ### limit이 있는 query의 [union]
      *
      * Postgres:
      * ```sql
@@ -521,7 +521,7 @@ class Ex17_Union: AbstractExposedTest() {
     }
 
     /**
-     * ### [unionAll] of limited queries
+     * ### limit이 있는 query의 [unionAll]
      *
      * ```sql
      * -- Postgres
@@ -568,7 +568,7 @@ class Ex17_Union: AbstractExposedTest() {
     }
 
     /**
-     * ### [union] with distinct results
+     * ### distinct result를 가진 [union]
      *
      * ```sql
      * -- Postgres
@@ -598,7 +598,7 @@ class Ex17_Union: AbstractExposedTest() {
     }
 
     /**
-     * ### [unionAll] with all results
+     * ### 모든 result를 포함하는 [unionAll]
      *
      * ```sql
      * -- Postgres
@@ -628,7 +628,7 @@ class Ex17_Union: AbstractExposedTest() {
     }
 
     /**
-     * ### [unionAll] with all results of three queries
+     * ### 모든 result를 포함하는 [unionAll] of three queries
      *
      * ```sql
      * -- Postgres
@@ -665,7 +665,7 @@ class Ex17_Union: AbstractExposedTest() {
     }
 
     /**
-     * ### [unionAll] with expressions
+     * ### expression을 포함하는 [unionAll]
      *
      * ```sql
      * -- Postgres
@@ -701,7 +701,7 @@ class Ex17_Union: AbstractExposedTest() {
     }
 
     /**
-     * ### [unionAll] with expressions and alias
+     * ### expression을 포함하는 [unionAll] and alias
      *
      * ```sql
      * -- Postgres

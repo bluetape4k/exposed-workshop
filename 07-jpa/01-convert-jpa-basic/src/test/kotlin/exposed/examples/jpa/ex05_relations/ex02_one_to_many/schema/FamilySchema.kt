@@ -49,7 +49,7 @@ object FamilySchema {
         val name = varchar("name", 255)
         val birthday = date("birthday")
 
-        // reference to Father
+        // Father 엔티티를 참조한다.
         val father = reference("father_id", FatherTable, onDelete = ReferenceOption.CASCADE).index()
     }
 
@@ -58,8 +58,8 @@ object FamilySchema {
 
         var name by FatherTable.name
 
-        // Ordered by birthday
-        // one-to-many relationship
+        // 생일 컬럼 기준으로 정렬한다.
+        // 일대다 관계를 매핑한다.
         val children by Child.referrersOn(ChildTable.father)
             .orderBy(ChildTable.birthday to SortOrder.ASC)
 
@@ -76,7 +76,7 @@ object FamilySchema {
         var name by ChildTable.name
         var birthday by ChildTable.birthday
 
-        // many-to-one relationship (bidirectional)
+        // 다대일 관계를 매핑한다.ship (bidirectional)
         // var father by Father referencedOn ChildTable.father
 
         override fun equals(other: Any?): Boolean = idEquals(other)

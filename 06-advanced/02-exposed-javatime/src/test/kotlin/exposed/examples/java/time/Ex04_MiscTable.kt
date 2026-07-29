@@ -331,8 +331,8 @@ class Ex04_MiscTable: AbstractExposedTest() {
         }
     }
 
-    // these DB take the datetime nanosecond value and round up to default precision
-    // which causes flaky comparison failures if not cast to TIMESTAMP first
+    // 이 데이터베이스들은 datetime 나노초 값을 기본 정밀도로 반올림한다.
+    // 먼저 TIMESTAMP로 캐스팅하지 않으면 비교 검증이 불안정하게 실패할 수 있다.
     private val requiresExplicitDTCast = setOf(TestDB.H2_PSQL)
 
     @ParameterizedTest
@@ -1143,7 +1143,7 @@ class Ex04_MiscTable: AbstractExposedTest() {
     }
 
     /**
-     * Update nullable columns to null
+     * nullable 컬럼을 null 값으로 갱신한다.
      *
      * ```sql
      * -- Postgres
@@ -1253,7 +1253,7 @@ class Ex04_MiscTable: AbstractExposedTest() {
     }
 
     /**
-     * Update varchar column
+     * varchar 컬럼 값을 갱신한다.
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -1378,7 +1378,7 @@ class Ex04_MiscTable: AbstractExposedTest() {
         withDb(testDB) {
             exec(zeroDateTimeTableDdl)
             try {
-                // Need ignore to bypass strict mode
+                // strict mode 검사를 우회하려면 ignore 처리가 필요하다.
                 exec("INSERT IGNORE INTO `zerodatetimetable` (dt1,dt2,ts1,ts2) VALUES ('0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');")
                 val row = ZeroDateTimeTable.selectAll().first()
 

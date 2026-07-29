@@ -4,7 +4,7 @@ import exposed.examples.spring.architecture.model.CreateCustomerCommand
 import exposed.examples.spring.architecture.model.CustomerRecord
 
 /**
- * Customer persistence contract used by the Spring service layer.
+ * Spring 서비스 계층이 사용하는 고객 영속성 계약이다.
  */
 internal interface CustomerRepository {
     fun create(command: CreateCustomerCommand): CustomerRecord

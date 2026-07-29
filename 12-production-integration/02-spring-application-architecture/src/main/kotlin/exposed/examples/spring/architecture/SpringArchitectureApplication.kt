@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
 /**
- * Spring Boot 4 application architecture example backed by Exposed JDBC.
+ * Exposed JDBC를 사용하는 Spring Boot 4 애플리케이션 아키텍처 예제이다.
  *
- * ## Contract
- * - Controllers remain thin and delegate to service use cases.
- * - Repositories own Exposed transactions and schema bootstrap.
- * - Error responses are sanitized by controller advice.
+ * ## 계약
+ * - 컨트롤러는 얇게 유지하고 서비스 유스케이스에 처리를 위임한다.
+ * - 저장소는 Exposed 트랜잭션과 스키마 부트스트랩을 책임진다.
+ * - 오류 응답은 controller advice에서 정제한다.
  */
 @SpringBootApplication
 internal class SpringArchitectureApplication

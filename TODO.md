@@ -1,28 +1,28 @@
 # TODO
 
-## 1. Exposed Quick starts examples
+## 1. Exposed 빠른 시작 예제
 
-- [X] Spring Boot MVC Rest API with Exposed
-- [X] Spring Boot Webflux REST API with Exposed Suspended
+- [X] Exposed 기반 Spring Boot MVC REST API
+- [X] Exposed Suspended 기반 Spring Boot WebFlux REST API
 
-## 2. Alternatives to JPA - Asynchronous Database Access
+## 2. JPA 대안 - 비동기 데이터베이스 접근
 
 - [X] Hibernate Reactive
 - [X] R2DBC
-- [X] Vertx SQL Client (with MyBatis SQL Builder)
-- [X] Exposed with Coroutines
-- [X] Virtual Threads with JPA
+- [X] Vert.x SQL Client (MyBatis SQL Builder 사용)
+- [X] Coroutines 기반 Exposed
+- [X] JPA와 Virtual Threads
 
-## 3. Test enviroment for Exposed
+## 3. Exposed 테스트 환경
 
 - [X] JUnit 5
-- [X] TestContainers
-- [X] Databases
+- [X] Testcontainers
+- [X] 데이터베이스
     - [X] H2
-    - [X] Postgres
+    - [X] PostgreSQL
     - [X] MySQL V8
 
-## 3. Basic Features in Exposed
+## 4. Exposed 기본 기능
 
 - [X] SQL DSL
 - [X] Table 정의 및 생성
@@ -54,7 +54,7 @@
 - [X] INSERT INTO SELECT
 - [X] MergeFrom
 
-## 4. Advanced Features in Exposed
+## 5. Exposed 고급 기능
 
 - [X] Expressions
 - [X] Functions
@@ -62,15 +62,15 @@
 - [X] Composite Primary Key
 - [X] CTE (Common Table Expression)
 
-## 5. Define Custom ID Table & Entity
+## 6. 커스텀 ID Table 및 Entity 정의
 
 - [X] Entity
     - [X] Auto Increment ID
     - [X] Client Generated ID
 
-## 6. Advanded Data types
+## 7. 고급 데이터 타입
 
-- [X] Array Column for Postgres
+- [X] PostgreSQL Array Column
 - [X] JSON
     - [X] JSON Column
     - [X] JSONB Column
@@ -78,12 +78,12 @@
 - [X] Kotlin DateTime Column
 - [X] Money Column
 
-## 7. Define Other Data Types
+## 8. 기타 데이터 타입 정의
 
 - Custom EntityID
-    - [X] Snowflake ID for EntityID
-    - [X] Timebased UUID for EntityID
-    - [X] Base62 encoded UUID for EntityID
+    - [X] EntityID용 Snowflake ID
+    - [X] EntityID용 time-based UUID
+    - [X] Base62 encoded UUID 기반 EntityID
 - Object Column
     - [X] Binary Serialized Column
         - [X] JDK Built-in Serializer
@@ -97,13 +97,13 @@
         - [X] Snappy Column
         - [X] ZSTD Column
     - [X] Encrypted Column
-- JSON Column using Jackson
-    - [X] jackson function for JSON Column
+- Jackson 기반 JSON Column
+    - [X] JSON Column용 Jackson 함수
 
-## 7. Migration JPA Entity to Exposed Entity
+## 9. JPA Entity를 Exposed Entity로 마이그레이션
 
-- [X] Simple Entity
-- [X] Relationships
+- [X] 단순 Entity
+- [X] 관계
     - [X] One To One
     - [X] One To Many
         - [X] List
@@ -111,49 +111,49 @@
         - [X] Map
     - [X] Many To One
     - [X] Many To Many
-- [X] Hierarchy
+- [X] 계층 구조
     - [X] Self Referencing
     - [X] Relation Table
-- [X] Inheritance
+- [X] 상속
     - [X] Single Table
     - [X] Table Per Class
     - [X] Joined Table
 
-## 8. Exposed with Coroutines
+## 10. Coroutines와 Exposed
 
-- [X] Transactional Coroutines
+- [X] 트랜잭션 Coroutines
     - [X] newSuspendedTransaction
 
 - [X] Dispatchers
     - [X] Dispatchers.IO
     - [X] Dispatchers.VT
 
-## 9. Integration with Spring Boot
+## 11. Spring Boot 통합
 
-- [X] Using Spring Transaction
+- [X] Spring Transaction 사용
 - [X] Spring Boot MVC
     - [X] Platform Threads
     - [X] Virtual Threads
-- [X] Spring Boot Webflux + Coroutines
-- [X] Implement ExposedRepository
+- [X] Spring Boot WebFlux + Coroutines
+- [X] ExposedRepository 구현
 
-## 10. Multi-tenant Application
+## 12. 멀티테넌트 애플리케이션
 
-- [X] Multitenant with Spring MVC
-- [X] Multitenant with Spring MVC and Virtual Threads
-- [X] Multitenant with Spring Webflux and Coroutines
+- [X] Spring MVC 기반 멀티테넌시
+- [X] Spring MVC와 Virtual Threads 기반 멀티테넌시
+- [X] Spring WebFlux와 Coroutines 기반 멀티테넌시
 
-## 11. Exposed with Redisson (Cache Strategy)
+## 13. Redisson과 Exposed (Cache Strategy)
 
 - [X] Read Through
 - [X] Write Through
 - [X] Write Behind
 
-## 12. Migration Existing Database (Flyway)
+## 14. 기존 데이터베이스 마이그레이션 (Flyway)
 
-- [ ] MigrationUtils in Exposed
-- [ ] Using Flyway for Migration
+- [ ] Exposed의 MigrationUtils
+- [ ] Flyway 기반 Migration
 
-## 13. Exposed with Spring Modulith
+## 15. Spring Modulith와 Exposed
 
-- [ ] Spring Modulith & Application Events
+- [ ] Spring Modulith 및 Application Events

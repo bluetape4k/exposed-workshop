@@ -46,6 +46,6 @@ class DefaultCountrySuspendedRepository: CountrySuspendedRepository {
      * 기본 구현은 별도 캐시를 사용하지 않으므로 수행할 작업이 없습니다.
      */
     override suspend fun evictCacheAll() {
-        // Nothing to do.
+        // 변경할 데이터가 없으면 아무 작업도 하지 않는다.
     }
 }

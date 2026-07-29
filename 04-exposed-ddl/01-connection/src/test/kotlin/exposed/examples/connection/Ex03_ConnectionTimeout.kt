@@ -77,7 +77,7 @@ class Ex03_ConnectionTimeout: AbstractExposedTest() {
 
         try {
             try {
-                // transaction block should use default DatabaseConfig values when no property is set
+                // 별도 속성이 없으면 transaction block은 기본 DatabaseConfig 값을 사용해야 합니다.
                 transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                     exec("SELECT 1;")
                 }
@@ -90,7 +90,7 @@ class Ex03_ConnectionTimeout: AbstractExposedTest() {
             datasource.connectCount = 0
 
             try {
-                // property set in transaction block should override default DatabaseConfig
+                // transaction block에서 지정한 속성은 기본 DatabaseConfig 값을 재정의해야 합니다.
                 transaction(db = db, transactionIsolation = Connection.TRANSACTION_SERIALIZABLE) {
                     maxAttempts = 5
                     exec("SELECT 1;")

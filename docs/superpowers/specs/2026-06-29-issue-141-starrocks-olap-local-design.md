@@ -1,37 +1,35 @@
-# Issue 141 - StarRocks Local-First OLAP Design
+# Issue 141 - StarRocks local-first OLAP 설계
 
-## Context
+## 배경
 
-Issue #141 asks for a workshop example that teaches the local-testability
-boundary for the `bluetape4k-exposed-starrocks` helper. The example must avoid
-making StarRocks a default CI dependency while still showing StarRocks-oriented
-DDL and analytical projection shape.
+Issue #141은 `bluetape4k-exposed-starrocks` helper의 local-testability boundary를 가르치는
+workshop example을 요구한다. 이 예제는 StarRocks를 default CI dependency로 만들지 않으면서
+StarRocks-oriented DDL과 analytical projection shape를 보여 줘야 한다.
 
-## Decision
+## 결정
 
-Create `13-ecosystem-integrations/04-starrocks-olap-local`.
+`13-ecosystem-integrations/04-starrocks-olap-local`을 만든다.
 
-- Use `StarRocksAnalyticsProfile` to validate the Connector/J boundary and
-  render the expected `jdbc:starrocks://host:port/catalog.database` URL.
-- Use `StarRocksTable` for the target rollup table so local DDL rendering keeps
-  `ENGINE=OLAP` and `replication_num = 1` visible.
-- Use H2 only as a transaction context and fixture store for local deterministic
-  projection tests.
-- Keep real StarRocks behavior out of the default test path and document it as
-  explicit opt-in.
+- Connector/J boundary를 검증하고 예상 `jdbc:starrocks://host:port/catalog.database` URL을
+  rendering하기 위해 `StarRocksAnalyticsProfile`을 사용한다.
+- Local DDL rendering에서 `ENGINE=OLAP`와 `replication_num = 1`이 보이도록 target rollup
+  table에는 `StarRocksTable`을 사용한다.
+- H2는 local deterministic projection test를 위한 transaction context와 fixture store로만
+  사용한다.
+- Real StarRocks behavior는 default test path 밖에 두고 explicit opt-in으로 문서화한다.
 
-## Acceptance Mapping
+## 수용 기준 매핑
 
-- Default tests remain local and deterministic: H2-only tests, no Docker.
-- README locale pair documents local and real StarRocks boundaries.
-- Tests verify DDL/query shape and a real local aggregation scenario.
-- Diagram asset ships as SVG plus rendered PNG under
+- Default test는 local/deterministic 상태를 유지한다: H2-only test, Docker 없음.
+- README locale pair는 local 및 real StarRocks boundary를 문서화한다.
+- Test는 DDL/query shape와 실제 local aggregation scenario를 검증한다.
+- Diagram asset은 SVG와 rendered PNG로 다음 위치에 제공된다.
   `docs/images/readme-diagrams/`.
-- Examples workflow includes `:04-starrocks-olap-local:build`.
+- Examples workflow는 `:04-starrocks-olap-local:build`를 포함한다.
 
-## Risks
+## 위험
 
-- DDL rendering is structural only; it is not proof of StarRocks storage or
-  distribution behavior.
-- Real StarRocks validation must remain a separate opt-in lane to avoid hiding
-  backend prerequisites inside fast CI.
+- DDL rendering은 structure만 검증한다. StarRocks storage나 distribution behavior의 증거가
+  아니다.
+- Real StarRocks validation은 fast CI 안에 backend prerequisite를 숨기지 않도록 별도 opt-in
+  lane으로 유지해야 한다.

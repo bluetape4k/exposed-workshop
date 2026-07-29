@@ -4,7 +4,7 @@ import exposed.multitenant.security.tenant.TenantId
 import java.io.Serializable
 
 /**
- * Tenant identity derived from an authenticated Spring Security principal.
+ * 인증된 Spring Security principal에서 추출한 테넌트 식별자이다.
  */
 internal data class AuthenticatedTenant(
     val tenantId: TenantId,

@@ -19,10 +19,10 @@ import java.io.Serializable
 import java.math.BigDecimal
 
 /**
- * Typed application profile for the StarRocks OLAP workshop.
+ * StarRocks OLAP 워크숍에서 사용하는 타입화된 애플리케이션 프로필이다.
  *
- * The profile makes the JDBC boundary explicit without opening a StarRocks
- * connection during local structural tests.
+ * 이 프로필은 StarRocks 연결을 열지 않고도 JDBC 경계를 명시한다.
+ * 로컬 구조 테스트 중에는 실제 연결을 만들지 않는다.
  */
 data class StarRocksAnalyticsProfile(
     val host: String = "localhost",
@@ -49,19 +49,19 @@ data class StarRocksAnalyticsProfile(
     }
 
     /**
-     * Returns the StarRocks Connector/J URL that a real validation run uses.
+     * 실제 검증 실행에서 사용하는 StarRocks Connector/J URL을 반환한다.
      */
     fun jdbcUrl(): String =
         "jdbc:starrocks://$host:$port/$catalog.$database"
 
     /**
-     * Converts extra driver properties to the public bluetape4k StarRocks API.
+     * 추가 driver property를 공개 bluetape4k StarRocks API로 변환한다.
      */
     fun toConnectionOptions(): StarRocksConnectionOptions =
         StarRocksConnectionOptions(extraProperties = extraProperties)
 
     /**
-     * Exposes the driver property boundary for README and test assertions.
+     * README와 테스트 assertion을 위해 driver property 경계를 노출한다.
      */
     fun jdbcPropertyPreview(user: String): Map<String, String> {
         user.requireNotBlank("user")
@@ -74,13 +74,13 @@ data class StarRocksAnalyticsProfile(
 }
 
 /**
- * Returns the default local StarRocks analytics profile.
+ * 기본 로컬 StarRocks 분석 프로필을 반환한다.
  */
 fun defaultStarRocksAnalyticsProfile(): StarRocksAnalyticsProfile =
     StarRocksAnalyticsProfile()
 
 /**
- * Order event projected from OLTP storage into an OLAP rollup.
+ * OLTP 스토리지에서 OLAP rollup으로 투영되는 주문 이벤트이다.
  */
 data class OrderEvent(
     val orderId: Long,
@@ -100,7 +100,7 @@ data class OrderEvent(
 }
 
 /**
- * Daily regional revenue rollup ready for a StarRocks fact table.
+ * StarRocks fact table에 적재할 수 있는 일별 지역 매출 rollup이다.
  */
 data class RegionalRevenueRollup(
     val region: String,
@@ -115,7 +115,7 @@ data class RegionalRevenueRollup(
 }
 
 /**
- * Local OLTP-style fixture table used for deterministic projection tests.
+ * 결정적인 프로젝션 테스트에 사용하는 로컬 OLTP 스타일 픽스처 테이블이다.
  */
 object LocalOrderEvents: org.jetbrains.exposed.v1.core.Table("local_order_events") {
     val orderId = long("order_id")
@@ -127,7 +127,7 @@ object LocalOrderEvents: org.jetbrains.exposed.v1.core.Table("local_order_events
 }
 
 /**
- * StarRocks target table shape for the projected OLAP rollup.
+ * 프로젝션된 OLAP rollup을 위한 StarRocks 대상 테이블 형태이다.
  */
 object StarRocksRegionalSalesRollups: StarRocksTable("starrocks_regional_sales_rollups") {
     val region = varchar("region", 32)
@@ -137,7 +137,7 @@ object StarRocksRegionalSalesRollups: StarRocksTable("starrocks_regional_sales_r
 }
 
 /**
- * Creates a local H2 database for SQL rendering and aggregation tests.
+ * SQL 렌더링과 집계 테스트를 위한 로컬 H2 데이터베이스를 생성한다.
  */
 fun createLocalProjectionDatabase(name: String = "starrocks_projection"): Database {
     name.requireNotBlank("name")
@@ -149,7 +149,7 @@ fun createLocalProjectionDatabase(name: String = "starrocks_projection"): Databa
 }
 
 /**
- * Generates the StarRocks rollup DDL locally without executing it.
+ * StarRocks rollup DDL을 실행하지 않고 로컬에서 생성한다.
  */
 fun buildStarRocksRollupDdl(): String =
     transaction(createLocalProjectionDatabase("starrocks_rollup_ddl")) {
@@ -157,7 +157,7 @@ fun buildStarRocksRollupDdl(): String =
     }
 
 /**
- * Inserts deterministic local order events for projection tests.
+ * 프로젝션 테스트를 위한 결정적인 로컬 주문 이벤트를 삽입한다.
  */
 fun seedLocalOrderEvents(db: Database, events: List<OrderEvent>) {
     events.requireNotEmpty("events")
@@ -174,7 +174,7 @@ fun seedLocalOrderEvents(db: Database, events: List<OrderEvent>) {
 }
 
 /**
- * Builds the daily regional revenue query used before real StarRocks validation.
+ * 실제 StarRocks 검증 전에 사용하는 일별 지역 매출 쿼리를 구성한다.
  */
 fun buildDailyRegionalRevenueQuery(): Query {
     val orderCount = LocalOrderEvents.orderId.count()
@@ -195,7 +195,7 @@ fun buildDailyRegionalRevenueQuery(): Query {
 }
 
 /**
- * Generates the rollup SQL locally so readers can inspect projection shape.
+ * 독자가 프로젝션 형태를 확인할 수 있도록 rollup SQL을 로컬에서 생성한다.
  */
 fun generateDailyRegionalRevenueSql(): String =
     transaction(createLocalProjectionDatabase("starrocks_rollup_sql")) {
@@ -203,7 +203,7 @@ fun generateDailyRegionalRevenueSql(): String =
     }
 
 /**
- * Projects local order events into daily regional revenue rollups.
+ * 로컬 주문 이벤트를 일별 지역 매출 rollup으로 프로젝션한다.
  */
 fun projectDailyRegionalRevenue(db: Database): List<RegionalRevenueRollup> {
     val orderCount = LocalOrderEvents.orderId.count()

@@ -1,41 +1,39 @@
-# Issue #140 CockroachDB Retry Workshop
+# Issue #140 CockroachDB retry workshop
 
-## Context
+## 배경
 
-`bluetape4k-exposed` 1.11.0 added CockroachDB PostgreSQL-wire helpers and a
-bounded serializable retry helper. `exposed-workshop` needed a runnable example
-for issue #140 under chapter 13.
+`bluetape4k-exposed` 1.11.0은 CockroachDB PostgreSQL-wire helper와 bounded serializable
+retry helper를 추가했다. `exposed-workshop`에는 13장 아래 issue #140용 runnable example이
+필요했다.
 
-## Decision
+## 결정
 
-Use public helper APIs and a deterministic SQLSTATE `40001` retry injection in
-tests. Do not create a race-based concurrent conflict test for the workshop
-default path.
+Public helper API와 test의 deterministic SQLSTATE `40001` retry injection을 사용한다.
+Workshop default path에는 race-based concurrent conflict test를 만들지 않는다.
 
-## Outcome
+## 결과
 
-The new `03-cockroachdb-retry` module demonstrates:
+새 `03-cockroachdb-retry` module은 다음을 보여 준다.
 
 - `CockroachDatabase.connect` with `CockroachServer.Launcher.cockroach`.
 - schema bootstrap for inventory and ledger tables.
 - `withCockroachTransaction` around a whole inventory reservation.
-- retryable conflict replay and non-retryable SQL failure boundary.
+- retryable conflict replay와 non-retryable SQL failure boundary.
 
-## Verification
+## 검증
 
 - Test: PASS, 5 tests.
 - Build: PASS.
 - Diagram validation and visual inspection: PASS.
 - Workflow lint and diff check: PASS.
 
-## Future Guidance
+## 향후 지침
 
-For CockroachDB retry examples, keep the default workshop path deterministic.
-Use live concurrent conflicts only in a separate opt-in lane if the example's
-goal is contention behavior rather than helper API usage.
+CockroachDB retry 예제에서는 default workshop path를 deterministic하게 유지한다. 예제의 목표가
+helper API 사용이 아니라 contention behavior라면 live concurrent conflict는 별도의 opt-in
+lane에서만 사용한다.
 
-For sequence diagrams, keep pill labels above their own message lines instead
-of letting the line run through the label. If endpoints attach to activation
-bars, attach to the left or right edge with a horizontal terminal segment so
-the endpoint audit does not treat activation-bar top/bottom hits as card-corner
-attachments.
+Sequence diagram에서는 line이 label을 관통하지 않도록 pill label을 자신의 message line 위에
+둔다. Endpoint가 activation bar에 붙는다면 horizontal terminal segment로 왼쪽 또는 오른쪽
+edge에 붙인다. 그래야 endpoint audit이 activation-bar top/bottom hit를 card-corner attachment로
+취급하지 않는다.

@@ -166,7 +166,7 @@ class FastjsonBColumnTest: AbstractExposedTest() {
                 it[fastjsonBColumn] = data1.copy(logins = 1000)
             }
 
-            // Postgres requires type casting to compare jsonb field as integer value in DB ???
+            // Postgres는 jsonb 필드를 DB 내부에서 정수 값으로 비교하려면 타입 캐스팅이 필요하다.
             val logins = when (currentDialectTest) {
                 is PostgreSQLDialect ->
                     tester.fastjsonBColumn.extract<Int>("logins").castTo(IntegerColumnType())
@@ -272,7 +272,7 @@ class FastjsonBColumnTest: AbstractExposedTest() {
             val userIsInAlphaTeam = tester.fastjsonBColumn.contains(alphaTeamUserAsJson)
             tester.selectAll().where { userIsInAlphaTeam }.count() shouldBeEqualTo 1L
 
-            // test target contains candidate at specified path
+            // 지정한 경로의 대상 JSON이 후보 값을 포함하는지 검증한다.
             if (testDB in TestDB.ALL_MYSQL_MARIADB) {
                 val userIsInAlphaTeam2 = tester.fastjsonBColumn.contains("\"Alpha\"", ".user.team")
                 val alphaTeamUsers = tester.select(tester.id).where { userIsInAlphaTeam2 }
@@ -295,7 +295,7 @@ class FastjsonBColumnTest: AbstractExposedTest() {
 
             val optional = if (testDB in TestDB.ALL_MYSQL_LIKE) "one" else null
 
-            // test data at path root '$' exists by providing no path arguments
+            // 경로 인자를 전달하지 않아 루트 경로 '$'의 데이터 존재 여부를 검증한다.
             // SELECT COUNT(*) FROM fastjson_b_table WHERE JSONB_PATH_EXISTS(fastjson_b_table.fastjson_b_column, '$')
             val hasAnyData = tester.fastjsonBColumn.exists(optional = optional)
             tester.selectAll().where { hasAnyData }.count() shouldBeEqualTo 2L
@@ -308,7 +308,7 @@ class FastjsonBColumnTest: AbstractExposedTest() {
             val hasLogins = tester.fastjsonBColumn.exists(".logins", optional = optional)
             tester.selectAll().where { hasLogins }.count() shouldBeEqualTo 2L
 
-            // test data at path exists with filter condition and optional arguments
+            // 필터 조건과 선택 인자를 사용해 경로의 데이터 존재 여부를 검증한다.
             if (currentDialectTest is PostgreSQLDialect) {
                 // SELECT fastjson_b_table.id FROM fastjson_b_table
                 //  WHERE JSONB_PATH_EXISTS(fastjson_b_table.fastjson_b_column, '$.logins ? (@ == 1000)')
@@ -359,7 +359,7 @@ class FastjsonBColumnTest: AbstractExposedTest() {
             val firstIsOnTeamA = tester.groups.extract<String>(*path1) eq "Team A"
             tester.selectAll().where { firstIsOnTeamA }.single()[tester.id] shouldBeEqualTo singleId
 
-            // older MySQL and MariaDB versions require non-scalar extracted value from JSON Array
+            // 오래된 MySQL 및 MariaDB 버전은 JSON 배열에서 추출한 비스칼라 값 형식이 필요하다.
             val toScalar = testDB != TestDB.MYSQL_V5
             val path2 = when (currentDialectTest) {
                 is PostgreSQLDialect -> "0"
@@ -460,7 +460,7 @@ class FastjsonBColumnTest: AbstractExposedTest() {
                 SchemaUtils.create(defaultTester)
                 defaultTester.exists().shouldBeTrue()
 
-                // ensure defaults match returned metadata defaults
+                // 반환된 메타데이터의 기본값과 선언한 기본값이 일치하는지 검증한다.
                 // [deprecated] SchemaUtils.statementsRequiredToActualizeScheme → MigrationUtils.statementsRequiredForDatabaseMigration 로 교체
                 // val alters = SchemaUtils.statementsRequiredToActualizeScheme(defaultTester)
                 val alters = MigrationUtils.statementsRequiredForDatabaseMigration(defaultTester)
@@ -492,7 +492,7 @@ class FastjsonBColumnTest: AbstractExposedTest() {
         }
 
         withTables(testDB, iterables) {
-            // the logger is left in to test that it does not throw ClassCastException on insertion of iterables
+            // Iterable 값을 삽입할 때 ClassCastException이 발생하지 않는지 검증하려고 logger를 남겨 둔다.
             addLogger(StdOutSqlLogger)
 
             val user1 = User("A", "Team A")
@@ -594,7 +594,7 @@ class FastjsonBColumnTest: AbstractExposedTest() {
             val value = fastjsonb<User>("value").databaseGenerated()
         }
 
-        // MySQL versions prior to 8.0.13 do not accept default values on JSON columns
+        // MySQL 8.0.13 이전 버전은 JSON 컬럼 기본값을 허용하지 않는다.
         Assumptions.assumeTrue { testDB != TestDB.MYSQL_V5 }
         withTables(testDB, tester) {
             testerDatabaseGenerated.insert { }

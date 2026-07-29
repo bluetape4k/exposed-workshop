@@ -18,7 +18,7 @@ object MemberSchema {
     val memberTables = arrayOf(GroupTable, MemberTable, UserTable)
 
     /**
-     * Group Table
+     * Group 테이블 매핑 정의이다.
      *
      * ```sql
      * -- Postgres
@@ -84,7 +84,7 @@ object MemberSchema {
     }
 
     /**
-     * User Table
+     * User 테이블 매핑 정의이다.
      *
      * ```sql
      * -- Postgres

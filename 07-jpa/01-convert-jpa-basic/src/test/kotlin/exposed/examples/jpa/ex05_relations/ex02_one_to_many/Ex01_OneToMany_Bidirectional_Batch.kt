@@ -43,11 +43,11 @@ class Ex01_OneToMany_Bidirectional_Batch: AbstractExposedTest() {
                 .orderBy(BatchItemTable.id to SortOrder.ASC)
                 .toList() shouldBeEqualTo batchItems
 
-            // eager loading
+            // eager loading으로 연관 엔티티를 미리 로드한다.
             val loaded2 = Batch.all().with(Batch::items).single()
             loaded2.items.toList() shouldBeEqualTo batchItems
 
-            // eager loading
+            // eager loading으로 연관 엔티티를 미리 로드한다.
             val loaded3 = Batch.findById(batch1.id)?.load(Batch::items)
             loaded3?.items?.toList() shouldBeEqualTo batchItems
         }

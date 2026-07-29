@@ -24,8 +24,7 @@
 
 ## 2. Native SQL vs HQL vs CriteriaBuilder vs jOOQ — JMH 실측
 
-**출처
-**: [Zeyad Ahmed, Medium (2024-01-25)](https://medium.com/@zeyadahmedcs/comprehensive-guide-to-decoding-the-java-persistence-puzzle-jmh-benchmarking-of-native-query-hql-108fd7220c54)
+**출처**: [Zeyad Ahmed, Medium (2024-01-25)](https://medium.com/@zeyadahmedcs/comprehensive-guide-to-decoding-the-java-persistence-puzzle-jmh-benchmarking-of-native-query-hql-108fd7220c54)
 **환경**: JMH 1.37 / Java 17 / Spring Boot 3.1.2 / PostgreSQL (IMDb DB, avgt 모드)
 
 | 쿼리 방식             | findAll() 소형 DB     | findAll() 대형 DB | findAllByCategory() 중형 DB |
@@ -42,8 +41,7 @@
 
 ## 3. Spring Boot JPQL vs Native SQL vs Specification — JMH 실측
 
-**출처
-**: [Stackademic (2025)](https://blog.stackademic.com/spring-boot-query-performance-deep-dive-jpql-vs-native-vs-specification-with-benchmarks-77c6b655bb78)
+**출처**: [Stackademic (2025)](https://blog.stackademic.com/spring-boot-query-performance-deep-dive-jpql-vs-native-vs-specification-with-benchmarks-77c6b655bb78)
 **환경**: Spring Boot 3.3.2 / PostgreSQL 15 / Apple M2 / 100만 행 / HikariCP
 
 | 쿼리 방식             | 상대 성능                               |
@@ -56,8 +54,7 @@
 
 ## 4. Hibernate(CriteriaBuilder) vs jOOQ — 학술 JMH 논문
 
-**출처
-**: [Hetman & Miłosz, Lublin University of Technology, JCSI 35 (2025) 209–215](https://ph.pollub.pl/index.php/jcsi/article/download/7306/5024/34434)
+**출처**: [Hetman & Miłosz, Lublin University of Technology, JCSI 35 (2025) 209–215](https://ph.pollub.pl/index.php/jcsi/article/download/7306/5024/34434)
 **환경**: OpenJDK 17 / PostgreSQL 16.4 (bare metal) / Spring Boot 3.3.4 / Chinook DB (track 210만 건 등)
 **JMH 설정**: warmup 3회, 측정 10회 × 각 30초
 
@@ -109,8 +106,7 @@ getCategory();  // SELECT * FROM category WHERE product_id = 1
 
 ## 6. ORM Battle 2025: Hibernate vs jOOQ vs plain JDBC
 
-**출처
-**: [Devrim Ozcay, Medium (2025-06-19)](https://medium.com/javarevisited/the-great-orm-debate-hibernate-vs-jooq-vs-plain-jdbc-e271b95a2ef5)
+**출처**: [Devrim Ozcay, Medium (2025-06-19)](https://medium.com/javarevisited/the-great-orm-debate-hibernate-vs-jooq-vs-plain-jdbc-e271b95a2ef5)
 
 핵심 발견사항:
 

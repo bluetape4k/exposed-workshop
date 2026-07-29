@@ -61,9 +61,9 @@ internal infix fun Int.shouldFractionalPartEqualTo(nano2: Int) {
     val dialect = currentDialectTest
     val db = dialect.name
     when (dialect) {
-        // accurate to 100 nanoseconds
+        // 100나노초 단위까지 정확도를 검증한다.
         is SQLServerDialect                                 -> nano1.nanoRoundTo100Nanos() shouldBeEqualTo nano2.nanoRoundTo100Nanos()
-        // microseconds
+        // 마이크로초 정밀도를 검증한다.s
         is MariaDBDialect                                   -> nano1.nanoFloorToMicro() shouldBeEqualTo nano2.nanoFloorToMicro()
 
         is H2Dialect, is PostgreSQLDialect, is MysqlDialect -> {
@@ -74,7 +74,7 @@ internal infix fun Int.shouldFractionalPartEqualTo(nano2: Int) {
                 else       -> {} // don't compare fractional part
             }
         }
-        // milliseconds
+        // 밀리초 정밀도를 검증한다.
         is OracleDialect                                    -> nano1.nanoRoundToMilli() shouldBeEqualTo nano2.nanoRoundToMilli()
         is SQLiteDialect                                    -> nano1.nanoFloorToMilli() shouldBeEqualTo nano2.nanoFloorToMilli()
         else                                                -> io.bluetape4k.assertions.fail("Unknown dialect $db")

@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 
 /**
- * Extracts tenant identity from authenticated Spring Security principals.
+ * 인증된 Spring Security principal에서 테넌트 식별자를 추출한다.
  */
 internal class TenantAuthenticationResolver {
 

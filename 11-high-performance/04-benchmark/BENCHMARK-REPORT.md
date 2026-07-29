@@ -1,14 +1,14 @@
-# Cache Strategy Benchmark Report
+# 캐시 전략 벤치마크 보고서
 
-- Profile: `smoke`
-- Generated At: `2026-04-19`
-- JMH Mode: Average Time (lower is better)
+- 프로파일: `smoke`
+- 생성일: `2026-04-19`
+- JMH 모드: Average Time (낮을수록 좋음)
 
 ## 1. 캐시 전략 비교 (CacheStrategyComparisonBenchmark)
 
 실제 PostgreSQL(Testcontainers) + HikariCP 환경에서 NoCache, ReadThrough, WriteThrough 전략을 비교합니다.
 
-| Strategy | Workload | Payload (B) | Score (us/op) | Error | Unit |
+| 전략 | 워크로드 | Payload (B) | Score (us/op) | Error | Unit |
 |----------|----------|:-----------:|:-------------:|:-----:|------|
 | NO_CACHE | READ_HEAVY | 256 | 547.733 | ±460.814 | us/op |
 | NO_CACHE | READ_HEAVY | 4096 | 482.554 | ±91.551 | us/op |
@@ -51,7 +51,7 @@
 
 인메모리 Caffeine 캐시의 hit/miss 오버헤드를 비교합니다. (DB I/O 없이 순수 캐시 계층 비용)
 
-| Benchmark | Payload (B) | Score (us/op) | Error | Unit |
+| 벤치마크 | Payload (B) | Score (us/op) | Error | Unit |
 |-----------|:-----------:|:-------------:|:-----:|------|
 | dbOnlyRead | 256 | 0.001 | ±0.000 | us/op |
 | dbOnlyRead | 4096 | 0.001 | ±0.000 | us/op |
@@ -65,8 +65,8 @@
 ### 캐시 계층 오버헤드 분석
 
 - **Cache Hit**: DB 직접 읽기와 거의 동일한 성능 (< 0.01 us 차이)
-- **Cache Miss**: invalidate + reload 비용으로 ~0.1 us 추가 오버헤드
-- **Payload 크기**: 256B → 4096B 변경 시 캐시 오버헤드 변화 미미
+- **Cache Miss**: invalidate + reload 비용으로 약 0.1 us 추가 오버헤드
+- **Payload 크기**: 256B에서 4096B로 커져도 캐시 오버헤드 변화는 미미함
 
 ## 3. 결론
 

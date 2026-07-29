@@ -1,21 +1,27 @@
-# Issue 49 Ktor Routing DataSource
+# Issue 49 Ktor routing DataSource
 
-## Context
+## 배경
 
-Issue #49 asked for a Ktor routing datasource example near the existing Spring routing datasource module.
+Issue #49는 기존 Spring routing datasource module 근처에 Ktor routing datasource 예제를
+요구했다.
 
-## Decision
+## 결정
 
-Use a Ktor plugin to select `READ` or `WRITE` from request method or `X-Data-Source`, then bind that role through a coroutine context element before repository access.
+Ktor plugin으로 request method 또는 `X-Data-Source`에서 `READ`나 `WRITE`를 선택하고,
+repository access 전에 coroutine context element를 통해 해당 role을 bind한다.
 
-## Outcome
+## 결과
 
-Added `11-high-performance/07-routing-datasource-ktor` with two H2-backed datasource roles, observable route responses, selection counters, English/Korean README files, and a rendered architecture diagram.
+두 H2-backed datasource role, observable route response, selection counter, English/Korean README
+file, rendered architecture diagram을 갖춘 `11-high-performance/07-routing-datasource-ktor`를
+추가했다.
 
-## Verification
+## 검증
 
-Passed: `repo-test-summary -- ./gradlew :07-routing-datasource-ktor:test` with five passing routing selection tests.
+통과: `repo-test-summary -- ./gradlew :07-routing-datasource-ktor:test`, passing routing
+selection test 5개.
 
-## Future Guidance
+## 향후 지침
 
-Routing datasource examples should expose the selected role in tests, because it is easier to verify than inferring routing from side effects.
+Routing datasource 예제는 test에서 selected role을 노출해야 한다. Side effect에서 routing을
+추론하는 것보다 검증하기 쉽기 때문이다.

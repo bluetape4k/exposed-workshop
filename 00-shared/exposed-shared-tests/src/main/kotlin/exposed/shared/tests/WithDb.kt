@@ -78,7 +78,7 @@ fun withDb(
                 statement(testDB)
             }
         } finally {
-            // revert any new configuration to not be carried over to the next test in suite
+            // 이번 테스트에서 새로 적용한 설정이 다음 테스트로 넘어가지 않도록 원래 DB 설정으로 되돌립니다.
             if (configure != null) {
                 testDB.db = registeredDb
             }

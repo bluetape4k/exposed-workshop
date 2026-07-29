@@ -1,57 +1,55 @@
-# Issue #138 BigQuery Dry-Run Implementation Plan
+# Issue #138 BigQuery dry-run 구현 계획
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Agentic worker용:** REQUIRED SUB-SKILL: 이 계획은 task-by-task로 구현하기 위해 superpowers:subagent-driven-development(권장) 또는 superpowers:executing-plans를 사용한다. 단계 추적에는 checkbox(`- [ ]`) syntax를 사용한다.
 
-**Goal:** Add the runnable `13-ecosystem-integrations/01-bigquery-dry-run`
-workshop module for issue #138.
+**목표:** Issue #138을 위한 runnable `13-ecosystem-integrations/01-bigquery-dry-run` workshop
+module을 추가한다.
 
-**Architecture:** The module is a credential-free test-driven workshop example.
-It uses Exposed to build analytical SQL against an H2-backed SQL generation
-database, then validates the generated SQL through `BigQueryContext.validateQuery`
-against a mocked BigQuery REST client. Documentation and a flow diagram explain
-the boundary between dry-run validation and billable query execution.
+**아키텍처:** Module은 credential-free test-driven workshop example이다. H2-backed SQL generation
+database에서 Exposed로 analytical SQL을 만들고, mocked BigQuery REST client에 대해
+`BigQueryContext.validateQuery`로 generated SQL을 검증한다. Documentation과 flow diagram은
+dry-run validation과 billable query execution의 boundary를 설명한다.
 
-**Tech Stack:** Kotlin 2.3, Java 21, Gradle Kotlin DSL, JetBrains Exposed v1.x
+**기술 스택:** Kotlin 2.3, Java 21, Gradle Kotlin DSL, JetBrains Exposed v1.x
 from the catalog-backed dependency line,
 `bluetape4k-exposed-bigquery`, H2, JUnit 5, MockK, `bluetape4k-assertions`,
 CairoSVG, GitHub Actions.
 
 ---
 
-## File Map
+## 파일 지도
 
-- Modify: `gradle/libs.versions.toml`
-  - add `exposed-bigquery` alias using the centrally governed artifact.
-- Create: `13-ecosystem-integrations/01-bigquery-dry-run/build.gradle.kts`
-  - module dependencies and test classpath wiring.
-- Create: `13-ecosystem-integrations/01-bigquery-dry-run/src/main/kotlin/exposed/examples/bigquery/dryrun/BigQueryDryRunWorkshop.kt`
-  - public workshop helper API for building the read-model query, default
-    dry-run options, and validation call.
-- Create: `13-ecosystem-integrations/01-bigquery-dry-run/src/test/kotlin/exposed/examples/bigquery/dryrun/BigQueryDryRunWorkshopTest.kt`
-  - generated SQL, dry-run options, success, and failure tests.
-- Create: `13-ecosystem-integrations/01-bigquery-dry-run/src/test/resources/junit-platform.properties`
-- Create: `13-ecosystem-integrations/01-bigquery-dry-run/src/test/resources/logback-test.xml`
-- Create: `13-ecosystem-integrations/01-bigquery-dry-run/README.md`
-- Create: `13-ecosystem-integrations/01-bigquery-dry-run/README.ko.md`
-- Create: `docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.svg`
-- Create: `docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.png`
-- Modify: `13-ecosystem-integrations/README.md`
-- Modify: `13-ecosystem-integrations/README.ko.md`
-- Modify: `README.md`
-- Modify: `README.ko.md`
-- Modify: `.github/workflows/examples.yml`
-- Create: `docs/review/2026-06-29-issue-138-bigquery-dry-run-code-review.md`
-- Create: `docs/lessons/2026-06-29-issue-138-bigquery-dry-run.md`
+- 수정: `gradle/libs.versions.toml`
+  - Centrally governed artifact를 사용하는 `exposed-bigquery` alias를 추가한다.
+- 생성: `13-ecosystem-integrations/01-bigquery-dry-run/build.gradle.kts`
+  - Module dependency와 test classpath wiring.
+- 생성: `13-ecosystem-integrations/01-bigquery-dry-run/src/main/kotlin/exposed/examples/bigquery/dryrun/BigQueryDryRunWorkshop.kt`
+  - Read-model query, default dry-run option, validation call을 만드는 public workshop helper API.
+- 생성: `13-ecosystem-integrations/01-bigquery-dry-run/src/test/kotlin/exposed/examples/bigquery/dryrun/BigQueryDryRunWorkshopTest.kt`
+  - Generated SQL, dry-run option, success, failure test.
+- 생성: `13-ecosystem-integrations/01-bigquery-dry-run/src/test/resources/junit-platform.properties`
+- 생성: `13-ecosystem-integrations/01-bigquery-dry-run/src/test/resources/logback-test.xml`
+- 생성: `13-ecosystem-integrations/01-bigquery-dry-run/README.md`
+- 생성: `13-ecosystem-integrations/01-bigquery-dry-run/README.ko.md`
+- 생성: `docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.svg`
+- 생성: `docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.png`
+- 수정: `13-ecosystem-integrations/README.md`
+- 수정: `13-ecosystem-integrations/README.ko.md`
+- 수정: `README.md`
+- 수정: `README.ko.md`
+- 수정: `.github/workflows/examples.yml`
+- 생성: `docs/review/2026-06-29-issue-138-bigquery-dry-run-code-review.md`
+- 생성: `docs/lessons/2026-06-29-issue-138-bigquery-dry-run.md`
 
-## Task 1: Catalog And Module Skeleton
+## 작업 1: Catalog 및 module skeleton
 
 complexity: low
 
-Apply `$bluetape4k-code-patterns` for module registration and dependency
-governance.
+Module registration과 dependency governance에는 `$bluetape4k-code-patterns`를 적용한다.
 
-- [ ] Add `exposed-bigquery = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-bigquery" }` next to the other `exposed-*` aliases in `gradle/libs.versions.toml`.
-- [ ] Create `13-ecosystem-integrations/01-bigquery-dry-run/build.gradle.kts`:
+- [ ] 추가: `gradle/libs.versions.toml`의 다른 `exposed-*` alias 옆에
+  `exposed-bigquery = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-bigquery" }`.
+- [ ] 생성: `13-ecosystem-integrations/01-bigquery-dry-run/build.gradle.kts`:
 
 ```kotlin
 configurations {
@@ -70,281 +68,271 @@ dependencies {
 }
 ```
 
-- [ ] Create `src/test/resources/junit-platform.properties` with parallel
-  execution disabled for deterministic request capture.
-- [ ] Create `src/test/resources/logback-test.xml` using the repository's
-  existing compact test logging pattern.
-- [ ] Run:
+- [ ] 생성: Deterministic request capture를 위해 parallel execution을 비활성화한
+  `src/test/resources/junit-platform.properties`.
+- [ ] 생성: Repository의 기존 compact test logging pattern을 사용하는
+  `src/test/resources/logback-test.xml`.
+- [ ] 실행:
 
 ```bash
 ./gradlew projects --quiet
 ```
 
-Expected: exit 0 and output contains `:01-bigquery-dry-run`.
+예상: exit 0이고 output이 `:01-bigquery-dry-run`을 포함한다.
 
-## Task 2: RED Tests For Dry-Run Query Validation
+## 작업 2: Dry-run query validation용 RED test
 
 complexity: medium
 
-Apply `$bluetape4k-code-patterns`, `ecc-kotlin-exposed`, and
-`ecc-kotlin-testing`. Follow TDD: write the tests before adding
-`BigQueryDryRunWorkshop.kt`.
+`$bluetape4k-code-patterns`, `ecc-kotlin-exposed`, `ecc-kotlin-testing`을 적용한다. TDD를 따라
+`BigQueryDryRunWorkshop.kt`를 추가하기 전에 test를 작성한다.
 
-- [ ] Create
+- [ ] 생성:
   `13-ecosystem-integrations/01-bigquery-dry-run/src/test/kotlin/exposed/examples/bigquery/dryrun/BigQueryDryRunWorkshopTest.kt`.
-- [ ] Write tests that expect production API symbols from
-  `BigQueryDryRunWorkshop.kt`: `Events`, `buildRegionalRevenueQuery`,
+- [ ] 작성: `BigQueryDryRunWorkshop.kt`의 production API symbol을 기대하는 test:
+  `Events`, `buildRegionalRevenueQuery`,
   `defaultDryRunOptions`, and `validateRegionalRevenueDryRun`.
-- [ ] Add MockK stubs for the actual Google API service chain:
+- [ ] 추가: 실제 Google API service chain용 MockK stub:
   `Bigquery`, `Bigquery.Jobs`, and `Bigquery.Jobs.Query`.
-- [ ] Capture the real `QueryRequest` argument passed to
-  `Jobs.query(projectId, request)` and return a configured `QueryResponse` from
-  `Jobs.Query.execute()`.
-- [ ] Use named test constants for placeholder project ID, dataset ID, and
-  location, then construct `BigQueryContext` with those constants.
-- [ ] Add test `generated query dry run maps query job options without credentials`:
-  - builds an Exposed grouped query
-  - calls `BigQueryContext.validateQuery`
-  - asserts captured request fields with `bluetape4k-assertions`
-- [ ] Add test `dry run surfaces BigQuery validation errors without execution`:
-  - mocked response includes an error
-  - `validateQuery` throws `BigQueryQueryException`
-  - assertion uses `io.bluetape4k.assertions.assertFailsWith`
-- [ ] Run:
+- [ ] `Jobs.query(projectId, request)`에 전달되는 실제 `QueryRequest` argument를 capture하고
+  `Jobs.Query.execute()`에서 configured `QueryResponse`를 반환한다.
+- [ ] Placeholder project ID, dataset ID, location에는 named test constant를 사용하고, 해당
+  constant로 `BigQueryContext`를 구성한다.
+- [ ] 추가: test `generated query dry run maps query job options without credentials`:
+  - Exposed grouped query를 만든다.
+  - `BigQueryContext.validateQuery`를 호출한다.
+  - Captured request field를 `bluetape4k-assertions`로 assert한다.
+- [ ] 추가: test `dry run surfaces BigQuery validation errors without execution`:
+  - Mocked response는 error를 포함한다.
+  - `validateQuery`는 `BigQueryQueryException`을 던진다.
+  - Assertion은 `io.bluetape4k.assertions.assertFailsWith`를 사용한다.
+- [ ] 실행:
 
 ```bash
 ./gradlew :01-bigquery-dry-run:test --tests 'exposed.examples.bigquery.dryrun.BigQueryDryRunWorkshopTest' --no-daemon
 ```
 
-Expected RED: tests fail because `BigQueryDryRunWorkshop.kt` has not been
-implemented yet, or because actual BigQuery API signatures require import/API
-adjustments. The failure must be about missing implementation or API wiring, not
-syntax typos. If tests pass immediately because existing APIs fully cover the
-test without production helper gaps, record that as TDD evidence instead of
-forcing an artificial failure.
+예상 RED: `BigQueryDryRunWorkshop.kt`가 아직 구현되지 않았거나 실제 BigQuery API signature에
+import/API 조정이 필요해서 test가 실패한다. Failure는 syntax typo가 아니라 missing implementation
+또는 API wiring 때문이어야 한다. Existing API가 production helper gap 없이 test를 완전히 충족해
+test가 즉시 통과하면 artificial failure를 강제하지 말고 이를 TDD evidence로 기록한다.
 
-## Task 3: GREEN Implementation By Wiring Existing BigQuery APIs
+## 작업 3: 기존 BigQuery API wiring으로 GREEN 구현
 
 complexity: medium
 
-Apply `$bluetape4k-code-patterns` and `ecc-kotlin-exposed`.
+`$bluetape4k-code-patterns`와 `ecc-kotlin-exposed`를 적용한다.
 
-- [ ] Create
+- [ ] 생성:
   `13-ecosystem-integrations/01-bigquery-dry-run/src/main/kotlin/exposed/examples/bigquery/dryrun/BigQueryDryRunWorkshop.kt`.
-- [ ] Implement public KDoc-backed workshop helpers:
+- [ ] 공개 KDoc이 있는 workshop helper를 구현한다:
   - `Events` table with `eventId`, `region`, `eventType`, `revenue`, and
     `occurredAt` columns
   - `buildRegionalRevenueQuery`
   - `defaultDryRunOptions`
   - `validateRegionalRevenueDryRun`
-- [ ] Fix imports and helper code so tests compile against the actual
-  `BigQueryContext`, `BigQueryQueryOptions`, `BigQueryQueryPriority`, and
-  `BigQueryQueryException` APIs.
-- [ ] Create the H2 SQL-generation database deterministically in test setup.
+- [ ] 실제 `BigQueryContext`, `BigQueryQueryOptions`, `BigQueryQueryPriority`,
+  `BigQueryQueryException` API에 대해 test가 compile되도록 import와 helper code를 고친다.
+- [ ] 생성: Test setup에서 H2 SQL-generation database를 deterministic하게 만든다.
   Use `Database.connect("jdbc:h2:mem:bigquery_dry_run;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE", driver = "org.h2.Driver")`
-  or the matching `BigQueryContext` factory when available. Recreate the mocked
-  BigQuery REST client per test, keep mutable request capture per test, and rely
-  on `BigQueryContext.validateQuery` for transaction boundaries so Exposed state
-  does not leak across tests.
-- [ ] Do not add any path that reads `System.getenv`, `System.getProperty`,
-  ADC, service-account files, project secrets, endpoint overrides, tokens, API
-  keys, or constructs a real Google Cloud BigQuery client.
-- [ ] Avoid deprecated Exposed imports such as `SqlExpressionBuilder.eq`.
-- [ ] Use durable SQL fragment assertions instead of exact full-SQL matching.
-- [ ] Run:
+  또는 사용할 수 있으면 matching `BigQueryContext` factory를 사용한다. Test마다 mocked BigQuery
+  REST client를 다시 만들고 mutable request capture를 test별로 유지하며, Exposed state가 test
+  사이에 leak되지 않도록 transaction boundary는 `BigQueryContext.validateQuery`에 맡긴다.
+- [ ] `System.getenv`, `System.getProperty`, ADC, service-account file, project secret, endpoint
+  override, token, API key를 읽거나 real Google Cloud BigQuery client를 만드는 path를 추가하지
+  않는다.
+- [ ] 회피: deprecated Exposed imports such as `SqlExpressionBuilder.eq`.
+- [ ] Exact full-SQL matching 대신 durable SQL fragment assertion을 사용한다.
+- [ ] 실행:
 
 ```bash
 ./gradlew :01-bigquery-dry-run:test --no-daemon
 ```
 
-Expected GREEN: all tests in `:01-bigquery-dry-run` pass.
+예상 GREEN: `:01-bigquery-dry-run`의 모든 test가 통과한다.
 
-## Task 4: Module README Pair And Diagram
+## 작업 4: Module README pair와 diagram
 
 complexity: medium
 
-Apply `$bluetape4k-diagram` and README locale policy.
+`$bluetape4k-diagram`과 README locale policy를 적용한다.
 
-- [ ] Create `README.md` and `README.ko.md` under the module.
-- [ ] Include language switches:
+- [ ] 생성: Module 아래 `README.md`와 `README.ko.md`.
+- [ ] 포함: language switches:
   - English file: `English | [한국어](README.ko.md)`
   - Korean file: `[English](README.md) | 한국어`
-- [ ] Keep README locale parity. Both files must contain matching sections for:
-  purpose, dry-run vs execution, credential-free command, no-cloud-credential
-  guarantee, tested behavior, diagram reference, and real BigQuery out-of-scope
-  warning.
-- [ ] Explain:
-  - dry run parses and validates a query without executing a billable query
-  - default test path uses a mocked BigQuery REST client
-  - no credentials, ADC, project secrets, or network calls are required
+- [ ] 유지: README locale parity. 두 file은 purpose, dry-run vs execution, credential-free
+  command, no-cloud-credential guarantee, tested behavior, diagram reference, real BigQuery
+  out-of-scope warning에 대한 matching section을 가져야 한다.
+- [ ] 설명:
+  - Dry run은 billable query를 실행하지 않고 query를 parse/validate한다.
+  - Default test path는 mocked BigQuery REST client를 사용한다.
+  - Credential, ADC, project secret, network call은 필요하지 않다.
   - command: `./gradlew :01-bigquery-dry-run:test`
-  - expected result: the command uses only H2 plus mocked BigQuery REST calls
-    and passes without `GOOGLE_APPLICATION_CREDENTIALS`
-- [ ] Create `docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.svg` with
-  English labels and source-backed flow: Exposed query -> SQL generation DB ->
-  BigQuery dry-run request -> mocked REST response -> workshop assertions.
-- [ ] Embed the diagram in both README files with alt text or a caption that
-  includes `mocked BigQuery REST response`.
-- [ ] Render PNG:
+  - Expected result: Command는 H2와 mocked BigQuery REST call만 사용하며
+    `GOOGLE_APPLICATION_CREDENTIALS` 없이 통과한다.
+- [ ] 생성: English label과 source-backed flow를 가진
+  `docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.svg`: Exposed query -> SQL
+  generation DB -> BigQuery dry-run request -> mocked REST response -> workshop assertions.
+- [ ] embed: 두 README file에 diagram을 넣고 `mocked BigQuery REST response`를 포함한 alt text
+  또는 caption을 둔다.
+- [ ] PNG render:
 
 ```bash
 ~/.local/bin/cairosvg docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.svg \
   -o docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.png -s 2
 ```
 
-- [ ] Validate:
+- [ ] 검증:
 
 ```bash
 xmllint --noout docs/images/readme-diagrams/01-bigquery-dry-run-flow-01.svg
 ```
 
-- [ ] Inspect rendered PNG at full size before accepting the diagram.
+- [ ] Diagram을 수용하기 전에 rendered PNG를 full size로 검사한다.
 
-## Task 5: Chapter, Root README, And Workflow Wiring
+## 작업 5: Chapter, root README, workflow wiring
 
 complexity: low
 
-Apply `$bluetape4k-code-patterns` for module registration and workflow rules.
+Module registration과 workflow rule에는 `$bluetape4k-code-patterns`를 적용한다.
 
-- [ ] Update `13-ecosystem-integrations/README.md` and `README.ko.md`:
-  - change #138 status from `Planned` to `Ready`
-  - link `01-bigquery-dry-run/README.md` and
+- [ ] 갱신: `13-ecosystem-integrations/README.md`와 `README.ko.md`:
+  - #138 status를 `Planned`에서 `Ready`로 변경한다.
+  - `01-bigquery-dry-run/README.md`와
     `01-bigquery-dry-run/README.ko.md`
-  - keep #139-#145 as planned
-- [ ] Update root `README.md` and `README.ko.md` under Chapter 13 to include the
-  first runnable child module link.
-- [ ] Add `:01-bigquery-dry-run:build` to the selected Examples workflow Gradle
-  invocation, near the chapter 13 comment.
-- [ ] Complete the new-module registration audit and record the result in the
-  review document:
-  - `settings.gradle.kts`: automatic chapter include covers the module
-  - repo-local module list: root/chapter README pairs updated
-  - CI workflow: no child-module path/job change required because broad Gradle
-    test jobs cover discovered projects
-  - Nightly workflow: N/A for this issue because the module is mock-only and the
-    Examples workflow owns runnable example coverage
-  - Examples workflow: path filters already include chapter 13 and selected
-    build task is added
-  - summary `needs`: unchanged unless the Examples job graph changes
-  - coverage artifacts: unchanged; no Kover threshold or Codecov gate is added
-- [ ] Run:
+    를 link한다.
+  - #139-#145는 planned 상태로 유지한다.
+- [ ] 갱신: Chapter 13 아래 root `README.md`와 `README.ko.md`에 첫 runnable child module link를
+  포함한다.
+- [ ] 추가: Chapter 13 comment 근처 selected Examples workflow Gradle invocation에
+  `:01-bigquery-dry-run:build`.
+- [ ] 완료: New-module registration audit를 수행하고 review document에 결과를 기록한다:
+  - `settings.gradle.kts`: Automatic chapter include가 module을 포함한다.
+  - Repo-local module list: root/chapter README pair가 갱신됐다.
+  - CI workflow: Broad Gradle test job이 discovered project를 다루므로 child-module path/job 변경은
+    필요하지 않다.
+  - Nightly workflow: 이 module은 mock-only이고 Examples workflow가 runnable example coverage를
+    소유하므로 N/A.
+  - Examples workflow: Path filter는 이미 chapter 13을 포함하고 selected build task가 추가된다.
+  - Summary `needs`: Examples job graph가 바뀌지 않으면 unchanged.
+  - Coverage artifact: 변경 없음. Kover threshold나 Codecov gate를 추가하지 않는다.
+- [ ] 실행:
 
 ```bash
 actionlint .github/workflows/examples.yml
 ```
 
-Expected: exit 0.
+예상: exit 0.
 
-## Task 6: Verification And Review Evidence
+## 작업 6: 검증과 review evidence
 
 complexity: medium
 
-Apply `verification-before-completion`, `$bluetape4k-code-patterns`, and
-`$bluetape4k-diagram`.
+`verification-before-completion`, `$bluetape4k-code-patterns`, `$bluetape4k-diagram`을
+적용한다.
 
-- [ ] Run module tests:
+- [ ] 실행: Module test:
 
 ```bash
 ./gradlew :01-bigquery-dry-run:test --no-daemon
 ```
 
-- [ ] Run module build:
+- [ ] 실행: Module build:
 
 ```bash
 ./gradlew :01-bigquery-dry-run:build --no-daemon
 ```
 
-- [ ] Run project discovery:
+- [ ] 실행: Project discovery:
 
 ```bash
 ./gradlew projects --quiet
 ```
 
-- [ ] Run workflow lint:
+- [ ] 실행: Workflow lint:
 
 ```bash
 actionlint .github/workflows/examples.yml
 ```
 
-- [ ] Run diff whitespace check:
+- [ ] 실행: Diff whitespace check:
 
 ```bash
 git diff --check
 ```
 
-- [ ] Run README local-link check for touched README files:
+- [ ] 실행: 변경된 README file의 local-link check:
 
 ```bash
 ruby -e 'files=%w[README.md README.ko.md 13-ecosystem-integrations/README.md 13-ecosystem-integrations/README.ko.md 13-ecosystem-integrations/01-bigquery-dry-run/README.md 13-ecosystem-integrations/01-bigquery-dry-run/README.ko.md]; bad=[]; files.each{|f| text=File.read(f); text.scan(/!?\[[^\]]*\]\(([^)#][^)]*)\)/).flatten.each{|href| next if href =~ %r{\Ahttps?://}; path=href.split("#",2).first; next if path.empty?; target=File.expand_path(path, File.dirname(f)); bad << "#{f} -> #{href}" unless File.exist?(target)}}; abort(bad.join("\n")) unless bad.empty?'
 ```
-- [ ] Run credential drift scan for touched module/docs:
+- [ ] 실행: 변경된 module/docs의 credential drift scan:
 
 ```bash
 rg -in "GOOGLE_APPLICATION_CREDENTIALS|application-default|Application Default Credentials|\\bADC\\b|service[-_ ]account|client_secret|password|token|api[_-]?key|project[-_ ]?ids?|projectId|endpoint secret" \
   13-ecosystem-integrations README.md README.ko.md docs/images/readme-diagrams .github/workflows/examples.yml
 ```
 
-Expected: only explanatory policy/warning text and placeholder dataset/project
-IDs, no real secrets.
+예상: Explanatory policy/warning text와 placeholder dataset/project ID만 나오며 real secret은 없다.
 
-- [ ] Run executable-path real-client scan:
+- [ ] 실행: Executable-path real-client scan:
 
 ```bash
 rg -n "System\\.getenv|System\\.getProperty|GoogleCredentials|BigQueryOptions|ServiceAccount|GOOGLE_CLOUD_PROJECT|GOOGLE_APPLICATION_CREDENTIALS|setApplicationName|new Bigquery|Bigquery\\.Builder" \
   13-ecosystem-integrations/01-bigquery-dry-run/src .github/workflows/examples.yml
 ```
 
-Expected: zero matches, except mocked `Bigquery` type usage in the test helper
-when the match is not real-client construction.
+예상: Real-client construction이 아닌 test helper의 mocked `Bigquery` type usage를 제외하면 match
+0개.
 
-- [ ] Write `docs/review/2026-06-29-issue-138-bigquery-dry-run-code-review.md`
-  with severity counts and findings derived from actual review evidence. Do not
-  predeclare P0/P1 results before the review is complete.
-- [ ] Record rendered PNG visual QA evidence in the review document after
-  inspecting the generated image.
+- [ ] 작성: `docs/review/2026-06-29-issue-138-bigquery-dry-run-code-review.md`
+  에 실제 review evidence에서 파생된 severity count와 finding을 기록한다. 검토 완료 전에 P0/P1
+  result를 미리 선언하지 않는다.
+- [ ] 기록: Generated image를 검사한 뒤 review document에 rendered PNG visual QA evidence를
+  기록한다.
 
-## Task 7: Lessons, Commit, PR, And CI
+## 작업 7: Lesson, commit, PR, CI
 
 complexity: low
 
-- [ ] Create `docs/lessons/2026-06-29-issue-138-bigquery-dry-run.md` with the
-  module, credential-free default, and workflow task wiring lesson.
-- [ ] Commit spec and plan before implementation if not already committed.
-- [ ] Commit implementation/docs/review/lesson with Lore commit trailers.
-- [ ] Push branch `feat/issue-138-bigquery-dry-run`.
-- [ ] Read live issue metadata before creating the PR:
+- [ ] 생성: Module, credential-free default, workflow task wiring lesson을 담은
+  `docs/lessons/2026-06-29-issue-138-bigquery-dry-run.md`.
+- [ ] commit: 아직 commit하지 않았다면 implementation 전에 spec과 plan을 commit한다.
+- [ ] commit: Implementation/docs/review/lesson을 Lore commit trailer와 함께 commit한다.
+- [ ] push: Branch `feat/issue-138-bigquery-dry-run`.
+- [ ] 읽기: PR 생성 전 live issue metadata:
 
 ```bash
 gh issue view 138 --json assignees,labels,milestone,state
 ```
 
-- [ ] Create PR:
+- [ ] 생성: PR:
   - title: `feat: add BigQuery dry-run workshop example`
-  - body closes #138 and references #137
-  - assignee, milestone, and labels mirrored from live issue #138 metadata
-  - final section exactly `## DoD Status`
-- [ ] Verify live PR metadata:
+  - Body는 #138을 close하고 #137을 reference한다.
+  - Assignee, milestone, label은 live issue #138 metadata를 반영한다.
+  - 마지막 section은 정확히 `## DoD Status`다.
+- [ ] 검증: live PR metadata:
 
 ```bash
 gh pr view <number> --json body,assignees,labels,milestone,state,isDraft
 ```
 
-- [ ] Verify parent epic #137 remains open:
+- [ ] 검증: parent epic #137 remains open:
 
 ```bash
 gh issue view 137 --json state
 ```
 
-- [ ] Watch/check CI with `gh pr checks <number>` and proceed to final DoD only
-  after checks are success or an evidence-backed blocker is reported.
+- [ ] `gh pr checks <number>`로 CI를 watch/check하고, check success 또는 evidence-backed blocker를
+  보고한 뒤에만 final DoD로 진행한다.
 
-## Step 3-R Self Review
+## 단계 3-R Self review
 
-- Spec coverage: every #138 acceptance criterion maps to Tasks 1-7.
-- Placeholder scan: no `TBD`, `TODO`, or open-ended implementation steps remain.
-- Type consistency: module name, package name, test class, diagram filenames,
-  and Gradle task names are consistent across tasks.
-- Concurrency helpers: not applicable; this module has no race, structured
-  concurrency, virtual-thread, or suspend stress behavior.
-- Testcontainers: not applicable; default path is mock REST client plus H2 SQL
-  generation DB.
+- Spec coverage: 모든 #138 acceptance criterion은 작업 1-7에 mapping된다.
+- Placeholder scan: `TBD`, `TODO`, open-ended implementation step이 남아 있지 않다.
+- Type consistency: Module name, package name, test class, diagram filename, Gradle task name이
+  task 전체에서 일관된다.
+- Concurrency helpers: 해당 없음. 이 module에는 race, structured concurrency, virtual-thread,
+  suspend stress behavior가 없다.
+- Testcontainers: 해당 없음. Default path는 mock REST client와 H2 SQL generation DB다.

@@ -44,7 +44,7 @@ class Ex05_OneToMany_JoinTable: AbstractExposedTest() {
             entityCache.clear()
 
             /**
-             * Eager loading with `load(User::addresses)`
+             * `load(User::addresses)`로 주소 관계를 eager loading한다.
              *
              * ```sql
              * -- Postgres

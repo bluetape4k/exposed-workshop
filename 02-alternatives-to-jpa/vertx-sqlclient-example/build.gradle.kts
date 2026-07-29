@@ -8,16 +8,16 @@ dependencies {
     testImplementation(libs.bluetape4k.jdbc)
     testImplementation(libs.bluetape4k.junit5)
 
-    // Vertx
+    // Vert.x 테스트 의존성
     testImplementation(libs.bluetape4k.vertx)
     testImplementation(libs.vertx.junit5)
 
-    // Vertx Kotlin
+    // Vert.x Kotlin 및 coroutine 의존성
     testImplementation(libs.vertx.core)
     testImplementation(libs.vertx.lang.kotlin)
     testImplementation(libs.vertx.lang.kotlin.coroutines)
 
-    // Vertx SqlClient
+    // Vert.x SQL client 의존성
     testImplementation(libs.vertx.sql.client)
     testImplementation(libs.vertx.sql.client.templates)
     testImplementation(libs.vertx.mysql.client)
@@ -29,7 +29,7 @@ dependencies {
     testImplementation(libs.vertx.jdbc.client)
     testImplementation(libs.agroal.pool)
 
-    // MyBatis
+    // MyBatis dynamic SQL 의존성
     testImplementation(libs.mybatis.dynamic.sql)
 
     // Vetx SqlClient Templates 에서 Jackson Databind 를 이용한 매핑을 사용한다
@@ -40,13 +40,13 @@ dependencies {
     testRuntimeOnly(libs.h2)
     testRuntimeOnly(libs.mysql.connector.j)
 
-    // Testcontainers
+    // Testcontainers 데이터베이스 의존성
     testImplementation(libs.bluetape4k.testcontainers)
     testImplementation(libs.testcontainers)
     testImplementation(libs.testcontainers.mysql)
     testImplementation(libs.testcontainers.postgresql)
 
-    // Coroutines
+    // 코루틴 테스트 의존성
     testImplementation(libs.bluetape4k.coroutines)
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)

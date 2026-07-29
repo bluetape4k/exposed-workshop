@@ -27,7 +27,7 @@ class Ex04_OneToMany_N_plus_1_Restaurant: AbstractExposedTest() {
     companion object: KLogging()
 
     /**
-     * Eager loading `Menu` entities (`with(Restaurant::menus)`)
+     * `with(Restaurant::menus)`로 `Menu` 엔티티를 eager loading한다.
      *
      * 참고: [Eager Loaing](https://jetbrains.github.io/Exposed/dao-relationships.html#eager-loading)
      */
@@ -41,7 +41,7 @@ class Ex04_OneToMany_N_plus_1_Restaurant: AbstractExposedTest() {
             entityCache.clear()
 
             /**
-             * Earger loading `Menu` entities (`with(Restaurant::menus)`)
+             * `with(Restaurant::menus)`로 `Menu` 엔티티를 eager loading한다.
              *
              * ```sql
              * SELECT restaurant.id, restaurant."name"

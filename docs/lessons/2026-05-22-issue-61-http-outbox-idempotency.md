@@ -1,27 +1,27 @@
-# Issue 61 HTTP Outbox Idempotency Examples
+# Issue 61 HTTP outbox idempotency 예제
 
-## Context
+## 배경
 
-Issue #61 added the second paired chapter 12 production-integration topic:
-Spring Boot 4 and Ktor HTTP client outbox/idempotency examples.
+Issue #61은 두 번째 paired 12장 production-integration topic인 Spring Boot 4/Ktor HTTP
+client outbox/idempotency 예제를 추가했다.
 
-## Decision
+## 결정
 
-Persist the outbound payment record before gateway dispatch, use a unique
-idempotency key as the duplicate boundary, and keep the gateway replaceable so
-tests do not require a real external HTTP service.
+Gateway dispatch 전에 outbound payment record를 저장하고, unique idempotency key를
+duplicate boundary로 사용하며, test가 실제 external HTTP service를 요구하지 않도록 gateway를
+교체 가능하게 유지한다.
 
-## Outcome
+## 결과
 
-The Spring module uses MVC, `RestClient`, controller advice, and an Exposed JDBC
-repository. The Ktor module mirrors the contract with routes, `StatusPages`, a
-Ktor HTTP client, and blocking Exposed calls isolated behind `Dispatchers.IO`.
+Spring 모듈은 MVC, `RestClient`, controller advice, Exposed JDBC repository를 사용한다.
+Ktor 모듈은 route, `StatusPages`, Ktor HTTP client, `Dispatchers.IO` 뒤로 격리한 blocking
+Exposed call로 같은 contract를 반영한다.
 
-## Verification
+## 검증
 
-Run the two module builds and the `Examples.yml` workflow path after changes.
+변경 후 두 module build와 `Examples.yml` workflow path를 실행한다.
 
-## Future Guidance
+## 향후 지침
 
-For chapter 12 paired examples, update the chapter README, root README files,
-and `.github/workflows/examples.yml` in the same PR as the runnable modules.
+12장의 paired example에서는 runnable module과 같은 PR에서 chapter README, root README file,
+`.github/workflows/examples.yml`을 갱신한다.

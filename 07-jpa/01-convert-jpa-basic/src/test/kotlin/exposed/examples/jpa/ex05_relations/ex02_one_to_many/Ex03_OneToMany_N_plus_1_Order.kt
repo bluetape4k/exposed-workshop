@@ -24,7 +24,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import kotlin.random.Random
 
 /**
- * bidirectional one-to-many relationship with eager loading and lazy loading
+ * 양방향 일대다 관계에서 eager loading과 lazy loading 동작을 비교한다.
  */
 class Ex03_OneToMany_N_plus_1_Order: AbstractExposedTest() {
 
@@ -41,7 +41,7 @@ class Ex03_OneToMany_N_plus_1_Order: AbstractExposedTest() {
             entityCache.clear()
 
             /**
-             * Fetch lazy loading `OrderItem` entity
+             * lazy loading으로 `OrderItem` 엔티티를 조회한다.
              * ```sql
              * -- Postgres
              * SELECT orders.id, orders."no"
@@ -56,7 +56,7 @@ class Ex03_OneToMany_N_plus_1_Order: AbstractExposedTest() {
             loaded.items.count() shouldBeEqualTo 3
 
             /**
-             * Fetch lazy loading `OrderItem` entity
+             * lazy loading으로 `OrderItem` 엔티티를 조회한다.
              *
              * ```sql
              * -- Postgres
@@ -70,7 +70,7 @@ class Ex03_OneToMany_N_plus_1_Order: AbstractExposedTest() {
             entityCache.clear()
 
             /**
-             * Eager loading `OrderItem` entity by `with(Order::items)`
+             * `with(Order::items)`로 `OrderItem` 엔티티를 eager loading한다.
              *
              * ```sql
              * -- Postgres
@@ -89,7 +89,7 @@ class Ex03_OneToMany_N_plus_1_Order: AbstractExposedTest() {
             entityCache.clear()
 
             /**
-             * join loading
+             * 조인으로 연관 엔티티를 로드한다.
              * ```sql
              * -- Postgres
              * SELECT orders.id, orders."no", order_items.id, order_items."name", order_items.price, order_items.order_id
@@ -120,14 +120,14 @@ class Ex03_OneToMany_N_plus_1_Order: AbstractExposedTest() {
             OrderItem.all().count() shouldBeEqualTo 2L
             order1.items.count() shouldBeEqualTo 2L
 
-            // cascade delete
+            // cascade delete 동작을 검증한다.
             order1.delete()
             OrderItem.all().count() shouldBeEqualTo 0L
         }
     }
 
     /**
-     * Eager loading with pagination
+     * 페이지네이션과 함께 eager loading을 검증한다.
      *
      * ```sql
      * -- Postgres
@@ -165,7 +165,7 @@ class Ex03_OneToMany_N_plus_1_Order: AbstractExposedTest() {
     }
 
     /**
-     * Lazy loading with pagination (N+1 문제)
+     * lazy loading으로 연관 엔티티를 지연 로드한다. with pagination (N+1 문제)
      *
      * ```sql
      * -- Postgres

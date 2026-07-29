@@ -1,22 +1,22 @@
-# MyBatis Dynamic SQL 2 Catalog Sync
+# MyBatis Dynamic SQL 2 catalog 동기화
 
-## Context
+## 배경
 
-`bluetape4k-dependencies` promoted MyBatis Dynamic SQL to 2.0.0 and Fory Kotlin
-to 0.17.0 as shared catalog versions.
+`bluetape4k-dependencies`가 MyBatis Dynamic SQL 2.0.0과 Fory Kotlin 0.17.0을
+shared catalog version으로 승격했다.
 
-## Decision
+## 결정
 
-Materialize the shared catalog change in the Exposed workshop repository and
-verify the build still compiles.
+Shared catalog 변경을 Exposed workshop repository에 반영하고 build가 계속 compile되는지
+검증한다.
 
-## Outcome
+## 결과
 
-`gradle/libs.versions.toml` now carries MyBatis Dynamic SQL 2.0.0 and Fory
-Kotlin 0.17.0.
+`gradle/libs.versions.toml`은 이제 MyBatis Dynamic SQL 2.0.0과 Fory Kotlin 0.17.0을
+담고 있다.
 
-## Verification
+## 검증
 
 - `./gradlew build -x test --no-daemon`
 
-The build completed with existing unrelated warnings.
+Build는 기존 unrelated warning과 함께 완료됐다.

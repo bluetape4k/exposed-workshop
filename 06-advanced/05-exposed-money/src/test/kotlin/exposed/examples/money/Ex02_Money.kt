@@ -288,7 +288,7 @@ class Ex02_Money: AbstractExposedTest() {
             result2[tester.nullableMoney.currency] shouldBeEqualTo currencyUnit
 
             /**
-             * manual composite columns should still accept composite values
+             * 수동으로 선언한 복합 컬럼도 복합 값을 정상적으로 받아야 한다.
              *
              * ```sql
              * INSERT INTO tester (amount, currency, nullable_amount, nullable_currency)
@@ -308,7 +308,7 @@ class Ex02_Money: AbstractExposedTest() {
             }
 
             /**
-             * Search by composite column
+             * 복합 컬럼 값으로 행을 검색한다.
              *
              * ```sql
              * SELECT COUNT(*) FROM tester

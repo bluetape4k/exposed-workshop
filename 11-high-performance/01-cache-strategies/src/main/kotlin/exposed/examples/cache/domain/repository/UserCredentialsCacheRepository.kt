@@ -36,10 +36,10 @@ class UserCredentialsCacheRepository(
     // READ-ONLY 이므로,  updateEntity, insertEntity 에서 아무 작업도 하지 않습니다.
 
     override fun BatchInsertStatement.insertEntity(entity: UserCredentialsRecord) {
-        // No operation
+        // 이 저장소 구현에서는 별도 정리 작업이 필요하지 않다.
     }
 
     override fun UpdateStatement.updateEntity(entity: UserCredentialsRecord) {
-        // No operation
+        // 이 저장소 구현에서는 별도 정리 작업이 필요하지 않다.
     }
 }
