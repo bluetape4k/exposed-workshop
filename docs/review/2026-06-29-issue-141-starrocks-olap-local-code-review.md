@@ -1,40 +1,39 @@
-# Issue 141 - StarRocks Local-First OLAP Code Review
+# Issue 141 - StarRocks local-first OLAP code review
 
-## Scope
+## 범위
 
-- New module `13-ecosystem-integrations/04-starrocks-olap-local`
+- 새 모듈 `13-ecosystem-integrations/04-starrocks-olap-local`
 - StarRocks alias in `gradle/libs.versions.toml`
 - README locale pair, root/chapter indexes, Examples workflow
 - Diagram asset `13-starrocks-olap-local-architecture-01.svg/png`
 
-## Findings
+## 발견 사항
 
 - P0: 0
 - P1: 0
 
-## Review Notes
+## 리뷰 노트
 
-- The implementation uses the public `bluetape4k-exposed-starrocks` API:
+- 구현은 public `bluetape4k-exposed-starrocks` API를 사용한다:
   `StarRocksConnectionOptions` and `StarRocksTable`.
-- Default tests are H2-only and do not instantiate Testcontainers or contact a
-  StarRocks backend.
-- DDL tests intentionally validate rendered shape only. Real StarRocks storage,
-  partitioning, distribution, and cloud behavior remain out of scope and are
-  documented as opt-in.
-- Diagram validation followed `$bluetape4k-diagram`: source-backed scope,
-  editable SVG, CairoSVG-rendered PNG, XML parse, geometry audit, endpoint audit,
-  marker/style scan, and full-size PNG inspection.
+- Default test는 H2-only이며 Testcontainers를 instantiate하거나 StarRocks backend에 접속하지
+  않는다.
+- DDL test는 의도적으로 rendered shape만 검증한다. Real StarRocks storage, partitioning,
+  distribution, cloud behavior는 scope 밖이며 opt-in으로 문서화됐다.
+- Diagram validation은 `$bluetape4k-diagram`을 따랐다: source-backed scope, editable SVG,
+  CairoSVG-rendered PNG, XML parse, geometry audit, endpoint audit, marker/style scan,
+  full-size PNG inspection.
 
-## Verification Evidence
+## 검증 근거
 
-- RED: `:04-starrocks-olap-local:test` failed on unresolved workshop symbols.
-- GREEN: `:04-starrocks-olap-local:test` passed with 5 tests, 0 failures, 0
-  errors, 0 skipped.
-- Build: `:04-starrocks-olap-local:test :04-starrocks-olap-local:build` passed.
-- Matrix guard: `:04-starrocks-olap-local:test -PuseDB=H2` passed.
-- Registration: `./gradlew projects --quiet` listed `:04-starrocks-olap-local`.
+- RED: `:04-starrocks-olap-local:test`는 unresolved workshop symbol에서 실패했다.
+- GREEN: `:04-starrocks-olap-local:test`는 test 5개, failure 0, error 0, skipped 0으로
+  통과했다.
+- Build: `:04-starrocks-olap-local:test :04-starrocks-olap-local:build` 통과.
+- Matrix guard: `:04-starrocks-olap-local:test -PuseDB=H2` 통과.
+- Registration: `./gradlew projects --quiet`가 `:04-starrocks-olap-local`을 표시했다.
 - Workflow/static: `actionlint .github/workflows/examples.yml`,
   `node /Users/debop/work/bluetape4k/.omx/scripts/audit-readme-diagrams.mjs .`,
-  and `git diff --check` passed.
-- Diagram: XML parse, geometry audit, endpoint audit, marker/style scan, PNG
-  render, and visual inspection passed.
+  `git diff --check` 통과.
+- Diagram: XML parse, geometry audit, endpoint audit, marker/style scan, PNG render,
+  visual inspection 통과.
