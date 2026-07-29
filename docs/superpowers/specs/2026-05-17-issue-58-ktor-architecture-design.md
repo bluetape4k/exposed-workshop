@@ -1,62 +1,59 @@
-# Issue 58 - Ktor Application Architecture Design
+# Issue 58 - Ktor application architecture 설계
 
-## Context
+## 배경
 
-Issue #58 starts chapter 12 production integration work with the smallest Ktor
-example in `exposed-workshop`. The module should become the baseline shape for
-later chapter 12 examples without pulling in auth, outbox, WebSocket, external
-client, or observability scope.
+Issue #58은 `exposed-workshop`에서 가장 작은 Ktor 예제로 12장 production integration 작업을
+시작한다. 이 모듈은 auth, outbox, WebSocket, external client, observability scope를 끌어오지
+않고 이후 12장 예제의 baseline shape가 되어야 한다.
 
-## Goal
+## 목표
 
-Add `12-production-integration/01-ktor-application-architecture`, a minimal
-Ktor + Exposed JDBC example that demonstrates explicit application assembly,
-feature routes, service/repository boundaries, JSON serialization, error
-mapping, and route tests.
+명시적 application assembly, feature route, service/repository boundary, JSON
+serialization, error mapping, route test를 보여 주는 최소 Ktor + Exposed JDBC 예제
+`12-production-integration/01-ktor-application-architecture`를 추가한다.
 
-## Non-Goals
+## 비목표
 
-- No Spring Boot dependency in this module.
-- No Testcontainers; use in-memory H2 for the first baseline example.
-- No authentication, sessions, WebSocket, external HTTP client, or metrics.
-- No shared abstraction for future chapter 12 modules until duplication is real.
+- 이 모듈에는 Spring Boot dependency를 넣지 않는다.
+- Testcontainers 없음. 첫 baseline example에는 in-memory H2를 사용한다.
+- Authentication, session, WebSocket, external HTTP client, metrics 없음.
+- Duplication이 실제로 나타나기 전까지 future chapter 12 module용 shared abstraction 없음.
 
-## Design
+## 설계
 
-- Register the chapter in `settings.gradle.kts` with the existing
-  `includeModules("12-production-integration", false, false)` helper.
-- Add Ktor aliases to `gradle/libs.versions.toml` using the current official
-  Ktor 3.4.3 coordinates already used in `bluetape4k-projects`.
-- Use `kotlin("plugin.serialization")` for DTOs and Ktor kotlinx JSON support.
-- Use a small `Customer` domain:
+- 기존 `includeModules("12-production-integration", false, false)` helper로 chapter를
+  `settings.gradle.kts`에 등록한다.
+- `bluetape4k-projects`에서 이미 사용하는 현재 official Ktor 3.4.3 coordinate로
+  `gradle/libs.versions.toml`에 Ktor alias를 추가한다.
+- DTO와 Ktor kotlinx JSON support에는 `kotlin("plugin.serialization")`을 사용한다.
+- 작은 `Customer` domain을 사용한다.
   - `Customers` Exposed table.
   - `CustomerRepository` interface.
-  - `ExposedCustomerRepository` implementation exposing `suspend` functions
-    and wrapping every blocking JDBC `transaction {}` call in
-    `withContext(Dispatchers.IO)`.
-  - `CustomerService` for validation and route-friendly errors.
-- Use Ktor `ContentNegotiation`, `StatusPages`, `CallLogging`, `CallId`, and
-  feature route functions.
-- Configure JSON with `ignoreUnknownKeys = true` and enforce a small request
-  body limit for the demo API.
-- Map `IllegalArgumentException` to HTTP 400, missing records to HTTP 404, and
-  unexpected exceptions to sanitized HTTP 500 JSON responses.
-- Use `testApplication` for route tests with a unique H2 JDBC URL per test.
+  - `suspend` function을 노출하고 모든 blocking JDBC `transaction {}` 호출을
+    `withContext(Dispatchers.IO)`로 감싸는 `ExposedCustomerRepository` 구현.
+  - Validation과 route-friendly error를 위한 `CustomerService`.
+- Ktor `ContentNegotiation`, `StatusPages`, `CallLogging`, `CallId`, feature route function을
+  사용한다.
+- JSON은 `ignoreUnknownKeys = true`로 설정하고 demo API에는 작은 request body limit을
+  적용한다.
+- `IllegalArgumentException`은 HTTP 400, missing record는 HTTP 404, unexpected exception은
+  sanitized HTTP 500 JSON response로 mapping한다.
+- Route test에는 test마다 unique H2 JDBC URL을 사용하는 `testApplication`을 사용한다.
 
-## Acceptance Criteria
+## 수용 기준
 
-- `:01-ktor-application-architecture:compileKotlin` passes.
-- `:01-ktor-application-architecture:test` passes.
-- Tests cover create, get, list, not found, malformed JSON, at least two
-  validation failure paths, and a parallel insert smoke path.
-- `README.md` and `README.ko.md` exist for the module.
-- KDoc for public/internal module entrypoints explains the contract in English.
-- `git diff --check` passes.
+- `:01-ktor-application-architecture:compileKotlin` 통과.
+- `:01-ktor-application-architecture:test` 통과.
+- Test는 create, get, list, not found, malformed JSON, 최소 두 validation failure path,
+  parallel insert smoke path를 다룬다.
+- 모듈에 `README.md`와 `README.ko.md`가 존재한다.
+- Public/internal module entrypoint의 KDoc은 contract를 English로 설명한다.
+- `git diff --check` 통과.
 
-## Risks
+## 위험
 
-- Blocking Exposed JDBC is acceptable only behind the repository-owned
-  `Dispatchers.IO` boundary. README must state that higher-throughput
-  non-blocking persistence belongs in the R2DBC workshop.
-- Version catalog changes affect the whole repo; keep aliases minimal and reuse
-  the Ktor 3.4.3 version from existing bluetape4k examples.
+- Blocking Exposed JDBC는 repository-owned `Dispatchers.IO` boundary 뒤에서만 허용된다.
+  README는 higher-throughput non-blocking persistence가 R2DBC workshop에 속한다고 명시해야
+  한다.
+- Version catalog 변경은 repo 전체에 영향을 준다. Alias를 최소화하고 기존 bluetape4k 예제의
+  Ktor 3.4.3 version을 재사용한다.

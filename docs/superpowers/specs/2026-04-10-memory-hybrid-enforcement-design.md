@@ -1,4 +1,4 @@
-# Memory Hybrid Enforcement Design
+# Memory hybrid enforcement 설계
 
 ## 개요
 
