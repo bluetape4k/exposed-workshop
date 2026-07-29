@@ -35,7 +35,7 @@ import kotlin.test.assertFailsWith
  */
 class Ex01_Version: AbstractExposedTest() {
 
-    // these DB require key columns from ON clause to be included in the derived source table (USING clause)
+    // 이 데이터베이스들은 ON 절의 키 컬럼이 파생 소스 테이블(USING 절)에 포함되어야 한다.
     private val upsertViaMergeDB = TestDB.ALL_H2
 
     interface VersionedEntity {
@@ -100,7 +100,7 @@ class Ex01_Version: AbstractExposedTest() {
                 log.info { "Product: ${it[Products.name]}, Price: ${it[Products.price]}, Version: ${it[Products.version]}" }
             }
 
-            // Check the initial version
+            // 초기 version 값을 검증한다.
             val updatedRows = Products.update({ Products.id eq id and (Products.version eq 0) }) {
                 it[name] = "Updated Product A"
                 it[version] = Products.version + 1
@@ -126,7 +126,7 @@ class Ex01_Version: AbstractExposedTest() {
     @MethodSource(ENABLE_DIALECTS_METHOD)
     fun `update versioned entity`(testDB: TestDB) {
         withTables(testDB, Products) {
-            // 1. Insert a product with version 0
+            // 1. version 0을 가진 product를 삽입한다.
             val p1 = Product.new {
                 name = "Product A"
                 price = 100.0.toBigDecimal()

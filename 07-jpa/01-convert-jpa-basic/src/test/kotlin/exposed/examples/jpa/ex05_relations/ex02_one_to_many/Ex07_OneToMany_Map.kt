@@ -50,7 +50,7 @@ class Ex07_OneToMany_Map: AbstractExposedTest() {
 
             entityCache.clear()
 
-            // lazy loading
+            // lazy loading으로 연관 엔티티를 지연 로드한다.
             val loadedCar = Car.findById(car.id)!!
             loadedCar shouldBeEqualTo car
             loadedCar.options.values shouldContainSame car.options.values
@@ -67,7 +67,7 @@ class Ex07_OneToMany_Map: AbstractExposedTest() {
             // options 는 매번 읽어온다 
             car.options.values shouldContainSame listOf(option1, option3)
 
-            // Remove Car
+            // Car 엔티티를 제거한다.
             car.delete()
 
             CarTable.selectAll().count() shouldBeEqualTo 0L
@@ -206,8 +206,8 @@ class Ex07_OneToMany_Map: AbstractExposedTest() {
 
         var name by CarTable.name
 
-        // OneToMany Map with MapKeyColumn (optionKey: CarOption)  (CarOption is Component/Embeddable)
-        // JoinTable: CarOptionTable
+        // MapKeyColumn(optionKey: CarOption)을 사용하는 OneToMany Map 예제이다. CarOption은 Component/Embeddable이다.
+        // 조인 테이블은 CarOptionTable이다.
         val options: Map<String, CarOption>
             get() = CarOptionTable.selectAll()
                 .where { CarOptionTable.carId eq this@Car.id }
@@ -229,8 +229,8 @@ class Ex07_OneToMany_Map: AbstractExposedTest() {
             }
         }
 
-        // OneToMany Map with MapKeyColumn (partKey: CarPart) (CarPart is Entity)
-        // JoinTable: CarPartMapTable
+        // MapKeyColumn(partKey: CarPart)을 사용하는 OneToMany Map 예제이다. CarPart는 Entity이다.
+        // 조인 테이블은 CarPartMapTable이다.
         val parts: Map<String, CarPart>
             get() = CarPartMapTable.innerJoin(CarPartTable)
                 .select(listOf(CarPartMapTable.partKey) + CarPartTable.columns)

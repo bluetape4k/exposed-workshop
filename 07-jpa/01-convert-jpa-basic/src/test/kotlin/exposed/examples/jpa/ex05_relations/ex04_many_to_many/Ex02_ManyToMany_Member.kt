@@ -39,7 +39,7 @@ class Ex02_ManyToMany_Member: AbstractExposedTest() {
 
     /**
      *
-     * Postgres:
+     * Postgres 예:
      * ```sql
      * SELECT "User".id,
      *        "User".first_name,

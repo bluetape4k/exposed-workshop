@@ -38,7 +38,7 @@ class Ex01_ManyToOne: AbstractExposedTest() {
     companion object: KLogging()
 
     /**
-     * unidirectional many-to-one
+     * 단방향 다대일 관계를 검증한다.
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)
@@ -79,7 +79,7 @@ class Ex01_ManyToOne: AbstractExposedTest() {
         withBeerTables(testDB) { brewerys, beers ->
             val brewery1 = Brewery.findById(1)!!
 
-            // Fetch lazy loading
+            // lazy loading으로 연관 엔티티를 조회한다.
             val loaded = Brewery.all().first()
             loaded shouldBeEqualTo brewery1
             loaded.beers shouldHaveSize 3
@@ -87,7 +87,7 @@ class Ex01_ManyToOne: AbstractExposedTest() {
     }
 
     /**
-     * Eager loading with `with(Brewery::beers)`
+     * `with(Brewery::beers)`로 beer 컬렉션을 eager loading한다.
      *
      * ```sql
      * -- Postgres
@@ -101,7 +101,7 @@ class Ex01_ManyToOne: AbstractExposedTest() {
         withBeerTables(testDB) { brewerys, beers ->
             val berlin: Brewery = Brewery.findById(1)!!
 
-            // Eager loading
+            // eager loading으로 연관 엔티티를 미리 로드한다.
             val loadedBrewerys: SizedIterable<Brewery> = Brewery.all().with(Brewery::beers)
             val loaded: Brewery = loadedBrewerys.first()
             loaded shouldBeEqualTo berlin
@@ -115,7 +115,7 @@ class Ex01_ManyToOne: AbstractExposedTest() {
     }
 
     /**
-     * Lazy loading
+     * lazy loading으로 연관 엔티티를 지연 로드한다.
      * ```sql
      * -- Postgres
      * SELECT beer.id, beer."name", beer.brewery_id FROM beer WHERE beer.id = 1
@@ -124,7 +124,7 @@ class Ex01_ManyToOne: AbstractExposedTest() {
      * SELECT brewery.id, brewery."name" FROM brewery WHERE brewery.id = 1
      * ```
      *
-     * Eager loading
+     * eager loading으로 연관 엔티티를 미리 로드한다.
      * ```sql
      * -- Postgres
      * SELECT beer.id, beer."name", beer.brewery_id FROM beer WHERE beer.id = 1
@@ -145,7 +145,7 @@ class Ex01_ManyToOne: AbstractExposedTest() {
         }
         log.debug { "Eager loading brewery" }
         withBeerTables(testDB) { brewerys, beers ->
-            // Eager loading
+            // eager loading으로 연관 엔티티를 미리 로드한다.
             val beer1 = Beer.findById(1)!!.load(Beer::brewery)
             val beer2 = Beer.findById(2)!!
             log.debug { "Access to berr1.brewery" }
@@ -195,7 +195,7 @@ class Ex01_ManyToOne: AbstractExposedTest() {
             flushCache()
             entityCache.clear()
 
-            // eager loading
+            // eager loading으로 연관 엔티티를 미리 로드한다.
             val loaded = SalesForce.findById(salesForce.id)!!.load(SalesForce::salesGuys)
             log.debug { "loaded=$loaded" }
             loaded shouldBeEqualTo salesForce
@@ -207,7 +207,7 @@ class Ex01_ManyToOne: AbstractExposedTest() {
             flushCache()
             entityCache.clear()
 
-            // eager loading
+            // eager loading으로 연관 엔티티를 미리 로드한다.
             val loaded2 = SalesForce.findById(salesForce.id)!!.load(SalesForce::salesGuys)
             loaded2 shouldBeEqualTo salesForce
             loaded2.salesGuys.toList() shouldBeEqualTo listOf(salesGuy1, salesGuy2)

@@ -96,7 +96,7 @@ object BankSchema {
 
         var number: String by BankAccountTable.number
 
-        // many to many with via
+        // via 조인 테이블을 사용하는 다대다 관계를 매핑한다.
         val owners: SizedIterable<AccountOwner> by AccountOwner via OwnerAccountMapTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)
@@ -114,7 +114,7 @@ object BankSchema {
 
         var ssn: String by AccountOwnerTable.ssn
 
-        // many to many with via
+        // via 조인 테이블을 사용하는 다대다 관계를 매핑한다.
         val accounts: SizedIterable<BankAccount> by BankAccount via OwnerAccountMapTable
 
         override fun equals(other: Any?): Boolean = idEquals(other)

@@ -52,11 +52,11 @@ class Ex01_CompositeId: AbstractExposedTest() {
         }
 
         withDb(testDB) {
-            // Table can be created with no issue
+            // 테이블 생성 자체는 문제 없이 수행된다.
             SchemaUtils.create(missingIdsTable)
 
             expectException<IllegalStateException> {
-                // but trying to use id property requires idColumns not being empty
+                // 그러나 id 속성을 사용하려면 idColumns가 비어 있지 않아야 한다.
                 missingIdsTable.select(missingIdsTable.id).toList()
             }
 

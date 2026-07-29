@@ -89,7 +89,7 @@ object BlogSchema {
     }
 
     /**
-     * Many-to-many relationship table
+     * 다대다 관계를 연결하는 조인 테이블이다.
      *
      * ```sql
      * CREATE TABLE IF NOT EXISTS post_tags (
@@ -160,7 +160,7 @@ object BlogSchema {
     class PostComment(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<PostComment>(PostCommentTable)
 
-        // one-to-many relationship
+        // 일대다 관계를 매핑한다.
         var post by Post referencedOn PostCommentTable.postId
         var review by PostCommentTable.review
 

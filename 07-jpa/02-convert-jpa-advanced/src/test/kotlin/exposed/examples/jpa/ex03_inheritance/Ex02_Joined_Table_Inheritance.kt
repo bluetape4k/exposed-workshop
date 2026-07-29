@@ -33,7 +33,7 @@ class Ex02_Joined_Table_Inheritance: AbstractExposedTest() {
     companion object: KLogging()
 
     /**
-     * Joined Person Table
+     * Joined 전략의 Person 테이블 매핑 정의이다.
      *
      * ```sql
      * -- Postgres
@@ -57,7 +57,7 @@ class Ex02_Joined_Table_Inheritance: AbstractExposedTest() {
     }
 
     /**
-     * Joined Employee Table
+     * Joined 전략의 Employee 테이블 매핑 정의이다.
      *
      * ```sql
      * -- Postgres
@@ -95,7 +95,7 @@ class Ex02_Joined_Table_Inheritance: AbstractExposedTest() {
     }
 
     /**
-     * Joined Customer Table
+     * Joined 전략의 Customer 테이블 매핑 정의이다.
      *
      * ```sql
      * -- Postgres
@@ -268,7 +268,7 @@ class Ex02_Joined_Table_Inheritance: AbstractExposedTest() {
             entityCache.clear()
 
             /**
-             * Eager loading with `with()`
+             * eager loading으로 연관 엔티티를 미리 로드한다. with `with()`
              *
              * ```sql
              * -- Postgres
@@ -282,7 +282,7 @@ class Ex02_Joined_Table_Inheritance: AbstractExposedTest() {
             }
 
             /**
-             * Lazy loading with `load()`
+             * lazy loading으로 연관 엔티티를 지연 로드한다. with `load()`
              *
              * ```sql
              * -- Postgres

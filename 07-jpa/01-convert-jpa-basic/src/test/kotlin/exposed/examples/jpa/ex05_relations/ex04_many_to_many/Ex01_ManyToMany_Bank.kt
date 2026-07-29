@@ -45,7 +45,7 @@ class Ex01_ManyToMany_Bank: AbstractExposedTest() {
             entityCache.clear()
 
             /**
-             * Eager loading with `with(AccountOwner::accounts)`
+             * eager loading으로 연관 엔티티를 미리 로드한다. with `with(AccountOwner::accounts)`
              *
              * ```sql
              * -- Postgres
@@ -62,7 +62,7 @@ class Ex01_ManyToMany_Bank: AbstractExposedTest() {
             ownersWithAccounts shouldHaveSize 2
 
             /**
-             * Eager loading with `load(AccountOwner::accounts)`
+             * eager loading으로 연관 엔티티를 미리 로드한다. with `load(AccountOwner::accounts)`
              *
              * ```sql
              * -- Postgres
@@ -88,7 +88,7 @@ class Ex01_ManyToMany_Bank: AbstractExposedTest() {
             entityCache.clear()
 
             /**
-             * Eager loading with `load(BankAccount::owners)`
+             * eager loading으로 연관 엔티티를 미리 로드한다. with `load(BankAccount::owners)`
              * ```sql
              * -- Postgres
              * SELECT bank_account.id, bank_account."number"
@@ -107,7 +107,7 @@ class Ex01_ManyToMany_Bank: AbstractExposedTest() {
             loadedAccount1.owners shouldContainSame listOf(owner1, owner2)
 
             /**
-             * Delete mapping (ownerId = 2, accountId = 3)
+             * ownerId=2, accountId=3인 매핑 행을 삭제한다.
              *
              * ```sql
              * -- Postgres
@@ -145,7 +145,7 @@ class Ex01_ManyToMany_Bank: AbstractExposedTest() {
             entityCache.clear()
 
             /**
-             * Lazy loading
+             * lazy loading으로 연관 엔티티를 지연 로드한다.
              * ```sql
              * -- Postgres
              * SELECT bank_account.id, bank_account."number"
@@ -181,7 +181,7 @@ class Ex01_ManyToMany_Bank: AbstractExposedTest() {
             account4.assertAccountExists()
 
             /**
-             * Delete mapping (accountId = 3, ownerId = 2)
+             * accountId=3, ownerId=2인 매핑 행을 삭제한다.
              *
              * ```sql
              * -- Postgres
@@ -193,7 +193,7 @@ class Ex01_ManyToMany_Bank: AbstractExposedTest() {
             OwnerAccountMapTable.deleteWhere { (accountId eq account3.id) and (ownerId eq owner2.id) }
 
             /**
-             * Eager loading
+             * eager loading으로 연관 엔티티를 미리 로드한다.
              *
              * ```sql
              * -- Postgres
@@ -217,7 +217,7 @@ class Ex01_ManyToMany_Bank: AbstractExposedTest() {
     }
 
     /**
-     * Eager loading with `with(BankAccount::owners)`
+     * eager loading으로 연관 엔티티를 미리 로드한다. with `with(BankAccount::owners)`
      *
      * ```sql
      * -- Postgres

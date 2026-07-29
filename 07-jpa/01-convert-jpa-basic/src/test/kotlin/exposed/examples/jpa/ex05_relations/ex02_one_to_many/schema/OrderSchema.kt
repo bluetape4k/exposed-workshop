@@ -47,7 +47,7 @@ object OrderSchema {
         val name = varchar("name", 255)
         val price = decimal("price", 10, 2).nullable()
 
-        // reference to Order
+        // Order 엔티티를 참조한다.
         val orderId = reference(
             "order_id",
             OrderTable,
@@ -61,7 +61,7 @@ object OrderSchema {
 
         var no by OrderTable.no
 
-        // one-to-many relationship
+        // 일대다 관계를 매핑한다.
         val items: SizedIterable<OrderItem> by OrderItem
             .referrersOn(OrderItemTable.orderId)
             .orderBy(OrderItemTable.name)
@@ -79,7 +79,7 @@ object OrderSchema {
         var name by OrderItemTable.name
         var price by OrderItemTable.price
 
-        // many-to-one relationship
+        // 다대일 관계를 매핑한다.ship
         var order by Order referencedOn OrderItemTable.orderId
 
         override fun equals(other: Any?): Boolean = idEquals(other)

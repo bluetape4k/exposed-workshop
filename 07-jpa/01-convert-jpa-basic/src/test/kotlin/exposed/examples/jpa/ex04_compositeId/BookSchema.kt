@@ -21,9 +21,9 @@ object BookSchema {
     val allTables = arrayOf(Publishers, Authors, Books, Reviews, Offices)
 
     /**
-     * CompositeIdTable with 2 key columns - int & uuid (both db-generated)
+     * int와 uuid 두 키 컬럼을 사용하는 CompositeIdTable 예제이다. 두 값 모두 DB에서 생성된다.
      *
-     * Postgres:
+     * Postgres 예:
      * ```sql
      * CREATE TABLE IF NOT EXISTS publishers (
      *      pub_id SERIAL,
@@ -62,14 +62,14 @@ object BookSchema {
         val publisherIsbn = javaUUID("publisher_isbn")
         val penName = varchar("pen_name", 32)
 
-        // FK constraint with multiple columns is created as a table-level constraint
+        // 여러 컬럼으로 구성된 FK 제약은 테이블 수준 제약으로 생성된다.
         init {
             foreignKey(publisherId, publisherIsbn, target = Publishers.primaryKey)
         }
     }
 
     /**
-     * CompositeIdTable with 1 key column - int (db-generated)
+     * int 키 컬럼 하나를 사용하는 CompositeIdTable 예제이다. 값은 DB에서 생성된다.
      *
      * ```sql
      * CREATE TABLE IF NOT EXISTS books (
@@ -91,7 +91,7 @@ object BookSchema {
     }
 
     /**
-     * CompositeIdTable with 2 key columns - string & long (neither db-generated)
+     * string과 long 두 키 컬럼을 사용하는 CompositeIdTable 예제이다. 두 값 모두 애플리케이션에서 지정한다.
      *
      * ```sql
      * CREATE TABLE IF NOT EXISTS reviews (
@@ -119,7 +119,7 @@ object BookSchema {
     }
 
     /**
-     * CompositeIdTable with 3 key columns - string, string, & int (none db-generated)
+     * string, string, int 세 키 컬럼을 사용하는 CompositeIdTable 예제이다. 모든 값은 애플리케이션에서 지정한다.
      *
      * ```sql
      * CREATE TABLE IF NOT EXISTS offices (

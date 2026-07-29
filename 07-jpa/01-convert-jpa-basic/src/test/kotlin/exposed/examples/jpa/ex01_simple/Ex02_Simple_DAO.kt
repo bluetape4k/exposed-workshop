@@ -63,7 +63,7 @@ class Ex02_Simple_DAO : AbstractExposedTest() {
     }
 
     /**
-     * Unique index violation
+     * 고유 인덱스 위반이 발생하는 경로를 검증한다.
      */
     @ParameterizedTest
     @MethodSource(ENABLE_DIALECTS_METHOD)

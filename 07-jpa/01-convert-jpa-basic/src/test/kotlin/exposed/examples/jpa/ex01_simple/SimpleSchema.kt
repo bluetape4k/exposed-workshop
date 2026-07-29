@@ -19,7 +19,7 @@ import java.io.Serializable
 object SimpleSchema {
 
     /**
-     * Table
+     * Exposed Table 매핑 정의이다.
      *
      * ```sql
      * -- Postgres
@@ -39,7 +39,7 @@ object SimpleSchema {
     }
 
     /**
-     * Entity
+     * Exposed DAO Entity 매핑 정의이다.
      */
     class SimpleEntity(id: EntityID<Long>): LongEntity(id) {
         companion object: LongEntityClass<SimpleEntity>(SimpleTable) {
@@ -68,7 +68,7 @@ object SimpleSchema {
     }
 
     /**
-     * Record
+     * 조회 결과를 담는 레코드 DTO이다.
      */
     data class SimpleRecord(
         val id: Long,

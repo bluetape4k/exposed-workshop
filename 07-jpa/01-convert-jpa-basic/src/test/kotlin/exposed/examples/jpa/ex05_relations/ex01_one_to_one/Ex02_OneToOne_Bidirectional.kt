@@ -64,7 +64,7 @@ class Ex02_OneToOne_Bidirectional: AbstractExposedTest() {
         var name: String by HusbandTable.name
 
         /**
-         * one-to-one bidirectional (husband -> wife)
+         * 양방향 일대일 관계를 husband에서 wife 방향으로 조회한다.
          */
         var wife: Wife? by Wife optionalReferencedOn HusbandTable.wifeId
 
@@ -82,7 +82,7 @@ class Ex02_OneToOne_Bidirectional: AbstractExposedTest() {
         var name by WifeTable.name
 
         /**
-         * one-to-one bidirectional (wife -> husband)
+         * 양방향 일대일 관계를 wife에서 husband 방향으로 조회한다.
          */
         val husband: Husband? by Husband optionalBackReferencedOn HusbandTable.wifeId
 
