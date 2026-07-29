@@ -9,7 +9,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.web.filter.OncePerRequestFilter
 
 /**
- * Rejects requests that mix multiple supported credential sources.
+ * 지원되는 여러 인증 정보 소스가 섞인 요청을 거부한다.
  */
 internal class CredentialConflictFilter : OncePerRequestFilter() {
 

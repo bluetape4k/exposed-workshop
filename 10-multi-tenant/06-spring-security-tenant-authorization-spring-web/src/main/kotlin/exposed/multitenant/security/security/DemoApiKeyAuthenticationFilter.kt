@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 
 /**
- * Authenticates fixed API keys for the tenant authorization workshop.
+ * 테넌트 권한 부여 워크숍에서 사용하는 고정 API key를 인증한다.
  */
 internal class DemoApiKeyAuthenticationFilter : OncePerRequestFilter() {
 

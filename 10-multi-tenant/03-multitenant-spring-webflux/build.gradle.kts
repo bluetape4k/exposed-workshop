@@ -35,7 +35,7 @@ dependencies {
 
     testImplementation(project(":exposed-shared-tests"))
 
-    // Exposed
+    // Exposed ORM 및 DSL 의존성
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.jdbc)
     implementation(libs.jetbrains.exposed.dao)
@@ -43,7 +43,7 @@ dependencies {
     implementation(libs.jetbrains.exposed.migration.jdbc)
     implementation(libs.jetbrains.exposed.spring.boot.starter)
 
-    // bluetape4k
+    // Bluetape4k 공통 테스트/유틸리티 의존성
     implementation(libs.exposed.core)
     implementation(libs.bluetape4k.jackson2)
     implementation(libs.bluetape4k.jdbc)
@@ -51,21 +51,21 @@ dependencies {
     testImplementation(libs.bluetape4k.junit5)
     testImplementation(libs.bluetape4k.spring.boot.core)
 
-    // Database Drivers
+    // 테스트 데이터베이스별 JDBC 드라이버 의존성
     implementation(libs.hikaricp)
 
     // H2
     runtimeOnly(libs.h2.v2)
 
-    // MySQL
+    // MySQL 테스트 드라이버 의존성
     implementation(libs.testcontainers.mysql)
     runtimeOnly(libs.mysql.connector.j)
 
-    // PostgreSQL
+    // PostgreSQL 테스트 드라이버 의존성
     implementation(libs.testcontainers.postgresql)
     runtimeOnly(libs.postgresql.driver)
 
-    // Spring Boot
+    // Spring Boot 멀티테넌트 웹 예제 의존성
     implementation("org.springframework.boot:spring-boot-autoconfigure")
     annotationProcessor("org.springframework.boot:spring-boot-autoconfigure-processor")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
@@ -82,21 +82,21 @@ dependencies {
         exclude(module = "mockito-core")
     }
 
-    // Coroutines
+    // 코루틴 기반 트랜잭션 및 비동기 흐름 의존성
     implementation(libs.bluetape4k.coroutines)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.reactor)
     testImplementation(libs.kotlinx.coroutines.test)
 
-    // Reactor
+    // WebFlux/Reactor 어댑터 예제 의존성
     implementation(libs.reactor.netty)
     implementation(libs.reactor.kotlin.extensions)
     testImplementation(libs.reactor.test)
 
-    // Monitoring
+    // 관찰성 및 모니터링 의존성
     implementation(libs.micrometer.core)
     implementation(libs.micrometer.registry.prometheus)
 
-    // SpringDoc - OpenAPI 3.0
+    // SpringDoc 기반 OpenAPI 3.0 문서화 의존성
     implementation(libs.springdoc.openapi.starter.webflux.ui)
 }

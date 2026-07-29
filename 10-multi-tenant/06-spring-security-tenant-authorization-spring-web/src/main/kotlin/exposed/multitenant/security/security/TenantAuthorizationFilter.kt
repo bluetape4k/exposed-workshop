@@ -10,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 
 /**
- * Authorizes requested tenant access and binds the tenant context downstream.
+ * 요청된 테넌트 접근 권한을 검증하고 downstream 처리에 테넌트 컨텍스트를 바인딩한다.
  */
 internal class TenantAuthorizationFilter(
     private val resolver: TenantAuthenticationResolver,

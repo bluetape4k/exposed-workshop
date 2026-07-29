@@ -5,7 +5,7 @@ import org.springframework.security.authentication.AbstractAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 
 /**
- * Authentication token for fixed workshop API-key and demo-session credentials.
+ * 워크숍용 고정 API key와 demo-session 인증 정보를 담는 인증 토큰이다.
  */
 internal class DemoAuthenticationToken(
     val tenantId: TenantId,
