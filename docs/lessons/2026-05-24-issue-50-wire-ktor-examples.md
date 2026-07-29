@@ -1,21 +1,26 @@
-# Issue 50 Wire Ktor Chapter Examples
+# Issue 50 Ktor chapter example wiring
 
-## Context
+## 배경
 
-Issue #50 asked to wire the new Ktor chapter examples into documentation and verification guidance.
+Issue #50은 새 Ktor chapter example을 documentation과 verification guidance에 연결하라고
+요구했다.
 
-## Decision
+## 결정
 
-Record the chapter 11 Ktor module links, test tasks, and CI/nightly coverage decision in both English and Korean README files. Treat the Ktor modules as H2-only examples that do not need container-backed nightly coverage.
+11장 Ktor module link, test task, CI/nightly coverage decision을 English/Korean README file에
+모두 기록한다. Ktor module은 container-backed nightly coverage가 필요 없는 H2-only 예제로
+취급한다.
 
-## Outcome
+## 결과
 
-Updated `11-high-performance/README.md` and `README.ko.md` with Ktor cache, coroutine cache, and routing datasource modules plus verification commands.
+`11-high-performance/README.md`와 `README.ko.md`에 Ktor cache, coroutine cache, routing
+datasource module 및 verification command를 추가했다.
 
-## Verification
+## 검증
 
-Passed: `git diff --check`.
+통과: `git diff --check`.
 
-## Future Guidance
+## 향후 지침
 
-Docs PRs that depend on feature PRs may reference not-yet-merged module directories, but they should clearly list the prerequisite module PRs in the PR body.
+Feature PR에 의존하는 docs PR은 아직 merge되지 않은 module directory를 참조할 수 있지만,
+PR body에 prerequisite module PR을 명확히 나열해야 한다.

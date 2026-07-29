@@ -1,23 +1,30 @@
-# Issue 111 Source-Derived README Diagrams
+# Issue 111 Source-derived README diagram
 
-## Context
+## 배경
 
-The first README diagram refresh still depended too much on existing SVG labels. That preserved stale Mermaid-like structure and allowed non-guide assets to survive.
+첫 README diagram refresh는 여전히 기존 SVG label에 과도하게 의존했다. 그 결과 stale
+Mermaid-like structure가 보존되고 non-guide asset이 남을 수 있었다.
 
-## Decision
+## 결정
 
-Regenerate README diagram assets from README context plus current Kotlin sources. Parent README diagrams must include child Gradle module sources when the parent directory has no direct source set. Localized READMEs must not drive image text; `README.md` is the preferred source for image titles and labels.
+README context와 현재 Kotlin source에서 README diagram asset을 다시 생성한다. Parent
+directory에 direct source set이 없으면 parent README diagram은 child Gradle module source를
+포함해야 한다. Localized README는 image text를 결정하지 않는다. Image title과 label에는
+`README.md`를 preferred source로 사용한다.
 
-## Outcome
+## 결과
 
-All 175 README diagram SVG/PNG pairs were regenerated with source-derived architecture panels, UML-like class sections with supertypes above concrete implementations, sequence interaction bands, and ERD table compartments with FK relationships.
+175개 README diagram SVG/PNG pair를 모두 다시 생성했다. 결과물은 source-derived architecture
+panel, concrete implementation 위에 supertype을 두는 UML-like class section, sequence
+interaction band, FK relationship을 갖춘 ERD table compartment를 포함한다.
 
-## Verification
+## 검증
 
 - `node scripts/regenerate-readme-diagrams.js`
 - README diagram audit: `missing=0`, `svgRefs=0`, `fontMissing=0`, `rawMermaid=0`, `nonEnglish=0`
 - `git diff --check`
 
-## Future Guidance
+## 향후 지침
 
-Do not repair diagram assets by editing SVG text in place. Fix the source model or generator first, then regenerate SVG and PNG together.
+SVG text를 제자리에서 편집해 diagram asset을 수리하지 않는다. Source model 또는 generator를
+먼저 수정한 뒤 SVG와 PNG를 함께 다시 생성한다.

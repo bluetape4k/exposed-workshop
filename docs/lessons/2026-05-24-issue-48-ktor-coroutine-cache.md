@@ -1,21 +1,27 @@
-# Issue 48 Ktor Coroutine Cache
+# Issue 48 Ktor coroutine cache
 
-## Context
+## 배경
 
-Issue #48 asked for a Ktor coroutine cache example near the existing Spring coroutine cache module.
+Issue #48은 기존 Spring coroutine cache module 근처에 Ktor coroutine cache 예제를 요구했다.
 
-## Decision
+## 결정
 
-Use suspend route handlers, `newSuspendedTransaction(Dispatchers.IO, ...)` for JDBC work, a coroutine-friendly per-key `Mutex`, and explicit cancellation rethrowing in `StatusPages`.
+Suspend route handler, JDBC work용 `newSuspendedTransaction(Dispatchers.IO, ...)`,
+coroutine-friendly per-key `Mutex`, `StatusPages`에서 명시적인 cancellation rethrowing을
+사용한다.
 
-## Outcome
+## 결과
 
-Added `11-high-performance/06-cache-strategies-coroutines-ktor` with read-through, write-through, invalidation, concurrent request tests, English/Korean README files, and a rendered architecture diagram.
+Read-through, write-through, invalidation, concurrent request test, English/Korean README file,
+rendered architecture diagram을 갖춘 `11-high-performance/06-cache-strategies-coroutines-ktor`를
+추가했다.
 
-## Verification
+## 검증
 
-Passed: `repo-test-summary -- ./gradlew :06-cache-strategies-coroutines-ktor:test` with four passing tests, including concurrent read-through load coalescing.
+통과: `repo-test-summary -- ./gradlew :06-cache-strategies-coroutines-ktor:test`, concurrent
+read-through load coalescing을 포함해 passing test 4개.
 
-## Future Guidance
+## 향후 지침
 
-Coroutine cache examples should prove concurrent request behavior, not only sequential cache hits. Keep `runBlocking` out of production request paths.
+Coroutine cache 예제는 sequential cache hit뿐 아니라 concurrent request behavior를 증명해야
+한다. Production request path에는 `runBlocking`을 두지 않는다.

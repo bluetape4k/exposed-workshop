@@ -1,73 +1,67 @@
-# Issue 62 Observability Readiness
+# Issue 62 Observability readiness
 
-## Context
+## 배경
 
-Issue #62 asked for paired Spring Boot 4 and Ktor examples that demonstrate
-operational diagnostics for database-backed services.
+Issue #62는 database-backed service의 operational diagnostics를 보여 주는 paired Spring
+Boot 4/Ktor 예제를 요구했다.
 
-## Decision
+## 결정
 
-Add two focused chapter 12 modules instead of folding readiness into the
-existing Ktor architecture baseline:
+Readiness를 기존 Ktor architecture baseline에 합치지 않고 focused 12장 모듈 두 개를 추가한다.
 
 - `09-spring-observability-readiness`
 - `10-ktor-observability-readiness`
 
-Spring uses Actuator readiness groups and a custom database health contributor.
-Ktor uses an explicit `/readyz` route with `CallId`, `CallLogging`, and
-`StatusPages`.
+Spring은 Actuator readiness group과 custom database health contributor를 사용한다. Ktor는
+`CallId`, `CallLogging`, `StatusPages`를 갖춘 명시적 `/readyz` route를 사용한다.
 
-## Outcome
+## 결과
 
-Both modules persist slow-operation diagnostics through Exposed JDBC, sanitize
-and propagate `X-Request-ID`, return structured errors, and test degraded
-database readiness with in-process state.
+두 모듈은 Exposed JDBC를 통해 slow-operation diagnostics를 저장하고, `X-Request-ID`를
+sanitize/propagate하며, structured error를 반환하고, in-process state로 degraded database
+readiness를 테스트한다.
 
-README architecture sections use generated PNG diagrams under
-`docs/images/readme-diagrams/` with SVG sources kept next to them.
+README architecture section은 `docs/images/readme-diagrams/` 아래 generated PNG diagram을
+사용하고 SVG source를 옆에 보관한다.
 
-The repository guidance now requires every example README to include an
-Architecture Diagram PNG/SVG pair. Add class, sequence, ERD, or other UML-style
-diagrams when the example has relationships or flows that are not obvious from
-the architecture diagram alone.
+Repository guidance는 이제 모든 예제 README에 Architecture Diagram PNG/SVG pair를 요구한다.
+Architecture diagram만으로 관계나 flow가 명확하지 않으면 class, sequence, ERD 또는 다른
+UML-style diagram을 추가한다.
 
-## Verification
+## 검증
 
 ```bash
 ./gradlew :09-spring-observability-readiness:test :10-ktor-observability-readiness:test --stacktrace --continue
 ```
 
-Result after the Claude review fixes: Spring 6 tests passing, Ktor 6 tests
-passing with `--rerun-tasks`.
+Claude review 수정 후 결과: Spring 6 test passing, Ktor 6 test passing with
+`--rerun-tasks`.
 
-README diagram links were checked for missing local PNG targets and Mermaid
-residue after the image links were added.
+Image link 추가 후 README diagram link에서 missing local PNG target과 Mermaid residue를
+확인했다.
 
-After rebasing on current chapter 12, the modules were renumbered to 09/10,
-the chapter English/Korean index README files were updated, and the regenerated
-PNG diagrams were visually opened to confirm the title and labels match 09/10.
-The final chapter README scan reported `readmes=20`, `missingPng=0`,
-`missingArchitecture=0`, `mermaidResidue=0`, and `missingFiles=0`.
-`./gradlew projects --quiet` listed both new modules, and `git diff --check`
-passed.
+현재 12장 위로 rebase한 뒤 모듈 번호를 09/10으로 다시 매기고, chapter English/Korean
+index README file을 갱신했으며, regenerated PNG diagram을 직접 열어 title과 label이 09/10에
+맞는지 확인했다. 최종 chapter README scan은 `readmes=20`, `missingPng=0`,
+`missingArchitecture=0`, `mermaidResidue=0`, `missingFiles=0`을 보고했다.
+`./gradlew projects --quiet`는 두 새 모듈을 모두 표시했고, `git diff --check`도 통과했다.
 
-Claude 6-Tier review found one P1 and several P2/P3 issues before PR creation:
-Spring method-level parallel tests shared `DiagnosticsState`, request IDs were
-echoed without validation, Spring readiness allowed repository exceptions to
-escape, and Ktor schema initialization could be marked complete before DDL
-success. The rerun also flagged Spring framework 4xx errors and unexpected
-exceptions in the catch-all handler; those now return structured 400 responses
-or log server-side before returning a sanitized 500. These were fixed and
-covered by the final targeted test run.
+Claude 6-Tier review는 PR 생성 전에 P1 한 건과 여러 P2/P3를 찾았다. Spring
+method-level parallel test가 `DiagnosticsState`를 공유했고, request ID가 validation 없이
+echo됐으며, Spring readiness가 repository exception을 escape하게 했고, Ktor schema
+initialization은 DDL success 전에 complete로 표시될 수 있었다. Rerun은 Spring framework
+4xx error와 catch-all handler의 unexpected exception도 지적했다. 이제 이들은 structured
+400 response를 반환하거나 sanitized 500 반환 전에 server-side log를 남긴다. 모두 수정했고
+최종 targeted test run으로 검증했다.
 
-Final Claude 6-Tier rerun artifact:
+최종 Claude 6-Tier rerun artifact:
 `.omx/artifacts/claude-issue-62-code-review-6tier-stdin-6min-20260522184325.md`.
 It reported `P0=0`, `P1=0`, `P2=0`, `P3=2`, verdict `PASS`.
 
-## Future Agents
+## 향후 agent 지침
 
-Spring Boot 4 health classes live under `org.springframework.boot.health.*`, not
-the Spring Boot 3 `org.springframework.boot.actuate.health.*` package.
+Spring Boot 4 health class는 Spring Boot 3의 `org.springframework.boot.actuate.health.*`
+package가 아니라 `org.springframework.boot.health.*` 아래에 있다.
 
-Do not echo caller-supplied correlation headers directly in examples. Cap and
-sanitize them before adding them to response headers, logs, or persisted rows.
+예제에서 caller-supplied correlation header를 그대로 echo하지 않는다. Response header, log,
+persisted row에 넣기 전에 cap과 sanitize를 적용한다.

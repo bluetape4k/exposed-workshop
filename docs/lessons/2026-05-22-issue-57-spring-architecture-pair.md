@@ -1,23 +1,23 @@
-# Issue 57 Spring Architecture Pair
+# Issue 57 Spring architecture pair
 
-## Context
+## 배경
 
-Issue #57 is a chapter 12 epic. WIP limits require completing one child lane at a
-time; the existing state already had the Ktor side of issue #58.
+Issue #57은 12장 epic이다. WIP limit 때문에 child lane을 한 번에 하나씩 완료해야 했고,
+기존 상태에는 이미 issue #58의 Ktor 쪽 구현이 있었다.
 
-## Decision
+## 결정
 
-Add the Spring Boot 4 application architecture pair as
-`12-production-integration/02-spring-application-architecture` instead of
-starting another topic. Keep the shape parallel to the Ktor module: HTTP layer,
-service validation, Exposed repository, H2/Hikari persistence, and focused tests.
+다른 topic을 시작하지 않고 Spring Boot 4 application architecture pair를
+`12-production-integration/02-spring-application-architecture`로 추가한다. HTTP layer,
+service validation, Exposed repository, H2/Hikari persistence, focused test 구성을 Ktor
+모듈과 나란히 유지한다.
 
-## Outcome
+## 결과
 
-Chapter 12 now has a paired Spring/Ktor architecture topic plus chapter-level
-README files that mark later production-integration topics as planned work.
+12장은 이제 paired Spring/Ktor architecture topic과 이후 production-integration topic을
+planned work로 표시하는 chapter-level README file을 갖는다.
 
-## Verification
+## 검증
 
 - `./gradlew projects --no-daemon` registered
   `:02-spring-application-architecture`.
@@ -37,12 +37,11 @@ README files that mark later production-integration topics as planned work.
 - `actionlint .github/workflows/examples.yml` passed.
 - `git diff --check` passed.
 - `:02-spring-application-architecture:detekt` is not registered.
-- Claude CLI P0/P1 advisor review returned no P0 and two P1 findings in
-  `ErrorAdvice`: avoid catching `Throwable` and log unexpected 5xx causes. Both
-  were fixed by handling `Exception` and logging the exception before returning
-  the sanitized response.
+- Claude CLI P0/P1 advisor review는 P0 없이 `ErrorAdvice`에서 P1 두 건을 반환했다:
+  `Throwable` catch 회피, unexpected 5xx cause logging. 둘 다 `Exception` 처리와
+  sanitized response 반환 전 exception logging으로 수정했다.
 
-## Future Guard
+## 향후 보호 장치
 
-For #59-#62, add Spring and Ktor coverage as pairs and update the chapter README
-table in the same change.
+#59-#62에서는 Spring/Ktor coverage를 pair로 추가하고 같은 변경에서 chapter README table을
+갱신한다.

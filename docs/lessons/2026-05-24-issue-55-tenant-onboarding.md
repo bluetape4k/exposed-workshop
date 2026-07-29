@@ -1,21 +1,25 @@
-# Issue 55 Tenant Onboarding
+# Issue 55 Tenant onboarding
 
-## Context
+## 배경
 
-Issue #55 asked for a chapter 10 tenant onboarding and provisioning example.
+Issue #55는 10장 tenant onboarding/provisioning 예제를 요구했다.
 
-## Decision
+## 결정
 
-Keep the example focused on tenant catalog persistence plus schema provisioning and cleanup, with service-level tests proving success, duplicates, and failure cleanup.
+예제는 tenant catalog persistence, schema provisioning, cleanup에 집중한다. Success,
+duplicate, failure cleanup은 service-level test로 증명한다.
 
-## Outcome
+## 결과
 
-Added `10-multi-tenant/08-tenant-onboarding-spring-web` with Spring Web wiring, Exposed schema provisioning, English/Korean README files, and a rendered architecture diagram.
+Spring Web wiring, Exposed schema provisioning, English/Korean README file, rendered architecture
+diagram을 갖춘 `10-multi-tenant/08-tenant-onboarding-spring-web`를 추가했다.
 
-## Verification
+## 검증
 
-Passed: `repo-test-summary -- ./gradlew :08-tenant-onboarding-spring-web:test` with three passing onboarding tests.
+통과: `repo-test-summary -- ./gradlew :08-tenant-onboarding-spring-web:test`, passing onboarding
+test 3개.
 
-## Future Guidance
+## 향후 지침
 
-Onboarding examples should persist catalog metadata only after provisioning succeeds, and tests should explicitly prove partial resources are removed after failure.
+Onboarding 예제는 provisioning이 성공한 뒤에만 catalog metadata를 저장해야 하며, test는 실패
+후 partial resource가 제거됨을 명시적으로 증명해야 한다.

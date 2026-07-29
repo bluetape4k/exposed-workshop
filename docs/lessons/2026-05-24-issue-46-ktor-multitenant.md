@@ -1,21 +1,25 @@
-# Issue 46 Ktor Multitenant Example
+# Issue 46 Ktor multitenant 예제
 
-## Context
+## 배경
 
-Issue #46 asked for a Ktor equivalent to the chapter 10 Spring multi-tenant examples.
+Issue #46은 10장 Spring multi-tenant 예제에 대응되는 Ktor equivalent를 요구했다.
 
-## Decision
+## 결정
 
-Use a Ktor plugin for tenant header validation and a coroutine `ThreadContextElement` for request-scoped tenant binding. Keep schema switching explicit inside the Exposed repository transaction.
+Tenant header validation에는 Ktor plugin을, request-scoped tenant binding에는 coroutine
+`ThreadContextElement`를 사용한다. Schema switching은 Exposed repository transaction 안에서
+명시적으로 유지한다.
 
-## Outcome
+## 결과
 
-Added `10-multi-tenant/07-multitenant-ktor` with H2-backed tenant schemas, focused route tests, English/Korean README files, and a reusable architecture diagram.
+H2-backed tenant schema, focused route test, English/Korean README file, reusable architecture
+diagram을 갖춘 `10-multi-tenant/07-multitenant-ktor`를 추가했다.
 
-## Verification
+## 검증
 
-Passed: `repo-test-summary -- ./gradlew :07-multitenant-ktor:test` with four passing tests.
+통과: `repo-test-summary -- ./gradlew :07-multitenant-ktor:test`, passing test 4개.
 
-## Future Guidance
+## 향후 지침
 
-For Ktor tenant examples, keep tenant resolution separate from repository schema switching so tests can prove missing header, invalid tenant, cleanup, and isolation behavior independently.
+Ktor tenant 예제에서는 tenant resolution을 repository schema switching과 분리해 test가
+missing header, invalid tenant, cleanup, isolation behavior를 독립적으로 증명할 수 있게 한다.

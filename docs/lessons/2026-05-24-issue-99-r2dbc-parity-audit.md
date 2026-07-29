@@ -1,28 +1,30 @@
-# Issue 99 R2DBC Parity Audit
+# Issue 99 R2DBC parity 감사
 
-## Context
+## 배경
 
-`exposed-workshop` needed a final roadmap parity pass against `exposed-r2dbc-workshop` after the Ktor, chapter 10, and
-chapter 12 example issues were completed.
+Ktor, 10장, 12장 example issue가 완료된 뒤 `exposed-workshop`에는
+`exposed-r2dbc-workshop` 대비 최종 roadmap parity pass가 필요했다.
 
-## Decision
+## 결정
 
-Track parity by concept, not by exact module name. Blocking JDBC modules and R2DBC modules keep separate architecture
-choices when the underlying Exposed API model differs.
+Parity는 정확한 module name이 아니라 concept 기준으로 추적한다. Underlying Exposed API model이
+다르면 blocking JDBC module과 R2DBC module은 별도의 architecture choice를 유지한다.
 
-## Outcome
+## 결과
 
-The audit found no portable gaps. `README.md`, `README.ko.md`, and the research note now record which issues and modules
-cover each overlapping topic, and mark R2DBC connection-factory routing plus JDBC DAO/transaction-template/cache/benchmark
-topics as platform-specific.
+감사는 portable gap이 없음을 확인했다. `README.md`, `README.ko.md`, research note는 이제 각
+overlapping topic을 어떤 issue와 module이 다루는지 기록하고, R2DBC connection-factory
+routing 및 JDBC DAO/transaction-template/cache/benchmark topic을 platform-specific으로
+표시한다.
 
-## Verification
+## 검증
 
-- Confirmed `exposed-workshop` has only issue `#99` open.
-- Confirmed `exposed-r2dbc-workshop` has no open issues.
-- Checked closed roadmap issue sets: `exposed-workshop#45`-`#63`, `exposed-r2dbc-workshop#32`-`#49`, `#69`, and `#89`.
+- `exposed-workshop`에 열린 issue가 `#99`뿐임을 확인했다.
+- `exposed-r2dbc-workshop`에 열린 issue가 없음을 확인했다.
+- Closed roadmap issue set을 확인했다: `exposed-workshop#45`-`#63`,
+  `exposed-r2dbc-workshop#32`-`#49`, `#69`, `#89`.
 
-## Next time
+## 다음 작업
 
-When adding future example roadmap issues, first check the parity table and create counterpart issues only for portable
-teaching concepts.
+향후 example roadmap issue를 추가할 때는 parity table을 먼저 확인하고, portable teaching
+concept에 대해서만 counterpart issue를 만든다.
