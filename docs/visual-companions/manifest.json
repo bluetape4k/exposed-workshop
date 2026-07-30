@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "repository": "bluetape4k/exposed-workshop",
+  "documents": [
+    {
+      "id": "exposed-redis-cache-strategies",
+      "source": "docs/superpowers/specs/2026-07-30-exposed-workshop-visual-companions-design.md",
+      "status": "approved",
+      "public": true,
+      "presentation": {
+        "mode": "simulation",
+        "defaultView": "simulation",
+        "views": [
+          "simulation"
+        ]
+      },
+      "locales": {
+        "en": {
+          "title": "Exposed and Redis Cache Strategies",
+          "html": "docs/superpowers/specs/2026-07-30-exposed-redis-cache-strategies-visual-companion.en.html"
+        },
+        "ko": {
+          "title": "Exposed와 Redis 캐시 전략",
+          "html": "docs/superpowers/specs/2026-07-30-exposed-redis-cache-strategies-visual-companion.html"
+        }
+      }
+    },
+    {
+      "id": "ddd-modulith-boundaries",
+      "source": "docs/superpowers/specs/2026-07-30-exposed-workshop-visual-companions-design.md",
+      "status": "approved",
+      "public": true,
+      "presentation": {
+        "mode": "simulation",
+        "defaultView": "simulation",
+        "views": [
+          "simulation"
+        ]
+      },
+      "locales": {
+        "en": {
+          "title": "DDD Modulith Boundaries",
+          "html": "docs/superpowers/specs/2026-07-30-ddd-modulith-boundaries-visual-companion.en.html"
+        },
+        "ko": {
+          "title": "DDD Modulith 경계",
+          "html": "docs/superpowers/specs/2026-07-30-ddd-modulith-boundaries-visual-companion.html"
+        }
+      }
+    }
+  ]
+}
