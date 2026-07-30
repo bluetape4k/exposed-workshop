@@ -15,6 +15,10 @@ async function html(relativePath) {
   return readFile(new URL(relativePath, root), 'utf8');
 }
 
+function values(content, pattern) {
+  return [...content.matchAll(pattern)].map((match) => match[1]).sort();
+}
+
 test('approved bilingual visual companions satisfy the repository contract', async () => {
   const { stdout } = await validate();
   assert.match(stdout, /2 documents \/ 4 locale files/);
@@ -42,6 +46,19 @@ test('cache companion explains the implemented Exposed and Redis path', async ()
   for (const strategy of ['read-through', 'write-through', 'read-only', 'write-behind']) {
     assert.match(content, new RegExp(`data-strategy=["']${strategy}["']`));
   }
+});
+
+test('cache locale documents expose the same structure and interactions', async () => {
+  const ko = await html(
+    'docs/superpowers/specs/2026-07-30-exposed-redis-cache-strategies-visual-companion.html',
+  );
+  const en = await html(
+    'docs/superpowers/specs/2026-07-30-exposed-redis-cache-strategies-visual-companion.en.html',
+  );
+  assert.deepEqual(values(en, /<section\b[^>]*id=["']([^"']+)/gi), values(ko, /<section\b[^>]*id=["']([^"']+)/gi));
+  assert.deepEqual(values(en, /data-strategy=["']([^"']+)/gi), values(ko, /data-strategy=["']([^"']+)/gi));
+  assert.equal((en.match(/\.\/gradlew /g) ?? []).length, (ko.match(/\.\/gradlew /g) ?? []).length);
+  assert.match(en, /data-baseline=["']a2edd9af77188f814ccae10917a9e6ad574402f9["']/);
 });
 
 test('DDD companion separates the accepted event path from a rejected module reference', async () => {
