@@ -89,6 +89,45 @@
     .reason b { color: var(--teal); font-size: 12px; }
     .reason h3 { margin-top: 8px; font-size: 18px; }
     .reason p { margin-top: 10px; color: var(--muted); font-size: 14px; }
+    .architecture-map { display: grid; grid-template-columns: minmax(0, 1fr) 170px minmax(0, 1fr); gap: 18px; align-items: stretch; }
+    .boundary { padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .boundary.orders { border-top: 4px solid var(--blue); }
+    .boundary.shipping { border-top: 4px solid var(--teal); }
+    .boundary-label { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+    .boundary h3 { margin-top: 5px; font-size: 22px; }
+    .arch-stack { display: grid; gap: 8px; margin-top: 18px; }
+    .arch-node { min-width: 0; padding: 11px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); }
+    .arch-node b, .arch-node code { display: block; overflow-wrap: anywhere; }
+    .arch-node span { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
+    .arch-arrow { color: var(--muted); font-size: 11px; font-weight: 750; text-align: center; }
+    .event-contract { display: grid; align-content: center; gap: 12px; text-align: center; }
+    .event-contract .event { padding: 16px 10px; border: 1px solid var(--gold); border-radius: 8px; color: var(--gold); background: var(--surface); font-size: 12px; font-weight: 850; overflow-wrap: anywhere; }
+    .event-contract .event code { display: block; margin-top: 5px; color: var(--ink); font-size: 11px; }
+    .allowed { color: var(--teal); font-size: 12px; font-weight: 850; }
+    .blocked-rule { padding: 10px; border-left: 3px solid var(--red); color: var(--muted); background: var(--surface-2); font-size: 11px; text-align: left; }
+    .aggregate-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .aggregate-rule { padding: 16px; border-top: 3px solid var(--blue); background: var(--surface); }
+    .aggregate-rule:nth-child(2) { border-color: var(--teal); }
+    .aggregate-rule:nth-child(3) { border-color: var(--gold); }
+    .aggregate-rule:nth-child(4) { border-color: var(--red); }
+    .aggregate-rule b { font-size: 13px; }
+    .aggregate-rule p { margin-top: 7px; color: var(--muted); font-size: 13px; }
+    .model-note { margin-top: 18px; padding: 16px 18px; border: 1px solid var(--gold); border-radius: 6px; background: color-mix(in srgb, var(--gold) 8%, var(--surface)); font-size: 14px; }
+    .model-note strong { color: var(--gold); }
+    .class-title { margin: 44px 0 20px; font-size: 28px; }
+    .class-diagram { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .class-lane { min-width: 0; }
+    .class-lane > h3 { padding-bottom: 10px; border-bottom: 3px solid var(--blue); font-size: 18px; }
+    .class-lane.shipping > h3 { border-color: var(--teal); }
+    .class-flow { display: grid; gap: 7px; margin-top: 14px; }
+    .uml-class { overflow: hidden; border: 1px solid var(--strong); border-radius: 6px; background: var(--surface); }
+    .uml-head { padding: 10px 12px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+    .stereotype { display: block; color: var(--muted); font-size: 10px; }
+    .uml-head strong { display: block; margin-top: 2px; overflow-wrap: anywhere; font-size: 13px; }
+    .members { display: grid; gap: 3px; padding: 9px 12px; color: var(--muted); font: 11px/1.5 "SFMono-Regular", Consolas, monospace; }
+    .relation { color: var(--muted); font-size: 11px; font-weight: 750; text-align: center; }
+    .cross-relation { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin-top: 22px; color: var(--gold); font-size: 12px; font-weight: 850; text-align: center; }
+    .cross-relation::before, .cross-relation::after { content: ""; height: 1px; background: var(--gold); }
     .compare { display: grid; grid-template-columns: 1fr 70px 1fr; gap: 16px; align-items: center; }
     .context { min-height: 250px; padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
     .context.orders { border-top: 4px solid var(--blue); }
@@ -102,6 +141,12 @@
     .effect:nth-child(2) { border-color: var(--blue); } .effect:nth-child(3) { border-color: var(--gold); } .effect:nth-child(4) { border-color: var(--red); }
     .effect h3 { font-size: 17px; }
     .effect p { margin-top: 8px; color: var(--muted); font-size: 14px; }
+    .source-visual { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .source-visual img { display: block; width: 100%; height: auto; background: #f7f8f8; }
+    .source-visual figcaption { display: grid; gap: 7px; padding: 16px 18px 18px; border-top: 1px solid var(--line); }
+    .source-visual figcaption strong { font-size: 15px; }
+    .source-visual figcaption span { color: var(--muted); font-size: 13px; }
+    .source-visual figcaption a { width: fit-content; color: var(--teal); font-size: 12px; font-weight: 800; }
     .runbook { display: grid; grid-template-columns: 1fr .9fr; gap: 20px; }
     .code-panel { overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
     .panel-title { padding: 12px 16px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; font-weight: 800; }
@@ -110,8 +155,8 @@
     .source-list a { display: block; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); font-size: 13px; overflow-wrap: anywhere; }
     .provenance { padding: 24px 0 40px; color: var(--muted); font-size: 12px; }
     .provenance a { margin-right: 14px; }
-    @media (max-width: 900px) { .hero, .section-head, .runbook { grid-template-columns: 1fr; } .hero { min-height: auto; padding-top: 46px; } .selection { grid-template-columns: 1fr; } .nav a:nth-child(-n+2) { display: none; } }
-    @media (max-width: 650px) { .shell { width: min(100% - 22px, 1180px); } .nav { display: none; } h1 { font-size: 37px; } .facts, .effects, .compare, .modules { grid-template-columns: 1fr; } .handoff { min-height: 48px; } .trace ol { display: flex; overflow-x: auto; } .trace li { min-width: 120px; } .contract { padding: 12px 0; } .band { padding: 58px 0; } }
+    @media (max-width: 900px) { .hero, .section-head, .runbook, .architecture-map { grid-template-columns: 1fr; } .hero { min-height: auto; padding-top: 46px; } .selection, .aggregate-grid { grid-template-columns: repeat(2, 1fr); } .event-contract { grid-template-columns: 1fr 1fr; align-items: center; } .nav a:nth-child(-n+2) { display: none; } }
+    @media (max-width: 650px) { .shell { width: min(100% - 22px, 1180px); } .nav { display: none; } h1 { font-size: 37px; } .facts, .effects, .compare, .modules, .selection, .aggregate-grid, .class-diagram, .event-contract { grid-template-columns: 1fr; } .handoff { min-height: 48px; } .trace ol { display: flex; overflow-x: auto; } .trace li { min-width: 120px; } .contract { padding: 12px 0; } .band { padding: 58px 0; } }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
   </style>
 </head>
@@ -121,7 +166,7 @@
       <a class="brand" href="https://github.com/bluetape4k/exposed-workshop">exposed-workshop / Visual Companion</a>
       <div class="actions">
         <nav class="nav" aria-label="문서 이동">
-          <a href="#selection">선정 이유</a><a href="#need">DDD 필요성</a><a href="#run">실행</a>
+          <a href="#boundary-overview">경계 구조</a><a href="#aggregate">Aggregate</a><a href="#run">실행</a>
           <a href="./2026-07-30-exposed-redis-cache-strategies-visual-companion.html">캐시 전략</a>
           <a href="./2026-07-30-ddd-modulith-boundaries-visual-companion.en.html" lang="en">EN</a>
         </nav>
@@ -160,9 +205,98 @@
         <div class="section-head"><h2>DDD 적용 사례로 이 예제를 선택한 이유</h2><p>이 예제는 DDD 용어만 소개하지 않는다. 주문 수락과 배송 예약이라는 서로 다른 상태 변경을 독립 트랜잭션과 테이블로 구현하고, 허용된 이벤트 참조와 금지된 내부 참조를 자동 검증한다.</p></div>
         <div class="selection">
           <article class="reason"><b>업무 규칙</b><h3>상태 변경 책임이 코드에 드러난다</h3><p><code>AcceptOrderCommand</code>는 주문 모듈로 들어가고 <code>OrderApplicationService</code>만 주문 상태를 변경한다.</p></article>
-          <article class="reason"><b>모듈 계약</b><h3>공개 범위가 실행 가능한 규칙이다</h3><p><code>orders.events</code>는 named interface이고 배송 모듈은 <code>orders :: events</code>만 참조할 수 있다.</p></article>
-          <article class="reason"><b>검증</b><h3>잘못된 설계를 실패 테스트로 보여준다</h3><p><code>shipping → orders.internal</code> 참조를 넣은 fixture에서 <code>ApplicationModules.verify()</code>가 <code>Violations</code>를 반환한다.</p></article>
+          <article class="reason"><b>모듈 계약</b><h3>공개 범위가 실행 가능한 규칙이다</h3><p><code>orders.events</code>는 <code>Named Interface</code>이고 배송 모듈은 <code>orders :: events</code>만 참조할 수 있다.</p></article>
+          <article class="reason"><b>검증</b><h3>잘못된 설계를 실패 테스트로 보여준다</h3><p><code>shipping → orders.internal</code> 참조를 넣은 픽스처에서 <code>ApplicationModules.verify()</code>가 <code>Violations</code>를 반환한다.</p></article>
         </div>
+      </div>
+    </section>
+
+    <section id="boundary-overview" class="band">
+      <div class="shell">
+        <div class="section-head"><h2>Modulith 경계와 검증 흐름</h2><p>주문과 배송은 각자 상태와 Exposed 테이블을 관리한다. 두 모듈 사이에서는 <code>orders :: events</code>만 공개되며, Modulith 검증은 배송 모듈이 주문 모듈의 내부 구현을 직접 참조하지 못하게 한다.</p></div>
+        <figure class="source-visual" data-visual-id="ddd-modulith-boundaries">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjUyMCIgdmlld0JveD0iMCAwIDEwMDAgNTIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+CiAgPHRpdGxlIGlkPSJ0aXRsZSI+REREIGJvdW5kZWQgY29udGV4dHMgd2l0aCBTcHJpbmcgTW9kdWxpdGggdmVyaWZpY2F0aW9uPC90aXRsZT4KICA8ZGVzYyBpZD0iZGVzYyI+T3JkZXJzIHB1Ymxpc2hlcyBhIG5hbWVkIGludGVyZmFjZSBldmVudCwgc2hpcHBpbmcgY29uc3VtZXMgb25seSB0aGF0IGV2ZW50LCBhbmQgQXBwbGljYXRpb25Nb2R1bGVzIHZlcmlmeSBjaGVja3MgbW9kdWxlIGRlcGVuZGVuY2llcy48L2Rlc2M+CiAgPGRlZnM+CiAgICA8bWFya2VyIGlkPSJhcnJvdy1ibHVlIiB2aWV3Qm94PSIwIDAgMTAgMTAiIHJlZlg9IjkiIHJlZlk9IjUiIG1hcmtlcldpZHRoPSIxNCIgbWFya2VySGVpZ2h0PSIxNCIgbWFya2VyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+CiAgICAgIDxwYXRoIGQ9Ik0gMCAwIEwgMTAgNSBMIDAgMTAgWiIgZmlsbD0iIzI1NjNlYiIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjAiIHN0cm9rZS1kYXNoYXJyYXk9Im5vbmUiIHN0eWxlPSJzdHJva2UtZGFzaGFycmF5Om5vbmUhaW1wb3J0YW50Ii8+CiAgICA8L21hcmtlcj4KICAgIDxtYXJrZXIgaWQ9ImFycm93LWdyZWVuIiB2aWV3Qm94PSIwIDAgMTAgMTAiIHJlZlg9IjkiIHJlZlk9IjUiIG1hcmtlcldpZHRoPSIxNCIgbWFya2VySGVpZ2h0PSIxNCIgbWFya2VyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+CiAgICAgIDxwYXRoIGQ9Ik0gMCAwIEwgMTAgNSBMIDAgMTAgWiIgZmlsbD0iIzE1ODAzZCIgc3Ryb2tlPSIjMTU4MDNkIiBzdHJva2Utd2lkdGg9IjAiIHN0cm9rZS1kYXNoYXJyYXk9Im5vbmUiIHN0eWxlPSJzdHJva2UtZGFzaGFycmF5Om5vbmUhaW1wb3J0YW50Ii8+CiAgICA8L21hcmtlcj4KICAgIDxtYXJrZXIgaWQ9ImFycm93LXNsYXRlIiB2aWV3Qm94PSIwIDAgMTAgMTAiIHJlZlg9IjkiIHJlZlk9IjUiIG1hcmtlcldpZHRoPSIxNCIgbWFya2VySGVpZ2h0PSIxNCIgbWFya2VyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+CiAgICAgIDxwYXRoIGQ9Ik0gMCAwIEwgMTAgNSBMIDAgMTAgWiIgZmlsbD0iIzQ3NTU2OSIgc3Ryb2tlPSIjNDc1NTY5IiBzdHJva2Utd2lkdGg9IjAiIHN0cm9rZS1kYXNoYXJyYXk9Im5vbmUiIHN0eWxlPSJzdHJva2UtZGFzaGFycmF5Om5vbmUhaW1wb3J0YW50Ii8+CiAgICA8L21hcmtlcj4KICAgIDxmaWx0ZXIgaWQ9InNoYWRvdyIgeD0iLTEwJSIgeT0iLTEwJSIgd2lkdGg9IjEyMCUiIGhlaWdodD0iMTIwJSI+CiAgICAgIDxmZURyb3BTaGFkb3cgZHg9IjAiIGR5PSI4IiBzdGREZXZpYXRpb249IjgiIGZsb29kLWNvbG9yPSIjMGYxNzJhIiBmbG9vZC1vcGFjaXR5PSIwLjEyIi8+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjUyMCIgZmlsbD0iI2Y4ZmFmYyIvPgogIDx0ZXh0IHg9IjUwMCIgeT0iNDYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmNoaXRlY3RzIERhdWdodGVyIiBmb250LXNpemU9IjI2IiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjMGYxNzJhIj5EREQgQm91bmRlZCBDb250ZXh0cyB3aXRoIE1vZHVsaXRoIEJvdW5kYXJ5IFZlcmlmaWNhdGlvbjwvdGV4dD4KICA8dGV4dCB4PSI1MDAiIHk9Ijc0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzQ3NTU2OSI+RXhwb3NlZCB0YWJsZXMgc3RheSBpbnNpZGUgZWFjaCBjb250ZXh0OyBvbmx5IGRvbWFpbiBldmVudHMgY3Jvc3MgbW9kdWxlIGJvdW5kYXJpZXMuPC90ZXh0PgoKICA8cmVjdCBjbGFzcz0iY2FyZCIgeD0iNzAiIHk9IjExMCIgd2lkdGg9IjI1MCIgaGVpZ2h0PSIxNjAiIHJ4PSI4IiBmaWxsPSIjZWZmNmZmIiBzdHJva2U9IiMyNTYzZWIiIHN0cm9rZS13aWR0aD0iMiIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICA8dGV4dCB4PSIxOTUiIHk9IjE0NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyY2hpdGVjdHMgRGF1Z2h0ZXIiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiMxZTNhOGEiPk9yZGVycyBDb250ZXh0PC90ZXh0PgogIDx0ZXh0IHg9Ijk2IiB5PSIxNzgiIGZvbnQtZmFtaWx5PSJDb21pYyBNb25vIiBmb250LXNpemU9IjEzIiBmaWxsPSIjMWU0MGFmIj5PcmRlckFwcGxpY2F0aW9uU2VydmljZTwvdGV4dD4KICA8dGV4dCB4PSI5NiIgeT0iMjA0IiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzFlNDBhZiI+RXhwb3NlZE9yZGVyUmVwb3NpdG9yeTwvdGV4dD4KICA8dGV4dCB4PSI5NiIgeT0iMjMwIiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzFlNDBhZiI+ZGRkX21vZHVsaXRoX29yZGVyczwvdGV4dD4KCiAgPHJlY3QgY2xhc3M9ImNhcmQiIHg9IjM5MCIgeT0iMTMwIiB3aWR0aD0iMjIwIiBoZWlnaHQ9IjEyMCIgcng9IjgiIGZpbGw9IiNlY2ZkZjUiIHN0cm9rZT0iIzE1ODAzZCIgc3Ryb2tlLXdpZHRoPSIyIiBmaWx0ZXI9InVybCgjc2hhZG93KSIvPgogIDx0ZXh0IHg9IjUwMCIgeT0iMTY1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJjaGl0ZWN0cyBEYXVnaHRlciIgZm9udC1zaXplPSIxNyIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzE2NjUzNCI+TmFtZWQgSW50ZXJmYWNlPC90ZXh0PgogIDx0ZXh0IHg9IjUwMCIgeT0iMTk1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzE2NjUzNCI+b3JkZXJzIDo6IGV2ZW50czwvdGV4dD4KICA8dGV4dCB4PSI1MDAiIHk9IjIxOSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkNvbWljIE1vbm8iIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiMxNjY1MzQiPk9yZGVyQWNjZXB0ZWRFdmVudDwvdGV4dD4KCiAgPHJlY3QgY2xhc3M9ImNhcmQiIHg9IjY4MCIgeT0iMTEwIiB3aWR0aD0iMjUwIiBoZWlnaHQ9IjE2MCIgcng9IjgiIGZpbGw9IiNmZmY3ZWQiIHN0cm9rZT0iI2MyNDEwYyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWx0ZXI9InVybCgjc2hhZG93KSIvPgogIDx0ZXh0IHg9IjgwNSIgeT0iMTQ1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJjaGl0ZWN0cyBEYXVnaHRlciIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzlhMzQxMiI+U2hpcHBpbmcgQ29udGV4dDwvdGV4dD4KICA8dGV4dCB4PSI3MDYiIHk9IjE3OCIgZm9udC1mYW1pbHk9IkNvbWljIE1vbm8iIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM5YTM0MTIiPlNoaXBwaW5nUmVzZXJ2YXRpb25IYW5kbGVyPC90ZXh0PgogIDx0ZXh0IHg9IjcwNiIgeT0iMjA0IiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzlhMzQxMiI+RXhwb3NlZFNoaXBwaW5nUmVwb3NpdG9yeTwvdGV4dD4KICA8dGV4dCB4PSI3MDYiIHk9IjIzMCIgZm9udC1mYW1pbHk9IkNvbWljIE1vbm8iIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM5YTM0MTIiPmRkZF9tb2R1bGl0aF9zaGlwcGluZ188L3RleHQ+CiAgPHRleHQgeD0iNzA2IiB5PSIyNTIiIGZvbnQtZmFtaWx5PSJDb21pYyBNb25vIiBmb250LXNpemU9IjEzIiBmaWxsPSIjOWEzNDEyIj5yZXNlcnZhdGlvbnM8L3RleHQ+CgogIDxyZWN0IGNsYXNzPSJjYXJkIiB4PSI3MCIgeT0iMzUwIiB3aWR0aD0iODYwIiBoZWlnaHQ9IjExMCIgcng9IjgiIGZpbGw9IiNmMWY1ZjkiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWx0ZXI9InVybCgjc2hhZG93KSIvPgogIDx0ZXh0IHg9IjUwMCIgeT0iMzg4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJjaGl0ZWN0cyBEYXVnaHRlciIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzMzNDE1NSI+QXBwbGljYXRpb25Nb2R1bGVzLnZlcmlmeSgpPC90ZXh0PgogIDx0ZXh0IHg9IjUwMCIgeT0iNDE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzQ3NTU2OSI+UG9zaXRpdmUgdGVzdCBhY2NlcHRzIG9yZGVycyAtPiBldmVudHMgLT4gc2hpcHBpbmcgb25seS48L3RleHQ+CiAgPHRleHQgeD0iNTAwIiB5PSI0NDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJDb21pYyBNb25vIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNDc1NTY5Ij5OZWdhdGl2ZSBmaXh0dXJlIHJlamVjdHMgc2hpcHBpbmcgLT4gb3JkZXJzLmludGVybmFsIHJlcG9zaXRvcnkgYWNjZXNzLjwvdGV4dD4KCiAgPHBhdGggY2xhc3M9ImNvbm5lY3RvciIgZD0iTSAzMjAgMTkwIEwgMzkwIDE5MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgbWFya2VyLWVuZD0idXJsKCNhcnJvdy1ibHVlKSIvPgogIDxwYXRoIGNsYXNzPSJjb25uZWN0b3IiIGQ9Ik0gNjEwIDE5MCBMIDY4MCAxOTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzE1ODAzZCIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG1hcmtlci1lbmQ9InVybCgjYXJyb3ctZ3JlZW4pIi8+CiAgPHBhdGggY2xhc3M9ImNvbm5lY3RvciIgZD0iTSAxOTUgMjcwIEwgMTk1IDM1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNDc1NTY5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgbWFya2VyLWVuZD0idXJsKCNhcnJvdy1zbGF0ZSkiLz4KICA8cGF0aCBjbGFzcz0iY29ubmVjdG9yIiBkPSJNIDUwMCAyNTAgTCA1MDAgMzUwIiBmaWxsPSJub25lIiBzdHJva2U9IiM0NzU1NjkiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93LXNsYXRlKSIvPgogIDxwYXRoIGNsYXNzPSJjb25uZWN0b3IiIGQ9Ik0gODA1IDI3MCBMIDgwNSAzNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG1hcmtlci1lbmQ9InVybCgjYXJyb3ctc2xhdGUpIi8+CgogIDx0ZXh0IHg9IjM1NSIgeT0iMTc4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzI1NjNlYiI+cHVibGlzaGVzPC90ZXh0PgogIDx0ZXh0IHg9IjY0NSIgeT0iMTc4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzE1ODAzZCI+Y29uc3VtZXM8L3RleHQ+CiAgPHRleHQgeD0iMTk1IiB5PSIzMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJDb21pYyBNb25vIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNDc1NTY5Ij5tb2R1bGU8L3RleHQ+CiAgPHRleHQgeD0iNTAwIiB5PSIzMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJDb21pYyBNb25vIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNDc1NTY5Ij5leHBvcnQ8L3RleHQ+CiAgPHRleHQgeD0iODA1IiB5PSIzMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJDb21pYyBNb25vIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNDc1NTY5Ij5tb2R1bGU8L3RleHQ+Cjwvc3ZnPgo=" alt="Orders Context가 공개 이벤트를 통해 Shipping Context와 연결되고 ApplicationModules.verify가 경계를 검사하는 다이어그램">
+          <figcaption>
+            <strong>Spring Modulith 공개 경계와 검증 흐름</strong>
+            <span><code>orders :: events</code>만 <code>Named Interface</code>로 공개하고, <code>ApplicationModules.verify()</code>가 <code>shipping → orders.internal</code> 참조를 차단하는 전체 구조를 보여준다.</span>
+            <a href="https://github.com/bluetape4k/exposed-workshop/blob/develop/docs/images/readme-diagrams/08-ddd-modulith-boundaries-flow-01.svg">다이어그램 크게 보기</a>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="architecture" class="band">
+      <div class="shell">
+        <div class="section-head"><h2>아키텍처 다이어그램</h2><p><code>orders</code>는 주문 상태를, <code>shipping</code>은 배송 예약 상태를 각각 소유한다. 배송 모듈은 주문 모듈의 내부 구현을 참조하지 않고 공개된 <code>OrderAcceptedEvent</code>만 수신한다.</p></div>
+        <div class="architecture-map" role="img" aria-label="orders 모듈과 shipping 모듈의 애플리케이션 서비스, 저장소, Exposed 테이블 및 공개 이벤트 관계">
+          <article class="boundary orders">
+            <span class="boundary-label">Bounded Context · 데이터 소유자</span><h3>orders</h3>
+            <div class="arch-stack">
+              <div class="arch-node"><b>AcceptOrderCommand</b><span>주문 접수 요청</span></div><div class="arch-arrow">호출 ↓</div>
+              <div class="arch-node"><b>OrderApplicationService</b><span>TransactionTemplate · 주문 트랜잭션</span></div><div class="arch-arrow">저장 ↓</div>
+              <div class="arch-node"><b>ExposedOrderRepository</b><span>orders.internal</span></div><div class="arch-arrow">Exposed SQL DSL ↓</div>
+              <div class="arch-node"><code>WorkshopOrders</code><span>ddd_modulith_orders · orderKey 고유 인덱스</span></div>
+            </div>
+          </article>
+          <div class="event-contract">
+            <div class="allowed">발행 → 수신</div>
+            <div class="event">공개 이벤트<code>OrderAcceptedEvent</code><code>orders :: events</code></div>
+            <div class="blocked-rule"><strong>차단되는 참조</strong><br><code>shipping → orders.internal</code></div>
+          </div>
+          <article class="boundary shipping">
+            <span class="boundary-label">Bounded Context · 데이터 소유자</span><h3>shipping</h3>
+            <div class="arch-stack">
+              <div class="arch-node"><b>ShippingReservationHandler</b><span>@EventListener · 이벤트 수신</span></div><div class="arch-arrow">호출 ↓</div>
+              <div class="arch-node"><b>TransactionTemplate</b><span>배송 예약 트랜잭션</span></div><div class="arch-arrow">저장 ↓</div>
+              <div class="arch-node"><b>ExposedShippingReservationRepository</b><span>shipping.internal</span></div><div class="arch-arrow">Exposed SQL DSL ↓</div>
+              <div class="arch-node"><code>ShippingReservations</code><span>ddd_modulith_shipping_reservations · orderKey 고유 인덱스</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="aggregate" class="band">
+      <div class="shell">
+        <div class="section-head"><h2>Exposed로 주문 Aggregate의 일관성 경계를 구현한 방식</h2><p>이 예제에는 별도의 <code>Order</code> Aggregate Root 클래스는 없다. 대신 애플리케이션 서비스의 트랜잭션, 저장소의 저장 절차, Exposed 테이블의 제약 조건을 조합해 주문 접수에 필요한 일관성을 보장한다.</p></div>
+        <div class="aggregate-grid">
+          <article class="aggregate-rule"><b>1. 명령 처리 경계</b><p><code>AcceptOrderCommand</code>를 <code>OrderApplicationService</code>에서 처리해 주문 상태 변경 진입점을 한곳으로 제한한다.</p></article>
+          <article class="aggregate-rule"><b>2. 트랜잭션 경계</b><p><code>TransactionTemplate</code> 안에서 주문을 저장하고 조회해 하나의 주문 접수 작업으로 처리한다.</p></article>
+          <article class="aggregate-rule"><b>3. DB 일관성 제약</b><p><code>WorkshopOrders.orderKey.uniqueIndex()</code>가 동일한 주문 키의 중복 저장을 차단한다.</p></article>
+          <article class="aggregate-rule"><b>4. 저장 결과 반환</b><p>저장된 행을 <code>OrderSummary</code>로 매핑하고, 트랜잭션이 끝난 뒤 <code>OrderAcceptedEvent</code>를 발행한다.</p></article>
+        </div>
+        <div class="model-note"><strong>현재 구현의 범위:</strong> 주문 접수만 다루는 간결한 트랜잭션 스크립트 방식이다. 상태 전이 규칙이 늘어나면 <code>Order</code> Aggregate Root에 행위를 정의하고, 저장소가 Aggregate와 Exposed 행을 변환하도록 확장할 수 있다. 다음 클래스 다이어그램은 현재 소스에 실제로 존재하는 타입만 표시한다.</div>
+
+        <h3 class="class-title">클래스 다이어그램</h3>
+        <div class="class-diagram" role="img" aria-label="주문 접수와 배송 예약에 참여하는 실제 클래스 및 Exposed 테이블 관계">
+          <div class="class-lane">
+            <h3>orders</h3>
+            <div class="class-flow">
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«command»</span><strong>AcceptOrderCommand</strong></div><div class="members"><span>orderKey: String</span><span>customerId: Long</span></div></article>
+              <div class="relation">호출 ↓</div>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«application service»</span><strong>OrderApplicationService</strong></div><div class="members"><span>accept(command): OrderSummary</span><span>ApplicationEventPublisher</span><span>TransactionTemplate</span></div></article>
+              <div class="relation">저장 ↓</div>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«repository»</span><strong>ExposedOrderRepository</strong></div><div class="members"><span>accept(orderKey, customerId)</span><span>toSummary(row): OrderSummary</span></div></article>
+              <div class="relation">매핑 ↙　↘ Exposed SQL DSL</div>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«read model»</span><strong>OrderSummary</strong></div><div class="members"><span>id, orderKey, customerId</span><span>status, acceptedAt</span></div></article>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«LongIdTable»</span><strong>WorkshopOrders</strong></div><div class="members"><span>orderKey.uniqueIndex()</span><span>customerId, status, acceptedAt</span></div></article>
+              <div class="relation">서비스가 발행 ↓</div>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«domain event · orders :: events»</span><strong>OrderAcceptedEvent</strong></div><div class="members"><span>orderKey, customerId, acceptedAt</span></div></article>
+            </div>
+          </div>
+          <div class="class-lane shipping">
+            <h3>shipping</h3>
+            <div class="class-flow">
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«event listener»</span><strong>ShippingReservationHandler</strong></div><div class="members"><span>reserveShipment(event)</span><span>TransactionTemplate</span></div></article>
+              <div class="relation">저장 ↓</div>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«repository»</span><strong>ExposedShippingReservationRepository</strong></div><div class="members"><span>reserve(orderKey, customerId)</span><span>toReservation(row)</span></div></article>
+              <div class="relation">매핑 ↙　↘ Exposed SQL DSL</div>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«result model»</span><strong>ShippingReservation</strong></div><div class="members"><span>id, orderKey, customerId</span><span>reservedAt</span></div></article>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«LongIdTable»</span><strong>ShippingReservations</strong></div><div class="members"><span>orderKey.uniqueIndex()</span><span>customerId, reservedAt</span></div></article>
+            </div>
+          </div>
+        </div>
+        <div class="cross-relation">OrderAcceptedEvent를 공개 계약으로 수신</div>
       </div>
     </section>
 
@@ -170,7 +304,7 @@
       <div class="shell">
         <div class="section-head"><h2>DDD가 필요한 상황</h2><p>여러 기능이 같은 테이블과 저장소를 직접 변경하기 시작하면 상태 변경 규칙이 분산되고 변경 영향 범위를 예측하기 어려워진다. 주문과 배송처럼 업무 용어, 상태 전이, 변경 주기가 다른 영역은 책임 경계와 공개 계약을 분명히 해야 한다.</p></div>
         <div class="compare">
-          <article class="context orders"><h3>orders</h3><ul><li><code>AcceptOrderCommand</code> 해석</li><li>주문 중복과 상태 전이 검사</li><li><code>ExposedOrderRepository</code>로 저장</li><li><code>OrderAcceptedEvent</code> 발행</li></ul></article>
+          <article class="context orders"><h3>orders</h3><ul><li><code>AcceptOrderCommand</code> 해석</li><li><code>orderKey</code> 중복을 고유 인덱스로 차단</li><li><code>ACCEPTED</code> 상태로 신규 저장</li><li><code>OrderAcceptedEvent</code> 발행</li></ul></article>
           <div class="contract">공개 계약<code>orders :: events</code></div>
           <article class="context shipping"><h3>shipping</h3><ul><li><code>ShippingReservationHandler</code>가 이벤트 수신</li><li>배송 예약 규칙 적용</li><li><code>ExposedShippingReservationRepository</code>로 저장</li><li>주문 내부 저장소는 참조하지 않음</li></ul></article>
         </div>
@@ -179,19 +313,19 @@
 
     <section id="effects" class="band">
       <div class="shell">
-        <div class="section-head"><h2>DDD 적용 효과와 추가 비용을 함께 본다</h2><p>경계를 만들면 변경 영향과 테스트 범위를 줄일 수 있지만, 이벤트 계약·매핑·실패 처리 설계가 추가된다. Modulith 검증이 보장하는 범위와 운영 메시징이 보장해야 할 범위를 구분한다.</p></div>
+        <div class="section-head"><h2>DDD 적용 효과와 추가 비용을 함께 본다</h2><p>경계를 만들면 변경 영향과 테스트 범위를 줄일 수 있지만, 이벤트 계약·매핑·실패 처리 설계가 추가된다. Modulith가 검증하는 범위와 운영 메시징에서 보장해야 할 범위를 구분한다.</p></div>
         <div class="effects">
           <article class="effect"><h3>상태 변경 책임이 한곳에 모인다</h3><p>주문 규칙은 orders, 배송 예약 규칙은 shipping이 관리한다. 다른 모듈은 내부 저장소를 직접 호출하지 않는다.</p></article>
-          <article class="effect"><h3>참조 규칙을 자동 검증한다</h3><p><code>ApplicationModules.verify()</code>는 package와 named interface를 기준으로 컴파일 시점 참조 위반을 찾는다.</p></article>
+          <article class="effect"><h3>참조 규칙을 자동 검증한다</h3><p><code>ApplicationModules.verify()</code>는 패키지와 <code>Named Interface</code>를 기준으로 컴파일 시점 참조 위반을 찾는다.</p></article>
           <article class="effect"><h3>이벤트 계약 관리 비용이 생긴다</h3><p>모듈 사이에 전달할 최소 정보를 이벤트로 정의하고, 내부 모델과 이벤트 모델의 매핑 및 변경 호환성을 관리해야 한다.</p></article>
-          <article class="effect"><h3>내구성은 별도 설계가 필요하다</h3><p>이 예제의 <code>@EventListener</code>는 같은 프로세스에서 동작한다. Outbox, broker 저장, 중복 전달, 멱등성, 재처리를 구현하거나 보장하지 않는다.</p></article>
+          <article class="effect"><h3>내구성은 별도 설계가 필요하다</h3><p>이 예제의 <code>@EventListener</code>는 같은 프로세스에서 동작한다. Outbox, 브로커 저장, 중복 전달, 멱등성, 재처리를 구현하거나 보장하지 않는다.</p></article>
         </div>
       </div>
     </section>
 
     <section id="run" class="band">
       <div class="shell">
-        <div class="section-head"><h2>정상 흐름과 경계 위반을 같은 테스트 실행에서 확인한다</h2><p>테스트는 주문 수락 후 배송 예약이 저장되는 정상 경로와, <code>orders.internal.LeakyOrderRepository</code>를 직접 참조하는 invalid fixture를 함께 검증한다. 검증기는 업무 규칙이나 런타임 이벤트 전달 성공을 검사하지 않는다.</p></div>
+        <div class="section-head"><h2>정상 흐름과 경계 위반을 같은 테스트 실행에서 확인한다</h2><p>테스트는 주문 수락 후 배송 예약이 저장되는 정상 경로와, <code>orders.internal.LeakyOrderRepository</code>를 직접 참조하는 경계 위반 픽스처를 함께 검증한다. 검증기는 업무 규칙이나 런타임 이벤트 전달 성공을 검사하지 않는다.</p></div>
         <div class="runbook">
           <div class="code-panel"><div class="panel-title">실행 명령과 처리 순서</div><pre><code>./gradlew :08-ddd-modulith-boundaries:test
 
@@ -206,6 +340,9 @@ AcceptOrderCommand
           <div class="source-list">
             <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/README.ko.md">DDD Modulith 경계 README</a>
             <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/src/main/kotlin/exposed/examples/spring/modulith/boundaries/orders/OrderApplicationService.kt">OrderApplicationService.kt</a>
+            <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/src/main/kotlin/exposed/examples/spring/modulith/boundaries/orders/internal/ExposedOrderRepository.kt">ExposedOrderRepository.kt</a>
+            <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/src/main/kotlin/exposed/examples/spring/modulith/boundaries/shipping/ShippingReservationHandler.kt">ShippingReservationHandler.kt</a>
+            <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/src/main/kotlin/exposed/examples/spring/modulith/boundaries/shipping/internal/ExposedShippingReservationRepository.kt">ExposedShippingReservationRepository.kt</a>
             <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/src/test/kotlin/exposed/examples/spring/modulith/boundaries/BoundaryVerificationApplicationTest.kt">BoundaryVerificationApplicationTest.kt</a>
             <a href="./2026-07-30-exposed-workshop-visual-companions-design.md">시각화 설계 문서</a>
           </div>
