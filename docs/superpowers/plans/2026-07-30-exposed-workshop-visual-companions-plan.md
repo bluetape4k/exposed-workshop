@@ -10,6 +10,23 @@
 
 ---
 
+## Approved Visual Evidence Extension
+
+- Place the cache strategy Architecture Diagram in the architecture explanation in both locales.
+- Place the PostgreSQL + HikariCP smoke benchmark chart and its six measured values after the
+  Near Cache effects and operational cautions.
+- State that the benchmark compares only `NoCache`, `ReadThrough`, and `WriteThrough`; it does not
+  measure Redis Near Cache, Write-Behind, production throughput, or an SLA.
+- Place the Spring Modulith boundary diagram in both DDD locale documents before the
+  detailed architecture and class diagrams.
+- Keep source provenance in captions and links; do not expose artifact provenance as a reader-facing
+  section title.
+- Keep the source SVGs self-contained as `data:` images so Pages snapshots do not require additional
+  asset synchronization.
+- Do not add sequence diagrams.
+- Validate the three visual identifiers in both locales and inspect light/dark desktop and mobile
+  renders before completion.
+
 ## File Map
 
 ### `exposed-workshop`

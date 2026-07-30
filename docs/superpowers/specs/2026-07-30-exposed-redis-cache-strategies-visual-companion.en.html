@@ -65,15 +65,34 @@
     .strategies { display: grid; grid-template-columns: repeat(4, 1fr); padding: 12px; gap: 7px; border-bottom: 1px solid #364640; }
     .strategy { min-height: 44px; padding: 7px; border: 1px solid #465952; border-radius: 6px; color: #bdd0ca; background: #22302c; font-size: 11px; font-weight: 750; cursor: pointer; }
     .strategy[aria-pressed="true"] { border-color: #77dac5; color: #eafffa; background: #174d42; }
+    .layer-legend { display: flex; align-items: center; justify-content: flex-end; gap: 16px; padding: 8px 16px 0; color: #a9bbb5; font-size: 10px; font-weight: 800; }
+    .layer-key { display: inline-flex; align-items: center; gap: 6px; }
+    .layer-key::before { width: 9px; height: 9px; border-radius: 2px; content: ""; }
+    .layer-key[data-layer="api"]::before { background: #65a9e8; }
+    .layer-key[data-layer="cache"]::before { background: #66d3bd; }
+    .layer-key[data-layer="db"]::before { background: #e5b95f; }
     .flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 16px; }
     .tier { min-width: 0; padding: 14px; border: 1px solid #3c4c47; border-radius: 7px; background: #202d29; }
+    .tier[data-layer="cache"] { border-color: #337f70; box-shadow: inset 0 3px #66d3bd; }
+    .tier[data-layer="db"] { border-color: #8b713b; box-shadow: inset 0 3px #e5b95f; }
     .tier-label { color: #91a8a1; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+    .tier[data-layer="cache"] .tier-label { color: #79d8c6; }
+    .tier[data-layer="db"] .tier-label { color: #ecc879; }
     .tier strong { display: block; margin: 8px 0 12px; color: #fff; font-size: 15px; }
     .value { min-height: 48px; padding: 9px; border-radius: 5px; color: #bfeadd; background: #12201c; font-family: "SFMono-Regular", monospace; font-size: 12px; overflow-wrap: anywhere; }
     .timeline { padding: 0 16px 16px; }
     .timeline ol { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; margin: 0; padding: 0; list-style: none; }
-    .timeline li { min-height: 56px; padding: 9px; border: 1px solid #3b4d47; border-radius: 6px; color: #a9bbb5; font-size: 10px; }
-    .timeline li.active { border-color: #7adac7; color: #effffb; background: #174d42; }
+    .timeline li { display: grid; min-height: 62px; align-content: start; gap: 5px; padding: 8px 9px; border: 1px solid #3b4d47; border-radius: 6px; color: #a9bbb5; background: #1b2925; font-size: 10px; }
+    .stage-layer { font-size: 9px; font-weight: 900; text-transform: uppercase; }
+    .timeline li[data-layer="api"] { border-color: #365f83; background: #172b3b; }
+    .timeline li[data-layer="api"] .stage-layer { color: #79b8ef; }
+    .timeline li[data-layer="cache"] { border-color: #337f70; background: #15362f; }
+    .timeline li[data-layer="cache"] .stage-layer { color: #79d8c6; }
+    .timeline li[data-layer="db"] { border-color: #8b713b; background: #372f1d; }
+    .timeline li[data-layer="db"] .stage-layer { color: #ecc879; }
+    .timeline li.active[data-layer="api"] { border-color: #83c1f5; color: #f0f8ff; background: #214968; }
+    .timeline li.active[data-layer="cache"] { border-color: #7adac7; color: #effffb; background: #174d42; }
+    .timeline li.active[data-layer="db"] { border-color: #f0c66f; color: #fff8e8; background: #55431e; }
     .completion { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 10px; padding: 11px 12px; border-radius: 6px; background: #101a17; font-size: 12px; }
     .completion strong { color: #79dfc9; }
     .run { border: 0; border-radius: 5px; padding: 8px 12px; color: #08231c; background: #78ddc7; font-weight: 850; cursor: pointer; }
@@ -89,6 +108,7 @@
     .card p { margin-top: 10px; }
     .card ul { margin: 12px 0 0; padding-left: 18px; }
     .implementation { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .implementation-variants { grid-template-columns: repeat(3, 1fr); margin-top: 20px; }
     .code-panel, .warning { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
     .code-panel { overflow: hidden; }
     .panel-title { padding: 12px 16px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; font-weight: 800; }
@@ -102,12 +122,25 @@
     .warning { padding: 18px; border-left: 4px solid var(--red); }
     .warning h3 { font-size: 16px; }
     .warning p { margin-top: 9px; color: var(--muted); font-size: 13px; }
+    .source-visuals { display: grid; gap: 34px; }
+    .source-visual { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .source-visual img { display: block; width: 100%; height: auto; background: #f7f8f8; }
+    .source-visual figcaption { display: grid; gap: 7px; padding: 16px 18px 18px; border-top: 1px solid var(--line); }
+    .source-visual figcaption strong { font-size: 15px; }
+    .source-visual figcaption span { color: var(--muted); font-size: 13px; }
+    .source-visual figcaption a { width: fit-content; color: var(--green); font-size: 12px; font-weight: 800; }
+    .benchmark-table { width: 100%; border-collapse: collapse; margin-top: 18px; background: var(--surface); font-size: 13px; }
+    .benchmark-table th, .benchmark-table td { padding: 10px 12px; border: 1px solid var(--line); text-align: right; }
+    .benchmark-table th:first-child, .benchmark-table td:first-child { text-align: left; }
+    .benchmark-table thead { background: var(--surface-2); }
+    .benchmark-evidence { margin-top: 34px; }
+    .benchmark-note { margin-top: 14px; padding: 14px 16px; border-left: 4px solid var(--amber); background: var(--surface); color: var(--muted); font-size: 13px; }
     .runbook { display: grid; grid-template-columns: 1fr .8fr; gap: 22px; }
     .source-list { display: grid; gap: 9px; }
     .source-list a { display: block; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); font-size: 13px; overflow-wrap: anywhere; }
     .provenance { padding: 24px 0 40px; color: var(--muted); font-size: 12px; }
     .provenance a { margin-right: 14px; }
-    @media (max-width: 900px) { .hero, .section-head, .implementation, .runbook { grid-template-columns: 1fr; } .hero { min-height: auto; padding-top: 46px; } .grid-4 { grid-template-columns: repeat(2, 1fr); } .nav a:nth-child(-n+2) { display: none; } }
+    @media (max-width: 900px) { .hero, .section-head, .implementation, .implementation-variants, .runbook { grid-template-columns: 1fr; } .hero { min-height: auto; padding-top: 46px; } .grid-4 { grid-template-columns: repeat(2, 1fr); } .nav a:nth-child(-n+2) { display: none; } }
     @media (max-width: 620px) { .shell { width: min(100% - 22px, 1180px); } .nav { display: none; } h1 { font-size: 39px; } .facts, .flow, .cautions, .grid-4 { grid-template-columns: 1fr; } .strategies { grid-template-columns: repeat(2, 1fr); } .timeline ol { display: flex; overflow-x: auto; } .timeline li { min-width: 112px; } .band { padding: 58px 0; } }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
   </style>
@@ -118,7 +151,7 @@
       <a class="brand" href="https://github.com/bluetape4k/exposed-workshop">exposed-workshop / Visual Companion</a>
       <div class="actions">
         <nav class="nav" aria-label="Document navigation">
-          <a href="#structure">Strategies</a><a href="#implementation">Implementation</a><a href="#run">Run</a>
+          <a href="#strategy-architecture">Architecture</a><a href="#implementation">Implementation</a><a href="#run">Run</a>
           <a href="./2026-07-30-ddd-modulith-boundaries-visual-companion.en.html">DDD boundaries</a>
           <a href="./2026-07-30-exposed-redis-cache-strategies-visual-companion.html" lang="ko">한국어</a>
         </nav>
@@ -132,10 +165,10 @@
   <main>
     <section id="simulation" class="shell hero">
       <div>
-        <p class="eyebrow">Exposed + Redis + Near Cache</p>
+        <p class="eyebrow">Exposed + Local Cache + Redis</p>
         <h1>The cache strategy determines when Redis and the database reflect a read or write</h1>
         <p class="lead">Caching is not only a latency optimization. It defines where a value is read, when a change reaches the database, and how each layer converges after invalidation or failure.</p>
-        <div class="facts"><div class="fact"><span>L1</span><strong>JVM Near Cache</strong></div><div class="fact"><span>L2</span><strong>Redis RLocalCachedMap</strong></div><div class="fact"><span>Persistent</span><strong>Exposed + DB</strong></div></div>
+        <div class="facts"><div class="fact"><span>L1 / Local cache</span><strong>Caffeine or Redisson local cache</strong></div><div class="fact"><span>L2 / Remote cache</span><strong>Redis</strong></div><div class="fact"><span>Database access</span><strong>Exposed</strong></div></div>
       </div>
       <div class="board" aria-live="polite">
         <div class="board-head"><strong>Rename user: Ada → Grace</strong><span class="status">Strategy simulation</span></div>
@@ -145,37 +178,61 @@
           <button class="strategy" data-strategy="read-only" aria-pressed="false">Read-Only</button>
           <button class="strategy" data-strategy="write-behind" aria-pressed="false">Write-Behind</button>
         </div>
+        <div class="layer-legend" aria-label="Processing layer colors">
+          <span class="layer-key" data-layer="api">API</span>
+          <span class="layer-key" data-layer="cache">Cache</span>
+          <span class="layer-key" data-layer="db">DB</span>
+        </div>
         <div class="flow">
-          <div class="tier"><span class="tier-label">L1 / Near Cache</span><strong>Application memory</strong><div class="value" data-value="l1">miss</div></div>
-          <div class="tier"><span class="tier-label">L2 / Redis</span><strong>RLocalCachedMap</strong><div class="value" data-value="redis">user:42 = Ada</div></div>
-          <div class="tier"><span class="tier-label">Persistent / DB</span><strong>Exposed Table</strong><div class="value" data-value="db">users[42] = Ada</div></div>
+          <div class="tier" data-layer="cache"><span class="tier-label">L1 / Local cache</span><strong>Caffeine / Redisson Local</strong><div class="value" data-value="l1">miss</div></div>
+          <div class="tier" data-layer="cache"><span class="tier-label">L2 / Remote cache</span><strong>Redis</strong><div class="value" data-value="redis">user:42 = Ada</div></div>
+          <div class="tier" data-layer="db"><span class="tier-label">Persistent / DB</span><strong>Exposed Table</strong><div class="value" data-value="db">users[42] = Ada</div></div>
         </div>
         <div class="timeline"><ol data-timeline></ol><div class="completion"><span data-explanation>A miss loads the database value into both cache layers.</span><strong data-completion>Read complete</strong><button class="run" type="button">Run again</button></div></div>
       </div>
     </section>
     <section id="structure" class="band">
       <div class="shell">
-        <div class="section-head"><h2>One cache API exposes four data-processing rules</h2><p><code>JdbcCacheRepository</code> and <code>AbstractJdbcRedissonRepository</code> connect Exposed database access to Redisson's <code>RLocalCachedMap</code>. Select a strategy from the update frequency and acceptable persistence delay of each data type.</p></div>
+        <div class="section-head"><h2>Cache strategies</h2><p><code>JdbcCacheRepository</code> implementations separate cache reads and database persistence into Read-Through, Write-Through, Read-Only, and Write-Behind strategies. Select one from the update frequency and acceptable persistence delay of each data type.</p></div>
         <div class="grid-4">
-          <article class="card"><h3>Read-Through</h3><p>On a cache miss, <code>EntityMapLoader</code> queries through Exposed and fills Redis and Near Cache.</p><ul><li>Reduces repeated reads</li><li>First read includes DB latency</li></ul></article>
+          <article class="card"><h3>Read-Through</h3><p>On a cache miss, <code>EntityMapLoader</code> queries through Exposed and fills Redis and the local cache.</p><ul><li>Reduces repeated reads</li><li>First read includes DB latency</li></ul></article>
           <article class="card"><h3>Write-Through</h3><p><code>EntityMapWriter</code> updates the cache and database in the request path.</p><ul><li>DB persistence confirmed before response</li><li>Higher write latency</li></ul></article>
           <article class="card"><h3>Read-Only</h3><p>Cache stable data, invalidate it on change, and reload it on the next read.</p><ul><li>No unnecessary write path</li><li>Invalidation must not be missed</li></ul></article>
           <article class="card"><h3>Write-Behind</h3><p>Accept the request, write Redis first, then let a batch persist through Exposed.</p><ul><li>Lower response latency</li><li>Acceptance is not DB completion</li></ul></article>
         </div>
       </div>
     </section>
+
+    <section id="strategy-architecture" class="band">
+      <div class="shell">
+        <div class="section-head"><h2>Cache strategy architecture</h2><p>The diagram connects request handling, repository strategy, storage, and verification to show where each strategy reads data and when it persists changes to the database.</p></div>
+        <div class="source-visuals">
+          <figure class="source-visual" data-visual-id="cache-strategy-architecture">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAwIDk0MCIgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTQwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkNhY2hlIHN0cmF0ZWd5IGFyY2hpdGVjdHVyZSI+CiAgPGRlZnM+CiAgICA8ZmlsdGVyIGlkPSJzaGFkb3ciIHg9Ii0xMCUiIHk9Ii0xMCUiIHdpZHRoPSIxMjAlIiBoZWlnaHQ9IjEzMCUiPgogICAgICA8ZmVEcm9wU2hhZG93IGR4PSIyIiBkeT0iNCIgc3RkRGV2aWF0aW9uPSI1IiBmbG9vZC1jb2xvcj0iIzFmMjkzNyIgZmxvb2Qtb3BhY2l0eT0iMC4xMiIvPgogICAgPC9maWx0ZXI+CiAgICA8bWFya2VyIGlkPSJhcnJvd0NhY2hlIiBtYXJrZXJVbml0cz0idXNlclNwYWNlT25Vc2UiIG1hcmtlcldpZHRoPSIxNCIgbWFya2VySGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDEwIDEwIiByZWZYPSI5IiByZWZZPSI1IiBvcmllbnQ9ImF1dG8iPgogICAgICA8cGF0aCBkPSJNIDAgMCBMIDEwIDUgTCAwIDEwIFoiIGZpbGw9IiMzZjhlODQiIHN0cm9rZT0iIzNmOGU4NCIgc3Ryb2tlLXdpZHRoPSIwIiBzdHJva2UtZGFzaGFycmF5PSJub25lIiBzdHlsZT0ic3Ryb2tlLWRhc2hhcnJheTpub25lIWltcG9ydGFudCIvPgogICAgPC9tYXJrZXI+CiAgICA8bWFya2VyIGlkPSJhcnJvd1JvdXRlIiBtYXJrZXJVbml0cz0idXNlclNwYWNlT25Vc2UiIG1hcmtlcldpZHRoPSIxNCIgbWFya2VySGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDEwIDEwIiByZWZYPSI5IiByZWZZPSI1IiBvcmllbnQ9ImF1dG8iPgogICAgICA8cGF0aCBkPSJNIDAgMCBMIDEwIDUgTCAwIDEwIFoiIGZpbGw9IiNhMjc0M2QiIHN0cm9rZT0iI2EyNzQzZCIgc3Ryb2tlLXdpZHRoPSIwIiBzdHJva2UtZGFzaGFycmF5PSJub25lIiBzdHlsZT0ic3Ryb2tlLWRhc2hhcnJheTpub25lIWltcG9ydGFudCIvPgogICAgPC9tYXJrZXI+CiAgICA8bWFya2VyIGlkPSJhcnJvd1ZlcmlmeSIgbWFya2VyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBtYXJrZXJXaWR0aD0iMTQiIG1hcmtlckhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxMCAxMCIgcmVmWD0iOSIgcmVmWT0iNSIgb3JpZW50PSJhdXRvIj4KICAgICAgPHBhdGggZD0iTSAwIDAgTCAxMCA1IEwgMCAxMCBaIiBmaWxsPSIjNzY2N2IxIiBzdHJva2U9IiM3NjY3YjEiIHN0cm9rZS13aWR0aD0iMCIgc3Ryb2tlLWRhc2hhcnJheT0ibm9uZSIgc3R5bGU9InN0cm9rZS1kYXNoYXJyYXk6bm9uZSFpbXBvcnRhbnQiLz4KICAgIDwvbWFya2VyPgogICAgPHN0eWxlPgogICAgICB0ZXh0IHsgbGV0dGVyLXNwYWNpbmc6IDA7IH0KICAgICAgLmNhbnZhcyB7IGZpbGw6ICNmYmZjZjg7IHN0cm9rZTogIzNmNTE1YTsgc3Ryb2tlLXdpZHRoOiAzOyB9CiAgICAgIC50aXRsZSB7IGZvbnQtZmFtaWx5OiAiQXJjaGl0ZWN0cyBEYXVnaHRlciI7IGZvbnQtc2l6ZTogMzZweDsgZmlsbDogIzIzMzIzYTsgfQogICAgICAuc3VidGl0bGUsLmxhbmVOb3RlLC5jYXJkVGV4dCwubGFiZWwsLmZvb3RlciB7IGZvbnQtZmFtaWx5OiAiQ29taWMgTW9ubyI7IGZpbGw6ICMzMjQ3NTA7IH0KICAgICAgLnN1YnRpdGxlIHsgZm9udC1zaXplOiAxNXB4OyB9CiAgICAgIC5sYW5lVGl0bGUgeyBmb250LWZhbWlseTogIkFyY2hpdGVjdHMgRGF1Z2h0ZXIiOyBmb250LXNpemU6IDIwcHg7IGZpbGw6ICMyMzMyM2E7IH0KICAgICAgLmxhbmVOb3RlIHsgZm9udC1zaXplOiAxMnB4OyBmaWxsOiAjNWI2ZDc1OyB9CiAgICAgIC5jYXJkVGl0bGUgeyBmb250LWZhbWlseTogIkFyY2hpdGVjdHMgRGF1Z2h0ZXIiOyBmb250LXNpemU6IDIwcHg7IGZpbGw6ICMyMDMyM2I7IH0KICAgICAgLmNhcmRUZXh0IHsgZm9udC1zaXplOiAxM3B4OyB9CiAgICAgIC5sYWJlbCB7IGZvbnQtc2l6ZTogMTJweDsgZm9udC13ZWlnaHQ6IDcwMDsgfQogICAgICAuZm9vdGVyIHsgZm9udC1zaXplOiAxMnB4OyBmaWxsOiAjNjA3MTdhOyB9CiAgICAgIC5sYW5lUmVxdWVzdCB7IGZpbGw6ICNlZWY3ZjU7IHN0cm9rZTogIzZmYTA5ODsgc3Ryb2tlLXdpZHRoOiAyLjI7IH0KICAgICAgLmxhbmVSZXBvc2l0b3J5IHsgZmlsbDogI2ZmZjdlODsgc3Ryb2tlOiAjYjk4ZTUwOyBzdHJva2Utd2lkdGg6IDIuMjsgfQogICAgICAubGFuZVN0b3JhZ2UgeyBmaWxsOiAjZjVmM2ZiOyBzdHJva2U6ICM4ZjgyYmQ7IHN0cm9rZS13aWR0aDogMi4yOyB9CiAgICAgIC5jYXJkIHsgZmlsbDogI2ZmZjsgc3Ryb2tlLXdpZHRoOiAyLjM7IGZpbHRlcjogdXJsKCNzaGFkb3cpOyB9CiAgICAgIC5jYWNoZUNhcmQgeyBzdHJva2U6ICM1ZDk0OGI7IH0KICAgICAgLnJvdXRlQ2FyZCB7IHN0cm9rZTogI2FjN2EzNDsgfQogICAgICAudmVyaWZ5Q2FyZCB7IHN0cm9rZTogIzdiNmJiNDsgfQogICAgICAuZmxvd1JlYWRXcml0ZSB7IGZpbGw6IG5vbmU7IHN0cm9rZTogIzNmOGU4NDsgc3Ryb2tlLXdpZHRoOiA0OyBzdHJva2UtbGluZWNhcDogcm91bmQ7IHN0cm9rZS1saW5lam9pbjogcm91bmQ7IG1hcmtlci1lbmQ6IHVybCgjYXJyb3dDYWNoZSk7IH0KICAgICAgLmZsb3dSZWFkT25seSB7IGZpbGw6IG5vbmU7IHN0cm9rZTogI2EyNzQzZDsgc3Ryb2tlLXdpZHRoOiA0OyBzdHJva2UtbGluZWNhcDogcm91bmQ7IHN0cm9rZS1saW5lam9pbjogcm91bmQ7IG1hcmtlci1lbmQ6IHVybCgjYXJyb3dSb3V0ZSk7IH0KICAgICAgLmZsb3dXcml0ZUJlaGluZCB7IGZpbGw6IG5vbmU7IHN0cm9rZTogIzc2NjdiMTsgc3Ryb2tlLXdpZHRoOiA0OyBzdHJva2UtbGluZWNhcDogcm91bmQ7IHN0cm9rZS1saW5lam9pbjogcm91bmQ7IG1hcmtlci1lbmQ6IHVybCgjYXJyb3dWZXJpZnkpOyB9CiAgICAgIC5sZWdlbmRMaW5lIHsgZmlsbDogbm9uZTsgc3Ryb2tlLXdpZHRoOiA0OyBzdHJva2UtbGluZWNhcDogcm91bmQ7IH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgoKICA8cmVjdCB4PSIyNCIgeT0iMjQiIHdpZHRoPSIxNTUyIiBoZWlnaHQ9Ijg5MiIgcng9IjIwIiBjbGFzcz0iY2FudmFzIi8+CiAgPHRleHQgeD0iODAwIiB5PSI3NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InRpdGxlIj5DYWNoZSBTdHJhdGVneSBBcmNoaXRlY3R1cmU8L3RleHQ+CiAgPHRleHQgeD0iODAwIiB5PSIxMDYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJzdWJ0aXRsZSI+U3ByaW5nIE1WQyB2aXJ0dWFsLXRocmVhZCByZXF1ZXN0cyBzZWxlY3QgYW4gZXhwbGljaXQgUmVkaXNzb24gcmVwb3NpdG9yeSBzdHJhdGVneSBiZWZvcmUgUmVkaXMgbmVhci1jYWNoZSBhbmQgRXhwb3NlZCBEQiBhY2Nlc3MuPC90ZXh0PgoKICA8cmVjdCB4PSI3MCIgeT0iMTUwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjY0MCIgcng9IjE4IiBjbGFzcz0ibGFuZVJlcXVlc3QiLz4KICA8dGV4dCB4PSIxMTAiIHk9IjE5MCIgY2xhc3M9ImxhbmVUaXRsZSI+UmVxdWVzdCBydW50aW1lPC90ZXh0PgogIDx0ZXh0IHg9IjExMCIgeT0iMjE2IiBjbGFzcz0ibGFuZU5vdGUiPlRvbWNhdFZpcnR1YWxUaHJlYWRDb25maWcgcmVwbGFjZXM8L3RleHQ+CiAgPHRleHQgeD0iMTEwIiB5PSIyMzQiIGNsYXNzPSJsYW5lTm90ZSI+dGhlIFRvbWNhdCBleGVjdXRvciBmb3IgYmxvY2tpbmcgSS9PLjwvdGV4dD4KCiAgPHJlY3QgeD0iNjAwIiB5PSIxNTAiIHdpZHRoPSI0MDAiIGhlaWdodD0iNjQwIiByeD0iMTgiIGNsYXNzPSJsYW5lUmVwb3NpdG9yeSIvPgogIDx0ZXh0IHg9IjY0MCIgeT0iMTkwIiBjbGFzcz0ibGFuZVRpdGxlIj5SZXBvc2l0b3J5IHN0cmF0ZWd5PC90ZXh0PgogIDx0ZXh0IHg9IjY0MCIgeT0iMjE2IiBjbGFzcz0ibGFuZU5vdGUiPkVhY2ggcmVwb3NpdG9yeSBleHRlbmRzPC90ZXh0PgogIDx0ZXh0IHg9IjY0MCIgeT0iMjM0IiBjbGFzcz0ibGFuZU5vdGUiPkFic3RyYWN0SmRiY1JlZGlzc29uUmVwb3NpdG9yeS48L3RleHQ+CgogIDxyZWN0IHg9IjExMzAiIHk9IjE1MCIgd2lkdGg9IjQwMCIgaGVpZ2h0PSI2NDAiIHJ4PSIxOCIgY2xhc3M9ImxhbmVTdG9yYWdlIi8+CiAgPHRleHQgeD0iMTE3MCIgeT0iMTkwIiBjbGFzcz0ibGFuZVRpdGxlIj5TdG9yYWdlIGFuZCB2ZXJpZmljYXRpb248L3RleHQ+CiAgPHRleHQgeD0iMTE3MCIgeT0iMjE2IiBjbGFzcz0ibGFuZU5vdGUiPlJlZGlzc29uQ29uZmlnIHN0YXJ0cyBSZWRpcywgYW5kIHRlc3RzPC90ZXh0PgogIDx0ZXh0IHg9IjExNzAiIHk9IjIzNCIgY2xhc3M9ImxhbmVOb3RlIj5wcm92ZSBmYWxsYmFjayBhbmQgYXN5bmMgcGVyc2lzdGVuY2UuPC90ZXh0PgoKICA8cmVjdCBpZD0idXNlcnNDb250cm9sbGVyIiB4PSIxMTAiIHk9IjI4MCIgd2lkdGg9IjMyMCIgaGVpZ2h0PSIxMTYiIHJ4PSIxMiIgY2xhc3M9ImNhcmQgY2FjaGVDYXJkIi8+CiAgPHRleHQgeD0iMjcwIiB5PSIzMTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJjYXJkVGl0bGUiPlVzZXJDb250cm9sbGVyPC90ZXh0PgogIDx0ZXh0IHg9IjEzOCIgeT0iMzQwIiBjbGFzcz0iY2FyZFRleHQiPkdFVCAvdXNlcnMve2lkfTwvdGV4dD4KICA8dGV4dCB4PSIxMzgiIHk9IjM2MCIgY2xhc3M9ImNhcmRUZXh0Ij5QT1NUIC91c2VyczwvdGV4dD4KICA8dGV4dCB4PSIxMzgiIHk9IjM4MCIgY2xhc3M9ImNhcmRUZXh0Ij5yZWFkLXRocm91Z2ggYW5kIHdyaXRlLXRocm91Z2ggcGF0aDwvdGV4dD4KCiAgPHJlY3QgaWQ9InVzZXJSZXBvc2l0b3J5IiB4PSI2NDAiIHk9IjI4MCIgd2lkdGg9IjMyMCIgaGVpZ2h0PSIxMTYiIHJ4PSIxMiIgY2xhc3M9ImNhcmQgY2FjaGVDYXJkIi8+CiAgPHRleHQgeD0iODAwIiB5PSIzMTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJjYXJkVGl0bGUiPlVzZXJDYWNoZVJlcG9zaXRvcnk8L3RleHQ+CiAgPHRleHQgeD0iNjY4IiB5PSIzNDAiIGNsYXNzPSJjYXJkVGV4dCI+UkVBRF9XUklURV9USFJPVUdIX1dJVEhfTkVBUl9DQUNIRTwvdGV4dD4KICA8dGV4dCB4PSI2NjgiIHk9IjM2MCIgY2xhc3M9ImNhcmRUZXh0Ij5jYWNoZSBtaXNzIGxvYWRzIGZyb20gVXNlclRhYmxlPC90ZXh0PgogIDx0ZXh0IHg9IjY2OCIgeT0iMzgwIiBjbGFzcz0iY2FyZFRleHQiPnNhdmUgdXBkYXRlcyBjYWNoZSBhbmQgREIgdG9nZXRoZXI8L3RleHQ+CgogIDxyZWN0IGlkPSJ1c2Vyc1N0b3JhZ2UiIHg9IjExNzAiIHk9IjI4MCIgd2lkdGg9IjMyMCIgaGVpZ2h0PSIxMTYiIHJ4PSIxMiIgY2xhc3M9ImNhcmQgY2FjaGVDYXJkIi8+CiAgPHRleHQgeD0iMTMzMCIgeT0iMzEyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0iY2FyZFRpdGxlIj5SZWRpcyBuZWFyIGNhY2hlICsgdXNlcnM8L3RleHQ+CiAgPHRleHQgeD0iMTE5OCIgeT0iMzQwIiBjbGFzcz0iY2FyZFRleHQiPmxvY2FsIG5lYXIgY2FjaGUgYW5kIFJlZGlzIEwyPC90ZXh0PgogIDx0ZXh0IHg9IjExOTgiIHk9IjM2MCIgY2xhc3M9ImNhcmRUZXh0Ij5FeHBvc2VkIHdyaXRlcyBVc2VyVGFibGUgcm93czwvdGV4dD4KICA8dGV4dCB4PSIxMTk4IiB5PSIzODAiIGNsYXNzPSJjYXJkVGV4dCI+dGVzdHMgY2hlY2sgaGl0LCBtaXNzLCBhbmQgZmFsbGJhY2s8L3RleHQ+CgogIDxyZWN0IGlkPSJjcmVkZW50aWFsc0NvbnRyb2xsZXIiIHg9IjExMCIgeT0iNDQwIiB3aWR0aD0iMzIwIiBoZWlnaHQ9IjExNiIgcng9IjEyIiBjbGFzcz0iY2FyZCByb3V0ZUNhcmQiLz4KICA8dGV4dCB4PSIyNzAiIHk9IjQ3MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImNhcmRUaXRsZSI+VXNlckNyZWRlbnRpYWxzQ29udHJvbGxlcjwvdGV4dD4KICA8dGV4dCB4PSIxMzgiIHk9IjUwMCIgY2xhc3M9ImNhcmRUZXh0Ij5HRVQgL3VzZXItY3JlZGVudGlhbHMve3VzZXJuYW1lfTwvdGV4dD4KICA8dGV4dCB4PSIxMzgiIHk9IjUyMCIgY2xhc3M9ImNhcmRUZXh0Ij5ERUxFVEUgL3VzZXItY3JlZGVudGlhbHM8L3RleHQ+CiAgPHRleHQgeD0iMTM4IiB5PSI1NDAiIGNsYXNzPSJjYXJkVGV4dCI+ZXhwbGljaXQgY2FjaGUgaW52YWxpZGF0aW9uIHN1cmZhY2U8L3RleHQ+CgogIDxyZWN0IGlkPSJjcmVkZW50aWFsc1JlcG9zaXRvcnkiIHg9IjY0MCIgeT0iNDQwIiB3aWR0aD0iMzIwIiBoZWlnaHQ9IjExNiIgcng9IjEyIiBjbGFzcz0iY2FyZCByb3V0ZUNhcmQiLz4KICA8dGV4dCB4PSI4MDAiIHk9IjQ3MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImNhcmRUaXRsZSI+VXNlckNyZWRlbnRpYWxzQ2FjaGVSZXBvc2l0b3J5PC90ZXh0PgogIDx0ZXh0IHg9IjY2OCIgeT0iNTAwIiBjbGFzcz0iY2FyZFRleHQiPlJFQURfT05MWV9XSVRIX05FQVJfQ0FDSEU8L3RleHQ+CiAgPHRleHQgeD0iNjY4IiB5PSI1MjAiIGNsYXNzPSJjYXJkVGV4dCI+bWlzcyByZWFkcyBVc2VyQ3JlZGVudGlhbHNUYWJsZTwvdGV4dD4KICA8dGV4dCB4PSI2NjgiIHk9IjU0MCIgY2xhc3M9ImNhcmRUZXh0Ij5pbnNlcnQvdXBkYXRlIGFyZSBuby1vcCBieSBkZXNpZ248L3RleHQ+CgogIDxyZWN0IGlkPSJjcmVkZW50aWFsc1N0b3JhZ2UiIHg9IjExNzAiIHk9IjQ0MCIgd2lkdGg9IjMyMCIgaGVpZ2h0PSIxMTYiIHJ4PSIxMiIgY2xhc3M9ImNhcmQgcm91dGVDYXJkIi8+CiAgPHRleHQgeD0iMTMzMCIgeT0iNDcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0iY2FyZFRpdGxlIj5SZWFkLW9ubHkgY2FjaGUgcHJvb2Y8L3RleHQ+CiAgPHRleHQgeD0iMTE5OCIgeT0iNTAwIiBjbGFzcz0iY2FyZFRleHQiPmNyZWRlbnRpYWxzIGFyZSBpbW11dGFibGUgZm9yIHRoaXMgcmVwbzwvdGV4dD4KICA8dGV4dCB4PSIxMTk4IiB5PSI1MjAiIGNsYXNzPSJjYXJkVGV4dCI+Y2FjaGUgaW52YWxpZGF0aW9uIGRvZXMgbm90IG11dGF0ZSBEQjwvdGV4dD4KICA8dGV4dCB4PSIxMTk4IiB5PSI1NDAiIGNsYXNzPSJjYXJkVGV4dCI+dGVzdHMgdmVyaWZ5IGZhbGxiYWNrIHBhdGggcmVtYWlucyB2YWxpZDwvdGV4dD4KCiAgPHJlY3QgaWQ9ImV2ZW50c0NvbnRyb2xsZXIiIHg9IjExMCIgeT0iNjAwIiB3aWR0aD0iMzIwIiBoZWlnaHQ9IjExNiIgcng9IjEyIiBjbGFzcz0iY2FyZCB2ZXJpZnlDYXJkIi8+CiAgPHRleHQgeD0iMjcwIiB5PSI2MzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJjYXJkVGl0bGUiPlVzZXJFdmVudENvbnRyb2xsZXI8L3RleHQ+CiAgPHRleHQgeD0iMTM4IiB5PSI2NjAiIGNsYXNzPSJjYXJkVGV4dCI+UE9TVCAvdXNlci1ldmVudHMvYnVsazwvdGV4dD4KICA8dGV4dCB4PSIxMzgiIHk9IjY4MCIgY2xhc3M9ImNhcmRUZXh0Ij5ldmVudCBwYXlsb2FkcyBhcmUgYWNjZXB0ZWQgcXVpY2tseTwvdGV4dD4KICA8dGV4dCB4PSIxMzgiIHk9IjcwMCIgY2xhc3M9ImNhcmRUZXh0Ij5wZXJzaXN0ZW5jZSBjYW4gY29tcGxldGUgbGF0ZXI8L3RleHQ+CgogIDxyZWN0IGlkPSJldmVudHNSZXBvc2l0b3J5IiB4PSI2NDAiIHk9IjYwMCIgd2lkdGg9IjMyMCIgaGVpZ2h0PSIxMTYiIHJ4PSIxMiIgY2xhc3M9ImNhcmQgdmVyaWZ5Q2FyZCIvPgogIDx0ZXh0IHg9IjgwMCIgeT0iNjMyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0iY2FyZFRpdGxlIj5Vc2VyRXZlbnRDYWNoZVJlcG9zaXRvcnk8L3RleHQ+CiAgPHRleHQgeD0iNjY4IiB5PSI2NjAiIGNsYXNzPSJjYXJkVGV4dCI+V1JJVEVfQkVISU5EX1dJVEhfTkVBUl9DQUNIRTwvdGV4dD4KICA8dGV4dCB4PSI2NjgiIHk9IjY4MCIgY2xhc3M9ImNhcmRUZXh0Ij5jYWNoZSB3cml0ZSByZXR1cm5zIGJlZm9yZSBEQiBmbHVzaDwvdGV4dD4KICA8dGV4dCB4PSI2NjgiIHk9IjcwMCIgY2xhc3M9ImNhcmRUZXh0Ij5iYXRjaCBpbnNlcnQgcGVyc2lzdHMgVXNlckV2ZW50VGFibGU8L3RleHQ+CgogIDxyZWN0IGlkPSJldmVudHNTdG9yYWdlIiB4PSIxMTcwIiB5PSI2MDAiIHdpZHRoPSIzMjAiIGhlaWdodD0iMTE2IiByeD0iMTIiIGNsYXNzPSJjYXJkIHZlcmlmeUNhcmQiLz4KICA8dGV4dCB4PSIxMzMwIiB5PSI2MzIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJjYXJkVGl0bGUiPkFzeW5jIHBlcnNpc3RlbmNlIGV2aWRlbmNlPC90ZXh0PgogIDx0ZXh0IHg9IjExOTgiIHk9IjY2MCIgY2xhc3M9ImNhcmRUZXh0Ij5SZWRpcyBhYnNvcmJzIHdyaXRlIGJ1cnN0cyBmaXJzdDwvdGV4dD4KICA8dGV4dCB4PSIxMTk4IiB5PSI2ODAiIGNsYXNzPSJjYXJkVGV4dCI+RXhwb3NlZCBldmVudHVhbGx5IHN0b3JlcyB1c2VyX2FjdGlvbjwvdGV4dD4KICA8dGV4dCB4PSIxMTk4IiB5PSI3MDAiIGNsYXNzPSJjYXJkVGV4dCI+QXdhaXRpbGl0eSB2ZXJpZmllcyBmaW5hbCBEQiBjb3VudDwvdGV4dD4KCiAgPHBhdGggaWQ9InVzZXJzLWNvbnRyb2xsZXItcmVwb3NpdG9yeSIgZGF0YS1jb25uZWN0b3I9InVzZXJzLWNvbnRyb2xsZXItcmVwb3NpdG9yeSIgZD0iTSA0MzAgMzM4IEwgNjQwIDMzOCIgY2xhc3M9ImZsb3dSZWFkV3JpdGUiLz4KICA8cGF0aCBpZD0idXNlcnMtcmVwb3NpdG9yeS1zdG9yYWdlIiBkYXRhLWNvbm5lY3Rvcj0idXNlcnMtcmVwb3NpdG9yeS1zdG9yYWdlIiBkPSJNIDk2MCAzMzggTCAxMTcwIDMzOCIgY2xhc3M9ImZsb3dSZWFkV3JpdGUiLz4KICA8cGF0aCBpZD0iY3JlZGVudGlhbHMtY29udHJvbGxlci1yZXBvc2l0b3J5IiBkYXRhLWNvbm5lY3Rvcj0iY3JlZGVudGlhbHMtY29udHJvbGxlci1yZXBvc2l0b3J5IiBkPSJNIDQzMCA0OTggTCA2NDAgNDk4IiBjbGFzcz0iZmxvd1JlYWRPbmx5Ii8+CiAgPHBhdGggaWQ9ImNyZWRlbnRpYWxzLXJlcG9zaXRvcnktc3RvcmFnZSIgZGF0YS1jb25uZWN0b3I9ImNyZWRlbnRpYWxzLXJlcG9zaXRvcnktc3RvcmFnZSIgZD0iTSA5NjAgNDk4IEwgMTE3MCA0OTgiIGNsYXNzPSJmbG93UmVhZE9ubHkiLz4KICA8cGF0aCBpZD0iZXZlbnRzLWNvbnRyb2xsZXItcmVwb3NpdG9yeSIgZGF0YS1jb25uZWN0b3I9ImV2ZW50cy1jb250cm9sbGVyLXJlcG9zaXRvcnkiIGQ9Ik0gNDMwIDY1OCBMIDY0MCA2NTgiIGNsYXNzPSJmbG93V3JpdGVCZWhpbmQiLz4KICA8cGF0aCBpZD0iZXZlbnRzLXJlcG9zaXRvcnktc3RvcmFnZSIgZGF0YS1jb25uZWN0b3I9ImV2ZW50cy1yZXBvc2l0b3J5LXN0b3JhZ2UiIGQ9Ik0gOTYwIDY1OCBMIDExNzAgNjU4IiBjbGFzcz0iZmxvd1dyaXRlQmVoaW5kIi8+CgogIDx0ZXh0IHg9IjUzNSIgeT0iMzIyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPnN5bmMgcGF0aDwvdGV4dD4KICA8dGV4dCB4PSIxMDY1IiB5PSIzMjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+Y2FjaGUgKyBEQjwvdGV4dD4KICA8dGV4dCB4PSI1MzUiIHk9IjQ4MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5yZWFkLW9ubHk8L3RleHQ+CiAgPHRleHQgeD0iMTA2NSIgeT0iNDgyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPmZhbGxiYWNrPC90ZXh0PgogIDx0ZXh0IHg9IjUzNSIgeT0iNjQyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPmJ1bGsgd3JpdGU8L3RleHQ+CiAgPHRleHQgeD0iMTA2NSIgeT0iNjQyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPmV2ZW50dWFsIERCPC90ZXh0PgoKICA8cmVjdCB4PSIzODIiIHk9IjgyMiIgd2lkdGg9IjgzNiIgaGVpZ2h0PSIzOCIgcng9IjE5IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNkN2UyZGUiIHN0cm9rZS13aWR0aD0iMS40Ii8+CiAgPHBhdGggZD0iTSA0MjAgODQxIEwgNDc4IDg0MSIgY2xhc3M9ImxlZ2VuZExpbmUiIHN0cm9rZT0iIzNmOGU4NCIvPgogIDx0ZXh0IHg9IjQ5MCIgeT0iODQ1IiBjbGFzcz0iZm9vdGVyIj5yZWFkLXRocm91Z2ggKyB3cml0ZS10aHJvdWdoPC90ZXh0PgogIDxwYXRoIGQ9Ik0gNjkyIDg0MSBMIDc1MCA4NDEiIGNsYXNzPSJsZWdlbmRMaW5lIiBzdHJva2U9IiNhMjc0M2QiLz4KICA8dGV4dCB4PSI3NjIiIHk9Ijg0NSIgY2xhc3M9ImZvb3RlciI+cmVhZC1vbmx5IGNhY2hlPC90ZXh0PgogIDxwYXRoIGQ9Ik0gOTM4IDg0MSBMIDk5NiA4NDEiIGNsYXNzPSJsZWdlbmRMaW5lIiBzdHJva2U9IiM3NjY3YjEiLz4KICA8dGV4dCB4PSIxMDA4IiB5PSI4NDUiIGNsYXNzPSJmb290ZXIiPndyaXRlLWJlaGluZDwvdGV4dD4KPC9zdmc+Cg==" alt="Cache strategy architecture across request runtime, repository strategy, storage, and verification">
+            <figcaption>
+              <strong>Cache strategy path from request to persistence</strong>
+              <span><code>UserCacheRepository</code>, <code>UserCredentialsCacheRepository</code>, and <code>UserEventCacheRepository</code> select Read/Write-Through, Read-Only, and Write-Behind before delegating to the shared Redisson repository and Exposed database path.</span>
+              <a href="https://github.com/bluetape4k/exposed-workshop/blob/develop/docs/images/readme-diagrams/11-high-performance-01-cache-strategies-architecture-02.svg">Open the full-size diagram</a>
+            </figcaption>
+          </figure>
+
+
+        </div>
+      </div>
+    </section>
+
     <section id="implementation" class="band">
       <div class="shell">
-        <div class="section-head"><h2>How Exposed and Redis implement Near Cache</h2><p>Each example repository selects a strategy on the shared base class. Redisson Loader and Writer adapters invoke Exposed transactions. Near Cache removes Redis round trips for repeated reads, but local invalidation and reconnection remain part of the operational design.</p></div>
+        <div class="section-head"><h2>Implementing cache strategies with Exposed and Redis</h2><p>Near Cache consists of a local cache at L1 and Redis at L2. The Lettuce implementation uses Caffeine at L1, while the Redisson implementation uses the local cache managed by <code>RLocalCachedMap</code>. Exposed is not part of Near Cache; it is the database access layer invoked for cache misses and writes.</p></div>
         <div class="implementation">
           <div class="steps">
             <div class="step"><strong>Select the repository strategy</strong><span><code>UserCacheRepository</code> uses <code>READ_WRITE_THROUGH_WITH_NEAR_CACHE</code>.</span></div>
-            <div class="step"><strong>Connect local cache and Redis</strong><span><code>AbstractJdbcRedissonRepository</code> configures <code>RLocalCachedMap</code>.</span></div>
+            <div class="step"><strong>Select the Redis client and local cache</strong><span>Redisson uses <code>RLocalCachedMap</code>; selected Lettuce suspend paths use <code>LettuceSuspendNearCache</code> with Caffeine.</span></div>
             <div class="step"><strong>Connect database reads</strong><span><code>EntityMapLoader</code> executes an Exposed SELECT on a miss.</span></div>
             <div class="step"><strong>Connect database writes</strong><span><code>EntityMapWriter</code> runs the Exposed transaction for Write-Through or a Write-Behind batch.</span></div>
             <div class="step"><strong>Review invalidation semantics</strong><span><code>deleteFromDBOnInvalidate</code> determines whether invalidation also deletes the database row.</span></div>
           </div>
-          <div class="code-panel"><div class="panel-title">Strategies in the example repositories</div><pre><code>UserCacheRepository
+          <div class="code-panel"><div class="panel-title">11-high-performance / Redisson strategies</div><pre><code>UserCacheRepository
   READ_WRITE_THROUGH_WITH_NEAR_CACHE
 
 UserCredentialsCacheRepository
@@ -189,29 +246,86 @@ HTTP → JdbcCacheRepository
      → EntityMapLoader / EntityMapWriter
      → Exposed transaction → DB</code></pre></div>
         </div>
+        <div class="implementation implementation-variants">
+          <div class="code-panel"><div class="panel-title">Redisson Near Cache</div><pre><code>Redisson local cache (L1)
++ Redis RLocalCachedMap (L2)
++ AbstractJdbcRedissonRepository
++ Exposed DB loader / writer</code></pre></div>
+          <div class="code-panel"><div class="panel-title">Lettuce Near Cache</div><pre><code>Caffeine (L1)
++ Redis via Lettuce (L2)
++ LettuceSuspendNearCache
++ AbstractSuspendedJdbcLettuceRepository
++ Exposed DB loader / writer</code></pre></div>
+          <div class="code-panel"><div class="panel-title">09-spring / Lettuce Redis cache</div><pre><code>LettuceCacheConfig
++ RedisCacheManager
++ Exposed CountryRepository
+
++ LettuceSuspendedCache
++ CachedCountrySuspendedRepository
++ Exposed suspended repository
+
++ No local L1 cache</code></pre></div>
+        </div>
       </div>
     </section>
     <section id="effects" class="band">
       <div class="shell">
-        <div class="section-head"><h2>Measure Near Cache with Redis traffic and convergence delay</h2><p>Repeated reads in one JVM can finish in L1. The system still needs an explicit limit for stale local values, reconnection behavior, and writes that Redis has accepted but the database has not persisted.</p></div>
+        <div class="section-head"><h2>Measure Near Cache with Redis traffic and convergence delay</h2><p>Repeated reads in one JVM can finish in the local cache. The system still needs an explicit limit for stale local values, reconnection behavior, and writes that Redis has accepted but the database has not persisted.</p></div>
         <div class="cautions">
-          <article class="warning"><h3>Temporarily stale local values</h3><p>Delayed invalidation or a disconnected Redis client can leave different JVMs with different Near Cache values.</p></article>
+          <article class="warning"><h3>Temporarily stale local values</h3><p>Delayed Redisson invalidation messages or Lettuce RESP3 tracking notifications can leave JVM-local caches with different values.</p></article>
           <article class="warning"><h3>Write-Behind loss window</h3><p>A failure after the Redis write and before the database batch can lose a change that has not reached durable storage. Never label request acceptance as DB persistence.</p></article>
           <article class="warning"><h3>Invalidation versus deletion</h3><p>Review <code>deleteFromDBOnInvalidate</code> before calling invalidate. Separate cache eviction from business deletion.</p></article>
+        </div>
+        <div class="benchmark-evidence">
+          <div>
+            <figure class="source-visual" data-visual-id="cache-strategy-benchmark">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAwIiBoZWlnaHQ9IjgxMCIgdmlld0JveD0iMCAwIDE1MDAgODEwIj4KCjxkZWZzPgogIDxmaWx0ZXIgaWQ9InNoYWRvdyIgeD0iLTE2JSIgeT0iLTE2JSIgd2lkdGg9IjEzMiUiIGhlaWdodD0iMTMyJSI+CiAgICA8ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iNyIgc3RkRGV2aWF0aW9uPSI3IiBmbG9vZC1jb2xvcj0iIzk0YTNiOCIgZmxvb2Qtb3BhY2l0eT0iLjE2Ii8+CiAgPC9maWx0ZXI+CiAgPHN0eWxlPjwhW0NEQVRBWwogICAgc3Zne2ZvbnQtZmFtaWx5OidDb21pYyBNb25vJywnQ29taWMgU2FucyBNUycsJ0NvbWljIE5ldWUnLCdDaGFsa2JvYXJkIFNFJyxjdXJzaXZlfQogICAgLmNhbnZhc3tmaWxsOiNmNmY5ZmN9CiAgICAuZnJhbWV7ZmlsbDojZmZmZmZmO3N0cm9rZTojY2RkY2ViO3N0cm9rZS13aWR0aDoyLjU7ZmlsdGVyOnVybCgjc2hhZG93KX0KICAgIC50aXRsZXtmb250LWZhbWlseTonQXJjaGl0ZWN0cyBEYXVnaHRlcicsJ0NvbWljIE1vbm8nLCdDb21pYyBTYW5zIE1TJyxjdXJzaXZlO2ZvbnQtc2l6ZTo0MHB4O2ZvbnQtd2VpZ2h0OjQwMDtmaWxsOiMyNTM2NGZ9CiAgICAuc3VidGl0bGUsLmxlZ2VuZCwubm90ZSwuYXhpc3tmb250LWZhbWlseTonQ29taWMgTW9ubycsJ0NvbWljIFNhbnMgTVMnLCdDb21pYyBOZXVlJywnQ2hhbGtib2FyZCBTRScsY3Vyc2l2ZTtmaWxsOiM1MjYyNzY7Zm9udC13ZWlnaHQ6NDAwfQogICAgLnN1YnRpdGxle2ZvbnQtc2l6ZToxOHB4fQogICAgLmxlZ2VuZHtmb250LXNpemU6MTZweH0KICAgIC5ub3Rle2ZvbnQtc2l6ZToxN3B4fQogICAgLmF4aXN7Zm9udC1zaXplOjE1cHh9CiAgICAubGFiZWx7Zm9udC1mYW1pbHk6J0NvbWljIE1vbm8nLCdDb21pYyBTYW5zIE1TJywnQ29taWMgTmV1ZScsJ0NoYWxrYm9hcmQgU0UnLGN1cnNpdmU7Zm9udC1zaXplOjE4cHg7ZmlsbDojMjUzNjRmO2ZvbnQtd2VpZ2h0OjQwMH0KICAgIC52YWx1ZXtmb250LWZhbWlseTonQ29taWMgTW9ubycsJ0NvbWljIFNhbnMgTVMnLCdDb21pYyBOZXVlJywnQ2hhbGtib2FyZCBTRScsY3Vyc2l2ZTtmb250LXNpemU6MTZweDtmaWxsOiMyNTM2NGY7Zm9udC13ZWlnaHQ6NjAwfQogICAgLmJhcntzaGFwZS1yZW5kZXJpbmc6Z2VvbWV0cmljUHJlY2lzaW9ufQogICAgLmZvb3RlckJveHtmaWxsOiNmOGZhZmM7c3Ryb2tlOiNkYmU2ZjE7c3Ryb2tlLXdpZHRoOjJ9CiAgXV0+PC9zdHlsZT4KPC9kZWZzPgo8cmVjdCBjbGFzcz0iY2FudmFzIiB3aWR0aD0iMTUwMCIgaGVpZ2h0PSI4MTAiLz4KPHJlY3QgY2xhc3M9ImZyYW1lIiB4PSI0OCIgeT0iNDAiIHdpZHRoPSIxNDA0IiBoZWlnaHQ9IjczMCIgcng9IjI2Ii8+Cjx0ZXh0IGNsYXNzPSJ0aXRsZSIgeD0iODIiIHk9IjEwMiI+Q2FjaGUgU3RyYXRlZ3kgTGF0ZW5jeTwvdGV4dD4KPHRleHQgY2xhc3M9InN1YnRpdGxlIiB4PSI4NCIgeT0iMTM0Ij5Qb3N0Z3JlU1FMICsgSGlrYXJpQ1Agc21va2UgYmVuY2htYXJrPC90ZXh0Pgo8cmVjdCB4PSI5MTAiIHk9IjE1NCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiByeD0iNSIgZmlsbD0iIzY3YjdkYyIvPgo8dGV4dCBjbGFzcz0ibGVnZW5kIiB4PSI5MzUiIHk9IjE2NyI+UkVBRF9IRUFWWTwvdGV4dD4KPHJlY3QgeD0iMTAzNCIgeT0iMTU0IiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHJ4PSI1IiBmaWxsPSIjZjVhMWJmIi8+Cjx0ZXh0IGNsYXNzPSJsZWdlbmQiIHg9IjEwNTkiIHk9IjE2NyI+V1JJVEVfSEVBVlk8L3RleHQ+Cjx0ZXh0IGNsYXNzPSJheGlzIiB4PSIzNjUiIHk9IjE5OCI+dXMvb3A8L3RleHQ+Cjx0ZXh0IGNsYXNzPSJsYWJlbCIgeD0iODQiIHk9IjI0NCI+Tm9DYWNoZSAvIDI1NkI8L3RleHQ+CjxyZWN0IGNsYXNzPSJiYXIiIHg9IjM2NSIgeT0iMjE0IiB3aWR0aD0iODEwLjAiIGhlaWdodD0iMjAiIHJ4PSI4IiBmaWxsPSIjNjdiN2RjIi8+Cjx0ZXh0IGNsYXNzPSJ2YWx1ZSIgeD0iMTE4OS4wIiB5PSIyMzAiPjU0Ny43IHVzL29wPC90ZXh0Pgo8cmVjdCBjbGFzcz0iYmFyIiB4PSIzNjUiIHk9IjI0MiIgd2lkdGg9Ijc0Ny4zIiBoZWlnaHQ9IjIwIiByeD0iOCIgZmlsbD0iI2Y1YTFiZiIvPgo8dGV4dCBjbGFzcz0idmFsdWUiIHg9IjExMjYuMyIgeT0iMjU4Ij41MDUuMyB1cy9vcDwvdGV4dD4KPHRleHQgY2xhc3M9ImxhYmVsIiB4PSI4NCIgeT0iMzIwIj5SZWFkVGhyb3VnaCAvIDI1NkI8L3RleHQ+CjxyZWN0IGNsYXNzPSJiYXIiIHg9IjM2NSIgeT0iMjkwIiB3aWR0aD0iMTI5LjQiIGhlaWdodD0iMjAiIHJ4PSI4IiBmaWxsPSIjNjdiN2RjIi8+Cjx0ZXh0IGNsYXNzPSJ2YWx1ZSIgeD0iNTA4LjQiIHk9IjMwNiI+ODcuNSB1cy9vcDwvdGV4dD4KPHJlY3QgY2xhc3M9ImJhciIgeD0iMzY1IiB5PSIzMTgiIHdpZHRoPSI3MDcuOCIgaGVpZ2h0PSIyMCIgcng9IjgiIGZpbGw9IiNmNWExYmYiLz4KPHRleHQgY2xhc3M9InZhbHVlIiB4PSIxMDg2LjgiIHk9IjMzNCI+NDc4LjYgdXMvb3A8L3RleHQ+Cjx0ZXh0IGNsYXNzPSJsYWJlbCIgeD0iODQiIHk9IjM5NiI+V3JpdGVUaHJvdWdoIC8gMjU2QjwvdGV4dD4KPHJlY3QgY2xhc3M9ImJhciIgeD0iMzY1IiB5PSIzNjYiIHdpZHRoPSI3NC43IiBoZWlnaHQ9IjIwIiByeD0iOCIgZmlsbD0iIzY3YjdkYyIvPgo8dGV4dCBjbGFzcz0idmFsdWUiIHg9IjQ1My43IiB5PSIzODIiPjUwLjUgdXMvb3A8L3RleHQ+CjxyZWN0IGNsYXNzPSJiYXIiIHg9IjM2NSIgeT0iMzk0IiB3aWR0aD0iNjYzLjQiIGhlaWdodD0iMjAiIHJ4PSI4IiBmaWxsPSIjZjVhMWJmIi8+Cjx0ZXh0IGNsYXNzPSJ2YWx1ZSIgeD0iMTA0Mi40IiB5PSI0MTAiPjQ0OC42IHVzL29wPC90ZXh0Pgo8dGV4dCBjbGFzcz0ibGFiZWwiIHg9Ijg0IiB5PSI0NzIiPk5vQ2FjaGUgLyA0S0I8L3RleHQ+CjxyZWN0IGNsYXNzPSJiYXIiIHg9IjM2NSIgeT0iNDQyIiB3aWR0aD0iNzEzLjciIGhlaWdodD0iMjAiIHJ4PSI4IiBmaWxsPSIjNjdiN2RjIi8+Cjx0ZXh0IGNsYXNzPSJ2YWx1ZSIgeD0iMTA5Mi43IiB5PSI0NTgiPjQ4Mi42IHVzL29wPC90ZXh0Pgo8cmVjdCBjbGFzcz0iYmFyIiB4PSIzNjUiIHk9IjQ3MCIgd2lkdGg9Ijc4Mi45IiBoZWlnaHQ9IjIwIiByeD0iOCIgZmlsbD0iI2Y1YTFiZiIvPgo8dGV4dCBjbGFzcz0idmFsdWUiIHg9IjExNjEuOSIgeT0iNDg2Ij41MjkuNCB1cy9vcDwvdGV4dD4KPHRleHQgY2xhc3M9ImxhYmVsIiB4PSI4NCIgeT0iNTQ4Ij5SZWFkVGhyb3VnaCAvIDRLQjwvdGV4dD4KPHJlY3QgY2xhc3M9ImJhciIgeD0iMzY1IiB5PSI1MTgiIHdpZHRoPSIxNDEuOCIgaGVpZ2h0PSIyMCIgcng9IjgiIGZpbGw9IiM2N2I3ZGMiLz4KPHRleHQgY2xhc3M9InZhbHVlIiB4PSI1MjAuOCIgeT0iNTM0Ij45NS45IHVzL29wPC90ZXh0Pgo8cmVjdCBjbGFzcz0iYmFyIiB4PSIzNjUiIHk9IjU0NiIgd2lkdGg9IjczNi40IiBoZWlnaHQ9IjIwIiByeD0iOCIgZmlsbD0iI2Y1YTFiZiIvPgo8dGV4dCBjbGFzcz0idmFsdWUiIHg9IjExMTUuNCIgeT0iNTYyIj40OTcuOSB1cy9vcDwvdGV4dD4KPHRleHQgY2xhc3M9ImxhYmVsIiB4PSI4NCIgeT0iNjI0Ij5Xcml0ZVRocm91Z2ggLyA0S0I8L3RleHQ+CjxyZWN0IGNsYXNzPSJiYXIiIHg9IjM2NSIgeT0iNTk0IiB3aWR0aD0iODIuNyIgaGVpZ2h0PSIyMCIgcng9IjgiIGZpbGw9IiM2N2I3ZGMiLz4KPHRleHQgY2xhc3M9InZhbHVlIiB4PSI0NjEuNyIgeT0iNjEwIj41NS45IHVzL29wPC90ZXh0Pgo8cmVjdCBjbGFzcz0iYmFyIiB4PSIzNjUiIHk9IjYyMiIgd2lkdGg9IjcyNy41IiBoZWlnaHQ9IjIwIiByeD0iOCIgZmlsbD0iI2Y1YTFiZiIvPgo8dGV4dCBjbGFzcz0idmFsdWUiIHg9IjExMDYuNSIgeT0iNjM4Ij40OTEuOSB1cy9vcDwvdGV4dD4KPHJlY3QgY2xhc3M9ImZvb3RlckJveCIgeD0iNzgiIHk9IjcwNCIgd2lkdGg9IjEzNDQiIGhlaWdodD0iNDIiIHJ4PSIyMCIvPgo8dGV4dCBjbGFzcz0ibm90ZSIgeD0iOTgiIHk9IjczMSI+TG93ZXIgaXMgYmV0dGVyLiBSZWFkLWhlYXZ5IHdvcmtsb2FkcyBnZXQgbW9zdCBvZiB0aGUgYmVuZWZpdC48L3RleHQ+Cjwvc3ZnPgo=" alt="Benchmark chart comparing read-heavy and write-heavy average time for NoCache, ReadThrough, and WriteThrough">
+              <figcaption>
+                <strong>PostgreSQL + HikariCP smoke benchmark</strong>
+                <span><code>CacheStrategyComparisonBenchmark</code> compares <code>NoCache</code>, <code>ReadThrough</code>, and <code>WriteThrough</code> against a real PostgreSQL Testcontainer through HikariCP. Values are average time in <code>us/op</code>; lower is better.</span>
+                <a href="https://github.com/bluetape4k/exposed-workshop/blob/develop/docs/images/readme-charts/cache-strategy-latency-chart-01.svg">Open the full-size chart</a>
+              </figcaption>
+            </figure>
+            <table class="benchmark-table">
+              <thead><tr><th>Strategy / Payload</th><th>READ_HEAVY</th><th>WRITE_HEAVY</th></tr></thead>
+              <tbody>
+                <tr><td>NoCache / 256B</td><td>547.7 us/op</td><td>505.3 us/op</td></tr>
+                <tr><td>ReadThrough / 256B</td><td>87.5 us/op</td><td>478.6 us/op</td></tr>
+                <tr><td>WriteThrough / 256B</td><td>50.5 us/op</td><td>448.6 us/op</td></tr>
+                <tr><td>NoCache / 4KB</td><td>482.6 us/op</td><td>529.4 us/op</td></tr>
+                <tr><td>ReadThrough / 4KB</td><td>95.9 us/op</td><td>497.9 us/op</td></tr>
+                <tr><td>WriteThrough / 4KB</td><td>55.9 us/op</td><td>491.9 us/op</td></tr>
+              </tbody>
+            </table>
+            <p class="benchmark-note"><strong>Scope:</strong> <code>READ_HEAVY</code> uses 90% reads and 10% writes; <code>WRITE_HEAVY</code> uses 10% reads and 90% writes. This result does not measure Redis Near Cache, Write-Behind, production throughput, or an SLA.</p>
+          </div>
         </div>
       </div>
     </section>
     <section id="run" class="band">
       <div class="shell">
-        <div class="section-head"><h2>Run the examples to observe persistence timing in tests</h2><p>Testcontainers starts Redis. The MVC module shows the synchronous repository path; the coroutine module shows the same strategies with WebFlux and coroutines. Local H2 and Redis results are not production PostgreSQL benchmarks.</p></div>
+        <div class="section-head"><h2>Run the examples to inspect persistence timing and Lettuce integration</h2><p>Testcontainers starts Redis. Modules <code>01</code> and <code>02</code> verify Redisson-backed persistence strategies. Module <code>06</code> combines Spring Cache with Lettuce, while module <code>07</code> applies <code>LettuceSuspendedCache</code> to an Exposed repository. Modules <code>06</code> and <code>07</code> are Redis-only cache examples without a local L1 cache.</p></div>
         <div class="runbook">
-          <div class="code-panel"><div class="panel-title">Commands</div><pre><code>./gradlew :01-cache-strategies:test
+          <div class="code-panel"><div class="panel-title">Redisson commands</div><pre><code># Redisson + Exposed strategies
+./gradlew :01-cache-strategies:test
 ./gradlew :01-cache-strategies:bootRun
 ./gradlew :02-cache-strategies-coroutines:test</code></pre></div>
+          <div class="code-panel"><div class="panel-title">Lettuce example commands</div><pre><code># Spring Cache + Lettuce + Exposed
+./gradlew :06-spring-cache:test
+
+# LettuceSuspendedCache + Exposed
+./gradlew :07-spring-suspended-cache:test</code></pre></div>
+        </div>
+        <div class="runbook" style="margin-top: 22px">
           <div class="source-list">
             <a href="../../../11-high-performance/01-cache-strategies/README.ko.md">Cache strategies README</a>
             <a href="../../../11-high-performance/01-cache-strategies/src/main/kotlin/exposed/examples/cache/domain/repository/UserCacheRepository.kt">UserCacheRepository.kt</a>
             <a href="../../../11-high-performance/01-cache-strategies/src/test/kotlin/exposed/examples/cache/domain/repository/UserCacheRepositoryTest.kt">UserCacheRepositoryTest.kt</a>
+          </div>
+          <div class="source-list">
+            <a href="../../../09-spring/06-spring-cache/README.ko.md">Spring Cache + Lettuce README</a>
+            <a href="../../../09-spring/07-spring-suspended-cache/README.ko.md">LettuceSuspendedCache README</a>
+            <a href="https://github.com/bluetape4k/bluetape4k-exposed/blob/develop/exposed/jdbc-lettuce/README.ko.md">Lettuce Near Cache implementation</a>
             <a href="./2026-07-30-exposed-workshop-visual-companions-design.md">Visual companion design</a>
           </div>
         </div>
@@ -225,10 +339,46 @@ HTTP → JdbcCacheRepository
   </footer>
   <script>
     const strategyState = {
-      "read-through": { stages: ["Near Cache miss", "Redis miss", "EntityMapLoader", "Exposed DB", "Near Cache + Redis"], completion: "Read complete", explanation: "A miss loads the database value into both cache layers.", values: ["user:42 = Ada", "user:42 = Ada", "users[42] = Ada"] },
-      "write-through": { stages: ["RLocalCachedMap put", "EntityMapWriter", "Exposed transaction", "DB + Redis"], completion: "DB persistence complete", explanation: "EntityMapWriter and the Exposed transaction finish before the response.", values: ["user:42 = Grace", "user:42 = Grace", "users[42] = Grace"] },
-      "read-only": { stages: ["Invalidate cache", "Keep DB", "EntityMapLoader on next read"], completion: "Reload complete", explanation: "The change invalidates the cache; the next read reloads the database value.", values: ["miss", "miss", "credentials[42] = active"] },
-      "write-behind": { stages: ["Accept request", "Write Redis", "Async batch", "Exposed transaction", "DB persistence complete"], completion: "DB persistence complete", explanation: "The response returns first; completion appears only after the asynchronous batch reaches the database.", values: ["event:9001 = queued", "event:9001 = queued", "events[9001] = persisted"] }
+      "read-through": {
+        stages: [
+          { label: "API read request", layer: "api" },
+          { label: "Local cache miss", layer: "cache" },
+          { label: "Redis miss", layer: "cache" },
+          { label: "EntityMapLoader → Exposed DB", layer: "db" },
+          { label: "Fill Redis + local cache", layer: "cache" }
+        ],
+        completion: "Read complete", explanation: "A miss loads the database value into both cache layers.", values: ["user:42 = Ada", "user:42 = Ada", "users[42] = Ada"]
+      },
+      "write-through": {
+        stages: [
+          { label: "API update request", layer: "api" },
+          { label: "Update RLocalCachedMap", layer: "cache" },
+          { label: "EntityMapWriter", layer: "db" },
+          { label: "Exposed transaction", layer: "db" },
+          { label: "DB persistence complete", layer: "db" }
+        ],
+        completion: "DB persistence complete", explanation: "EntityMapWriter and the Exposed transaction finish before the response.", values: ["user:42 = Grace", "user:42 = Grace", "users[42] = Grace"]
+      },
+      "read-only": {
+        stages: [
+          { label: "API update request", layer: "api" },
+          { label: "Invalidate cache", layer: "cache" },
+          { label: "Keep DB value", layer: "db" },
+          { label: "Next API read", layer: "api" },
+          { label: "EntityMapLoader → DB reload", layer: "db" }
+        ],
+        completion: "Reload complete", explanation: "The change invalidates the cache; the next read reloads the database value.", values: ["miss", "miss", "credentials[42] = active"]
+      },
+      "write-behind": {
+        stages: [
+          { label: "Accept API request", layer: "api" },
+          { label: "Write Redis", layer: "cache" },
+          { label: "Async batch", layer: "api" },
+          { label: "Exposed transaction", layer: "db" },
+          { label: "DB persistence complete", layer: "db" }
+        ],
+        completion: "DB persistence complete", explanation: "The response returns first; completion appears only after the asynchronous batch reaches the database.", values: ["event:9001 = queued", "event:9001 = queued", "events[9001] = persisted"]
+      }
     };
     const buttons = [...document.querySelectorAll("[data-strategy]")];
     const timeline = document.querySelector("[data-timeline]");
@@ -242,7 +392,9 @@ HTTP → JdbcCacheRepository
       selected = strategy;
       const state = strategyState[strategy];
       buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.strategy === strategy)));
-      timeline.innerHTML = state.stages.map((stage, index) => `<li data-step="${index}">${index + 1}. ${stage}</li>`).join("");
+      timeline.innerHTML = state.stages
+        .map((stage, index) => `<li data-step="${index}" data-layer="${stage.layer}"><span class="stage-layer">${stage.layer}</span><span>${index + 1}. ${stage.label}</span></li>`)
+        .join("");
       completion.textContent = animate ? "Processing" : state.completion;
       explanation.textContent = state.explanation;
       values.forEach((node, index) => { node.textContent = animate ? "…" : state.values[index]; });

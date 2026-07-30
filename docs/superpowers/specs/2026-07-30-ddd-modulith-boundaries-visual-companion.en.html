@@ -87,6 +87,45 @@
     .reason b { color: var(--teal); font-size: 12px; }
     .reason h3 { margin-top: 8px; font-size: 18px; }
     .reason p { margin-top: 10px; color: var(--muted); font-size: 14px; }
+    .architecture-map { display: grid; grid-template-columns: minmax(0, 1fr) 170px minmax(0, 1fr); gap: 18px; align-items: stretch; }
+    .boundary { padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .boundary.orders { border-top: 4px solid var(--blue); }
+    .boundary.shipping { border-top: 4px solid var(--teal); }
+    .boundary-label { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+    .boundary h3 { margin-top: 5px; font-size: 22px; }
+    .arch-stack { display: grid; gap: 8px; margin-top: 18px; }
+    .arch-node { min-width: 0; padding: 11px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); }
+    .arch-node b, .arch-node code { display: block; overflow-wrap: anywhere; }
+    .arch-node span { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
+    .arch-arrow { color: var(--muted); font-size: 11px; font-weight: 750; text-align: center; }
+    .event-contract { display: grid; align-content: center; gap: 12px; text-align: center; }
+    .event-contract .event { padding: 16px 10px; border: 1px solid var(--gold); border-radius: 8px; color: var(--gold); background: var(--surface); font-size: 12px; font-weight: 850; overflow-wrap: anywhere; }
+    .event-contract .event code { display: block; margin-top: 5px; color: var(--ink); font-size: 11px; }
+    .allowed { color: var(--teal); font-size: 12px; font-weight: 850; }
+    .blocked-rule { padding: 10px; border-left: 3px solid var(--red); color: var(--muted); background: var(--surface-2); font-size: 11px; text-align: left; }
+    .aggregate-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .aggregate-rule { padding: 16px; border-top: 3px solid var(--blue); background: var(--surface); }
+    .aggregate-rule:nth-child(2) { border-color: var(--teal); }
+    .aggregate-rule:nth-child(3) { border-color: var(--gold); }
+    .aggregate-rule:nth-child(4) { border-color: var(--red); }
+    .aggregate-rule b { font-size: 13px; }
+    .aggregate-rule p { margin-top: 7px; color: var(--muted); font-size: 13px; }
+    .model-note { margin-top: 18px; padding: 16px 18px; border: 1px solid var(--gold); border-radius: 6px; background: color-mix(in srgb, var(--gold) 8%, var(--surface)); font-size: 14px; }
+    .model-note strong { color: var(--gold); }
+    .class-title { margin: 44px 0 20px; font-size: 28px; }
+    .class-diagram { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .class-lane { min-width: 0; }
+    .class-lane > h3 { padding-bottom: 10px; border-bottom: 3px solid var(--blue); font-size: 18px; }
+    .class-lane.shipping > h3 { border-color: var(--teal); }
+    .class-flow { display: grid; gap: 7px; margin-top: 14px; }
+    .uml-class { overflow: hidden; border: 1px solid var(--strong); border-radius: 6px; background: var(--surface); }
+    .uml-head { padding: 10px 12px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+    .stereotype { display: block; color: var(--muted); font-size: 10px; }
+    .uml-head strong { display: block; margin-top: 2px; overflow-wrap: anywhere; font-size: 13px; }
+    .members { display: grid; gap: 3px; padding: 9px 12px; color: var(--muted); font: 11px/1.5 "SFMono-Regular", Consolas, monospace; }
+    .relation { color: var(--muted); font-size: 11px; font-weight: 750; text-align: center; }
+    .cross-relation { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin-top: 22px; color: var(--gold); font-size: 12px; font-weight: 850; text-align: center; }
+    .cross-relation::before, .cross-relation::after { content: ""; height: 1px; background: var(--gold); }
     .compare { display: grid; grid-template-columns: 1fr 70px 1fr; gap: 16px; align-items: center; }
     .context { min-height: 250px; padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
     .context.orders { border-top: 4px solid var(--blue); }
@@ -100,6 +139,12 @@
     .effect:nth-child(2) { border-color: var(--blue); } .effect:nth-child(3) { border-color: var(--gold); } .effect:nth-child(4) { border-color: var(--red); }
     .effect h3 { font-size: 17px; }
     .effect p { margin-top: 8px; color: var(--muted); font-size: 14px; }
+    .source-visual { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .source-visual img { display: block; width: 100%; height: auto; background: #f7f8f8; }
+    .source-visual figcaption { display: grid; gap: 7px; padding: 16px 18px 18px; border-top: 1px solid var(--line); }
+    .source-visual figcaption strong { font-size: 15px; }
+    .source-visual figcaption span { color: var(--muted); font-size: 13px; }
+    .source-visual figcaption a { width: fit-content; color: var(--teal); font-size: 12px; font-weight: 800; }
     .runbook { display: grid; grid-template-columns: 1fr .9fr; gap: 20px; }
     .code-panel { overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
     .panel-title { padding: 12px 16px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; font-weight: 800; }
@@ -108,8 +153,8 @@
     .source-list a { display: block; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); font-size: 13px; overflow-wrap: anywhere; }
     .provenance { padding: 24px 0 40px; color: var(--muted); font-size: 12px; }
     .provenance a { margin-right: 14px; }
-    @media (max-width: 900px) { .hero, .section-head, .runbook { grid-template-columns: 1fr; } .hero { min-height: auto; padding-top: 46px; } .selection { grid-template-columns: 1fr; } .nav a:nth-child(-n+2) { display: none; } }
-    @media (max-width: 650px) { .shell { width: min(100% - 22px, 1180px); } .nav { display: none; } h1 { font-size: 37px; } .facts, .effects, .compare, .modules { grid-template-columns: 1fr; } .handoff { min-height: 48px; } .trace ol { display: flex; overflow-x: auto; } .trace li { min-width: 120px; } .contract { padding: 12px 0; } .band { padding: 58px 0; } }
+    @media (max-width: 900px) { .hero, .section-head, .runbook, .architecture-map { grid-template-columns: 1fr; } .hero { min-height: auto; padding-top: 46px; } .selection, .aggregate-grid { grid-template-columns: repeat(2, 1fr); } .event-contract { grid-template-columns: 1fr 1fr; align-items: center; } .nav a:nth-child(-n+2) { display: none; } }
+    @media (max-width: 650px) { .shell { width: min(100% - 22px, 1180px); } .nav { display: none; } h1 { font-size: 37px; } .facts, .effects, .compare, .modules, .selection, .aggregate-grid, .class-diagram, .event-contract { grid-template-columns: 1fr; } .handoff { min-height: 48px; } .trace ol { display: flex; overflow-x: auto; } .trace li { min-width: 120px; } .contract { padding: 12px 0; } .band { padding: 58px 0; } }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
   </style>
 </head>
@@ -119,7 +164,7 @@
       <a class="brand" href="https://github.com/bluetape4k/exposed-workshop">exposed-workshop / Visual Companion</a>
       <div class="actions">
         <nav class="nav" aria-label="Document navigation">
-          <a href="#selection">Why this example</a><a href="#need">Why DDD</a><a href="#run">Run</a>
+          <a href="#boundary-overview">Boundaries</a><a href="#aggregate">Aggregate</a><a href="#run">Run</a>
           <a href="./2026-07-30-exposed-redis-cache-strategies-visual-companion.en.html">Cache strategies</a>
           <a href="./2026-07-30-ddd-modulith-boundaries-visual-companion.html" lang="ko">한국어</a>
         </nav>
@@ -162,11 +207,99 @@
         </div>
       </div>
     </section>
+
+    <section id="boundary-overview" class="band">
+      <div class="shell">
+        <div class="section-head"><h2>Modulith boundaries and verification flow</h2><p>Orders and shipping manage their own state and Exposed tables. Only <code>orders :: events</code> is published between the modules, and Modulith verification prevents shipping from referencing order internals directly.</p></div>
+        <figure class="source-visual" data-visual-id="ddd-modulith-boundaries">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjUyMCIgdmlld0JveD0iMCAwIDEwMDAgNTIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+CiAgPHRpdGxlIGlkPSJ0aXRsZSI+REREIGJvdW5kZWQgY29udGV4dHMgd2l0aCBTcHJpbmcgTW9kdWxpdGggdmVyaWZpY2F0aW9uPC90aXRsZT4KICA8ZGVzYyBpZD0iZGVzYyI+T3JkZXJzIHB1Ymxpc2hlcyBhIG5hbWVkIGludGVyZmFjZSBldmVudCwgc2hpcHBpbmcgY29uc3VtZXMgb25seSB0aGF0IGV2ZW50LCBhbmQgQXBwbGljYXRpb25Nb2R1bGVzIHZlcmlmeSBjaGVja3MgbW9kdWxlIGRlcGVuZGVuY2llcy48L2Rlc2M+CiAgPGRlZnM+CiAgICA8bWFya2VyIGlkPSJhcnJvdy1ibHVlIiB2aWV3Qm94PSIwIDAgMTAgMTAiIHJlZlg9IjkiIHJlZlk9IjUiIG1hcmtlcldpZHRoPSIxNCIgbWFya2VySGVpZ2h0PSIxNCIgbWFya2VyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+CiAgICAgIDxwYXRoIGQ9Ik0gMCAwIEwgMTAgNSBMIDAgMTAgWiIgZmlsbD0iIzI1NjNlYiIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjAiIHN0cm9rZS1kYXNoYXJyYXk9Im5vbmUiIHN0eWxlPSJzdHJva2UtZGFzaGFycmF5Om5vbmUhaW1wb3J0YW50Ii8+CiAgICA8L21hcmtlcj4KICAgIDxtYXJrZXIgaWQ9ImFycm93LWdyZWVuIiB2aWV3Qm94PSIwIDAgMTAgMTAiIHJlZlg9IjkiIHJlZlk9IjUiIG1hcmtlcldpZHRoPSIxNCIgbWFya2VySGVpZ2h0PSIxNCIgbWFya2VyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+CiAgICAgIDxwYXRoIGQ9Ik0gMCAwIEwgMTAgNSBMIDAgMTAgWiIgZmlsbD0iIzE1ODAzZCIgc3Ryb2tlPSIjMTU4MDNkIiBzdHJva2Utd2lkdGg9IjAiIHN0cm9rZS1kYXNoYXJyYXk9Im5vbmUiIHN0eWxlPSJzdHJva2UtZGFzaGFycmF5Om5vbmUhaW1wb3J0YW50Ii8+CiAgICA8L21hcmtlcj4KICAgIDxtYXJrZXIgaWQ9ImFycm93LXNsYXRlIiB2aWV3Qm94PSIwIDAgMTAgMTAiIHJlZlg9IjkiIHJlZlk9IjUiIG1hcmtlcldpZHRoPSIxNCIgbWFya2VySGVpZ2h0PSIxNCIgbWFya2VyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+CiAgICAgIDxwYXRoIGQ9Ik0gMCAwIEwgMTAgNSBMIDAgMTAgWiIgZmlsbD0iIzQ3NTU2OSIgc3Ryb2tlPSIjNDc1NTY5IiBzdHJva2Utd2lkdGg9IjAiIHN0cm9rZS1kYXNoYXJyYXk9Im5vbmUiIHN0eWxlPSJzdHJva2UtZGFzaGFycmF5Om5vbmUhaW1wb3J0YW50Ii8+CiAgICA8L21hcmtlcj4KICAgIDxmaWx0ZXIgaWQ9InNoYWRvdyIgeD0iLTEwJSIgeT0iLTEwJSIgd2lkdGg9IjEyMCUiIGhlaWdodD0iMTIwJSI+CiAgICAgIDxmZURyb3BTaGFkb3cgZHg9IjAiIGR5PSI4IiBzdGREZXZpYXRpb249IjgiIGZsb29kLWNvbG9yPSIjMGYxNzJhIiBmbG9vZC1vcGFjaXR5PSIwLjEyIi8+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjUyMCIgZmlsbD0iI2Y4ZmFmYyIvPgogIDx0ZXh0IHg9IjUwMCIgeT0iNDYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmNoaXRlY3RzIERhdWdodGVyIiBmb250LXNpemU9IjI2IiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjMGYxNzJhIj5EREQgQm91bmRlZCBDb250ZXh0cyB3aXRoIE1vZHVsaXRoIEJvdW5kYXJ5IFZlcmlmaWNhdGlvbjwvdGV4dD4KICA8dGV4dCB4PSI1MDAiIHk9Ijc0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzQ3NTU2OSI+RXhwb3NlZCB0YWJsZXMgc3RheSBpbnNpZGUgZWFjaCBjb250ZXh0OyBvbmx5IGRvbWFpbiBldmVudHMgY3Jvc3MgbW9kdWxlIGJvdW5kYXJpZXMuPC90ZXh0PgoKICA8cmVjdCBjbGFzcz0iY2FyZCIgeD0iNzAiIHk9IjExMCIgd2lkdGg9IjI1MCIgaGVpZ2h0PSIxNjAiIHJ4PSI4IiBmaWxsPSIjZWZmNmZmIiBzdHJva2U9IiMyNTYzZWIiIHN0cm9rZS13aWR0aD0iMiIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz4KICA8dGV4dCB4PSIxOTUiIHk9IjE0NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyY2hpdGVjdHMgRGF1Z2h0ZXIiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiMxZTNhOGEiPk9yZGVycyBDb250ZXh0PC90ZXh0PgogIDx0ZXh0IHg9Ijk2IiB5PSIxNzgiIGZvbnQtZmFtaWx5PSJDb21pYyBNb25vIiBmb250LXNpemU9IjEzIiBmaWxsPSIjMWU0MGFmIj5PcmRlckFwcGxpY2F0aW9uU2VydmljZTwvdGV4dD4KICA8dGV4dCB4PSI5NiIgeT0iMjA0IiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzFlNDBhZiI+RXhwb3NlZE9yZGVyUmVwb3NpdG9yeTwvdGV4dD4KICA8dGV4dCB4PSI5NiIgeT0iMjMwIiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzFlNDBhZiI+ZGRkX21vZHVsaXRoX29yZGVyczwvdGV4dD4KCiAgPHJlY3QgY2xhc3M9ImNhcmQiIHg9IjM5MCIgeT0iMTMwIiB3aWR0aD0iMjIwIiBoZWlnaHQ9IjEyMCIgcng9IjgiIGZpbGw9IiNlY2ZkZjUiIHN0cm9rZT0iIzE1ODAzZCIgc3Ryb2tlLXdpZHRoPSIyIiBmaWx0ZXI9InVybCgjc2hhZG93KSIvPgogIDx0ZXh0IHg9IjUwMCIgeT0iMTY1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJjaGl0ZWN0cyBEYXVnaHRlciIgZm9udC1zaXplPSIxNyIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzE2NjUzNCI+TmFtZWQgSW50ZXJmYWNlPC90ZXh0PgogIDx0ZXh0IHg9IjUwMCIgeT0iMTk1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzE2NjUzNCI+b3JkZXJzIDo6IGV2ZW50czwvdGV4dD4KICA8dGV4dCB4PSI1MDAiIHk9IjIxOSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkNvbWljIE1vbm8iIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiMxNjY1MzQiPk9yZGVyQWNjZXB0ZWRFdmVudDwvdGV4dD4KCiAgPHJlY3QgY2xhc3M9ImNhcmQiIHg9IjY4MCIgeT0iMTEwIiB3aWR0aD0iMjUwIiBoZWlnaHQ9IjE2MCIgcng9IjgiIGZpbGw9IiNmZmY3ZWQiIHN0cm9rZT0iI2MyNDEwYyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWx0ZXI9InVybCgjc2hhZG93KSIvPgogIDx0ZXh0IHg9IjgwNSIgeT0iMTQ1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJjaGl0ZWN0cyBEYXVnaHRlciIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzlhMzQxMiI+U2hpcHBpbmcgQ29udGV4dDwvdGV4dD4KICA8dGV4dCB4PSI3MDYiIHk9IjE3OCIgZm9udC1mYW1pbHk9IkNvbWljIE1vbm8iIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM5YTM0MTIiPlNoaXBwaW5nUmVzZXJ2YXRpb25IYW5kbGVyPC90ZXh0PgogIDx0ZXh0IHg9IjcwNiIgeT0iMjA0IiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzlhMzQxMiI+RXhwb3NlZFNoaXBwaW5nUmVwb3NpdG9yeTwvdGV4dD4KICA8dGV4dCB4PSI3MDYiIHk9IjIzMCIgZm9udC1mYW1pbHk9IkNvbWljIE1vbm8iIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM5YTM0MTIiPmRkZF9tb2R1bGl0aF9zaGlwcGluZ188L3RleHQ+CiAgPHRleHQgeD0iNzA2IiB5PSIyNTIiIGZvbnQtZmFtaWx5PSJDb21pYyBNb25vIiBmb250LXNpemU9IjEzIiBmaWxsPSIjOWEzNDEyIj5yZXNlcnZhdGlvbnM8L3RleHQ+CgogIDxyZWN0IGNsYXNzPSJjYXJkIiB4PSI3MCIgeT0iMzUwIiB3aWR0aD0iODYwIiBoZWlnaHQ9IjExMCIgcng9IjgiIGZpbGw9IiNmMWY1ZjkiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWx0ZXI9InVybCgjc2hhZG93KSIvPgogIDx0ZXh0IHg9IjUwMCIgeT0iMzg4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJjaGl0ZWN0cyBEYXVnaHRlciIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iIzMzNDE1NSI+QXBwbGljYXRpb25Nb2R1bGVzLnZlcmlmeSgpPC90ZXh0PgogIDx0ZXh0IHg9IjUwMCIgeT0iNDE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzQ3NTU2OSI+UG9zaXRpdmUgdGVzdCBhY2NlcHRzIG9yZGVycyAtPiBldmVudHMgLT4gc2hpcHBpbmcgb25seS48L3RleHQ+CiAgPHRleHQgeD0iNTAwIiB5PSI0NDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJDb21pYyBNb25vIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNDc1NTY5Ij5OZWdhdGl2ZSBmaXh0dXJlIHJlamVjdHMgc2hpcHBpbmcgLT4gb3JkZXJzLmludGVybmFsIHJlcG9zaXRvcnkgYWNjZXNzLjwvdGV4dD4KCiAgPHBhdGggY2xhc3M9ImNvbm5lY3RvciIgZD0iTSAzMjAgMTkwIEwgMzkwIDE5MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgbWFya2VyLWVuZD0idXJsKCNhcnJvdy1ibHVlKSIvPgogIDxwYXRoIGNsYXNzPSJjb25uZWN0b3IiIGQ9Ik0gNjEwIDE5MCBMIDY4MCAxOTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzE1ODAzZCIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG1hcmtlci1lbmQ9InVybCgjYXJyb3ctZ3JlZW4pIi8+CiAgPHBhdGggY2xhc3M9ImNvbm5lY3RvciIgZD0iTSAxOTUgMjcwIEwgMTk1IDM1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNDc1NTY5IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgbWFya2VyLWVuZD0idXJsKCNhcnJvdy1zbGF0ZSkiLz4KICA8cGF0aCBjbGFzcz0iY29ubmVjdG9yIiBkPSJNIDUwMCAyNTAgTCA1MDAgMzUwIiBmaWxsPSJub25lIiBzdHJva2U9IiM0NzU1NjkiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93LXNsYXRlKSIvPgogIDxwYXRoIGNsYXNzPSJjb25uZWN0b3IiIGQ9Ik0gODA1IDI3MCBMIDgwNSAzNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzQ3NTU2OSIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG1hcmtlci1lbmQ9InVybCgjYXJyb3ctc2xhdGUpIi8+CgogIDx0ZXh0IHg9IjM1NSIgeT0iMTc4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzI1NjNlYiI+cHVibGlzaGVzPC90ZXh0PgogIDx0ZXh0IHg9IjY0NSIgeT0iMTc4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQ29taWMgTW9ubyIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzE1ODAzZCI+Y29uc3VtZXM8L3RleHQ+CiAgPHRleHQgeD0iMTk1IiB5PSIzMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJDb21pYyBNb25vIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNDc1NTY5Ij5tb2R1bGU8L3RleHQ+CiAgPHRleHQgeD0iNTAwIiB5PSIzMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJDb21pYyBNb25vIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNDc1NTY5Ij5leHBvcnQ8L3RleHQ+CiAgPHRleHQgeD0iODA1IiB5PSIzMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJDb21pYyBNb25vIiBmb250LXNpemU9IjEyIiBmaWxsPSIjNDc1NTY5Ij5tb2R1bGU8L3RleHQ+Cjwvc3ZnPgo=" alt="Orders Context connected to Shipping Context through a published event, with ApplicationModules verify enforcing the boundary">
+          <figcaption>
+            <strong>Spring Modulith published boundary and verification flow</strong>
+            <span>Only <code>orders :: events</code> is published as a <code>Named Interface</code>, while <code>ApplicationModules.verify()</code> rejects a <code>shipping → orders.internal</code> reference.</span>
+            <a href="https://github.com/bluetape4k/exposed-workshop/blob/develop/docs/images/readme-diagrams/08-ddd-modulith-boundaries-flow-01.svg">Open the full-size diagram</a>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="architecture" class="band">
+      <div class="shell">
+        <div class="section-head"><h2>Architecture diagram</h2><p><code>orders</code> owns order state, while <code>shipping</code> owns shipping reservation state. Shipping never references order internals; it receives only the published <code>OrderAcceptedEvent</code>.</p></div>
+        <div class="architecture-map" role="img" aria-label="Application services, repositories, Exposed tables, and the published event across orders and shipping">
+          <article class="boundary orders">
+            <span class="boundary-label">Bounded Context · data owner</span><h3>orders</h3>
+            <div class="arch-stack">
+              <div class="arch-node"><b>AcceptOrderCommand</b><span>order acceptance request</span></div><div class="arch-arrow">calls ↓</div>
+              <div class="arch-node"><b>OrderApplicationService</b><span>TransactionTemplate · orders transaction</span></div><div class="arch-arrow">persists ↓</div>
+              <div class="arch-node"><b>ExposedOrderRepository</b><span>orders.internal</span></div><div class="arch-arrow">Exposed SQL DSL ↓</div>
+              <div class="arch-node"><code>WorkshopOrders</code><span>ddd_modulith_orders · orderKey unique index</span></div>
+            </div>
+          </article>
+          <div class="event-contract">
+            <div class="allowed">publish → receive</div>
+            <div class="event">Published event<code>OrderAcceptedEvent</code><code>orders :: events</code></div>
+            <div class="blocked-rule"><strong>Rejected reference</strong><br><code>shipping → orders.internal</code></div>
+          </div>
+          <article class="boundary shipping">
+            <span class="boundary-label">Bounded Context · data owner</span><h3>shipping</h3>
+            <div class="arch-stack">
+              <div class="arch-node"><b>ShippingReservationHandler</b><span>@EventListener · receives event</span></div><div class="arch-arrow">calls ↓</div>
+              <div class="arch-node"><b>TransactionTemplate</b><span>shipping reservation transaction</span></div><div class="arch-arrow">persists ↓</div>
+              <div class="arch-node"><b>ExposedShippingReservationRepository</b><span>shipping.internal</span></div><div class="arch-arrow">Exposed SQL DSL ↓</div>
+              <div class="arch-node"><code>ShippingReservations</code><span>ddd_modulith_shipping_reservations · orderKey unique index</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section id="aggregate" class="band">
+      <div class="shell">
+        <div class="section-head"><h2>How Exposed implements the order Aggregate consistency boundary</h2><p>This example has no standalone <code>Order</code> Aggregate Root class. Instead, it combines the application service transaction, repository persistence procedure, and Exposed table constraints to enforce the consistency required for order acceptance.</p></div>
+        <div class="aggregate-grid">
+          <article class="aggregate-rule"><b>1. Command boundary</b><p><code>OrderApplicationService</code> handles <code>AcceptOrderCommand</code>, keeping the state-change entry point in one place.</p></article>
+          <article class="aggregate-rule"><b>2. Transaction boundary</b><p>The order is inserted and selected inside one <code>TransactionTemplate</code> callback.</p></article>
+          <article class="aggregate-rule"><b>3. Database constraint</b><p><code>WorkshopOrders.orderKey.uniqueIndex()</code> rejects a duplicate order key.</p></article>
+          <article class="aggregate-rule"><b>4. Persisted result</b><p>The row maps to <code>OrderSummary</code>; <code>OrderAcceptedEvent</code> is published after the transaction callback returns.</p></article>
+        </div>
+        <div class="model-note"><strong>Current scope:</strong> this is a compact Transaction Script for order acceptance. If transition rules grow, introduce an <code>Order</code> Aggregate Root with domain methods and let the repository map between that Aggregate and Exposed rows. The class diagram below includes only types that exist in the current source.</div>
+
+        <h3 class="class-title">Class diagram</h3>
+        <div class="class-diagram" role="img" aria-label="Actual classes and Exposed tables participating in order acceptance and shipping reservation">
+          <div class="class-lane">
+            <h3>orders</h3>
+            <div class="class-flow">
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«command»</span><strong>AcceptOrderCommand</strong></div><div class="members"><span>orderKey: String</span><span>customerId: Long</span></div></article>
+              <div class="relation">calls ↓</div>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«application service»</span><strong>OrderApplicationService</strong></div><div class="members"><span>accept(command): OrderSummary</span><span>ApplicationEventPublisher</span><span>TransactionTemplate</span></div></article>
+              <div class="relation">persists ↓</div>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«repository»</span><strong>ExposedOrderRepository</strong></div><div class="members"><span>accept(orderKey, customerId)</span><span>toSummary(row): OrderSummary</span></div></article>
+              <div class="relation">maps ↙　↘ Exposed SQL DSL</div>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«read model»</span><strong>OrderSummary</strong></div><div class="members"><span>id, orderKey, customerId</span><span>status, acceptedAt</span></div></article>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«LongIdTable»</span><strong>WorkshopOrders</strong></div><div class="members"><span>orderKey.uniqueIndex()</span><span>customerId, status, acceptedAt</span></div></article>
+              <div class="relation">service publishes ↓</div>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«domain event · orders :: events»</span><strong>OrderAcceptedEvent</strong></div><div class="members"><span>orderKey, customerId, acceptedAt</span></div></article>
+            </div>
+          </div>
+          <div class="class-lane shipping">
+            <h3>shipping</h3>
+            <div class="class-flow">
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«event listener»</span><strong>ShippingReservationHandler</strong></div><div class="members"><span>reserveShipment(event)</span><span>TransactionTemplate</span></div></article>
+              <div class="relation">persists ↓</div>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«repository»</span><strong>ExposedShippingReservationRepository</strong></div><div class="members"><span>reserve(orderKey, customerId)</span><span>toReservation(row)</span></div></article>
+              <div class="relation">maps ↙　↘ Exposed SQL DSL</div>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«result model»</span><strong>ShippingReservation</strong></div><div class="members"><span>id, orderKey, customerId</span><span>reservedAt</span></div></article>
+              <article class="uml-class"><div class="uml-head"><span class="stereotype">«LongIdTable»</span><strong>ShippingReservations</strong></div><div class="members"><span>orderKey.uniqueIndex()</span><span>customerId, reservedAt</span></div></article>
+            </div>
+          </div>
+        </div>
+        <div class="cross-relation">OrderAcceptedEvent crosses the published contract</div>
+      </div>
+    </section>
     <section id="need" class="band">
       <div class="shell">
         <div class="section-head"><h2>When DDD becomes necessary</h2><p>When several features mutate the same tables and repositories directly, state-transition rules become scattered and change impact becomes difficult to predict. Areas with different language, transitions, and change cadence need explicit responsibilities and published contracts.</p></div>
         <div class="compare">
-          <article class="context orders"><h3>orders</h3><ul><li>Interpret <code>AcceptOrderCommand</code></li><li>Check duplicates and state transitions</li><li>Persist with <code>ExposedOrderRepository</code></li><li>Publish <code>OrderAcceptedEvent</code></li></ul></article>
+          <article class="context orders"><h3>orders</h3><ul><li>Interpret <code>AcceptOrderCommand</code></li><li>Reject duplicate <code>orderKey</code> values with a unique index</li><li>Insert the new <code>ACCEPTED</code> state</li><li>Publish <code>OrderAcceptedEvent</code></li></ul></article>
           <div class="contract">Published contract<code>orders :: events</code></div>
           <article class="context shipping"><h3>shipping</h3><ul><li>Receive the event in <code>ShippingReservationHandler</code></li><li>Apply reservation rules</li><li>Persist with <code>ExposedShippingReservationRepository</code></li><li>Never reference the order's internal repository</li></ul></article>
         </div>
@@ -200,6 +333,9 @@ AcceptOrderCommand
           <div class="source-list">
             <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/README.ko.md">DDD Modulith boundaries README</a>
             <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/src/main/kotlin/exposed/examples/spring/modulith/boundaries/orders/OrderApplicationService.kt">OrderApplicationService.kt</a>
+            <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/src/main/kotlin/exposed/examples/spring/modulith/boundaries/orders/internal/ExposedOrderRepository.kt">ExposedOrderRepository.kt</a>
+            <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/src/main/kotlin/exposed/examples/spring/modulith/boundaries/shipping/ShippingReservationHandler.kt">ShippingReservationHandler.kt</a>
+            <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/src/main/kotlin/exposed/examples/spring/modulith/boundaries/shipping/internal/ExposedShippingReservationRepository.kt">ExposedShippingReservationRepository.kt</a>
             <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/src/test/kotlin/exposed/examples/spring/modulith/boundaries/BoundaryVerificationApplicationTest.kt">BoundaryVerificationApplicationTest.kt</a>
             <a href="./2026-07-30-exposed-workshop-visual-companions-design.md">Visual companion design</a>
           </div>

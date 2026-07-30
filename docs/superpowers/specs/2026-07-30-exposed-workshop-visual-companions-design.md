@@ -23,6 +23,9 @@
 - 클래스명, 메서드명, 설정 키, Gradle 명령은 원문을 유지한다.
 - `light`, `dark`, `auto` 테마를 지원하고 `starlight-theme` 선택을 저장한다.
 - 각 문서는 독립 실행 가능한 HTML이며 외부 CSS, JavaScript, 이미지 파일에 의존하지 않는다.
+- Architecture Diagram은 구조를 설명하는 구간에, benchmark chart는 효과와 측정 결과를
+  설명하는 구간에 배치한다. 출처는 본문 제목이 아니라 캡션과 링크에 표시한다.
+- 자료의 양은 제한하지 않지만, 동일한 내용을 반복하는 Sequence Diagram은 포함하지 않는다.
 - 소스 기준 커밋은 40자리 Git commit으로 고정한다.
 - 게시본은 원본 저장소의 매니페스트와 사이트 스냅숏 검증을 모두 통과해야 한다.
 
@@ -116,6 +119,10 @@ Visual Companion은 다음 구현 관계를 소스 링크와 함께 표시한다
 DB 반영이 지연되는 구간을 별도 상태로 표시하며, Redis 적재만 끝난 상태를 DB 반영 완료로
 표현하지 않는다.
 
+처리 시간축은 계층별 색상을 고정한다. API 요청과 응답은 파란색, 로컬 캐시와 Redis는
+청록색, Exposed 트랜잭션과 DB 반영은 황색으로 표시한다. L1과 L2는 모두 Cache 계층으로
+묶되 각 저장 위치의 이름은 별도로 표시한다. 전략을 전환해도 같은 계층의 색상은 바꾸지 않는다.
+
 ### 필요성 및 효과
 
 - Read-Through는 캐시 미스 처리와 DB 조회 코드를 저장소 경계로 모은다.
@@ -125,8 +132,15 @@ DB 반영이 지연되는 구간을 별도 상태로 표시하며, Redis 적재�
 - Near Cache는 동일 인스턴스의 반복 조회에서 Redis 네트워크 왕복을 줄인다.
 - 공통 `JdbcCacheRepository` 계약으로 직접 DB 조회, 캐시 조회, 저장, 무효화를 구분한다.
 
-성능 효과는 테스트의 상대 비교와 기존 블로그의 검증 범위 안에서만 설명한다. 현재 예제에
-재현 가능한 벤치마크 결과가 없으면 구체적인 처리량이나 지연 시간 수치를 만들지 않는다.
+성능 효과는 `11-high-performance/04-benchmark/BENCHMARK-REPORT.md`와
+`CacheStrategyComparisonBenchmark.kt`를 근거로 설명한다. 기존
+`cache-strategy-latency-chart-01.svg`를 포함하고, PostgreSQL Testcontainers와 HikariCP를
+사용한 smoke profile이라는 점을 차트 바로 아래에 표시한다. 차트는 Near Cache의 효과와
+운영 시 주의사항을 설명한 다음에 배치한다. 값은 평균 처리 시간
+`us/op`이며 낮을수록 빠르다.
+
+이 벤치마크는 `NoCache`, `ReadThrough`, `WriteThrough`만 비교한다. Redis Near Cache,
+Write-Behind, 운영 처리량, SLA를 측정한 결과로 확대 해석하지 않는다.
 
 ### 주의할 점
 
@@ -205,7 +219,7 @@ H2만 사용하므로 외부 인증 정보 없이 실행할 수 있다는 점도
 - 후속 작업을 원래 트랜잭션 안에 계속 추가해 처리 범위가 커진다.
 - 문서에 적은 모듈 경계와 실제 코드 참조가 달라져도 빌드가 이를 검출하지 못한다.
 
-DDD는 업무 규칙과 상태 변경 책임을 bounded context와 애그리거트에 배치한다. 이 예제는
+DDD는 업무 규칙과 상태 변경 책임을 Bounded Context와 Aggregate에 배치한다. 이 예제는
 Spring Modulith 검증을 추가해 그 설계를 실행 가능한 코드 규칙으로 만든다.
 
 ### 구조와 처리 흐름
@@ -220,6 +234,41 @@ Spring Modulith 검증을 추가해 그 설계를 실행 가능한 코드 규칙
 
 두 모듈의 테이블과 트랜잭션은 별도 영역으로 표시한다. 이벤트 전달은 허용된 연결선으로,
 `shipping → orders.internal` 직접 참조는 차단된 연결선으로 표시한다.
+
+### 아키텍처 다이어그램
+
+`08-ddd-modulith-boundaries-flow-01.svg`를 경계 설명 구간에 배치해
+`orders :: events` 공개 범위와 `ApplicationModules.verify()`의 검증 대상을 한눈에
+확인하게 한다.
+
+`orders`와 `shipping`을 각각 데이터 소유권이 분리된 Bounded Context로 표시한다.
+각 영역에는 애플리케이션 서비스 또는 이벤트 처리기, 트랜잭션, 저장소, Exposed
+`LongIdTable`을 실제 호출 순서대로 배치한다. 두 영역 사이에는 `OrderAcceptedEvent`와
+`orders :: events`만 허용된 연결로 표시하고, `shipping → orders.internal` 참조는
+차단되는 연결로 표시한다.
+
+### Exposed 기반 Aggregate 일관성 경계
+
+현재 구현에는 별도의 `Order` Aggregate Root 클래스가 없다. 이 사실을 숨기지 않고 다음
+요소가 주문 접수의 일관성 경계를 구성한다고 설명한다.
+
+1. `OrderApplicationService`가 `AcceptOrderCommand`의 단일 진입점이 된다.
+2. `TransactionTemplate` 안에서 주문을 저장하고 조회한다.
+3. `WorkshopOrders.orderKey.uniqueIndex()`가 동일한 주문 키의 중복 저장을 차단한다.
+4. 저장된 행을 `OrderSummary`로 반환하고 트랜잭션 종료 후 `OrderAcceptedEvent`를 발행한다.
+
+이 구조는 주문 접수만 다루는 간결한 트랜잭션 스크립트다. 상태 전이와 업무 규칙이
+늘어나면 `Order` Aggregate Root에 행위를 정의하고, 저장소가 Aggregate와 Exposed
+행을 변환하는 구조로 확장할 수 있음을 현재 구현과 구분해 표시한다.
+
+### 클래스 다이어그램
+
+현재 소스에 존재하는 타입만 표시한다. 주문 영역은 `AcceptOrderCommand`,
+`OrderApplicationService`, `ExposedOrderRepository`, `OrderSummary`, `WorkshopOrders`,
+`OrderAcceptedEvent`의 호출·저장·매핑·발행 관계를 보여준다. 배송 영역은
+`ShippingReservationHandler`, `ExposedShippingReservationRepository`,
+`ShippingReservation`, `ShippingReservations`의 이벤트 수신·저장·매핑 관계를 보여준다.
+존재하지 않는 상속 관계나 Aggregate Root 클래스를 추가하지 않는다.
 
 ### DDD 적용 효과
 
