@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:,">
+  <title>DDD Modulith 경계 시각화</title>
+  <script>
+    (() => {
+      const storageKey = "starlight-theme";
+      const storedTheme = localStorage.getItem(storageKey);
+      const systemTheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme =
+        storedTheme === "light" || storedTheme === "dark" ? storedTheme : systemTheme;
+    })();
+  </script>
+  <style>
+    :root, :root[data-theme="light"] {
+      --ink: #19201f; --muted: #5e6866; --paper: #f6f6f3; --surface: #fff; --surface-2: #eef0ed;
+      --line: #ced4d1; --strong: #96a29e; --teal: #08786d; --teal-soft: #dcefeb;
+      --blue: #2e66a1; --blue-soft: #e0ebf6; --red: #c2453a; --red-soft: #f7dfdc;
+      --gold: #9d6c09; --gold-soft: #f4e9cf; --shadow: 0 18px 42px rgba(35, 45, 42, .1);
+    }
+    :root[data-theme="dark"] {
+      --ink: #edf4f2; --muted: #a9bab5; --paper: #09110f; --surface: #121d1a; --surface-2: #1a2824;
+      --line: #31423d; --strong: #586c65; --teal: #70d8c7; --teal-soft: #123c35;
+      --blue: #84b6e9; --blue-soft: #1d3347; --red: #ff9187; --red-soft: #462825;
+      --gold: #efc46f; --gold-soft: #40351f; --shadow: 0 18px 42px rgba(0, 0, 0, .3);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.6; }
+    button { color: inherit; font: inherit; }
+    a { color: inherit; text-underline-offset: 3px; }
+    code, pre { font-family: "SFMono-Regular", Consolas, monospace; }
+    h1, h2, h3, p { margin: 0; }
+    h1, h2, h3 { line-height: 1.2; letter-spacing: 0; }
+    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .topbar { position: sticky; top: 0; z-index: 30; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(12px); }
+    .topbar .shell, .nav, .actions { display: flex; align-items: center; }
+    .topbar .shell { min-height: 54px; justify-content: space-between; gap: 18px; }
+    .brand { font-size: 13px; font-weight: 850; text-decoration: none; }
+    .nav { gap: 18px; color: var(--muted); font-size: 12px; font-weight: 750; }
+    .nav a { text-decoration: none; }
+    .nav a:hover { color: var(--teal); }
+    .actions { gap: 12px; }
+    .theme-toggle { display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); cursor: pointer; }
+    .theme-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; }
+    :root[data-theme="dark"] .sun, :root[data-theme="light"] .moon { display: none; }
+    button:focus-visible, a:focus-visible { outline: 3px solid color-mix(in srgb, var(--teal) 40%, transparent); outline-offset: 3px; }
+    section[id] { scroll-margin-top: 70px; }
+    .hero { display: grid; grid-template-columns: minmax(0, .88fr) minmax(560px, 1.12fr); gap: 44px; min-height: 690px; align-items: center; padding: 58px 0 48px; }
+    .eyebrow { color: var(--teal); font-size: 13px; font-weight: 850; }
+    h1 { margin-top: 17px; font-size: clamp(40px, 4.7vw, 64px); word-break: keep-all; }
+    .lead { margin-top: 22px; color: var(--muted); font-size: 18px; word-break: keep-all; }
+    .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 30px; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--line); }
+    .fact { padding: 13px; background: var(--surface); }
+    .fact span { display: block; color: var(--muted); font-size: 11px; font-weight: 700; }
+    .fact strong { display: block; margin-top: 4px; font-size: 13px; }
+    .board { overflow: hidden; border: 1px solid var(--strong); border-radius: 8px; background: #18221f; color: #f2f7f5; box-shadow: var(--shadow); }
+    .board-head { display: flex; min-height: 52px; align-items: center; justify-content: space-between; gap: 12px; padding: 0 16px; border-bottom: 1px solid #394943; font-size: 12px; }
+    .scenario-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; border-bottom: 1px solid #394943; }
+    .scenario { min-height: 42px; border: 1px solid #465952; border-radius: 6px; color: #bdd0ca; background: #22302c; font-weight: 800; cursor: pointer; }
+    .scenario[aria-pressed="true"] { border-color: #78d8c6; color: #f0fffb; background: #174d43; }
+    .scenario[data-scenario="violation"][aria-pressed="true"] { border-color: #ff9589; background: #572d29; }
+    .modules { display: grid; grid-template-columns: 1fr 74px 1fr; gap: 10px; align-items: stretch; padding: 14px; }
+    .module { min-width: 0; border: 1px solid #3d4d48; border-radius: 7px; padding: 14px; background: #202d29; }
+    .module-label { color: #91a8a1; font-size: 10px; font-weight: 850; text-transform: uppercase; }
+    .module h3 { margin-top: 5px; color: #fff; font-size: 18px; }
+    .module code { display: block; margin-top: 12px; padding: 9px; border-radius: 5px; color: #bfeadd; background: #12201c; font-size: 11px; overflow-wrap: anywhere; }
+    .db-row { margin-top: 10px; color: #a8bbb5; font-size: 11px; }
+    .handoff { display: grid; place-items: center; color: #84dccb; font-size: 24px; font-weight: 900; text-align: center; }
+    .handoff small { display: block; color: #a8bbb5; font-size: 9px; font-weight: 700; }
+    .trace { padding: 0 14px 14px; }
+    .trace ol { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 0; padding: 0; list-style: none; }
+    .trace li { min-height: 54px; padding: 8px; border: 1px solid #3d4d48; border-radius: 6px; color: #a9bbb5; font-size: 10px; }
+    .trace li.active { border-color: #75d8c5; color: #effffb; background: #174d43; }
+    .trace li.rejected { border-color: #ff9187; color: #ffe5e2; background: #542b27; }
+    .verification { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; padding: 11px 12px; border-radius: 6px; background: #101a17; font-size: 12px; }
+    .verification strong { color: #7ddfc9; }
+    .verification strong.bad { color: #ff9b91; }
+    .band { border-top: 1px solid var(--line); padding: 76px 0; }
+    .section-head { display: grid; grid-template-columns: .68fr 1.32fr; gap: 40px; margin-bottom: 30px; }
+    .section-head h2 { font-size: 36px; word-break: keep-all; }
+    .section-head p { color: var(--muted); font-size: 16px; }
+    .selection { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .reason { padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .reason b { color: var(--teal); font-size: 12px; }
+    .reason h3 { margin-top: 8px; font-size: 18px; }
+    .reason p { margin-top: 10px; color: var(--muted); font-size: 14px; }
+    .compare { display: grid; grid-template-columns: 1fr 70px 1fr; gap: 16px; align-items: center; }
+    .context { min-height: 250px; padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .context.orders { border-top: 4px solid var(--blue); }
+    .context.shipping { border-top: 4px solid var(--teal); }
+    .context h3 { font-size: 20px; }
+    .context ul { margin: 14px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .contract { text-align: center; color: var(--gold); font-weight: 850; }
+    .contract code { display: block; margin-top: 8px; font-size: 11px; }
+    .effects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .effect { border-left: 4px solid var(--teal); padding: 16px 18px; background: var(--surface); }
+    .effect:nth-child(2) { border-color: var(--blue); } .effect:nth-child(3) { border-color: var(--gold); } .effect:nth-child(4) { border-color: var(--red); }
+    .effect h3 { font-size: 17px; }
+    .effect p { margin-top: 8px; color: var(--muted); font-size: 14px; }
+    .runbook { display: grid; grid-template-columns: 1fr .9fr; gap: 20px; }
+    .code-panel { overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .panel-title { padding: 12px 16px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; font-weight: 800; }
+    pre { margin: 0; padding: 18px; overflow-x: auto; color: var(--ink); background: var(--surface-2); font-size: 12px; line-height: 1.7; }
+    .source-list { display: grid; gap: 9px; }
+    .source-list a { display: block; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); font-size: 13px; overflow-wrap: anywhere; }
+    .provenance { padding: 24px 0 40px; color: var(--muted); font-size: 12px; }
+    .provenance a { margin-right: 14px; }
+    @media (max-width: 900px) { .hero, .section-head, .runbook { grid-template-columns: 1fr; } .hero { min-height: auto; padding-top: 46px; } .selection { grid-template-columns: 1fr; } .nav a:nth-child(-n+2) { display: none; } }
+    @media (max-width: 650px) { .shell { width: min(100% - 22px, 1180px); } .nav { display: none; } h1 { font-size: 37px; } .facts, .effects, .compare, .modules { grid-template-columns: 1fr; } .handoff { min-height: 48px; } .trace ol { display: flex; overflow-x: auto; } .trace li { min-width: 120px; } .contract { padding: 12px 0; } .band { padding: 58px 0; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell">
+      <a class="brand" href="https://github.com/bluetape4k/exposed-workshop">exposed-workshop / Visual Companion</a>
+      <div class="actions">
+        <nav class="nav" aria-label="문서 이동">
+          <a href="#selection">선정 이유</a><a href="#need">DDD 필요성</a><a href="#run">실행</a>
+          <a href="./2026-07-30-exposed-redis-cache-strategies-visual-companion.html">캐시 전략</a>
+          <a href="./2026-07-30-ddd-modulith-boundaries-visual-companion.en.html" lang="en">EN</a>
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="밝은 테마와 어두운 테마 전환" title="테마 전환">
+          <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section id="simulation" class="shell hero">
+      <div>
+        <p class="eyebrow">Exposed + Spring Modulith + DDD</p>
+        <h1>주문은 자기 저장소에 저장하고 배송은 공개된 이벤트만 받아 자기 저장소에 배송 예약을 만든다</h1>
+        <p class="lead">하나의 애플리케이션과 DB를 사용해도 주문과 배송의 상태 변경 책임을 분리할 수 있다. 공개 이벤트는 두 모듈의 연결 규칙이 되고, Modulith 검증은 이를 어긴 컴파일 시점 참조를 테스트에서 차단한다.</p>
+        <div class="facts"><div class="fact"><span>주문</span><strong>orders transaction</strong></div><div class="fact"><span>계약</span><strong>orders :: events</strong></div><div class="fact"><span>배송</span><strong>shipping transaction</strong></div></div>
+      </div>
+      <div class="board" aria-live="polite">
+        <div class="board-head"><strong>주문 수락 → 배송 예약</strong><span>ApplicationModules.verify()</span></div>
+        <div class="scenario-controls" role="group" aria-label="DDD 경계 시나리오 선택">
+          <button class="scenario" data-scenario="normal" aria-pressed="true">정상 이벤트 전달</button>
+          <button class="scenario" data-scenario="violation" aria-pressed="false">금지된 내부 참조</button>
+        </div>
+        <div class="modules">
+          <article class="module"><span class="module-label">Bounded Context</span><h3>orders</h3><code data-orders>OrderApplicationService</code><div class="db-row" data-order-row>ddd_modulith_orders: ORD-1001 / ACCEPTED</div></article>
+          <div class="handoff" data-handoff>→<small>OrderAcceptedEvent</small></div>
+          <article class="module"><span class="module-label">Bounded Context</span><h3>shipping</h3><code data-shipping>ShippingReservationHandler</code><div class="db-row" data-shipping-row>ddd_modulith_shipping_reservations: ORD-1001 / RESERVED</div></article>
+        </div>
+        <div class="trace"><ol data-trace></ol><div class="verification"><span data-result-text>공개 이벤트를 통한 모듈 연결</span><strong data-result>검증 통과</strong></div></div>
+      </div>
+    </section>
+
+    <section id="selection" class="band">
+      <div class="shell">
+        <div class="section-head"><h2>DDD 적용 사례로 이 예제를 선택한 이유</h2><p>이 예제는 DDD 용어만 소개하지 않는다. 주문 수락과 배송 예약이라는 서로 다른 상태 변경을 독립 트랜잭션과 테이블로 구현하고, 허용된 이벤트 참조와 금지된 내부 참조를 자동 검증한다.</p></div>
+        <div class="selection">
+          <article class="reason"><b>업무 규칙</b><h3>상태 변경 책임이 코드에 드러난다</h3><p><code>AcceptOrderCommand</code>는 주문 모듈로 들어가고 <code>OrderApplicationService</code>만 주문 상태를 변경한다.</p></article>
+          <article class="reason"><b>모듈 계약</b><h3>공개 범위가 실행 가능한 규칙이다</h3><p><code>orders.events</code>는 named interface이고 배송 모듈은 <code>orders :: events</code>만 참조할 수 있다.</p></article>
+          <article class="reason"><b>검증</b><h3>잘못된 설계를 실패 테스트로 보여준다</h3><p><code>shipping → orders.internal</code> 참조를 넣은 fixture에서 <code>ApplicationModules.verify()</code>가 <code>Violations</code>를 반환한다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="need" class="band">
+      <div class="shell">
+        <div class="section-head"><h2>DDD가 필요한 상황</h2><p>여러 기능이 같은 테이블과 저장소를 직접 변경하기 시작하면 상태 변경 규칙이 분산되고 변경 영향 범위를 예측하기 어려워진다. 주문과 배송처럼 업무 용어, 상태 전이, 변경 주기가 다른 영역은 책임 경계와 공개 계약을 분명히 해야 한다.</p></div>
+        <div class="compare">
+          <article class="context orders"><h3>orders</h3><ul><li><code>AcceptOrderCommand</code> 해석</li><li>주문 중복과 상태 전이 검사</li><li><code>ExposedOrderRepository</code>로 저장</li><li><code>OrderAcceptedEvent</code> 발행</li></ul></article>
+          <div class="contract">공개 계약<code>orders :: events</code></div>
+          <article class="context shipping"><h3>shipping</h3><ul><li><code>ShippingReservationHandler</code>가 이벤트 수신</li><li>배송 예약 규칙 적용</li><li><code>ExposedShippingReservationRepository</code>로 저장</li><li>주문 내부 저장소는 참조하지 않음</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="effects" class="band">
+      <div class="shell">
+        <div class="section-head"><h2>DDD 적용 효과와 추가 비용을 함께 본다</h2><p>경계를 만들면 변경 영향과 테스트 범위를 줄일 수 있지만, 이벤트 계약·매핑·실패 처리 설계가 추가된다. Modulith 검증이 보장하는 범위와 운영 메시징이 보장해야 할 범위를 구분한다.</p></div>
+        <div class="effects">
+          <article class="effect"><h3>상태 변경 책임이 한곳에 모인다</h3><p>주문 규칙은 orders, 배송 예약 규칙은 shipping이 관리한다. 다른 모듈은 내부 저장소를 직접 호출하지 않는다.</p></article>
+          <article class="effect"><h3>참조 규칙을 자동 검증한다</h3><p><code>ApplicationModules.verify()</code>는 package와 named interface를 기준으로 컴파일 시점 참조 위반을 찾는다.</p></article>
+          <article class="effect"><h3>이벤트 계약 관리 비용이 생긴다</h3><p>모듈 사이에 전달할 최소 정보를 이벤트로 정의하고, 내부 모델과 이벤트 모델의 매핑 및 변경 호환성을 관리해야 한다.</p></article>
+          <article class="effect"><h3>내구성은 별도 설계가 필요하다</h3><p>이 예제의 <code>@EventListener</code>는 같은 프로세스에서 동작한다. Outbox, broker 저장, 중복 전달, 멱등성, 재처리를 구현하거나 보장하지 않는다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="run" class="band">
+      <div class="shell">
+        <div class="section-head"><h2>정상 흐름과 경계 위반을 같은 테스트 실행에서 확인한다</h2><p>테스트는 주문 수락 후 배송 예약이 저장되는 정상 경로와, <code>orders.internal.LeakyOrderRepository</code>를 직접 참조하는 invalid fixture를 함께 검증한다. 검증기는 업무 규칙이나 런타임 이벤트 전달 성공을 검사하지 않는다.</p></div>
+        <div class="runbook">
+          <div class="code-panel"><div class="panel-title">실행 명령과 처리 순서</div><pre><code>./gradlew :08-ddd-modulith-boundaries:test
+
+AcceptOrderCommand
+  → orders transaction
+  → ExposedOrderRepository
+  → ddd_modulith_orders
+  → OrderAcceptedEvent
+  → ShippingReservationHandler
+  → shipping transaction
+  → ddd_modulith_shipping_reservations</code></pre></div>
+          <div class="source-list">
+            <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/README.ko.md">DDD Modulith 경계 README</a>
+            <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/src/main/kotlin/exposed/examples/spring/modulith/boundaries/orders/OrderApplicationService.kt">OrderApplicationService.kt</a>
+            <a href="../../../13-ecosystem-integrations/08-ddd-modulith-boundaries/src/test/kotlin/exposed/examples/spring/modulith/boundaries/BoundaryVerificationApplicationTest.kt">BoundaryVerificationApplicationTest.kt</a>
+            <a href="./2026-07-30-exposed-workshop-visual-companions-design.md">시각화 설계 문서</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="shell provenance" data-status="approved" data-source="2026-07-30-exposed-workshop-visual-companions-design.md" data-baseline="a2edd9af77188f814ccae10917a9e6ad574402f9">
+    <a href="https://github.com/bluetape4k/exposed-workshop">Repository</a>
+    <a href="./2026-07-30-exposed-redis-cache-strategies-visual-companion.html">이전: Exposed와 Redis 캐시 전략</a>
+    <span>Approved source baseline <code>a2edd9af77188f814ccae10917a9e6ad574402f9</code></span>
+  </footer>
+  <script>
+    const scenarios = {
+      normal: {
+        steps: ["AcceptOrderCommand", "OrderApplicationService", "ExposedOrderRepository", "OrderAcceptedEvent", "ShippingReservationHandler"],
+        orders: "OrderApplicationService",
+        shipping: "ShippingReservationHandler",
+        handoff: "→<small>OrderAcceptedEvent</small>",
+        orderRow: "ddd_modulith_orders: ORD-1001 / ACCEPTED",
+        shippingRow: "ddd_modulith_shipping_reservations: ORD-1001 / RESERVED",
+        message: "공개 이벤트를 통한 모듈 연결",
+        result: "검증 통과",
+        bad: false
+      },
+      violation: {
+        steps: ["shipping", "orders.internal", "LeakyOrderRepository", "ApplicationModules.verify()", "Violations"],
+        orders: "orders.internal.LeakyOrderRepository",
+        shipping: "금지된 컴파일 시점 참조",
+        handoff: "×<small>internal reference</small>",
+        orderRow: "orders 내부 구현 노출",
+        shippingRow: "shipping → orders.internal",
+        message: "허용되지 않은 모듈 참조",
+        result: "Violations 반환",
+        bad: true
+      }
+    };
+    const buttons = [...document.querySelectorAll("[data-scenario]")];
+    function render(name) {
+      const state = scenarios[name];
+      buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.scenario === name)));
+      document.querySelector("[data-orders]").textContent = state.orders;
+      document.querySelector("[data-shipping]").textContent = state.shipping;
+      document.querySelector("[data-handoff]").innerHTML = state.handoff;
+      document.querySelector("[data-order-row]").textContent = state.orderRow;
+      document.querySelector("[data-shipping-row]").textContent = state.shippingRow;
+      document.querySelector("[data-result-text]").textContent = state.message;
+      const result = document.querySelector("[data-result]");
+      result.textContent = state.result;
+      result.classList.toggle("bad", state.bad);
+      document.querySelector("[data-trace]").innerHTML = state.steps
+        .map((step, index) => `<li class="${state.bad && index > 0 ? "rejected" : "active"}">${index + 1}. ${step}</li>`)
+        .join("");
+    }
+    buttons.forEach((button) => button.addEventListener("click", () => render(button.dataset.scenario)));
+    const themeStorageKey = "starlight-theme";
+    document.querySelector(".theme-toggle").addEventListener("click", () => {
+      const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem(themeStorageKey, next);
+    });
+    render("normal");
+  </script>
+</body>
+</html>
