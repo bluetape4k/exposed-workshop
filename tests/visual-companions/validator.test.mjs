@@ -83,3 +83,16 @@ test('DDD companion separates the accepted event path from a rejected module ref
     assert.match(content, new RegExp(`data-scenario=["']${scenario}["']`));
   }
 });
+
+test('DDD locale documents expose the same structure and scenarios', async () => {
+  const ko = await html(
+    'docs/superpowers/specs/2026-07-30-ddd-modulith-boundaries-visual-companion.html',
+  );
+  const en = await html(
+    'docs/superpowers/specs/2026-07-30-ddd-modulith-boundaries-visual-companion.en.html',
+  );
+  assert.deepEqual(values(en, /<section\b[^>]*id=["']([^"']+)/gi), values(ko, /<section\b[^>]*id=["']([^"']+)/gi));
+  assert.deepEqual(values(en, /data-scenario=["']([^"']+)/gi), values(ko, /data-scenario=["']([^"']+)/gi));
+  assert.equal((en.match(/\.\/gradlew /g) ?? []).length, (ko.match(/\.\/gradlew /g) ?? []).length);
+  assert.match(en, /data-baseline=["']a2edd9af77188f814ccae10917a9e6ad574402f9["']/);
+});
