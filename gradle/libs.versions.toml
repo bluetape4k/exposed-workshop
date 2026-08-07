@@ -2,7 +2,7 @@
 # Gradle Version Catalog — migrated from buildSrc/src/main/kotlin/Libs.kt
 
 [versions]
-bluetape4k-dependencies = "1.3.1"
+bluetape4k-dependencies = "1.4.0"
 
 kotlin = "2.4.0"
 kotlinx-coroutines = "1.11.0"
@@ -15,7 +15,7 @@ spring-boot = "4.1.0"
 spring-modulith = "2.0.6"
 reactor-bom = "2025.0.6"
 
-exposed = "1.3.0"
+exposed = "1.4.0"
 
 slf4j = "2.0.18"
 logback = "1.5.32"
@@ -252,18 +252,18 @@ reactor-test = { module = "io.projectreactor:reactor-test" }
 netty-bom = { module = "io.netty:netty-bom", version.ref = "netty" }
 
 # JetBrains Exposed
-jetbrains-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
-jetbrains-exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt", version.ref = "exposed" }
-jetbrains-exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
-jetbrains-exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
-jetbrains-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
-jetbrains-exposed-json = { module = "org.jetbrains.exposed:exposed-json", version.ref = "exposed" }
-jetbrains-exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
-jetbrains-exposed-migration-jdbc = { module = "org.jetbrains.exposed:exposed-migration-jdbc", version.ref = "exposed" }
-jetbrains-exposed-money = { module = "org.jetbrains.exposed:exposed-money", version.ref = "exposed" }
-jetbrains-exposed-r2dbc = { module = "org.jetbrains.exposed:exposed-r2dbc", version.ref = "exposed" }
-jetbrains-exposed-spring-boot-starter = { module = "org.jetbrains.exposed:exposed-spring-boot-starter", version.ref = "exposed" }
-jetbrains-exposed-spring7-transaction = { module = "org.jetbrains.exposed:spring7-transaction", version.ref = "exposed" }
+jetbrains-exposed-core = { module = "org.jetbrains.exposed:exposed-core" }
+jetbrains-exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt" }
+jetbrains-exposed-dao = { module = "org.jetbrains.exposed:exposed-dao" }
+jetbrains-exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time" }
+jetbrains-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc" }
+jetbrains-exposed-json = { module = "org.jetbrains.exposed:exposed-json" }
+jetbrains-exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime" }
+jetbrains-exposed-migration-jdbc = { module = "org.jetbrains.exposed:exposed-migration-jdbc" }
+jetbrains-exposed-money = { module = "org.jetbrains.exposed:exposed-money" }
+jetbrains-exposed-r2dbc = { module = "org.jetbrains.exposed:exposed-r2dbc" }
+jetbrains-exposed-spring-boot-starter = { module = "org.jetbrains.exposed:exposed-spring-boot-starter" }
+jetbrains-exposed-spring7-transaction = { module = "org.jetbrains.exposed:spring7-transaction" }
 
 # Micrometer
 micrometer-bom = { module = "io.micrometer:micrometer-bom", version.ref = "micrometer" }

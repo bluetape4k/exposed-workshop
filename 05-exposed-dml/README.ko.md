@@ -2,7 +2,7 @@
 
 [English](./README.md) | 한국어
 
-현재 워크숍 기준인 Exposed 1.3.0에서 SELECT/INSERT/UPDATE/DELETE/UPSERT부터 컬럼 타입, SQL 함수, 트랜잭션, Entity API까지의 조회·변경 흐름을 실행 가능한 테스트로 정리하는 챕터입니다.
+현재 워크숍 기준인 Exposed 1.4.0에서 SELECT/INSERT/UPDATE/DELETE/UPSERT부터 컬럼 타입, SQL 함수, 트랜잭션, Entity API까지의 조회·변경 흐름을 실행 가능한 테스트로 정리하는 챕터입니다.
 
 ## 챕터 목표
 
