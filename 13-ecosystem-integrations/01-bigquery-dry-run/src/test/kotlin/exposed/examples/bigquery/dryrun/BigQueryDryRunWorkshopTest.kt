@@ -68,7 +68,11 @@ class BigQueryDryRunWorkshopTest {
             validateRegionalRevenueDryRun(context)
         }
 
-        error.message.orEmpty() shouldContain "Unknown column region_name"
+        // bluetape4k-exposed 1.12.1 intentionally redacts provider-specific
+        // BigQuery details; keep the assertion on the stable validation summary.
+        error.message.orEmpty() shouldContain "reasons=invalidQuery"
+        error.message.orEmpty() shouldContain "statement=SELECT"
+        error.message.orEmpty() shouldContain "sqlFingerprint=sha256:"
         fixture.request.isCaptured.shouldBeTrue()
         fixture.request.captured.dryRun shouldBeEqualTo true
     }
