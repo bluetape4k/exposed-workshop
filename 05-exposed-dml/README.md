@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-A chapter covering the full read/write flow in the current Exposed 1.3.0 workshop baseline. The examples move from SELECT/INSERT/UPDATE/DELETE/UPSERT through column types, SQL functions, transactions, and the Entity API, with each topic captured as executable tests.
+A chapter covering the full read/write flow in the current Exposed 1.4.0 workshop baseline. The examples move from SELECT/INSERT/UPDATE/DELETE/UPSERT through column types, SQL functions, transactions, and the Entity API, with each topic captured as executable tests.
 
 ## Chapter Goals
 

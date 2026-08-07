@@ -59,10 +59,10 @@ Kotlin Exposed는 JetBrains가 만든 Kotlin 우선 SQL 프레임워크입니다
 | Kotlin plugin | 2.4.0 |
 | Kotlin language/API level | 2.3 |
 | Java toolchain | 21 |
-| Exposed | 1.3.0 |
+| Exposed | 1.4.0 |
 | Spring Boot | 4.0.6 |
 | Kotlinx Coroutines | 1.11.0 |
-| Bluetape4k dependencies BOM | 1.3.1 |
+| Bluetape4k dependencies BOM | 1.4.0 |
 | Gradle Wrapper | 9.5.0 |
 
 ## 학습 가이드
