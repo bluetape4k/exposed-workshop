@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 760" width="1500" height="760" role="img" aria-label="09 Spring: Suspended Cache (07)">
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
+      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12" />
     </filter>
-    <marker id="umlInheritanceArrow" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="17" refY="8" orient="auto">
-      <path d="M1,1 L17,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.8" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    <marker id="umlInheritanceArrow" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="17" refY="8" orient="auto" data-role="uml-hollow" data-tip-direction="positive-x">
+      <path d="M1,1 L17,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.8" stroke-dasharray="none" style="stroke-dasharray:none!important" />
     </marker>
-    <marker id="dependencyArrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
-      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#64748b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    <marker id="dependencyArrow" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="9" refY="5" orient="auto" data-role="uml-hollow" data-tip-direction="positive-x">
+      <path d="M1,1 L9,5 L1,9" fill="none" stroke="#64748b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="none" style="stroke-dasharray:none!important" />
     </marker>
     <style>
   .canvas{fill:#f6f9fc}
@@ -24,100 +24,100 @@
   .wire{fill:none;stroke:#94a3b8;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 5}
 </style>
   </defs>
-  <rect width="1500" height="760" class="canvas"/>
-  <rect x="20" y="20" width="1460" height="720" rx="16" class="frame"/>
+  <rect width="1500" height="760" class="canvas" />
+  <rect x="20" y="20" width="1460" height="720" rx="16" class="frame" />
 
   <text x="48" y="58" class="title">09 Spring: Suspended Cache (07)</text>
   <text x="48" y="80" class="subtitle">Source-derived class relationships for the coroutine-native suspended repository cache</text>
 
-  <rect x="88" y="140" width="220" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+  <rect x="88" y="140" width="220" height="72" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card" />
   <text x="198" y="170" class="smallLabel" text-anchor="middle">Int Id Table</text>
   <text x="198" y="195" class="detail" text-anchor="middle">Exposed table base</text>
 
-  <rect x="68" y="270" width="260" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+  <rect x="68" y="270" width="260" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card" />
   <text x="198" y="302" class="smallLabel" text-anchor="middle">Country Table</text>
   <text x="198" y="331" class="detail" text-anchor="middle">countries table schema</text>
 
-  <rect x="68" y="410" width="260" height="74" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+  <rect x="68" y="410" width="260" height="74" rx="10" fill="#fce7f3" stroke="#db2777" class="card" />
   <text x="198" y="442" class="smallLabel" text-anchor="middle">Country Record</text>
   <text x="198" y="466" class="detail" text-anchor="middle">DTO used by repository/cache</text>
 
-  <rect x="68" y="540" width="260" height="74" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+  <rect x="68" y="540" width="260" height="74" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card" />
   <text x="198" y="572" class="smallLabel" text-anchor="middle">Exposed Config</text>
   <text x="198" y="596" class="detail" text-anchor="middle">Database + DatabaseConfig</text>
 
-  <rect x="408" y="140" width="220" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
+  <rect x="408" y="140" width="220" height="72" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card" />
   <text x="518" y="170" class="smallLabel" text-anchor="middle">Int Entity</text>
   <text x="518" y="195" class="detail" text-anchor="middle">Exposed DAO base</text>
 
-  <rect x="388" y="270" width="260" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
+  <rect x="388" y="270" width="260" height="84" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card" />
   <text x="518" y="303" class="smallLabel" text-anchor="middle">Country</text>
   <text x="518" y="331" class="detail" text-anchor="middle">DAO entity for CountryTable</text>
 
-  <rect x="388" y="410" width="260" height="74" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+  <rect x="388" y="410" width="260" height="74" rx="10" fill="#dcfce7" stroke="#16a34a" class="card" />
   <text x="518" y="438" class="smallLabel" text-anchor="middle">Application</text>
   <text x="518" y="456" class="smallLabel" text-anchor="middle">Listener</text>
   <text x="518" y="468" class="detail" text-anchor="middle">Spring event contract</text>
 
-  <rect x="388" y="540" width="260" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
+  <rect x="388" y="540" width="260" height="84" rx="10" fill="#e2e8f0" stroke="#64748b" class="card" />
   <text x="518" y="572" class="smallLabel" text-anchor="middle">Data Populator</text>
   <text x="518" y="601" class="detail" text-anchor="middle">inserts initial country rows</text>
 
-  <rect x="760" y="140" width="640" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+  <rect x="760" y="140" width="640" height="84" rx="10" fill="#ffedd5" stroke="#ea580c" class="card" />
   <text x="1080" y="171" class="smallLabel" text-anchor="middle">Country Suspended</text>
   <text x="1080" y="189" class="smallLabel" text-anchor="middle">Repository</text>
   <text x="1080" y="207" class="detail" text-anchor="middle">suspend repository contract</text>
 
-  <rect x="700" y="270" width="260" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+  <rect x="700" y="270" width="260" height="84" rx="10" fill="#fef3c7" stroke="#d97706" class="card" />
   <text x="830" y="301" class="smallLabel" text-anchor="middle">Default Country</text>
   <text x="830" y="319" class="smallLabel" text-anchor="middle">Suspended Repository</text>
   <text x="830" y="337" class="detail" text-anchor="middle">Exposed transaction access</text>
 
-  <rect x="1100" y="270" width="260" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card"/>
+  <rect x="1100" y="270" width="260" height="84" rx="10" fill="#fce7f3" stroke="#db2777" class="card" />
   <text x="1230" y="301" class="smallLabel" text-anchor="middle">Cached Country</text>
   <text x="1230" y="319" class="smallLabel" text-anchor="middle">Suspended Repository</text>
   <text x="1230" y="337" class="detail" text-anchor="middle">decorates repository calls</text>
 
-  <rect x="700" y="410" width="260" height="74" rx="10" fill="#ffedd5" stroke="#ea580c" class="card"/>
+  <rect x="700" y="410" width="260" height="74" rx="10" fill="#ffedd5" stroke="#ea580c" class="card" />
   <text x="830" y="441" class="smallLabel" text-anchor="middle">Suspended Repository</text>
   <text x="830" y="459" class="smallLabel" text-anchor="middle">Config</text>
   <text x="830" y="470" class="detail" text-anchor="middle">wires delegate + cached bean</text>
 
-  <rect x="1100" y="410" width="260" height="74" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+  <rect x="1100" y="410" width="260" height="74" rx="10" fill="#fef3c7" stroke="#d97706" class="card" />
   <text x="1230" y="440" class="smallLabel" text-anchor="middle">Lettuce Suspended</text>
   <text x="1230" y="458" class="smallLabel" text-anchor="middle">Cache Manager</text>
   <text x="1230" y="470" class="detail" text-anchor="middle">creates named caches</text>
 
-  <rect x="700" y="540" width="260" height="74" rx="10" fill="#dcfce7" stroke="#16a34a" class="card"/>
+  <rect x="700" y="540" width="260" height="74" rx="10" fill="#dcfce7" stroke="#16a34a" class="card" />
   <text x="830" y="571" class="smallLabel" text-anchor="middle">Lettuce Suspended</text>
   <text x="830" y="589" class="smallLabel" text-anchor="middle">Cache Config</text>
   <text x="830" y="600" class="detail" text-anchor="middle">configures cache manager</text>
 
-  <rect x="1100" y="540" width="260" height="74" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
+  <rect x="1100" y="540" width="260" height="74" rx="10" fill="#fef3c7" stroke="#d97706" class="card" />
   <text x="1230" y="571" class="smallLabel" text-anchor="middle">Lettuce Suspended</text>
   <text x="1230" y="589" class="smallLabel" text-anchor="middle">Cache</text>
   <text x="1230" y="600" class="detail" text-anchor="middle">get / put / evict / clear</text>
 
-  <rect x="700" y="645" width="260" height="76" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
+  <rect x="700" y="645" width="260" height="76" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card" />
   <text x="830" y="674" class="smallLabel" text-anchor="middle">Spring Suspended Cache</text>
   <text x="830" y="694" class="smallLabel" text-anchor="middle">Application</text>
   <text x="830" y="713" class="detail" text-anchor="middle">provides RedisClient bean</text>
 
-  <path data-connector="country-table-inherits-int-id-table" d="M198,270 V212" class="inherit" marker-end="url(#umlInheritanceArrow)"/>
-  <path data-connector="country-inherits-int-entity" d="M518,270 V212" class="inherit" marker-end="url(#umlInheritanceArrow)"/>
-  <path data-connector="data-populator-inherits-application-listener" d="M518,540 V484" class="inherit" marker-end="url(#umlInheritanceArrow)"/>
-  <path data-connector="default-repository-inherits-country-suspended-repository" d="M830,270 V224" class="inherit" marker-end="url(#umlInheritanceArrow)"/>
-  <path data-connector="cached-repository-inherits-country-suspended-repository" d="M1230,270 V224" class="inherit" marker-end="url(#umlInheritanceArrow)"/>
+  <path data-connector="country-table-inherits-int-id-table" d="M198,270 V212" class="inherit" marker-end="url(#umlInheritanceArrow)" />
+  <path data-connector="country-inherits-int-entity" d="M518,270 V212" class="inherit" marker-end="url(#umlInheritanceArrow)" />
+  <path data-connector="data-populator-inherits-application-listener" d="M518,540 V484" class="inherit" marker-end="url(#umlInheritanceArrow)" />
+  <path data-connector="default-repository-inherits-country-suspended-repository" d="M830,270 V224" class="inherit" marker-end="url(#umlInheritanceArrow)" />
+  <path data-connector="cached-repository-inherits-country-suspended-repository" d="M1230,270 V224" class="inherit" marker-end="url(#umlInheritanceArrow)" />
 
-  <path data-connector="country-uses-country-table" d="M388,312 H328" class="depend" marker-end="url(#dependencyArrow)"/>
-  <path data-connector="data-populator-uses-country-table" d="M388,582 H360 Q348,582 348,570 V348 Q348,340 340,340 H328" class="depend" marker-end="url(#dependencyArrow)"/>
-  <path data-connector="default-repository-uses-country-table" d="M700,312 H688 Q676,312 676,324 V376 Q676,388 664,388 H360 Q348,388 348,376 V336 Q348,324 340,324 H328" class="depend" marker-end="url(#dependencyArrow)"/>
-  <path data-connector="cached-repository-delegates-country-suspended-repository" d="M1100,312 H1088 Q1076,312 1076,324 V376 Q1076,388 1064,388 H842 Q830,388 830,376 V354" class="depend" marker-end="url(#dependencyArrow)"/>
-  <path data-connector="cached-repository-uses-cache-manager" d="M1230,354 V410" class="depend" marker-end="url(#dependencyArrow)"/>
-  <path data-connector="cache-manager-creates-cache" d="M1230,484 V540" class="depend" marker-end="url(#dependencyArrow)"/>
-  <path data-connector="repository-config-creates-default-repository" d="M830,410 V354" class="wire" marker-end="url(#dependencyArrow)"/>
-  <path data-connector="repository-config-creates-cached-repository" d="M890,410 V402 Q890,394 902,394 H1218 Q1230,394 1230,382 V354" class="wire" marker-end="url(#dependencyArrow)"/>
-  <path data-connector="repository-config-injects-cache-manager" d="M960,447 H1100" class="wire" marker-end="url(#dependencyArrow)"/>
-  <path data-connector="lettuce-cache-config-creates-cache-manager" d="M960,577 H1000 Q1012,577 1012,565 V459 Q1012,447 1024,447 H1100" class="wire" marker-end="url(#dependencyArrow)"/>
-  <path data-connector="spring-application-provides-redis-client" d="M830,645 V614" class="wire" marker-end="url(#dependencyArrow)"/>
+  <path data-connector="country-uses-country-table" d="M388,312 H328" class="depend" marker-end="url(#dependencyArrow)" />
+  <path data-connector="data-populator-uses-country-table" d="M388,582 H360 Q348,582 348,570 V348 Q355,340 347,340 H328" class="depend" marker-end="url(#dependencyArrow)" />
+  <path data-connector="default-repository-uses-country-table" d="M700,312 H688 Q676,312 676,324 V376 Q676,388 664,388 H360 Q348,388 348,376 V336 Q355,324 347,324 H328" class="depend" marker-end="url(#dependencyArrow)" />
+  <path data-connector="cached-repository-delegates-country-suspended-repository" d="M1100,312 H1088 Q1076,312 1076,324 V376 Q1076,388 1064,388 H842 Q830,388 830,376 V354" class="depend" marker-end="url(#dependencyArrow)" />
+  <path data-connector="cached-repository-uses-cache-manager" d="M1230,354 V410" class="depend" marker-end="url(#dependencyArrow)" />
+  <path data-connector="cache-manager-creates-cache" d="M1230,484 V540" class="depend" marker-end="url(#dependencyArrow)" />
+  <path data-connector="repository-config-creates-default-repository" d="M830,410 V354" class="wire" marker-end="url(#dependencyArrow)" />
+  <path data-connector="repository-config-creates-cached-repository" d="M890,410 V402 Q890,394 902,394 H1218 Q1230,394 1230,382 V354" class="wire" marker-end="url(#dependencyArrow)" />
+  <path data-connector="repository-config-injects-cache-manager" d="M960,447 H1100" class="wire" marker-end="url(#dependencyArrow)" />
+  <path data-connector="lettuce-cache-config-creates-cache-manager" d="M960,577 H1000 Q1012,577 1012,565 V459 Q1012,447 1024,447 H1100" class="wire" marker-end="url(#dependencyArrow)" />
+  <path data-connector="spring-application-provides-redis-client" d="M830,645 V614" class="wire" marker-end="url(#dependencyArrow)" />
 </svg>

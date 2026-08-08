@@ -3,8 +3,8 @@
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
     </filter>
-    <marker id="inheritHead" markerWidth="18" markerHeight="16" refX="17" refY="8" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M1,1 L17,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.6"/>
+    <marker id="inheritHead" markerWidth="18" markerHeight="16" refX="17" refY="8" orient="auto" markerUnits="userSpaceOnUse" viewBox="0 0 18 16" data-role="uml-hollow" data-tip-direction="positive-x">
+      <path d="M1,1 L17,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.6" stroke-dasharray="none"/>
     </marker>
     <style>
       .canvas{fill:#f6f9fc}
