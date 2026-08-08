@@ -7,6 +7,11 @@ aggregate가 invariant, command method, pending domain event를 소유하고,
 `OrderRepository`는 Exposed transaction 안에서 aggregate를 local H2 table로
 매핑합니다.
 
+도메인은 Bluetape4k Exposed core의 `AbstractAggregateRoot<Long>`와
+`DomainEvent<Long>`를 사용합니다. Aggregate를 배치할 때
+`Snowflakers.Global.nextId()`가 typed Snowflake ID를 만들고, 각 event는 해당
+aggregate ID와 `Instant` 시각을 함께 보유합니다.
+
 ![DDD aggregate lifecycle with Exposed repository](../../docs/images/readme-diagrams/07-ddd-aggregate-repository-flow-01.png)
 
 그림의 핵심은 경계입니다.
@@ -55,24 +60,27 @@ aggregate는 order가 더 이상 `PLACED` 상태가 아니면 approval을 거부
 
 ## Repository Boundary
 
-`OrderRepository.save(...)`가 Exposed transaction을 소유합니다.
+`OrderRepository.save(...)`가 Exposed transaction을 소유합니다. Aggregate는
+이미 Snowflake ID를 가지므로 persistence가 별도 identity를 만들지 않습니다.
 
 ```kotlin
 val savedId = transaction(db) {
-    val orderId = aggregate.id ?: insertOrder(aggregate).value
+    val orderId = aggregate.id
+    insertOrderIfAbsent(aggregate)
     replaceOrderLines(orderId, aggregate.lines)
     updateOrder(orderId, aggregate)
     appendDomainEvents(orderId, aggregate.pendingEvents)
     orderId
 }
 
-aggregate.markPersisted(savedId)
 aggregate.markEventsCommitted()
 ```
 
 Domain event 목록은 transaction 성공 이후에만 비웁니다. Event insert 이후 실패가
 발생하면 H2가 order, line, event row를 모두 rollback하고, aggregate에는 retry나
 검사를 위한 pending event가 그대로 남습니다.
+Event의 `occurredAt: Instant`는 epoch millisecond로 저장되고, aggregate ID는
+`snowflakeGenerated()`가 만든 `Long` primary key로 유지됩니다.
 
 ## Tables
 

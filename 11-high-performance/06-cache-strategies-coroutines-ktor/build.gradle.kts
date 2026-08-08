@@ -23,6 +23,9 @@ dependencies {
 
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.jdbc)
+    implementation(libs.exposed.cache)
+    implementation(libs.exposed.jdbc.caffeine)
+    implementation(libs.exposed.ktor)
     implementation(libs.hikaricp)
     implementation(libs.kotlinx.coroutines.core)
 
@@ -32,4 +35,5 @@ dependencies {
     testImplementation(libs.ktor.client.content.negotiation)
     testImplementation(libs.bluetape4k.junit5)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(project(":exposed-shared-tests"))
 }

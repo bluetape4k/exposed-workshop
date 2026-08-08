@@ -1,13 +1,13 @@
 package exposed.multitenant.ktor
 
 import exposed.multitenant.ktor.model.MovieResponse
+import exposed.shared.tests.createJsonClient
 import exposed.multitenant.ktor.tenant.Tenant
 import exposed.multitenant.ktor.tenant.TenantContext
 import io.bluetape4k.assertions.shouldBeEqualTo
 import io.bluetape4k.assertions.shouldContain
 import io.bluetape4k.assertions.shouldNotContain
 import io.ktor.client.call.body
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
@@ -16,9 +16,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
-import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.testing.testApplication
-import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
@@ -93,14 +91,4 @@ class TenantKtorApplicationTest {
         TenantContext.currentTenantOrNull() shouldBeEqualTo null
     }
 
-    private fun io.ktor.server.testing.ApplicationTestBuilder.createJsonClient() =
-        createClient {
-            install(ContentNegotiation) {
-                json(
-                    Json {
-                        ignoreUnknownKeys = true
-                    },
-                )
-            }
-        }
 }

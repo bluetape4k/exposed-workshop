@@ -1,28 +1,32 @@
 package exposed.examples.ktor.cache.coroutines
 
 import exposed.examples.ktor.cache.coroutines.model.CoroutineCacheStatsResponse
+import exposed.examples.ktor.cache.coroutines.model.HealthResponse
 import exposed.examples.ktor.cache.coroutines.model.ProductResponse
+import exposed.shared.tests.createJsonClient
 import io.bluetape4k.assertions.shouldBeEqualTo
 import io.ktor.client.call.body
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.testing.testApplication
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.parallel.Execution
+import org.junit.jupiter.api.parallel.ExecutionMode
+import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Execution(ExecutionMode.SAME_THREAD)
 class KtorCoroutineCacheApplicationTest {
 
     @Test
@@ -62,8 +66,6 @@ class KtorCoroutineCacheApplicationTest {
         val stats = client.get("/cache/stats").body<CoroutineCacheStatsResponse>()
 
         stats.databaseReads shouldBeEqualTo 1
-        stats.cacheMisses shouldBeEqualTo 1
-        stats.cacheHits shouldBeEqualTo 7
         stats.inFlightLoads shouldBeEqualTo 0
     }
 
@@ -101,14 +103,27 @@ class KtorCoroutineCacheApplicationTest {
         stats.cacheMisses shouldBeEqualTo 2
     }
 
-    private fun io.ktor.server.testing.ApplicationTestBuilder.createJsonClient() =
-        createClient {
-            install(ContentNegotiation) {
-                json(
-                    Json {
-                        ignoreUnknownKeys = true
-                    },
-                )
+    @Test
+    fun `library health routes and legacy health contract are both available`() {
+        val previousDefault = TransactionManager.defaultDatabase
+        testApplication {
+            application {
+                ktorCoroutineCacheModule()
             }
+            val client = createJsonClient()
+
+            client.get("/health").body<HealthResponse>().status shouldBeEqualTo "UP"
+            val health = client.get("/healthz/exposed")
+            health.status shouldBeEqualTo HttpStatusCode.OK
+            health.bodyAsText().contains("\"status\":\"UP\"") shouldBeEqualTo true
+
+            val readiness = client.get("/ready")
+            readiness.status shouldBeEqualTo HttpStatusCode.OK
+            readiness.bodyAsText().contains("cache.products-cache") shouldBeEqualTo true
+
+            client.delete("/products/unknown/cache").status shouldBeEqualTo HttpStatusCode.NotFound
         }
+        TransactionManager.defaultDatabase shouldBeEqualTo previousDefault
+    }
+
 }

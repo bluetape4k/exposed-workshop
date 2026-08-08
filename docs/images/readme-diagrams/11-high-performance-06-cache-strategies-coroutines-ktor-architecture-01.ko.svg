@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Ktor coroutine cache architecture">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Ktor coroutine cache 아키텍처">
   <defs>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
@@ -9,13 +9,13 @@
     <style>
       .canvas{fill:#f6f9fc}
       .frame{fill:#fff;stroke:#d7e2ec;stroke-width:1.5}
-      .title{font-family:"Architects Daughter";font-size:34px;fill:#1e293b}
-      .subtitle{font-family:"Comic Mono";font-size:13px;fill:#536476}
-      .columnTitle{font-family:"Architects Daughter";font-size:12px;letter-spacing:.08em;fill:#94a3b8}
+      .title{font-family:"goorm Sans";font-size:34px;fill:#1e293b}
+      .subtitle{font-family:"goorm Sans Code";font-size:13px;fill:#536476}
+      .columnTitle{font-family:"goorm Sans";font-size:12px;letter-spacing:.08em;fill:#94a3b8}
       .card{stroke-width:1.7;filter:url(#shadow)}
-      .label{font-family:"Architects Daughter";font-size:18px;fill:#1e293b}
-      .detail{font-family:"Comic Mono";font-size:12px;fill:#536476}
-      .tiny{font-family:"Comic Mono";font-size:10.5px;fill:#64748b}
+      .label{font-family:"goorm Sans";font-size:18px;fill:#1e293b}
+      .detail{font-family:"goorm Sans Code";font-size:12px;fill:#536476}
+      .tiny{font-family:"goorm Sans Code";font-size:10.5px;fill:#64748b}
       .arrow{fill:none;stroke:#64748b;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#flowHead)}
       .dash{fill:none;stroke:#94a3b8;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:7 5;marker-end:url(#flowHead)}
     </style>
@@ -24,35 +24,35 @@
   <rect width="1600" height="900" class="canvas"/>
   <rect x="28" y="24" width="1544" height="852" rx="16" class="frame"/>
 
-  <text x="64" y="70" class="title">Ktor coroutine cache architecture</text>
-  <text x="64" y="96" class="subtitle">Suspend-first routes use Bluetape4k suspended JDBC Caffeine coalescing and Exposed transactions on Dispatchers.IO</text>
+  <text x="64" y="70" class="title">Ktor coroutine cache 아키텍처</text>
+  <text x="64" y="96" class="subtitle">Suspend-first route가 Bluetape4k suspended JDBC Caffeine coalescing과 Dispatchers.IO Exposed transaction을 사용</text>
 
-  <text x="192" y="146" class="columnTitle" text-anchor="middle">KTOR MODULE</text>
-  <text x="496" y="146" class="columnTitle" text-anchor="middle">SUSPEND ROUTES</text>
-  <text x="800" y="146" class="columnTitle" text-anchor="middle">COROUTINE CACHE POLICY</text>
+  <text x="192" y="146" class="columnTitle" text-anchor="middle">KTOR 모듈</text>
+  <text x="496" y="146" class="columnTitle" text-anchor="middle">SUSPEND ROUTE</text>
+  <text x="800" y="146" class="columnTitle" text-anchor="middle">COROUTINE CACHE 정책</text>
   <text x="1104" y="146" class="columnTitle" text-anchor="middle">SUSPENDED REPOSITORY</text>
-  <text x="1408" y="146" class="columnTitle" text-anchor="middle">PERSISTENCE / RESPONSE</text>
+  <text x="1408" y="146" class="columnTitle" text-anchor="middle">PERSISTENCE / 응답</text>
 
   <g id="bootstrap-row">
     <rect x="72" y="182" width="240" height="96" rx="10" fill="#e2e8f0" stroke="#64748b" class="card"/>
-    <text x="192" y="216" class="label" text-anchor="middle">Coroutine module</text>
+    <text x="192" y="216" class="label" text-anchor="middle">Coroutine 모듈</text>
     <text x="192" y="241" class="detail" text-anchor="middle">ktorCoroutineCacheModule</text>
-    <text x="192" y="259" class="tiny" text-anchor="middle">CIO server on port 8080</text>
+    <text x="192" y="259" class="tiny" text-anchor="middle">CIO server 8080</text>
 
     <rect x="376" y="182" width="240" height="96" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-    <text x="496" y="216" class="label" text-anchor="middle">Coroutine plugins</text>
+    <text x="496" y="216" class="label" text-anchor="middle">Coroutine plugin</text>
     <text x="496" y="241" class="detail" text-anchor="middle">ContentNegotiation</text>
-    <text x="496" y="259" class="tiny" text-anchor="middle">StatusPages rethrows cancellation</text>
+    <text x="496" y="259" class="tiny" text-anchor="middle">StatusPages가 cancellation을 재전파</text>
 
     <rect x="680" y="182" width="240" height="96" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-    <text x="800" y="216" class="label" text-anchor="middle">Database connect</text>
+    <text x="800" y="216" class="label" text-anchor="middle">Database 연결</text>
     <text x="800" y="241" class="detail" text-anchor="middle">HikariDataSource + Database</text>
-    <text x="800" y="259" class="tiny" text-anchor="middle">lease + default restore + unregister</text>
+    <text x="800" y="259" class="tiny" text-anchor="middle">lease + default 복원 + unregister</text>
 
     <rect x="984" y="182" width="240" height="96" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
     <text x="1104" y="216" class="label" text-anchor="middle">ProductPersistence</text>
     <text x="1104" y="241" class="detail" text-anchor="middle">SchemaUtils.create(Products)</text>
-    <text x="1104" y="259" class="tiny" text-anchor="middle">seed coroutine examples</text>
+    <text x="1104" y="259" class="tiny" text-anchor="middle">coroutine example seed</text>
 
     <rect x="1288" y="182" width="240" height="96" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
     <text x="1408" y="216" class="label" text-anchor="middle">Products table</text>
@@ -68,23 +68,23 @@
     <rect x="72" y="376" width="240" height="106" rx="10" fill="#f8fafc" stroke="#94a3b8" class="card"/>
     <text x="192" y="411" class="label" text-anchor="middle">HTTP GET</text>
     <text x="192" y="436" class="detail" text-anchor="middle">/products/{sku}/read-through</text>
-    <text x="192" y="455" class="tiny" text-anchor="middle">suspending handler</text>
+    <text x="192" y="455" class="tiny" text-anchor="middle">suspend handler</text>
 
     <rect x="376" y="376" width="240" height="106" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
     <text x="496" y="411" class="label" text-anchor="middle">coroutineCacheRoutes</text>
-    <text x="496" y="436" class="detail" text-anchor="middle">requiredSku() validates path</text>
-    <text x="496" y="455" class="tiny" text-anchor="middle">calls service without runBlocking</text>
+    <text x="496" y="436" class="detail" text-anchor="middle">requiredSku() path 검증</text>
+    <text x="496" y="455" class="tiny" text-anchor="middle">runBlocking 없이 service 호출</text>
 
     <rect x="680" y="376" width="240" height="106" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
     <text x="800" y="411" class="label" text-anchor="middle">Coroutine service</text>
     <text x="800" y="436" class="detail" text-anchor="middle">readThrough(sku)</text>
-    <text x="800" y="455" class="tiny" text-anchor="middle">cache hit fast path before lock</text>
+    <text x="800" y="455" class="tiny" text-anchor="middle">lock 전 cache hit fast path</text>
 
     <rect x="984" y="376" width="240" height="106" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
     <text x="1104" y="411" class="label" text-anchor="middle">Suspended JDBC repository</text>
     <text x="1104" y="436" class="detail" text-anchor="middle">AbstractSuspended</text>
     <text x="1104" y="452" class="detail" text-anchor="middle">JdbcCaffeineRepository</text>
-    <text x="1104" y="468" class="tiny" text-anchor="middle">library get coalesces misses</text>
+    <text x="1104" y="468" class="tiny" text-anchor="middle">library get이 miss를 결합</text>
 
     <rect x="1288" y="376" width="240" height="106" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
     <text x="1408" y="411" class="label" text-anchor="middle">Suspended DB read</text>
@@ -104,24 +104,24 @@
     <text x="192" y="649" class="detail" text-anchor="middle">DELETE cache / GET stats</text>
 
     <rect x="376" y="570" width="240" height="116" rx="10" fill="#ede9fe" stroke="#7c3aed" class="card"/>
-    <text x="496" y="605" class="label" text-anchor="middle">Route handlers</text>
-    <text x="496" y="630" class="detail" text-anchor="middle">receive UpdateProductRequest</text>
-    <text x="496" y="649" class="tiny" text-anchor="middle">return NoContent or stats</text>
+    <text x="496" y="605" class="label" text-anchor="middle">Route handler</text>
+    <text x="496" y="630" class="detail" text-anchor="middle">UpdateProductRequest 수신</text>
+    <text x="496" y="649" class="tiny" text-anchor="middle">NoContent 또는 stats 반환</text>
 
     <rect x="680" y="570" width="240" height="116" rx="10" fill="#ccfbf1" stroke="#0f766e" class="card"/>
-    <text x="800" y="605" class="label" text-anchor="middle">Service operations</text>
+    <text x="800" y="605" class="label" text-anchor="middle">Service operation</text>
     <text x="800" y="630" class="detail" text-anchor="middle">writeThrough / invalidate</text>
-    <text x="800" y="649" class="tiny" text-anchor="middle">stats + failure latch for readiness</text>
+    <text x="800" y="649" class="tiny" text-anchor="middle">stats + readiness failure latch</text>
 
     <rect x="984" y="570" width="240" height="116" rx="10" fill="#fef3c7" stroke="#d97706" class="card"/>
     <text x="1104" y="605" class="label" text-anchor="middle">Suspended upsert</text>
     <text x="1104" y="630" class="detail" text-anchor="middle">repository.update(sku)</text>
-    <text x="1104" y="649" class="tiny" text-anchor="middle">Products.upsert + version bump</text>
+    <text x="1104" y="649" class="tiny" text-anchor="middle">Products.upsert + version 증가</text>
 
     <rect x="1288" y="570" width="240" height="116" rx="10" fill="#dbeafe" stroke="#3b82f6" class="card"/>
-    <text x="1408" y="605" class="label" text-anchor="middle">Response models</text>
+    <text x="1408" y="605" class="label" text-anchor="middle">응답 모델</text>
     <text x="1408" y="630" class="detail" text-anchor="middle">ProductResponse / Stats</text>
-    <text x="1408" y="649" class="tiny" text-anchor="middle">source shows cache or database path</text>
+    <text x="1408" y="649" class="tiny" text-anchor="middle">cache 또는 database 경로 표시</text>
 
     <path data-connector="http-mutate-products-to-coroutine-routes" d="M312,628 H376" class="arrow"/>
     <path data-connector="coroutine-routes-to-write-service" d="M616,628 H680" class="arrow"/>
@@ -130,6 +130,6 @@
   </g>
 
   <rect x="72" y="750" width="1456" height="62" rx="10" fill="#f8fafc" stroke="#d7e2ec" stroke-width="1.3"/>
-  <text x="800" y="776" class="label" text-anchor="middle">Coroutine service stays suspend-first; Bluetape4k repository coalesces one database read per cold SKU.</text>
-  <text x="800" y="797" class="detail" text-anchor="middle">The service observes in-flight requests; dashed arrows mark suspended repository fallback.</text>
+  <text x="800" y="776" class="label" text-anchor="middle">Coroutine service는 suspend-first이며 Bluetape4k repository가 cold SKU당 DB read 하나로 결합.</text>
+  <text x="800" y="797" class="detail" text-anchor="middle">Service가 in-flight 요청을 관측하고 점선은 suspended repository fallback을 표시.</text>
 </svg>

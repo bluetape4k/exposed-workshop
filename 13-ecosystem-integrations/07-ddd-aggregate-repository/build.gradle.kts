@@ -4,6 +4,7 @@ configurations {
 
 dependencies {
     implementation(libs.bluetape4k.core)
+    implementation(libs.exposed.core)
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.jdbc)
 
