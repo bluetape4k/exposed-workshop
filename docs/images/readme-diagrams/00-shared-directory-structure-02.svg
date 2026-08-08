@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1080" viewBox="0 0 1500 1080">
 <defs>
   <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#94a3b8" flood-opacity=".16"/></filter>
-  <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M2,2 L12,7 L2,12 Z" fill="#2563eb"/></marker>
+  <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" data-role="primary" data-tip-direction="positive-x"><path d="M2,2 L12,7 L2,12 Z" fill="#2563eb" stroke-dasharray="none"/></marker>
   <style><![CDATA[
     svg{font-family:"Architects Daughter","Comic Mono",ui-sans-serif,system-ui,sans-serif}.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#8aa6cf;stroke-width:3;filter:url(#shadow)}.title{font-family:"Architects Daughter";font-size:46px;fill:#263a57}.subtitle,.label,.small,.mono,.footer{font-family:"Comic Mono";fill:#526276}.subtitle{font-size:17px}.label{font-size:16px}.small{font-size:13px}.mono{font-size:13px}.laneTitle,.nodeTitle{font-family:"Architects Daughter";fill:#263a57}.laneTitle{font-size:30px}.nodeTitle{font-size:22px}.lane{stroke-width:2.5}.folder{fill:#fff;stroke-width:2;filter:url(#shadow)}.folderTab{stroke-width:2}.file{fill:#f8fafc;stroke:#d4e0ec;stroke-width:1.4}.arrow{fill:none;stroke:#2563eb;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrow)}.soft{fill:none;stroke:#7c3aed;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:7 7;marker-end:url(#arrow)}.note{fill:#f8fafc;stroke:#d4e0ec;stroke-width:2}
   ]]></style>

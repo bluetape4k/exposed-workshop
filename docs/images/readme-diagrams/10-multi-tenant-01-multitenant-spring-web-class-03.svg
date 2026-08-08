@@ -3,13 +3,13 @@
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
       <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.12"/>
     </filter>
-    <marker id="inheritHead" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="16" refY="8" orient="auto">
+    <marker id="inheritHead" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="16" viewBox="0 0 18 16" refX="16" refY="8" orient="auto" data-role="uml-hollow" data-tip-direction="positive-x">
       <path d="M1,1 L16,8 L1,15 Z" fill="#fff" stroke="#64748b" stroke-width="1.7" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
     </marker>
-    <marker id="callHead" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+    <marker id="callHead" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="primary" data-tip-direction="positive-x">
       <path d="M0 0 L10 5 L0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
     </marker>
-    <marker id="schemaHead" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto">
+    <marker id="schemaHead" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="primary" data-tip-direction="positive-x">
       <path d="M0 0 L10 5 L0 10 Z" fill="#8a6f3e" stroke="#8a6f3e" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
     </marker>
     <style>

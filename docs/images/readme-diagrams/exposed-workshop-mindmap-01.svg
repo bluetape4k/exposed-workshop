@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000">
   <defs>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#94a3b8" flood-opacity=".18"/></filter>
-    <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse"><path d="M2,2 L12,7 L2,12 Z" fill="#64748b"/></marker>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto" markerUnits="userSpaceOnUse" viewBox="0 0 14 14" data-role="primary" data-tip-direction="positive-x"><path d="M2,2 L12,7 L2,12 Z" fill="#64748b" stroke-dasharray="none"/></marker>
     <style><![CDATA[
       svg{font-family:"Architects Daughter","Comic Mono",ui-sans-serif,system-ui,sans-serif}.canvas{fill:#f6f9fc}.frame{fill:#fff;stroke:#8aa6cf;stroke-width:3;filter:url(#shadow)}.title{font-family:"Architects Daughter";font-size:50px;fill:#263a57}.subtitle,.body,.tag,.footer{font-family:"Comic Mono";fill:#526276}.subtitle{font-size:17px}.body{font-size:14px}.tag{font-size:13px}.hubTitle,.cardTitle{font-family:"Architects Daughter";fill:#263a57}.hubTitle{font-size:38px}.cardTitle{font-size:28px}.hub{fill:#ffffff;stroke:#8aa6cf;stroke-width:3;filter:url(#shadow)}.card{stroke-width:2.5;filter:url(#shadow)}.route{fill:none;stroke:#64748b;stroke-width:3.5;stroke-linecap:round;stroke-dasharray:8 7;marker-end:url(#arrow)}.pill{fill:#fff;stroke:#dbe7f3;stroke-width:1.6}.footerBox{fill:#f8fafc;stroke:#d4e0ec;stroke-width:2}
     ]]></style>
