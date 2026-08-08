@@ -1,0 +1,49 @@
+{
+  "kind": "architecture",
+  "source": {
+    "question": "Which component owns cache policy, JDBC state, readiness, and lifecycle cleanup in the Ktor cache example?",
+    "revision": "f86ab97d+working-tree",
+    "paths": [
+      "11-high-performance/05-cache-strategies-ktor/src/main/kotlin/exposed/examples/ktor/cache/KtorCacheStrategiesApplication.kt",
+      "11-high-performance/05-cache-strategies-ktor/src/main/kotlin/exposed/examples/ktor/cache/service/CachedUserService.kt",
+      "11-high-performance/05-cache-strategies-ktor/src/main/kotlin/exposed/examples/ktor/cache/repository/ExposedUserRepository.kt",
+      "11-high-performance/05-cache-strategies-ktor/src/main/kotlin/exposed/examples/ktor/cache/JdbcCacheDatabaseLease.kt"
+    ]
+  },
+  "nodes": [
+    {"id":"module","label":"Application module","source":"KtorCacheStrategiesApplication.kt"},
+    {"id":"plugins","label":"Ktor plugins","source":"KtorCacheStrategiesApplication.kt"},
+    {"id":"database","label":"HikariDataSource + Database","source":"JdbcCacheDatabaseLease.kt"},
+    {"id":"persistence","label":"UserPersistence","source":"UserPersistence.kt"},
+    {"id":"users","label":"Users table","source":"UserPersistence.kt"},
+    {"id":"http-read","label":"HTTP GET cache routes","source":"CacheStrategyRoutes.kt"},
+    {"id":"routes-read","label":"cacheStrategyRoutes","source":"CacheStrategyRoutes.kt"},
+    {"id":"service-read","label":"CachedUserService","source":"CachedUserService.kt"},
+    {"id":"repository-cache","label":"AbstractJdbcCaffeineRepository","source":"ExposedUserRepository.kt"},
+    {"id":"db-read","label":"findByIdFromDb","source":"ExposedUserRepository.kt"},
+    {"id":"http-write","label":"HTTP mutation and stats","source":"CacheStrategyRoutes.kt"},
+    {"id":"routes-write","label":"Route handlers","source":"CacheStrategyRoutes.kt"},
+    {"id":"service-write","label":"writeThrough / invalidate","source":"CachedUserService.kt"},
+    {"id":"repository-write","label":"put / invalidate / upsert","source":"ExposedUserRepository.kt"},
+    {"id":"responses","label":"Response models","source":"model"}
+  ],
+  "edges": [
+    {"id":"module-plugins","from":"module","to":"plugins","kind":"flow","source":"KtorCacheStrategiesApplication.kt"},
+    {"id":"plugins-database","from":"plugins","to":"database","kind":"dependency","source":"KtorCacheStrategiesApplication.kt"},
+    {"id":"database-persistence","from":"database","to":"persistence","kind":"flow","source":"UserPersistence.kt"},
+    {"id":"persistence-users","from":"persistence","to":"users","kind":"flow","source":"UserPersistence.kt"},
+    {"id":"http-read-routes","from":"http-read","to":"routes-read","kind":"flow","source":"CacheStrategyRoutes.kt"},
+    {"id":"routes-read-service","from":"routes-read","to":"service-read","kind":"flow","source":"CacheStrategyRoutes.kt"},
+    {"id":"service-read-cache","from":"service-read","to":"repository-cache","kind":"ownership","source":"CachedUserService.kt"},
+    {"id":"cache-db-read","from":"repository-cache","to":"db-read","kind":"fallback","source":"ExposedUserRepository.kt"},
+    {"id":"http-write-routes","from":"http-write","to":"routes-write","kind":"flow","source":"CacheStrategyRoutes.kt"},
+    {"id":"routes-write-service","from":"routes-write","to":"service-write","kind":"flow","source":"CacheStrategyRoutes.kt"},
+    {"id":"service-write-repository","from":"service-write","to":"repository-write","kind":"ownership","source":"CachedUserService.kt"},
+    {"id":"repository-responses","from":"repository-write","to":"responses","kind":"flow","source":"model"}
+  ],
+  "behavior": {"branches": 2, "loops": 0},
+  "repairs": [
+    {"target":"repository-cache","reason":"replace removed service-owned ConcurrentHashMap with Bluetape4k repository ownership","touches":3},
+    {"target":"database","reason":"show lease restore, unregister, and datasource cleanup","touches":2}
+  ]
+}

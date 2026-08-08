@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.parallel.Execution
 import org.junit.jupiter.api.parallel.ExecutionMode
+import java.time.Instant
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Execution(ExecutionMode.SAME_THREAD)
@@ -62,6 +63,16 @@ class DddAggregateWorkshopTest {
         events.single().eventType shouldBeEqualTo "OrderPlaced"
         events.single().sequence shouldBeEqualTo 1
         events.single().payload shouldBeEqualTo "customer=customer-1;lines=2;total=65.00"
+    }
+
+    @Test
+    fun `aggregate uses typed id and domain event metadata from bluetape core`() {
+        val order = PurchaseOrder.place(newOrderCommand(), occurredAtEpochMillis = 1_000L)
+
+        (order.id > 0L) shouldBeEqualTo true
+        val event = order.pendingEvents.single()
+        event.aggregateId shouldBeEqualTo order.id
+        event.occurredAt shouldBeEqualTo Instant.ofEpochMilli(1_000L)
     }
 
     @Test

@@ -9,6 +9,11 @@ import exposed.examples.ktor.cache.persistence.UserPersistence
 import exposed.examples.ktor.cache.repository.ExposedUserRepository
 import exposed.examples.ktor.cache.routes.cacheStrategyRoutes
 import exposed.examples.ktor.cache.service.CachedUserService
+import io.bluetape4k.exposed.ktor.Bluetape4kExposedKtorConfig
+import io.bluetape4k.exposed.ktor.ExposedKtorCacheContributor
+import io.bluetape4k.exposed.ktor.ExposedKtorCacheReadinessConfig
+import io.bluetape4k.exposed.ktor.ExposedKtorCacheStatus
+import io.bluetape4k.exposed.ktor.installBluetape4kExposedKtor
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStopped
 import io.ktor.server.application.call
@@ -17,12 +22,18 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.response.respond
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
-import org.jetbrains.exposed.v1.jdbc.Database
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlinx.coroutines.Dispatchers
 
 private const val DEFAULT_PORT = 8080
 
 fun main() {
-    embeddedServer(CIO, port = DEFAULT_PORT, module = Application::ktorCacheStrategiesModule).start(wait = true)
+    embeddedServer(
+        CIO,
+        host = "127.0.0.1",
+        port = DEFAULT_PORT,
+        module = Application::ktorCacheStrategiesModule,
+    ).start(wait = true)
 }
 
 fun Application.ktorCacheStrategiesModule(
@@ -30,22 +41,49 @@ fun Application.ktorCacheStrategiesModule(
 ) {
     installKtorCachePlugins()
 
-    val database = Database.connect(dataSource)
-    UserPersistence(database).initialize()
-    environment.monitor.subscribe(ApplicationStopped) {
-        dataSource.close()
-    }
+    val lease = JdbcCacheDatabaseLease.acquire(dataSource)
+    val writeFailureLatch = AtomicBoolean(false)
+    val repository = ExposedUserRepository(assertOwner = lease::assertOwned)
+    try {
+        UserPersistence(lease.database).initialize()
+        val service = CachedUserService(repository, writeFailureLatch)
 
-    val service = CachedUserService(ExposedUserRepository(database))
+        installBluetape4kExposedKtor(
+            Bluetape4kExposedKtorConfig(
+                jdbcDatabase = lease.database,
+                jdbcBlockingDispatcher = Dispatchers.IO,
+                installStatusPages = false,
+                installHealthRoutes = true,
+                healthPath = "/healthz/exposed",
+                readinessPath = "/ready",
+            ),
+            ExposedKtorCacheReadinessConfig(
+                listOf(
+                    ExposedKtorCacheContributor.jdbcRepository("users") { repository.validateConsistency() },
+                    ExposedKtorCacheContributor.custom("users-write") {
+                        if (writeFailureLatch.get()) ExposedKtorCacheStatus.DOWN else ExposedKtorCacheStatus.UP
+                    },
+                ),
+            ),
+        )
 
-    routing {
-        get("/") {
-            call.respond(IndexResponse())
+        environment.monitor.subscribe(ApplicationStopped) {
+            lease.release(repository::close)
         }
-        get("/health") {
-            call.respond(HealthResponse(status = "UP"))
+
+        routing {
+            get("/") {
+                call.respond(IndexResponse())
+            }
+            // 기존 교육용 caller 계약을 유지합니다. library 상세 route는 /healthz/exposed 입니다.
+            get("/health") {
+                call.respond(HealthResponse(status = "UP"))
+            }
+            cacheStrategyRoutes(service)
         }
-        cacheStrategyRoutes(service)
+    } catch (cause: Throwable) {
+        lease.release(repository::close)
+        throw cause
     }
 }
 

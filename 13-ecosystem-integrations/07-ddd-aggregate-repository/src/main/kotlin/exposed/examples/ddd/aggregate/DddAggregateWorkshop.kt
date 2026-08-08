@@ -2,9 +2,14 @@ package exposed.examples.ddd.aggregate
 
 import io.bluetape4k.support.requireNotBlank
 import io.bluetape4k.support.requirePositiveNumber
+import io.bluetape4k.exposed.core.snowflakeGenerated
+import io.bluetape4k.exposed.core.ddd.AbstractAggregateRoot
+import io.bluetape4k.exposed.core.ddd.DomainEvent
+import io.bluetape4k.idgenerators.snowflake.Snowflakers
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.SortOrder
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IdTable
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.jdbc.Database
@@ -18,6 +23,7 @@ import org.jetbrains.exposed.v1.jdbc.update
 import java.io.Serializable
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.time.Instant
 
 @JvmInline
 internal value class OrderNumber(val value: String): Serializable {
@@ -122,22 +128,22 @@ internal enum class OrderStatus {
     APPROVED,
 }
 
-internal sealed interface OrderDomainEvent: Serializable {
+internal sealed interface OrderDomainEvent: DomainEvent<Long>, Serializable {
     val sequence: Int
     val orderNumber: OrderNumber
-    val occurredAtEpochMillis: Long
     val eventType: String
 
     fun payload(): String
 }
 
 internal data class OrderPlacedEvent(
+    override val aggregateId: Long,
     override val sequence: Int,
     override val orderNumber: OrderNumber,
     val customerId: CustomerId,
     val lineCount: Int,
     val totalAmount: Money,
-    override val occurredAtEpochMillis: Long,
+    override val occurredAt: Instant,
 ): OrderDomainEvent {
 
     override val eventType: String = "OrderPlaced"
@@ -151,11 +157,12 @@ internal data class OrderPlacedEvent(
 }
 
 internal data class OrderApprovedEvent(
+    override val aggregateId: Long,
     override val sequence: Int,
     override val orderNumber: OrderNumber,
     val approvedBy: OperatorId,
     val totalAmount: Money,
-    override val occurredAtEpochMillis: Long,
+    override val occurredAt: Instant,
 ): OrderDomainEvent {
 
     override val eventType: String = "OrderApproved"
@@ -169,26 +176,23 @@ internal data class OrderApprovedEvent(
 }
 
 internal class PurchaseOrder private constructor(
-    id: Long?,
+    override val id: Long,
     val orderNumber: OrderNumber,
     val customerId: CustomerId,
     lines: List<OrderLine>,
     status: OrderStatus,
     version: Long,
     lastEventSequence: Int,
-) {
-
-    var id: Long? = id
-        private set
+) : AbstractAggregateRoot<Long>() {
 
     private val mutableLines: List<OrderLine> = lines.toList()
-    private val mutablePendingEvents = mutableListOf<OrderDomainEvent>()
     private var mutableStatus: OrderStatus = status
     private var mutableVersion: Long = version
     private var lastCommittedEventSequence: Int = lastEventSequence
 
     val lines: List<OrderLine> get() = mutableLines
-    val pendingEvents: List<OrderDomainEvent> get() = mutablePendingEvents.toList()
+    val pendingEvents: List<OrderDomainEvent>
+        get() = domainEvents().map { it as OrderDomainEvent }
     val status: OrderStatus get() = mutableStatus
     val version: Long get() = mutableVersion
     val total: Money get() = lines.fold(Money.dollars("0.00")) { acc, line -> acc + line.lineTotal }
@@ -202,35 +206,32 @@ internal class PurchaseOrder private constructor(
         mutableVersion += 1L
         record(
             OrderApprovedEvent(
+                aggregateId = id,
                 sequence = nextEventSequence(),
                 orderNumber = orderNumber,
                 approvedBy = approvedBy,
                 totalAmount = total,
-                occurredAtEpochMillis = occurredAtEpochMillis,
+                occurredAt = Instant.ofEpochMilli(occurredAtEpochMillis),
             )
         )
     }
 
-    internal fun markPersisted(id: Long) {
-        this.id = id
-    }
-
     internal fun markEventsCommitted() {
-        lastCommittedEventSequence += mutablePendingEvents.size
-        mutablePendingEvents.clear()
+        lastCommittedEventSequence += domainEvents().size
+        clearDomainEvents()
     }
 
     private fun record(event: OrderDomainEvent) {
-        mutablePendingEvents += event
+        recordDomainEvent(event)
     }
 
     private fun nextEventSequence(): Int =
-        lastCommittedEventSequence + mutablePendingEvents.size + 1
+        lastCommittedEventSequence + domainEvents().size + 1
 
     companion object {
         fun place(command: PlaceOrderCommand, occurredAtEpochMillis: Long = nowEpochMillis()): PurchaseOrder {
             val order = PurchaseOrder(
-                id = null,
+                id = Snowflakers.Global.nextId(),
                 orderNumber = command.orderNumber,
                 customerId = command.customerId,
                 lines = command.lines,
@@ -240,12 +241,13 @@ internal class PurchaseOrder private constructor(
             )
             order.record(
                 OrderPlacedEvent(
+                    aggregateId = order.id,
                     sequence = 1,
                     orderNumber = command.orderNumber,
                     customerId = command.customerId,
                     lineCount = command.lines.size,
                     totalAmount = order.total,
-                    occurredAtEpochMillis = occurredAtEpochMillis,
+                    occurredAt = Instant.ofEpochMilli(occurredAtEpochMillis),
                 )
             )
             return order
@@ -302,12 +304,15 @@ internal fun interface RepositoryFailureHook {
     fun afterEventsPersisted(orderId: Long)
 }
 
-internal object WorkshopDddOrders: LongIdTable("ddd_orders") {
+internal object WorkshopDddOrders: IdTable<Long>("ddd_orders") {
+    override val id = long("id").snowflakeGenerated().entityId()
     val orderNumber = varchar("order_number", 64).uniqueIndex()
     val customerId = varchar("customer_id", 64)
     val status = varchar("status", 24)
     val version = long("version")
     val totalAmount = decimal("total_amount", 12, 2)
+
+    override val primaryKey = PrimaryKey(id)
 }
 
 internal object WorkshopDddOrderLines: LongIdTable("ddd_order_lines") {
@@ -343,7 +348,10 @@ internal class OrderRepository(
         failureHook: RepositoryFailureHook = RepositoryFailureHook {},
     ): PersistedOrder {
         val savedId = transaction(db) {
-            val orderId = aggregate.id ?: insertOrder(aggregate).value
+            val orderId = aggregate.id
+            if (WorkshopDddOrders.selectAll().where { WorkshopDddOrders.id eq orderId }.singleOrNull() == null) {
+                insertOrder(aggregate)
+            }
             replaceOrderLines(orderId, aggregate.lines)
             updateOrder(orderId, aggregate)
             appendDomainEvents(orderId, aggregate.pendingEvents)
@@ -351,7 +359,6 @@ internal class OrderRepository(
             orderId
         }
 
-        aggregate.markPersisted(savedId)
         aggregate.markEventsCommitted()
         return findById(savedId) ?: error("Order $savedId was not found after save.")
     }
@@ -410,14 +417,17 @@ internal class OrderRepository(
             WorkshopDddOrderEvents.selectAll().count()
         }
 
-    private fun insertOrder(aggregate: PurchaseOrder): EntityID<Long> =
-        WorkshopDddOrders.insertAndGetId {
+    private fun insertOrder(aggregate: PurchaseOrder): EntityID<Long> {
+        WorkshopDddOrders.insert {
+            it[id] = EntityID(aggregate.id, WorkshopDddOrders)
             it[orderNumber] = aggregate.orderNumber.value
             it[customerId] = aggregate.customerId.value
             it[status] = aggregate.status.name
             it[version] = aggregate.version
             it[totalAmount] = aggregate.total.amount
         }
+        return EntityID(aggregate.id, WorkshopDddOrders)
+    }
 
     private fun updateOrder(orderId: Long, aggregate: PurchaseOrder) {
         WorkshopDddOrders.update({ WorkshopDddOrders.id eq orderId }) {
@@ -447,7 +457,7 @@ internal class OrderRepository(
                 it[eventSequence] = event.sequence
                 it[eventType] = event.eventType
                 it[payload] = event.payload()
-                it[occurredAtEpochMillis] = event.occurredAtEpochMillis
+                it[occurredAtEpochMillis] = event.occurredAt.toEpochMilli()
             }
         }
     }

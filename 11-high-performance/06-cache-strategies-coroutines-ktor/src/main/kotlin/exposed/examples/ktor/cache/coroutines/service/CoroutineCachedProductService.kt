@@ -4,55 +4,65 @@ import exposed.examples.ktor.cache.coroutines.model.CoroutineCacheStatsResponse
 import exposed.examples.ktor.cache.coroutines.model.ProductResponse
 import exposed.examples.ktor.cache.coroutines.model.UpdateProductRequest
 import exposed.examples.ktor.cache.coroutines.repository.SuspendingProductRepository
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
+import kotlin.coroutines.cancellation.CancellationException
 
 class CoroutineCachedProductService(
     private val repository: SuspendingProductRepository,
+    private val writeFailureLatch: AtomicBoolean = AtomicBoolean(false),
 ) {
-    private val cache = ConcurrentHashMap<String, ProductResponse>()
-    private val loadLocks = ConcurrentHashMap<String, Mutex>()
     private val inFlightLoads = AtomicInteger()
     private val cacheHits = AtomicInteger()
     private val cacheMisses = AtomicInteger()
 
     suspend fun readThrough(sku: String): ProductResponse {
-        cache[sku]?.let {
+        check(repository.accepts(sku)) { "Unknown product key is not admitted: $sku" }
+        val cacheHit = repository.cache.getIfPresent(sku) != null
+        if (cacheHit) {
             cacheHits.incrementAndGet()
-            return it.copy(source = "read-through-cache")
+        } else {
+            cacheMisses.incrementAndGet()
         }
 
-        val lock = loadLocks.computeIfAbsent(sku) { Mutex() }
-        return lock.withLock {
-            cache[sku]?.let {
-                cacheHits.incrementAndGet()
-                return@withLock it.copy(source = "read-through-cache")
-            }
-
-            cacheMisses.incrementAndGet()
-            inFlightLoads.incrementAndGet()
-            try {
-                val product = repository.find(sku) ?: throw IllegalArgumentException("Unknown product: $sku")
-                cache[sku] = product.copy(source = "cache")
-                product.copy(source = "read-through-database")
-            } finally {
-                inFlightLoads.decrementAndGet()
-                loadLocks.remove(sku, lock)
-            }
+        inFlightLoads.incrementAndGet()
+        try {
+            val product = repository.get(sku) ?: throw IllegalArgumentException("Unknown product: $sku")
+            return product.copy(source = if (cacheHit) "read-through-cache" else "read-through-database")
+        } finally {
+            inFlightLoads.decrementAndGet()
         }
     }
 
     suspend fun writeThrough(sku: String, request: UpdateProductRequest): ProductResponse {
+        check(repository.accepts(sku)) { "Unknown product key is not admitted: $sku" }
         val name = request.name.trim()
         require(name.isNotBlank()) { "name must not be blank" }
-        val updated = repository.update(sku, name)
-        cache[sku] = updated.copy(source = "cache")
-        return updated.copy(source = "write-through")
+        val updated = ProductResponse(
+            sku = sku,
+            name = name,
+            version = repository.nextVersion(sku),
+            source = "cache",
+        )
+        return try {
+            repository.put(sku, updated)
+            writeFailureLatch.set(false)
+            updated.copy(source = "write-through")
+        } catch (cause: CancellationException) {
+            throw cause
+        } catch (cause: Exception) {
+            repository.invalidate(sku)
+            writeFailureLatch.set(true)
+            throw cause
+        }
     }
 
-    fun invalidate(sku: String): Boolean = cache.remove(sku) != null
+    suspend fun invalidate(sku: String): Boolean {
+        if (!repository.accepts(sku)) return false
+        val present = repository.cache.getIfPresent(sku) != null
+        if (present) repository.invalidate(sku)
+        return present
+    }
 
     fun stats(): CoroutineCacheStatsResponse =
         CoroutineCacheStatsResponse(
@@ -60,6 +70,8 @@ class CoroutineCachedProductService(
             cacheHits = cacheHits.get(),
             cacheMisses = cacheMisses.get(),
             inFlightLoads = inFlightLoads.get(),
-            cacheSize = cache.size,
+            cacheSize = repository.cache.asMap().size,
         )
+
+    fun writeFailureLatched(): Boolean = writeFailureLatch.get()
 }
