@@ -22,26 +22,26 @@ Chapter 10-12 backlog는 가치가 있지만, tenant 소유 datasource pool을 �
 
 | 우선순위 | 이슈 | 난이도 | 메모 |
 |---|---|---:|---|
-| P2 | [#70](https://github.com/bluetape4k/exposed-workshop/issues/70) routing datasource registry does not close tenant Hikari pools | M | 기존 chapter 11 예제가 tenant pool을 만들지만 registry/Spring shutdown 소유권을 정의하지 않습니다. |
-| P3 | [#45](https://github.com/bluetape4k/exposed-workshop/issues/45) Ktor examples for chapters 10 and 11 epic | L | `#46`-`#50`의 parent입니다. 작업은 module 단위로 유지합니다. |
-| P3 | [#46](https://github.com/bluetape4k/exposed-workshop/issues/46) Ktor multi-tenant example for chapter 10 | M | `#45`의 child입니다. |
-| P3 | [#47](https://github.com/bluetape4k/exposed-workshop/issues/47) Ktor cache strategies example for chapter 11 | M | `#45`의 child입니다. |
-| P3 | [#48](https://github.com/bluetape4k/exposed-workshop/issues/48) Ktor coroutine cache example for chapter 11 | M | `#45`의 child입니다. |
-| P3 | [#49](https://github.com/bluetape4k/exposed-workshop/issues/49) Ktor routing datasource example for chapter 11 | M | `#45`의 child입니다. `#70` lifecycle fix를 반영해야 합니다. |
-| P3 | [#50](https://github.com/bluetape4k/exposed-workshop/issues/50) wire Ktor chapter examples into docs and verification | S | `#46`-`#49` 완료 후 마무리합니다. |
-| P3 | [#51](https://github.com/bluetape4k/exposed-workshop/issues/51) Spring Boot multi-tenant strategy epic | L | `#52`-`#56`의 parent입니다. |
-| P3 | [#52](https://github.com/bluetape4k/exposed-workshop/issues/52) schema-per-tenant Spring Boot example | M | `#51`의 child입니다. |
-| P3 | [#53](https://github.com/bluetape4k/exposed-workshop/issues/53) database-per-tenant Spring Boot example | M | `#51`의 child입니다. |
-| P3 | [#54](https://github.com/bluetape4k/exposed-workshop/issues/54) Spring Security tenant authorization example | M | `#51`의 child입니다. |
-| P3 | [#55](https://github.com/bluetape4k/exposed-workshop/issues/55) tenant onboarding/provisioning example | M | `#51`의 child입니다. |
-| P3 | [#56](https://github.com/bluetape4k/exposed-workshop/issues/56) wire chapter 10 examples into docs and verification | S | `#52`-`#55` 완료 후 마무리합니다. |
-| P3 | [#57](https://github.com/bluetape4k/exposed-workshop/issues/57) chapter 12 production integration epic | L | `#58`-`#63`의 parent입니다. |
-| P3 | [#58](https://github.com/bluetape4k/exposed-workshop/issues/58) Spring Boot 4 and Ktor application architecture examples | M | `#57`의 child입니다. |
-| P3 | [#59](https://github.com/bluetape4k/exposed-workshop/issues/59) authentication/session examples | M | `#57`의 child입니다. |
-| P3 | [#60](https://github.com/bluetape4k/exposed-workshop/issues/60) outbox realtime examples | M | `#57`의 child입니다. |
-| P3 | [#61](https://github.com/bluetape4k/exposed-workshop/issues/61) HTTP client outbox/idempotency examples | M | `#57`의 child입니다. |
-| P3 | [#62](https://github.com/bluetape4k/exposed-workshop/issues/62) observability/readiness examples | M | `#57`의 child입니다. |
-| P3 | [#63](https://github.com/bluetape4k/exposed-workshop/issues/63) wire chapter 12 examples into docs and verification | S | `#58`-`#62` 완료 후 마무리합니다. |
+| P2 | [#70](https://github.com/bluetape4k/exposed-workshop/issues/70) routing datasource registry가 tenant Hikari pool을 닫지 않음 | M | 기존 chapter 11 예제가 tenant pool을 만들지만 registry/Spring shutdown 소유권을 정의하지 않습니다. |
+| P3 | [#45](https://github.com/bluetape4k/exposed-workshop/issues/45) 10·11장 Ktor 예제 epic | L | `#46`-`#50`의 parent입니다. 작업은 module 단위로 유지합니다. |
+| P3 | [#46](https://github.com/bluetape4k/exposed-workshop/issues/46) 10장 Ktor multi-tenant 예제 | M | `#45`의 child입니다. |
+| P3 | [#47](https://github.com/bluetape4k/exposed-workshop/issues/47) 11장 Ktor cache strategy 예제 | M | `#45`의 child입니다. |
+| P3 | [#48](https://github.com/bluetape4k/exposed-workshop/issues/48) 11장 Ktor coroutine cache 예제 | M | `#45`의 child입니다. |
+| P3 | [#49](https://github.com/bluetape4k/exposed-workshop/issues/49) 11장 Ktor routing datasource 예제 | M | `#45`의 child입니다. `#70` lifecycle fix를 반영해야 합니다. |
+| P3 | [#50](https://github.com/bluetape4k/exposed-workshop/issues/50) Ktor 장 예제를 문서와 검증에 연결 | S | `#46`-`#49` 완료 후 마무리합니다. |
+| P3 | [#51](https://github.com/bluetape4k/exposed-workshop/issues/51) Spring Boot multi-tenant 전략 epic | L | `#52`-`#56`의 parent입니다. |
+| P3 | [#52](https://github.com/bluetape4k/exposed-workshop/issues/52) schema-per-tenant Spring Boot 예제 | M | `#51`의 child입니다. |
+| P3 | [#53](https://github.com/bluetape4k/exposed-workshop/issues/53) database-per-tenant Spring Boot 예제 | M | `#51`의 child입니다. |
+| P3 | [#54](https://github.com/bluetape4k/exposed-workshop/issues/54) Spring Security tenant authorization 예제 | M | `#51`의 child입니다. |
+| P3 | [#55](https://github.com/bluetape4k/exposed-workshop/issues/55) tenant onboarding/provisioning 예제 | M | `#51`의 child입니다. |
+| P3 | [#56](https://github.com/bluetape4k/exposed-workshop/issues/56) 10장 예제를 문서와 검증에 연결 | S | `#52`-`#55` 완료 후 마무리합니다. |
+| P3 | [#57](https://github.com/bluetape4k/exposed-workshop/issues/57) 12장 production integration epic | L | `#58`-`#63`의 parent입니다. |
+| P3 | [#58](https://github.com/bluetape4k/exposed-workshop/issues/58) Spring Boot 4·Ktor application architecture 예제 | M | `#57`의 child입니다. |
+| P3 | [#59](https://github.com/bluetape4k/exposed-workshop/issues/59) authentication/session 예제 | M | `#57`의 child입니다. |
+| P3 | [#60](https://github.com/bluetape4k/exposed-workshop/issues/60) outbox realtime 예제 | M | `#57`의 child입니다. |
+| P3 | [#61](https://github.com/bluetape4k/exposed-workshop/issues/61) HTTP client outbox/idempotency 예제 | M | `#57`의 child입니다. |
+| P3 | [#62](https://github.com/bluetape4k/exposed-workshop/issues/62) observability/readiness 예제 | M | `#57`의 child입니다. |
+| P3 | [#63](https://github.com/bluetape4k/exposed-workshop/issues/63) 12장 예제를 문서와 검증에 연결 | S | `#58`-`#62` 완료 후 마무리합니다. |
 
 ## 의존성 맵
 
