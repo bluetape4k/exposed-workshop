@@ -2,9 +2,9 @@ package exposed.examples.ktor.cache
 
 import exposed.examples.ktor.cache.model.CacheStatsResponse
 import exposed.examples.ktor.cache.model.UserResponse
+import exposed.shared.tests.createJsonClient
 import io.bluetape4k.assertions.shouldBeEqualTo
 import io.ktor.client.call.body
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -13,9 +13,7 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.testing.testApplication
-import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
@@ -75,14 +73,4 @@ class KtorCacheStrategiesApplicationTest {
         stats.cacheMisses shouldBeEqualTo 2
     }
 
-    private fun io.ktor.server.testing.ApplicationTestBuilder.createJsonClient() =
-        createClient {
-            install(ContentNegotiation) {
-                json(
-                    Json {
-                        ignoreUnknownKeys = true
-                    },
-                )
-            }
-        }
 }

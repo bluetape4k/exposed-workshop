@@ -44,6 +44,12 @@ dependencies {
     implementation(libs.bluetape4k.idgenerators)
     implementation(libs.java.uuid.generator)
 
+    // Ktor 테스트 애플리케이션 공통 JSON client
+    api(libs.ktor.server.test.host)
+    api(libs.ktor.client.content.negotiation)
+    api(libs.ktor.serialization.kotlinx.json)
+    api(libs.kotlinx.serialization.json)
+
     // 코루틴 테스트 의존성
     testImplementation(libs.bluetape4k.coroutines)
     testImplementation(libs.kotlinx.coroutines.core)

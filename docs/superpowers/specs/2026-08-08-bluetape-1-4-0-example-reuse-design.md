@@ -66,17 +66,20 @@ GitHub 중복 확인 후 별도 library 승격 issue로 남긴다.
 - Ktor module은 실제 1.12.1 overload를 사용한다. 각 application은
   `Bluetape4kExposedKtorConfig(jdbcDatabase = database,
   jdbcBlockingDispatcher = Dispatchers.IO, installStatusPages = false,
-  installHealthRoutes = true, healthPath = "/health", readinessPath = "/ready")`와
-  `ExposedKtorCacheReadinessConfig`를 함께 넘긴다. readiness contributor는
-  `jdbcRepository("users"/"products") { repository.validateConsistency() }`와
-  `custom("*-write") { writeFailureLatch ? DOWN : UP }`를 분리해 구성한다.
-  전자는 library worker report를, 후자는 `WRITE_THROUGH` DB 예외 뒤 service가
-  기록한 O(1) application-owned latch를 관측한다. 성공한 다음 write는 latch를
-  reset한다. 기존 수동 `/health` route와 그 전용 `HealthResponse`는 제거한다.
-  health는 library가 반환하는 allowlisted 상태만 노출하고 SQL/URL/credential/cache
-  key/exception detail을 포함하지 않는 loopback/demo 전용 route로 둔다. `main`의
-  embedded server는 `host = "127.0.0.1"`로 고정하고, readiness는 library의
-  `UP`/`DOWN`/timeout HTTP status를 함께 검증한다.
+  installHealthRoutes = true, healthPath = "/healthz/exposed", readinessPath = "/ready")`와
+  `ExposedKtorCacheReadinessConfig`를 함께 넘긴다. sync readiness contributor는
+  `jdbcRepository("users") { repository.validateConsistency() }`와
+  `custom("users-write") { if (writeFailureLatch.get()) DOWN else UP }`를 분리해
+  구성한다. suspend repository에는 `validateConsistency()`가 없으므로
+  `custom("products-cache") { if (cacheStatus.get()) UP else DOWN }` 하나로
+  application-owned 상태를 관측하고, 성공한 다음 write는 latch를 reset한다.
+  library health route는 `/healthz/exposed`에 두고 기존 caller 호환성을 위해
+  수동 `/health` route의 `HealthResponse(status = "UP")`를 유지한다. health body
+  차이는 EN/KO README migration note에 기록한다. health는 allowlisted 상태만
+  반환하고 SQL/URL/credential/cache key/exception detail을 노출하지 않는
+  loopback/demo 전용 route로 둔다. `main`의 embedded server는
+  `host = "127.0.0.1"`로 고정하고, readiness는 library의 `UP`/`DOWN`/timeout
+  HTTP status를 `/ready`에서 검증한다.
 - JDBC repository base가 implicit `transaction {}`를 사용하므로
   `TransactionManager.defaultDatabase`는 각 demo module의 application-local
   owner가 명시적으로 관리한다. 새 production shared module을 만들지 않는
@@ -102,6 +105,9 @@ GitHub 중복 확인 후 별도 library 승격 issue로 남긴다.
 `PurchaseOrder`는 `AbstractAggregateRoot<Long>`를 상속하고, domain event는
 `DomainEvent<Long>`를 구현한다.
 
+DDD module은 `libs.exposed.core`를 직접 선언하여 이 두 contract가
+`bluetape4k-exposed-core` 1.12.1에서 오도록 고정한다.
+
 - 신규 aggregate ID는 이미 catalog에 있는 Bluetape `Snowflakers.Global`로
   생성하여 DB auto-increment 의존성을 제거한다.
 - `PurchaseOrder.id`는 생성 시점부터 non-null이며, Exposed insert는
@@ -125,6 +131,12 @@ GitHub 중복 확인 후 별도 library 승격 issue로 남긴다.
 헬퍼를 추가하고 네 모듈의 private helper를 제거한다. 각 consumer가 명시적으로
 shared test fixture를 참조하게 하며, 이 변경은 테스트 지원 코드만 통합한다.
 교육용 production plugin·datasource는 shared에 넣지 않는다.
+
+cache invalidation의 caller 계약도 보존한다. library `invalidate`는 `Unit`을
+반환하므로 service adapter가 invalidate 전에 `repository.cache.getIfPresent(id)`로
+존재 여부를 확인하고, 존재하면 `204 No Content`, 없으면 `404 Not Found`를
+반환한다. DB row 존재 여부를 새로 조회하지 않아 기존 cache-entry semantics를
+유지한다.
 
 다음 테넌트 컨텍스트 구현은 교육용 차이를 보존하되, live duplicate check 후
 `bluetape4k-projects`에 프레임워크 중립 primitive 승격 issue를 등록한다.
@@ -213,8 +225,10 @@ aggregate adapter만 되돌릴 수 있다. catalog alias 추가가 compile을 �
    정확한 수치를 수용 기준으로 삼지 않는다.
 3. 실제 `Bluetape4kExposedKtorConfig` +
    `ExposedKtorCacheReadinessConfig` overload가 library health/readiness route를
-   설치한다. repository consistency contributor와 write-failure latch contributor가
-   각각 `UP`/`DOWN`/timeout으로 변환하고, 기존 수동 health route가 없으며,
+   설치한다. sync repository consistency contributor와 sync write-failure latch,
+   suspend application status contributor가 `UP`/`DOWN`으로 변환하고,
+   `readinessProbeTimeout` 경계를 JDBC probe fixture에서 검증한다. 기존 수동
+   `/health` 호환 route와 library `/healthz/exposed` response 차이를 문서화하고,
    allowlisted redacted response를 반환한다. application stop 뒤
    `closeAndUnregister`와 소유권 검증을 통과한 경우에만 default database가
    이전 값으로 돌아온다. 시작 실패·두 번째 owner·중첩 stop·반복 실행 cleanup도
@@ -230,7 +244,8 @@ aggregate adapter만 되돌릴 수 있다. catalog alias 추가가 compile을 �
    cross-tenant isolation acceptance 또는 bounded key/cancellation acceptance를
    포함한 sanitized 한국어 body를 사용하거나, 중복 issue 번호와 그 이유를
    증적으로 남긴다.
-7. 영향 모듈 compile/test, `detekt`, `git diff --check`, README EN/KO parity
+7. 영향 모듈 compile/test, 네 shared-helper consumer compile/test, `detekt`,
+   `git diff --check`, README EN/KO parity
    검사가 fresh evidence로 통과한다.
 
 ## 완료 정의

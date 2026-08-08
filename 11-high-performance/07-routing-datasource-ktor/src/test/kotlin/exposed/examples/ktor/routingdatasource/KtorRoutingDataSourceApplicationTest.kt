@@ -3,9 +3,9 @@ package exposed.examples.ktor.routingdatasource
 import exposed.examples.ktor.routingdatasource.model.InventoryResponse
 import exposed.examples.ktor.routingdatasource.model.RoutingStatsResponse
 import exposed.examples.ktor.routingdatasource.routing.DataSourceRole
+import exposed.shared.tests.createJsonClient
 import io.bluetape4k.assertions.shouldBeEqualTo
 import io.ktor.client.call.body
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.put
@@ -13,9 +13,7 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.testing.testApplication
-import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
@@ -96,14 +94,4 @@ class KtorRoutingDataSourceApplicationTest {
         stats.writeSelections shouldBeEqualTo 1
     }
 
-    private fun io.ktor.server.testing.ApplicationTestBuilder.createJsonClient() =
-        createClient {
-            install(ContentNegotiation) {
-                json(
-                    Json {
-                        ignoreUnknownKeys = true
-                    },
-                )
-            }
-        }
 }
