@@ -54,28 +54,42 @@ GitHub 중복 확인 후 별도 library 승격 issue로 남긴다.
   `put`은 cache를 먼저 갱신하므로 DB write 예외·취소 시 service가 즉시
   `invalidate`를 보상 호출하고 readiness를 `DOWN`으로 관측할 수 있게 한다.
 - suspend 저장소는 library의 per-key `Mutex`와 cancellation-safe
-  transaction path를 사용하고, 기존 동시성 coalescing 테스트를 유지한다.
-  1.4.0 library 내부 mutex map의 수명은 library 계약으로 취급하며, workshop이
-  lock을 재구현하거나 “lock 제거”를 주장하지 않는다. demo는 persistence가
-  seed한 SKU allowlist만 cache loader에 전달해 미지의 고카디널리티 key가
-  library loader에 유입되지 않도록 fail-closed 한다. 실제 cancellation 뒤
-  `CancellationException` 재전파와 후속 조회 성공만 검증한다.
-- Ktor module은 정확한 `installBluetape4kExposedKtor` 설정
-  (`installStatusPages=false`, `jdbcDatabase`, `jdbcBlockingDispatcher=Dispatchers.IO`,
-  `healthPath="/health"`, `readinessPath="/ready"`)과
-  `ExposedKtorCacheContributor.jdbcRepository`를 사용한다. health는 allowlisted
-  상태만 반환하고 SQL/URL/credential/cache key/exception detail을 노출하지
-  않는 loopback/demo 전용 route로 둔다. readiness는
-  `validateConsistency()`의 `UP`/`DOWN`/timeout 상태를 HTTP status와 함께
+  transaction path를 사용하고, coalescing의 외부 계약은 `databaseReads == 1`로
+  좁힌다. 기존 DTO의 `cacheHits`, `cacheMisses`, `inFlightLoads` 필드는 response
+  호환성을 위해 남기되 library loader의 내부 관측값이라고 주장하지 않으며,
+  해당 정확한 수치는 수용 기준에서 제외한다. 1.4.0 library 내부 mutex map의
+  수명은 library 계약으로 취급하며, workshop이 lock을 재구현하거나 “lock 제거”를
+  주장하지 않는다. demo는 persistence가 seed한 SKU allowlist만 cache loader에
+  전달해 미지의 고카디널리티 key가 library loader에 유입되지 않도록 fail-closed
+  한다. 실제 cancellation 뒤 `CancellationException` 재전파와 후속 조회 성공만
   검증한다.
+- Ktor module은 실제 1.12.1 overload를 사용한다. 각 application은
+  `Bluetape4kExposedKtorConfig(jdbcDatabase = database,
+  jdbcBlockingDispatcher = Dispatchers.IO, installStatusPages = false,
+  installHealthRoutes = true, healthPath = "/health", readinessPath = "/ready")`와
+  `ExposedKtorCacheReadinessConfig`를 함께 넘긴다. readiness contributor는
+  `jdbcRepository("users"/"products") { repository.validateConsistency() }`와
+  `custom("*-write") { writeFailureLatch ? DOWN : UP }`를 분리해 구성한다.
+  전자는 library worker report를, 후자는 `WRITE_THROUGH` DB 예외 뒤 service가
+  기록한 O(1) application-owned latch를 관측한다. 성공한 다음 write는 latch를
+  reset한다. 기존 수동 `/health` route와 그 전용 `HealthResponse`는 제거한다.
+  health는 library가 반환하는 allowlisted 상태만 노출하고 SQL/URL/credential/cache
+  key/exception detail을 포함하지 않는 loopback/demo 전용 route로 둔다. `main`의
+  embedded server는 `host = "127.0.0.1"`로 고정하고, readiness는 library의
+  `UP`/`DOWN`/timeout HTTP status를 함께 검증한다.
 - JDBC repository base가 implicit `transaction {}`를 사용하므로
-  `TransactionManager.defaultDatabase`는 단일 demo application 소유로
-  명시한다. repository adapter의 DB operation은 ownership guard 안에서만
-  실행하며, 서로 다른 두 database lifecycle이 동시에 소유권을 얻으려 하면
-  fail-fast한다. 시작/종료는 공통 lifecycle lock 안에서 수행하고, 종료 시
-  repository `close()`가 끝난 뒤 현재 default가 자신이 설치한 DB인지 확인한
-  다음 이전 값을 복원하고 datasource를 닫는다. 소유권 불일치면 fail-closed
-  하여 복원을 덮어쓰지 않고 증적을 남긴다.
+  `TransactionManager.defaultDatabase`는 각 demo module의 application-local
+  owner가 명시적으로 관리한다. 새 production shared module을 만들지 않는
+  대신 각 module이 JVM 내 자신의 `Any` lifecycle lock과 owner token을 갖고,
+  같은 module에서 서로 다른 두 database lifecycle이 동시에 소유권을 얻으려
+  하면 fail-fast한다. 시작/종료는 그 lock 안에서 수행한다. 시작 실패 시 이미
+  등록된 database도 `TransactionManager.closeAndUnregister(database)`로
+  해제하고 datasource·owner를 독립적으로 정리한다. 정상 종료는 repository
+  `close()` → 현재 default가 자신이 설치한 DB인지 확인 → 이전 default 복원 →
+  `closeAndUnregister(database)` → datasource close → owner release 순서이며,
+  owner mismatch에서는 복원을 덮어쓰지 않고도 unregister/datasource/owner
+  cleanup을 시도한다. module 간 JVM-global exclusion은 범위 밖이며 이를
+  보장한다고 주장하지 않는다.
 
 대안 1은 공통 production cache service를 새 shared 모듈에 만드는 방식이다.
 이는 교육용 cache-aside/read-through/write-through 차이를 감추고 새 모듈
@@ -146,13 +160,16 @@ Issue target은 cross-framework 설계이므로 `bluetape4k-projects`로 권장�
 ## 실패 모드와 대응
 
 1. **Default database 누수:** 여러 `testApplication` 실행 뒤 이전
-   `TransactionManager.defaultDatabase`가 덮어써질 수 있다. lifecycle lock,
-   설치 DB identity check, 시작 실패/중첩 stop/반복 실행 테스트로 소유권을
-   증명한다.
+   `TransactionManager.defaultDatabase`가 덮어써질 수 있다. module-local
+   lifecycle lock, owner token, 설치 DB identity check,
+   `closeAndUnregister`, 시작 실패/두 번째 owner 거부/중첩 stop/반복 실행
+   테스트로 소유권과 실패 cleanup을 증명한다. module 간 동시성은 범위 밖으로
+   명시한다.
 2. **Cache/DB 불일치:** 1.4.0 write-through는 cache-first이므로 DB 예외나
    취소 뒤 stale entry가 남을 수 있다. service 보상 invalidate, 후속 DB
-   read, readiness `DOWN`, repository idempotent close와 bounded close
-   evidence를 남긴다.
+   read, application-owned failure latch를 통한 readiness `DOWN`, 성공 write
+   뒤 latch reset, repository idempotent close와 bounded close evidence를
+   남긴다.
 3. **Coroutine cancellation 계약:** in-flight load 취소 시 library 내부
    mutex 수명을 workshop이 추정하지 않는다. 실제 job cancellation에서
    `CancellationException`을 재전파하고 후속 재조회를 성공시키는 테스트를
@@ -190,12 +207,18 @@ aggregate adapter만 되돌릴 수 있다. catalog alias 추가가 compile을 �
 1. 05/06 cache module이 `libs.exposed.jdbc.caffeine` 및 필요 시
    `libs.exposed.ktor`를 사용하고, 직접 만든 `ConcurrentHashMap` cache path가
    production service에서 제거된다.
-2. 기존 cache 전략·hit/miss/read counter·write-through·invalidate·동시성
-   coalescing 테스트가 실제 library repository를 통해 통과한다.
-3. 정확한 Bluetape Ktor health/readiness config가 repository consistency 결과를
-   `UP`/`DOWN`/timeout으로 변환하고, allowlisted redacted response를 반환하며,
-   application stop 뒤 소유권 검증을 통과한 경우에만 default database가 이전
-   값으로 돌아온다.
+2. 기존 cache 전략·read counter·write-through·invalidate 테스트와 실제 library
+   repository를 통한 동시성 coalescing(`databaseReads == 1`)이 통과한다. suspend
+   DTO의 hit/miss/in-flight 필드는 호환성을 유지하지만 내부 library mutex의
+   정확한 수치를 수용 기준으로 삼지 않는다.
+3. 실제 `Bluetape4kExposedKtorConfig` +
+   `ExposedKtorCacheReadinessConfig` overload가 library health/readiness route를
+   설치한다. repository consistency contributor와 write-failure latch contributor가
+   각각 `UP`/`DOWN`/timeout으로 변환하고, 기존 수동 health route가 없으며,
+   allowlisted redacted response를 반환한다. application stop 뒤
+   `closeAndUnregister`와 소유권 검증을 통과한 경우에만 default database가
+   이전 값으로 돌아온다. 시작 실패·두 번째 owner·중첩 stop·반복 실행 cleanup도
+   테스트한다.
 4. DDD aggregate가 `AbstractAggregateRoot<Long>`/`DomainEvent<Long>`를
    사용하며, success commit만 event를 clear하고 rollback은 pending event를
    보존한다.

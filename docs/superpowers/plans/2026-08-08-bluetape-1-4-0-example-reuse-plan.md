@@ -45,12 +45,12 @@
 - `11-high-performance/05-cache-strategies-ktor/src/main/kotlin/exposed/examples/ktor/cache/**`
 - `11-high-performance/05-cache-strategies-ktor/src/test/kotlin/exposed/examples/ktor/cache/**`
 
-- 테스트에 library repository 기반의 전략 동작, cache consistency readiness, `/health`와 `/ready` 응답, application stop 뒤 `TransactionManager.defaultDatabase` 복원을 먼저 명시하고 RED를 실행한다.
+- 테스트에 library repository 기반의 전략 동작, cache consistency readiness, `/health`와 `/ready` 응답, application stop 뒤 `TransactionManager.defaultDatabase` 복원과 `TransactionManager.closeAndUnregister`를 먼저 명시하고 RED를 실행한다.
 - `Users`를 `IdTable<String>`로 매핑하고 `CachedUser` persistence record를 만든다. `ExposedUserRepository`는 `AbstractJdbcCaffeineRepository<String, CachedUser>`를 상속하며 `findByIdFromDb`, `insertEntity`, `updateEntity`, `BatchInsertStatement` 매핑과 기존 database-read counter를 연결한다.
 - service의 `ConcurrentHashMap` cache와 수동 lock/cache path를 제거한다. cache-aside는 repository cache의 read/populate API, read-through는 repository `get`, write-through는 configured `put`, invalidation은 repository `invalidate`를 사용한다. 기존 response DTO, route, hit/miss/read/cache-size stats는 유지한다.
-- module lifecycle에서 공통 lifecycle lock 안에 `TransactionManager.defaultDatabase`의 이전 값을 저장하고, repository `close()`가 bounded/idempotent하게 끝난 뒤 현재 default가 자신이 설치한 DB인지 확인한다. identity가 다르면 fail-closed로 복원을 덮어쓰지 않고 소유권 오류를 증적한다. 정상 경로는 이전 default 복원 후 datasource 종료 순서를 지킨다.
-- `installBluetape4kExposedKtor(installStatusPages=false, jdbcDatabase, jdbcBlockingDispatcher=Dispatchers.IO, healthPath="/health", readinessPath="/ready")`와 `ExposedKtorCacheContributor.jdbcRepository`를 사용한다. loopback/demo 전용 route는 allowlisted 상태만 반환하고 readiness `UP`/`DOWN`/timeout과 민감정보 redaction을 테스트한다.
-- 1.4.0 `put`의 cache-first 동작을 전제로 DB write/취소 예외 시 service 보상 `invalidate`와 후속 DB read를 먼저 테스트한다. DB read count, strategy 결과, invalidation, readiness consistency, lifecycle restoration을 GREEN으로 확인한다.
+- module-local owner object가 lifecycle lock 안에서 `TransactionManager.defaultDatabase`의 이전 값을 저장하고 database를 설치한다. startup failure는 database가 이미 등록됐는지와 무관하게 `closeAndUnregister`, datasource close, owner release를 독립적으로 시도한다. stop은 repository `close()` → identity 확인 → conditional default restore → `TransactionManager.closeAndUnregister(database)` → datasource close → owner release 순서를 지키며, mismatch에서는 복원을 덮어쓰지 않는다. second owner, nested stop, repeated application test를 추가한다.
+- 기존 수동 `/health` route와 `HealthResponse`를 제거하고, 다음 실제 overload를 그대로 사용한다: `installBluetape4kExposedKtor(Bluetape4kExposedKtorConfig(jdbcDatabase = database, jdbcBlockingDispatcher = Dispatchers.IO, installStatusPages = false, installHealthRoutes = true, healthPath = "/health", readinessPath = "/ready"), ExposedKtorCacheReadinessConfig(listOf(ExposedKtorCacheContributor.jdbcRepository("users") { repository.validateConsistency() }, ExposedKtorCacheContributor.custom("users-write") { if (writeFailureLatch.get()) ExposedKtorCacheStatus.DOWN else ExposedKtorCacheStatus.UP })))`. coroutine module은 component를 `products`/`products-write`로 바꾼다. embedded server host는 `127.0.0.1`로 고정한다.
+- 1.4.0 `put`의 cache-first 동작을 전제로 DB write/취소 예외 시 service 보상 `invalidate`, write-failure latch `DOWN`, 성공 write 뒤 latch reset과 후속 DB read를 먼저 테스트한다. DB read count, strategy 결과, invalidation, readiness consistency, lifecycle restoration을 GREEN으로 확인한다.
 
 ## Task 4: suspend cache 예제를 cancellation-safe repository로 교체
 
@@ -58,11 +58,11 @@
 - `11-high-performance/06-cache-strategies-coroutines-ktor/src/main/kotlin/exposed/examples/ktor/cache/**`
 - `11-high-performance/06-cache-strategies-coroutines-ktor/src/test/kotlin/exposed/examples/ktor/cache/**`
 
-- 기존 concurrent coalescing, write-through, invalidation, cancellation 테스트를 library `AbstractSuspendedJdbcCaffeineRepository` contract와 `/health`/`/ready` lifecycle 요구로 확장한 뒤 RED를 실행한다.
+- 기존 concurrent coalescing, write-through, invalidation, cancellation 테스트를 library `AbstractSuspendedJdbcCaffeineRepository` contract와 `/health`/`/ready` lifecycle 요구로 확장한 뒤 RED를 실행한다. 정확한 `cacheHits=7/cacheMisses=1` 계약은 제거하고 `databaseReads == 1`, 응답 8건, 종료 시 `inFlightLoads == 0`만 coalescing acceptance로 둔다.
 - `Products`를 `IdTable<String>`로 매핑하고 repository mapping/DB read counter를 구현한다. `LocalCacheConfig`의 write mode와 repository `get`/`put`/`invalidate`를 사용해 service의 map 및 key별 `Mutex`를 제거한다. persistence seed SKU allowlist 밖의 key는 library loader에 전달하기 전에 fail-closed로 거부한다.
-- hit/miss/in-flight 통계는 cache 구현을 다시 만들지 않는 관측용 상태로만 유지한다. coalescing 자체는 Bluetape repository에 맡기고, library 내부 mutex map의 제거를 가정하지 않는다. cancellation 시 `CancellationException` 재전파와 후속 load 가능성을 검증한다.
-- repository adapter의 DB operation과 lifecycle은 ownership guard 안에서 실행한다. `ApplicationStopped`에서 repository close → default database 소유권 확인 및 복원 → datasource close 순서를 보장하고 Ktor contributor readiness를 연결한다. write-through DB 예외 뒤 cache 보상 invalidate와 readiness `DOWN`도 검증한다.
-- H2에서 동시 8개 read의 database read 1회, 후속 hit, unknown-key churn rejection, cancellation 후 후속 read, readiness, lifecycle 복원을 GREEN으로 확인한다.
+- hit/miss/in-flight DTO 필드는 호환성을 위해 유지하되 raw 내부 library 관측값으로 문서화하지 않는다. coalescing 자체는 Bluetape repository에 맡기고, library 내부 mutex map의 제거를 가정하지 않는다. cancellation 시 `CancellationException` 재전파와 후속 load 가능성을 검증한다.
+- repository adapter의 DB operation과 lifecycle은 module-local ownership guard 안에서 실행한다. `ApplicationStopped`에서 repository close → default database identity 확인 및 conditional restore → `TransactionManager.closeAndUnregister` → datasource close → owner release 순서를 보장하고 Ktor contributor readiness를 연결한다. write-through DB 예외 뒤 cache 보상 invalidate와 write-failure latch `DOWN`, successful retry 뒤 `UP`도 검증한다.
+- H2에서 동시 8개 read의 database read 1회, 응답 8건, 종료 시 in-flight 0, unknown-key churn rejection, cancellation 후 후속 read, readiness, startup failure/second-owner/repeated-stop lifecycle 복원을 GREEN으로 확인한다.
 
 ## Task 5: DDD aggregate와 event를 Bluetape core API로 교체
 
@@ -90,7 +90,7 @@
 - shared README 양쪽에 `createJsonClient` 사용법과 네 consumer 재사용 경계를 source-equivalent로 추가한다.
 - cache README 양쪽에 Bluetape repository, health/readiness, lifecycle 책임을 반영하고 coroutine README의 coalescing 설명을 library 책임으로 수정한다.
 - DDD README 양쪽의 자체 event buffer/nullable ID 예시를 `AbstractAggregateRoot`, `DomainEvent`, Snowflake ID, commit 후 clear semantics로 갱신한다.
-- 기존 PNG/SVG architecture diagram은 구조가 바뀌지 않는 범위에서 재사용하며, diagram source-equivalent 규칙을 깨는 raw Mermaid를 추가하지 않는다.
+- 다음 architecture diagram SVG/PNG를 library repository·Ktor readiness·module-local lifecycle 구조로 갱신하고, 기존 `ConcurrentHashMap`, service-owned cache, per-SKU `Mutex` 문구를 제거한다: `docs/images/readme-diagrams/11-high-performance-05-cache-strategies-ktor-architecture-01.svg/.png`, `docs/images/readme-diagrams/11-high-performance-06-cache-strategies-coroutines-ktor-architecture-01.svg/.png`. 각 변경은 source-equivalent EN/KO asset pair와 semantic/connector/arrowhead/visual/opaque audits로 검증한다. raw Mermaid는 추가하지 않는다.
 
 ## Task 7: library 승격 issue 중복 확인 및 등록
 
@@ -112,7 +112,7 @@
   ./gradlew detekt --no-daemon --console=plain
   git diff --check
   ```
-- 네 shared-helper consumer compile/test와 기존 관련 module 테스트를 추가 확인한다. H2 fast 외에 `USE_FAST_DB=false` 또는 repository canonical `-PuseDB=H2,POSTGRESQL`을 `--max-workers=1`과 `cleanTest --no-build-cache`로 시도하고, Testcontainers/Docker 미가용이면 정확한 N/A/blocked evidence와 잔여 리소스 판정을 기록한다.
+- 네 shared-helper consumer compile/test와 기존 관련 module 테스트를 추가 확인한다. 두 cache application의 반복·동시 lifecycle 테스트를 backend matrix보다 우선한다. H2 fast 외에 `USE_FAST_DB=false` 또는 repository canonical `-PuseDB=H2,POSTGRESQL`을 `--max-workers=1`과 `cleanTest --no-build-cache`로 시도하고, Testcontainers/Docker 미가용이면 정확한 N/A/blocked evidence와 잔여 리소스 판정을 기록한다.
 - six perspective review 결과를 performance, stability/Ops, security, architecture, developer/API, user/caller 렌즈로 수집하고 P0/P1은 0으로 닫는다. P2/P3는 수정하거나 rationale과 후속 issue를 남긴다.
 - `bluetape-flow.py` checklist의 required checks, component evidence, lane completion, main-lane completion을 갱신한다. PR/push/merge/release는 승인 범위 밖이므로 CG-11~18은 concrete N/A로 남긴다.
 - 최종 DoD에 changed paths, 보존한 원본 dirty 다이어그램, test/detekt/diff evidence, issue read-back, known gaps, `DONE`/`PENDING`/`BLOCKED`를 포함한다.
