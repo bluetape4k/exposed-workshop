@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/bluetape4k/exposed-workshop/actions/workflows/ci.yml/badge.svg)](https://github.com/bluetape4k/exposed-workshop/actions/workflows/ci.yml)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.4-7F52FF?logo=kotlin)](https://kotlinlang.org)
-[![JVM](https://img.shields.io/badge/JVM-21-ED8B00?logo=openjdk)](https://openjdk.org)
+[![JVM](https://img.shields.io/badge/JVM-25-ED8B00?logo=openjdk)](https://openjdk.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 [English](./README.md) | 한국어
@@ -58,7 +58,7 @@ Kotlin Exposed는 JetBrains가 만든 Kotlin 우선 SQL 프레임워크입니다
 |------|-----------|
 | Kotlin plugin | 2.4.0 |
 | Kotlin language/API level | 2.3 |
-| Java toolchain | 21 |
+| Java toolchain | 25 |
 | Exposed | 1.4.0 |
 | Spring Boot | 4.0.6 |
 | Kotlinx Coroutines | 1.11.0 |
@@ -72,7 +72,7 @@ Kotlin Exposed는 JetBrains가 만든 Kotlin 우선 SQL 프레임워크입니다
 1. **공통 기반과 진입점**: 테스트 fixture, Spring MVC/WebFlux, reactive 대안 기술을 먼저 봅니다.
 2. **Exposed 핵심**: SQL DSL, DAO, 스키마 정의, DML, 함수, 트랜잭션, Entity를 학습합니다.
 3. **확장과 마이그레이션**: JSON, money, 암호화, 커스텀 컬럼/Entity, Jackson/Fastjson/Tink, JPA 마이그레이션을 다룹니다.
-4. **런타임 모델**: 코루틴과 Java 21 가상 스레드에서 Exposed 사용 방식을 비교합니다.
+4. **런타임 모델**: 코루틴과 Java 25 가상 스레드에서 Exposed 사용 방식을 비교합니다.
 5. **운영 패턴**: Spring 트랜잭션, 리포지토리, 캐시, 멀티테넌시, routing datasource, benchmark, Ktor, outbox, 인증/세션, realtime, observability 예제로 확장합니다.
 
 ### 학습 경로
@@ -244,7 +244,7 @@ Exposed를 Kotlin Coroutines 환경에서 사용하는 방법을 학습합니다
 
 #### [Virtual Threads 기본](08-coroutines/02-virtualthreads-basic/README.ko.md)
 
-Exposed를 Java 21 Virtual Threads 환경에서 사용하는 방법을 학습합니다. 블로킹 코드 스타일을 유지하면서 고성능 비동기 처리를 구현합니다.
+Exposed를 Java 25 Virtual Threads 환경에서 사용하는 방법을 학습합니다. 블로킹 코드 스타일을 유지하면서 고성능 비동기 처리를 구현합니다.
 
 ---
 
@@ -454,7 +454,7 @@ R2DBC 쪽 대응 추적 이슈는
 
 ### 사전 요구사항
 
-- JDK 21 이상 (Virtual Threads 및 Preview 기능 사용)
+- JDK 25 이상 (Virtual Threads 사용)
 - Gradle Wrapper 9.5.0 포함 (`./gradlew` 사용 권장)
 - Docker (Testcontainers 사용 시)
 

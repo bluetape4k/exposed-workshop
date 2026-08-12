@@ -11,7 +11,7 @@ dependencies {
     testImplementation(libs.jetbrains.exposed.jdbc)
 
     // Java 21 에서 Virtual Thread 를 사용할 때 (Java 25 에서는 jdk25 를 사용하세요)
-    testRuntimeOnly(libs.bluetape4k.virtualthread.jdk21)
+    testRuntimeOnly(libs.bluetape4k.virtualthread.jdk25)
 
     testImplementation(libs.exposed.core)
     testImplementation(libs.bluetape4k.junit5)

@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.bluetape4k.testcontainers)
     testImplementation(libs.bluetape4k.junit5)
     testImplementation(libs.bluetape4k.spring.boot.core)
+    testRuntimeOnly(libs.bluetape4k.virtualthread.jdk25)
 
     // 테스트 데이터베이스별 JDBC 드라이버 의존성
     implementation(libs.hikaricp)

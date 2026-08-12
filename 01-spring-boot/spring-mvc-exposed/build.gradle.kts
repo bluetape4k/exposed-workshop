@@ -74,6 +74,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     testImplementation(libs.bluetape4k.spring.boot.core)
+    testRuntimeOnly(libs.bluetape4k.virtualthread.jdk25)
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
     testImplementation(libs.spring.boot.starter.webmvc.test)
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
