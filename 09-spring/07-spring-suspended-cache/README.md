@@ -4,6 +4,8 @@ English | [한국어](./README.ko.md)
 
 This module implements the coroutine-native cache alternative used by the source. Instead of Spring Cache annotations, suspended repositories use `LettuceSuspendedCache` and `LettuceSuspendedCacheManager` over Lettuce coroutine commands, then wrap `DefaultCountrySuspendedRepository` with `CachedCountrySuspendedRepository` so cache hits avoid opening a DB transaction.
 
+> **FastFory cache compatibility:** `LettuceBinaryCodecs.lz4FastFory()` uses `SCHEMA_CONSISTENT` and is not wire-compatible with existing `lz4Fory()` entries. FastFory does not fall back to Fory decoding, so flush existing entries or switch to a new key namespace before rollout. This example treats the values as volatile cache data and does not define a migration path.
+
 ## Learning Goals
 
 - Understand why `@Cacheable` cannot be applied to `suspend` functions and implement an alternative using the Lettuce coroutine API.
@@ -127,7 +129,7 @@ class LettuceSuspendedCacheConfig(
         LettuceSuspendedCacheManager(
             redisClient = redisClient,
             ttlSeconds = 60L,
-            codec = LettuceBinaryCodecs.lz4Fory(),  // LZ4 compression + Fory serialization
+            codec = LettuceBinaryCodecs.lz4FastFory(),  // LZ4 compression + FastFory serialization
         )
 }
 
@@ -155,7 +157,7 @@ class SuspendedRepositoryConfig {
 | `suspend` function support | Not supported (AOP proxy limitation) | Supported (coroutine-native) |
 | Cache control method | Declarative annotations             | Explicit code         |
 | TTL configuration | `RedisCacheConfiguration.entryTtl` | Constructor parameter |
-| Serialization  | `RedisSerializationContext`        | Lettuce `RedisCodec`  |
+| Serialization  | `RedisSerializationContext`        | Lettuce `RedisCodec` with LZ4+FastFory (`SCHEMA_CONSISTENT`) |
 | Transaction integration | `transactionAware()`          | Manual combination    |
 
 ## How to Run

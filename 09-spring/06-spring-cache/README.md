@@ -2,7 +2,9 @@
 
 English | [한국어](./README.ko.md)
 
-This module adds Spring Cache to a country lookup repository backed by Exposed. It uses Redis through `RedisCacheManager`, LZ4+Fory serialization, `@Cacheable`, and direct `CacheManager` eviction; the tests check cache hit/miss behavior, invalidation, and transaction-aware cache updates.
+This module adds Spring Cache to a country lookup repository backed by Exposed. It uses Redis through `RedisCacheManager`, LZ4+FastFory serialization, `@Cacheable`, and direct `CacheManager` eviction; the tests check cache hit/miss behavior, invalidation, and transaction-aware cache updates.
+
+> **FastFory cache compatibility:** `LZ4FastFory` uses `SCHEMA_CONSISTENT` and is not wire-compatible with existing `LZ4Fory` entries. FastFory does not fall back to Fory decoding, so flush existing entries or switch to a new key namespace before rollout. This example treats the values as volatile cache data and does not define a migration path.
 
 ## Learning Goals
 
@@ -22,7 +24,7 @@ This module adds Spring Cache to a country lookup repository backed by Exposed. 
 
 ## Key Concepts
 
-### Cache Configuration (LZ4+Fory Serialization, TTL 10min)
+### Cache Configuration (LZ4+FastFory Serialization, TTL 10min)
 
 ```kotlin
 @Configuration
@@ -34,7 +36,7 @@ class LettuceCacheConfig {
         RedisCacheConfiguration.defaultCacheConfig()
             .serializeValuesWith(
                 RedisSerializationContext.SerializationPair
-                    .fromSerializer(RedisBinarySerializers.LZ4Fory)  // Compressed serialization
+                    .fromSerializer(RedisBinarySerializers.LZ4FastFory)  // Compressed FastFory serialization
             )
             .entryTtl(Duration.ofMinutes(10))  // Default TTL
 

@@ -4,6 +4,8 @@
 
 이 모듈은 소스가 사용하는 coroutine-native cache 대안을 구현합니다. Spring Cache 애노테이션 대신 suspended repository가 Lettuce coroutine command 기반의 `LettuceSuspendedCache`, `LettuceSuspendedCacheManager`를 직접 사용합니다. 이후 `DefaultCountrySuspendedRepository`를 `CachedCountrySuspendedRepository`로 감싸 캐시 hit 시 DB 트랜잭션을 열지 않도록 구성합니다.
 
+> **FastFory 캐시 호환성:** `LettuceBinaryCodecs.lz4FastFory()`는 `SCHEMA_CONSISTENT`를 사용하므로 기존 `lz4Fory()` 엔트리와 wire-compatible하지 않습니다. FastFory는 Fory 디코딩으로 자동 fallback하지 않으므로, 배포 전에 기존 엔트리를 비우거나 새 key namespace로 전환해야 합니다. 이 예제는 값을 휘발성 cache data로 취급하며 migration 경로를 정의하지 않습니다.
+
 ## 학습 목표
 
 - `@Cacheable`이 suspend 함수에 적용되지 않는 이유를 이해하고 Lettuce 코루틴 API로 대안을 구현한다.
@@ -127,7 +129,7 @@ class LettuceSuspendedCacheConfig(
         LettuceSuspendedCacheManager(
             redisClient = redisClient,
             ttlSeconds = 60L,
-            codec = LettuceBinaryCodecs.lz4Fory(),  // LZ4 압축 + Fory 직렬화
+            codec = LettuceBinaryCodecs.lz4FastFory(),  // LZ4 압축 + FastFory 직렬화
         )
 }
 
@@ -155,7 +157,7 @@ class SuspendedRepositoryConfig {
 | suspend 함수 지원 | 미지원 (AOP 프록시 제약)                   | 지원 (코루틴 네이티브)         |
 | 캐시 제어 방식      | 선언적 어노테이션                          | 명시적 코드                |
 | TTL 설정        | `RedisCacheConfiguration.entryTtl` | 생성자 파라미터              |
-| 직렬화           | `RedisSerializationContext`        | Lettuce `RedisCodec`  |
+| 직렬화           | `RedisSerializationContext`        | `SCHEMA_CONSISTENT` 기반 LZ4+FastFory `RedisCodec`  |
 | 트랜잭션 연동       | `transactionAware()`               | 수동 조합                 |
 
 ## 실행 방법

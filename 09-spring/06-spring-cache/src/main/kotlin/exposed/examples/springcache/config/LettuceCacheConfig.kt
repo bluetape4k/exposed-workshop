@@ -20,7 +20,7 @@ import java.time.Duration
 class LettuceCacheConfig {
 
     companion object: KLogging() {
-        private val defaultRedisSerializer = RedisBinarySerializers.LZ4Fory
+        private val defaultRedisSerializer = RedisBinarySerializers.LZ4FastFory
     }
 
     @Bean

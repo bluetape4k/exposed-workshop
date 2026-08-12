@@ -3,11 +3,12 @@ package exposed.examples.suspendedcache.config
 import exposed.examples.suspendedcache.AbstractSpringSuspendedCacheApplicationTest
 import exposed.examples.suspendedcache.domain.CountryRecord
 import exposed.examples.suspendedcache.lettuce.LettuceSuspendedCacheManager
-import io.bluetape4k.junit5.coroutines.runSuspendIO
-import io.bluetape4k.logging.coroutines.KLoggingChannel
-import kotlinx.coroutines.delay
 import io.bluetape4k.assertions.shouldBeEqualTo
 import io.bluetape4k.assertions.shouldNotBeNull
+import io.bluetape4k.junit5.coroutines.runSuspendIO
+import io.bluetape4k.logging.coroutines.KLoggingChannel
+import io.bluetape4k.redis.lettuce.codec.LettuceBinaryCodecs
+import kotlinx.coroutines.delay
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -38,5 +39,16 @@ class LettuceSuspendedCacheConfigTest(
 
         cache.get(countryKr.code) shouldBeEqualTo countryKr
         cache.get(countryUs.code) shouldBeEqualTo countryUs
+    }
+
+    @Test
+    fun `LZ4 FastFory codec로 값을 round trip 한다`() {
+        val value = CountryRecord("KR", "South Korea", "동해물과 백두산이 마르고 닳도록")
+        val codec = LettuceBinaryCodecs.lz4FastFory<CountryRecord>()
+
+        val encoded = codec.encodeValue(value)
+        val decoded = codec.decodeValue(encoded)
+
+        decoded shouldBeEqualTo value
     }
 }
