@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.bluetape4k.jackson2)
     implementation(libs.bluetape4k.jdbc)
     testImplementation(libs.bluetape4k.spring.boot.core)
+    testRuntimeOnly(libs.bluetape4k.virtualthread.jdk25)
     implementation(libs.bluetape4k.testcontainers)
 
     // 데이터베이스 드라이버

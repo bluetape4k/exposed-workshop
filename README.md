@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/bluetape4k/exposed-workshop/actions/workflows/ci.yml/badge.svg)](https://github.com/bluetape4k/exposed-workshop/actions/workflows/ci.yml)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.4-7F52FF?logo=kotlin)](https://kotlinlang.org)
-[![JVM](https://img.shields.io/badge/JVM-21-ED8B00?logo=openjdk)](https://openjdk.org)
+[![JVM](https://img.shields.io/badge/JVM-25-ED8B00?logo=openjdk)](https://openjdk.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 English | [한국어](./README.ko.md)
@@ -58,7 +58,7 @@ Kotlin Exposed is JetBrains' Kotlin-first SQL framework. It lets you model table
 |------------|-------------------|
 | Kotlin plugin | 2.4.0 |
 | Kotlin language/API level | 2.3 |
-| Java toolchain | 21 |
+| Java toolchain | 25 |
 | Exposed | 1.4.0 |
 | Spring Boot | 4.0.6 |
 | Kotlinx Coroutines | 1.11.0 |
@@ -72,7 +72,7 @@ Read the repository in source-tree order. Start with shared fixtures, then work 
 1. **Shared and entrypoints**: common test fixtures, Spring MVC/WebFlux, and reactive alternatives.
 2. **Exposed core**: SQL DSL, DAO, schema definition, DML, functions, transactions, and entities.
 3. **Extensions and migration**: JSON, money, encryption, custom columns/entities, Jackson/Fastjson/Tink, and JPA migration.
-4. **Runtime models**: coroutines and Java 21 virtual threads.
+4. **Runtime models**: coroutines and Java 25 virtual threads.
 5. **Operational patterns**: Spring transactions, repositories, cache, multi-tenancy, routing data sources, benchmarks, Ktor, outbox, auth/session, realtime, and observability.
 
 ### Learning Path
@@ -243,7 +243,7 @@ Learn how to use Exposed in a Kotlin Coroutines environment. Covers `newSuspende
 
 #### [Virtual Threads Basics](08-coroutines/02-virtualthreads-basic/README.md)
 
-Learn how to use Exposed with Java 21 Virtual Threads. Achieve high-performance async processing while maintaining a blocking code style.
+Learn how to use Exposed with Java 25 Virtual Threads. Achieve high-performance async processing while maintaining a blocking code style.
 
 ---
 
@@ -454,7 +454,7 @@ No new follow-up issues are needed as of 2026-05-24 because the remaining differ
 
 ### Prerequisites
 
-- JDK 21 or higher (for Virtual Threads and Preview features)
+- JDK 25 or higher (for Virtual Threads)
 - Gradle Wrapper 9.5.0 included (use `./gradlew`)
 - Docker (for Testcontainers)
 

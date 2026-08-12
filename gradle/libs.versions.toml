@@ -160,7 +160,7 @@ bluetape4k-spring-boot-r2dbc = { module = "io.github.bluetape4k:bluetape4k-sprin
 bluetape4k-spring-boot-redis = { module = "io.github.bluetape4k:bluetape4k-spring-boot-redis" }
 
 # bluetape4k virtualthread
-bluetape4k-virtualthread-jdk21 = { module = "io.github.bluetape4k:bluetape4k-virtualthread-jdk21" }
+bluetape4k-virtualthread-jdk25 = { module = "io.github.bluetape4k:bluetape4k-virtualthread-jdk25" }
 
 # Kotlin
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }

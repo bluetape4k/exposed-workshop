@@ -31,7 +31,7 @@ object UserContext {
     fun <T> withUser(
         username: String,
         block: () -> T,
-    ): T = ScopedValue.where(CURRENT_USER, username).call(block)
+    ): T = ScopedValue.where(CURRENT_USER, username).call<T, RuntimeException> { block() }
 
     fun getCurrentUser(): String = runCatching { CURRENT_USER.get() }.getOrNull() ?: DEFAULT_USERNAME
 }
