@@ -2,7 +2,9 @@
 
 [English](./README.md) | 한국어
 
-이 모듈은 Exposed 기반 국가 조회 Repository에 Spring Cache를 더합니다. Redis는 `RedisCacheManager`로 연결하고, 값 직렬화에는 LZ4+Fory를 사용하며, 조회는 `@Cacheable`, 무효화는 `CacheManager` 직접 호출로 처리합니다. 테스트는 캐시 hit/miss, 무효화, transaction-aware cache update 동작을 검증합니다.
+이 모듈은 Exposed 기반 국가 조회 Repository에 Spring Cache를 더합니다. Redis는 `RedisCacheManager`로 연결하고, 값 직렬화에는 LZ4+FastFory를 사용하며, 조회는 `@Cacheable`, 무효화는 `CacheManager` 직접 호출로 처리합니다. 테스트는 캐시 hit/miss, 무효화, transaction-aware cache update 동작을 검증합니다.
+
+> **FastFory 캐시 호환성:** `LZ4FastFory`는 `SCHEMA_CONSISTENT`를 사용하므로 기존 `LZ4Fory` 엔트리와 wire-compatible하지 않습니다. FastFory는 Fory 디코딩으로 자동 fallback하지 않으므로, 배포 전에 기존 엔트리를 비우거나 새 key namespace로 전환해야 합니다. 이 예제는 값을 휘발성 cache data로 취급하며 migration 경로를 정의하지 않습니다.
 
 ## 학습 목표
 
@@ -22,7 +24,7 @@
 
 ## 핵심 개념
 
-### Cache 설정 (LZ4+Fory 직렬화, TTL 10분)
+### Cache 설정 (LZ4+FastFory 직렬화, TTL 10분)
 
 ```kotlin
 @Configuration
@@ -34,7 +36,7 @@ class LettuceCacheConfig {
         RedisCacheConfiguration.defaultCacheConfig()
             .serializeValuesWith(
                 RedisSerializationContext.SerializationPair
-                    .fromSerializer(RedisBinarySerializers.LZ4Fory)  // 압축 직렬화
+                    .fromSerializer(RedisBinarySerializers.LZ4FastFory)  // 압축 FastFory 직렬화
             )
             .entryTtl(Duration.ofMinutes(10))  // 기본 TTL
 
