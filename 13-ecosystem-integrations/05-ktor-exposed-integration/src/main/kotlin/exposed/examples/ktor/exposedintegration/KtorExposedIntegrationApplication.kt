@@ -9,6 +9,8 @@ import io.bluetape4k.exposed.ktor.installBluetape4kExposedKtor
 import io.bluetape4k.ktor.core.Bluetape4kKtorCoreConfig
 import io.bluetape4k.ktor.core.bluetape4kErrorResponses
 import io.bluetape4k.ktor.core.installBluetape4kKtorCore
+import io.bluetape4k.r2dbc.pool.connectionFactoryOptionsOf
+import io.bluetape4k.r2dbc.pool.connectionPoolOf
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStopped
@@ -24,9 +26,6 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import io.r2dbc.pool.ConnectionPool
-import io.r2dbc.pool.ConnectionPoolConfiguration
-import io.r2dbc.spi.ConnectionFactories
-import io.r2dbc.spi.ConnectionFactoryOptions
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.serialization.Serializable
@@ -75,7 +74,7 @@ internal data class NoteResponse(
 
 internal class KtorExposedIntegrationResources private constructor(
     private val dataSource: HikariDataSource,
-    private val r2dbcPool: ConnectionPool,
+    internal val r2dbcPool: ConnectionPool,
     val jdbcDatabase: Database,
     val r2dbcDatabase: R2dbcDatabase,
     val jdbcDispatcher: ExecutorCoroutineDispatcher,
@@ -107,13 +106,12 @@ internal class KtorExposedIntegrationResources private constructor(
             val jdbcDispatcher = Executors.newFixedThreadPool(2).asCoroutineDispatcher()
 
             val r2dbcUrl = "r2dbc:h2:mem:///$databaseName-r2dbc;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
-            val r2dbcOptions = ConnectionFactoryOptions.parse(r2dbcUrl)
-            val r2dbcPool = ConnectionPool(
-                ConnectionPoolConfiguration.builder(ConnectionFactories.get(r2dbcOptions))
-                    .maxSize(2)
-                    .initialSize(1)
-                    .build()
-            )
+            val r2dbcOptions = connectionFactoryOptionsOf(r2dbcUrl)
+            val r2dbcPool = connectionPoolOf(r2dbcOptions) {
+                maxSize = 2
+                initialSize = 1
+                minIdle = 0
+            }
             val r2dbcDatabase = R2dbcDatabase.connect(
                 r2dbcPool,
                 databaseConfig = R2dbcDatabaseConfig {

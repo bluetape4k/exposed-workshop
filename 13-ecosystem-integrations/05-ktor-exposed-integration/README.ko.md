@@ -57,6 +57,30 @@ installBluetape4kExposedKtor(
 HikariCP, H2 JDBC, R2DBC pool, dispatcher 리소스는 여전히 caller가 만들고 소유합니다.
 helper가 lifecycle ownership을 숨기지는 않습니다.
 
+### R2DBC 커넥션 풀 설정
+
+R2DBC URL을 `connectionFactoryOptionsOf`로 한 번 파싱한 뒤,
+`connectionPoolOf`에 같은 options를 전달합니다. 풀의 최대 크기와 초기 크기는
+예제의 기존 계약인 `maxSize = 2`, `initialSize = 1`을 유지하고,
+provider 기본 `minIdle = 8`이 이 작은 풀의 제약과 충돌하지 않도록 `minIdle = 0`을
+명시합니다.
+
+```kotlin
+val r2dbcOptions = connectionFactoryOptionsOf(r2dbcUrl)
+val r2dbcPool = connectionPoolOf(r2dbcOptions) {
+    maxSize = 2
+    initialSize = 1
+    minIdle = 0
+}
+```
+
+`bluetape4k-r2dbc` helper는 pool을 자동으로 닫지 않습니다. 애플리케이션이
+`KtorExposedIntegrationResources`에서 pool을 소유하고 `ApplicationStopped`에서
+정리해야 하며, `R2dbcDatabase`가 pool lifecycle을 대신 소유하지 않습니다.
+pool 계약 테스트는 H2 pool을 warmup한 뒤 `maxSize = 2`와 초기 할당량을
+확인하고 `close()`를 두 번 호출하며, `ApplicationStopped`를 발생시켜 종료
+경로가 멱등적인지 증명합니다.
+
 ## CRUD Route
 
 note route는 `call.exposedJdbcTransaction`을 통해 JDBC 작업을 실행합니다.
@@ -111,6 +135,10 @@ URL, password를 응답에 포함하지 않습니다.
 - `/readyz/exposed`가 JDBC와 R2DBC 리소스가 모두 사용 가능할 때 readiness를 반환합니다.
 - caller-owned JDBC datasource가 닫히면 `/readyz/exposed`가 `503 Service Unavailable`을
   반환합니다.
+- R2DBC pool이 `maxSize = 2`를 유지하고 connection 하나를 warmup한 뒤에도
+  helper가 아니라 caller가 소유하는지 확인합니다.
+- `close()` 중복 호출과 `ApplicationStopped` monitor event가 두 번째 cleanup
+  실패 없이 caller-owned pool을 정리하는지 확인합니다.
 - exposed database error가 structured response로 변환되고 민감한 정보를 노출하지 않습니다.
 
 ## Chapter 12와의 관계

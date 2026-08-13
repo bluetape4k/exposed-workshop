@@ -58,6 +58,29 @@ installBluetape4kExposedKtor(
 The caller still creates and owns the HikariCP, H2 JDBC, R2DBC pool, and
 dispatcher resources. The helper does not hide lifecycle ownership.
 
+### R2DBC Pool Configuration
+
+The example parses the R2DBC URL once with `connectionFactoryOptionsOf` and
+passes the same options to `connectionPoolOf`. It keeps the existing
+`maxSize = 2` and `initialSize = 1` contract, and sets `minIdle = 0` explicitly
+because the provider default of `8` is invalid for this small pool.
+
+```kotlin
+val r2dbcOptions = connectionFactoryOptionsOf(r2dbcUrl)
+val r2dbcPool = connectionPoolOf(r2dbcOptions) {
+    maxSize = 2
+    initialSize = 1
+    minIdle = 0
+}
+```
+
+The `bluetape4k-r2dbc` helper does not close the pool automatically. The
+application owns the pool in `KtorExposedIntegrationResources` and disposes it
+from `ApplicationStopped`; `R2dbcDatabase` does not take over that lifecycle.
+The pool contract test warms the H2 pool, verifies `maxSize = 2` and the initial
+allocation, calls `close()` twice, and raises `ApplicationStopped` to prove the
+shutdown path is idempotent.
+
 ## CRUD Route
 
 The note routes run JDBC work through `call.exposedJdbcTransaction`:
@@ -114,6 +137,10 @@ The tests verify that:
   available.
 - `/readyz/exposed` returns `503 Service Unavailable` when the caller-owned JDBC
   datasource is closed.
+- the R2DBC pool keeps `maxSize = 2`, warms one connection, and remains
+  caller-owned after helper creation.
+- duplicate `close()` calls and the `ApplicationStopped` monitor event dispose
+  the caller-owned pool without a second cleanup failure.
 - exposed database errors are structured and sanitized.
 
 ## Relationship To Chapter 12

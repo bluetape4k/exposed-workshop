@@ -131,6 +131,7 @@ bluetape4k-jackson2 = { module = "io.github.bluetape4k:bluetape4k-jackson2" }
 bluetape4k-jackson3 = { module = "io.github.bluetape4k:bluetape4k-jackson3" }
 bluetape4k-ktor-core = { module = "io.github.bluetape4k:bluetape4k-ktor-core" }
 bluetape4k-ktor-testing = { module = "io.github.bluetape4k:bluetape4k-ktor-testing" }
+bluetape4k-r2dbc = { module = "io.github.bluetape4k:bluetape4k-r2dbc" }
 
 # exposed
 exposed-core = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-core" }
