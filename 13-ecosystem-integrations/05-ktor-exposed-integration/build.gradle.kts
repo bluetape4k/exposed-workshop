@@ -23,6 +23,7 @@ configurations {
 
 dependencies {
     implementation(libs.bluetape4k.ktor.core)
+    implementation(libs.bluetape4k.r2dbc)
     implementation(libs.exposed.ktor)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.cio)

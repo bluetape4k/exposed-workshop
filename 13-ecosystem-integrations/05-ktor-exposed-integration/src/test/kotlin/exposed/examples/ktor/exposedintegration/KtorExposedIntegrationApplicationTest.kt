@@ -14,6 +14,7 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import io.ktor.server.application.ApplicationStopped
 import io.ktor.server.testing.testApplication
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -88,6 +89,38 @@ class KtorExposedIntegrationApplicationTest {
             response shouldContain "jdbc"
             response shouldNotContain "jdbc:h2:"
         }
+    }
+
+    @Test
+    fun `r2dbc helper preserves pool bounds and idempotent cleanup`() {
+        val resources = KtorExposedIntegrationResources.create("pool-helper")
+        try {
+            resources.r2dbcPool.warmup().block()
+
+            val metrics = resources.r2dbcPool.metrics.orElseThrow()
+            metrics.maxAllocatedSize shouldBeEqualTo 2
+            metrics.allocatedSize() shouldBeEqualTo 1
+            resources.r2dbcPool.isDisposed shouldBeEqualTo false
+        } finally {
+            resources.close()
+            resources.close()
+        }
+
+        resources.r2dbcPool.isDisposed shouldBeEqualTo true
+    }
+
+    @Test
+    fun `application stopped event disposes caller owned pool`() = testApplication {
+        val resources = KtorExposedIntegrationResources.create("application-stopped")
+        application {
+            installKtorExposedIntegrationWorkshop(resources)
+        }
+        startApplication()
+
+        application.monitor.raise(ApplicationStopped, application)
+
+        resources.r2dbcPool.isDisposed shouldBeEqualTo true
+        resources.close()
     }
 
     @Test

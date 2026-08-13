@@ -16,38 +16,40 @@
 - Modify: `gradle/libs.versions.toml:116-135`
 - Modify: `13-ecosystem-integrations/05-ktor-exposed-integration/build.gradle.kts:20-45`
 
-- [ ] Add `bluetape4k-r2dbc = { module = "io.github.bluetape4k:bluetape4k-r2dbc" }` beside the other core aliases.
-- [ ] Add `implementation(libs.bluetape4k.r2dbc)` to the Ktor Exposed module.
-- [ ] Run `./gradlew :05-ktor-exposed-integration:dependencies --configuration runtimeClasspath` and confirm `io.github.bluetape4k:bluetape4k-r2dbc:1.12.1` is selected by the `bluetape4k-dependencies:1.4.0` BOM.
+- [x] Add `bluetape4k-r2dbc = { module = "io.github.bluetape4k:bluetape4k-r2dbc" }` beside the other core aliases.
+- [x] Add `implementation(libs.bluetape4k.r2dbc)` to the Ktor Exposed module.
+- [x] Run `./gradlew :05-ktor-exposed-integration:dependencies --configuration runtimeClasspath` and confirm `io.github.bluetape4k:bluetape4k-r2dbc:1.12.1` is selected by the `bluetape4k-dependencies:1.4.0` BOM.
 
 ### Task 2: add the failing helper-contract test
 
 **Files:**
 - Modify: `13-ecosystem-integrations/05-ktor-exposed-integration/src/test/kotlin/exposed/examples/ktor/exposedintegration/KtorExposedIntegrationApplicationTest.kt`
 
-- [ ] Add one test that creates `KtorExposedIntegrationResources.create("pool-helper")`, calls the existing readiness route, and asserts `r2dbc` is `HealthResponse.UP`.
-- [ ] In the same test, call `resources.close()` twice after the application block and assert no exception escapes; this locks idempotent caller-owned cleanup without mocking `ConnectionPool` internals.
-- [ ] Run `./gradlew :05-ktor-exposed-integration:test --tests '*pool helper*'` before changing production code and record the expected failure caused by the still-missing dependency/helper migration.
+- [x] Add one test that creates `KtorExposedIntegrationResources.create("pool-helper")`, warms the pool, and asserts `maxAllocatedSize`, `allocatedSize`, and `isDisposed` through the real pool metrics.
+- [x] In the same test, call `resources.close()` twice and assert no exception escapes; this locks idempotent caller-owned cleanup without mocking `ConnectionPool` internals.
+- [x] Raise `ApplicationStopped` through the real application monitor and assert the subscribed shutdown path disposes the pool.
+- [x] Run `./gradlew :05-ktor-exposed-integration:test --tests '*pool helper*'` before changing production code and record the expected failure caused by the still-missing dependency/helper migration.
 
 ### Task 3: replace direct R2DBC builder calls
 
 **Files:**
 - Modify: `13-ecosystem-integrations/05-ktor-exposed-integration/src/main/kotlin/exposed/examples/ktor/exposedintegration/KtorExposedIntegrationApplication.kt:25-128`
 
-- [ ] Replace imports with `io.bluetape4k.r2dbc.pool.connectionFactoryOptionsOf` and `io.bluetape4k.r2dbc.pool.connectionPoolOf`.
-- [ ] Replace the four-line builder chain with:
+- [x] Replace imports with `io.bluetape4k.r2dbc.pool.connectionFactoryOptionsOf` and `io.bluetape4k.r2dbc.pool.connectionPoolOf`.
+- [x] Replace the four-line builder chain with:
 
 ```kotlin
 val r2dbcOptions = connectionFactoryOptionsOf(r2dbcUrl)
 val r2dbcPool = connectionPoolOf(r2dbcOptions) {
     maxSize = 2
     initialSize = 1
+    minIdle = 0
 }
 ```
 
-- [ ] Keep `R2dbcDatabaseConfig { connectionFactoryOptions = r2dbcOptions }` unchanged.
-- [ ] Keep `close()` cleanup order and `ApplicationStopped` subscription unchanged unless the failing test proves a lifecycle defect; do not add suspend cleanup or catch cancellation.
-- [ ] Run the new focused test and the complete module test; both must pass.
+- [x] Keep `R2dbcDatabaseConfig { connectionFactoryOptions = r2dbcOptions }` unchanged.
+- [x] Keep `close()` cleanup order and `ApplicationStopped` subscription unchanged unless the failing test proves a lifecycle defect; do not add suspend cleanup or catch cancellation.
+- [x] Run the new focused test and the complete module test; both must pass.
 
 ### Task 4: synchronize bilingual README
 
@@ -55,15 +57,14 @@ val r2dbcPool = connectionPoolOf(r2dbcOptions) {
 - Modify: `13-ecosystem-integrations/05-ktor-exposed-integration/README.ko.md`
 - Modify: `13-ecosystem-integrations/05-ktor-exposed-integration/README.md`
 
-- [ ] Add a short R2DBC pool section showing the helper call and stating that the application owns disposal.
-- [ ] Preserve code tokens, route names, diagram path, and existing chapter-12 boundary.
-- [ ] Verify section/title/table parity and paired links between the two locale files.
+- [x] Add a short R2DBC pool section showing the helper call and stating that the application owns disposal.
+- [x] Preserve code tokens, route names, diagram path, and existing chapter-12 boundary.
+- [x] Verify section/title/table parity and paired links between the two locale files.
 
 ### Task 5: targeted verification and cleanup
 
-- [ ] Run `./gradlew :05-ktor-exposed-integration:test` sequentially with fresh output.
-- [ ] Run `./gradlew :05-ktor-exposed-integration:detekt` or the repository’s module-equivalent static-analysis task.
-- [ ] Run `git diff --check` and `rg -n 'ConnectionPoolConfiguration|ConnectionFactories' 13-ecosystem-integrations/05-ktor-exposed-integration/src` to prove direct builder removal.
-- [ ] Read back both README files and record `SPW-01..05`, `KT-FIN-01..11`, and performance/stability scan evidence.
+- [x] Run `./gradlew :05-ktor-exposed-integration:test` sequentially with fresh output.
+- [x] Attempt `./gradlew :05-ktor-exposed-integration:detekt`; record the repository task absence and use aggregate static analysis in the final verification lane.
+- [x] Run `git diff --check` and `rg -n 'ConnectionPoolConfiguration|ConnectionFactories' 13-ecosystem-integrations/05-ktor-exposed-integration/src` to prove direct builder removal.
+- [x] Read back both README files and record `SPW-01..05`, `KT-FIN-01..11`, and performance/stability scan evidence.
 - [ ] Commit with a Korean Lore message containing `Constraint`, `Rejected`, `Confidence`, `Scope-risk`, `Directive`, `Tested`, and `Not-tested` trailers.
-

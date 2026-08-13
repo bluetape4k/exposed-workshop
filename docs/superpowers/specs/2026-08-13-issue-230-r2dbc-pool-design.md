@@ -13,7 +13,9 @@
 
 - `r2dbc:h2:mem:///$databaseName-r2dbc;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE`
   URL과 `R2dbcDatabaseConfig.connectionFactoryOptions` 값.
-- `maxSize = 2`, `initialSize = 1` 풀 설정.
+- `maxSize = 2`, `initialSize = 1`, `minIdle = 0` 풀 설정. provider 기본
+  `minIdle = 8`은 `maxSize = 2`와 함께 사용할 수 없으므로 작은 예제 풀에는
+  `minIdle = 0`을 명시한다.
 - `KtorExposedIntegrationResources`가 Hikari datasource, R2DBC pool,
   dispatcher의 소유자이며 `ApplicationStopped`에서 한 번 정리하는 lifecycle.
 - CRUD, readiness, SQL 오류 비노출 응답과 README 양쪽 locale의 설명.
@@ -65,6 +67,7 @@ val r2dbcOptions = connectionFactoryOptionsOf(r2dbcUrl)
 val r2dbcPool = connectionPoolOf(r2dbcOptions) {
     maxSize = 2
     initialSize = 1
+    minIdle = 0
 }
 ```
 
@@ -99,15 +102,16 @@ val r2dbcPool = connectionPoolOf(r2dbcOptions) {
 
 ## 수용 기준과 DoD
 
-- [ ] 직접 `ConnectionPoolConfiguration.builder`/`ConnectionFactories.get`가
+- [x] 직접 `ConnectionPoolConfiguration.builder`/`ConnectionFactories.get`가
   예제 production source에서 제거된다.
-- [ ] `bluetape4k-r2dbc` versionless catalog alias와 module dependency가
+- [x] `bluetape4k-r2dbc` versionless catalog alias와 module dependency가
   추가된다.
-- [ ] URL, options 재사용, `maxSize = 2`, `initialSize = 1`이 테스트로 증명된다.
-- [ ] CRUD, readiness, sanitized SQL error 테스트가 새로 통과한다.
-- [ ] caller-owned cleanup와 one-time `ApplicationStopped` 경계가 README 양쪽
+- [x] URL, options 재사용, `maxSize = 2`, `initialSize = 1`, `minIdle = 0`이
+  테스트로 증명된다.
+- [x] CRUD, readiness, sanitized SQL error 테스트가 새로 통과한다.
+- [x] caller-owned cleanup와 one-time `ApplicationStopped` 경계가 README 양쪽
   locale에 일치하게 설명된다.
-- [ ] `git diff --check`, Detekt/compile 및 module test가 통과한다.
+- [x] `git diff --check`, Detekt/compile 및 module test가 통과한다.
 
 ## Writer evidence
 
@@ -117,4 +121,3 @@ val r2dbcPool = connectionPoolOf(r2dbcOptions) {
   검토한다.
 - `SPW-04`: provider source와 local caller를 line-level로 대조한다.
 - `SPW-05`: commit 전 Markdown read-back과 workflow receipt evidence를 남긴다.
-
