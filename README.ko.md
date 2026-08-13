@@ -60,10 +60,21 @@ Kotlin Exposed는 JetBrains가 만든 Kotlin 우선 SQL 프레임워크입니다
 | Kotlin language/API level | 2.3 |
 | Java toolchain | 25 |
 | Exposed | 1.4.0 |
-| Spring Boot | 4.0.6 |
+| Spring Boot | 4.1.0 |
 | Kotlinx Coroutines | 1.11.0 |
 | Bluetape4k dependencies BOM | 1.4.0 |
-| Gradle Wrapper | 9.5.0 |
+| Gradle Wrapper | 9.6.0 |
+
+### 의존성 버전 거버넌스
+
+공유 의존성 버전은 import한 BOM의 `bluetape4k-dependencies` 릴리스
+catalog를 기준으로 선언합니다. 로컬 pin이 필요하다면
+`gradle/libs.versions.toml` 주석이나 추적 가능한 lesson에 릴리스 값과
+호환성 사유를 기록합니다. BOM이 이미 관리하는 artifact에는 임의의 버전을
+추가하지 않습니다. catalog 변경을 검토할 때는
+`gradle/dependency-governance.sh`를 실행합니다. 이 guard는 import한
+`bluetape4k-dependencies:1.4.0` release에 명시적으로 고정되어 있으므로,
+BOM을 변경할 때는 release 대조와 guard를 함께 갱신합니다.
 
 ## 학습 가이드
 
@@ -455,7 +466,7 @@ R2DBC 쪽 대응 추적 이슈는
 ### 사전 요구사항
 
 - JDK 25 이상 (Virtual Threads 사용)
-- Gradle Wrapper 9.5.0 포함 (`./gradlew` 사용 권장)
+- Gradle Wrapper 9.6.0 포함 (`./gradlew` 사용 권장)
 - Docker (Testcontainers 사용 시)
 
 ### 빠른 시작

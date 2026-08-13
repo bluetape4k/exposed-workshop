@@ -60,10 +60,20 @@ Kotlin Exposed is JetBrains' Kotlin-first SQL framework. It lets you model table
 | Kotlin language/API level | 2.3 |
 | Java toolchain | 25 |
 | Exposed | 1.4.0 |
-| Spring Boot | 4.0.6 |
+| Spring Boot | 4.1.0 |
 | Kotlinx Coroutines | 1.11.0 |
 | Bluetape4k dependencies BOM | 1.4.0 |
-| Gradle Wrapper | 9.5.0 |
+| Gradle Wrapper | 9.6.0 |
+
+### Dependency Version Governance
+
+Shared dependency versions follow the `bluetape4k-dependencies` release catalog
+for the imported BOM. If a local pin is required, record the release value and
+the compatibility reason in `gradle/libs.versions.toml` or a tracked lesson.
+Do not add ad hoc versions for artifacts already managed by a BOM. Run
+`gradle/dependency-governance.sh` when reviewing catalog changes. This guard is
+explicitly pinned to the imported `bluetape4k-dependencies:1.4.0` release; when
+the BOM changes, refresh the release comparison and the guard together.
 
 ## Learning Guide
 
@@ -455,7 +465,7 @@ No new follow-up issues are needed as of 2026-05-24 because the remaining differ
 ### Prerequisites
 
 - JDK 25 or higher (for Virtual Threads)
-- Gradle Wrapper 9.5.0 included (use `./gradlew`)
+- Gradle Wrapper 9.6.0 included (use `./gradlew`)
 - Docker (for Testcontainers)
 
 ### Quick Start
