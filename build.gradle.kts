@@ -1,5 +1,5 @@
-import io.gitlab.arturbosch.detekt.Detekt
-import io.gitlab.arturbosch.detekt.report.ReportMergeTask
+import dev.detekt.gradle.Detekt
+import dev.detekt.gradle.report.ReportMergeTask
 import org.graalvm.buildtools.gradle.dsl.GraalVMExtension
 import org.graalvm.buildtools.gradle.dsl.GraalVMReachabilityMetadataRepositoryExtension
 import org.graalvm.buildtools.gradle.tasks.CollectReachabilityMetadata
@@ -20,7 +20,7 @@ plugins {
     alias(libs.plugins.kotlinx.atomicfu)
     alias(libs.plugins.kotlin.kapt) apply false
 
-    alias(libs.plugins.detekt)
+    alias(libs.plugins.detekt.dev)
     alias(libs.plugins.kover)
 
     alias(libs.plugins.dependency.management)
@@ -174,9 +174,10 @@ subprojects {
         }
         withType<Detekt>().configureEach detekt@{
             enabled = this@subprojects.name !== "exposed-tests"
+            reports.checkstyle.required.set(true)
             finalizedBy(reportMerge)
             reportMerge.configure {
-                input.from(this@detekt.xmlReportFile)
+                input.from(this@detekt.reports.checkstyle.outputLocation)
             }
         }
 

@@ -82,7 +82,7 @@ javamoney-moneta = "1.4.5"
 javax-money-api = "1.1"
 
 # Plugin versions
-detekt = "1.23.8"
+detekt-dev = "2.0.0-alpha.6"
 dependency-management = "1.1.7"
 dokka = "2.2.0"
 kover = "0.9.9"
@@ -100,7 +100,7 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlinx-atomicfu = { id = "org.jetbrains.kotlinx.atomicfu", version.ref = "kotlinx-atomicfu" }
 kotlinx-benchmark = { id = "org.jetbrains.kotlinx.benchmark", version.ref = "kotlinx-benchmark" }
 
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+detekt-dev = { id = "dev.detekt", version.ref = "detekt-dev" }
 dependency-management = { id = "io.spring.dependency-management", version.ref = "dependency-management" }
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
