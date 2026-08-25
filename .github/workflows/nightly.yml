@@ -45,7 +45,7 @@ jobs:
       - name: Detekt static analysis
         run: ./gradlew detekt --parallel
       - name: Upload detekt report
-        if: always()
+        if: always() && hashFiles('**/build/reports/detekt/*.xml') != ''
         uses: actions/upload-artifact@v7
         with:
           name: detekt-report
