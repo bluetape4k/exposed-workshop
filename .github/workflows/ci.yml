@@ -106,7 +106,7 @@ jobs:
   test:
     name: Test / ${{ matrix.db-name }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: validate-wrapper
     strategy:
       fail-fast: false
       matrix:

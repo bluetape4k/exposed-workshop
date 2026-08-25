@@ -16,6 +16,7 @@ on:
       - 'gradle/**'
       - '*.gradle.kts'
       - 'settings.gradle.kts'
+      - '.github/scripts/select-changed-examples.sh'
       - '.github/workflows/examples.yml'
   pull_request:
     branches: [ develop, main ]
@@ -30,6 +31,7 @@ on:
       - 'gradle/**'
       - '*.gradle.kts'
       - 'settings.gradle.kts'
+      - '.github/scripts/select-changed-examples.sh'
       - '.github/workflows/examples.yml'
   workflow_dispatch:
 
@@ -46,6 +48,40 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 jobs:
+  changes:
+    name: Detect Changed Examples
+    runs-on: ubuntu-latest
+    outputs:
+      all: ${{ steps.select.outputs.all }}
+      module_tasks: ${{ steps.select.outputs.module_tasks }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Select changed example modules
+        id: select
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          if [[ "$EVENT_NAME" == "schedule" || "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            FORCE_ALL=true .github/scripts/select-changed-examples.sh '' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            range="$BASE_SHA...$HEAD_SHA"
+          elif [[ -n "$BEFORE_SHA" && ! "$BEFORE_SHA" =~ ^0+$ ]]; then
+            range="$BEFORE_SHA...$HEAD_SHA"
+          else
+            range="$HEAD_SHA^...$HEAD_SHA"
+          fi
+
+          .github/scripts/select-changed-examples.sh "$range" >> "$GITHUB_OUTPUT"
+
   validate-wrapper:
     name: Validate Gradle Wrapper
     runs-on: ubuntu-latest
@@ -58,7 +94,9 @@ jobs:
     name: Build / Examples (selected modules)
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: validate-wrapper
+    needs:
+      - changes
+      - validate-wrapper
     steps:
       - uses: actions/checkout@v7
 
@@ -73,43 +111,12 @@ jobs:
           cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: Build and test selected examples
-        run: |
-          # Weekly downstream gate:
-          # - multi-tenant Spring examples
-          # - routing datasource example
-          # - production-integration Spring/Ktor examples
-          # Chapter 13 ecosystem integrations are added as child modules become runnable.
-          #
-          # Keep Testcontainers-backed modules in one Gradle invocation so shared
-          # test infrastructure can serialize container usage.
-          # Routing DataSource uses GraalVM AOT tasks; disable configuration cache for this mixed example build.
-          ./gradlew \
-            :03-routing-datasource:build \
-            :04-schema-per-tenant-spring-web:build \
-            :05-database-per-tenant-spring-web:build \
-            :06-spring-security-tenant-authorization-spring-web:build \
-            :01-ktor-application-architecture:build \
-            :02-spring-application-architecture:build \
-            :03-spring-http-outbox-idempotency:build \
-            :04-ktor-http-outbox-idempotency:build \
-            :05-spring-auth-session:build \
-            :06-ktor-auth-session:build \
-            :07-spring-outbox-realtime:build \
-            :08-ktor-outbox-realtime:build \
-            :09-spring-observability-readiness:build \
-            :10-ktor-observability-readiness:build \
-            :01-bigquery-dry-run:build \
-            :02-trino-session-options:build \
-            :03-cockroachdb-retry:build \
-            :04-starrocks-olap-local:build \
-            :05-ktor-exposed-integration:build \
-            :06-spring-modulith-publications:build \
-            :07-ddd-aggregate-repository:build \
-            :08-ddd-modulith-boundaries:build \
-            :09-duckdb-embedded-analytics:build \
-            --no-daemon --no-configuration-cache --continue
         env:
+          MODULE_TASKS: ${{ needs.changes.outputs.module_tasks }}
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false"
+        run: |
+          read -r -a module_tasks <<< "$MODULE_TASKS"
+          ./gradlew "${module_tasks[@]}" --no-daemon --no-configuration-cache --continue
 
       - name: Upload failed example reports
         if: failure()
@@ -127,6 +134,7 @@ jobs:
     name: Examples Status
     runs-on: ubuntu-latest
     needs:
+      - changes
       - validate-wrapper
       - build-examples
     if: always()
