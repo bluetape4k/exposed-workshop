@@ -38,18 +38,26 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
         with:
           gradle-version: wrapper
-      - name: Build (compile only)
-        run: ./gradlew assemble --parallel
+      - name: Build and Detekt
+        run: ./gradlew assemble detekt --parallel
         env:
           GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-      - name: Detekt static analysis
-        run: ./gradlew detekt --parallel
+      - name: Verify Detekt reports
+        shell: bash
+        run: |
+          report_count=$(find . -type f -path '*/build/reports/detekt/*.xml' -size +0c | wc -l | tr -d ' ')
+          test "$report_count" -gt 0 || {
+            echo "Detekt did not produce a non-empty XML report" >&2
+            exit 1
+          }
+          echo "Detekt XML reports: $report_count"
       - name: Upload detekt report
         if: always() && hashFiles('**/build/reports/detekt/*.xml') != ''
         uses: actions/upload-artifact@v7
         with:
           name: detekt-report
           path: '**/build/reports/detekt/*.xml'
+          if-no-files-found: error
           retention-days: 14
 
   test:
