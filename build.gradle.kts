@@ -1,5 +1,5 @@
 import dev.detekt.gradle.Detekt
-import dev.detekt.gradle.report.ReportMergeTask
+import dev.detekt.gradle.plugin.getSupportedKotlinVersion
 import org.graalvm.buildtools.gradle.dsl.GraalVMExtension
 import org.graalvm.buildtools.gradle.dsl.GraalVMReachabilityMetadataRepositoryExtension
 import org.graalvm.buildtools.gradle.tasks.CollectReachabilityMetadata
@@ -58,6 +58,7 @@ subprojects {
         // Kotlin 1.9.20 부터는 pluginId 를 지정해줘야 합니다.
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.kotlinx.atomicfu")
+        plugin("dev.detekt")
         plugin("io.spring.dependency-management")
         plugin("com.adarshr.test-logger")
         plugin("org.jetbrains.kotlinx.kover")
@@ -168,17 +169,11 @@ subprojects {
             showFullStackTraces = true
         }
 
-        val reportMerge by registering(ReportMergeTask::class) {
-            val file = rootProject.layout.buildDirectory.asFile.get().resolve("reports/detekt/exposed.xml")
-            output.set(file)
-        }
-        withType<Detekt>().configureEach detekt@{
-            enabled = this@subprojects.name !== "exposed-tests"
+        withType<Detekt>().configureEach {
+            enabled = this@subprojects.name != "exposed-tests"
+            // 기존 예제의 위반은 리포트로 수집하고, 기준선 도입 전에는 빌드 실패로 전파하지 않습니다.
+            ignoreFailures = true
             reports.checkstyle.required.set(true)
-            finalizedBy(reportMerge)
-            reportMerge.configure {
-                input.from(this@detekt.reports.checkstyle.outputLocation)
-            }
         }
 
         clean {
@@ -308,6 +303,19 @@ subprojects {
             enabled = false
         }
     }
+
+    configurations.matching { it.name == "detekt" }.configureEach {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "org.jetbrains.kotlin") {
+                useVersion(getSupportedKotlinVersion())
+                because("Detekt must run with the Kotlin compiler version it was built against")
+            }
+        }
+    }
+}
+
+tasks.named<Detekt>("detekt") {
+    dependsOn(subprojects.map { it.tasks.named<Detekt>("detekt") })
 }
 
 dependencies {
