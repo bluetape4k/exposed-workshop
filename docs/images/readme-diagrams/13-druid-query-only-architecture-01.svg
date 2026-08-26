@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">Apache Druid query-only architecture</title>
+  <desc id="desc">Typed Druid query profile and provider JDBC facade with deterministic tests and an explicit real-service smoke boundary.</desc>
+  <defs>
+    <style>
+      text { letter-spacing: 0; }
+      .title { font-family: "Architects Daughter"; font-size: 42px; fill: #23323a; }
+      .subtitle, .laneNote, .cardText, .footer, .legendText { font-family: "Comic Mono"; fill: #324750; }
+      .subtitle { font-size: 17px; }
+      .laneTitle { font-family: "Architects Daughter"; font-size: 25px; fill: #23323a; }
+      .laneNote { font-size: 14px; fill: #5b6d75; }
+      .cardTitle { font-family: "Architects Daughter"; font-size: 21px; fill: #20323b; }
+      .cardText { font-size: 13px; }
+      .footer { font-size: 14px; fill: #60717a; }
+      .legendText { font-size: 13px; }
+      .canvas { fill: #fbfcf8; stroke: #3f515a; stroke-width: 3; }
+      .lane { stroke-width: 2.1; }
+      .laneApplication { fill: #eef7f5; stroke: #6fa098; }
+      .laneProvider { fill: #fff7e8; stroke: #b98e50; }
+      .laneBoundary { fill: #f2f0fb; stroke: #897bc2; }
+      .card { fill: #ffffff; stroke-width: 2.2; }
+      .applicationCard { stroke: #5d948b; }
+      .providerCard { stroke: #ac7a34; }
+      .boundaryCard { stroke: #7b6bb4; }
+      .externalCard { stroke: #69777e; }
+      .connector { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .primary { stroke: #ac7a34; stroke-width: 3; }
+      .secondary { stroke: #7b6bb4; stroke-width: 2.4; stroke-dasharray: 9 7; }
+      .legendLine { fill: none; stroke-linecap: round; stroke-width: 3; }
+    </style>
+    <marker id="primaryArrow" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto" data-role="primary" data-tip-direction="positive-x">
+      <path d="M0,0 L14,7 L0,14 Z" fill="#ac7a34" stroke="none" stroke-dasharray="none"/>
+    </marker>
+    <marker id="secondaryArrow" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto" data-role="secondary" data-tip-direction="positive-x">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#7b6bb4" stroke="none" stroke-dasharray="none"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="980" fill="#fbfcf8"/>
+  <rect x="24" y="24" width="1552" height="932" rx="20" class="canvas"/>
+  <text x="800" y="78" text-anchor="middle" class="title">Apache Druid Query-Only Exposed</text>
+  <text x="800" y="110" text-anchor="middle" class="subtitle">Typed options and a provider-first read boundary keep Druid outside the Exposed write model.</text>
+
+  <rect x="70" y="150" width="1460" height="235" rx="18" class="lane laneApplication"/>
+  <text x="104" y="190" class="laneTitle">Workshop API</text>
+  <text x="104" y="218" class="laneNote">The example owns validation and query intent; it does not open a Database or define a dialect.</text>
+
+  <rect x="180" y="255" width="430" height="92" rx="12" class="card applicationCard"/>
+  <text x="395" y="289" text-anchor="middle" class="cardTitle">DruidQueryProfile</text>
+  <text x="395" y="316" text-anchor="middle" class="cardText">endpoint · datasource · schema · context</text>
+  <text x="395" y="336" text-anchor="middle" class="cardText">optional credentials stay environment-only</text>
+
+  <rect x="990" y="255" width="430" height="92" rx="12" class="card applicationCard"/>
+  <text x="1205" y="289" text-anchor="middle" class="cardTitle">Query-only facade</text>
+  <text x="1205" y="316" text-anchor="middle" class="cardText">query · querySuspend · listColumns</text>
+  <text x="1205" y="336" text-anchor="middle" class="cardText">SELECT / WITH / EXPLAIN / DESCRIBE / SHOW</text>
+
+  <path d="M610,301 H990" class="connector primary" data-source="profile" data-target="facade" marker-end="url(#primaryArrow)"/>
+
+  <rect x="70" y="430" width="1460" height="245" rx="18" class="lane laneProvider"/>
+  <text x="104" y="470" class="laneTitle">Provider boundary</text>
+  <text x="104" y="498" class="laneNote">The central catalog resolves the provider; its public API enforces the query-only JDBC contract.</text>
+
+  <rect x="180" y="535" width="430" height="92" rx="12" class="card providerCard"/>
+  <text x="395" y="569" text-anchor="middle" class="cardTitle">DruidConnectionOptions</text>
+  <text x="395" y="596" text-anchor="middle" class="cardText">Avatica URL · reconnection · serialization</text>
+  <text x="395" y="616" text-anchor="middle" class="cardText">contextProperties → JDBC properties</text>
+
+  <rect x="990" y="535" width="430" height="92" rx="12" class="card providerCard"/>
+  <text x="1205" y="569" text-anchor="middle" class="cardTitle">DruidJdbc</text>
+  <text x="1205" y="596" text-anchor="middle" class="cardText">read-only ResultSet mapping</text>
+  <text x="1205" y="616" text-anchor="middle" class="cardText">INFORMATION_SCHEMA.COLUMNS metadata</text>
+
+  <path d="M395,347 V535" class="connector primary" data-source="profile" data-target="options" marker-end="url(#primaryArrow)"/>
+  <path d="M1205,347 V535" class="connector primary" data-source="facade" data-target="jdbc" marker-end="url(#primaryArrow)"/>
+  <path d="M610,581 H990" class="connector primary" data-source="options" data-target="jdbc" marker-end="url(#primaryArrow)"/>
+
+  <rect x="70" y="720" width="1460" height="170" rx="18" class="lane laneBoundary"/>
+  <text x="104" y="760" class="laneTitle">Execution boundaries</text>
+  <text x="104" y="788" class="laneNote">Default verification is local and fake; a real Druid call is an explicit, manual opt-in.</text>
+
+  <rect x="180" y="815" width="430" height="52" rx="12" class="card boundaryCard"/>
+  <text x="395" y="848" text-anchor="middle" class="cardTitle">Deterministic MockK tests</text>
+
+  <rect x="700" y="815" width="430" height="52" rx="12" class="card boundaryCard"/>
+  <text x="915" y="848" text-anchor="middle" class="cardTitle">EXPOSED_DRUID_SMOKE=true</text>
+
+  <rect x="1220" y="815" width="230" height="52" rx="12" class="card externalCard"/>
+  <text x="1335" y="840" text-anchor="middle" class="cardTitle">Druid Router/Broker</text>
+  <text x="1335" y="858" text-anchor="middle" class="cardText">Avatica endpoint</text>
+
+  <path d="M395,815 V780 Q395,760 415,760 H1140 Q1160,760 1160,740 V627" class="connector secondary" data-source="local" data-target="jdbc" marker-end="url(#secondaryArrow)"/>
+  <path d="M915,815 V800 Q915,780 935,780 H1280 Q1300,780 1300,760 V627" class="connector secondary" data-source="smoke" data-target="jdbc" marker-end="url(#secondaryArrow)"/>
+  <path d="M1420,581 H1480 Q1500,581 1500,601 V815" class="connector primary" data-source="jdbc" data-target="druid" marker-end="url(#primaryArrow)"/>
+
+  <rect x="1110" y="165" width="370" height="58" rx="10" class="card externalCard"/>
+  <line x1="1135" y1="189" x2="1195" y2="189" class="legendLine" stroke="#ac7a34"/>
+  <text x="1210" y="194" class="legendText">runtime query/configuration</text>
+  <line x1="1135" y1="210" x2="1195" y2="210" class="legendLine" stroke="#7b6bb4" stroke-dasharray="9 7"/>
+  <text x="1210" y="215" class="legendText">test or explicit opt-in</text>
+
+  <text x="800" y="932" text-anchor="middle" class="footer">No DDL, DML, DAO, repository, migration, Database, or dialect path is part of this example.</text>
+</svg>

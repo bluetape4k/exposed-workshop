@@ -31,6 +31,7 @@ chapter. Child modules become runnable as their issues are implemented.
 | [#144](https://github.com/bluetape4k/exposed-workshop/issues/144) | Ready | [`13-ecosystem-integrations/07-ddd-aggregate-repository`](07-ddd-aggregate-repository/README.md) | `:07-ddd-aggregate-repository:build` | [DDD Aggregate Lifecycle with Exposed Repository](07-ddd-aggregate-repository/README.md) | Domain architecture |
 | [#145](https://github.com/bluetape4k/exposed-workshop/issues/145) | Ready | [`13-ecosystem-integrations/08-ddd-modulith-boundaries`](08-ddd-modulith-boundaries/README.md) | `:08-ddd-modulith-boundaries:build` | [DDD Bounded Context and Modulith Boundary Verification](08-ddd-modulith-boundaries/README.md) | Domain architecture |
 | TBD | Ready | [`13-ecosystem-integrations/09-duckdb-embedded-analytics`](09-duckdb-embedded-analytics/README.md) | `:09-duckdb-embedded-analytics:build` | [DuckDB Embedded Analytics with Exposed](09-duckdb-embedded-analytics/README.md) | Database platform adapters |
+| [#234](https://github.com/bluetape4k/exposed-workshop/issues/234) | Ready | [`13-ecosystem-integrations/10-druid-query-only`](10-druid-query-only/README.md) | `:10-druid-query-only:build` | [Apache Druid Query-Only Exposed](10-druid-query-only/README.md) | Database platform adapters |
 
 ## External Service And Credential Policy
 

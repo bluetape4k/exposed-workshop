@@ -438,6 +438,12 @@ Orders와 shipping을 Spring Modulith bounded context로 나누고, order event 
 interface만 공개하며, deterministic H2 기반 Exposed 테스트로 정상 의존성과 금지된
 의존성을 함께 검증합니다.
 
+#### [Apache Druid Query-Only Exposed](13-ecosystem-integrations/10-druid-query-only/README.ko.md)
+
+중앙 catalog의 typed `DruidQueryProfile`을 `DruidConnectionOptions`로 매핑하고, read-only
+`query`, `querySuspend`, `listColumns` 호출을 `DruidJdbc`에 위임합니다. deterministic
+MockK 테스트와 명시적인 real-service smoke test로 이 경계를 검증합니다.
+
 ---
 
 ## exposed-r2dbc-workshop 예제 parity

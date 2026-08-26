@@ -438,6 +438,13 @@ Split orders and shipping into Spring Modulith bounded contexts, expose only an
 order event named interface, and verify valid and forbidden dependencies with
 deterministic H2-backed Exposed tests.
 
+#### [Apache Druid Query-Only Exposed](13-ecosystem-integrations/10-druid-query-only/README.md)
+
+Map a typed `DruidQueryProfile` to `DruidConnectionOptions` from the central catalog, delegate
+read-only `query`, `querySuspend`, and `listColumns` calls to `DruidJdbc`, and
+verify the boundary with deterministic MockK tests plus an explicit real-service
+smoke test.
+
 ---
 
 ## Example parity with exposed-r2dbc-workshop
