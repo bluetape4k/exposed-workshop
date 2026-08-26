@@ -82,8 +82,8 @@ fun createJdbcBatchSchema(database: Database)
 fun checkpointableJdbcBatchJob(
     database: Database,
     options: JdbcBatchOptions = JdbcBatchOptions(),
-    processor: BatchProcessor<JdbcSourceRecord, JdbcTargetRecord> = defaultProcessor,
-    writer: BatchWriter<JdbcTargetRecord> = exposedJdbcTargetWriter(database),
+    processor: BatchProcessor<JdbcSourceRecord, JdbcTargetRecord> = defaultJdbcProcessor,
+    writer: BatchWriter<JdbcTargetRecord> = jdbcTargetWriter(database),
 ): BatchJob
 
 suspend fun runCheckpointableJdbcBatch(
@@ -243,4 +243,3 @@ issue #236, 양쪽 locale 링크를 module 파일이 존재한 뒤 추가한다.
 - [x] SPW-03 — Korean technical register를 적용하고 API/identifier/command/URL/version을 보존했다.
 - [x] SPW-04 — provider source/README, local Gradle catalog, chapter 13 workflow와 대조해 claim을 고정했다.
 - [x] SPW-05 — 파일을 저장한 뒤 Markdown headings, code fence, 목록, 링크 parity와 terminology audit를 다시 읽고 workflow receipt에 기록한다.
-
