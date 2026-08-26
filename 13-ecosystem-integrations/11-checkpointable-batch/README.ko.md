@@ -65,6 +65,9 @@ Cancellation은 provider가 `STOPPED`를 기록한 뒤 `CancellationException`�
 전달됩니다. 같은 job name과 parameter로 다시 실행하면 저장된 checkpoint 이후부터
 재개하며, H2 테스트가 이 동작을 검증합니다.
 
+전체 성공은 `BatchStatus.COMPLETED`를 반환하고, processor 또는 writer item을
+skip한 실행은 skip count와 함께 `BatchStatus.COMPLETED_WITH_SKIPS`를 반환합니다.
+
 현재 provider에는 중요한 `FAILED` 경계가 있습니다. failed-step report에는 checkpoint가
 포함되지 않으며, JDBC repository가 해당 report를 저장할 때 기존 checkpoint를 지울 수
 있습니다. failure test는 이 provider 동작을 그대로 드러내며 workshop workaround를
