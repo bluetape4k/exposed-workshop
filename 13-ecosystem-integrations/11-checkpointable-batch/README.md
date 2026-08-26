@@ -67,6 +67,10 @@ Cancellation is rethrown as `CancellationException` after the provider records
 `STOPPED`. A subsequent run with the same job name and parameters resumes after
 the saved checkpoint, as covered by the H2 test.
 
+Full success returns `BatchStatus.COMPLETED`; a run that skips processor or
+writer items returns `BatchStatus.COMPLETED_WITH_SKIPS` and reports its skip
+count.
+
 The provider currently has an important `FAILED` boundary: its failed-step
 report does not carry a checkpoint, and the JDBC repository may clear an
 existing checkpoint when it writes that report. The failure test intentionally
