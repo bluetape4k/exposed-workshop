@@ -1,0 +1,30 @@
+{
+  "kind": "architecture",
+  "source": {
+    "question": "How do the typed Druid profile and query-only facade reach an Avatica endpoint across explicit responsibility boundaries?",
+    "revision": "6c5f9aa2",
+    "paths": [
+      "13-ecosystem-integrations/10-druid-query-only/src/main/kotlin/exposed/examples/druid/queryonly/DruidQueryOnlyWorkshop.kt",
+      "13-ecosystem-integrations/10-druid-query-only/src/test/kotlin/exposed/examples/druid/queryonly/DruidQueryOnlyWorkshopTest.kt",
+      "13-ecosystem-integrations/10-druid-query-only/src/test/kotlin/exposed/examples/druid/queryonly/DruidQueryOnlySmokeTest.kt",
+      "13-ecosystem-integrations/10-druid-query-only/README.md"
+    ]
+  },
+  "nodes": [
+    {"id":"profile","label":"DruidQueryProfile","source":"DruidQueryOnlyWorkshop.kt"},
+    {"id":"options","label":"DruidConnectionOptions","source":"DruidQueryOnlyWorkshop.kt"},
+    {"id":"jdbc","label":"DruidJdbc query / querySuspend / listColumns","source":"DruidQueryOnlyWorkshop.kt"},
+    {"id":"local","label":"Deterministic MockK tests","source":"DruidQueryOnlyWorkshopTest.kt"},
+    {"id":"smoke","label":"EXPOSED_DRUID_SMOKE opt-in","source":"DruidQueryOnlySmokeTest.kt"},
+    {"id":"druid","label":"Apache Druid Router/Broker Avatica","source":"README.md"}
+  ],
+  "edges": [
+    {"id":"profile-options","from":"profile","to":"options","kind":"dependency","source":"DruidQueryOnlyWorkshop.kt"},
+    {"id":"options-jdbc","from":"options","to":"jdbc","kind":"configuration","source":"DruidQueryOnlyWorkshop.kt"},
+    {"id":"jdbc-local","from":"local","to":"jdbc","kind":"verification","source":"DruidQueryOnlyWorkshopTest.kt"},
+    {"id":"smoke-jdbc","from":"smoke","to":"jdbc","kind":"opt-in","source":"DruidQueryOnlySmokeTest.kt"},
+    {"id":"jdbc-druid","from":"jdbc","to":"druid","kind":"query","source":"README.md"}
+  ],
+  "behavior": {"branches": 1, "loops": 0},
+  "repairs": []
+}
