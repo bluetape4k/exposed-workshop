@@ -10,13 +10,16 @@ import io.bluetape4k.junit5.coroutines.runSuspendIO
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
+import io.mockk.mockk
 import io.mockk.mockkObject
+import io.mockk.slot
 import io.mockk.unmockkObject
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.sql.ResultSet
 
 class DruidQueryOnlyWorkshopTest {
 
@@ -67,9 +70,14 @@ class DruidQueryOnlyWorkshopTest {
 
     @Test
     fun `sync query delegates query-only SQL and returns mapped rows`() {
-        every { DruidJdbc.query<Long>(any(), any(), any()) } returns listOf(7L)
+        val mapper = slot<(ResultSet) -> Long>()
+        every { DruidJdbc.query<Long>(any(), any(), capture(mapper)) } returns listOf(7L)
 
         queryDatasourceRowCount(profile) shouldBeEqualTo listOf(7L)
+
+        val resultSet = mockk<ResultSet>()
+        every { resultSet.getLong("row_count") } returns 7L
+        mapper.captured(resultSet) shouldBeEqualTo 7L
 
         verify(exactly = 1) {
             DruidJdbc.query<Long>(
@@ -82,9 +90,14 @@ class DruidQueryOnlyWorkshopTest {
 
     @Test
     fun `suspend query delegates the supplied dispatcher`() = runSuspendIO {
-        coEvery { DruidJdbc.querySuspend<Long>(any(), any(), any(), any()) } returns listOf(11L)
+        val mapper = slot<(ResultSet) -> Long>()
+        coEvery { DruidJdbc.querySuspend<Long>(any(), any(), any(), capture(mapper)) } returns listOf(11L)
 
         queryDatasourceRowCountSuspend(profile, dispatcher = Dispatchers.Unconfined) shouldBeEqualTo listOf(11L)
+
+        val resultSet = mockk<ResultSet>()
+        every { resultSet.getLong("row_count") } returns 11L
+        mapper.captured(resultSet) shouldBeEqualTo 11L
 
         coVerify(exactly = 1) {
             DruidJdbc.querySuspend<Long>(

@@ -102,4 +102,3 @@ EXPOSED_DRUID_PASSWORD='<optional-password>' \
 This command can incur network and service costs and may require a datasource
 with readable metadata. It is a manual opt-in path and is not part of the
 default Examples gate.
-

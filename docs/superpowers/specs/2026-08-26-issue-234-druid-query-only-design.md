@@ -92,6 +92,11 @@ exposed-druid = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-drui
 - `13-ecosystem-integrations/10-druid-query-only/README.md`
 - `13-ecosystem-integrations/10-druid-query-only/README.ko.md`
 
+새 모듈의 표준 테스트 실행을 고정하기 위해 인접 모듈과 같은
+`src/test/resources/junit-platform.properties`와 `logback-test.xml`도 둔다.
+chapter 13 표와 함께 root `README.md`/`README.ko.md` ecosystem index에도 양쪽
+locale 링크를 추가하여 module → chapter → root 탐색 경계를 닫는다.
+
 두 README는 profile 구성, 동기/suspend query, `listColumns`, query-only 제외 범위, 기본 테스트 명령, opt-in smoke 명령을 같은 순서와 의미로 설명한다. README는 PNG만 embed한다.
 
 정적 architecture 다이어그램은 SVG를 source로 삼고 English/Korean 자산을 각각 렌더링한다.
@@ -101,7 +106,7 @@ exposed-druid = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-drui
 - `docs/images/readme-diagrams/13-druid-query-only-architecture-01.ko.svg`
 - `docs/images/readme-diagrams/13-druid-query-only-architecture-01.ko.png`
 
-다이어그램의 독자 질문은 “타입화한 profile과 query-only facade가 외부 Druid Avatica endpoint까지 어떤 책임 경계로 이어지는가?”다. 카드와 연결은 source의 `DruidQueryProfile`, `DruidConnectionOptions`, `DruidJdbc` 세 API와 local deterministic test/mock, 명시적 opt-in smoke 경계를 나타낸다. SVG는 CairoSVG scale 2로 PNG를 만들고 XML, semantic, connector, arrowhead, geometry, visual, asset-pair 감사를 통과시킨다.
+다이어그램의 독자 질문은 “타입화한 profile과 query-only facade가 외부 Druid Avatica endpoint까지 어떤 책임 경계로 이어지는가?”다. 카드와 연결은 source의 `DruidQueryProfile`, workshop query-only facade, `DruidConnectionOptions`, `DruidJdbc` API와 local deterministic test/mock, 명시적 opt-in smoke 경계를 나타낸다. 특히 profile → facade → `DruidJdbc` 호출과 profile → options → `DruidJdbc` 설정 흐름을 분리해 표시한다. SVG는 CairoSVG scale 2로 PNG를 만들고 XML, semantic, connector, arrowhead, geometry, visual, asset-pair 감사를 통과시킨다.
 
 ## 워크플로와 범위 경계
 

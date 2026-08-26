@@ -103,4 +103,3 @@ EXPOSED_DRUID_PASSWORD='<optional-password>' \
 이 명령은 network와 service 비용이 발생할 수 있고 읽을 수 있는 metadata가
 있는 datasource가 필요할 수 있습니다. 수동 opt-in 경로이며 기본 Examples
 gate에는 포함하지 않습니다.
-

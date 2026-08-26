@@ -55,7 +55,7 @@
   <text x="1205" y="316" text-anchor="middle" class="cardText">query · querySuspend · listColumns</text>
   <text x="1205" y="336" text-anchor="middle" class="cardText">SELECT / WITH / EXPLAIN / DESCRIBE / SHOW</text>
 
-  <path d="M610,301 H990" class="connector primary" data-source="profile" data-target="options" marker-end="url(#primaryArrow)"/>
+  <path d="M610,301 H990" class="connector primary" data-source="profile" data-target="facade" marker-end="url(#primaryArrow)"/>
 
   <rect x="70" y="430" width="1460" height="245" rx="18" class="lane laneProvider"/>
   <text x="104" y="470" class="laneTitle">Provider 경계</text>
@@ -72,6 +72,7 @@
   <text x="1205" y="616" text-anchor="middle" class="cardText">INFORMATION_SCHEMA.COLUMNS metadata</text>
 
   <path d="M395,347 V535" class="connector primary" data-source="profile" data-target="options" marker-end="url(#primaryArrow)"/>
+  <path d="M1205,347 V535" class="connector primary" data-source="facade" data-target="jdbc" marker-end="url(#primaryArrow)"/>
   <path d="M610,581 H990" class="connector primary" data-source="options" data-target="jdbc" marker-end="url(#primaryArrow)"/>
 
   <rect x="70" y="720" width="1460" height="170" rx="18" class="lane laneBoundary"/>

@@ -17,8 +17,12 @@
 - Create: `13-ecosystem-integrations/10-druid-query-only/src/main/kotlin/exposed/examples/druid/queryonly/DruidQueryOnlyWorkshop.kt` — profile, query-only SQL 생성, sync/suspend/metadata facade.
 - Create: `13-ecosystem-integrations/10-druid-query-only/src/test/kotlin/exposed/examples/druid/queryonly/DruidQueryOnlyWorkshopTest.kt` — 외부 서비스 없는 RED→GREEN 회귀 테스트.
 - Create: `13-ecosystem-integrations/10-druid-query-only/src/test/kotlin/exposed/examples/druid/queryonly/DruidQueryOnlySmokeTest.kt` — 환경 변수로만 활성화되는 실제 endpoint smoke test.
+- Create: `13-ecosystem-integrations/10-druid-query-only/src/test/resources/junit-platform.properties` — 단일 개발자 로컬/CI 테스트 실행 순서와 lifecycle 설정.
+- Create: `13-ecosystem-integrations/10-druid-query-only/src/test/resources/logback-test.xml` — 모듈 테스트 로깅 설정.
 - Create: `13-ecosystem-integrations/10-druid-query-only/README.md` — English 사용법과 제약.
 - Create: `13-ecosystem-integrations/10-druid-query-only/README.ko.md` — Korean source-equivalent 사용법과 제약.
+- Modify: `README.md` — root English module index에 새 모듈 링크와 요약.
+- Modify: `README.ko.md` — root Korean module index에 새 모듈 링크와 요약.
 - Modify: `13-ecosystem-integrations/README.md` — chapter 표에 issue #234 행.
 - Modify: `13-ecosystem-integrations/README.ko.md` — Korean chapter 표에 issue #234 행.
 - Modify: `.github/scripts/select-changed-examples.sh` — `:10-druid-query-only:build` weekly Examples task.
@@ -99,12 +103,15 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockkObject
+import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.unmockkObject
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.sql.ResultSet
 
 class DruidQueryOnlyWorkshopTest {
 
@@ -136,6 +143,11 @@ class DruidQueryOnlyWorkshopTest {
     }
 
     @Test
+    fun `default profile points to the local Druid Avatica endpoint`() {
+        defaultDruidQueryProfile() shouldBeEqualTo DruidQueryProfile()
+    }
+
+    @Test
     fun `blank profile values fail before JDBC calls`() {
         assertFailsWith<IllegalArgumentException> { DruidQueryProfile(datasource = "") }
         assertFailsWith<IllegalArgumentException> { DruidQueryProfile(schema = " ") }
@@ -149,9 +161,14 @@ class DruidQueryOnlyWorkshopTest {
 
     @Test
     fun `sync query delegates query-only SQL and returns mapped rows`() {
-        every { DruidJdbc.query<Long>(any(), any(), any()) } returns listOf(7L)
+        val mapper = slot<(ResultSet) -> Long>()
+        every { DruidJdbc.query<Long>(any(), any(), capture(mapper)) } returns listOf(7L)
 
         queryDatasourceRowCount(profile) shouldBeEqualTo listOf(7L)
+
+        val resultSet = mockk<ResultSet>()
+        every { resultSet.getLong("row_count") } returns 7L
+        mapper.captured(resultSet) shouldBeEqualTo 7L
 
         verify(exactly = 1) {
             DruidJdbc.query<Long>(
@@ -164,9 +181,14 @@ class DruidQueryOnlyWorkshopTest {
 
     @Test
     fun `suspend query delegates the supplied dispatcher`() = runSuspendIO {
-        coEvery { DruidJdbc.querySuspend<Long>(any(), any(), any(), any()) } returns listOf(11L)
+        val mapper = slot<(ResultSet) -> Long>()
+        coEvery { DruidJdbc.querySuspend<Long>(any(), any(), any(), capture(mapper)) } returns listOf(11L)
 
         queryDatasourceRowCountSuspend(profile, dispatcher = Dispatchers.Unconfined) shouldBeEqualTo listOf(11L)
+
+        val resultSet = mockk<ResultSet>()
+        every { resultSet.getLong("row_count") } returns 11L
+        mapper.captured(resultSet) shouldBeEqualTo 11L
 
         coVerify(exactly = 1) {
             DruidJdbc.querySuspend<Long>(
@@ -414,6 +436,8 @@ Expected: deterministic workshop tests pass and the smoke class remains disabled
 - Create: `13-ecosystem-integrations/10-druid-query-only/README.ko.md`.
 - Modify: `13-ecosystem-integrations/README.md`.
 - Modify: `13-ecosystem-integrations/README.ko.md`.
+- Modify: `README.md`.
+- Modify: `README.ko.md`.
 - Modify: `.github/scripts/select-changed-examples.sh`.
 
 - [ ] **Step 1: Write source-equivalent README sections.**
@@ -445,6 +469,10 @@ EXPOSED_DRUID_DATASOURCE='<datasource>' \\
 
 Add the issue #234 row after the DuckDB row in both chapter tables with status `Ready`, path `10-druid-query-only`, task `:10-druid-query-only:build`, title `Apache Druid Query-Only Exposed`, and lane `Database platform adapters`. Add `:10-druid-query-only:build` to `ALL_TASKS` in `.github/scripts/select-changed-examples.sh`; keep the existing dynamic `13-ecosystem-integrations/*/**` mapping unchanged.
 
+Add the same module link and a source-equivalent summary to the root `README.md`
+and `README.ko.md` ecosystem index so the public navigation chain reaches the
+new child module from both locales.
+
 - [ ] **Step 3: Verify registration and README parity.**
 
 Run:
@@ -474,7 +502,7 @@ Use this source-backed model:
   "kind": "architecture",
   "source": {
     "question": "타입화한 Druid profile과 query-only facade가 Avatica endpoint까지 어떤 책임 경계로 이어지는가?",
-    "revision": "a357c6cb",
+    "revision": "200b46b0",
     "paths": [
       "docs/superpowers/specs/2026-08-26-issue-234-druid-query-only-design.md",
       "13-ecosystem-integrations/10-druid-query-only/src/main/kotlin/exposed/examples/druid/queryonly/DruidQueryOnlyWorkshop.kt",
@@ -483,6 +511,7 @@ Use this source-backed model:
   },
   "nodes": [
     {"id":"profile","label":"DruidQueryProfile","source":"DruidQueryOnlyWorkshop.kt"},
+    {"id":"facade","label":"Workshop query-only facade","source":"DruidQueryOnlyWorkshop.kt"},
     {"id":"options","label":"DruidConnectionOptions","source":"DruidQueryOnlyWorkshop.kt"},
     {"id":"jdbc","label":"DruidJdbc query / querySuspend / listColumns","source":"DruidQueryOnlyWorkshop.kt"},
     {"id":"local","label":"Deterministic MockK tests","source":"DruidQueryOnlyWorkshopTest.kt"},
@@ -490,10 +519,12 @@ Use this source-backed model:
     {"id":"druid","label":"Apache Druid Router/Broker Avatica","source":"README.md"}
   ],
   "edges": [
+    {"id":"profile-facade","from":"profile","to":"facade","kind":"api","source":"DruidQueryOnlyWorkshop.kt"},
     {"id":"profile-options","from":"profile","to":"options","kind":"dependency","source":"DruidQueryOnlyWorkshop.kt"},
+    {"id":"facade-jdbc","from":"facade","to":"jdbc","kind":"query","source":"DruidQueryOnlyWorkshop.kt"},
     {"id":"options-jdbc","from":"options","to":"jdbc","kind":"configuration","source":"DruidQueryOnlyWorkshop.kt"},
-    {"id":"jdbc-local","from":"jdbc","to":"local","kind":"verification","source":"DruidQueryOnlyWorkshopTest.kt"},
-    {"id":"jdbc-smoke","from":"jdbc","to":"smoke","kind":"opt-in","source":"DruidQueryOnlySmokeTest.kt"},
+    {"id":"local-jdbc","from":"local","to":"jdbc","kind":"verification","source":"DruidQueryOnlyWorkshopTest.kt"},
+    {"id":"smoke-jdbc","from":"smoke","to":"jdbc","kind":"opt-in","source":"DruidQueryOnlySmokeTest.kt"},
     {"id":"jdbc-druid","from":"jdbc","to":"druid","kind":"query","source":"README.md"}
   ],
   "behavior": {"branches": 1, "loops": 0},
@@ -503,7 +534,7 @@ Use this source-backed model:
 
 - [ ] **Step 2: Draw and render one SVG at a time.**
 
-Use the repository architecture family `docs/images/readme-diagrams/13-ecosystem-integrations-architecture-01.png` as the palette/layout reference. Use orthogonal rounded connectors, typed primary/secondary markers, Korean or English fonts from the diagram contract, and no invented technology logos. Keep the six source-backed cards and five edges; explain solid query edges and dashed test/opt-in edges in an in-image legend.
+Use the repository architecture family `docs/images/readme-diagrams/13-ecosystem-integrations-architecture-01.png` as the palette/layout reference. Use orthogonal rounded connectors, typed primary/secondary markers, Korean or English fonts from the diagram contract, and no invented technology logos. Keep the seven source-backed cards and seven edges; explain solid query edges and dashed test/opt-in edges in an in-image legend.
 
 - [ ] **Step 3: Validate, render, and audit each asset.**
 
@@ -581,4 +612,3 @@ Refresh `AGENTS.md`, workflow references, issue metadata, and PR template immedi
 - Placeholder scan: no `TBD`, `TODO`, or vague implementation step is used; every code change has an exact path, code shape, command, and expected result.
 - Type consistency: `DruidQueryProfile`, `toConnectionOptions`, `buildDatasourceCountQuery`, `queryDatasourceRowCount`, `queryDatasourceRowCountSuspend`, and `listDatasourceColumns` names are identical in tests, implementation, README plan, and smoke test.
 - Single-owner constraint: tasks are sequential, heavy Gradle checks are serialized, and no subagent lane is required.
-
