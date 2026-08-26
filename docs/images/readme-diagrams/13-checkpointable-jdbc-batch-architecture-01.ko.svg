@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1060" viewBox="0 0 1600 1060" role="img" aria-labelledby="title desc">
+  <title id="title">재시작 가능한 Exposed JDBC batch 아키텍처</title>
+  <desc id="desc">JDBC workshop은 public API, provider batch DSL, keyset reader, processor, target writer, checkpoint repository, 호출자가 제공하는 JDBC database를 조합합니다. Deterministic 테스트는 로컬에 머물고 R2DBC 대응은 별도로 추적합니다.</desc>
+  <defs>
+    <style>
+      text { letter-spacing: 0; }
+      .title { font-family: "goorm Sans"; font-size: 42px; fill: #23323a; }
+      .subtitle, .cardText, .legend, .footer { font-family: "goorm Sans Code"; fill: #324750; }
+      .subtitle { font-size: 17px; }
+      .cardTitle { font-family: "goorm Sans"; font-size: 22px; fill: #20323b; }
+      .cardText { font-size: 14px; }
+      .legend { font-size: 13px; fill: #52656d; }
+      .footer { font-size: 14px; fill: #60717a; }
+      .canvas { fill: #fbfcf8; stroke: #3f515a; stroke-width: 3; }
+      .scope { fill: #ffffff; stroke: #c4d0d3; stroke-width: 2; }
+      .api { fill: #eaf4f8; stroke: #3f7d9c; stroke-width: 2.2; }
+      .dsl { fill: #f2f0fb; stroke: #7b6bb4; stroke-width: 2.2; }
+      .jdbc { fill: #fff7e8; stroke: #ac7a34; stroke-width: 2.2; }
+      .state { fill: #eef7f0; stroke: #6e8f4f; stroke-width: 2.2; }
+      .test { fill: #f5f0fb; stroke: #897bc2; stroke-width: 2.2; }
+      .boundary { fill: #f4f6f5; stroke: #69777e; stroke-width: 2.2; stroke-dasharray: 9 6; }
+      .flow { fill: none; stroke: #3f7d9c; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowFlow); }
+      .data { fill: none; stroke: #a2743d; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowData); }
+      .checkpoint { fill: none; stroke: #6e8f4f; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowCheckpoint); }
+      .verify { fill: none; stroke: #897bc2; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowVerify); }
+      .scopeLine { fill: none; stroke: #69777e; stroke-width: 2.5; stroke-dasharray: 10 7; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowScope); }
+      .legendLine { fill: none; stroke-width: 3; stroke-linecap: round; }
+    </style>
+    <marker id="arrowFlow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="primary" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c" stroke="#3f7d9c" stroke-width="0" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowData" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="primary" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowCheckpoint" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="primary" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-width="0" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowVerify" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="primary" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#897bc2" stroke="#897bc2" stroke-width="0" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowScope" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="primary" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#69777e" stroke="#69777e" stroke-width="0" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
+
+  <rect x="24" y="24" width="1552" height="1012" rx="20" class="canvas"/>
+  <text x="800" y="78" text-anchor="middle" class="title">재시작 가능한 Exposed JDBC Batch</text>
+  <text x="800" y="110" text-anchor="middle" class="subtitle">JDBC chunk 실행은 read/write를 소유하고, provider metadata는 재시작 상태를 소유합니다.</text>
+
+  <rect x="60" y="150" width="1480" height="710" rx="18" class="scope"/>
+  <text x="92" y="186" class="cardTitle">JDBC 전용 workshop 경계</text>
+  <text x="92" y="211" class="cardText">호출자가 JDBC Database를 제공하며, H2가 deterministic 기본값입니다.</text>
+
+  <rect x="100" y="245" width="280" height="112" rx="14" class="api"/>
+  <text x="240" y="282" text-anchor="middle" class="cardTitle">Workshop API</text>
+  <text x="240" y="310" text-anchor="middle" class="cardText">createJdbcBatchSchema</text>
+  <text x="240" y="333" text-anchor="middle" class="cardText">runCheckpointableJdbcBatch</text>
+
+  <rect x="500" y="245" width="300" height="112" rx="14" class="dsl"/>
+  <text x="650" y="282" text-anchor="middle" class="cardTitle">BatchJob DSL</text>
+  <text x="650" y="310" text-anchor="middle" class="cardText">checkpointableJdbcBatchJob</text>
+  <text x="650" y="333" text-anchor="middle" class="cardText">chunk, skip, retry, timeout</text>
+
+  <rect x="980" y="245" width="250" height="112" rx="14" class="jdbc"/>
+  <text x="1105" y="282" text-anchor="middle" class="cardTitle">Keyset reader</text>
+  <text x="1105" y="310" text-anchor="middle" class="cardText">ExposedJdbcBatchReader</text>
+  <text x="1105" y="333" text-anchor="middle" class="cardText">Long checkpoint</text>
+
+  <rect x="1270" y="245" width="250" height="112" rx="14" class="jdbc"/>
+  <text x="1395" y="282" text-anchor="middle" class="cardTitle">Target writer</text>
+  <text x="1395" y="310" text-anchor="middle" class="cardText">ExposedJdbcBatchWriter</text>
+  <text x="1395" y="333" text-anchor="middle" class="cardText">sourceId primary key</text>
+
+  <rect x="500" y="470" width="300" height="112" rx="14" class="state"/>
+  <text x="650" y="507" text-anchor="middle" class="cardTitle">Processor</text>
+  <text x="650" y="535" text-anchor="middle" class="cardText">defaultJdbcProcessor</text>
+  <text x="650" y="558" text-anchor="middle" class="cardText">name uppercase, value × 2</text>
+
+  <rect x="900" y="470" width="320" height="112" rx="14" class="state"/>
+  <text x="1060" y="507" text-anchor="middle" class="cardTitle">Checkpoint repository</text>
+  <text x="1060" y="535" text-anchor="middle" class="cardText">ExposedJdbcBatchJobRepository</text>
+  <text x="1060" y="558" text-anchor="middle" class="cardText">job/step metadata</text>
+
+  <rect x="1260" y="470" width="280" height="112" rx="14" class="jdbc"/>
+  <text x="1400" y="507" text-anchor="middle" class="cardTitle">JDBC database</text>
+  <text x="1400" y="535" text-anchor="middle" class="cardText">H2 기본값 또는 호출자 database</text>
+  <text x="1400" y="558" text-anchor="middle" class="cardText">source, target, metadata</text>
+
+  <path d="M 380 301 L 500 301" class="flow" data-connector="connector"/>
+  <path d="M 800 301 L 980 301" class="flow" data-connector="connector"/>
+  <path d="M 650 357 L 650 470" class="flow" data-connector="connector"/>
+  <path d="M 780 357 L 828 357 Q 840 357 840 369 L 840 458 Q 840 470 852 470 L 900 470" class="checkpoint" data-connector="connector"/>
+  <path d="M 800 526 L 820 526 Q 832 526 832 538 L 832 640 Q 832 652 844 652 L 1533 652 Q 1550 652 1550 635 L 1550 340 Q 1550 328 1540 328 L 1520 328" class="flow" data-connector="connector"/>
+  <path d="M 1105 357 L 1105 393 Q 1105 405 1117 405 L 1288 405 Q 1300 405 1300 417 L 1300 470" class="data" data-connector="connector"/>
+  <path d="M 1395 357 L 1395 470" class="data" data-connector="connector"/>
+  <path d="M 1220 526 L 1260 526" class="checkpoint" data-connector="connector"/>
+
+  <rect x="100" y="685" width="280" height="112" rx="14" class="test"/>
+  <text x="240" y="722" text-anchor="middle" class="cardTitle">H2 lifecycle 테스트</text>
+  <text x="240" y="750" text-anchor="middle" class="cardText">success, skip, retry, timeout</text>
+  <text x="240" y="773" text-anchor="middle" class="cardText">cancellation과 restart</text>
+
+  <rect x="500" y="685" width="300" height="112" rx="14" class="boundary"/>
+  <text x="650" y="722" text-anchor="middle" class="cardTitle">R2DBC 대응</text>
+  <text x="650" y="750" text-anchor="middle" class="cardText">exposed-r2dbc-workshop #205</text>
+  <text x="650" y="773" text-anchor="middle" class="cardText">suspend / Flow / pool lifecycle</text>
+
+  <path d="M 240 685 L 240 357" class="verify" data-connector="connector"/>
+
+  <rect x="900" y="685" width="640" height="112" rx="14" fill="#f4f6f5" stroke="#c4d0d3" stroke-width="2"/>
+  <text x="930" y="722" class="cardTitle">Provider contract를 그대로 표시</text>
+  <text x="930" y="750" class="cardText">write → onChunkCommitted → save checkpoint</text>
+  <text x="930" y="773" class="cardText">FAILED checkpoint 보존은 bluetape4k-exposed#745에서 별도 추적</text>
+
+  <rect x="100" y="885" width="1400" height="58" rx="12" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
+  <line x1="135" y1="914" x2="205" y2="914" class="legendLine" stroke="#3f7d9c"/>
+  <text x="220" y="919" class="legend">API / control flow</text>
+  <line x1="410" y1="914" x2="480" y2="914" class="legendLine" stroke="#a2743d"/>
+  <text x="495" y="919" class="legend">JDBC data path</text>
+  <line x1="670" y1="914" x2="740" y2="914" class="legendLine" stroke="#6e8f4f"/>
+  <text x="755" y="919" class="legend">checkpoint state</text>
+  <line x1="915" y1="914" x2="985" y2="914" class="legendLine" stroke="#897bc2"/>
+  <text x="1000" y="919" class="legend">test verification</text>
+  <line x1="1160" y1="914" x2="1230" y2="914" class="legendLine" stroke="#69777e" stroke-dasharray="10 7"/>
+  <text x="1245" y="919" class="legend">scope boundary</text>
+
+  <text x="800" y="990" text-anchor="middle" class="footer">R2DBC는 exposed-r2dbc-workshop#205에서 구현하며, 이 모듈은 JDBC 전용입니다.</text>
+</svg>

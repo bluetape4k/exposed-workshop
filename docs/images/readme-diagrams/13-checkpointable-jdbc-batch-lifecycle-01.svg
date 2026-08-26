@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1450" viewBox="0 0 1600 1450" role="img" aria-labelledby="title desc">
+  <title id="title">Checkpointable JDBC batch lifecycle</title>
+  <desc id="desc">A JDBC batch reads a keyset page, writes a chunk, commits and saves a checkpoint, then records FAILED or STOPPED states and resumes after the saved checkpoint on a later run.</desc>
+  <defs>
+    <style>
+      text { letter-spacing: 0; }
+      .title { font-family: "Architects Daughter"; font-size: 40px; font-weight: 400; fill: #263238; }
+      .subtitle, .msg, .note, .footer, .role { font-family: "Comic Mono"; fill: #36464f; }
+      .subtitle { font-size: 18px; }
+      .participant { font-family: "Architects Daughter"; font-size: 19px; font-weight: 400; fill: #1f3138; }
+      .role { font-size: 13px; fill: #546a73; }
+      .msg { font-size: 14px; }
+      .note { font-size: 13px; }
+      .footer { font-size: 14px; fill: #60727d; }
+      .frame { fill: #fbfcf8; stroke: #41545d; stroke-width: 3; }
+      .header { fill: #ffffff; stroke: #546e7a; stroke-width: 2; }
+      .lifeline { stroke: #9aaab1; stroke-width: 2; stroke-dasharray: 7 8; }
+      .activation { fill: #f3ecdf; stroke: #8f784e; stroke-width: 1.5; }
+      .call { fill: none; stroke: #3f7d9c; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowCall); }
+      .sql { fill: none; stroke: #a2743d; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowSql); }
+      .state { fill: none; stroke: #6e8f4f; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowState); }
+      .return { fill: none; stroke: #9b7d54; stroke-width: 2.5; stroke-dasharray: 8 6; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowReturn); }
+      .error { fill: none; stroke: #b45b5b; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowError); }
+      .loop, .alt { fill: none; stroke: #78909c; stroke-width: 3; stroke-dasharray: 12 7; }
+      .label { fill: #ffffff; stroke: #d7e0e4; stroke-width: 1.5; }
+      .label.callLabel { stroke: #9cc2d1; }
+      .label.sqlLabel { stroke: #d0b078; }
+      .label.stateLabel { stroke: #b6c9a4; }
+      .label.returnLabel { stroke: #c8b38f; }
+      .label.errorLabel { stroke: #d7a2a2; }
+      .badge { stroke-width: 1.8; }
+      .badge.callBadge { fill: #eaf4f8; stroke: #3f7d9c; }
+      .badge.sqlBadge { fill: #fff4df; stroke: #a2743d; }
+      .badge.stateBadge { fill: #eef7f0; stroke: #6e8f4f; }
+      .badge.returnBadge { fill: #fff7e8; stroke: #9b7d54; }
+      .badge.errorBadge { fill: #fff0f0; stroke: #b45b5b; }
+      .badgeText { font-family: "Comic Mono"; font-size: 12px; font-weight: 700; }
+      .msg.callText, .badgeText.callText { fill: #2f6f8e; }
+      .msg.sqlText, .badgeText.sqlText { fill: #855a29; }
+      .msg.stateText, .badgeText.stateText { fill: #55783f; }
+      .msg.returnText, .badgeText.returnText { fill: #7f6038; }
+      .msg.errorText, .badgeText.errorText { fill: #934545; }
+    </style>
+    <marker id="arrowCall" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="sequence" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c" stroke="#3f7d9c" stroke-width="0" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowSql" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="sequence" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#a2743d" stroke="#a2743d" stroke-width="0" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowState" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="sequence" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-width="0" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowReturn" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="sequence" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b7d54" stroke="#9b7d54" stroke-width="0" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowError" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="sequence" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#b45b5b" stroke="#b45b5b" stroke-width="0" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
+
+  <rect x="24" y="24" width="1552" height="1402" rx="20" class="frame"/>
+  <text x="800" y="78" text-anchor="middle" class="title">Checkpointable JDBC Batch Lifecycle</text>
+  <text x="800" y="108" text-anchor="middle" class="subtitle">Read a keyset chunk, write it, commit, and save the checkpoint before the next chunk begins.</text>
+
+  <g id="participants">
+    <rect x="60" y="150" width="170" height="68" rx="10" class="header"/>
+    <text x="145" y="179" text-anchor="middle" class="participant">Workshop Caller</text>
+    <text x="145" y="201" text-anchor="middle" class="role">H2 JUnit test</text>
+
+    <rect x="292" y="150" width="196" height="68" rx="10" class="header"/>
+    <text x="390" y="179" text-anchor="middle" class="participant">BatchJob DSL</text>
+    <text x="390" y="201" text-anchor="middle" class="role">job + params</text>
+
+    <rect x="548" y="150" width="204" height="68" rx="10" class="header"/>
+    <text x="650" y="179" text-anchor="middle" class="participant">BatchStepRunner</text>
+    <text x="650" y="201" text-anchor="middle" class="role">chunk lifecycle</text>
+
+    <rect x="828" y="150" width="204" height="68" rx="10" class="header"/>
+    <text x="930" y="179" text-anchor="middle" class="participant">JDBC I/O</text>
+    <text x="930" y="201" text-anchor="middle" class="role">reader + writer</text>
+
+    <rect x="1100" y="150" width="200" height="68" rx="10" class="header"/>
+    <text x="1200" y="179" text-anchor="middle" class="participant">Checkpoint Repo</text>
+    <text x="1200" y="201" text-anchor="middle" class="role">job/step metadata</text>
+
+    <rect x="1370" y="150" width="180" height="68" rx="10" class="header"/>
+    <text x="1460" y="179" text-anchor="middle" class="participant">H2 Database</text>
+    <text x="1460" y="201" text-anchor="middle" class="role">source + target</text>
+  </g>
+
+  <line x1="145" y1="218" x2="145" y2="1330" class="lifeline"/>
+  <line x1="390" y1="218" x2="390" y2="1330" class="lifeline"/>
+  <line x1="650" y1="218" x2="650" y2="1330" class="lifeline"/>
+  <line x1="930" y1="218" x2="930" y2="1330" class="lifeline"/>
+  <line x1="1200" y1="218" x2="1200" y2="1330" class="lifeline"/>
+  <line x1="1460" y1="218" x2="1460" y2="1330" class="lifeline"/>
+
+  <rect x="383" y="330" width="14" height="80" rx="6" class="activation"/>
+  <rect x="643" y="385" width="14" height="460" rx="6" class="activation"/>
+  <rect x="923" y="440" width="14" height="280" rx="6" class="activation"/>
+  <rect x="1193" y="725" width="14" height="185" rx="6" class="activation"/>
+
+  <rect x="70" y="300" width="1480" height="570" rx="14" class="loop"/>
+  <rect x="96" y="306" width="250" height="30" rx="15" fill="#eef7f0" stroke="#6e8f4f" stroke-width="1.8"/>
+  <text x="120" y="326" class="note">loop: RUNNING, each chunk</text>
+
+  <rect x="72" y="307" width="424" height="34" rx="17" class="label callLabel"/>
+  <circle cx="96" cy="324" r="13" class="badge callBadge"/><text x="96" y="329" text-anchor="middle" class="badgeText callText">1</text>
+  <text x="120" y="329" class="msg callText">checkpointableJdbcBatchJob(options)</text>
+  <path d="M 145 340 L 383 340" class="call" data-connector="connector"/>
+
+  <rect x="300" y="362" width="350" height="34" rx="17" class="label callLabel"/>
+  <circle cx="324" cy="379" r="13" class="badge callBadge"/><text x="324" y="384" text-anchor="middle" class="badgeText callText">2</text>
+  <text x="348" y="384" class="msg callText">job.run() → step runner</text>
+  <path d="M 397 395 L 643 395" class="call" data-connector="connector"/>
+
+  <rect x="458" y="417" width="418" height="34" rx="17" class="label callLabel"/>
+  <circle cx="482" cy="434" r="13" class="badge callBadge"/><text x="482" y="439" text-anchor="middle" class="badgeText callText">3</text>
+  <text x="506" y="439" class="msg callText">read next keyset page after checkpoint</text>
+  <path d="M 657 450 L 923 450" class="call" data-connector="connector"/>
+
+  <rect x="1010" y="472" width="405" height="34" rx="17" class="label sqlLabel"/>
+  <circle cx="1034" cy="489" r="13" class="badge sqlBadge"/><text x="1034" y="494" text-anchor="middle" class="badgeText sqlText">4</text>
+  <text x="1058" y="494" class="msg sqlText">SELECT id &gt; checkpoint</text>
+  <path d="M 937 505 L 1453 505" class="sql" data-connector="connector"/>
+
+  <rect x="1004" y="527" width="442" height="34" rx="17" class="label returnLabel"/>
+  <circle cx="1028" cy="544" r="13" class="badge returnBadge"/><text x="1028" y="549" text-anchor="middle" class="badgeText returnText">5</text>
+  <text x="1052" y="549" class="msg returnText">rows mapped to JdbcSourceRecord</text>
+  <path d="M 1460 560 L 937 560" class="return" data-connector="connector"/>
+
+  <rect x="462" y="582" width="406" height="34" rx="17" class="label stateLabel"/>
+  <circle cx="486" cy="599" r="13" class="badge stateBadge"/><text x="486" y="604" text-anchor="middle" class="badgeText stateText">6</text>
+  <text x="510" y="604" class="msg stateText">process chunk and write targets</text>
+  <path d="M 657 615 L 923 615" class="state" data-connector="connector"/>
+
+  <rect x="1004" y="637" width="442" height="34" rx="17" class="label sqlLabel"/>
+  <circle cx="1028" cy="654" r="13" class="badge sqlBadge"/><text x="1028" y="659" text-anchor="middle" class="badgeText sqlText">7</text>
+  <text x="1052" y="659" class="msg sqlText">INSERT jdbc_batch_target rows</text>
+  <path d="M 937 670 L 1453 670" class="sql" data-connector="connector"/>
+
+  <rect x="694" y="692" width="428" height="34" rx="17" class="label stateLabel"/>
+  <circle cx="718" cy="709" r="13" class="badge stateBadge"/><text x="718" y="714" text-anchor="middle" class="badgeText stateText">8</text>
+  <text x="742" y="714" class="msg stateText">onChunkCommitted(checkpoint=3)</text>
+  <path d="M 657 725 L 1140 725 Q 1152 725 1152 737 L 1152 749 Q 1152 761 1164 761 L 1193 761" class="state" data-connector="connector"/>
+
+  <rect x="1000" y="747" width="452" height="34" rx="17" class="label stateLabel"/>
+  <circle cx="1024" cy="764" r="13" class="badge stateBadge"/><text x="1024" y="769" text-anchor="middle" class="badgeText stateText">9</text>
+  <text x="1048" y="769" class="msg stateText">persist step checkpoint JSON</text>
+  <path d="M 1207 780 L 1453 780" class="state" data-connector="connector"/>
+
+  <rect x="1010" y="802" width="424" height="34" rx="17" class="label returnLabel"/>
+  <circle cx="1034" cy="819" r="13" class="badge returnBadge"/><text x="1034" y="824" text-anchor="middle" class="badgeText returnText">10</text>
+  <text x="1058" y="824" class="msg returnText">chunk commit acknowledged</text>
+  <path d="M 1453 835 L 1207 835" class="return" data-connector="connector"/>
+
+  <rect x="590" y="895" width="900" height="235" rx="14" class="alt"/>
+  <rect x="616" y="901" width="330" height="30" rx="15" fill="#fff0f0" stroke="#b45b5b" stroke-width="1.8"/>
+  <text x="640" y="921" class="note">alt: RUNNING → FAILED / STOPPED</text>
+
+  <rect x="742" y="932" width="430" height="34" rx="17" class="label errorLabel"/>
+  <circle cx="766" cy="949" r="13" class="badge errorBadge"/><text x="766" y="954" text-anchor="middle" class="badgeText errorText">11</text>
+  <text x="790" y="954" class="msg errorText">writer failure, timeout, or cancellation</text>
+  <path d="M 923 965 L 657 965" class="error" data-connector="connector"/>
+
+  <rect x="674" y="987" width="500" height="34" rx="17" class="label stateLabel"/>
+  <circle cx="698" cy="1004" r="13" class="badge stateBadge"/><text x="698" y="1009" text-anchor="middle" class="badgeText stateText">12</text>
+  <text x="722" y="1009" class="msg stateText">record FAILED or STOPPED metadata</text>
+  <path d="M 657 1020 L 1193 1020" class="state" data-connector="connector"/>
+
+  <rect x="1010" y="1042" width="440" height="34" rx="17" class="label sqlLabel"/>
+  <circle cx="1034" cy="1059" r="13" class="badge sqlBadge"/><text x="1034" y="1064" text-anchor="middle" class="badgeText sqlText">13</text>
+  <text x="1058" y="1064" class="msg sqlText">persist status in job/step tables</text>
+  <path d="M 1207 1075 L 1453 1075" class="sql" data-connector="connector"/>
+  <text x="640" y="1100" class="note">STOPPED keeps the last committed checkpoint; FAILED preservation is provider issue #745.</text>
+
+  <rect x="70" y="1160" width="1480" height="170" rx="14" class="loop"/>
+  <rect x="96" y="1166" width="500" height="30" rx="15" fill="#eaf4f8" stroke="#3f7d9c" stroke-width="1.8"/>
+  <text x="120" y="1186" class="note">next run: RUNNING → COMPLETED(_WITH_SKIPS)</text>
+
+  <rect x="72" y="1198" width="442" height="34" rx="17" class="label callLabel"/>
+  <circle cx="96" cy="1215" r="13" class="badge callBadge"/><text x="96" y="1220" text-anchor="middle" class="badgeText callText">14</text>
+  <text x="120" y="1220" class="msg callText">runCheckpointableJdbcBatch(options)</text>
+  <path d="M 145 1230 L 383 1230" class="call" data-connector="connector"/>
+
+  <rect x="466" y="1240" width="410" height="34" rx="17" class="label stateLabel"/>
+  <circle cx="490" cy="1257" r="13" class="badge stateBadge"/><text x="490" y="1262" text-anchor="middle" class="badgeText stateText">15</text>
+  <text x="514" y="1262" class="msg stateText">resume after checkpoint=3</text>
+  <path d="M 657 1275 L 923 1275" class="state" data-connector="connector"/>
+
+  <rect x="92" y="1280" width="370" height="34" rx="17" class="label returnLabel"/>
+  <circle cx="116" cy="1297" r="13" class="badge returnBadge"/><text x="116" y="1302" text-anchor="middle" class="badgeText returnText">16</text>
+  <text x="140" y="1302" class="msg returnText">COMPLETED with all target keys</text>
+  <path d="M 383 1315 L 145 1315" class="return" data-connector="connector"/>
+
+  <rect x="98" y="1360" width="1404" height="42" rx="12" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
+  <text x="118" y="1386" class="note">Commit order is write → onChunkCommitted → save checkpoint. The JDBC target key makes duplicate writes visible.</text>
+  <text x="800" y="1420" text-anchor="middle" class="footer">R2DBC suspend / Flow lifecycle is tracked in exposed-r2dbc-workshop#205.</text>
+</svg>

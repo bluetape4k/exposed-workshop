@@ -30,6 +30,7 @@ Exposed 1.11과 인접 ecosystem 예제를 다루되, 운영형 서비스 패턴
 | [#145](https://github.com/bluetape4k/exposed-workshop/issues/145) | Ready | [`13-ecosystem-integrations/08-ddd-modulith-boundaries`](08-ddd-modulith-boundaries/README.ko.md) | `:08-ddd-modulith-boundaries:build` | [DDD Bounded Context and Modulith Boundary Verification](08-ddd-modulith-boundaries/README.ko.md) | Domain architecture |
 | TBD | Ready | [`13-ecosystem-integrations/09-duckdb-embedded-analytics`](09-duckdb-embedded-analytics/README.ko.md) | `:09-duckdb-embedded-analytics:build` | [DuckDB Embedded Analytics with Exposed](09-duckdb-embedded-analytics/README.ko.md) | Database platform adapters |
 | [#234](https://github.com/bluetape4k/exposed-workshop/issues/234) | Ready | [`13-ecosystem-integrations/10-druid-query-only`](10-druid-query-only/README.ko.md) | `:10-druid-query-only:build` | [Apache Druid Query-Only Exposed](10-druid-query-only/README.ko.md) | Database platform adapters |
+| [#236](https://github.com/bluetape4k/exposed-workshop/issues/236) | Ready | [`13-ecosystem-integrations/11-checkpointable-batch`](11-checkpointable-batch/README.ko.md) | `:11-checkpointable-batch:build` | [재시작 가능한 Exposed JDBC Batch](11-checkpointable-batch/README.ko.md) | JDBC batch 실행 |
 
 ## 외부 서비스와 credential 정책
 

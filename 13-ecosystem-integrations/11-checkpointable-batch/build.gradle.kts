@@ -9,6 +9,7 @@ dependencies {
     implementation(libs.exposed.batch)
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.jdbc)
+    implementation(libs.jetbrains.exposed.java.time)
     implementation(libs.bluetape4k.jackson3)
     implementation(libs.bluetape4k.virtualthread.jdk25)
 

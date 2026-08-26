@@ -445,6 +445,13 @@ read-only `query`, `querySuspend`, and `listColumns` calls to `DruidJdbc`, and
 verify the boundary with deterministic MockK tests plus an explicit real-service
 smoke test.
 
+#### [Checkpointable Exposed JDBC Batch](13-ecosystem-integrations/11-checkpointable-batch/README.md)
+
+Read source rows by keyset, transform and write JDBC chunks, persist provider
+checkpoints, and verify cancellation/restart behavior with deterministic H2
+tests. The R2DBC counterpart is tracked separately in
+[`exposed-r2dbc-workshop#205`](https://github.com/bluetape4k/exposed-r2dbc-workshop/issues/205).
+
 ---
 
 ## Example parity with exposed-r2dbc-workshop
@@ -462,8 +469,11 @@ and R2DBC examples keep distinct architecture choices when the database API mode
 | Chapter 12 production integration epic `#57` and split modules `12-production-integration/01-10-*` | Closed R2DBC issues `#43`-`#49`; consolidated modules `12-production-integration/01-spring-production-integration`, `02-ktor-production-integration` | Covered by counterpart |
 | R2DBC connection-factory-per-tenant | Closed R2DBC issue `#39`; JDBC uses database-per-tenant `#53` and schema-per-tenant `#52` | Platform-specific, no duplicate issue |
 | JDBC DAO/entities, transaction template, Spring cache, benchmark | Blocking/JDBC-only modules in `03-exposed-basic`, `05-exposed-dml`, `09-spring`, and `11-high-performance` | Platform-specific, no duplicate issue |
+| Checkpointable batch JDBC example [#236](https://github.com/bluetape4k/exposed-workshop/issues/236) | R2DBC batch counterpart [#205](https://github.com/bluetape4k/exposed-r2dbc-workshop/issues/205) | Split by database API model; each repository owns its native lifecycle |
 
-No new follow-up issues are needed as of 2026-05-24 because the remaining differences are platform-specific.
+The provider-level FAILED-checkpoint preservation follow-up is tracked in
+[`bluetape4k-exposed#745`](https://github.com/bluetape4k/bluetape4k-exposed/issues/745),
+separately from both workshop implementations.
 
 ---
 
