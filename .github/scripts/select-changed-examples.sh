@@ -30,6 +30,7 @@ ALL_TASKS=(
   :08-ddd-modulith-boundaries:build
   :09-duckdb-embedded-analytics:build
   :10-druid-query-only:build
+  :11-checkpointable-batch:build
 )
 
 all=false

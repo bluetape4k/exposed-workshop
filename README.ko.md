@@ -444,6 +444,13 @@ interface만 공개하며, deterministic H2 기반 Exposed 테스트로 정상 �
 `query`, `querySuspend`, `listColumns` 호출을 `DruidJdbc`에 위임합니다. deterministic
 MockK 테스트와 명시적인 real-service smoke test로 이 경계를 검증합니다.
 
+#### [재시작 가능한 Exposed JDBC Batch](13-ecosystem-integrations/11-checkpointable-batch/README.ko.md)
+
+keyset으로 source row를 읽고 JDBC chunk를 변환·저장한 뒤 provider checkpoint를 기록하며,
+deterministic H2 테스트로 cancellation/restart 동작을 검증합니다. R2DBC 대응은
+[`exposed-r2dbc-workshop#205`](https://github.com/bluetape4k/exposed-r2dbc-workshop/issues/205)에서
+별도로 추적합니다.
+
 ---
 
 ## exposed-r2dbc-workshop 예제 parity
@@ -462,8 +469,10 @@ R2DBC 쪽 대응 추적 이슈는
 | Chapter 12 production integration epic `#57` 및 분리 모듈 `12-production-integration/01-10-*` | 닫힌 R2DBC 이슈 `#43`-`#49`; 통합 모듈 `12-production-integration/01-spring-production-integration`, `02-ktor-production-integration` | 대응 항목으로 충족 |
 | R2DBC connection-factory-per-tenant | 닫힌 R2DBC 이슈 `#39`; JDBC는 database-per-tenant `#53` 및 schema-per-tenant `#52` 사용 | 플랫폼 특화, 중복 이슈 없음 |
 | JDBC DAO/entities, transaction template, Spring cache, benchmark | `03-exposed-basic`, `05-exposed-dml`, `09-spring`, `11-high-performance`의 blocking/JDBC 전용 모듈 | 플랫폼 특화, 중복 이슈 없음 |
+| 재시작 가능한 JDBC batch 예제 [#236](https://github.com/bluetape4k/exposed-workshop/issues/236) | R2DBC batch 대응 [#205](https://github.com/bluetape4k/exposed-r2dbc-workshop/issues/205) | 데이터베이스 API 모델에 따라 분리하고 각 저장소가 native lifecycle을 소유 |
 
-2026-05-24 기준 남은 차이는 플랫폼 특화 항목이므로 새 후속 이슈는 만들지 않습니다.
+provider-level FAILED checkpoint 보존 후속 작업은 두 workshop 구현과 별개로
+[`bluetape4k-exposed#745`](https://github.com/bluetape4k/bluetape4k-exposed/issues/745)에서 추적합니다.
 
 ---
 

@@ -34,7 +34,7 @@
 - Modify: `gradle/libs.versions.toml:92-145`
 - Create: `13-ecosystem-integrations/11-checkpointable-batch/build.gradle.kts`
 
-- [ ] **Step 1: Add the central catalog alias.**
+- [x] **Step 1: Add the central catalog alias.**
 
 Insert the following entry beside the existing `exposed-*` aliases and do not add a version:
 
@@ -42,7 +42,7 @@ Insert the following entry beside the existing `exposed-*` aliases and do not ad
 exposed-batch = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-batch" }
 ```
 
-- [ ] **Step 2: Add the module build file.**
+- [x] **Step 2: Add the module build file.**
 
 Create the exact Gradle file below so provider compile-only contracts and the JDK 25 runtime are explicit:
 
@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.exposed.batch)
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.jdbc)
+    implementation(libs.jetbrains.exposed.java.time)
     implementation(libs.bluetape4k.jackson3)
     implementation(libs.bluetape4k.virtualthread.jdk25)
 
@@ -68,7 +69,7 @@ dependencies {
 }
 ```
 
-- [ ] **Step 3: Prove automatic project discovery before adding source.**
+- [x] **Step 3: Prove automatic project discovery before adding source.**
 
 Run:
 
@@ -78,7 +79,7 @@ Run:
 
 Expected: the project list contains `:11-checkpointable-batch` without a new `settings.gradle.kts` include.
 
-- [ ] **Step 4: Commit the registration slice.**
+- [x] **Step 4: Commit the registration slice.**
 
 ```bash
 git add gradle/libs.versions.toml 13-ecosystem-integrations/11-checkpointable-batch/build.gradle.kts
@@ -97,7 +98,7 @@ Not-tested: 아직 source와 module test는 없음
 **Files:**
 - Create: `13-ecosystem-integrations/11-checkpointable-batch/src/test/kotlin/exposed/examples/batch/jdbc/JdbcBatchWorkshopTest.kt`
 
-- [ ] **Step 1: Write the normal execution expectation before production source.**
+- [x] **Step 1: Write the normal execution expectation before production source.**
 
 Create the test file with this first test. The referenced production symbols are intentionally absent at this point:
 
@@ -137,7 +138,7 @@ class JdbcBatchWorkshopTest {
 }
 ```
 
-- [ ] **Step 2: Run the test and record the correct RED failure.**
+- [x] **Step 2: Run the test and record the correct RED failure.**
 
 Run:
 
@@ -152,7 +153,7 @@ Expected: compilation fails with unresolved references for `createJdbcBatchSchem
 **Files:**
 - Create: `13-ecosystem-integrations/11-checkpointable-batch/src/main/kotlin/exposed/examples/batch/jdbc/JdbcBatchWorkshop.kt`
 
-- [ ] **Step 1: Write the public types and schema objects.**
+- [x] **Step 1: Write the public types and schema objects.**
 
 Use the following names and contracts; keep KDoc in Korean and imports under `org.jetbrains.exposed.v1.*`:
 
@@ -178,7 +179,6 @@ import kotlin.time.Duration
 import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
-import org.jetbrains.exposed.v1.jdbc.batchInsert
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 
 object JdbcBatchSourceTable : Table("jdbc_batch_source") {
@@ -231,12 +231,12 @@ fun createJdbcBatchSchema(database: Database) {
 }
 ```
 
-- [ ] **Step 2: Add the provider-backed reader, writer, and job builder.**
+- [x] **Step 2: Add the provider-backed reader, writer, and job builder.**
 
 Implement these exact boundaries in the same file:
 
 ```kotlin
-private val defaultJdbcProcessor = BatchProcessor<JdbcSourceRecord, JdbcTargetRecord> { source ->
+val defaultJdbcProcessor = BatchProcessor<JdbcSourceRecord, JdbcTargetRecord> { source ->
     JdbcTargetRecord(
         sourceId = source.id,
         sourceName = source.name.uppercase(),
@@ -261,7 +261,7 @@ private fun jdbcSourceReader(database: Database, pageSize: Int): BatchReader<Jdb
         keyClass = Long::class,
     )
 
-private fun jdbcTargetWriter(database: Database): BatchWriter<JdbcTargetRecord> =
+fun jdbcTargetWriter(database: Database): BatchWriter<JdbcTargetRecord> =
     ExposedJdbcBatchWriter(database, JdbcBatchTargetTable) { target ->
         this[JdbcBatchTargetTable.sourceId] = target.sourceId
         this[JdbcBatchTargetTable.sourceName] = target.sourceName
@@ -293,7 +293,7 @@ suspend fun runCheckpointableJdbcBatch(
 ): BatchReport = checkpointableJdbcBatchJob(database, options).run()
 ```
 
-- [ ] **Step 3: Compile the contract before writing integration assertions.**
+- [x] **Step 3: Compile the contract before writing integration assertions.**
 
 Run:
 
@@ -310,7 +310,7 @@ Expected: `BUILD SUCCESSFUL`; if provider compile-only dependencies are missing,
 - Create: `13-ecosystem-integrations/11-checkpointable-batch/src/test/resources/junit-platform.properties`
 - Create: `13-ecosystem-integrations/11-checkpointable-batch/src/test/resources/logback-test.xml`
 
-- [ ] **Step 1: Create isolated H2 helpers and seed/query functions.**
+- [x] **Step 1: Create isolated H2 helpers and seed/query functions.**
 
 Use a unique in-memory URL per test and create all four metadata/data tables before each scenario:
 
@@ -331,7 +331,6 @@ private fun seed(database: Database, values: IntRange) {
 
 private fun targetRows(database: Database): List<JdbcTargetRecord> = transaction(database) {
     JdbcBatchTargetTable.selectAll()
-        .orderBy(JdbcBatchTargetTable.sourceId)
         .map { row ->
             JdbcTargetRecord(
                 sourceId = row[JdbcBatchTargetTable.sourceId],
@@ -339,16 +338,17 @@ private fun targetRows(database: Database): List<JdbcTargetRecord> = transaction
                 transformedValue = row[JdbcBatchTargetTable.transformedValue],
             )
         }
+        .sortedBy(JdbcTargetRecord::sourceId)
 }
 ```
 
 Use the repository's existing `bluetape4k.assertions` matchers and `runTest`/`runSuspendIO` convention already used by nearby modules.
 
-- [ ] **Step 2: Write the normal execution test first.**
+- [x] **Step 2: Write the normal execution test first.**
 
 The test must call `createJdbcBatchSchema`, seed `1..8`, run `runCheckpointableJdbcBatch` with `chunkSize = 3`, then assert `BatchReport.Success`, `COMPLETED`, read/write counts of `8`, zero skips, eight target rows, and the target transformation (`ITEM-1`, `2`).
 
-- [ ] **Step 3: Run the normal test before implementation changes.**
+- [x] **Step 3: Run the normal test before implementation changes.**
 
 Run:
 
@@ -358,7 +358,7 @@ Run:
 
 Expected: the test compiles and passes against the Task 3 implementation; any failure is fixed in the narrowest source/test file before adding the next scenario.
 
-- [ ] **Step 4: Add test resources and commit the green baseline.**
+- [x] **Step 4: Add test resources and commit the green baseline.**
 
 `junit-platform.properties` must set `junit.jupiter.execution.parallel.enabled=false`. `logback-test.xml` must keep the same concise console pattern as neighboring chapter 13 modules. Commit only after the targeted test and `git diff --check` pass.
 
@@ -367,31 +367,31 @@ Expected: the test compiles and passes against the Task 3 implementation; any fa
 **Files:**
 - Modify: `13-ecosystem-integrations/11-checkpointable-batch/src/test/kotlin/exposed/examples/batch/jdbc/JdbcBatchWorkshopTest.kt`
 
-- [ ] **Step 1: Add a failing writer and prove keyset restart.**
+- [x] **Step 1: Capture FAILED behavior and keep provider checkpoint ownership explicit.**
 
-Create a test-only `FailOnceWriter` that delegates the real `ExposedJdbcBatchWriter`, succeeds for the first chunk, throws once for the second chunk, then delegates. Run the same `JdbcBatchOptions.parameters` twice. Assert first report `BatchReport.Failure`, second report `BatchReport.Success`, target source IDs are exactly `1..8` once, and the second job did not rewrite the first checkpointed chunk.
+Create a test-only `FailOnceWriter` that delegates the real `ExposedJdbcBatchWriter`, succeeds for the first chunk, and throws on the second chunk. Assert the first report is `BatchReport.Failure`, the first chunk was written, and job/step metadata is `FAILED`. Do not add a workshop workaround or claim FAILED checkpoint preservation: the provider's current FAILED report clears the previously saved checkpoint, so link [bluetape4k-exposed#745](https://github.com/bluetape4k/bluetape4k-exposed/issues/745) and keep the actual keyset restart proof in Step 5's `STOPPED` scenario.
 
-- [ ] **Step 2: Add processor skip coverage.**
+- [x] **Step 2: Add processor skip coverage.**
 
 Inject `BatchProcessor` that throws `IllegalArgumentException("even value")` for even values, set `SkipPolicy.ALL`, run ten rows, and assert `BatchReport.PartiallyCompleted`, `skipCount == 5`, `writeCount == 5`, and target IDs contain only odd source IDs.
 
-- [ ] **Step 3: Add retry/backoff coverage.**
+- [x] **Step 3: Add retry/backoff coverage.**
 
-Create a `FlakyWriter` that throws on its first call and delegates on its second call. Configure `RetryPolicy(maxAttempts = 2, delay = 1.milliseconds)` and assert two attempts plus a successful report. Keep the delay bounded to avoid a slow default test.
+Create a `FailFirstWriter` that throws on its first call and delegates on its second call. Configure `RetryPolicy(maxAttempts = 2, delay = 1.milliseconds)` and assert two attempts plus a successful report. Keep the delay bounded to avoid a slow default test.
 
-- [ ] **Step 4: Add commit-timeout coverage.**
+- [x] **Step 4: Add commit-timeout coverage.**
 
-Seed exactly `1..3` so the scenario contains one chunk. Create a `SlowWriter` that calls `delay(50.milliseconds)` before delegating. Configure `chunkSize = 3`, `commitTimeout = 5.milliseconds`, `RetryPolicy.NONE`, and `SkipPolicy.maxSkips(3)`. Assert `BatchReport.PartiallyCompleted`, `skipCount == 3`, `writeCount == 0`, and no target row from the timed-out chunk.
+Seed exactly `1..3` so the scenario contains one chunk. Create a `SlowWriter` that calls `delay(50.milliseconds)` before delegating. Configure `chunkSize = 3`, `commitTimeout = 5.milliseconds`, the default `RetryPolicy.NONE`, and `SkipPolicy.maxSkips(3)`. Assert `BatchReport.PartiallyCompleted`, `skipCount == 3`, `writeCount == 0`, and no target row from the timed-out chunk.
 
-- [ ] **Step 5: Add cancellation and STOPPED restart coverage.**
+- [x] **Step 5: Add cancellation and STOPPED restart coverage.**
 
 Create a writer that delegates and signals a `CompletableDeferred<Unit>` after the first write, then suspends on the second write. Wait until `BatchStepExecutionTable.checkpoint` is non-null, cancel the running job, assert `CancellationException` is rethrown, query metadata for `STOPPED`, then run a fresh job with the normal writer and assert the final target source IDs are `1..8` exactly once.
 
-- [ ] **Step 6: Add schema contract assertions.**
+- [x] **Step 6: Add schema contract assertions.**
 
 Query `BatchJobExecutionTable`, `BatchStepExecutionTable`, `JdbcBatchSourceTable`, and `JdbcBatchTargetTable` through Exposed metadata and assert all required tables exist and target `sourceId` is the primary key used by the idempotent workshop output.
 
-- [ ] **Step 7: Run the complete module test and commit the behavior slice.**
+- [x] **Step 7: Run the complete module test and commit the behavior slice.**
 
 Run:
 
@@ -415,23 +415,23 @@ Expected: all module tests pass without Docker, network, or credentials. Commit 
 - Create: `docs/images/readme-diagrams/13-checkpointable-jdbc-batch-lifecycle-01.ko.svg`
 - Create: `docs/images/readme-diagrams/13-checkpointable-jdbc-batch-lifecycle-01.ko.png`
 
-- [ ] **Step 1: Draft the English README from the public source.**
+- [x] **Step 1: Draft the English README from the public source.**
 
 Include the module link to `README.ko.md`, architecture PNG, purpose, provider coordinates, schema table names, `checkpointableJdbcBatchJob` snippet, restart ordering, failure/skip/retry/timeout/cancellation behavior, at-least-once and idempotency caveat, H2 test command, optional PostgreSQL JDBC boundary, and explicit statement that R2DBC belongs to `exposed-r2dbc-workshop#205`.
 
-- [ ] **Step 2: Write `README.ko.md` as source-equivalent Korean.**
+- [x] **Step 2: Write `README.ko.md` as source-equivalent Korean.**
 
 Keep the same headings, code blocks, list order, links, image filenames, counts, commands, and exclusions. Preserve API names, identifiers, URLs, versions, and exact `BatchStatus` tokens.
 
-- [ ] **Step 3: Create the eight paired SVG/PNG assets' SVG sources.**
+- [x] **Step 3: Create the eight paired SVG/PNG assets' SVG sources.**
 
 Architecture labels: `JdbcBatchWorkshop`, `BatchJob`, `BatchStepRunner`, JDBC keyset reader, chunk writer, checkpoint repository tables, H2, and restart boundary. Lifecycle labels: `RUNNING`, `FAILED`, `STOPPED`, `COMPLETED`, `COMPLETED_WITH_SKIPS`, and the ordered `write → onChunkCommitted → saveCheckpoint` transition. English and Korean assets must be source-equivalent.
 
-- [ ] **Step 4: Render and inspect PNGs.**
+- [x] **Step 4: Render and inspect PNGs.**
 
 Use the repository's `bluetape-diagram` renderer/audit workflow to render each SVG at scale 2, inspect the PNGs at README size, and run XML/semantic/connector/arrowhead/geometry/visual/asset-pair audits. README files embed PNG only; SVG links remain available through the image target.
 
-- [ ] **Step 5: Run documentation checks.**
+- [x] **Step 5: Run documentation checks.**
 
 Run:
 
@@ -452,19 +452,19 @@ Expected: no whitespace errors and zero unexplained terminology findings.
 - Modify: `README.ko.md`
 - Modify: `.github/scripts/select-changed-examples.sh`
 
-- [ ] **Step 1: Add chapter 13 rows after the Druid entry.**
+- [x] **Step 1: Add chapter 13 rows after the Druid entry.**
 
 Add issue #236, path `13-ecosystem-integrations/11-checkpointable-batch`, task `:11-checkpointable-batch:build`, title `Checkpointable Exposed JDBC Batch Workshop`, and lane `JDBC batch execution` to both chapter tables. Korean row text must preserve the same path/task/link and translate only reader-facing prose.
 
-- [ ] **Step 2: Add root README module links.**
+- [x] **Step 2: Add root README module links.**
 
 Add matching English/Korean module headings after the Druid section, linking to both module README files and stating that the workshop demonstrates JDBC checkpoint restart and chunk lifecycle.
 
-- [ ] **Step 3: Add the fixed Examples task.**
+- [x] **Step 3: Add the fixed Examples task.**
 
 Insert `:11-checkpointable-batch:build` into `ALL_TASKS` in `.github/scripts/select-changed-examples.sh`. Do not add a new path case; the existing `13-ecosystem-integrations/*/**` dynamic mapping selects the module.
 
-- [ ] **Step 4: Prove path selection and workflow registration.**
+- [x] **Step 4: Prove path selection and workflow registration.**
 
 Run:
 
@@ -481,7 +481,7 @@ Expected: the fixed task list contains `:11-checkpointable-batch:build`, and a m
 - Modify: workflow receipt under `/Users/debop/work/bluetape4k/exposed-workshop/.bluetape/runs/20260826T160113Z-76d748ca/`
 - No source file changes unless a verification failure requires a narrow repair.
 
-- [ ] **Step 1: Run targeted and static checks.**
+- [x] **Step 1: Run targeted and static checks.**
 
 Run sequentially:
 
@@ -495,19 +495,19 @@ git diff --check
 
 Expected: all commands exit 0; no network or credential requirement is introduced.
 
-- [ ] **Step 2: Re-read implementation and docs against the design.**
+- [x] **Step 2: Re-read implementation and docs against the design.**
 
 Verify provider class names, package imports, table names, status tokens, README locale parity, diagram filenames, issue links, R2DBC exclusion, and workflow task registration. Confirm every Exposed import uses `org.jetbrains.exposed.v1.*`, no deprecated provider import is present, and the `BatchInsertStatement` receiver in the writer binding is not shadowed by an outer receiver. Run the Korean terminology audit again after any prose repair.
 
-- [ ] **Step 3: Attach workflow checks.**
+- [x] **Step 3: Attach workflow checks.**
 
 Record evidence for `spec-plan`, `module-test`, `static-check`, `docs-parity`, and `workflow-registration` with exact paths and command output. Attach component evidence only after all five checks have fresh results.
 
-- [ ] **Step 4: Run workflow completion check.**
+- [x] **Step 4: Run workflow completion check.**
 
 Use `bluetape-flow.py completion-check` with the Type A run's explicit `--state-root` and owner file. Repair any missing evidence before considering the run complete.
 
-- [ ] **Step 5: Commit the final implementation slice.**
+- [x] **Step 5: Commit the final implementation slice.**
 
 Use the Lore commit protocol in Korean. Include `Tested:` with the exact Gradle, static, docs, and path-selection evidence and `Not-tested:` only for explicitly opt-in PostgreSQL or remote CI evidence.
 

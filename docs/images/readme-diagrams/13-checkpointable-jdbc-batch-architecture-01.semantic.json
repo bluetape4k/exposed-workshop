@@ -1,0 +1,36 @@
+{
+  "kind": "architecture",
+  "source": {
+    "question": "How does the JDBC workshop keep chunk execution, provider metadata, and restart state inside explicit responsibility boundaries?",
+    "revision": "54c75809",
+    "paths": [
+      "13-ecosystem-integrations/11-checkpointable-batch/src/main/kotlin/exposed/examples/batch/jdbc/JdbcBatchWorkshop.kt",
+      "13-ecosystem-integrations/11-checkpointable-batch/src/test/kotlin/exposed/examples/batch/jdbc/JdbcBatchWorkshopTest.kt",
+      "13-ecosystem-integrations/11-checkpointable-batch/README.md"
+    ]
+  },
+  "nodes": [
+    {"id":"workshop","label":"JdbcBatchWorkshop public API","source":"JdbcBatchWorkshop.kt"},
+    {"id":"dsl","label":"checkpointableJdbcBatchJob / BatchJob DSL","source":"JdbcBatchWorkshop.kt"},
+    {"id":"reader","label":"ExposedJdbcBatchReader keyset reader","source":"JdbcBatchWorkshop.kt"},
+    {"id":"processor","label":"defaultJdbcProcessor","source":"JdbcBatchWorkshop.kt"},
+    {"id":"writer","label":"ExposedJdbcBatchWriter target writer","source":"JdbcBatchWorkshop.kt"},
+    {"id":"repository","label":"ExposedJdbcBatchJobRepository checkpoint metadata","source":"JdbcBatchWorkshop.kt"},
+    {"id":"database","label":"JDBC database: H2 default or caller database","source":"JdbcBatchWorkshop.kt"},
+    {"id":"tests","label":"Deterministic H2 lifecycle tests","source":"JdbcBatchWorkshopTest.kt"},
+    {"id":"r2dbc","label":"R2DBC counterpart: exposed-r2dbc-workshop #205","source":"README.md"}
+  ],
+  "edges": [
+    {"id":"workshop-dsl","from":"workshop","to":"dsl","kind":"api","source":"JdbcBatchWorkshop.kt"},
+    {"id":"dsl-reader","from":"dsl","to":"reader","kind":"flow","source":"JdbcBatchWorkshop.kt"},
+    {"id":"dsl-processor","from":"dsl","to":"processor","kind":"flow","source":"JdbcBatchWorkshop.kt"},
+    {"id":"processor-writer","from":"processor","to":"writer","kind":"flow","source":"JdbcBatchWorkshop.kt"},
+    {"id":"dsl-repository","from":"dsl","to":"repository","kind":"dependency","source":"JdbcBatchWorkshop.kt"},
+    {"id":"reader-database","from":"reader","to":"database","kind":"jdbc-read","source":"JdbcBatchWorkshop.kt"},
+    {"id":"writer-database","from":"writer","to":"database","kind":"jdbc-write","source":"JdbcBatchWorkshop.kt"},
+    {"id":"repository-database","from":"repository","to":"database","kind":"checkpoint","source":"JdbcBatchWorkshop.kt"},
+    {"id":"tests-workshop","from":"tests","to":"workshop","kind":"verification","source":"JdbcBatchWorkshopTest.kt"}
+  ],
+  "behavior": {"branches": 2, "loops": 1},
+  "repairs": []
+}

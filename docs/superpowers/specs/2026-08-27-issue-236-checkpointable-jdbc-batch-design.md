@@ -146,9 +146,10 @@ source/target table을 함께 만든다. 테스트 간 상태를 공유하지 �
 
 1. 정상 실행: source 8건을 chunk 3으로 읽고 target 8건을 저장하며 `BatchReport.Success`,
    `COMPLETED`, read/write count와 마지막 checkpoint를 검증한다.
-2. 실패 후 keyset restart: 첫 chunk 뒤 writer가 한 번 실패해 `FAILED`를 남긴 뒤 같은
-   parameters로 새 job을 실행한다. 기존 execution을 재사용하고 첫 chunk를 다시 쓰지
-   않으며 남은 source만 저장하는지 확인한다.
+2. 실패 상태 경계: 첫 chunk 뒤 writer가 한 번 실패해 `FAILED`를 남긴다. provider의
+   현재 FAILED report가 checkpoint를 비워 저장하는 동작은 [bluetape4k-exposed#745](https://github.com/bluetape4k/bluetape4k-exposed/issues/745)의
+   후속 결함으로 연결하고 workshop에 workaround를 추가하지 않는다. 실제 keyset
+   restart는 STOPPED 재실행 시나리오에서 검증한다.
 3. processor skip: 짝수 입력에서 예외를 던지는 processor와 `SkipPolicy.ALL`을 사용해
    `COMPLETED_WITH_SKIPS`, skip count, 저장된 홀수 결과를 확인한다.
 4. writer retry/backoff: 첫 write만 실패하는 writer와 짧은 `RetryPolicy`를 사용해
@@ -215,8 +216,10 @@ issue #236, 양쪽 locale 링크를 module 파일이 존재한 뒤 추가한다.
 ## 수용 기준
 
 - `exposed-batch` alias와 module이 `bluetape4k-dependencies:1.4.0`에서 해석된다.
-- H2 JDBC 정상 실행, 실패 후 keyset restart, processor skip, writer retry/backoff,
-  commit timeout, cancellation `STOPPED`와 재실행이 테스트로 고정된다.
+- H2 JDBC 정상 실행, FAILED 상태 경계, processor skip, writer retry/backoff,
+  commit timeout, cancellation `STOPPED`와 keyset 재실행이 테스트로 고정된다.
+- FAILED checkpoint 보존 결함은 [bluetape4k-exposed#745](https://github.com/bluetape4k/bluetape4k-exposed/issues/745)에 연결하고
+  이 workshop에서 우회 adapter를 만들지 않는다.
 - batch metadata table과 source/target schema가 README에서 실제 이름과 상태 전이로
   설명된다.
 - R2DBC 코드는 이 저장소에 없고 target issue #205로 연결된다.

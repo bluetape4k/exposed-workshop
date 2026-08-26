@@ -11,7 +11,7 @@
 | 우선순위 | 렌즈 | 근거 | 필요한 수정 | 재검토 |
 |---|---|---|---|---|
 | P2 | Performance | keyset reader와 chunk writer 경계는 provider의 `Dispatchers.VT` 경로를 재사용하지만 workshop에는 대규모 benchmark가 없다 | production benchmark를 이 이슈의 범위에 추가하지 않고 README에 H2 학습 경계와 PostgreSQL opt-in을 명시 | Performance 재확인: 수용 |
-| P2 | Stability | provider의 `write → onChunkCommitted → saveCheckpoint`, retry, timeout, `STOPPED` 계약이 설계와 테스트 목록에 모두 있다 | cancellation/restart 테스트에서 metadata checkpoint와 terminal status를 직접 read-back | Stability 재확인: 계획 Task 5에 반영 |
+| P2 | Stability | provider의 `write → onChunkCommitted → saveCheckpoint`, retry, timeout, `STOPPED` 계약이 설계와 테스트 목록에 모두 있다. FAILED report의 checkpoint 삭제는 provider #745로 분리했다 | cancellation/restart 테스트에서 metadata checkpoint와 terminal status를 직접 read-back하고 FAILED 경계는 workaround 없이 관찰 | Stability 재확인: 계획 Task 5에 반영 |
 | P2 | Security | 기본 실행은 H2이며 credentials/network가 없고 checkpoint serializer가 `CheckpointJson.jackson3()`로 고정된다 | 외부 입력/인증을 새로 도입하지 않으며 at-least-once와 exactly-once 제외를 문서화 | Security 재확인: 수용 |
 | P2 | Operator/Ops | 배포 가능한 서비스가 아니라 workshop module이므로 health/readiness/runbook은 범위 밖이다 | opt-in PostgreSQL, CI 기본 H2, 실패 시 재실행 경계를 README와 위험 표에 유지 | Operator/Ops 재확인: 수용 |
 | P1 | Developer/API | 설계의 public default symbol이 구현 계획의 실제 이름과 달랐다 | `defaultProcessor`/`exposedJdbcTargetWriter`를 `defaultJdbcProcessor`/`jdbcTargetWriter`로 통일 | Developer/API 재확인: 통과 |

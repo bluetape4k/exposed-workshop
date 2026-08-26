@@ -1,0 +1,37 @@
+{
+  "kind": "sequence",
+  "source": {
+    "question": "What happens to a JDBC batch chunk from keyset read through checkpoint commit, failure, cancellation, and restart?",
+    "revision": "54c75809",
+    "paths": [
+      "13-ecosystem-integrations/11-checkpointable-batch/src/main/kotlin/exposed/examples/batch/jdbc/JdbcBatchWorkshop.kt",
+      "13-ecosystem-integrations/11-checkpointable-batch/src/test/kotlin/exposed/examples/batch/jdbc/JdbcBatchWorkshopTest.kt",
+      "docs/superpowers/specs/2026-08-27-issue-236-checkpointable-jdbc-batch-design.md"
+    ]
+  },
+  "nodes": [
+    {"id":"caller","label":"Workshop test / caller","source":"JdbcBatchWorkshopTest.kt"},
+    {"id":"job","label":"BatchJob DSL","source":"JdbcBatchWorkshop.kt"},
+    {"id":"runner","label":"BatchStepRunner","source":"JdbcBatchWorkshop.kt"},
+    {"id":"jdbc","label":"Exposed JDBC reader + writer","source":"JdbcBatchWorkshop.kt"},
+    {"id":"repository","label":"Checkpoint repository","source":"JdbcBatchWorkshop.kt"},
+    {"id":"database","label":"H2/JDBC database","source":"JdbcBatchWorkshopTest.kt"}
+  ],
+  "edges": [
+    {"id":"caller-job","from":"caller","to":"job","kind":"start","source":"JdbcBatchWorkshopTest.kt"},
+    {"id":"job-runner","from":"job","to":"runner","kind":"execute","source":"JdbcBatchWorkshop.kt"},
+    {"id":"runner-jdbc-read","from":"runner","to":"jdbc","kind":"read","source":"JdbcBatchWorkshop.kt"},
+    {"id":"jdbc-database-read","from":"jdbc","to":"database","kind":"select","source":"JdbcBatchWorkshop.kt"},
+    {"id":"database-jdbc-rows","from":"database","to":"jdbc","kind":"rows","source":"JdbcBatchWorkshop.kt"},
+    {"id":"runner-jdbc-write","from":"runner","to":"jdbc","kind":"write","source":"JdbcBatchWorkshop.kt"},
+    {"id":"jdbc-database-write","from":"jdbc","to":"database","kind":"insert","source":"JdbcBatchWorkshop.kt"},
+    {"id":"runner-repository-commit","from":"runner","to":"repository","kind":"checkpoint","source":"JdbcBatchWorkshop.kt"},
+    {"id":"repository-database-checkpoint","from":"repository","to":"database","kind":"metadata","source":"JdbcBatchWorkshop.kt"},
+    {"id":"runner-failure","from":"runner","to":"repository","kind":"failed-or-stopped","source":"JdbcBatchWorkshop.kt"},
+    {"id":"caller-restart","from":"caller","to":"job","kind":"restart","source":"JdbcBatchWorkshopTest.kt"},
+    {"id":"runner-resume","from":"runner","to":"jdbc","kind":"resume","source":"JdbcBatchWorkshopTest.kt"},
+    {"id":"job-completed","from":"job","to":"caller","kind":"report","source":"JdbcBatchWorkshopTest.kt"}
+  ],
+  "behavior": {"branches": 2, "loops": 1},
+  "repairs": []
+}
