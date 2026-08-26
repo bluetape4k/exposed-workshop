@@ -18,6 +18,9 @@
 아키텍처 및 구현 리뷰는 `CLEAR`다. 커밋·push와 exact live head/CI 확인은
 PR 생성 후 delivery gate에서 별도로 마친다.
 
+독립 리뷰 lane도 최신 exact HEAD를 확인했다. `architect`는 `CLEAR`,
+`code-reviewer`는 `APPROVE`를 보고했으며 두 lane 모두 `P0=0, P1=0, P2=0`이다.
+
 ## 이전 finding과 조치
 
 1. `DruidJdbc.query`/`querySuspend`의 `mapper = any()`만 검증하던 테스트를
