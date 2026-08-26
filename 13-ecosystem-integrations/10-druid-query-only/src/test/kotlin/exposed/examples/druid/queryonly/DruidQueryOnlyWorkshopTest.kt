@@ -49,6 +49,11 @@ class DruidQueryOnlyWorkshopTest {
     }
 
     @Test
+    fun `default profile points to the local Druid Avatica endpoint`() {
+        defaultDruidQueryProfile() shouldBeEqualTo DruidQueryProfile()
+    }
+
+    @Test
     fun `blank profile values fail before JDBC calls`() {
         assertFailsWith<IllegalArgumentException> { DruidQueryProfile(datasource = "") }
         assertFailsWith<IllegalArgumentException> { DruidQueryProfile(schema = " ") }
