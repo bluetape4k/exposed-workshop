@@ -29,6 +29,7 @@ ALL_TASKS=(
   :07-ddd-aggregate-repository:build
   :08-ddd-modulith-boundaries:build
   :09-duckdb-embedded-analytics:build
+  :10-druid-query-only:build
 )
 
 all=false
