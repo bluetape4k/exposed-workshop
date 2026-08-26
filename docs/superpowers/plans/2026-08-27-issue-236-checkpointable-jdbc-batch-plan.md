@@ -6,7 +6,7 @@
 
 **Architecture:** `13-ecosystem-integrations/11-checkpointable-batch` 독립 module이 `BatchJob` DSL, `ExposedJdbcBatchJobRepository`, `ExposedJdbcBatchReader`, `ExposedJdbcBatchWriter`를 직접 조합한다. source/target table과 불변 options는 main source에 두고, 실패를 주입하는 writer는 test source에만 둔다. R2DBC는 이 저장소에 추가하지 않고 `exposed-r2dbc-workshop#205`가 담당한다.
 
-**Tech Stack:** Kotlin 2.3, Java 25, Gradle version catalog, JetBrains Exposed 1.4.0, `bluetape4k-exposed-batch:1.12.1`, Jackson 3 checkpoint serialization, H2, JUnit 5, kotlinx-coroutines-test, SVG/PNG diagrams.
+**Tech Stack:** Kotlin 2.4.0 (repository catalog), Java 25, Gradle version catalog, JetBrains Exposed 1.4.0, `bluetape4k-exposed-batch:1.12.1`, Jackson 3 checkpoint serialization, H2, JUnit 5, kotlinx-coroutines-test, SVG/PNG diagrams.
 
 ---
 
@@ -381,7 +381,7 @@ Create a `FlakyWriter` that throws on its first call and delegates on its second
 
 - [ ] **Step 4: Add commit-timeout coverage.**
 
-Create a `SlowWriter` that calls `delay(50.milliseconds)` before delegating. Configure `commitTimeout = 5.milliseconds`, `RetryPolicy.NONE`, and `SkipPolicy.maxSkips(3)`. Assert `BatchReport.PartiallyCompleted`, `skipCount == 3`, `writeCount == 0`, and no target row from the timed-out chunk.
+Seed exactly `1..3` so the scenario contains one chunk. Create a `SlowWriter` that calls `delay(50.milliseconds)` before delegating. Configure `chunkSize = 3`, `commitTimeout = 5.milliseconds`, `RetryPolicy.NONE`, and `SkipPolicy.maxSkips(3)`. Assert `BatchReport.PartiallyCompleted`, `skipCount == 3`, `writeCount == 0`, and no target row from the timed-out chunk.
 
 - [ ] **Step 5: Add cancellation and STOPPED restart coverage.**
 
@@ -423,7 +423,7 @@ Include the module link to `README.ko.md`, architecture PNG, purpose, provider c
 
 Keep the same headings, code blocks, list order, links, image filenames, counts, commands, and exclusions. Preserve API names, identifiers, URLs, versions, and exact `BatchStatus` tokens.
 
-- [ ] **Step 3: Create the four SVG sources.**
+- [ ] **Step 3: Create the eight paired SVG/PNG assets' SVG sources.**
 
 Architecture labels: `JdbcBatchWorkshop`, `BatchJob`, `BatchStepRunner`, JDBC keyset reader, chunk writer, checkpoint repository tables, H2, and restart boundary. Lifecycle labels: `RUNNING`, `FAILED`, `STOPPED`, `COMPLETED`, `COMPLETED_WITH_SKIPS`, and the ordered `write → onChunkCommitted → saveCheckpoint` transition. English and Korean assets must be source-equivalent.
 
@@ -470,7 +470,7 @@ Run:
 
 ```bash
 FORCE_ALL=true .github/scripts/select-changed-examples.sh
-git diff --name-only HEAD~1..HEAD | .github/scripts/select-changed-examples.sh HEAD~1..HEAD
+./.github/scripts/select-changed-examples.sh HEAD~1..HEAD
 ```
 
 Expected: the fixed task list contains `:11-checkpointable-batch:build`, and a module-only diff selects only that task rather than silently dropping the module. Run `git diff --check` again.
@@ -488,6 +488,7 @@ Run sequentially:
 ```bash
 USE_FAST_DB=true ./gradlew :11-checkpointable-batch:test --no-daemon
 ./gradlew :11-checkpointable-batch:build --no-daemon
+./gradlew :11-checkpointable-batch:koverXmlReport --no-daemon
 ./gradlew detekt --no-daemon
 git diff --check
 ```
@@ -496,7 +497,7 @@ Expected: all commands exit 0; no network or credential requirement is introduce
 
 - [ ] **Step 2: Re-read implementation and docs against the design.**
 
-Verify provider class names, package imports, table names, status tokens, README locale parity, diagram filenames, issue links, R2DBC exclusion, and workflow task registration. Run the Korean terminology audit again after any prose repair.
+Verify provider class names, package imports, table names, status tokens, README locale parity, diagram filenames, issue links, R2DBC exclusion, and workflow task registration. Confirm every Exposed import uses `org.jetbrains.exposed.v1.*`, no deprecated provider import is present, and the `BatchInsertStatement` receiver in the writer binding is not shadowed by an outer receiver. Run the Korean terminology audit again after any prose repair.
 
 - [ ] **Step 3: Attach workflow checks.**
 
@@ -513,6 +514,16 @@ Use the Lore commit protocol in Korean. Include `Tested:` with the exact Gradle,
 - [ ] **Step 6: Prepare merge-ready report, not a merge.**
 
 Create/update the Korean PR body with `Summary`, `Background`, `What This Solves`, `Work Done`, `Validation`, `Review Notes`, `Metadata`, and final `## DoD Status`. Read back assignee, milestone, labels, closing token, exact head SHA, CI checks, review threads, and mergeability. Stop at `PENDING` for a fresh explicit user approval tied to that exact head; never enable auto-merge.
+
+## Risk prediction (Step 3-P)
+
+| Risk | Signal | Mitigation | Rollback / rerun |
+|---|---|---|---|
+| Provider API or BOM drift | `compileKotlin` cannot resolve a documented provider symbol or the resolved version differs from `1.12.1` | Pin only the existing catalog alias, inspect the provider source/POM, and keep the adapter limited to public APIs | Revert the module slice; rerun catalog resolution before source edits |
+| Checkpoint boundary mismatch | Restart rewrites a committed key or skips an uncommitted key in the H2 restart test | Assert `write → onChunkCommitted → saveCheckpoint`, use Long keyset restore, and require exact target IDs after rerun | Drop the failing execution/database and rerun with a unique H2 name; do not add deduplication logic to hide the contract |
+| Cancellation persists the wrong state | Cancellation test cannot observe a saved checkpoint or metadata remains `RUNNING` | Gate cancellation on non-null `BatchStepExecutionTable.checkpoint`, assert rethrown `CancellationException` and `STOPPED`, and use the provider's `NonCancellable` behavior as the contract | Cancel the test job and close resources in `finally`; rerun only the isolated scenario |
+| Timeout/runtime variance | A short timeout test flakes under a loaded host or virtual-thread runtime differs | Keep timeout test H2-only, use a deliberately longer writer delay than the timeout, exclude JDK 21 virtualthread runtime, and record PostgreSQL as opt-in/not-tested locally | Increase only the test margin while preserving the ordering; do not weaken the timeout assertion |
+| Documentation/CI scope drift | README locale or changed-examples selection omits the new module, or R2DBC language reappears | Compare EN/KO file structure and links, audit diagrams, and assert `:11-checkpointable-batch:build` from the existing dynamic chapter-13 mapping | Revert only the affected docs/workflow slice and rerun parity/path checks |
 
 ## Plan self-review
 
