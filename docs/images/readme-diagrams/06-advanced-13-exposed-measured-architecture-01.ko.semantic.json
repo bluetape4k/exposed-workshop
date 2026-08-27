@@ -1,0 +1,25 @@
+{
+  "kind": "architecture",
+  "source": {
+    "question": "측정값이 workshop 테스트에서 JDBC 컬럼으로 이동하고 다시 복원되는 흐름은 무엇인가?",
+    "revision": "103ddb9a",
+    "paths": [
+      "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt",
+      "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01_MeasuredColumns.kt",
+      "docs/superpowers/specs/2026-08-27-issue-238-exposed-measured-design.md"
+    ]
+  },
+  "nodes": [
+    {"id":"tests","label":"DSL / DAO 테스트","source":"Ex01_MeasuredColumns.kt"},
+    {"id":"table","label":"ProductTable","source":"MeasuredData.kt"},
+    {"id":"column-type","label":"Measured ColumnType","source":"2026-08-27-issue-238-exposed-measured-design.md"},
+    {"id":"jdbc","label":"JDBC 데이터베이스","source":"Ex01_MeasuredColumns.kt"}
+  ],
+  "edges": [
+    {"id":"tests-to-table","from":"tests","to":"table","kind":"선언/사용","source":"Ex01_MeasuredColumns.kt"},
+    {"id":"table-to-column-type","from":"table","to":"column-type","kind":"encode/decode","source":"MeasuredData.kt"},
+    {"id":"column-type-to-jdbc","from":"column-type","to":"jdbc","kind":"DOUBLE 저장","source":"2026-08-27-issue-238-exposed-measured-design.md"}
+  ],
+  "behavior": {"branches": 0, "loops": 0},
+  "repairs": []
+}

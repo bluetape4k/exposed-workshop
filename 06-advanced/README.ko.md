@@ -29,6 +29,7 @@
 | `09-exposed-fastjson2`       | Fastjson2 연동 JSON 컬럼                         |
 | `11-exposed-jackson3`        | Jackson3 연동 JSON 컬럼                          |
 | `12-exposed-tink`            | Google Tink AEAD/DAEAD 암복호화 컬럼               |
+| `13-exposed-measured`        | 타입이 있는 길이·질량·온도 JDBC 컬럼                  |
 
 ## 아키텍처 개요
 
@@ -45,7 +46,8 @@
 3. `01-exposed-crypt` — 투명 암복호화 컬럼
 4. `12-exposed-tink` — AEAD/DAEAD 고급 암호화
 5. `07-custom-entities` — 커스텀 ID 전략
-6. 나머지 모듈 (날짜/시간, 직렬화 라이브러리 연동)
+6. `13-exposed-measured` — 타입이 있는 측정값 컬럼과 안정적인 기준 단위
+7. 나머지 모듈 (날짜/시간, 직렬화 라이브러리 연동)
 
 ## 선수 지식
 
@@ -61,6 +63,7 @@
 ./gradlew :06-custom-columns:test
 ./gradlew :07-custom-entities:test
 ./gradlew :12-exposed-tink:test
+./gradlew :13-exposed-measured:test
 
 # H2만 대상으로 빠른 테스트
 ./gradlew :01-exposed-crypt:test -PuseFastDB=true

@@ -232,6 +232,10 @@ Jackson 3.x 버전을 사용하여 JSON/JSONB 컬럼을 처리하는 방법을 �
 
 Google Tink 라이브러리를 사용하여 AEAD(비결정적) 및 DAEAD(결정적) 방식으로 컬럼 데이터를 암호화하는 방법을 학습합니다. DAEAD 방식은 암호화된 상태로 WHERE 절 검색이 가능합니다.
 
+#### [Exposed Measured (타입이 있는 측정값 컬럼)](06-advanced/13-exposed-measured/README.ko.md)
+
+`bluetape4k-exposed-measured` JDBC 확장을 사용하여 기준 단위 스키마를 유지하면서 타입이 있는 길이·질량·온도 값을 저장하는 방법을 학습합니다.
+
 ---
 
 ### JPA 마이그레이션

@@ -1,0 +1,22 @@
+{
+  "kind": "erd",
+  "source": {
+    "question": "측정값 상품 예제를 구성하는 Entity와 물리 컬럼은 무엇인가?",
+    "revision": "103ddb9a",
+    "paths": [
+      "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt",
+      "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01_MeasuredColumns.kt"
+    ]
+  },
+  "nodes": [
+    {"id":"entity","label":"ProductEntity","source":"MeasuredData.kt"},
+    {"id":"table","label":"measured_products","source":"MeasuredData.kt"},
+    {"id":"jdbc","label":"JDBC 물리 저장소","source":"Ex01_MeasuredColumns.kt"}
+  ],
+  "edges": [
+    {"id":"entity-to-table","from":"entity","to":"table","kind":"1:1 매핑","source":"MeasuredData.kt"},
+    {"id":"table-to-jdbc","from":"table","to":"jdbc","kind":"DOUBLE 컬럼","source":"MeasuredData.kt"}
+  ],
+  "behavior": {"branches": 0, "loops": 0},
+  "repairs": []
+}

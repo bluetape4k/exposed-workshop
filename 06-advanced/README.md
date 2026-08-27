@@ -29,6 +29,7 @@ This chapter covers extension scenarios frequently encountered in production bey
 | `09-exposed-fastjson2`       | Fastjson2 JSON column integration                        |
 | `11-exposed-jackson3`        | Jackson3 JSON column integration                         |
 | `12-exposed-tink`            | Google Tink AEAD/DAEAD encryption columns                |
+| `13-exposed-measured`        | Typed length, mass, and temperature JDBC columns         |
 
 ## Architecture Overview
 
@@ -45,7 +46,8 @@ This chapter covers extension scenarios frequently encountered in production bey
 3. `01-exposed-crypt` — Transparent encryption/decryption columns
 4. `12-exposed-tink` — Advanced AEAD/DAEAD encryption
 5. `07-custom-entities` — Custom ID strategies
-6. Remaining modules (date/time, serialization library integration)
+6. `13-exposed-measured` — Typed measurement columns and stable base units
+7. Remaining modules (date/time, serialization library integration)
 
 ## Prerequisites
 
@@ -61,6 +63,7 @@ This chapter covers extension scenarios frequently encountered in production bey
 ./gradlew :06-custom-columns:test
 ./gradlew :07-custom-entities:test
 ./gradlew :12-exposed-tink:test
+./gradlew :13-exposed-measured:test
 
 # Quick test targeting H2 only
 ./gradlew :01-exposed-crypt:test -PuseFastDB=true
