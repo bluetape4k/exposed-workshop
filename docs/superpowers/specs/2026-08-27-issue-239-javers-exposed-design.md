@@ -23,9 +23,11 @@ JDBC 트랜잭션 안에서 비즈니스 데이터와 감사 데이터가 함께
    상태를 한 번만 커밋한다.
 4. 업무 트랜잭션이 롤백되면 고객 행과 JaVers `javers_commit`, `javers_snapshot`
    행이 모두 남지 않는다.
-5. 영속 엔티티의 민감한 `secret` 필드는 감사 DTO에 포함하지 않으며, 감사 기준 데이터의
+5. 변경되지 않은 값을 다시 커밋해도 새로운 감사 기준 데이터나 성공 이력이 중복
+   생성되지 않는다.
+6. 영속 엔티티의 민감한 `secret` 필드는 감사 DTO에 포함하지 않으며, 감사 기준 데이터의
    변경 프로퍼티와 저장 상태에 노출되지 않는다.
-6. 구독을 닫으면 후속 DAO 변경이 감사 기준 데이터를 만들지 않는다.
+7. 구독을 닫으면 후속 DAO 변경이 감사 기준 데이터를 만들지 않는다.
 
 ## 선택한 설계
 
@@ -92,6 +94,11 @@ AuditedCustomer
 컨텍스트 전파나 WebFlux/R2DBC 연동은 이 이슈의 범위가 아니며, 해당 구현은
 `exposed-r2dbc-workshop`에서 별도 이슈로 다룬다.
 
+문맥 도우미는 중첩 호출에서 바깥 문맥을 복원하고, 최상위 호출이 끝나면
+스레드에 값을 남기지 않는다. 모든 subscription 사용 예는 `try/finally` 또는
+`use`로 닫으며, provider의 전역 hook과 동시 `close()` 조정은 이 교육 예제의
+지원 범위 밖이다.
+
 ### 조회 API
 
 워크숍이 반복해서 JaVers JQL을 작성하지 않도록 `JaversAuditHistory` 파사드를
@@ -105,7 +112,8 @@ AuditedCustomer
 
 파사드는 원장 데이터를 수정하거나 되돌리지 않는다. `rollback`은 JaVers의
 과거 상태를 읽어 표시하는 예제 용어로만 사용하며, 원본 `Customers` 행에 대한
-자동 복원 기능은 제공하지 않는다.
+자동 복원 기능은 제공하지 않는다. 이 교육용 조회는 이력 전체를 읽는 무제한
+형태이며, 운영 환경의 페이지네이션·보존 정책을 대체하지 않는다.
 
 ## 트랜잭션 및 이벤트 흐름
 
@@ -127,9 +135,10 @@ AuditContext.with(actor, requestId)
 ## 테스트 설계
 
 모든 테스트는 `TestDB` 공용 인프라 대신 모듈 내부 H2 JDBC 데이터베이스를
-사용해 외부 Docker와 자격 증명 없이 결정론적으로 실행한다. 각 테스트는 업무
-테이블과 JaVers 테이블을 명시적으로 초기화하고, hook subscription을 `close()`
-하여 전역 EntityHook 상태가 다음 테스트에 남지 않게 한다.
+사용해 외부 Docker와 자격 증명 없이 결정론적으로 실행한다. 각 테스트는 고유한
+H2 데이터베이스와 새 `ExposedCdoSnapshotRepository`/JaVers 인스턴스를 만들고
+업무 테이블과 JaVers 테이블을 초기화하여 provider의 head 캐시가 테스트 사이에
+재사용되지 않게 한다. hook subscription은 `try/finally`에서 `close()`한다.
 
 | 테스트 | 검증 내용 |
 | --- | --- |
@@ -137,12 +146,16 @@ AuditContext.with(actor, requestId)
 | create/update audit | actor, requestId, 변경 유형, 감사 이력, diff |
 | final flush | 한 트랜잭션의 다중 수정이 최종 상태의 한 감사 기준 데이터로 기록됨 |
 | rollback | 예외 이후 업무 행·commit·감사 기준 데이터가 모두 0건임 |
-| sensitive exclusion | `secret`이 감사 기준 데이터의 property와 encoded state에 없음 |
+| duplicate commit | 값이 변하지 않은 재커밋이 새 감사 기준 데이터와 성공 이력을 만들지 않음 |
+| sensitive exclusion | `secret`이 변경 프로퍼티·encoded state·저장 행에 없음 |
 | subscription lifecycle | `close()` 이후 DAO 변경은 감사 기준 데이터를 추가하지 않음 |
+| context lifecycle | 중첩 문맥 복원, 최상위 종료 후 제거, 예외 종료를 확인함 |
 
 JaVers API는 provider 저장소의 `findSnapshots`, `findChanges`와
-`CdoSnapshot.getPropertyValue`를 사용한다. 테스트는 문자열 출력 전체에 의존하지
-않고, 감사 기준 데이터 수·메타데이터·변경 프로퍼티·관찰 가능한 값만 단언한다.
+`CdoSnapshot.getPropertyValue`를 사용한다. 민감 필드 검증은 여기에 더해
+`CdoSnapshotTable.state`와 `changedProperties`를 직접 읽어 저장 payload에도
+`secret`이 없는지 확인한다. 테스트는 문자열 출력 전체에 의존하지 않고, 감사
+기준 데이터 수·메타데이터·변경 프로퍼티·관찰 가능한 값만 단언한다.
 
 ## 의존성 및 빌드 통합
 
@@ -158,7 +171,8 @@ JaVers API는 provider 저장소의 `findSnapshots`, `findChanges`와
   `:12-javers-exposed-audit`가 등록되는지 `./gradlew projects`로 증명한다.
 - `.github/workflows/examples.yml`의 변경 예제 task 목록에
   `:12-javers-exposed-audit:build`를 추가한다. H2 단일 JVM 예제이므로 Nightly
-  container matrix에는 추가하지 않는다.
+  container matrix에는 별도 행을 추가하지 않는다. 다만 Nightly의 H2 전체
+  `test`와 root CI 전체 테스트에 새 project가 자동 포함되는지 검증한다.
 
 ## 문서와 시각 자료
 
@@ -177,7 +191,9 @@ JaVers API는 provider 저장소의 `findSnapshots`, `findChanges`와
 SVG가 편집 가능한 source of truth이며 CairoSVG로 PNG를 렌더링한다. 다이어그램의
 독자-facing 문구는 영문·한국어 asset을 source-equivalent로 제공하고, README에는
 raw Mermaid를 남기지 않는다. README에는 H2 결정론적 범위, 민감 필드 제외,
-R2DBC 분리 경계, 테스트 실행 명령을 명시한다.
+R2DBC 분리 경계, 테스트 실행 명령을 명시한다. `ensureSchema()`는 교육용
+편의 기능이며 실제 운영에서는 외부 migration을 소유하고
+`createSchemaOnEnsure=false`와 같은 provider 옵션을 검토한다.
 
 ## 범위 밖 항목과 후속 이슈
 
