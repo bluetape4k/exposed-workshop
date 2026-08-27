@@ -7,7 +7,7 @@
 - 설계 명세: `docs/superpowers/specs/2026-08-28-issue-240-jdbc-lettuce-cache-design.md`
 - 명세 리뷰: `docs/superpowers/reviews/2026-08-28-issue-240-jdbc-lettuce-cache-spec-review.md`
 - 설계·명세 승인: 완료
-- 계획 승인: 여섯 관점 리뷰·보정 완료, 사용자 승인 대기
+- 계획 승인: 사용자 승인 완료, 구현 진행 중
 - 작업 방식: 한 명의 개발자가 하나의 branch에서 컴포넌트를 의존성 순서대로
   직렬 구현한다. 독립 검토는 별도 reviewer lane으로 수행하되 코드 소유권은
   lead lane 하나로 유지한다.
