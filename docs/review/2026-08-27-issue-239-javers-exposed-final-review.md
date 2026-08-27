@@ -4,6 +4,8 @@
 
 - 이슈: [#239](https://github.com/bluetape4k/exposed-workshop/issues/239)
 - 브랜치: `feat/issue-239-javers-exposed`
+- 구현 검토 기준 head: `ed71c0fec27bbf378438a789bcb36fae3da8d25d`
+- 현재 docs-only head: `70fa0bb695db2fe40480e2ec4961e582b1abc5e2`
 - 리뷰 범위: 구현 코드, 12개 계약 테스트, EN/KO README와 다이어그램, Gradle/CI 선택기 연동
 - 개발 방식: 1인 개발자 범위의 읽기 전용 독립 검토 lane을 병렬로 수행하고 leader가 통합함
 
@@ -46,8 +48,8 @@
 
 ## 남은 통합 게이트
 
-PR #251 exact head `ed71c0fec27bbf378438a789bcb36fae3da8d25d` 기준으로 CI,
+PR #251 exact head `70fa0bb695db2fe40480e2ec4961e582b1abc5e2` 기준으로 CI,
 review decision, unresolved thread, body/label/milestone/assignee/link을 다시
-읽었고 P0/P1은 0건이다. H2 재실행은 기존 `:02-cache-strategies-coroutines`
-테스트 결과를 확인하는 통합 게이트로 남아 있다. 머지는 이 기록으로 대체하지
-않으며, 최종 exact head에 대한 별도 `승인`이 있을 때만 수행한다.
+읽었고 P0/P1은 0건이다. H2를 포함한 DB matrix와 aggregate CI가 모두 PASS로
+종료됐다. 머지는 이 기록으로 대체하지 않으며, 최종 exact head에 대한 별도
+`승인`이 있을 때만 수행한다.

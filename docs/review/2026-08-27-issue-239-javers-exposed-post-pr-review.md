@@ -38,15 +38,23 @@
 
 ## 통합 게이트
 
-- PR head `ed71c0fe…`에서 #239 모듈 `JaversExposedAuditWorkshopTest` 12/12,
-  detekt/build, 문서·자산 감사를 통과했다.
+- 구현 검토 기준 head `ed71c0fe…`에서 #239 모듈 `JaversExposedAuditWorkshopTest`
+  12/12, detekt/build, 문서·자산 감사를 통과했다.
 - CI run [33073200792](https://github.com/bluetape4k/exposed-workshop/actions/runs/33073200792)
   attempt 1의 H2는 기존 `:02-cache-strategies-coroutines`의
   `UserControllerTest`에서 실패했고, #239 모듈은 같은 job에서 12개 통과했다.
-- 동일 실패 job의 attempt 2는 H2 재현 여부를 확인 중이다. 결과가 확정되기 전에는
-  PR을 merge-ready로 판정하지 않는다.
+- 동일 실패 job의 attempt 2는 H2를 포함해 전체 CI가 PASS로 종료되어 일시적 기존
+  테스트 실패로 분리했다.
+- docs-only head `70fa0bb695db2fe40480e2ec4961e582b1abc5e2`의 CI
+  [33077816100](https://github.com/bluetape4k/exposed-workshop/actions/runs/33077816100),
+  Examples [33077816137](https://github.com/bluetape4k/exposed-workshop/actions/runs/33077816137),
+  CodeQL [33077811062](https://github.com/bluetape4k/exposed-workshop/actions/runs/33077811062)도
+  모두 PASS로 종료됐다.
+- 이후 문서-only commit이 추가되면 merge 전 live PR head와 해당 head의 CI를 다시
+  읽어야 한다.
 
 ## 결론
 
-정확성·보안·문서 review는 **PASS(P0=0, P1=0)** 이다. 최종 통합 상태는 exact
-head의 CI가 모두 green이고 최신 merge approval이 확인될 때까지 **PENDING**이다.
+정확성·보안·문서 review는 **PASS(P0=0, P1=0)** 이다. `70fa0bb6…` exact head의
+CI도 모두 green이며, 최종 통합 상태는 현재 head에 대한 최신 merge approval이
+확인될 때까지 **PENDING**이다.
