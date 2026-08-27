@@ -95,6 +95,10 @@ The provider also accepts `1.kilometers()`, `500.grams()`, and
 `273.15.kelvin()`. Each input is normalized to the column's base unit before
 the JDBC value is written.
 
+On read, the provider's measured column types accept an existing typed value or
+a numeric `Number`. Any other DB value is rejected with `error(...)`; this is a
+provider source contract, not a workshop-specific driver-injection test.
+
 The generic `Measure<T>` boundary prevents assigning a mass value to a length
 column at compile time. On read, compare through a requested unit rather than
 comparing the raw `DOUBLE` representation:

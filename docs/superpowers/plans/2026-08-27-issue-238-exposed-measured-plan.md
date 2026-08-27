@@ -27,7 +27,7 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
 | catalog | `gradle/libs.versions.toml` | BOM 기반 `exposed-measured` consumer alias 추가 |
 | 모듈 빌드 | `06-advanced/13-exposed-measured/build.gradle.kts` | Exposed JDBC, measured provider, shared test와 JDBC dialect 의존성 등록 |
 | 예제 모델 | `06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt` | `ProductTable`, `ProductEntity`, 기준 단위 컬럼 선언 |
-| 회귀 테스트 | `06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01_MeasuredColumns.kt` | DSL/DAO round-trip, nullable, 정밀도; provider 부적합 DB 값 계약은 문서화 |
+| 회귀 테스트 | `06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01MeasuredColumns.kt` | DSL/DAO round-trip, nullable, 정밀도; provider 부적합 DB 값 계약은 문서화 |
 | 테스트 설정 | `06-advanced/13-exposed-measured/src/test/resources/junit-platform.properties` | 기존 shared test의 직렬 실행/생명주기 설정 재사용 |
 | 테스트 로그 | `06-advanced/13-exposed-measured/src/test/resources/logback-test.xml` | 모듈 package와 Exposed 로그 설정 |
 | 모듈 문서 | `06-advanced/13-exposed-measured/README.md`, `README.ko.md` | source-equivalent 사용법, 기준 단위/정밀도/migration 설명 |
@@ -44,14 +44,14 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
 
 ## 단계 1 — 모듈·의존성 등록과 baseline
 
-- [ ] `gradle/libs.versions.toml`의 `# exposed` 영역에 다음 versionless alias를
+- [x] `gradle/libs.versions.toml`의 `# exposed` 영역에 다음 versionless alias를
   추가한다. 버전은 `bluetape4k-dependencies = "1.4.0"` BOM에서 해석한다.
 
   ```toml
   exposed-measured = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-measured" }
   ```
 
-- [ ] `06-advanced/13-exposed-measured/build.gradle.kts`를 기존
+- [x] `06-advanced/13-exposed-measured/build.gradle.kts`를 기존
   `06-advanced/05-exposed-money` 패턴으로 만든다.
 
   - `testImplementation(project(":exposed-shared-tests"))`
@@ -65,10 +65,10 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
 
   R2DBC, Redis, Caffeine, 새 버전 override는 추가하지 않는다.
 
-- [ ] `settings.gradle.kts`의 `includeModules("06-advanced", false, false)`가
+- [x] `settings.gradle.kts`의 `includeModules("06-advanced", false, false)`가
   새 leaf directory를 `:13-exposed-measured`로 자동 발견하는지 확인한다.
 
-- [ ] alias와 provider 좌표를 다음 명령으로 검증한다.
+- [x] alias와 provider 좌표를 다음 명령으로 검증한다.
 
   ```bash
   ./gradlew projects --no-daemon --no-configuration-cache
@@ -81,7 +81,7 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
   기대 결과는 project 목록에 `:13-exposed-measured`가 나타나고 provider 버전이
   BOM `1.4.0`에서 선택되는 것이다.
 
-- [ ] 코드/테스트를 건드리기 전 현재 baseline을 feature worktree에서 보존한다.
+- [x] 코드/테스트를 건드리기 전 현재 baseline을 feature worktree에서 보존한다.
 
   ```bash
   USE_FAST_DB=true repo-test-summary -- \
@@ -91,7 +91,7 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
 
 ## 단계 2 — TDD RED: 측정값 계약을 먼저 고정한다
 
-- [ ] `Ex01_MeasuredColumns.kt`에 테스트 이름과 기대 동작을 먼저 작성한다.
+- [x] `Ex01MeasuredColumns.kt`에 테스트 이름과 기대 동작을 먼저 작성한다.
   `MeasuredData.kt`가 아직 없을 때의 compile RED를 기록한 뒤, 테스트가 실행될 수
   있도록 최소한의 table/entity 선언만 추가한다. provider 변환 로직은 복제하지
   않는다.
@@ -111,7 +111,7 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
      `TemperatureDelta`를 받는다는 타입 경계를 KDoc/README compile-time 예로
      남긴다. runtime unsafe cast 테스트는 추가하지 않는다.
 
-- [ ] `MeasuredData.kt`는 다음 범위의 최소 모델만 제공한다.
+- [x] `MeasuredData.kt`는 다음 범위의 최소 모델만 제공한다.
 
   ```kotlin
   object ProductTable : IntIdTable("measured_products") {
@@ -138,51 +138,51 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
   `org.jetbrains.exposed.v1.*` 계열만 사용한다. table/entity와 테스트의 reader-facing
   KDoc 및 주석은 한국어로 작성한다.
 
-- [ ] 기존 모듈에서 복사한 `junit-platform.properties`와 `logback-test.xml`은
+- [x] 기존 모듈에서 복사한 `junit-platform.properties`와 `logback-test.xml`은
   package/logger 이름만 새 모듈에 맞추고, `junit.jupiter.execution.parallel.enabled=false`
   및 `maxParallelUsages = 1` 계약을 유지한다.
 
-- [ ] provider 연결 전 RED 명령을 실행하고, 실패가 “provider DSL/모듈 심볼 부재 또는
+- [x] provider 연결 전 RED 명령을 실행하고, 실패가 “provider DSL/모듈 심볼 부재 또는
   기대 assertion 불일치”인지 원시 출력으로 기록한다.
 
   ```bash
   USE_FAST_DB=true ./gradlew :13-exposed-measured:test \
-    --tests 'exposed.examples.measured.Ex01_MeasuredColumns' \
+    --tests 'exposed.examples.measured.Ex01MeasuredColumns' \
     --no-build-cache --no-daemon --no-configuration-cache
   ```
 
 ## 단계 3 — TDD GREEN: provider DSL/DAO 구현을 최소화한다
 
-- [ ] RED에서 고정한 테스트를 만족하도록 `MeasuredData.kt`의 DSL 선언과 DAO
+- [x] RED에서 고정한 테스트를 만족하도록 `MeasuredData.kt`의 DSL 선언과 DAO
   delegated property를 완성한다. `MeasureColumnType`, `TemperatureColumnType`,
   `TemperatureDeltaColumnType`를 로컬에 재구현하지 않고 `libs.exposed.measured`의
   공개 API를 그대로 호출한다.
 
-- [ ] JDBC 테스트는 `AbstractExposedTest`, `TestDB`, `withTables`,
+- [x] JDBC 테스트는 `AbstractExposedTest`, `TestDB`, `withTables`,
   `@ParameterizedTest`, `@MethodSource(ENABLE_DIALECTS_METHOD)`를 사용한다.
   `transaction {}` 밖의 전역 DB 연결이나 수동 connection pool을 만들지 않는다.
 
-- [ ] 길이 입력은 centimeters/meters/kilometers, 질량 입력은 grams/kilograms,
+- [x] 길이 입력은 centimeters/meters/kilometers, 질량 입력은 grams/kilograms,
   온도 입력은 Celsius/Fahrenheit/Kelvin을 최소 한 번씩 보여 준다. assertion은
   `io.bluetape4k.assertions.shouldBeNear`를 사용해 대표적인 허용 오차를 명시한다.
 
-- [ ] `DOUBLE` serialization/read-back의 기준 단위를 확인한다. 필요한 경우
+- [x] `DOUBLE` serialization/read-back의 기준 단위를 확인한다. 필요한 경우
   `columnType.sqlType() == "DOUBLE"`와 `MeasureColumnType` base unit을 단위
   테스트에서 확인하되 provider 전체 테스트를 중복하지 않는다.
 
-- [ ] GREEN focused test를 실행하고, provider의 invalid DB value source 계약은
+- [x] GREEN focused test를 실행하고, provider의 invalid DB value source 계약은
   README/source ledger로 확인한다. 정상 JDBC driver 출력에 인위적인 값을
   주입하는 workshop 테스트는 추가하지 않는다.
 
   ```bash
   USE_FAST_DB=true ./gradlew :13-exposed-measured:test \
-    --tests 'exposed.examples.measured.Ex01_MeasuredColumns' \
+    --tests 'exposed.examples.measured.Ex01MeasuredColumns' \
     --no-build-cache --no-daemon --no-configuration-cache
   ```
 
 ## 단계 4 — README와 chapter/repository index를 source-equivalent로 작성한다
 
-- [ ] `06-advanced/13-exposed-measured/README.md`와 `README.ko.md`를 같은 섹션
+- [x] `06-advanced/13-exposed-measured/README.md`와 `README.ko.md`를 같은 섹션
   순서로 작성한다.
 
   1. 학습 목표와 `bluetape4k-exposed-measured` BOM alias
@@ -196,15 +196,15 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
   8. R2DBC는 `exposed-r2dbc-workshop` 별도 이슈라는 범위 안내
   9. architecture/ERD PNG 참조
 
-- [ ] `06-advanced/README.md`와 `README.ko.md`의 Included Modules/포함 모듈 표,
+- [x] `06-advanced/README.md`와 `README.ko.md`의 Included Modules/포함 모듈 표,
   권장 학습 순서, 실행 명령에 `13-exposed-measured`를 같은 위치와 의미로
   추가한다.
 
-- [ ] repository root `README.md`와 `README.ko.md`의 Advanced Features/고급
+- [x] repository root `README.md`와 `README.ko.md`의 Advanced Features/고급
   기능 목록에 새 module link와 한영 설명을 추가한다. 예제 README의 코드,
   명령, API 이름, URL은 양쪽에서 동일하게 유지하고 prose만 번역한다.
 
-- [ ] `git diff --check`, writer terminology audit와 간단한 EN/KO heading/link
+- [x] `git diff --check`, writer terminology audit와 간단한 EN/KO heading/link
   parity 검사를 실행한다.
 
   ```bash
@@ -219,13 +219,13 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
 
 ## 단계 5 — CI/Nightly 및 workflow registration을 고정한다
 
-- [ ] `.github/workflows/nightly.yml`의 PostgreSQL shard-1, MySQL shard-1,
+- [x] `.github/workflows/nightly.yml`의 PostgreSQL shard-1, MySQL shard-1,
   MariaDB smoke task에 `:13-exposed-measured:test`를 `:05-exposed-money:test`
   인접 위치로 추가한다. H2 matrix의 전체 `test`와 `.github/workflows/ci.yml`의
   전체 test/assemble/detekt는 새 Gradle project를 자동 포함하므로 변경하지
   않는다.
 
-- [ ] module discovery와 CI task registration을 다음으로 검증한다.
+- [x] module discovery와 CI task registration을 다음으로 검증한다.
 
   ```bash
   ./gradlew projects --no-daemon --no-configuration-cache
@@ -234,32 +234,32 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
   actionlint .github/workflows/ci.yml .github/workflows/nightly.yml
   ```
 
-- [ ] changed-example selector는 현재 `06-advanced`를 mapping하지 않는 기존
+- [x] changed-example selector는 현재 `06-advanced`를 mapping하지 않는 기존
   fixed weekly 정책을 유지한다는 것을 기록한다. 새 모듈 경로가 selector에
   누락되어 PR에서 조용히 빠지는 일이 없는지 `ci.yml` 전체 test와 nightly task
   양쪽을 근거로 확인한다.
 
 ## 단계 6 — 한영 architecture/ERD SVG·PNG를 생성하고 감사한다
 
-- [ ] 기존 자산 스타일을 확인한 뒤 다음 source pair를 만든다.
+- [x] 기존 자산 스타일을 확인한 뒤 다음 source pair를 만든다.
 
   - `docs/images/readme-diagrams/06-advanced-13-exposed-measured-architecture-01.svg`
   - `docs/images/readme-diagrams/06-advanced-13-exposed-measured-architecture-01.ko.svg`
   - `docs/images/readme-diagrams/06-advanced-13-exposed-measured-erd-01.svg`
   - `docs/images/readme-diagrams/06-advanced-13-exposed-measured-erd-01.ko.svg`
 
-- [ ] architecture는 `Input Measure`, `Provider ColumnType`, `JDBC DOUBLE`,
+- [x] architecture는 `Input Measure`, `Provider ColumnType`, `JDBC DOUBLE`,
   `ProductTable`, `DSL/DAO read-back`, `Dialect Test`의 연결된 책임 흐름을
   8개 이하 노드로 표현한다. ERD는 `measured_products`의 `id`, `name`, `length`,
   `mass`, `temperature`, `nullable_mass`와 m/kg/K 기준 단위를 표현한다.
   reader-facing prose가 있으므로 영어/한국어 SVG를 별도로 유지한다.
 
-- [ ] 각 SVG의 visible text, branch/decision, long identifier를
+- [x] 각 SVG의 visible text, branch/decision, long identifier를
   `.semantic.json` ledger에 기록한다. ledger의 `revision`은 생성 시점의
   실제 `git rev-parse HEAD`로 채우고, PNG는 SVG를 CairoSVG scale 2로 재생성한다.
   raw Mermaid/Graphviz를 README에 넣지 않는다.
 
-- [ ] 다음 감사와 `view_image(detail="original")` 시각 검토를 순차 실행한다.
+- [x] 다음 감사와 `view_image(detail="original")` 시각 검토를 순차 실행한다.
 
   ```bash
   for svg in docs/images/readme-diagrams/06-advanced-13-exposed-measured-*.svg; do
@@ -304,9 +304,9 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
 | 기준 단위가 문서/다이어그램과 코드에서 어긋남 | README, ERD, source column 선언의 m/kg/K 불일치 | source-equivalent parity, semantic ledger, root/chapter index read-back | docs asset slice만 재생성하고 schema/API는 변경하지 않음 |
 | Nightly/CI가 새 module을 실행하지 않음 | `:13-exposed-measured:test` registration 부재 | `projects`, nightly grep, full CI task와 actionlint 검증 | workflow task만 보정 후 affected checks 재실행 |
 
-- [ ] performance/stability review artifact를 `docs/review/2026-08-27-issue-238-exposed-measured-performance-stability.md`에 작성한다. 요청당 무거운 allocation/반복 변환을 새로 만들지 않는지, JDBC 자원 소유권/정리, Testcontainers 직렬성, `DOUBLE` 경계와 재실행 지점을 소스·테스트 근거로 기록한다. benchmark는 도메인 학습 예제에 포함하지 않으며 `N/A (production benchmark out of scope)`로 사유를 남긴다.
+- [x] performance/stability review artifact를 `docs/review/2026-08-27-issue-238-exposed-measured-performance-stability.md`에 작성한다. 요청당 무거운 allocation/반복 변환을 새로 만들지 않는지, JDBC 자원 소유권/정리, Testcontainers 직렬성, `DOUBLE` 경계와 재실행 지점을 소스·테스트 근거로 기록한다. benchmark는 도메인 학습 예제에 포함하지 않으며 `N/A (production benchmark out of scope)`로 사유를 남긴다.
 
-- [ ] 모듈 검증을 작은 순서에서 넓은 순서로 실행한다.
+- [x] 모듈 검증을 작은 순서에서 넓은 순서로 실행한다.
 
   ```bash
   USE_FAST_DB=true repo-test-summary -- \
@@ -326,34 +326,34 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
 
 ## 단계 8 — traceability, final review, lesson, workflow receipt
 
-- [ ] issue #238 live metadata(title/body/assignee/milestone/labels)와 현재 diff를
+- [x] issue #238 live metadata(title/body/assignee/milestone/labels)와 현재 diff를
   다시 읽어 모든 DoD를 다음 표에 매핑한다.
 
 | Issue DoD | 계획 task | 증거 |
 |---|---|---|
-| 길이·질량·온도 3계열 round-trip | 2, 3 | `Ex01_MeasuredColumns.kt`, H2 및 dialect 결과 |
+| 길이·질량·온도 3계열 round-trip | 2, 3 | `Ex01MeasuredColumns.kt`, H2 및 dialect 결과 |
 | null·소수 정밀도·단위 변환·부적합 단위 동작 | 2, 3, 4 | near assertion, nullable, README compile-time 예와 provider source contract |
 | base unit 저장과 migration 주의 | 3, 4, 6 | source declaration, README/ERD, semantic ledger |
 | EN/KO README와 source-equivalent SVG/PNG | 4, 6 | parity/terms/diagram audits 및 original PNG inspection |
 | module test/static check | 1, 3, 7 | Gradle test/build/detekt, full detekt |
 | 신규 schema 격리/R2DBC 제외 | 1, 3, 4 | changed path audit, README scope, live issue read-back |
 
-- [ ] `docs/review/2026-08-27-issue-238-exposed-measured-final-review.md`에
+- [x] `docs/review/2026-08-27-issue-238-exposed-measured-final-review.md`에
   performance, stability, security, operator/ops, developer/API, user/caller 여섯
   관점과 통합 판정을 기록한다. 단일 개발자 lane이므로 parallel subagent는
   `N/A (single-developer lane)`로 명시하되 독립적인 관점 검토 자체는 leader가
   순차 수행한다. P0=0/P1=0이 아니면 구현/PR을 진행하지 않는다.
 
-- [ ] `docs/lessons/2026-08-27-issue-238-exposed-measured.md`에 provider 기준
+- [x] `docs/lessons/2026-08-27-issue-238-exposed-measured.md`에 provider 기준
   단위 source-of-truth, `DOUBLE`/near assertion, nullable/DAO parity,
   workflow registration과 재발 방지 guard를 한국어로 기록한다.
 
-- [ ] workflow helper에 `spec-plan`, `module-test`, `static-check`,
+- [x] workflow helper에 `spec-plan`, `module-test`, `static-check`,
   `docs-parity`, `workflow-registration`, `review`, `lesson` evidence를 등록하고
   lane/topology changed paths가 write scope 안인지 확인한다. `lane-complete`,
   `check-result`, `component-evidence`, `completion-check`을 순서대로 실행한다.
 
-- [ ] 모든 durable artifact와 코드/문서/다이어그램 변경을 Lore commit trailer와
+- [x] 모든 durable artifact와 코드/문서/다이어그램 변경을 Lore commit trailer와
   함께 커밋한다. 각 commit은 한국어 intent line, Constraint/Rejected/Confidence/
   Scope-risk/Directive/Tested/Not-tested를 포함한다.
 
@@ -389,9 +389,9 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
 
 ## 계획 상태
 
-`REVIEW-PASS / APPROVED` — Step 3-R 여섯 렌즈와 main integration은 P0=0/P1=0으로
-통과했고, 사용자 plan approval(2026-08-27)을 받아 코드 mutation과 Step 3-P risk
-prediction을 진행했다.
+`IMPLEMENTATION-VERIFIED / READY-FOR-PR` — 승인된 계획의 단계 1–8과 최종
+여섯 관점 검토를 P0=0/P1=0으로 완료했다. 사용자 plan approval(2026-08-27)을
+받아 구현·검증·문서화를 마쳤고, 이제 PR/CI live gate만 남았다.
 
 ## 중단 조건
 

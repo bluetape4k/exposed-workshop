@@ -42,7 +42,8 @@
 - `withTables`가 각 dialect 테스트의 schema lifecycle을 소유하고, 신규 테스트
   resource는 parallel execution을 끈다. 실패 시 skip을 성공으로 해석하지 않는다.
 - provider의 unsupported DB value는 `error(...)`로 즉시 드러나며, workshop은
-  그 계약을 한 개의 경계 테스트로 고정하고 provider 내부 구현을 복제하지 않는다.
+  그 source contract를 README와 semantic ledger에 기록하고 provider 내부
+  구현이나 인위적인 driver 출력 주입 테스트를 복제하지 않는다.
 - 기준 단위 변경은 기존 `DOUBLE` 데이터를 변환해야 하는 migration 위험이다.
   이번 모듈은 격리 학습 schema라 migration을 구현하지 않고 README/ERD에 명시한다.
 

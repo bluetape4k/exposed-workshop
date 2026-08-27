@@ -6,7 +6,7 @@
 `13-exposed-measured` 모듈은 provider의 기존 `DOUBLE` 기준 단위 계약을
 재사용하고, 기존 스키마·모듈·R2DBC 저장소를 변경하지 않는다.
 
-검증 기준 commit: `c00028d6`
+검증 기준 commit: `cd97a3e4` (최신 구현·README·ledger 보정 checkpoint)
 
 검증 worktree: `feat/issue-238-exposed-measured`
 검증 시각: 2026-08-27 (KST)
@@ -77,4 +77,6 @@ PostgreSQL/MySQL/MariaDB 실행을 A-10 live gate로 남긴다. 현재 로컬 �
 모듈·인접 모듈·detekt·assemble·문서/다이어그램 검증은 모두 완료되었다.
 
 검증자 결론: `A-VER-01`부터 `A-VER-07`까지 현재 diff와 승인 artifact에 대해
-PASS. PR 생성 전 최종 6관점 review에서 동일 traceability와 CI 결과를 다시 읽는다.
+PASS. 최종 여섯 관점 review(`docs/review/2026-08-27-issue-238-exposed-measured-final-review.md`)
+와 lesson(`docs/lessons/2026-08-27-issue-238-exposed-measured.md`)도 작성했으며,
+PR 생성 전 exact head·CI·metadata live gate만 남았다.

@@ -20,9 +20,9 @@
 | Issue 요구사항/DoD | 계획 task | 구체적인 증거 |
 |---|---|---|
 | measured alias와 신규 `06-advanced` 모듈 | 1, 5 | `gradle/libs.versions.toml`, `13-exposed-measured`, `projects`, dependency insight |
-| 길이·질량·온도 3계열 base-unit round-trip | 2, 3, 7 | `MeasuredData.kt`, `Ex01_MeasuredColumns.kt`, H2/PG/MySQL/MariaDB 결과 |
+| 길이·질량·온도 3계열 base-unit round-trip | 2, 3, 7 | `MeasuredData.kt`, `Ex01MeasuredColumns.kt`, H2/PG/MySQL/MariaDB 결과 |
 | DSL 및 DAO/Entity 조회 | 2, 3, 4 | 같은 `ProductTable`을 통한 row와 entity read-back, README 코드 |
-| null·소수 정밀도·단위 변환·부적합 입력 | 2, 3, 4, 7 | `nullable()`, `shouldBeNear`, provider invalid DB value assertion, compile-time 문서 예 |
+| null·소수 정밀도·단위 변환·부적합 입력 | 2, 3, 4, 7 | `nullable()`, `shouldBeNear`, provider source contract 문서, compile-time 문서 예 |
 | base unit 저장과 migration 주의 | 3, 4, 6 | meter/kg/K source declaration, README와 ERD |
 | EN/KO README와 SVG/PNG ERD/architecture | 4, 6 | source-equivalent 섹션, four SVG/four PNG, semantic/asset audits |
 | 기존 schema/custom column/R2DBC 제외 | 1, 3, 4, 8 | 신규 격리 테이블, changed-path audit, README 범위 안내 |
@@ -62,7 +62,8 @@
 - P2: 위 사항은 이미 계획에 반영되어 별도 차단 없이 수용한다.
 - 모순 없음: provider는 `DOUBLE`을 사용하므로 issue의 `precision/scale`은
   근사 정밀도/유한 범위로 검증하고 DECIMAL 정책은 추가하지 않는다. provider
-  invalid DB type 테스트는 정상 JDBC round-trip과 분리되어 있다.
+  invalid DB type 경계는 source contract 문서로 남기고 정상 JDBC round-trip에
+  인위적인 driver 출력 주입 테스트를 추가하지 않는다.
 - single-developer 판단: 별도 reviewer/subagent lane은 `N/A (single-developer
   lane)`이며, leader가 모든 렌즈와 integration을 수행한다. 이는 CI, final review,
   lesson 또는 live PR 검증을 생략하는 근거가 아니다.

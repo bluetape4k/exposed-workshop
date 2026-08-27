@@ -241,20 +241,20 @@ asset-pair 감사를 수행한다.
 
 ## 수용 기준
 
-- [ ] `gradle/libs.versions.toml`의 `exposed-measured` alias가
+- [x] `gradle/libs.versions.toml`의 `exposed-measured` alias가
   `bluetape4k-dependencies:1.4.0` BOM으로 해석된다.
-- [ ] `06-advanced/13-exposed-measured`가 자동으로 Gradle project가 되고,
+- [x] `06-advanced/13-exposed-measured`가 자동으로 Gradle project가 되고,
   `ProductTable`/`ProductEntity`가 `org.jetbrains.exposed.v1.*`와 provider DSL을
   사용한다.
-- [ ] 길이·질량·절대온도의 meter/kg/K 기준 `DOUBLE` 저장과 표시 단위 변환이
+- [x] 길이·질량·절대온도의 meter/kg/K 기준 `DOUBLE` 저장과 표시 단위 변환이
   DSL 및 DAO 테스트로 검증된다.
-- [ ] nullable 왕복, 소수/큰 값의 허용 오차, 절대온도/온도차 구분,
+- [x] nullable 왕복, 소수/큰 값의 허용 오차, 절대온도/온도차 구분,
   서로 다른 단위 계열의 compile-time 경계가 테스트 또는 문서로 고정된다.
-- [ ] 기존 모듈/스키마/커스텀 컬럼과 R2DBC 범위를 변경하지 않는다.
-- [ ] English/Korean module README와 architecture/ERD SVG·PNG가
+- [x] 기존 모듈/스키마/커스텀 컬럼과 R2DBC 범위를 변경하지 않는다.
+- [x] English/Korean module README와 architecture/ERD SVG·PNG가
   source-equivalent이며 기준 단위·`DOUBLE` 한계·migration 주의를 포함한다.
-- [ ] `06-advanced` root README 양쪽 언어의 모듈 목록과 실행 명령이 일치한다.
-- [ ] module test, detekt/static check, docs/diagram audit, workflow registration,
+- [x] `06-advanced` root README 양쪽 언어의 모듈 목록과 실행 명령이 일치한다.
+- [x] module test, detekt/static check, docs/diagram audit, workflow registration,
   six-lens review, Korean lesson이 완료된다.
 - [ ] Issue/PR metadata는 live read-back하고 PR 본문 마지막에 `## DoD Status`를
   둔다. merge-ready 보고는 exact head·CI·review/thread 확인 이후에만 한다.

@@ -90,6 +90,11 @@ TemperatureContractTable.insert {
 provider는 `1.kilometers()`, `500.grams()`, `273.15.kelvin()`도 지원합니다.
 각 입력값은 JDBC에 기록하기 전에 컬럼의 기준 단위로 정규화됩니다.
 
+조회 시 provider의 measured column type은 이미 타입이 있는 값 또는 숫자형
+`Number`를 허용합니다. 그 밖의 DB 값은 `error(...)`로 거부합니다. 이는
+provider source contract이며 workshop에서 driver 출력을 주입하는 테스트로
+중복하지 않습니다.
+
 제네릭 `Measure<T>` 경계는 컴파일 시 질량 값을 길이 컬럼에 대입하는 실수를
 막습니다. 조회 시에는 원시 `DOUBLE` 표현을 직접 비교하지 말고 원하는 단위로
 변환하여 비교합니다.

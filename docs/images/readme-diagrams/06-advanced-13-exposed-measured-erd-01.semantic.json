@@ -2,7 +2,7 @@
   "kind": "erd",
   "source": {
     "question": "What entity and physical columns make up the measured product example?",
-    "revision": "c00028d6",
+    "revision": "cd97a3e4",
     "paths": [
       "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt",
       "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01MeasuredColumns.kt"
