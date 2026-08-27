@@ -1,0 +1,22 @@
+{
+  "kind": "erd",
+  "source": {
+    "question": "측정값 상품 예제를 구성하는 Entity와 물리 컬럼은 무엇인가?",
+    "revision": "cd97a3e4",
+    "paths": [
+      "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt",
+      "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01MeasuredColumns.kt"
+    ]
+  },
+  "nodes": [
+    {"id":"entity","label":"ProductEntity","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt"},
+    {"id":"table","label":"measured_products","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt"},
+    {"id":"jdbc","label":"JDBC 물리 저장소","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01MeasuredColumns.kt"}
+  ],
+  "edges": [
+    {"id":"entity-to-table","from":"entity","to":"table","kind":"1:1 매핑","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt"},
+    {"id":"table-to-jdbc","from":"table","to":"jdbc","kind":"DOUBLE 컬럼","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt"}
+  ],
+  "behavior": {"branches": 0, "loops": 0},
+  "repairs": []
+}

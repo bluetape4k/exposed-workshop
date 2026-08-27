@@ -231,6 +231,10 @@ Learn how to process JSON/JSONB columns using Jackson 3.x.
 
 Learn how to encrypt column data using AEAD (non-deterministic) and DAEAD (deterministic) modes with the Google Tink library. DAEAD mode allows WHERE clause searches on encrypted data.
 
+#### [Exposed Measured (Typed Measurement Columns)](06-advanced/13-exposed-measured/README.md)
+
+Learn how to store typed length, mass, and temperature values through the `bluetape4k-exposed-measured` JDBC extension while keeping a stable base-unit schema.
+
 ---
 
 ### JPA Migration

@@ -1,0 +1,34 @@
+plugins {
+    kotlin("plugin.serialization")
+}
+
+configurations {
+    testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
+}
+
+dependencies {
+    testImplementation(project(":exposed-shared-tests"))
+
+    testImplementation(libs.jetbrains.exposed.core)
+    testImplementation(libs.jetbrains.exposed.dao)
+    testImplementation(libs.jetbrains.exposed.jdbc)
+    testImplementation(libs.exposed.core)
+    testImplementation(libs.exposed.measured)
+
+    testImplementation(libs.bluetape4k.junit5)
+    testImplementation(libs.bluetape4k.testcontainers)
+    testImplementation(libs.testcontainers)
+    testImplementation(libs.testcontainers.mariadb)
+    testImplementation(libs.testcontainers.mysql)
+    testImplementation(libs.testcontainers.postgresql)
+
+    testRuntimeOnly(libs.h2.v2)
+    testRuntimeOnly(libs.mariadb.java.client)
+    testRuntimeOnly(libs.mysql.connector.j)
+    testRuntimeOnly(libs.postgresql.driver)
+    testRuntimeOnly(libs.pgjdbc.ng)
+
+    testImplementation(libs.bluetape4k.coroutines)
+    testImplementation(libs.kotlinx.coroutines.core)
+    testImplementation(libs.kotlinx.coroutines.test)
+}

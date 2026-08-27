@@ -1,0 +1,135 @@
+# Exposed Measured Columns
+
+English | [한국어](./README.ko.md)
+
+This example shows how to persist typed measurements through the
+`bluetape4k-exposed-measured` provider in a JDBC-backed Exposed table.
+`Length`, `Mass`, and absolute `Temperature` values are stored as `DOUBLE`
+values in their provider-defined base units and are reconstructed as typed
+values when selected. R2DBC is not exercised in this repository.
+
+## What this example covers
+
+- DSL columns: `length("length")`, `mass("mass")`, and `temperature("temperature")`.
+- DAO properties backed by the same columns through `IntEntity` and
+  `EntityClass`.
+- Unit conversion on write (`150.centimeters()` and `77.fahrenheit()`) and
+  base-unit conversion on read.
+- Representative display units: centimeters, meters, kilometers; grams,
+  kilograms; Celsius, Fahrenheit, and Kelvin.
+- Nullable measured values and floating-point comparisons with an explicit
+  tolerance.
+- The provider's incompatible DB-value failure boundary as a documented source
+  contract; this workshop keeps the normal JDBC path under test.
+
+## Architecture
+
+![Measured Exposed JDBC architecture](../../docs/images/readme-diagrams/06-advanced-13-exposed-measured-architecture-01.png)
+
+![Measured product ERD](../../docs/images/readme-diagrams/06-advanced-13-exposed-measured-erd-01.png)
+
+The physical schema is intentionally small:
+
+| Column | Kotlin value | Physical type | Stored base unit |
+| --- | --- | --- | --- |
+| `length` | `Measure<Length>` | `DOUBLE` | metre (`m`) |
+| `mass` | `Measure<Mass>` | `DOUBLE` | kilogram (`kg`) |
+| `nullable_mass` | `Measure<Mass>?` | `DOUBLE NULL` | kilogram (`kg`) |
+| `temperature` | `Temperature` | `DOUBLE` | Kelvin (`K`) |
+
+Changing a provider base unit is a schema and migration decision. The example
+does not alter an existing table, define a measurement accuracy policy, or
+provide a currency/measurement abstraction. R2DBC is intentionally out of
+scope; it belongs in the `exposed-r2dbc-workshop` repository.
+
+## DSL and DAO usage
+
+```kotlin
+internal object ProductTable: IntIdTable("measured_products") {
+    val name = varchar("name", 100)
+    val length = length("length")
+    val mass = mass("mass")
+    val nullableMass = mass("nullable_mass").nullable()
+    val temperature = temperature("temperature")
+}
+
+internal class ProductEntity(id: EntityID<Int>): IntEntity(id) {
+    companion object: EntityClass<Int, ProductEntity>(ProductTable)
+
+    var name by ProductTable.name
+    var length by ProductTable.length
+    var mass by ProductTable.mass
+    var nullableMass by ProductTable.nullableMass
+    var temperature by ProductTable.temperature
+}
+
+transaction {
+    ProductTable.insert {
+        it[ProductTable.name] = "desk"
+        it[ProductTable.length] = 150.centimeters()
+        it[ProductTable.mass] = 2.5.kilograms()
+        it[ProductTable.temperature] = 77.fahrenheit()
+    }
+}
+```
+
+Absolute temperature and temperature deltas are separate provider types. Use
+`temperature()` for `Temperature` and `temperatureDelta()` for
+`TemperatureDelta`; an absolute value cannot be written to a delta column (or
+the reverse) at compile time:
+
+```kotlin
+object TemperatureContractTable: Table() {
+    val absolute = temperature("absolute")
+    val delta = temperatureDelta("delta")
+}
+
+TemperatureContractTable.insert {
+    it[TemperatureContractTable.absolute] = 25.celsius()
+    it[TemperatureContractTable.delta] = 5.celsiusDelta()
+    // it[TemperatureContractTable.delta] = 25.celsius() // Does not compile
+}
+```
+
+The provider also accepts `1.kilometers()`, `500.grams()`, and
+`273.15.kelvin()`. Each input is normalized to the column's base unit before
+the JDBC value is written.
+
+On read, the provider's measured column types accept an existing typed value or
+a numeric `Number`. Any other DB value is rejected with `error(...)`; this is a
+provider source contract, not a workshop-specific driver-injection test.
+
+The generic `Measure<T>` boundary prevents assigning a mass value to a length
+column at compile time. On read, compare through a requested unit rather than
+comparing the raw `DOUBLE` representation:
+
+```kotlin
+(row[ProductTable.length] `in` Length.meters).shouldBeNear(1.5, 1e-10)
+row[ProductTable.temperature].inCelsius().shouldBeNear(25.0, 1e-10)
+```
+
+The following commented assignment is intentionally invalid and must remain a
+compile-time error; a `Measure<Mass>` cannot be written to a
+`Measure<Length>` column:
+
+```kotlin
+val lengthValue: Measure<Length> = 1.kilometers()
+val massValue: Measure<Mass> = 500.grams()
+
+ProductTable.insert {
+    it[ProductTable.length] = lengthValue
+    // it[ProductTable.length] = massValue // Does not compile: Measure<Mass> is not Measure<Length>
+}
+```
+
+## Tests
+
+```bash
+./gradlew :13-exposed-measured:test
+./gradlew :13-exposed-measured:test -PuseFastDB=true
+```
+
+`Ex01MeasuredColumns` runs the JDBC round-trip, DAO nullable, and precision
+cases through the shared `TestDB` matrix. The provider's incompatible DB-value
+failure boundary is documented above rather than re-tested with artificial
+driver output.

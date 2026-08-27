@@ -1,0 +1,25 @@
+{
+  "kind": "architecture",
+  "source": {
+    "question": "How does a measured value move from the workshop test to a JDBC column and back?",
+    "revision": "cd97a3e4",
+    "paths": [
+      "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt",
+      "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01MeasuredColumns.kt",
+      "docs/superpowers/specs/2026-08-27-issue-238-exposed-measured-design.md"
+    ]
+  },
+  "nodes": [
+    {"id":"tests","label":"DSL / DAO tests","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01MeasuredColumns.kt"},
+    {"id":"table","label":"ProductTable","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt"},
+    {"id":"column-type","label":"Measured ColumnType","source":"docs/superpowers/specs/2026-08-27-issue-238-exposed-measured-design.md"},
+    {"id":"jdbc","label":"JDBC database","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01MeasuredColumns.kt"}
+  ],
+  "edges": [
+    {"id":"tests-to-table","from":"tests","to":"table","kind":"declare/use","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01MeasuredColumns.kt"},
+    {"id":"table-to-column-type","from":"table","to":"column-type","kind":"encode/decode","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt"},
+    {"id":"column-type-to-jdbc","from":"column-type","to":"jdbc","kind":"DOUBLE persistence","source":"docs/superpowers/specs/2026-08-27-issue-238-exposed-measured-design.md"}
+  ],
+  "behavior": {"branches": 0, "loops": 0},
+  "repairs": []
+}

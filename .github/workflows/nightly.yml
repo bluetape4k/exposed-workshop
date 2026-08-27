@@ -89,6 +89,7 @@ jobs:
               :06-custom-columns:test
               :04-exposed-json:test
               :05-exposed-money:test
+              :13-exposed-measured:test
               :09-exposed-fastjson2:test
               :01-coroutines-basic:test
           - db: POSTGRESQL
@@ -149,6 +150,7 @@ jobs:
               :06-custom-columns:test
               :04-exposed-json:test
               :05-exposed-money:test
+              :13-exposed-measured:test
               :09-exposed-fastjson2:test
               :01-coroutines-basic:test
           - db: MYSQL_V8
@@ -209,6 +211,7 @@ jobs:
               :06-custom-columns:test
               :04-exposed-json:test
               :05-exposed-money:test
+              :13-exposed-measured:test
               :09-exposed-fastjson2:test
               :01-coroutines-basic:test
     steps:
