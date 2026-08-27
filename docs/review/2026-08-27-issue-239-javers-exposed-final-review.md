@@ -28,7 +28,7 @@
 - P1: **0**
 - P2: 교육용 무제한 history 조회, 인증/인가·actor 공급, raw direct commit 금지,
   외부 DB/성능/R2DBC 및 provider 외부 hook lifecycle은 승인된 범위 밖으로 명시
-- 리뷰 상태: **PASS — PR 생성 가능**
+- 리뷰 상태: **PASS — PR #251 exact head 검토 완료**
 
 ## 검증 증적
 
@@ -41,11 +41,13 @@
 - 변경 예제 selector: `all=true`, `:12-javers-exposed-audit:build` 포함
 - 다이어그램 semantic/text/endpoint/connector/geometry/arrowhead/mixed-corner/style/visual 감사: 신규 6개 모두 PASS
 - 자산 쌍 감사: `ok=true`, `pair_count=208`, 누락 없음
-- 한국어 용어 감사: 7개 문서, findings 0
+- 한국어 용어 감사: 8개 문서, findings 0
 - `git diff --check`: PASS
 
 ## 남은 통합 게이트
 
-PR 생성 후 실제 PR head 기준 CI, review decision, unresolved thread, body/label/
-milestone/assignee/link을 다시 읽는다. 머지는 이 기록으로 대체하지 않으며,
-최신 head에 대한 별도 `승인`이 있을 때만 수행한다.
+PR #251 exact head `ed71c0fec27bbf378438a789bcb36fae3da8d25d` 기준으로 CI,
+review decision, unresolved thread, body/label/milestone/assignee/link을 다시
+읽었고 P0/P1은 0건이다. H2 재실행은 기존 `:02-cache-strategies-coroutines`
+테스트 결과를 확인하는 통합 게이트로 남아 있다. 머지는 이 기록으로 대체하지
+않으며, 최종 exact head에 대한 별도 `승인`이 있을 때만 수행한다.

@@ -4,7 +4,7 @@
 
 - 이슈: [#239](https://github.com/bluetape4k/exposed-workshop/issues/239)
 - 작업 브랜치: `feat/issue-239-javers-exposed`
-- 코드 검증 기준 커밋: `a1d5d26b`
+- 코드 검증 기준 커밋: `ed71c0fec27bbf378438a789bcb36fae3da8d25d`
 - 범위: `13-ecosystem-integrations/12-javers-exposed-audit`의 JDBC 예제와 문서·다이어그램·예제 선택기 연동
 - 제외 범위: R2DBC 구현. R2DBC는 `exposed-r2dbc-workshop#235`에서 다룬다.
 
@@ -96,7 +96,7 @@ git diff --check
   `javers.commit` 우회 금지, actor 인증·조회 권한 책임, 교육용 평문 `secret` 경계를
   EN/KO에 동등하게 설명한다.
 - 전체 공유 자산 디렉터리에 `--require-all-referenced`를 적용하면 기존 다른 예제의 미참조 자산 때문에 실패하므로 이 모듈의 DoD로 사용하지 않았다. 모듈 README 기준 자산 쌍·링크 검증은 PASS다.
-- 한국어 용어 감사 결과: 5개 문서, findings 0.
+- 한국어 용어 감사 결과: 8개 문서, findings 0.
 
 ## CI/실행 범위 판단
 
