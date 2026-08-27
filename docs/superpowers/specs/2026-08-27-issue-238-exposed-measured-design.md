@@ -273,6 +273,6 @@ asset-pair 감사를 수행한다.
 
 ## 설계 상태
 
-`APPROVED-DESIGN / SPEC-REVIEW-PENDING` — 사용자 승인(2026-08-27)을 받은
-선택지 A를 기준으로 작성했고 Step 2-R 통합 검토(P0=0/P1=0)를 완료했다. 사용자의
-spec review가 통과되면 implementation plan과 TDD 실행으로 진행한다.
+`APPROVED-DESIGN / APPROVED` — 사용자 승인(2026-08-27)을 받은 선택지 A를
+기준으로 작성했고 Step 2-R 통합 검토(P0=0/P1=0)를 완료했다. 승인된 설계를
+implementation plan과 TDD 실행의 기준으로 사용한다.

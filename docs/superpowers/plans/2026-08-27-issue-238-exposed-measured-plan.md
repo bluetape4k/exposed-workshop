@@ -387,9 +387,9 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
 
 ## 계획 상태
 
-`REVIEW-PASS / USER-APPROVAL-PENDING` — Step 3-R 여섯 렌즈와 main integration은
-P0=0/P1=0으로 통과했고, 사용자의 plan approval 후에만 첫 코드 mutation과
-Step 3-P risk prediction을 시작한다.
+`REVIEW-PASS / APPROVED` — Step 3-R 여섯 렌즈와 main integration은 P0=0/P1=0으로
+통과했고, 사용자 plan approval(2026-08-27)을 받아 코드 mutation과 Step 3-P risk
+prediction을 진행했다.
 
 ## 중단 조건
 
