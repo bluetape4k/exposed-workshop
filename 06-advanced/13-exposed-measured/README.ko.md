@@ -2,10 +2,10 @@
 
 [English](./README.md) | 한국어
 
-`bluetape4k-exposed-measured` JDBC 확장을 사용하여 타입이 있는 측정값을
-저장하는 예제입니다. `Length`, `Mass`, 절대 온도인 `Temperature`를 provider가
-정한 기준 단위의 `DOUBLE` 값으로 저장하고, 조회 시 타입이 있는 측정값으로
-복원합니다.
+JDBC 기반 Exposed 테이블에서 `bluetape4k-exposed-measured` provider를 사용하여
+타입이 있는 측정값을 저장하는 예제입니다. `Length`, `Mass`, 절대 온도인
+`Temperature`를 provider가 정한 기준 단위의 `DOUBLE` 값으로 저장하고, 조회 시
+타입이 있는 측정값으로 복원합니다. 이 저장소에서는 R2DBC를 실행하지 않습니다.
 
 ## 이 예제에서 다루는 내용
 
@@ -13,6 +13,8 @@
 - `IntEntity`와 `EntityClass`를 사용하여 같은 컬럼을 DAO 속성으로 접근하는 방법.
 - `150.centimeters()`, `77.fahrenheit()`처럼 입력 단위를 변환하고 조회 시
   기준 단위로 변환하는 방법.
+- 대표 표시 단위인 센티미터·미터·킬로미터, 그램·킬로그램,
+  섭씨·화씨·켈빈을 사용하는 방법.
 - nullable 측정값과 명시적인 허용 오차를 적용한 부동소수점 비교.
 - provider가 호환되지 않는 DB 값 타입을 거부하는 경계.
 
@@ -64,6 +66,9 @@ transaction {
 }
 ```
 
+provider는 `1.kilometers()`, `500.grams()`, `273.15.kelvin()`도 지원합니다.
+각 입력값은 JDBC에 기록하기 전에 컬럼의 기준 단위로 정규화됩니다.
+
 제네릭 `Measure<T>` 경계는 컴파일 시 질량 값을 길이 컬럼에 대입하는 실수를
 막습니다. 조회 시에는 원시 `DOUBLE` 표현을 직접 비교하지 말고 원하는 단위로
 변환하여 비교합니다.
@@ -71,6 +76,19 @@ transaction {
 ```kotlin
 (row[ProductTable.length] `in` Length.meters).shouldBeNear(1.5, 1e-10)
 row[ProductTable.temperature].inCelsius().shouldBeNear(25.0, 1e-10)
+```
+
+다음 주석 처리한 대입은 의도적으로 잘못된 코드이며 컴파일 오류로 남아야
+합니다. `Measure<Mass>`는 `Measure<Length>` 컬럼에 기록할 수 없습니다.
+
+```kotlin
+val lengthValue: Measure<Length> = 1.kilometers()
+val massValue: Measure<Mass> = 500.grams()
+
+ProductTable.insert {
+    it[ProductTable.length] = lengthValue
+    // it[ProductTable.length] = massValue // 컴파일 오류: Measure<Mass>는 Measure<Length>가 아님
+}
 ```
 
 ## 테스트

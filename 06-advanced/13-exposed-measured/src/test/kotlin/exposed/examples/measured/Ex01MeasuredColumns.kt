@@ -10,7 +10,10 @@ import io.bluetape4k.measured.Mass
 import io.bluetape4k.measured.celsius
 import io.bluetape4k.measured.centimeters
 import io.bluetape4k.measured.fahrenheit
+import io.bluetape4k.measured.grams
 import io.bluetape4k.measured.kilograms
+import io.bluetape4k.measured.kelvin
+import io.bluetape4k.measured.kilometers
 import io.bluetape4k.measured.meters
 import io.bluetape4k.exposed.core.measured.MeasureColumnType
 import io.bluetape4k.measured.Measure
@@ -92,6 +95,25 @@ class Ex01MeasuredColumns: AbstractExposedTest() {
             val row = ProductTable.selectAll().where { ProductTable.id eq id }.single()
             (row[ProductTable.length] `in` Length.meters).shouldBeNear(123_456.789123, 1e-6)
             (row[ProductTable.mass] `in` Mass.kilograms).shouldBeNear(0.000123, 1e-12)
+        }
+    }
+
+    /** 대표 표시 단위인 km, g, K도 provider 기준 단위로 정규화되는지 검증합니다. */
+    @ParameterizedTest
+    @MethodSource(ENABLE_DIALECTS_METHOD)
+    fun `추가 표시 단위도 기준 단위로 round-trip 된다`(testDB: TestDB) {
+        withTables(testDB, ProductTable) {
+            val id = ProductTable.insertAndGetId {
+                it[ProductTable.name] = "표시 단위"
+                it[ProductTable.length] = 1.kilometers()
+                it[ProductTable.mass] = 500.grams()
+                it[ProductTable.temperature] = 273.15.kelvin()
+            }
+
+            val row = ProductTable.selectAll().where { ProductTable.id eq id }.single()
+            (row[ProductTable.length] `in` Length.meters).shouldBeNear(1_000.0, 1e-10)
+            (row[ProductTable.mass] `in` Mass.kilograms).shouldBeNear(0.5, 1e-10)
+            row[ProductTable.temperature].inKelvin().shouldBeNear(273.15, 1e-10)
         }
     }
 

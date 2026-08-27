@@ -18,10 +18,10 @@
 | `06-advanced` 아래 JDBC 측정값 모듈 추가 | `06-advanced/13-exposed-measured/build.gradle.kts`, `gradle/libs.versions.toml` | `./gradlew projects`, `./gradlew assemble` | PASS |
 | 길이·질량·절대 온도 DSL 컬럼 | `MeasuredData.kt`의 `ProductTable` | `DSL measured 컬럼은 기준 단위로 round-trip 된다` | PASS |
 | DAO `Entity`/`EntityClass` 예제 | `MeasuredData.kt`의 `ProductEntity` | `DAO measured 컬럼은 nullable 값을 보존한다` | PASS |
-| 입력 단위 변환과 기준 단위 조회 | `Ex01MeasuredColumns.kt` (`cm`, `m`, `kg`, `°F`, `°C`) | `:13-exposed-measured:test` 10 tests, failures/errors 0 | PASS |
+| 입력 단위 변환과 기준 단위 조회 | `Ex01MeasuredColumns.kt` (`cm`, `m`, `km`, `g`, `kg`, `°F`, `°C`, `K`) | `:13-exposed-measured:test` 13 tests, failures/errors 0 | PASS |
 | nullable 값 보존 | `nullableMass` 컬럼과 DAO 속성 | nullable DAO 파라미터 테스트 | PASS |
 | Double 정밀도 경계 | 허용 오차를 둔 `shouldBeNear` 검증 | 정밀 측정값 파라미터 테스트 | PASS |
-| 호환되지 않는 DB 값 거부 | `MeasureColumnType.valueFromDB` 경계 테스트 | `IllegalStateException` 기대 테스트 | PASS |
+| 호환되지 않는 DB 값 거부와 계열 경계 | `MeasureColumnType.valueFromDB` 경계 테스트와 README의 `Measure<Mass>` → `Measure<Length>` 컴파일 오류 예 | `IllegalStateException` 기대 테스트와 source-equivalent 문서 확인 | PASS |
 | EN/KO README와 SVG/PNG | 모듈 README 2개, architecture/ERD SVG·PNG·ledger | semantic, asset-pair, arrowhead, connector, endpoint, visual audit | PASS |
 | CI/nightly 등록 | `.github/workflows/nightly.yml` PG/MySQL/MariaDB shard 항목 | YAML diff 및 Gradle build graph 확인 | PASS |
 | 기존 스키마·R2DBC·정확도 정책 범위 유지 | 변경 파일에 기존 스키마 수정 없음; README 비목표 명시 | `git diff --name-only`, 승인 spec/plan 대조 | PASS |
@@ -56,8 +56,8 @@
 
 ## Fresh validation evidence
 
-- `./gradlew :13-exposed-measured:test --no-daemon --no-configuration-cache` — BUILD SUCCESSFUL; JUnit XML `tests=10`, `failures=0`, `errors=0`, `skipped=0`.
-- `./gradlew :13-exposed-measured:test -PuseFastDB=true --no-daemon --no-configuration-cache` — BUILD SUCCESSFUL; fast H2 JUnit XML `tests=4`, `failures=0`, `errors=0`, `skipped=0`.
+- `./gradlew :13-exposed-measured:test --no-daemon --no-configuration-cache` — BUILD SUCCESSFUL; JUnit XML `tests=13`, `failures=0`, `errors=0`, `skipped=0`.
+- `./gradlew :13-exposed-measured:test -PuseFastDB=true --no-daemon --no-configuration-cache` — BUILD SUCCESSFUL; fast H2 JUnit XML `tests=5`, `failures=0`, `errors=0`, `skipped=0`.
 - `./gradlew :13-exposed-measured:detekt --no-daemon --no-configuration-cache` — BUILD SUCCESSFUL.
 - `./gradlew :13-exposed-measured:dependencyInsight --dependency bluetape4k-exposed-measured --configuration testRuntimeClasspath` — `io.github.bluetape4k.exposed:bluetape4k-exposed-measured:1.12.1` resolved.
 - `./gradlew :13-exposed-measured:test :06-custom-columns:test :04-exposed-json:test -PuseFastDB=true` — BUILD SUCCESSFUL; 52 discovered tests, failures/errors 0. Existing JSON module reported 18 skipped cases.

@@ -2,10 +2,11 @@
 
 English | [한국어](./README.ko.md)
 
-This example shows how to persist typed measurements with the
-`bluetape4k-exposed-measured` JDBC extension. `Length`, `Mass`, and absolute
-`Temperature` values are stored as `DOUBLE` values in their provider-defined
-base units and are reconstructed as typed values when selected.
+This example shows how to persist typed measurements through the
+`bluetape4k-exposed-measured` provider in a JDBC-backed Exposed table.
+`Length`, `Mass`, and absolute `Temperature` values are stored as `DOUBLE`
+values in their provider-defined base units and are reconstructed as typed
+values when selected. R2DBC is not exercised in this repository.
 
 ## What this example covers
 
@@ -14,6 +15,8 @@ base units and are reconstructed as typed values when selected.
   `EntityClass`.
 - Unit conversion on write (`150.centimeters()` and `77.fahrenheit()`) and
   base-unit conversion on read.
+- Representative display units: centimeters, meters, kilometers; grams,
+  kilograms; Celsius, Fahrenheit, and Kelvin.
 - Nullable measured values and floating-point comparisons with an explicit
   tolerance.
 - The provider's incompatible DB-value failure boundary.
@@ -66,6 +69,10 @@ transaction {
 }
 ```
 
+The provider also accepts `1.kilometers()`, `500.grams()`, and
+`273.15.kelvin()`. Each input is normalized to the column's base unit before
+the JDBC value is written.
+
 The generic `Measure<T>` boundary prevents assigning a mass value to a length
 column at compile time. On read, compare through a requested unit rather than
 comparing the raw `DOUBLE` representation:
@@ -73,6 +80,20 @@ comparing the raw `DOUBLE` representation:
 ```kotlin
 (row[ProductTable.length] `in` Length.meters).shouldBeNear(1.5, 1e-10)
 row[ProductTable.temperature].inCelsius().shouldBeNear(25.0, 1e-10)
+```
+
+The following commented assignment is intentionally invalid and must remain a
+compile-time error; a `Measure<Mass>` cannot be written to a
+`Measure<Length>` column:
+
+```kotlin
+val lengthValue: Measure<Length> = 1.kilometers()
+val massValue: Measure<Mass> = 500.grams()
+
+ProductTable.insert {
+    it[ProductTable.length] = lengthValue
+    // it[ProductTable.length] = massValue // Does not compile: Measure<Mass> is not Measure<Length>
+}
 ```
 
 ## Tests
