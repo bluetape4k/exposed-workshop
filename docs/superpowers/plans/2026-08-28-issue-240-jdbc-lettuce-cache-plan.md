@@ -66,7 +66,7 @@ module test task에는 다음 계약을 고정한다.
 - opt-in에서 Docker/Testcontainers가 준비되지 않으면 skip하지 않고 실패한다.
 - 기본 H2 경로는 module compile/test와 Examples `build`에서 계속 실행된다.
 
-새 `junit-platform.properties`는 Redis server stop/restart를 사용하는 모든
+새 `junit-platform.properties`는 공유 Redis transport 장애를 주입하는 모든
 클래스를 `same_thread`로 직렬 실행하고, 테스트별 `@Timeout`과 별도의 Redis
 readiness deadline을 함께 사용한다. client는 테스트 전용 `RedisURI`에 짧은
 connect/command timeout을 명시한다. 골격 직후
@@ -124,8 +124,9 @@ sync/suspend parity oracle은 다음 표로 고정한다.
 - `11-high-performance/08-cache-strategies-lettuce/src/test/kotlin/exposed/examples/cache/lettuce/RedisLettuceCacheFailureIntegrationTest.kt`
   - `@Tag("redis")` Redis GET/MGET/cache-only SET/warm 오류 시 DB fallback 또는
     결과 보존, write 오류 전파
-  - Redis 중단→fallback→readiness polling→재시작→같은 client의 auto-reconnect와
-    cache fill을 deadline 안에 확인
+  - 공유 Redis endpoint에서 기존 transport를 `CLIENT KILL`로 끊은 뒤
+    fallback→readiness polling→같은 client의 auto-reconnect와 cache fill을
+    deadline 안에 확인
   - 두 번째 `putAll` chunk의 writer 또는 pipeline만 결정적으로 실패시키고
     첫 번째 DB commit, partial Redis state, 원래 예외를 정확히 단언
   - 별도 `StringCodec` connection으로 malformed JSON을 같은 key에 기록해
@@ -135,9 +136,9 @@ sync/suspend parity oracle은 다음 표로 고정한다.
   - repository close-before-use와 반복 close가 예외 없이 끝나고, repository
     close 후 JVM 종료 시점의 `ShutdownQueue` client 소유권만 남는지 확인
 
-Redis 오류는 (1) container stop/restart로 transport 오류, (2) 별도 raw
-`StringCodec` connection으로 malformed payload, (3) provider writer가 사용하는
-통제된 Redis connection/pipeline 실패 fixture로 주입한다. provider source를
+Redis 오류는 (1) 공유 endpoint를 유지하는 `CLIENT KILL`로 transport 오류, (2)
+별도 raw `StringCodec` connection으로 malformed payload, (3) provider writer가
+사용하는 통제된 Redis connection/pipeline 실패 fixture로 주입한다. provider source를
 우회하는 새 production abstraction은 만들지 않는다. query/command counter는
 작은 고정 입력에서 `getAll`의 한 번 MGET·miss별 fallback과 `putAll` chunk/pipeline
 경계를 관찰하는 데만 사용하고 성능 수치로 확장하지 않는다.
@@ -150,7 +151,7 @@ layout 확인 후 결정하되 책임은 유지한다).
 - `11-high-performance/08-cache-strategies-lettuce/src/main/kotlin/exposed/examples/cache/lettuce/ProductLettuceCacheModels.kt`
   - `ProductTable`은 `LongIdTable("lettuce_products")` 기반으로 정의하고
     `ProductRecord`는 한국어 KDoc이 있는 `Serializable` data class로 둔다.
-    `ProductRecord`의 companion에는 `@JvmField val serialVersionUID: Long = 1L`을
+    `ProductRecord`의 companion에는 private `const val serialVersionUID: Long = 1L`을
     둔다. public KDoc은 README의 import/API 예제와 같은 이름을 사용한다.
 - `11-high-performance/08-cache-strategies-lettuce/src/main/kotlin/exposed/examples/cache/lettuce/ProductJdbcLettuceRepository.kt`
   - public constructor를 다음으로 고정한다:

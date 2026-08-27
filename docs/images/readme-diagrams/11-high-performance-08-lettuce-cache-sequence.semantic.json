@@ -1,0 +1,33 @@
+{
+  "kind": "sequence",
+  "source": {
+    "question": "How does a JDBC Lettuce read-through miss, write-through update, and transport fallback preserve ownership and ordering?",
+    "revision": "73862284",
+    "paths": [
+      "11-high-performance/08-cache-strategies-lettuce/src/main/kotlin/exposed/examples/cache/lettuce/ProductJdbcLettuceRepository.kt",
+      "11-high-performance/08-cache-strategies-lettuce/src/main/kotlin/exposed/examples/cache/lettuce/ProductSuspendedJdbcLettuceRepository.kt",
+      "11-high-performance/08-cache-strategies-lettuce/src/test/kotlin/exposed/examples/cache/lettuce/RedisLettuceCacheFailureIntegrationTest.kt"
+    ]
+  },
+  "nodes": [
+    {"id": "caller", "label": "Caller", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "repository", "label": "ProductJdbcLettuceRepository", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "cache", "label": "Lettuce LoadedMap", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "database", "label": "ProductTable / H2", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "redis", "label": "Redis", "source": "RedisLettuceCacheFailureIntegrationTest.kt"},
+    {"id": "owner", "label": "ShutdownQueue", "source": "RedisLettuceCacheFailureIntegrationTest.kt"}
+  ],
+  "edges": [
+    {"id": "call-get", "from": "caller", "to": "repository", "kind": "call", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "get-cache", "from": "repository", "to": "cache", "kind": "read", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "cache-redis", "from": "cache", "to": "redis", "kind": "read", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "miss-db", "from": "cache", "to": "database", "kind": "fallback", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "fill-cache", "from": "database", "to": "cache", "kind": "warm", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "write-db", "from": "repository", "to": "database", "kind": "write-through", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "write-redis", "from": "repository", "to": "redis", "kind": "pipeline", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "return-value", "from": "repository", "to": "caller", "kind": "return", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "close-owner", "from": "owner", "to": "redis", "kind": "lifecycle", "source": "RedisLettuceCacheFailureIntegrationTest.kt"}
+  ],
+  "behavior": {"branches": 2, "loops": 1},
+  "repairs": []
+}

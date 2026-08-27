@@ -1,0 +1,33 @@
+{
+  "kind": "architecture",
+  "source": {
+    "question": "Which component owns the JDBC source of truth, remote Lettuce cache, and Redis client lifecycle?",
+    "revision": "73862284",
+    "paths": [
+      "11-high-performance/08-cache-strategies-lettuce/src/main/kotlin/exposed/examples/cache/lettuce/ProductJdbcLettuceRepository.kt",
+      "11-high-performance/08-cache-strategies-lettuce/src/main/kotlin/exposed/examples/cache/lettuce/ProductSuspendedJdbcLettuceRepository.kt",
+      "11-high-performance/08-cache-strategies-lettuce/src/main/kotlin/exposed/examples/cache/lettuce/ProductLettuceCacheModels.kt",
+      "11-high-performance/08-cache-strategies-lettuce/src/test/kotlin/exposed/examples/cache/lettuce/RedisLettuceCacheFixture.kt"
+    ]
+  },
+  "nodes": [
+    {"id": "caller", "label": "Caller", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "sync-repository", "label": "ProductJdbcLettuceRepository", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "suspend-repository", "label": "ProductSuspendedJdbcLettuceRepository", "source": "ProductSuspendedJdbcLettuceRepository.kt"},
+    {"id": "provider-map", "label": "AbstractJdbcLettuceRepository / LoadedMap", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "jdbc-source", "label": "ProductTable / H2 JDBC", "source": "ProductLettuceCacheModels.kt"},
+    {"id": "redis-cache", "label": "Redis remote cache", "source": "ProductLettuceCacheModels.kt"},
+    {"id": "client-owner", "label": "ShutdownQueue client owner", "source": "RedisLettuceCacheFixture.kt"}
+  ],
+  "edges": [
+    {"id": "caller-sync", "from": "caller", "to": "sync-repository", "kind": "flow", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "caller-suspend", "from": "caller", "to": "suspend-repository", "kind": "flow", "source": "ProductSuspendedJdbcLettuceRepository.kt"},
+    {"id": "sync-provider", "from": "sync-repository", "to": "provider-map", "kind": "dependency", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "suspend-provider", "from": "suspend-repository", "to": "provider-map", "kind": "dependency", "source": "ProductSuspendedJdbcLettuceRepository.kt"},
+    {"id": "provider-jdbc", "from": "provider-map", "to": "jdbc-source", "kind": "read-write", "source": "ProductJdbcLettuceRepository.kt"},
+    {"id": "provider-redis", "from": "provider-map", "to": "redis-cache", "kind": "cache", "source": "ProductLettuceCacheModels.kt"},
+    {"id": "owner-client", "from": "client-owner", "to": "redis-cache", "kind": "lifecycle", "source": "RedisLettuceCacheFixture.kt"}
+  ],
+  "behavior": {"branches": 2, "loops": 0},
+  "repairs": []
+}

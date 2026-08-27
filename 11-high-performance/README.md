@@ -29,6 +29,7 @@ This chapter follows the high-performance examples in the source tree: Redisson-
 | [`05-cache-strategies-ktor`](05-cache-strategies-ktor/README.md)             | Ktor cache-aside/read-through/write-through examples      |
 | [`06-cache-strategies-coroutines-ktor`](06-cache-strategies-coroutines-ktor/README.md) | Coroutine-safe Ktor cache examples               |
 | [`07-routing-datasource-ktor`](07-routing-datasource-ktor/README.md)         | Ktor read/write datasource routing examples               |
+| [`08-cache-strategies-lettuce`](08-cache-strategies-lettuce/README.md)         | JDBC + Lettuce remote cache contract (H2 default, Redis opt-in) |
 
 ---
 
@@ -65,6 +66,7 @@ This chapter follows the high-performance examples in the source tree: Redisson-
 | `05-cache-strategies-ktor`       | Ktor       | CIO event loop + blocking repository | CIO         |
 | `06-cache-strategies-coroutines-ktor` | Ktor  | Suspend routes + `Dispatchers.IO` DB | CIO         |
 | `07-routing-datasource-ktor`     | Ktor       | Request plugin + coroutine context   | CIO         |
+| `08-cache-strategies-lettuce`    | Plain Kotlin/Exposed | JDBC + Lettuce remote cache | N/A         |
 
 ---
 
@@ -77,6 +79,7 @@ This chapter follows the high-performance examples in the source tree: Redisson-
 5. [`05-cache-strategies-ktor`](05-cache-strategies-ktor/README.md) — Ktor cache strategy routes
 6. [`06-cache-strategies-coroutines-ktor`](06-cache-strategies-coroutines-ktor/README.md) — Coroutine-safe Ktor cache
 7. [`07-routing-datasource-ktor`](07-routing-datasource-ktor/README.md) — Ktor read/write datasource routing
+8. [`08-cache-strategies-lettuce`](08-cache-strategies-lettuce/README.md) — JDBC + Lettuce sync/suspend cache contracts
 
 ---
 
@@ -91,6 +94,10 @@ This chapter follows the high-performance examples in the source tree: Redisson-
 ./gradlew :05-cache-strategies-ktor:test
 ./gradlew :06-cache-strategies-coroutines-ktor:test
 ./gradlew :07-routing-datasource-ktor:test
+./gradlew :08-cache-strategies-lettuce:test
+
+# Redis opt-in integration tests (requires Docker/Testcontainers)
+./gradlew :08-cache-strategies-lettuce:test -PincludeRedisIntegration=true
 
 # Benchmark (smoke: fast trend check, main: precise measurement)
 ./gradlew :04-benchmark:smokeBenchmark
@@ -106,6 +113,7 @@ This chapter follows the high-performance examples in the source tree: Redisson-
 - Confirm fallback path (cache failure → DB) operates correctly on failure.
 - For Ktor modules, confirm route responses expose cache source or selected datasource role.
 - Ktor examples are H2-only, so they exercise cache/routing behavior without container-backed Redis or replica databases.
+- The Lettuce module keeps H2 tests in the default path; Redis-tagged tests run only with `-PincludeRedisIntegration=true`.
 
 ---
 
@@ -140,3 +148,5 @@ This chapter follows the high-performance examples in the source tree: Redisson-
 
 - Redisson-based cache strategies require a Redis server. Testcontainers automatically starts a Redis container.
 - The RoutingDataSource example can be used with Read Replica or multi-tenant structures.
+- The Lettuce example uses the provider's `READ_WRITE_THROUGH` contract directly with an explicit Jackson 3 codec. It is a remote-cache teaching example, not a throughput or SLO benchmark.
+- R2DBC is intentionally implemented in the separate `exposed-r2dbc-workshop` repository (issue `#235`).

@@ -218,10 +218,10 @@ Redis 복구 후 같은 client가 Lettuce 기본 auto-reconnect로 다시 명령
   retry loop를 추가하지 않는다.
 - 읽기 GET/MGET transport 오류는 한 번 관찰한 뒤 즉시 DB loader fallback을
   수행한다. read retry 횟수·간격·deadline을 새로 정의하지 않는다.
-- Redis를 중단한 뒤 DB fallback을 확인하고, 같은 client가 Redis 재시작 후
-  다시 연결되어 cache SET/GET을 수행하는 bounded smoke를 Redis 통합 테스트에
-  포함한다. provider map 초기화 전 연결 실패와 active near-cache 오류는 이
-  경로의 대상이 아니다.
+- 공유 Redis endpoint에서 기존 transport를 `CLIENT KILL`로 끊은 뒤 DB fallback을
+  확인하고, 같은 client가 readiness deadline 안에 다시 연결되어 cache SET/GET을
+  수행하는 bounded smoke를 Redis 통합 테스트에 포함한다. provider map 초기화
+  전 연결 실패와 active near-cache 오류는 이 경로의 대상이 아니다.
 - `READ_WRITE_THROUGH`의 DB writer 설정에 포함된 provider retry가 있더라도
   이 모듈은 그 내부 횟수·간격을 재구현하거나 성공으로 재해석하지 않는다. Redis
   SET/pipeline 실패는 provider 예외를 전파하고 DB commit을 되돌리지 않는다.
@@ -310,7 +310,7 @@ Redis가 필요한 테스트는 `RedisServer.Launcher.redis`와
 | write failure boundary | DB writer/Redis write 실패가 성공으로 위장되지 않고 예외/상태를 보존하는지 확인 | H2 + Redis |
 | close lifecycle | remote-cache profile의 sync/suspend repository가 close-before-use와 반복 `close()`에서도 예외 없이 종료되고, repository → client 순서와 fixture shutdown 책임을 지킴 | Redis |
 | cancellation | suspend read/write 중 취소가 `CancellationException`으로 전파되고 임의 fallback으로 변환되지 않음 | Redis + coroutine test |
-| reconnect recovery | Redis 중단 중 DB fallback, Redis 재시작 후 같은 client의 재연결·재조회·cache fill | Redis + Testcontainers |
+| reconnect recovery | 기존 transport를 `CLIENT KILL`로 끊은 동안 DB fallback, 동일 endpoint에서 같은 client의 재연결·재조회·cache fill | Redis + Testcontainers |
 | partial batch failure | 뒤의 DB chunk 또는 Redis pipeline 실패가 앞선 commit을 되돌리지 않고 partial state와 예외를 보존 | H2 + Redis 장애 경계 |
 | near-cache safety | provider 기본 codec 및 local pattern invalidation 한계 때문에 near-cache 실행을 DoD에서 제외했음을 문서·config로 확인 | N/A: remote-only profile |
 
@@ -388,7 +388,7 @@ sequence-style/pair audit를 수행한다.
 | --- | --- | --- |
 | Redis GET/MGET 연결·명령 실패 | loader가 DB에서 읽은 값 또는 빈 결과를 반환 | 통제된 장애 client/fixture에서 DB 값과 예외 비전파를 단언 |
 | provider cache 초기화/`client.connect` 실패 | DB-only fallback을 주장하지 않고 초기화 예외를 전파 | close-before-use와 생성 실패 경계를 별도 lifecycle 테스트·README에 기록 |
-| Redis 중단 후 복구 | 중단 중 DB fallback, 재시작 뒤 동일 client가 auto-reconnect 후 cache 경로를 회복 | Testcontainers stop/start bounded smoke; custom retry loop 없음 |
+| Redis transport 단절 후 복구 | `CLIENT KILL` 중 DB fallback, 동일 endpoint에서 동일 client가 auto-reconnect 후 cache 경로를 회복 | shared-endpoint bounded smoke; custom retry loop 없음 |
 | DB loader 실패 | Redis miss가 임의의 빈 성공으로 바뀌지 않음 | H2 transaction 오류를 주입해 원래 예외를 관찰 |
 | cache-only SET 또는 warm pipeline 실패 | 이미 확보한 DB read 결과는 호출자에게 유지 | `findAll`/fallback 테스트와 경고 로그 확인 |
 | write-through DB writer/Redis SET 실패 | write API가 성공한 것처럼 반환하지 않음 | 예외 타입과 DB/cache 상태를 분리 단언 |
@@ -436,9 +436,9 @@ sequence-style/pair audit를 수행한다.
 - [ ] `-PincludeRedisIntegration=true`와 `@Tag("redis")` 규칙, 기본
       `test`/Examples `build`/CI/nightly 범위가 README·Gradle·workflow 근거와
       일치한다.
-- [ ] Redis 중단 중 DB fallback과 재시작 후 같은 client의 auto-reconnect 경로가
-      bounded smoke로 검증된다. provider 초기화 실패는 DB-only fallback으로
-      포장하지 않는다.
+- [ ] Redis transport 단절 중 DB fallback과 동일 endpoint에서 같은 client의
+      auto-reconnect 경로가 bounded smoke로 검증된다. provider 초기화 실패는
+      DB-only fallback으로 포장하지 않는다.
 - [ ] batch chunk 독립 commit, partial success, stale cache 및 후속 실패가
       테스트·README에 명시된다.
 - [ ] repository → client shutdown, `ShutdownQueue`/공유 resources 소유권,

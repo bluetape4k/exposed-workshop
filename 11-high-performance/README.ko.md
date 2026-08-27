@@ -29,6 +29,7 @@
 | [`05-cache-strategies-ktor`](05-cache-strategies-ktor/README.md)             | Ktor cache-aside/read-through/write-through 예제 |
 | [`06-cache-strategies-coroutines-ktor`](06-cache-strategies-coroutines-ktor/README.md) | Coroutine-safe Ktor cache 예제 |
 | [`07-routing-datasource-ktor`](07-routing-datasource-ktor/README.md)         | Ktor read/write datasource routing 예제 |
+| [`08-cache-strategies-lettuce`](08-cache-strategies-lettuce/README.ko.md)         | JDBC + Lettuce 원격 캐시 계약 (H2 기본, Redis opt-in) |
 
 ---
 
@@ -65,6 +66,7 @@
 | `05-cache-strategies-ktor`       | Ktor       | CIO 이벤트 루프 + blocking repository | CIO     |
 | `06-cache-strategies-coroutines-ktor` | Ktor  | Suspend route + `Dispatchers.IO` DB | CIO     |
 | `07-routing-datasource-ktor`     | Ktor       | Request plugin + coroutine context | CIO     |
+| `08-cache-strategies-lettuce`    | Plain Kotlin/Exposed | JDBC + Lettuce 원격 캐시 | N/A     |
 
 ---
 
@@ -77,6 +79,7 @@
 5. [`05-cache-strategies-ktor`](05-cache-strategies-ktor/README.md) — Ktor cache strategy route
 6. [`06-cache-strategies-coroutines-ktor`](06-cache-strategies-coroutines-ktor/README.md) — Coroutine-safe Ktor cache
 7. [`07-routing-datasource-ktor`](07-routing-datasource-ktor/README.md) — Ktor read/write datasource routing
+8. [`08-cache-strategies-lettuce`](08-cache-strategies-lettuce/README.ko.md) — JDBC + Lettuce sync/suspend 캐시 계약
 
 ---
 
@@ -91,6 +94,10 @@
 ./gradlew :05-cache-strategies-ktor:test
 ./gradlew :06-cache-strategies-coroutines-ktor:test
 ./gradlew :07-routing-datasource-ktor:test
+./gradlew :08-cache-strategies-lettuce:test
+
+# Redis opt-in 통합 테스트 (Docker/Testcontainers 필요)
+./gradlew :08-cache-strategies-lettuce:test -PincludeRedisIntegration=true
 
 # 벤치마크 (smoke: 빠른 추세, main: 정밀 측정)
 ./gradlew :04-benchmark:smokeBenchmark
@@ -106,6 +113,7 @@
 - 장애 시 폴백 경로(캐시 실패 → DB)가 정상 동작하는지 확인한다.
 - Ktor 모듈은 route response에서 cache source 또는 selected datasource role이 드러나는지 확인한다.
 - Ktor 예제는 H2-only라 Redis나 replica database 컨테이너 없이 cache/routing behavior 자체를 검증한다.
+- Lettuce 모듈은 기본 경로에서 H2 테스트를 실행하고, Redis tag 테스트는 `-PincludeRedisIntegration=true`일 때만 실행한다.
 
 ---
 
@@ -143,3 +151,5 @@
 
 - Redisson 기반 캐시 전략은 Redis 서버가 필요합니다. Testcontainers가 자동으로 Redis 컨테이너를 실행합니다.
 - RoutingDataSource 예제는 Read Replica 또는 멀티테넌트 구조에서 활용 가능합니다.
+- Lettuce 예제는 provider의 `READ_WRITE_THROUGH` 계약과 명시적인 Jackson 3 codec을 직접 사용한다. 처리량이나 SLO를 측정하는 benchmark가 아니라 원격 캐시 학습 예제다.
+- R2DBC는 별도 `exposed-r2dbc-workshop` 저장소(이슈 `#235`)에서 구현한다.
