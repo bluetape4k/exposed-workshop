@@ -1,0 +1,34 @@
+{
+  "kind": "architecture",
+  "source": {
+    "question": "How do an Exposed DAO change, request context, JaVers mapping, and JDBC audit tables stay inside one transaction?",
+    "revision": "issue-239-design-2026-08-27",
+    "paths": [
+      "13-ecosystem-integrations/12-javers-exposed-audit/src/main/kotlin/exposed/examples/javers/audit/JaversExposedAuditWorkshop.kt",
+      "docs/superpowers/specs/2026-08-27-issue-239-javers-exposed-design.md"
+    ]
+  },
+  "nodes": [
+    {"id": "caller", "label": "Caller", "source": "README.md"},
+    {"id": "context", "label": "AuditContextHolder", "source": "JaversExposedAuditWorkshop.kt"},
+    {"id": "dao", "label": "CustomerEntity", "source": "JaversExposedAuditWorkshop.kt"},
+    {"id": "hook", "label": "EntityHook subscription", "source": "JaversExposedAuditWorkshop.kt"},
+    {"id": "dto", "label": "AuditedCustomer allow-list", "source": "JaversExposedAuditWorkshop.kt"},
+    {"id": "javers", "label": "JaVers", "source": "JaversExposedAuditWorkshop.kt"},
+    {"id": "repository", "label": "ExposedCdoSnapshotRepository", "source": "JaversExposedAuditWorkshop.kt"},
+    {"id": "tables", "label": "Customers + JaVers tables", "source": "JaversExposedAuditWorkshop.kt"},
+    {"id": "tests", "label": "Unique H2 tests", "source": "JaversExposedAuditWorkshopTest.kt"}
+  ],
+  "edges": [
+    {"id": "caller-context", "from": "caller", "to": "context", "kind": "scope", "source": "AuditContextHolder.with"},
+    {"id": "caller-dao", "from": "caller", "to": "dao", "kind": "transaction", "source": "transaction(database)"},
+    {"id": "dao-hook", "from": "dao", "to": "hook", "kind": "lifecycle", "source": "EntityHook"},
+    {"id": "hook-context", "from": "hook", "to": "context", "kind": "metadata", "source": "requireCurrent"},
+    {"id": "hook-dto", "from": "hook", "to": "dto", "kind": "mapping", "source": "ExposedJaversEntityHookMapping"},
+    {"id": "dto-javers", "from": "dto", "to": "javers", "kind": "commit", "source": "javers.commit"},
+    {"id": "javers-repository", "from": "javers", "to": "repository", "kind": "persistence", "source": "registerJaversRepository"},
+    {"id": "repository-tables", "from": "repository", "to": "tables", "kind": "jdbc", "source": "CdoSnapshotTable"},
+    {"id": "tests-all", "from": "tests", "to": "tables", "kind": "verify", "source": "JaversExposedAuditWorkshopTest"}
+  ],
+  "behavior": {"branches": 2, "loops": 1}
+}

@@ -1,0 +1,26 @@
+{
+  "kind": "erd",
+  "source": {
+    "question": "Which business and JaVers tables are written for one customer audit history, and where is the secret field absent?",
+    "revision": "issue-239-design-2026-08-27",
+    "paths": [
+      "13-ecosystem-integrations/12-javers-exposed-audit/src/main/kotlin/exposed/examples/javers/audit/JaversExposedAuditWorkshop.kt",
+      "13-ecosystem-integrations/12-javers-exposed-audit/src/test/kotlin/exposed/examples/javers/audit/JaversExposedAuditWorkshopTest.kt"
+    ]
+  },
+  "nodes": [
+    {"id": "customers", "label": "audit_customers", "source": "Customers"},
+    {"id": "commit", "label": "javers_commit", "source": "CommitTable"},
+    {"id": "snapshot", "label": "javers_snapshot", "source": "CdoSnapshotTable"},
+    {"id": "dto", "label": "AuditedCustomer", "source": "JaversExposedAuditWorkshop.kt"},
+    {"id": "secret", "label": "secret excluded", "source": "JaversExposedAuditWorkshopTest.kt"}
+  ],
+  "edges": [
+    {"id": "erd-customer-entity", "from": "customers", "to": "dto", "kind": "allow-list", "source": "toAuditObject"},
+    {"id": "erd-commit-snapshot", "from": "commit", "to": "snapshot", "kind": "contains", "source": "commitId"},
+    {"id": "erd-javers-commit", "from": "dto", "to": "commit", "kind": "metadata", "source": "javers.commit"},
+    {"id": "erd-javers-snapshot", "from": "dto", "to": "snapshot", "kind": "state", "source": "CdoSnapshotTable.state"},
+    {"id": "erd-secret", "from": "customers", "to": "secret", "kind": "excluded", "source": "secret allow-list policy"}
+  ],
+  "behavior": {"branches": 1, "loops": 0}
+}

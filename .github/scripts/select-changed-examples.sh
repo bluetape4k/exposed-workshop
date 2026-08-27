@@ -31,6 +31,7 @@ ALL_TASKS=(
   :09-duckdb-embedded-analytics:build
   :10-druid-query-only:build
   :11-checkpointable-batch:build
+  :12-javers-exposed-audit:build
 )
 
 all=false
