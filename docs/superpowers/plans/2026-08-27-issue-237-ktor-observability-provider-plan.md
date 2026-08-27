@@ -309,11 +309,11 @@
 
 - [x] workflow helper로 evidence/check-result와 component-evidence를 등록하고, 모든 필수 check가 통과한 뒤 lane-complete와 completion-check를 실행한다. 최종 receipt checksum과 검증 명령을 lesson/PR에 연결했다.
 
-- [ ] final docs/review/lesson을 Lore 커밋으로 기록하고, `git diff --check` 후 semantic branch를 push한다.
+- [x] final docs/review/lesson을 Lore 커밋으로 기록하고, `git diff --check` 후 semantic branch를 push한다. 커밋 `9e38d62f1084f0bed453ee43ce6224dc99c96ce1`을 push했다.
 
-- [ ] PR 생성 권한 범위는 `feat/issue-237-ktor-observability-provider` → `develop`로 고정한다. PR 본문은 한국어로 작성하고 `Summary`, `Testing`, `Docs`, `DoD Status`를 포함한다. `DoD Status`에는 issue #237의 각 체크 항목과 명령/결과를 적는다.
+- [x] PR 생성 권한 범위는 `feat/issue-237-ktor-observability-provider` → `develop`로 고정한다. PR #249 본문은 한국어로 작성하고 `Summary`, `Testing`, `Docs`, `DoD Status`와 workflow receipt를 포함했다.
 
-- [ ] PR 생성 후 exact head SHA, base, body, status checks, review threads, mergeability를 live-read-back한다. CI가 통과해도 fresh explicit `승인` 전에는 merge/auto-merge를 수행하지 않고 `PENDING`으로 정지한다.
+- [x] PR 생성 후 exact head SHA, base, body, status checks, review threads, mergeability를 live-read-back했다. CI가 진행 중이므로 fresh explicit `승인` 전 merge/auto-merge를 수행하지 않고 `PENDING`으로 유지한다.
 
 ## Risk prediction and plan self-review
 
