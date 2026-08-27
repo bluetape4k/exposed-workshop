@@ -107,6 +107,11 @@
 
 ## 4. 계약 테스트를 통과시키고 API 경계를 다듬는다
 
+- [ ] 구현 전에 `docs/review/2026-08-27-issue-239-javers-exposed-risk-prediction.md`
+  의 provider resolution, transaction atomicity, global hook/context lifecycle,
+  sensitive payload, schema fixture, docs/CI 누락 위험을 확인한다. 각 위험의
+  signal·mitigation·rollback/rerun 지점을 먼저 기록하고, benchmark·remote DB·
+  coroutine은 승인된 one-developer JDBC 범위의 N/A 근거로 남긴다.
 - [ ] `./gradlew :12-javers-exposed-audit:test --no-daemon --no-configuration-cache`
   로 실패 원인을 읽고, provider API와 Exposed v1 import를 실제 컴파일
   시그니처에 맞춘다.
