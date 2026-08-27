@@ -129,6 +129,7 @@ bluetape4k-vertx = { module = "io.github.bluetape4k:bluetape4k-vertx" }
 bluetape4k-grpc = { module = "io.github.bluetape4k:bluetape4k-grpc" }
 bluetape4k-jackson2 = { module = "io.github.bluetape4k:bluetape4k-jackson2" }
 bluetape4k-jackson3 = { module = "io.github.bluetape4k:bluetape4k-jackson3" }
+bluetape4k-javers-exposed = { module = "io.github.bluetape4k.javers:javers-exposed" }
 bluetape4k-ktor-core = { module = "io.github.bluetape4k:bluetape4k-ktor-core" }
 bluetape4k-ktor-observability = { module = "io.github.bluetape4k:bluetape4k-ktor-observability" }
 bluetape4k-ktor-testing = { module = "io.github.bluetape4k:bluetape4k-ktor-testing" }
