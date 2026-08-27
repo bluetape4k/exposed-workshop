@@ -150,6 +150,7 @@ exposed-batch = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-batc
 exposed-jdbc = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc" }
 exposed-cache = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-cache" }
 exposed-jdbc-caffeine = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-caffeine" }
+exposed-jdbc-lettuce = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-lettuce" }
 exposed-jdbc-redisson = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-redisson" }
 exposed-ktor = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-ktor" }
 exposed-spring-modulith = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-spring-modulith" }

@@ -7,6 +7,7 @@ set -euo pipefail
 # modules instead of silently dropping coverage.
 ALL_TASKS=(
   :03-routing-datasource:build
+  :08-cache-strategies-lettuce:build
   :04-schema-per-tenant-spring-web:build
   :05-database-per-tenant-spring-web:build
   :06-spring-security-tenant-authorization-spring-web:build
@@ -68,6 +69,9 @@ else
         ;;
       11-high-performance/03-routing-datasource/**)
         add_task :03-routing-datasource:build
+        ;;
+      11-high-performance/08-cache-strategies-lettuce/**)
+        add_task :08-cache-strategies-lettuce:build
         ;;
       12-production-integration/*/**)
         module="${path#12-production-integration/}"
