@@ -33,6 +33,7 @@ chapter. Child modules become runnable as their issues are implemented.
 | TBD | Ready | [`13-ecosystem-integrations/09-duckdb-embedded-analytics`](09-duckdb-embedded-analytics/README.md) | `:09-duckdb-embedded-analytics:build` | [DuckDB Embedded Analytics with Exposed](09-duckdb-embedded-analytics/README.md) | Database platform adapters |
 | [#234](https://github.com/bluetape4k/exposed-workshop/issues/234) | Ready | [`13-ecosystem-integrations/10-druid-query-only`](10-druid-query-only/README.md) | `:10-druid-query-only:build` | [Apache Druid Query-Only Exposed](10-druid-query-only/README.md) | Database platform adapters |
 | [#236](https://github.com/bluetape4k/exposed-workshop/issues/236) | Ready | [`13-ecosystem-integrations/11-checkpointable-batch`](11-checkpointable-batch/README.md) | `:11-checkpointable-batch:build` | [Checkpointable Exposed JDBC Batch](11-checkpointable-batch/README.md) | JDBC batch execution |
+| [#239](https://github.com/bluetape4k/exposed-workshop/issues/239) | Ready | [`13-ecosystem-integrations/12-javers-exposed-audit`](12-javers-exposed-audit/README.md) | `:12-javers-exposed-audit:build` | [JaVers + Exposed Audit History](12-javers-exposed-audit/README.md) | JDBC audit history |
 
 ## External Service And Credential Policy
 

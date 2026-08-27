@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="900" viewBox="0 0 1500 900" role="img" aria-labelledby="title desc">
+  <title id="title">JaVers와 Exposed 감사 아키텍처</title>
+  <desc id="desc">Exposed DAO 트랜잭션이 범위가 있는 감사 컨텍스트를 전역 entity hook에 제공하고, 엔티티를 detached allow-list DTO로 변환한 뒤 Exposed JDBC repository를 통해 JaVers commit을 저장합니다.</desc>
+  <defs>
+    <style>
+      text { letter-spacing: 0; }
+      .canvas { fill: #fbfcf8; stroke: #435761; stroke-width: 3; }
+      .title { font-family: "Apple SD Gothic Neo", "Noto Sans KR", "Architects Daughter", sans-serif; font-size: 40px; fill: #22343c; }
+      .subtitle, .body, .footer { font-family: "Apple SD Gothic Neo", "Noto Sans KR", "Comic Mono", sans-serif; fill: #40545d; }
+      .subtitle { font-size: 17px; }
+      .heading { font-family: "Apple SD Gothic Neo", "Noto Sans KR", "Architects Daughter", sans-serif; font-size: 23px; fill: #21333b; }
+      .body { font-size: 14px; }
+      .footer { font-size: 14px; fill: #60727d; }
+      .boundary { fill: #ffffff; stroke: #c6d1d4; stroke-width: 2; stroke-dasharray: 10 7; }
+      .caller { fill: #eaf4f8; stroke: #3f7d9c; stroke-width: 2.2; }
+      .context { fill: #fff7e8; stroke: #ac7a34; stroke-width: 2.2; }
+      .dao { fill: #eaf4f8; stroke: #3f7d9c; stroke-width: 2.2; }
+      .hook { fill: #f2f0fb; stroke: #7b6bb4; stroke-width: 2.2; }
+      .dto { fill: #eef7f0; stroke: #6e8f4f; stroke-width: 2.2; }
+      .javers { fill: #f5f0fb; stroke: #897bc2; stroke-width: 2.2; }
+      .jdbc { fill: #fff7e8; stroke: #ac7a34; stroke-width: 2.2; }
+      .tests { fill: #eef7f0; stroke: #6e8f4f; stroke-width: 2.2; }
+      .flow { fill: none; stroke: #3f7d9c; stroke-width: 3; stroke-linecap: round; marker-end: url(#flowArrow); }
+      .metadata { fill: none; stroke: #ac7a34; stroke-width: 3; stroke-linecap: round; marker-end: url(#metadataArrow); }
+      .persist { fill: none; stroke: #6e8f4f; stroke-width: 3; stroke-linecap: round; marker-end: url(#persistArrow); }
+      .verify { fill: none; stroke: #897bc2; stroke-width: 3; stroke-linecap: round; marker-end: url(#verifyArrow); }
+    </style>
+    <marker id="flowArrow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="primary" data-tip-direction="positive-x"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c" stroke="#3f7d9c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+    <marker id="metadataArrow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="primary" data-tip-direction="positive-x"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#ac7a34" stroke="#ac7a34" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+    <marker id="persistArrow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="primary" data-tip-direction="positive-x"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#6e8f4f" stroke="#6e8f4f" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+    <marker id="verifyArrow" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="primary" data-tip-direction="positive-x"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#897bc2" stroke="#897bc2" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+  </defs>
+  <rect x="24" y="24" width="1452" height="852" rx="20" class="canvas"/>
+  <text x="750" y="76" text-anchor="middle" class="title">JaVers + Exposed 감사 아키텍처</text>
+  <text x="750" y="108" text-anchor="middle" class="subtitle">JDBC 트랜잭션, detached allow-list, 감사 row가 하나의 명시적 경계를 공유합니다.</text>
+  <rect x="60" y="150" width="1380" height="430" rx="18" class="boundary"/>
+  <text x="90" y="186" class="heading">애플리케이션과 provider 경계</text>
+  <rect x="100" y="230" width="280" height="110" rx="14" class="caller"/>
+  <text x="240" y="266" text-anchor="middle" class="heading">Caller</text>
+  <text x="240" y="294" text-anchor="middle" class="body">transaction(database)</text>
+  <text x="240" y="318" text-anchor="middle" class="body">AuditContextHolder.with</text>
+  <rect x="500" y="230" width="300" height="110" rx="14" class="context"/>
+  <text x="650" y="266" text-anchor="middle" class="heading">감사 컨텍스트</text>
+  <text x="650" y="294" text-anchor="middle" class="body">actor + requestId</text>
+  <text x="650" y="318" text-anchor="middle" class="body">ThreadLocal, 종료 시 복원</text>
+  <rect x="920" y="230" width="360" height="110" rx="14" class="dao"/>
+  <text x="1100" y="266" text-anchor="middle" class="heading">CustomerEntity</text>
+  <text x="1100" y="294" text-anchor="middle" class="body">Exposed IntEntity / Customers</text>
+  <text x="1100" y="318" text-anchor="middle" class="body">name, email, secret</text>
+  <rect x="920" y="420" width="360" height="110" rx="14" class="hook"/>
+  <text x="1100" y="456" text-anchor="middle" class="heading">EntityHook subscription</text>
+  <text x="1100" y="484" text-anchor="middle" class="body">마지막 flush event만 처리</text>
+  <text x="1100" y="508" text-anchor="middle" class="body">subscribeAudit / close()</text>
+  <rect x="500" y="420" width="300" height="110" rx="14" class="dto"/>
+  <text x="650" y="456" text-anchor="middle" class="heading">AuditedCustomer</text>
+  <text x="650" y="484" text-anchor="middle" class="body">id, name, email</text>
+  <text x="650" y="508" text-anchor="middle" class="body">secret은 mapping하지 않음</text>
+  <rect x="100" y="420" width="280" height="110" rx="14" class="javers"/>
+  <text x="240" y="456" text-anchor="middle" class="heading">JaVers</text>
+  <text x="240" y="484" text-anchor="middle" class="body">commit + metadata</text>
+  <text x="240" y="508" text-anchor="middle" class="body">snapshot / changes</text>
+  <path data-connector="caller-context" data-source="caller" data-target="context" d="M380 285 L500 285" class="metadata"/>
+  <path data-connector="context-dao" data-source="context" data-target="dao" d="M800 285 L920 285" class="flow"/>
+  <path data-connector="dao-hook" data-source="dao" data-target="hook" d="M1100 340 L1100 420" class="flow"/>
+  <path data-connector="hook-dto" data-source="hook" data-target="dto" d="M920 475 L800 475" class="flow"/>
+  <path data-connector="dto-javers" data-source="dto" data-target="javers" d="M500 475 L380 475" class="persist"/>
+  <rect x="60" y="620" width="1380" height="170" rx="18" class="boundary"/>
+  <text x="90" y="656" class="heading">JDBC persistence와 검증</text>
+  <rect x="100" y="690" width="360" height="70" rx="12" class="jdbc"/>
+  <text x="280" y="720" text-anchor="middle" class="heading">ExposedCdoSnapshotRepository</text>
+  <text x="280" y="744" text-anchor="middle" class="body">ensureSchema + 원자적 JDBC write</text>
+  <rect x="600" y="690" width="360" height="70" rx="12" class="jdbc"/>
+  <text x="780" y="720" text-anchor="middle" class="heading">CommitTable + CdoSnapshotTable</text>
+  <text x="780" y="744" text-anchor="middle" class="body">author, properties, state, changedProperties</text>
+  <rect x="1100" y="690" width="280" height="70" rx="12" class="tests"/>
+  <text x="1240" y="720" text-anchor="middle" class="heading">고유 H2 테스트</text>
+  <text x="1240" y="744" text-anchor="middle" class="body">commit, rollback, exclusion</text>
+  <path data-connector="javers-repository" data-source="javers" data-target="repository" d="M240 530 L240 690" class="persist"/>
+  <path data-connector="repository-tables" data-source="repository" data-target="tables" d="M460 725 L600 725" class="persist"/>
+  <path data-connector="tables-tests" data-source="tables" data-target="tests" d="M960 725 L1100 725" class="verify"/>
+  <text x="750" y="836" text-anchor="middle" class="footer">R2DBC persistence는 이 JDBC 전용 workshop의 범위 밖입니다.</text>
+</svg>

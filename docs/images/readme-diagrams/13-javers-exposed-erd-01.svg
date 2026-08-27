@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="900" viewBox="0 0 1500 900" role="img" aria-labelledby="title desc">
+  <title id="title">JaVers and Exposed audit ERD</title>
+  <desc id="desc">The business customer table is mapped through an allow-list audit DTO to JaVers commit and snapshot tables. The secret column remains business-only.</desc>
+  <defs>
+    <style>
+      .canvas { fill: #f6f9fc; stroke: #d7e2ec; stroke-width: 2; }.frame { fill: #ffffff; stroke: #d7e2ec; stroke-width: 1.5; }.title { font-family: "Architects Daughter"; font-size: 38px; fill: #1e293b; }.subtitle, .detail, .small, .footer { font-family: "Comic Mono"; fill: #536476; }.subtitle { font-size: 16px; }.detail { font-size: 14px; }.small { font-size: 13px; }.label { font-family: "Architects Daughter"; font-size: 22px; fill: #1e293b; }.card { stroke-width: 1.8; }.business { fill: #dbeafe; stroke: #2563eb; }.audit { fill: #dcfce7; stroke: #16a34a; }.snapshot { fill: #fef3c7; stroke: #d97706; }.policy { fill: #fce7f3; stroke: #db2777; }.relation { fill: none; stroke: #16a34a; stroke-width: 2.5; stroke-linecap: round; marker-end: url(#relationArrow); }.excluded { fill: none; stroke: #db2777; stroke-width: 2.5; stroke-dasharray: 9 7; stroke-linecap: round; marker-end: url(#excludedArrow); }.footer { font-size: 14px; fill: #60717c; }
+    </style>
+    <marker id="relationArrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="secondary" data-tip-direction="positive-x"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#16a34a" stroke="#16a34a" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+    <marker id="excludedArrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="secondary" data-tip-direction="positive-x"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#db2777" stroke="#db2777" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/></marker>
+  </defs>
+  <rect width="1500" height="900" class="canvas"/><rect x="24" y="24" width="1452" height="852" rx="18" class="frame"/>
+  <text x="750" y="76" text-anchor="middle" class="title">JaVers + Exposed Audit ERD</text>
+  <text x="750" y="108" text-anchor="middle" class="subtitle">Business data is mapped through an allow-list before JaVers stores commit metadata and snapshot state.</text>
+  <text x="750" y="145" text-anchor="middle" class="small">BUSINESS TABLE → DETACHED AUDIT OBJECT → JAVERS STORAGE</text>
+
+  <rect x="80" y="205" width="360" height="280" rx="12" class="card business"/><rect x="80" y="205" width="360" height="54" rx="12" fill="#bfdbfe"/>
+  <text x="260" y="240" text-anchor="middle" class="label">audit_customers</text>
+  <text x="104" y="300" class="small">id INT PRIMARY KEY</text><text x="104" y="334" class="small">name VARCHAR(100) NOT NULL</text><text x="104" y="368" class="small">email VARCHAR(200) NOT NULL</text><text x="104" y="402" class="small">secret VARCHAR(200) NOT NULL</text><text x="104" y="450" class="detail">business-only field</text>
+
+  <rect x="575" y="205" width="350" height="245" rx="12" class="card audit"/><rect x="575" y="205" width="350" height="54" rx="12" fill="#bbf7d0"/>
+  <text x="750" y="240" text-anchor="middle" class="label">AuditedCustomer</text>
+  <text x="600" y="300" class="small">@Id id: Int</text><text x="600" y="334" class="small">name: String</text><text x="600" y="368" class="small">email: String</text><text x="600" y="416" class="detail">detached allow-list</text>
+
+  <rect x="1050" y="170" width="360" height="250" rx="12" class="card snapshot"/><rect x="1050" y="170" width="360" height="54" rx="12" fill="#fde68a"/>
+  <text x="1230" y="205" text-anchor="middle" class="label">javers_commit</text>
+  <text x="1075" y="266" class="small">commit_id · sequence</text><text x="1075" y="300" class="small">author</text><text x="1075" y="334" class="small">properties: requestId, changeType</text><text x="1075" y="382" class="detail">one row per JaVers commit</text>
+
+  <rect x="1050" y="535" width="360" height="265" rx="12" class="card snapshot"/><rect x="1050" y="535" width="360" height="54" rx="12" fill="#fde68a"/>
+  <text x="1230" y="570" text-anchor="middle" class="label">javers_snapshot</text>
+  <text x="1075" y="632" class="small">global_id · commit_id · version</text><text x="1075" y="666" class="small">type · managed_type</text><text x="1075" y="700" class="small">state</text><text x="1075" y="734" class="small">changedProperties</text><text x="1075" y="778" class="detail">secret key/value absent</text>
+
+  <rect x="575" y="610" width="350" height="145" rx="12" class="card policy"/><rect x="575" y="610" width="350" height="48" rx="12" fill="#fbcfe8"/>
+  <text x="750" y="642" text-anchor="middle" class="label">Sensitive-field policy</text><text x="750" y="690" text-anchor="middle" class="detail">secret → not mapped</text><text x="750" y="718" text-anchor="middle" class="small">raw state + changedProperties tested</text>
+
+  <path data-connector="entity-dto" data-source="customers" data-target="dto" d="M440 345 L575 345" class="relation"/><text x="507" y="330" text-anchor="middle" class="small">allow-list</text>
+  <path data-connector="dto-commit" data-source="dto" data-target="commit" d="M925 300 L1050 300" class="relation"/><text x="987" y="284" text-anchor="middle" class="small">commit metadata</text>
+  <path data-connector="commit-snapshot" data-source="commit" data-target="snapshot" d="M1230 420 L1230 535" class="relation"/><text x="1250" y="486" class="small">commit_id</text>
+  <path data-connector="dto-snapshot" data-source="dto" data-target="snapshot" d="M925 400 L1050 665" class="relation"/><text x="968" y="520" class="small">state</text>
+  <path data-connector="customers-policy" data-source="customers" data-target="policy" d="M260 485 L260 670 Q260 682 272 682 L575 682" class="excluded"/><text x="275" y="650" class="small">secret excluded</text>
+
+  <text x="750" y="845" text-anchor="middle" class="footer">Rollback removes the business row and its commit/snapshot rows together; restoration is intentionally not implemented.</text>
+</svg>

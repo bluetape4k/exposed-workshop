@@ -1,0 +1,32 @@
+{
+  "kind": "sequence",
+  "source": {
+    "question": "In what order does a scoped JDBC transaction create, flush, commit, and query a JaVers audit record?",
+    "revision": "issue-239-design-2026-08-27",
+    "paths": [
+      "13-ecosystem-integrations/12-javers-exposed-audit/src/main/kotlin/exposed/examples/javers/audit/JaversExposedAuditWorkshop.kt",
+      "13-ecosystem-integrations/12-javers-exposed-audit/src/test/kotlin/exposed/examples/javers/audit/JaversExposedAuditWorkshopTest.kt"
+    ]
+  },
+  "nodes": [
+    {"id": "caller", "label": "Caller", "source": "README.md"},
+    {"id": "context", "label": "AuditContextHolder", "source": "JaversExposedAuditWorkshop.kt"},
+    {"id": "transaction", "label": "Exposed transaction", "source": "JaversExposedAuditWorkshopTest.kt"},
+    {"id": "entityhook", "label": "EntityHook", "source": "JaversExposedAuditWorkshop.kt"},
+    {"id": "javers", "label": "JaVers", "source": "JaversExposedAuditWorkshop.kt"},
+    {"id": "database", "label": "JDBC tables", "source": "JaversExposedAuditWorkshopTest.kt"},
+    {"id": "history", "label": "JaversAuditHistory", "source": "JaversExposedAuditWorkshop.kt"}
+  ],
+  "edges": [
+    {"id": "seq-context", "from": "caller", "to": "context", "kind": "scope", "source": "AuditContextHolder.with"},
+    {"id": "seq-open", "from": "caller", "to": "transaction", "kind": "open", "source": "transaction(database)"},
+    {"id": "seq-create", "from": "transaction", "to": "entityhook", "kind": "event", "source": "CustomerEntity.new"},
+    {"id": "seq-author", "from": "entityhook", "to": "context", "kind": "metadata", "source": "requireCurrent"},
+    {"id": "seq-commit", "from": "entityhook", "to": "javers", "kind": "commit", "source": "javers.commit"},
+    {"id": "seq-persist", "from": "javers", "to": "database", "kind": "persist", "source": "ExposedCdoSnapshotRepository"},
+    {"id": "seq-rollback", "from": "transaction", "to": "database", "kind": "rollback", "source": "transaction rollback"},
+    {"id": "seq-query", "from": "caller", "to": "history", "kind": "query", "source": "JaversAuditHistory.history"},
+    {"id": "seq-read", "from": "history", "to": "javers", "kind": "read", "source": "findSnapshots/findChanges"}
+  ],
+  "behavior": {"branches": 2, "loops": 1}
+}

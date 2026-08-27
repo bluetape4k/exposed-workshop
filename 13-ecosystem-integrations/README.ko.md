@@ -31,6 +31,7 @@ Exposed 1.11과 인접 ecosystem 예제를 다루되, 운영형 서비스 패턴
 | TBD | Ready | [`13-ecosystem-integrations/09-duckdb-embedded-analytics`](09-duckdb-embedded-analytics/README.ko.md) | `:09-duckdb-embedded-analytics:build` | [DuckDB Embedded Analytics with Exposed](09-duckdb-embedded-analytics/README.ko.md) | Database platform adapters |
 | [#234](https://github.com/bluetape4k/exposed-workshop/issues/234) | Ready | [`13-ecosystem-integrations/10-druid-query-only`](10-druid-query-only/README.ko.md) | `:10-druid-query-only:build` | [Apache Druid Query-Only Exposed](10-druid-query-only/README.ko.md) | Database platform adapters |
 | [#236](https://github.com/bluetape4k/exposed-workshop/issues/236) | Ready | [`13-ecosystem-integrations/11-checkpointable-batch`](11-checkpointable-batch/README.ko.md) | `:11-checkpointable-batch:build` | [재시작 가능한 Exposed JDBC Batch](11-checkpointable-batch/README.ko.md) | JDBC batch 실행 |
+| [#239](https://github.com/bluetape4k/exposed-workshop/issues/239) | Ready | [`13-ecosystem-integrations/12-javers-exposed-audit`](12-javers-exposed-audit/README.ko.md) | `:12-javers-exposed-audit:build` | [JaVers + Exposed 감사 이력](12-javers-exposed-audit/README.ko.md) | JDBC 감사 이력 |
 
 ## 외부 서비스와 credential 정책
 
