@@ -27,8 +27,7 @@ dependencies {
     implementation(libs.ktor.server.cio)
     implementation(libs.ktor.server.content.negotiation)
     implementation(libs.ktor.server.status.pages)
-    implementation(libs.ktor.server.call.logging)
-    implementation(libs.ktor.server.call.id)
+    implementation(libs.bluetape4k.ktor.observability)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.kotlinx.serialization.json)
 
@@ -41,4 +40,5 @@ dependencies {
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.bluetape4k.junit5)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.logcaptor)
 }

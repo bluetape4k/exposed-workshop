@@ -1,0 +1,41 @@
+{
+  "kind": "sequence",
+  "source": {
+    "question": "How does the central Ktor provider carry a request ID from normalization through logging, JDBC diagnostics, and each response outcome?",
+    "revision": "8dd1be76017b7f692a5114fa489d0b3aa82af9de+working-tree",
+    "paths": [
+      "12-production-integration/10-ktor-observability-readiness/src/main/kotlin/exposed/examples/ktor/observability/KtorObservabilityReadinessApplication.kt",
+      "12-production-integration/10-ktor-observability-readiness/src/main/kotlin/exposed/examples/ktor/observability/config/KtorPlugins.kt",
+      "12-production-integration/10-ktor-observability-readiness/src/main/kotlin/exposed/examples/ktor/observability/routes/DiagnosticsRoutes.kt",
+      "12-production-integration/10-ktor-observability-readiness/src/main/kotlin/exposed/examples/ktor/observability/service/DiagnosticsService.kt",
+      "12-production-integration/10-ktor-observability-readiness/src/main/kotlin/exposed/examples/ktor/observability/persistence/DiagnosticsPersistence.kt",
+      "12-production-integration/10-ktor-observability-readiness/src/main/kotlin/exposed/examples/ktor/observability/model/DiagnosticsModels.kt",
+      "12-production-integration/10-ktor-observability-readiness/src/test/kotlin/exposed/examples/ktor/observability/config/KtorPluginsProviderTest.kt",
+      "12-production-integration/10-ktor-observability-readiness/build.gradle.kts"
+    ]
+  },
+  "nodes": [
+    {"id":"client","label":"Client","source":"DiagnosticsRoutesTest.kt"},
+    {"id":"provider","label":"Provider installer","source":"KtorObservabilityReadinessApplication.kt"},
+    {"id":"correlation","label":"Correlation","source":"KtorPlugins.kt"},
+    {"id":"logging","label":"CallLogging","source":"KtorPlugins.kt"},
+    {"id":"status","label":"StatusPages","source":"KtorPlugins.kt"},
+    {"id":"jdbc","label":"JDBC diagnostics","source":"DiagnosticsPersistence.kt"}
+  ],
+  "edges": [
+    {"id":"install-provider","from":"client","to":"provider","kind":"install","source":"KtorObservabilityReadinessApplication.kt"},
+    {"id":"request-correlation","from":"client","to":"correlation","kind":"request","source":"DiagnosticsRoutes.kt"},
+    {"id":"correlation-logging","from":"correlation","to":"logging","kind":"mdc","source":"KtorPlugins.kt"},
+    {"id":"logging-status","from":"logging","to":"status","kind":"route","source":"KtorPlugins.kt"},
+    {"id":"status-jdbc","from":"status","to":"jdbc","kind":"diagnostics","source":"DiagnosticsService.kt"},
+    {"id":"jdbc-status","from":"jdbc","to":"status","kind":"result","source":"DiagnosticsPersistence.kt"},
+    {"id":"status-success","from":"status","to":"client","kind":"success","source":"KtorPlugins.kt"},
+    {"id":"status-validation","from":"client","to":"status","kind":"validation-error","source":"KtorPlugins.kt"},
+    {"id":"status-cancellation","from":"status","to":"client","kind":"cancellation","source":"KtorPlugins.kt"}
+  ],
+  "behavior": {"branches": 2, "loops": 0},
+  "repairs": [
+    {"target":"correlation","reason":"make sanitized and generated request identifiers visible before MDC logging","touches":3},
+    {"target":"status","reason":"keep structured errors and CancellationException rethrow in the application contract","touches":3}
+  ]
+}
