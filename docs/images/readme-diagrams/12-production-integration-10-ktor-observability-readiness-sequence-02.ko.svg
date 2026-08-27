@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">Ktor observability provider 요청 생명주기</title>
+  <desc id="desc">provider가 request identifier를 정제하거나 생성하고 call logging에 correlation을 추가한 뒤, 애플리케이션 소유 StatusPages가 JDBC 진단의 성공·검증 오류·취소 결과를 처리한다.</desc>
+  <defs>
+    <style>
+      text { letter-spacing: 0; }
+      .title { font-family: "goorm Sans"; font-size: 40px; font-weight: 400; fill: #263238; }
+      .subtitle, .msg, .note, .footer, .role { font-family: "goorm Sans Code"; fill: #36464f; }
+      .subtitle { font-size: 18px; }
+      .participant { font-family: "goorm Sans"; font-size: 19px; font-weight: 400; fill: #1f3138; }
+      .role { font-size: 13px; fill: #546a73; }
+      .msg { font-size: 14px; }
+      .note { font-size: 13px; }
+      .footer { font-size: 14px; fill: #60727d; }
+      .frame { fill: #fbfcf8; stroke: #41545d; stroke-width: 3; }
+      .header { fill: #ffffff; stroke: #546e7a; stroke-width: 2; }
+      .lifeline { stroke: #9aaab1; stroke-width: 2; stroke-dasharray: 7 8; }
+      .activation { fill: #f3ecdf; stroke: #8f784e; stroke-width: 1.5; }
+      .call { fill: none; stroke: #3f7d9c; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowCall); }
+      .return { fill: none; stroke: #9b7d54; stroke-width: 2.5; stroke-dasharray: 8 6; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowReturn); }
+      .error { fill: none; stroke: #b55c58; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowError); }
+      .cancel { fill: none; stroke: #8166a8; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowCancel); }
+      .alt { fill: none; stroke: #78909c; stroke-width: 3; stroke-dasharray: 12 7; }
+      .branchDivider { stroke: #b0bdc2; stroke-width: 2; stroke-dasharray: 8 6; }
+      .label { fill: #ffffff; stroke: #d7e0e4; stroke-width: 1.5; }
+      .label.callLabel { stroke: #9cc2d1; }
+      .label.returnLabel { stroke: #c8b38f; }
+      .label.errorLabel { stroke: #d7a4a0; }
+      .label.cancelLabel { stroke: #b9a6d0; }
+      .badge { stroke-width: 1.8; }
+      .badge.callBadge { fill: #eaf4f8; stroke: #3f7d9c; }
+      .badge.returnBadge { fill: #fff7e8; stroke: #9b7d54; }
+      .badge.errorBadge { fill: #fff0ef; stroke: #b55c58; }
+      .badge.cancelBadge { fill: #f3eff9; stroke: #8166a8; }
+      .badgeText { font-family: "goorm Sans Code"; font-size: 12px; font-weight: 700; }
+      .msg.callText, .badgeText.callText { fill: #2f6f8e; }
+      .msg.returnText, .badgeText.returnText { fill: #7f6038; }
+      .msg.errorText, .badgeText.errorText { fill: #984b47; }
+      .msg.cancelText, .badgeText.cancelText { fill: #684d91; }
+    </style>
+    <marker id="arrowCall" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="sequence" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#3f7d9c" stroke="#3f7d9c" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowReturn" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="sequence" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#9b7d54" stroke="#9b7d54" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowError" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="sequence" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#b55c58" stroke="#b55c58" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+    <marker id="arrowCancel" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" data-role="sequence" data-tip-direction="positive-x">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#8166a8" stroke="#8166a8" stroke-width="0" stroke-dasharray="none" style="stroke-dasharray:none!important"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="1120" fill="#fbfcf8"/>
+  <rect x="24" y="24" width="1552" height="1072" rx="20" class="frame"/>
+  <text x="800" y="78" text-anchor="middle" class="title">Ktor Observability Provider 요청 생명주기</text>
+  <text x="800" y="108" text-anchor="middle" class="subtitle">correlation을 먼저 정규화하고, 애플리케이션 소유 StatusPages가 JDBC 성공·검증·취소 결과를 명시적으로 유지합니다.</text>
+
+  <g id="participants">
+    <rect x="70" y="150" width="200" height="68" rx="10" class="header"/>
+    <text x="170" y="179" text-anchor="middle" class="participant">Client</text>
+    <text x="170" y="201" text-anchor="middle" class="role">HTTP 요청</text>
+
+    <rect x="315" y="150" width="210" height="68" rx="10" class="header"/>
+    <text x="420" y="179" text-anchor="middle" class="participant">Provider installer</text>
+    <text x="420" y="201" text-anchor="middle" class="role">startup 경계</text>
+
+    <rect x="570" y="150" width="220" height="68" rx="10" class="header"/>
+    <text x="680" y="179" text-anchor="middle" class="participant">Correlation</text>
+    <text x="680" y="201" text-anchor="middle" class="role">정제 / 생성</text>
+
+    <rect x="835" y="150" width="220" height="68" rx="10" class="header"/>
+    <text x="945" y="179" text-anchor="middle" class="participant">CallLogging</text>
+    <text x="945" y="201" text-anchor="middle" class="role">MDC + 요청 로그</text>
+
+    <rect x="1100" y="150" width="210" height="68" rx="10" class="header"/>
+    <text x="1205" y="179" text-anchor="middle" class="participant">StatusPages</text>
+    <text x="1205" y="201" text-anchor="middle" class="role">애플리케이션 계약</text>
+
+    <rect x="1360" y="150" width="190" height="68" rx="10" class="header"/>
+    <text x="1455" y="179" text-anchor="middle" class="participant">JDBC diagnostics</text>
+    <text x="1455" y="201" text-anchor="middle" class="role">Exposed + H2</text>
+  </g>
+
+  <line x1="170" y1="218" x2="170" y2="1000" class="lifeline"/>
+  <line x1="420" y1="218" x2="420" y2="1000" class="lifeline"/>
+  <line x1="680" y1="218" x2="680" y2="1000" class="lifeline"/>
+  <line x1="945" y1="218" x2="945" y2="1000" class="lifeline"/>
+  <line x1="1205" y1="218" x2="1205" y2="1000" class="lifeline"/>
+  <line x1="1455" y1="218" x2="1455" y2="1000" class="lifeline"/>
+
+  <rect x="413" y="258" width="14" height="70" rx="6" class="activation"/>
+  <rect x="673" y="338" width="14" height="120" rx="6" class="activation"/>
+  <rect x="938" y="418" width="14" height="120" rx="6" class="activation"/>
+  <rect x="1198" y="498" width="14" height="410" rx="6" class="activation"/>
+  <rect x="1448" y="578" width="14" height="64" rx="6" class="activation"/>
+
+  <rect x="64" y="238" width="430" height="34" rx="17" class="label callLabel"/>
+  <circle cx="88" cy="255" r="13" class="badge callBadge"/><text x="88" y="260" text-anchor="middle" class="badgeText callText">1</text>
+  <text x="112" y="260" class="msg callText">installBluetape4kKtorObservability()</text>
+  <path d="M 170 280 L 413 280" class="call"/>
+
+  <rect x="72" y="318" width="710" height="34" rx="17" class="label callLabel"/>
+  <circle cx="96" cy="335" r="13" class="badge callBadge"/><text x="96" y="340" text-anchor="middle" class="badgeText callText">2</text>
+  <text x="120" y="340" class="msg callText">GET /diagnostics/operations with X-Request-ID</text>
+  <path d="M 170 360 L 673 360" class="call"/>
+
+  <rect x="378" y="398" width="560" height="34" rx="17" class="label callLabel"/>
+  <circle cx="402" cy="415" r="13" class="badge callBadge"/><text x="402" y="420" text-anchor="middle" class="badgeText callText">3</text>
+  <text x="426" y="420" class="msg callText">sanitize, trim, and bind correlation-id to MDC</text>
+  <path d="M 687 440 L 938 440" class="call"/>
+
+  <rect x="602" y="478" width="650" height="34" rx="17" class="label callLabel"/>
+  <circle cx="626" cy="495" r="13" class="badge callBadge"/><text x="626" y="500" text-anchor="middle" class="badgeText callText">4</text>
+  <text x="650" y="500" class="msg callText">route enters StatusPages and DiagnosticsService</text>
+  <path d="M 952 520 L 1198 520" class="call"/>
+
+  <rect x="724" y="558" width="710" height="34" rx="17" class="label callLabel"/>
+  <circle cx="748" cy="575" r="13" class="badge callBadge"/><text x="748" y="580" text-anchor="middle" class="badgeText callText">5</text>
+  <text x="772" y="580" class="msg callText">transactionIO가 request_id, duration_ms, slow을 기록</text>
+  <path d="M 1212 600 L 1448 600" class="call"/>
+
+  <rect x="748" y="658" width="650" height="34" rx="17" class="label returnLabel"/>
+  <circle cx="772" cy="675" r="13" class="badge returnBadge"/><text x="772" y="680" text-anchor="middle" class="badgeText returnText">6</text>
+  <text x="796" y="680" class="msg returnText">structured diagnostics row가 StatusPages로 반환</text>
+  <path d="M 1448 700 L 1212 700" class="return"/>
+
+  <rect x="194" y="708" width="760" height="34" rx="17" class="label returnLabel"/>
+  <circle cx="218" cy="725" r="13" class="badge returnBadge"/><text x="218" y="730" text-anchor="middle" class="badgeText returnText">7</text>
+  <text x="242" y="730" class="msg returnText">X-Request-ID와 JSON payload를 포함한 200 응답</text>
+  <path d="M 1198 760 L 170 760" class="return"/>
+
+  <rect x="56" y="650" width="1488" height="300" rx="16" class="alt"/>
+  <text x="82" y="682" class="note">alt 요청 결과</text>
+  <text x="82" y="704" class="note">success</text>
+  <line x1="72" y1="800" x2="1528" y2="800" class="branchDivider"/>
+  <text x="82" y="832" class="note">else: 잘못된 request id</text>
+  <text x="82" y="892" class="note">else: cancellation</text>
+
+  <rect x="256" y="798" width="920" height="34" rx="17" class="label errorLabel"/>
+  <circle cx="280" cy="815" r="13" class="badge errorBadge"/><text x="280" y="820" text-anchor="middle" class="badgeText errorText">8</text>
+  <text x="304" y="820" class="msg errorText">잘못된 X-Request-ID는 400 ErrorResponse가 됨</text>
+  <path d="M 170 850 L 1198 850" class="error"/>
+
+  <rect x="256" y="858" width="920" height="34" rx="17" class="label cancelLabel"/>
+  <circle cx="280" cy="875" r="13" class="badge cancelBadge"/><text x="280" y="880" text-anchor="middle" class="badgeText cancelText">9</text>
+  <text x="304" y="880" class="msg cancelText">CancellationException을 rethrow하여 취소 의미를 보존</text>
+  <path d="M 1198 910 L 170 910" class="cancel"/>
+
+  <rect x="74" y="988" width="1452" height="50" rx="12" fill="#ffffff" stroke="#ccd7da" stroke-width="2"/>
+  <text x="96" y="1018" class="note">JDBC-only 워크숍 경계: Micrometer와 tracing은 opt-in이며 R2DBC 구현은 exposed-r2dbc-workshop에서 담당합니다.</text>
+  <text x="800" y="1072" text-anchor="middle" class="footer">12-production-integration/10-ktor-observability-readiness</text>
+</svg>

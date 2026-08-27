@@ -1,6 +1,9 @@
 package exposed.examples.ktor.observability.config
 
 import exposed.examples.ktor.observability.model.ErrorResponse
+import io.bluetape4k.ktor.observability.Bluetape4kKtorObservabilityConfig
+import io.bluetape4k.ktor.observability.CorrelationIdSettings
+import io.bluetape4k.ktor.observability.installBluetape4kKtorObservability
 import io.bluetape4k.logging.KLogging
 import io.bluetape4k.logging.error
 import io.ktor.http.HttpStatusCode
@@ -8,43 +11,29 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.plugins.BadRequestException
-import io.ktor.server.plugins.callid.CallId
 import io.ktor.server.plugins.callid.callId
-import io.ktor.server.plugins.callid.callIdMdc
-import io.ktor.server.plugins.callid.generate
-import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.statuspages.StatusPages
-import io.ktor.server.request.header
 import io.ktor.server.response.respond
-import java.util.UUID
 import kotlinx.coroutines.CancellationException
 
 internal const val REQUEST_ID_HEADER = "X-Request-ID"
 internal const val MAX_REQUEST_ID_LENGTH = 120
 
-private val RequestIdPattern = Regex("[A-Za-z0-9._:-]+")
-
-internal fun sanitizeRequestId(value: String?): String? =
-    value
-        ?.trim()
-        ?.takeIf(::isValidRequestId)
-
-private fun isValidRequestId(value: String): Boolean =
-    value.length in 1..MAX_REQUEST_ID_LENGTH && RequestIdPattern.matches(value)
-
 private object KtorObservabilityLogger : KLogging()
 
 internal fun Application.installKtorPlugins() {
-    install(CallId) {
-        retrieve { call -> sanitizeRequestId(call.request.header(REQUEST_ID_HEADER)) }
-        generate { UUID.randomUUID().toString() }
-        verify(::isValidRequestId)
-        replyToHeader(REQUEST_ID_HEADER)
-    }
-    install(CallLogging) {
-        callIdMdc("callId")
-    }
+    installBluetape4kKtorObservability(
+        Bluetape4kKtorObservabilityConfig(
+            correlationId = CorrelationIdSettings(
+                requestHeaderName = REQUEST_ID_HEADER,
+                responseHeaderName = REQUEST_ID_HEADER,
+                mdcKey = "callId",
+                maxLength = MAX_REQUEST_ID_LENGTH,
+                propagateResponseHeader = true,
+            ),
+        ),
+    )
     install(ContentNegotiation) {
         json(ApplicationJson)
     }

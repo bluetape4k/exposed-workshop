@@ -20,6 +20,8 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DiagnosticsRoutesTest {
@@ -64,6 +66,33 @@ class DiagnosticsRoutesTest {
 
         val operation = json.decodeFromString<OperationDiagnosticsResponse>(response.bodyAsText())
         operation.requestId shouldBeEqualTo sanitizedRequestId
+    }
+
+    @Test
+    fun `provider sanitizes mixed request id characters before echo`() = testApplicationWithPersistence {
+        val response = client.get("/diagnostics/operations/import") {
+            header(REQUEST_ID_HEADER, "trace:with spaces")
+        }
+
+        response.status shouldBeEqualTo HttpStatusCode.OK
+        response.headers[REQUEST_ID_HEADER] shouldBeEqualTo "tracewithspaces"
+
+        val operation = json.decodeFromString<OperationDiagnosticsResponse>(response.bodyAsText())
+        operation.requestId shouldBeEqualTo "tracewithspaces"
+    }
+
+    @Test
+    fun `provider generates a sixteen character base58 request id when header is absent`() =
+        testApplicationWithPersistence {
+        val response = client.get("/diagnostics/operations/import")
+
+        response.status shouldBeEqualTo HttpStatusCode.OK
+        val generatedRequestId = response.headers[REQUEST_ID_HEADER].shouldNotBeNull()
+        assertEquals(16, generatedRequestId.length)
+        assertTrue(generatedRequestId.matches(Regex("[A-Za-z0-9]+")))
+
+        val operation = json.decodeFromString<OperationDiagnosticsResponse>(response.bodyAsText())
+        operation.requestId shouldBeEqualTo generatedRequestId
     }
 
     @Test

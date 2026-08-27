@@ -1,0 +1,45 @@
+{
+  "kind": "architecture",
+  "source": {
+    "question": "Which layer owns Ktor correlation and logging, and which layer owns structured errors and JDBC diagnostics?",
+    "revision": "8dd1be76017b7f692a5114fa489d0b3aa82af9de+working-tree",
+    "paths": [
+      "12-production-integration/10-ktor-observability-readiness/src/main/kotlin/exposed/examples/ktor/observability/KtorObservabilityReadinessApplication.kt",
+      "12-production-integration/10-ktor-observability-readiness/src/main/kotlin/exposed/examples/ktor/observability/config/KtorPlugins.kt",
+      "12-production-integration/10-ktor-observability-readiness/src/main/kotlin/exposed/examples/ktor/observability/routes/DiagnosticsRoutes.kt",
+      "12-production-integration/10-ktor-observability-readiness/src/main/kotlin/exposed/examples/ktor/observability/service/DiagnosticsService.kt",
+      "12-production-integration/10-ktor-observability-readiness/src/main/kotlin/exposed/examples/ktor/observability/persistence/DiagnosticsPersistence.kt",
+      "12-production-integration/10-ktor-observability-readiness/src/main/kotlin/exposed/examples/ktor/observability/model/DiagnosticsModels.kt",
+      "12-production-integration/10-ktor-observability-readiness/build.gradle.kts",
+      "gradle/libs.versions.toml"
+    ]
+  },
+  "nodes": [
+    {"id":"module","label":"Application module","source":"KtorObservabilityReadinessApplication.kt"},
+    {"id":"routes","label":"HTTP routes","source":"DiagnosticsRoutes.kt"},
+    {"id":"provider","label":"Provider installer","source":"KtorPlugins.kt"},
+    {"id":"correlation","label":"Correlation policy","source":"KtorPlugins.kt"},
+    {"id":"logging","label":"CallLogging","source":"KtorPlugins.kt"},
+    {"id":"telemetry","label":"Optional telemetry","source":"KtorPlugins.kt"},
+    {"id":"status","label":"StatusPages","source":"KtorPlugins.kt"},
+    {"id":"response","label":"Reader contract","source":"DiagnosticsModels.kt"},
+    {"id":"service","label":"DiagnosticsService","source":"DiagnosticsService.kt"},
+    {"id":"jdbc","label":"Exposed JDBC","source":"DiagnosticsPersistence.kt"}
+  ],
+  "edges": [
+    {"id":"module-routes","from":"module","to":"routes","kind":"flow","source":"KtorObservabilityReadinessApplication.kt"},
+    {"id":"module-provider","from":"module","to":"provider","kind":"install","source":"KtorObservabilityReadinessApplication.kt"},
+    {"id":"provider-correlation","from":"provider","to":"correlation","kind":"policy","source":"KtorPlugins.kt"},
+    {"id":"correlation-logging","from":"correlation","to":"logging","kind":"mdc","source":"KtorPlugins.kt"},
+    {"id":"logging-telemetry","from":"logging","to":"telemetry","kind":"optional","source":"KtorPlugins.kt"},
+    {"id":"routes-service","from":"routes","to":"service","kind":"execute","source":"DiagnosticsRoutes.kt"},
+    {"id":"service-jdbc","from":"service","to":"jdbc","kind":"persist","source":"DiagnosticsService.kt"},
+    {"id":"routes-status","from":"routes","to":"status","kind":"error","source":"KtorPlugins.kt"},
+    {"id":"status-response","from":"status","to":"response","kind":"respond","source":"KtorPlugins.kt"}
+  ],
+  "behavior": {"branches": 2, "loops": 0},
+  "repairs": [
+    {"target":"provider","reason":"replace duplicated local CallId and CallLogging ownership with the central installer","touches":4},
+    {"target":"correlation","reason":"make filtering, maximum length, generated ID, and response propagation visible","touches":4}
+  ]
+}

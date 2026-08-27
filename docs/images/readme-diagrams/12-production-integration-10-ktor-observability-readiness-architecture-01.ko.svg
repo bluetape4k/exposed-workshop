@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
-  <title id="title">Ktor observability provider architecture</title>
-  <desc id="desc">The bluetape4k Ktor observability provider owns correlation and call logging while the JDBC workshop application owns status pages, routes, diagnostics, and structured responses.</desc>
+  <title id="title">Ktor 관측성 provider 아키텍처</title>
+  <desc id="desc">bluetape4k Ktor 관측성 provider가 correlation과 call logging을 소유하고 JDBC 워크숍 애플리케이션이 StatusPages, routes, diagnostics, structured response를 소유한다.</desc>
   <defs>
     <style>
       text { letter-spacing: 0; }
-      .title { font-family: "Architects Daughter"; font-size: 40px; fill: #23323a; }
-      .subtitle, .laneNote, .cardText, .label, .footer { font-family: "Comic Mono"; fill: #324750; }
+      .title { font-family: "goorm Sans"; font-size: 40px; fill: #23323a; }
+      .subtitle, .laneNote, .cardText, .label, .footer { font-family: "goorm Sans Code"; fill: #324750; }
       .subtitle { font-size: 17px; }
-      .laneTitle { font-family: "Architects Daughter"; font-size: 24px; fill: #23323a; }
+      .laneTitle { font-family: "goorm Sans"; font-size: 24px; fill: #23323a; }
       .laneNote { font-size: 13px; fill: #5b6d75; }
-      .cardTitle { font-family: "Architects Daughter"; font-size: 22px; fill: #20323b; }
+      .cardTitle { font-family: "goorm Sans"; font-size: 22px; fill: #20323b; }
       .cardText { font-size: 14px; }
       .providerText { font-size: 12px; }
       .label { font-size: 13px; font-weight: 700; }
@@ -46,24 +46,24 @@
 
   <rect x="0" y="0" width="1600" height="1000" fill="#fbfcf8"/>
   <rect x="24" y="24" width="1552" height="952" rx="20" class="canvas"/>
-  <text x="800" y="78" text-anchor="middle" class="title">Ktor Observability Provider</text>
-  <text x="800" y="110" text-anchor="middle" class="subtitle">The provider centralizes correlation and logging; the JDBC workshop keeps routes, errors, and diagnostics explicit.</text>
+  <text x="800" y="78" text-anchor="middle" class="title">Ktor 관측성 Provider</text>
+  <text x="800" y="110" text-anchor="middle" class="subtitle">중앙 provider는 correlation과 logging을 설치하고 JDBC 워크숍은 route·오류·diagnostics 계약을 유지합니다.</text>
 
   <rect x="70" y="158" width="300" height="700" rx="18" class="lane laneHttp"/>
-  <text x="104" y="198" class="laneTitle">Ktor application</text>
-  <text x="104" y="224" class="laneNote">module and HTTP routes.</text>
+  <text x="104" y="198" class="laneTitle">Ktor 애플리케이션</text>
+  <text x="104" y="224" class="laneNote">module과 HTTP route.</text>
 
   <rect x="410" y="158" width="360" height="700" rx="18" class="lane laneKtor"/>
   <text x="444" y="198" class="laneTitle">bluetape4k provider</text>
-  <text x="444" y="224" class="laneNote">central correlation and logging.</text>
+  <text x="444" y="224" class="laneNote">중앙 correlation과 logging.</text>
 
   <rect x="810" y="158" width="320" height="700" rx="18" class="lane laneStore"/>
-  <text x="844" y="198" class="laneTitle">application contract</text>
-  <text x="844" y="224" class="laneNote">errors and structured responses.</text>
+  <text x="844" y="198" class="laneTitle">애플리케이션 계약</text>
+  <text x="844" y="224" class="laneNote">오류와 structured response.</text>
 
   <rect x="1170" y="158" width="330" height="700" rx="18" class="lane laneContract"/>
   <text x="1204" y="198" class="laneTitle">JDBC diagnostics</text>
-  <text x="1204" y="224" class="laneNote">Exposed repository and H2.</text>
+  <text x="1204" y="224" class="laneNote">Exposed repository와 H2.</text>
 
   <rect id="module" x="100" y="240" width="240" height="100" rx="12" class="card httpCard"/>
   <text x="220" y="275" text-anchor="middle" class="cardTitle">Application module</text>
@@ -79,12 +79,12 @@
   <rect id="provider" x="450" y="230" width="280" height="100" rx="12" class="card ktorCard"/>
   <text x="590" y="265" text-anchor="middle" class="cardTitle">Provider installer</text>
   <text x="478" y="293" class="cardText providerText">installBluetape4kKtorObservability</text>
-  <text x="478" y="313" class="cardText">one application startup call</text>
+  <text x="478" y="313" class="cardText">애플리케이션 startup에서 한 번 호출</text>
 
   <rect id="correlation" x="450" y="350" width="280" height="100" rx="12" class="card ktorCard"/>
-  <text x="590" y="385" text-anchor="middle" class="cardTitle">Correlation policy</text>
+  <text x="590" y="385" text-anchor="middle" class="cardTitle">Correlation 정책</text>
   <text x="478" y="413" class="cardText">X-Request-ID trim + filter</text>
-  <text x="478" y="433" class="cardText">max 120 / 16-char Base58</text>
+  <text x="478" y="433" class="cardText">max 120 / 16자 Base58</text>
 
   <rect id="logging" x="450" y="510" width="280" height="90" rx="12" class="card ktorCard"/>
   <text x="590" y="545" text-anchor="middle" class="cardTitle">CallLogging</text>
@@ -92,18 +92,18 @@
 
   <rect id="telemetry" x="450" y="660" width="280" height="90" rx="12" class="card ktorCard"/>
   <text x="590" y="695" text-anchor="middle" class="cardTitle">Optional telemetry</text>
-  <text x="478" y="723" class="cardText">Micrometer / tracing off by default</text>
+  <text x="478" y="723" class="cardText">Micrometer / tracing 기본 off</text>
 
   <rect id="status" x="850" y="480" width="240" height="110" rx="12" class="card storeCard"/>
   <text x="970" y="516" text-anchor="middle" class="cardTitle">StatusPages</text>
   <text x="878" y="546" class="cardText">400 / 500 ErrorResponse</text>
   <text x="878" y="566" class="cardText">CancellationException rethrow</text>
-  <text x="878" y="586" class="cardText">requestId from callId</text>
+  <text x="878" y="586" class="cardText">callId에서 requestId 읽기</text>
 
   <rect id="response" x="850" y="660" width="240" height="100" rx="12" class="card storeCard"/>
-  <text x="970" y="695" text-anchor="middle" class="cardTitle">Reader contract</text>
+  <text x="970" y="695" text-anchor="middle" class="cardTitle">Reader 계약</text>
   <text x="878" y="723" class="cardText">X-Request-ID response header</text>
-  <text x="878" y="743" class="cardText">JSON errors + /readyz status</text>
+  <text x="878" y="743" class="cardText">JSON 오류 + /readyz status</text>
 
   <rect id="service" x="1210" y="270" width="250" height="110" rx="12" class="card contractCard"/>
   <text x="1335" y="306" text-anchor="middle" class="cardTitle">DiagnosticsService</text>
@@ -136,5 +136,5 @@
   <text x="595" y="535" text-anchor="middle" class="label">error</text>
   <text x="1000" y="630" text-anchor="middle" class="label">response</text>
 
-  <text x="800" y="920" text-anchor="middle" class="footer">JDBC-only workshop boundary: provider owns CallId/CallLogging; application owns StatusPages, routes, and Exposed diagnostics.</text>
+  <text x="800" y="920" text-anchor="middle" class="footer">JDBC-only workshop 경계: provider는 CallId/CallLogging, 애플리케이션은 StatusPages·routes·Exposed diagnostics를 소유합니다.</text>
 </svg>
