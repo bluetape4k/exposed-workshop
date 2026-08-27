@@ -27,7 +27,7 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
 | catalog | `gradle/libs.versions.toml` | BOM 기반 `exposed-measured` consumer alias 추가 |
 | 모듈 빌드 | `06-advanced/13-exposed-measured/build.gradle.kts` | Exposed JDBC, measured provider, shared test와 JDBC dialect 의존성 등록 |
 | 예제 모델 | `06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt` | `ProductTable`, `ProductEntity`, 기준 단위 컬럼 선언 |
-| 회귀 테스트 | `06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01_MeasuredColumns.kt` | DSL/DAO round-trip, nullable, 정밀도, 부적합 DB 값 검증 |
+| 회귀 테스트 | `06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01_MeasuredColumns.kt` | DSL/DAO round-trip, nullable, 정밀도; provider 부적합 DB 값 계약은 문서화 |
 | 테스트 설정 | `06-advanced/13-exposed-measured/src/test/resources/junit-platform.properties` | 기존 shared test의 직렬 실행/생명주기 설정 재사용 |
 | 테스트 로그 | `06-advanced/13-exposed-measured/src/test/resources/logback-test.xml` | 모듈 package와 Exposed 로그 설정 |
 | 모듈 문서 | `06-advanced/13-exposed-measured/README.md`, `README.ko.md` | source-equivalent 사용법, 기준 단위/정밀도/migration 설명 |
@@ -103,10 +103,10 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
   3. `nullableMass`를 생략한 row가 NULL로 읽히고 0으로 치환되지 않는지 확인한다.
   4. 소수 길이, 큰 질량 또는 큰 길이 값을 `DOUBLE` 허용 오차로 검증하고
      DECIMAL precision/scale 정책을 발명하지 않는다.
-  5. `MeasureColumnType(Length.meters)`와 `TemperatureColumnType`의
-     `valueFromDB("invalid")`가 provider 계약대로 `IllegalStateException`을
-     던지는지 확인한다. 이 테스트는 지원되지 않는 DB 값 타입 경계를 직접
-     고정하고, 정상 JDBC driver가 숫자를 반환한다는 사실과 분리한다.
+  5. provider의 `MeasureColumnType`/`TemperatureColumnType`이 숫자가 아닌
+     DB 값을 거부한다는 source 계약을 README와 source ledger에 기록한다. 정상
+     JDBC driver가 숫자를 반환하는 경계와 workshop의 정상 경로를 분리하며,
+     provider 책임인 임의 타입 주입 테스트는 중복하지 않는다.
   6. `temperature()`가 `Temperature`를, `temperatureDelta()`가 별도
      `TemperatureDelta`를 받는다는 타입 경계를 KDoc/README compile-time 예로
      남긴다. runtime unsafe cast 테스트는 추가하지 않는다.
@@ -170,8 +170,9 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
   `columnType.sqlType() == "DOUBLE"`와 `MeasureColumnType` base unit을 단위
   테스트에서 확인하되 provider 전체 테스트를 중복하지 않는다.
 
-- [ ] GREEN focused test를 실행하고, invalid DB value 테스트에서 provider가
-  `error(...)`로 반환하는 예외 타입/메시지를 과도하게 고정하지 않는지 확인한다.
+- [ ] GREEN focused test를 실행하고, provider의 invalid DB value source 계약은
+  README/source ledger로 확인한다. 정상 JDBC driver 출력에 인위적인 값을
+  주입하는 workshop 테스트는 추가하지 않는다.
 
   ```bash
   USE_FAST_DB=true ./gradlew :13-exposed-measured:test \
@@ -187,7 +188,8 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
   1. 학습 목표와 `bluetape4k-exposed-measured` BOM alias
   2. `ProductTable`의 `DOUBLE` 기준 단위(meter/kg/K)와 `ProductEntity`
   3. DSL insert/select와 DAO read-back 코드
-  4. nullable, 소수/큰 값 허용 오차, unsupported DB value, compile-time 계열 경계
+  4. nullable, 소수/큰 값 허용 오차, unsupported DB value source contract 문서,
+     compile-time 계열 경계
   5. DB가 원래 표시 단위를 보존하지 않는다는 migration 주의
   6. `DOUBLE`은 금융/법정 계량 정확도 정책이 아니라는 범위
   7. JDBC/H2 fast profile 실행 명령과 지원 dialect 안내
@@ -330,7 +332,7 @@ JDBC 컬럼 DSL을 사용하는 상품 길이·질량·절대온도 예제를 �
 | Issue DoD | 계획 task | 증거 |
 |---|---|---|
 | 길이·질량·온도 3계열 round-trip | 2, 3 | `Ex01_MeasuredColumns.kt`, H2 및 dialect 결과 |
-| null·소수 정밀도·단위 변환·부적합 단위 동작 | 2, 3, 4 | near assertion, nullable, provider invalid type, README compile-time 예 |
+| null·소수 정밀도·단위 변환·부적합 단위 동작 | 2, 3, 4 | near assertion, nullable, README compile-time 예와 provider source contract |
 | base unit 저장과 migration 주의 | 3, 4, 6 | source declaration, README/ERD, semantic ledger |
 | EN/KO README와 source-equivalent SVG/PNG | 4, 6 | parity/terms/diagram audits 및 original PNG inspection |
 | module test/static check | 1, 3, 7 | Gradle test/build/detekt, full detekt |

@@ -7,6 +7,7 @@ import io.bluetape4k.assertions.shouldBeNear
 import io.bluetape4k.assertions.shouldBeNull
 import io.bluetape4k.measured.Length
 import io.bluetape4k.measured.Mass
+import io.bluetape4k.measured.Measure
 import io.bluetape4k.measured.celsius
 import io.bluetape4k.measured.centimeters
 import io.bluetape4k.measured.fahrenheit
@@ -15,10 +16,7 @@ import io.bluetape4k.measured.kilograms
 import io.bluetape4k.measured.kelvin
 import io.bluetape4k.measured.kilometers
 import io.bluetape4k.measured.meters
-import io.bluetape4k.exposed.core.measured.MeasureColumnType
-import io.bluetape4k.measured.Measure
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
 import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.dao.flushCache
 import org.jetbrains.exposed.v1.jdbc.insertAndGetId
@@ -117,13 +115,4 @@ class Ex01MeasuredColumns: AbstractExposedTest() {
         }
     }
 
-    /** provider가 지원하지 않는 DB 값 타입을 조용히 허용하지 않는지 검증합니다. */
-    @Test
-    fun `MeasureColumnType은 지원하지 않는 DB 값 타입을 거부한다`() {
-        val columnType = MeasureColumnType(Length.meters) { Measure(it, Length.meters) }
-
-        assertFailsWith<IllegalStateException> {
-            columnType.valueFromDB("not-a-number")
-        }
-    }
 }

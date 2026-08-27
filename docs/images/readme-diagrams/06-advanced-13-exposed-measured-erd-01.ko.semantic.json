@@ -9,13 +9,13 @@
     ]
   },
   "nodes": [
-    {"id":"entity","label":"ProductEntity","source":"MeasuredData.kt"},
-    {"id":"table","label":"measured_products","source":"MeasuredData.kt"},
-    {"id":"jdbc","label":"JDBC 물리 저장소","source":"Ex01_MeasuredColumns.kt"}
+    {"id":"entity","label":"ProductEntity","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt"},
+    {"id":"table","label":"measured_products","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt"},
+    {"id":"jdbc","label":"JDBC 물리 저장소","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01MeasuredColumns.kt"}
   ],
   "edges": [
-    {"id":"entity-to-table","from":"entity","to":"table","kind":"1:1 매핑","source":"MeasuredData.kt"},
-    {"id":"table-to-jdbc","from":"table","to":"jdbc","kind":"DOUBLE 컬럼","source":"MeasuredData.kt"}
+    {"id":"entity-to-table","from":"entity","to":"table","kind":"1:1 매핑","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt"},
+    {"id":"table-to-jdbc","from":"table","to":"jdbc","kind":"DOUBLE 컬럼","source":"06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt"}
   ],
   "behavior": {"branches": 0, "loops": 0},
   "repairs": []

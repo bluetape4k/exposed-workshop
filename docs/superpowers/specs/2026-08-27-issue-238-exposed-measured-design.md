@@ -156,8 +156,9 @@ class ProductEntity(id: EntityID<Int>) : IntEntity(id) {
    컴파일되지 않는다는 사실을 README의 compile-time 예로 설명한다. 런타임
    reflection 우회나 인위적인 `assertFailsWith` 계약은 추가하지 않는다.
 7. provider 실패 경계: `valueFromDB`가 `Number`가 아닌 값에 `error(...)`를
-   발생시킨다는 provider 계약을 문서화한다. workshop의 정상 JDBC 경로에서
-   임의 타입을 주입하는 테스트는 provider 모듈의 책임이므로 중복하지 않는다.
+   발생시킨다는 provider 계약을 README와 source ledger에 문서화한다. workshop의
+   정상 JDBC 경로에서 임의 타입을 주입하는 테스트는 provider 모듈의 책임이므로
+   중복하지 않는다.
 
 ## 실패 모드와 대응
 

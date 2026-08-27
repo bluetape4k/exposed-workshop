@@ -16,7 +16,8 @@ JDBC 기반 Exposed 테이블에서 `bluetape4k-exposed-measured` provider를 �
 - 대표 표시 단위인 센티미터·미터·킬로미터, 그램·킬로그램,
   섭씨·화씨·켈빈을 사용하는 방법.
 - nullable 측정값과 명시적인 허용 오차를 적용한 부동소수점 비교.
-- provider가 호환되지 않는 DB 값 타입을 거부하는 경계.
+- provider가 호환되지 않는 DB 값 타입을 거부하는 source contract를 문서화하는
+  경계. 이 workshop은 정상 JDBC 경로를 테스트합니다.
 
 ## 아키텍처
 
@@ -42,6 +43,7 @@ provider의 기준 단위를 바꾸는 일은 스키마와 마이그레이션 �
 
 ```kotlin
 internal object ProductTable: IntIdTable("measured_products") {
+    val name = varchar("name", 100)
     val length = length("length")
     val mass = mass("mass")
     val nullableMass = mass("nullable_mass").nullable()
@@ -51,6 +53,7 @@ internal object ProductTable: IntIdTable("measured_products") {
 internal class ProductEntity(id: EntityID<Int>): IntEntity(id) {
     companion object: EntityClass<Int, ProductEntity>(ProductTable)
 
+    var name by ProductTable.name
     var length by ProductTable.length
     var mass by ProductTable.mass
     var nullableMass by ProductTable.nullableMass
@@ -59,10 +62,28 @@ internal class ProductEntity(id: EntityID<Int>): IntEntity(id) {
 
 transaction {
     ProductTable.insert {
-        it[length] = 150.centimeters()
-        it[mass] = 2.5.kilograms()
-        it[temperature] = 77.fahrenheit()
+        it[ProductTable.name] = "desk"
+        it[ProductTable.length] = 150.centimeters()
+        it[ProductTable.mass] = 2.5.kilograms()
+        it[ProductTable.temperature] = 77.fahrenheit()
     }
+}
+```
+
+절대 온도와 온도 차이는 provider의 서로 다른 타입입니다. `Temperature`에는
+`temperature()`, `TemperatureDelta`에는 `temperatureDelta()`를 사용하며, 절대
+온도와 온도 차이를 서로의 컬럼에 기록하려 하면 컴파일 시점에 차단됩니다.
+
+```kotlin
+object TemperatureContractTable: Table() {
+    val absolute = temperature("absolute")
+    val delta = temperatureDelta("delta")
+}
+
+TemperatureContractTable.insert {
+    it[TemperatureContractTable.absolute] = 25.celsius()
+    it[TemperatureContractTable.delta] = 5.celsiusDelta()
+    // it[TemperatureContractTable.delta] = 25.celsius() // 컴파일 오류
 }
 ```
 
@@ -99,4 +120,5 @@ ProductTable.insert {
 ```
 
 `Ex01MeasuredColumns`는 공용 `TestDB` 매트릭스를 통해 JDBC 왕복, DAO nullable,
-정밀도, 호환되지 않는 값 타입 거부 사례를 실행합니다.
+정밀도 사례를 실행합니다. provider의 호환되지 않는 DB 값 타입 거부 경계는
+위에 문서화하며, 인위적으로 driver 출력을 주입하는 테스트는 중복하지 않습니다.

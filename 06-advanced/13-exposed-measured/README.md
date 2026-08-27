@@ -19,7 +19,8 @@ values when selected. R2DBC is not exercised in this repository.
   kilograms; Celsius, Fahrenheit, and Kelvin.
 - Nullable measured values and floating-point comparisons with an explicit
   tolerance.
-- The provider's incompatible DB-value failure boundary.
+- The provider's incompatible DB-value failure boundary as a documented source
+  contract; this workshop keeps the normal JDBC path under test.
 
 ## Architecture
 
@@ -45,6 +46,7 @@ scope; it belongs in the `exposed-r2dbc-workshop` repository.
 
 ```kotlin
 internal object ProductTable: IntIdTable("measured_products") {
+    val name = varchar("name", 100)
     val length = length("length")
     val mass = mass("mass")
     val nullableMass = mass("nullable_mass").nullable()
@@ -54,6 +56,7 @@ internal object ProductTable: IntIdTable("measured_products") {
 internal class ProductEntity(id: EntityID<Int>): IntEntity(id) {
     companion object: EntityClass<Int, ProductEntity>(ProductTable)
 
+    var name by ProductTable.name
     var length by ProductTable.length
     var mass by ProductTable.mass
     var nullableMass by ProductTable.nullableMass
@@ -62,10 +65,29 @@ internal class ProductEntity(id: EntityID<Int>): IntEntity(id) {
 
 transaction {
     ProductTable.insert {
-        it[length] = 150.centimeters()
-        it[mass] = 2.5.kilograms()
-        it[temperature] = 77.fahrenheit()
+        it[ProductTable.name] = "desk"
+        it[ProductTable.length] = 150.centimeters()
+        it[ProductTable.mass] = 2.5.kilograms()
+        it[ProductTable.temperature] = 77.fahrenheit()
     }
+}
+```
+
+Absolute temperature and temperature deltas are separate provider types. Use
+`temperature()` for `Temperature` and `temperatureDelta()` for
+`TemperatureDelta`; an absolute value cannot be written to a delta column (or
+the reverse) at compile time:
+
+```kotlin
+object TemperatureContractTable: Table() {
+    val absolute = temperature("absolute")
+    val delta = temperatureDelta("delta")
+}
+
+TemperatureContractTable.insert {
+    it[TemperatureContractTable.absolute] = 25.celsius()
+    it[TemperatureContractTable.delta] = 5.celsiusDelta()
+    // it[TemperatureContractTable.delta] = 25.celsius() // Does not compile
 }
 ```
 
@@ -103,5 +125,7 @@ ProductTable.insert {
 ./gradlew :13-exposed-measured:test -PuseFastDB=true
 ```
 
-`Ex01MeasuredColumns` runs the JDBC round-trip, DAO nullable, precision, and
-incompatible-value cases through the shared `TestDB` matrix.
+`Ex01MeasuredColumns` runs the JDBC round-trip, DAO nullable, and precision
+cases through the shared `TestDB` matrix. The provider's incompatible DB-value
+failure boundary is documented above rather than re-tested with artificial
+driver output.
