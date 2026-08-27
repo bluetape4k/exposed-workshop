@@ -37,15 +37,16 @@ val database = Database.connect(
 )
 
 val javers = createJavers(database) // ensureSchema()는 교육용 편의 기능입니다
-val subscription = subscribeAudit(javers)
-try {
+transaction(database) { SchemaUtils.create(Customers) }
+val subscription = subscribeAudit(database, javers)
+val customerId = try {
     AuditContextHolder.with(AuditContext("alice", "request-123")) {
         transaction(database) {
             CustomerEntity.new {
                 name = "Alice"
                 email = "alice@example.com"
                 secret = "business-only"
-            }
+            }.id.value
         }
     }
 } finally {
@@ -58,6 +59,11 @@ val history = JaversAuditHistory(javers).history(customerId)
 `subscription.close()`은 멱등적이며 provider의 전역 hook을 제거합니다. 애플리케이션
 lifecycle 경계에서 subscription을 보관하고, 테스트나 단기 process에서는 위와 같이
 `try/finally`로 닫는 방식을 사용합니다.
+subscription은 전달한 정확한 `Database` 인스턴스에 결합됩니다. provider hook은 전역이므로
+다른 database에서 DAO를 변경하면 이 감사 저장소에 기록하지 않고 fail closed로 즉시
+실패합니다. 전역 hook의 소유자는 한 번에 하나의 subscription/database만 허용하므로
+소유자를 바꾸려면 기존 subscription을 먼저 닫아야 합니다. subscription은 애플리케이션
+lifecycle이 소유하며, 이 예제는 multi-tenant 전역 hook registry를 제공하지 않습니다.
 
 ## Commit과 조회 lifecycle
 
@@ -77,7 +83,13 @@ property와 함께 update 기준 데이터를 만듭니다. 같은 값을 다시
 
 `JaversAuditHistory.history`는 읽기 전용 교육용 조회입니다. 운영 pagination, retention,
 restore, source of truth 교체 정책은 의도적으로 포함하지 않았으며 감사 저장소를 소유한
-애플리케이션이 결정해야 합니다.
+애플리케이션이 결정해야 합니다. 인증·인가·tenant filter가 없으므로 production endpoint로
+직접 노출하면 안 됩니다. 호출 전에 customer/tenant 경계를 애플리케이션이 검사해야 합니다.
+
+`createJavers`는 provider wiring을 보여주기 위해 낮은 수준의 JaVers 인스턴스를 노출합니다.
+이 entity에 `javers.commit`을 직접 호출하면 `AuditedCustomer` allow-list와 `secret` 제외
+경로를 우회할 수 있으므로 사용하면 안 됩니다. 직접 commit이 필요한 애플리케이션은 별도
+allow-list mapping과 테스트를 정의하고 두 경로를 섞지 않아야 합니다.
 
 ## Schema 소유권과 검증
 
@@ -107,5 +119,9 @@ JDBC 예제만 구현합니다. R2DBC persistence 예제는
 [`exposed-r2dbc-workshop#235`](https://github.com/bluetape4k/exposed-r2dbc-workshop/issues/235)에서
 구현합니다.
 
-운영 actor 인증, 분산 context 전파, 감사 retention, pagination, restore/rollback command,
-전역 hook의 동시 소유권은 이 workshop의 범위가 아닙니다.
+실제 애플리케이션의 `AuditContext.actor`는 신뢰할 수 있는 인증 주체에서 공급해야 합니다.
+이 workshop은 비어 있지 않은지만 검사하고 인증하지 않습니다. `secret` column은 감사
+allow-list를 보여주기 위한 가짜 workshop field이며 업무 데이터에 평문으로 저장합니다.
+실제 credential에는 암호화와 별도 보호가 필요합니다. 분산 context 전파, 감사 retention,
+pagination, restore/rollback command, 전역 hook의 동시 소유권은 이 workshop의 범위가
+아닙니다.

@@ -48,11 +48,14 @@ JDBC 트랜잭션 안에서 비즈니스 데이터와 감사 데이터가 함께
 3. `ExposedJaversEntityHookMapping.of(CustomerEntity)`로 감사 대상과 변환기를
    등록한다.
 4. `ExposedJaversEntityHookSubscription.subscribe(...)`로 전역 hook을 연결하고,
-   예제 생명주기가 끝날 때 `close()`로 해제한다.
+   `subscribeAudit(database, javers)`의 database identity guard로 다른 JDBC
+   `Database` 이벤트를 fail-closed 처리하며, 예제 생명주기가 끝날 때 `close()`로 해제한다.
 
-직접 커밋을 호출하는 서비스 경로는 EntityHook을 우회할 수 있고 중복 감사 기준 데이터를
-만들 수 있으므로 선택하지 않는다. EntityHook과 직접 커밋을 섞는 hybrid도 같은
-변경을 두 번 기록할 위험이 있어 제외한다.
+직접 커밋을 호출하는 서비스 경로는 EntityHook과 detached allow-list를 우회할 수 있고
+중복 감사 기준 데이터나 민감 필드 노출을 만들 수 있으므로 선택하지 않는다. EntityHook과
+직접 커밋을 섞는 hybrid도 같은 변경을 두 번 기록할 위험이 있어 제외한다. 이 예제의
+`createJavers`는 provider wiring 설명을 위해 raw 인스턴스를 반환하지만, 호출자는 직접
+`javers.commit`하지 않고 반드시 mapping 경계를 거쳐야 한다.
 
 ### 업무 모델과 감사 경계
 
@@ -97,7 +100,9 @@ AuditedCustomer
 문맥 도우미는 중첩 호출에서 바깥 문맥을 복원하고, 최상위 호출이 끝나면
 스레드에 값을 남기지 않는다. 모든 subscription 사용 예는 `try/finally` 또는
 `use`로 닫으며, provider의 전역 hook과 동시 `close()` 조정은 이 교육 예제의
-지원 범위 밖이다.
+지원 범위 밖이다. provider hook은 전역이므로 하나의 `Database`에 하나의 subscription만
+두고, `subscribeAudit`는 다른 `Database`의 이벤트를 즉시 거부한다. 전역 hook에는 한 번에
+하나의 subscription/database 소유자만 허용하며, 다중 테넌트 registry는 구현하지 않는다.
 
 ### 조회 API
 
@@ -113,7 +118,10 @@ AuditedCustomer
 파사드는 원장 데이터를 수정하거나 되돌리지 않는다. `rollback`은 JaVers의
 과거 상태를 읽어 표시하는 예제 용어로만 사용하며, 원본 `Customers` 행에 대한
 자동 복원 기능은 제공하지 않는다. 이 교육용 조회는 이력 전체를 읽는 무제한
-형태이며, 운영 환경의 페이지네이션·보존 정책을 대체하지 않는다.
+형태이며, 운영 환경의 페이지네이션·보존 정책을 대체하지 않는다. 인증·인가·테넌트
+필터가 없으므로 production endpoint에 직접 노출하지 않고 호출자가 고객 경계를 검사해야
+한다. `AuditContext.actor`도 이 예제에서는 비어 있지 않은지만 확인하므로 실제 서비스는
+인증된 주체에서 값을 공급해야 한다.
 
 ## 트랜잭션 및 이벤트 흐름
 
@@ -150,6 +158,7 @@ H2 데이터베이스와 새 `ExposedCdoSnapshotRepository`/JaVers 인스턴스�
 | sensitive exclusion | `secret`이 변경 프로퍼티·encoded state·저장 행에 없음 |
 | subscription lifecycle | `close()` 이후 DAO 변경은 감사 기준 데이터를 추가하지 않음 |
 | context lifecycle | 중첩 문맥 복원, 최상위 종료 후 제거, 예외 종료를 확인함 |
+| database isolation | 전역 hook이 다른 `Database` 이벤트를 fail-closed하고 업무·감사 행을 남기지 않음 |
 
 JaVers API는 provider 저장소의 `findSnapshots`, `findChanges`와
 `CdoSnapshot.getPropertyValue`를 사용한다. 민감 필드 검증은 여기에 더해
@@ -211,6 +220,7 @@ R2DBC 분리 경계, 테스트 실행 명령을 명시한다. `ensureSchema()`�
 | 전역 EntityHook이 테스트 사이에 남음 | 테스트별 subscription과 `close()` 보장 |
 | 문맥 없는 변경이 익명으로 기록됨 | `AuditContextHolder.requireCurrent()` 실패 |
 | 영속 엔티티를 직접 감사해 `secret`이 노출됨 | detached `AuditedCustomer` 변환기 |
+| 다른 `Database` 이벤트가 전역 hook을 오염시킴 | 구독 API의 database identity guard와 교차 DB 부정 테스트 |
 | JaVers와 업무 데이터의 트랜잭션 불일치 | 같은 Exposed `transaction` 안에서 hook 실행 |
 | provider API가 바뀌어 예제가 깨짐 | 0.3.0 BOM alias와 API 호출을 빌드·테스트로 검증 |
 

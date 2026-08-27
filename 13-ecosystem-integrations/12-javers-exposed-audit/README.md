@@ -39,15 +39,16 @@ val database = Database.connect(
 )
 
 val javers = createJavers(database) // ensureSchema() is an education convenience
-val subscription = subscribeAudit(javers)
-try {
+transaction(database) { SchemaUtils.create(Customers) }
+val subscription = subscribeAudit(database, javers)
+val customerId = try {
     AuditContextHolder.with(AuditContext("alice", "request-123")) {
         transaction(database) {
             CustomerEntity.new {
                 name = "Alice"
                 email = "alice@example.com"
                 secret = "business-only"
-            }
+            }.id.value
         }
     }
 } finally {
@@ -60,6 +61,12 @@ val history = JaversAuditHistory(javers).history(customerId)
 `subscription.close()` is idempotent and removes the provider's global hook.
 Always keep the subscription in an application lifecycle boundary; the
 `try/finally` form makes the example safe for a test or a short-lived process.
+The subscription is bound to the exact `Database` instance passed to it. Because
+the provider hook is global, a DAO change in another database fails closed
+instead of being written to this audit store. This workshop permits only one
+active subscription/database owner for the global hook; keep it at the
+application lifecycle boundary and close it before replacing the owner. It does
+not provide a multi-tenant global-hook registry.
 
 ## Commit and query lifecycle
 
@@ -82,7 +89,15 @@ record.
 `JaversAuditHistory.history` is a read-only teaching query. It intentionally
 does not add production pagination, retention, restore, or source-of-truth
 replacement policy; those decisions belong to the application that owns the
-audit store.
+audit store. It has no authentication, authorization, or tenant filter, so it
+must not be exposed directly as a production endpoint. The caller must enforce
+the customer/tenant boundary before invoking it.
+
+`createJavers` exposes the low-level JaVers instance so the workshop can show
+provider wiring. Do not call `javers.commit` directly for this entity: that path
+can bypass the `AuditedCustomer` allow-list and its `secret` exclusion. If an
+application needs direct commits, it must define and test an equivalent
+allow-list mapping instead of mixing the paths.
 
 ## Schema ownership and verification
 
@@ -112,6 +127,10 @@ This module implements only the JDBC example requested by
 The R2DBC persistence example belongs in
 [`exposed-r2dbc-workshop#235`](https://github.com/bluetape4k/exposed-r2dbc-workshop/issues/235).
 
-Production actor authentication, distributed context propagation, audit
-retention, pagination, restore/rollback commands, and concurrent global-hook
-ownership are outside this workshop.
+`AuditContext.actor` is a trusted caller identity input in a real application;
+the workshop only validates that it is non-blank and does not authenticate it.
+The `secret` column is a fake workshop field and is stored as plain business data
+only to demonstrate the audit allow-list; real credentials require encryption
+and separate protection. Distributed context propagation, audit retention,
+pagination, restore/rollback commands, and concurrent global-hook ownership are
+outside this workshop.

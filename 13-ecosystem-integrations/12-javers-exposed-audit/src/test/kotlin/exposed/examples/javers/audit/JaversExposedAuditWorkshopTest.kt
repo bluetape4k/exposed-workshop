@@ -60,7 +60,7 @@ class JaversExposedAuditWorkshopTest {
     @Test
     fun `create update audit exposes metadata diff and history`() {
         val audit = JaversAuditHistory(javers)
-        val subscription = subscribeAudit(javers)
+        val subscription = subscribeAudit(database, javers)
         val id = try {
             AuditContextHolder.with(AuditContext(actor = "alice", requestId = "request-create")) {
                 transaction(database) {
@@ -92,12 +92,19 @@ class JaversExposedAuditWorkshopTest {
         snapshots[0].commitMetadata.properties["requestId"] shouldBeEqualTo "request-update"
         snapshots[0].commitMetadata.properties["changeType"] shouldBeEqualTo "Updated"
         audit.changes(id).shouldNotBeEmpty()
-        audit.history(id).snapshots shouldHaveSize 2
+        audit.history(id).apply {
+            current shouldBeEqualTo AuditedCustomer(
+                id = id,
+                name = "Alice Updated",
+                email = "alice.updated@example.com",
+            )
+            snapshots shouldHaveSize 2
+        }
     }
 
     @Test
     fun `one transaction records only the final flushed customer state`() {
-        val subscription = subscribeAudit(javers)
+        val subscription = subscribeAudit(database, javers)
         val id = try {
             val customerId = AuditContextHolder.with(AuditContext("alice", "request-create")) {
                 transaction(database) {
@@ -131,7 +138,7 @@ class JaversExposedAuditWorkshopTest {
 
     @Test
     fun `rollback removes business and audit rows`() {
-        val subscription = subscribeAudit(javers)
+        val subscription = subscribeAudit(database, javers)
         try {
             assertFailsWith<IllegalStateException> {
                 AuditContextHolder.with(AuditContext("alice", "request-rollback")) {
@@ -158,7 +165,7 @@ class JaversExposedAuditWorkshopTest {
 
     @Test
     fun `unchanged entity does not create a duplicate audit commit`() {
-        val subscription = subscribeAudit(javers)
+        val subscription = subscribeAudit(database, javers)
         val id = try {
             val customerId = AuditContextHolder.with(AuditContext("alice", "request-create")) {
                 transaction(database) {
@@ -191,7 +198,7 @@ class JaversExposedAuditWorkshopTest {
 
     @Test
     fun `secret is excluded from JaVers properties and encoded state`() {
-        val subscription = subscribeAudit(javers)
+        val subscription = subscribeAudit(database, javers)
         val id = try {
             val customerId = AuditContextHolder.with(AuditContext("alice", "request-create")) {
                 transaction(database) {
@@ -227,7 +234,7 @@ class JaversExposedAuditWorkshopTest {
 
     @Test
     fun `closed subscription is idempotent and stops auditing`() {
-        val subscription = subscribeAudit(javers)
+        val subscription = subscribeAudit(database, javers)
         subscription.close()
         subscription.close()
 
@@ -245,6 +252,20 @@ class JaversExposedAuditWorkshopTest {
             CommitTable.selectAll().count().shouldBeZero()
             CdoSnapshotTable.selectAll().count().shouldBeZero()
         }
+    }
+
+    @Test
+    fun `only one global subscription can own the audit hook`() {
+        val subscription = subscribeAudit(database, javers)
+        try {
+            assertFailsWith<IllegalStateException> {
+                subscribeAudit(database, javers)
+            }
+        } finally {
+            subscription.close()
+        }
+
+        subscribeAudit(database, javers).close()
     }
 
     @Test
@@ -270,7 +291,7 @@ class JaversExposedAuditWorkshopTest {
 
     @Test
     fun `missing context fails closed and rolls back all rows`() {
-        val subscription = subscribeAudit(javers)
+        val subscription = subscribeAudit(database, javers)
         try {
             assertFailsWith<IllegalStateException> {
                 transaction(database) {
@@ -290,5 +311,55 @@ class JaversExposedAuditWorkshopTest {
             CommitTable.selectAll().count().shouldBeZero()
             CdoSnapshotTable.selectAll().count().shouldBeZero()
         }
+    }
+
+    @Test
+    fun `subscription rejects entity changes from another database`() {
+        val otherDatabase = Database.connect(
+            url = "jdbc:h2:mem:javers-audit-other-${UUID.randomUUID()};MODE=PostgreSQL;DB_CLOSE_DELAY=-1",
+            driver = "org.h2.Driver",
+        )
+        createJavers(otherDatabase)
+        transaction(otherDatabase) {
+            SchemaUtils.create(Customers)
+        }
+
+        val subscription = subscribeAudit(database, javers)
+        try {
+            assertFailsWith<IllegalStateException> {
+                AuditContextHolder.with(AuditContext("alice", "request-cross-database")) {
+                    transaction(otherDatabase) {
+                        CustomerEntity.new {
+                            name = "Cross database"
+                            email = "cross-database@example.com"
+                            secret = "secret"
+                        }
+                    }
+                }
+            }
+        } finally {
+            subscription.close()
+        }
+
+        transaction(otherDatabase) {
+            Customers.selectAll().count().shouldBeZero()
+            CommitTable.selectAll().count().shouldBeZero()
+            CdoSnapshotTable.selectAll().count().shouldBeZero()
+        }
+    }
+
+    @Test
+    fun `subscription rejects a Javers instance bound to another database`() {
+        val otherDatabase = Database.connect(
+            url = "jdbc:h2:mem:javers-audit-javers-other-${UUID.randomUUID()};MODE=PostgreSQL;DB_CLOSE_DELAY=-1",
+            driver = "org.h2.Driver",
+        )
+        val otherJavers = createJavers(otherDatabase)
+
+        assertFailsWith<IllegalStateException> {
+            subscribeAudit(database, otherJavers)
+        }
+
+        subscribeAudit(database, javers).close()
     }
 }

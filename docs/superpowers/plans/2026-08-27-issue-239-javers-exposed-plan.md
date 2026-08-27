@@ -93,9 +93,13 @@
   `ExposedCdoSnapshotRepository(database).ensureSchema()` 후
   `JaversBuilder.javers().registerJaversRepository(repository).build()`를
   반환한다.
-- [ ] `subscribeAudit(javers)`에서
+- [ ] `subscribeAudit(database, javers)`에서
   `ExposedJaversEntityHookMapping.of(CustomerEntity) { it.toAuditObject() }`와
   `ExposedJaversEntityHookSubscription.subscribe`를 연결한다.
+  - 전역 hook의 이벤트 database가 전달한 `database`와 다르면 fail-closed하고,
+    다른 database에 업무·감사 행을 남기지 않는 부정 테스트를 추가한다.
+  - 전역 hook 중복 구독은 명시적으로 거부하고, `close()` 뒤 재구독이 가능한지
+    lifecycle 테스트로 고정한다.
   - `authorProvider`는 현재 actor를 반환한다.
   - `commitPropertiesProvider`는 requestId와 `change.changeType.name`만
     반환한다.
@@ -103,7 +107,7 @@
     한다.
   - README와 테스트 fixture는 `try/finally` 또는 `.use` scoped lifecycle을
     사용하고, provider가 전역 hook을 등록하므로 동시 `close()` 조정은 지원
-    범위 밖임을 명시한다.
+    범위 밖임과 database별 단일 subscription 계약을 명시한다.
 
 ## 4. 계약 테스트를 통과시키고 API 경계를 다듬는다
 
@@ -131,6 +135,11 @@
     rollback 의미, `secret` 제외 정책을 설명한다.
   - `actor`는 실제 서비스에서 인증된 caller identity로 공급해야 하며, 이
     교육 예제는 인증/인가를 구현하지 않는다고 명시한다.
+  - `history(customerId)`에는 인증·인가·tenant filter가 없고, raw `javers.commit`은
+    detached allow-list와 `secret` 제외를 우회할 수 있으므로 production endpoint와
+    직접 commit에 사용하지 않는다는 경고를 EN/KO에 동등하게 넣는다.
+  - `secret`은 교육용 가짜 평문 필드이며 실제 credential은 암호화·별도 보호가
+    필요하다는 경계를 명시한다.
   - `./gradlew :12-javers-exposed-audit:test`와 build 명령을 제공한다.
   - H2 결정론적 범위와 Docker/자격 증명/원격 DB 미사용을 명시한다.
   - `ensureSchema()`는 H2 교육용 편의 기능이고 실제 운영 migration 소유자는

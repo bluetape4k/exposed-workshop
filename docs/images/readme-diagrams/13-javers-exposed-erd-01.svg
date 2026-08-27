@@ -15,7 +15,7 @@
 
   <rect x="80" y="205" width="360" height="280" rx="12" class="card business"/><rect x="80" y="205" width="360" height="54" rx="12" fill="#bfdbfe"/>
   <text x="260" y="240" text-anchor="middle" class="label">audit_customers</text>
-  <text x="104" y="300" class="small">id INT PRIMARY KEY</text><text x="104" y="334" class="small">name VARCHAR(100) NOT NULL</text><text x="104" y="368" class="small">email VARCHAR(200) NOT NULL</text><text x="104" y="402" class="small">secret VARCHAR(200) NOT NULL</text><text x="104" y="450" class="detail">업무 저장소에만 존재</text>
+  <text x="104" y="300" class="small">id INT PRIMARY KEY</text><text x="104" y="334" class="small">name VARCHAR(100) NOT NULL</text><text x="104" y="368" class="small">email VARCHAR(200) NOT NULL</text><text x="104" y="402" class="small">secret VARCHAR(200) NOT NULL</text><text x="104" y="450" class="detail">business-only field</text>
 
   <rect x="575" y="205" width="350" height="245" rx="12" class="card audit"/><rect x="575" y="205" width="350" height="54" rx="12" fill="#bbf7d0"/>
   <text x="750" y="240" text-anchor="middle" class="label">AuditedCustomer</text>
