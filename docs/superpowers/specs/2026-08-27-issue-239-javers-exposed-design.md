@@ -163,13 +163,16 @@ JaVers API는 provider 저장소의 `findSnapshots`, `findChanges`와
 ## 문서와 시각 자료
 
 모듈 README는 영어 `README.md`와 source-equivalent 한국어 `README.ko.md`를
-제공한다. 두 문서에는 다음 자료를 포함한다.
+제공한다. 두 문서에는 저장소 루트의 `docs/images/readme-diagrams/` 아래에
+다음 자료를 포함한다.
 
-- 아키텍처 다이어그램: `docs/images/readme-diagrams/javers-exposed-architecture.svg`
-  및 동일 렌더링 PNG
-- 트랜잭션/이벤트 순서 다이어그램: `javers-exposed-sequence.svg` 및 PNG
+- 아키텍처 다이어그램: `13-javers-exposed-architecture-01.svg`/`.png`와
+  한국어 source-equivalent `.ko.svg`/`.ko.png`
+- 트랜잭션/이벤트 순서 다이어그램: `13-javers-exposed-sequence-01.svg`/`.png`와
+  한국어 source-equivalent `.ko.svg`/`.ko.png`
 - `javers_commit`·`javers_snapshot`·`customers` 관계를 보여주는 ERD:
-  `javers-exposed-erd.svg` 및 PNG
+  `13-javers-exposed-erd-01.svg`/`.png`와 한국어 source-equivalent
+  `.ko.svg`/`.ko.png`
 
 SVG가 편집 가능한 source of truth이며 CairoSVG로 PNG를 렌더링한다. 다이어그램의
 독자-facing 문구는 영문·한국어 asset을 source-equivalent로 제공하고, README에는
