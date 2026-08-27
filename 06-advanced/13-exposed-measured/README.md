@@ -23,9 +23,9 @@ values when selected. R2DBC is not exercised in this repository.
 
 ## Architecture
 
-![Measured Exposed JDBC architecture](../../../docs/images/readme-diagrams/06-advanced-13-exposed-measured-architecture-01.png)
+![Measured Exposed JDBC architecture](../../docs/images/readme-diagrams/06-advanced-13-exposed-measured-architecture-01.png)
 
-![Measured product ERD](../../../docs/images/readme-diagrams/06-advanced-13-exposed-measured-erd-01.png)
+![Measured product ERD](../../docs/images/readme-diagrams/06-advanced-13-exposed-measured-erd-01.png)
 
 The physical schema is intentionally small:
 

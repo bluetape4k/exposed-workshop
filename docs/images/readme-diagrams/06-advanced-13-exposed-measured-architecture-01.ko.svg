@@ -18,7 +18,7 @@
 
   <rect x="90" y="230" width="250" height="120" rx="12" fill="#dbeafe" stroke="#2563eb" class="card"/>
   <text x="215" y="267" class="label" text-anchor="middle">DSL / DAO 테스트</text>
-  <text x="215" y="300" class="detail" text-anchor="middle">Ex01_MeasuredColumns</text>
+  <text x="215" y="300" class="detail" text-anchor="middle">Ex01MeasuredColumns</text>
   <text x="215" y="324" class="small" text-anchor="middle">insert + select + findById</text>
 
   <rect x="410" y="230" width="250" height="120" rx="12" fill="#dcfce7" stroke="#16a34a" class="card"/>

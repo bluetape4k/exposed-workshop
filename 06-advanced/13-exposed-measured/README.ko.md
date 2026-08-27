@@ -20,9 +20,9 @@ JDBC 기반 Exposed 테이블에서 `bluetape4k-exposed-measured` provider를 �
 
 ## 아키텍처
 
-![측정값 Exposed JDBC 아키텍처](../../../docs/images/readme-diagrams/06-advanced-13-exposed-measured-architecture-01.ko.png)
+![측정값 Exposed JDBC 아키텍처](../../docs/images/readme-diagrams/06-advanced-13-exposed-measured-architecture-01.ko.png)
 
-![측정값 상품 ERD](../../../docs/images/readme-diagrams/06-advanced-13-exposed-measured-erd-01.ko.png)
+![측정값 상품 ERD](../../docs/images/readme-diagrams/06-advanced-13-exposed-measured-erd-01.ko.png)
 
 물리 스키마는 의도적으로 작게 유지합니다.
 

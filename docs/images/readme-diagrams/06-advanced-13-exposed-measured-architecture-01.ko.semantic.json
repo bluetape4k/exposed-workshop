@@ -2,10 +2,10 @@
   "kind": "architecture",
   "source": {
     "question": "측정값이 workshop 테스트에서 JDBC 컬럼으로 이동하고 다시 복원되는 흐름은 무엇인가?",
-    "revision": "103ddb9a",
+    "revision": "c00028d6",
     "paths": [
       "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt",
-      "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01_MeasuredColumns.kt",
+      "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01MeasuredColumns.kt",
       "docs/superpowers/specs/2026-08-27-issue-238-exposed-measured-design.md"
     ]
   },

@@ -2,10 +2,10 @@
   "kind": "erd",
   "source": {
     "question": "측정값 상품 예제를 구성하는 Entity와 물리 컬럼은 무엇인가?",
-    "revision": "103ddb9a",
+    "revision": "c00028d6",
     "paths": [
       "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/MeasuredData.kt",
-      "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01_MeasuredColumns.kt"
+      "06-advanced/13-exposed-measured/src/test/kotlin/exposed/examples/measured/Ex01MeasuredColumns.kt"
     ]
   },
   "nodes": [

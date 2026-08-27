@@ -6,7 +6,7 @@
 `13-exposed-measured` 모듈은 provider의 기존 `DOUBLE` 기준 단위 계약을
 재사용하고, 기존 스키마·모듈·R2DBC 저장소를 변경하지 않는다.
 
-검증 기준 commit: `7c8f1251`
+검증 기준 commit: `c00028d6`
 
 검증 worktree: `feat/issue-238-exposed-measured`
 검증 시각: 2026-08-27 (KST)
