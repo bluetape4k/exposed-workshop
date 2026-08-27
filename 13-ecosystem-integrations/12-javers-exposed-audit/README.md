@@ -86,6 +86,14 @@ business transaction rolls back, its commit and snapshot rows roll back with
 it. A missing `AuditContext` fails closed instead of creating an anonymous
 record.
 
+### Delete lifecycle
+
+Calling `CustomerEntity.delete()` removes the business row and lets the
+provider commit an id-based terminal snapshot in the same transaction. The
+latest snapshot is `SnapshotType.TERMINAL` with `changeType=Removed`, while the
+audit rows remain available for history queries and `history.current == null`.
+Business deletion therefore does not erase the audit trail.
+
 `JaversAuditHistory.history` is a read-only teaching query. It intentionally
 does not add production pagination, retention, restore, or source-of-truth
 replacement policy; those decisions belong to the application that owns the

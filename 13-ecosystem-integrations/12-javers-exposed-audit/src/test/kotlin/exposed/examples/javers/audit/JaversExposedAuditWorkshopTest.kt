@@ -15,6 +15,7 @@ import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -100,6 +101,48 @@ class JaversExposedAuditWorkshopTest {
             )
             snapshots shouldHaveSize 2
         }
+    }
+
+    @Test
+    fun `delete removes business row and records terminal audit snapshot`() {
+        val audit = JaversAuditHistory(javers)
+        val subscription = subscribeAudit(database, javers)
+        val id = try {
+            val customerId = AuditContextHolder.with(AuditContext("alice", "request-create")) {
+                transaction(database) {
+                    CustomerEntity.new {
+                        name = "Delete me"
+                        email = "delete-me@example.com"
+                        secret = "business-only"
+                    }.id.value
+                }
+            }
+
+            AuditContextHolder.with(AuditContext("bob", "request-delete")) {
+                transaction(database) {
+                    requireNotNull(CustomerEntity.findById(customerId)).delete()
+                }
+            }
+            customerId
+        } finally {
+            subscription.close()
+        }
+
+        transaction(database) {
+            Customers.selectAll().count().shouldBeZero()
+            CommitTable.selectAll().count() shouldBeEqualTo 2L
+            CdoSnapshotTable.selectAll().count() shouldBeEqualTo 2L
+        }
+
+        val history = audit.history(id)
+        history.snapshots shouldHaveSize 2
+        history.snapshots.first().apply {
+            type shouldBeEqualTo SnapshotType.TERMINAL
+            commitMetadata.author shouldBeEqualTo "bob"
+            commitMetadata.properties["requestId"] shouldBeEqualTo "request-delete"
+            commitMetadata.properties["changeType"] shouldBeEqualTo "Removed"
+        }
+        assertNull(history.current)
     }
 
     @Test

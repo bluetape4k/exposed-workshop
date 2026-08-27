@@ -81,6 +81,13 @@ property와 함께 update 기준 데이터를 만듭니다. 같은 값을 다시
 만들지 않습니다. 업무 트랜잭션이 rollback되면 commit과 `snapshot` row도 함께 rollback됩니다.
 `AuditContext`가 없으면 익명 기록을 만들지 않고 fail closed합니다.
 
+### 삭제 lifecycle
+
+`CustomerEntity.delete()`를 호출하면 업무 row가 삭제되고 provider가 같은 트랜잭션에서
+id 기반 `terminal` 기준 데이터를 commit합니다. 최신 기준 데이터는 `SnapshotType.TERMINAL`이며
+`changeType=Removed`를 포함하고, 감사 row는 history 조회를 위해 남으므로
+`history.current == null`이 됩니다. 업무 row 삭제는 감사 이력 삭제를 의미하지 않습니다.
+
 `JaversAuditHistory.history`는 읽기 전용 교육용 조회입니다. 운영 pagination, retention,
 restore, source of truth 교체 정책은 의도적으로 포함하지 않았으며 감사 저장소를 소유한
 애플리케이션이 결정해야 합니다. 인증·인가·tenant filter가 없으므로 production endpoint로
