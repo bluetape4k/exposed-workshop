@@ -55,7 +55,9 @@ Exposed `1.4.0`입니다.
 
 - 루트 및 장별 README의 모듈 목록을 현재 `settings.gradle.kts`와 일치시켰습니다.
 - WIP 큐를 2026-08-28 GitHub 상태로 갱신하고, 유일한 열린 작업인
-  `#255`의 upstream `2.0.0-SNAPSHOT` metadata/POM 대기 조건을 기록했습니다.
+  `#255`의 기본 `bluetape4k-dependencies:2.0.0-SNAPSHOT` 공개 metadata/POM은
+  확인했지만, BOM·중앙 catalog에 tenant artifact/versionless alias가 없어
+  migration을 보류하는 조건을 구체화했습니다.
 
 ## [1.1.2] - 2026-03-21
 

@@ -46,9 +46,12 @@
 
 `02`와 `06`은 공통 `TenantContext` 작업의 기존 reference consumer입니다.
 자세한 전환은
-[#255](https://github.com/bluetape4k/exposed-workshop/issues/255)에서 추적하며,
-upstream `2.0.0-SNAPSHOT` metadata와 POM을 검증하기 전까지는 각 예제의 local
-context 구현을 유지합니다. 이 migration에서는 새로운 모듈을 추가하지 않습니다.
+[#255](https://github.com/bluetape4k/exposed-workshop/issues/255)에서 추적합니다.
+기본 좌표 `io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`의
+metadata/POM은 공개되어 있지만, 공개 BOM에는 아직 tenant/context artifact나
+versionless catalog alias가 없습니다. exact artifact POM/API가 공개될
+때까지는 각 예제의 local context 구현을 유지하며, 이 migration에서는 새로운
+모듈을 추가하지 않습니다.
 
 ---
 

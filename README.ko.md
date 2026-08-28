@@ -23,7 +23,12 @@
 공통 `TenantContext` reference artifact를 검증한 뒤 기존 MVC와 Virtual Thread
 테넌트 예제를 전환하는
 [#255](https://github.com/bluetape4k/exposed-workshop/issues/255)입니다.
-이 migration에서는 새로운 multi-tenant 모듈을 만들지 않습니다.
+기본 좌표 `io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`의
+metadata/POM은 공개 저장소에서 확인했지만,
+[`bluetape4k-bom:2.0.0-SNAPSHOT`](https://github.com/bluetape4k/bluetape4k-dependencies/issues/213)과
+exposed BOM에는 아직 tenant/context artifact나 versionless catalog alias가
+없습니다. exact artifact POM/API가 공개될 때까지 migration을 보류하며, 이
+작업에서 새로운 multi-tenant 모듈은 만들지 않습니다.
 
 ## 제공 기능
 

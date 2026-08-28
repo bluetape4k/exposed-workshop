@@ -46,9 +46,12 @@ It then compares that baseline with **Database per Tenant**, where each whitelis
 
 Modules `02` and `06` are the two existing reference consumers for the shared
 `TenantContext` work tracked in
-[#255](https://github.com/bluetape4k/exposed-workshop/issues/255). Until the
-upstream `2.0.0-SNAPSHOT` metadata and POM are verified, these examples keep
-their local context implementations; the migration does not add a new module.
+[#255](https://github.com/bluetape4k/exposed-workshop/issues/255). The base
+`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT` metadata and POM
+are public, but the published BOMs do not yet expose a tenant/context artifact
+or versionless catalog alias. Until the exact artifact POM/API is public, these
+examples keep their local context implementations; the migration does not add
+a new module.
 
 ---
 

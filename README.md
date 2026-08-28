@@ -23,8 +23,13 @@ ecosystem integrations through JaVers audit history. As of 2026-08-28, the only
 open tracked implementation item is
 [#255](https://github.com/bluetape4k/exposed-workshop/issues/255): migrate the
 existing MVC and Virtual Thread tenant examples to the shared `TenantContext`
-reference artifact after the upstream `2.0.0-SNAPSHOT` metadata and POM are
-verified. No new multi-tenant module is planned for that migration.
+reference artifact. The base
+`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT` metadata and POM
+are publicly resolvable, but the published
+[`bluetape4k-bom:2.0.0-SNAPSHOT`](https://github.com/bluetape4k/bluetape4k-dependencies/issues/213)
+and exposed BOM do not yet contain a tenant/context artifact or versionless
+catalog alias. Migration remains pending until the exact artifact POM/API is
+public; no new multi-tenant module is planned.
 
 ## What It Provides
 
