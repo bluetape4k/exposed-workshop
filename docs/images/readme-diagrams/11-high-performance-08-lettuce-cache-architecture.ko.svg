@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 820" width="1400" height="820" role="img" aria-label="JDBC Lettuce 캐시 아키텍처와 소유권">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#1f2937" flood-opacity="0.13"/></filter>
+    <marker id="arrowPrimary" markerWidth="14" markerHeight="14" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" orient="auto" data-role="primary" data-tip-direction="positive-x"><path d="M0 0 L10 5 L0 10 Z" fill="#4f86c6" stroke="#4f86c6" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+    <marker id="arrowSecondary" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" orient="auto" data-role="secondary" data-tip-direction="positive-x"><path d="M0 0 L10 5 L0 10 Z" fill="#8b6b43" stroke="#8b6b43" stroke-dasharray="none" style="stroke-dasharray:none"/></marker>
+    <style>
+      .frame{fill:#fbfcf8;stroke:#40545d;stroke-width:3}.title{font-family:"goorm Sans",sans-serif;font-size:34px;fill:#1e293b}.subtitle,.detail{font-family:"goorm Sans Code","goorm Sans",monospace;fill:#536476}.subtitle{font-size:15px}.detail{font-size:14px}.card{filter:url(#shadow);stroke-width:2}.card-title{font-family:"goorm Sans",sans-serif;font-size:22px;fill:#1e293b}.card-title-small{font-family:"goorm Sans",sans-serif;font-size:17px;fill:#1e293b}.card-detail{font-family:"goorm Sans Code","goorm Sans",monospace;font-size:14px;fill:#536476}.boundary{fill:none;stroke:#9cafb7;stroke-width:2;stroke-dasharray:9 7}.flow{fill:none;stroke:#4f86c6;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowPrimary)}.lifecycle{fill:none;stroke:#8b6b43;stroke-width:2.5;stroke-dasharray:8 6;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowSecondary)}.label{fill:#fff;stroke:#c7d9e8;stroke-width:1.4}.legend{fill:#fff;stroke:#d7e2ec;stroke-width:1.4}
+    </style>
+  </defs>
+  <rect x="18" y="18" width="1364" height="784" rx="18" class="frame"/>
+  <text x="54" y="62" class="title">JDBC Lettuce 캐시 소유권</text>
+  <text x="54" y="88" class="subtitle">Provider-first READ_WRITE_THROUGH: H2가 원장이고 Redis는 원격 캐시이며 RedisClient 종료는 호출자가 소유합니다.</text>
+
+  <rect x="52" y="126" width="1296" height="600" rx="16" class="boundary"/>
+  <text x="76" y="156" class="detail">application 경계</text>
+
+  <g data-node="caller">
+    <rect x="78" y="292" width="220" height="120" rx="14" fill="#eaf3fb" stroke="#4f86c6" class="card"/>
+    <text x="188" y="328" class="card-title" text-anchor="middle">Caller</text>
+    <text x="188" y="354" class="card-detail" text-anchor="middle">sync / suspend API</text>
+    <text x="188" y="380" class="card-detail" text-anchor="middle">RedisClient 소유</text>
+  </g>
+
+  <g data-node="sync-repository">
+    <rect x="370" y="126" width="270" height="138" rx="14" fill="#f4f0e6" stroke="#a2743d" class="card"/>
+    <text x="505" y="164" class="card-title" text-anchor="middle">ProductJdbcLettuceRepository</text>
+    <text x="505" y="191" class="card-detail" text-anchor="middle">AbstractJdbcLettuceRepository</text>
+    <text x="505" y="218" class="card-detail" text-anchor="middle">get / put / findAll</text>
+  </g>
+
+  <g data-node="suspend-repository">
+    <rect x="370" y="526" width="270" height="138" rx="14" fill="#f4f0e6" stroke="#a2743d" class="card"/>
+    <text x="505" y="554" class="card-title-small" text-anchor="middle">ProductSuspendedJdbcLettuce</text>
+    <text x="505" y="578" class="card-title-small" text-anchor="middle">Repository</text>
+    <text x="505" y="604" class="card-detail" text-anchor="middle">AbstractSuspendedJdbcLettuce</text>
+    <text x="505" y="621" class="card-detail" text-anchor="middle">Repository</text>
+    <text x="505" y="646" class="card-detail" text-anchor="middle">suspendedTransactionAsync(IO)</text>
+  </g>
+
+  <g data-node="provider-map">
+    <rect x="760" y="274" width="300" height="190" rx="14" fill="#eaf5ef" stroke="#6f8f58" class="card"/>
+    <text x="910" y="312" class="card-title" text-anchor="middle">Provider LoadedMap</text>
+    <text x="910" y="340" class="card-detail" text-anchor="middle">명시적 Jackson 3 codec</text>
+    <text x="910" y="366" class="card-detail" text-anchor="middle">keyPrefix: workshop:products</text>
+    <text x="910" y="392" class="card-detail" text-anchor="middle">remote-only, wrapper 없음</text>
+    <text x="910" y="430" class="card-detail" text-anchor="middle">읽기 fallback / write-through</text>
+  </g>
+
+  <g data-node="jdbc-source">
+    <rect x="1140" y="126" width="190" height="120" rx="14" fill="#edf5f5" stroke="#2f9a94" class="card"/>
+    <text x="1235" y="164" class="card-title" text-anchor="middle">ProductTable</text>
+    <text x="1235" y="191" class="card-detail" text-anchor="middle">H2 JDBC</text>
+    <text x="1235" y="218" class="card-detail" text-anchor="middle">원장(source of truth)</text>
+  </g>
+
+  <g data-node="redis-cache">
+    <rect x="1140" y="350" width="190" height="120" rx="14" fill="#f6eee7" stroke="#a2743d" class="card"/>
+    <text x="1235" y="388" class="card-title" text-anchor="middle">Redis</text>
+    <text x="1235" y="415" class="card-detail" text-anchor="middle">원격 캐시</text>
+    <text x="1235" y="442" class="card-detail" text-anchor="middle">SCAN + UNLINK 정리</text>
+  </g>
+
+  <g data-node="client-owner">
+    <rect x="760" y="566" width="300" height="100" rx="14" fill="#f3eef8" stroke="#7a6f9a" class="card"/>
+    <text x="910" y="604" class="card-title" text-anchor="middle">ShutdownQueue</text>
+    <text x="910" y="632" class="card-detail" text-anchor="middle">단일 client 소유자</text>
+  </g>
+
+  <path data-connector="caller-sync" data-source="caller" data-target="sync-repository" d="M298 324 H334 Q350 324 350 306 V215 Q346 195 355 195 H370" class="flow"/>
+  <rect x="300" y="274" width="154" height="28" rx="14" class="label"/><text x="377" y="293" class="detail" text-anchor="middle">sync 호출</text>
+  <path data-connector="caller-suspend" data-source="caller" data-target="suspend-repository" d="M298 380 H334 Q350 380 350 398 V575 Q346 595 355 595 H370" class="flow"/>
+  <rect x="300" y="436" width="170" height="28" rx="14" class="label"/><text x="385" y="455" class="detail" text-anchor="middle">suspend 호출</text>
+  <path data-connector="sync-provider" data-source="sync-repository" data-target="provider-map" d="M640 195 H700 Q720 195 720 215 V310 Q720 330 745 330 H760" class="flow"/>
+  <rect x="648" y="214" width="136" height="28" rx="14" class="label"/><text x="716" y="233" class="detail" text-anchor="middle">provider API</text>
+  <path data-connector="suspend-provider" data-source="suspend-repository" data-target="provider-map" d="M640 595 H700 Q720 595 720 575 V428 Q720 408 745 408 H760" class="flow"/>
+  <rect x="646" y="680" width="154" height="28" rx="14" class="label"/><text x="723" y="699" class="detail" text-anchor="middle">동일 계약</text>
+  <path data-connector="provider-jdbc" data-source="provider-map" data-target="jdbc-source" d="M1060 324 H1092 Q1110 324 1110 306 V206 Q1110 186 1125 186 H1140" class="flow"/>
+  <rect x="1036" y="262" width="124" height="28" rx="14" class="label"/><text x="1098" y="281" class="detail" text-anchor="middle">DB fallback</text>
+  <path data-connector="provider-redis" data-source="provider-map" data-target="redis-cache" d="M1060 412 H1140" class="flow"/>
+  <rect x="1044" y="438" width="142" height="28" rx="14" class="label"/><text x="1115" y="457" class="detail" text-anchor="middle">GET / SETEX</text>
+  <path data-connector="owner-redis" data-source="client-owner" data-target="redis-cache" d="M1060 616 H1094 Q1112 616 1112 598 V500 Q1112 484 1128 484 H1235 V470" class="lifecycle"/>
+  <rect x="1048" y="618" width="190" height="28" rx="14" class="label"/><text x="1143" y="637" class="detail" text-anchor="middle">lifecycle 경계</text>
+
+  <rect x="78" y="744" width="1252" height="38" rx="14" class="legend"/>
+  <line x1="104" y1="763" x2="174" y2="763" class="flow"/><text x="190" y="768" class="detail">주요 dependency / data flow</text>
+  <line x1="496" y1="763" x2="566" y2="763" class="lifecycle"/><text x="582" y="768" class="detail">호출자 소유 lifecycle</text>
+  <text x="1014" y="768" class="detail">Redis는 최적화 계층이며 업무 원장이 아님</text>
+</svg>
