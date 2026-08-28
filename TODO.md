@@ -151,9 +151,23 @@
 
 ## 14. 기존 데이터베이스 마이그레이션 (Flyway)
 
-- [ ] Exposed의 MigrationUtils
+- [X] Exposed의 MigrationUtils
 - [ ] Flyway 기반 Migration
 
 ## 15. Spring Modulith와 Exposed
 
-- [ ] Spring Modulith 및 Application Events
+- [X] Spring Modulith publication store
+- [X] Spring Modulith Application Events
+- [X] DDD aggregate와 Modulith bounded context 경계 검증
+
+## 16. Exposed ecosystem integrations
+
+- [X] BigQuery dry-run query validation
+- [X] Trino session options와 pushdown 검증
+- [X] CockroachDB serializable retry
+- [X] StarRocks local-first OLAP
+- [X] Ktor Exposed integration
+- [X] DuckDB embedded analytics
+- [X] Apache Druid query-only
+- [X] Checkpointable JDBC batch
+- [X] JaVers + Exposed 감사 이력
