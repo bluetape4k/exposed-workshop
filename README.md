@@ -15,6 +15,17 @@ A source-backed workshop for learning Kotlin Exposed through runnable Gradle mod
 
 `exposed-workshop` teaches Kotlin Exposed as a sequence of small, executable examples. The repository starts with shared database fixtures and Spring Boot entrypoints, then expands into SQL DSL, DAO, DDL/DML, advanced column types, JPA migration, coroutines, virtual threads, multi-tenancy, cache/routing, and production integration with Spring Boot and Ktor.
 
+## Current Status
+
+The source tree currently contains the runnable examples for Chapters 10–13,
+including Ktor and tenant-onboarding variants, JDBC + Lettuce caching, and the
+ecosystem integrations through JaVers audit history. As of 2026-08-28, the only
+open tracked implementation item is
+[#255](https://github.com/bluetape4k/exposed-workshop/issues/255): migrate the
+existing MVC and Virtual Thread tenant examples to the shared `TenantContext`
+reference artifact after the upstream `2.0.0-SNAPSHOT` metadata and POM are
+verified. No new multi-tenant module is planned for that migration.
+
 ## What It Provides
 
 - **Source-ordered learning path** matching `settings.gradle.kts` and the chapter directory layout.
@@ -83,7 +94,7 @@ Read the repository in source-tree order. Start with shared fixtures, then work 
 2. **Exposed core**: SQL DSL, DAO, schema definition, DML, functions, transactions, and entities.
 3. **Extensions and migration**: JSON, money, encryption, custom columns/entities, Jackson/Fastjson/Tink, and JPA migration.
 4. **Runtime models**: coroutines and Java 25 virtual threads.
-5. **Operational patterns**: Spring transactions, repositories, cache, multi-tenancy, routing data sources, benchmarks, Ktor, outbox, auth/session, realtime, and observability.
+5. **Operational patterns**: Spring transactions, repositories, cache, multi-tenancy, routing data sources, benchmarks, Ktor, outbox, auth/session, realtime, observability, and ecosystem integrations.
 
 ### Learning Path
 
@@ -319,6 +330,14 @@ Route whitelisted tenants to dedicated Hikari pools and Exposed databases with n
 
 Authorize the requested tenant from JWT, API key, or demo session identity before routing to a tenant database.
 
+#### [Multitenant Ktor](10-multi-tenant/07-multitenant-ktor/README.md)
+
+Propagate a validated tenant through Ktor request plugins and coroutine context while switching Exposed schemas explicitly.
+
+#### [Tenant Onboarding Spring Web](10-multi-tenant/08-tenant-onboarding-spring-web/README.md)
+
+Persist tenant metadata, provision a schema marker, reject duplicates, and clean up partially provisioned schemas.
+
 ---
 
 ### High Performance
@@ -338,6 +357,22 @@ Learn flexible DataSource routing configuration for multi-tenant or read replica
 #### [Benchmark](11-high-performance/04-benchmark/README.md)
 
 Measure performance of cache/routing examples using `kotlinx-benchmark` micro-benchmarks. Provides smoke and main profiles with Markdown report generation.
+
+#### [Ktor Cache Strategies](11-high-performance/05-cache-strategies-ktor/README.md)
+
+Compare cache-aside, read-through, and write-through behavior in Ktor routes.
+
+#### [Ktor Coroutine Cache Strategies](11-high-performance/06-cache-strategies-coroutines-ktor/README.md)
+
+Apply coroutine-safe cache operations with explicit `Dispatchers.IO` boundaries.
+
+#### [Ktor RoutingDataSource](11-high-performance/07-routing-datasource-ktor/README.md)
+
+Route read/write datasource roles from Ktor request context and transaction state.
+
+#### [JDBC + Lettuce Cache Strategies](11-high-performance/08-cache-strategies-lettuce/README.md)
+
+Exercise the provider `READ_WRITE_THROUGH` contract with H2 by default and Redis as an explicit opt-in.
 
 ### Production Integration
 
@@ -391,9 +426,9 @@ Implement the Ktor pair with explicit `/readyz`, sanitized `X-Request-ID`, struc
 
 #### [Chapter 13 Overview](13-ecosystem-integrations/README.md)
 
-Track planned Exposed 1.11 ecosystem examples for database platforms, Ktor,
-Spring Modulith, and DDD under issue
-[#137](https://github.com/bluetape4k/exposed-workshop/issues/137).
+Review the delivered Exposed 1.11 ecosystem examples for database platforms,
+Ktor, Spring Modulith, DDD, checkpointable batch, and audit history. Future
+additions can extend the chapter without moving production-service examples.
 
 #### [BigQuery Dry-Run Query Validation](13-ecosystem-integrations/01-bigquery-dry-run/README.md)
 
@@ -442,6 +477,10 @@ Split orders and shipping into Spring Modulith bounded contexts, expose only an
 order event named interface, and verify valid and forbidden dependencies with
 deterministic H2-backed Exposed tests.
 
+#### [DuckDB Embedded Analytics with Exposed](13-ecosystem-integrations/09-duckdb-embedded-analytics/README.md)
+
+Run local DuckDB analytical queries through Exposed while keeping embedded database setup and cleanup explicit.
+
 #### [Apache Druid Query-Only Exposed](13-ecosystem-integrations/10-druid-query-only/README.md)
 
 Map a typed `DruidQueryProfile` to `DruidConnectionOptions` from the central catalog, delegate
@@ -455,6 +494,10 @@ Read source rows by keyset, transform and write JDBC chunks, persist provider
 checkpoints, and verify cancellation/restart behavior with deterministic H2
 tests. The R2DBC counterpart is tracked separately in
 [`exposed-r2dbc-workshop#205`](https://github.com/bluetape4k/exposed-r2dbc-workshop/issues/205).
+
+#### [JaVers + Exposed Audit History](13-ecosystem-integrations/12-javers-exposed-audit/README.md)
+
+Record entity changes with JaVers and preserve delete lifecycle history through the Exposed repository boundary.
 
 ---
 

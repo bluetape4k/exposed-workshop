@@ -15,6 +15,16 @@
 
 `exposed-workshop`은 Kotlin Exposed를 작은 실행 예제로 나눠 설명합니다. 공통 데이터베이스 fixture와 Spring Boot 진입점에서 시작해 SQL DSL, DAO, DDL/DML, 고급 컬럼 타입, JPA 마이그레이션, 코루틴, 가상 스레드, 멀티테넌시, 캐시/라우팅, Spring Boot와 Ktor 기반 운영 통합 예제로 확장됩니다.
 
+## 현재 상태
+
+현재 소스 트리에는 Chapter 10–13의 실행 가능한 예제가 모두 포함되어
+있습니다. Ktor와 tenant onboarding 변형, JDBC + Lettuce 캐시, JaVers 감사
+이력까지 연결되어 있습니다. 2026-08-28 기준 유일하게 열린 구현 작업은
+공통 `TenantContext` reference artifact를 검증한 뒤 기존 MVC와 Virtual Thread
+테넌트 예제를 전환하는
+[#255](https://github.com/bluetape4k/exposed-workshop/issues/255)입니다.
+이 migration에서는 새로운 multi-tenant 모듈을 만들지 않습니다.
+
 ## 제공 기능
 
 - **소스 순서와 같은 학습 경로** — `settings.gradle.kts`와 챕터 디렉터리 구조를 그대로 따릅니다.
@@ -84,7 +94,7 @@ BOM을 변경할 때는 release 대조와 guard를 함께 갱신합니다.
 2. **Exposed 핵심**: SQL DSL, DAO, 스키마 정의, DML, 함수, 트랜잭션, Entity를 학습합니다.
 3. **확장과 마이그레이션**: JSON, money, 암호화, 커스텀 컬럼/Entity, Jackson/Fastjson/Tink, JPA 마이그레이션을 다룹니다.
 4. **런타임 모델**: 코루틴과 Java 25 가상 스레드에서 Exposed 사용 방식을 비교합니다.
-5. **운영 패턴**: Spring 트랜잭션, 리포지토리, 캐시, 멀티테넌시, routing datasource, benchmark, Ktor, outbox, 인증/세션, realtime, observability 예제로 확장합니다.
+5. **운영 패턴**: Spring 트랜잭션, 리포지토리, 캐시, 멀티테넌시, routing datasource, benchmark, Ktor, outbox, 인증/세션, realtime, observability, ecosystem integration 예제로 확장합니다.
 
 ### 학습 경로
 
@@ -321,6 +331,14 @@ WebFlux와 Coroutines를 이용하여 반응형 멀티테넌시를 구현하는 
 
 JWT, API key, demo session identity에서 요청 tenant를 인가한 뒤 tenant database로 라우팅하는 방법을 학습합니다.
 
+#### [Multitenant Ktor](10-multi-tenant/07-multitenant-ktor/README.ko.md)
+
+Ktor request plugin과 coroutine context로 검증된 tenant를 전파하고 Exposed schema를 명시적으로 전환하는 방법을 학습합니다.
+
+#### [Tenant Onboarding Spring Web](10-multi-tenant/08-tenant-onboarding-spring-web/README.ko.md)
+
+Tenant metadata를 저장하고 schema marker를 provisioning하며, duplicate와 부분 provisioning 실패를 cleanup하는 방법을 학습합니다.
+
 ---
 
 ### 고성능
@@ -340,6 +358,22 @@ Multi-Tenant 또는 Read Replica 구조를 위한 유연한 DataSource 라우팅
 #### [벤치마크](11-high-performance/04-benchmark/README.ko.md)
 
 `kotlinx-benchmark` 기반 마이크로벤치마크로 캐시/라우팅 예제의 성능을 측정합니다. smoke 프로파일과 main 프로파일을 제공하며 Markdown 리포트를 생성할 수 있습니다.
+
+#### [Ktor 캐시 전략](11-high-performance/05-cache-strategies-ktor/README.ko.md)
+
+Ktor route에서 cache-aside, read-through, write-through 동작을 비교합니다.
+
+#### [Ktor Coroutine 캐시 전략](11-high-performance/06-cache-strategies-coroutines-ktor/README.ko.md)
+
+명시적인 `Dispatchers.IO` 경계에서 coroutine-safe 캐시 작업을 적용합니다.
+
+#### [Ktor RoutingDataSource](11-high-performance/07-routing-datasource-ktor/README.ko.md)
+
+Ktor request context와 transaction 상태에서 read/write datasource 역할을 라우팅합니다.
+
+#### [JDBC + Lettuce 캐시 전략](11-high-performance/08-cache-strategies-lettuce/README.ko.md)
+
+H2를 기본으로 provider의 `READ_WRITE_THROUGH` 계약을 실습하고 Redis는 명시적으로 opt-in합니다.
 
 ### 운영 통합
 
@@ -393,8 +427,9 @@ Spring Boot 4 서비스의 Actuator readiness, request correlation, structured e
 
 #### [Chapter 13 개요](13-ecosystem-integrations/README.ko.md)
 
-이슈 [#137](https://github.com/bluetape4k/exposed-workshop/issues/137) 아래에서 데이터베이스
-플랫폼, Ktor, Spring Modulith, DDD 중심의 Exposed 1.11 ecosystem 예제를 추적합니다.
+데이터베이스 플랫폼, Ktor, Spring Modulith, DDD, checkpointable batch, 감사
+이력을 포함한 Exposed 1.11 ecosystem 예제를 확인합니다. 운영 서비스 예제와
+분리된 장 경계는 향후 확장에도 유지합니다.
 
 #### [BigQuery Dry-Run Query Validation](13-ecosystem-integrations/01-bigquery-dry-run/README.ko.md)
 
@@ -442,6 +477,10 @@ Orders와 shipping을 Spring Modulith bounded context로 나누고, order event 
 interface만 공개하며, deterministic H2 기반 Exposed 테스트로 정상 의존성과 금지된
 의존성을 함께 검증합니다.
 
+#### [DuckDB Embedded Analytics with Exposed](13-ecosystem-integrations/09-duckdb-embedded-analytics/README.ko.md)
+
+로컬 DuckDB 분석 쿼리를 Exposed로 실행하고 embedded database 설정과 cleanup 경계를 명시합니다.
+
 #### [Apache Druid Query-Only Exposed](13-ecosystem-integrations/10-druid-query-only/README.ko.md)
 
 중앙 catalog의 typed `DruidQueryProfile`을 `DruidConnectionOptions`로 매핑하고, read-only
@@ -454,6 +493,10 @@ keyset으로 source row를 읽고 JDBC chunk를 변환·저장한 뒤 provider c
 deterministic H2 테스트로 cancellation/restart 동작을 검증합니다. R2DBC 대응은
 [`exposed-r2dbc-workshop#205`](https://github.com/bluetape4k/exposed-r2dbc-workshop/issues/205)에서
 별도로 추적합니다.
+
+#### [JaVers + Exposed 감사 이력](13-ecosystem-integrations/12-javers-exposed-audit/README.ko.md)
+
+JaVers로 Entity 변경을 기록하고 Exposed repository 경계를 통해 삭제 lifecycle 이력을 보존합니다.
 
 ---
 

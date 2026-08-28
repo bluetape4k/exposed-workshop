@@ -36,13 +36,19 @@
 | 모듈                                        | 설명                              | 컨텍스트 전파           |
 |-------------------------------------------|---------------------------------|-------------------|
 | `01-multitenant-spring-web`               | Spring MVC 기반 멀티테넌트             | `ThreadLocal`     |
-| `02-multitenant-spring-web-virtualthread` | Java 21 Virtual Thread 기반 멀티테넌트 | `ScopedValue`     |
+| `02-multitenant-spring-web-virtualthread` | Java 25 Virtual Thread 기반 멀티테넌트 | `ScopedValue`     |
 | `03-multitenant-spring-webflux`           | WebFlux + Coroutines 기반 멀티테넌트   | Reactor `Context` |
 | `04-schema-per-tenant-spring-web`         | 하나의 Hikari pool을 쓰는 schema-per-tenant 예제 | `ThreadLocal`     |
 | `05-database-per-tenant-spring-web`       | tenant별 전용 Hikari pool을 쓰는 database-per-tenant 예제 | `ThreadLocal`     |
 | `06-spring-security-tenant-authorization-spring-web` | database routing 전 Spring Security로 tenant authorization 수행 | `ThreadLocal` |
 | `07-multitenant-ktor`                     | Ktor request plugin 기반 멀티테넌트 예제 | Coroutine `ThreadContextElement` |
 | `08-tenant-onboarding-spring-web`         | Tenant catalog 저장과 schema provisioning 예제 | Service transaction |
+
+`02`와 `06`은 공통 `TenantContext` 작업의 기존 reference consumer입니다.
+자세한 전환은
+[#255](https://github.com/bluetape4k/exposed-workshop/issues/255)에서 추적하며,
+upstream `2.0.0-SNAPSHOT` metadata와 POM을 검증하기 전까지는 각 예제의 local
+context 구현을 유지합니다. 이 migration에서는 새로운 모듈을 추가하지 않습니다.
 
 ---
 
@@ -62,6 +68,13 @@
 | 격리 가드   |      Schema      |           Schema           |                Schema               |    Header whitelist + reset 실패 시 eviction     | Header whitelist + 기본 datasource 없음 | 인증된 tenant match + 기본 datasource 없음 |
 | 블로킹 허용  |        허용        |             허용             |          금지 (이벤트 루프 차단 불가)          |                       허용                       |                    허용                    |                    허용                    |
 
+### Ktor 및 onboarding 확장
+
+| 모듈 | 런타임 경계 | 격리 / 트랜잭션 초점 |
+|---|---|---|
+| `07-multitenant-ktor` | Ktor request plugin + coroutine `ThreadContextElement` | `X-Tenant-ID`를 검증하고 tenant를 바인딩한 뒤 JDBC repository transaction에서 schema를 전환합니다. |
+| `08-tenant-onboarding-spring-web` | Spring service transaction | Schema provisioning 성공 후 tenant catalog을 저장하고, 실패하면 부분 리소스를 제거합니다. |
+
 ---
 
 ## 공통 요청 흐름
@@ -80,7 +93,8 @@
 4. [`04-schema-per-tenant-spring-web`](04-schema-per-tenant-spring-web/README.ko.md) — 하나의 shared pool에서 명시적 schema switch, reset, connection eviction을 실습
 5. [`05-database-per-tenant-spring-web`](05-database-per-tenant-spring-web/README.ko.md) — tenant마다 전용 datasource를 선택하고 fallback database가 없도록 구성
 6. [`06-spring-security-tenant-authorization-spring-web`](06-spring-security-tenant-authorization-spring-web/README.ko.md) — 인증된 identity와 tenant routing을 연결한 뒤 database를 선택
-7. [`08-tenant-onboarding-spring-web`](08-tenant-onboarding-spring-web/README.ko.md) — Tenant metadata를 저장하고 cleanup 가능한 tenant schema를 provisioning
+7. [`07-multitenant-ktor`](07-multitenant-ktor/README.ko.md) — Ktor request plugin으로 검증된 tenant context를 전파
+8. [`08-tenant-onboarding-spring-web`](08-tenant-onboarding-spring-web/README.ko.md) — Tenant metadata를 저장하고 cleanup 가능한 tenant schema를 provisioning
 
 ---
 
@@ -162,6 +176,22 @@ demo session header로 caller를 인증하고, 요청된 `X-Tenant-ID`를 인가
 request path에서 raw header-only tenant trust를 제거합니다.
 
 - 관련 모듈: [`06-spring-security-tenant-authorization-spring-web`](06-spring-security-tenant-authorization-spring-web/)
+
+### Ktor tenant context
+
+`07-multitenant-ktor`는 Ktor plugin에서 `X-Tenant-ID`를 검증하고 coroutine
+`ThreadContextElement`로 값을 바인딩한 뒤 repository transaction에서 Exposed
+schema를 전환합니다.
+
+- 관련 모듈: [`07-multitenant-ktor`](07-multitenant-ktor/)
+
+### Tenant onboarding과 provisioning
+
+`08-tenant-onboarding-spring-web`은 schema와 marker table provisioning이
+성공한 뒤에만 tenant catalog을 기록하고, catalog 저장 전에 실패하면 schema를
+제거합니다.
+
+- 관련 모듈: [`08-tenant-onboarding-spring-web`](08-tenant-onboarding-spring-web/)
 
 ---
 
