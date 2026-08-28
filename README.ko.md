@@ -19,16 +19,18 @@
 
 현재 소스 트리에는 Chapter 10–13의 실행 가능한 예제가 모두 포함되어
 있습니다. Ktor와 tenant onboarding 변형, JDBC + Lettuce 캐시, JaVers 감사
-이력까지 연결되어 있습니다. 2026-08-28 기준 유일하게 열린 구현 작업은
-공통 `TenantContext` reference artifact를 검증한 뒤 기존 MVC와 Virtual Thread
+이력까지 연결되어 있습니다. 2026-08-29 기준 유일하게 열린 구현 작업은
+공통 `TenantContext` reference artifact를 사용해 기존 MVC와 Virtual Thread
 테넌트 예제를 전환하는
-[#255](https://github.com/bluetape4k/exposed-workshop/issues/255)입니다.
-기본 좌표 `io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`의
-metadata/POM은 공개 저장소에서 확인했지만,
+[#255](https://github.com/bluetape4k/exposed-workshop/issues/255)입니다. 두
+consumer 모듈은 이제 versionless catalog alias를 통해 공통
+`io.github.bluetape4k:bluetape4k-tenant` API를 사용하며 기준은
+`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`입니다. 기본
+좌표의 metadata/POM은 공개 저장소에서 확인했지만,
 [`bluetape4k-bom:2.0.0-SNAPSHOT`](https://github.com/bluetape4k/bluetape4k-dependencies/issues/213)과
-exposed BOM에는 아직 tenant/context artifact나 versionless catalog alias가
-없습니다. exact artifact POM/API가 공개될 때까지 migration을 보류하며, 이
-작업에서 새로운 multi-tenant 모듈은 만들지 않습니다.
+exposed BOM의 tenant artifact 공개 해석은 아직 대기 중입니다. 로컬 검증은
+upstream PR의 exact artifact를 사용했으며 public dependency resolution은
+pending입니다. 이 작업에서 새로운 multi-tenant 모듈은 만들지 않습니다.
 
 ## 제공 기능
 
@@ -88,7 +90,7 @@ catalog를 기준으로 선언합니다. 로컬 pin이 필요하다면
 호환성 사유를 기록합니다. BOM이 이미 관리하는 artifact에는 임의의 버전을
 추가하지 않습니다. catalog 변경을 검토할 때는
 `gradle/dependency-governance.sh`를 실행합니다. 이 guard는 import한
-`bluetape4k-dependencies:1.4.0` release에 명시적으로 고정되어 있으므로,
+`bluetape4k-dependencies:2.0.0-SNAPSHOT` catalog에 명시적으로 고정되어 있으므로,
 BOM을 변경할 때는 release 대조와 guard를 함께 갱신합니다.
 
 ## 학습 가이드

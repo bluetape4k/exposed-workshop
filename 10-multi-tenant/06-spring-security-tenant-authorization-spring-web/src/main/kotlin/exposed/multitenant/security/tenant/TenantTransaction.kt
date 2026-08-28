@@ -7,7 +7,7 @@ class TenantTransaction(
 ) {
 
     fun <T> execute(
-        tenantId: TenantId = TenantContext.current(),
+        tenantId: TenantId = TenantContexts.current(),
         block: () -> T,
     ): T =
         transaction(registry.databaseFor(tenantId)) {

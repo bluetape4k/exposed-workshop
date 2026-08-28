@@ -8,7 +8,7 @@
 
 `1.1.2` 태그 이후 `develop` 브랜치에 반영된 예제·문서·검증 변경을
 기록합니다. 현재 버전과 의존성 기준은 `gradle/libs.versions.toml`의
-`bluetape4k-dependencies:1.4.0`, Kotlin `2.4.0`, Java toolchain `25`,
+`bluetape4k-dependencies:2.0.0-SNAPSHOT`, Kotlin `2.4.0`, Java toolchain `25`,
 Exposed `1.4.0`입니다.
 
 ### 추가
@@ -28,6 +28,11 @@ Exposed `1.4.0`입니다.
 
 - `settings.gradle.kts`가 `00`부터 `13`장까지 소스 트리의 모듈을 자동 발견하도록
   유지하고, Gradle version catalog와 중앙 BOM을 기준으로 의존성 좌표를 관리합니다.
+- Chapter 10의 기존 MVC/Virtual Thread tenant consumer가 versionless
+  `libs.bluetape4k.tenant` alias를 통해 공통 `bluetape4k-tenant` carrier를
+  사용하도록 전환했습니다. 애플리케이션 경계는 header parsing·인가·schema/database
+  routing을 유지하고, lexical binding과 cleanup은 공통 `ThreadLocalTenantContext` /
+  `ScopedValueTenantContext`에 위임합니다.
 - CI는 선택된 Examples 경로와 nightly 검증 경계를 사용하며, detekt·테스트
   결과와 시각 자료 검증을 아티팩트로 남깁니다.
 - 모든 장의 README는 실행 모듈, 다이어그램 이미지, English/Korean locale 쌍을
@@ -46,6 +51,9 @@ Exposed `1.4.0`입니다.
 
 - Druid query-only, checkpointable JDBC batch, Ktor observability, measured
   단위 컬럼, JaVers 감사 이력, JDBC Lettuce cache의 H2 중심 테스트를 추가했습니다.
+- #255 대상 모듈에서 unbound context, 중첩 scope 복원, 예외 후 cleanup, 순차·병렬
+  tenant 격리를 검증했습니다. 로컬 exact upstream snapshot 기준 `02` 44개와
+  `06` 32개 테스트가 통과했습니다.
 - 멀티테넌트 MVC/Virtual Thread/WebFlux와 cache/routing 예제에 순차·병렬 격리,
   실패 후 cleanup, fallback 동작을 확인하는 회귀 검증을 보강했습니다.
 - 문서 검증은 `git diff --check`, localization 범위, README 링크와 다이어그램
@@ -54,10 +62,10 @@ Exposed `1.4.0`입니다.
 ### 문서
 
 - 루트 및 장별 README의 모듈 목록을 현재 `settings.gradle.kts`와 일치시켰습니다.
-- WIP 큐를 2026-08-28 GitHub 상태로 갱신하고, 유일한 열린 작업인
-  `#255`의 기본 `bluetape4k-dependencies:2.0.0-SNAPSHOT` 공개 metadata/POM은
-  확인했지만, BOM·중앙 catalog에 tenant artifact/versionless alias가 없어
-  migration을 보류하는 조건을 구체화했습니다.
+- WIP 큐를 2026-08-29 GitHub 상태로 갱신하고, `#255` 구현이 로컬에서
+  `2.0.0-SNAPSHOT` catalog와 exact upstream tenant artifact 기준으로 진행된
+  상태를 기록했습니다. public snapshot 저장소의 tenant artifact/BOM 노출은
+  upstream publication gate가 해소될 때까지 pending입니다.
 
 ## [1.1.2] - 2026-03-21
 

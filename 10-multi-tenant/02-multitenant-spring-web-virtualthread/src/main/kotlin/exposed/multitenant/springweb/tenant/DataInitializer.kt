@@ -33,7 +33,7 @@ class DataInitializer {
     fun initialize() {
         log.info { "데이터베이스 초기화 및 샘플 데이터 추가" }
 
-        val tenant = TenantContext.getCurrentTenant()
+        val tenant = TenantContexts.current()
         createSchema(tenant)
         populateData(tenant)
     }

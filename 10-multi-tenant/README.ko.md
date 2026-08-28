@@ -48,10 +48,11 @@
 자세한 전환은
 [#255](https://github.com/bluetape4k/exposed-workshop/issues/255)에서 추적합니다.
 기본 좌표 `io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`의
-metadata/POM은 공개되어 있지만, 공개 BOM에는 아직 tenant/context artifact나
-versionless catalog alias가 없습니다. exact artifact POM/API가 공개될
-때까지는 각 예제의 local context 구현을 유지하며, 이 migration에서는 새로운
-모듈을 추가하지 않습니다.
+metadata/POM은 공개되어 있습니다. 두 예제는 이제 versionless catalog alias로
+`io.github.bluetape4k:bluetape4k-tenant`를 사용하고, 각 애플리케이션 tenant
+타입과 공통 carrier 사이의 얇은 mapping만 유지합니다. exact tenant artifact는
+공개 snapshot 저장소에서 아직 해석되지 않으므로 로컬 검증에는 upstream PR
+artifact를 사용하며, 새로운 모듈은 추가하지 않습니다.
 
 ---
 
@@ -148,7 +149,8 @@ versionless catalog alias가 없습니다. exact artifact POM/API가 공개될
 ### Virtual Thread 환경의 테넌트 컨텍스트 전파
 
 Virtual Thread는 `ThreadLocal` 대신 `ScopedValue`로 컨텍스트를 전파합니다. `02-multitenant-spring-web-virtualthread`는
-`TomcatVirtualThreadConfig`로 executor를 교체하고 `ScopedValue.where().run { }` 블록으로 테넌트를 바인딩합니다.
+`TomcatVirtualThreadConfig`로 executor를 교체하고 `TenantContexts` 내부의 공통
+`ScopedValueTenantContext`로 테넌트를 바인딩합니다.
 
 - 관련 모듈: [`02-multitenant-spring-web-virtualthread`](02-multitenant-spring-web-virtualthread/)
 
@@ -175,8 +177,9 @@ WebFlux에서는 Reactor `Context`를 통해 코루틴 컨텍스트에 테넌트
 
 `06-spring-security-tenant-authorization-spring-web`은 demo JWT, API key,
 demo session header로 caller를 인증하고, 요청된 `X-Tenant-ID`를 인가한 뒤에만
-`TenantContext`를 설정합니다. database-per-tenant routing 경계는 유지하되
-request path에서 raw header-only tenant trust를 제거합니다.
+`TenantContexts`를 통해 공통 `ThreadLocalTenantContext`를 바인딩합니다.
+database-per-tenant routing 경계는 유지하되 request path에서 raw header-only
+tenant trust를 제거합니다.
 
 - 관련 모듈: [`06-spring-security-tenant-authorization-spring-web`](06-spring-security-tenant-authorization-spring-web/)
 

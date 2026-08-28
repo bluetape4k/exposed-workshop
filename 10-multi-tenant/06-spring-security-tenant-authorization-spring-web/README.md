@@ -17,6 +17,16 @@ matches authenticated claims or server-side identity before routing to tenant
 data. The MVC `ThreadLocal` propagation shown here does not transfer unchanged
 to coroutine, WebFlux, or virtual-thread modules.
 
+## Dependency
+
+The module consumes the shared `bluetape4k-tenant` carrier from the
+`2.0.0-SNAPSHOT` dependency line. The catalog alias is versionless; the
+`bluetape4k-dependencies` BOM remains the version authority.
+
+```kotlin
+implementation(libs.bluetape4k.tenant)
+```
+
 ## Architecture Diagram
 
 ![Spring Security Tenant Authorization Spring Web Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-06-spring-security-tenant-authorization-spring-web-architecture-01.png)
@@ -34,7 +44,7 @@ to coroutine, WebFlux, or virtual-thread modules.
 | Conflict handling | Mixed supported credential sources return `400 CONFLICTING_CREDENTIALS` |
 | Missing auth | Spring Security returns `401 Unauthorized` |
 | Missing/invalid tenant selector | `400 MISSING_TENANT`; unknown selector returns `404 UNKNOWN_TENANT` |
-| Routing boundary | `TenantAuthorizationFilter` sets `TenantContext`; repositories use `TenantTransaction` |
+| Routing boundary | `TenantAuthorizationFilter` binds the shared `ThreadLocalTenantContext` through `TenantContexts`; repositories use `TenantTransaction` |
 | Fallback | No default datasource; no header-only tenant routing |
 | Isolation | Each tenant has a different H2 JDBC URL and Hikari pool |
 
@@ -84,8 +94,9 @@ curl -H 'X-API-Key: demo-globex-key' \
 
 The tests cover JWT, API-key, and demo-session access; invalid credentials;
 tenant mismatch; missing and malformed claims; credential conflicts; tenant
-selector failures; cross-tenant isolation; `ThreadLocal` cleanup; rollback;
-database bootstrap; datasource close; and source-text architecture guards.
+selector failures; cross-tenant isolation; shared `ThreadLocalTenantContext`
+cleanup (without consumer-owned `set`/`clear` calls); rollback; database
+bootstrap; datasource close; and source-text architecture guards.
 
 ## CI Coverage
 

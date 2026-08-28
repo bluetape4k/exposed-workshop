@@ -2,7 +2,7 @@
 
 English | [한국어](./README.ko.md)
 
-An example that extends the multi-tenancy structure from module `01` to a Java 21 Virtual Threads environment. Focuses on a configuration that increases concurrent throughput while retaining blocking I/O style. Uses `ScopedValue` instead of `ThreadLocal` for Virtual Thread-friendly context propagation.
+An example that extends the multi-tenancy structure from module `01` to a Java 25 Virtual Threads environment. Focuses on a configuration that increases concurrent throughput while retaining blocking I/O style. Uses the shared `bluetape4k-tenant` `ScopedValueTenantContext` instead of a module-local `ThreadLocal` implementation for Virtual Thread-friendly context propagation.
 
 ## Learning Goals
 
@@ -14,7 +14,17 @@ An example that extends the multi-tenancy structure from module `01` to a Java 2
 ## Prerequisites
 
 - [`../01-multitenant-spring-web/README.md`](../01-multitenant-spring-web/README.md)
-- Java 21 Virtual Threads basics
+- Java 25 Virtual Threads basics
+
+## Dependency
+
+The module uses the shared tenant carrier from the `2.0.0-SNAPSHOT` dependency
+line. The catalog alias is versionless; `bluetape4k-dependencies` and its BOM
+remain the version authority.
+
+```kotlin
+implementation(libs.bluetape4k.tenant)
+```
 
 ---
 
@@ -41,7 +51,7 @@ An example that extends the multi-tenancy structure from module `01` to a Java 2
 
 ### ScopedValue-Based Context Propagation
 
-Virtual Threads can be created in the millions concurrently, making `ThreadLocal`'s memory overhead problematic. Java 21's `ScopedValue` operates as an immutable binding, making it well-suited for Virtual Thread environments.
+Virtual Threads can be created in the millions concurrently, making `ThreadLocal`'s memory overhead problematic. Java 25's `ScopedValue` operates as an immutable binding, making it well-suited for Virtual Thread environments.
 
 ```
 ThreadLocal  → Mutable, requires manual clear()
@@ -75,19 +85,22 @@ fun protocolHandlerVirtualThreadExecutorCustomizer(): TomcatProtocolHandlerCusto
 }
 ```
 
-### TenantContext (ScopedValue Version)
+### TenantContexts (shared ScopedValue carrier)
 
-A version of the `ThreadLocal` approach from module `01` replaced with `ScopedValue`. Values are only valid inside the `ScopedValue.where().run { }` block and automatically disappear when the block ends.
+`TenantContexts` is a thin application boundary around the shared
+`ScopedValueTenantContext` from `bluetape4k-tenant`. The application keeps header
+parsing and `Tenants` lookup; the common carrier owns lexical binding and has no
+default tenant. Values are only valid inside the carrier scope and automatically
+disappear when the block ends.
 
 ```kotlin
-object TenantContext {
-    val CURRENT_TENANT: ScopedValue<Tenant> = ScopedValue.newInstance()
+object TenantContexts {
+    private val delegate = ScopedValueTenantContext()
 
-    inline fun withTenant(tenant: Tenants.Tenant = getCurrentTenant(), crossinline block: () -> Unit) {
-        ScopedValue.where(CURRENT_TENANT, tenant).run {
-            block()
-        }
-    }
+    fun currentOrNull(): Tenant? = delegate.currentOrNull()?.let(Tenants::getById)
+    fun current(): Tenant = Tenants.getById(delegate.requireCurrent().value)
+    fun <T> withTenant(tenant: Tenant, block: () -> T): T =
+        delegate.withTenant(BluetapeTenantId(tenant.id), block)
 }
 ```
 
@@ -99,7 +112,7 @@ Performs the same role as `TenantSchemaAspect` from module `01`, but additionall
 @Before("@within(...Transactional) || @annotation(...Transactional)")
 fun setSchemaForTransaction() {
     transaction {
-        val schema = TenantContext.getCurrentTenantSchema()
+        val schema = getSchemaDefinition(TenantContexts.current())
         SchemaUtils.createSchema(schema)  // Additional compared to module 01
         SchemaUtils.setSchema(schema)
         commit()
@@ -109,7 +122,10 @@ fun setSchemaForTransaction() {
 
 ### TenantFilter
 
-Uses the same servlet filter interface as module `01`, but internally `TenantContext.withTenant()` operates on a `ScopedValue` basis.
+Uses the same servlet filter interface as module `01`, but internally
+`TenantContexts.withTenant()` delegates to the shared `ScopedValueTenantContext`.
+The filter still owns the explicit application policy for missing or unknown
+headers; the common carrier itself never substitutes a tenant.
 
 ---
 
@@ -118,8 +134,8 @@ Uses the same servlet filter interface as module `01`, but internally `TenantCon
 | File                                    | Role                                          |
 |---------------------------------------|-----------------------------------------------|
 | `config/TomcatVirtualThreadConfig.kt` | Replace Tomcat executor with Virtual Thread   |
-| `tenant/TenantFilter.kt`              | Extract tenant from header, bind ScopedValue  |
-| `tenant/TenantContext.kt`             | ScopedValue-based tenant store                |
+| `tenant/TenantFilter.kt`              | Extract tenant from header, bind the shared ScopedValue carrier |
+| `tenant/TenantContexts.kt`            | Map application tenants to `ScopedValueTenantContext`         |
 | `tenant/Tenants.kt`                   | Tenant enum + schema mapping                  |
 | `tenant/SchemaSupport.kt`             | Helper for creating `Schema` objects          |
 | `tenant/TransactionSchemaAspect.kt`   | Schema creation/switching before transaction via AOP |
@@ -160,7 +176,7 @@ curl -H 'X-TENANT-ID: english' http://localhost:8080/actors/1
 
 - Verify response data differs between `X-TENANT-ID: korean` and `X-TENANT-ID: english`
 - Verify that tenant data does not cross over even as concurrent request count increases
-- Confirm default value returned when `getCurrentTenant()` is called outside `ScopedValue` scope
+- Confirm `currentOrNull()` returns `null` and `current()` throws `MissingTenantContextException` outside the `ScopedValue` scope
 - Measure latency changes when thread pool/connection pool settings are modified
 
 ## Operations Checkpoints

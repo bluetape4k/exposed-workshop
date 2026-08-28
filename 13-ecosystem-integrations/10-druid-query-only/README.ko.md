@@ -18,7 +18,7 @@ Avatica Router 또는 Broker 연결을 사용하는 분석 read model을 참고�
 
 ## Profile과 provider options
 
-의존성은 중앙 `bluetape4k-dependencies:1.4.0` catalog alias
+의존성은 중앙 `bluetape4k-dependencies:2.0.0-SNAPSHOT` catalog alias
 `libs.exposed.druid`로 해석됩니다.
 
 ```kotlin

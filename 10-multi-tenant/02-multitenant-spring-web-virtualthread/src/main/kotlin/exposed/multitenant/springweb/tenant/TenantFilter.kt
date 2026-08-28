@@ -9,7 +9,8 @@ import jakarta.servlet.http.HttpServletRequest
 import org.springframework.stereotype.Component
 
 /**
- * 요청 헤더(`X-TENANT-ID`)를 읽어 [TenantContext]에 테넌트를 설정하는 서블릿 필터입니다.
+ * 요청 헤더(`X-TENANT-ID`)를 읽어 공통 `ScopedValueTenantContext`에 테넌트를 binding하는
+ * 서블릿 필터입니다.
  */
 @Component
 class TenantFilter: Filter {
@@ -20,7 +21,7 @@ class TenantFilter: Filter {
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
         val tenant = extractTenant(request as HttpServletRequest)
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             chain.doFilter(request, response)
         }
     }

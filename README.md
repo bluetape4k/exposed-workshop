@@ -19,17 +19,18 @@ A source-backed workshop for learning Kotlin Exposed through runnable Gradle mod
 
 The source tree currently contains the runnable examples for Chapters 10–13,
 including Ktor and tenant-onboarding variants, JDBC + Lettuce caching, and the
-ecosystem integrations through JaVers audit history. As of 2026-08-28, the only
+ecosystem integrations through JaVers audit history. As of 2026-08-29, the only
 open tracked implementation item is
 [#255](https://github.com/bluetape4k/exposed-workshop/issues/255): migrate the
 existing MVC and Virtual Thread tenant examples to the shared `TenantContext`
-reference artifact. The base
-`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT` metadata and POM
-are publicly resolvable, but the published
+reference artifact. The two consumer modules now use the common
+`io.github.bluetape4k:bluetape4k-tenant` API through the versionless catalog alias
+under `io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`. The base
+metadata and POM are publicly resolvable, but the published
 [`bluetape4k-bom:2.0.0-SNAPSHOT`](https://github.com/bluetape4k/bluetape4k-dependencies/issues/213)
-and exposed BOM do not yet contain a tenant/context artifact or versionless
-catalog alias. Migration remains pending until the exact artifact POM/API is
-public; no new multi-tenant module is planned.
+and exposed BOM have not yet exposed the tenant artifact in the public snapshot
+repository. Local verification uses the exact upstream PR artifact; public
+dependency resolution remains pending. No new multi-tenant module is planned.
 
 ## What It Provides
 
@@ -78,7 +79,7 @@ Kotlin Exposed is JetBrains' Kotlin-first SQL framework. It lets you model table
 | Exposed | 1.4.0 |
 | Spring Boot | 4.1.0 |
 | Kotlinx Coroutines | 1.11.0 |
-| Bluetape4k dependencies BOM | 1.4.0 |
+| Bluetape4k dependencies BOM | 2.0.0-SNAPSHOT |
 | Gradle Wrapper | 9.6.0 |
 
 ### Dependency Version Governance
@@ -88,8 +89,9 @@ for the imported BOM. If a local pin is required, record the release value and
 the compatibility reason in `gradle/libs.versions.toml` or a tracked lesson.
 Do not add ad hoc versions for artifacts already managed by a BOM. Run
 `gradle/dependency-governance.sh` when reviewing catalog changes. This guard is
-explicitly pinned to the imported `bluetape4k-dependencies:1.4.0` release; when
-the BOM changes, refresh the release comparison and the guard together.
+explicitly pinned to the imported `bluetape4k-dependencies:2.0.0-SNAPSHOT`
+catalog; when the BOM changes, refresh the release comparison and the guard
+together.
 
 ## Learning Guide
 

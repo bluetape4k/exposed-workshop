@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.bluetape4k.io)
     implementation(libs.bluetape4k.jackson2)
     implementation(libs.bluetape4k.jdbc)
+    implementation(libs.bluetape4k.tenant)
     testImplementation(libs.bluetape4k.junit5)
     testImplementation(libs.bluetape4k.spring.boot.core)
 

@@ -1,6 +1,6 @@
 package exposed.multitenant.security.security
 
-import exposed.multitenant.security.tenant.TenantContext
+import exposed.multitenant.security.tenant.TenantContexts
 import exposed.multitenant.security.tenant.TenantRequest
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -38,11 +38,8 @@ internal class TenantAuthorizationFilter(
             throw AccessDeniedException("Tenant mismatch")
         }
 
-        try {
-            TenantContext.set(requestedTenant)
+        TenantContexts.withTenant(requestedTenant) {
             filterChain.doFilter(request, response)
-        } finally {
-            TenantContext.clear()
         }
     }
 }

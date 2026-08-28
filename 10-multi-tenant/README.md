@@ -48,10 +48,11 @@ Modules `02` and `06` are the two existing reference consumers for the shared
 `TenantContext` work tracked in
 [#255](https://github.com/bluetape4k/exposed-workshop/issues/255). The base
 `io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT` metadata and POM
-are public, but the published BOMs do not yet expose a tenant/context artifact
-or versionless catalog alias. Until the exact artifact POM/API is public, these
-examples keep their local context implementations; the migration does not add
-a new module.
+are public. Both examples now consume `io.github.bluetape4k:bluetape4k-tenant`
+through the versionless catalog alias and keep only a thin application mapping
+from their local tenant types to the common carrier. The exact tenant artifact
+is not yet resolvable from the public snapshot repository, so local verification
+uses the upstream PR artifact; no new module is added.
 
 ---
 
@@ -146,7 +147,7 @@ All modules follow the flow below. Only the context propagation mechanism differ
 
 ### Tenant Context Propagation in Virtual Thread Environments
 
-Virtual Threads use `ScopedValue` instead of `ThreadLocal` for context propagation. `02-multitenant-spring-web-virtualthread` replaces the executor with `TomcatVirtualThreadConfig` and binds the tenant using a `ScopedValue.where().run { }` block.
+Virtual Threads use `ScopedValue` instead of `ThreadLocal` for context propagation. `02-multitenant-spring-web-virtualthread` replaces the executor with `TomcatVirtualThreadConfig` and binds the tenant through the shared `ScopedValueTenantContext` inside `TenantContexts`.
 
 - Related module: [`02-multitenant-spring-web-virtualthread`](02-multitenant-spring-web-virtualthread/)
 
@@ -172,8 +173,9 @@ In WebFlux, tenant information is propagated to the coroutine context via Reacto
 
 `06-spring-security-tenant-authorization-spring-web` authenticates the caller
 with a demo JWT, API key, or demo session header, then authorizes the requested
-`X-Tenant-ID` before setting `TenantContext`. It keeps the database-per-tenant
-routing boundary but removes raw header-only tenant trust from request paths.
+`X-Tenant-ID` before binding the shared `ThreadLocalTenantContext` through
+`TenantContexts`. It keeps the database-per-tenant routing boundary but removes
+raw header-only tenant trust from request paths.
 
 - Related module: [`06-spring-security-tenant-authorization-spring-web`](06-spring-security-tenant-authorization-spring-web/)
 

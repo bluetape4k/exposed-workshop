@@ -16,7 +16,7 @@ class TenantInitializer(
 
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
         Tenants.Tenant.entries.forEach { tenant ->
-            ScopedValue.where(TenantContext.CURRENT_TENANT, tenant).run {
+            TenantContexts.withTenant(tenant) {
                 dataInitializer.initialize()
             }
         }
