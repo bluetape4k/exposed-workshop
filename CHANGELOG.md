@@ -52,8 +52,8 @@ Exposed `1.4.0`입니다.
 - Druid query-only, checkpointable JDBC batch, Ktor observability, measured
   단위 컬럼, JaVers 감사 이력, JDBC Lettuce cache의 H2 중심 테스트를 추가했습니다.
 - #255 대상 모듈에서 unbound context, 중첩 scope 복원, 예외 후 cleanup, 순차·병렬
-  tenant 격리를 검증했습니다. 로컬 exact upstream snapshot 기준 `02` 44개와
-  `06` 32개 테스트가 통과했습니다.
+  tenant 격리를 검증했습니다. 공개 `2.0.0-SNAPSHOT`의 정상 Gradle 해석 기준
+  `02` 44개와 `06` 32개 테스트가 통과했습니다.
 - 멀티테넌트 MVC/Virtual Thread/WebFlux와 cache/routing 예제에 순차·병렬 격리,
   실패 후 cleanup, fallback 동작을 확인하는 회귀 검증을 보강했습니다.
 - 문서 검증은 `git diff --check`, localization 범위, README 링크와 다이어그램
@@ -62,10 +62,11 @@ Exposed `1.4.0`입니다.
 ### 문서
 
 - 루트 및 장별 README의 모듈 목록을 현재 `settings.gradle.kts`와 일치시켰습니다.
-- WIP 큐를 2026-08-29 GitHub 상태로 갱신하고, `#255` 구현이 로컬에서
-  `2.0.0-SNAPSHOT` catalog와 exact upstream tenant artifact 기준으로 진행된
-  상태를 기록했습니다. public snapshot 저장소의 tenant artifact/BOM 노출은
-  upstream publication gate가 해소될 때까지 pending입니다.
+- WIP 큐를 2026-08-29 GitHub 상태로 갱신하고, `#255` 구현이
+  `2.0.0-SNAPSHOT` catalog와 공개 tenant artifact 기준으로 완료된 상태를
+  기록했습니다. `bluetape4k-tenant`와 dependency/exposed BOM의 공개 snapshot
+  좌표를 정상 Gradle 해석으로 확인했으며, upstream provider PR #1566은
+  merge되었습니다.
 
 ## [1.1.2] - 2026-03-21
 

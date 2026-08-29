@@ -25,12 +25,13 @@ open tracked implementation item is
 existing MVC and Virtual Thread tenant examples to the shared `TenantContext`
 reference artifact. The two consumer modules now use the common
 `io.github.bluetape4k:bluetape4k-tenant` API through the versionless catalog alias
-under `io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`. The base
-metadata and POM are publicly resolvable, but the published
-[`bluetape4k-bom:2.0.0-SNAPSHOT`](https://github.com/bluetape4k/bluetape4k-dependencies/issues/213)
-and exposed BOM have not yet exposed the tenant artifact in the public snapshot
-repository. Local verification uses the exact upstream PR artifact; public
-dependency resolution remains pending. No new multi-tenant module is planned.
+under `io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`. The
+`bluetape4k-dependencies`, [`bluetape4k-bom:2.0.0-SNAPSHOT`](https://github.com/bluetape4k/bluetape4k-dependencies/issues/213),
+exposed BOM, and `bluetape4k-tenant` snapshot coordinates are now publicly
+resolvable. Upstream provider PR
+[`bluetape4k-projects#1566`](https://github.com/bluetape4k/bluetape4k-projects/pull/1566)
+is merged, and normal Gradle resolution selects the timestamped tenant snapshot
+without a local Maven override. No new multi-tenant module is planned.
 
 ## What It Provides
 

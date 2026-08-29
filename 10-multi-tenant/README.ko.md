@@ -48,11 +48,12 @@
 자세한 전환은
 [#255](https://github.com/bluetape4k/exposed-workshop/issues/255)에서 추적합니다.
 기본 좌표 `io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`의
-metadata/POM은 공개되어 있습니다. 두 예제는 이제 versionless catalog alias로
+metadata/POM, exposed BOM, `bluetape4k-tenant`가 모두 공개 저장소에서
+해석됩니다. 두 예제는 이제 versionless catalog alias로
 `io.github.bluetape4k:bluetape4k-tenant`를 사용하고, 각 애플리케이션 tenant
-타입과 공통 carrier 사이의 얇은 mapping만 유지합니다. exact tenant artifact는
-공개 snapshot 저장소에서 아직 해석되지 않으므로 로컬 검증에는 upstream PR
-artifact를 사용하며, 새로운 모듈은 추가하지 않습니다.
+타입과 공통 carrier 사이의 얇은 mapping만 유지합니다. 로컬 Maven override
+없이 정상 Gradle 해석으로 timestamped tenant snapshot을 선택하며, 새로운
+모듈은 추가하지 않습니다.
 
 ---
 

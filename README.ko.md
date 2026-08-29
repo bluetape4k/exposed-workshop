@@ -25,12 +25,14 @@
 [#255](https://github.com/bluetape4k/exposed-workshop/issues/255)입니다. 두
 consumer 모듈은 이제 versionless catalog alias를 통해 공통
 `io.github.bluetape4k:bluetape4k-tenant` API를 사용하며 기준은
-`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`입니다. 기본
-좌표의 metadata/POM은 공개 저장소에서 확인했지만,
-[`bluetape4k-bom:2.0.0-SNAPSHOT`](https://github.com/bluetape4k/bluetape4k-dependencies/issues/213)과
-exposed BOM의 tenant artifact 공개 해석은 아직 대기 중입니다. 로컬 검증은
-upstream PR의 exact artifact를 사용했으며 public dependency resolution은
-pending입니다. 이 작업에서 새로운 multi-tenant 모듈은 만들지 않습니다.
+`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`입니다.
+`bluetape4k-dependencies`, [`bluetape4k-bom:2.0.0-SNAPSHOT`](https://github.com/bluetape4k/bluetape4k-dependencies/issues/213),
+exposed BOM, `bluetape4k-tenant` snapshot 좌표가 모두 공개 저장소에서
+해석됩니다. upstream provider PR
+[`bluetape4k-projects#1566`](https://github.com/bluetape4k/bluetape4k-projects/pull/1566)이
+merge되었고, 이제 로컬 Maven override 없이 정상 Gradle 해석으로
+timestamped tenant snapshot을 선택합니다. 이 작업에서 새로운 multi-tenant
+모듈은 만들지 않습니다.
 
 ## 제공 기능
 
@@ -79,7 +81,7 @@ Kotlin Exposed는 JetBrains가 만든 Kotlin 우선 SQL 프레임워크입니다
 | Exposed | 1.4.0 |
 | Spring Boot | 4.1.0 |
 | Kotlinx Coroutines | 1.11.0 |
-| Bluetape4k dependencies BOM | 1.4.0 |
+| Bluetape4k dependencies BOM | 2.0.0-SNAPSHOT |
 | Gradle Wrapper | 9.6.0 |
 
 ### 의존성 버전 거버넌스

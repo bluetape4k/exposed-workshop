@@ -47,12 +47,12 @@ It then compares that baseline with **Database per Tenant**, where each whitelis
 Modules `02` and `06` are the two existing reference consumers for the shared
 `TenantContext` work tracked in
 [#255](https://github.com/bluetape4k/exposed-workshop/issues/255). The base
-`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT` metadata and POM
-are public. Both examples now consume `io.github.bluetape4k:bluetape4k-tenant`
-through the versionless catalog alias and keep only a thin application mapping
-from their local tenant types to the common carrier. The exact tenant artifact
-is not yet resolvable from the public snapshot repository, so local verification
-uses the upstream PR artifact; no new module is added.
+`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT` metadata and POM,
+the exposed BOM, and `bluetape4k-tenant` are publicly resolvable. Both examples
+consume `io.github.bluetape4k:bluetape4k-tenant` through the versionless catalog
+alias and keep only a thin application mapping from their local tenant types to
+the common carrier. Normal Gradle resolution now selects the timestamped tenant
+snapshot without a local Maven override; no new module is added.
 
 ---
 

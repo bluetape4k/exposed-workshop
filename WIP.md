@@ -36,24 +36,22 @@ Chapter 12의 Spring/Ktor production integration 쌍, Chapter 13의 플랫폼·D
 전환하되, 신규 모듈은 만들지 않습니다.
 
 공개 snapshot 저장소에서 기본 좌표
-`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`의 metadata/POM은
-확인했습니다. timestamped POM `2.0.0-20260821.130544-3`는
-`bluetape4k-bom:2.0.0-SNAPSHOT`을 import합니다.
+`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`의 metadata/POM과
+`bluetape4k-bom:2.0.0-SNAPSHOT`,
+`io.github.bluetape4k.exposed:bluetape4k-exposed-bom:2.0.0-SNAPSHOT`,
+`io.github.bluetape4k:bluetape4k-tenant:2.0.0-SNAPSHOT` 좌표를 확인했습니다.
+tenant metadata는 `20260829072901`에 갱신되었고, 정상 Gradle
+`dependencyInsight`는 timestamped tenant snapshot
+`2.0.0-20260829.072901-1`을 local Maven override 없이 선택합니다.
 
-다만 `bluetape4k-bom:2.0.0-SNAPSHOT`의 공개 POM
-(`2.0.0-20260827.122018-13`)과
-`io.github.bluetape4k.exposed:bluetape4k-exposed-bom:2.0.0-SNAPSHOT`의 공개
-POM (`2.0.0-20260828.024948-10`)에는 `TenantContext`에 해당하는
-tenant/context artifact나 versionless catalog alias가 없습니다.
-upstream
-[`bluetape4k-projects#1562`](https://github.com/bluetape4k/bluetape4k-projects/issues/1562),
-[`bluetape4k-projects#1565`](https://github.com/bluetape4k/bluetape4k-projects/issues/1565)와
-[`bluetape4k-dependencies#213`](https://github.com/bluetape4k/bluetape4k-dependencies/issues/213)이
-아직 열려 있습니다. 사용자가 `2.0.0-SNAPSHOT` 기준으로 #255 구현을
-진행하도록 결정했으므로 catalog에 versionless `bluetape4k-tenant` alias를
-추가하고, upstream PR의 exact artifact를 로컬 Maven에서 검증하는 방식으로
-두 기존 consumer 전환을 완료했습니다. public snapshot 저장소의 tenant
-artifact 해석은 여전히 pending입니다.
+upstream provider
+[`bluetape4k-projects#1566`](https://github.com/bluetape4k/bluetape4k-projects/pull/1566)은
+merge되었습니다. [`bluetape4k-projects#1565`](https://github.com/bluetape4k/bluetape4k-projects/issues/1565)와
+[`bluetape4k-dependencies#213`](https://github.com/bluetape4k/bluetape4k-dependencies/issues/213)은
+추적을 위해 열려 있지만, 현재 공개 artifact 해석을 막지는 않습니다. 사용자가
+`2.0.0-SNAPSHOT` 기준으로 #255 구현을 진행하도록 결정한 뒤 추가한 versionless
+`bluetape4k-tenant` alias와 두 기존 consumer 전환은 공개 snapshot 기준으로
+재검증을 완료했습니다.
 
 - `10-multi-tenant/06-spring-security-tenant-authorization-spring-web`
   — MVC/platform-thread `ThreadLocal` consumer
@@ -71,13 +69,13 @@ cleanup을 대상 테스트로 확인했습니다.
 - `06-spring-security-tenant-authorization-spring-web`: 공통
   `ThreadLocalTenantContext`와 `TenantContexts` 경계로 전환, filter cleanup 및
   인증/격리 회귀 테스트 포함
-- 로컬 exact PR artifact 기준 대상 모듈 테스트: `02` 44개, `06` 32개 통과
+- 공개 snapshot 정상 Gradle 해석 기준 대상 모듈 테스트: `02` 44개, `06` 32개 통과
 
 ## 우선순위 큐
 
 | 상태 | 이슈 | 다음 조건 |
 |---|---|---|
-| 구현 진행 중 (로컬 전환 완료) | [#255](https://github.com/bluetape4k/exposed-workshop/issues/255) (`1.4.0`) MVC·virtual-thread 예제를 공통 `TenantContext` reference consumer로 전환 | public tenant artifact/BOM 공개 → 중앙 dependency 해석 재검증 → detekt·`git diff --check` 및 문서 링크 검증 |
+| 구현 완료 (Issue metadata 갱신 대기) | [#255](https://github.com/bluetape4k/exposed-workshop/issues/255) (`1.4.0`) MVC·virtual-thread 예제를 공통 `TenantContext` reference consumer로 전환 | Issue DoD/상태 갱신 후 종료 검토 |
 
 ## 의존성 맵
 
@@ -85,8 +83,8 @@ cleanup을 대상 테스트로 확인했습니다.
 bluetape4k-projects#1562
   -> bluetape4k-dependencies#213
     -> 기본 2.0.0-SNAPSHOT metadata/POM은 공개·확인됨
-    -> tenant artifact·versionless alias 공개 및 POM/API 검증 (현재 upstream #1565 대기)
-      -> exposed-workshop#255 (local implementation complete)
+    -> tenant artifact·versionless alias 공개 및 POM/API 검증 (upstream #1566 merge)
+      -> exposed-workshop#255 (implementation + normal resolution complete)
         -> chapter 10/06 MVC ThreadLocal consumer 전환 완료
         -> chapter 10/02 JDK 25 ScopedValue consumer 전환 완료
         -> 기존 route·인증·routing·격리 회귀 검증 완료
@@ -96,5 +94,5 @@ bluetape4k-projects#1562
 
 | 작업 흐름 | 동시 작업 수 | 현재 규칙 |
 |---|---:|---|
-| TenantContext reference consumer | 1 | `2.0.0-SNAPSHOT` catalog 기준 단일 순차 lane. public tenant artifact가 공개되기 전에는 로컬 exact PR artifact로만 검증하고, 공개 후 중앙 해석을 재검증합니다. |
+| TenantContext reference consumer | 1 | `2.0.0-SNAPSHOT` catalog 기준 단일 순차 lane. 공개 tenant artifact의 정상 Gradle 해석과 대상 테스트를 재검증했으며, 후속 변경도 같은 검증 경계를 유지합니다. |
 | 신규 예제 확장 | 0 | 1.4.0 예제 세트가 닫힌 상태이므로 #255의 lifecycle/compatibility 경계를 먼저 확인합니다. |
