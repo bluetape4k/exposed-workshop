@@ -28,17 +28,17 @@ LLM_FACING_DOCS = Set.new(%w[
 ])
 
 EXPECTED = {
-  markdown_total: 279,
+  markdown_total: 341,
   llm_facing_docs: 3,
-  readme_pair_dirs: 86,
-  readme_files: 172,
-  single_language_docs: 104,
+  readme_pair_dirs: 91,
+  readme_files: 182,
+  single_language_docs: 156,
   ko_named_single_language_docs: 0,
-  kotlin_files: 912,
-  comment_bearing_kotlin_files: 604,
-  kdoc_files: 507,
+  kotlin_files: 942,
+  comment_bearing_kotlin_files: 626,
+  kdoc_files: 525,
   kdoc_tag_files: 102,
-  commentish_lines: 23_959,
+  commentish_lines: 24_078,
 }.freeze
 
 options = {
