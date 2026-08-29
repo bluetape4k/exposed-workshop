@@ -16,9 +16,9 @@ class LocalizationScopeAuditTest < Minitest::Test
     stdout, stderr, status = run_audit("--strict-counts")
 
     assert status.success?, stderr
-    assert_includes stdout, "single_language_docs=104"
-    assert_includes stdout, "readme_pair_dirs=86"
-    assert_includes stdout, "comment_bearing_kotlin_files=604"
+    assert_includes stdout, "single_language_docs=156"
+    assert_includes stdout, "readme_pair_dirs=91"
+    assert_includes stdout, "comment_bearing_kotlin_files=626"
     assert_includes stdout, "kdoc_tag_files=102"
   end
 
