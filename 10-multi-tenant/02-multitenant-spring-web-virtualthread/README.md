@@ -97,7 +97,7 @@ disappear when the block ends.
 object TenantContexts {
     private val delegate = ScopedValueTenantContext()
 
-    fun currentOrNull(): Tenant? = delegate.currentOrNull()?.let(Tenants::getById)
+    fun currentOrNull(): Tenant? = delegate.currentOrNull()?.let { Tenants.getById(it.value) }
     fun current(): Tenant = Tenants.getById(delegate.requireCurrent().value)
     fun <T> withTenant(tenant: Tenant, block: () -> T): T =
         delegate.withTenant(BluetapeTenantId(tenant.id), block)
@@ -182,7 +182,7 @@ curl -H 'X-TENANT-ID: english' http://localhost:8080/actors/1
 ## Operations Checkpoints
 
 - Increasing Virtual Threads alone does not resolve DB bottlenecks — tune HikariCP `maximumPoolSize` together
-- `ScopedValue` is immutable so tenant cannot be changed after binding — finalize flow design upfront
+- `ScopedValue` bindings are immutable within a scope; nested scopes may temporarily rebind a tenant and restore the outer binding when they end — finalize flow design upfront
 - Ensure no long-running blocking tasks are placed in the request path
 - Fix integration tests for tenant leak detection in CI
 

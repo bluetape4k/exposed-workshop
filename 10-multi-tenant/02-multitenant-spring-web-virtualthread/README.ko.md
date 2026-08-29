@@ -99,7 +99,7 @@ fun protocolHandlerVirtualThreadExecutorCustomizer(): TomcatProtocolHandlerCusto
 object TenantContexts {
     private val delegate = ScopedValueTenantContext()
 
-    fun currentOrNull(): Tenant? = delegate.currentOrNull()?.let(Tenants::getById)
+    fun currentOrNull(): Tenant? = delegate.currentOrNull()?.let { Tenants.getById(it.value) }
     fun current(): Tenant = Tenants.getById(delegate.requireCurrent().value)
     fun <T> withTenant(tenant: Tenant, block: () -> T): T =
         delegate.withTenant(BluetapeTenantId(tenant.id), block)
@@ -185,7 +185,7 @@ curl -H 'X-TENANT-ID: english' http://localhost:8080/actors/1
 ## 운영 체크포인트
 
 - Virtual Thread 증가만으로 DB 병목이 해결되지 않으므로 HikariCP `maximumPoolSize` 함께 튜닝
-- `ScopedValue`는 불변이므로 바인딩 후 테넌트 변경이 불가 — 설계 단계에서 흐름 확정 필요
+- `ScopedValue` 바인딩은 현재 스코프 안에서 불변이지만, 중첩 스코프에서는 다른 테넌트를 임시로 재바인딩하고 종료 시 바깥 바인딩을 복원 — 설계 단계에서 흐름 확정 필요
 - 장시간 블로킹 작업을 요청 경로에 두지 않도록 점검
 - tenant 누수 탐지를 위한 통합 테스트를 CI에 고정
 

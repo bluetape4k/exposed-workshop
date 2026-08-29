@@ -533,18 +533,20 @@ class TenantSecurityApplicationTest(
     }
 
     @Test
-    fun `architecture keeps tenant context writes behind authorization filter`() {
+    fun `architecture keeps tenant context writes explicit and allowlisted`() {
         val productionFiles = Files.walk(moduleRoot.resolve("src/main/kotlin")).use { paths ->
             paths.filter { Files.isRegularFile(it) && it.toString().endsWith(".kt") }.toList()
         }
 
         val contextWriters = productionFiles
             .filterNot { it.fileName.toString() == "TenantContexts.kt" }
-            .filter { Files.readString(it).contains("TenantContexts.withTenant(requestedTenant") }
+            .filter { Files.readString(it).contains("TenantContexts.withTenant(") }
             .map { moduleRoot.relativize(it).toString() }
+            .sorted()
 
         contextWriters shouldBeEqualTo listOf(
             "src/main/kotlin/exposed/multitenant/security/security/TenantAuthorizationFilter.kt",
+            "src/main/kotlin/exposed/multitenant/security/tenant/InventorySeeder.kt",
         )
     }
 
