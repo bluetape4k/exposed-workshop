@@ -1,7 +1,7 @@
 package exposed.multitenant.springweb.domain.repository
 
 import exposed.multitenant.springweb.AbstractMultitenantTest
-import exposed.multitenant.springweb.tenant.TenantContext
+import exposed.multitenant.springweb.tenant.TenantContexts
 import exposed.multitenant.springweb.tenant.Tenants.Tenant
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -24,7 +24,7 @@ class ActorRepositoryTest(
     @ParameterizedTest(name = "tenant={0}")
     @EnumSource(Tenant::class)
     fun `테넌트별 모든 배우 조회`(tenant: Tenant) {
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val actors = actorRepo.searchActors(emptyMap())
             log.debug { "tenant=${tenant.id}, actors.size=${actors.size}" }
             actors shouldHaveSize 9
@@ -38,7 +38,7 @@ class ActorRepositoryTest(
             Tenant.ENGLISH -> "Johnny"
             Tenant.KOREAN  -> "조니"
         }
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val actors = actorRepo.searchActors(mapOf("firstName" to firstName))
             actors.shouldNotBeEmpty()
             actors.forEach { log.debug { "tenant=${tenant.id}, actor=$it" } }
@@ -53,7 +53,7 @@ class ActorRepositoryTest(
             Tenant.ENGLISH -> "Depp"
             Tenant.KOREAN  -> "뎁"
         }
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val actors = actorRepo.searchActors(mapOf("lastName" to lastName))
             actors.shouldNotBeEmpty()
             actors.forEach { log.debug { "tenant=${tenant.id}, actor=$it" } }
@@ -63,7 +63,7 @@ class ActorRepositoryTest(
     @ParameterizedTest(name = "tenant={0}")
     @EnumSource(Tenant::class)
     fun `잘못된 birthday 파라미터는 무시되고 모든 배우를 반환한다`(tenant: Tenant) {
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val actors = actorRepo.searchActors(mapOf("birthday" to "not-a-date"))
             actors shouldHaveSize 9
         }
@@ -76,7 +76,7 @@ class ActorRepositoryTest(
             Tenant.ENGLISH -> "Brad"
             Tenant.KOREAN  -> "브래드"
         }
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val actors = actorRepo.searchActors(mapOf("id" to "2"))
             actors shouldHaveSize 1
             actors.first().firstName shouldBeEqualTo expectedFirstName
@@ -86,7 +86,7 @@ class ActorRepositoryTest(
     @ParameterizedTest(name = "tenant={0}")
     @EnumSource(Tenant::class)
     fun `존재하지 않는 배우 id 조회 시 null을 반환한다`(tenant: Tenant) {
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val actor = actorRepo.findByIdOrNull(-1L)
             actor.shouldBeNull()
         }

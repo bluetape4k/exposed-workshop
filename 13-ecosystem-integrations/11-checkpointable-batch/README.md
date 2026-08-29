@@ -21,7 +21,7 @@ Use this module when a blocking JDBC batch needs explicit chunk boundaries and a
 restartable keyset checkpoint. The dependency is resolved through the central
 catalog alias `libs.exposed.batch` and currently uses
 `io.github.bluetape4k.exposed:bluetape4k-exposed-batch:1.12.1` through the
-`bluetape4k-dependencies:1.4.0` BOM.
+`bluetape4k-dependencies:2.0.0-SNAPSHOT` BOM.
 
 The example demonstrates:
 

@@ -6,40 +6,74 @@
 
 ## [미배포]
 
+`1.1.2` 태그 이후 `develop` 브랜치에 반영된 예제·문서·검증 변경을
+기록합니다. 현재 버전과 의존성 기준은 `gradle/libs.versions.toml`의
+`bluetape4k-dependencies:2.0.0-SNAPSHOT`, Kotlin `2.4.0`, Java toolchain `25`,
+Exposed `1.4.0`입니다.
+
 ### 추가
 
-- `.omc/` 디렉터리 추가 (OMC 상태 관리용)
-- `.claude/worktrees` gitignore 규칙 추가
-- `Libs.bluetape4k_lingua`, `Libs.bluetape4k_mock_web_server`, `Libs.bluetape4k_mock_webflux_server` 모듈 참조 추가 (BOM 1.7.0 신규 모듈)
-- GitHub Actions CI 워크플로 개선: DB 매트릭스 (`H2/PostgreSQL/MySQL 8/MariaDB`) 병렬 실행, Kover 커버리지 집계, detekt/테스트 아티팩트 업로드
+- **Chapter 10 멀티테넌시**: schema-per-tenant, database-per-tenant, Spring
+  Security tenant authorization, Ktor, tenant onboarding 예제를 추가했습니다.
+- **Chapter 11 고성능**: Ktor cache/routing 변형과 JDBC + Lettuce 원격 캐시
+  예제를 추가했습니다. H2 기본 검증과 Redis opt-in 경계를 문서화했습니다.
+- **Chapter 12 운영 통합**: Spring Boot 4와 Ktor의 application architecture,
+  HTTP outbox/idempotency, auth/session, realtime outbox, observability/readiness
+  예제를 쌍으로 구성했습니다.
+- **Chapter 13 ecosystem integrations**: BigQuery, Trino, CockroachDB,
+  StarRocks, Ktor Exposed, Spring Modulith, DDD, DuckDB, Apache Druid,
+  checkpointable JDBC batch, JaVers + Exposed 감사 이력 예제를 연결했습니다.
 
 ### 변경
 
-- **의존성 거버넌스**: `bluetape4k-dependencies`를 배포된 `1.2.0` BOM에 맞춤
-- **Bluetape4k**: `1.6.2` → `1.7.0`
-- **Kotlin**: `2.3.20` → `2.3.21`
-- **MariaDB JDBC 드라이버**: `mariadb-java-client` `3.5.7` → `3.5.8`, `r2dbc-mariadb` `1.3.0` → `1.4.0`
-- CI 테스트 잡에서 Testcontainers 기반 DB는 `--max-workers=1` 적용 (Docker 리소스 경합 방지)
-
-### 제거
-
-- `Libs.bluetape4k_crypto`, `Libs.bluetape4k_exposed_jasypt` 참조 제거 (BOM 1.7.0에서 제외됨)
-- `06-advanced/10-exposed-jasypt` 예제 모듈 전체 삭제 (대체 모듈은 `12-exposed-tink`)
-- `06-advanced/06-custom-columns`의 encrypt 테스트 디렉터리 삭제 (`bluetape4k-crypto` 의존)
-- `00-shared/exposed-shared-tests`, `02-alternatives-to-jpa/hibernate-reactive-example`에서 crypto/jasypt 참조 정리
+- `settings.gradle.kts`가 `00`부터 `13`장까지 소스 트리의 모듈을 자동 발견하도록
+  유지하고, Gradle version catalog와 중앙 BOM을 기준으로 의존성 좌표를 관리합니다.
+- Chapter 10의 기존 MVC/Virtual Thread tenant consumer가 versionless
+  `libs.bluetape4k.tenant` alias를 통해 공통 `bluetape4k-tenant` carrier를
+  사용하도록 전환했습니다. 애플리케이션 경계는 header parsing·인가·schema/database
+  routing을 유지하고, lexical binding과 cleanup은 공통 `ThreadLocalTenantContext` /
+  `ScopedValueTenantContext`에 위임합니다.
+- CI는 선택된 Examples 경로와 nightly 검증 경계를 사용하며, detekt·테스트
+  결과와 시각 자료 검증을 아티팩트로 남깁니다.
+- 모든 장의 README는 실행 모듈, 다이어그램 이미지, English/Korean locale 쌍을
+  소스와 함께 설명하도록 정렬했습니다.
 
 ### 수정
 
-- MariaDB에서 JSON/JSONB 컬럼 default 메타데이터 round-trip 불일치로 실패하던 테스트 8개 스킵 처리 (`04-exposed-json`, `08-exposed-jackson`, `09-exposed-fastjson2`, `11-exposed-jackson3`)
+- tenant datasource registry가 소유한 Hikari pool의 lifecycle을 정리해 종료 시
+  pool 누수를 방지했습니다.
+- JaVers 감사 예제에서 JDBC 고객 삭제 이후에도 삭제 시점의 감사 이력을 보존하고,
+  Exposed 삭제 lifecycle 계약을 회귀 검증으로 고정했습니다.
+- JDBC batch의 checkpoint 재시작 경계와 Lettuce cache provider의 sync/suspend
+  계약을 각각 독립 예제로 명확히 했습니다.
 
 ### 테스트
 
-- **`10-multi-tenant/01-multitenant-spring-web`**: `ActorExposedRepository` / `MovieExposedRepository`에 `@Transactional` 추가, `ActorRepositoryTest` / `MovieRepositoryTest` 신규 추가 (테넌트별 스키마 격리 검증, 28개)
-- **`10-multi-tenant/02-multitenant-spring-web-virtualthread`**: 동일한 리포지토리 테스트 추가 (가상 스레드 환경, 28개)
-- **`10-multi-tenant/03-multitenant-spring-webflux`**: WebFlux 환경 도메인 리포지토리 테스트 추가 (12개)
-- **`11-high-performance/01-cache-strategies`**: 캐시 무효화(단일/복수) 및 단일 이벤트 write-behind 테스트 추가 (31 → 35개)
-- **`11-high-performance/02-cache-strategies-coroutines`**: 코루틴 스타일 동일 테스트 추가 (31 → 35개)
-- **`11-high-performance/03-routing-datasource`**: `InMemoryDataSourceRegistry` 중복키/없는키 조회, `ContextAwareRoutingKeyResolver` null supplier·read-only 키 테스트 추가 (21 → 25개)
+- Druid query-only, checkpointable JDBC batch, Ktor observability, measured
+  단위 컬럼, JaVers 감사 이력, JDBC Lettuce cache의 H2 중심 테스트를 추가했습니다.
+- #255 대상 모듈에서 unbound context, 중첩 scope 복원, 예외 후 cleanup, 순차·병렬
+  tenant 격리를 검증했습니다. 공개 `2.0.0-SNAPSHOT`의 정상 Gradle 해석 기준
+  `02` 44개와 `06` 32개 테스트가 통과했습니다.
+- 멀티테넌트 MVC/Virtual Thread/WebFlux와 cache/routing 예제에 순차·병렬 격리,
+  실패 후 cleanup, fallback 동작을 확인하는 회귀 검증을 보강했습니다.
+- 문서 검증은 `git diff --check`, localization 범위, README 링크와 다이어그램
+  자산 검사를 기준으로 유지합니다.
+
+### 문서
+
+- 루트 및 장별 README의 모듈 목록을 현재 `settings.gradle.kts`와 일치시켰습니다.
+- WIP 큐를 2026-08-29 GitHub 상태로 갱신하고, `#255` 구현이
+  `2.0.0-SNAPSHOT` catalog와 공개 tenant artifact 기준으로 완료된 상태를
+  기록했습니다. `bluetape4k-tenant`와 dependency/exposed BOM의 공개 snapshot
+  좌표를 정상 Gradle 해석으로 확인했으며, upstream provider PR #1566은
+  merge되었습니다.
+
+## [1.1.2] - 2026-03-21
+
+### 변경
+
+- 프로젝트 버전을 `1.1.1`에서 `1.1.2`로 올렸습니다.
+- Bluetape4k 기준 버전을 `1.5.0-Beta2`로 갱신했습니다.
 
 ---
 
@@ -106,10 +140,12 @@
 - **`10-multi-tenant`**: Schema-based 멀티테넌시 (MVC, Virtual Threads, WebFlux)
 - **`11-high-performance`**: Read/Write Through/Behind 캐시 전략, RoutingDataSource
 
-[Unreleased]: https://github.com/bluetape4k/exposed-workshop/compare/v1.1.1...HEAD
+[미배포]: https://github.com/bluetape4k/exposed-workshop/compare/1.1.2...HEAD
 
-[1.1.1]: https://github.com/bluetape4k/exposed-workshop/compare/v1.0.5...v1.1.1
+[1.1.2]: https://github.com/bluetape4k/exposed-workshop/compare/1.1.1...1.1.2
 
-[1.0.5]: https://github.com/bluetape4k/exposed-workshop/compare/v1.0.0...v1.0.5
+[1.1.1]: https://github.com/bluetape4k/exposed-workshop/compare/1.0.5...1.1.1
 
-[1.0.0]: https://github.com/bluetape4k/exposed-workshop/releases/tag/v1.0.0
+[1.0.5]: https://github.com/bluetape4k/exposed-workshop/compare/1.0.0...1.0.5
+
+[1.0.0]: https://github.com/bluetape4k/exposed-workshop/tree/1.0.0

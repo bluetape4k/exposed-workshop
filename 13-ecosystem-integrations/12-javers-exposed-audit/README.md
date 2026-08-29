@@ -27,7 +27,7 @@ Use this module to learn the smallest useful audit boundary for an Exposed DAO:
   customer.
 
 The catalog resolves the provider through the
-`bluetape4k-dependencies:1.4.0` BOM. The example uses
+`bluetape4k-dependencies:2.0.0-SNAPSHOT` BOM. The example uses
 `io.bluetape4k.javers:javers-exposed:0.3.0` and Exposed JDBC.
 
 ## Public API

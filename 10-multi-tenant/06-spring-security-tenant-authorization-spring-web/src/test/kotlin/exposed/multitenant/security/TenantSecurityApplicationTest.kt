@@ -13,7 +13,7 @@ import exposed.multitenant.security.security.DemoAuthenticationToken
 import exposed.multitenant.security.security.DemoSessionAuthenticationFilter
 import exposed.multitenant.security.security.TenantAuthenticationResolver
 import exposed.multitenant.security.security.TenantAuthorizationFilter
-import exposed.multitenant.security.tenant.TenantContext
+import exposed.multitenant.security.tenant.TenantContexts
 import exposed.multitenant.security.tenant.TenantDatabaseRegistry
 import exposed.multitenant.security.tenant.TenantId
 import exposed.multitenant.security.tenant.TenantRequest
@@ -64,7 +64,7 @@ class TenantSecurityApplicationTest(
 
     @AfterEach
     fun tearDown() {
-        TenantContext.clear()
+        TenantContexts.currentOrNull().shouldBeNull()
         SecurityContextHolder.clearContext()
     }
 
@@ -195,7 +195,7 @@ class TenantSecurityApplicationTest(
             .expectBody()
             .jsonPath("$.code").isEqualTo("CONFLICTING_CREDENTIALS")
 
-        TenantContext.currentOrNull().shouldBeNull()
+        TenantContexts.currentOrNull().shouldBeNull()
     }
 
     @Test
@@ -338,10 +338,10 @@ class TenantSecurityApplicationTest(
             tenantRequest(" ACME "),
             MockHttpServletResponse(),
             FilterChain { _, _ ->
-                TenantContext.current() shouldBeEqualTo TenantId.ACME
+                TenantContexts.current() shouldBeEqualTo TenantId.ACME
             },
         )
-        TenantContext.currentOrNull().shouldBeNull()
+        TenantContexts.currentOrNull().shouldBeNull()
     }
 
     @Test
@@ -353,7 +353,7 @@ class TenantSecurityApplicationTest(
             .exchange()
             .expectStatus().is5xxServerError
 
-        TenantContext.currentOrNull().shouldBeNull()
+        TenantContexts.currentOrNull().shouldBeNull()
     }
 
     @Test
@@ -393,14 +393,14 @@ class TenantSecurityApplicationTest(
                 request,
                 response,
                 FilterChain { _, _ ->
-                    TenantContext.current() shouldBeEqualTo TenantId.ACME
+                    TenantContexts.current() shouldBeEqualTo TenantId.ACME
                     error("downstream failure")
                 },
             )
         }
 
         failure.message shouldBeEqualTo "downstream failure"
-        TenantContext.currentOrNull().shouldBeNull()
+        TenantContexts.currentOrNull().shouldBeNull()
     }
 
     @Test
@@ -417,11 +417,11 @@ class TenantSecurityApplicationTest(
                 tenantRequest(header),
                 MockHttpServletResponse(),
                 FilterChain { _, _ ->
-                    observed += TenantContext.current()
-                    TenantContext.current() shouldBeEqualTo expectedTenant
+                    observed += TenantContexts.current()
+                    TenantContexts.current() shouldBeEqualTo expectedTenant
                 },
             )
-            TenantContext.currentOrNull().shouldBeNull()
+            TenantContexts.currentOrNull().shouldBeNull()
         }
 
         observed shouldBeEqualTo listOf(TenantId.ACME, TenantId.GLOBEX)
@@ -432,7 +432,7 @@ class TenantSecurityApplicationTest(
         val sku = "ROLLBACK-${System.nanoTime()}"
 
         val failure = assertFailsWith<IllegalStateException> {
-            TenantContext.withTenant(TenantId.ACME) {
+            TenantContexts.withTenant(TenantId.ACME) {
                 tenantTransaction.execute {
                     InventoryItems.insert {
                         it[InventoryItems.sku] = sku
@@ -446,10 +446,10 @@ class TenantSecurityApplicationTest(
         }
         failure.message shouldBeEqualTo "rollback requested"
 
-        TenantContext.withTenant(TenantId.ACME) {
+        TenantContexts.withTenant(TenantId.ACME) {
             repository.findBySku(sku).shouldBeNull()
         }
-        TenantContext.withTenant(TenantId.GLOBEX) {
+        TenantContexts.withTenant(TenantId.GLOBEX) {
             repository.findBySku("GLOBEX-DRONE-001").shouldNotBeNull()
         }
     }
@@ -533,18 +533,20 @@ class TenantSecurityApplicationTest(
     }
 
     @Test
-    fun `architecture keeps tenant context writes behind authorization filter`() {
+    fun `architecture keeps tenant context writes explicit and allowlisted`() {
         val productionFiles = Files.walk(moduleRoot.resolve("src/main/kotlin")).use { paths ->
             paths.filter { Files.isRegularFile(it) && it.toString().endsWith(".kt") }.toList()
         }
 
         val contextWriters = productionFiles
-            .filterNot { it.fileName.toString() == "TenantContext.kt" }
-            .filter { Files.readString(it).contains("TenantContext.set(") }
+            .filterNot { it.fileName.toString() == "TenantContexts.kt" }
+            .filter { Files.readString(it).contains("TenantContexts.withTenant(") }
             .map { moduleRoot.relativize(it).toString() }
+            .sorted()
 
         contextWriters shouldBeEqualTo listOf(
             "src/main/kotlin/exposed/multitenant/security/security/TenantAuthorizationFilter.kt",
+            "src/main/kotlin/exposed/multitenant/security/tenant/InventorySeeder.kt",
         )
     }
 
@@ -564,7 +566,9 @@ class TenantSecurityApplicationTest(
 
     @Test
     fun `architecture keeps repository transaction routing explicit`() {
-        val repositoryFiles = Files.walk(moduleRoot.resolve("src/main/kotlin/exposed/multitenant/security/repository")).use { paths ->
+        val repositoryFiles = Files.walk(
+            moduleRoot.resolve("src/main/kotlin/exposed/multitenant/security/repository"),
+        ).use { paths ->
             paths.filter { Files.isRegularFile(it) && it.toString().endsWith(".kt") }.toList()
         }
 
@@ -631,7 +635,7 @@ class TenantSecurityApplicationTest(
     class FailureAfterTenantController {
         @GetMapping("/inventory/_failure-after-tenant")
         fun fail(): Nothing {
-            TenantContext.current() shouldBeEqualTo TenantId.ACME
+            TenantContexts.current() shouldBeEqualTo TenantId.ACME
             error("failure after tenant resolution")
         }
     }

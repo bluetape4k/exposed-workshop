@@ -18,7 +18,7 @@ Druid connection.
 
 ## Profile and provider options
 
-The dependency is resolved through the central `bluetape4k-dependencies:1.4.0`
+The dependency is resolved through the central `bluetape4k-dependencies:2.0.0-SNAPSHOT`
 catalog alias `libs.exposed.druid`.
 
 ```kotlin

@@ -1,83 +1,98 @@
 # WIP - exposed-workshop
 
-스냅샷: 2026-06-02 KST
-범위: 2026-01-01 이후 생성되고 `debop`에게 할당된 열린 GitHub 이슈.
+스냅샷: 2026-08-29 KST
+범위: 현재 `develop` 브랜치와 GitHub에서 `debop`에게 할당된 열린 이슈를
+대조한 작업 큐.
 열린 이슈 수: 1개.
 
 ## 최근 완료
 
-- Spring Boot 4 정렬, version catalog 마이그레이션, 의존성 거버넌스,
-  호환성 가드, Redisson 기준선 정렬이 병합되었습니다.
-- 테스트 정리와 Kluent에서 `bluetape4k-assertions`로의 마이그레이션이 병합되었습니다.
-- README hero/architecture 갱신이 병합되었습니다.
-- GNO 기반 감사에서 routing datasource pool lifecycle 문제를 `#70`으로 등록했습니다.
+`1.4.0` 예제 확장은 다음 이슈를 기준으로 현재 소스와 문서에 반영되어
+있습니다.
+
+- [#234](https://github.com/bluetape4k/exposed-workshop/issues/234) Apache
+  Druid query-only Exposed 예제
+- [#236](https://github.com/bluetape4k/exposed-workshop/issues/236)
+  checkpointable JDBC batch 예제
+- [#237](https://github.com/bluetape4k/exposed-workshop/issues/237) Ktor
+  observability 예제의 Bluetape4k provider 전환
+- [#238](https://github.com/bluetape4k/exposed-workshop/issues/238) Exposed
+  measured 단위 컬럼 예제
+- [#239](https://github.com/bluetape4k/exposed-workshop/issues/239) JaVers +
+  Exposed 감사 이력 예제
+- [#240](https://github.com/bluetape4k/exposed-workshop/issues/240) JDBC
+  Lettuce repository cache 전략 예제
+- [#252](https://github.com/bluetape4k/exposed-workshop/issues/252) JaVers
+  삭제 lifecycle 감사 검증 보강
+
+이로써 Chapter 10의 Ktor/onboarding 변형, Chapter 11의 Ktor/Lettuce 변형,
+Chapter 12의 Spring/Ktor production integration 쌍, Chapter 13의 플랫폼·DDD·
+감사 예제가 모두 소스 트리에 연결되어 있습니다.
 
 ## 현재 방향
 
-새 chapter 콘텐츠를 늘리기 전에 기존 예제의 lifecycle 정확성을 먼저 회복합니다.
-Chapter 10-12 backlog는 가치가 있지만, tenant 소유 datasource pool을 누수하는
-예제 위에 더 확장해서는 안 됩니다.
+현재 유일한 열린 작업은 [#255](https://github.com/bluetape4k/exposed-workshop/issues/255)
+입니다. 기존 Chapter 10 예제를 공통 `TenantContext`의 reference consumer로
+전환하되, 신규 모듈은 만들지 않습니다.
+
+공개 snapshot 저장소에서 기본 좌표
+`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`의 metadata/POM과
+`bluetape4k-bom:2.0.0-SNAPSHOT`,
+`io.github.bluetape4k.exposed:bluetape4k-exposed-bom:2.0.0-SNAPSHOT`,
+`io.github.bluetape4k:bluetape4k-tenant:2.0.0-SNAPSHOT` 좌표를 확인했습니다.
+tenant metadata는 `20260829072901`에 갱신되었고, 정상 Gradle
+`dependencyInsight`는 timestamped tenant snapshot
+`2.0.0-20260829.072901-1`을 local Maven override 없이 선택합니다.
+
+upstream provider
+[`bluetape4k-projects#1566`](https://github.com/bluetape4k/bluetape4k-projects/pull/1566)은
+merge되었습니다. [`bluetape4k-projects#1565`](https://github.com/bluetape4k/bluetape4k-projects/issues/1565)와
+[`bluetape4k-dependencies#213`](https://github.com/bluetape4k/bluetape4k-dependencies/issues/213)은
+추적을 위해 열려 있지만, 현재 공개 artifact 해석을 막지는 않습니다. 사용자가
+`2.0.0-SNAPSHOT` 기준으로 #255 구현을 진행하도록 결정한 뒤 추가한 versionless
+`bluetape4k-tenant` alias와 두 기존 consumer 전환은 공개 snapshot 기준으로
+재검증을 완료했습니다.
+
+- `10-multi-tenant/06-spring-security-tenant-authorization-spring-web`
+  — MVC/platform-thread `ThreadLocal` consumer
+- `10-multi-tenant/02-multitenant-spring-web-virtualthread`
+  — MVC/virtual-thread JDK 25 `ScopedValue` consumer
+
+header parsing, Spring Security authorization, schema/database routing과 기존
+route·격리 동작은 유지했습니다. 순차/병렬 격리, 중첩 scope 복원, 실패 후
+cleanup을 대상 테스트로 확인했습니다.
+
+현재 구현 증거:
+
+- `02-multitenant-spring-web-virtualthread`: 공통 `ScopedValueTenantContext`와
+  `TenantContexts` 경계로 전환, JDK 25 scope 테스트 포함
+- `06-spring-security-tenant-authorization-spring-web`: 공통
+  `ThreadLocalTenantContext`와 `TenantContexts` 경계로 전환, filter cleanup 및
+  인증/격리 회귀 테스트 포함
+- 공개 snapshot 정상 Gradle 해석 기준 대상 모듈 테스트: `02` 44개, `06` 32개 통과
 
 ## 우선순위 큐
 
-| 우선순위 | 이슈 | 난이도 | 메모 |
-|---|---|---:|---|
-| P2 | [#70](https://github.com/bluetape4k/exposed-workshop/issues/70) routing datasource registry가 tenant Hikari pool을 닫지 않음 | M | 기존 chapter 11 예제가 tenant pool을 만들지만 registry/Spring shutdown 소유권을 정의하지 않습니다. |
-| P3 | [#45](https://github.com/bluetape4k/exposed-workshop/issues/45) 10·11장 Ktor 예제 epic | L | `#46`-`#50`의 parent입니다. 작업은 module 단위로 유지합니다. |
-| P3 | [#46](https://github.com/bluetape4k/exposed-workshop/issues/46) 10장 Ktor multi-tenant 예제 | M | `#45`의 child입니다. |
-| P3 | [#47](https://github.com/bluetape4k/exposed-workshop/issues/47) 11장 Ktor cache strategy 예제 | M | `#45`의 child입니다. |
-| P3 | [#48](https://github.com/bluetape4k/exposed-workshop/issues/48) 11장 Ktor coroutine cache 예제 | M | `#45`의 child입니다. |
-| P3 | [#49](https://github.com/bluetape4k/exposed-workshop/issues/49) 11장 Ktor routing datasource 예제 | M | `#45`의 child입니다. `#70` lifecycle fix를 반영해야 합니다. |
-| P3 | [#50](https://github.com/bluetape4k/exposed-workshop/issues/50) Ktor 장 예제를 문서와 검증에 연결 | S | `#46`-`#49` 완료 후 마무리합니다. |
-| P3 | [#51](https://github.com/bluetape4k/exposed-workshop/issues/51) Spring Boot multi-tenant 전략 epic | L | `#52`-`#56`의 parent입니다. |
-| P3 | [#52](https://github.com/bluetape4k/exposed-workshop/issues/52) schema-per-tenant Spring Boot 예제 | M | `#51`의 child입니다. |
-| P3 | [#53](https://github.com/bluetape4k/exposed-workshop/issues/53) database-per-tenant Spring Boot 예제 | M | `#51`의 child입니다. |
-| P3 | [#54](https://github.com/bluetape4k/exposed-workshop/issues/54) Spring Security tenant authorization 예제 | M | `#51`의 child입니다. |
-| P3 | [#55](https://github.com/bluetape4k/exposed-workshop/issues/55) tenant onboarding/provisioning 예제 | M | `#51`의 child입니다. |
-| P3 | [#56](https://github.com/bluetape4k/exposed-workshop/issues/56) 10장 예제를 문서와 검증에 연결 | S | `#52`-`#55` 완료 후 마무리합니다. |
-| P3 | [#57](https://github.com/bluetape4k/exposed-workshop/issues/57) 12장 production integration epic | L | `#58`-`#63`의 parent입니다. |
-| P3 | [#58](https://github.com/bluetape4k/exposed-workshop/issues/58) Spring Boot 4·Ktor application architecture 예제 | M | `#57`의 child입니다. |
-| P3 | [#59](https://github.com/bluetape4k/exposed-workshop/issues/59) authentication/session 예제 | M | `#57`의 child입니다. |
-| P3 | [#60](https://github.com/bluetape4k/exposed-workshop/issues/60) outbox realtime 예제 | M | `#57`의 child입니다. |
-| P3 | [#61](https://github.com/bluetape4k/exposed-workshop/issues/61) HTTP client outbox/idempotency 예제 | M | `#57`의 child입니다. |
-| P3 | [#62](https://github.com/bluetape4k/exposed-workshop/issues/62) observability/readiness 예제 | M | `#57`의 child입니다. |
-| P3 | [#63](https://github.com/bluetape4k/exposed-workshop/issues/63) 12장 예제를 문서와 검증에 연결 | S | `#58`-`#62` 완료 후 마무리합니다. |
+| 상태 | 이슈 | 다음 조건 |
+|---|---|---|
+| 구현 완료 (Issue metadata 갱신 대기) | [#255](https://github.com/bluetape4k/exposed-workshop/issues/255) (`1.4.0`) MVC·virtual-thread 예제를 공통 `TenantContext` reference consumer로 전환 | Issue DoD/상태 갱신 후 종료 검토 |
 
 ## 의존성 맵
 
 ```text
-#70 routing datasource Hikari lifecycle
-  -> #49 Ktor routing datasource example should inherit the cleanup rule
-  -> any future tenant datasource examples should define shutdown ownership
-
-#45 Ktor chapters 10/11 epic
-  -> #46 Ktor multi-tenant
-  -> #47 Ktor cache strategies
-  -> #48 Ktor coroutine cache
-  -> #49 Ktor routing datasource
-  -> #50 docs and verification
-
-#51 Spring Boot chapter 10 multi-tenant epic
-  -> #52 schema-per-tenant
-  -> #53 database-per-tenant
-  -> #54 Spring Security tenant authorization
-  -> #55 onboarding/provisioning
-  -> #56 docs and verification
-
-#57 chapter 12 production integration epic
-  -> #58 application architecture
-  -> #59 authentication/session
-  -> #60 outbox realtime
-  -> #61 HTTP client outbox/idempotency
-  -> #62 observability/readiness
-  -> #63 docs and verification
+bluetape4k-projects#1562
+  -> bluetape4k-dependencies#213
+    -> 기본 2.0.0-SNAPSHOT metadata/POM은 공개·확인됨
+    -> tenant artifact·versionless alias 공개 및 POM/API 검증 (upstream #1566 merge)
+      -> exposed-workshop#255 (implementation + normal resolution complete)
+        -> chapter 10/06 MVC ThreadLocal consumer 전환 완료
+        -> chapter 10/02 JDK 25 ScopedValue consumer 전환 완료
+        -> 기존 route·인증·routing·격리 회귀 검증 완료
 ```
 
 ## WIP 제한
 
-| 작업 흐름 | 제한 | 현재 다음 작업 |
+| 작업 흐름 | 동시 작업 수 | 현재 규칙 |
 |---|---:|---|
-| Correctness / lifecycle | 1 | routing datasource 확장보다 `#70`을 먼저 처리합니다. |
-| Ktor examples | 1 | `#45` 아래 child 하나를 시작하고, children 완료 후 `#50`을 마무리합니다. |
-| Spring Boot multi-tenant examples | 1 | `#51` 아래 child 하나를 시작하고, children 완료 후 `#56`을 마무리합니다. |
-| Production integration examples | 1 | `#57` 아래 child 하나를 시작하고, children 완료 후 `#63`을 마무리합니다. |
+| TenantContext reference consumer | 1 | `2.0.0-SNAPSHOT` catalog 기준 단일 순차 lane. 공개 tenant artifact의 정상 Gradle 해석과 대상 테스트를 재검증했으며, 후속 변경도 같은 검증 경계를 유지합니다. |
+| 신규 예제 확장 | 0 | 1.4.0 예제 세트가 닫힌 상태이므로 #255의 lifecycle/compatibility 경계를 먼저 확인합니다. |

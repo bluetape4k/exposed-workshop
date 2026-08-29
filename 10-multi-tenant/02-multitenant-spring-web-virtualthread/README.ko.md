@@ -2,8 +2,8 @@
 
 [English](./README.md) | 한국어
 
-`01` 모듈의 멀티테넌시 구조를 Java 21 Virtual Threads 환경으로 확장한 예제입니다. 블로킹 I/O 스타일을 유지하면서 동시 처리량을 높이는 구성에 초점을 맞춥니다. `ThreadLocal` 대신
-`ScopedValue`를 사용해 Virtual Thread 친화적인 컨텍스트 전파를 구현합니다.
+`01` 모듈의 멀티테넌시 구조를 Java 25 Virtual Threads 환경으로 확장한 예제입니다. 블로킹 I/O 스타일을 유지하면서 동시 처리량을 높이는 구성에 초점을 맞춥니다. 모듈 내부 구현 대신 공통
+`bluetape4k-tenant`의 `ScopedValueTenantContext`를 사용해 Virtual Thread 친화적인 컨텍스트 전파를 구현합니다.
 
 ## 학습 목표
 
@@ -15,7 +15,17 @@
 ## 선수 지식
 
 - [`../01-multitenant-spring-web/README.md`](../01-multitenant-spring-web/README.md)
-- Java 21 Virtual Threads 기초
+- Java 25 Virtual Threads 기초
+
+## 의존성
+
+이 모듈은 `2.0.0-SNAPSHOT` 의존성 계열의 공통 tenant carrier를 사용합니다.
+catalog alias에는 버전을 직접 쓰지 않으며 `bluetape4k-dependencies`와 BOM이
+버전의 기준입니다.
+
+```kotlin
+implementation(libs.bluetape4k.tenant)
+```
 
 ---
 
@@ -42,7 +52,7 @@
 
 ### ScopedValue 기반 컨텍스트 전파
 
-Virtual Thread는 수백만 개가 동시에 생성될 수 있어 `ThreadLocal`의 메모리 오버헤드가 문제가 됩니다. Java 21의
+Virtual Thread는 수백만 개가 동시에 생성될 수 있어 `ThreadLocal`의 메모리 오버헤드가 문제가 됩니다. Java 25의
 `ScopedValue`는 불변 바인딩으로 동작해 Virtual Thread 환경에 적합합니다.
 
 ```
@@ -78,19 +88,21 @@ fun protocolHandlerVirtualThreadExecutorCustomizer(): TomcatProtocolHandlerCusto
 }
 ```
 
-### TenantContext (ScopedValue 버전)
+### TenantContexts (공통 ScopedValue carrier)
 
-`01` 모듈의 `ThreadLocal` 방식을 `ScopedValue`로 교체한 버전입니다. `ScopedValue.where().run { }` 블록 안에서만 값이 유효하며, 블록 종료 시 자동으로 소멸됩니다.
+`TenantContexts`는 `bluetape4k-tenant`의 공통 `ScopedValueTenantContext`를 감싸는
+얇은 애플리케이션 경계입니다. header parsing과 `Tenants` 조회는 애플리케이션이
+소유하고, lexical binding과 기본 tenant를 두지 않는 조회 의미는 공통 carrier에
+위임합니다. 값은 carrier scope 안에서만 유효하며 블록 종료 시 자동으로 소멸됩니다.
 
 ```kotlin
-object TenantContext {
-    val CURRENT_TENANT: ScopedValue<Tenant> = ScopedValue.newInstance()
+object TenantContexts {
+    private val delegate = ScopedValueTenantContext()
 
-    inline fun withTenant(tenant: Tenants.Tenant = getCurrentTenant(), crossinline block: () -> Unit) {
-        ScopedValue.where(CURRENT_TENANT, tenant).run {
-            block()
-        }
-    }
+    fun currentOrNull(): Tenant? = delegate.currentOrNull()?.let { Tenants.getById(it.value) }
+    fun current(): Tenant = Tenants.getById(delegate.requireCurrent().value)
+    fun <T> withTenant(tenant: Tenant, block: () -> T): T =
+        delegate.withTenant(BluetapeTenantId(tenant.id), block)
 }
 ```
 
@@ -103,7 +115,7 @@ object TenantContext {
 @Before("@within(...Transactional) || @annotation(...Transactional)")
 fun setSchemaForTransaction() {
     transaction {
-        val schema = TenantContext.getCurrentTenantSchema()
+        val schema = getSchemaDefinition(TenantContexts.current())
         SchemaUtils.createSchema(schema)  // 01 모듈 대비 추가
         SchemaUtils.setSchema(schema)
         commit()
@@ -113,7 +125,10 @@ fun setSchemaForTransaction() {
 
 ### TenantFilter
 
-`01` 모듈과 동일한 서블릿 필터 인터페이스를 사용하지만, 내부적으로 `TenantContext.withTenant()`가 `ScopedValue` 기반으로 동작합니다.
+`01` 모듈과 동일한 서블릿 필터 인터페이스를 사용하지만, 내부적으로
+`TenantContexts.withTenant()`가 공통 `ScopedValueTenantContext`에 위임됩니다.
+header가 없거나 알 수 없는 경우의 명시적인 애플리케이션 정책은 필터가 소유하며,
+공통 carrier 자체는 tenant를 대체하지 않습니다.
 
 ---
 
@@ -122,8 +137,8 @@ fun setSchemaForTransaction() {
 | 파일                                    | 역할                                  |
 |---------------------------------------|-------------------------------------|
 | `config/TomcatVirtualThreadConfig.kt` | Tomcat executor를 Virtual Thread로 교체 |
-| `tenant/TenantFilter.kt`              | 헤더에서 테넌트 추출, ScopedValue 바인딩        |
-| `tenant/TenantContext.kt`             | ScopedValue 기반 테넌트 저장소              |
+| `tenant/TenantFilter.kt`              | 헤더에서 테넌트 추출, 공통 ScopedValue carrier 바인딩 |
+| `tenant/TenantContexts.kt`            | 애플리케이션 tenant를 `ScopedValueTenantContext`에 매핑 |
 | `tenant/Tenants.kt`                   | 테넌트 열거형 + 스키마 매핑                    |
 | `tenant/SchemaSupport.kt`             | `Schema` 객체 생성 헬퍼                   |
 | `tenant/TransactionSchemaAspect.kt`   | AOP로 트랜잭션 전 스키마 생성/전환               |
@@ -164,13 +179,13 @@ curl -H 'X-TENANT-ID: english' http://localhost:8080/actors/1
 
 - `X-TENANT-ID: korean`과 `X-TENANT-ID: english` 응답 데이터가 다른지 확인
 - 동시 요청 수를 늘려도 테넌트 데이터가 교차되지 않는지 검증
-- `ScopedValue` 스코프 밖에서 `getCurrentTenant()` 호출 시 기본값 반환 확인
+- `ScopedValue` 스코프 밖에서 `currentOrNull()`이 `null`을 반환하고 `current()`가 `MissingTenantContextException`을 던지는지 확인
 - 스레드 풀/커넥션 풀 설정값 변경 시 지연시간 변화 측정
 
 ## 운영 체크포인트
 
 - Virtual Thread 증가만으로 DB 병목이 해결되지 않으므로 HikariCP `maximumPoolSize` 함께 튜닝
-- `ScopedValue`는 불변이므로 바인딩 후 테넌트 변경이 불가 — 설계 단계에서 흐름 확정 필요
+- `ScopedValue` 바인딩은 현재 스코프 안에서 불변이지만, 중첩 스코프에서는 다른 테넌트를 임시로 재바인딩하고 종료 시 바깥 바인딩을 복원 — 설계 단계에서 흐름 확정 필요
 - 장시간 블로킹 작업을 요청 경로에 두지 않도록 점검
 - tenant 누수 탐지를 위한 통합 테스트를 CI에 고정
 

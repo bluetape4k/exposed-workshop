@@ -26,7 +26,7 @@ spring:
 
     threads:
         virtual:
-            enabled: true   # Virtual Thread 사용 여부 (TenantContext 를 ThreadLocal이 아닌 ScopeValue 를 사용하도록 변경하려면 ...)
+            enabled: true   # Virtual Thread 사용 여부 (TenantContexts는 공통 ScopedValue carrier를 사용합니다)
 
     jackson:
         serialization:

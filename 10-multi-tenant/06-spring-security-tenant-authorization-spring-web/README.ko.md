@@ -16,6 +16,16 @@ header만으로는 더 이상 신뢰하지 않습니다.
 `ThreadLocal` 전파 방식은 coroutine, WebFlux, virtual-thread 모듈에 그대로
 옮길 수 없습니다.
 
+## 의존성
+
+이 모듈은 `2.0.0-SNAPSHOT` 의존성 계열의 공통 `bluetape4k-tenant` carrier를
+사용합니다. catalog alias에는 버전을 직접 쓰지 않으며
+`bluetape4k-dependencies` BOM이 버전의 기준입니다.
+
+```kotlin
+implementation(libs.bluetape4k.tenant)
+```
+
 ## Architecture Diagram
 
 ![Spring Security Tenant Authorization Spring Web Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-06-spring-security-tenant-authorization-spring-web-architecture-01.png)
@@ -33,7 +43,7 @@ header만으로는 더 이상 신뢰하지 않습니다.
 | Conflict handling | 지원 credential source가 섞이면 `400 CONFLICTING_CREDENTIALS` |
 | Missing auth | Spring Security가 `401 Unauthorized` 반환 |
 | Missing/invalid tenant selector | `400 MISSING_TENANT`; 알 수 없는 selector는 `404 UNKNOWN_TENANT` |
-| Routing boundary | `TenantAuthorizationFilter`가 `TenantContext` 설정; repository는 `TenantTransaction` 사용 |
+| Routing boundary | `TenantAuthorizationFilter`가 `TenantContexts`를 통해 공통 `ThreadLocalTenantContext`를 바인딩; repository는 `TenantTransaction` 사용 |
 | Fallback | 기본 datasource와 header-only tenant routing 없음 |
 | Isolation | tenant마다 서로 다른 H2 JDBC URL과 Hikari pool 사용 |
 
@@ -83,8 +93,9 @@ curl -H 'X-API-Key: demo-globex-key' \
 
 테스트는 JWT, API key, demo session 접근, invalid credentials, tenant mismatch,
 claim 누락/오류, credential conflict, tenant selector 오류, cross-tenant 격리,
-`ThreadLocal` 정리, rollback, database bootstrap, datasource close, source-text
-architecture guard를 검증합니다.
+공통 `ThreadLocalTenantContext` cleanup(소비자 코드의 `set`/`clear` 호출 없음),
+rollback, database bootstrap, datasource close, source-text architecture guard를
+검증합니다.
 
 ## CI Coverage
 

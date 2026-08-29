@@ -2,7 +2,7 @@
 # Gradle Version Catalog — migrated from buildSrc/src/main/kotlin/Libs.kt
 
 [versions]
-bluetape4k-dependencies = "1.4.0"
+bluetape4k-dependencies = "2.0.0-SNAPSHOT"
 
 kotlin = "2.4.0"
 kotlinx-coroutines = "1.11.0"
@@ -117,6 +117,7 @@ jetbrains-annotations = { module = "org.jetbrains:annotations", version = "26.1.
 bluetape4k-dependencies = { module = "io.github.bluetape4k:bluetape4k-dependencies", version.ref = "bluetape4k-dependencies" }
 bluetape4k-core = { module = "io.github.bluetape4k:bluetape4k-core" }
 bluetape4k-coroutines = { module = "io.github.bluetape4k:bluetape4k-coroutines" }
+bluetape4k-tenant = { module = "io.github.bluetape4k:bluetape4k-tenant" }
 bluetape4k-logging = { module = "io.github.bluetape4k:bluetape4k-logging" }
 bluetape4k-junit5 = { module = "io.github.bluetape4k:bluetape4k-junit5" }
 bluetape4k-testcontainers = { module = "io.github.bluetape4k:bluetape4k-testcontainers" }

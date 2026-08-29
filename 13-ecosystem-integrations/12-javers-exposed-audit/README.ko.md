@@ -25,7 +25,7 @@ row를 원자적으로 처리합니다.
   `CustomerEntity` → `AuditedCustomer` mapping과 함께 등록합니다.
 - `JaversAuditHistory`가 고객별 `snapshot`, `changes`, 통합 `history`를 조회합니다.
 
-catalog는 `bluetape4k-dependencies:1.4.0` BOM을 통해 provider를 해석합니다. 예제는
+catalog는 `bluetape4k-dependencies:2.0.0-SNAPSHOT` BOM을 통해 provider를 해석합니다. 예제는
 `io.bluetape4k.javers:javers-exposed:0.3.0`과 Exposed JDBC를 사용합니다.
 
 ## Public API

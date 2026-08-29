@@ -31,7 +31,7 @@ class InventorySeeder(
     private fun seedTenant(tenantId: TenantId) {
         val seed = seedRows[tenantId].orEmpty()
         seed.forEach { request ->
-            TenantContext.withTenant(tenantId) {
+            TenantContexts.withTenant(tenantId) {
                 if (repository.findBySku(request.sku) == null) {
                     repository.create(request)
                 }

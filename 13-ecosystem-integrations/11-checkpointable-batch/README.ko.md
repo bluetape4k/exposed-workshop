@@ -18,7 +18,7 @@ Deterministic H2 테스트는 Docker, credential, remote service 없이 같은 �
 
 명시적인 chunk 경계와 재시작 가능한 keyset checkpoint가 필요한 blocking JDBC batch에 이
 모듈을 사용합니다. 의존성은 중앙 catalog alias `libs.exposed.batch`로 해석하며,
-`bluetape4k-dependencies:1.4.0` BOM을 통해 현재
+`bluetape4k-dependencies:2.0.0-SNAPSHOT` BOM을 통해 현재
 `io.github.bluetape4k.exposed:bluetape4k-exposed-batch:1.12.1`을 사용합니다.
 
 이 예제는 다음을 보여줍니다.

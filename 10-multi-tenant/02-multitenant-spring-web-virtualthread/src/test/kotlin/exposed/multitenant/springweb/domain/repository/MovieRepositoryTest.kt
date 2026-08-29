@@ -1,7 +1,7 @@
 package exposed.multitenant.springweb.domain.repository
 
 import exposed.multitenant.springweb.AbstractMultitenantTest
-import exposed.multitenant.springweb.tenant.TenantContext
+import exposed.multitenant.springweb.tenant.TenantContexts
 import exposed.multitenant.springweb.tenant.Tenants.Tenant
 import io.bluetape4k.logging.coroutines.KLoggingChannel
 import io.bluetape4k.logging.debug
@@ -24,7 +24,7 @@ class MovieRepositoryTest(
     @ParameterizedTest(name = "tenant={0}")
     @EnumSource(Tenant::class)
     fun `테넌트별 모든 영화 조회`(tenant: Tenant) {
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val movies = movieRepo.searchMovies(emptyMap())
             log.debug { "tenant=${tenant.id}, movies.size=${movies.size}" }
             movies shouldHaveSize 4
@@ -38,7 +38,7 @@ class MovieRepositoryTest(
             Tenant.ENGLISH -> "Gladiator"
             Tenant.KOREAN  -> "글래디에이터"
         }
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val movies = movieRepo.searchMovies(mapOf("name" to movieName))
             movies shouldHaveSize 1
             movies.first().name shouldBeEqualTo movieName
@@ -52,7 +52,7 @@ class MovieRepositoryTest(
             Tenant.ENGLISH -> "Johnny"
             Tenant.KOREAN  -> "조니"
         }
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val movies = movieRepo.searchMovies(mapOf("producerName" to producerName))
             movies.shouldNotBeEmpty()
             movies.forEach { log.debug { "tenant=${tenant.id}, movie=$it" } }
@@ -62,7 +62,7 @@ class MovieRepositoryTest(
     @ParameterizedTest(name = "tenant={0}")
     @EnumSource(Tenant::class)
     fun `모든 영화와 출연 배우를 조인하여 조회한다`(tenant: Tenant) {
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val moviesWithActors = movieRepo.getAllMoviesWithActors()
             moviesWithActors.shouldNotBeEmpty()
             moviesWithActors.forEach {
@@ -75,18 +75,21 @@ class MovieRepositoryTest(
     @ParameterizedTest(name = "tenant={0}")
     @EnumSource(Tenant::class)
     fun `특정 영화 id로 배우 목록을 함께 조회한다`(tenant: Tenant) {
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val movieWithActors = movieRepo.getMovieWithActors(1L)
             movieWithActors.shouldNotBeNull()
             movieWithActors.actors.shouldNotBeEmpty()
-            log.debug { "tenant=${tenant.id}, movie=${movieWithActors.name}, actorCount=${movieWithActors.actors.size}" }
+            log.debug {
+                "tenant=${tenant.id}, movie=${movieWithActors.name}, " +
+                    "actorCount=${movieWithActors.actors.size}"
+            }
         }
     }
 
     @ParameterizedTest(name = "tenant={0}")
     @EnumSource(Tenant::class)
     fun `영화별 출연 배우 수를 집계한다`(tenant: Tenant) {
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val counts = movieRepo.getMovieActorsCount()
             counts.shouldNotBeEmpty()
             counts.forEach {
@@ -99,7 +102,7 @@ class MovieRepositoryTest(
     @ParameterizedTest(name = "tenant={0}")
     @EnumSource(Tenant::class)
     fun `제작에 참여한 배우가 있는 영화를 조회한다`(tenant: Tenant) {
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val results = movieRepo.findMoviesWithActingProducers()
             results.shouldNotBeEmpty()
             results.forEach {
@@ -111,7 +114,7 @@ class MovieRepositoryTest(
     @ParameterizedTest(name = "tenant={0}")
     @EnumSource(Tenant::class)
     fun `존재하지 않는 영화 id 조회 시 null을 반환한다`(tenant: Tenant) {
-        TenantContext.withTenant(tenant) {
+        TenantContexts.withTenant(tenant) {
             val movie = movieRepo.findByIdOrNull(-1L)
             movie.shouldBeNull()
         }

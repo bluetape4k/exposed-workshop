@@ -1,6 +1,6 @@
 package exposed.multitenant.security.controller
 
-import exposed.multitenant.security.tenant.TenantContextException
+import io.bluetape4k.tenant.MissingTenantContextException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -16,7 +16,7 @@ class InventoryErrorHandler {
             .status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse("VALIDATION_FAILED", "Request body validation failed"))
 
-    @ExceptionHandler(TenantContextException::class)
+    @ExceptionHandler(MissingTenantContextException::class)
     fun tenantContextFailure(): ResponseEntity<ErrorResponse> =
         ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)

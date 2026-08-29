@@ -2,7 +2,7 @@
 set -euo pipefail
 
 catalog="${1:-gradle/libs.versions.toml}"
-authority_expected_version="1.4.0"
+authority_expected_version="2.0.0-SNAPSHOT"
 
 if [[ ! -f "$catalog" ]]; then
   printf 'catalog expected=%s actual=<missing> action=provide-a-valid-catalog-path\n' "$catalog"
@@ -62,7 +62,7 @@ while IFS='|' read -r key expected_value; do
   [[ -z "$key" ]] && continue
   actual="$(actual_for "$key")"
   if [[ "$actual" != "$expected_value" ]]; then
-    printf '%s expected=%s actual=%s action=align-with-1.4.0-release-catalog\n' \
+    printf '%s expected=%s actual=%s action=align-with-2.0.0-SNAPSHOT-catalog\n' \
       "$key" "$expected_value" "${actual:-<missing>}"
     failed=1
   else
