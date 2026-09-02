@@ -15,13 +15,20 @@ Exposed reader/writer, checkpoint metadata repository, and caller-supplied JDBC
 database as separate responsibilities. Deterministic H2 tests exercise the
 same boundaries without Docker, credentials, or a remote service.
 
+H2 2.4.240 has an upstream cross-session regression for `CHECK` constraints
+containing `IN (...)`. The test runtime for this module therefore uses the
+last known-good `h2-v2-check-workaround` alias at `2.3.232`. The global catalog
+keeps `h2-v2 = 2.4.240` for other modules; this workaround is limited to the
+checkpointable batch fixture and can be removed after an upstream release
+containing the fix.
+
 ## Purpose
 
 Use this module when a blocking JDBC batch needs explicit chunk boundaries and a
 restartable keyset checkpoint. The dependency is resolved through the central
-catalog alias `libs.exposed.batch` and currently uses
-`io.github.bluetape4k.exposed:bluetape4k-exposed-batch:1.12.1` through the
-`bluetape4k-dependencies:2.0.0-SNAPSHOT` BOM.
+catalog alias `libs.exposed.batch` and currently resolves
+`io.github.bluetape4k.exposed:bluetape4k-exposed-batch:2.0.0` through the
+`bluetape4k-dependencies:2.0.0` BOM.
 
 The example demonstrates:
 

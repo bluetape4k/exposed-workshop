@@ -19,8 +19,8 @@ to coroutine, WebFlux, or virtual-thread modules.
 
 ## Dependency
 
-The module consumes the shared `bluetape4k-tenant` carrier from the
-`2.0.0-SNAPSHOT` dependency line. The catalog alias is versionless; the
+The module consumes the shared `bluetape4k-tenant` carrier from the stable
+`2.0.0` dependency line. The catalog alias is versionless; the
 `bluetape4k-dependencies` BOM remains the version authority.
 
 ```kotlin

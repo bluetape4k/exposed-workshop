@@ -8,6 +8,8 @@ import io.bluetape4k.batch.api.BatchReport
 import io.bluetape4k.batch.api.BatchStatus
 import io.bluetape4k.batch.api.BatchWriter
 import io.bluetape4k.batch.api.SkipPolicy
+import io.bluetape4k.batch.CheckpointJson
+import io.bluetape4k.batch.jdbc.ExposedJdbcBatchJobRepository
 import io.bluetape4k.batch.jdbc.tables.BatchJobExecutionTable
 import io.bluetape4k.batch.jdbc.tables.BatchStepExecutionTable
 import io.bluetape4k.junit5.coroutines.runSuspendIO
@@ -193,6 +195,17 @@ class JdbcBatchWorkshopTest {
         }
         tableCounts.keys shouldBeEqualTo jdbcBatchMetadataTables.map { it.tableName }.toSet()
         JdbcBatchTargetTable.primaryKey.columns.single() shouldBeEqualTo JdbcBatchTargetTable.sourceId
+    }
+
+    @Test
+    fun `provider metadata CHECK constraint remains valid across JDBC sessions`() = runSuspendIO {
+        val database = h2Database("check-constraint")
+        createJdbcBatchSchema(database)
+
+        val execution = ExposedJdbcBatchJobRepository(database, CheckpointJson.jackson3())
+            .findOrCreateJobExecution("check-constraint-job", emptyMap())
+
+        execution.status shouldBeEqualTo BatchStatus.RUNNING
     }
 
     @Test

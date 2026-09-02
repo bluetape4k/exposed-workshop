@@ -45,14 +45,14 @@ It then compares that baseline with **Database per Tenant**, where each whitelis
 | `08-tenant-onboarding-spring-web`         | Tenant catalog persistence and schema provisioning | Service transaction   |
 
 Modules `02` and `06` are the two existing reference consumers for the shared
-`TenantContext` work tracked in
-[#255](https://github.com/bluetape4k/exposed-workshop/issues/255). The base
-`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT` metadata and POM,
-the exposed BOM, and `bluetape4k-tenant` are publicly resolvable. Both examples
-consume `io.github.bluetape4k:bluetape4k-tenant` through the versionless catalog
-alias and keep only a thin application mapping from their local tenant types to
-the common carrier. Normal Gradle resolution now selects the timestamped tenant
-snapshot without a local Maven override; no new module is added.
+`TenantContext` work completed in
+[#255](https://github.com/bluetape4k/exposed-workshop/issues/255). The stable
+`io.github.bluetape4k:bluetape4k-dependencies:2.0.0` metadata and POM, the
+exposed BOM, and `bluetape4k-tenant:2.0.0` are publicly resolvable. Both
+examples consume `io.github.bluetape4k:bluetape4k-tenant` through the
+versionless catalog alias and keep only a thin application mapping from their
+local tenant types to the common carrier. Normal Gradle resolution selects the
+stable tenant artifact without a local Maven override; no new module is added.
 
 ---
 
