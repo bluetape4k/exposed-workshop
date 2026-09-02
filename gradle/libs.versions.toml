@@ -2,7 +2,7 @@
 # Gradle Version Catalog — migrated from buildSrc/src/main/kotlin/Libs.kt
 
 [versions]
-bluetape4k-dependencies = "2.0.0-SNAPSHOT"
+bluetape4k-dependencies = "2.0.0"
 
 kotlin = "2.4.0"
 kotlinx-coroutines = "1.11.0"
@@ -27,7 +27,11 @@ awaitility = "4.3.0"
 testcontainers = "2.0.5"
 
 hikaricp = "7.1.0"
+# H2 2.4.240 has a CHECK (... IN (...)) cross-session regression; the
+# checkpointable JDBC fixture uses the last known-good 2.3.x line until the
+# upstream fix is released.
 h2-v2 = "2.4.240"
+h2-v2-check-workaround = "2.3.232"
 mysql-connector-j = "9.7.0"
 mariadb-java-client = "3.5.8"
 postgresql-driver = "42.7.13"
@@ -284,6 +288,7 @@ micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-p
 hikaricp = { module = "com.zaxxer:HikariCP", version.ref = "hikaricp" }
 h2 = { module = "com.h2database:h2", version = "1.4.197" }
 h2-v2 = { module = "com.h2database:h2", version.ref = "h2-v2" }
+h2-v2-check-workaround = { module = "com.h2database:h2", version.ref = "h2-v2-check-workaround" }
 mysql-connector-j = { module = "com.mysql:mysql-connector-j", version.ref = "mysql-connector-j" }
 mariadb-java-client = { module = "org.mariadb.jdbc:mariadb-java-client", version.ref = "mariadb-java-client" }
 postgresql-driver = { module = "org.postgresql:postgresql", version.ref = "postgresql-driver" }

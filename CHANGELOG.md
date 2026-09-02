@@ -8,7 +8,7 @@
 
 `1.1.2` 태그 이후 `develop` 브랜치에 반영된 예제·문서·검증 변경을
 기록합니다. 현재 버전과 의존성 기준은 `gradle/libs.versions.toml`의
-`bluetape4k-dependencies:2.0.0-SNAPSHOT`, Kotlin `2.4.0`, Java toolchain `25`,
+`bluetape4k-dependencies:2.0.0`, Kotlin `2.4.0`, Java toolchain `25`,
 Exposed `1.4.0`입니다.
 
 ### 추가
@@ -52,8 +52,16 @@ Exposed `1.4.0`입니다.
 - Druid query-only, checkpointable JDBC batch, Ktor observability, measured
   단위 컬럼, JaVers 감사 이력, JDBC Lettuce cache의 H2 중심 테스트를 추가했습니다.
 - #255 대상 모듈에서 unbound context, 중첩 scope 복원, 예외 후 cleanup, 순차·병렬
-  tenant 격리를 검증했습니다. 공개 `2.0.0-SNAPSHOT`의 정상 Gradle 해석 기준
+  tenant 격리를 검증했습니다. 공개 `2.0.0`의 정상 Gradle 해석 기준
   `02` 44개와 `06` 32개 테스트가 통과했습니다.
+- 안정 `2.0.0` catalog의 dependency resolution과 governance를 통과시켰습니다.
+  `:11-checkpointable-batch:test`에서 H2 2.4.240의
+  `BATCH_JOB_EXEC_STATUS_ACTIVE_KEY_CHK` cross-session 회귀가 변경 전 `develop`와
+  동기화 branch에서 모두 재현되어 #260으로 등록했습니다. 전역 H2 2.4.240은
+  유지하고 checkpointable batch test runtime만 `h2-v2-check-workaround = 2.3.232`로
+  고정했으며, 회귀 1개·batch 모듈 9개·Ktor 6개 대상 테스트를 통과시켰습니다.
+  최종 전체 `clean build`도 `BUILD SUCCESSFUL in 13m 1s`와 `1102 actionable tasks`
+  (`1094 executed`, `6 from cache`, `2 up-to-date`)로 완료했습니다.
 - 멀티테넌트 MVC/Virtual Thread/WebFlux와 cache/routing 예제에 순차·병렬 격리,
   실패 후 cleanup, fallback 동작을 확인하는 회귀 검증을 보강했습니다.
 - 문서 검증은 `git diff --check`, localization 범위, README 링크와 다이어그램
@@ -62,11 +70,13 @@ Exposed `1.4.0`입니다.
 ### 문서
 
 - 루트 및 장별 README의 모듈 목록을 현재 `settings.gradle.kts`와 일치시켰습니다.
-- WIP 큐를 2026-08-29 GitHub 상태로 갱신하고, `#255` 구현이
-  `2.0.0-SNAPSHOT` catalog와 공개 tenant artifact 기준으로 완료된 상태를
-  기록했습니다. `bluetape4k-tenant`와 dependency/exposed BOM의 공개 snapshot
-  좌표를 정상 Gradle 해석으로 확인했으며, upstream provider PR #1566은
-  merge되었습니다.
+- WIP 큐를 2026-09-02 GitHub 상태로 갱신하고, `#255` 구현이
+  `2.0.0` catalog와 공개 tenant artifact 기준으로 완료된 상태를
+  기록했습니다. `bluetape4k-tenant`와 dependency/exposed BOM의 공개 안정
+  좌표를 확인했으며, upstream provider PR #1566은 merge되었습니다.
+- `#259`를 통해 `bluetape4k-dependencies:2.0.0` 안정 릴리스 기준으로
+  workshop catalog, governance guard, 현재 문서를 정렬하고, 후속 H2 회귀는
+  `#260`에서 모듈 범위 workaround와 회귀 테스트로 추적합니다.
 
 ## [1.1.2] - 2026-03-21
 

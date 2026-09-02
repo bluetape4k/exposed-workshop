@@ -14,12 +14,19 @@ Exposed JDBC를 조합해 keyset으로 chunk를 읽고, row를 변환·저장한
 checkpoint metadata repository, 호출자가 제공하는 JDBC database 책임을 분리합니다.
 Deterministic H2 테스트는 Docker, credential, remote service 없이 같은 경계를 실행합니다.
 
+H2 2.4.240에는 여러 세션에서 `IN (...)`을 포함한 `CHECK` constraint를 평가할 때
+발생하는 upstream cross-session regression이 있습니다. 따라서 이 모듈의 test runtime은
+마지막으로 정상 동작한 `h2-v2-check-workaround` alias `2.3.232`를 사용합니다. 다른
+모듈을 위해 전역 catalog의 `h2-v2 = 2.4.240`은 유지하며, 이 workaround는
+checkpointable batch fixture에만 적용하고 upstream fix가 포함된 release가 나오면
+제거할 수 있습니다.
+
 ## 목적
 
 명시적인 chunk 경계와 재시작 가능한 keyset checkpoint가 필요한 blocking JDBC batch에 이
 모듈을 사용합니다. 의존성은 중앙 catalog alias `libs.exposed.batch`로 해석하며,
-`bluetape4k-dependencies:2.0.0-SNAPSHOT` BOM을 통해 현재
-`io.github.bluetape4k.exposed:bluetape4k-exposed-batch:1.12.1`을 사용합니다.
+`bluetape4k-dependencies:2.0.0` BOM을 통해 현재
+`io.github.bluetape4k.exposed:bluetape4k-exposed-batch:2.0.0`으로 해석됩니다.
 
 이 예제는 다음을 보여줍니다.
 

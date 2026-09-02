@@ -18,7 +18,7 @@ An example that extends the multi-tenancy structure from module `01` to a Java 2
 
 ## Dependency
 
-The module uses the shared tenant carrier from the `2.0.0-SNAPSHOT` dependency
+The module uses the shared tenant carrier from the stable `2.0.0` dependency
 line. The catalog alias is versionless; `bluetape4k-dependencies` and its BOM
 remain the version authority.
 

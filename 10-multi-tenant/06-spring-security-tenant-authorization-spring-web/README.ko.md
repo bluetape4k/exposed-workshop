@@ -18,7 +18,7 @@ header만으로는 더 이상 신뢰하지 않습니다.
 
 ## 의존성
 
-이 모듈은 `2.0.0-SNAPSHOT` 의존성 계열의 공통 `bluetape4k-tenant` carrier를
+이 모듈은 안정 `2.0.0` 의존성 계열의 공통 `bluetape4k-tenant` carrier를
 사용합니다. catalog alias에는 버전을 직접 쓰지 않으며
 `bluetape4k-dependencies` BOM이 버전의 기준입니다.
 

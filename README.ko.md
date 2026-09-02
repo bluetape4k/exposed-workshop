@@ -19,19 +19,20 @@
 
 현재 소스 트리에는 Chapter 10–13의 실행 가능한 예제가 모두 포함되어
 있습니다. Ktor와 tenant onboarding 변형, JDBC + Lettuce 캐시, JaVers 감사
-이력까지 연결되어 있습니다. 2026-08-29 기준 유일하게 열린 구현 작업은
-공통 `TenantContext` reference artifact를 사용해 기존 MVC와 Virtual Thread
-테넌트 예제를 전환하는
-[#255](https://github.com/bluetape4k/exposed-workshop/issues/255)입니다. 두
-consumer 모듈은 이제 versionless catalog alias를 통해 공통
+이력까지 연결되어 있습니다. 2026-09-02 기준 공통 `TenantContext` reference
+artifact를 사용하도록 기존 MVC와 Virtual Thread 테넌트 예제를 전환하는
+[#255](https://github.com/bluetape4k/exposed-workshop/issues/255)은
+완료되었고, 안정 dependency reference 동기화는
+[#259](https://github.com/bluetape4k/exposed-workshop/issues/259)에서
+추적합니다. 두 consumer 모듈은 이제 versionless catalog alias를 통해 공통
 `io.github.bluetape4k:bluetape4k-tenant` API를 사용하며 기준은
-`io.github.bluetape4k:bluetape4k-dependencies:2.0.0-SNAPSHOT`입니다.
-`bluetape4k-dependencies`, [`bluetape4k-bom:2.0.0-SNAPSHOT`](https://github.com/bluetape4k/bluetape4k-dependencies/issues/213),
-exposed BOM, `bluetape4k-tenant` snapshot 좌표가 모두 공개 저장소에서
+`io.github.bluetape4k:bluetape4k-dependencies:2.0.0`입니다.
+`bluetape4k-dependencies`, [`bluetape4k-bom:2.0.0`](https://github.com/bluetape4k/bluetape4k-dependencies/releases/tag/2.0.0),
+exposed BOM, `bluetape4k-tenant` 안정 좌표가 모두 공개 저장소에서
 해석됩니다. upstream provider PR
 [`bluetape4k-projects#1566`](https://github.com/bluetape4k/bluetape4k-projects/pull/1566)이
 merge되었고, 이제 로컬 Maven override 없이 정상 Gradle 해석으로
-timestamped tenant snapshot을 선택합니다. 이 작업에서 새로운 multi-tenant
+안정 tenant artifact를 선택합니다. 이 작업에서 새로운 multi-tenant
 모듈은 만들지 않습니다.
 
 ## 제공 기능
@@ -81,7 +82,7 @@ Kotlin Exposed는 JetBrains가 만든 Kotlin 우선 SQL 프레임워크입니다
 | Exposed | 1.4.0 |
 | Spring Boot | 4.1.0 |
 | Kotlinx Coroutines | 1.11.0 |
-| Bluetape4k dependencies BOM | 2.0.0-SNAPSHOT |
+| Bluetape4k dependencies BOM | 2.0.0 |
 | Gradle Wrapper | 9.6.0 |
 
 ### 의존성 버전 거버넌스
@@ -92,7 +93,7 @@ catalog를 기준으로 선언합니다. 로컬 pin이 필요하다면
 호환성 사유를 기록합니다. BOM이 이미 관리하는 artifact에는 임의의 버전을
 추가하지 않습니다. catalog 변경을 검토할 때는
 `gradle/dependency-governance.sh`를 실행합니다. 이 guard는 import한
-`bluetape4k-dependencies:2.0.0-SNAPSHOT` catalog에 명시적으로 고정되어 있으므로,
+`bluetape4k-dependencies:2.0.0` catalog에 명시적으로 고정되어 있으므로,
 BOM을 변경할 때는 release 대조와 guard를 함께 갱신합니다.
 
 ## 학습 가이드
