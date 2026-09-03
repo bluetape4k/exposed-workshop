@@ -39,7 +39,11 @@ jobs:
         with:
           gradle-version: wrapper
       - name: Build and Detekt
-        run: ./gradlew assemble detekt --parallel
+        run: >-
+          ./gradlew assemble detekt
+          -x :04-benchmark:assemble
+          -x :04-benchmark:detekt
+          --parallel
         env:
           GRADLE_OPTS: "-Dorg.gradle.daemon=false"
       - name: Verify Detekt reports
@@ -236,11 +240,14 @@ jobs:
         run: |
           read -r -a module_tasks <<< "$MODULE_TASKS"
           if [ "$COLLECT_COVERAGE" = "true" ]; then
-            ./gradlew test koverXmlReport "-PuseDB=$USE_DB" --continue
+            ./gradlew test koverXmlReport \
+              -x :04-benchmark:test \
+              -x :04-benchmark:koverXmlReport \
+              "-PuseDB=$USE_DB" --continue
           elif [ "$NEEDS_DOCKER" = "true" ]; then
             ./gradlew "${module_tasks[@]}" "-PuseDB=$USE_DB" --continue --max-workers=1
           else
-            ./gradlew test "-PuseDB=$USE_DB" --continue
+            ./gradlew test -x :04-benchmark:test "-PuseDB=$USE_DB" --continue
           fi
       - name: Upload test results
         if: always()

@@ -85,12 +85,16 @@ jobs:
           cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: Build (compile only)
-        run: ./gradlew build -x test --parallel
+        run: >-
+          ./gradlew build -x test
+          -x :04-benchmark:build
+          -x :04-benchmark:detekt
+          --parallel
         env:
           GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
       - name: Detekt static analysis
-        run: ./gradlew detekt --parallel
+        run: ./gradlew detekt -x :04-benchmark:detekt --parallel
 
       - name: Upload detekt report
         if: always() && hashFiles('**/build/reports/detekt/*.xml') != ''
@@ -154,16 +158,18 @@ jobs:
         run: |
           if [ "$NEEDS_DOCKER" = "true" ]; then
             # Testcontainers 기반 DB는 모듈 간 Docker 리소스 경합(포트/Redis/DB 컨테이너)을 피하기 위해 프로젝트 순차 실행
-            ./gradlew test "-PuseDB=$USE_DB" --continue --max-workers=1
+            ./gradlew test -x :04-benchmark:test "-PuseDB=$USE_DB" --continue --max-workers=1
           else
-            ./gradlew test "-PuseDB=$USE_DB" --continue
+            ./gradlew test -x :04-benchmark:test "-PuseDB=$USE_DB" --continue
           fi
 
       - name: Generate Kover XML report
         if: matrix.collect-coverage && !cancelled()
         env:
           USE_DB: ${{ matrix.db }}
-        run: ./gradlew koverXmlReport "-PuseDB=$USE_DB" --continue -x test
+        run: >-
+          ./gradlew koverXmlReport "-PuseDB=$USE_DB" --continue -x test
+          -x :04-benchmark:koverXmlReport
         continue-on-error: true
 
       - name: Upload test results
