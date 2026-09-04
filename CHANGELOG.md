@@ -26,6 +26,8 @@ Exposed `1.4.0`입니다.
 
 ### 변경
 
+- 중앙 post-publish 정책과 일치하도록 `bluetape4k-dependencies` catalog를
+  `2.0.0` 안정 BOM으로 고정했습니다.
 - `settings.gradle.kts`가 `00`부터 `13`장까지 소스 트리의 모듈을 자동 발견하도록
   유지하고, Gradle version catalog와 중앙 BOM을 기준으로 의존성 좌표를 관리합니다.
 - Chapter 10의 기존 MVC/Virtual Thread tenant consumer가 versionless

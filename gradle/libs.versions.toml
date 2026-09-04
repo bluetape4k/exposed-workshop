@@ -2,7 +2,8 @@
 # Gradle Version Catalog — migrated from buildSrc/src/main/kotlin/Libs.kt
 
 [versions]
-bluetape4k-dependencies = "2.1.0-SNAPSHOT"
+# 정식 2.0.0 안정 릴리스만 소비한다.
+bluetape4k-dependencies = "2.0.0"
 
 kotlin = "2.4.0"
 kotlinx-coroutines = "1.11.0"
