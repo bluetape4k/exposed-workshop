@@ -139,6 +139,7 @@ bluetape4k-ktor-testing = { module = "io.github.bluetape4k:bluetape4k-ktor-testi
 bluetape4k-r2dbc = { module = "io.github.bluetape4k:bluetape4k-r2dbc" }
 
 # exposed
+bluetape4k-exposed-jdbc-tests = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-tests" }
 exposed-core = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-core" }
 exposed-dao = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-dao" }
 exposed-measured = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-measured" }

@@ -14,6 +14,7 @@ This module builds a synchronous Spring MVC application around the movie/actor d
 ## Prerequisites
 
 - [`../03-spring-transaction/README.md`](../03-spring-transaction/README.md)
+- [`bluetape4k-exposed-jdbc-tests`](https://github.com/bluetape4k/bluetape4k-exposed/tree/2.0.0/exposed/jdbc-tests): Published JDBC test fixtures and DB matrix (test scope only)
 
 ## Architecture
 

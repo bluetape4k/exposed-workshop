@@ -13,7 +13,7 @@ Spring MVC + Virtual Threads 환경에서 Exposed DSL/DAO를 사용하는 REST A
 
 ## 선수 지식
 
-- [`00-shared/exposed-shared-tests`](../../00-shared/exposed-shared-tests/README.ko.md): 공통 테스트 베이스 클래스와 DB 설정 참고
+- [`bluetape4k-exposed-jdbc-tests`](https://github.com/bluetape4k/bluetape4k-exposed/tree/2.0.0/exposed/jdbc-tests): 공개 JDBC 테스트 fixture 및 DB matrix (테스트 스코프 전용)
 - Spring MVC, REST 컨트롤러, `@Transactional` 기본 개념
 
 ---

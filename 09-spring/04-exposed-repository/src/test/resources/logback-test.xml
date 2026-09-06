@@ -12,7 +12,6 @@
     </appender>
 
     <logger name="exposed.examples.springmvc" level="DEBUG"/>
-    <logger name="exposed.shared" level="DEBUG"/>
     <logger name="io.bluetape4k" level="DEBUG"/>
 
 
