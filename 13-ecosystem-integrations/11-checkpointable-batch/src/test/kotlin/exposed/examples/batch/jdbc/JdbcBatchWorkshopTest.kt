@@ -199,10 +199,11 @@ class JdbcBatchWorkshopTest {
 
     @Test
     fun `provider metadata CHECK constraint remains valid across JDBC sessions`() = runSuspendIO {
-        val database = h2Database("check-constraint")
-        createJdbcBatchSchema(database)
+        val schemaDatabase = h2Database("check-constraint")
+        createJdbcBatchSchema(schemaDatabase)
 
-        val execution = ExposedJdbcBatchJobRepository(database, CheckpointJson.jackson3())
+        val executionDatabase = h2Database("check-constraint")
+        val execution = ExposedJdbcBatchJobRepository(executionDatabase, CheckpointJson.jackson3())
             .findOrCreateJobExecution("check-constraint-job", emptyMap())
 
         execution.status shouldBeEqualTo BatchStatus.RUNNING

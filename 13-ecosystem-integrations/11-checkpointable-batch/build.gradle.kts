@@ -13,7 +13,7 @@ dependencies {
     implementation(libs.bluetape4k.jackson3)
     implementation(libs.bluetape4k.virtualthread.jdk25)
 
-    runtimeOnly(libs.h2.v2.check.workaround)
+    runtimeOnly(libs.h2.v2)
 
     testImplementation(libs.bluetape4k.junit5)
     testImplementation(libs.kotlinx.coroutines.test)
