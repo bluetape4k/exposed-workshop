@@ -17,6 +17,7 @@ spring-modulith = "2.1.0"
 reactor-bom = "2025.0.6"
 
 exposed = "1.4.0"
+exposed-hashing = "1.5.0"
 
 slf4j = "2.0.18"
 logback = "1.5.34"
@@ -263,6 +264,7 @@ reactor-test = { module = "io.projectreactor:reactor-test" }
 netty-bom = { module = "io.netty:netty-bom", version.ref = "netty" }
 
 # JetBrains Exposed
+jetbrains-exposed-hashing-bom = { module = "org.jetbrains.exposed:exposed-bom", version.ref = "exposed-hashing" }
 jetbrains-exposed-core = { module = "org.jetbrains.exposed:exposed-core" }
 jetbrains-exposed-crypt = { module = "org.jetbrains.exposed:exposed-crypt" }
 jetbrains-exposed-dao = { module = "org.jetbrains.exposed:exposed-dao" }

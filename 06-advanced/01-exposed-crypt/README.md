@@ -2,16 +2,45 @@
 
 English | [한국어](./README.ko.md)
 
-A module for transparently encrypting and decrypting column data using `exposed-crypt`. It covers patterns that minimize application code changes when storing sensitive information.
+A module for transparently encrypting and decrypting column data using `exposed-crypt`. It also demonstrates the Exposed 1.5.0 one-way hashing API for passwords and recovery codes. The examples keep reversible encryption and non-reversible hashing as separate storage decisions.
 
 ## Overview
 
 Columns declared with `encryptedVarchar` / `encryptedBinary` functions automatically encrypt on INSERT and decrypt on SELECT. Application code reads and writes plaintext as-is, while ciphertext is stored in the DB.
 
+## One-Way Hashing (Exposed 1.5.0)
+
+Hashing is different from the reversible encryption examples in this module: a
+`Hashed` value cannot be decrypted. Declare a column with `hashed()` and verify
+candidate input with `Hashed.matches()`.
+
+```kotlin
+object Users : IntIdTable("users") {
+    val password = text("password").hashed(BCryptHasher())
+    val recoveryCode = varchar("recovery_code", 60).nullable().hashed()
+}
+
+Users.insert {
+    it[password] = Users.password.hash("s3cret")
+    it[recoveryCode] = Users.recoveryCode.hash("r3covery")
+}
+
+val stored = Users.selectAll().single()
+stored[Users.password].matches("s3cret")       // true
+stored[Users.password].matches("wrong-value")  // false
+stored[Users.recoveryCode]                      // Hashed?; null stays null
+```
+
+`Column.hash()` selects the hasher declared by the column, so a stored `Hashed`
+value can be assigned again without hashing it a second time. Only the encoded
+hash is persisted; do not log passwords, recovery codes, or their candidates.
+
 ## Learning Objectives
 
 - Learn `encryptedVarchar` and `encryptedBinary` column definitions and CRUD patterns.
 - Understand how to use encrypted columns in DSL/DAO paths.
+- Define Exposed 1.5.0 `hashed()` columns in DSL/DAO paths and verify them with `Hashed.matches()`.
+- Choose nullable hashing when a missing recovery code must remain `null`.
 - Pre-calculate post-encryption length with `Encryptor.maxColLength()`.
 - Summarize search constraints (non-deterministic encryption) and alternatives.
 
@@ -154,6 +183,8 @@ insertLog.shouldContainNone(listOf("testName"))  // Verify plaintext not exposed
 |-------------------------------------|-------------------------------------------------------|
 | `Ex01_EncryptedColumn.kt`           | DSL encrypted column declaration, CRUD, length calculation, log masking verification |
 | `Ex02_EncryptedColumnWithEntity.kt` | DAO Entity encrypted column CRUD                      |
+| `Ex03_HashedColumn.kt`              | DSL one-way password/recovery-code hashing, matching, null handling, and safe re-assignment |
+| `Ex04_HashedColumnWithEntity.kt`    | DAO Entity one-way hashing and `Hashed.matches()` verification |
 
 ## How to Run Tests
 
@@ -174,6 +205,7 @@ insertLog.shouldContainNone(listOf("testName"))  // Verify plaintext not exposed
 - **WHERE clause search not possible**: Non-deterministic encryption means encrypted columns cannot be used as WHERE conditions.
 - **Index not supported**: Even if an index is created on an encrypted column, it cannot be utilized for searches.
 - **Alternatives**: For searchable fields, use `10-exposed-jasypt` (deterministic encryption) or `12-exposed-tink` (DAEAD).
+- **Hashing is not searchable or reversible**: Use `Hashed.matches()` for verification; never expect plaintext recovery from the database.
 
 ## Practice Checklist
 

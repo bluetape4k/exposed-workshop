@@ -2,17 +2,46 @@
 
 [English](./README.md) | 한국어
 
-`exposed-crypt`를 사용해 컬럼 데이터를 투명하게 암복호화하는 모듈입니다. 민감 정보 저장 시 애플리케이션 코드 변경을 최소화하는 패턴을 다룹니다.
+`exposed-crypt`를 사용해 컬럼 데이터를 투명하게 암복호화하는 모듈입니다. Exposed 1.5.0의 비밀번호·복구 코드용 단방향 hashing API도 함께 다룹니다. 가역 암호화와 복호화할 수 없는 hashing을 서로 다른 저장 결정으로 구분합니다.
 
 ## 개요
 
 `encryptedVarchar` /
 `encryptedBinary` 함수로 선언된 컬럼은 INSERT 시 자동으로 암호화하고 SELECT 시 자동으로 복호화합니다. 애플리케이션 코드는 평문을 그대로 읽고 쓰며, DB에는 암호문이 저장됩니다.
 
+## 단방향 Hashing (Exposed 1.5.0)
+
+Hashing은 이 모듈의 가역 암호화 예제와 다릅니다. `Hashed` 값은 복호화할
+수 없으므로 `hashed()` 컬럼을 선언하고 후보 입력을
+`Hashed.matches()`로 검증합니다.
+
+```kotlin
+object Users : IntIdTable("users") {
+    val password = text("password").hashed(BCryptHasher())
+    val recoveryCode = varchar("recovery_code", 60).nullable().hashed()
+}
+
+Users.insert {
+    it[password] = Users.password.hash("s3cret")
+    it[recoveryCode] = Users.recoveryCode.hash("r3covery")
+}
+
+val stored = Users.selectAll().single()
+stored[Users.password].matches("s3cret")       // true
+stored[Users.password].matches("wrong-value")  // false
+stored[Users.recoveryCode]                      // Hashed?; null은 그대로 유지
+```
+
+`Column.hash()`는 컬럼 선언에 지정한 hasher를 선택하므로 이미 저장한
+`Hashed` 값을 다시 할당해도 이중 hashing하지 않습니다. DB에는 encoded hash만
+저장되며, 비밀번호·복구 코드와 후보 입력을 로그에 남기지 않습니다.
+
 ## 학습 목표
 
 - `encryptedVarchar`, `encryptedBinary` 컬럼 정의와 CRUD 패턴을 익힌다.
 - DSL/DAO 경로에서 암호화 컬럼 사용법을 이해한다.
+- DSL/DAO 경로에서 Exposed 1.5.0 `hashed()` 컬럼을 정의하고 `Hashed.matches()`로 검증한다.
+- 없는 복구 코드를 `null`로 유지해야 할 때 nullable hashing을 선택한다.
 - `Encryptor.maxColLength()`로 암호화 후 길이를 사전 계산한다.
 - 검색 제약(비결정적 암호화)과 대안을 정리한다.
 
@@ -156,6 +185,8 @@ insertLog.shouldContainNone(listOf("testName"))  // 평문 미노출 확인
 |-------------------------------------|---------------------------------------|
 | `Ex01_EncryptedColumn.kt`           | DSL 암호화 컬럼 선언, CRUD, 길이 계산, 로그 마스킹 검증 |
 | `Ex02_EncryptedColumnWithEntity.kt` | DAO Entity 방식 암호화 컬럼 CRUD             |
+| `Ex03_HashedColumn.kt`              | DSL 단방향 비밀번호/복구 코드 hashing, 일치 검증, null 처리, 안전한 재할당 |
+| `Ex04_HashedColumnWithEntity.kt`    | DAO Entity 단방향 hashing과 `Hashed.matches()` 검증 |
 
 ## 테스트 실행 방법
 
@@ -176,6 +207,7 @@ insertLog.shouldContainNone(listOf("testName"))  // 평문 미노출 확인
 - **WHERE 절 검색 불가**: 비결정적 암호화 방식이므로 암호화 컬럼을 WHERE 조건으로 사용할 수 없습니다.
 - **인덱스 미지원**: 암호화 컬럼에 인덱스를 생성해도 검색 시 활용할 수 없습니다.
 - **대안**: 검색이 필요한 필드는 `10-exposed-jasypt`(결정적 암호화) 또는 `12-exposed-tink`(DAEAD)를 사용하세요.
+- **Hashing은 검색·복호화 대상이 아닙니다**: `Hashed.matches()`로만 검증하고 DB에서 평문을 복원하려 하지 마세요.
 
 ## 실습 체크리스트
 

@@ -208,7 +208,7 @@ Learn the powerful Exposed Entity API. Covers various primary key strategies, re
 
 #### [Exposed Crypt (Transparent Column Encryption)](06-advanced/01-exposed-crypt/README.md)
 
-Learn how to transparently encrypt/decrypt database columns using the `exposed-crypt` extension.
+Learn how to transparently encrypt/decrypt database columns and verify Exposed 1.5.0 one-way password hashes using the `exposed-crypt` extension.
 
 #### [Exposed JavaTime (java.time Integration)](06-advanced/02-exposed-javatime/README.md)
 
