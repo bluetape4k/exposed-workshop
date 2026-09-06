@@ -15,11 +15,10 @@ checkpoint metadata repository, 호출자가 제공하는 JDBC database 책임�
 Deterministic H2 테스트는 Docker, credential, remote service 없이 같은 경계를 실행합니다.
 
 H2 2.4.240에는 여러 세션에서 `IN (...)`을 포함한 `CHECK` constraint를 평가할 때
-발생하는 upstream cross-session regression이 있습니다. 따라서 이 모듈의 test runtime은
-마지막으로 정상 동작한 `h2-v2-check-workaround` alias `2.3.232`를 사용합니다. 다른
-모듈을 위해 전역 catalog의 `h2-v2 = 2.4.240`은 유지하며, 이 workaround는
-checkpointable batch fixture에만 적용하고 upstream fix가 포함된 release가 나오면
-제거할 수 있습니다.
+발생하는 upstream cross-session regression이 있었습니다. H2 `2.5.250`에는 upstream
+수정이 포함되었으므로, checkpointable batch fixture도 module-specific workaround 없이
+전역 catalog alias `h2-v2 = 2.5.250`을 사용합니다. 회귀 테스트는 schema와 provider
+repository를 서로 다른 JDBC session에서 열어 이 경계를 검증합니다.
 
 ## 목적
 

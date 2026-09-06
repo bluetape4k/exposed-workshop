@@ -59,11 +59,13 @@ Exposed `1.4.0`입니다.
 - 안정 `2.0.0` catalog의 dependency resolution과 governance를 통과시켰습니다.
   `:11-checkpointable-batch:test`에서 H2 2.4.240의
   `BATCH_JOB_EXEC_STATUS_ACTIVE_KEY_CHK` cross-session 회귀가 변경 전 `develop`와
-  동기화 branch에서 모두 재현되어 #260으로 등록했습니다. 전역 H2 2.4.240은
-  유지하고 checkpointable batch test runtime만 `h2-v2-check-workaround = 2.3.232`로
-  고정했으며, 회귀 1개·batch 모듈 9개·Ktor 6개 대상 테스트를 통과시켰습니다.
-  최종 전체 `clean build`도 `BUILD SUCCESSFUL in 13m 1s`와 `1102 actionable tasks`
-  (`1094 executed`, `6 from cache`, `2 up-to-date`)로 완료했습니다.
+  동기화 branch에서 모두 재현되어 #260으로 등록했습니다. 후속 이슈 #264에서
+  H2 `2.5.250` POM/JAR 공개를 확인하고 전역 `h2-v2`를 갱신했으며,
+  `h2-v2-check-workaround` alias와 checkpointable batch module-specific runtime
+  pin을 제거했습니다. 독립 JDBC session을 사용하는 named regression은 H2
+  2.4.240 강제 시 실패한 뒤 2.5.250에서 통과했습니다. batch·Ktor 대상 검증과
+  전체 `clean build`도 `BUILD SUCCESSFUL in 11m 21s`로 완료했으며, 전체 빌드는
+  1102 actionable tasks 중 1100개를 실행했습니다.
 - 멀티테넌트 MVC/Virtual Thread/WebFlux와 cache/routing 예제에 순차·병렬 격리,
   실패 후 cleanup, fallback 동작을 확인하는 회귀 검증을 보강했습니다.
 - 문서 검증은 `git diff --check`, localization 범위, README 링크와 다이어그램
