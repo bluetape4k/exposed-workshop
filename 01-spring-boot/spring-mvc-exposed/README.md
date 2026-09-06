@@ -13,7 +13,7 @@ A REST API module using Exposed DSL/DAO in a Spring MVC + Virtual Threads enviro
 
 ## Prerequisites
 
-- [`00-shared/exposed-shared-tests`](../../00-shared/exposed-shared-tests/README.md): Shared test base classes and DB configuration reference
+- [`bluetape4k-exposed-jdbc-tests`](https://github.com/bluetape4k/bluetape4k-exposed/tree/2.0.0/exposed/jdbc-tests): Published JDBC test fixtures and DB matrix (test scope only)
 - Spring MVC, REST controllers, `@Transactional` basics
 
 ---

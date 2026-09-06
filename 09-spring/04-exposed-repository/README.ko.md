@@ -14,6 +14,7 @@
 ## 선수 지식
 
 - [`../03-spring-transaction/README.ko.md`](../03-spring-transaction/README.ko.md)
+- [`bluetape4k-exposed-jdbc-tests`](https://github.com/bluetape4k/bluetape4k-exposed/tree/2.0.0/exposed/jdbc-tests): 공개 JDBC 테스트 fixture 및 DB matrix (테스트 스코프 전용)
 
 ## 아키텍처
 

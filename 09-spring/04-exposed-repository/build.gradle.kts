@@ -31,7 +31,12 @@ configurations {
 
 dependencies {
 
-    testImplementation(project(":exposed-shared-tests"))
+    // 공개 fixture가 자체적으로 포함하는 Spring Boot 4 자동설정을 전파하지 않습니다.
+    // 이 예제는 Exposed Spring Boot starter를 이미 직접 선택하므로 충돌을 막고,
+    // 필요한 JDBC/Testcontainers 의존성은 이 모듈의 명시적 선언을 사용합니다.
+    testImplementation(libs.bluetape4k.exposed.jdbc.tests) {
+        isTransitive = false
+    }
 
     // Exposed ORM 및 DSL 의존성
     implementation(libs.jetbrains.exposed.core)
