@@ -18,7 +18,7 @@
 
 | 모듈                           | 설명                                           |
 |------------------------------|----------------------------------------------|
-| `01-exposed-crypt`           | `encryptedVarchar`/`encryptedBinary` 암복호화 컬럼 |
+| `01-exposed-crypt`           | `encryptedVarchar`/`encryptedBinary` 암복호화 및 Exposed 1.5.0 단방향 hashing 컬럼 |
 | `02-exposed-javatime`        | Java Time 타입 매핑 (`LocalDate`, `Instant` 등)   |
 | `03-exposed-kotlin-datetime` | Kotlin `kotlinx-datetime` 타입 매핑              |
 | `04-exposed-json`            | JSON/JSONB 컬럼 매핑 및 경로 쿼리                     |
@@ -43,7 +43,7 @@
 
 1. `06-custom-columns` — ColumnType 확장의 기본 구조 이해
 2. `04-exposed-json` — JSON/JSONB 컬럼과 경로 쿼리
-3. `01-exposed-crypt` — 투명 암복호화 컬럼
+3. `01-exposed-crypt` — 투명 암복호화 및 단방향 hashing 컬럼
 4. `12-exposed-tink` — AEAD/DAEAD 고급 암호화
 5. `07-custom-entities` — 커스텀 ID 전략
 6. `13-exposed-measured` — 타입이 있는 측정값 컬럼과 안정적인 기준 단위

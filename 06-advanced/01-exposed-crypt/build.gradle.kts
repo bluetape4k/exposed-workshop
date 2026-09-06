@@ -2,6 +2,14 @@ configurations {
     testImplementation.get().extendsFrom(compileOnly.get(), runtimeOnly.get())
 }
 
+// 현재 2.0.0 ecosystem BOM은 Exposed 1.4.0을 관리하므로, 다음 catalog
+// publication 전까지 이 예제만 공개된 Exposed 1.5.0 hashing API를 사용합니다.
+dependencyManagement {
+    imports {
+        mavenBom(libs.jetbrains.exposed.hashing.bom.get().toString())
+    }
+}
+
 dependencies {
 
 

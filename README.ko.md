@@ -210,7 +210,7 @@ Exposed의 강력한 Entity API를 학습합니다. 다양한 기본키 전략, 
 
 #### [Exposed Crypt (투명한 컬럼 암호화)](06-advanced/01-exposed-crypt/README.ko.md)
 
-`exposed-crypt` 확장을 사용하여 데이터베이스 컬럼을 투명하게 암호화/복호화하는 방법을 학습합니다.
+`exposed-crypt` 확장을 사용하여 데이터베이스 컬럼을 투명하게 암호화/복호화하고 Exposed 1.5.0 단방향 비밀번호 hash를 검증하는 방법을 학습합니다.
 
 #### [Exposed JavaTime (java.time 통합)](06-advanced/02-exposed-javatime/README.ko.md)
 
