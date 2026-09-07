@@ -4,22 +4,22 @@
 
 **Goal:** Spring·Ktor auth-session 예제가 published `bluetape4k-tink` hex API를 사용해 중복 JDK hasher를 제거한다.
 
-**Architecture:** repository의 token 저장/조회 지점이 `TinkDigesters.SHA256.digestHex`를 직접 호출한다. catalog snapshot alias와 module-scoped implementation dependency만 추가하고 session schema/API는 유지한다.
+**Architecture:** repository의 token 저장/조회 지점이 `TinkDigesters.SHA256.digestHex`를 직접 호출한다. catalog timestamped provider alias와 module-scoped implementation dependency만 추가하고 session schema/API는 유지한다.
 
-**Tech Stack:** Kotlin 2.4, Spring Boot 4.1, Ktor 3.5, Exposed 1.4, H2, Gradle version catalog, `io.github.bluetape4k:bluetape4k-tink:2.1.0-SNAPSHOT`.
+**Tech Stack:** Kotlin 2.4, Spring Boot 4.1, Ktor 3.5, Exposed 1.4, H2, Gradle version catalog, `io.github.bluetape4k:bluetape4k-tink:2.1.0-20260907.141940-7`.
 
 ---
 
-### Task 1: Tink snapshot alias와 module dependency를 RED 상태로 추가
+### Task 1: Tink timestamped provider alias와 module dependency를 RED 상태로 추가
 
 **Files:**
 - Modify: `gradle/libs.versions.toml`
 - Modify: `12-production-integration/05-spring-auth-session/build.gradle.kts`
 - Modify: `12-production-integration/06-ktor-auth-session/build.gradle.kts`
 
-- [ ] `[libraries]`에 `bluetape4k-tink-snapshot = { module = "io.github.bluetape4k:bluetape4k-tink", version = "2.1.0-SNAPSHOT" }`를 추가한다.
+- [ ] `[versions]`에 배포된 timestamped provider build `bluetape4k-tink-snapshot = "2.1.0-20260907.141940-7"`을 추가하고 `[libraries]` alias가 이를 참조하게 한다.
 - [ ] 두 module의 `dependencies`에 `implementation(libs.bluetape4k.tink.snapshot)`을 추가한다.
-- [ ] provider snapshot을 받기 전 baseline에서 `TinkDigesters` import가 unresolved인 RED compile을 관찰한다.
+- [ ] provider dependency를 받기 전 baseline에서 `TinkDigesters` import가 unresolved인 RED compile을 관찰한다.
 
 ### Task 2: RED — known vector와 persistence 계약을 고정
 
@@ -59,6 +59,6 @@ TinkDigesters.SHA256.digestHex(token)
 git diff --check
 ```
 
-- [ ] dependency output에 `bluetape4k-tink:2.1.0-SNAPSHOT`이 있고 direct `MessageDigest`/`SessionTokenHasher`가 consumer source에 없는지 확인한다.
+- [ ] dependency output에 `bluetape4k-tink:2.1.0-20260907.141940-7`이 있고 direct `MessageDigest`/`SessionTokenHasher`가 consumer source에 없는지 확인한다.
 - [ ] raw token이 로그/예외/fixture 출력에 추가되지 않았는지 `rg`로 확인한다.
 - [ ] 설계/계획 SPW-01..05, Kotlin KT-FIN-01..11, workflow CG-01..10 증거를 기록하고 Lore commit protocol로 한국어 commit을 만든다.

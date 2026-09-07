@@ -7,13 +7,13 @@ Spring과 Ktor auth-session repository가 각각 `MessageDigest.getInstance("SHA
 - Spring: `12-production-integration/05-spring-auth-session/src/main/kotlin/exposed/examples/spring/auth/repository/ExposedAuthRepository.kt`
 - Ktor: `12-production-integration/06-ktor-auth-session/src/main/kotlin/exposed/examples/ktor/auth/repository/ExposedAuthRepository.kt`
 - upstream `bluetape4k-projects#1649`의 병합 PR `#1678`
-- provider snapshot `io.github.bluetape4k:bluetape4k-tink:2.1.0-SNAPSHOT`
+- provider의 timestamped build `io.github.bluetape4k:bluetape4k-tink:2.1.0-20260907.141940-7`
 
 현재 provider의 `TinkDigesters.SHA256.digestHex(String)`은 UTF-8 입력을 lowercase hex로 변환하고 SHA-256 결과를 항상 64자로 만든다. `matchesHex`는 canonical lowercase 형식과 길이를 먼저 확인한 뒤 constant-time 비교를 수행한다.
 
 ## 경계와 선택
 
-두 repository는 private hasher를 유지하지 않고 저장/조회 지점에서 `TinkDigesters.SHA256.digestHex(token)`을 호출한다. catalog에는 workshop이 직접 소비하는 snapshot alias를 추가하고 두 모듈에 `implementation`으로 선언한다. 안정 BOM 2.0.0을 전역 변경하지 않으며 snapshot override는 이 workshop 범위에 한정한다.
+두 repository는 private hasher를 유지하지 않고 저장/조회 지점에서 `TinkDigesters.SHA256.digestHex(token)`을 호출한다. catalog에는 workshop이 직접 소비하는 timestamped provider alias `2.1.0-20260907.141940-7`을 추가하고 두 모듈에 `implementation`으로 선언한다. 안정 BOM 2.0.0을 전역 변경하지 않으며 이 timestamped dependency override는 workshop 범위에 한정한다.
 
 검토한 대안은 (1) 기존 JDK 구현을 한 shared utility로 이동하는 방식, (2) provider의 Base64 `digest`를 사용하는 방식, (3) Tink hex API 직접 호출이다. (1)은 provider contract 중복을 남기고, (2)는 `varchar(64)` 저장 계약을 깨뜨리므로 제외한다. (3)은 기존 DB 값과 encoding을 보존하면서 private duplication을 제거하므로 선택한다.
 
@@ -29,4 +29,4 @@ Spring과 Ktor auth-session repository가 각각 `MessageDigest.getInstance("SHA
 
 두 모듈의 session creation/list/lookup endpoint 및 repository 테스트를 유지하고, 각 repository 테스트에 known-vector와 저장된 hash length/format 검사를 추가한다. 변경 후 `MessageDigest`와 `SessionTokenHasher`가 consumer에 남지 않는지 검색하고 dependency graph/POM에서 Tink artifact가 runtime에만 필요한 모듈에 올바르게 포함되는지 확인한다.
 
-완료 조건은 두 모듈 compile/test, provider snapshot resolution, UTF-8/lowercase/64-character contract, raw-token 비노출, `git diff --check`, Kotlin final checklist PASS다.
+완료 조건은 두 모듈 compile/test, timestamped provider build resolution, UTF-8/lowercase/64-character contract, raw-token 비노출, `git diff --check`, Kotlin final checklist PASS다.

@@ -23,6 +23,7 @@ configurations {
 
 dependencies {
 
+    implementation(libs.bluetape4k.tink.snapshot)
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.jdbc)
     implementation(libs.hikaricp)
