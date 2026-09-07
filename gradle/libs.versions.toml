@@ -5,8 +5,8 @@
 # 정식 2.0.0 안정 릴리스만 소비한다.
 bluetape4k-dependencies = "2.0.0"
 bluetape4k-exposed-tenant-jdbc-snapshot = "2.1.0-20260907.153611-1"
-# Issue #270 provider snapshot; pin the deployed timestamped build explicitly.
-bluetape4k-tink-snapshot = "2.1.0-20260907.141940-7"
+# Issue #270 provider builds; pin the deployed timestamped build explicitly.
+bluetape4k-provider-timestamp = "2.1.0-20260907.141940-7"
 
 kotlin = "2.4.0"
 kotlinx-coroutines = "1.11.0"
@@ -140,7 +140,8 @@ bluetape4k-ktor-core = { module = "io.github.bluetape4k:bluetape4k-ktor-core" }
 bluetape4k-ktor-observability = { module = "io.github.bluetape4k:bluetape4k-ktor-observability" }
 bluetape4k-ktor-testing = { module = "io.github.bluetape4k:bluetape4k-ktor-testing" }
 bluetape4k-r2dbc = { module = "io.github.bluetape4k:bluetape4k-r2dbc" }
-bluetape4k-tink-snapshot = { module = "io.github.bluetape4k:bluetape4k-tink", version.ref = "bluetape4k-tink-snapshot" }
+bluetape4k-core-snapshot = { module = "io.github.bluetape4k:bluetape4k-core", version.ref = "bluetape4k-provider-timestamp" }
+bluetape4k-tink-snapshot = { module = "io.github.bluetape4k:bluetape4k-tink", version.ref = "bluetape4k-provider-timestamp" }
 
 # exposed
 bluetape4k-exposed-jdbc-tests = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-jdbc-tests" }

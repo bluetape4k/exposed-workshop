@@ -23,6 +23,7 @@ configurations {
 
 dependencies {
 
+    implementation(libs.bluetape4k.core.snapshot)
     implementation(libs.bluetape4k.tink.snapshot)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.cio)

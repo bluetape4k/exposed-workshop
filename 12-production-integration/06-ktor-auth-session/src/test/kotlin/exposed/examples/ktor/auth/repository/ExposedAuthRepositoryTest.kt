@@ -24,8 +24,21 @@ class ExposedAuthRepositoryTest {
             "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         TinkDigesters.SHA256.digestHex("한글🔐") shouldBeEqualTo
             "4bf6e938ebc1c053c46bb45c34671c82ba63137812782261f5c709cf6766ee11"
-        TinkDigesters.SHA256.digestHex("leading-zero-14") shouldBeEqualTo
-            "0254752e819d44696c55ce451caf98ca6cd6f71254c516ab05910f79815df755"
+        TinkDigesters.SHA256.digestHex("286") shouldBeEqualTo
+            "00328ce57bbc14b33bd6695bc8eb32cdf2fb5f3a7d89ec14a42825e15d39df60"
+    }
+
+    @Test
+    fun `tink SHA-256 hex verifier accepts only canonical matching hashes`() {
+        val token = "286"
+        val expectedHash = "00328ce57bbc14b33bd6695bc8eb32cdf2fb5f3a7d89ec14a42825e15d39df60"
+        val wrongHash = "10328ce57bbc14b33bd6695bc8eb32cdf2fb5f3a7d89ec14a42825e15d39df60"
+
+        TinkDigesters.SHA256.matchesHex(token, expectedHash) shouldBeEqualTo true
+        TinkDigesters.SHA256.matchesHex(token, wrongHash) shouldBeEqualTo false
+        TinkDigesters.SHA256.matchesHex(token, expectedHash.uppercase()) shouldBeEqualTo false
+        TinkDigesters.SHA256.matchesHex(token, "not-a-hex-digest") shouldBeEqualTo false
+        TinkDigesters.SHA256.matchesHex(token, expectedHash.dropLast(2)) shouldBeEqualTo false
     }
 
     @Test
