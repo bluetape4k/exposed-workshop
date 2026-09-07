@@ -22,18 +22,17 @@
 이력까지 연결되어 있습니다. 2026-09-02 기준 공통 `TenantContext` reference
 artifact를 사용하도록 기존 MVC와 Virtual Thread 테넌트 예제를 전환하는
 [#255](https://github.com/bluetape4k/exposed-workshop/issues/255)은
-완료되었고, 안정 dependency reference 동기화는
+완료되었고, 안정 dependency reference 기준선은
 [#259](https://github.com/bluetape4k/exposed-workshop/issues/259)에서
-추적합니다. 두 consumer 모듈은 이제 versionless catalog alias를 통해 공통
+기록합니다. 두 consumer 모듈은 이제 versionless catalog alias를 통해 공통
 `io.github.bluetape4k:bluetape4k-tenant` API를 사용하며 기준은
-`io.github.bluetape4k:bluetape4k-dependencies:2.0.0`입니다.
-`bluetape4k-dependencies`, [`bluetape4k-bom:2.0.0`](https://github.com/bluetape4k/bluetape4k-dependencies/releases/tag/2.0.0),
-exposed BOM, `bluetape4k-tenant` 안정 좌표가 모두 공개 저장소에서
-해석됩니다. upstream provider PR
+`io.github.bluetape4k:bluetape4k-dependencies:2.1.0-SNAPSHOT`입니다. 현재
+개발선은 core, exposed, tenant provider를 `*-SNAPSHOT` 개발 버전으로 해석하며, 공개된
+`2.0.0` 좌표는 안정 기준선으로 유지합니다. upstream provider PR
 [`bluetape4k-projects#1566`](https://github.com/bluetape4k/bluetape4k-projects/pull/1566)이
-merge되었고, 이제 로컬 Maven override 없이 정상 Gradle 해석으로
-안정 tenant artifact를 선택합니다. 이 작업에서 새로운 multi-tenant
-모듈은 만들지 않습니다.
+merge되었으며, 안정 경로 검증은 로컬 Maven override 없이 완료되었습니다. 현재
+개발선은 의도적으로 tenant SNAPSHOT을 해석합니다. 이 작업에서 새로운
+multi-tenant 모듈은 만들지 않습니다.
 
 ## 제공 기능
 
@@ -82,18 +81,18 @@ Kotlin Exposed는 JetBrains가 만든 Kotlin 우선 SQL 프레임워크입니다
 | Exposed | 1.4.0 |
 | Spring Boot | 4.1.0 |
 | Kotlinx Coroutines | 1.11.0 |
-| Bluetape4k dependencies BOM | 2.0.0 |
+| Bluetape4k dependencies BOM | 2.1.0-SNAPSHOT |
 | Gradle Wrapper | 9.6.0 |
 
 ### 의존성 버전 거버넌스
 
-공유 의존성 버전은 import한 BOM의 `bluetape4k-dependencies` 릴리스
+공유 의존성 버전은 import한 BOM의 `bluetape4k-dependencies` 개발
 catalog를 기준으로 선언합니다. 로컬 pin이 필요하다면
 `gradle/libs.versions.toml` 주석이나 추적 가능한 lesson에 릴리스 값과
 호환성 사유를 기록합니다. BOM이 이미 관리하는 artifact에는 임의의 버전을
 추가하지 않습니다. catalog 변경을 검토할 때는
 `gradle/dependency-governance.sh`를 실행합니다. 이 guard는 import한
-`bluetape4k-dependencies:2.0.0` catalog에 명시적으로 고정되어 있으므로,
+`bluetape4k-dependencies:2.1.0-SNAPSHOT` catalog에 명시적으로 고정되어 있으므로,
 BOM을 변경할 때는 release 대조와 guard를 함께 갱신합니다.
 
 ## 학습 가이드

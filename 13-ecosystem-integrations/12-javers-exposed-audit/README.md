@@ -26,9 +26,9 @@ Use this module to learn the smallest useful audit boundary for an Exposed DAO:
 - `JaversAuditHistory` reads snapshots, changes, or the combined history for a
   customer.
 
-The catalog resolves the provider through the stable
-`bluetape4k-dependencies:2.0.0` BOM. The example uses
-`io.bluetape4k.javers:javers-exposed:0.3.0` and Exposed JDBC.
+The catalog resolves the provider through the development
+`bluetape4k-dependencies:2.1.0-SNAPSHOT` BOM. The example uses
+`io.github.bluetape4k.javers:javers-exposed:1.1.0-SNAPSHOT` and Exposed JDBC.
 
 ## Public API
 
