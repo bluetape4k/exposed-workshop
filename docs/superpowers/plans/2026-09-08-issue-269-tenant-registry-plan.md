@@ -104,9 +104,9 @@ git diff --check
 - RED: provider import와 adapter가 없는 상태에서 `compileTestKotlin`이
   `toTenantJdbcResourceRegistry` unresolved reference로 실패했다.
 - GREEN: 두 모듈 `compileKotlin`과 `compileTestKotlin`이 통과했다.
-- 테스트: 05 모듈 14개, 06 application test 30개와 전체 32개가 통과했다.
-- 정적 검증: 두 모듈 `detekt`, `git diff --check`, duplicate registry scan이
-  통과했다.
+- 테스트: shared support 4개, 05 모듈 15개, 06 모듈 33개가 통과했다.
+- 정적 검증: shared support와 두 consumer `detekt`, `git diff --check`, duplicate
+  registry/property scan이 통과했다.
 - 의존성: 두 runtime graph가 exact
   `io.github.bluetape4k.exposed:bluetape4k-exposed-tenant-jdbc:2.1.0-20260907.153611-1`
   을 선택했다. Exposed BOM은 `1.5.0`, consumer의 `exposed-jdbc`는 기존

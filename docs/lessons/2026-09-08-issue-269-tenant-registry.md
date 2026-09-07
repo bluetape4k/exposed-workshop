@@ -47,13 +47,15 @@ configuration contract가 다시 갈라진다. 그래서 `00-shared/tenant-jdbc-
   닫힌 뒤 lookup이 고정된 closed 예외로 실패하는지 확인한다.
 - shared support test와 두 consumer contract test에서 normalized duplicate
   tenant 설정(`acme`/` ACME `)이 동일한 예외 메시지로 fail-fast하는지 확인한다.
-- `./gradlew :05-database-per-tenant-spring-web:test --no-build-cache --no-daemon`
-  결과: 14 passing.
-- `./gradlew :06-spring-security-tenant-authorization-spring-web:test --no-build-cache --no-daemon`
-  결과: 32 passing.
-- 두 모듈 `compileKotlin` 및 `compileTestKotlin`, targeted `detekt`,
-  `git diff --check`가 통과했다.
-- runtime dependency graph에서 두 모듈 모두
+- `./gradlew :tenant-jdbc-support:test --rerun-tasks --no-build-cache --no-daemon`
+  결과: 4 passing.
+- `./gradlew :05-database-per-tenant-spring-web:test --rerun-tasks --no-build-cache --no-daemon`
+  결과: 15 passing.
+- `./gradlew :06-spring-security-tenant-authorization-spring-web:test --rerun-tasks --no-build-cache --no-daemon`
+  결과: 33 passing.
+- shared support와 두 모듈 `compileKotlin` 및 `compileTestKotlin`, targeted
+  `detekt`, `git diff --check`가 통과했다.
+- runtime dependency graph에서 shared support와 두 consumer 모두
   `io.github.bluetape4k.exposed:bluetape4k-exposed-tenant-jdbc:2.1.0-20260907.153611-1`
   을 확인했다.
 
