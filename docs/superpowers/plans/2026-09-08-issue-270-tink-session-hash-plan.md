@@ -60,6 +60,6 @@ TinkDigesters.SHA256.digestHex(token)
 git diff --check
 ```
 
-- [x] dependency output에 `bluetape4k-tink:2.1.0-20260907.141940-7`과 `bluetape4k-core:2.1.0-20260907.141940-7`이 있고, `dependencyInsight`에 `2.1.0-SNAPSHOT -> 2.0.0` downgrade가 없는지 확인한다.
+- [x] dependency output에 `bluetape4k-tink:2.1.0-20260907.141940-7`과 `bluetape4k-core:2.1.0-20260907.141940-7`이 선택되는지 확인한다. logging·virtualthread ancillary 전이는 안정 BOM으로 선택되는 경계가 의도된 것이며, pinned Tink/core 계약에는 `2.1.0-SNAPSHOT -> 2.0.0` downgrade가 없어야 한다.
 - [x] raw token이 로그/예외/fixture 출력에 추가되지 않았는지 `rg`로 확인한다.
 - [x] 설계/계획 SPW-01..05, Kotlin KT-FIN-01..11, workflow CG-01..10 증거를 기록하고 Lore commit protocol로 한국어 commit을 만든다.
