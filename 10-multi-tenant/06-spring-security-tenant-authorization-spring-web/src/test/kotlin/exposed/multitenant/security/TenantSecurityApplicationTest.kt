@@ -2,7 +2,6 @@ package exposed.multitenant.security
 
 import com.zaxxer.hikari.HikariDataSource
 import exposed.multitenant.security.config.TenantDataSourceProperties
-import exposed.multitenant.security.config.TenantJdbcProperties
 import exposed.multitenant.security.config.toTenantJdbcResourceRegistry
 import exposed.multitenant.security.domain.CreateInventoryItemRequest
 import exposed.multitenant.security.domain.InventoryItemRecord
@@ -18,6 +17,7 @@ import exposed.multitenant.security.tenant.TenantContexts
 import exposed.multitenant.security.tenant.TenantId
 import exposed.multitenant.security.tenant.TenantRequest
 import exposed.multitenant.security.tenant.TenantTransaction
+import exposed.shared.tenant.jdbc.TenantJdbcSettings
 import io.bluetape4k.exposed.tenant.jdbc.TenantJdbcResourceRegistry
 import io.bluetape4k.assertions.assertFailsWith
 import io.bluetape4k.assertions.shouldBeEqualTo
@@ -478,6 +478,21 @@ class TenantSecurityApplicationTest(
     }
 
     @Test
+    fun `registry rejects duplicate normalized tenant configuration`() {
+        val failure = assertFailsWith<IllegalArgumentException> {
+            TenantDataSourceProperties(
+                tenants = mapOf(
+                    "acme" to h2Properties("duplicate-acme"),
+                    " ACME " to h2Properties("duplicate-acme-normalized"),
+                    "globex" to h2Properties("duplicate-globex"),
+                ),
+            ).toTenantJdbcResourceRegistry()
+        }
+
+        failure.message shouldBeEqualTo "Duplicate tenant datasource configuration: acme"
+    }
+
+    @Test
     fun `registry rejects unknown tenant configuration`() {
         val failure = assertFailsWith<RuntimeException> {
             TenantDataSourceProperties(
@@ -497,7 +512,7 @@ class TenantSecurityApplicationTest(
         val failure = assertFailsWith<IllegalArgumentException> {
             TenantDataSourceProperties(
                 tenants = mapOf(
-                    "acme" to TenantJdbcProperties(
+                    "acme" to TenantJdbcSettings(
                         jdbcUrl = "jdbc:h2:mem:no_close_delay_acme;MODE=PostgreSQL;DATABASE_TO_UPPER=false",
                     ),
                     "globex" to h2Properties("no-close-delay-globex"),
@@ -606,8 +621,8 @@ class TenantSecurityApplicationTest(
     private fun WebTestClient.RequestHeadersSpec<*>.demoSession(value: String): WebTestClient.RequestHeadersSpec<*> =
         header(DemoSessionAuthenticationFilter.SESSION_HEADER, value)
 
-    private fun h2Properties(name: String): TenantJdbcProperties =
-        TenantJdbcProperties(
+    private fun h2Properties(name: String): TenantJdbcSettings =
+        TenantJdbcSettings(
             jdbcUrl = "jdbc:h2:mem:$name;MODE=PostgreSQL;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1",
         )
 

@@ -33,6 +33,11 @@ implementation(libs.bluetape4k.tenant)
 implementation(libs.exposed.tenant.jdbc.snapshot)
 ```
 
+이 예제의 `@ConfigurationProperties` wrapper는
+`Map<String, TenantJdbcSettings>`를 binding합니다. Spring과 무관한
+`:tenant-jdbc-support` 모듈이 tenant key 정규화, 중복·누락 tenant 거부, Hikari
+설정 검증, provider registry factory 연결을 공통으로 담당합니다.
+
 ## Architecture Diagram
 
 ![Spring Security Tenant Authorization Spring Web Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-06-spring-security-tenant-authorization-spring-web-architecture-01.png)
@@ -53,6 +58,7 @@ implementation(libs.exposed.tenant.jdbc.snapshot)
 | Routing boundary | `TenantAuthorizationFilter`가 `TenantContexts`를 통해 공통 `ThreadLocalTenantContext`를 바인딩; repository는 `TenantTransaction` 사용 |
 | Fallback | 기본 datasource와 header-only tenant routing 없음 |
 | Isolation | tenant마다 서로 다른 H2 JDBC URL과 Hikari pool 사용 |
+| Configuration boundary | Spring binding은 이 예제에 남기고, 공용 support가 정규화·중복/누락 검증·Hikari 생성·provider factory 연결을 담당합니다 |
 | Lifecycle | `TenantJdbcResourceRegistry<TenantId>`가 각 Hikari `DataSource`와 Exposed `Database`를 소유하고 역순으로 등록 해제·종료하며, Spring bean lifecycle을 통해 idempotent `close()`를 노출합니다 |
 
 ## Demo Credentials

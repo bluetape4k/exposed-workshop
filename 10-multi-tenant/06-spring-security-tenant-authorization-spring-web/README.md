@@ -34,6 +34,11 @@ snapshot so this example can use the shared lifecycle implementation:
 implementation(libs.exposed.tenant.jdbc.snapshot)
 ```
 
+The local `@ConfigurationProperties` wrapper binds `Map<String,
+TenantJdbcSettings>`. The Spring-independent `:tenant-jdbc-support` module
+normalizes tenant keys, rejects duplicate or missing tenants, validates Hikari
+settings, and connects the map to the provider registry factory.
+
 ## Architecture Diagram
 
 ![Spring Security Tenant Authorization Spring Web Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-06-spring-security-tenant-authorization-spring-web-architecture-01.png)
@@ -54,6 +59,7 @@ implementation(libs.exposed.tenant.jdbc.snapshot)
 | Routing boundary | `TenantAuthorizationFilter` binds the shared `ThreadLocalTenantContext` through `TenantContexts`; repositories use `TenantTransaction` |
 | Fallback | No default datasource; no header-only tenant routing |
 | Isolation | Each tenant has a different H2 JDBC URL and Hikari pool |
+| Configuration boundary | Spring binding stays in this example; shared support owns normalization, duplicate/missing validation, Hikari creation, and provider factory wiring |
 | Lifecycle | `TenantJdbcResourceRegistry<TenantId>` owns each Hikari `DataSource` and Exposed `Database`, unregisters and closes them in reverse order, and exposes idempotent `close()` through the Spring bean lifecycle |
 
 ## Demo Credentials

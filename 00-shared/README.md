@@ -20,6 +20,7 @@ Instead of repeating database selection, transaction setup, schema/table cleanup
 | Module | Purpose |
 |--------|---------|
 | `exposed-shared-tests` | Shared JUnit, Exposed, Testcontainers, and sample repository fixtures |
+| `tenant-jdbc-support` | Spring-independent tenant JDBC settings, normalization, Hikari factory, and provider registry adapter |
 
 ## Source Layout
 
@@ -87,3 +88,7 @@ When enabled, container-backed databases are started by the shared test infrastr
 ## Next Step
 
 Open [`exposed-shared-tests`](./exposed-shared-tests/README.md) for the detailed fixture API map and examples.
+
+Open [`tenant-jdbc-support`](./tenant-jdbc-support/README.md) for the shared
+tenant JDBC configuration and lifecycle adapter used by the database-per-tenant
+Spring MVC examples.

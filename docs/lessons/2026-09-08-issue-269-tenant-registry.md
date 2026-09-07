@@ -17,12 +17,36 @@
 catalog에서 exact build
 `2.1.0-20260907.153611-1`로 고정했다.
 
+## 리뷰 보완: 공용 설정·factory 경계
+
+초기 전환 뒤에도 두 `DatabaseConfiguration`에 normalized map, Hikari 설정 검증,
+provider factory/disposer wiring이 남아 있으면 lifecycle 중복이 사라져도
+configuration contract가 다시 갈라진다. 그래서 `00-shared/tenant-jdbc-support`를
+추가하고 다음 순서로 책임을 고정했다.
+
+- `TenantJdbcSettings`가 순수 설정값, H2 `DB_CLOSE_DELAY=-1` 검증, Hikari 기본값과
+  factory를 소유한다.
+- `normalizeTenantJdbcSettings`가 parser를 호출한 뒤 명시적으로 `containsKey`를
+  검사한다. `acme`와 ` ACME `가 같은 normalized key이면 마지막 값을 덮어쓰지
+  않고 `IllegalArgumentException`을 발생시킨다. expected tenant 누락도 같은
+  helper에서 fail-fast한다.
+- `toTenantJdbcResourceRegistry`가 설정 검증과 provider
+  `TenantJdbcResourceRegistry.create`/disposer 연결을 단일화한다. 각 consumer에는
+  Spring `@ConfigurationProperties` wrapper와 `TenantId` parser/name function만
+  남는다.
+
+공용 모듈은 exact timestamped tenant JDBC provider를 `api`로 소비하지만 Spring
+의존성은 갖지 않는다. 따라서 Spring binding은 예제에 남고 provider가 factory
+반환 이후 `DataSource`와 Exposed `Database` lifecycle을 계속 소유한다.
+
 ## 결과와 검증
 
 - 두 local registry/entry 구현을 삭제했다.
 - 두 모듈의 integration test와 lifecycle test를 provider type 기준으로
   갱신했다. standalone registry는 `close()`를 두 번 호출하고 datasource가
   닫힌 뒤 lookup이 고정된 closed 예외로 실패하는지 확인한다.
+- shared support test와 두 consumer contract test에서 normalized duplicate
+  tenant 설정(`acme`/` ACME `)이 동일한 예외 메시지로 fail-fast하는지 확인한다.
 - `./gradlew :05-database-per-tenant-spring-web:test --no-build-cache --no-daemon`
   결과: 14 passing.
 - `./gradlew :06-spring-security-tenant-authorization-spring-web:test --no-build-cache --no-daemon`

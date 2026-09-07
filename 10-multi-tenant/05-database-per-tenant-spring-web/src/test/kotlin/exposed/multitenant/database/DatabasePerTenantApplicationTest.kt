@@ -2,7 +2,6 @@ package exposed.multitenant.database
 
 import com.zaxxer.hikari.HikariDataSource
 import exposed.multitenant.database.config.TenantDataSourceProperties
-import exposed.multitenant.database.config.TenantJdbcProperties
 import exposed.multitenant.database.config.toTenantJdbcResourceRegistry
 import exposed.multitenant.database.domain.CreateInventoryItemRequest
 import exposed.multitenant.database.domain.InventoryItemRecord
@@ -12,6 +11,7 @@ import exposed.multitenant.database.tenant.TenantContext
 import exposed.multitenant.database.tenant.TenantFilter
 import exposed.multitenant.database.tenant.TenantId
 import exposed.multitenant.database.tenant.TenantTransaction
+import exposed.shared.tenant.jdbc.TenantJdbcSettings
 import io.bluetape4k.exposed.tenant.jdbc.TenantJdbcResourceRegistry
 import jakarta.servlet.FilterChain
 import org.assertj.core.api.Assertions.assertThat
@@ -259,6 +259,20 @@ class DatabasePerTenantApplicationTest(
     }
 
     @Test
+    fun `registry rejects duplicate normalized tenant configuration`() {
+        assertThatThrownBy {
+            TenantDataSourceProperties(
+                tenants = mapOf(
+                    "acme" to h2Properties("duplicate-acme"),
+                    " ACME " to h2Properties("duplicate-acme-normalized"),
+                    "globex" to h2Properties("duplicate-globex"),
+                ),
+            ).toTenantJdbcResourceRegistry()
+        }.isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("Duplicate tenant datasource configuration: acme")
+    }
+
+    @Test
     fun `registry rejects unknown tenant configuration`() {
         assertThatThrownBy {
             TenantDataSourceProperties(
@@ -277,7 +291,7 @@ class DatabasePerTenantApplicationTest(
         assertThatThrownBy {
             TenantDataSourceProperties(
                 tenants = mapOf(
-                    "acme" to TenantJdbcProperties(
+                    "acme" to TenantJdbcSettings(
                         jdbcUrl = "jdbc:h2:mem:no_close_delay_acme;MODE=PostgreSQL;DATABASE_TO_UPPER=false",
                     ),
                     "globex" to h2Properties("no-close-delay-globex"),
@@ -322,8 +336,8 @@ class DatabasePerTenantApplicationTest(
             .responseBody
             ?: error("Inventory item response body is missing")
 
-    private fun h2Properties(name: String): TenantJdbcProperties =
-        TenantJdbcProperties(
+    private fun h2Properties(name: String): TenantJdbcSettings =
+        TenantJdbcSettings(
             jdbcUrl = "jdbc:h2:mem:$name;MODE=PostgreSQL;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1",
         )
 

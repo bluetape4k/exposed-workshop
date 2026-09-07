@@ -23,6 +23,11 @@ shared tenant JDBC registry:
 implementation(libs.exposed.tenant.jdbc.snapshot)
 ```
 
+The local `@ConfigurationProperties` wrapper binds `Map<String,
+TenantJdbcSettings>`. The Spring-independent `:tenant-jdbc-support` module
+normalizes tenant keys, rejects duplicate or missing tenants, validates Hikari
+settings, and connects the map to the provider registry factory.
+
 ## Architecture Diagram
 
 ![Database-per-Tenant Spring Web Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-05-database-per-tenant-spring-web-architecture-01.png)
@@ -39,6 +44,7 @@ implementation(libs.exposed.tenant.jdbc.snapshot)
 | Fallback | No default datasource; missing tenant returns 400 and unknown tenant returns 404 |
 | Routing boundary | `TenantTransaction` resolves the current tenant and calls Exposed `transaction(database)` |
 | Isolation | Every tenant has a different H2 JDBC URL and a different Hikari pool |
+| Configuration boundary | Spring binding stays in this example; shared support owns normalization, duplicate/missing validation, Hikari creation, and provider factory wiring |
 | Lifecycle | `TenantJdbcResourceRegistry<TenantId>` owns each Hikari `DataSource` and Exposed `Database`, unregisters and closes them in reverse order, and exposes idempotent `close()` through the Spring bean lifecycle |
 | Bootstrap | `InventorySeeder` creates `inventory_items` and seeds distinct rows per tenant database |
 

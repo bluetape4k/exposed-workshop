@@ -21,6 +21,11 @@ identity를 인증 claim 또는 서버 측 session 상태와 반드시 연결해
 implementation(libs.exposed.tenant.jdbc.snapshot)
 ```
 
+이 예제의 `@ConfigurationProperties` wrapper는
+`Map<String, TenantJdbcSettings>`를 binding합니다. Spring과 무관한
+`:tenant-jdbc-support` 모듈이 tenant key 정규화, 중복·누락 tenant 거부, Hikari
+설정 검증, provider registry factory 연결을 공통으로 담당합니다.
+
 ## Architecture Diagram
 
 ![Database-per-Tenant Spring Web Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-05-database-per-tenant-spring-web-architecture-01.png)
@@ -37,6 +42,7 @@ implementation(libs.exposed.tenant.jdbc.snapshot)
 | Fallback | 기본 datasource가 없습니다. tenant 누락은 400, 알 수 없는 tenant는 404입니다 |
 | Routing boundary | `TenantTransaction`이 현재 tenant를 해석하고 Exposed `transaction(database)`를 호출합니다 |
 | Isolation | 각 tenant는 서로 다른 H2 JDBC URL과 Hikari pool을 가집니다 |
+| Configuration boundary | Spring binding은 이 예제에 남기고, 공용 support가 정규화·중복/누락 검증·Hikari 생성·provider factory 연결을 담당합니다 |
 | Lifecycle | `TenantJdbcResourceRegistry<TenantId>`가 각 Hikari `DataSource`와 Exposed `Database`를 소유하고 역순으로 등록 해제·종료하며, Spring bean lifecycle을 통해 idempotent `close()`를 노출합니다 |
 | Bootstrap | `InventorySeeder`가 tenant database마다 `inventory_items`를 만들고 서로 다른 seed row를 넣습니다 |
 
