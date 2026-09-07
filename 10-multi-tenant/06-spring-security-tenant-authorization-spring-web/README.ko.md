@@ -26,6 +26,13 @@ header만으로는 더 이상 신뢰하지 않습니다.
 implementation(libs.bluetape4k.tenant)
 ```
 
+공통 lifecycle 구현을 사용하기 위해 tenant JDBC registry는 배포된
+`2.1.0-20260907.153611-1` 개발 버전을 사용합니다.
+
+```kotlin
+implementation(libs.exposed.tenant.jdbc.snapshot)
+```
+
 ## Architecture Diagram
 
 ![Spring Security Tenant Authorization Spring Web Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-06-spring-security-tenant-authorization-spring-web-architecture-01.png)
@@ -46,6 +53,7 @@ implementation(libs.bluetape4k.tenant)
 | Routing boundary | `TenantAuthorizationFilter`가 `TenantContexts`를 통해 공통 `ThreadLocalTenantContext`를 바인딩; repository는 `TenantTransaction` 사용 |
 | Fallback | 기본 datasource와 header-only tenant routing 없음 |
 | Isolation | tenant마다 서로 다른 H2 JDBC URL과 Hikari pool 사용 |
+| Lifecycle | `TenantJdbcResourceRegistry<TenantId>`가 각 Hikari `DataSource`와 Exposed `Database`를 소유하고 역순으로 등록 해제·종료하며, Spring bean lifecycle을 통해 idempotent `close()`를 노출합니다 |
 
 ## Demo Credentials
 
@@ -96,6 +104,11 @@ claim 누락/오류, credential conflict, tenant selector 오류, cross-tenant �
 공통 `ThreadLocalTenantContext` cleanup(소비자 코드의 `set`/`clear` 호출 없음),
 rollback, database bootstrap, datasource close, source-text architecture guard를
 검증합니다.
+
+factory가 `DataSource`를 반환한 뒤에는 provider registry가 tenant datasource와
+Exposed database의 lifecycle을 소유합니다. 애플리케이션을 종료하기 전에 새
+tenant request를 차단하고 진행 중인 작업을 drain한 뒤 Spring bean lifecycle이
+idempotent `close()`를 호출하도록 구성해야 합니다.
 
 ## CI Coverage
 

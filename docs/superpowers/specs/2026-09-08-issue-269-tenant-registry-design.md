@@ -9,7 +9,7 @@
 - 두 모듈의 `DatabaseConfiguration.kt`, `TenantTransaction.kt`, `InventorySeeder.kt`, 통합 테스트
 - upstream `bluetape4k-exposed#836`의 병합 commit `dd099f85377d798ef3e2754dc64064a125e4669b`
 
-upstream snapshot `io.github.bluetape4k.exposed:bluetape4k-exposed-tenant-jdbc:2.1.0-SNAPSHOT`은 `TenantJdbcResourceRegistry.create`, `resourceFor`, `databaseFor`, `dataSourceFor`, `configuredTenants`, `close`를 제공한다. registry가 `Database.connect` 등록 해제와 disposer 호출을 역순으로 담당하며, close는 idempotent하다.
+upstream 개발 버전 `io.github.bluetape4k.exposed:bluetape4k-exposed-tenant-jdbc:2.1.0-20260907.153611-1`은 Kotlin package `io.bluetape4k.exposed.tenant.jdbc`의 `TenantJdbcResourceRegistry.create`, `resourceFor`, `databaseFor`, `dataSourceFor`, `configuredTenants`, `close`를 제공한다. registry가 `Database.connect` 등록 해제와 disposer 호출을 역순으로 담당하며, close는 idempotent하다.
 
 ## 경계와 선택
 
@@ -32,4 +32,4 @@ upstream snapshot `io.github.bluetape4k.exposed:bluetape4k-exposed-tenant-jdbc:2
 
 기존 tenant A/B 격리, seeding, rollback, request context cleanup 테스트를 유지하고 provider type/property 변경에 맞춰 갱신한다. standalone lifecycle 테스트는 두 DataSource가 닫히고 두 번째 `close()`가 성공하는지 확인한다. 두 README locale에는 provider가 DataSource와 `Database`를 소유하고 caller가 shutdown 전에 request drain을 수행해야 한다는 경계를 기록한다.
 
-완료 조건은 duplicate registry/entry 삭제, 두 모듈의 snapshot dependency/POM 확인, targeted compile/test 통과, `git diff --check`, Kotlin final checklist의 lifecycle·Exposed·문서 항목 PASS다.
+완료 조건은 duplicate registry/entry 삭제, 두 모듈의 개발 버전 dependency/POM 확인, targeted compile/test 통과, `git diff --check`, Kotlin final checklist의 lifecycle·Exposed·문서 항목 PASS다.

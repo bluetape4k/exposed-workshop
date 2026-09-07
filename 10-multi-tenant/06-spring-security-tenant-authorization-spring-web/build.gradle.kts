@@ -19,6 +19,7 @@ springBoot {
 
 dependencies {
     implementation(libs.bluetape4k.tenant)
+    implementation(libs.exposed.tenant.jdbc.snapshot)
 
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.jdbc)

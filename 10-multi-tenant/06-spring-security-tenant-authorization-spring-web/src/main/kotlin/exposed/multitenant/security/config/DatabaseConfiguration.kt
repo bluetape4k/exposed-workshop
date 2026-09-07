@@ -2,8 +2,9 @@ package exposed.multitenant.security.config
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import exposed.multitenant.security.tenant.TenantDatabaseRegistry
+import exposed.multitenant.security.tenant.TenantId
 import exposed.multitenant.security.tenant.TenantTransaction
+import io.bluetape4k.exposed.tenant.jdbc.TenantJdbcResourceRegistry
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
@@ -15,12 +16,38 @@ import java.io.Serializable
 class DatabaseConfiguration {
 
     @Bean(destroyMethod = "close")
-    fun tenantDatabaseRegistry(properties: TenantDataSourceProperties): TenantDatabaseRegistry =
-        TenantDatabaseRegistry.from(properties)
+    fun tenantDatabaseRegistry(properties: TenantDataSourceProperties): TenantJdbcResourceRegistry<TenantId> =
+        properties.toTenantJdbcResourceRegistry()
 
     @Bean
-    fun tenantTransaction(registry: TenantDatabaseRegistry): TenantTransaction =
+    fun tenantTransaction(registry: TenantJdbcResourceRegistry<TenantId>): TenantTransaction =
         TenantTransaction(registry)
+}
+
+/**
+ * Spring properties를 공용 tenant JDBC registry의 resource factory 계약으로 변환합니다.
+ *
+ * Hikari `DataSource`가 factory에서 반환된 뒤에는 provider가 `DataSource`와 Exposed
+ * `Database`의 lifecycle을 소유하고, registry 종료 시 disposer를 호출합니다.
+ */
+internal fun TenantDataSourceProperties.toTenantJdbcResourceRegistry(): TenantJdbcResourceRegistry<TenantId> {
+    val configured = tenants.mapKeys { (key, _) -> TenantId.fromHeader(key) }
+    val missing = TenantId.entries.filterNot(configured::containsKey)
+    require(missing.isEmpty()) {
+        "Missing tenant datasource configuration: ${missing.joinToString { it.headerValue }}"
+    }
+
+    configured.forEach { (tenantId, jdbc) ->
+        jdbc.validate("tenant-${tenantId.headerValue}")
+    }
+
+    return TenantJdbcResourceRegistry.create(
+        tenants = TenantId.entries,
+        dataSourceFactory = { tenantId ->
+            configured.getValue(tenantId).toHikariDataSource("tenant-${tenantId.headerValue}")
+        },
+        disposeDataSource = { _, dataSource -> dataSource.close() },
+    )
 }
 
 @ConfigurationProperties(prefix = "app")
