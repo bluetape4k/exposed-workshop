@@ -2,16 +2,17 @@ package exposed.multitenant.database
 
 import com.zaxxer.hikari.HikariDataSource
 import exposed.multitenant.database.config.TenantDataSourceProperties
-import exposed.multitenant.database.config.TenantJdbcProperties
+import exposed.multitenant.database.config.toTenantJdbcResourceRegistry
 import exposed.multitenant.database.domain.CreateInventoryItemRequest
 import exposed.multitenant.database.domain.InventoryItemRecord
 import exposed.multitenant.database.domain.InventoryItems
 import exposed.multitenant.database.repository.InventoryRepository
 import exposed.multitenant.database.tenant.TenantContext
-import exposed.multitenant.database.tenant.TenantDatabaseRegistry
 import exposed.multitenant.database.tenant.TenantFilter
 import exposed.multitenant.database.tenant.TenantId
 import exposed.multitenant.database.tenant.TenantTransaction
+import exposed.shared.tenant.jdbc.TenantJdbcSettings
+import io.bluetape4k.exposed.tenant.jdbc.TenantJdbcResourceRegistry
 import jakarta.servlet.FilterChain
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -46,7 +47,7 @@ import java.util.concurrent.Executors
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DatabasePerTenantApplicationTest(
     @param:Autowired private val client: WebTestClient,
-    @param:Autowired private val registry: TenantDatabaseRegistry,
+    @param:Autowired private val registry: TenantJdbcResourceRegistry<TenantId>,
     @param:Autowired private val repository: InventoryRepository,
     @param:Autowired private val tenantTransaction: TenantTransaction,
 ) {
@@ -238,7 +239,7 @@ class DatabasePerTenantApplicationTest(
 
     @Test
     fun `bootstrap creates inventory table in every configured tenant database`() {
-        registry.configuredTenants().forEach { tenantId ->
+        registry.configuredTenants.forEach { tenantId ->
             val count = transaction(registry.databaseFor(tenantId)) {
                 InventoryItems.selectAll().count()
             }
@@ -250,27 +251,37 @@ class DatabasePerTenantApplicationTest(
     @Test
     fun `registry rejects missing known tenant configuration`() {
         assertThatThrownBy {
-            TenantDatabaseRegistry.from(
-                TenantDataSourceProperties(
-                    tenants = mapOf("acme" to h2Properties("missing-known-acme")),
-                )
-            )
+            TenantDataSourceProperties(
+                tenants = mapOf("acme" to h2Properties("missing-known-acme")),
+            ).toTenantJdbcResourceRegistry()
         }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("Missing tenant datasource configuration: globex")
     }
 
     @Test
+    fun `registry rejects duplicate normalized tenant configuration`() {
+        assertThatThrownBy {
+            TenantDataSourceProperties(
+                tenants = mapOf(
+                    "acme" to h2Properties("duplicate-acme"),
+                    " ACME " to h2Properties("duplicate-acme-normalized"),
+                    "globex" to h2Properties("duplicate-globex"),
+                ),
+            ).toTenantJdbcResourceRegistry()
+        }.isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("Duplicate tenant datasource configuration: acme")
+    }
+
+    @Test
     fun `registry rejects unknown tenant configuration`() {
         assertThatThrownBy {
-            TenantDatabaseRegistry.from(
-                TenantDataSourceProperties(
-                    tenants = mapOf(
-                        "acme" to h2Properties("unknown-acme"),
-                        "globex" to h2Properties("unknown-globex"),
-                        "initech" to h2Properties("unknown-initech"),
-                    ),
-                )
-            )
+            TenantDataSourceProperties(
+                tenants = mapOf(
+                    "acme" to h2Properties("unknown-acme"),
+                    "globex" to h2Properties("unknown-globex"),
+                    "initech" to h2Properties("unknown-initech"),
+                ),
+            ).toTenantJdbcResourceRegistry()
         }.isInstanceOf(RuntimeException::class.java)
             .hasMessageContaining("Unknown tenant: initech")
     }
@@ -278,37 +289,37 @@ class DatabasePerTenantApplicationTest(
     @Test
     fun `registry rejects h2 tenant database without close delay`() {
         assertThatThrownBy {
-            TenantDatabaseRegistry.from(
-                TenantDataSourceProperties(
-                    tenants = mapOf(
-                        "acme" to TenantJdbcProperties(
-                            jdbcUrl = "jdbc:h2:mem:no_close_delay_acme;MODE=PostgreSQL;DATABASE_TO_UPPER=false",
-                        ),
-                        "globex" to h2Properties("no-close-delay-globex"),
+            TenantDataSourceProperties(
+                tenants = mapOf(
+                    "acme" to TenantJdbcSettings(
+                        jdbcUrl = "jdbc:h2:mem:no_close_delay_acme;MODE=PostgreSQL;DATABASE_TO_UPPER=false",
                     ),
-                )
-            )
+                    "globex" to h2Properties("no-close-delay-globex"),
+                ),
+            ).toTenantJdbcResourceRegistry()
         }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("DB_CLOSE_DELAY=-1")
     }
 
     @Test
     fun `registry close closes owned hikari datasources`() {
-        val standalone = TenantDatabaseRegistry.from(
-            TenantDataSourceProperties(
-                tenants = mapOf(
-                    "acme" to h2Properties("close-acme"),
-                    "globex" to h2Properties("close-globex"),
-                ),
-            )
-        )
+        val standalone = TenantDataSourceProperties(
+            tenants = mapOf(
+                "acme" to h2Properties("close-acme"),
+                "globex" to h2Properties("close-globex"),
+            ),
+        ).toTenantJdbcResourceRegistry()
         val dataSources = TenantId.entries.map { tenantId ->
             standalone.dataSourceFor(tenantId) as HikariDataSource
         }
 
         standalone.close()
+        standalone.close()
 
         assertThat(dataSources).allMatch { it.isClosed }
+        assertThatThrownBy { standalone.databaseFor(TenantId.ACME) }
+            .isInstanceOf(IllegalStateException::class.java)
+            .hasMessage("Tenant JDBC resource registry is closed.")
     }
 
     private fun getInventory(
@@ -325,8 +336,8 @@ class DatabasePerTenantApplicationTest(
             .responseBody
             ?: error("Inventory item response body is missing")
 
-    private fun h2Properties(name: String): TenantJdbcProperties =
-        TenantJdbcProperties(
+    private fun h2Properties(name: String): TenantJdbcSettings =
+        TenantJdbcSettings(
             jdbcUrl = "jdbc:h2:mem:$name;MODE=PostgreSQL;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1",
         )
 

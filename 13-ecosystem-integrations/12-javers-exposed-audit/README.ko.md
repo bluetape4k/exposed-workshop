@@ -2,7 +2,7 @@
 
 [English](README.md) | 한국어
 
-이 workshop은 의도적으로 JDBC만 다룹니다. `bluetape4k-javers:0.3.0`의 Exposed
+이 workshop은 의도적으로 JDBC만 다룹니다. `io.github.bluetape4k.javers:javers-exposed:1.1.0-SNAPSHOT`
 provider를 사용해 Exposed DAO lifecycle을 JaVers에 연결하고 업무 트랜잭션과 감사
 row를 원자적으로 처리합니다.
 

@@ -3,6 +3,7 @@ package exposed.multitenant.database.tenant
 import exposed.multitenant.database.domain.CreateInventoryItemRequest
 import exposed.multitenant.database.domain.InventoryItems
 import exposed.multitenant.database.repository.InventoryRepository
+import io.bluetape4k.exposed.tenant.jdbc.TenantJdbcResourceRegistry
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.springframework.boot.ApplicationArguments
@@ -11,12 +12,12 @@ import org.springframework.stereotype.Component
 
 @Component
 class InventorySeeder(
-    private val registry: TenantDatabaseRegistry,
+    private val registry: TenantJdbcResourceRegistry<TenantId>,
     private val repository: InventoryRepository,
 ) : ApplicationRunner {
 
     override fun run(args: ApplicationArguments) {
-        registry.configuredTenants().forEach { tenantId ->
+        registry.configuredTenants.forEach { tenantId ->
             bootstrapTenantDatabase(tenantId)
             seedTenant(tenantId)
         }

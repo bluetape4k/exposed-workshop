@@ -3,7 +3,7 @@
 English | [한국어](README.ko.md)
 
 This workshop is intentionally JDBC-only. It connects an Exposed DAO lifecycle
-to JaVers with the `bluetape4k-javers:0.3.0` Exposed provider and keeps the
+to JaVers with the `io.github.bluetape4k.javers:javers-exposed:1.1.0-SNAPSHOT` provider and keeps the
 business transaction and audit rows atomic.
 
 ![JaVers and Exposed audit architecture](../../docs/images/readme-diagrams/13-javers-exposed-architecture-01.png)

@@ -18,6 +18,8 @@ springBoot {
 }
 
 dependencies {
+    implementation(project(":tenant-jdbc-support"))
+    implementation(libs.exposed.tenant.jdbc.snapshot)
     implementation(libs.jetbrains.exposed.core)
     implementation(libs.jetbrains.exposed.jdbc)
     implementation(libs.jetbrains.exposed.spring.boot.starter)

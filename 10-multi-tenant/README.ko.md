@@ -52,7 +52,7 @@
 exposed BOM과 `bluetape4k-tenant:2.1.0-SNAPSHOT`을 해석합니다. 두 예제는
 versionless catalog alias로 `io.github.bluetape4k:bluetape4k-tenant`를
 사용하고, 각 애플리케이션 tenant 타입과 공통 carrier 사이의 얇은 mapping만
-유지합니다. 로컬 Maven override 없이 정상 Gradle 해석으로 안정 tenant
+유지합니다. 로컬 Maven override 없이 정상 Gradle 해석으로 tenant SNAPSHOT
 artifact를 선택하며, 새로운 모듈은 추가하지 않습니다.
 
 ---

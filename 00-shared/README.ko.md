@@ -20,6 +20,7 @@
 | 모듈 | 역할 |
 |------|------|
 | `exposed-shared-tests` | JUnit, Exposed, Testcontainers, 샘플 repository fixture를 모은 공유 테스트 모듈 |
+| `tenant-jdbc-support` | Spring과 무관한 tenant JDBC 설정·정규화·Hikari factory·provider registry adapter |
 
 ## 소스 구조
 
@@ -87,3 +88,7 @@ class MyExposedTest : AbstractExposedTest() {
 ## 다음 단계
 
 자세한 fixture API 지도와 예제는 [`exposed-shared-tests`](./exposed-shared-tests/README.ko.md)를 참고하세요.
+
+database-per-tenant Spring MVC 예제가 사용하는 공용 tenant JDBC 설정과
+lifecycle adapter는 [`tenant-jdbc-support`](./tenant-jdbc-support/README.ko.md)를
+참고하세요.

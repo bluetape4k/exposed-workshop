@@ -4,6 +4,7 @@
 [versions]
 # 2.0.0 안정 릴리스 이후 다음 minor snapshot train을 소비한다.
 bluetape4k-dependencies = "2.1.0-SNAPSHOT"
+bluetape4k-exposed-tenant-jdbc-snapshot = "2.1.0-20260907.153611-1"
 
 kotlin = "2.4.0"
 kotlinx-coroutines = "1.11.0"
@@ -161,6 +162,7 @@ exposed-spring-modulith = { module = "io.github.bluetape4k.exposed:bluetape4k-ex
 exposed-starrocks = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-starrocks" }
 exposed-trino = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-trino" }
 exposed-tink = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-tink" }
+exposed-tenant-jdbc-snapshot = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-tenant-jdbc", version.ref = "bluetape4k-exposed-tenant-jdbc-snapshot" }
 
 # bluetape4k hibernate
 bluetape4k-hibernate-reactive = { module = "io.github.bluetape4k:bluetape4k-hibernate-reactive" }
