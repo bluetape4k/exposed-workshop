@@ -2,7 +2,7 @@ package exposed.multitenant.security
 
 import com.zaxxer.hikari.HikariDataSource
 import exposed.multitenant.security.config.TenantDataSourceProperties
-import exposed.multitenant.security.config.TenantJdbcProperties
+import exposed.multitenant.security.config.toTenantJdbcResourceRegistry
 import exposed.multitenant.security.domain.CreateInventoryItemRequest
 import exposed.multitenant.security.domain.InventoryItemRecord
 import exposed.multitenant.security.domain.InventoryItems
@@ -14,10 +14,11 @@ import exposed.multitenant.security.security.DemoSessionAuthenticationFilter
 import exposed.multitenant.security.security.TenantAuthenticationResolver
 import exposed.multitenant.security.security.TenantAuthorizationFilter
 import exposed.multitenant.security.tenant.TenantContexts
-import exposed.multitenant.security.tenant.TenantDatabaseRegistry
 import exposed.multitenant.security.tenant.TenantId
 import exposed.multitenant.security.tenant.TenantRequest
 import exposed.multitenant.security.tenant.TenantTransaction
+import exposed.shared.tenant.jdbc.TenantJdbcSettings
+import io.bluetape4k.exposed.tenant.jdbc.TenantJdbcResourceRegistry
 import io.bluetape4k.assertions.assertFailsWith
 import io.bluetape4k.assertions.shouldBeEqualTo
 import io.bluetape4k.assertions.shouldBeNull
@@ -57,7 +58,7 @@ import org.springframework.web.bind.annotation.RestController
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TenantSecurityApplicationTest(
     @param:Autowired private val client: WebTestClient,
-    @param:Autowired private val registry: TenantDatabaseRegistry,
+    @param:Autowired private val registry: TenantJdbcResourceRegistry<TenantId>,
     @param:Autowired private val repository: InventoryRepository,
     @param:Autowired private val tenantTransaction: TenantTransaction,
 ) {
@@ -456,7 +457,7 @@ class TenantSecurityApplicationTest(
 
     @Test
     fun `bootstrap creates inventory table in every configured tenant database`() {
-        registry.configuredTenants().forEach { tenantId ->
+        registry.configuredTenants.forEach { tenantId ->
             val count = transaction(registry.databaseFor(tenantId)) {
                 InventoryItems.selectAll().count()
             }
@@ -468,28 +469,39 @@ class TenantSecurityApplicationTest(
     @Test
     fun `registry rejects missing known tenant configuration`() {
         val failure = assertFailsWith<IllegalArgumentException> {
-            TenantDatabaseRegistry.from(
-                TenantDataSourceProperties(
-                    tenants = mapOf("acme" to h2Properties("missing-known-acme")),
-                ),
-            )
+            TenantDataSourceProperties(
+                tenants = mapOf("acme" to h2Properties("missing-known-acme")),
+            ).toTenantJdbcResourceRegistry()
         }
 
         failure.message?.contains("Missing tenant datasource configuration: globex") shouldBeEqualTo true
     }
 
     @Test
+    fun `registry rejects duplicate normalized tenant configuration`() {
+        val failure = assertFailsWith<IllegalArgumentException> {
+            TenantDataSourceProperties(
+                tenants = mapOf(
+                    "acme" to h2Properties("duplicate-acme"),
+                    " ACME " to h2Properties("duplicate-acme-normalized"),
+                    "globex" to h2Properties("duplicate-globex"),
+                ),
+            ).toTenantJdbcResourceRegistry()
+        }
+
+        failure.message shouldBeEqualTo "Duplicate tenant datasource configuration: acme"
+    }
+
+    @Test
     fun `registry rejects unknown tenant configuration`() {
         val failure = assertFailsWith<RuntimeException> {
-            TenantDatabaseRegistry.from(
-                TenantDataSourceProperties(
-                    tenants = mapOf(
-                        "acme" to h2Properties("unknown-acme"),
-                        "globex" to h2Properties("unknown-globex"),
-                        "initech" to h2Properties("unknown-initech"),
-                    ),
+            TenantDataSourceProperties(
+                tenants = mapOf(
+                    "acme" to h2Properties("unknown-acme"),
+                    "globex" to h2Properties("unknown-globex"),
+                    "initech" to h2Properties("unknown-initech"),
                 ),
-            )
+            ).toTenantJdbcResourceRegistry()
         }
 
         failure.message?.contains("Unknown tenant: initech") shouldBeEqualTo true
@@ -498,16 +510,14 @@ class TenantSecurityApplicationTest(
     @Test
     fun `registry rejects h2 tenant database without close delay`() {
         val failure = assertFailsWith<IllegalArgumentException> {
-            TenantDatabaseRegistry.from(
-                TenantDataSourceProperties(
-                    tenants = mapOf(
-                        "acme" to TenantJdbcProperties(
-                            jdbcUrl = "jdbc:h2:mem:no_close_delay_acme;MODE=PostgreSQL;DATABASE_TO_UPPER=false",
-                        ),
-                        "globex" to h2Properties("no-close-delay-globex"),
+            TenantDataSourceProperties(
+                tenants = mapOf(
+                    "acme" to TenantJdbcSettings(
+                        jdbcUrl = "jdbc:h2:mem:no_close_delay_acme;MODE=PostgreSQL;DATABASE_TO_UPPER=false",
                     ),
+                    "globex" to h2Properties("no-close-delay-globex"),
                 ),
-            )
+            ).toTenantJdbcResourceRegistry()
         }
 
         failure.message?.contains("DB_CLOSE_DELAY=-1") shouldBeEqualTo true
@@ -515,21 +525,24 @@ class TenantSecurityApplicationTest(
 
     @Test
     fun `registry close closes owned hikari datasources`() {
-        val standalone = TenantDatabaseRegistry.from(
-            TenantDataSourceProperties(
-                tenants = mapOf(
-                    "acme" to h2Properties("close-acme"),
-                    "globex" to h2Properties("close-globex"),
-                ),
+        val standalone = TenantDataSourceProperties(
+            tenants = mapOf(
+                "acme" to h2Properties("close-acme"),
+                "globex" to h2Properties("close-globex"),
             ),
-        )
+        ).toTenantJdbcResourceRegistry()
         val dataSources = TenantId.entries.map { tenantId ->
             standalone.dataSourceFor(tenantId) as HikariDataSource
         }
 
         standalone.close()
+        standalone.close()
 
         dataSources.all { it.isClosed } shouldBeEqualTo true
+        val failure = assertFailsWith<IllegalStateException> {
+            standalone.databaseFor(TenantId.ACME)
+        }
+        failure.message shouldBeEqualTo "Tenant JDBC resource registry is closed."
     }
 
     @Test
@@ -608,8 +621,8 @@ class TenantSecurityApplicationTest(
     private fun WebTestClient.RequestHeadersSpec<*>.demoSession(value: String): WebTestClient.RequestHeadersSpec<*> =
         header(DemoSessionAuthenticationFilter.SESSION_HEADER, value)
 
-    private fun h2Properties(name: String): TenantJdbcProperties =
-        TenantJdbcProperties(
+    private fun h2Properties(name: String): TenantJdbcSettings =
+        TenantJdbcSettings(
             jdbcUrl = "jdbc:h2:mem:$name;MODE=PostgreSQL;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1",
         )
 

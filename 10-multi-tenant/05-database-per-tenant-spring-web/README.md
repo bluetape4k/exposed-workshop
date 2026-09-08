@@ -14,6 +14,20 @@ header as the final production trust source; this workshop keeps
 systems should bind tenant identity to authenticated claims or server-side
 session state.
 
+## Dependency
+
+The example consumes the published `2.1.0-20260907.153611-1` snapshot for the
+shared tenant JDBC registry:
+
+```kotlin
+implementation(libs.exposed.tenant.jdbc.snapshot)
+```
+
+The local `@ConfigurationProperties` wrapper binds `Map<String,
+TenantJdbcSettings>`. The Spring-independent `:tenant-jdbc-support` module
+normalizes tenant keys, rejects duplicate or missing tenants, validates Hikari
+settings, and connects the map to the provider registry factory.
+
 ## Architecture Diagram
 
 ![Database-per-Tenant Spring Web Architecture diagram](../../docs/images/readme-diagrams/10-multi-tenant-05-database-per-tenant-spring-web-architecture-01.png)
@@ -30,7 +44,8 @@ session state.
 | Fallback | No default datasource; missing tenant returns 400 and unknown tenant returns 404 |
 | Routing boundary | `TenantTransaction` resolves the current tenant and calls Exposed `transaction(database)` |
 | Isolation | Every tenant has a different H2 JDBC URL and a different Hikari pool |
-| Lifecycle | `TenantDatabaseRegistry` owns and closes all tenant datasources |
+| Configuration boundary | Spring binding stays in this example; shared support owns normalization, duplicate/missing validation, Hikari creation, and provider factory wiring |
+| Lifecycle | `TenantJdbcResourceRegistry<TenantId>` owns each Hikari `DataSource` and Exposed `Database`, unregisters and closes them in reverse order, and exposes idempotent `close()` through the Spring bean lifecycle |
 | Bootstrap | `InventorySeeder` creates `inventory_items` and seeds distinct rows per tenant database |
 
 ## Run
@@ -56,6 +71,11 @@ curl -H 'X-Tenant-ID: globex' \
 The tests cover isolated reads and writes, missing and unknown tenants, no
 fallback routing, parallel request `ThreadLocal` cleanup, rollback behavior,
 per-tenant DDL bootstrap, and datasource close behavior.
+
+The provider registry owns the datasource and Exposed database after the
+factory returns. Before application shutdown, callers must stop accepting new
+tenant requests and drain in-flight work before the Spring bean invokes
+`close()`.
 
 ## CI Coverage
 
