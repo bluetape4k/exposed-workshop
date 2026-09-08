@@ -3,8 +3,8 @@ package exposed.examples.spring.auth.repository
 import exposed.examples.spring.auth.model.AuthSessionRecord
 import exposed.examples.spring.auth.model.AuthUser
 import io.bluetape4k.codec.Base58
+import io.bluetape4k.tink.digest.TinkDigesters
 import jakarta.annotation.PostConstruct
-import java.security.MessageDigest
 import java.time.Duration
 import java.time.Instant
 import org.jetbrains.exposed.v1.core.ResultRow
@@ -62,7 +62,7 @@ internal class ExposedAuthRepository(
             val expiresAt = issuedAt.plus(sessionTtl)
             val id = AuthSessions.insertAndGetId {
                 it[AuthSessions.username] = username
-                it[AuthSessions.tokenHash] = SessionTokenHasher.hash(token)
+                it[AuthSessions.tokenHash] = TinkDigesters.SHA256.digestHex(token)
                 it[issuedAtEpochMs] = issuedAt.toEpochMilli()
                 it[expiresAtEpochMs] = expiresAt.toEpochMilli()
             }.value
@@ -160,12 +160,4 @@ private object AuthSessions : LongIdTable("auth_sessions") {
     val tokenHash = varchar("token_hash", 64).uniqueIndex()
     val issuedAtEpochMs = long("issued_at_epoch_ms")
     val expiresAtEpochMs = long("expires_at_epoch_ms")
-}
-
-private object SessionTokenHasher {
-    fun hash(token: String): String {
-        val digest = MessageDigest.getInstance("SHA-256")
-            .digest(token.toByteArray())
-        return digest.joinToString(separator = "") { byte -> "%02x".format(byte) }
-    }
 }

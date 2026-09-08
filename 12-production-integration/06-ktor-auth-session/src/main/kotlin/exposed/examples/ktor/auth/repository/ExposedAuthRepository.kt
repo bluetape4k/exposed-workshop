@@ -4,7 +4,7 @@ import exposed.examples.ktor.auth.model.AuthSessionRecord
 import exposed.examples.ktor.auth.model.AuthUser
 import exposed.examples.ktor.auth.service.PasswordHasher
 import io.bluetape4k.codec.Base58
-import java.security.MessageDigest
+import io.bluetape4k.tink.digest.TinkDigesters
 import java.time.Duration
 import java.time.Instant
 import java.util.concurrent.atomic.AtomicBoolean
@@ -60,7 +60,7 @@ internal class ExposedAuthRepository(
             val token = "ktor_${Base58.randomString(24)}"
             val id = AuthSessions.insertAndGetId {
                 it[AuthSessions.username] = username
-                it[AuthSessions.tokenHash] = SessionTokenHasher.hash(token)
+                it[AuthSessions.tokenHash] = TinkDigesters.SHA256.digestHex(token)
                 it[AuthSessions.issuedAtEpochMs] = issuedAtEpochMs
                 it[AuthSessions.expiresAtEpochMs] = expiresAtEpochMs
             }.value
@@ -76,7 +76,7 @@ internal class ExposedAuthRepository(
 
     override suspend fun findSessionByToken(token: String): AuthSessionRecord? {
         ensureSchema()
-        val tokenHash = SessionTokenHasher.hash(token)
+        val tokenHash = TinkDigesters.SHA256.digestHex(token)
         val nowEpochMs = Instant.now().toEpochMilli()
         return transactionIO {
             AuthSessions.selectAll()
@@ -204,12 +204,4 @@ private object AuthSessions : LongIdTable("ktor_auth_sessions") {
     val tokenHash = varchar("token_hash", 64).uniqueIndex()
     val issuedAtEpochMs = long("issued_at_epoch_ms")
     val expiresAtEpochMs = long("expires_at_epoch_ms")
-}
-
-private object SessionTokenHasher {
-    fun hash(token: String): String {
-        val digest = MessageDigest.getInstance("SHA-256")
-            .digest(token.toByteArray())
-        return digest.joinToString(separator = "") { byte -> "%02x".format(byte) }
-    }
 }
