@@ -22,16 +22,16 @@ including Ktor and tenant-onboarding variants, JDBC + Lettuce caching, and the
 ecosystem integrations through JaVers audit history. As of 2026-09-02, the
 TenantContext consumer migration in
 [#255](https://github.com/bluetape4k/exposed-workshop/issues/255) is complete,
-and [#259](https://github.com/bluetape4k/exposed-workshop/issues/259) tracks the
-stable dependency reference synchronization. The two consumer modules use the common
+and [#259](https://github.com/bluetape4k/exposed-workshop/issues/259) records the
+stable dependency reference baseline. The two consumer modules use the common
 `io.github.bluetape4k:bluetape4k-tenant` API through the versionless catalog alias
-under `io.github.bluetape4k:bluetape4k-dependencies:2.0.0`. The
-`bluetape4k-dependencies`, [`bluetape4k-bom:2.0.0`](https://github.com/bluetape4k/bluetape4k-dependencies/releases/tag/2.0.0),
-exposed BOM, and `bluetape4k-tenant` stable coordinates are now publicly
-resolvable. Upstream provider PR
+under `io.github.bluetape4k:bluetape4k-dependencies:2.1.0-SNAPSHOT`. The current
+development line resolves the core, exposed, and tenant providers as snapshots;
+the published `2.0.0` coordinates remain the stable baseline. Upstream provider PR
 [`bluetape4k-projects#1566`](https://github.com/bluetape4k/bluetape4k-projects/pull/1566)
-is merged, and normal Gradle resolution selects the stable tenant artifact
-without a local Maven override. No new multi-tenant module is planned.
+is merged, and its stable-path validation completed without a local Maven override.
+The current development line intentionally resolves the tenant SNAPSHOT. No new
+multi-tenant module is planned.
 
 ## What It Provides
 
@@ -80,17 +80,17 @@ Kotlin Exposed is JetBrains' Kotlin-first SQL framework. It lets you model table
 | Exposed | 1.4.0 |
 | Spring Boot | 4.1.0 |
 | Kotlinx Coroutines | 1.11.0 |
-| Bluetape4k dependencies BOM | 2.0.0 |
+| Bluetape4k dependencies BOM | 2.1.0-SNAPSHOT |
 | Gradle Wrapper | 9.6.0 |
 
 ### Dependency Version Governance
 
-Shared dependency versions follow the `bluetape4k-dependencies` release catalog
+Shared dependency versions follow the `bluetape4k-dependencies` development catalog
 for the imported BOM. If a local pin is required, record the release value and
 the compatibility reason in `gradle/libs.versions.toml` or a tracked lesson.
 Do not add ad hoc versions for artifacts already managed by a BOM. Run
 `gradle/dependency-governance.sh` when reviewing catalog changes. This guard is
-explicitly pinned to the imported `bluetape4k-dependencies:2.0.0`
+explicitly pinned to the imported `bluetape4k-dependencies:2.1.0-SNAPSHOT`
 catalog; when the BOM changes, refresh the release comparison and the guard
 together.
 

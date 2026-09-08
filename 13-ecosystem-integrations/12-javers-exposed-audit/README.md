@@ -3,7 +3,7 @@
 English | [한국어](README.ko.md)
 
 This workshop is intentionally JDBC-only. It connects an Exposed DAO lifecycle
-to JaVers with the `bluetape4k-javers:0.3.0` Exposed provider and keeps the
+to JaVers with the `io.github.bluetape4k.javers:javers-exposed:1.1.0-SNAPSHOT` provider and keeps the
 business transaction and audit rows atomic.
 
 ![JaVers and Exposed audit architecture](../../docs/images/readme-diagrams/13-javers-exposed-architecture-01.png)
@@ -26,9 +26,9 @@ Use this module to learn the smallest useful audit boundary for an Exposed DAO:
 - `JaversAuditHistory` reads snapshots, changes, or the combined history for a
   customer.
 
-The catalog resolves the provider through the stable
-`bluetape4k-dependencies:2.0.0` BOM. The example uses
-`io.bluetape4k.javers:javers-exposed:0.3.0` and Exposed JDBC.
+The catalog resolves the provider through the development
+`bluetape4k-dependencies:2.1.0-SNAPSHOT` BOM. The example uses
+`io.github.bluetape4k.javers:javers-exposed:1.1.0-SNAPSHOT` and Exposed JDBC.
 
 ## Public API
 

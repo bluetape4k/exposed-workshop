@@ -1,9 +1,16 @@
 # WIP - exposed-workshop
 
-스냅샷: 2026-09-07 KST
+기준 시각: 2026-09-07 KST
 범위: 현재 `develop` 브랜치와 GitHub에서 `debop`에게 할당된 열린 이슈를
 대조한 작업 큐.
 열린 이슈 수: 5개.
+
+## 2026-09-07 2.1.0-SNAPSHOT 예제 소비선
+
+중앙 catalog를 `bluetape4k-dependencies:2.1.0-SNAPSHOT`으로 전환했다. 현재
+dependency-management 출력은 core·tenant·virtual-thread·exposed provider를
+`2.1.0-SNAPSHOT`, JaVers provider를 `1.1.0-SNAPSHOT`으로 관리한다. 아래
+`2.0.0` 기록은 이전 안정 기준선의 완료 증거로 보존한다.
 
 ## 최근 완료
 

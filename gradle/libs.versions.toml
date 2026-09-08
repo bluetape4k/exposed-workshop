@@ -2,8 +2,8 @@
 # Gradle Version Catalog — migrated from buildSrc/src/main/kotlin/Libs.kt
 
 [versions]
-# 정식 2.0.0 안정 릴리스만 소비한다.
-bluetape4k-dependencies = "2.0.0"
+# 2.0.0 안정 릴리스 이후 다음 minor snapshot train을 소비한다.
+bluetape4k-dependencies = "2.1.0-SNAPSHOT"
 bluetape4k-exposed-tenant-jdbc-snapshot = "2.1.0-20260907.153611-1"
 # Issue #270 provider builds; pin the deployed timestamped build explicitly.
 bluetape4k-provider-timestamp = "2.1.0-20260907.141940-7"

@@ -24,8 +24,8 @@ repository를 서로 다른 JDBC session에서 열어 이 경계를 검증합니
 
 명시적인 chunk 경계와 재시작 가능한 keyset checkpoint가 필요한 blocking JDBC batch에 이
 모듈을 사용합니다. 의존성은 중앙 catalog alias `libs.exposed.batch`로 해석하며,
-`bluetape4k-dependencies:2.0.0` BOM을 통해 현재
-`io.github.bluetape4k.exposed:bluetape4k-exposed-batch:2.0.0`으로 해석됩니다.
+`bluetape4k-dependencies:2.1.0-SNAPSHOT` BOM을 통해 현재
+`io.github.bluetape4k.exposed:bluetape4k-exposed-batch:2.1.0-SNAPSHOT`으로 해석됩니다.
 
 이 예제는 다음을 보여줍니다.
 
