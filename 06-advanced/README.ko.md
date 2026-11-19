@@ -18,7 +18,7 @@
 
 | 모듈                           | 설명                                           |
 |------------------------------|----------------------------------------------|
-| `01-exposed-crypt`           | `encryptedVarchar`/`encryptedBinary` 암복호화 및 Exposed 1.5.0 단방향 hashing 컬럼 |
+| `01-exposed-crypt`           | `encryptedVarchar`/`encryptedBinary` 암복호화 및 Exposed 1.6.0 단방향 hashing 컬럼 |
 | `02-exposed-javatime`        | Java Time 타입 매핑 (`LocalDate`, `Instant` 등)   |
 | `03-exposed-kotlin-datetime` | Kotlin `kotlinx-datetime` 타입 매핑              |
 | `04-exposed-json`            | JSON/JSONB 컬럼 매핑 및 경로 쿼리                     |

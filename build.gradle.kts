@@ -193,11 +193,15 @@ subprojects {
         imports {
             mavenBom(rootLibs.spring.boot.dependencies.get().toString())
             mavenBom(rootLibs.bluetape4k.dependencies.get().toString())
+            // 중앙 BOM의 중첩 import가 일시적으로 누락되어도 versionless consumer가 빈 버전을 사용하지 않도록 명시합니다.
+            mavenBom(rootLibs.bluetape4k.bom.get().toString())
+            mavenBom(rootLibs.bluetape4k.exposed.bom.get().toString())
             mavenBom(rootLibs.kotlinx.coroutines.bom.get().toString())
             mavenBom(rootLibs.kotlin.bom.get().toString())
             mavenBom(rootLibs.netty.bom.get().toString())
             mavenBom(rootLibs.jackson.bom.get().toString())
             mavenBom(rootLibs.jackson3.bom.get().toString())
+            mavenBom(rootLibs.jetbrains.exposed.hashing.bom.get().toString())
         }
         dependencies {
             // Kotlinx Coroutines (mavenBom 이 적용이 안되어서 추가로 명시했습니다)

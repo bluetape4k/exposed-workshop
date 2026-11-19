@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalUuidApi::class)
-
 package exposed.examples.spring.modulith.publications
 
 import exposed.examples.spring.modulith.publications.fulfillment.FulfillmentReservationHandler
@@ -30,8 +28,6 @@ import org.springframework.transaction.support.TransactionTemplate
 import java.time.Duration
 import java.time.Instant
 import java.util.UUID
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 @SpringBootTest(
     classes = [SpringModulithPublicationApplication::class],
@@ -112,13 +108,13 @@ class SpringModulithPublicationApplicationTest @Autowired constructor(
 
         transactionTemplate.executeWithoutResult {
             eventPublicationTable.insert { row ->
-                row[id] = Uuid.parse(publicationId.toString())
+                row[id] = publicationId
                 row[listenerId] = "fulfillment.reserve-stock"
                 row[eventType] = missingEventType
                 row[serializedEvent] = """{"orderKey":"legacy","customerId":"customer-c","approvedAt":"2026-06-29T00:00:00Z"}"""
                 row[publicationDate] = Instant.parse("2026-06-29T00:00:00Z")
                 row[completionDate] = null
-                row[status] = Status.FAILED.name
+                row[status] = Status.FAILED
                 row[completionAttempts] = 1
                 row[lastResubmissionDate] = Instant.parse("2026-06-29T00:00:00Z")
             }

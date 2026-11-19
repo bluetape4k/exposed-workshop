@@ -19,8 +19,8 @@ spring-boot = "4.1.0"
 spring-modulith = "2.1.0"
 reactor-bom = "2025.0.6"
 
-exposed = "1.4.0"
-exposed-hashing = "1.5.0"
+exposed = "1.6.0"
+exposed-hashing = "1.6.0"
 
 slf4j = "2.0.18"
 logback = "1.5.34"
@@ -120,6 +120,8 @@ jetbrains-annotations = { module = "org.jetbrains:annotations", version = "26.1.
 
 # bluetape4k
 bluetape4k-dependencies = { module = "io.github.bluetape4k:bluetape4k-dependencies", version.ref = "bluetape4k-dependencies" }
+bluetape4k-bom = { module = "io.github.bluetape4k:bluetape4k-bom", version.ref = "bluetape4k-dependencies" }
+bluetape4k-exposed-bom = { module = "io.github.bluetape4k.exposed:bluetape4k-exposed-bom", version.ref = "bluetape4k-dependencies" }
 bluetape4k-core = { module = "io.github.bluetape4k:bluetape4k-core" }
 bluetape4k-coroutines = { module = "io.github.bluetape4k:bluetape4k-coroutines" }
 bluetape4k-tenant = { module = "io.github.bluetape4k:bluetape4k-tenant" }
