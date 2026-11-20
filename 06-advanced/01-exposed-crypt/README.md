@@ -2,13 +2,13 @@
 
 English | [한국어](./README.ko.md)
 
-A module for transparently encrypting and decrypting column data using `exposed-crypt`. It also demonstrates the Exposed 1.5.0 one-way hashing API for passwords and recovery codes. The examples keep reversible encryption and non-reversible hashing as separate storage decisions.
+A module for transparently encrypting and decrypting column data using `exposed-crypt`. It also demonstrates the Exposed 1.6.0 one-way hashing API for passwords and recovery codes. The examples keep reversible encryption and non-reversible hashing as separate storage decisions.
 
 ## Overview
 
 Columns declared with `encryptedVarchar` / `encryptedBinary` functions automatically encrypt on INSERT and decrypt on SELECT. Application code reads and writes plaintext as-is, while ciphertext is stored in the DB.
 
-## One-Way Hashing (Exposed 1.5.0)
+## One-Way Hashing (Exposed 1.6.0)
 
 Hashing is different from the reversible encryption examples in this module: a
 `Hashed` value cannot be decrypted. Declare a column with `hashed()` and verify
@@ -39,7 +39,7 @@ hash is persisted; do not log passwords, recovery codes, or their candidates.
 
 - Learn `encryptedVarchar` and `encryptedBinary` column definitions and CRUD patterns.
 - Understand how to use encrypted columns in DSL/DAO paths.
-- Define Exposed 1.5.0 `hashed()` columns in DSL/DAO paths and verify them with `Hashed.matches()`.
+- Define Exposed 1.6.0 `hashed()` columns in DSL/DAO paths and verify them with `Hashed.matches()`.
 - Choose nullable hashing when a missing recovery code must remain `null`.
 - Pre-calculate post-encryption length with `Encryptor.maxColLength()`.
 - Summarize search constraints (non-deterministic encryption) and alternatives.

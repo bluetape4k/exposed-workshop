@@ -18,7 +18,7 @@ This chapter covers extension scenarios frequently encountered in production bey
 
 | Module                       | Description                                              |
 |------------------------------|----------------------------------------------------------|
-| `01-exposed-crypt`           | `encryptedVarchar`/`encryptedBinary` encryption and Exposed 1.5.0 one-way hashing columns |
+| `01-exposed-crypt`           | `encryptedVarchar`/`encryptedBinary` encryption and Exposed 1.6.0 one-way hashing columns |
 | `02-exposed-javatime`        | Java Time type mapping (`LocalDate`, `Instant`, etc.)    |
 | `03-exposed-kotlin-datetime` | Kotlin `kotlinx-datetime` type mapping                   |
 | `04-exposed-json`            | JSON/JSONB column mapping and path queries               |

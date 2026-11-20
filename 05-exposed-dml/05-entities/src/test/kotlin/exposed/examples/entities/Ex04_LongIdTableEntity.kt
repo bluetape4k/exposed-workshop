@@ -197,6 +197,8 @@ class Ex04_LongIdTableEntity: AbstractExposedTest() {
                 city = busan
             }
 
+            // 새 DAO 엔티티의 지연 insert를 먼저 반영해야 delete()가 실제 행을 삭제한다.
+            sunghoon.flush()
             sunghoon.delete() // delete() 는 레코드를 삭제한다.
             busan.delete()    // delete() 는 레코드를 삭제한다.
 

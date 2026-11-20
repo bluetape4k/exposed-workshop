@@ -2,14 +2,14 @@
 
 [English](./README.md) | 한국어
 
-`exposed-crypt`를 사용해 컬럼 데이터를 투명하게 암복호화하는 모듈입니다. Exposed 1.5.0의 비밀번호·복구 코드용 단방향 hashing API도 함께 다룹니다. 가역 암호화와 복호화할 수 없는 hashing을 서로 다른 저장 결정으로 구분합니다.
+`exposed-crypt`를 사용해 컬럼 데이터를 투명하게 암복호화하는 모듈입니다. Exposed 1.6.0의 비밀번호·복구 코드용 단방향 hashing API도 함께 다룹니다. 가역 암호화와 복호화할 수 없는 hashing을 서로 다른 저장 결정으로 구분합니다.
 
 ## 개요
 
 `encryptedVarchar` /
 `encryptedBinary` 함수로 선언된 컬럼은 INSERT 시 자동으로 암호화하고 SELECT 시 자동으로 복호화합니다. 애플리케이션 코드는 평문을 그대로 읽고 쓰며, DB에는 암호문이 저장됩니다.
 
-## 단방향 Hashing (Exposed 1.5.0)
+## 단방향 Hashing (Exposed 1.6.0)
 
 Hashing은 이 모듈의 가역 암호화 예제와 다릅니다. `Hashed` 값은 복호화할
 수 없으므로 `hashed()` 컬럼을 선언하고 후보 입력을
@@ -40,7 +40,7 @@ stored[Users.recoveryCode]                      // Hashed?; null은 그대로 �
 
 - `encryptedVarchar`, `encryptedBinary` 컬럼 정의와 CRUD 패턴을 익힌다.
 - DSL/DAO 경로에서 암호화 컬럼 사용법을 이해한다.
-- DSL/DAO 경로에서 Exposed 1.5.0 `hashed()` 컬럼을 정의하고 `Hashed.matches()`로 검증한다.
+- DSL/DAO 경로에서 Exposed 1.6.0 `hashed()` 컬럼을 정의하고 `Hashed.matches()`로 검증한다.
 - 없는 복구 코드를 `null`로 유지해야 할 때 nullable hashing을 선택한다.
 - `Encryptor.maxColLength()`로 암호화 후 길이를 사전 계산한다.
 - 검색 제약(비결정적 암호화)과 대안을 정리한다.
